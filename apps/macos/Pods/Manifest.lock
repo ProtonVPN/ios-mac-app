@@ -1,0 +1,53 @@
+PODS:
+  - Alamofire (4.8.0)
+  - KeychainAccess (3.1.2)
+  - ReachabilitySwift (4.3.0)
+  - Sentry (4.1.1):
+    - Sentry/Core (= 4.1.1)
+  - Sentry/Core (4.1.1)
+  - Sparkle (1.21.3)
+  - SwiftLint (0.32.0)
+  - TrustKit (1.6.3)
+  - vpncore (0.9.0):
+    - Alamofire (~> 4.0)
+    - KeychainAccess (~> 3.0)
+    - ReachabilitySwift (~> 4.0)
+    - Sentry (~> 4.0)
+    - TrustKit (~> 1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - KeychainAccess (~> 3.0)
+  - ReachabilitySwift (~> 4.0)
+  - Sentry (~> 4.0)
+  - Sparkle (~> 1.0)
+  - SwiftLint
+  - vpncore (from `../vpncore`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - KeychainAccess
+    - ReachabilitySwift
+    - Sentry
+    - Sparkle
+    - SwiftLint
+    - TrustKit
+
+EXTERNAL SOURCES:
+  vpncore:
+    :path: "../vpncore"
+
+SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
+  Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
+  SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
+  TrustKit: a2f0c3a926f0a3ce3c082db9a39f1f540dbb04cb
+  vpncore: 45996c2071c4c4f7e3b31105014c3eccfa6fe042
+
+PODFILE CHECKSUM: 3158300ca6b752839f7cbb82c523d1f3a00b9cbf
+
+COCOAPODS: 1.8.4

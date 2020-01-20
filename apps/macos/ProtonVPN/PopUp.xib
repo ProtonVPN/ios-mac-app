@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15400" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15400"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="PopUpViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyView" destination="vii-kb-94f" id="nht-CG-cF3"/>
+                <outlet property="cancelButton" destination="ar6-Fs-KA6" id="DpJ-7W-Waq"/>
+                <outlet property="confirmButton" destination="eFD-KT-oxG" id="Lhc-2f-Wad"/>
+                <outlet property="footerView" destination="9O0-r8-G55" id="262-fA-vzh"/>
+                <outlet property="leadingDescriptionConstraint" destination="P58-eV-IIV" id="rsC-bB-VLJ"/>
+                <outlet property="popUpDescription" destination="0m1-gw-FAf" id="cob-b1-GBt"/>
+                <outlet property="popUpDescriptionTextView" destination="vii-kb-94f" id="GiH-Cn-fXi"/>
+                <outlet property="popUpIcon" destination="qA3-vq-Urx" id="ier-Y4-gcf"/>
+                <outlet property="view" destination="c22-O7-iKe" id="O9T-Nu-OAp"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="YQv-pg-Si6">
+                    <rect key="frame" x="0.0" y="50" width="500" height="130"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="qA3-vq-Urx">
+                            <rect key="frame" x="15" y="15" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="SJR-PN-GUW"/>
+                                <constraint firstAttribute="height" constant="100" id="zFj-Fj-7H3"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="LyU-r2-N6H"/>
+                        </imageView>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="0m1-gw-FAf">
+                            <rect key="frame" x="128" y="57" width="354" height="16"/>
+                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="PopUp description here" id="uxh-Nt-uGj">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <scrollView appearanceType="aqua" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="ESt-rz-vDH">
+                            <rect key="frame" x="125" y="57" width="360" height="16"/>
+                            <clipView key="contentView" drawsBackground="NO" copiesOnScroll="NO" id="4q1-qZ-VMP">
+                                <rect key="frame" x="0.0" y="0.0" width="360" height="16"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <textView editable="NO" importsGraphics="NO" richText="NO" verticallyResizable="YES" allowsCharacterPickerTouchBarItem="NO" textCompletion="NO" id="vii-kb-94f">
+                                        <rect key="frame" x="0.0" y="0.0" width="360" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <size key="minSize" width="360" height="16"/>
+                                        <size key="maxSize" width="364" height="10000000"/>
+                                        <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                    </textView>
+                                </subviews>
+                                <color key="backgroundColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </clipView>
+                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="fwq-EZ-m5J">
+                                <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="iY3-ul-9Oh">
+                                <rect key="frame" x="344" y="0.0" width="16" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="ESt-rz-vDH" firstAttribute="centerY" secondItem="YQv-pg-Si6" secondAttribute="centerY" id="1hD-Aa-RTF"/>
+                        <constraint firstItem="0m1-gw-FAf" firstAttribute="centerY" secondItem="YQv-pg-Si6" secondAttribute="centerY" id="4J3-dM-rMq"/>
+                        <constraint firstAttribute="trailing" secondItem="ESt-rz-vDH" secondAttribute="trailing" constant="15" id="7jx-qq-U44"/>
+                        <constraint firstItem="qA3-vq-Urx" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YQv-pg-Si6" secondAttribute="top" constant="15" id="D3j-jV-iY3"/>
+                        <constraint firstItem="0m1-gw-FAf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YQv-pg-Si6" secondAttribute="top" constant="20" id="DQ0-Il-BSh"/>
+                        <constraint firstAttribute="trailing" secondItem="0m1-gw-FAf" secondAttribute="trailing" constant="20" id="Lv5-Xa-8Jj"/>
+                        <constraint firstItem="0m1-gw-FAf" firstAttribute="leading" secondItem="YQv-pg-Si6" secondAttribute="leading" constant="130" id="P58-eV-IIV"/>
+                        <constraint firstItem="ESt-rz-vDH" firstAttribute="leading" secondItem="YQv-pg-Si6" secondAttribute="leading" constant="125" id="SAL-H8-cVj"/>
+                        <constraint firstItem="qA3-vq-Urx" firstAttribute="leading" secondItem="YQv-pg-Si6" secondAttribute="leading" constant="15" id="X3b-DN-Ajo"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="0m1-gw-FAf" secondAttribute="bottom" constant="20" id="aP5-he-UeA"/>
+                        <constraint firstItem="qA3-vq-Urx" firstAttribute="centerY" secondItem="YQv-pg-Si6" secondAttribute="centerY" id="dHJ-vM-0tp"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="qA3-vq-Urx" secondAttribute="bottom" constant="15" id="lcK-NI-4Qo"/>
+                        <constraint firstItem="ESt-rz-vDH" firstAttribute="height" secondItem="0m1-gw-FAf" secondAttribute="height" id="waU-My-Tnj"/>
+                        <constraint firstItem="ESt-rz-vDH" firstAttribute="top" relation="greaterThanOrEqual" secondItem="YQv-pg-Si6" secondAttribute="top" constant="20" id="y5X-5b-BKO"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="9O0-r8-G55">
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ar6-Fs-KA6" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="285" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="97n-Ej-W1D"/>
+                                <constraint firstAttribute="width" constant="90" id="MU1-U0-P7r"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Cancel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="9KA-hF-b34">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eFD-KT-oxG" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="390" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="MyI-35-1kj"/>
+                                <constraint firstAttribute="height" constant="35" id="YNH-bV-hKw"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Confirm" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="VBX-pq-qSQ">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="eFD-KT-oxG" firstAttribute="leading" secondItem="ar6-Fs-KA6" secondAttribute="trailing" constant="15" id="4ot-q3-NSP"/>
+                        <constraint firstItem="ar6-Fs-KA6" firstAttribute="centerY" secondItem="9O0-r8-G55" secondAttribute="centerY" id="OnR-K7-z3g"/>
+                        <constraint firstItem="eFD-KT-oxG" firstAttribute="centerY" secondItem="9O0-r8-G55" secondAttribute="centerY" id="WZZ-wm-OLu"/>
+                        <constraint firstAttribute="height" constant="50" id="h62-ZU-J5q"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="9O0-r8-G55" firstAttribute="top" secondItem="YQv-pg-Si6" secondAttribute="bottom" id="0ei-Y4-h6g"/>
+                <constraint firstItem="YQv-pg-Si6" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="0fs-Gb-enP"/>
+                <constraint firstItem="9O0-r8-G55" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="3uV-Us-WTd"/>
+                <constraint firstAttribute="bottom" secondItem="9O0-r8-G55" secondAttribute="bottom" id="Iml-k5-WQz"/>
+                <constraint firstAttribute="trailing" secondItem="9O0-r8-G55" secondAttribute="trailing" id="TNq-0B-R3p"/>
+                <constraint firstItem="eFD-KT-oxG" firstAttribute="trailing" secondItem="0m1-gw-FAf" secondAttribute="trailing" id="ZYK-31-mIA"/>
+                <constraint firstAttribute="trailing" secondItem="YQv-pg-Si6" secondAttribute="trailing" id="zNt-Lb-TFe"/>
+                <constraint firstItem="YQv-pg-Si6" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="zkp-MG-1vf"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+    </objects>
+</document>

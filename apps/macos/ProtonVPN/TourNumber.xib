@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourNumberViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="numberLabel" destination="asE-rb-4I8" id="WZM-7k-k3P"/>
+                <outlet property="numberView" destination="toX-k4-kop" id="Xuj-he-Xrq"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="168"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="toX-k4-kop" customClass="TourNumberView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="168"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="asE-rb-4I8">
+                            <rect key="frame" x="222" y="77" width="37" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="LSu-hg-pcA">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="asE-rb-4I8" firstAttribute="centerX" secondItem="toX-k4-kop" secondAttribute="centerX" id="Adn-gl-di2"/>
+                        <constraint firstItem="asE-rb-4I8" firstAttribute="centerY" secondItem="toX-k4-kop" secondAttribute="centerY" constant="-1" id="Xy6-rx-qXq"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="toX-k4-kop" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="38O-1u-H6w"/>
+                <constraint firstAttribute="bottom" secondItem="toX-k4-kop" secondAttribute="bottom" id="ilc-b6-Ed2"/>
+                <constraint firstItem="toX-k4-kop" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="qOa-SL-4W3"/>
+                <constraint firstAttribute="trailing" secondItem="toX-k4-kop" secondAttribute="trailing" id="wyE-db-z1O"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="93"/>
+        </customView>
+    </objects>
+</document>

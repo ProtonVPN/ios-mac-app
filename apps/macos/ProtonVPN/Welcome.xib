@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WelcomeViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="ZgO-cU-Lfg" id="ctj-5U-nad"/>
+                <outlet property="mapView" destination="5Kh-Ok-j2c" id="htz-ou-gLN"/>
+                <outlet property="noThanksButton" destination="cqF-tK-7IP" id="GIn-oy-oaj"/>
+                <outlet property="takeTourButton" destination="guH-vC-NAW" id="tbB-sR-EBr"/>
+                <outlet property="titleLabel" destination="eNP-Q8-2Im" id="F9e-JY-jGE"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="800" height="541"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="5Kh-Ok-j2c">
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="542"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="542" id="I0b-m0-t2V"/>
+                        <constraint firstAttribute="width" constant="800" id="eFq-Id-9D3"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="welcome-map" id="HQP-rf-dWD"/>
+                </imageView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="2wQ-uI-vCR" userLabel="Gradient View" customClass="MapGradientView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="800" height="542"/>
+                </customView>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eNP-Q8-2Im">
+                    <rect key="frame" x="18" y="285" width="764" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Welcome on Board" id="slM-b4-SMt">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZgO-cU-Lfg">
+                    <rect key="frame" x="18" y="237" width="764" height="17"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Take a tour" id="pDJ-Uj-JLu">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="34" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="M4I-2d-A6Y">
+                    <rect key="frame" x="239" y="100" width="322" height="40"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cqF-tK-7IP" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="-6" y="-7" width="156" height="51"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="p7B-pz-Y5h"/>
+                                <constraint firstAttribute="width" constant="144" id="vle-Zl-Ke7"/>
+                            </constraints>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="vk7-u8-z3K">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="cancel:" target="-2" id="vOu-Ng-9qg"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="guH-vC-NAW" customClass="UpsellPrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="172" y="-7" width="156" height="51"/>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="K6g-LT-Ee3">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="takeTour:" target="-2" id="gwe-IE-6cc"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="guH-vC-NAW" firstAttribute="width" secondItem="cqF-tK-7IP" secondAttribute="width" id="UjY-Qb-s3M"/>
+                        <constraint firstItem="guH-vC-NAW" firstAttribute="height" secondItem="cqF-tK-7IP" secondAttribute="height" id="xps-rB-l1u"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="ZgO-cU-Lfg" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="2eJ-DH-k9R"/>
+                <constraint firstAttribute="bottom" secondItem="M4I-2d-A6Y" secondAttribute="bottom" constant="100" id="4y2-2x-nNy"/>
+                <constraint firstAttribute="trailing" secondItem="eNP-Q8-2Im" secondAttribute="trailing" constant="20" id="6NF-t7-DRu"/>
+                <constraint firstItem="ZgO-cU-Lfg" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="6xO-q9-inb"/>
+                <constraint firstItem="5Kh-Ok-j2c" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="-1" id="74d-9a-TtB"/>
+                <constraint firstAttribute="trailing" secondItem="5Kh-Ok-j2c" secondAttribute="trailing" id="DYc-r0-czD"/>
+                <constraint firstAttribute="trailing" secondItem="ZgO-cU-Lfg" secondAttribute="trailing" constant="20" id="FM0-vF-OJw"/>
+                <constraint firstItem="2wQ-uI-vCR" firstAttribute="leading" secondItem="5Kh-Ok-j2c" secondAttribute="leading" id="LRX-9L-WKa"/>
+                <constraint firstItem="M4I-2d-A6Y" firstAttribute="top" secondItem="ZgO-cU-Lfg" secondAttribute="baseline" constant="100" id="PCo-Xq-qsl"/>
+                <constraint firstItem="2wQ-uI-vCR" firstAttribute="trailing" secondItem="5Kh-Ok-j2c" secondAttribute="trailing" id="Rka-7f-hEv"/>
+                <constraint firstItem="2wQ-uI-vCR" firstAttribute="top" secondItem="5Kh-Ok-j2c" secondAttribute="top" id="UUh-fM-RRr"/>
+                <constraint firstItem="eNP-Q8-2Im" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="XNw-BN-BlC"/>
+                <constraint firstItem="eNP-Q8-2Im" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="20" id="YBU-oy-YSk"/>
+                <constraint firstItem="M4I-2d-A6Y" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="gLk-Jw-Zig"/>
+                <constraint firstAttribute="bottom" secondItem="5Kh-Ok-j2c" secondAttribute="bottom" id="i9R-MW-lPB"/>
+                <constraint firstItem="5Kh-Ok-j2c" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="pYf-in-Lkb"/>
+                <constraint firstItem="2wQ-uI-vCR" firstAttribute="bottom" secondItem="5Kh-Ok-j2c" secondAttribute="bottom" id="sel-x6-xDR"/>
+                <constraint firstItem="ZgO-cU-Lfg" firstAttribute="top" secondItem="eNP-Q8-2Im" secondAttribute="baseline" constant="34" id="ui7-f1-k6S"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="168.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="welcome-map" width="800" height="542"/>
+    </resources>
+</document>

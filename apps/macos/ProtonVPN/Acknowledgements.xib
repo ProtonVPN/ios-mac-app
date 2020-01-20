@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="15505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AcknowledgementsViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="c22-O7-iKe" id="gdM-Gu-zBY"/>
+                <outlet property="webView" destination="fur-gY-bnM" id="09J-gB-S1R"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="634" height="407"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fur-gY-bnM">
+                    <rect key="frame" x="0.0" y="0.0" width="634" height="407"/>
+                    <wkWebViewConfiguration key="configuration">
+                        <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                        <wkPreferences key="preferences"/>
+                    </wkWebViewConfiguration>
+                </wkWebView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="fur-gY-bnM" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Kbc-wF-aOf"/>
+                <constraint firstAttribute="bottom" secondItem="fur-gY-bnM" secondAttribute="bottom" id="Yq3-Ju-nwU"/>
+                <constraint firstItem="fur-gY-bnM" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="jMW-rQ-axE"/>
+                <constraint firstAttribute="trailing" secondItem="fur-gY-bnM" secondAttribute="trailing" id="rmb-lg-3dv"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="154"/>
+        </customView>
+    </objects>
+</document>

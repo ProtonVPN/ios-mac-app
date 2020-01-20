@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="TourViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="chQ-uI-kyp" id="AY0-7Y-n0l"/>
+                <outlet property="nextButton" destination="dXd-kW-1gU" id="dYK-J9-nw4"/>
+                <outlet property="pageNumberLabel" destination="QaR-f9-QCI" id="S3n-gS-T6K"/>
+                <outlet property="previousButton" destination="6yH-Sh-9Eu" id="agL-ey-5cP"/>
+                <outlet property="titleLabel" destination="pCA-0i-rAl" id="UMX-wt-18U"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="220" height="272"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Q9s-QJ-Bzz" customClass="TourDescriptionView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="236" height="272"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="lFm-Z4-aEO" customClass="TourNumberRingView" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="16" y="216" width="36" height="36"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="lFm-Z4-aEO" secondAttribute="height" multiplier="1:1" id="KRd-et-LGB"/>
+                                <constraint firstAttribute="width" constant="36" id="Vko-xm-XgR"/>
+                            </constraints>
+                        </customView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QaR-f9-QCI">
+                            <rect key="frame" x="16" y="227" width="37" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="HlB-Qz-qxW">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pCA-0i-rAl">
+                            <rect key="frame" x="62" y="227" width="37" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="sn5-kJ-dsv">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6yH-Sh-9Eu" customClass="TourPreviousButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="10" y="5" width="38" height="37"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="26" id="3Q8-eU-xMU"/>
+                                <constraint firstAttribute="width" constant="26" id="BfR-ok-e1e"/>
+                            </constraints>
+                            <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="9Wj-UH-TL9">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="previous:" target="-2" id="OUg-GU-8tp"/>
+                            </connections>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dXd-kW-1gU" customClass="TourNextButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="52" y="3" width="164" height="41"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="152" id="7RY-fq-gFC"/>
+                                <constraint firstAttribute="height" constant="30" id="9dF-zv-hpw"/>
+                            </constraints>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PLw-pb-fa8" customClass="TourNextButtonCell" customModule="ProtonVPN" customModuleProvider="target">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="next:" target="-2" id="IiY-Fa-1QT"/>
+                            </connections>
+                        </button>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="chQ-uI-kyp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="14" y="179" width="37" height="17"/>
+                            <constraints>
+                                <constraint firstAttribute="width" relation="lessThanOrEqual" constant="188" id="nn7-J5-rVh"/>
+                            </constraints>
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" title="Label" id="Wma-0F-gd0">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="pCA-0i-rAl" firstAttribute="leading" secondItem="lFm-Z4-aEO" secondAttribute="trailing" constant="12" id="3ak-yt-5g7"/>
+                        <constraint firstItem="lFm-Z4-aEO" firstAttribute="leading" secondItem="Q9s-QJ-Bzz" secondAttribute="leading" constant="16" id="C8w-jp-2O4"/>
+                        <constraint firstAttribute="bottom" secondItem="6yH-Sh-9Eu" secondAttribute="bottom" constant="12" id="OXq-40-jAm"/>
+                        <constraint firstItem="chQ-uI-kyp" firstAttribute="top" secondItem="lFm-Z4-aEO" secondAttribute="bottom" constant="20" id="chW-4I-Vdc"/>
+                        <constraint firstItem="chQ-uI-kyp" firstAttribute="leading" secondItem="lFm-Z4-aEO" secondAttribute="leading" id="e5O-wr-1rm"/>
+                        <constraint firstItem="lFm-Z4-aEO" firstAttribute="top" secondItem="Q9s-QJ-Bzz" secondAttribute="top" constant="20" id="eFA-8U-hxE"/>
+                        <constraint firstItem="6yH-Sh-9Eu" firstAttribute="leading" secondItem="Q9s-QJ-Bzz" secondAttribute="leading" constant="16" id="hw9-Zj-KCr"/>
+                        <constraint firstItem="dXd-kW-1gU" firstAttribute="leading" secondItem="6yH-Sh-9Eu" secondAttribute="trailing" constant="16" id="jtz-6G-Xaj"/>
+                        <constraint firstItem="dXd-kW-1gU" firstAttribute="centerY" secondItem="6yH-Sh-9Eu" secondAttribute="centerY" id="k2f-Wg-YlP"/>
+                        <constraint firstItem="QaR-f9-QCI" firstAttribute="centerX" secondItem="lFm-Z4-aEO" secondAttribute="centerX" id="lGd-Ed-D78"/>
+                        <constraint firstItem="QaR-f9-QCI" firstAttribute="centerY" secondItem="lFm-Z4-aEO" secondAttribute="centerY" constant="-1" id="wbp-ew-kvI"/>
+                        <constraint firstItem="pCA-0i-rAl" firstAttribute="centerY" secondItem="lFm-Z4-aEO" secondAttribute="centerY" constant="-1" id="yvV-iP-1XC"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Q9s-QJ-Bzz" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="7Kp-vR-ZWw"/>
+                <constraint firstAttribute="bottom" secondItem="Q9s-QJ-Bzz" secondAttribute="bottom" id="Y7r-N0-BBg"/>
+                <constraint firstAttribute="trailing" secondItem="Q9s-QJ-Bzz" secondAttribute="trailing" constant="-16" id="gth-Sh-xWn"/>
+                <constraint firstItem="Q9s-QJ-Bzz" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="pTB-bx-pxS"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

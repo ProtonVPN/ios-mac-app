@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="CountryItemView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="nqZ-Q3-j1Z">
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="85p-cE-sb6">
+                            <rect key="frame" x="20" y="18" width="21" height="14"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="21" id="2PS-fv-48M"/>
+                                <constraint firstAttribute="height" constant="14" id="TZ2-Tq-LKI"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="3nF-YE-fHp"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RtH-Pc-szY">
+                            <rect key="frame" x="49" y="17" width="90" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Country name" id="8bO-l6-lWL">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="TtF-kS-etc">
+                            <rect key="frame" x="0.0" y="49" width="340" height="1"/>
+                            <view key="contentView" id="DDs-fu-dSl">
+                                <rect key="frame" x="0.0" y="0.0" width="340" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="diM-53-Mlf"/>
+                            </constraints>
+                        </box>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J0h-6U-DxQ" customClass="CellSurfaceButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="ZFY-oc-nbv"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="j2F-lc-E8j">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="J0h-6U-DxQ" secondAttribute="trailing" id="15T-3X-hG6"/>
+                        <constraint firstItem="J0h-6U-DxQ" firstAttribute="leading" secondItem="nqZ-Q3-j1Z" secondAttribute="leading" id="Npy-hl-1Gc"/>
+                        <constraint firstItem="RtH-Pc-szY" firstAttribute="centerY" secondItem="nqZ-Q3-j1Z" secondAttribute="centerY" id="cLa-BH-zQC"/>
+                        <constraint firstItem="85p-cE-sb6" firstAttribute="centerY" secondItem="nqZ-Q3-j1Z" secondAttribute="centerY" id="g96-Ta-3pt"/>
+                        <constraint firstAttribute="trailing" secondItem="TtF-kS-etc" secondAttribute="trailing" id="hi7-HV-cJH"/>
+                        <constraint firstAttribute="top" secondItem="TtF-kS-etc" secondAttribute="top" id="iBb-hc-rhu"/>
+                        <constraint firstItem="85p-cE-sb6" firstAttribute="leading" secondItem="nqZ-Q3-j1Z" secondAttribute="leading" constant="20" id="lF4-Li-Rsz"/>
+                        <constraint firstItem="RtH-Pc-szY" firstAttribute="leading" secondItem="85p-cE-sb6" secondAttribute="trailing" constant="10" id="oce-uF-lY1"/>
+                        <constraint firstItem="J0h-6U-DxQ" firstAttribute="top" secondItem="nqZ-Q3-j1Z" secondAttribute="top" id="s9M-Pd-OMu"/>
+                        <constraint firstItem="TtF-kS-etc" firstAttribute="leading" secondItem="nqZ-Q3-j1Z" secondAttribute="leading" id="wsg-vA-U5n"/>
+                        <constraint firstAttribute="bottom" secondItem="J0h-6U-DxQ" secondAttribute="bottom" id="z5o-GE-kz2"/>
+                    </constraints>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p1k-2r-T6k" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="229" y="10" width="56" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="Pvd-PC-aRL"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="Connect" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="XDE-CO-vr7">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTu-Cv-u42" customClass="FeatureIcon" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="255" y="15" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="8Ae-5J-fKb"/>
+                        <constraint firstAttribute="height" constant="20" id="qIK-J0-uB9"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="bEy-pY-ljB"/>
+                </imageView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dqe-zy-5OE" customClass="ExpandCellButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="290" y="10" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="3bB-IV-Aqj"/>
+                        <constraint firstAttribute="height" constant="30" id="NfK-xX-Pab"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="nLG-KJ-cbv">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstItem="xTu-Cv-u42" firstAttribute="centerY" secondItem="dqe-zy-5OE" secondAttribute="centerY" id="0lP-kz-fmD"/>
+                <constraint firstItem="dqe-zy-5OE" firstAttribute="leading" secondItem="p1k-2r-T6k" secondAttribute="trailing" constant="5" id="A2D-7y-JxP"/>
+                <constraint firstAttribute="bottom" secondItem="nqZ-Q3-j1Z" secondAttribute="bottom" id="GbF-uK-spD"/>
+                <constraint firstItem="nqZ-Q3-j1Z" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="JWQ-pa-oqz"/>
+                <constraint firstItem="dqe-zy-5OE" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="KKL-2o-hmN"/>
+                <constraint firstAttribute="trailing" secondItem="nqZ-Q3-j1Z" secondAttribute="trailing" id="b37-70-3Hi"/>
+                <constraint firstAttribute="trailing" secondItem="dqe-zy-5OE" secondAttribute="trailing" constant="20" id="fTb-0A-Z1A"/>
+                <constraint firstItem="p1k-2r-T6k" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="juQ-Fb-mYY"/>
+                <constraint firstItem="dqe-zy-5OE" firstAttribute="leading" secondItem="xTu-Cv-u42" secondAttribute="trailing" constant="15" id="tuO-7Q-8yE"/>
+                <constraint firstItem="nqZ-Q3-j1Z" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="yOT-TO-CWy"/>
+            </constraints>
+            <connections>
+                <outlet property="cellSurfaceButton" destination="J0h-6U-DxQ" id="lsd-GU-Rtf"/>
+                <outlet property="connectButton" destination="p1k-2r-T6k" id="rr2-g6-Kds"/>
+                <outlet property="countryFlagIcon" destination="85p-cE-sb6" id="vh0-WT-IP6"/>
+                <outlet property="countryNameLabel" destination="RtH-Pc-szY" id="mL0-UT-IZ5"/>
+                <outlet property="expandCellButton" destination="dqe-zy-5OE" id="E1z-bT-9YZ"/>
+                <outlet property="keywordIcon" destination="xTu-Cv-u42" id="KOc-VU-u6i"/>
+                <outlet property="rowSeparator" destination="TtF-kS-etc" id="suL-1u-als"/>
+            </connections>
+            <point key="canvasLocation" x="179" y="187"/>
+        </customView>
+    </objects>
+</document>

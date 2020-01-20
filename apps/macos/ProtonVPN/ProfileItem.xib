@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="box content view" minToolsVersion="7.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="ProfileItemView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="8tv-OS-eVg">
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="lmS-Zl-ejH">
+                            <rect key="frame" x="20" y="18" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="5JN-eD-nya"/>
+                                <constraint firstAttribute="width" constant="15" id="96c-ai-WB1"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="AWM-uv-9bM"/>
+                        </imageView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Bjs-4H-etf" customClass="ProfileCircle" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="20" y="18" width="15" height="15"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="15" id="XCZ-cC-ujk"/>
+                                <constraint firstAttribute="width" constant="15" id="iTT-kn-Dxj"/>
+                            </constraints>
+                        </customView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xpv-N4-o42">
+                            <rect key="frame" x="53" y="17" width="176" height="17"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Profile name" usesSingleLineMode="YES" id="yF6-mZ-uH9">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="XIf-zM-8Jt" userLabel="Secondary Description Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="240" y="17" width="82" height="17"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="Maintenance" usesSingleLineMode="YES" id="HTq-Vg-LGS">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="cNp-oL-Grh">
+                            <rect key="frame" x="20" y="0.0" width="300" height="1"/>
+                            <view key="contentView" id="tvF-hE-GAN">
+                                <rect key="frame" x="0.0" y="0.0" width="300" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="6ld-CO-iDa"/>
+                            </constraints>
+                        </box>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="XIf-zM-8Jt" firstAttribute="centerY" secondItem="8tv-OS-eVg" secondAttribute="centerY" id="3Dm-bg-LkC"/>
+                        <constraint firstItem="Bjs-4H-etf" firstAttribute="centerY" secondItem="8tv-OS-eVg" secondAttribute="centerY" id="4V2-dM-aNb"/>
+                        <constraint firstAttribute="bottom" secondItem="cNp-oL-Grh" secondAttribute="bottom" id="5cN-ax-F6c"/>
+                        <constraint firstAttribute="trailing" secondItem="XIf-zM-8Jt" secondAttribute="trailing" constant="20" id="9i4-IS-DuX"/>
+                        <constraint firstItem="cNp-oL-Grh" firstAttribute="leading" secondItem="8tv-OS-eVg" secondAttribute="leading" constant="20" id="Beh-nB-rj0"/>
+                        <constraint firstItem="XIf-zM-8Jt" firstAttribute="leading" secondItem="Xpv-N4-o42" secondAttribute="trailing" constant="15" id="OEA-TF-Qb4"/>
+                        <constraint firstItem="Xpv-N4-o42" firstAttribute="leading" secondItem="Bjs-4H-etf" secondAttribute="trailing" constant="20" id="TBA-sg-sYu"/>
+                        <constraint firstAttribute="width" constant="340" id="bfw-WA-8rk"/>
+                        <constraint firstItem="Xpv-N4-o42" firstAttribute="centerY" secondItem="8tv-OS-eVg" secondAttribute="centerY" id="clF-iU-DT0"/>
+                        <constraint firstItem="Bjs-4H-etf" firstAttribute="leading" secondItem="8tv-OS-eVg" secondAttribute="leading" constant="20" id="gNr-uw-Ahg"/>
+                        <constraint firstItem="lmS-Zl-ejH" firstAttribute="leading" secondItem="8tv-OS-eVg" secondAttribute="leading" constant="20" id="rUx-l8-5Hh"/>
+                        <constraint firstAttribute="trailing" secondItem="cNp-oL-Grh" secondAttribute="trailing" constant="20" id="rdi-9l-X55"/>
+                        <constraint firstItem="lmS-Zl-ejH" firstAttribute="centerY" secondItem="8tv-OS-eVg" secondAttribute="centerY" id="xzj-kH-fBv"/>
+                    </constraints>
+                </customView>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ex-Ki-c2M" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="235" y="10" width="85" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="dgB-KL-vVY"/>
+                        <constraint firstAttribute="width" constant="85" id="yza-ap-0xG"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="Connect" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="wvO-d7-tY4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="2ex-Ki-c2M" secondAttribute="trailing" constant="20" id="Ccn-Nx-RG7"/>
+                <constraint firstAttribute="trailing" secondItem="8tv-OS-eVg" secondAttribute="trailing" id="QQM-OV-Fwo"/>
+                <constraint firstAttribute="bottom" secondItem="8tv-OS-eVg" secondAttribute="bottom" id="Yho-xh-5k1"/>
+                <constraint firstItem="2ex-Ki-c2M" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="fdm-6n-gGx"/>
+                <constraint firstItem="8tv-OS-eVg" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="hQL-qy-53A"/>
+                <constraint firstItem="8tv-OS-eVg" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="y4N-Pb-ShK"/>
+            </constraints>
+            <connections>
+                <outlet property="connectButton" destination="2ex-Ki-c2M" id="CNs-gc-QTU"/>
+                <outlet property="nameToDescriptionConstraint" destination="OEA-TF-Qb4" id="V5V-xN-Hce"/>
+                <outlet property="profileCircle" destination="Bjs-4H-etf" id="1pm-aG-NWA"/>
+                <outlet property="profileImage" destination="lmS-Zl-ejH" id="ftd-rg-CBm"/>
+                <outlet property="profileName" destination="Xpv-N4-o42" id="pue-VK-qiY"/>
+                <outlet property="rowSeparator" destination="cNp-oL-Grh" id="Vju-FN-G9D"/>
+                <outlet property="secondaryDescription" destination="XIf-zM-8Jt" id="MNP-Qg-785"/>
+            </connections>
+        </customView>
+    </objects>
+</document>

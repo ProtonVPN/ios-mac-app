@@ -1,0 +1,14 @@
+ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
+CODE_SIGN_IDENTITY =
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess" "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift" "${PODS_CONFIGURATION_BUILD_DIR}/Sentry" "${PODS_CONFIGURATION_BUILD_DIR}/vpncore"
+GCC_ENABLE_CPP_EXCEPTIONS = YES
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire/Alamofire.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess/KeychainAccess.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift/Reachability.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Sentry/Sentry.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/vpncore/vpncore.framework/Headers" "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/OpenPGP" "${PODS_ROOT}/Headers/Public/OpenSSL-OSX"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
+LIBRARY_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/../../OpenPGP/libs" "${PODS_ROOT}/OpenSSL-OSX/lib"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"OpenPGP_macOS" -l"bz2" -l"c++" -l"crypto" -l"ssl" -l"z" -framework "Alamofire" -framework "Foundation" -framework "KeychainAccess" -framework "Reachability" -framework "Sentry" -framework "SystemConfiguration" -framework "vpncore"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods

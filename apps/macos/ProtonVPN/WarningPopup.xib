@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WarningPopupViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyView" destination="Rq4-QH-7oR" id="f1H-Mj-tNf"/>
+                <outlet property="cancelButton" destination="tKc-w2-Gxb" id="BOV-ha-JAc"/>
+                <outlet property="continueButton" destination="MgT-bO-XvA" id="UtE-y5-5hk"/>
+                <outlet property="footerView" destination="LYS-Rt-AOb" id="iCq-P3-38S"/>
+                <outlet property="view" destination="c22-O7-iKe" id="1Og-ib-IZo"/>
+                <outlet property="warningDescriptionLabel" destination="EV1-RD-eT2" id="5nz-xw-ywp"/>
+                <outlet property="warningImage" destination="wSj-a5-wlF" id="oq3-L9-qTM"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="180"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Rq4-QH-7oR">
+                    <rect key="frame" x="0.0" y="50" width="500" height="130"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EV1-RD-eT2">
+                            <rect key="frame" x="123" y="57" width="359" height="17"/>
+                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="center" title="Multiline Label" id="Cd4-D2-k1y">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="wSj-a5-wlF">
+                            <rect key="frame" x="15" y="15" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="GME-Un-TLT"/>
+                                <constraint firstAttribute="height" constant="100" id="Wyl-tJ-REZ"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="tXp-AT-RVg"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="wSj-a5-wlF" secondAttribute="bottom" constant="15" id="06j-7u-2nU"/>
+                        <constraint firstItem="EV1-RD-eT2" firstAttribute="leading" secondItem="wSj-a5-wlF" secondAttribute="trailing" constant="10" id="2nl-cf-Cge"/>
+                        <constraint firstItem="EV1-RD-eT2" firstAttribute="centerY" secondItem="Rq4-QH-7oR" secondAttribute="centerY" id="5Yo-pl-zfj"/>
+                        <constraint firstAttribute="trailing" secondItem="EV1-RD-eT2" secondAttribute="trailing" constant="20" id="HNH-nS-hhg"/>
+                        <constraint firstItem="wSj-a5-wlF" firstAttribute="top" secondItem="Rq4-QH-7oR" secondAttribute="top" constant="15" id="ZmS-5V-KWQ"/>
+                        <constraint firstItem="wSj-a5-wlF" firstAttribute="leading" secondItem="Rq4-QH-7oR" secondAttribute="leading" constant="15" id="gVk-AK-2wo"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="LYS-Rt-AOb">
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MgT-bO-XvA" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="390" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="01N-pf-h6A"/>
+                                <constraint firstAttribute="height" constant="35" id="Z8b-Em-jty"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Continue" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="BUm-LX-0Jg">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="14"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="tKc-w2-Gxb" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="285" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="1lL-1q-Nzk"/>
+                                <constraint firstAttribute="height" constant="35" id="ytC-EH-AwR"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Cancel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="LGy-SQ-NnT">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="14"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="MgT-bO-XvA" firstAttribute="centerY" secondItem="LYS-Rt-AOb" secondAttribute="centerY" id="6xc-We-06Q"/>
+                        <constraint firstItem="MgT-bO-XvA" firstAttribute="leading" secondItem="tKc-w2-Gxb" secondAttribute="trailing" constant="15" id="8cJ-nM-scA"/>
+                        <constraint firstItem="tKc-w2-Gxb" firstAttribute="centerY" secondItem="LYS-Rt-AOb" secondAttribute="centerY" id="Kcx-IM-O8O"/>
+                        <constraint firstAttribute="height" constant="50" id="dZA-dK-XDY"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Rq4-QH-7oR" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="DN3-Xd-Woi"/>
+                <constraint firstAttribute="trailing" secondItem="Rq4-QH-7oR" secondAttribute="trailing" id="G15-ZI-H4D"/>
+                <constraint firstAttribute="bottom" secondItem="LYS-Rt-AOb" secondAttribute="bottom" id="OWt-yd-ycm"/>
+                <constraint firstItem="MgT-bO-XvA" firstAttribute="trailing" secondItem="EV1-RD-eT2" secondAttribute="trailing" id="QlA-TW-WxJ"/>
+                <constraint firstItem="LYS-Rt-AOb" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="SSS-Eo-3OV"/>
+                <constraint firstAttribute="trailing" secondItem="LYS-Rt-AOb" secondAttribute="trailing" id="TTS-c2-Ph1"/>
+                <constraint firstItem="LYS-Rt-AOb" firstAttribute="top" secondItem="Rq4-QH-7oR" secondAttribute="bottom" id="ZcQ-t8-Hu8"/>
+                <constraint firstItem="Rq4-QH-7oR" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="hpZ-oO-wzI"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="167"/>
+        </customView>
+    </objects>
+</document>

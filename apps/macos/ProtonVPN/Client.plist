@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>Id</key>
+	<string>macOSVPN</string>
+	<key>Secret</key>
+	<string>31e7dcced342f546df6edc7146577090</string>
+</dict>
+</plist>

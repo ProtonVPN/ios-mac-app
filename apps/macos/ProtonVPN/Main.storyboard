@@ -1,0 +1,302 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Application-->
+        <scene sceneID="bp7-46-bAJ">
+            <objects>
+                <application id="h8H-vA-RPV" sceneMemberID="viewController">
+                    <menu key="mainMenu" title="Main Menu" systemMenu="main" id="QWu-g5-TAy">
+                        <items>
+                            <menuItem title="ProtonVPN" id="07m-CU-Ub0">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="ProtonVPN" systemMenu="apple" autoenablesItems="NO" id="KRh-uR-HLK">
+                                    <items>
+                                        <menuItem title="About ProtonVPN" id="vP3-tn-eYl">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Check for Updates..." id="Cj0-Uq-nbX">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="MB8-ys-omS"/>
+                                        <menuItem title="Preferences..." enabled="NO" keyEquivalent="," id="Eh5-UX-qbQ"/>
+                                        <menuItem isSeparatorItem="YES" id="Kbm-xb-JYd"/>
+                                        <menuItem title="Hide ProtonVPN" keyEquivalent="h" id="4ci-va-LpU">
+                                            <connections>
+                                                <action selector="hide:" target="Rfr-RJ-rux" id="Xow-I1-oOY"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Hide Others" keyEquivalent="h" id="0uV-Fc-ulM">
+                                            <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
+                                            <connections>
+                                                <action selector="hideOtherApplications:" target="Rfr-RJ-rux" id="OU9-4r-I0z"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Show All" id="aqi-V1-OKY">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="Dpa-Ex-rg1"/>
+                                        <menuItem title="Log Out" keyEquivalent="W" id="fMB-J1-ZCn"/>
+                                        <menuItem title="Quit ProtonVPN" keyEquivalent="q" id="T4h-7x-f33"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Profiles" id="S30-yK-lnf">
+                                <attributedString key="attributedTitle"/>
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Profiles" id="SLm-uJ-7jS">
+                                    <items>
+                                        <menuItem title="Overview" keyEquivalent="p" id="Zgw-qW-99b"/>
+                                        <menuItem title="Create New Profile" keyEquivalent="P" id="8BK-r5-0U0"/>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Window" id="NbC-9A-ZUM">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Window" systemMenu="window" id="MwC-dM-Zc0">
+                                    <items>
+                                        <menuItem title="Minimize" keyEquivalent="m" id="zsQ-yh-Eqf">
+                                            <connections>
+                                                <action selector="miniaturize:" target="Rfr-RJ-rux" id="DK1-3R-281"/>
+                                            </connections>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                            <menuItem title="Help" id="qrY-ft-3La">
+                                <modifierMask key="keyEquivalentModifierMask"/>
+                                <menu key="submenu" title="Help" systemMenu="help" id="wED-7F-VQJ">
+                                    <items>
+                                        <menuItem title="Report an Issue" id="a5J-cy-nfO">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="View Logs" id="Td7-XY-QFc" userLabel="Logs Item">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="Clear All Data" id="OOQ-ac-X8f">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                        <menuItem title="ProtonVPN Help" id="OK2-4f-4vJ">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
+                                    </items>
+                                </menu>
+                            </menuItem>
+                        </items>
+                    </menu>
+                    <connections>
+                        <outlet property="delegate" destination="bEz-oL-DfB" id="BTA-ZQ-oMc"/>
+                    </connections>
+                </application>
+                <customObject id="Rfr-RJ-rux" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="bEz-oL-DfB" customClass="AppDelegate" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="helpMenu" destination="mRb-0w-XKD" id="wX2-hY-1jN"/>
+                        <outlet property="profilesMenu" destination="y1K-P0-0ff" id="tQi-de-OgS"/>
+                        <outlet property="protonVpnMenu" destination="p32-LT-5lV" id="6gd-sS-PjT"/>
+                        <outlet property="statusMenu" destination="zgJ-n0-DCA" id="yC9-GP-MjS"/>
+                    </connections>
+                </customObject>
+                <customObject id="p32-LT-5lV" customClass="ProtonVpnMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="aboutItem" destination="vP3-tn-eYl" id="mtp-wZ-zav"/>
+                        <outlet property="checkForUpdatesItem" destination="Cj0-Uq-nbX" id="ziP-f4-tEi"/>
+                        <outlet property="logOutItem" destination="fMB-J1-ZCn" id="6gD-Qx-PDk"/>
+                        <outlet property="preferencesItem" destination="Eh5-UX-qbQ" id="VLD-xF-Zhl"/>
+                        <outlet property="quitItem" destination="T4h-7x-f33" id="HJ9-vE-u08"/>
+                        <outlet property="showAllItem" destination="aqi-V1-OKY" id="ruU-yR-cVz"/>
+                    </connections>
+                </customObject>
+                <customObject id="y1K-P0-0ff" customClass="ProfilesMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="createNewProfileItem" destination="8BK-r5-0U0" id="ODz-hO-hYX"/>
+                        <outlet property="overviewItem" destination="Zgw-qW-99b" id="ZcC-WV-NXs"/>
+                        <outlet property="profilesMenu" destination="SLm-uJ-7jS" id="u0I-me-ol4"/>
+                    </connections>
+                </customObject>
+                <customObject id="mRb-0w-XKD" customClass="HelpMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="clearApplicationDataItem" destination="OOQ-ac-X8f" id="Qdl-PZ-hwW"/>
+                        <outlet property="helpItem" destination="OK2-4f-4vJ" id="IBe-qE-jlf"/>
+                        <outlet property="logsItem" destination="Td7-XY-QFc" id="nHY-1C-tGF"/>
+                        <outlet property="reportAnIssueItem" destination="a5J-cy-nfO" id="4BY-VB-g72"/>
+                    </connections>
+                </customObject>
+                <customObject id="zgJ-n0-DCA" customClass="StatusMenuWindowController" customModule="ProtonVPN" customModuleProvider="target"/>
+            </objects>
+            <point key="canvasLocation" x="840" y="-593"/>
+        </scene>
+        <!--Sidebar View Controller-->
+        <scene sceneID="5by-wi-NYK">
+            <objects>
+                <viewController identifier="Sidebar" storyboardIdentifier="Sidebar" id="daf-JG-kq4" customClass="SidebarViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="P1k-nt-v63">
+                        <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="v3s-C7-hC3">
+                                <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+                                <subviews>
+                                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="UQf-5v-cDa" userLabel="Sidebar container">
+                                        <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+                                        <subviews>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="PUh-5c-b8S">
+                                                <rect key="frame" x="0.0" y="0.0" width="340" height="380"/>
+                                            </customView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="0TS-Fg-7cD">
+                                                <rect key="frame" x="0.0" y="380" width="340" height="50"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="50" id="t7J-Po-vJA"/>
+                                                </constraints>
+                                            </customView>
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="N6y-fY-SzI">
+                                                <rect key="frame" x="0.0" y="430" width="340" height="170"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="170" id="rEx-Kr-Uoo"/>
+                                                </constraints>
+                                            </customView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="PUh-5c-b8S" secondAttribute="trailing" id="DdW-U6-dPN"/>
+                                            <constraint firstItem="PUh-5c-b8S" firstAttribute="top" secondItem="0TS-Fg-7cD" secondAttribute="bottom" id="I68-VU-9Gh"/>
+                                            <constraint firstAttribute="width" constant="340" id="Mgh-z8-rJG"/>
+                                            <constraint firstItem="PUh-5c-b8S" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="VVV-e8-AcH"/>
+                                            <constraint firstAttribute="bottom" secondItem="PUh-5c-b8S" secondAttribute="bottom" id="Zqp-vF-2LV"/>
+                                            <constraint firstItem="0TS-Fg-7cD" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="bLs-8c-sbT"/>
+                                            <constraint firstAttribute="trailing" secondItem="N6y-fY-SzI" secondAttribute="trailing" id="cLO-Ze-Pv5"/>
+                                            <constraint firstItem="N6y-fY-SzI" firstAttribute="top" secondItem="UQf-5v-cDa" secondAttribute="top" id="gbh-Kc-bPB"/>
+                                            <constraint firstItem="0TS-Fg-7cD" firstAttribute="top" secondItem="N6y-fY-SzI" secondAttribute="bottom" id="qD2-nk-kg4"/>
+                                            <constraint firstAttribute="trailing" secondItem="0TS-Fg-7cD" secondAttribute="trailing" id="sMF-vR-Iah"/>
+                                            <constraint firstItem="N6y-fY-SzI" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="wop-uu-BZa"/>
+                                        </constraints>
+                                    </customView>
+                                    <containerView translatesAutoresizingMaskIntoConstraints="NO" id="wDY-gS-T5p">
+                                        <rect key="frame" x="340" y="0.0" width="0.0" height="600"/>
+                                        <connections>
+                                            <segue destination="7AT-b8-enS" kind="embed" id="urB-fW-MmQ"/>
+                                        </connections>
+                                    </containerView>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNd-Sp-llG" customClass="ExpandMapButton" customModule="ProtonVPN" customModuleProvider="target">
+                                        <rect key="frame" x="306" y="547" width="40" height="37"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="28" id="Abd-dc-FK4"/>
+                                            <constraint firstAttribute="height" constant="26" id="hlL-wT-KyG"/>
+                                        </constraints>
+                                        <buttonCell key="cell" type="push" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="MUr-gT-bqC">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="wDY-gS-T5p" secondAttribute="bottom" id="0ch-32-69v"/>
+                                    <constraint firstAttribute="trailing" secondItem="wDY-gS-T5p" secondAttribute="trailing" id="3i8-xf-wLS"/>
+                                    <constraint firstItem="wDY-gS-T5p" firstAttribute="top" secondItem="v3s-C7-hC3" secondAttribute="top" id="7FY-tW-79h"/>
+                                    <constraint firstAttribute="trailing" secondItem="wDY-gS-T5p" secondAttribute="trailing" id="8h6-4b-I3H"/>
+                                    <constraint firstAttribute="bottom" secondItem="wDY-gS-T5p" secondAttribute="bottom" id="NiV-bh-5XJ"/>
+                                    <constraint firstItem="UQf-5v-cDa" firstAttribute="top" secondItem="v3s-C7-hC3" secondAttribute="top" id="S5U-dH-K8Y"/>
+                                    <constraint firstItem="DNd-Sp-llG" firstAttribute="top" secondItem="v3s-C7-hC3" secondAttribute="top" constant="20" id="V2S-mc-Nex"/>
+                                    <constraint firstItem="wDY-gS-T5p" firstAttribute="leading" secondItem="DNd-Sp-llG" secondAttribute="trailing" id="mvh-iE-K8h"/>
+                                    <constraint firstItem="wDY-gS-T5p" firstAttribute="top" secondItem="v3s-C7-hC3" secondAttribute="top" id="p5N-Mp-MJG"/>
+                                    <constraint firstItem="wDY-gS-T5p" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="trailing" id="rJI-D1-VMn"/>
+                                    <constraint firstItem="UQf-5v-cDa" firstAttribute="leading" secondItem="v3s-C7-hC3" secondAttribute="leading" id="s1G-eT-279"/>
+                                    <constraint firstAttribute="bottom" secondItem="UQf-5v-cDa" secondAttribute="bottom" id="tIN-yg-LHB"/>
+                                </constraints>
+                            </customView>
+                            <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="iAI-dX-ZPI" customClass="ConnectionOverlay" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="v3s-C7-hC3" firstAttribute="leading" secondItem="P1k-nt-v63" secondAttribute="leading" id="BA7-J8-Rvp"/>
+                            <constraint firstAttribute="bottom" secondItem="iAI-dX-ZPI" secondAttribute="bottom" id="Bc2-zO-0m6"/>
+                            <constraint firstItem="v3s-C7-hC3" firstAttribute="top" secondItem="P1k-nt-v63" secondAttribute="top" id="Ikb-uY-6Kr"/>
+                            <constraint firstAttribute="trailing" secondItem="iAI-dX-ZPI" secondAttribute="trailing" id="PPg-of-iAT"/>
+                            <constraint firstItem="iAI-dX-ZPI" firstAttribute="leading" secondItem="P1k-nt-v63" secondAttribute="leading" id="WSY-ej-OFa"/>
+                            <constraint firstAttribute="bottom" secondItem="v3s-C7-hC3" secondAttribute="bottom" id="ZVd-B9-MXy"/>
+                            <constraint firstItem="iAI-dX-ZPI" firstAttribute="top" secondItem="P1k-nt-v63" secondAttribute="top" id="gVZ-R2-AcI"/>
+                            <constraint firstAttribute="trailing" secondItem="v3s-C7-hC3" secondAttribute="trailing" id="znh-oo-M2O"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="activeControllerViewContainer" destination="PUh-5c-b8S" id="lTW-Bk-xYL"/>
+                        <outlet property="allThings" destination="v3s-C7-hC3" id="mIk-aH-Sfj"/>
+                        <outlet property="connectionOverlay" destination="iAI-dX-ZPI" id="oWx-NJ-QB1"/>
+                        <outlet property="expandButton" destination="DNd-Sp-llG" id="ahE-yj-xdi"/>
+                        <outlet property="expandButtonLeading" destination="mvh-iE-K8h" id="nm0-qB-cph"/>
+                        <outlet property="headerControllerViewContainer" destination="N6y-fY-SzI" id="GJw-NB-zEb"/>
+                        <outlet property="mapContainerView" destination="DNd-Sp-llG" id="4gn-Da-can"/>
+                        <outlet property="sidebarContainerView" destination="UQf-5v-cDa" id="YOS-DY-aPn"/>
+                        <outlet property="tabBarControllerViewContainer" destination="0TS-Fg-7cD" id="eou-mY-vmQ"/>
+                    </connections>
+                </viewController>
+                <customObject id="CRQ-No-wiP" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="826" y="-19"/>
+        </scene>
+        <!--Map Section View Controller-->
+        <scene sceneID="EdY-4h-6iY">
+            <objects>
+                <viewController id="7AT-b8-enS" customClass="MapSectionViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="DLI-83-rHW">
+                        <rect key="frame" x="0.0" y="0.0" width="700" height="600"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Vpu-AA-VF7" customClass="MapView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="700" height="600"/>
+                            </customView>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VjH-4C-IHs" userLabel="Logo View" customClass="PassThroughImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="532" y="540" width="124" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="124" id="Ho5-He-jGM"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageAlignment="bottom" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="p99-38-ERf"/>
+                            </imageView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="Mu7-j5-Aiv" customClass="ZoomView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="530" y="400" width="130" height="130"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="130" id="jt0-to-m7o"/>
+                                    <constraint firstAttribute="width" constant="130" id="qbg-RX-0ax"/>
+                                </constraints>
+                            </customView>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="CeF-Pj-FtR" customClass="PassThroughView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="500" width="700" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="mcD-Ie-YIl"/>
+                                </constraints>
+                            </customView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Vpu-AA-VF7" firstAttribute="leading" secondItem="DLI-83-rHW" secondAttribute="leading" id="4QJ-sy-AmA"/>
+                            <constraint firstAttribute="trailing" secondItem="CeF-Pj-FtR" secondAttribute="trailing" id="Cq4-Ec-G2r"/>
+                            <constraint firstAttribute="trailing" secondItem="Mu7-j5-Aiv" secondAttribute="trailing" constant="40" id="GoY-fM-qH4"/>
+                            <constraint firstItem="Vpu-AA-VF7" firstAttribute="top" secondItem="DLI-83-rHW" secondAttribute="top" id="Lqk-hG-EeG"/>
+                            <constraint firstItem="VjH-4C-IHs" firstAttribute="centerX" secondItem="Mu7-j5-Aiv" secondAttribute="centerX" constant="-1" id="PBi-Nb-Sey"/>
+                            <constraint firstItem="Mu7-j5-Aiv" firstAttribute="top" secondItem="VjH-4C-IHs" secondAttribute="bottom" constant="10" id="Q2K-mF-x0c"/>
+                            <constraint firstItem="CeF-Pj-FtR" firstAttribute="top" secondItem="DLI-83-rHW" secondAttribute="top" id="Rnn-fp-FIl"/>
+                            <constraint firstAttribute="trailing" secondItem="Vpu-AA-VF7" secondAttribute="trailing" id="jJH-MC-wcA"/>
+                            <constraint firstItem="Mu7-j5-Aiv" firstAttribute="top" secondItem="DLI-83-rHW" secondAttribute="top" constant="70" id="s3H-Qg-6d7"/>
+                            <constraint firstItem="CeF-Pj-FtR" firstAttribute="leading" secondItem="DLI-83-rHW" secondAttribute="leading" id="tql-JJ-H2w"/>
+                            <constraint firstAttribute="bottom" secondItem="Vpu-AA-VF7" secondAttribute="bottom" id="yON-bE-2Jr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logoImageView" destination="VjH-4C-IHs" id="7L6-H7-aws"/>
+                        <outlet property="mapHeaderControllerViewContainer" destination="CeF-Pj-FtR" id="6g8-NX-36U"/>
+                        <outlet property="mapView" destination="Vpu-AA-VF7" id="MuW-sV-qnv"/>
+                        <outlet property="zoomView" destination="Mu7-j5-Aiv" id="cbD-aL-oeP"/>
+                    </connections>
+                </viewController>
+                <customObject id="ttT-bd-6iJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1489" y="-19"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="protonvpn-white-transparent" width="121" height="21"/>
+    </resources>
+</document>

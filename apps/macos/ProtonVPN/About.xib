@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="15505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AboutViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="acknowledgementsButton" destination="jhr-u8-QdG" id="uyc-Bc-L84"/>
+                <outlet property="backgroundView" destination="phl-Dg-gm1" id="2Yf-88-lLc"/>
+                <outlet property="changelogLabel" destination="DR4-PX-Ub5" id="Xd9-Wh-Lhx"/>
+                <outlet property="dateLabel" destination="OV0-pC-uav" id="CVz-Fr-7WN"/>
+                <outlet property="dateTitleLabel" destination="qML-de-p0H" id="9Ka-0C-5Rp"/>
+                <outlet property="versionLabel" destination="Rmd-fh-L9T" id="6eg-Is-dI2"/>
+                <outlet property="versionTitleLabel" destination="ywI-rG-Ydf" id="GOF-WO-nuZ"/>
+                <outlet property="view" destination="c22-O7-iKe" id="c7k-hq-tRs"/>
+                <outlet property="webView" destination="K1t-iB-xTT" id="9X8-Hj-PPL"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="634" height="407"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="phl-Dg-gm1">
+                    <rect key="frame" x="0.0" y="0.0" width="634" height="407"/>
+                    <subviews>
+                        <imageView translatesAutoresizingMaskIntoConstraints="NO" id="YWf-ww-NBh">
+                            <rect key="frame" x="154" y="347" width="327" height="50"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="NRY-cy-TPC"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-green-transparent" id="eB4-E3-MWA"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Rmd-fh-L9T" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="133" y="321" width="483" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="_Version_" id="C5Z-yY-4TR">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ywI-rG-Ydf" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="18" y="321" width="109" height="16"/>
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Current version_" id="64B-Cc-Wx8">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-pC-uav" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="133" y="295" width="483" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="_date_" id="6EH-ba-U1g">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qML-de-p0H" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="18" y="295" width="109" height="16"/>
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Last update_" id="sgd-rm-IRW">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <wkWebView wantsLayer="YES" translatesAutoresizingMaskIntoConstraints="NO" id="K1t-iB-xTT">
+                            <rect key="frame" x="20" y="20" width="594" height="191"/>
+                            <wkWebViewConfiguration key="configuration">
+                                <audiovisualMediaTypes key="mediaTypesRequiringUserActionForPlayback" none="YES"/>
+                                <wkPreferences key="preferences"/>
+                            </wkWebViewConfiguration>
+                        </wkWebView>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="DR4-PX-Ub5" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="18" y="221" width="116" height="23"/>
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Changelog_" id="tWL-Lm-jZY">
+                                <font key="font" metaFont="system" size="20"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jhr-u8-QdG" customClass="GreenHighlightButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="14" y="257" width="170" height="32"/>
+                            <buttonCell key="cell" type="push" title="_Acknowledgements_" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="FpV-Aw-cj8">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="acknowledgementsPressed:" target="-2" id="UyV-2s-g0m"/>
+                            </connections>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="K1t-iB-xTT" firstAttribute="leading" secondItem="phl-Dg-gm1" secondAttribute="leading" constant="20" id="0di-z2-NmY"/>
+                        <constraint firstItem="YWf-ww-NBh" firstAttribute="centerX" secondItem="phl-Dg-gm1" secondAttribute="centerX" id="8SO-As-ocH"/>
+                        <constraint firstItem="jhr-u8-QdG" firstAttribute="leading" secondItem="qML-de-p0H" secondAttribute="leading" id="A3o-ZC-fq8"/>
+                        <constraint firstItem="OV0-pC-uav" firstAttribute="firstBaseline" secondItem="qML-de-p0H" secondAttribute="firstBaseline" id="AmT-7h-dCd"/>
+                        <constraint firstItem="ywI-rG-Ydf" firstAttribute="leading" secondItem="phl-Dg-gm1" secondAttribute="leading" constant="20" id="FIW-vT-qZp"/>
+                        <constraint firstItem="Rmd-fh-L9T" firstAttribute="firstBaseline" secondItem="ywI-rG-Ydf" secondAttribute="firstBaseline" id="IrS-yF-xdJ"/>
+                        <constraint firstItem="OV0-pC-uav" firstAttribute="leading" secondItem="qML-de-p0H" secondAttribute="trailing" priority="750" constant="10" id="Msy-Rw-LOV"/>
+                        <constraint firstItem="DR4-PX-Ub5" firstAttribute="leading" secondItem="qML-de-p0H" secondAttribute="leading" id="U5r-yr-Mko"/>
+                        <constraint firstItem="YWf-ww-NBh" firstAttribute="top" secondItem="phl-Dg-gm1" secondAttribute="top" constant="10" id="XGj-sS-9X0"/>
+                        <constraint firstItem="DR4-PX-Ub5" firstAttribute="top" secondItem="jhr-u8-QdG" secondAttribute="bottom" constant="20" id="beX-Bf-Fok"/>
+                        <constraint firstItem="jhr-u8-QdG" firstAttribute="top" secondItem="OV0-pC-uav" secondAttribute="bottom" constant="10" id="cjG-fK-5ba"/>
+                        <constraint firstAttribute="trailing" secondItem="K1t-iB-xTT" secondAttribute="trailing" constant="20" id="eS9-Nl-j7n"/>
+                        <constraint firstItem="qML-de-p0H" firstAttribute="top" secondItem="ywI-rG-Ydf" secondAttribute="bottom" constant="10" id="eTu-2x-gNk"/>
+                        <constraint firstItem="Rmd-fh-L9T" firstAttribute="top" secondItem="YWf-ww-NBh" secondAttribute="bottom" constant="10" id="gfz-eJ-aod"/>
+                        <constraint firstAttribute="trailing" secondItem="OV0-pC-uav" secondAttribute="trailing" constant="20" id="o4W-3K-5qA"/>
+                        <constraint firstAttribute="bottom" secondItem="K1t-iB-xTT" secondAttribute="bottom" constant="20" id="qjO-1b-gaN"/>
+                        <constraint firstAttribute="trailing" secondItem="Rmd-fh-L9T" secondAttribute="trailing" constant="20" id="udl-yc-jDh"/>
+                        <constraint firstItem="Rmd-fh-L9T" firstAttribute="leading" secondItem="OV0-pC-uav" secondAttribute="leading" id="uee-h7-Gt1"/>
+                        <constraint firstItem="Rmd-fh-L9T" firstAttribute="leading" secondItem="ywI-rG-Ydf" secondAttribute="trailing" priority="750" constant="10" id="xrt-eR-7mS"/>
+                        <constraint firstItem="K1t-iB-xTT" firstAttribute="top" secondItem="DR4-PX-Ub5" secondAttribute="bottom" constant="10" id="z0m-tr-fBG"/>
+                        <constraint firstItem="qML-de-p0H" firstAttribute="leading" secondItem="ywI-rG-Ydf" secondAttribute="leading" id="zMD-Oh-chm"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="phl-Dg-gm1" secondAttribute="trailing" id="09b-3y-Ne5"/>
+                <constraint firstItem="phl-Dg-gm1" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="kez-eX-D4z"/>
+                <constraint firstItem="phl-Dg-gm1" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="nDv-tc-E3L"/>
+                <constraint firstAttribute="bottom" secondItem="phl-Dg-gm1" secondAttribute="bottom" id="y7W-mE-SwL"/>
+            </constraints>
+            <point key="canvasLocation" x="336" y="328.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="protonvpn-green-transparent" width="326.5" height="98"/>
+    </resources>
+</document>

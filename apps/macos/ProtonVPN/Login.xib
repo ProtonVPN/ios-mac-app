@@ -1,0 +1,420 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="LoginViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="createAccountButton" destination="sIO-81-jPa" id="7JO-Uk-siV"/>
+                <outlet property="helpLink" destination="Ara-sw-83l" id="qcA-FT-bJQ"/>
+                <outlet property="loadingLabel" destination="NOz-Sf-FlH" id="Eto-PR-mnF"/>
+                <outlet property="loadingSymbol" destination="abE-ig-b2r" id="f6z-B9-fRf"/>
+                <outlet property="loadingView" destination="u4S-T4-Dh2" id="cQH-gc-lCO"/>
+                <outlet property="loginButton" destination="doA-fK-3JY" id="2p4-B6-fyK"/>
+                <outlet property="logoImage" destination="lMo-f0-lr7" id="OWj-wd-TpX"/>
+                <outlet property="needHelpButton" destination="Mvc-5H-vVI" id="BHA-oa-iTf"/>
+                <outlet property="onboardingView" destination="ehd-hP-OCf" id="ZRf-EI-FaR"/>
+                <outlet property="passwordHorizontalLine" destination="dhf-WW-VSQ" id="Gb8-EQ-wLX"/>
+                <outlet property="passwordRevealButton" destination="FhT-rA-7Im" id="4Kf-Xg-FhF"/>
+                <outlet property="passwordSecureTextField" destination="Oat-9Y-92S" id="fXn-BU-oJa"/>
+                <outlet property="passwordTextField" destination="1Vt-py-EJy" id="Gmx-6r-XOl"/>
+                <outlet property="rememberLoginButton" destination="ktV-MT-egg" id="X6y-sy-jjO"/>
+                <outlet property="rememberLoginLabel" destination="OBi-vb-cZX" id="4j9-2a-Vbu"/>
+                <outlet property="startOnBootButton" destination="AUK-pM-3uL" id="qPs-BD-trr"/>
+                <outlet property="startOnBootLabel" destination="rxN-J0-rur" id="43y-Lx-Xle"/>
+                <outlet property="usernameHorizontalLine" destination="aw7-qm-KCg" id="ro8-Ho-Dc2"/>
+                <outlet property="usernameTextField" destination="L0d-AC-N2e" id="BlC-SP-Xpl"/>
+                <outlet property="view" destination="c22-O7-iKe" id="1ar-Gp-I5h"/>
+                <outlet property="warningLabel" destination="R2H-lD-KeK" id="J2T-Mz-h41"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="ehd-hP-OCf">
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
+                    <subviews>
+                        <textField hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1Vt-py-EJy" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="341" width="245" height="22"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Dt0-pE-ODb">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <secureTextField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Oat-9Y-92S" customClass="SecureTextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="341" width="245" height="22"/>
+                            <secureTextFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" drawsBackground="YES" usesSingleLineMode="YES" id="jVm-Nx-CtP">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <allowedInputSourceLocales>
+                                    <string>NSAllRomanInputSourcesLocaleIdentifier</string>
+                                </allowedInputSourceLocales>
+                            </secureTextFieldCell>
+                        </secureTextField>
+                        <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0d-AC-N2e" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="413" width="280" height="22"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Z83-RI-Nnd">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="aw7-qm-KCg">
+                            <rect key="frame" x="30" y="404" width="280" height="1"/>
+                            <view key="contentView" id="Qvp-vh-nuv">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="6ji-FX-Voe"/>
+                            </constraints>
+                        </box>
+                        <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="dhf-WW-VSQ">
+                            <rect key="frame" x="30" y="332" width="280" height="1"/>
+                            <view key="contentView" id="gIU-eW-cMD">
+                                <rect key="frame" x="0.0" y="0.0" width="280" height="1"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="1" id="nYL-Ge-eEw"/>
+                            </constraints>
+                        </box>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Mvc-5H-vVI" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="133" y="60" width="75" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="xj2-pN-trf"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Need Help?" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="PBv-vy-Yeq">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="sIO-81-jPa" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="121" y="90" width="98" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="gQm-9i-Vg8"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Create Account" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="t7k-bT-K1x">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="doA-fK-3JY" customClass="LoginButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="105" y="135" width="130" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="130" id="2sG-je-nEa"/>
+                                <constraint firstAttribute="height" constant="40" id="Quq-12-M98"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Login" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="yml-Pq-g1u">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FhT-rA-7Im">
+                            <rect key="frame" x="280" y="343" width="30" height="18"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="30" id="AGb-jR-EaU"/>
+                                <constraint firstAttribute="height" constant="18" id="gSc-LG-3NA"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fpw-Re-ji8">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OBi-vb-cZX" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="28" y="276" width="107" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Remember Login" id="ZBW-h6-pmf">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rxN-J0-rur" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="28" y="235" width="87" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start On Boot" id="t7J-ck-lyp">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="AUK-pM-3uL" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="275" y="233" width="35" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="RqO-MB-dAj"/>
+                                <constraint firstAttribute="width" constant="35" id="nfK-Js-dR9"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ktV-MT-egg" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="275" y="274" width="35" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="20" id="RBh-pS-Drr"/>
+                                <constraint firstAttribute="width" constant="35" id="yKR-fW-gxT"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="OBi-vb-cZX" firstAttribute="top" secondItem="dhf-WW-VSQ" secondAttribute="bottom" constant="40" id="4pb-zV-TJB"/>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="centerY" secondItem="AUK-pM-3uL" secondAttribute="centerY" id="6iO-Qv-TjH"/>
+                        <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="1Vt-py-EJy" secondAttribute="trailing" constant="5" id="7mw-aU-jiO"/>
+                        <constraint firstItem="ktV-MT-egg" firstAttribute="trailing" secondItem="dhf-WW-VSQ" secondAttribute="trailing" id="9C0-xV-0r8"/>
+                        <constraint firstItem="doA-fK-3JY" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="9et-Q8-vPP"/>
+                        <constraint firstItem="dhf-WW-VSQ" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="leading" id="B4b-qe-cM9"/>
+                        <constraint firstItem="Mvc-5H-vVI" firstAttribute="top" secondItem="sIO-81-jPa" secondAttribute="bottom" constant="10" id="E2Z-co-zZo"/>
+                        <constraint firstItem="L0d-AC-N2e" firstAttribute="leading" secondItem="ehd-hP-OCf" secondAttribute="leading" constant="30" id="GBA-6J-iQs"/>
+                        <constraint firstItem="OBi-vb-cZX" firstAttribute="centerY" secondItem="ktV-MT-egg" secondAttribute="centerY" id="Gt1-vt-PGp"/>
+                        <constraint firstItem="Oat-9Y-92S" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="JMA-IK-byM"/>
+                        <constraint firstItem="dhf-WW-VSQ" firstAttribute="top" secondItem="Oat-9Y-92S" secondAttribute="bottom" constant="8" id="K1B-3J-erB"/>
+                        <constraint firstItem="L0d-AC-N2e" firstAttribute="top" secondItem="ehd-hP-OCf" secondAttribute="top" constant="15" id="S1V-Ut-LUM"/>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="leading" secondItem="OBi-vb-cZX" secondAttribute="leading" id="W9i-Ds-lOG"/>
+                        <constraint firstItem="1Vt-py-EJy" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="WYZ-h1-kzg"/>
+                        <constraint firstItem="OBi-vb-cZX" firstAttribute="leading" secondItem="dhf-WW-VSQ" secondAttribute="leading" id="YN5-iD-Qns"/>
+                        <constraint firstItem="rxN-J0-rur" firstAttribute="top" secondItem="OBi-vb-cZX" secondAttribute="bottom" constant="25" id="YsP-ba-gkh"/>
+                        <constraint firstItem="Mvc-5H-vVI" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="ZWM-wE-k72"/>
+                        <constraint firstItem="sIO-81-jPa" firstAttribute="centerX" secondItem="ehd-hP-OCf" secondAttribute="centerX" id="gp4-fv-asJ"/>
+                        <constraint firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" constant="30" id="gqA-PK-32W"/>
+                        <constraint firstItem="Oat-9Y-92S" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="50" id="jJY-ny-AXh"/>
+                        <constraint firstAttribute="bottom" secondItem="Mvc-5H-vVI" secondAttribute="bottom" constant="60" id="jN1-0H-n7M"/>
+                        <constraint firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" constant="30" id="jgs-ne-SwS"/>
+                        <constraint firstItem="FhT-rA-7Im" firstAttribute="leading" secondItem="Oat-9Y-92S" secondAttribute="trailing" constant="5" id="lFH-Ha-6Fl"/>
+                        <constraint firstItem="AUK-pM-3uL" firstAttribute="trailing" secondItem="ktV-MT-egg" secondAttribute="trailing" id="lei-xP-jKF"/>
+                        <constraint firstItem="1Vt-py-EJy" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="50" id="ofV-I3-fl2"/>
+                        <constraint firstItem="aw7-qm-KCg" firstAttribute="trailing" secondItem="L0d-AC-N2e" secondAttribute="trailing" id="pU1-s6-Zq9"/>
+                        <constraint firstItem="FhT-rA-7Im" firstAttribute="centerY" secondItem="Oat-9Y-92S" secondAttribute="centerY" id="rE6-pk-GEh"/>
+                        <constraint firstItem="dhf-WW-VSQ" firstAttribute="trailing" secondItem="FhT-rA-7Im" secondAttribute="trailing" id="sfn-b2-xtR"/>
+                        <constraint firstItem="sIO-81-jPa" firstAttribute="top" secondItem="doA-fK-3JY" secondAttribute="bottom" constant="25" id="w49-BC-M9Z"/>
+                        <constraint firstItem="aw7-qm-KCg" firstAttribute="leading" secondItem="L0d-AC-N2e" secondAttribute="leading" id="x2f-Zn-Nlc"/>
+                        <constraint firstItem="aw7-qm-KCg" firstAttribute="top" secondItem="L0d-AC-N2e" secondAttribute="bottom" constant="8" id="zo0-Z6-KPw"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="u4S-T4-Dh2">
+                    <rect key="frame" x="0.0" y="0.0" width="340" height="450"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NOz-Sf-FlH" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="152" y="100" width="37" height="16"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="fIf-Oa-kdW">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="abE-ig-b2r" customClass="LoadingAnimationView" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="110" y="240" width="120" height="120"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="abE-ig-b2r" secondAttribute="height" multiplier="1:1" id="571-mp-FSK"/>
+                                <constraint firstAttribute="height" constant="120" id="pKC-5b-Tvn"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="NOz-Sf-FlH" secondAttribute="bottom" constant="100" id="5HU-O9-bVK"/>
+                        <constraint firstItem="NOz-Sf-FlH" firstAttribute="centerX" secondItem="u4S-T4-Dh2" secondAttribute="centerX" id="KiU-UB-9XP"/>
+                    </constraints>
+                    <accessibility identifier="loader"/>
+                </customView>
+                <imageView translatesAutoresizingMaskIntoConstraints="NO" id="lMo-f0-lr7">
+                    <rect key="frame" x="70" y="495" width="200" height="40"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="oFP-uu-5R7"/>
+                        <constraint firstAttribute="width" constant="200" id="vYX-xl-eng"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-white-transparent" id="nl5-nA-nZA"/>
+                </imageView>
+                <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="JuR-aC-JB5">
+                    <rect key="frame" x="106" y="438" width="129" height="57"/>
+                    <subviews>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="R2H-lD-KeK" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="-2" y="21" width="87" height="16"/>
+                            <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Warning label" id="Eqy-sR-yNP">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ara-sw-83l" customClass="PVPNHyperlinkTextField" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="83" y="21" width="46" height="13"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="13" id="P70-l9-e1L"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Help link" bezelStyle="rounded" image="buttonCell:KJn-aD-Rcl:image" alignment="center" imageScaling="proportionallyDown" inset="2" id="KJn-aD-Rcl">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="10"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Ara-sw-83l" firstAttribute="firstBaseline" secondItem="R2H-lD-KeK" secondAttribute="firstBaseline" id="8tI-Lr-BFF"/>
+                        <constraint firstItem="R2H-lD-KeK" firstAttribute="centerY" secondItem="JuR-aC-JB5" secondAttribute="centerY" id="lgp-Dv-02O"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="u4S-T4-Dh2" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="5Ob-0B-XeH"/>
+                <constraint firstAttribute="bottom" secondItem="u4S-T4-Dh2" secondAttribute="bottom" id="76O-HL-E8O"/>
+                <constraint firstItem="u4S-T4-Dh2" firstAttribute="top" secondItem="JuR-aC-JB5" secondAttribute="bottom" constant="-12" id="7ws-Dt-te4"/>
+                <constraint firstItem="ehd-hP-OCf" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="APF-bK-TFy"/>
+                <constraint firstItem="JuR-aC-JB5" firstAttribute="top" secondItem="lMo-f0-lr7" secondAttribute="bottom" id="KRd-B6-aNm"/>
+                <constraint firstItem="JuR-aC-JB5" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="QBq-BK-5qx"/>
+                <constraint firstAttribute="trailing" secondItem="u4S-T4-Dh2" secondAttribute="trailing" id="U6l-XP-eIs"/>
+                <constraint firstAttribute="trailing" secondItem="ehd-hP-OCf" secondAttribute="trailing" id="bQh-CJ-5Wn"/>
+                <constraint firstItem="JuR-aC-JB5" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="cAe-S7-If1"/>
+                <constraint firstItem="ehd-hP-OCf" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="cHx-pB-Wz8"/>
+                <constraint firstItem="lMo-f0-lr7" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="hSe-Jd-bxV"/>
+                <constraint firstItem="lMo-f0-lr7" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="65" id="m33-4C-ROP"/>
+                <constraint firstItem="abE-ig-b2r" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="pSl-g5-cK8"/>
+                <constraint firstAttribute="bottom" secondItem="ehd-hP-OCf" secondAttribute="bottom" id="r0i-kb-EOs"/>
+                <constraint firstItem="abE-ig-b2r" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="uUk-N7-pHc"/>
+                <constraint firstItem="u4S-T4-Dh2" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="150" id="vT8-jf-4yv"/>
+            </constraints>
+            <point key="canvasLocation" x="140" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="buttonCell:KJn-aD-Rcl:image" width="1" height="1">
+            <mutableData key="keyedArchiveRepresentation">
+YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
+ExQZHh8jJCsuMTtDR0tPUlUkbnVsbNUJCgsMDQ4PEBESVk5TU2l6ZVYkY2xhc3NcTlNJbWFnZUZsYWdz
+Vk5TUmVwc1dOU0NvbG9ygAKAERIgwwAAgAOAC1Z7MSwgMX3SFQoWGFpOUy5vYmplY3RzoReABIAK0hUK
+Gh2iGxyABYAGgAkQANIgCiEiXxAUTlNUSUZGUmVwcmVzZW50YXRpb26AB4AITxEIxE1NACoAAAAKAAAA
+EAEAAAMAAAABAAEAAAEBAAMAAAABAAEAAAECAAMAAAACAAgACAEDAAMAAAABAAEAAAEGAAMAAAABAAEA
+AAEKAAMAAAABAAEAAAERAAQAAAABAAAACAESAAMAAAABAAEAAAEVAAMAAAABAAIAAAEWAAMAAAABAAEA
+AAEXAAQAAAABAAAAAgEcAAMAAAABAAEAAAEoAAMAAAABAAIAAAFSAAMAAAABAAEAAAFTAAMAAAACAAEA
+AYdzAAcAAAf0AAAA0AAAAAAAAAf0YXBwbAIgAABtbnRyR1JBWVhZWiAH0AACAA4ADAAAAABhY3NwQVBQ
+TAAAAABub25lAAAAAAAAAAAAAAAAAAAAAAAA9tYAAQAAAADTLWFwcGwAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAVkZXNjAAAAwAAAAG9kc2NtAAABMAAABmZjcHJ0AAAH
+mAAAADh3dHB0AAAH0AAAABRrVFJDAAAH5AAAAA5kZXNjAAAAAAAAABVHZW5lcmljIEdyYXkgUHJvZmls
+ZQAAAAAAAAAAAAAAFUdlbmVyaWMgR3JheSBQcm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAbWx1YwAAAAAAAAAfAAAADHNrU0sAAAAqAAABhGVuVVMAAAAoAAAB
+rmNhRVMAAAAsAAAB1nZpVk4AAAAsAAACAnB0QlIAAAAqAAACLnVrVUEAAAAsAAACWGZyRlUAAAAqAAAC
+hGh1SFUAAAAuAAACrnpoVFcAAAAQAAAC3G5iTk8AAAAsAAAC7GtvS1IAAAAYAAADGGNzQ1oAAAAkAAAD
+MGhlSUwAAAAgAAADVHJvUk8AAAAkAAADdGRlREUAAAA6AAADmGl0SVQAAAAuAAAD0nN2U0UAAAAuAAAE
+AHpoQ04AAAAQAAAELmphSlAAAAAWAAAEPmVsR1IAAAAkAAAEVHB0UE8AAAA4AAAEeG5sTkwAAAAqAAAE
+sGVzRVMAAAAoAAAE2nRoVEgAAAAkAAAFAnRyVFIAAAAiAAAFJmZpRkkAAAAsAAAFSGhySFIAAAA6AAAF
+dHBsUEwAAAA2AAAFrnJ1UlUAAAAmAAAF5GFyRUcAAAAoAAAGCmRhREsAAAA0AAAGMgBWAWEAZQBvAGIA
+ZQBjAG4A/QAgAHMAaQB2AP0AIABwAHIAbwBmAGkAbABHAGUAbgBlAHIAaQBjACAARwByAGEAeQAgAFAA
+cgBvAGYAaQBsAGUAUABlAHIAZgBpAGwAIABkAGUAIABnAHIAaQBzACAAZwBlAG4A6AByAGkAYwBDHqUA
+dQAgAGgA7ABuAGgAIABNAOAAdQAgAHgA4QBtACAAQwBoAHUAbgBnAFAAZQByAGYAaQBsACAAQwBpAG4A
+egBhACAARwBlAG4A6QByAGkAYwBvBBcEMAQzBDAEOwRMBD0EOAQ5ACAEPwRABD4ERAQwBDkEOwAgAEcA
+cgBhAHkAUAByAG8AZgBpAGwAIABnAOkAbgDpAHIAaQBxAHUAZQAgAGcAcgBpAHMAwQBsAHQAYQBsAOEA
+bgBvAHMAIABzAHoA/AByAGsAZQAgAHAAcgBvAGYAaQBskBp1KHBwlo6Ccl9pY8+P8ABHAGUAbgBlAHIA
+aQBzAGsAIABnAHIA5QB0AG8AbgBlAHAAcgBvAGYAaQBsx3y8GAAgAEcAcgBhAHkAINUEuFzTDMd8AE8A
+YgBlAGMAbgD9ACABYQBlAGQA/QAgAHAAcgBvAGYAaQBsBeQF6AXVBeQF2QXcACAARwByAGEAeQAgBdsF
+3AXcBdkAUAByAG8AZgBpAGwAIABnAHIAaQAgAGcAZQBuAGUAcgBpAGMAQQBsAGwAZwBlAG0AZQBpAG4A
+ZQBzACAARwByAGEAdQBzAHQAdQBmAGUAbgAtAFAAcgBvAGYAaQBsAFAAcgBvAGYAaQBsAG8AIABnAHIA
+aQBnAGkAbwAgAGcAZQBuAGUAcgBpAGMAbwBHAGUAbgBlAHIAaQBzAGsAIABnAHIA5QBzAGsAYQBsAGUA
+cAByAG8AZgBpAGxmbpAacHBepmPPj/Blh072TgCCLDCwMOwwpDDXMO0w1TChMKQw6wOTA7UDvQO5A7oD
+zAAgA8ADwQO/A8YDrwO7ACADswO6A8EDuQBQAGUAcgBmAGkAbAAgAGcAZQBuAOkAcgBpAGMAbwAgAGQA
+ZQAgAGMAaQBuAHoAZQBuAHQAbwBzAEEAbABnAGUAbQBlAGUAbgAgAGcAcgBpAGoAcwBwAHIAbwBmAGkA
+ZQBsAFAAZQByAGYAaQBsACAAZwByAGkAcwAgAGcAZQBuAOkAcgBpAGMAbw5CDhsOIw5EDh8OJQ5MDioO
+NQ5ADhcOMg4XDjEOSA4nDkQOGwBHAGUAbgBlAGwAIABHAHIAaQAgAFAAcgBvAGYAaQBsAGkAWQBsAGUA
+aQBuAGUAbgAgAGgAYQByAG0AYQBhAHAAcgBvAGYAaQBpAGwAaQBHAGUAbgBlAHIAaQENAGsAaQAgAHAA
+cgBvAGYAaQBsACAAcwBpAHYAaQBoACAAdABvAG4AbwB2AGEAVQBuAGkAdwBlAHIAcwBhAGwAbgB5ACAA
+cAByAG8AZgBpAGwAIABzAHoAYQByAG8BWwBjAGkEHgQxBEkEOAQ5ACAEQQQ1BEAESwQ5ACAEPwRABD4E
+RAQ4BDsETAZFBkQGQQAgBioGOQYxBkoGQQAgAEcAcgBhAHkAIAYnBkQGOQYnBkUARwBlAG4AZQByAGUA
+bAAgAGcAcgDlAHQAbwBuAGUAYgBlAHMAawByAGkAdgBlAGwAcwBlAAB0ZXh0AAAAAENvcHlyaWdodCAy
+MDA3IEFwcGxlIEluYy4sIGFsbCByaWdodHMgcmVzZXJ2ZWQuAFhZWiAAAAAAAADzUQABAAAAARbMY3Vy
+dgAAAAAAAAABAc0AANIlJicoWiRjbGFzc25hbWVYJGNsYXNzZXNfEBBOU0JpdG1hcEltYWdlUmVwoycp
+KlpOU0ltYWdlUmVwWE5TT2JqZWN00iUmLC1XTlNBcnJheaIsKtIlJi8wXk5TTXV0YWJsZUFycmF5oy8s
+KtUyMzQ1CjY3ODk6V05TV2hpdGVcTlNDb21wb25lbnRzXE5TQ29sb3JTcGFjZV8QEk5TQ3VzdG9tQ29s
+b3JTcGFjZUQwIDAAQzAgMBADgAyAENQ8PT4KP0BBQlROU0lEVU5TSUNDV05TTW9kZWwQCYANEACAD9JE
+CkVGV05TLmRhdGFPERFoAAARaGFwcGwCAAAAbW50ckdSQVlYWVogB9wACAAXAA8ALgAPYWNzcEFQUEwA
+AAAAbm9uZQAAAAAAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1hcHBsAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFZGVzYwAAAMAAAAB5ZHNjbQAAATwAAAfoY3BydAAACSQA
+AAAjd3RwdAAACUgAAAAUa1RSQwAACVwAAAgMZGVzYwAAAAAAAAAfR2VuZXJpYyBHcmF5IEdhbW1hIDIu
+MiBQcm9maWxlAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAG1sdWMAAAAAAAAAHwAAAAxza1NLAAAALgAAAYRk
+YURLAAAAOAAAAbJjYUVTAAAAOAAAAep2aVZOAAAAQAAAAiJwdEJSAAAASgAAAmJ1a1VBAAAALAAAAqxm
+ckZVAAAAPgAAAthodUhVAAAANAAAAxZ6aFRXAAAAHgAAA0puYk5PAAAAOgAAA2hjc0NaAAAAKAAAA6Jo
+ZUlMAAAAJAAAA8ppdElUAAAATgAAA+5yb1JPAAAAKgAABDxkZURFAAAATgAABGZrb0tSAAAAIgAABLRz
+dlNFAAAAOAAAAbJ6aENOAAAAHgAABNZqYUpQAAAAJgAABPRlbEdSAAAAKgAABRpwdFBPAAAAUgAABURu
+bE5MAAAAQAAABZZlc0VTAAAATAAABdZ0aFRIAAAAMgAABiJ0clRSAAAAJAAABlRmaUZJAAAARgAABnho
+ckhSAAAAPgAABr5wbFBMAAAASgAABvxydVJVAAAAOgAAB0ZlblVTAAAAPAAAB4BhckVHAAAALAAAB7wA
+VgFhAGUAbwBiAGUAYwBuAOEAIABzAGkAdgDhACAAZwBhAG0AYQAgADIALAAyAEcAZQBuAGUAcgBpAHMA
+awAgAGcAcgDlACAAMgAsADIAIABnAGEAbQBtAGEAcAByAG8AZgBpAGwARwBhAG0AbQBhACAAZABlACAA
+ZwByAGkAcwBvAHMAIABnAGUAbgDoAHIAaQBjAGEAIAAyAC4AMgBDHqUAdQAgAGgA7ABuAGgAIABNAOAA
+dQAgAHgA4QBtACAAQwBoAHUAbgBnACAARwBhAG0AbQBhACAAMgAuADIAUABlAHIAZgBpAGwAIABHAGUA
+bgDpAHIAaQBjAG8AIABkAGEAIABHAGEAbQBhACAAZABlACAAQwBpAG4AegBhAHMAIAAyACwAMgQXBDAE
+MwQwBDsETAQ9BDAAIABHAHIAYQB5AC0EMwQwBDwEMAAgADIALgAyAFAAcgBvAGYAaQBsACAAZwDpAG4A
+6QByAGkAcQB1AGUAIABnAHIAaQBzACAAZwBhAG0AbQBhACAAMgAsADIAwQBsAHQAYQBsAOEAbgBvAHMA
+IABzAHoA/AByAGsAZQAgAGcAYQBtAG0AYQAgADIALgAykBp1KHBwlo5RSV6mACAAMgAuADIAIIJyX2lj
+z4/wAEcAZQBuAGUAcgBpAHMAawAgAGcAcgDlACAAZwBhAG0AbQBhACAAMgAsADIALQBwAHIAbwBmAGkA
+bABPAGIAZQBjAG4A4QAgAWEAZQBkAOEAIABnAGEAbQBhACAAMgAuADIF0gXQBd4F1AAgBdAF5AXVBegA
+IAXbBdwF3AXZACAAMgAuADIAUAByAG8AZgBpAGwAbwAgAGcAcgBpAGcAaQBvACAAZwBlAG4AZQByAGkA
+YwBvACAAZABlAGwAbABhACAAZwBhAG0AbQBhACAAMgAsADIARwBhAG0AYQAgAGcAcgBpACAAZwBlAG4A
+ZQByAGkAYwEDACAAMgAsADIAQQBsAGwAZwBlAG0AZQBpAG4AZQBzACAARwByAGEAdQBzAHQAdQBmAGUA
+bgAtAFAAcgBvAGYAaQBsACAARwBhAG0AbQBhACAAMgAsADLHfLwYACDWjMDJACCsELnIACAAMgAuADIA
+INUEuFzTDMd8Zm6QGnBwXqZ8+2VwACAAMgAuADIAIGPPj/Blh072TgCCLDCwMOwwpDCsMPMw3gAgADIA
+LgAyACAw1zDtMNUwoTCkMOsDkwO1A70DuQO6A8wAIAOTA7oDwQO5ACADkwOsA7wDvAOxACAAMgAuADIA
+UABlAHIAZgBpAGwAIABnAGUAbgDpAHIAaQBjAG8AIABkAGUAIABjAGkAbgB6AGUAbgB0AG8AcwAgAGQA
+YQAgAEcAYQBtAG0AYQAgADIALAAyAEEAbABnAGUAbQBlAGUAbgAgAGcAcgBpAGoAcwAgAGcAYQBtAG0A
+YQAgADIALAAyAC0AcAByAG8AZgBpAGUAbABQAGUAcgBmAGkAbAAgAGcAZQBuAOkAcgBpAGMAbwAgAGQA
+ZQAgAGcAYQBtAG0AYQAgAGQAZQAgAGcAcgBpAHMAZQBzACAAMgAsADIOIw4xDgcOKg41DkEOAQ4hDiEO
+Mg5ADgEOIw4iDkwOFw4xDkgOJw5EDhsAIAAyAC4AMgBHAGUAbgBlAGwAIABHAHIAaQAgAEcAYQBtAGEA
+IAAyACwAMgBZAGwAZQBpAG4AZQBuACAAaABhAHIAbQBhAGEAbgAgAGcAYQBtAG0AYQAgADIALAAyACAA
+LQBwAHIAbwBmAGkAaQBsAGkARwBlAG4AZQByAGkBDQBrAGkAIABHAHIAYQB5ACAARwBhAG0AbQBhACAA
+MgAuADIAIABwAHIAbwBmAGkAbABVAG4AaQB3AGUAcgBzAGEAbABuAHkAIABwAHIAbwBmAGkAbAAgAHMA
+egBhAHIAbwFbAGMAaQAgAGcAYQBtAG0AYQAgADIALAAyBB4EMQRJBDAETwAgBEEENQRABDAETwAgBDME
+MAQ8BDwEMAAgADIALAAyAC0EPwRABD4ERAQ4BDsETABHAGUAbgBlAHIAaQBjACAARwByAGEAeQAgAEcA
+YQBtAG0AYQAgADIALgAyACAAUAByAG8AZgBpAGwAZQY6BicGRQYnACAAMgAuADIAIAZEBkgGRgAgBjEG
+RQYnBi8GSgAgBjkGJwZFdGV4dAAAAABDb3B5cmlnaHQgQXBwbGUgSW5jLiwgMjAxMgAAWFlaIAAAAAAA
+APNRAAEAAAABFsxjdXJ2AAAAAAAABAAAAAAFAAoADwAUABkAHgAjACgALQAyADcAOwBAAEUASgBPAFQA
+WQBeAGMAaABtAHIAdwB8AIEAhgCLAJAAlQCaAJ8ApACpAK4AsgC3ALwAwQDGAMsA0ADVANsA4ADlAOsA
+8AD2APsBAQEHAQ0BEwEZAR8BJQErATIBOAE+AUUBTAFSAVkBYAFnAW4BdQF8AYMBiwGSAZoBoQGpAbEB
+uQHBAckB0QHZAeEB6QHyAfoCAwIMAhQCHQImAi8COAJBAksCVAJdAmcCcQJ6AoQCjgKYAqICrAK2AsEC
+ywLVAuAC6wL1AwADCwMWAyEDLQM4A0MDTwNaA2YDcgN+A4oDlgOiA64DugPHA9MD4APsA/kEBgQTBCAE
+LQQ7BEgEVQRjBHEEfgSMBJoEqAS2BMQE0wThBPAE/gUNBRwFKwU6BUkFWAVnBXcFhgWWBaYFtQXFBdUF
+5QX2BgYGFgYnBjcGSAZZBmoGewaMBp0GrwbABtEG4wb1BwcHGQcrBz0HTwdhB3QHhgeZB6wHvwfSB+UH
++AgLCB8IMghGCFoIbgiCCJYIqgi+CNII5wj7CRAJJQk6CU8JZAl5CY8JpAm6Cc8J5Qn7ChEKJwo9ClQK
+agqBCpgKrgrFCtwK8wsLCyILOQtRC2kLgAuYC7ALyAvhC/kMEgwqDEMMXAx1DI4MpwzADNkM8w0NDSYN
+QA1aDXQNjg2pDcMN3g34DhMOLg5JDmQOfw6bDrYO0g7uDwkPJQ9BD14Peg+WD7MPzw/sEAkQJhBDEGEQ
+fhCbELkQ1xD1ERMRMRFPEW0RjBGqEckR6BIHEiYSRRJkEoQSoxLDEuMTAxMjE0MTYxODE6QTxRPlFAYU
+JxRJFGoUixStFM4U8BUSFTQVVhV4FZsVvRXgFgMWJhZJFmwWjxayFtYW+hcdF0EXZReJF64X0hf3GBsY
+QBhlGIoYrxjVGPoZIBlFGWsZkRm3Gd0aBBoqGlEadxqeGsUa7BsUGzsbYxuKG7Ib2hwCHCocUhx7HKMc
+zBz1HR4dRx1wHZkdwx3sHhYeQB5qHpQevh7pHxMfPh9pH5Qfvx/qIBUgQSBsIJggxCDwIRwhSCF1IaEh
+ziH7IiciVSKCIq8i3SMKIzgjZiOUI8Ij8CQfJE0kfCSrJNolCSU4JWgllyXHJfcmJyZXJocmtyboJxgn
+SSd6J6sn3CgNKD8ocSiiKNQpBik4KWspnSnQKgIqNSpoKpsqzysCKzYraSudK9EsBSw5LG4soizXLQwt
+QS12Last4S4WLkwugi63Lu4vJC9aL5Evxy/+MDUwbDCkMNsxEjFKMYIxujHyMioyYzKbMtQzDTNGM38z
+uDPxNCs0ZTSeNNg1EzVNNYc1wjX9Njc2cjauNuk3JDdgN5w31zgUOFA4jDjIOQU5Qjl/Obw5+To2OnQ6
+sjrvOy07azuqO+g8JzxlPKQ84z0iPWE9oT3gPiA+YD6gPuA/IT9hP6I/4kAjQGRApkDnQSlBakGsQe5C
+MEJyQrVC90M6Q31DwEQDREdEikTORRJFVUWaRd5GIkZnRqtG8Ec1R3tHwEgFSEtIkUjXSR1JY0mpSfBK
+N0p9SsRLDEtTS5pL4kwqTHJMuk0CTUpNk03cTiVObk63TwBPSU+TT91QJ1BxULtRBlFQUZtR5lIxUnxS
+x1MTU19TqlP2VEJUj1TbVShVdVXCVg9WXFapVvdXRFeSV+BYL1h9WMtZGllpWbhaB1pWWqZa9VtFW5Vb
+5Vw1XIZc1l0nXXhdyV4aXmxevV8PX2Ffs2AFYFdgqmD8YU9homH1YklinGLwY0Njl2PrZEBklGTpZT1l
+kmXnZj1mkmboZz1nk2fpaD9olmjsaUNpmmnxakhqn2r3a09rp2v/bFdsr20IbWBtuW4SbmtuxG8eb3hv
+0XArcIZw4HE6cZVx8HJLcqZzAXNdc7h0FHRwdMx1KHWFdeF2Pnabdvh3VnezeBF4bnjMeSp5iXnnekZ6
+pXsEe2N7wnwhfIF84X1BfaF+AX5ifsJ/I3+Ef+WAR4CogQqBa4HNgjCCkoL0g1eDuoQdhICE44VHhauG
+DoZyhteHO4efiASIaYjOiTOJmYn+imSKyoswi5aL/IxjjMqNMY2Yjf+OZo7OjzaPnpAGkG6Q1pE/kaiS
+EZJ6kuOTTZO2lCCUipT0lV+VyZY0lp+XCpd1l+CYTJi4mSSZkJn8mmia1ZtCm6+cHJyJnPedZJ3SnkCe
+rp8dn4uf+qBpoNihR6G2oiailqMGo3aj5qRWpMelOKWpphqmi6b9p26n4KhSqMSpN6mpqhyqj6sCq3Wr
+6axcrNCtRK24ri2uoa8Wr4uwALB1sOqxYLHWskuywrM4s660JbSctRO1irYBtnm28Ldot+C4WbjRuUq5
+wro7urW7LrunvCG8m70VvY++Cr6Evv+/er/1wHDA7MFnwePCX8Lbw1jD1MRRxM7FS8XIxkbGw8dBx7/I
+Pci8yTrJuco4yrfLNsu2zDXMtc01zbXONs62zzfPuNA50LrRPNG+0j/SwdNE08bUSdTL1U7V0dZV1tjX
+XNfg2GTY6Nls2fHadtr724DcBdyK3RDdlt4c3qLfKd+v4DbgveFE4cziU+Lb42Pj6+Rz5PzlhOYN5pbn
+H+ep6DLovOlG6dDqW+rl63Dr++yG7RHtnO4o7rTvQO/M8Fjw5fFy8f/yjPMZ86f0NPTC9VD13vZt9vv3
+ivgZ+Kj5OPnH+lf65/t3/Af8mP0p/br+S/7c/23//4AO0iUmSEldTlNNdXRhYmxlRGF0YaNISipWTlNE
+YXRh0iUmTE1cTlNDb2xvclNwYWNlok4qXE5TQ29sb3JTcGFjZdIlJlBRV05TQ29sb3KiUCrSJSZTVFdO
+U0ltYWdlolMqXxAPTlNLZXllZEFyY2hpdmVy0VdYVHJvb3SAAQAIABEAGgAjAC0AMgA3AEwAUgBdAGQA
+awB4AH8AhwCJAIsAkACSAJQAmwCgAKsArQCvALEAtgC5ALsAvQC/AMEAxgDdAN8A4QmpCa4JuQnCCdUJ
+2QnkCe0J8gn6Cf0KAgoRChUKIAooCjUKQgpXClwKYApiCmQKZgpvCnQKegqCCoQKhgqICooKjwqXHAMc
+BRwKHBgcHBwjHCgcNRw4HEUcShxSHFUcWhxiHGUcdxx6HH8AAAAAAAACAQAAAAAAAABZAAAAAAAAAAAA
+AAAAAAAcgQ
+</mutableData>
+        </image>
+        <image name="protonvpn-white-transparent" width="121" height="21"/>
+    </resources>
+</document>

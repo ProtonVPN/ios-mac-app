@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SCUpgradePopupViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="bodyView" destination="3Bk-8n-60Y" id="WXj-0r-5TQ"/>
+                <outlet property="cancelButton" destination="KYX-K2-pSe" id="81E-C2-V5y"/>
+                <outlet property="footerView" destination="Z3S-uD-8g7" id="4k6-ha-zpT"/>
+                <outlet property="learnMoreButton" destination="eUy-lJ-AOv" id="7bu-Kw-bAL"/>
+                <outlet property="upgradeButton" destination="Vow-nK-mN2" id="Ywm-TU-hFw"/>
+                <outlet property="upgradeDescriptionPart1" destination="Bho-vy-ZYN" id="pVe-SC-T0w"/>
+                <outlet property="upgradeDescriptionPart2" destination="ti7-d8-53n" id="Q8z-Og-O4q"/>
+                <outlet property="upgradeIcon" destination="r10-Hv-fGY" id="NKU-Lq-Dav"/>
+                <outlet property="view" destination="c22-O7-iKe" id="nhF-Nn-H9r"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="180"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="3Bk-8n-60Y">
+                    <rect key="frame" x="0.0" y="50" width="500" height="130"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="r10-Hv-fGY">
+                            <rect key="frame" x="15" y="15" width="100" height="100"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="GRi-TO-sDx"/>
+                                <constraint firstAttribute="height" constant="100" id="o28-id-gGK"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="lXR-wr-JqU"/>
+                        </imageView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="voV-20-Slj">
+                            <rect key="frame" x="130" y="28" width="350" height="74"/>
+                            <subviews>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Bho-vy-ZYN">
+                                    <rect key="frame" x="-2" y="57" width="354" height="17"/>
+                                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" alignment="left" title="Description part 1" id="wHu-3O-7Vt">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eUy-lJ-AOv" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="-3" y="27" width="353" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="LqK-Z5-mJj"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="bevel" title="Learn more" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="112-4j-ncl">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                </button>
+                                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ti7-d8-53n">
+                                    <rect key="frame" x="-2" y="0.0" width="354" height="17"/>
+                                    <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="Description part 2" id="BCX-k4-Ngn">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="eUy-lJ-AOv" firstAttribute="top" secondItem="Bho-vy-ZYN" secondAttribute="bottom" constant="10" id="C60-Db-aI8"/>
+                                <constraint firstAttribute="trailing" secondItem="Bho-vy-ZYN" secondAttribute="trailing" id="DNZ-0J-vxV"/>
+                                <constraint firstItem="Bho-vy-ZYN" firstAttribute="top" secondItem="voV-20-Slj" secondAttribute="top" id="KDB-jv-7DN"/>
+                                <constraint firstItem="ti7-d8-53n" firstAttribute="top" secondItem="eUy-lJ-AOv" secondAttribute="bottom" constant="10" id="OAx-vd-vX8"/>
+                                <constraint firstItem="Bho-vy-ZYN" firstAttribute="leading" secondItem="voV-20-Slj" secondAttribute="leading" id="Pqz-X6-t3M"/>
+                                <constraint firstItem="ti7-d8-53n" firstAttribute="trailing" secondItem="Bho-vy-ZYN" secondAttribute="trailing" id="TvC-lo-U9T"/>
+                                <constraint firstItem="eUy-lJ-AOv" firstAttribute="trailing" secondItem="Bho-vy-ZYN" secondAttribute="trailing" id="add-SR-vkn"/>
+                                <constraint firstItem="ti7-d8-53n" firstAttribute="leading" secondItem="Bho-vy-ZYN" secondAttribute="leading" id="fAE-H6-t47"/>
+                                <constraint firstAttribute="bottom" secondItem="ti7-d8-53n" secondAttribute="bottom" id="yxt-Xd-2Dy"/>
+                                <constraint firstItem="eUy-lJ-AOv" firstAttribute="leading" secondItem="Bho-vy-ZYN" secondAttribute="leading" constant="-3" id="zeI-W8-msy"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="voV-20-Slj" firstAttribute="leading" secondItem="r10-Hv-fGY" secondAttribute="trailing" constant="15" id="3IU-rw-3GO"/>
+                        <constraint firstAttribute="trailing" secondItem="voV-20-Slj" secondAttribute="trailing" constant="20" id="3Qo-Fs-gZB"/>
+                        <constraint firstItem="voV-20-Slj" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3Bk-8n-60Y" secondAttribute="top" constant="20" id="AV4-p5-cWA"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="r10-Hv-fGY" secondAttribute="bottom" constant="15" id="AxK-TJ-JgT"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="voV-20-Slj" secondAttribute="bottom" constant="20" id="EOc-13-8y1"/>
+                        <constraint firstItem="r10-Hv-fGY" firstAttribute="centerY" secondItem="3Bk-8n-60Y" secondAttribute="centerY" id="MEU-Dz-45v"/>
+                        <constraint firstItem="voV-20-Slj" firstAttribute="centerY" secondItem="3Bk-8n-60Y" secondAttribute="centerY" id="SqY-q8-Pcg"/>
+                        <constraint firstItem="r10-Hv-fGY" firstAttribute="leading" secondItem="3Bk-8n-60Y" secondAttribute="leading" constant="15" id="VTj-WO-HdL"/>
+                        <constraint firstItem="r10-Hv-fGY" firstAttribute="top" relation="greaterThanOrEqual" secondItem="3Bk-8n-60Y" secondAttribute="top" constant="15" id="waT-sa-2LC"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Z3S-uD-8g7">
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="KYX-K2-pSe" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="285" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="JxT-Ld-JoT"/>
+                                <constraint firstAttribute="height" constant="35" id="LeO-kq-36X"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="OK" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="90I-1k-ypE">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vow-nK-mN2" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="390" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="90" id="MxA-8V-yNe"/>
+                                <constraint firstAttribute="height" constant="35" id="XZ5-ie-EWf"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="w42-Ie-5Aa">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="KYX-K2-pSe" firstAttribute="centerY" secondItem="Z3S-uD-8g7" secondAttribute="centerY" id="Z9r-4x-iRO"/>
+                        <constraint firstItem="Vow-nK-mN2" firstAttribute="leading" secondItem="KYX-K2-pSe" secondAttribute="trailing" constant="15" id="ZYC-AI-JwA"/>
+                        <constraint firstAttribute="trailing" secondItem="Vow-nK-mN2" secondAttribute="trailing" constant="20" symbolic="YES" id="a4m-ds-pe2"/>
+                        <constraint firstAttribute="height" constant="50" id="a77-UO-eVr"/>
+                        <constraint firstItem="Vow-nK-mN2" firstAttribute="centerY" secondItem="Z3S-uD-8g7" secondAttribute="centerY" id="iyZ-cw-aD0"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Z3S-uD-8g7" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="BDH-3W-8Ri"/>
+                <constraint firstAttribute="trailing" secondItem="3Bk-8n-60Y" secondAttribute="trailing" id="KI0-5M-A0C"/>
+                <constraint firstItem="Z3S-uD-8g7" firstAttribute="top" secondItem="3Bk-8n-60Y" secondAttribute="bottom" id="WaL-Io-O0O"/>
+                <constraint firstAttribute="bottom" secondItem="Z3S-uD-8g7" secondAttribute="bottom" id="Wfm-b0-WIl"/>
+                <constraint firstItem="3Bk-8n-60Y" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="nuC-l8-8sw"/>
+                <constraint firstItem="3Bk-8n-60Y" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="tb6-sR-tAq"/>
+                <constraint firstAttribute="trailing" secondItem="Z3S-uD-8g7" secondAttribute="trailing" id="wMk-W1-oXj"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

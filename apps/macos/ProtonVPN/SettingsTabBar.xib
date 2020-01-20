@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SettingsTabBarViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="accountButton" destination="7XQ-En-Ong" id="lCN-vJ-iGy"/>
+                <outlet property="connectionButton" destination="dVx-Mt-eNR" id="VxW-4m-bNe"/>
+                <outlet property="generalButton" destination="fqE-or-95S" id="TgY-Op-oSS"/>
+                <outlet property="headerLabel" destination="glc-99-b6K" id="l5Q-T3-xTI"/>
+                <outlet property="tabBarView" destination="NQ8-0j-JaE" id="Fe7-oT-MIz"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="125"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="5pA-sx-MtK">
+                    <rect key="frame" x="0.0" y="40" width="500" height="85"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="glc-99-b6K">
+                            <rect key="frame" x="40" y="21" width="242" height="44"/>
+                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Settings header" id="137-Tu-s8p">
+                                <font key="font" metaFont="system" size="36"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="85" id="6kE-uY-mXz"/>
+                        <constraint firstItem="glc-99-b6K" firstAttribute="leading" secondItem="5pA-sx-MtK" secondAttribute="leading" constant="42" id="89H-fr-k1w"/>
+                        <constraint firstItem="glc-99-b6K" firstAttribute="centerY" secondItem="5pA-sx-MtK" secondAttribute="centerY" id="GZI-GU-bfH"/>
+                        <constraint firstAttribute="width" constant="500" id="cxg-LN-a7W"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="NQ8-0j-JaE" customClass="TabBarView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fqE-or-95S" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="0.0" y="0.0" width="150" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="KAs-XC-3sd"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="General button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="2GG-IA-NYE">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVx-Mt-eNR" userLabel="Connection Button" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="150" y="0.0" width="150" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="Zy3-w0-Swb"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Connection button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="bhj-SP-RG0">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7XQ-En-Ong" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="300" y="0.0" width="150" height="40"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="150" id="BKN-UZ-ZHJ"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Account button" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="WpN-tM-13P">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstAttribute="bottom" secondItem="dVx-Mt-eNR" secondAttribute="bottom" id="0V9-DZ-KiA"/>
+                        <constraint firstItem="fqE-or-95S" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="B3K-uY-jKq"/>
+                        <constraint firstAttribute="bottom" secondItem="fqE-or-95S" secondAttribute="bottom" id="ERr-Dk-dnP"/>
+                        <constraint firstItem="7XQ-En-Ong" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="FAu-af-Tji"/>
+                        <constraint firstAttribute="height" constant="40" id="GKL-Ka-0lE"/>
+                        <constraint firstItem="dVx-Mt-eNR" firstAttribute="trailing" secondItem="7XQ-En-Ong" secondAttribute="leading" id="MWi-qV-bGl"/>
+                        <constraint firstItem="fqE-or-95S" firstAttribute="leading" secondItem="NQ8-0j-JaE" secondAttribute="leading" id="Tb9-nI-DjI"/>
+                        <constraint firstAttribute="bottom" secondItem="7XQ-En-Ong" secondAttribute="bottom" id="Upb-4S-wBF"/>
+                        <constraint firstItem="dVx-Mt-eNR" firstAttribute="leading" secondItem="fqE-or-95S" secondAttribute="trailing" id="WAt-mM-nRp"/>
+                        <constraint firstItem="dVx-Mt-eNR" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="nNr-0e-53v"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="5pA-sx-MtK" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="19e-PK-dt1"/>
+                <constraint firstAttribute="trailing" secondItem="NQ8-0j-JaE" secondAttribute="trailing" id="9LQ-Ka-hXo"/>
+                <constraint firstItem="NQ8-0j-JaE" firstAttribute="width" secondItem="5pA-sx-MtK" secondAttribute="width" id="Iuf-mI-5FU"/>
+                <constraint firstAttribute="trailing" secondItem="5pA-sx-MtK" secondAttribute="trailing" id="R2e-nP-boc"/>
+                <constraint firstAttribute="bottom" secondItem="NQ8-0j-JaE" secondAttribute="bottom" id="Ub5-Dk-juU"/>
+                <constraint firstItem="5pA-sx-MtK" firstAttribute="bottom" secondItem="NQ8-0j-JaE" secondAttribute="top" id="YOA-yc-ic7"/>
+                <constraint firstItem="5pA-sx-MtK" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="doT-jF-hpo"/>
+                <constraint firstItem="NQ8-0j-JaE" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="xJh-3m-Ecq"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="221"/>
+        </customView>
+    </objects>
+</document>

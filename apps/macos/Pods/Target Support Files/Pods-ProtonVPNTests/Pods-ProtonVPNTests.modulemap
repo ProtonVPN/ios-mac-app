@@ -1,0 +1,6 @@
+framework module Pods_ProtonVPNTests {
+  umbrella header "Pods-ProtonVPNTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
