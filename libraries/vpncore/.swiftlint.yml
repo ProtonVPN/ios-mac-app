@@ -1,0 +1,56 @@
+disabled_rules: # rule identifiers to exclude from running
+  - file_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#file-line-length
+  - line_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#line-length
+  - type_body_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-body-length
+  - identifier_name # https://github.com/realm/SwiftLint/blob/master/Rules.md#identifier-name
+  - trailing_whitespace # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-whitespace
+  - notification_center_detachment # https://github.com/realm/SwiftLint/blob/master/Rules.md#notification-center-detachment
+  - trailing_comma # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-comma
+  - multiline_arguments # https://github.com/realm/SwiftLint/blob/master/Rules.md#multiline-arguments
+  - unused_closure_parameter # https://github.com/realm/SwiftLint/blob/master/Rules.md#unused-closure-parameter
+  - discouraged_optional_collection # https://github.com/realm/SwiftLint/blob/master/Rules.md#discouraged-optional-collection
+  - force_cast # https://github.com/realm/SwiftLint/blob/master/Rules.md#force-cast
+  - redundant_string_enum_value # https://github.com/realm/SwiftLint/blob/master/Rules.md#redundant-string-enum-value
+  - no_fallthrough_only # https://github.com/realm/SwiftLint/blob/master/Rules.md#no-fallthrough-only
+
+opt_in_rules: # some rules are only opt-in
+  - empty_count # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-count
+  - closure_end_indentation # https://github.com/realm/SwiftLint/blob/master/Rules.md#closure-end-indentation
+  - closure_spacing # https://github.com/realm/SwiftLint/blob/master/Rules.md#closure-spacing
+  - collection_alignment # https://github.com/realm/SwiftLint/blob/master/Rules.md#collection-element-alignment
+  - empty_string # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-string
+  - empty_xctest_method # https://github.com/realm/SwiftLint/blob/master/Rules.md#empty-xctest-method
+  - literal_expression_end_indentation # https://github.com/realm/SwiftLint/blob/master/Rules.md#literal-expression-end-indentation
+  - modifier_order # https://github.com/realm/SwiftLint/blob/master/Rules.md#modifier-order
+  - operator_usage_whitespace # https://github.com/realm/SwiftLint/blob/master/Rules.md#operator-usage-whitespace
+  - overridden_super_call # https://github.com/realm/SwiftLint/blob/master/Rules.md#overridden-methods-call-super
+  - prohibited_super_call # https://github.com/realm/SwiftLint/blob/master/Rules.md
+  - sorted_first_last # https://github.com/realm/SwiftLint/blob/master/Rules.md
+
+# Some rules that may be useful:
+  # - file_types_order # https://github.com/realm/SwiftLint/blob/master/Rules.md#file-types-order
+  # - implicit_return # https://github.com/realm/SwiftLint/blob/master/Rules.md#implicit-return
+  # - type_contents_order # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-contents-order
+
+# More rules can be found here: https://github.com/realm/SwiftLint/blob/master/Rules.md
+
+
+included: # paths to include during linting. `--path` is ignored if present.
+  - Source
+excluded: # paths to ignore during linting. Takes precedence over `included`.
+  - Carthage
+  - Pods
+  
+# configurable rules can be customized from this configuration file
+# binary rules can set their severity level
+force_cast: warning # implicitly
+
+reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)
+
+custom_rules:
+  no_print:
+    name: "Printing to console"
+    message: "No direct printing to console is allowed. Please use PMLog class from vpncore library."
+    regex: "(^\\s*print\\()|(NSLog)"
+    match_kinds:
+      - identifier

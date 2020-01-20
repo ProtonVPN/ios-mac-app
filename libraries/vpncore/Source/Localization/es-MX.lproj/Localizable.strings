@@ -1,0 +1,1381 @@
+/* (No Comment) */
+"_5_connections" = "5 Conexiones";
+
+/* (No Comment) */
+"_5_connections_description" = "Conecte hasta 5 dispositivos\nal mismo tiempo";
+
+/* About */
+"_about" = "Acerca de";
+
+/* (No Comment) */
+"_account" = "Cuenta";
+
+/* (No Comment) */
+"_account_plan" = "Plan de la cuenta";
+
+/* (No Comment) */
+"_account_type" = "Tipo de cuenta";
+
+/* (No Comment) */
+"_acknowledgements" = "Agradecimientos";
+
+/* (No Comment) */
+"_action" = "Acción";
+
+/* (No Comment) */
+"_activate_widget" = "Activar widget";
+
+/* (No Comment) */
+"_activate_widget_step_1" = "Desde su pantalla de inicio, deslice hacia la última pantalla de la izquierda para acceder a sus widgets.";
+
+/* (No Comment) */
+"_activate_widget_step_2" = "Deslice totalmente hacia abajo y pulse el botón editar.";
+
+/* (No Comment) */
+"_activate_widget_step_3" = "Añada el widget de ProtonVPN a la lista de widgets activos.";
+
+/* (No Comment) */
+"_advanced_features" = "+ Funciones avanzadas";
+
+/* (No Comment) */
+"_ae_vpn_info_not_received" = "No se pudo obtener información de VPN";
+
+/* API errors */
+"_ae_wrong_login_credentials" = "Nombre de usuario o contraseña incorrectos";
+
+/* (No Comment) */
+"_all_countries" = "40+ países";
+
+/* (No Comment) */
+"_all_servers_in_country_under_maintenance" = "Todos los servidores en este país están bajo mantenimiento. Conéctese a otro país.";
+
+/* (No Comment) */
+"_all_servers_in_profile_under_maintenance" = "Servidor(es) del perfil en mantenimiento";
+
+/* (No Comment) */
+"_all_servers_under_maintenance" = "Todos los servidores están en mantenimiento. Esto generalmente significa que hay dificultades técnicas por parte de ProtonVPN o que su red es limitada.";
+
+/* (No Comment) */
+"_already_have_account" = "Ya tengo una cuenta";
+
+/* (No Comment) */
+"_always_on_vpn" = "VPN siempre activa";
+
+/* (No Comment) */
+"_always_on_vpn_tooltip_ios" = "Kill Switch no es compatible con iOS. La VPN siempre activa restablece una conexión VPN segura de forma rápida y automática. Para su seguridad, esta función siempre estará activada.";
+
+/* (No Comment) */
+"_always_on_will_reconnect" = "La VPN siempre activa le reconectará automáticamente";
+
+/* (No Comment) */
+"_auto_assigned" = "Auto asignado";
+
+/* (No Comment) */
+"_auto_connect" = "Auto conectar";
+
+/* (No Comment) */
+"_auto_connect_tooltip" = "Al iniciar la app, estará conectado al perfil seleccionado";
+
+/* (No Comment) */
+"_basic_servers" = "SERVIDORES BASIC";
+
+/* General */
+"_cancel" = "Cancelar";
+
+/* (No Comment) */
+"_changelog" = "Registro de cambios";
+
+/* (No Comment) */
+"_check_if_fields_present" = "Por favor verifique si todos los campos están completos";
+
+/* (No Comment) */
+"_choose_plan" = "Elegir suscripción";
+
+/* (No Comment) */
+"_city" = "Ciudad";
+
+/* (No Comment) */
+"_clear_application_data" = "Borrar datos de la aplicación";
+
+/* (No Comment) */
+"_close" = "Cerrar";
+
+/* (No Comment) */
+"_color" = "Color";
+
+/* (No Comment) */
+"_connect" = "Conectar";
+
+/* (No Comment) */
+"_connected" = "Conectado";
+
+/* (No Comment) */
+"_connected_to" = "Conectado a";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Conectado a %@";
+
+/* (No Comment) */
+"_connecting" = "Conectando";
+
+/* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "Conectando a %@";
+
+/* %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Conectando %@";
+
+/* (No Comment) */
+"_connecting..." = "Conectando...";
+
+/* (No Comment) */
+"_connection" = "Conexión";
+
+/* (No Comment) */
+"_connection_failed" = "Conexión fallida";
+
+/* (No Comment) */
+"_connection_settings" = "Ajustes de conexión";
+
+/* (No Comment) */
+"_continue" = "Continuar";
+
+/* (No Comment) */
+"_countries" = "Países";
+
+/* (No Comment) */
+"_countries_count" = "%@ países";
+
+/* (No Comment) */
+"_countries_free" = "Países gratuitos";
+
+/* (No Comment) */
+"_countries_premium" = "Países premium";
+
+/* (No Comment) */
+"_countries_tour_description" = "Elija qué país y servidor desea utilizar para su dirección IP final.";
+
+/* (No Comment) */
+"_countries_tour_title" = "Países";
+
+/* (No Comment) */
+"_country" = "País";
+
+/* (No Comment) */
+"_country_selection_is_required" = "Seleccione un país";
+
+/* %@ is a country name, e.g. Switzerland servers under maintenance */
+"_country_servers_under_maintenance" = "Servidores de %@ en mantenimiento";
+
+/* (No Comment) */
+"_create_account" = "Crear cuenta";
+
+/* (No Comment) */
+"_create_new_profile" = "Crear perfil";
+
+/* (No Comment) */
+"_create_profile" = "Crear perfil";
+
+/* (No Comment) */
+"_current_selection_will_be_lost" = "Si continúa, su selección actual se perderá. ¿Desea continuar de todos modos?";
+
+/* (No Comment) */
+"_data_disclaimer_agree" = "Aceptar y continuar";
+
+/* (No Comment) */
+"_data_disclaimer_device_details" = "Modelo y versión de SO de su dispositivo";
+
+/* %@1 is a bold 'Username, email address'
+ %@2 is a bold 'Your device model and OS version' */
+"_data_disclaimer_text" = "ProtonVPN se compromete a proteger y respetar su privacidad. Es nuestra política primordial recopilar la menor cantidad de datos de usuario posible para garantizar una experiencia de usuario privada y anónima en el uso de la aplicación, específicamente:\n\n%@ - para iniciar sesión, ayudar a recuperar una contraseña perdida y enviar actualizaciones importantes del servicio.\n\n %@ - Solo para informes de errores y errores. \n\nLa aplicación ProtonVPN no procesa ninguna información del usuario además de estos datos. No registramos su actividad en línea ni ninguna información personal identificable. Todos los datos enumerados anteriormente se almacenan y procesan en el propio sistema de ProtonVPN, sin que ningún tercero tenga acceso a ellos.";
+
+/* (No Comment) */
+"_data_disclaimer_title" = "Protéjase en línea";
+
+/* (No Comment) */
+"_data_disclaimer_user_details" = "Nombre de usuario, dirección de correo electrónico";
+
+/* (No Comment) */
+"_default_profile_tooltip" = "El botón \"Conexión rápida\" usa el perfil por defecto.";
+
+/* (No Comment) */
+"_delete" = "Eliminar";
+
+/* (No Comment) */
+"_delete_application_data_popup_body" = "Todos los datos de ProtonVPN se eliminarán y la aplicación se cerrará. ¿Desea continuar?";
+
+/* (No Comment) */
+"_delete_application_data_popup_title" = "Borrar datos de la aplicación";
+
+/* (No Comment) */
+"_delete_profile_warning" = "El perfil se eliminará permanentemente. ¿Desea continuar?";
+
+/* (No Comment) */
+"_delinquent_user_description" = "Su cuenta actualmente tiene una factura vencida. Por favor, pague todas las facturas pendientes en account.protonvpn.com";
+
+/* Alerts */
+"_delinquent_user_title" = "Factura no pagada";
+
+/* (No Comment) */
+"_different_server_each_time" = "Servidor diferente cada vez";
+
+/* (No Comment) */
+"_disable" = "Deshabilitar";
+
+/* (No Comment) */
+"_disabled" = "Deshabilitado";
+
+/* (No Comment) */
+"_disconnect" = "Desconectar";
+
+/* (No Comment) */
+"_disconnected" = "Desconectado";
+
+/* (No Comment) */
+"_discover_the_app" = "Descubrir la app";
+
+/* (No Comment) */
+"_dns_leak_protection" = "Protección contra filtración de DNS";
+
+/* (No Comment) */
+"_dns_leak_protection_tooltip" = "Evita que se filtren detalles de consultas DNS a terceros. Siempre habilitada.";
+
+/* (No Comment) */
+"_do_you_want_to_activate_subscription_for" = "¿Desea activar la suscripción comprada para ";
+
+/* (No Comment) */
+"_done" = "Hecho";
+
+/* (No Comment) */
+"_early_access" = "Acceso anticipado";
+
+/* (No Comment) */
+"_early_access_tooltip" = "Sea el primero en obtener las últimas actualizaciones. Por favor tenga en cuenta que las nuevas versiones podrían ser menos estables.";
+
+/* (No Comment) */
+"_edit" = "Editar";
+
+/* (No Comment) */
+"_enabled" = "Habilitado";
+
+/* (No Comment) */
+"_end_tour" = "Terminar recorrido";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "¡DISFRUTE %@ GRATIS!";
+
+/* (No Comment) */
+"_enter_email_address" = "Ingrese el correo electrónico";
+
+/* (No Comment) */
+"_enter_profile_name" = "Ingrese el nombre de perfil";
+
+/* (No Comment) */
+"_enter_verification_code" = "123 456";
+
+/* (No Comment) */
+"_error_api_offline" = "La API de ProtonVPN está actualmente fuera de línea";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_message" = "Se ha registrado con éxito pero su pago no ha sido procesado. Para reenviar su información de pago, haga clic en reintentar. Sólo se le cobrará una vez. Si el problema persiste, póngase en contacto con soporte al cliente.";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_support" = "Contáctese con soporte al cliente";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_title" = "Pago fallido";
+
+/* (No Comment) */
+"_error_credit_applied" = "Póngase en contacto con support@protonvpn.com para completar su compra.";
+
+/* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
+"_error_decode" = "Error al decodificar los datos archivados en la clase: %@";
+
+/* (No Comment) */
+"_error_email_verification_disabled" = "Verificación de correo electrónico temporalmente desactivada";
+
+/* (No Comment) */
+"_error_existing_session_to_server" = "No se puede conectar al servidor porque ya tiene una sesión activa del usuario";
+
+/* error try to restore user from the session */
+"_error_fetch_session" = "No se puede encontrar el usuario desde la sesión";
+
+/* (No Comment) */
+"_error_field_email_wrong_format" = "La dirección de correo electrónico no es válida";
+
+/* (No Comment) */
+"_error_field_passwords_dont_match" = "Las contraseñas no coinciden entre sí";
+
+/* (No Comment) */
+"_error_field_required" = "Este campo es obligatorio";
+
+/* (No Comment) */
+"_error_field_unknown" = "Por favor, verifique este campo";
+
+/* error when generate srp clint */
+"_error_generate_srp" = "Falló la generación SRP";
+
+/* error when try to hash password */
+"_error_hash_password" = "No se puede cambiar la contraseña del usuario";
+
+/* Errors */
+"_error_internal_error" = "Error interno de la API";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_message" = "¿Desea recibir un nuevo código de verificación o usar un método de verificación alternativo?";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_resend" = "Reenviar";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_title" = "Código de verificación inválido";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_try_other" = "Intente otro método";
+
+/* (No Comment) */
+"_error_keychain_fetch" = "Error del llavero.";
+
+/* (No Comment) */
+"_error_loads" = "No se pueden actualizar las cargas del servidor";
+
+/* (No Comment) */
+"_error_mitm_description" = "Falló la validación del certificado TLS. Su conexión a internet actual puede ser monitorizada. Para mantener sus datos seguros, la aplicación está siendo bloqueada temporalmente.\nPara establecer una conexión VPN, cambie a una nueva red e intente conectarse de nuevo.";
+
+/* (No Comment) */
+"_error_mitm_title" = "Conexión insegura";
+
+/* error when try to parse modulus signature */
+"_error_modulus_signature" = "La firma del módulo está vacía";
+
+/* (No Comment) */
+"_error_no_active_username" = "Inicie sesión con la cuenta para la que está mejorando el plan de servicio para que podamos completar su compra.";
+
+/* (No Comment) */
+"_error_no_new_subscription_in_successfull_response" = "La mejora de su suscripción fue exitosa. Vuelva a iniciar la aplicación para beneficiarse de su nuevo plan de servicio.";
+
+/* IAP errors */
+"_error_occured" = "Ocurrió un error";
+
+/* (No Comment) */
+"_error_purchased_plan_does_not_match_available" = "No estábamos disponibles para hacer coincidir el producto de App Store con los productos de nuestro servidor. Póngase en contacto con soporte.";
+
+/* (No Comment) */
+"_error_receipt_lost" = "Recibo de App Store perdido. Póngase en contacto con el servicio de asistencia si su plan no se activó.";
+
+/* (No Comment) */
+"_error_sandbox_receipt" = "Las compras no están disponibles en la versión beta de la aplicación iOS. No se le ha cobrado.";
+
+/* error when try to parse the server info */
+"_error_server_info_parser" = "No se puede analizar la información del servidor";
+
+/* (No Comment) */
+"_error_session_count_parser" = "No se puede analizar el número de sesiones";
+
+/* error when the user attempts to sign up using an existing ProtonMail email address */
+"_error_signup_using_protonmail_address" = "Su cuenta de ProtonMail ya está configurada para VPN. Inicie sesión con sus credenciales existentes.";
+
+/* error when try to parse subscription info */
+"_error_subscription_parser" = "No se puede analizar la información de suscripción";
+
+/* (No Comment) */
+"_error_transaction_failed_by_unknown_reason" = "La App Store no pudo procesar su compra.";
+
+/* (No Comment) */
+"_error_transaction_of_other_user" = "Se inició una compra con un nombre de usuario ProtonVPN diferente.";
+
+/* (No Comment) */
+"_error_unavailable_product" = "No se pudo obtener la lista de productos disponibles desde App Store.";
+
+/* Unknown error */
+"_error_unknown_title" = "Error desconocido";
+
+/* (No Comment) */
+"_error_user_cancelled" = "Operación cancelada";
+
+/* error when the app fails to create a user */
+"_error_user_creation" = "Creación de cuenta fallida";
+
+/* (No Comment) */
+"_error_user_credentials_expired" = "Las credenciales de usuario han expirado. Inicie sesión otra vez";
+
+/* (No Comment) */
+"_error_user_credentials_missing" = "Faltan credenciales del usuario. No se puede iniciar sesión";
+
+/* (No Comment) */
+"_error_user_failed_human_validation" = "No hemos podido verificar que sea humano. Por favor, intente de nuevo o compre un plan premium.";
+
+/* (No Comment) */
+"_error_user_has_no_vpn_access" = "Su cuenta no tiene acceso VPN. Póngase en contacto con el administrador de su cuenta";
+
+/* (No Comment) */
+"_error_user_has_not_signed_up" = "Aún no se ha registrado en ProtonVPN";
+
+/* (No Comment) */
+"_error_user_is_on_waitlist" = "Actualmente ests en la lista de espera y su cuenta aún no está lista";
+
+/* username unavailable error */
+"_error_username_unavailable" = "Nombre de usuario ya registrado";
+
+/* error when try to parse verification methods */
+"_error_verification_methods_parser" = "No se pueden analizar los métodos de verificación";
+
+/* (No Comment) */
+"_error_vpn_credentials_missing" = "Faltan las credenciales VPN del llavero";
+
+/* default error when vpn properties fetch failed */
+"_error_vpn_properties" = "¡No se pueden recuperar las propiedades de VPN!";
+
+/* (No Comment) */
+"_error_vpn_session_is_active" = "La sesión de ProtonVPN está activa";
+
+/* (No Comment) */
+"_existing_firewall_popup_body" = "ProtonVPN utiliza un firewall para implementar un Kill Switch. Al habilitar Kill Switch, sobrescribirá la configuración actual del firewall del dispositivo. Si confía en esta configuración de firewall, no debe usar Kill Switch.\n\nPara usar Kill Switch y sobrescribir la configuración actual del firewall, seleccione CONTINUAR.\n\nPara deshabilitar Kill Switch y continuar usando su firewall actual, seleccione CANCELAR.";
+
+/* (No Comment) */
+"_existing_firewall_popup_title" = "Firewall detectado";
+
+/* (No Comment) */
+"_existing_session" = "Servidor no disponible";
+
+/* (No Comment) */
+"_existing_session_to_server" = "Por favor, seleccione un servidor diferente.";
+
+/* (No Comment) */
+"_expired" = "EXPIRADO";
+
+/* Extensions */
+"_extensions" = "Extensiones";
+
+/* (No Comment) */
+"_failed" = "falló";
+
+/* (No Comment) */
+"_failed_to_access_vpn_credentials_description" = "No se pudieron recuperar las credenciales de VPN, vuelva a iniciar sesión para resolver el problema.";
+
+/* (No Comment) */
+"_failed_to_access_vpn_credentials_title" = "Faltan credenciales de VPN";
+
+/* (No Comment) */
+"_fastest" = "El más rápido";
+
+/* (No Comment) */
+"_fastest_available_server" = "El servidor más rápido disponible";
+
+/* (No Comment) */
+"_fastest_connection" = "Conexión más rápida";
+
+/* (No Comment) */
+"_feature" = "Función";
+
+/* (No Comment) */
+"_feature_connections" = "Conexiones VPN simultáneas";
+
+/* (No Comment) */
+"_feature_secure_core" = "Secure Core";
+
+/* (No Comment) */
+"_feature_secure_streaming" = "Transmisión segura";
+
+/* Plan selection: advances features */
+"_feature_server_count" = "Conectar a servidores en";
+
+/* (No Comment) */
+"_feature_speed" = "Velocidad";
+
+/* (No Comment) */
+"_feature_tor" = "Tor sobre VPN";
+
+/* (No Comment) */
+"_forgot_password" = "¿Olvidó su contraseña?";
+
+/* (No Comment) */
+"_forgot_username" = "Nombre de usuario olvidado";
+
+/* (No Comment) */
+"_free" = "Gratis";
+
+/* (No Comment) */
+"_free_countries" = "3 países";
+
+/* (No Comment) */
+"_free_servers" = "SERVIDORES FREE";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features:
+ 
+ I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Mejore a %@ y siga disfrutando de estas funciones:";
+
+/* (No Comment) */
+"_free_trial_about_to_expire_title" = "¡Su prueba gratuita está a punto de expirar!";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
+ 
+ A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Su cuenta ha sido degradada a ProtonVPN FREE.\nAquí tiene lo que perderá de %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "SU PRUEBA GRATUITA HA %@";
+
+/* (No Comment) */
+"_general" = "General";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Obtener el plan %@";
+
+/* (No Comment) */
+"_get_verification_email" = "Obtener email de verificación";
+
+/* (No Comment) */
+"_get_verification_sms" = "Obtener SMS de verificación";
+
+/* (No Comment) */
+"_got_it" = "¡Entendido!";
+
+/* (No Comment) */
+"_help" = "Ayuda";
+
+/* (No Comment) */
+"_hide" = "OCULTAR";
+
+/* (No Comment) */
+"_high" = "Alta";
+
+/* (No Comment) */
+"_highest" = "Máxima";
+
+/* (No Comment) */
+"_ignore" = "Ignorar";
+
+/* (No Comment) */
+"_initializing_connection" = "Inicializando la conexión...";
+
+/* (No Comment) */
+"_invalid_refresh_token" = "Sesión expirada";
+
+/* (No Comment) */
+"_invalid_refresh_token_please_login" = "Ha pasado un tiempo desde la última vez que usó la aplicación ProtonVPN. Inicie sesión nuevamente.";
+
+/* (No Comment) */
+"_ios_onboarding_page1_description" = "De los científicos e ingenieros que crearon ProtonMail, bienvenidos a un internet más seguro y privado.";
+
+/* Upsell & Onboard - iOS */
+"_ios_onboarding_page1_title" = "Bienvenido a un mejor internet";
+
+/* (No Comment) */
+"_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos sus datos.";
+
+/* (No Comment) */
+"_ios_onboarding_page2_title" = "Creemos que internet debería ser gratis";
+
+/* (No Comment) */
+"_ios_onboarding_page3_description" = "Somos una empresa de seguridad. Ya sea nuestra arquitectura Secure Core o nuestro cifrado avanzado, la seguridad siempre es lo primero.";
+
+/* (No Comment) */
+"_ios_onboarding_page3_title" = "Su seguridad es nuestra prioridad";
+
+/* (No Comment) */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* (No Comment) */
+"_kill_switch" = "Kill Switch";
+
+/* %@ is a link to the app's Preferences */
+"_kill_switch_blocking_body" = "Ha perdido la conexión con el servidor VPN. Kill Switch está bloqueando todas las conexiones para evitar filtrar sus datos. ProtonVPN intentará reconectarse automáticamente. Para cerrar esta ventana, haga clic en Aceptar.\n\nSi desea deshabilitar temporalmente Kill Switch y volver a conectarse a internet SIN protección VPN, haga clic en DESHABILITAR.\n\nPara deshabilitar Kill Switch permanentemente, vaya a %@.";
+
+/* Notifications */
+"_kill_switch_blocking_connection" = "Kill Switch bloquea todas las conexiones";
+
+/* (No Comment) */
+"_kill_switch_blocking_title" = "Kill Switch actualmente está bloqueando las filtraciones de IP";
+
+/* (No Comment) */
+"_kill_switch_error_body" = "Kill Switch no funciona correctamente. Si desea informar este error al equipo de soporte de ProtonVPN, haga clic en Notificar.\nSi desea ignorar este error y continuar navegando en internet SIN la protección del Kill Switch, haga clic en Ignorar.";
+
+/* (No Comment) */
+"_kill_switch_error_title" = "Se ha detectado un error de Kill Switch";
+
+/* (No Comment) */
+"_kill_switch_helper_install_issue_popup_body" = "Hubo un problema al instalar o actualizar Kill Switch.\n\nPara intentarlo otra vez, haga clic en REINTENTAR.\n\nPara continuar sin Kill Switch, haga clic en DESHABILITAR.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_install_popup_body" = "Para habilitar Kill Switch, es posible que se le solicite que proporcione la contraseña del ordenador. Si aparece una solicitud, ingrese su %@ y acepte.\n\nPuede ver esta solicitud nuevamente ocasionalmente cuando la aplicación ProtonVPN reciba actualizaciones.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_update_popup_body" = "La actualización más reciente que ha descargado requiere que proporcione su contraseña del ordenador. Cuando la solicitud aparezca, ingrese su %@ y acepte.\n\nSi no ingresa su contraseña de Mac, Kill Switch se deshabilitará.";
+
+/* (No Comment) */
+"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Tome en cuenta que su conexión VPN finalizará cuando cambie las cuenta de Mac.";
+
+/* (No Comment) */
+"_learn_more" = "Más información";
+
+/* (No Comment) */
+"_learn_more_about_secure_core" = "Más información de Secure Core";
+
+/* (No Comment) */
+"_load" = "Carga";
+
+/* (No Comment) */
+"_loading_screen_slogan" = "Internet seguro en cualquier lugar";
+
+/* (No Comment) */
+"_location" = "Ubicación";
+
+/* (No Comment) */
+"_log_in" = "Iniciar sesión";
+
+/* (No Comment) */
+"_log_in_to_use_widget" = "Inicie sesión para comenzar";
+
+/* (No Comment) */
+"_log_out" = "Cerrar sesión";
+
+/* (No Comment) */
+"_log_out_warning" = "Al cerrar sesión la sesión finalizará su sesión de VPN.";
+
+/* (No Comment) */
+"_log_out_warning_long" = "Al cerrar la sesión de la aplicación desconectará la conexión VPN activa. ¿Desea continuar?";
+
+/* (No Comment) */
+"_login" = "Iniciar sesión";
+
+/* (No Comment) */
+"_logs" = "Registros";
+
+/* (No Comment) */
+"_mac_password" = "Contraseña Mac";
+
+/* (No Comment) */
+"_maintenance" = "Mantenimiento";
+
+/* (No Comment) */
+"_make_default_profile" = "Hacer perfil por defecto";
+
+/* (No Comment) */
+"_manage_profiles" = "Gestionar perfiles";
+
+/* (No Comment) */
+"_manage_subscription_on_web" = "Gestione su suscripción en el panel web";
+
+/* Map */
+"_map" = "Mapa";
+
+/* (No Comment) */
+"_map_hide" = "Ocultar mapa";
+
+/* (No Comment) */
+"_map_show" = "Mostrar mapa";
+
+/* (No Comment) */
+"_map_tour_description" = "Vea dónde se encuentran los servidores VPN. Encuentre el más cercano a su ubicación.";
+
+/* (No Comment) */
+"_map_tour_title" = "Mapa";
+
+/* (No Comment) */
+"_maybe_later" = "Más tarde";
+
+/* (No Comment) */
+"_medium" = "Media";
+
+/* (No Comment) */
+"_money_back_guarantee" = "30 días de garantía de devolución del dinero";
+
+/* (No Comment) */
+"_most_popular" = "Más popular";
+
+/* (No Comment) */
+"_multiple_countries" = "Múltiples países";
+
+/* (No Comment) */
+"_multiple_servers_description" = "Cientos de servidores\nalrededor del mundo";
+
+/* (No Comment) */
+"_multiple_servers_title" = "Servidores múltiples";
+
+/* (No Comment) */
+"_my_profiles" = "Mis perfiles";
+
+/* (No Comment) */
+"_name" = "Nombre";
+
+/* (No Comment) */
+"_ne_network_connection_lost" = "Conexión de red perdida";
+
+/* (No Comment) */
+"_ne_not_connected_to_the_internet" = "Sin conexión a internet";
+
+/* Network errors */
+"_ne_request_timed_out" = "Tiempo de espera de red agotado";
+
+/* (No Comment) */
+"_ne_unable_to_connect_to_host" = "Servicio no disponible";
+
+/* (No Comment) */
+"_neagent_always_allow" = "Permitir siempre";
+
+/* Final string with filled in variables looks like this:
+ 
+ You may be asked to provide your computer account password
+ to connect to the ProtonVPN service. If this request appears,
+ enter your Mac password (1) and click ‘Always Allow’ (2).
+ 
+ The numbers refer to a text field and button in an image displayed above this text. */
+"_neagent_description" = "Es posible que se le solicite que proporcione su %@\npara conectarse al servicio ProtonVPN. Si aparece esta solicitud,\ningrese su %@ %@ y haga clic en ‘%@’%@.";
+
+/* (No Comment) */
+"_neagent_first_step" = "(1)";
+
+/* (No Comment) */
+"_neagent_password" = "contraseña de la cuenta del ordenador";
+
+/* (No Comment) */
+"_neagent_second_step" = "(2)";
+
+/* (No Comment) */
+"_need_help" = "¿Necesita ayuda?";
+
+/* (No Comment) */
+"_network_unreachable" = "Red no disponible";
+
+/* (No Comment) */
+"_next" = "Siguiente";
+
+/* (No Comment) */
+"_next_tip" = "Siguiente consejo";
+
+/* (No Comment) */
+"_no_description_available" = "No hay descripción disponible";
+
+/* (No Comment) */
+"_no_servers_to_show" = "Actualmente no hay servidores para mostrar aquí.";
+
+/* (No Comment) */
+"_no_thanks" = "No, gracias";
+
+/* (No Comment) */
+"_not_connected" = "No conectado";
+
+/* (No Comment) */
+"_not_connected_to_the_internet" = "No se puede establecer una conexión VPN. No está conectado a Internet.";
+
+/* (No Comment) */
+"_ok" = "OK";
+
+/* (No Comment) */
+"_open_app_to_log_in" = "Mostrar ProtonVPN para iniciar sesión...";
+
+/* (No Comment) */
+"_overview" = "Vista general";
+
+/* (No Comment) */
+"_p2p" = "P2P";
+
+/* (No Comment) */
+"_p2p_description" = "Soporta tráfico P2P";
+
+/* (No Comment) */
+"_p2p_detected_popup_body" = "Su conexión ha sido deshabilitada porque está usando un servidor que no soporta el tráfico entre pares (P2P). P2P no es compatible con servidores o servidores gratuitos que están numerados 100 o más.";
+
+/* (No Comment) */
+"_p2p_detected_popup_title" = "Este servidor no permite tráfico P2P";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body" = "Su conexión ha sido redirigida automáticamente a través de otro servidor porque algunos servidores no admiten tráfico P2P. Esto puede reducir su velocidad de conexión. Utilice servidores con la etiqueta P2P para evitar el redireccionamiento.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p1" = "Su conexión ha sido redirigida automáticamente a través de otro servidor porque ciertos servidores no admiten tráfico P2P. Esto puede reducir su velocidad de conexión. Utilice servidores con el";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p2" = "ícono para evitar el redireccionamiento del tráfico.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_title" = "Conexión redirigida";
+
+/* (No Comment) */
+"_p2p_server" = "Servidor P2P";
+
+/* (No Comment) */
+"_p2p_servers" = "Servidores P2P";
+
+/* (No Comment) */
+"_paid_required" = "Se requiere un plan ProtonVPN de pago";
+
+/* (No Comment) */
+"_password" = "Contraseña";
+
+/* (No Comment) */
+"_password_confirm" = "Confirmar contraseña";
+
+/* (No Comment) */
+"_per_year_short" = "/año";
+
+/* (No Comment) */
+"_phone_country_code_placeholder" = "Código";
+
+/* (No Comment) */
+"_phone_number_placeholder" = "Ingrese el número de teléfono";
+
+/* (No Comment) */
+"_plan_does_not_include_secure_core" = "Su plan no incluye la función Secure Core.";
+
+/* (No Comment) */
+"_plan_speed_fastest" = "Velocidad máxima";
+
+/* (No Comment) */
+"_plan_speed_high" = "Velocidad alta";
+
+/* (No Comment) */
+"_plan_speed_medium" = "Velocidad media";
+
+/* (No Comment) */
+"_plans_connection" = "Conexión";
+
+/* (No Comment) */
+"_plans_connections" = "Conexiones";
+
+/* (No Comment) */
+"_plans_footer" = "Al confirmar su compra de un plan de pago, la cantidad mostrada se cargará a su cuenta de iTunes, la cual incluye el plan de servicio, y el cargo de compra en la app (Apple cobra un cargo de aproximadamente el 30% en las compras realizadas a través de su iPhone/iPad). Después de realizar la compra, su cuenta será automáticamente cambiada al plan seleccionado por un período de 1 año, después de ese plazo usted puede renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
+
+/* (No Comment) */
+"_plus" = "PLUS";
+
+/* (No Comment) */
+"_plus_plan_features" = "Servidores Plus\nSecure Core\nServidores Tor";
+
+/* (No Comment) */
+"_plus_required" = "Se requiere suscripción Plus o Visionary";
+
+/* (No Comment) */
+"_plus_servers" = "SERVIDORES PLUS";
+
+/* (No Comment) */
+"_plus_upgrade_description" = "Use Secure Core, transmita sus programas de TV favoritos,\n¡use hasta 5 dispositivos diferentes y más!";
+
+/* (No Comment) */
+"_plus_upgrade_title" = "¿Disfrutando ProtonVPN?\nObtenga Plus por sólo $8/mes";
+
+/* Settings */
+"_preferences" = "Preferencias";
+
+/* (No Comment) */
+"_premium_description" = "Servidor premium";
+
+/* (No Comment) */
+"_premium_server" = "Servidor premium";
+
+/* (No Comment) */
+"_preparing_connection" = "Comprobando disponibilidad del servidor";
+
+/* (No Comment) */
+"_privacy_policy" = "Política de Privacidad";
+
+/* Profiles */
+"_profile" = "Perfil";
+
+/* (No Comment) */
+"_profile_created_successfully" = "Perfil nuevo guardado";
+
+/* (No Comment) */
+"_profile_creation_failed" = "El perfil no se pudo crear";
+
+/* (No Comment) */
+"_profile_deleted_successfully" = "El perfil ha sido eliminado";
+
+/* (No Comment) */
+"_profile_deletion_failed" = "El perfil no se pudo eliminar";
+
+/* (No Comment) */
+"_profile_edited_successfully" = "Perfil actualizado";
+
+/* (No Comment) */
+"_profile_name_is_required" = "Ingrese un nombre";
+
+/* (No Comment) */
+"_profile_name_is_too_long" = "La longitud máxima del nombre del perfil es de 25 caracteres";
+
+/* (No Comment) */
+"_profile_name_needs_to_be_unique" = "El perfil con el mismo nombre ya existe";
+
+/* (No Comment) */
+"_profile_settings" = "Ajustes del perfil";
+
+/* (No Comment) */
+"_profiles" = "Perfiles";
+
+/* (No Comment) */
+"_profiles_overview" = "Resumen de perfiles";
+
+/* (No Comment) */
+"_profiles_tour_description" = "Guarde sus ajustes y servidores preferidos para uso futuro.";
+
+/* (No Comment) */
+"_profiles_tour_title" = "Perfiles";
+
+/* (No Comment) */
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+/* (No Comment) */
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "IP pública: %@";
+
+/* (No Comment) */
+"_quick_connect" = "Conexión rápida";
+
+/* (No Comment) */
+"_quick_connect_tooltip" = "El botón de conexión rápida le conectará al perfil seleccionado";
+
+/* (No Comment) */
+"_quick_connect_tour_description" = "Conecta automáticamente al servidor que le proporcionará la conexión más rápida.";
+
+/* (No Comment) */
+"_quick_connect_tour_title" = "Conexión rápida";
+
+/* (No Comment) */
+"_quit" = "Salir";
+
+/* (No Comment) */
+"_quit_warning" = "Salir de la aplicación desconectará la conexión VPN activa. ¿Desea continuar?";
+
+/* (No Comment) */
+"_random" = "Aleatorio";
+
+/* (No Comment) */
+"_random_available_server" = "Servidor disponible al azar";
+
+/* (No Comment) */
+"_random_connection" = "Conexión aleatoria";
+
+/* (No Comment) */
+"_recommended" = "Recomendado";
+
+/* (No Comment) */
+"_release_date" = "Fecha de lanzamiento:";
+
+/* (No Comment) */
+"_remember_login" = "Recordar inicio de sesión";
+
+/* (No Comment) */
+"_report" = "Notificar";
+
+/* (No Comment) */
+"_report_add_file" = "Añadir archivo";
+
+/* (No Comment) */
+"_report_an_issue" = "Notificar un problema...";
+
+/* Report bug */
+"_report_attachments" = "Adjuntos";
+
+/* (No Comment) */
+"_report_bug" = "Notificar error";
+
+/* (No Comment) */
+"_report_description" = "Por favor describa detalladamente el problema que encontró, y agregue todos los archivos que nos ayuden a reproducir el problema. Déjenos también información suya para contactarlo si necesitáramos más información.";
+
+/* (No Comment) */
+"_report_field_account" = "Cuenta:";
+
+/* (No Comment) */
+"_report_field_country" = "País:";
+
+/* (No Comment) */
+"_report_field_email" = "Correo:";
+
+/* (No Comment) */
+"_report_field_feedback" = "Comentarios";
+
+/* (No Comment) */
+"_report_field_isp" = "ISP:";
+
+/* (No Comment) */
+"_report_field_plan" = "Plan:";
+
+/* (No Comment) */
+"_report_field_version" = "Versión:";
+
+/* (No Comment) */
+"_report_logs" = "Registro de VPN";
+
+/* (No Comment) */
+"_report_logs_description" = "Activando esta opción añadirá los registros de su VPN a este reporte";
+
+/* (No Comment) */
+"_report_max_file_size" = "Tamaño límite máximo de archivo: 488 KB";
+
+/* (No Comment) */
+"_report_placeholder_email" = "Correo electrónico de contacto";
+
+/* (No Comment) */
+"_report_placeholder_message" = "Su mensaje...";
+
+/* (No Comment) */
+"_report_report" = "Mensaje del reporte";
+
+/* (No Comment) */
+"_report_send" = "Enviar reporte";
+
+/* (No Comment) */
+"_report_success" = "Gracias por su reporte";
+
+/* (No Comment) */
+"_request_invitation" = "Solicitar activación manual";
+
+/* (No Comment) */
+"_resend_code" = "Solicitar un código nuevo";
+
+/* (No Comment) */
+"_resend_no_code" = "¿No obtuvo el código?";
+
+/* (No Comment) */
+"_resend_success" = "Código nuevo solicitado";
+
+/* (No Comment) */
+"_reset_password" = "Restablecer contraseña";
+
+/* (No Comment) */
+"_retry" = "Reintentar";
+
+/* (No Comment) */
+"_save" = "Guardar";
+
+/* (No Comment) */
+"_save_as_profile" = "Guardar como perfil";
+
+/* (No Comment) */
+"_search_for_country" = "Búsqueda por país";
+
+/* (No Comment) */
+"_search_phone_country_code_placeholder" = "Buscar país";
+
+/* (No Comment) */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* (No Comment) */
+"_secure_core_description" = "Servidores ultra seguros\nalojados por nosotros";
+
+/* (No Comment) */
+"_secure_core_info" = "Proporciona protección adicional contra el compromiso del servidor VPN al redireccionar las conexiones a través de la red Secure Core";
+
+/* (No Comment) */
+"_secure_core_tour_description" = "Active Secure Core para redirigir su tráfico a través de servidores adicionales para otra capa de seguridad de la red. Disponible para miembros Plus y Visionary.";
+
+/* (No Comment) */
+"_secure_core_tour_title" = "Secure Core";
+
+/* (No Comment) */
+"_secure_streaming_description" = "Transmisión segura de su\ncontenido favorito";
+
+/* (No Comment) */
+"_secure_streaming_title" = "Transmisión segura";
+
+/* (No Comment) */
+"_security_options" = "Opciones de seguridad";
+
+/* (No Comment) */
+"_select_country" = "Seleccionar país";
+
+/* (No Comment) */
+"_select_phone_country_code" = "Seleccionar código de país";
+
+/* (No Comment) */
+"_select_plan" = "Seleccionar plan";
+
+/* (No Comment) */
+"_select_profile_color" = "Seleccionar color de perfil";
+
+/* (No Comment) */
+"_select_server" = "Seleccionar servidor";
+
+/* (No Comment) */
+"_select_verification_option" = "Por favor, seleccione una opción de verificación para continuar:";
+
+/* (No Comment) */
+"_select_verification_option_top_message" = "Para prevenir el abuso, debe verificar que es humano.";
+
+/* (No Comment) */
+"_server" = "Servidor";
+
+/* IP address follows e.g. Server IP: 123.45.67.890 */
+"_server_ip" = "IP del servidor:";
+
+/* Load follows e.g. Server Load: 24% */
+"_server_load" = "Carga del servidor:";
+
+/* (No Comment) */
+"_server_selection_is_required" = "Seleccione un servidor";
+
+/* (No Comment) */
+"_server_under_maintenance" = "Servidor en mantenimiento";
+
+/* (No Comment) */
+"_session_count_reached_description" = "Ha alcanzado el número máximo de conexiones simultáneas permitidas para su cuenta. Por favor, mejore su plan de ProtonVPN para obtener más conexiones.";
+
+/* (No Comment) */
+"_session_count_reached_title" = "Límite de sesión alcanzado";
+
+/* (No Comment) */
+"_session_time" = "Tiempo de sesión";
+
+/* (No Comment) */
+"_settings" = "Ajustes";
+
+/* (No Comment) */
+"_setup_complete" = "Configuración completada";
+
+/* (No Comment) */
+"_setup_complete_basic" = "Su compra fue exitosa. Su plan ProtonVPN Basic ahora está activo.";
+
+/* (No Comment) */
+"_setup_complete_free" = "Ahora está registrado en un plan ProtonVPN Free. Para comenzar, disfrute de siete días de nuestro plan ProtonVPN Plus de forma gratuita.";
+
+/* (No Comment) */
+"_setup_complete_plus" = "Su compra fue exitosa. Su plan ProtonVPN Plus ahora está activo.";
+
+/* (No Comment) */
+"_show" = "MOSTRAR";
+
+/* (No Comment) */
+"_show_protonvpn" = "Mostrar ProtonVPN";
+
+/* (No Comment) */
+"_sign_up" = "Registrarse";
+
+/* (No Comment) */
+"_skip" = "Omitir";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ velocidad";
+
+/* (No Comment) */
+"_standard" = "Estándar";
+
+/* (No Comment) */
+"_start_minimized" = "Iniciar minimizado";
+
+/* (No Comment) */
+"_start_on_boot" = "Iniciar al encender";
+
+/* (No Comment) */
+"_status" = "Estado";
+
+/* (No Comment) */
+"_submit_verification_code" = "Enviar";
+
+/* (No Comment) */
+"_subscription_plan" = "Plan de suscripción";
+
+/* (No Comment) */
+"_successfully_connected" = "Conectado con éxito";
+
+/* Custom switch off */
+"_switch_side_button_off" = "OFF";
+
+/* Custom switch on */
+"_switch_side_button_on" = "ON";
+
+/* (No Comment) */
+"_system_notifications" = "Notificaciones del sistema";
+
+/* (No Comment) */
+"_take_tour" = "Hacer recorrido";
+
+/* (No Comment) */
+"_technical_details" = "Detalles técnicos";
+
+/* (No Comment) */
+"_terms_and_conditions" = "Términos y Condiciones";
+
+/* %@1 is a link with a title of 'Terms and Conditions'
+ %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Al usar ProtonVPN, acepta nuestros\n%@ y %@";
+
+/* (No Comment) */
+"_timed_out" = "tiempo agotado";
+
+/* (No Comment) */
+"_tor" = "Tor";
+
+/* Servers */
+"_tor_description" = "Conecta a la red Tor";
+
+/* (No Comment) */
+"_tor_server" = "Servidor Tor";
+
+/* (No Comment) */
+"_trial_expired_alert_body_iOS" = "Su prueba gratuita de 7 días de ProtonVPN Plus ha expirado. Puede continuar usando ProtonVPN Free, pero si desea apoyar el proyecto y tener acceso a más países y funciones, mejore a un plan de pago.";
+
+/* (No Comment) */
+"_trial_expired_alert_title_iOS" = "Prueba de ProtonVPN Plus expirada";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "Para tener acceso permanente a las funciones de ProtonVPN Plus, puede mejorar su plan.";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "Disfrute de todos los beneficios de un internet seguro en cualquier lugar con ProtonVPN";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "Como regalo de bienvenida, ¡le damos acceso a una %@, que incluye funciones avanzadas durante el periodo inicial! Su prueba de bienvenida termina el";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "mejora gratuita a ProtonVPN Plus";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "suscripción completa a ProtonVPN";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Le hemos dado una %@ que incluye más servidores y funciones adicionales. Su prueba de ProtonVPN Plus finaliza en 7 días.";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "¡Gracias por usar ProtonVPN!";
+
+/* (No Comment) */
+"_trial_popup_title" = "Prueba de ProtonVPN";
+
+/* (No Comment) */
+"_trial_welcome_description_iOS" = "¡Como regalo de bienvenida, tiene acceso a una suscripción completa de ProtonVPN que incluye funciones avanzadas por los primeros días!";
+
+/* (No Comment) */
+"_trial_welcome_ends_in_iOS" = "Su prueba termina en";
+
+/* (No Comment) */
+"_trial_welcome_heading_iOS" = "Bienvenido a bordo";
+
+/* (No Comment) */
+"_try_agian" = "Volver a intentar";
+
+/* (No Comment) */
+"_unavailable" = "No disponible";
+
+/* (No Comment) */
+"_update_required" = "Actualización necesaria";
+
+/* (No Comment) */
+"_update_required_no_longer_supported" = "Esta versión de ProtonVPN ya no es compatible, actualice la aplicación para continuar usándola.";
+
+/* (No Comment) */
+"_update_required_support" = "Contacte al soporte";
+
+/* (No Comment) */
+"_update_required_update" = "Actualizar";
+
+/* (No Comment) */
+"_upgrade" = "Mejorar";
+
+/* (No Comment) */
+"_upgrade_for_secure_core" = "para usar Secure Core";
+
+/* (No Comment) */
+"_upgrade_my_plan" = "Mejorar mi plan";
+
+/* (No Comment) */
+"_upgrade_now" = "Mejorar ahora";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_country" = "Lo sentimos, no hay servidores disponibles para su nivel de suscripción en este país en este momento. Si desea acceder a más servidores, considere mejorar su suscripción.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core es una función premium que requiere ProtonVPN Plus o superior. Secure Core añade protección avanzada contra la supervisión del servidor VPN.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p2" = "Para acceder a Secure Core, consulte nuestros demás planes de suscripción que incluyen esta función.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_server" = "Lo sentimos, este servidor no está disponible para su nivel de suscripción. Si desea acceder a más servidores, considere mejorar su suscripción.";
+
+/* (No Comment) */
+"_upgrade_required" = "Mejora necesaria";
+
+/* (No Comment) */
+"_upgrade_subscription" = "Mejorar suscripción";
+
+/* (No Comment) */
+"_upgrade_to_plus" = "Mejorar a Plus";
+
+/* (No Comment) */
+"_upgrade_unavailable_body" = "Su suscripción de ProtonVPN no puede mejorarse desde la aplicación, visite account.protonvpn.com para mejorarla.";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
+"_upgrade_unavailable_title" = "Mejora no disponible en la app";
+
+/* (No Comment) */
+"_use_captcha_verification" = "Verificar con CAPTCHA";
+
+/* (No Comment) */
+"_use_other_email_address" = "Verificar con correo electrónico";
+
+/* (No Comment) */
+"_use_secure_core" = "Usar Secure Core";
+
+/* (No Comment) */
+"_use_sms_verification" = "Verificar con SMS";
+
+/* Login & Signup */
+"_username" = "Nombre de usuario";
+
+/* (No Comment) */
+"_verification_instructions" = "Se le ha enviado un código de verificación, ingréselo a continuación.";
+
+/* (No Comment) */
+"_version" = "Versión";
+
+/* (No Comment) */
+"_version_current" = "Version actual:";
+
+/* (No Comment) */
+"_via" = "vía";
+
+/* %@ is a country e.g. via Switzerland */
+"_via_country" = "vía %@";
+
+/* (No Comment) */
+"_view_logs" = "Ver registros";
+
+/* (No Comment) */
+"_view_toggle_will_cause_disconnect" = "Al habilitar Secure Core, finalizará su conexión actual.";
+
+/* (No Comment) */
+"_vpn_connection_active" = "Conexión VPN activa";
+
+/* (No Comment) */
+"_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo terminar una sesión VPN anterior. Necesitará reiniciar su dispositivo antes de establecer una conexión VPN nueva.";
+
+/* (No Comment) */
+"_vpn_stuck_disconnecting_title" = "Error de conexión";
+
+/* (No Comment) */
+"_warning" = "Advertencia";
+
+/* (No Comment) */
+"_warning_vpn_session_is_active" = "La sesión de ProtonVPN de otro usuario está activa en este dispositivo. Continuar con el proceso de inicio de sesión hará que la sesión actual finalice. ¿Desea continuar?";
+
+/* (No Comment) */
+"_welcome_description" = "Gracias por usar ProtonVPN. Eche un vistazo rápido\na las funciones principales de la aplicación.";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
+ 
+ A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "Como regalo de bienvenida, le concedemos un acceso de 7 días a una suscripción de\n%@ que le da:";
+
+/* Upsell & Onboard */
+"_welcome_title" = "¡BIENVENIDO A BORDO!";
+
+/* (No Comment) */
+"_widget" = "Widget iOS";
+
+/* (No Comment) */
+"_you_are_not_connected" = "No está conectado";
+

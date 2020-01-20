@@ -1,0 +1,607 @@
+// General
+"_cancel" = "Cancel";
+"_connect" = "Connect";
+"_connected" = "Connected";
+"_delete" = "Delete";
+"_disconnect" = "Disconnect";
+"_disconnected" = "Disconnected";
+"_done" = "Done";
+"_edit" = "Edit";
+"_ok" = "OK";
+"_save" = "Save";
+"_unavailable" = "Unavailable";
+"_warning" = "Warning";
+"_upgrade" = "Upgrade";
+"_upgrade_subscription" = "Upgrade Subscription";
+"_upgrade_required" = "Upgrade Required";
+"_maintenance" = "Maintenance";
+"_quit" = "Quit";
+"_quit_warning" = "Quitting the application will disconnect the active VPN connection. Do you want to continue?";
+"_enabled" = "Enabled";
+"_disabled" = "Disabled";
+"_disable" = "Disable";
+"_report" = "Report";
+"_ignore" = "Ignore";
+"_info" = "Info";
+"_continue" = "Continue";
+"_here" = "Here";
+"_network_unreachable" = "Network Unreachable";
+"_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the Internet.";
+"_vpn_connection_active" = "VPN Connection Active";
+"_log_out" = "Log Out";
+"_log_out_warning" = "Logging out will end your VPN session.";
+"_log_out_warning_long" = "Logging out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_loading_screen_slogan" = "Secure Internet Anywhere";
+"_report_an_issue" = "Report an Issue...";
+"_help" = "Help";
+"_learn_more" = "Learn more";
+"_ip" = "IP";
+"_close" = "Close";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Public IP: %@";
+"_quick_connect" = "Quick Connect";
+"_connect_to" = "Connect to...";
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+"_country" = "Country";
+"_show_protonvpn" = "Show ProtonVPN";
+"_clear_application_data" = "Clear Application Data";
+"_preparing_connection" = "Checking server availability";
+"_connecting" = "Connecting";
+"_connecting..." = "Connecting...";
+"_countries_free" = "Free countries";
+"_countries_premium" = "Premium countries";
+
+/* %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Connecting %@";
+
+/* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "Connecting to %@";
+"_connected_to" = "Connected to";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Connected to %@";
+"_not_connected" = "Not Connected";
+"_you_are_not_connected" = "You are not connected";
+"_try_agian" = "Try again";
+"_retry" = "Retry";
+"_free_servers" = "FREE SERVERS";
+"_basic_servers" = "BASIC SERVERS";
+"_plus_servers" = "PLUS SERVERS";
+"_initializing_connection" = "Initializing Connection...";
+"_successfully_connected" = "Successfully Connected";
+"_failed" = "failed";
+"_connection_failed" = "Connection Failed";
+"_timed_out" = "timed out";
+"_status" = "Status";
+"_session_time" = "Session Time";
+"_location" = "Location";
+"_city" = "City";
+"_technical_details" = "Technical Details";
+"_open_app_to_log_in" = "Show ProtonVPN to log in...";
+"_upgrade_to_plus" = "Upgrade to Plus";
+"_upgrade_for_secure_core" = "to use Secure Core";
+"_switch_side_button_on" = "ON";
+"_switch_side_button_off" = "OFF";
+
+// Notifications
+"_kill_switch_blocking_connection" = "Kill Switch blocking all connections";
+"_always_on_will_reconnect" = "Always-on VPN will reconnect you automatically";
+
+// About
+"_about" = "About";
+"_version" = "Version";
+"_version_current" = "Current version:";
+"_release_date" = "Release date:";
+"_changelog" = "Changelog";
+"_acknowledgements" = "Acknowledgements";
+
+// Login & Signup
+"_username" = "Username";
+"_password" = "Password";
+"_password_confirm" = "Confirm password";
+"_show" = "SHOW";
+"_hide" = "HIDE";
+"_login" = "Login";
+"_log_in" = "Log In";
+"_remember_login" = "Remember Login";
+"_start_on_boot" = "Start on Boot";
+"_create_account" = "Create Account";
+"_need_help" = "Need Help?";
+"_reset_password" = "Reset Password";
+"_forgot_username" = "Forgot Username";
+"_forgot_password" = "Forgot Password?";
+"_sign_up" = "Sign Up";
+"_warning_vpn_session_is_active" = "Another user's ProtonVPN session is active on this device. Continuing with the log in process will cause the current session to end. Do you want to continue?";
+"_enter_email_address" = "Enter email address";
+"_phone_country_code_placeholder" = "Code";
+"_phone_number_placeholder" = "Enter phone number";
+"_select_phone_country_code" = "Select Country Code";
+"_search_phone_country_code_placeholder" = "Search country";
+"_already_have_account" = "I already have an account";
+"_get_verification_email" = "Get verification email";
+"_get_verification_sms" = "Get verification SMS";
+"_select_verification_option" = "Please select a verification option to proceed:";
+"_select_verification_option_top_message" = "To prevent abuse, you must verify you are human.";
+"_use_captcha_verification" = "Verify with CAPTCHA";
+"_use_other_email_address" = "Verify with email";
+"_use_sms_verification" = "Verify with SMS";
+"_request_invitation" = "Request manual activation";
+"_enter_verification_code" = "123 456";
+"_submit_verification_code" = "Submit";
+"_resend_no_code" = "Didn't get the code?";
+"_resend_code" = "Request new code";
+"_resend_success" = "New code requested";
+"_terms_and_conditions" = "Terms and Conditions";
+
+/* %@1 is a link with a title of 'Terms and Conditions'
+ %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "By using ProtonVPN, you agree to our\n%@ and %@";
+"_privacy_policy" = "Privacy Policy";
+"_verification_instructions" = "A verification code has been sent to you, please enter it below.";
+"_setup_complete" = "Setup Complete";
+"_setup_complete_free" = "You are now signed up for a ProtonVPN Free plan. To get you started, enjoy seven days of our ProtonVPN Plus plan for free.";
+"_setup_complete_basic" = "Your purchase was successful. Your ProtonVPN Basic plan is now active.";
+"_setup_complete_plus" = "Your purchase was successful. Your ProtonVPN Plus plan is now active.";
+"_data_disclaimer_title" = "Protect yourself online";
+
+/* %@1 is a bold 'Username, email address'
+ %@2 is a bold 'Your device model and OS version' */
+"_data_disclaimer_text" = "ProtonVPN is committed to protecting and respecting your privacy. It is our overriding policy to collect as little user data as possible to ensure a private and anonymous user experience in the use of the App, specifically:\n\n%@ – to log you in, help to recover a lost password, and send important service updates.\n\n%@ – for crash reports and errors only.\n\nThe ProtonVPN App does not process any user information besides this data. We don't log your online activity nor any personal identifiable information. All data listed above is stored and processed on ProtonVPN's own system, with no third party ever having access to it.";
+"_data_disclaimer_user_details" = "Username, email address";
+"_data_disclaimer_device_details" = "Your device model and OS version";
+"_data_disclaimer_agree" = "Agree & Continue";
+
+// Map
+"_map" = "Map";
+"_map_show" = "Show map";
+"_map_hide" = "Hide map";
+
+// Servers
+"_tor_description" = "Connects to TOR network";
+"_p2p_description" = "Supports P2P traffic";
+"_premium_description" = "Premium server";
+
+/* %@ is a country e.g. via Switzerland */
+"_via_country" = "via %@";
+"_via" = "via";
+"_you_are_not_protected" = "You are not protected!";
+"_load" = "Load";
+"_countries" = "Countries";
+"_no_servers_to_show" = "There are currently no servers to show here.";
+"_plan_does_not_include_secure_core" = "Your plan doesn't include Secure Core feature.";
+"_learn_more_about_secure_core" = "Learn more about Secure Core";
+"_search_for_country" = "Search for country";
+"_secure_core_info" = "Provides additional protection against VPN server compromise by routing traffic through our Secure Core Network";
+"_view_toggle_will_cause_disconnect" = "Toggling Secure Core will end your current connection.";
+
+/* Load follows e.g. Server Load: 24% */
+"_server_load" = "Server Load:";
+
+/* IP address follows e.g. Server IP: 123.45.67.890 */
+"_server_ip" = "Server IP:";
+"_auto_assigned" = "Auto assigned";
+"_premium_server" = "Premium Server";
+"_standard" = "Standard";
+"_p2p" = "P2P";
+"_tor" = "TOR";
+"_p2p_server" = "P2P Server";
+"_tor_server" = "Tor Server";
+
+// Profiles
+"_profile" = "Profile";
+"_profiles" = "Profiles";
+"_recommended" = "Recommended";
+"_my_profiles" = "My Profiles";
+"_save_as_profile" = "Save as Profile";
+"_delete_profile" = "Delete profile";
+"_profile_deleted_successfully" = "Profile has been deleted";
+"_profile_deletion_failed" = "Profile could not be deleted";
+"_create_new_profile" = "Create Profile";
+"_manage_profiles" = "Manage Profiles";
+"_profiles_overview" = "Profiles Overview";
+"_profile_created_successfully" = "New Profile saved";
+"_profile_creation_failed" = "Profile could not be created";
+"_profile_edited_successfully" = "Profile updated";
+"_overview" = "Overview";
+"_connection" = "Connection";
+"_action" = "Action";
+"_default" = "Default";
+"_fastest" = "Fastest";
+"_fastest_available_server" = "Fastest available server";
+"_fastest_connection" = "Fastest Connection";
+"_random" = "Random";
+"_random_available_server" = "Random available server";
+"_random_connection" = "Random Connection";
+"_different_server_each_time" = "Different server each time";
+"_no_description_available" = "No description available";
+"_create_profile" = "Create Profile";
+"_profile_settings" = "Profile settings";
+"_connection_settings" = "Connection settings";
+"_name" = "Name";
+"_enter_profile_name" = "Enter Profile Name";
+"_color" = "Color";
+"_make_default_profile" = "Make Default Profile";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_feature" = "Feature";
+"_use_secure_core" = "Use Secure Core";
+"_select_country" = "Select Country";
+"_server" = "Server";
+"_select_server" = "Select Server";
+"_profile_name_is_required" = "Please enter a name";
+"_profile_name_is_too_long" = "Maximum profile name length is 25 characters";
+"_country_selection_is_required" = "Please select a country";
+"_server_selection_is_required" = "Please select a server";
+"_profile_name_needs_to_be_unique" = "Profile with same name already exists";
+"_country_and_server_combination_needs_to_be_unique" = "Profile with same server already exists";
+"_current_selection_will_be_lost" = "By continuing, current selection will be lost. Do you want to continue?";
+"_check_if_fields_present" = "Please check if all the fields are filled in";
+"_delete_profile" = "Delete Profile";
+"_delete_profile_warning" = "The profile will be permanently deleted. Do you want to continue?";
+"_select_profile_color" = "Select profile color";
+
+"_plan_speed_medium" = "Medium speed";
+"_plan_speed_high" = "High speed";
+"_plan_speed_fastest" = "Fastest speed";
+
+// Errors
+"_error_internal_error" = "Internal API error";
+"_error_vpn_session_is_active" = "ProtonVPN session is active";
+"_error_user_has_no_vpn_access" = "Your account does not have VPN Access. Please contact your Account Administrator";
+"_error_user_has_not_signed_up" = "You have not yet signed up for ProtonVPN";
+"_error_user_is_on_waitlist" = "You are currently in the Waitlist and your account is not yet ready";
+"_error_user_credentials_missing" = "User credentials are missing. Unable to login";
+"_error_user_credentials_expired" = "User credentials have expired. Please log in";
+"_error_vpn_credentials_missing" = "VPN credentials are missing from the keychain";
+
+"_error_field_required" = "This field is required";
+"_error_field_email_wrong_format" = "The email address is not in the right format";
+"_error_field_passwords_dont_match" = "Passwords do not match";
+"_error_field_unknown" = "Please check this field";
+
+"_error_user_cancelled" = "Operation cancelled";
+"_error_user_failed_human_validation" = "We have not been able to verify that you are human. Please try again or purchase a premium plan.";
+
+"_error_apply_payment_failed_on_registration_title" = "Payment failed";
+"_error_apply_payment_failed_on_registration_message" = "You have successfully registered but your payment was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
+"_error_apply_payment_failed_on_registration_support" = "Contact customer support";
+
+/* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
+"_error_decode" = "Failed to decode archived data in class: %@";
+"_error_email_verification_disabled" = "Email verification temporarily disabled";
+
+// Password encoding errors
+"_error_modulus_signature" = "Modulus signature is empty";
+"_error_generate_srp" = "SRP generation failed";
+"_error_hash_password" = "Can't hash user password";
+"_error_fetch_session" = "Can't find user from the session";
+
+// Network errors
+"_ne_request_timed_out" = "Network request timed out";
+"_ne_unable_to_connect_to_host" = "Service unreachable";
+"_ne_network_connection_lost" = "Network connection lost";
+"_ne_not_connected_to_the_internet" = "Not connected to the Internet";
+
+// API errors
+"_ae_wrong_login_credentials" = "Wrong username or password";
+"_ae_vpn_info_not_received" = "Unable to obtain vpn information";
+"_error_server_info_parser" = "Can't parse the servers info";
+"_error_vpn_properties" = "Can't fetch VPN properties!";
+"_error_session_count_parser" = "Can't parse session count";
+"_error_existing_session_to_server" = "Can't connect to server because it already has an active session from user";
+"_error_loads" = "Can't update server loads";
+"_error_api_offline" = "The ProtonVPN API is currently offline";
+"_error_subscription_parser" = "Can't parse subscription info";
+"_error_verification_methods_parser" = "Can't parse verfication methods";
+"_error_username_unavailable" = "Username already taken";
+"_error_keychain_fetch" = "Keychain error.";
+"_error_user_creation" = "Account creation failed";
+"_error_signup_using_protonmail_address" = "Your ProtonMail account is already configured for VPN. Please log in with your existing credentials.";
+
+// Unknown error
+"_error_unknown_title" = "Unknown error";
+
+// IAP errors
+"_error_occured" = "Error occured";
+"_error_unavailable_product" = "Failed to get list of available products from App Store.";
+"_error_receipt_lost" = "App Store receipt lost. Please contact support if your plan was not activated.";
+"_error_transaction_of_other_user" = "A purchase was started with a different ProtonVPN username.";
+"_error_purchased_plan_does_not_match_available" = "We were not available to match App Store product with products on our server. Please contact support.";
+"_error_sandbox_receipt" = "Purchases are not available in the beta version of the iOS app. You have not been charged.";
+"_error_credit_applied" = "Contact support@protonvpn.com to complete your purchase.";
+"_error_transaction_failed_by_unknown_reason" = "App Store could not process your purchase.";
+"_error_no_active_username" = "Please login with the account you're upgrading the service plan for so we can complete your purchase.";
+"_error_no_new_subscription_in_successfull_response" = "Your subscription upgrade was successful. Please relaunch the app to benefit from your new service plan.";
+
+// Alerts
+"_delinquent_user_title" = "Unpaid invoice";
+"_delinquent_user_description" = "Your account currently has an overdue invoice. Please pay all unpaid invoices at account.protonvpn.com";
+"_existing_session" = "Server Unavailable";
+"_existing_session_to_server" = "Please select a different server.";
+"_failed_to_access_vpn_credentials_title" = "VPN credentials missing";
+"_failed_to_access_vpn_credentials_description" = "Failed to retrieve VPN credentials, please log back in to resolve the issue.";
+"_p2p_detected_popup_title" = "P2P traffic is not permitted on this server";
+"_p2p_detected_popup_body" = "Your connection has been disabled because you are using a server that does not support peer-to-peer (P2P) traffic. P2P is not supported on free servers or servers that are numbered 100 or greater.";
+"_p2p_forwarded_popup_title" = "Connection rerouted";
+"_server_under_maintenance" = "Server under maintenance";
+"_session_count_reached_title" = "Session limit reached";
+"_session_count_reached_description" = "You have hit the maximum number of simultaneous connections allowed for your account. Please upgrade your ProtonVPN plan to get more connections.";
+"_upgrade_plan_to_access_country" = "Sorry, no servers available for your subscription tier in this country right now. If you would like to access more servers, consider upgrading your subscription.";
+"_upgrade_plan_to_access_server" = "Sorry, this server is not available for your subscription tier. If you would like to access more servers, consider upgrading your subscription.";
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core is a premium feature which requires ProtonVPN Plus or higher. Secure Core adds advanced protection against VPN server monitoring.";
+"_upgrade_plan_to_access_secure_core_p2" = "To access Secure Core, check out our other subscription plans which include this feature.";
+"_servers_under_maintenance" = "Servers under maintenance";
+"_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
+
+/* %@ is a country name, e.g. Switzerland servers under maintenance */
+"_country_servers_under_maintenance" = "%@ servers under maintenance";
+"_all_servers_in_profile_under_maintenance" = "Profile server(s) under maintenance";
+"_all_servers_under_maintenance" = "All servers are under maintenance. This usually means either there are technical difficulties on ProtonVPN's side, or your network is limited.";
+
+"_trial_popup_title" = "ProtonVPN Trial";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days.
+ */
+"_trial_popup_introduction" = "We have given you a %@ which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days.";
+"_trial_popup_free_upgrade" = "free upgrade to ProtonVPN Plus";
+"_trial_popup_call_to_upgrade" = "To have permanent access to ProtonVPN Plus features, you can upgrade your plan.";
+"_trial_popup_thanks" = "Thank you for using ProtonVPN!";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes
+ */
+"_trial_popup_explanation" = "As a welcome gift, you have access to a %@, including advanced features for the first few days! Your welcome trial ends in";
+"_trial_popup_full_subscription" = "full ProtonVPN subscription";
+"_trial_popup_enjoy" = "Enjoy the full benefits of secure internet anywhere with ProtonVPN";
+
+"_trial_welcome_heading_iOS" = "Welcome on board";
+"_trial_welcome_description_iOS" = "As a welcome gift you have access to a full ProtonVPN subscription including advanced features for the first days!";
+"_trial_welcome_ends_in_iOS" = "Your trial ends in";
+"_trial_expired_alert_title_iOS" = "ProtonVPN Plus trial expired";
+"_trial_expired_alert_body_iOS" = "Your 7 day free trial of ProtonVPN Plus has expired. You can continue to use ProtonVPN Free, but if you would like to support the project and have access to more countries and features, please upgrade to a paid plan.";
+
+"_p2p_forwarded_popup_body" = "Your connection has been automatically rerouted through another server because some servers do not support P2P traffic. This may reduce your connection speed. Please use servers with the P2P label to avoid rerouting.";
+"_p2p_forwarded_popup_body_p1" = "Your connection has been automatically rerouted through another server because certain servers do not support P2P traffic. This may reduce your connection speed. Please use servers with the";
+"_p2p_forwarded_popup_body_p2" = "icon to avoid traffic rerouting.";
+
+"_vpn_stuck_disconnecting_title" = "Connection error";
+"_vpn_stuck_disconnecting_body" = "Your device failed to terminate a previous VPN session. You will need to restart your device before you can establish a new VPN connection.";
+
+"_update_required" = "Update required";
+"_update_required_no_longer_supported" = "This version of ProtonVPN is no longer supported, please update the app to continue using it.";
+"_update_required_support" = "Contact support";
+"_update_required_update" = "Update";
+
+"_invalid_refresh_token" = "Session expired";
+"_invalid_refresh_token_please_login" = "It's been a while since you last used the ProtonVPN app. Please log back in.";
+
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+"_error_mitm_title" = "Insecure connection";
+"_error_mitm_description" = "The TLS certificate validation failed. Your current Internet connection may be monitored. To keep your data secure, the app is being temporarily blocked.\nTo establish a VPN connection, switch to a new network and try to connect again.";
+
+"_error_invalid_human_verification_code_title" = "Invalid verification code";
+"_error_invalid_human_verification_code_message" = "Would you like to receive a new verification code or use an alternative verification method?";
+"_error_invalid_human_verification_code_try_other" = "Try other method";
+"_error_invalid_human_verification_code_resend" = "Resend";
+
+/* Final string with filled in variables looks like this:
+ 
+ You may be asked to provide your computer account password
+ to connect to the ProtonVPN service. If this request appears,
+ enter your Mac password (1) and click ‘Always Allow’ (2).
+ 
+ The numbers refer to a text field and button in an image displayed above this text. */
+"_neagent_description" = "You may be asked to provide your %@\nto connect to the ProtonVPN service. If this request appears,\nenter your %@ %@ and click ‘%@’ %@.";
+"_neagent_password" = "computer account password";
+"_mac_password" = "Mac password";
+"_neagent_first_step" = "(1)";
+"_neagent_always_allow" = "Always Allow";
+"_neagent_second_step" = "(2)";
+"_got_it" = "Got it!";
+
+"_paid_required" = "Paid ProtonVPN plan required";
+"_plus_required" = "Plus or Visionary subscription required";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
+"_upgrade_unavailable_title" = "Upgrade Unavailable in App";
+"_upgrade_unavailable_body" = "Your ProtonVPN subscription cannot be upgraded from within the app, please visit account.protonvpn.com to upgrade.";
+
+"_delete_application_data_popup_title" = "Clear application data";
+"_delete_application_data_popup_body" = "All ProtonVPN data will be deleted and the application will quit. Do you wish to continue?";
+
+"_kill_switch_blocking_title" = "Kill Switch is currently blocking IP leaks";
+
+/* %@ is a link to the app's Preferences */
+"_kill_switch_blocking_body" = "You have lost connection to the VPN server. Kill Switch is blocking all connections to avoid leaking your data. ProtonVPN will try to reconnect automatically. To dismiss this window, click OK.\n\nIf you would like to temporarily disable Kill Switch and reconnect to the Internet WITHOUT VPN protection, click DISABLE.\n\nTo turn off Kill Switch permanently, go to %@.";
+
+"_kill_switch_error_title" = "A Kill Switch error has been detected";
+"_kill_switch_error_body" = "Kill Switch is not functioning properly. If you would like to report this error to the ProtonVPN Support Team, click Report.\nIf you would like to ignore this error and continue browsing the Internet WITHOUT Kill Switch protection, click Ignore.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_install_popup_body" = "To enable Kill Switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the ProtonVPN app receives updates.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_update_popup_body" = "The most recent update you downloaded requires you to provide your computer account password. When the request appears, please enter your %@ and accept.\n\nIf you do not enter your Mac password, Kill Switch will be turned off.";
+"_kill_switch_helper_install_issue_popup_body" = "There was a problem installing or updating Kill Switch.\n\nTo try again, click RETRY.\n\nTo continue without Kill Switch, click DISABLE.";
+
+"_existing_firewall_popup_title" = "Firewall detected";
+"_existing_firewall_popup_body" = "ProtonVPN uses a packet filter firewall to implement a Kill Switch. By enabling Kill Switch, you will overwrite your device's current firewall settings. If you rely on this firewall configuration, you should not use Kill Switch.\n\nTo use Kill Switch and overwrite your current firewall settings, select CONTINUE.\n\nTo turn off Kill Switch and continue using your current firewall, select CANCEL.";
+
+// Settings
+"_preferences" = "Preferences";
+"_settings" = "Settings";
+"_account" = "Account";
+"_general" = "General";
+"_account_type" = "Account type";
+"_account_plan" = "Account plan";
+"_manage_subscription_on_web" = "Manage your subscription in the web dashboard";
+"_kill_switch" = "Kill Switch";
+"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost. Note that your VPN connection will be terminated when you switch Mac accounts.";
+"_always_on_vpn" = "Always-on VPN";
+"_always_on_vpn_tooltip_ios" = "Kill Switch is not supported on iOS. Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.";
+"_always_on_vpn_connection_will_restart" = "Enabling Always-on VPN will reconnect the active connection. Do you want to continue?";
+"_always_on_vpn_connection_will_drop" = "You are currently connected with Always-on VPN enabled. Disabling Always-on VPN will end your connection. Do you want to continue?";
+"_auto_connect" = "Auto Connect";
+"_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
+"_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
+"_start_minimized" = "Start Minimized";
+"_system_notifications" = "System Notifications";
+"_early_access" = "Early Access";
+"_early_access_tooltip" = "Be the first to get the latest updates. Please keep in mind that early versions may be less stable.";
+"_dns_leak_protection" = "DNS Leak Protection";
+"_dns_leak_protection_tooltip" = "Prevent leaking details of DNS queries to third parties. Always on.";
+"_security_options" = "Security Options";
+"_subscription_plan" = "Subscription Plan";
+"_choose_plan" = "Choose Subscription";
+"_view_logs" = "View Logs";
+"_logs" = "Logs";
+"_activate_widget" = "Activate Widget";
+"_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
+"_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
+"_activate_widget_step_3" = "Add the ProtonVPN widget to the list of active widgets.";
+"_report_bug" = "Report Bug";
+
+// Plans
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Get %@ Plan";
+"_countries_count" = "%@ countries";
+"_free_countries" = "3 Countries";
+"_all_countries" = "40+ countries";
+"_plans_connection" = "Connection";
+"_plans_connections" = "Connections";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ speed";
+"_medium" = "Medium";
+"_high" = "High";
+"_highest" = "Highest";
+"_plus_plan_features" = "Plus Servers\nSecure Core\nTor Servers";
+"_free" = "Free";
+"_for_a_year" = "for one year";
+"_plan_unavailable_button" = "Temporarily Unavailable";
+"_do_you_want_to_activate_subscription_for" = "Do you want to activate the purchased subscription for ";
+"_most_popular" = "Most popular";
+"_select_plan" = "Select plan";
+"_advanced_features" = "+ Advanced features";
+"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes the service plan, and Apple’s in-app purchase fee (Apple charges a fee of approximately 30% on purchases made through your iPhone/iPad). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_per_year_short" = "/ yr";
+
+// Plan selection: advances features
+"_feature_server_count" = "Connect to servers in";
+"_feature_speed" = "Speed";
+"_feature_connections" = "Simultaneous VPN connections";
+"_feature_secure_streaming" = "Secure Streaming";
+"_feature_tor" = "Tor over VPN";
+"_feature_secure_core" = "Secure Core";
+
+
+
+// Upsell & Onboard
+"_welcome_title" = "WELCOME ON BOARD!";
+"_welcome_description" = "Thanks for using ProtonVPN. Take a quick look\nat the main app features.";
+"_no_thanks" = "No thanks";
+"_skip" = "Skip";
+"_take_tour" = "Take a Tour";
+
+"_plus" = "PLUS";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "ENJOY %@ FOR FREE!";
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
+ 
+ A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "As a welcome gift, you are granted a 7-day access to a\n%@ subscription which gives you:";
+"_p2p_servers" = "P2P servers";
+"_5_connections" = "5 Connections";
+"_multiple_countries" = "Multiple countries";
+"_expired" = "EXPIRED";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "YOUR FREE TRIAL %@";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
+ 
+ A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from %@:";
+"_maybe_later" = "Maybe Later";
+"_upgrade_now" = "Upgrade Now";
+"_money_back_guarantee" = "30-day money back guarantee";
+
+"_plus_upgrade_title" = "Enjoying ProtonVPN?\nGet Plus for only $8/mo";
+"_plus_upgrade_description" = "Use Secure Core, stream your favorite TV shows,\nuse on up to 5 different devices and more!";
+"_upgrade_my_plan" = "Upgrade My Plan";
+
+"_free_trial_about_to_expire_title" = "Your free trial is about to expire!";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features:
+ 
+ I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Upgrade to %@ and continue enjoying these features:";
+"_5_connections_description" = "Connect up to 5 devices\nat the same time";
+"_secure_core_description" = "Ultra secure servers\nhosted by us";
+"_multiple_servers_title" = "Multiple Servers";
+"_multiple_servers_description" = "Hundreds of servers\naround the world";
+"_secure_streaming_title" = "Secure Streaming";
+"_secure_streaming_description" = "Secure streaming of your\nfavorite content";
+
+"_quick_connect_tour_title" = "Quick Connect";
+"_quick_connect_tour_description" = "Automatically connect to the server that will provide you with the fastest connection.";
+"_profiles_tour_title" = "Profiles";
+"_profiles_tour_description" = "Save your preferred settings and servers for future use.";
+"_countries_tour_title" = "Countries";
+"_countries_tour_description" = "Choose which country and server you would like to use for your end IP address.";
+"_secure_core_tour_title" = "Secure Core";
+"_secure_core_tour_description" = "Turn on Secure Core to route your traffic through additional servers for another layer of network security. Available to Plus and Visionary members.";
+"_map_tour_title" = "Map";
+"_map_tour_description" = "See where VPN servers are located. Find the one nearest to your location.";
+"_next_tip" = "Next Tip";
+"_end_tour" = "End Tour";
+
+// Upsell & Onboard - iOS
+"_ios_onboarding_page1_title" = "Welcome to a better Internet";
+"_ios_onboarding_page1_description" = "From the scientists and engineers that created ProtonMail, welcome to a more secure and private Internet.";
+"_ios_onboarding_page2_title" = "We believe the Internet should be free";
+"_ios_onboarding_page2_description" = "Beat censorship and regional restrictions. We have no ads, no bandwidth limits, and don’t sell your data.";
+"_ios_onboarding_page3_title" = "Your security is our priority";
+"_ios_onboarding_page3_description" = "We are a security company. Whether it is our Secure Core architecture or advanced encryption, security always comes first.";
+"_next" = "Next";
+"_discover_the_app" = "Discover the app";
+
+// Extensions
+"_extensions" = "Extensions";
+"_widget" = "iOS Widget";
+"_log_in_to_use_widget" = "Please log in to get started";
+
+// Report bug
+"_report_attachments" = "Attachments";
+"_report_logs" = "VPN logs";
+"_report_logs_description" = "Enabling this will add your client side VPN logs to this report";
+"_report_report" = "Report message";
+"_report_placeholder_email" = "Contact email";
+"_report_placeholder_message" = "Your message...";
+"_report_send" = "Send Report";
+"_report_success" = "Thank you for your report";
+"_report_description" = "Please provide detailed information about the problem that you encountered, and attach any files that will help us reproduce the issue. Also provide us with a way to contact you for more information.";
+"_report_field_email" = "Email:";
+"_report_field_country" = "Country:";
+"_report_field_isp" = "ISP:";
+"_report_field_account" = "Account:";
+"_report_field_plan" = "Plan:";
+"_report_field_version" = "Version:";
+"_report_field_feedback" = "Feedback";
+"_report_add_file" = "Add file";
+"_report_max_file_size" = "Max file size limit: 488 KB";

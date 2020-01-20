@@ -1,0 +1,13 @@
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/Sentry-iOS" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS"
+GCC_ENABLE_CPP_EXCEPTIONS = YES
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-iOS/Alamofire.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess-iOS/KeychainAccess.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift-iOS/Reachability.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/Sentry-iOS/Sentry.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS/TrustKit.framework/Headers"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks' '@executable_path/../../Frameworks'
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-iOS/Alamofire.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess-iOS/KeychainAccess.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift-iOS/Reachability.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/Sentry-iOS/Sentry.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS/TrustKit.framework/Headers" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/Alamofire-iOS" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/KeychainAccess-iOS" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/ReachabilitySwift-iOS" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/Sentry-iOS" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/TrustKit-iOS"
+OTHER_LDFLAGS = $(inherited) -l"c++" -l"z" -framework "Alamofire" -framework "Foundation" -framework "KeychainAccess" -framework "Reachability" -framework "Security" -framework "Sentry" -framework "SystemConfiguration" -framework "TrustKit"
+OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
+PODS_BUILD_DIR = ${BUILD_DIR}
+PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)
+PODS_PODFILE_DIR_PATH = ${SRCROOT}/.
+PODS_ROOT = ${SRCROOT}/Pods
+USE_RECURSIVE_SCRIPT_INPUTS_IN_SCRIPT_PHASES = YES

@@ -1,0 +1,118 @@
+stages:
+  - linting
+  - unit_tests
+  - mirror
+
+variables:
+  LC_ALL: "en_US.UTF-8"
+  LANG: "en_US.UTF-8"
+  GEM_HOME: "$CI_PROJECT_DIR/gem"
+  PUBLIC_REPO_URL: git@github.com:ProtonVPN/vpncore.git
+
+.linux-common: &linux-common
+  image: ubuntu:latest
+  cache: {}
+  stage: mirror
+  before_script:
+    - apt-get -y update
+    - apt-get install -y connect-proxy git
+    - 'which ssh-agent || apt-get -y install openssh-client'
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - git config --global user.email $GIT_CI_EMAIL
+    - git config --global user.name $GIT_CI_USERNAME
+    - git config --global url."https://".insteadOf git://
+    - mkdir ~/.ssh 2> /dev/null
+    - |
+      cat <<EOF > ~/.ssh/config
+      Host github.com
+          Hostname ssh.github.com
+          User git
+          Port 443
+          ProxyCommand connect-proxy -H $http_proxy %h %p
+      EOF
+    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
+    ## ssh-keyscan doesn't support proxies so we can't fetch the fingerprint online
+    - |
+      cat <<EOF >> ~/.ssh/known_hosts
+      # ssh.github.com:443 SSH-2.0-babeld-2e9d163d
+      [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
+      EOF
+
+lint:
+  stage: linting
+  tags:
+    - iOS
+    - macOS
+  script: Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
+  allow_failure: false
+  artifacts:
+    name: "core-lint-$CI_COMMIT_TAG"
+    paths:
+      - swiftlint.xml
+    reports:
+      junit: 
+        - swiftlint.xml
+    expire_in: 90 days
+
+unit_tests:
+  dependencies: []
+  stage: unit_tests
+  script:
+    - pod install
+    
+    - fastlane ios test
+
+    - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
+    - fastlane mac ci_test
+
+    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.test_result/2_Test/action.xccovreport
+  tags:
+    - iOS
+    - macOS
+  artifacts:
+    reports:
+      junit: 
+        - fastlane/test_output/report.junit
+
+sync-app:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+      refs:
+        - master
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+      - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+      - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
+
+sync-app-2.0:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+      refs:
+        - release-candidate-2.0.0
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL --branch release-candidate-2.0.0"
+
+publish-github-release:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+    refs:
+    - tags
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+    - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"

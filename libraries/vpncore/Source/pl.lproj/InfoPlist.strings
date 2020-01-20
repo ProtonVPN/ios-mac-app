@@ -1,0 +1,6 @@
+/* Bundle name */
+"CFBundleName" = "$(PRODUCT_NAME)";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Prawo autorskie © 2019 Proton Technologies AG. Wszelkie prawa zastrzeżone.";
+

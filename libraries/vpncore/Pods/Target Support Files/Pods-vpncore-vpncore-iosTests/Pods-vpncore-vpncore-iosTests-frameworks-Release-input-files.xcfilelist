@@ -1,0 +1,6 @@
+${PODS_ROOT}/Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/KeychainAccess-iOS/KeychainAccess.framework
+${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework
+${BUILT_PRODUCTS_DIR}/Sentry-iOS/Sentry.framework
+${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework

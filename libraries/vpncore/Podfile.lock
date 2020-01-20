@@ -1,0 +1,38 @@
+PODS:
+  - Alamofire (4.8.0)
+  - KeychainAccess (3.1.2)
+  - ReachabilitySwift (4.3.0)
+  - Sentry (4.1.1):
+    - Sentry/Core (= 4.1.1)
+  - Sentry/Core (4.1.1)
+  - SwiftLint (0.32.0)
+  - TrustKit (1.6.1)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - KeychainAccess (~> 3.0)
+  - ReachabilitySwift (~> 4.0)
+  - Sentry (~> 4.0)
+  - SwiftLint
+  - TrustKit
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - KeychainAccess
+    - ReachabilitySwift
+    - Sentry
+    - SwiftLint
+    - TrustKit
+
+SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
+  SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
+  TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
+
+PODFILE CHECKSUM: eac85d5945533ef33559ab219a938a302e84f311
+
+COCOAPODS: 1.8.4

@@ -1,0 +1,49 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+update_fastlane
+
+platform :ios do
+  desc "Run all ios tests"
+  lane :test do
+    scan(scheme: "vpncore-ios")
+  end
+end
+
+platform :mac do
+  desc "Run all mac tests"
+  lane :ci_test do
+    create_keychain(
+      name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+      password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+      default_keychain: false,
+      add_to_search_list: true,
+      unlock: true
+    )
+    import_certificate(
+      keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+      keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+      certificate_path: 'Certificates.p12',
+      certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
+    )
+
+    scan(
+      scheme: "vpncore-macos",
+      result_bundle: true,
+      clean: true
+    )
+
+    delete_keychain(
+      name: ENV["DEVELOPER_KEYCHAIN_NAME"]
+    )
+  end
+end

@@ -1,0 +1,1381 @@
+/* (No Comment) */
+"_5_connections" = "5 verbindingen";
+
+/* (No Comment) */
+"_5_connections_description" = "Verbind tot 5 apparaten tegelijk";
+
+/* About */
+"_about" = "Over";
+
+/* (No Comment) */
+"_account" = "Account";
+
+/* (No Comment) */
+"_account_plan" = "Abonnement";
+
+/* (No Comment) */
+"_account_type" = "Accounttype";
+
+/* (No Comment) */
+"_acknowledgements" = "Met dank aan";
+
+/* (No Comment) */
+"_action" = "Actie";
+
+/* (No Comment) */
+"_activate_widget" = "Activeer Widget";
+
+/* (No Comment) */
+"_activate_widget_step_1" = "Veeg naar het meest linkse scherm vanaf uw thuisscherm om uw widgets te beheren.";
+
+/* (No Comment) */
+"_activate_widget_step_2" = "Schuif helemaal naar beneden en klik op de knop bewerken.";
+
+/* (No Comment) */
+"_activate_widget_step_3" = "Voeg de ProtonVPN-widget toe aan de lijst met actieve widgets.";
+
+/* (No Comment) */
+"_advanced_features" = "+ Geavanceerde mogelijkheden";
+
+/* (No Comment) */
+"_ae_vpn_info_not_received" = "Niet in staat om VPN-informatie op te halen";
+
+/* API errors */
+"_ae_wrong_login_credentials" = "Verkeerde gebruikersnaam of wachtwoord";
+
+/* (No Comment) */
+"_all_countries" = "40+ landen";
+
+/* (No Comment) */
+"_all_servers_in_country_under_maintenance" = "Alle servers in dit land zijn in onderhoud. Verbind met een ander land.";
+
+/* (No Comment) */
+"_all_servers_in_profile_under_maintenance" = "Profielserver(s) in onderhoud";
+
+/* (No Comment) */
+"_all_servers_under_maintenance" = "Alle servers zijn in onderhoud. Dit betekent meestal dat er technische problemen zijn aan de kant van ProtonVPN, of dat uw netwerkverbinding beperkt is.";
+
+/* (No Comment) */
+"_already_have_account" = "Ik heb al een account";
+
+/* (No Comment) */
+"_always_on_vpn" = "Altijd-actieve VPN";
+
+/* (No Comment) */
+"_always_on_vpn_tooltip_ios" = "'Kill Switch' wordt niet ondersteund op iOS. Altijd-actieve VPN herstelt snel en automatisch een veilige VPN-verbinding. Voor uw veiligheid is deze functie altijd aan.";
+
+/* (No Comment) */
+"_always_on_will_reconnect" = "Altijd-actieve VPN zal u automatisch opnieuw verbinden";
+
+/* (No Comment) */
+"_auto_assigned" = "Automatisch toegewezen";
+
+/* (No Comment) */
+"_auto_connect" = "Automatisch verbinden";
+
+/* (No Comment) */
+"_auto_connect_tooltip" = "Bij het starten van de app bent u verbonden met het geselecteerde profiel";
+
+/* (No Comment) */
+"_basic_servers" = "BASIS SERVERS";
+
+/* General */
+"_cancel" = "Annuleren";
+
+/* (No Comment) */
+"_changelog" = "Wat is er veranderd";
+
+/* (No Comment) */
+"_check_if_fields_present" = "Controleer of alle velden zijn ingevuld";
+
+/* (No Comment) */
+"_choose_plan" = "Abonnement kiezen";
+
+/* (No Comment) */
+"_city" = "Stad";
+
+/* (No Comment) */
+"_clear_application_data" = "Verwijder applicatiegegevens";
+
+/* (No Comment) */
+"_close" = "Sluiten";
+
+/* (No Comment) */
+"_color" = "Kleur";
+
+/* (No Comment) */
+"_connect" = "Maak verbinding";
+
+/* (No Comment) */
+"_connected" = "Verbonden";
+
+/* (No Comment) */
+"_connected_to" = "Verbonden met";
+
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Verbonden met %@";
+
+/* (No Comment) */
+"_connecting" = "Verbinding maken";
+
+/* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "Verbinding maken met %@";
+
+/* %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Verbinden met %@";
+
+/* (No Comment) */
+"_connecting..." = "Verbinding maken...";
+
+/* (No Comment) */
+"_connection" = "Verbinding";
+
+/* (No Comment) */
+"_connection_failed" = "Verbinding Mislukt";
+
+/* (No Comment) */
+"_connection_settings" = "Verbindingsinstellingen";
+
+/* (No Comment) */
+"_continue" = "Doorgaan";
+
+/* (No Comment) */
+"_countries" = "Landen";
+
+/* (No Comment) */
+"_countries_count" = "%@ landen";
+
+/* (No Comment) */
+"_countries_free" = "Gratis landen";
+
+/* (No Comment) */
+"_countries_premium" = "Premium landen";
+
+/* (No Comment) */
+"_countries_tour_description" = "Kies welk land en server u wilt gebruiken als uw publieke IP-adres.";
+
+/* (No Comment) */
+"_countries_tour_title" = "Landen";
+
+/* (No Comment) */
+"_country" = "Land";
+
+/* (No Comment) */
+"_country_selection_is_required" = "Kies een land";
+
+/* %@ is a country name, e.g. Switzerland servers under maintenance */
+"_country_servers_under_maintenance" = "%@ servers in onderhoud";
+
+/* (No Comment) */
+"_create_account" = "Account aanmaken";
+
+/* (No Comment) */
+"_create_new_profile" = "Maak profiel aan";
+
+/* (No Comment) */
+"_create_profile" = "Maak profiel aan";
+
+/* (No Comment) */
+"_current_selection_will_be_lost" = "Door verder te gaan zal de huidige selectie verloren gaan. Wilt u doorgaan?";
+
+/* (No Comment) */
+"_data_disclaimer_agree" = "Accepteren & Doorgaan";
+
+/* (No Comment) */
+"_data_disclaimer_device_details" = "Uw apparaatmodel en OS-versie";
+
+/* %@1 is a bold 'Username, email address'
+ %@2 is a bold 'Your device model and OS version' */
+"_data_disclaimer_text" = "ProtonVPN is toegewijd aan het beschermen en respecteren van uw privacy. Het is ons beleid om zo min mogelijk gebruikersgegevens te verzamelen om zodoende een privé- en anonieme gebruikerservaring te garanderen tijdens het gebruik van de app, met name:\n\n%@ – om u in te loggen, helpen bij het herstellen van een verloren wachtwoord en het versturen van belangrijke servicemededelingen.\n\n%@ - alleen voor crashrapporten en fouten.\n\nDe ProtonVPN app verwerkt geen gebruikersinformatie naast deze gegevens. We houden geen logboek bij met betrekking tot uw online activiteit en bewaren geen persoonlijk identificeerbare informatie. Alle gegevens die hierboven vermeld staan, worden opgeslagen en verwerkt op het eigen systeem van ProtonVPN, zonder dat een derde er ooit toegang toe heeft.";
+
+/* (No Comment) */
+"_data_disclaimer_title" = "Bescherm uzelf online";
+
+/* (No Comment) */
+"_data_disclaimer_user_details" = "Gebruikersnaam, e-mailadres";
+
+/* (No Comment) */
+"_default_profile_tooltip" = "De knop \"Snel verbinden\" gebruikt het standaardprofiel.";
+
+/* (No Comment) */
+"_delete" = "Verwijderen";
+
+/* (No Comment) */
+"_delete_application_data_popup_body" = "Alle ProtonVPN-gegevens worden verwijderd en de applicatie wordt afgesloten. Wilt u doorgaan?";
+
+/* (No Comment) */
+"_delete_application_data_popup_title" = "Verwijder applicatiegegevens";
+
+/* (No Comment) */
+"_delete_profile_warning" = "Het profiel wordt permanent verwijderd. Weet u zeker dat u door wil gaan?";
+
+/* (No Comment) */
+"_delinquent_user_description" = "Uw account heeft een openstaande factuur. Betaal alle openstaande rekeningen via account.protonvpn.com";
+
+/* Alerts */
+"_delinquent_user_title" = "Onbetaalde factuur";
+
+/* (No Comment) */
+"_different_server_each_time" = "Telkens een andere server";
+
+/* (No Comment) */
+"_disable" = "Uitschakelen";
+
+/* (No Comment) */
+"_disabled" = "Uitgeschakeld";
+
+/* (No Comment) */
+"_disconnect" = "Verbreken";
+
+/* (No Comment) */
+"_disconnected" = "Niet verbonden";
+
+/* (No Comment) */
+"_discover_the_app" = "Ontdek de app";
+
+/* (No Comment) */
+"_dns_leak_protection" = "DNS-lekbescherming";
+
+/* (No Comment) */
+"_dns_leak_protection_tooltip" = "Voorkomt dat er informatie vanuit uw DNS-queries naar derden lekt. Altijd actief.";
+
+/* (No Comment) */
+"_do_you_want_to_activate_subscription_for" = "Wilt u het aangeschafte abonnement activeren voor ";
+
+/* (No Comment) */
+"_done" = "Gereed";
+
+/* (No Comment) */
+"_early_access" = "Vroegtijdige toegang";
+
+/* (No Comment) */
+"_early_access_tooltip" = "Wees de eerste die de nieuwste updates ontvangt. Houdt in gedachte dat vroege versies minder stabiel kunnen zijn.";
+
+/* (No Comment) */
+"_edit" = "Bewerken";
+
+/* (No Comment) */
+"_enabled" = "Ingeschakeld";
+
+/* (No Comment) */
+"_end_tour" = "Rondleiding beëindigen";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "PROFITEER KOSTENLOOS VAN %@!";
+
+/* (No Comment) */
+"_enter_email_address" = "Vul e-mailadres in";
+
+/* (No Comment) */
+"_enter_profile_name" = "Vul profielnaam in";
+
+/* (No Comment) */
+"_enter_verification_code" = "123 456";
+
+/* (No Comment) */
+"_error_api_offline" = "De ProtonVPN-API is momenteel offline";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_message" = "U heeft succesvol geregistreerd maar uw betaling is niet verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenservice.";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_support" = "Neem contact op met de klantenservice";
+
+/* (No Comment) */
+"_error_apply_payment_failed_on_registration_title" = "Betaling mislukt";
+
+/* (No Comment) */
+"_error_credit_applied" = "Neem contact op met support@protonvpn.com om uw aankoop te voltooien.";
+
+/* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
+"_error_decode" = "Decoderen van gearchiveerde gegevens mislukt in klasse: %@";
+
+/* (No Comment) */
+"_error_email_verification_disabled" = "E-mailverificatie tijdelijk uitgeschakeld";
+
+/* (No Comment) */
+"_error_existing_session_to_server" = "Kan geen verbinding maken met de server omdat het al een actieve sessie van gebruiker heeft";
+
+/* error try to restore user from the session */
+"_error_fetch_session" = "Kan gebruiker niet vinden uit de sessie";
+
+/* (No Comment) */
+"_error_field_email_wrong_format" = "Het e-mailadres is niet in het juiste formaat";
+
+/* (No Comment) */
+"_error_field_passwords_dont_match" = "Wachtwoorden komen niet overeen";
+
+/* (No Comment) */
+"_error_field_required" = "Dit veld is verplicht";
+
+/* (No Comment) */
+"_error_field_unknown" = "Controleer dit veld";
+
+/* error when generate srp clint */
+"_error_generate_srp" = "SRP generatie mislukt";
+
+/* error when try to hash password */
+"_error_hash_password" = "Kan geen hash genereren van het gebruikerswachtwoord";
+
+/* Errors */
+"_error_internal_error" = "Interne API fout";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_message" = "Wilt u een nieuwe verificatiecode ontvangen of een alternatieve verificatiemethode gebruiken?";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_resend" = "Opnieuw versturen";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_title" = "Ongeldige verificatiecode";
+
+/* (No Comment) */
+"_error_invalid_human_verification_code_try_other" = "Probeer een andere methode";
+
+/* (No Comment) */
+"_error_keychain_fetch" = "Fout met keychain.";
+
+/* (No Comment) */
+"_error_loads" = "Kan serverloads niet bijwerken";
+
+/* (No Comment) */
+"_error_mitm_description" = "Valideren van het TLS-certificaat is mislukt. Uw huidige internetverbinding kan onderschept worden. Om uw gegevens veilig te houden wordt de app tijdelijk geblokkeerd.\nOm een VPN-verbinding tot stand te brengen schakelt u eerst naar een nieuw netwerk en probeert daarna opnieuw verbinding te maken.";
+
+/* (No Comment) */
+"_error_mitm_title" = "Onveilige verbinding";
+
+/* error when try to parse modulus signature */
+"_error_modulus_signature" = "Modulushandtekening is leeg";
+
+/* (No Comment) */
+"_error_no_active_username" = "Log in op het ProtonMail-account waarop u het abonnement aan het upgraden bent, zodat we uw aankoop kunnen voltooien.";
+
+/* (No Comment) */
+"_error_no_new_subscription_in_successfull_response" = "Uw abonnementsupgrade is succesvol. Herstart de app om gebruik te maken van uw nieuwe abonnement.";
+
+/* IAP errors */
+"_error_occured" = "Er is iets fout gegaan";
+
+/* (No Comment) */
+"_error_purchased_plan_does_not_match_available" = "Wij konden het App Store product niet vergelijken met de producten op onze server. Neem contact op met ons ondersteuningsteam.";
+
+/* (No Comment) */
+"_error_receipt_lost" = "App Store ontvangstbewijs verloren. Neem contact op met support als uw abonnement niet is geactiveerd.";
+
+/* (No Comment) */
+"_error_sandbox_receipt" = "Aankopen zijn niet beschikbaar in de bètaversie van de iOS app. Er is niets verrekend.";
+
+/* error when try to parse the server info */
+"_error_server_info_parser" = "Kan de serverinfo niet verwerken";
+
+/* (No Comment) */
+"_error_session_count_parser" = "Kan sessiecount niet verwerken";
+
+/* error when the user attempts to sign up using an existing ProtonMail email address */
+"_error_signup_using_protonmail_address" = "Uw ProtonMail-account is al geconfigureerd voor VPN. Log in met uw bestaande inloggegevens.";
+
+/* error when try to parse subscription info */
+"_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
+
+/* (No Comment) */
+"_error_transaction_failed_by_unknown_reason" = "App Store kon uw aankoop niet verwerken.";
+
+/* (No Comment) */
+"_error_transaction_of_other_user" = "Een aankoop is gestart met een andere ProtonVPN gebruikersnaam.";
+
+/* (No Comment) */
+"_error_unavailable_product" = "Fout bij het ophalen van lijst met beschikbare producten uit de App Store.";
+
+/* Unknown error */
+"_error_unknown_title" = "Onbekende fout";
+
+/* (No Comment) */
+"_error_user_cancelled" = "Actie geannuleerd";
+
+/* error when the app fails to create a user */
+"_error_user_creation" = "Account aanmaken is mislukt";
+
+/* (No Comment) */
+"_error_user_credentials_expired" = "Gebruikersgegevens zijn verlopen. Log in";
+
+/* (No Comment) */
+"_error_user_credentials_missing" = "Gebruikersgegevens ontbreken. Kan niet inloggen";
+
+/* (No Comment) */
+"_error_user_failed_human_validation" = "We hebben niet kunnen verifiëren of u menselijk bent. Probeer het opnieuw of koop een premium-abonnement.";
+
+/* (No Comment) */
+"_error_user_has_no_vpn_access" = "Uw account heeft geen VPN-toegang. Neem contact op met uw accountbeheerder";
+
+/* (No Comment) */
+"_error_user_has_not_signed_up" = "U heeft zich nog niet aangemeld voor ProtonVPN";
+
+/* (No Comment) */
+"_error_user_is_on_waitlist" = "U staat momenteel op de wachtlijst en uw account is nog niet klaar";
+
+/* username unavailable error */
+"_error_username_unavailable" = "Gebruikersnaam reeds in gebruik";
+
+/* error when try to parse verification methods */
+"_error_verification_methods_parser" = "Kan de verificatiemethoden niet verwerken";
+
+/* (No Comment) */
+"_error_vpn_credentials_missing" = "VPN-inloggegevens ontbreken in de keychain";
+
+/* default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Kan VPN-eigenschappen niet ophalen!";
+
+/* (No Comment) */
+"_error_vpn_session_is_active" = "ProtonVPN-sessie is actief";
+
+/* (No Comment) */
+"_existing_firewall_popup_body" = "ProtonVPN gebruikt een pakket firewall om een Kill Switch te implementeren. Door de Kill Switch in te schakelen worden de huidige firewallinstellingen van uw apparaat overschreven. Als u uw eigen firewallconfiguratie wil blijven gebruiken, moet u geen gebruik maken van de Kill Switch.\n\nOm gebruik te maken van de Kill Switch en daarmee uw firewallinstellingen te overschrijven, selecteer DOORGAAN.\n\nom uw huidige firewall te blijven gebruiken, selecteer ANNULEREN.";
+
+/* (No Comment) */
+"_existing_firewall_popup_title" = "Firewall gedetecteerd";
+
+/* (No Comment) */
+"_existing_session" = "Server niet beschikbaar";
+
+/* (No Comment) */
+"_existing_session_to_server" = "Selecteer een andere server.";
+
+/* (No Comment) */
+"_expired" = "VERLOPEN";
+
+/* Extensions */
+"_extensions" = "Extensies";
+
+/* (No Comment) */
+"_failed" = "mislukt";
+
+/* (No Comment) */
+"_failed_to_access_vpn_credentials_description" = "Fout bij het ophalen van VPN-inloggegevens, log opnieuw in om het probleem op te lossen.";
+
+/* (No Comment) */
+"_failed_to_access_vpn_credentials_title" = "VPN-inloggegevens ontbreken";
+
+/* (No Comment) */
+"_fastest" = "Snelste";
+
+/* (No Comment) */
+"_fastest_available_server" = "Snelste beschikbare server";
+
+/* (No Comment) */
+"_fastest_connection" = "Snelle verbinding";
+
+/* (No Comment) */
+"_feature" = "Soort";
+
+/* (No Comment) */
+"_feature_connections" = "Gelijktijdige VPN-verbindingen";
+
+/* (No Comment) */
+"_feature_secure_core" = "Secure Core";
+
+/* (No Comment) */
+"_feature_secure_streaming" = "Veilig Streamen";
+
+/* Plan selection: advances features */
+"_feature_server_count" = "Verbinden met servers in";
+
+/* (No Comment) */
+"_feature_speed" = "Snelheid";
+
+/* (No Comment) */
+"_feature_tor" = "Tor via VPN";
+
+/* (No Comment) */
+"_forgot_password" = "Wachtwoord vergeten?";
+
+/* (No Comment) */
+"_forgot_username" = "Vergeet gebruikersnaam";
+
+/* (No Comment) */
+"_free" = "Gratis";
+
+/* (No Comment) */
+"_free_countries" = "3 Landen";
+
+/* (No Comment) */
+"_free_servers" = "GRATIS SERVERS";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features:
+ 
+ I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Upgrade naar %@ en blijf gebruik maken van deze functies:";
+
+/* (No Comment) */
+"_free_trial_about_to_expire_title" = "Uw abonnement is bijna verlopen!";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
+ 
+ A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Uw account is gedowngraded naar ProtonVPN FREE.\nDit is wat u zult missen van %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "UW GRATIS PROEFVERSIE %@";
+
+/* (No Comment) */
+"_general" = "Algemeen";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Neem %@ abonnement";
+
+/* (No Comment) */
+"_get_verification_email" = "Krijg verificatie e-mail";
+
+/* (No Comment) */
+"_get_verification_sms" = "Krijg verificatie SMS";
+
+/* (No Comment) */
+"_got_it" = "Ik begrijp het!";
+
+/* (No Comment) */
+"_help" = "Help";
+
+/* (No Comment) */
+"_hide" = "VERBERGEN";
+
+/* (No Comment) */
+"_high" = "Hoog";
+
+/* (No Comment) */
+"_highest" = "Hoogste";
+
+/* (No Comment) */
+"_ignore" = "Negeren";
+
+/* (No Comment) */
+"_initializing_connection" = "Verbinding initialiseren...";
+
+/* (No Comment) */
+"_invalid_refresh_token" = "Sessie verlopen";
+
+/* (No Comment) */
+"_invalid_refresh_token_please_login" = "Het is een tijdje geleden sinds u de ProtonVPN-app voor het laatst hebt gebruikt. Log alstublieft opnieuw in.";
+
+/* (No Comment) */
+"_ios_onboarding_page1_description" = "Van de wetenschappers en ingenieurs die ProtonMail gecreëerd hebben, verwelkom ik u op een veiliger internet met meer privacy.";
+
+/* Upsell & Onboard - iOS */
+"_ios_onboarding_page1_title" = "Welkom op een beter internet";
+
+/* (No Comment) */
+"_ios_onboarding_page2_description" = "Ga censuur en regionale beperkingen tegen. We hebben geen advertenties, geen bandbreedtelimiet en we verkopen nooit uw data.";
+
+/* (No Comment) */
+"_ios_onboarding_page2_title" = "Wij vinden dat het internet vrij moet zijn";
+
+/* (No Comment) */
+"_ios_onboarding_page3_description" = "We zijn een beveiligingsbedrijf. Of het nu onze veilige 'Secure Core'- of geavanceerde versleuteling is, veiligheid komt altijd voorop.";
+
+/* (No Comment) */
+"_ios_onboarding_page3_title" = "Uw veiligheid is onze prioriteit";
+
+/* (No Comment) */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* (No Comment) */
+"_kill_switch" = "Kill Switch";
+
+/* %@ is a link to the app's Preferences */
+"_kill_switch_blocking_body" = "U heeft de verbinding met de VPN server verloren. Kill Switch blokkeert alle verbindingen om te voorkomen dat uw gegevens worden uitgelekt. ProtonVPN zal proberen om automatisch opnieuw verbinding te maken. Klik op OK om dit venster te sluiten.\n\nAls u wilt toestaan dat de Kill Switch tijdelijk wordt uitgeschakeld en er opnieuw verbinding wordt gemaakt met het internet ZONDER bescherming van VPN, klik dan op DISABLE.\n\nOm de Kill Switch permanent uit te schakelen, ga naar %@.";
+
+/* Notifications */
+"_kill_switch_blocking_connection" = "Kill Switch blokkeert alle verbindingen";
+
+/* (No Comment) */
+"_kill_switch_blocking_title" = "Kill Switch blokkeert alle IP lekken";
+
+/* (No Comment) */
+"_kill_switch_error_body" = "Kill Switch werkt niet goed. Als u deze fout wil melden aan het ProtonVPN Ondersteuningsteam, klik dan op Rapporteren.\nAls u deze fout wil negeren en doorgaan met surfen ZONDER de bescherming van de Kill Switch, klik dan op Negeren.";
+
+/* (No Comment) */
+"_kill_switch_error_title" = "Er is een fout opgetreden bij de Kill Switch";
+
+/* (No Comment) */
+"_kill_switch_helper_install_issue_popup_body" = "Er is een probleem opgetreden bij het installeren of bijwerken van Kill Switch.\n\nOm het opnieuw te proberen, klik op OPNIEUW PROBEREN.\n\nom door te gaan zonder Kill Switch, klik op UITSCHAKELEN.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_install_popup_body" = "Om Kill Switch in te schakelen, kunt u gevraagd worden om uw wachtwoord van uw computeraccount in te vullen. Als een aanvraag verschijnt, voer dan uw %@ in en accepteer.\n\nU kunt dit verzoek opnieuw krijgen wanneer de ProtonVPN-app updates ontvangt.";
+
+/* %@ is 'Mac password' */
+"_kill_switch_helper_update_popup_body" = "De meest recente update die u hebt gedownload vereist dat u uw wachtwoord van uw computeraccount geeft. Zodra het verzoek verschijnt, voer dan uw %@ in en accepteer.\n\nAls u uw Mac-wachtwoord niet invoert, wordt Kill Switch uitgeschakeld.";
+
+/* (No Comment) */
+"_kill_switch_tooltip" = "Blokkeert alle netwerkverkeer wanneer VPN-tunnel verbroken is. Let er op dat uw VPN-verbinding wordt beëindigd wanneer u van Mac account wisselt.";
+
+/* (No Comment) */
+"_learn_more" = "Meer informatie";
+
+/* (No Comment) */
+"_learn_more_about_secure_core" = "Meer informatie over Secure Core";
+
+/* (No Comment) */
+"_load" = "Belasting";
+
+/* (No Comment) */
+"_loading_screen_slogan" = "Overal veilig internet";
+
+/* (No Comment) */
+"_location" = "Locatie";
+
+/* (No Comment) */
+"_log_in" = "Aanmelden";
+
+/* (No Comment) */
+"_log_in_to_use_widget" = "Meld aan om te beginnen";
+
+/* (No Comment) */
+"_log_out" = "Afmelden";
+
+/* (No Comment) */
+"_log_out_warning" = "Afmelden zal uw VPN-sessie beëindigen.";
+
+/* (No Comment) */
+"_log_out_warning_long" = "Afmelden in de applicatie zal de actieve VPN-verbinding verbreken. Wilt u doorgaan?";
+
+/* (No Comment) */
+"_login" = "Aanmelden";
+
+/* (No Comment) */
+"_logs" = "Logs";
+
+/* (No Comment) */
+"_mac_password" = "Mac wachtwoord";
+
+/* (No Comment) */
+"_maintenance" = "Onderhoud";
+
+/* (No Comment) */
+"_make_default_profile" = "Maak standaardprofiel";
+
+/* (No Comment) */
+"_manage_profiles" = "Beheer profielen";
+
+/* (No Comment) */
+"_manage_subscription_on_web" = "Beheer uw abonnement vanaf het web dashboard";
+
+/* Map */
+"_map" = "Kaart";
+
+/* (No Comment) */
+"_map_hide" = "Kaart verbergen";
+
+/* (No Comment) */
+"_map_show" = "Kaart tonen";
+
+/* (No Comment) */
+"_map_tour_description" = "Zie waar VPN-servers zich bevinden. Vind degene die het dichtst bij uw locatie ligt.";
+
+/* (No Comment) */
+"_map_tour_title" = "Kaart";
+
+/* (No Comment) */
+"_maybe_later" = "Misschien later";
+
+/* (No Comment) */
+"_medium" = "Medium";
+
+/* (No Comment) */
+"_money_back_guarantee" = "30 dagen geld-terug-garantie";
+
+/* (No Comment) */
+"_most_popular" = "Meest populair";
+
+/* (No Comment) */
+"_multiple_countries" = "Meerdere landen";
+
+/* (No Comment) */
+"_multiple_servers_description" = "Honderden servers\nover de hele wereld";
+
+/* (No Comment) */
+"_multiple_servers_title" = "Meerdere servers";
+
+/* (No Comment) */
+"_my_profiles" = "Mijn profielen";
+
+/* (No Comment) */
+"_name" = "Naam";
+
+/* (No Comment) */
+"_ne_network_connection_lost" = "Netwerkverbinding verbroken";
+
+/* (No Comment) */
+"_ne_not_connected_to_the_internet" = "Niet verbonden met het internet";
+
+/* Network errors */
+"_ne_request_timed_out" = "Netwerkverzoek timed out";
+
+/* (No Comment) */
+"_ne_unable_to_connect_to_host" = "Dienst niet bereikbaar";
+
+/* (No Comment) */
+"_neagent_always_allow" = "Altijd toestaan";
+
+/* Final string with filled in variables looks like this:
+ 
+ You may be asked to provide your computer account password
+ to connect to the ProtonVPN service. If this request appears,
+ enter your Mac password (1) and click ‘Always Allow’ (2).
+ 
+ The numbers refer to a text field and button in an image displayed above this text. */
+"_neagent_description" = "Er kan gevraagd worden naar uw %@\nom te verbinden met de ProtonVPN-service. Als dit verzoekt verschijnt,\nvoer uw %@ %@ in en klik op '%@' %@.";
+
+/* (No Comment) */
+"_neagent_first_step" = "(1)";
+
+/* (No Comment) */
+"_neagent_password" = "wachtwoord van computeraccount";
+
+/* (No Comment) */
+"_neagent_second_step" = "(2)";
+
+/* (No Comment) */
+"_need_help" = "Hulp nodig?";
+
+/* (No Comment) */
+"_network_unreachable" = "Netwerk onbereikbaar";
+
+/* (No Comment) */
+"_next" = "Volgende";
+
+/* (No Comment) */
+"_next_tip" = "Volgende tip";
+
+/* (No Comment) */
+"_no_description_available" = "Geen omschrijving beschikbaar";
+
+/* (No Comment) */
+"_no_servers_to_show" = "Er zijn momenteel geen servers om hier te tonen.";
+
+/* (No Comment) */
+"_no_thanks" = "Nee, bedankt";
+
+/* (No Comment) */
+"_not_connected" = "Niet verbonden";
+
+/* (No Comment) */
+"_not_connected_to_the_internet" = "Kan de VPN-verbinding niet tot stand brengen. U bent niet verbonden met het internet.";
+
+/* (No Comment) */
+"_ok" = "OK";
+
+/* (No Comment) */
+"_open_app_to_log_in" = "Toon ProtonVPN om in te loggen...";
+
+/* (No Comment) */
+"_overview" = "Overzicht";
+
+/* (No Comment) */
+"_p2p" = "P2P";
+
+/* (No Comment) */
+"_p2p_description" = "Ondersteunt P2P verkeer";
+
+/* (No Comment) */
+"_p2p_detected_popup_body" = "Uw verbinding is uitgeschakeld omdat u een server gebruikt die geen peer-to-peer (P2P) verkeer ondersteunt. P2P wordt niet ondersteund op gratis servers of servers genummerd vanaf 100.";
+
+/* (No Comment) */
+"_p2p_detected_popup_title" = "P2P-verkeer is niet toegestaan op deze server";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body" = "Uw verbinding is automatisch herleid via een andere server omdat sommige servers geen P2P-verkeer ondersteunen. Hierdoor kan uw verbindingssnelheid lager zijn. Gebruik servers met het P2P-label om te voorkomen dat de verbinding herleid wordt.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p1" = "Uw verbinding is automatisch herleid via een andere server omdat sommige servers geen P2P-verkeer ondersteunen. Hierdoor kan uw verbindingssnelheid zijn verlaagt. Gebruik servers met het";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_body_p2" = "pictogram om verkeersherleiding te voorkomen.";
+
+/* (No Comment) */
+"_p2p_forwarded_popup_title" = "Verbinding omgeleid";
+
+/* (No Comment) */
+"_p2p_server" = "P2P-server";
+
+/* (No Comment) */
+"_p2p_servers" = "P2P-server";
+
+/* (No Comment) */
+"_paid_required" = "Betaald ProtonVPN-abonnement vereist";
+
+/* (No Comment) */
+"_password" = "Wachtwoord";
+
+/* (No Comment) */
+"_password_confirm" = "Bevestig wachtwoord";
+
+/* (No Comment) */
+"_per_year_short" = "/ jaar";
+
+/* (No Comment) */
+"_phone_country_code_placeholder" = "Code";
+
+/* (No Comment) */
+"_phone_number_placeholder" = "Telefoonnummer";
+
+/* (No Comment) */
+"_plan_does_not_include_secure_core" = "Uw abonnement bevat geen Secure Core functie.";
+
+/* (No Comment) */
+"_plan_speed_fastest" = "Hoogste snelheid";
+
+/* (No Comment) */
+"_plan_speed_high" = "Hoge Snelheid";
+
+/* (No Comment) */
+"_plan_speed_medium" = "Gemiddelde snelheid";
+
+/* (No Comment) */
+"_plans_connection" = "Verbinding";
+
+/* (No Comment) */
+"_plans_connections" = "Verbindingen";
+
+/* (No Comment) */
+"_plans_footer" = "Na bevestiging van uw aankoop van een abonnement, zal uw iTunes account in rekening worden gebracht met het geleverde zichtbare bedrag, dit bedrag is inclusief het service abonnement en de in-app aankoop heffing van Apple (een heffing van ongeveer 30% op aankopen gemaakt met uw iPhone/iPad). Na het succesvol afronden van de aankoop zal u automatisch opgewaardeerd naar het geselecteerde abonnement gedurende 1 jaar, waarna u kunt vernieuwen of afzeggen, dit kan via onze iOS app, of online.";
+
+/* (No Comment) */
+"_plus" = "PLUS";
+
+/* (No Comment) */
+"_plus_plan_features" = "Plus Servers\nSecure Core\nTor Servers";
+
+/* (No Comment) */
+"_plus_required" = "Plus of Visionary abonnement vereist";
+
+/* (No Comment) */
+"_plus_servers" = "PLUS SERVERS";
+
+/* (No Comment) */
+"_plus_upgrade_description" = "Gebruik Secure Core, stream uw favoriete TV-series,\ngebruik tot 5 verschillende apparaten en meer!";
+
+/* (No Comment) */
+"_plus_upgrade_title" = "Geniet u van ProtonVPN?\nNeem Plus voor slechts €8/maand";
+
+/* Settings */
+"_preferences" = "Voorkeuren";
+
+/* (No Comment) */
+"_premium_description" = "Premium-server";
+
+/* (No Comment) */
+"_premium_server" = "Premium-server";
+
+/* (No Comment) */
+"_preparing_connection" = "Beschikbaarheid servers controleren";
+
+/* (No Comment) */
+"_privacy_policy" = "Privacybeleid";
+
+/* Profiles */
+"_profile" = "Profiel";
+
+/* (No Comment) */
+"_profile_created_successfully" = "Nieuw profiel opgeslagen";
+
+/* (No Comment) */
+"_profile_creation_failed" = "Profiel kon niet worden aangemaakt";
+
+/* (No Comment) */
+"_profile_deleted_successfully" = "Profiel verwijderd";
+
+/* (No Comment) */
+"_profile_deletion_failed" = "Profiel kon niet worden verwijderd";
+
+/* (No Comment) */
+"_profile_edited_successfully" = "Profiel gewijzigd";
+
+/* (No Comment) */
+"_profile_name_is_required" = "Gelieve een naam in te voeren";
+
+/* (No Comment) */
+"_profile_name_is_too_long" = "Maximum lengte van profielnaam is 25 tekens";
+
+/* (No Comment) */
+"_profile_name_needs_to_be_unique" = "Profiel met dezelfde naam bestaat reeds";
+
+/* (No Comment) */
+"_profile_settings" = "Profiel-instellingen";
+
+/* (No Comment) */
+"_profiles" = "Profielen";
+
+/* (No Comment) */
+"_profiles_overview" = "Overzicht van profielen";
+
+/* (No Comment) */
+"_profiles_tour_description" = "Sla uw instellingen en servers op voor toekomstig gebruik.";
+
+/* (No Comment) */
+"_profiles_tour_title" = "Profielen";
+
+/* (No Comment) */
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+/* (No Comment) */
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Openbaar IP: %@";
+
+/* (No Comment) */
+"_quick_connect" = "Snel Verbinden";
+
+/* (No Comment) */
+"_quick_connect_tooltip" = "De knop 'Snel Verbinden' zal u verbinden met het geselecteerde profiel";
+
+/* (No Comment) */
+"_quick_connect_tour_description" = "Automatisch verbinden met de server met de snelste verbinding.";
+
+/* (No Comment) */
+"_quick_connect_tour_title" = "Snel Verbinden";
+
+/* (No Comment) */
+"_quit" = "Afsluiten";
+
+/* (No Comment) */
+"_quit_warning" = "De applicatie afsluiten zal de actieve VPN-verbinding verbreken. Wilt u doorgaan?";
+
+/* (No Comment) */
+"_random" = "Willekeurig";
+
+/* (No Comment) */
+"_random_available_server" = "Willekeurige beschikbare server";
+
+/* (No Comment) */
+"_random_connection" = "Willekeurige verbinding";
+
+/* (No Comment) */
+"_recommended" = "Aanbevolen";
+
+/* (No Comment) */
+"_release_date" = "Verschijningsdatum:";
+
+/* (No Comment) */
+"_remember_login" = "Aangemeld blijven";
+
+/* (No Comment) */
+"_report" = "Melden";
+
+/* (No Comment) */
+"_report_add_file" = "Voeg bestand toe";
+
+/* (No Comment) */
+"_report_an_issue" = "Een probleem melden...";
+
+/* Report bug */
+"_report_attachments" = "Bijlagen";
+
+/* (No Comment) */
+"_report_bug" = "Meld een bug";
+
+/* (No Comment) */
+"_report_description" = "Geef gedetailleerde informatie over het probleem dat u bent tegengekomen en voeg bestanden toe die ons kunnen helpen het probleem te reproduceren. Geef ons ook een manier om contact met u op te nemen voor meer informatie.";
+
+/* (No Comment) */
+"_report_field_account" = "Account:";
+
+/* (No Comment) */
+"_report_field_country" = "Land:";
+
+/* (No Comment) */
+"_report_field_email" = "E-mail:";
+
+/* (No Comment) */
+"_report_field_feedback" = "Feedback";
+
+/* (No Comment) */
+"_report_field_isp" = "ISP:";
+
+/* (No Comment) */
+"_report_field_plan" = "Abonnement:";
+
+/* (No Comment) */
+"_report_field_version" = "Versie:";
+
+/* (No Comment) */
+"_report_logs" = "VPN logs";
+
+/* (No Comment) */
+"_report_logs_description" = "Deze optie inschakelen zorgt ervoor dat de VPN logs van uw client toegevoegd worden aan dit rapport";
+
+/* (No Comment) */
+"_report_max_file_size" = "Maximale bestandsgrootte: 488 KB";
+
+/* (No Comment) */
+"_report_placeholder_email" = "Contact e-mail";
+
+/* (No Comment) */
+"_report_placeholder_message" = "Uw bericht...";
+
+/* (No Comment) */
+"_report_report" = "Rapporteer bericht";
+
+/* (No Comment) */
+"_report_send" = "Rapport verzenden";
+
+/* (No Comment) */
+"_report_success" = "Bedankt voor uw melding";
+
+/* (No Comment) */
+"_request_invitation" = "Handmatig activeren";
+
+/* (No Comment) */
+"_resend_code" = "Vraag een nieuwe code aan";
+
+/* (No Comment) */
+"_resend_no_code" = "Geen code ontvangen?";
+
+/* (No Comment) */
+"_resend_success" = "Nieuwe code aangevraagd";
+
+/* (No Comment) */
+"_reset_password" = "Wachtwoord resetten";
+
+/* (No Comment) */
+"_retry" = "Opnieuw proberen";
+
+/* (No Comment) */
+"_save" = "Opslaan";
+
+/* (No Comment) */
+"_save_as_profile" = "Bewaar als profiel";
+
+/* (No Comment) */
+"_search_for_country" = "Zoek een Land";
+
+/* (No Comment) */
+"_search_phone_country_code_placeholder" = "Zoek land";
+
+/* (No Comment) */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* (No Comment) */
+"_secure_core_description" = "Ultra beveiligde servers\nbeheerd door ons";
+
+/* (No Comment) */
+"_secure_core_info" = "Biedt extra bescherming tegen VPN server blootstelling door verbindingen via onze Secure Core netwerk te leiden";
+
+/* (No Comment) */
+"_secure_core_tour_description" = "Zet Secure Core aan om uw verkeer via additionele servers te leiden voor een extra laag netwerkbeveiliging. Beschikbaar voor Plus en Visionary leden.";
+
+/* (No Comment) */
+"_secure_core_tour_title" = "Secure Core";
+
+/* (No Comment) */
+"_secure_streaming_description" = "Veilige streaming van uw\nfavoriete content";
+
+/* (No Comment) */
+"_secure_streaming_title" = "Veilige Streaming";
+
+/* (No Comment) */
+"_security_options" = "Beveiligingsopties";
+
+/* (No Comment) */
+"_select_country" = "Selecteer land";
+
+/* (No Comment) */
+"_select_phone_country_code" = "Selecteer Landnummer";
+
+/* (No Comment) */
+"_select_plan" = "Selecteer abonnement";
+
+/* (No Comment) */
+"_select_profile_color" = "Kies profielkleur";
+
+/* (No Comment) */
+"_select_server" = "Kies Server";
+
+/* (No Comment) */
+"_select_verification_option" = "Selecteer een verificatie-optie om door te gaan:";
+
+/* (No Comment) */
+"_select_verification_option_top_message" = "Om misbruik te voorkomen, moet u verifiëren dat je een natuurlijk persoon bent.";
+
+/* (No Comment) */
+"_server" = "Servers";
+
+/* IP address follows e.g. Server IP: 123.45.67.890 */
+"_server_ip" = "Server IP:";
+
+/* Load follows e.g. Server Load: 24% */
+"_server_load" = "Serverbelasting:";
+
+/* (No Comment) */
+"_server_selection_is_required" = "Kies alstublieft een server";
+
+/* (No Comment) */
+"_server_under_maintenance" = "Server ondergaat onderhoud";
+
+/* (No Comment) */
+"_session_count_reached_description" = "U heeft het maximum aantal gelijktijdige verbindingen bereikt dat is toegestaan voor uw account. Upgrade uw ProtonVPN-abonnement om meer verbindingen te krijgen.";
+
+/* (No Comment) */
+"_session_count_reached_title" = "Sessielimiet bereikt";
+
+/* (No Comment) */
+"_session_time" = "Sessieduur";
+
+/* (No Comment) */
+"_settings" = "Instellingen";
+
+/* (No Comment) */
+"_setup_complete" = "Installatie voltooid";
+
+/* (No Comment) */
+"_setup_complete_basic" = "Uw aankoop was succesvol. Uw ProtonVPN Basic-abonnement is nu actief.";
+
+/* (No Comment) */
+"_setup_complete_free" = "U bent nu aangemeld voor een ProtonVPN Gratis abonnement. Om u op weg te helpen, geniet u zeven dagen gratis van ons ProtonVPN Plus-plan.";
+
+/* (No Comment) */
+"_setup_complete_plus" = "Uw aankoop was succesvol. Uw ProtonVPN Plus abonnement is nu actief.";
+
+/* (No Comment) */
+"_show" = "TOON";
+
+/* (No Comment) */
+"_show_protonvpn" = "ProtonVPN tonen";
+
+/* (No Comment) */
+"_sign_up" = "Registreren";
+
+/* (No Comment) */
+"_skip" = "Overslaan";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ snelheid";
+
+/* (No Comment) */
+"_standard" = "Standaard";
+
+/* (No Comment) */
+"_start_minimized" = "Geminimaliseerd starten";
+
+/* (No Comment) */
+"_start_on_boot" = "Starten bij het opstarten";
+
+/* (No Comment) */
+"_status" = "Status";
+
+/* (No Comment) */
+"_submit_verification_code" = "Bevestigen";
+
+/* (No Comment) */
+"_subscription_plan" = "Abonnement";
+
+/* (No Comment) */
+"_successfully_connected" = "Succesvol verbonden";
+
+/* Custom switch off */
+"_switch_side_button_off" = "UIT";
+
+/* Custom switch on */
+"_switch_side_button_on" = "AAN";
+
+/* (No Comment) */
+"_system_notifications" = "Systeemnotificaties";
+
+/* (No Comment) */
+"_take_tour" = "Rondleiding nemen";
+
+/* (No Comment) */
+"_technical_details" = "Technische gegevens";
+
+/* (No Comment) */
+"_terms_and_conditions" = "Algemene voorwaarden";
+
+/* %@1 is a link with a title of 'Terms and Conditions'
+ %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Door ProtonVPN te gebruiken, gaat u akkoord met onze\n%@ en %@";
+
+/* (No Comment) */
+"_timed_out" = "verlopen";
+
+/* (No Comment) */
+"_tor" = "TOR";
+
+/* Servers */
+"_tor_description" = "Verbinding maken met het Tor-netwerk";
+
+/* (No Comment) */
+"_tor_server" = "Tor-server";
+
+/* (No Comment) */
+"_trial_expired_alert_body_iOS" = "Uw 7 dagen gratis proefperiode van ProtonVPN Plus is verlopen. U kunt ProtonVPN gratis blijven gebruiken, maar als u het project wilt steunen en toegang wilt hebben tot meer landen en functies, upgrade dan naar een betaald abonnement.";
+
+/* (No Comment) */
+"_trial_expired_alert_title_iOS" = "ProtonVPN Plus proefperiode verlopen";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "Om permanent toegang te hebben tot ProtonVPN Plus functies, kunt u uw abonnement upgraden.";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "Geniet van alle voordelen van veilig internet waar dan ook met ProtonVPN";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "Als welkomstgeschenk, heeft u toegang tot een %@, inclusief geavanceerde functies in de eerste paar dagen! Uw proefperiode eindigt over";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "upgrade gratis naar ProtonVPN Plus";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "volledig ProtonVPN abonnement";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "We hebben u een %@ gegeven met meer servers en extra functies. Uw ProtonVPN Plus proefperiode eindigt over 7 dagen.";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "Bedankt voor het gebruik van ProtonVPN!";
+
+/* (No Comment) */
+"_trial_popup_title" = "ProtonVPN Proefperiode";
+
+/* (No Comment) */
+"_trial_welcome_description_iOS" = "Als welkomgeschenk heeft u de eerste dagen toegang tot een volledig ProtonVPN abonnement met geavanceerde functies!";
+
+/* (No Comment) */
+"_trial_welcome_ends_in_iOS" = "Uw proefperiode loopt af in";
+
+/* (No Comment) */
+"_trial_welcome_heading_iOS" = "Welkom bij ProtonVPN";
+
+/* (No Comment) */
+"_try_agian" = "Probeer opnieuw";
+
+/* (No Comment) */
+"_unavailable" = "Niet beschikbaar";
+
+/* (No Comment) */
+"_update_required" = "Update vereist";
+
+/* (No Comment) */
+"_update_required_no_longer_supported" = "Deze versie van ProtonVPN wordt niet langer ondersteund, update de app om deze te blijven gebruiken.";
+
+/* (No Comment) */
+"_update_required_support" = "Neem contact op met ondersteuning";
+
+/* (No Comment) */
+"_update_required_update" = "Update";
+
+/* (No Comment) */
+"_upgrade" = "Upgrade";
+
+/* (No Comment) */
+"_upgrade_for_secure_core" = "om Secure Core te gebruiken";
+
+/* (No Comment) */
+"_upgrade_my_plan" = "Upgrade het abonnement";
+
+/* (No Comment) */
+"_upgrade_now" = "Upgrade nu";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_country" = "Sorry, er zijn momenteel geen servers beschikbaar voor uw abonnementsklasse in dit land. Als u meer servers wilt gebruiken, kunt u overwegen uw abonnement te upgraden.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core is een premium functie die ProtonVPN Plus of hoger vereist. Secure Core voegt geavanceerde bescherming toe tegen VPN server toezicht.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_secure_core_p2" = "Bekijk onze andere abonnementen die Secure Core aanbieden om dit te gebruiken.";
+
+/* (No Comment) */
+"_upgrade_plan_to_access_server" = "Sorry, deze server is niet beschikbaar voor uw abonnementsklasse. Als u toegang wilt hebben tot meer servers, overweeg dan om uw abonnement te upgraden.";
+
+/* (No Comment) */
+"_upgrade_required" = "Upgrade vereist";
+
+/* (No Comment) */
+"_upgrade_subscription" = "Upgrade abonnement";
+
+/* (No Comment) */
+"_upgrade_to_plus" = "Upgraden naar Plus";
+
+/* (No Comment) */
+"_upgrade_unavailable_body" = "Uw ProtonVPN-abonnement kan niet worden geüpgraded vanuit de app, bezoek account.protonvpn.com om te upgraden.";
+
+/* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
+"_upgrade_unavailable_title" = "Upgrade niet beschikbaar in App";
+
+/* (No Comment) */
+"_use_captcha_verification" = "Verifieer met CAPTCHA";
+
+/* (No Comment) */
+"_use_other_email_address" = "Verifieer via e-mail";
+
+/* (No Comment) */
+"_use_secure_core" = "Gebruik Secure Core";
+
+/* (No Comment) */
+"_use_sms_verification" = "Verifiëren met sms";
+
+/* Login & Signup */
+"_username" = "Gebruikersnaam";
+
+/* (No Comment) */
+"_verification_instructions" = "Een verificatiecode is naar u verzonden, voer het hieronder in.";
+
+/* (No Comment) */
+"_version" = "Versie";
+
+/* (No Comment) */
+"_version_current" = "Huidige versie:";
+
+/* (No Comment) */
+"_via" = "via";
+
+/* %@ is a country e.g. via Switzerland */
+"_via_country" = "via %@";
+
+/* (No Comment) */
+"_view_logs" = "Logboek weergeven";
+
+/* (No Comment) */
+"_view_toggle_will_cause_disconnect" = "Secure Core inschakelen zal uw huidige verbinding verbreken.";
+
+/* (No Comment) */
+"_vpn_connection_active" = "VPN-verbinding actief";
+
+/* (No Comment) */
+"_vpn_stuck_disconnecting_body" = "Uw apparaat kon een eerdere VPN-sessie niet beëindigen. U moet uw apparaat herstarten voordat u een nieuwe VPN-verbinding kunt aanmaken.";
+
+/* (No Comment) */
+"_vpn_stuck_disconnecting_title" = "Verbindingsfout";
+
+/* (No Comment) */
+"_warning" = "Waarschuwing";
+
+/* (No Comment) */
+"_warning_vpn_session_is_active" = "Een ProtonVPN-sessie van een andere gebruiker is actief op dit apparaat. Door in te loggen zal de huidige sessie beëindigd worden. Wilt u doorgaan?";
+
+/* (No Comment) */
+"_welcome_description" = "Bedankt voor het gebruik van ProtonVPN. Bekijk snel \nde belangrijkste kenmerken van de applicatie.";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
+ 
+ A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "Als welkomstgeschenk krijgt u 7 dagen toegang tot een\n%@ abonnement dat u het volgende biedt:";
+
+/* Upsell & Onboard */
+"_welcome_title" = "WELKOM AAN BOORD!";
+
+/* (No Comment) */
+"_widget" = "iOS Widget";
+
+/* (No Comment) */
+"_you_are_not_connected" = "U bent niet verbonden";
+
