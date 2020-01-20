@@ -1,0 +1,56 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+    desc "Run all the tests"
+    lane :test do
+        clear_derived_data
+        scan(
+            scheme: "ProtonVPN",
+            clean: true,
+            xcargs: "-UseModernBuildSystem=NO",
+            result_bundle: true,
+            skip_slack: true
+        )
+    end
+        
+    desc "Make screenshots for every language on every device"
+    lane :screenshots do
+    
+        clear_derived_data
+        # First tests are run with build
+        capture_ios_screenshots(
+            clean: true,
+            devices: [ "iPhone 8" ],
+            languages: [ "en-US" ],
+            test_without_building: false,
+            derived_data_path: "~/Library/Developer/Xcode/DerivedData/ProtonVPN-CI-screens"
+        )
+        
+        # Other tests are run without building
+        capture_ios_screenshots(
+            clean: false,
+            test_without_building: true,
+            derived_data_path: "~/Library/Developer/Xcode/DerivedData/ProtonVPN-CI-screens"
+        )
+        
+        # Post URL with results to slack
+        url = ENV["IOS_VPNTEST_SCREENSHOTS_URL"].sub('[jobid]', ENV["CI_JOB_ID"])
+        slack(message: "Latest UI screenshots will be available for the next 3 days at " + url )
+        
+    end
+    
+end

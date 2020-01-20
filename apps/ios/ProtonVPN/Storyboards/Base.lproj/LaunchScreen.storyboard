@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
+    <device id="retina4_7" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="EHf-IW-A2E">
+            <objects>
+                <viewController id="01J-lp-oVM" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map-dark" translatesAutoresizingMaskIntoConstraints="NO" id="py7-UK-YeA">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="Vgb-Up-WCj">
+                                <rect key="frame" x="67" y="301" width="241" height="65"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="DVx-LF-6of">
+                                        <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="CmD-iY-rsJ"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mHI-sA-VZP">
+                                        <rect key="frame" x="0.0" y="48" width="241" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.4823529411764706" green="0.4823529411764706" blue="0.50588235294117645" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstAttribute="leading" secondItem="py7-UK-YeA" secondAttribute="leading" id="7Nv-a0-ZpJ"/>
+                            <constraint firstItem="Vgb-Up-WCj" firstAttribute="centerY" secondItem="py7-UK-YeA" secondAttribute="centerY" id="Tli-X7-sk4"/>
+                            <constraint firstItem="py7-UK-YeA" firstAttribute="bottom" secondItem="Ze5-6b-2t3" secondAttribute="bottom" id="VUZ-Nk-kVo"/>
+                            <constraint firstItem="py7-UK-YeA" firstAttribute="trailing" secondItem="Ze5-6b-2t3" secondAttribute="trailing" id="iER-95-mc7"/>
+                            <constraint firstItem="Vgb-Up-WCj" firstAttribute="centerX" secondItem="py7-UK-YeA" secondAttribute="centerX" id="oto-ve-bG0"/>
+                            <constraint firstAttribute="top" secondItem="py7-UK-YeA" secondAttribute="top" id="zXE-03-qwV"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="52" y="374.66266866566718"/>
+        </scene>
+        <!--Launch View Controller-->
+        <scene sceneID="DxW-HH-aES">
+            <objects>
+                <viewController storyboardIdentifier="LaunchViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eY9-5o-h91" customClass="LaunchViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CP0-zI-jTf">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="map-dark" translatesAutoresizingMaskIntoConstraints="NO" id="rEH-hr-sPV">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                            </imageView>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="2hy-lt-Pl6">
+                                <rect key="frame" x="67" y="301" width="241" height="65"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="Tg1-9f-Td4">
+                                        <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="30" id="hEF-w6-rHn"/>
+                                        </constraints>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9eV-7f-mUD">
+                                        <rect key="frame" x="0.0" y="48" width="241" height="17"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="whiteLarge" translatesAutoresizingMaskIntoConstraints="NO" id="PvE-0s-kSr">
+                                <rect key="frame" x="170" y="532" width="35" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="PvE-0s-kSr" secondAttribute="height" multiplier="1:1" id="Pqh-ch-XtC"/>
+                                    <constraint firstAttribute="width" constant="35" id="hVK-cw-BZM"/>
+                                </constraints>
+                                <color key="color" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </activityIndicatorView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="rEH-hr-sPV" firstAttribute="leading" secondItem="CP0-zI-jTf" secondAttribute="leading" id="BGu-CD-wQE"/>
+                            <constraint firstItem="rEH-hr-sPV" firstAttribute="bottom" secondItem="CP0-zI-jTf" secondAttribute="bottom" id="GkJ-GL-gE2"/>
+                            <constraint firstItem="2hy-lt-Pl6" firstAttribute="centerX" secondItem="rEH-hr-sPV" secondAttribute="centerX" id="Iyg-Ma-9MQ"/>
+                            <constraint firstItem="rEH-hr-sPV" firstAttribute="top" secondItem="CP0-zI-jTf" secondAttribute="top" id="ZVS-ll-DF5"/>
+                            <constraint firstItem="rEH-hr-sPV" firstAttribute="trailing" secondItem="CP0-zI-jTf" secondAttribute="trailing" id="d81-VO-1Lj"/>
+                            <constraint firstItem="PvE-0s-kSr" firstAttribute="centerX" secondItem="CP0-zI-jTf" secondAttribute="centerX" id="e8E-CY-Mh0"/>
+                            <constraint firstItem="2hy-lt-Pl6" firstAttribute="centerY" secondItem="rEH-hr-sPV" secondAttribute="centerY" id="rK3-3T-tDY"/>
+                            <constraint firstItem="bQF-E3-tbv" firstAttribute="bottom" secondItem="PvE-0s-kSr" secondAttribute="bottom" constant="100" id="tpS-zA-X73"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="bQF-E3-tbv"/>
+                    </view>
+                    <connections>
+                        <outlet property="loadingIndicator" destination="PvE-0s-kSr" id="hIC-T6-Qw2"/>
+                        <outlet property="underLogoLabel" destination="9eV-7f-mUD" id="04I-4y-iNk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="D1W-T8-37g" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="738" y="375"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="map-dark" width="2600" height="1681"/>
+        <image name="protonvpn-white-transparent" width="241" height="41"/>
+    </resources>
+</document>

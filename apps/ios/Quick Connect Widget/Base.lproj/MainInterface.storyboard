@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Today View Controller-->
+        <scene sceneID="cwh-vc-ff4">
+            <objects>
+                <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="Quick_Connect_Widget" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="GcN-lo-r42">
+                                <rect key="frame" x="82" y="0.0" width="146" height="110"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19p-4Y-Cn2">
+                                <rect key="frame" x="228" y="0.0" width="92" height="110"/>
+                                <connections>
+                                    <action selector="connectAction:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="ghT-Hr-1ZT"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mC-03-j2D" customClass="ProtonButton" customModule="Quick_Connect_Widget" customModuleProvider="target">
+                                <rect key="frame" x="244" y="38" width="60" height="34"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="34" id="Y6E-NM-iog"/>
+                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fnW-Pj-sDN"/>
+                                </constraints>
+                                <state key="normal" title="Connect"/>
+                                <connections>
+                                    <action selector="connectAction:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="Rl2-Yv-3xm"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
+                                <rect key="frame" x="16" y="27.5" width="50" height="55"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="height" multiplier="69:76" id="icq-9a-DQU"/>
+                                    <constraint firstAttribute="width" constant="50" id="ofH-qU-pfl"/>
+                                </constraints>
+                            </imageView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-e6-n86" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
+                                <rect key="frame" x="16" y="27.5" width="50" height="55"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="XpW-e6-n86" firstAttribute="trailing" secondItem="pE6-gs-k9n" secondAttribute="trailing" id="1dn-j4-tEN"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="bottom" secondItem="19p-4Y-Cn2" secondAttribute="bottom" id="5Gw-sZ-FFr"/>
+                            <constraint firstItem="19p-4Y-Cn2" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="CUD-fe-vnS"/>
+                            <constraint firstItem="XpW-e6-n86" firstAttribute="leading" secondItem="pE6-gs-k9n" secondAttribute="leading" id="E7l-xm-EEB"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="19p-4Y-Cn2" secondAttribute="trailing" id="JIc-Hd-ZiO"/>
+                            <constraint firstItem="GcN-lo-r42" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="16" id="R7J-x1-NP2"/>
+                            <constraint firstItem="pE6-gs-k9n" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="16" id="Rfe-9k-DcY"/>
+                            <constraint firstItem="XpW-e6-n86" firstAttribute="top" secondItem="pE6-gs-k9n" secondAttribute="top" id="Uc4-eU-qTu"/>
+                            <constraint firstItem="GcN-lo-r42" firstAttribute="leading" secondItem="pE6-gs-k9n" secondAttribute="trailing" constant="16" id="VKZ-l0-23j"/>
+                            <constraint firstItem="GcN-lo-r42" firstAttribute="trailing" secondItem="19p-4Y-Cn2" secondAttribute="leading" id="dbu-rR-7tl"/>
+                            <constraint firstItem="9mC-03-j2D" firstAttribute="leading" secondItem="GcN-lo-r42" secondAttribute="trailing" constant="16" id="e9F-Kg-iLf"/>
+                            <constraint firstItem="pE6-gs-k9n" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="gh6-34-hxz"/>
+                            <constraint firstItem="GcN-lo-r42" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" symbolic="YES" id="mYS-Cv-VNx"/>
+                            <constraint firstItem="9mC-03-j2D" firstAttribute="trailing" secondItem="ssy-KU-ocm" secondAttribute="trailing" constant="-16" id="ooa-YI-65k"/>
+                            <constraint firstItem="XpW-e6-n86" firstAttribute="bottom" secondItem="pE6-gs-k9n" secondAttribute="bottom" id="rMe-FM-ieH"/>
+                            <constraint firstItem="9mC-03-j2D" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="txI-TW-tYc"/>
+                            <constraint firstItem="GcN-lo-r42" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="xPy-hu-NUI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="R7J-x1-NP2"/>
+                            </mask>
+                        </variation>
+                    </view>
+                    <extendedEdge key="edgesForExtendedLayout"/>
+                    <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+                    <size key="freeformSize" width="320" height="110"/>
+                    <connections>
+                        <outlet property="connectButton" destination="9mC-03-j2D" id="bWQ-9p-Suc"/>
+                        <outlet property="connectionIcon" destination="pE6-gs-k9n" id="xYl-hV-phA"/>
+                        <outlet property="connectionLabel" destination="GcN-lo-r42" id="aMQ-RL-MDd"/>
+                        <outlet property="electronContainer" destination="XpW-e6-n86" id="65J-IY-tpU"/>
+                        <outlet property="invisibleConnectButton" destination="19p-4Y-Cn2" id="Tr8-GX-pik"/>
+                        <outlet property="largeScreenLeadingConstraint" destination="VKZ-l0-23j" id="nJE-ZD-ua3"/>
+                        <outlet property="smallScreenLeadingConstraint" destination="R7J-x1-NP2" id="yMI-80-pyk"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="140.80000000000001" y="133.5832083958021"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo" width="185" height="202"/>
+    </resources>
+</document>

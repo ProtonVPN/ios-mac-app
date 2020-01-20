@@ -1,0 +1,53 @@
+PODS:
+  - Alamofire (4.8.0)
+  - GSMessages (1.7.3)
+  - KeychainAccess (3.1.2)
+  - ReachabilitySwift (4.3.0)
+  - Sentry (4.1.1):
+    - Sentry/Core (= 4.1.1)
+  - Sentry/Core (4.1.1)
+  - SwiftLint (0.33.1)
+  - TrustKit (1.6.1)
+  - vpncore (0.9.0):
+    - Alamofire (~> 4.0)
+    - KeychainAccess (~> 3.0)
+    - ReachabilitySwift (~> 4.0)
+    - Sentry (~> 4.0)
+    - TrustKit (~> 1.0)
+
+DEPENDENCIES:
+  - Alamofire (~> 4.0)
+  - GSMessages (~> 1.0)
+  - KeychainAccess (~> 3.0)
+  - ReachabilitySwift (~> 4.0)
+  - Sentry (~> 4.0)
+  - SwiftLint
+  - vpncore (from `../vpncore`)
+
+SPEC REPOS:
+  https://github.com/CocoaPods/Specs.git:
+    - Alamofire
+    - GSMessages
+    - KeychainAccess
+    - ReachabilitySwift
+    - Sentry
+    - SwiftLint
+    - TrustKit
+
+EXTERNAL SOURCES:
+  vpncore:
+    :path: "../vpncore"
+
+SPEC CHECKSUMS:
+  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  GSMessages: b9bcf210247426ae113ff22eac1d8f03ad5dee53
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
+  SwiftLint: 9fc1143bbacec37f94994a7d0d2a85b2154b6294
+  TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
+  vpncore: 45996c2071c4c4f7e3b31105014c3eccfa6fe042
+
+PODFILE CHECKSUM: df580910e9f679522d461a27c0807d8cea08a295
+
+COCOAPODS: 1.8.4

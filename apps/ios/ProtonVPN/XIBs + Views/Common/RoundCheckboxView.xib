@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="iN0-l3-epB" customClass="RoundCheckboxView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WEV-Ki-sST">
+                    <rect key="frame" x="0.0" y="0.0" width="22" height="22"/>
+                    <color key="backgroundColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="WEV-Ki-sST" secondAttribute="height" multiplier="1:1" id="K1v-BA-55O"/>
+                    </constraints>
+                </view>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="checkbox_tick" translatesAutoresizingMaskIntoConstraints="NO" id="MMY-fc-z7o">
+                    <rect key="frame" x="4.5" y="7" width="13" height="10"/>
+                    <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </imageView>
+            </subviews>
+            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="WEV-Ki-sST" secondAttribute="trailing" id="3e5-eC-xIX"/>
+                <constraint firstItem="MMY-fc-z7o" firstAttribute="centerY" secondItem="iN0-l3-epB" secondAttribute="centerY" constant="1" id="Jc6-KY-2CQ"/>
+                <constraint firstAttribute="bottom" secondItem="WEV-Ki-sST" secondAttribute="bottom" id="KGU-Gt-g6i"/>
+                <constraint firstItem="WEV-Ki-sST" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="Tkv-dr-vIc"/>
+                <constraint firstItem="WEV-Ki-sST" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="Unz-nm-lFg"/>
+                <constraint firstItem="MMY-fc-z7o" firstAttribute="centerX" secondItem="iN0-l3-epB" secondAttribute="centerX" id="rKj-b9-MnS"/>
+            </constraints>
+            <nil key="simulatedTopBarMetrics"/>
+            <nil key="simulatedBottomBarMetrics"/>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <connections>
+                <outlet property="backgroundView" destination="WEV-Ki-sST" id="JGL-Qa-6bM"/>
+                <outlet property="imageView" destination="MMY-fc-z7o" id="dVi-GJ-RJo"/>
+            </connections>
+            <point key="canvasLocation" x="-28.260869565217394" y="-104.12946428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="checkbox_tick" width="13" height="10"/>
+    </resources>
+</document>
