@@ -38,6 +38,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     let reachability = Reachability()
     
     let appStateManager: AppStateManager
+    let propertiesManager: PropertiesManagerProtocol
     var vpnGateway: VpnGatewayProtocol?
     
     var timer: Timer?
@@ -46,11 +47,13 @@ class TodayViewController: UIViewController, NCWidgetProviding {
     
     required init?(coder aDecoder: NSCoder) {
         appStateManager = WidgetFactory.shared.appStateManager
+        propertiesManager = WidgetFactory.shared.propertiesManager
         vpnGateway = WidgetFactory.shared.vpnGateway
         
         super.init(coder: aDecoder)
         
         WidgetFactory.shared.alertService.delegate = self
+        WidgetFactory.shared.refreshVpnManager()
     }
     
     deinit {
@@ -140,12 +143,11 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         }
         
         switch vpnGateway.connection {
-        case .connected:
-            vpnGateway.disconnect()
-        case .connecting:
-            vpnGateway.stopConnecting(userInitiated: true)
+        case .connected, .connecting:
+            extensionContext?.open(URL(string: "protonvpn://disconnect")!, completionHandler: nil)
         case .disconnected, .disconnecting:
-            vpnGateway.quickConnect()
+            propertiesManager.lastConnectionRequest = vpnGateway.quickConnectConnectionRequest()
+            extensionContext?.open(URL(string: "protonvpn://connect")!, completionHandler: nil)
         }
     }
     
@@ -207,7 +209,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
         let titleText = LocalizedString.connected.attributed(withColor: UIColor.protonGreen(), font: .boldSystemFont(ofSize: 16))
         let connectedText = NSMutableAttributedString(attributedString: titleText)
         
-        if let server = appStateManager.activeServer {
+        if let server = appStateManager.activeConnection()?.server {
             if server.isSecureCore {
                 let secureCoreText = "\n\(server.exitCountryCode) \(LocalizedString.via) \(server.entryCountryCode)".attributed(withColor: .protonWhite(), fontSize: 12)
                 connectedText.append(secureCoreText)
@@ -215,7 +217,7 @@ class TodayViewController: UIViewController, NCWidgetProviding {
                 let countryText = "\n\(countryString)".attributed(withColor: .protonWhite(), fontSize: 12)
                 connectedText.append(countryText)
             }
-            if let ip = appStateManager.activeIp {
+            if let ip = appStateManager.activeConnection()?.serverIp.exitIp {
                 let ipText = "\n\(String(format: LocalizedString.ipValue, ip))".attributed(withColor: .protonWhite(), fontSize: 12)
                 connectedText.append(ipText)
             }

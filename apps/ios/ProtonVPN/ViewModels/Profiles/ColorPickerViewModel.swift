@@ -25,7 +25,7 @@ import vpncore
 
 class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UICollectionViewDataSource {
     
-    var colorChanged: ((ColorPickerViewModel) -> Void)?
+    var colorChanged: (() -> Void)?
     
     var cellHeight: CGFloat {
         var d: CGFloat = 38
@@ -69,21 +69,30 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         selectedColorIndex = indexPath.row
-        colorChanged?(self)
+        colorChanged?()
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        collectionView.selectItem(at: IndexPath(row: selectedColorIndex, section: 0), animated: false, scrollPosition: .top)
     }
     
     private let colors: [UIColor]
     
-    var selectedColorIndex: Int?
+    var selectedColorIndex: Int!
+    var selectedColor: UIColor {
+        return colorAt(index: selectedColorIndex)
+    }
     
-    override init() {
+    init(with color: UIColor? = nil) {
         colors = ProfileConstants.profileColors
-        selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count)))
+        
+        super.init()
+        
+        select(color: color)
     }
     
     func selectRandom() {
         selectedColorIndex = Int(arc4random_uniform(UInt32(colors.count)))
-        
     }
     
     func select(color newColor: UIColor?) {
@@ -92,10 +101,13 @@ class ColorPickerViewModel: NSObject, UICollectionViewDelegateFlowLayout, UIColl
             return
         }
         
-        for (index, color) in colors.enumerated() where color == newColor {
+        if let index = colors.enumerated().first(where: { (index, color) -> Bool in
+            color == newColor
+        })?.offset {
             selectedColorIndex = index
+        } else {
+            selectedColorIndex = 0
         }
-        
     }
     
     func select(color index: Int) {

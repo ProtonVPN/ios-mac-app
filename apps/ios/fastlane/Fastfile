@@ -26,6 +26,63 @@ platform :ios do
             skip_slack: true
         )
     end
+
+    lane :internal_beta do |options|
+        if !options[:changelog]
+            abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
+        elsif !options[:username]
+            abort("Please provide an App Store Connect username with appropriate permisions by running the command with `username:\"<App Store Connect username>\"`")
+        end
+
+        xcode_select("/Applications/Xcode.app")
+
+        sh("./sync_version_number.sh") # sync's the app target's version number with the other targets
+        sh("./increment_build_number.sh")
+
+        # Release build
+        build_app(
+            scheme: "ProtonVPN",
+            clean: true,
+            output_directory: "build/",
+            export_method: "app-store",
+            export_options: {
+                provisioningProfiles: {
+                    "ch.protonmail.vpn" => "ProtonVPN Release",
+                    "ch.protonmail.vpn.OpenVPN-Extension" => "ProtonVPN OpenVPN Release",
+                    "ch.protonmail.vpn.widget" => "ProtonVPN Widget Release",
+                    "ch.protonmail.vpn.Siri-Shortuct-Handler" => "ProtonVPN Siri Shortcuts Release"
+                }
+            }
+        )
+        upload_to_testflight(
+            username: options[:username],
+            team_name: "Proton Technologies AG",
+            groups: ["Internal Members"],
+            changelog: options[:changelog],
+            distribute_external: true,
+            demo_account_required: true
+        )
+
+        # Debug build
+        build_app(
+            scheme: "ProtonVPN Staging",
+            clean: true,
+            output_directory: "build/",
+            export_method: "app-store",
+            export_options: {
+                provisioningProfiles: {
+                    "ch.protonmail.vpn.debug" => "ProtonVPN Debug",
+                    "ch.protonmail.vpn.debug.OpenVPN-Extension" => "ProtonVPN OpenVPN Debug",
+                    "ch.protonmail.vpn.debug.widget" => "ProtonVPN Widget Debug",
+                    "ch.protonmail.vpn.debug.Siri-Shortuct-Handler" => "ProtonVPN Siri Shortcuts Debug"
+                }
+            }
+        )
+        upload_to_testflight(
+            username: options[:username],
+            team_name: "Proton Technologies AG",
+        )
+    end
         
     desc "Make screenshots for every language on every device"
     lane :screenshots do

@@ -24,7 +24,8 @@ import UIKit
 
 class StandardTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var label: UILabel! // need to use a custom label instead of the built in title label to avoid an upper separator
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var subtitleLabel: UILabel!
     
     var completionHandler: (() -> Void)?
     
@@ -32,13 +33,16 @@ class StandardTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         backgroundColor = .protonGrey()
-        label?.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .protonWhite()
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
+        titleLabel.textColor = .protonWhite()
+        
+        subtitleLabel.font = UIFont.systemFont(ofSize: 17)
+        subtitleLabel.textColor = .protonFontLightGrey()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         selectionStyle = .none
     }
     

@@ -34,6 +34,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     private let countryModel: CountryModel
     private let serverModels: [ServerModel]
     private var vpnGateway: VpnGatewayProtocol?
+    private let appStateManager: AppStateManager
     private let alertService: AlertService
     private let loginService: LoginService
     
@@ -72,14 +73,14 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
     
     var isConnected: Bool {
-        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = vpnGateway.activeServer, activeServer.serverType == serverType, activeServer.countryCode == countryCode {
+        if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server, activeServer.serverType == serverType, activeServer.countryCode == countryCode {
             return true
         }
         return false
     }
     
     var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.activeConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
@@ -161,10 +162,11 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     let showAnchor: Bool = true
     
-    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol?, enabled: Bool, alertService: AlertService, loginService: LoginService) {
+    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, loginService: LoginService) {
         self.countryModel = countryModel
         self.serverModels = servers
         self.vpnGateway = vpnGateway
+        self.appStateManager = appStateManager
         self.requiresUpgrade = !enabled
         self.alertService = alertService
         self.loginService = loginService
@@ -173,7 +175,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
         startObserving()
     }
     
-    func tapped(delegate: ConnectingCellDelegate) {
+    func tapped() {
         switch viewState {
         case .idle:
             viewState = .selected
@@ -183,36 +185,14 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 return
             }
             
-            if isConnected {
-                vpnGateway.disconnect { [weak self] in
-                    DispatchQueue.main.async { [weak self] in
-                        guard let `self` = self else { return }
-                        self.countryTapped?(self)
-                    }
-                }
-                return
+            if underMaintenance {
+                alertService.push(alert: MaintenanceAlert(countryName: labelString.string))
+            } else if isConnected {
+                vpnGateway.disconnect()
             } else if isConnecting {
                 vpnGateway.stopConnecting(userInitiated: true)
-                
-                if let delegate = vpnGateway.connectingCellDelegate {
-                    DispatchQueue.main.async {
-                        delegate.disableConnecting()
-                    }
-                }
-            } else if underMaintenance {
-                alertService.push(alert: MaintenanceAlert(countryName: labelString.string))
             } else {
-                if let delegate = vpnGateway.connectingCellDelegate {
-                    vpnGateway.stopConnecting(userInitiated: true)
-                    DispatchQueue.main.async {
-                        delegate.disableConnecting()
-                    }
-                }
-                vpnGateway.connectingCellDelegate = delegate
                 vpnGateway.connectTo(country: countryCode, ofType: serverType)
-                DispatchQueue.main.async { [unowned self] in
-                    self.buttonStateChanged?()
-                }
             }
         }
         

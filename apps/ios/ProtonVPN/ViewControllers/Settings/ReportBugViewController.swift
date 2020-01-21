@@ -28,6 +28,8 @@ class ReportBugViewController: UIViewController {
     
     public var viewModel: ReportBugViewModel!
     
+    private let vpnManager: VpnManagerProtocol
+    
     private let fieldFontSize: CGFloat = 16
     private let textFontSize: CGFloat = 14
     
@@ -49,6 +51,16 @@ class ReportBugViewController: UIViewController {
     private let footerConstraintConstant: CGFloat = 0
     private var scrollViewClick: UITapGestureRecognizer!
 
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    init(vpnManager: VpnManagerProtocol) {
+        self.vpnManager = vpnManager
+        
+        super.init(nibName: "ReportBugViewController", bundle: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -88,11 +100,17 @@ class ReportBugViewController: UIViewController {
     }
     
     @IBAction func logsSwitchChanged() {
-        guard let file = PMLog.logFile() else { return }
         if logsSwitch.isOn {
-            viewModel.add(files: [file])
+            if let applicationLogFile = PMLog.logFile() {
+                viewModel.add(files: [applicationLogFile])
+            }
+            
+            vpnManager.logFile(for: .openVpn(.undefined)) { [weak self] (fileUrl) in
+                guard let `self` = self, let fileUrl = fileUrl, self.logsSwitch.isOn else { return }
+                self.viewModel.add(files: [fileUrl])
+            }
         } else {
-            viewModel.remove(file: file)
+            viewModel.removeAllFiles()
         }
     }
     

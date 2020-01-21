@@ -27,11 +27,15 @@ class LogsViewController: UIViewController {
     
     @IBOutlet weak var textView: UITextView!
     
+    private let viewModel: LogsViewModel
+    
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init() {
+    init(viewModel: LogsViewModel) {
+        self.viewModel = viewModel
+        
         super.init(nibName: "Logs", bundle: nil)
     }
     
@@ -43,28 +47,17 @@ class LogsViewController: UIViewController {
         textView.backgroundColor = .clear
         textView.font = UIFont.systemFont(ofSize: 12)
         textView.textColor = .protonWhite()
-        textView.text = PMLog.logsContent()
+        textView.text = viewModel.logs
         textView.setContentOffset(CGPoint(x: 0, y: textView.contentSize.height), animated: true)
         
-        navigationItem.title = LocalizedString.logs
-        
-        let closeButton = UIButton.closeButton()
-        closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-        navigationItem.leftBarButtonItem = UIBarButtonItem(customView: closeButton)
+        navigationItem.title = viewModel.title
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(share(_:)))
     }
     
     // MARK: - Private
-    @objc private func close() {
-        dismiss(animated: true, completion: nil)
-    }
-    
     @objc private func share(_ item: UIBarButtonItem) {
-        guard let logFile = PMLog.logFile() else {
-            return
-        }
-        let activityViewController = UIActivityViewController(activityItems: [logFile], applicationActivities: nil)
+        let activityViewController = UIActivityViewController(activityItems: [viewModel.logFile], applicationActivities: nil)
         activityViewController.popoverPresentationController?.barButtonItem = item
         navigationController?.present(activityViewController, animated: true, completion: nil)
     }

@@ -32,37 +32,46 @@ class ProfileItemViewModel {
     private let alertService: AlertService
     private let planService: PlanService
     
-    let userTier: Int
-    let lowestSeverTier: Int
-    let underMaintenance: Bool
+    private let userTier: Int
+    private let lowestSeverTier: Int
+    private let underMaintenance: Bool
     
-    var connectionChanged: (() -> Void)?
-    
-    var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.activeConnectionRequest, (vpnGateway.connection == .connected || vpnGateway.connection == .connecting) {
-            if profile.connectionRequest == activeConnectionRequest {
-                return true
-            }
+    private var isConnected: Bool {
+        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
+            return activeConnectionRequest == profile.connectionRequest
         }
         return false
     }
     
-    var canConnect: Bool {
+    private var isConnecting: Bool {
+        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
+            return activeConnectionRequest == profile.connectionRequest
+        }
+        return false
+    }
+    
+    private var connectedUiState: Bool {
+        return isConnected || isConnecting
+    }
+    
+    private var canConnect: Bool {
         return !underMaintenance
     }
     
-    let connectedConnectIcon = UIImage(named: "con-connected")
-    
-    var isUsersTierTooLow: Bool {
+    private var isUsersTierTooLow: Bool {
         return userTier < lowestSeverTier
     }
+    
+    var connectionChanged: (() -> Void)?
+    
+    let connectedConnectIcon = UIImage(named: "con-connected")
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
             return UIImage(named: "con-locked")
         } else if underMaintenance {
             return UIImage(named: "con-unavailable")
-        } else if isConnected {
+        } else if connectedUiState {
             return connectedConnectIcon
         } else {
             return UIImage(named: "con-available")
@@ -83,10 +92,6 @@ class ProfileItemViewModel {
     
     var description: NSAttributedString {
         return attributedDescription(forProfile: profile)
-    }
-    
-    var isSystemProfile: Bool {
-        return profile.profileType == .system
     }
     
     var connectButtonTitle: String {
@@ -139,7 +144,7 @@ class ProfileItemViewModel {
         startObserving()
     }
     
-    func connectAction(delegate: ConnectingCellDelegate) {
+    func connectAction() {
         guard let vpnGateway = vpnGateway else {
             loginService.presentSignup()
             return
@@ -149,16 +154,11 @@ class ProfileItemViewModel {
             planService.presentPlanSelection()
         } else if underMaintenance {
             alertService.push(alert: MaintenanceAlert())
-        } else if vpnGateway.connection == .connecting, delegate === vpnGateway.connectingCellDelegate {
-            vpnGateway.stopConnecting(userInitiated: true)
         } else if isConnected {
             vpnGateway.disconnect()
+        } else if isConnecting {
+            vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            if let delegate = vpnGateway.connectingCellDelegate {
-                vpnGateway.stopConnecting(userInitiated: true)
-                delegate.disableConnecting()
-            }
-            vpnGateway.connectingCellDelegate = delegate
             vpnGateway.connectTo(profile: profile)
         }
     }

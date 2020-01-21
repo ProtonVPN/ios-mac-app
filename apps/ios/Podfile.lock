@@ -2,18 +2,32 @@ PODS:
   - Alamofire (4.8.0)
   - GSMessages (1.7.3)
   - KeychainAccess (3.1.2)
+  - OpenSSL-Apple (1.1.1d.5a)
   - ReachabilitySwift (4.3.0)
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - SwiftLint (0.33.1)
+  - SwiftyBeaver (1.8.4)
   - TrustKit (1.6.1)
-  - vpncore (0.9.0):
+  - TunnelKit (2.0.5):
+    - TunnelKit/Protocols/OpenVPN (= 2.0.5)
+  - TunnelKit/AppExtension (2.0.5):
+    - SwiftyBeaver
+    - TunnelKit/Core
+  - TunnelKit/Core (2.0.5):
+    - SwiftyBeaver
+  - TunnelKit/Protocols/OpenVPN (2.0.5):
+    - OpenSSL-Apple (~> 1.1.0j.4)
+    - TunnelKit/AppExtension
+    - TunnelKit/Core
+  - vpncore (1.0.0):
     - Alamofire (~> 4.0)
     - KeychainAccess (~> 3.0)
     - ReachabilitySwift (~> 4.0)
     - Sentry (~> 4.0)
     - TrustKit (~> 1.0)
+    - TunnelKit (~> 2.0.5)
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
@@ -29,10 +43,13 @@ SPEC REPOS:
     - Alamofire
     - GSMessages
     - KeychainAccess
+    - OpenSSL-Apple
     - ReachabilitySwift
     - Sentry
     - SwiftLint
+    - SwiftyBeaver
     - TrustKit
+    - TunnelKit
 
 EXTERNAL SOURCES:
   vpncore:
@@ -42,12 +59,15 @@ SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   GSMessages: b9bcf210247426ae113ff22eac1d8f03ad5dee53
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  OpenSSL-Apple: 2c9efbc94e0a1ada434cc197b02bd70052a82281
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: 9fc1143bbacec37f94994a7d0d2a85b2154b6294
+  SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
-  vpncore: 45996c2071c4c4f7e3b31105014c3eccfa6fe042
+  TunnelKit: f33216415cd9d5e37b6acf02edb0c79350598b36
+  vpncore: 9dde50c950e64aa91882f33b529f74adf4087355
 
-PODFILE CHECKSUM: df580910e9f679522d461a27c0807d8cea08a295
+PODFILE CHECKSUM: 41b00f41376cdfb383c9263658a238929f7c6bda
 
 COCOAPODS: 1.8.4

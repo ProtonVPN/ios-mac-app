@@ -68,7 +68,7 @@ class IosUiAlertService: UIAlertService {
         // Allows easier unit testing
         guard Thread.isMainThread else { return DispatchQueue.main.async { [unowned self] in self.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier) } }
         
-        self.windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
+        windowService.present(message: message, type: type.presentedMessageType, accessibilityIdentifier: accessibilityIdentifier)
     }
     
     private func alertIsNew(_ alert: SystemAlert) -> Bool {

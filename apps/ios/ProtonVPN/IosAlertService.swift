@@ -92,7 +92,10 @@ extension IosAlertService: CoreAlertService {
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
             
-        case is ConfirmVpnDisconnectAlert:
+        case is SecureCoreToggleDisconnectAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is ChangeProtocolDisconnectAlert:
             showDefaultSystemAlert(alert)
             
         case is LogoutWarningAlert:
@@ -188,6 +191,8 @@ extension IosAlertService: CoreAlertService {
     }
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
+        guard Thread.isMainThread else { return DispatchQueue.main.async { self.showDefaultSystemAlert(alert) } }
+        
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
         }

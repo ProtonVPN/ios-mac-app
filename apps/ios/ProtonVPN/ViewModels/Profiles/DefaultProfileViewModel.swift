@@ -27,28 +27,55 @@ class DefaultProfileViewModel {
     
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol?
+    private let propertiesManager: PropertiesManager
     private let loginService: LoginService
     
-    var connectionChanged: (() -> Void)?
+    private var profile: Profile {
+        switch serverOffering {
+        case .random:
+            return Profile(id: "st_r",
+                           accessTier: 0,
+                           profileIcon: .image("con-random"),
+                           profileType: .system,
+                           serverType: propertiesManager.serverTypeToggle,
+                           serverOffering: serverOffering,
+                           name: LocalizedString.random,
+                           vpnProtocol: PropertiesManager().vpnProtocol)
+        default:
+            return Profile(id: "st_f", accessTier: 0,
+                           profileIcon: .image("con-fastest"),
+                           profileType: .system,
+                           serverType: propertiesManager.serverTypeToggle,
+                           serverOffering: serverOffering,
+                           name: LocalizedString.fastest,
+                           vpnProtocol: PropertiesManager().vpnProtocol)
+        }
+    }
     
-    var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.activeConnectionRequest, (vpnGateway.connection == .connected || vpnGateway.connection == .connecting) {
-            switch activeConnectionRequest.connectionType {
-            case .fastest:
-                return serverOffering == .fastest(nil)
-            case .random:
-                return serverOffering == .random(nil)
-            default:
-                return false
-            }
+    private var isConnected: Bool {
+        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
+            return activeConnectionRequest == profile.connectionRequest
         }
         return false
     }
     
+    private var isConnecting: Bool {
+        if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
+            return activeConnectionRequest == profile.connectionRequest
+        }
+        return false
+    }
+    
+    private var connectedUiState: Bool {
+        return isConnected || isConnecting
+    }
+    
+    var connectionChanged: (() -> Void)?
+    
     let connectedConnectIcon = UIImage(named: "con-connected")
     
     var connectIcon: UIImage? {
-        if isConnected {
+        if connectedUiState {
             return connectedConnectIcon
         } else {
             return UIImage(named: "con-available")
@@ -77,43 +104,27 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, loginService: LoginService) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManager, loginService: LoginService) {
         self.serverOffering = serverOffering
+        self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.loginService = loginService
         
         startObserving()
     }
     
-    func connectAction(delegate: ConnectingCellDelegate) {
+    func connectAction() {
         guard let vpnGateway = vpnGateway else {
             loginService.presentSignup()
             return
         }
         
-        if vpnGateway.connection == .connecting, delegate === vpnGateway.connectingCellDelegate {
+        if isConnecting {
             vpnGateway.stopConnecting(userInitiated: true)
         } else if isConnected {
             vpnGateway.disconnect()
         } else {
-            if let delegate = vpnGateway.connectingCellDelegate {
-                vpnGateway.stopConnecting(userInitiated: true)
-                delegate.disableConnecting()
-            }
-            
-            vpnGateway.connectingCellDelegate = delegate
-            switch serverOffering {
-            case .fastest:
-                let profile = Profile(id: "st_f", accessTier: 0, profileIcon: .image("con-fastest"), profileType: .system,
-                                      serverType: vpnGateway.activeServerType, serverOffering: serverOffering, name: LocalizedString.fastest)
-                vpnGateway.connectTo(profile: profile)
-            case .random:
-                let profile = Profile(id: "st_r", accessTier: 0, profileIcon: .image("con-random"), profileType: .system,
-                                      serverType: vpnGateway.activeServerType, serverOffering: serverOffering, name: LocalizedString.random)
-                vpnGateway.connectTo(profile: profile)
-            default:
-                break
-            }
+            vpnGateway.connectTo(profile: profile)
         }
     }
     

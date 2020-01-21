@@ -72,7 +72,7 @@ extension SecureCoreToggleHandler {
         } else if vpnGateway.connection != .connected {
             completionWrapper(true)
         } else {
-            alertService.push(alert: ConfirmVpnDisconnectAlert(confirmHandler: { disconnectCompletion() }, cancelHandler: { completionWrapper(false) }))
+            alertService.push(alert: SecureCoreToggleDisconnectAlert(confirmHandler: { disconnectCompletion() }, cancelHandler: { completionWrapper(false) }))
         }
     }
 }

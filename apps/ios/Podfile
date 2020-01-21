@@ -1,6 +1,6 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :ios, '10.0'
+platform :ios, '11.0'
 
 use_frameworks!
 
@@ -24,19 +24,23 @@ def sharedpods
 end
 
 target 'ProtonVPN' do
-    sharedpods
+  sharedpods
+  
+  target 'OpenVPN Extension' do
+    inherit! :search_paths
+  end    
+
+  target 'Quick Connect Widget' do
+    inherit! :search_paths
+  end
     
-    target 'Quick Connect Widget' do
-        inherit! :search_paths
-    end
+  target 'Siri Shortuct Handler' do
+    inherit! :search_paths
+  end
     
-    target 'Siri Shortuct Handler' do
-      inherit! :search_paths
-    end
-    
-    target 'ProtonVPNTests' do
-      inherit! :search_paths
-    end
+  target 'ProtonVPNTests' do
+    inherit! :search_paths
+  end
 end
 
 plugin 'cocoapods-acknowledgements', :settings_bundle => true, :exclude => ['vpncore']
@@ -44,6 +48,7 @@ plugin 'cocoapods-acknowledgements', :settings_bundle => true, :exclude => ['vpn
 post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
+      config.build_settings['DEBUG_INFORMATION_FORMAT'] = 'dwarf'
       config.build_settings['ENABLE_BITCODE'] = 'NO'
     end
   end

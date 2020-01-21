@@ -57,8 +57,7 @@ class CountryViewCell: UITableViewCell {
     var servers: [ServerModel]?
     
     @IBAction func connectTapped(_ sender: Any) {
-        viewModel?.connectAction(delegate: self)
-        stateChanged()
+        viewModel?.connectAction()
     }
     
     override func awakeFromNib() {
@@ -84,12 +83,5 @@ class CountryViewCell: UITableViewCell {
             rightMarginConstraint.isActive = false
             rightNoMarginConstraint.isActive = true
         }
-    }
-}
-
-extension CountryViewCell: ConnectingCellDelegate {
-    
-    func disableConnecting() {
-        renderConnectButton()
     }
 }

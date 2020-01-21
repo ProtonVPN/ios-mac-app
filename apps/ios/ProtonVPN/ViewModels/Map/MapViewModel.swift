@@ -50,6 +50,7 @@ class MapViewModel: SecureCoreToggleHandler {
     private let loginService: LoginService
     private let serverManager: ServerManager
     private let vpnKeychain: VpnKeychainProtocol
+    private let propertiesManager: PropertiesManagerProtocol
     
     private var countryExitAnnotations: [CountryAnnotationViewModel] = []
     private var secureCoreEntryAnnotations: Set<SecureCoreEntryCountryModel> = []
@@ -71,7 +72,7 @@ class MapViewModel: SecureCoreToggleHandler {
         }
         if secureCoreOn {
             // connected but not to a SC server
-            if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = vpnGateway.activeServer {
+            if let vpnGateway = vpnGateway, vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server {
                 if activeServer.serverType == .standard {
                     cons.append(contentsOf: secureCoreConnections)
                 }
@@ -91,17 +92,18 @@ class MapViewModel: SecureCoreToggleHandler {
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
     
-    init(appStateManager: AppStateManager, loginService: LoginService, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol) {
+    init(appStateManager: AppStateManager, loginService: LoginService, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol) {
         self.appStateManager = appStateManager
         self.loginService = loginService
         self.alertService = alertService
-        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
+        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
+        self.propertiesManager = propertiesManager
         
         self.secureCoreConnections = []
         
-        setStateOf(type: vpnGateway?.activeServerType ?? .standard)
+        setStateOf(type: propertiesManager.serverTypeToggle)
         
         refreshAnnotations(forView: activeView)
         
@@ -148,7 +150,7 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
         return serverManager.grouping(for: type).map {
-            let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, enabled: $0.0.lowestTier <= userTier, alertService: alertService, loginService: loginService)
+            let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, appStateManager: appStateManager, enabled: $0.0.lowestTier <= userTier, alertService: alertService, loginService: loginService)
             
             if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
                 return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode
@@ -165,7 +167,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 
                 if let vpnGateway = self.vpnGateway {
                     self.secureCoreEntryAnnotations.forEach({ (annotation) in
-                        if let activeServer = vpnGateway.activeServer, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
+                        if let activeServer = self.appStateManager.activeConnection()?.server, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
                             annotation.hightlight(true)
                         } else {
                             annotation.hightlight(false)
@@ -183,7 +185,7 @@ class MapViewModel: SecureCoreToggleHandler {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
         serverManager.grouping(for: .secureCore).forEach { group in
             group.1.forEach { (server) in
-                var entryCountry = SecureCoreEntryCountryModel(countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode))
+                var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode))
                 if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
                     entryCountry = oldEntry
                 }
@@ -207,23 +209,18 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     @objc private func activeServerTypeSet() {
-        guard let vpnGateway = vpnGateway,
-            vpnGateway.activeServerType != activeView else { return }
+        guard propertiesManager.serverTypeToggle != activeView else { return }
         
         resetCurrentState()
     }
     
     @objc private func resetCurrentState() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
-        setStateOf(type: vpnGateway.activeServerType)
+        setStateOf(type: propertiesManager.serverTypeToggle)
         contentChanged?()
     }
     
     @objc private func connectionChanged() {
-        if let vpnGateway = vpnGateway, let activeServer = vpnGateway.activeServer, vpnGateway.connection == .connected {
+        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server, vpnGateway.connection == .connected {
             
             // draw connection line
             if let entryCountry = secureCoreEntryAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.entryCountryCode }),

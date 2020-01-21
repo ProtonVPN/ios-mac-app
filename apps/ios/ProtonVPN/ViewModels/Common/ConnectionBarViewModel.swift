@@ -34,6 +34,7 @@ class ConnectionBarViewModel {
     private let appStateManager: AppStateManager
     
     private var timer = Timer()
+    private var connectedDate = Date()
     
     var setConnecting: (() -> Void)?
     var setConnected: (() -> Void)?
@@ -54,6 +55,10 @@ class ConnectionBarViewModel {
     }
     
     @objc func updateState() {
+        appStateManager.connectedDate { [weak self] (date) in
+            self?.connectedDate = date ?? Date()
+        }
+        
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
             
@@ -83,6 +88,10 @@ class ConnectionBarViewModel {
             self?.updateConnected?()
         }
     }
+    
+    func allowTapping() -> Bool {
+        return appStateManager.activeConnection() != nil
+    }
 }
 
 extension ConnectionBarViewModel: ConnectionBarViewModelDelegate {
@@ -90,7 +99,6 @@ extension ConnectionBarViewModel: ConnectionBarViewModelDelegate {
     func timeString() -> String {
         let time: TimeInterval
         if case AppState.connected = appStateManager.state {
-            let connectedDate = appStateManager.connectedDate() ?? Date()
             time = Date().timeIntervalSince(connectedDate)
         } else {
             time = 0

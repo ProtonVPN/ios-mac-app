@@ -172,6 +172,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.serverStorage.store(properties.serverModels)
             
             self.propertiesManager.userIp = properties.ip
+            self.propertiesManager.openVpnConfig = properties.openVpnConfig
             
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
@@ -224,7 +225,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         guard let vpnCredentials = try? vpnKeychain.fetch() else { return }
 
         if case AppState.connected(_) = appStateManager.state {
-            if let server = appStateManager.activeServer {
+            if let server = appStateManager.activeConnection()?.server {
                 if server.tier > vpnCredentials.maxTier {
                     appStateManager.disconnect()
                 }
