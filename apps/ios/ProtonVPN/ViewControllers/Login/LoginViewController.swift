@@ -184,6 +184,7 @@ class LoginViewController: UIViewController {
     private func setupFooterSection() {
         loginButton.isEnabled = false
         loginButton.accessibilityIdentifier = "login_button"
+        loginButton.setTitle(LocalizedString.logIn, for: .normal)
         
         let forgotPasswordTitle = LocalizedString.forgotPassword.attributed(withColor: .protonUnavailableGrey(), fontSize: 14, alignment: .center)
         forgotPasswordButton.setAttributedTitle(forgotPasswordTitle, for: .normal)

@@ -503,7 +503,7 @@ extension NavigationService: ProfileService {
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()))
+            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()))
             return createProfileViewController
         }
         return nil
