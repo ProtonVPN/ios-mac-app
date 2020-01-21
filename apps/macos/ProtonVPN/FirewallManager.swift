@@ -147,7 +147,7 @@ class FirewallManager {
         }
     }
     
-    func disableFirewall() {
+    func disableFirewall(completion: (() -> Void)? = nil) {
         clearOldProperties()
         
         killSwitchBlockingAlert.dismiss?()
@@ -158,11 +158,13 @@ class FirewallManager {
         
         guard let helper = self.helper() else {
             PMLog.ET("Can not retrieve network helper")
+            completion?()
             return
         }
         
         helper.disableFirewall { (exitCode) in
             PMLog.D("disableFirewall exit code: \(exitCode)", level: .debug)
+            completion?()
         }
     }
     

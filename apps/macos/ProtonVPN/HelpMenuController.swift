@@ -25,6 +25,7 @@ import vpncore
 
 class HelpMenuController: NSObject {
     
+    @IBOutlet weak var helpMenu: NSMenu!
     @IBOutlet weak var reportAnIssueItem: NSMenuItem!
     @IBOutlet weak var logsItem: NSMenuItem!
     @IBOutlet weak var helpItem: NSMenuItem!
@@ -43,6 +44,8 @@ class HelpMenuController: NSObject {
     
     // MARK: - Private
     private func setupPersistentView() {
+        helpMenu.title = LocalizedString.help
+        
         reportAnIssueItem.title = LocalizedString.reportAnIssue
         reportAnIssueItem.isEnabled = true
         reportAnIssueItem.target = self
