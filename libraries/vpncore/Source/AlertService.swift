@@ -289,7 +289,7 @@ public class MaintenanceAlert: SystemAlert {
     }
 }
 
-public class ConfirmVpnDisconnectAlert: SystemAlert {
+public class SecureCoreToggleDisconnectAlert: SystemAlert {
     public var title: String? = LocalizedString.warning
     public var message: String? = LocalizedString.viewToggleWillCauseDisconnect
     public var actions = [AlertAction]()
@@ -297,10 +297,22 @@ public class ConfirmVpnDisconnectAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .destructive, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
-    }
+    }    
+}
+
+public class ChangeProtocolDisconnectAlert: SystemAlert {
+    public var title: String? = LocalizedString.vpnConnectionActive
+    public var message: String? = LocalizedString.changeProtocolDisconnectWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
     
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+    }
 }
 
 public class LogoutWarningAlert: SystemAlert {
@@ -378,9 +390,8 @@ public class ErrorNotificationAlert: SystemAlert {
     
     public init(error: Error) {
         message = error.localizedDescription
-        if let nsError = error as? NSError {
-            accessibilityIdentifier = "Error notification with code \(nsError.code)"
-        }
+        let nsError = error as NSError
+        accessibilityIdentifier = "Error notification with code \(nsError.code)"
     }
 }
 

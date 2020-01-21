@@ -63,21 +63,19 @@ public enum ServerSelection {
 
 public protocol VpnGatewayProtocol: class {
     
-    var activeServerType: ServerType { get }
-    var connectingCellDelegate: ConnectingCellDelegate? { get set }
     var connection: ConnectionStatus { get }
-    var activeIp: String? { get }
-    var activeServer: ServerModel? { get }
-    var activeConnectionRequest: ConnectionRequest? { get }
+    var lastConnectionRequest: ConnectionRequest? { get }
 
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)
     func autoConnect()
     func quickConnect()
+    func quickConnectConnectionRequest() -> ConnectionRequest
     func connectTo(country countryCode: String, ofType serverType: ServerType)
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
     func retryConnection()
+    func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
     func disconnect(completion: @escaping () -> Void)
@@ -108,9 +106,17 @@ public class VpnGateway: VpnGatewayProtocol {
     private let serverStorage: ServerStorage = ServerStorageConcrete()
     private let propertiesManager = PropertiesManager()
     
-    private var connectionPreparer: VpnConnectionPreparer?
-    
     private let siriHelper: SiriHelperProtocol?
+    
+    private var globalVpnProtocol: VpnProtocol {
+        return propertiesManager.vpnProtocol
+    }
+    
+    private var serverTypeToggle: ServerType {
+        return propertiesManager.secureCoreToggle ? .secureCore : .standard
+    }
+    
+    private var connectionPreparer: VpnConnectionPreparer?
     
     public static let connectionChanged = Notification.Name("VpnGatewayConnectionChanged")
     public static let activeServerTypeChanged = Notification.Name("VpnGatewayActiveServerTypeChanged")
@@ -121,27 +127,11 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
     
-    public var activeServerType: ServerType {
-        return propertiesManager.secureCoreToggle ? .secureCore : .standard
-    }
-    
-    private var lastConnectionType: ConnectionType?
-    
-    public weak var connectingCellDelegate: ConnectingCellDelegate?
-    
     public var connection: ConnectionStatus {
         return ConnectionStatus.forAppState(appStateManager.state)
     }
     
-    public var activeIp: String? {
-        return appStateManager.activeIp
-    }
-    
-    public var activeServer: ServerModel? {
-        return appStateManager.activeServer
-    }
-    
-    public var activeConnectionRequest: ConnectionRequest? {
+    public var lastConnectionRequest: ConnectionRequest? {
         return propertiesManager.lastConnectionRequest
     }
     
@@ -152,11 +142,11 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         
-        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
         profileManager = ProfileManager.shared
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
         
-        if case AppState.connected(_) = appStateManager.state, let activeServer = appStateManager.activeServer {
+        if case AppState.connected(_) = appStateManager.state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
         }
         
@@ -170,7 +160,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func changeActiveServerType(_ serverType: ServerType) {
-        guard activeServerType != serverType else { return }
+        guard serverTypeToggle != serverType else { return }
         
         propertiesManager.secureCoreToggle = serverType == .secureCore
         
@@ -181,125 +171,64 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func autoConnect() {
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
-        lastConnectionType = .auto
+        appStateManager.isOnDemandEnabled { [weak self] enabled in
+            guard let `self` = self, !enabled else { return }
         
-        if let autoConnectProfileId = propertiesManager.autoConnect.profileId, let profile = profileManager.profile(withId: autoConnectProfileId) {
-            connectTo(profile: profile)
-        } else {
-            let connectionRequest = ConnectionRequest(serverType: activeServerType, connectionType: .fastest)
-            propertiesManager.lastConnectionRequest = connectionRequest
-            
-            let selectServerClosure: ([SessionModel]?) -> (ServerModel?) = { [weak self] sessions in
-                guard let `self` = self else { return nil }
-                return self.selectServer(connectionRequest: connectionRequest, sessions: sessions)
+            if let autoConnectProfileId = self.propertiesManager.autoConnect.profileId, let profile = self.profileManager.profile(withId: autoConnectProfileId) {
+                self.connectTo(profile: profile)
+            } else {
+                self.quickConnect()
             }
-            connect(with: selectServerClosure)
         }
     }
     
     public func quickConnect() {
-        siriHelper?.donateQuickConnect()
-        lastConnectionType = .quick
-        
-        let propertiesManager = PropertiesManager()
+        connect(with: quickConnectConnectionRequest())
+    }
+    
+    public func quickConnectConnectionRequest() -> ConnectionRequest {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
-            connectTo(profile: profile)
+            return profile.connectionRequest
         } else {
-            let connectionRequest = ConnectionRequest(serverType: activeServerType, connectionType: .fastest)
-            propertiesManager.lastConnectionRequest = connectionRequest
-            
-            let selectServerClosure: ([SessionModel]?) -> (ServerModel?) = { [weak self] sessions in
-                guard let `self` = self else { return nil }
-                return self.selectServer(connectionRequest: connectionRequest, sessions: sessions)
-            }
-            connect(with: selectServerClosure)
+            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol)
         }
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
-        lastConnectionType = .country(code: countryCode, type: serverType)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol)
         
-        let connectionRequest = ConnectionRequest(serverType: activeServerType, connectionType: .country(countryCode, .fastest))
-        propertiesManager.lastConnectionRequest = connectionRequest
-        
-        let selectServerClosure: ([SessionModel]?) -> (ServerModel?) = { [weak self] sessions in
-            guard let `self` = self else { return nil }
-            return self.selectServer(connectionRequest: connectionRequest, sessions: sessions)
-        }
-        connect(with: selectServerClosure)
+        connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: activeServerType, connectionType: .country(server.countryCode, countryType))
-        propertiesManager.lastConnectionRequest = connectionRequest
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol)
         
-        lastConnectionType = .server(server)
-        
-        let selectServerClosure: ([SessionModel]?) -> (ServerModel?) = { _ in
-            return server
-        }
-        if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), !requiresUpgrade {
-            connect(with: selectServerClosure)
-        }
+        connect(with: connectionRequest)
     }
     
     public func connectTo(profile: Profile) {
-        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
-        lastConnectionType = .profile(profile)
-        propertiesManager.lastConnectionRequest = profile.connectionRequest
-        
-        let selectServerClosure: ([SessionModel]?) -> (ServerModel?)
-        switch profile.serverOffering {
-        case .fastest, .random:
-            selectServerClosure = { [weak self] sessions in
-                guard let `self` = self else { return nil }
-                return self.selectServer(connectionRequest: profile.connectionRequest, sessions: sessions)
-            }
-        case .custom(let sWrapper):
-            selectServerClosure = { [weak self] _ in
-                guard let `self` = self else { return nil }
-                if let requiresUpgrade = self.serverTierChecker.serverRequiresUpgrade(sWrapper.server), !requiresUpgrade {
-                    self.changeActiveServerType(sWrapper.server.serverType)
-                    return sWrapper.server
-                } else {
-                    return nil
-                }
-            }
-        }
-        
-        connect(with: selectServerClosure)
+        connect(with: profile.connectionRequest)
     }
     
     public func retryConnection() {
-        if let connectionType = lastConnectionType {
-            switch connectionType {
-            case .auto:
-                autoConnect()
-            case .quick:
-                quickConnect()
-            case .country(code: let code, type: let type):
-                connectTo(country: code, ofType: type)
-            case .server(let server):
-                connectTo(server: server)
-            case .profile(let profile):
-                connectTo(profile: profile)
-            }
-        } else {
-            PMLog.D("Connection retry requested")
-            let selectServerClosure: ([SessionModel]?) -> (ServerModel?) = { [weak self] _ in
-                return self?.activeServer
-            }
-            connect(with: selectServerClosure)
+        connect(with: lastConnectionRequest)
+    }
+    
+    public func connect(with request: ConnectionRequest?) {
+        siriHelper?.donateQuickConnect() // Change to another donation when appropriate
+        propertiesManager.lastConnectionRequest = request
+        
+        guard let request = request else {
+            connect(with: globalVpnProtocol, server: appStateManager.activeConnection()?.server)
+            return
         }
+        
+        connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request))
     }
     
     public func stopConnecting(userInitiated: Bool) {
-        PMLog.D("Connecting cancled, userInitiated: \(userInitiated)")
-        connectionPreparer?.cancelPreparingConnection()
+        PMLog.D("Connecting cancelled, userInitiated: \(userInitiated)")
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()
     }
@@ -333,7 +262,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     // MARK: - Private functions
-    private func filter(servers: [ServerModel], forSpecificCountry: Bool, type: ServerType, sessions: [SessionModel]?) -> [ServerModel] {
+    private func filter(servers: [ServerModel], forSpecificCountry: Bool, type: ServerType) -> [ServerModel] {
         do {
             let userTier = try self.userTier() // accessing from the keychain for each server is very expensive
             
@@ -351,26 +280,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 return []
             }
             
-            guard let sessions = sessions else {
-                return serversWithoutMaintenance
-            }
-            
-            let serversWithoutExistingSession = serversWithoutMaintenance.filter { server in
-                let availableServerIps = server.ips.filter { ip in
-                    return !sessions.contains { session in
-                        session.vpnProtocol == .ikev2 && ip.exitIp == session.exitIp
-                    }
-                }
-                return !availableServerIps.isEmpty
-            }
-            if serversWithoutExistingSession.isEmpty {
-                notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: .existingConnection)
-                let error = ApplicationError.existingSession
-                PMLog.ET(error.localizedDescription)
-                return []
-            }
-            
-            return serversWithoutExistingSession
+            return serversWithoutMaintenance
         } catch {
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
             return []
@@ -383,9 +293,9 @@ public class VpnGateway: VpnGatewayProtocol {
             .first
     }
     
-    private func selectServer(connectionRequest: ConnectionRequest, sessions: [SessionModel]?) -> ServerModel? {
+    private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         // use the ui to determine connection type if unspecified
-        let type = connectionRequest.serverType == .unspecified ? activeServerType : connectionRequest.serverType
+        let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
         
         let sortedServers: [ServerModel]
         let forSpecificCountry: Bool
@@ -403,7 +313,7 @@ public class VpnGateway: VpnGatewayProtocol {
             forSpecificCountry = false
         }
             
-        let servers = filter(servers: sortedServers, forSpecificCountry: forSpecificCountry, type: type, sessions: sessions)
+        let servers = filter(servers: sortedServers, forSpecificCountry: forSpecificCountry, type: type)
         
         guard !servers.isEmpty else {
             return nil
@@ -419,12 +329,7 @@ public class VpnGateway: VpnGatewayProtocol {
         changeActiveServerType(type)
         
         if !filtered.isEmpty {
-            switch appStateManager.state {
-            case .connecting:
-                return nil
-            default:
-                return pickServer(from: filtered, connectionRequest: connectionRequest)
-            }
+            return pickServer(from: filtered, connectionRequest: connectionRequest)
         }
         
         if case AppState.preparingConnection = self.appStateManager.state {
@@ -446,8 +351,8 @@ public class VpnGateway: VpnGatewayProtocol {
                 return servers.first
             case .random:
                 return servers[Int(arc4random_uniform(UInt32(servers.count)))]
-            default:
-                return nil
+            case .server(let server):
+                return server
             }
         }
     }
@@ -457,17 +362,15 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
     
-    private func connect(with selectServerClosure: @escaping ([SessionModel]?) -> (ServerModel?)) {
-        connectionPreparer?.cancelPreparingConnection()
-        
-        guard selectServerClosure(nil) != nil else {
+    private func connect(with vpnProtocol: VpnProtocol, server: ServerModel?) {
+        guard let server = server else {
             return
         }
         
         appStateManager.prepareToConnect()
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)
-        connectionPreparer?.prepareConnection(selectServerClosure: selectServerClosure)
+        connectionPreparer?.connect(withProtocol: vpnProtocol, server: server)
     }
     
     @objc private func appStateChanged() {

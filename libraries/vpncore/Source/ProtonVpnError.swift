@@ -35,7 +35,10 @@ public enum ProtonVpnError: LocalizedError {
     //decode
     case decode(location: String)
     
+    //connections
     case connectionFailed
+    case vpnManagerUnavailable
+    case removeVpnProfileFailed
     
     //case other(error: String)
     public var errorDescription: String? {
@@ -54,6 +57,10 @@ public enum ProtonVpnError: LocalizedError {
             return String(format: LocalizedString.errorDecode, location)
         case .connectionFailed:
             return LocalizedString.connectionFailed
+        case .vpnManagerUnavailable:
+            return "Couldn't retrieve vpn manager"
+        case .removeVpnProfileFailed:
+            return "Failed to remove VPN profile"
         }
     }
 }

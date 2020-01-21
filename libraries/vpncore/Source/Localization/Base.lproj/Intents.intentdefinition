@@ -7,13 +7,13 @@
 	<key>INIntentDefinitionModelVersion</key>
 	<string>1.1</string>
 	<key>INIntentDefinitionNamespace</key>
-	<string>wdTIms</string>
+	<string>kbrLjS</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>18G103</string>
+	<string>18G95</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>11A1027</string>
+	<string>11A420a</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>11.1</string>
+	<string>11.0</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
@@ -34,7 +34,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Connect to ProtonVPN</string>
+					<string>Quick Connect</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>8tZ81X</string>
 				</dict>
@@ -82,7 +82,7 @@
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Disconnect from ProtonVPN</string>
+					<string>Disconnect</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>cQ4Mju</string>
 				</dict>

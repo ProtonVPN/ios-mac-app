@@ -109,6 +109,14 @@ public extension Dictionary where Key: ExpressibleByStringLiteral, Value: AnyObj
         return try valueOrThrow(key)
     }
     
+    func intArray(key: Key) -> [Int]? {
+        return self[key] as? [Int]
+    }
+    
+    func intArrayOrThrow(key: Key) throws -> [Int] {
+        return try valueOrThrow(key)
+    }
+    
     // MARK: Json
     func jsonArray(key: Key) -> JSONArray? {
         return self[key] as? JSONArray

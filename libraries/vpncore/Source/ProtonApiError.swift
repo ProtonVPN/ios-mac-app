@@ -32,6 +32,7 @@ public enum ParseError: LocalizedError {
     case serverParse
     case sessionCountParse
     case loadsParse
+    case clientConfigParse
     case subscriptionsParse
     case verificationMethodsParse
     case paymentVerificationParse

@@ -25,7 +25,6 @@ import XCTest
 class AppStateManagerTests: XCTestCase {
 
     let serverDescriptor = ServerDescriptor(username: "", address: "")
-    let vpnConfig = VpnManagerConfiguration(serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: Data())
     let timerFactory = TimerFactoryMock()
     let propertiesManager = PropertiesManagerMock()
     let alertService = CoreAlertServiceMock()
@@ -43,7 +42,9 @@ class AppStateManagerTests: XCTestCase {
         
         let alamofireWrapper = AlamofireWrapperMock()
         vpnManager = VpnManagerMock()
-        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain)
+        
+        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer)
         
         if case AppState.disconnected = appStateManager.state {} else { XCTAssert(false) }
         XCTAssertFalse(appStateManager.state.isConnected)
@@ -56,7 +57,7 @@ class AppStateManagerTests: XCTestCase {
     }
     
     func startConnection() {
-        appStateManager.connect(withConfiguration: vpnConfig)
+        appStateManager.connect(withConfiguration: connectionConfig)
         vpnManager.state = .connecting(serverDescriptor)
         if case AppState.connecting(_) = appStateManager.state {} else { XCTAssert(false) }
         XCTAssertFalse(appStateManager.state.isConnected)
@@ -228,4 +229,10 @@ class AppStateManagerTests: XCTestCase {
         initialError()
         subsequentError()
     }
+    
+    lazy var connectionConfig: ConnectionConfiguration = {
+        let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0))
+        let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike)
+    }()
 }
