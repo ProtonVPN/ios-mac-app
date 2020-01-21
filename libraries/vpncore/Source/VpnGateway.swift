@@ -152,7 +152,7 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         
-        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
         profileManager = ProfileManager.shared
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
         

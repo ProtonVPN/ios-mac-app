@@ -48,9 +48,15 @@ force_cast: warning # implicitly
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)
 
 custom_rules:
+  
   no_print:
     name: "Printing to console"
     message: "No direct printing to console is allowed. Please use PMLog class from vpncore library."
     regex: "(^\\s*print\\()|(NSLog)"
     match_kinds:
       - identifier
+  
+  non_commented_localization:
+    regex: 'NSLocalizedString\("[^"]+"\s*\)'
+    message: "NSLocalizedString() should provide comment with a context of where translation is used to help translators."
+  

@@ -27,7 +27,7 @@ public struct ServerWrapper {
     
     private var _server: ServerModel
     public var server: ServerModel {
-        if let latestServerModel = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()).servers.first(where: { (serverModel) -> Bool in
+        if let latestServerModel = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()).servers.first(where: { (serverModel) -> Bool in
             return _server == serverModel
         }) {
             return latestServerModel
