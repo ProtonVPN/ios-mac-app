@@ -55,6 +55,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>DisconnectIntent</string>
+		<string>GetConnectionStatusIntent</string>
 		<string>QuickConnectIntent</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

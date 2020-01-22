@@ -24,7 +24,7 @@ import Intents
 import vpncore
 
 @available(iOSApplicationExtension 12.0, *)
-class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling {
+class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHandling, GetConnectionStatusIntentHandling {
     
     let siriHandlerViewModel: SiriHandlerViewModel
     
@@ -41,6 +41,10 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     
     func handle(intent: DisconnectIntent, completion: @escaping (DisconnectIntentResponse) -> Void) {
         siriHandlerViewModel.disconnect(completion)
+    }
+    
+    func handle(intent: GetConnectionStatusIntent, completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
+        siriHandlerViewModel.getConnectionStatus(completion)
     }
     
     override func handler(for intent: INIntent) -> Any {
