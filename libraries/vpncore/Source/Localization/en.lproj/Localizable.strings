@@ -5,6 +5,7 @@
 "_delete" = "Delete";
 "_disconnect" = "Disconnect";
 "_disconnected" = "Disconnected";
+"_disconnecting" = "Disconnecting";
 "_done" = "Done";
 "_edit" = "Edit";
 "_ok" = "OK";
