@@ -65,7 +65,7 @@ class LoginViewController: UIViewController {
             viewModel?.delegate = self
         }
     }
-    private var alertSevice: AlertService! {
+    private var alertService: AlertService! {
         return viewModel?.alertService
     }
     
@@ -268,10 +268,13 @@ extension LoginViewController: LoginViewModelDelegate {
         PMLog.ET(error.localizedDescription)
         loginButton.hideLoading()
                 
-        alertSevice.push(alert: ErrorNotificationAlert(error: error))
-                
-        usernameIcon.tintColor = .protonRed()
-        passwordIcon.tintColor = .protonRed()
+        if error.isTlsError {
+            alertService.push(alert: MITMAlert())
+        } else {
+            alertService.push(alert: ErrorNotificationAlert(error: error))
+            usernameIcon.tintColor = .protonRed()
+            passwordIcon.tintColor = .protonRed()
+        }
         
         loginButton.isEnabled = !((error as NSError).code == ApiErrorCode.wrongLoginCredentials)
     }

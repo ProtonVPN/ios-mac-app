@@ -86,6 +86,11 @@ class PlanSelectionViewController: UIViewController {
     
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.viewBecameVisible = true
+    }
+    
     private func setupView() {
         view.backgroundColor = .protonPlansGrey()
         
