@@ -205,7 +205,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
             } else {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error")))
             }
-        } else if let url = try? request.asURLRequest().url, let failedRequest = tlsFailedRequests.first(where: { $0.url?.absoluteString == url?.absoluteString}), let index = tlsFailedRequests.index(of: failedRequest) {
+        } else if let url = try? request.asURLRequest().url, let failedRequest = tlsFailedRequests.first(where: { $0.url?.absoluteString == url?.absoluteString }), let index = tlsFailedRequests.index(of: failedRequest) {
             tlsFailedRequests.remove(at: index)
             return .failure(NetworkError.error(forCode: NetworkErrorCode.tls))
         } else if response.result.isFailure, let error = response.error as NSError? {
