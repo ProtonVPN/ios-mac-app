@@ -58,6 +58,8 @@ public protocol AlamofireWrapper: class {
                 files: [String: URL],
                 success: @escaping ((JSONDictionary) -> Void),
                 failure: @escaping ((Error) -> Void))
+    
+    func markAsFailedTLS(request: URLRequest)
 }
 
 public class AlamofireWrapperImplementation: AlamofireWrapper {
@@ -67,6 +69,10 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
     private var alertService: CoreAlertService?
     private var humanVerificationHandler: HumanVerificationAdapter?
     private var trustKitHelper: TrustKitHelper?
+    private var tlsFailedRequests = [URLRequest]()
+    public func markAsFailedTLS(request: URLRequest) {
+        tlsFailedRequests.append(request)
+    }
     
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.alamofire")
     private let sessionManager = SessionManager()
@@ -118,7 +124,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
                 
                 self.debugLog(response)
                 
-                switch self.filterDataResponse(response: response) {
+                switch self.filterDataResponse(response: response, forRequest: request) {
                 case .success(let json):
                     success(json)
                 case .failure(let error):
@@ -166,7 +172,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
                                 switch encodingResult {
                                 case .success(let uploadRequest, _, _):
                                     uploadRequest.responseJSON { response in
-                                        switch self.filterDataResponse(response: response) {
+                                        switch self.filterDataResponse(response: response, forRequest: request) {
                                         case .success(let json):
                                             success(json)
                                         case .failure(let error):
@@ -190,7 +196,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
     
     // MARK: - Private functions
     
-    private func filterDataResponse(response: DataResponse<Any>) -> ApiResponse {
+    private func filterDataResponse(response: DataResponse<Any>, forRequest request: URLRequestConvertible) -> ApiResponse {
         if response.result.isSuccess, let statusCode = response.response?.statusCode, let json = response.result.value as? JSONDictionary, let code = json.int(key: "Code") {
             if statusCode == 200 && code == 1000 {
                 return .success(json)
@@ -199,6 +205,9 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
             } else {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error")))
             }
+        } else if let url = try? request.asURLRequest().url, let index = tlsFailedRequests.firstIndex(where: { $0.url?.absoluteString == url?.absoluteString }) {
+            tlsFailedRequests.remove(at: index)
+            return .failure(NetworkError.error(forCode: NetworkErrorCode.tls))
         } else if response.result.isFailure, let error = response.error as NSError? {
             return .failure(NetworkError.error(forCode: error.code))
         } else {

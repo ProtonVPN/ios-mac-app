@@ -59,30 +59,27 @@ public final class TrustKitHelper {
         return config
     }
     
-    public typealias Factory = CoreAlertServiceFactory
+    public typealias Factory = AlamofireWrapperFactory
     private var factory: Factory
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private var trustKit: TrustKit!
     
     public init(factory: Factory, hardfail: Bool = true) {
         self.factory = factory
         trustKit = TrustKit(configuration: TrustKitHelper.configuration(hardfail: hardfail))
-        
-        trustKit.pinningValidatorCallback = { result, notedHostname, policy in
-            if result.evaluationResult != .success, result.finalTrustDecision != .shouldAllowConnection {
-                self.validationFailure()
-            }
-        }
-        
     }
-    
-    private func validationFailure() {
-        alertService.push(alert: MITMAlert())
-    }
-    
+        
     public var authenticationChallengeTask: ((URLSession, URLSessionTask, URLAuthenticationChallenge, @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)? {
         return { session, task, challenge, completionHandler in
-            if self.trustKit.pinningValidator.handle(challenge, completionHandler: completionHandler) == false {
+            
+            let wrappedCompletionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void = { [self, task] disposition, credential in
+                if disposition == .cancelAuthenticationChallenge, let request = task.originalRequest {
+                    self.alamofireWrapper.markAsFailedTLS(request: request)
+                }
+                completionHandler(disposition, credential)
+            }
+            
+            if self.trustKit.pinningValidator.handle(challenge, completionHandler: wrappedCompletionHandler) == false {
                 // TrustKit did not handle this challenge: perhaps it was not for server trust
                 // or the domain was not pinned. Fall back to the default behavior
                 completionHandler(.performDefaultHandling, nil)
