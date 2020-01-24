@@ -26,12 +26,11 @@ class ServicePlanDataServiceMock: ServicePlanDataService {
     
     var isIAPAvailable: Bool = true
     
-    var callbackUpdateServicePlans: (((() -> Void)?) -> Void)?
+    var callbackUpdateServicePlans: ((((Error?) -> Void)?) -> Void)?
     
     // MARK: ServicePlanDataService implementation
-    
-    func updateServicePlans(completion: (() -> Void)?) {
+        
+    func updateServicePlans(completion: ((Error?) -> Void)?) {
         callbackUpdateServicePlans?(completion)
     }
-    
 }
