@@ -77,44 +77,44 @@ unit_tests:
       junit: 
         - fastlane/test_output/report.junit
 
-# sync-app:
-#   extends: .linux-common
-#   <<: *linux-common
-#   only:
-#       refs:
-#         - master
-#   artifacts:
-#     expire_in: 1 day
-#     paths:
-#     - log.txt
-#   script:
-#       - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-#       - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
+sync-app:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+      refs:
+        - master
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+      - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+      - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
 
-# sync-app-2.0:
-#   extends: .linux-common
-#   <<: *linux-common
-#   only:
-#       refs:
-#         - release-candidate-2.0.0
-#   artifacts:
-#     expire_in: 1 day
-#     paths:
-#     - log.txt
-#   script:
-#     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-#     - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL --branch release-candidate-2.0.0"
+sync-app-2.0:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+      refs:
+        - release-candidate-2.0.0
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL --branch release-candidate-2.0.0"
 
-# publish-github-release:
-#   extends: .linux-common
-#   <<: *linux-common
-#   only:
-#     refs:
-#     - tags
-#   artifacts:
-#     expire_in: 1 day
-#     paths:
-#     - log.txt
-#   script:
-#     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-#     - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
+publish-github-release:
+  extends: .linux-common
+  <<: *linux-common
+  only:
+    refs:
+    - tags
+  artifacts:
+    expire_in: 1 day
+    paths:
+    - log.txt
+  script:
+    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
+    - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
