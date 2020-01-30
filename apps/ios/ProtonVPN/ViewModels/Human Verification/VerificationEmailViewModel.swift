@@ -75,7 +75,7 @@ class VerificationEmailViewModel {
             }
                     
             switch (apiError.httpStatusCode, apiError.code) {
-            case (_, ApiErrorCode.signupWithProtonMailAdress):
+            case (_, ApiErrorCode.signupWithProtonMailAddress):
                 self?.switchToLoginWithProtonMailAddress?()
     
             default:
