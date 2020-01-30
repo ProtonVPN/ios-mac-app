@@ -910,7 +910,7 @@
 				7995FCD620908E1E0030E1EB /* Constants */,
 				79F17EFB20A55753004D2696 /* Core */,
 				D563319F23228EC800CE2EE3 /* Coordinators */,
-				D5F56897232620B000795953 /* Dependecy injection */,
+				D5F56897232620B000795953 /* Dependency injection */,
 				7995FCE1209092F30030E1EB /* Extentions */,
 				7995FD112090AD050030E1EB /* Management */,
 				D5BF95112355A52700C7D1E7 /* Misc */,
@@ -1569,12 +1569,12 @@
 			path = "Human Verification";
 			sourceTree = "<group>";
 		};
-		D5F56897232620B000795953 /* Dependecy injection */ = {
+		D5F56897232620B000795953 /* Dependency injection */ = {
 			isa = PBXGroup;
 			children = (
 				D5F56898232620C600795953 /* DependencyContainer.swift */,
 			);
-			path = "Dependecy injection";
+			path = "Dependency injection";
 			sourceTree = "<group>";
 		};
 		D5F5689E23277EC500795953 /* Coordinators */ = {
