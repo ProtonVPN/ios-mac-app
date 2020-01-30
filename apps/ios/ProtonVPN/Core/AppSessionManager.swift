@@ -317,7 +317,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         lastRefresh = Date()
         if loggedIn {
             attemptDataRefreshWithoutLogin(success: {}, failure: { error in
-                PMLog.D("Failed to reistablish vpn credentials: \(error.localizedDescription)", level: .error)
+                PMLog.D("Failed to reestablish vpn credentials: \(error.localizedDescription)", level: .error)
                 
                 let error = error as NSError
                 switch error.code {
