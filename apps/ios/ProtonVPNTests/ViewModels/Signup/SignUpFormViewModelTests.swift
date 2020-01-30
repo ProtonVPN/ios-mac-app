@@ -111,7 +111,7 @@ class SignUpFormViewModelTests: XCTestCase {
         viewModel.password2 = "abc"
         
         userApiService.callbackcheckAvailability = { username, success, failure in
-            failure(ApiError.uknownError)
+            failure(ApiError.unknownError)
         }
         viewModel.registrationFinished = { loggedIn in
             expectationSuccess.fulfill()
