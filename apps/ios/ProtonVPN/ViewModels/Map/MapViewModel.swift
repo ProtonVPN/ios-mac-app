@@ -114,7 +114,7 @@ class MapViewModel: SecureCoreToggleHandler {
         }
         
         secureCoreEntryAnnotations.forEach { (annotation) in
-            annotation.hightlight(false)
+            annotation.highlight(false)
         }
         
         reorderAnnotations?()
@@ -166,9 +166,9 @@ class MapViewModel: SecureCoreToggleHandler {
                 if let vpnGateway = self.vpnGateway {
                     self.secureCoreEntryAnnotations.forEach({ (annotation) in
                         if let activeServer = vpnGateway.activeServer, vpnGateway.connection == .connected, tappedAnnotationViewModel.countryCode == activeServer.exitCountryCode, annotation.countryCode == activeServer.entryCountryCode {
-                            annotation.hightlight(true)
+                            annotation.highlight(true)
                         } else {
-                            annotation.hightlight(false)
+                            annotation.highlight(false)
                         }
                     })
                 }
@@ -230,7 +230,7 @@ class MapViewModel: SecureCoreToggleHandler {
                 let exitCountry = countryExitAnnotations.first(where: { (element) -> Bool in element.countryCode == activeServer.exitCountryCode }) {
                 activeConnection = ConnectionViewModel(.connected, between: entryCountry, and: exitCountry)
                 if exitCountry.viewState == .selected {
-                    entryCountry.hightlight(true)
+                    entryCountry.highlight(true)
                 }
             } else {
                 activeConnection = nil
@@ -238,7 +238,7 @@ class MapViewModel: SecureCoreToggleHandler {
         } else {
             activeConnection = nil
             secureCoreEntryAnnotations.forEach { (annotation) in
-                annotation.hightlight(false)
+                annotation.highlight(false)
             }
         }
         
