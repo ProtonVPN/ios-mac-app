@@ -430,7 +430,7 @@ extension NavigationService: PlanService {
         self.windowService.replace(with: nc)
     }
     
-    /// Shorthand versino for presenting plen selection view controller.
+    /// Shorthand version for presenting plen selection view controller.
     /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
     func presentPlanSelection() {
         guard servicePlanDataService.isIAPAvailable else {
