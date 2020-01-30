@@ -54,7 +54,7 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: ProtonButton!
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var forgotSignupSeparater: UIView!
+    @IBOutlet weak var forgotSignupSeparator: UIView!
     @IBOutlet weak var signupButton: UIButton!
     
     @IBOutlet weak var footerStackView: UIStackView!

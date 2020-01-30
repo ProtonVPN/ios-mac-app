@@ -262,7 +262,7 @@
                         <outlet property="dismissButton" destination="gBy-y8-60s" id="6SF-gu-G6I"/>
                         <outlet property="footerStackView" destination="g0h-W7-NE4" id="1W7-5a-4wm"/>
                         <outlet property="forgotPasswordButton" destination="e7o-Rh-xk0" id="Lzo-25-xs6"/>
-                        <outlet property="forgotSignupSeparater" destination="Od8-pL-pp3" id="Oa7-HE-JGV"/>
+                        <outlet property="forgotSignupSeparator" destination="Od8-pL-pp3" id="Oa7-HE-JGV"/>
                         <outlet property="loginButton" destination="yEu-fg-51O" id="P5R-6Q-MqR"/>
                         <outlet property="passwordIcon" destination="qYY-GH-UR1" id="OCB-rs-HwG"/>
                         <outlet property="passwordWrapperView" destination="dk3-Fd-Mx1" id="ce8-px-sQW"/>
