@@ -26,7 +26,7 @@ import vpncore
 class UserPropertiesCreatorMock: UserPropertiesCreator {
         
     func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?) throws -> UserProperties {
-        return UserProperties(email: email, username: username, modulusID: modulusResponse.modulusId, salt: "salt", verifier: "veryfier", appleToken: deviceToken)
+        return UserProperties(email: email, username: username, modulusID: modulusResponse.modulusId, salt: "salt", verifier: "verifier", appleToken: deviceToken)
     }
     
 }
