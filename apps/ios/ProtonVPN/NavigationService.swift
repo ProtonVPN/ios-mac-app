@@ -434,7 +434,7 @@ extension NavigationService: PlanService {
     /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
     func presentPlanSelection() {
         guard servicePlanDataService.isIAPAvailable else {
-            alertService.push(alert: UpgradeUnavailbleAlert())
+            alertService.push(alert: UpgradeUnavailableAlert())
             return
         }
 
