@@ -13,7 +13,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ReportBugViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="attachmentsLabel" destination="lkz-PN-1vW" id="JxW-0P-fyp"/>
-                <outlet property="bottomContraint" destination="BYT-wi-ZIf" id="fgi-6W-jOQ"/>
+                <outlet property="bottomConstraint" destination="BYT-wi-ZIf" id="fgi-6W-jOQ"/>
                 <outlet property="emailField" destination="e1W-70-YGg" id="96y-SM-rVZ"/>
                 <outlet property="emailHolderView" destination="PsP-A1-fFW" id="3WP-c4-Ihw"/>
                 <outlet property="lineView" destination="1Ba-Q6-kcr" id="nFw-mN-dRc"/>

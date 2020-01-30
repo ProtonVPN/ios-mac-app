@@ -258,7 +258,7 @@
                         </connections>
                     </view>
                     <connections>
-                        <outlet property="bottomContraint" destination="8KE-Qa-63d" id="0kV-2L-Kwn"/>
+                        <outlet property="bottomConstraint" destination="8KE-Qa-63d" id="0kV-2L-Kwn"/>
                         <outlet property="dismissButton" destination="gBy-y8-60s" id="6SF-gu-G6I"/>
                         <outlet property="footerStackView" destination="g0h-W7-NE4" id="1W7-5a-4wm"/>
                         <outlet property="forgotPasswordButton" destination="e7o-Rh-xk0" id="Lzo-25-xs6"/>
