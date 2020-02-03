@@ -23,6 +23,8 @@ This app uses CocoaPods for most dependencies, including our vpncore framework (
 - Clean build folder in Xcode (`Cmd+Shift+K`)
 - Build app twice
 
+If you receive any dependency-related errors, try running `pod repo update` and then `pod install` again.
+
 ## Staying in Sync
 
 To stay in sync with changes made to vpncore, follow these three steps:
