@@ -94,7 +94,12 @@ public class LocalizedString {
     public static let on = NSLocalizedString("_switch_side_button_on", comment: "Custom switch on")
     public static let off = NSLocalizedString("_switch_side_button_off", comment: "Custom switch off")
     
-    public static let countriesCount = NSLocalizedString("_countries_count", comment: "iOS advandced plan features view. %@ is changed with the number of countries")
+    public static func countriesCount(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_countries_count", comment: "iOS advandced plan features view. %@ is changed with the number of countries."), number)
+    }
+    public static func countriesCountPlus(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_countries_count_plus", comment: "iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number."), number)
+    }
     public static let countriesFree = NSLocalizedString("_countries_free", comment: "iOS: countries list section header")
     public static let countriesPremium = NSLocalizedString("_countries_premium", comment: "iOS: countries list section header")
     public static let close = NSLocalizedString("_close", comment: "Common word")
@@ -432,7 +437,9 @@ public class LocalizedString {
     public static let freeCountries = NSLocalizedString("_free_countries", comment: "Account plan description")
     public static let allCountries = NSLocalizedString("_all_countries", comment: "Account plan description")
     public static let planConnection = NSLocalizedString("_plans_connection", comment: "Account plan description")
-    public static let planConnections = NSLocalizedString("_plans_connections", comment: "Account plan description")
+    public static func planConnections(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), number)
+    }
     public static let speed = NSLocalizedString("_speed", comment: "%@ is a speed description e.g. Speed: Highest")
     public static let medium = NSLocalizedString("_medium", comment: "Value of speed in _speed")
     public static let high = NSLocalizedString("_high", comment: "Value of speed in _speed")

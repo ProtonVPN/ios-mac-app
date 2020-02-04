@@ -10,6 +10,10 @@
 		1EF48C10ADF53C56CCF9D10E /* Pods_vpncore_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */; };
 		384FCC46E272DE21E4736436 /* Pods_vpncore_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */; };
 		C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */; };
+		D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
 		D52FF533235DE27700E8C7B8 /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */; };
 		D52FF534235DE27700E8C7B8 /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */; };
 		D53E8406233367D40031CD49 /* HumanVerificationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */; };
@@ -280,6 +284,8 @@
 		B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DB9D1719D98EC41F005D62 /* Pods-vpncore-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
+		D51FBDD223E81E9C0056DC09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustKitHelper.swift; sourceTree = "<group>"; };
 		D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationAdapter.swift; sourceTree = "<group>"; };
 		D53E840923338C830031CD49 /* GenericRequestRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRequestRetrier.swift; sourceTree = "<group>"; };
@@ -687,6 +693,7 @@
 			isa = PBXGroup;
 			children = (
 				E1C99F4D21C3C56600C54333 /* Localizable.strings */,
+				D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1131,6 +1138,7 @@
 			files = (
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1139,6 +1147,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */,
+				D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */,
 				D5A8812D22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
@@ -1149,6 +1158,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1144D4E22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
 				E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */,
 			);
@@ -1161,6 +1171,7 @@
 				D5EF8FA32293E9B100B713BD /* Localizable.strings in Resources */,
 				E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */,
 				D5A8812B22CE06EB009B63D1 /* test_log_1.log in Resources */,
+				D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812E22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1592,6 +1603,16 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D51FBDD223E81E9C0056DC09 /* en */,
+				D51FBDD423E81E9E0056DC09 /* pl */,
+			);
+			name = Localizable.stringsdict;
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		E1828571236C74D400E397A5 /* Intents.intentdefinition */ = {
 			isa = PBXVariantGroup;
 			children = (
