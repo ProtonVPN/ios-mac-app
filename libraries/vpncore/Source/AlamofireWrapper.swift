@@ -211,7 +211,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
         } else if response.result.isFailure, let error = response.error as NSError? {
             return .failure(NetworkError.error(forCode: error.code))
         } else {
-            return .failure(ApiError.uknownError)
+            return .failure(ApiError.unknownError)
         }
     }
     

@@ -106,7 +106,7 @@ class ReportBugViewModelTests: XCTestCase {
         let alamofireWrapper = AlamofireWrapperMock()
         alamofireWrapper.nextUploadHandler = { request, params, files, success, failure in
             XCTAssert(files.isEmpty)
-            failure(ApiError.uknownError)
+            failure(ApiError.unknownError)
         }
         
         alertService.alertAdded = {alert in
