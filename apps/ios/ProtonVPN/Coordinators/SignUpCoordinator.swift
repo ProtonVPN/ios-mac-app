@@ -38,10 +38,11 @@ class SignUpCoordinator: Coordinator {
     var finished: ((_ loggedIn: Bool) -> Void)?
     var cancelled: (() -> Void)?
     
-    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory
+    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory & CoreAlertServiceFactory
     private let factory: Factory
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var alertService: AlertService = factory.makeCoreAlertService()
     
     private var plan: AccountPlan?
     
@@ -50,7 +51,7 @@ class SignUpCoordinator: Coordinator {
     }
     
     func start() {
-        let viewModel = factory.makePlanSelectionSimpleViewModel(isDismissalAllowed: true, planSelectionFinished: { plan in
+        let viewModel = factory.makePlanSelectionSimpleViewModel(isDismissalAllowed: true, alertService: alertService, planSelectionFinished: { plan in
             debugPrint("plan selected!", plan)
             self.selected(plan: plan)
         })

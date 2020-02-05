@@ -361,7 +361,7 @@ extension CreateOrEditProfileViewModel {
         ]
         
         sections.append(contentsOf: serversByTier.map { serverGroup in
-            return SelectionSection(title: CoreAppConstants.planTranslatedName(forTier: serverGroup.tier),
+            return SelectionSection(title: CoreAppConstants.serverTierName(forTier: serverGroup.tier),
                                     cells: serverGroup.servers.map { server in
                                         return SelectionRow(title: serverDescriptor(for: server), object: ServerOffering.custom(ServerWrapper(server: server)))
                                     }

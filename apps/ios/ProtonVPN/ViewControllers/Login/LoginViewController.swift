@@ -184,6 +184,7 @@ class LoginViewController: UIViewController {
     private func setupFooterSection() {
         loginButton.isEnabled = false
         loginButton.accessibilityIdentifier = "login_button"
+        loginButton.setTitle(LocalizedString.logIn, for: .normal)
         
         let forgotPasswordTitle = LocalizedString.forgotPassword.attributed(withColor: .protonUnavailableGrey(), fontSize: 14, alignment: .center)
         forgotPasswordButton.setAttributedTitle(forgotPasswordTitle, for: .normal)
@@ -267,10 +268,13 @@ extension LoginViewController: LoginViewModelDelegate {
         PMLog.ET(error.localizedDescription)
         loginButton.hideLoading()
                 
-        alertService.push(alert: ErrorNotificationAlert(error: error))
-                
-        usernameIcon.tintColor = .protonRed()
-        passwordIcon.tintColor = .protonRed()
+        if error.isTlsError {
+            alertService.push(alert: MITMAlert())
+        } else {
+            alertService.push(alert: ErrorNotificationAlert(error: error))
+            usernameIcon.tintColor = .protonRed()
+            passwordIcon.tintColor = .protonRed()
+        }
         
         loginButton.isEnabled = !((error as NSError).code == ApiErrorCode.wrongLoginCredentials)
     }

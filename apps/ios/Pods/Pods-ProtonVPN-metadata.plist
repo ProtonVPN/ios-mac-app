@@ -99,7 +99,7 @@ SOFTWARE.
 			</dict>
 			<key>description</key>
 			<string>&lt;p&gt;KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and OS X.
-Makes using Keychain APIs extremely easy and much more palatable to use in Swift.&lt;/p&gt;
+Makes using Keychain APIs exremely easy and much more palatable to use in Swift.&lt;/p&gt;
 
 &lt;p&gt;Features
   - Simple interface

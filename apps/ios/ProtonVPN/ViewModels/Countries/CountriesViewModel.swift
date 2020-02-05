@@ -60,7 +60,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal let alertService: AlertService
     private let planService: PlanService
     
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
     private var state: ModelState = .standard([])
     

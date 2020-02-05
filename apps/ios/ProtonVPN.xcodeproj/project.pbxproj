@@ -64,7 +64,6 @@
 		79AFDA9220DB370E002F8751 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */; };
 		79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */; };
 		79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */; };
-		79AFDA9A20DC3546002F8751 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */; };
 		79C2424020FE86D300E0D410 /* VerificationEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */; };
 		79C2424420FE90DA00E0D410 /* VerificationEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */; };
 		79C242462107CE5500E0D410 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C242452107CE5500E0D410 /* CountryViewController.swift */; };
@@ -109,7 +108,6 @@
 		D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18006EC218B12A4009E01E3 /* Compare+Extension.swift */; };
 		D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E134558821889EC500FEEECE /* Data+Extension.swift */; };
 		D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */; };
-		D5136C2D228592E80002C095 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */; };
 		D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DE13FC216C8A85007A7161 /* UIDevice+Extension.swift */; };
 		D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D5136C30228592E80002C095 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
@@ -523,7 +521,6 @@
 		79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 		79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItemViewModel.swift; sourceTree = "<group>"; };
 		79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
-		79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailViewController.swift; sourceTree = "<group>"; };
 		79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailViewModel.swift; sourceTree = "<group>"; };
 		79C242452107CE5500E0D410 /* CountryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
@@ -1076,7 +1073,6 @@
 				E18006EC218B12A4009E01E3 /* Compare+Extension.swift */,
 				E134558821889EC500FEEECE /* Data+Extension.swift */,
 				79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */,
-				79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */,
 				79DE13FC216C8A85007A7161 /* UIDevice+Extension.swift */,
 				D594A957227C0E470041D423 /* UIView+nib.swift */,
 				D594A964227C466F0041D423 /* UIView+constraints.swift */,
@@ -2480,7 +2476,6 @@
 				E134558121876A3100FEEECE /* VerificationCodeViewModel.swift in Sources */,
 				E1C2261922720E21001B208C /* HumanVerificationOptionsViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
-				79AFDA9A20DC3546002F8751 /* UIImage+Extension.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				79C2424420FE90DA00E0D410 /* VerificationEmailViewModel.swift in Sources */,
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
@@ -2513,7 +2508,6 @@
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
-				D5136C2D228592E80002C095 /* UIImage+Extension.swift in Sources */,
 				E169FC4D228B1D8700FDC933 /* PhoneCountryCodeViewModel.swift in Sources */,
 				D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
