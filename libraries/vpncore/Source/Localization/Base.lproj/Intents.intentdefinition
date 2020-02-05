@@ -162,6 +162,8 @@
 				</array>
 				<key>INIntentResponseLastParameterTag</key>
 				<integer>6</integer>
+				<key>INIntentResponseOutput</key>
+				<string>status</string>
 				<key>INIntentResponseParameters</key>
 				<array>
 					<dict>
