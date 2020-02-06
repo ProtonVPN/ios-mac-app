@@ -495,7 +495,7 @@
 "_most_popular" = "Most popular";
 "_select_plan" = "Select plan";
 "_advanced_features" = "+ Advanced features";
-"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes the service plan, and Apple’s in-app purchase fee (Apple charges a fee of approximately 30% on purchases made through your iPhone/iPad). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
 "_per_year_short" = "/ yr";
 
 // Plan selection: advances features
