@@ -286,6 +286,7 @@ class CreateProfileViewController: UITableViewController {
         profileNameTableViewCell.contentView.backgroundColor = .protonGrey()
         profileNameTableViewCell.backgroundColor = .protonGrey()
         profileNameTableViewCell.selectionStyle = .none
+        profileNameLabel.text = LocalizedString.name
         profileNameTextField.attributedPlaceholder = NSAttributedString(string: LocalizedString.enterProfileName, attributes: [NSAttributedString.Key.foregroundColor: UIColor.lightGray])
         profileNameTextField.delegate = viewModel
         
