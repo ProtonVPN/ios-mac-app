@@ -576,6 +576,7 @@
 "_extensions" = "Extensions";
 "_widget" = "iOS Widget";
 "_log_in_to_use_widget" = "Please log in to get started";
+"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
 
 // Report bug
 "_report_attachments" = "Attachments";
