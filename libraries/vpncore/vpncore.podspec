@@ -2,7 +2,7 @@ Pod::Spec.new do |s|
     s.name             = 'vpncore'
     s.version          = '1.0.0'
     s.summary          = 'Core VPN components for use in ProtonVPN macOS and iOS apps'
-    s.description      = 'Contains primatives, coordinators, services and extensions related to managing VPN connections.'
+    s.description      = 'Contains primitives, coordinators, services and extensions related to managing VPN connections.'
     s.homepage         = 'https://protonvpn.com'
     s.license          = { :type => 'GPL3', :file => 'LICENSE' }
     s.author           = { 'Proton Technologies AG' => 'contact@protonvpn.com' }

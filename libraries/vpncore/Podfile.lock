@@ -1,13 +1,13 @@
 PODS:
   - Alamofire (4.8.0)
   - KeychainAccess (3.1.2)
-  - OpenSSL-Apple (1.1.0l.4)
+  - OpenSSL-Apple (1.1.1d.5a)
   - ReachabilitySwift (4.3.0)
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - SwiftLint (0.32.0)
-  - SwiftyBeaver (1.8.2)
+  - SwiftyBeaver (1.8.4)
   - TrustKit (1.6.1)
   - TunnelKit (2.1.0):
     - TunnelKit/Protocols/OpenVPN (= 2.1.0)
@@ -28,7 +28,7 @@ DEPENDENCIES:
   - Sentry (~> 4.0)
   - SwiftLint
   - TrustKit
-  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `4d61734ae6e22abc6587655b7e4e90733372116e`)
+  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `4d61734ae6`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -43,25 +43,25 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :commit: 4d61734ae6e22abc6587655b7e4e90733372116e
+    :commit: 4d61734ae6
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 CHECKOUT OPTIONS:
   TunnelKit:
-    :commit: 4d61734ae6e22abc6587655b7e4e90733372116e
+    :commit: 4d61734ae6
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  OpenSSL-Apple: f3d1668588ea8f06b076dcfa6177cd90452e3800
+  OpenSSL-Apple: 2c9efbc94e0a1ada434cc197b02bd70052a82281
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
-  SwiftyBeaver: aaf2ebd7dac2e952991f46a82ed24ad642867ae2
+  SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 0743f0306be0869d51118ac33e274e7507a93537
 
-PODFILE CHECKSUM: d36cb57ae2afea7bb0ab306c6613c8d78a011ed0
+PODFILE CHECKSUM: eb729d9b5795d68b768d50d2f580dda67a55c47a
 
 COCOAPODS: 1.8.4

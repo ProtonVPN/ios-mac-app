@@ -73,7 +73,7 @@ public class ApiError: NSError {
         fatalError("init(coder:) has not been implemented")
     }
     
-    public static let uknownError = ApiError(httpStatusCode: HttpStatusCode.internalServerError, code: HttpStatusCode.internalServerError,
+    public static let unknownError = ApiError(httpStatusCode: HttpStatusCode.internalServerError, code: HttpStatusCode.internalServerError,
                                              localizedDescription: LocalizedString.errorInternalError)
     
     private static func errorMessageFor(httpStatusCode statusCode: Int, apiErrorCode code: Int, errorMessage: String?) -> String {
