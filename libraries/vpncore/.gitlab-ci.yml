@@ -103,7 +103,7 @@ sync-app-2.0:
     - log.txt
   script:
     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL --branch release-candidate-2.0.0"
+    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL" --branch release-candidate-2.0.0
 
 publish-github-release:
   extends: .linux-common
