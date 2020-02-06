@@ -23,6 +23,8 @@ This app uses CocoaPods for most dependencies, including our vpncore framework (
 - Configure code signing for all targets with a paid Apple developer account (required due to VPN entitlements) and change the bundle identifiers to something unique
 - Build app twice
 
+If you receive any dependency-related errors, try running `pod repo update` and then `pod install` again.
+
 ## Staying in Sync
 
 To stay in sync with changes made to vpncore, follow these three steps:

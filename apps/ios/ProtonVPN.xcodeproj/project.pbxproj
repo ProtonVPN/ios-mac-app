@@ -2219,7 +2219,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    buildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortcut Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1161)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortuct Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1144E4B22EA0C550087A685 /* Increment Build Number */ = {
@@ -2238,7 +2238,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1161)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1144E4C22EA0C760087A685 /* Increment Build Number */ = {
@@ -2257,7 +2257,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1161)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1461DAC22EAEACA005D04C2 /* Sync Version Number */ = {
