@@ -2029,7 +2029,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1149)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		75482B271F7EF33F00B0BFFB /* Increment Build Number Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2043,7 +2043,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1149)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		8365E4C75CFCC327E988A44C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2135,7 +2135,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    buildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1149)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */ = {
