@@ -54,11 +54,11 @@ class LoginViewController: UIViewController {
     @IBOutlet weak var loginButton: ProtonButton!
     
     @IBOutlet weak var forgotPasswordButton: UIButton!
-    @IBOutlet weak var forgotSignupSeparater: UIView!
+    @IBOutlet weak var forgotSignupSeparator: UIView!
     @IBOutlet weak var signupButton: UIButton!
     
     @IBOutlet weak var footerStackView: UIStackView!
-    @IBOutlet weak var bottomContraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     
     var viewModel: LoginViewModel? {
         didSet {
@@ -123,10 +123,10 @@ class LoginViewController: UIViewController {
         let animationOptions = UIView.AnimationOptions(rawValue: UIView.AnimationOptions.beginFromCurrentState.rawValue | animationCurveRaw << 16)
         
         if endFrame.minY >= UIScreen.main.bounds.maxY { // Keyboard disappearing
-            self.bottomContraint.constant = self.footerConstraintConstant
+            self.bottomConstraint.constant = self.footerConstraintConstant
         } else {
             let coef: CGFloat = UIDevice.current.screenType == .iPhones_5_5s_5c_SE ? 15.0 : 0.0
-            self.bottomContraint.constant = endFrame.size.height - self.footerStackView.frame.size.height - self.footerConstraintConstant + self.textFieldStackView.spacing - coef
+            self.bottomConstraint.constant = endFrame.size.height - self.footerStackView.frame.size.height - self.footerConstraintConstant + self.textFieldStackView.spacing - coef
         }
 
         UIView.animate(withDuration: duration, delay: 0, options: animationOptions, animations: { [unowned self] in

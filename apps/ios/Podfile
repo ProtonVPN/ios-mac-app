@@ -30,7 +30,7 @@ target 'ProtonVPN' do
         inherit! :search_paths
     end
     
-    target 'Siri Shortuct Handler' do
+    target 'Siri Shortcut Handler' do
       inherit! :search_paths
     end
     

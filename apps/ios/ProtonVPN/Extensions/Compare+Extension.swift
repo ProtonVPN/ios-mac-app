@@ -25,7 +25,7 @@ import Foundation
 infix operator <
 infix operator >
 
-// FUTUREFIX: comparison operators with optionals were removed from the Swift Standard Libary.
+// FUTUREFIX: comparison operators with optionals were removed from the Swift Standard Library.
 // Consider refactoring the code to use the non-optional operators.
 func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {
@@ -38,7 +38,7 @@ func < <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     }
 }
 
-// FUTUREFIX: comparison operators with optionals were removed from the Swift Standard Libary.
+// FUTUREFIX: comparison operators with optionals were removed from the Swift Standard Library.
 // Consider refactoring the code to use the non-optional operators.
 func > <T: Comparable>(lhs: T?, rhs: T?) -> Bool {
     switch (lhs, rhs) {

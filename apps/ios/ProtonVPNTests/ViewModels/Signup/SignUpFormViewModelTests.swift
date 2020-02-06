@@ -102,7 +102,7 @@ class SignUpFormViewModelTests: XCTestCase {
     
     func testRegistrationWithUnavailableUsername() {
         let expectationError = XCTestExpectation(description: "Error shown")
-        let expectationSuccess = XCTestExpectation(description: "Registration successfull")
+        let expectationSuccess = XCTestExpectation(description: "Registration successful")
         expectationSuccess.isInverted = true
         
         viewModel.email = "abc"
@@ -111,7 +111,7 @@ class SignUpFormViewModelTests: XCTestCase {
         viewModel.password2 = "abc"
         
         userApiService.callbackcheckAvailability = { username, success, failure in
-            failure(ApiError.uknownError)
+            failure(ApiError.unknownError)
         }
         viewModel.registrationFinished = { loggedIn in
             expectationSuccess.fulfill()
@@ -126,7 +126,7 @@ class SignUpFormViewModelTests: XCTestCase {
     
     func testRegistrationSuccess() {
         let expectationError = XCTestExpectation(description: "Error shown", inverted: true)
-        let expectationSuccess = XCTestExpectation(description: "Registration successfull")
+        let expectationSuccess = XCTestExpectation(description: "Registration successful")
         let expectationPurchaseProductAPICalled = XCTestExpectation(description: "Product purchase API endpoint called", inverted: true) // We have free plan, so purchase should not be called
         let expectationModulusCalled = XCTestExpectation(description: "Modulus called")
         let expectationCreateUserCalled = XCTestExpectation(description: "Create user API endpoint called")

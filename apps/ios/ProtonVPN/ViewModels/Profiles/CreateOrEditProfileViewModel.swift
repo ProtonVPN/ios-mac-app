@@ -328,7 +328,7 @@ extension CreateOrEditProfileViewModel {
     }
     
     public var serverSelectionDataSet: SelectionDataSet? {
-        // Get newest data, because servers list may have been updated since selectecd group was set
+        // Get newest data, because servers list may have been updated since selected group was set
         guard let row = countries.firstIndex(where: { $0.0 == selectedCountryGroup?.0 }) else {
             return nil
         }
