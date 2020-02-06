@@ -117,19 +117,13 @@ class SiriHandlerViewModel {
     }
     
     public func getConnectionStatus(_ completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
-        guard let vpnGateway = vpnGateway else {
-            // Not logged in so open the app
-            completion(GetConnectionStatusIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
-            return
-        }
-        
-        let status = getConnectionStatusString(connection: vpnGateway.connection)
+        let status = getConnectionStatusString(connection: vpnGateway?.connection)
         let response = GetConnectionStatusIntentResponse.success(status: status)
         
         completion(response)
     }
     
-    private func getConnectionStatusString(connection: ConnectionStatus) -> String {
+    private func getConnectionStatusString(connection: ConnectionStatus?) -> String {
         switch connection {
         case .connected:
             return LocalizedString.connected
@@ -139,6 +133,8 @@ class SiriHandlerViewModel {
             return LocalizedString.disconnected
         case .disconnecting:
             return LocalizedString.disconnecting
+        default:
+            return LocalizedString.vpnStatusNotLoggedIn
         }
     }
     
