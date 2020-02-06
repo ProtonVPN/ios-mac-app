@@ -174,7 +174,7 @@ public class UpgradeRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 }
 
-public class UpgradeUnavailbleAlert: SystemAlert {
+public class UpgradeUnavailableAlert: SystemAlert {
     public var title: String? = LocalizedString.upgradeUnavailableTitle
     public var message: String? = LocalizedString.upgradeUnavailableBody
     public var actions = [AlertAction]()
