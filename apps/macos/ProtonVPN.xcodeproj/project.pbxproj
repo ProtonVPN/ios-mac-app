@@ -406,6 +406,12 @@
 		D5AC137F23796B8800244066 /* Acknowledgements.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
 		D5ADF5322282D00E0062367C /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = ../../../vpncore/Source/Intents.intentdefinition; sourceTree = "<group>"; };
+		D5CC3E8C2359D8AE00A9A75D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5CC3E8D2359D8BB00A9A75D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5CC3E8E2359D8C700A9A75D /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5CC3E8F2359D8D400A9A75D /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D5CC3E902359D8E300A9A75D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5CC3E912359D8F800A9A75D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		DA50B7BD4F52596E52378D9D /* Pods-ProtonVPN.release beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release beta.xcconfig"; sourceTree = "<group>"; };
 		E10FA80422C21AC100CD03B2 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
@@ -1891,6 +1897,12 @@
 				English,
 				en,
 				Base,
+				fr,
+				it,
+				pl,
+				"pt-BR",
+				es,
+				"es-MX",
 			);
 			mainGroup = EED534781EEC112000013607;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
@@ -2561,6 +2573,12 @@
 			isa = PBXVariantGroup;
 			children = (
 				7561512E1FD8B5DE009224E7 /* en */,
+				D5CC3E8C2359D8AE00A9A75D /* fr */,
+				D5CC3E8D2359D8BB00A9A75D /* it */,
+				D5CC3E8E2359D8C700A9A75D /* pl */,
+				D5CC3E8F2359D8D400A9A75D /* pt-BR */,
+				D5CC3E902359D8E300A9A75D /* es */,
+				D5CC3E912359D8F800A9A75D /* es-MX */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
