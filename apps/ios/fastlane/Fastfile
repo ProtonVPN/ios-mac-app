@@ -30,14 +30,28 @@ platform :ios do
     lane :internal_beta do |options|
         if !options[:changelog]
             abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
-        elsif !options[:username]
-            abort("Please provide an App Store Connect username with appropriate permisions by running the command with `username:\"<App Store Connect username>\"`")
         end
+
+        clear_derived_data
 
         xcode_select("/Applications/Xcode.app")
 
         sh("./sync_version_number.sh") # sync's the app target's version number with the other targets
         sh("./increment_build_number.sh")
+
+        create_keychain(
+            name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+            password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+            default_keychain: false,
+            add_to_search_list: true,
+            unlock: true
+        )
+        import_certificate(
+            keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+            keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+            certificate_path: 'Certificates.p12',
+            certificate_password: ENV["DISTRIBUTION_CERTIFICATE_PASSWORD"]
+        )
 
         # Release build
         build_app(
@@ -55,13 +69,15 @@ platform :ios do
             }
         )
         upload_to_testflight(
-            username: options[:username],
             team_name: "Proton Technologies AG",
             groups: ["Internal Members"],
             changelog: options[:changelog],
             distribute_external: true,
             demo_account_required: true
         )
+
+        # Updload dSYMs to Sentry
+        sentry_upload_dsym
 
         # Debug build
         build_app(
@@ -79,7 +95,6 @@ platform :ios do
             }
         )
         upload_to_testflight(
-            username: options[:username],
             team_name: "Proton Technologies AG",
         )
     end
