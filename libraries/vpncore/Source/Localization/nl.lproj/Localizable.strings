@@ -230,6 +230,8 @@
 /* (No Comment) */
 "_disconnected" = "Niet verbonden";
 
+"_disconnecting" = "Disconnecting";
+
 /* (No Comment) */
 "_discover_the_app" = "Ontdek de app";
 
@@ -1349,6 +1351,8 @@
 
 /* (No Comment) */
 "_vpn_connection_active" = "VPN-verbinding actief";
+
+"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
 
 /* (No Comment) */
 "_vpn_stuck_disconnecting_body" = "Uw apparaat kon een eerdere VPN-sessie niet beëindigen. U moet uw apparaat herstarten voordat u een nieuwe VPN-verbinding kunt aanmaken.";
