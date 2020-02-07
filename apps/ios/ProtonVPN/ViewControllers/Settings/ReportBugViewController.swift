@@ -47,7 +47,7 @@ class ReportBugViewController: UIViewController {
     @IBOutlet weak var messageField: UITextView!
     @IBOutlet weak var scrollView: UIScrollView!
     // Keyboard
-    @IBOutlet weak var bottomContraint: NSLayoutConstraint!
+    @IBOutlet weak var bottomConstraint: NSLayoutConstraint!
     private let footerConstraintConstant: CGFloat = 0
     private var scrollViewClick: UITapGestureRecognizer!
 
@@ -197,9 +197,9 @@ class ReportBugViewController: UIViewController {
         let animationOptions = UIView.AnimationOptions(rawValue: UIView.AnimationOptions.beginFromCurrentState.rawValue | animationCurveRaw << 16)
         
         if endFrame.minY >= UIScreen.main.bounds.maxY { // Keyboard disappearing
-            self.bottomContraint.constant = self.footerConstraintConstant
+            self.bottomConstraint.constant = self.footerConstraintConstant
         } else {
-            self.bottomContraint.constant = endFrame.size.height
+            self.bottomConstraint.constant = endFrame.size.height
         }
         
         UIView.animate(withDuration: duration, delay: 0, options: animationOptions, animations: { [unowned self] in

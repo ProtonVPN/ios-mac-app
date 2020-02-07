@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		0EFF42E4DD19397A4AA28559 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB679EE574B8A710446C434 /* Pods_OpenVPN_Extension.framework */; };
 		1D533E7ACCBB4672CD678E98 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
+		333BD905132E44B71647B9E9 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87BFF86F618D31D6568A4FC /* Pods_Siri_Shortcut_Handler.framework */; };
 		4B321D2FF7B51E388C059E38 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
@@ -65,7 +66,6 @@
 		79AFDA9220DB370E002F8751 /* ProfilesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */; };
 		79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */; };
 		79AFDA9820DC31ED002F8751 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */; };
-		79AFDA9A20DC3546002F8751 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */; };
 		79C2424020FE86D300E0D410 /* VerificationEmailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */; };
 		79C2424420FE90DA00E0D410 /* VerificationEmailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */; };
 		79C242462107CE5500E0D410 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C242452107CE5500E0D410 /* CountryViewController.swift */; };
@@ -95,7 +95,6 @@
 		79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */; };
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
 		A1595062098A4981D1D59236 /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 749D21D871A63CC1B873DB25 /* Pods_ProtonVPNTests.framework */; };
-		A1E20CCA53861C5D988F0A83 /* Pods_Siri_Shortuct_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC490E419F40437F46BCDCCB /* Pods_Siri_Shortuct_Handler.framework */; };
 		D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
 		D5136C1422858D9D0002C095 /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAF20D2011500EF6F9F /* CountryAnnotationViewModel.swift */; };
 		D5136C1622858E340002C095 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5136C1522858E340002C095 /* vpncore.framework */; };
@@ -110,7 +109,6 @@
 		D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E18006EC218B12A4009E01E3 /* Compare+Extension.swift */; };
 		D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E134558821889EC500FEEECE /* Data+Extension.swift */; };
 		D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */; };
-		D5136C2D228592E80002C095 /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */; };
 		D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79DE13FC216C8A85007A7161 /* UIDevice+Extension.swift */; };
 		D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D5136C30228592E80002C095 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
@@ -220,7 +218,7 @@
 		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
 		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
-		D55455572280280B006574F9 /* Siri Shortuct Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
@@ -275,7 +273,6 @@
 		D5FA16A8231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */; };
 		D5FA16AA231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5FA16A9231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib */; };
 		DAA1986AE49CB9E6E32D400F /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
-		DF55419E7C41652E54CB0329 /* Pods_Siri_Shortuct_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CC490E419F40437F46BCDCCB /* Pods_Siri_Shortuct_Handler.framework */; };
 		E0887D189B733BBB30BCCCFD /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 539B7C3B982207CF8C92B3EB /* Pods_ProtonVPN.framework */; };
 		E1007A5221F631960019B901 /* OnboardingPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1007A5121F631960019B901 /* OnboardingPageViewController.swift */; };
 		E101CB99219363CD001D7A76 /* DataDisclaimer.xib in Resources */ = {isa = PBXBuildFile; fileRef = E101CB98219363CD001D7A76 /* DataDisclaimer.xib */; };
@@ -430,7 +427,7 @@
 			containerPortal = 791DE5D1208DDA3000A29EA5 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = D554553E2280280B006574F9;
-			remoteInfo = "Siri Shortuct Handler";
+			remoteInfo = "Siri Shortcut Handler";
 		};
 		D5811D82229BBD870087B63A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -474,7 +471,7 @@
 			files = (
 				E14414FF22EF38ED00894DD0 /* OpenVPN Extension.appex in Embed App Extensions */,
 				E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */,
-				D55455572280280B006574F9 /* Siri Shortuct Handler.appex in Embed App Extensions */,
+				D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,18 +482,18 @@
 		01D0F264DFBFEEF5277A994B /* Pods_Quick_Connect_Widget_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quick_Connect_Widget_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		051EAEBDE97B0CEC48A61EA1 /* Pods-OpenVPN Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPN-metadata.plist"; path = "Pods/Pods-ProtonVPN-metadata.plist"; sourceTree = "<group>"; };
-		125A0B79AE0587E6AB4911A7 /* Pods-Siri Shortuct Handler Debug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler Debug.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler Debug/Pods-Siri Shortuct Handler Debug.release.xcconfig"; sourceTree = "<group>"; };
+		125A0B79AE0587E6AB4911A7 /* Pods-Siri Shortcut Handler Debug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.release.xcconfig"; sourceTree = "<group>"; };
 		27DC9BC0C1E48172BB2D32C6 /* Pods-Quick Connect Widget.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.test.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.test.xcconfig"; sourceTree = "<group>"; };
 		2CCFE54C53803A32EAF80A84 /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
-		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortuct Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.staging.xcconfig"; sourceTree = "<group>"; };
-		3F338F475F96CA85D904FF56 /* Pods-Siri Shortuct Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler Debug/Pods-Siri Shortuct Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
+		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
+		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
 		457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.debug.xcconfig"; sourceTree = "<group>"; };
 		4A860229338490F8F43FA399 /* Pods-ProtonVPN Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN Debug/Pods-ProtonVPN Debug.test.xcconfig"; sourceTree = "<group>"; };
 		503F9DA27A37743165674D71 /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		539B7C3B982207CF8C92B3EB /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A5A86B5BF186DCEAEAEE26B /* Pods-Siri Shortuct Handler Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler Debug/Pods-Siri Shortuct Handler Debug.debug.xcconfig"; sourceTree = "<group>"; };
-		6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortuct Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		5A5A86B5BF186DCEAEAEE26B /* Pods-Siri Shortcut Handler Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.debug.xcconfig"; sourceTree = "<group>"; };
+		6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
 		6515533A335A1D2DB1223276 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		6A69E59BAF3DC06849E45AB4 /* Pods_ProtonVPNUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B32F52842911147DAAFB4F5 /* Pods-Quick Connect Widget.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.staging.xcconfig"; sourceTree = "<group>"; };
@@ -563,7 +560,6 @@
 		79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewModel.swift; sourceTree = "<group>"; };
 		79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileItemViewModel.swift; sourceTree = "<group>"; };
 		79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSAttributedString+Extension.swift"; sourceTree = "<group>"; };
-		79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
 		79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailViewController.swift; sourceTree = "<group>"; };
 		79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationEmailViewModel.swift; sourceTree = "<group>"; };
 		79C242452107CE5500E0D410 /* CountryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
@@ -594,7 +590,7 @@
 		79FD80E421108049003B16E2 /* LaunchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewController.swift; sourceTree = "<group>"; };
 		79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesViewController.swift; sourceTree = "<group>"; };
 		79FF145420C41EE200BA3623 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
-		7C7703F928568A899E7E37DD /* Pods-Siri Shortuct Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.release.xcconfig"; sourceTree = "<group>"; };
+		7C7703F928568A899E7E37DD /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
 		7CC6CC42592DC9994434FD88 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		85C0FF4470A1FEB2BFC53FD0 /* Pods-ProtonVPN.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.test.xcconfig"; sourceTree = "<group>"; };
 		8811D5FDB915A2E5AA55B6D1 /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.staging.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
@@ -603,7 +599,6 @@
 		A09B44D1E00EEFCD461ACF3D /* Pods-ProtonVPNTests.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.test.xcconfig"; sourceTree = "<group>"; };
 		AEB7742676650AA4EA36B3BE /* Pods-OpenVPN Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.release.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.release.xcconfig"; sourceTree = "<group>"; };
 		B0647F1679DBDF94C906B748 /* Pods-Siri Shortuct Handler.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortuct Handler.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.test.xcconfig"; sourceTree = "<group>"; };
-		CC490E419F40437F46BCDCCB /* Pods_Siri_Shortuct_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortuct_Handler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quick_Connect_Widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2F21A496EC7CAAC042D9C4A /* Pods-Quick Connect Widget Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.test.xcconfig"; sourceTree = "<group>"; };
 		D4C13D55C880EFAB425D778F /* Pods-Quick Connect Widget Debug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.release.xcconfig"; sourceTree = "<group>"; };
@@ -630,11 +625,11 @@
 		D55131702319406200784ED0 /* PlanCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanCardView.xib; sourceTree = "<group>"; };
 		D55131722319425900784ED0 /* RoundCheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoundCheckboxView.xib; sourceTree = "<group>"; };
 		D55131762319427900784ED0 /* RoundCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCheckboxView.swift; sourceTree = "<group>"; };
-		D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortuct Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55455412280280B006574F9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		D554555F2280435B006574F9 /* Siri Shortuct Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortuct Handler.entitlements"; sourceTree = "<group>"; };
+		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
 		D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriHandlerViewModel.swift; sourceTree = "<group>"; };
 		D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
 		D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
@@ -658,6 +653,7 @@
 		D5ADF5132281663F0062367C /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		D5ADF52D2282C3F10062367C /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = ../../../vpncore/Source/Intents.intentdefinition; sourceTree = "<group>"; };
 		D5ADF5312282C6DA0062367C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D5B5D99023EAAADC009F89A5 /* THANKS */ = {isa = PBXFileReference; lastKnownFileType = text; path = THANKS; sourceTree = "<group>"; };
 		D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWrapperMock.swift; sourceTree = "<group>"; };
 		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
@@ -685,6 +681,7 @@
 		D5F568A22327833100795953 /* AppSessionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerMock.swift; sourceTree = "<group>"; };
 		D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanAdvancedFeaturesView.swift; sourceTree = "<group>"; };
 		D5FA16A9231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanAdvancedFeaturesView.xib; sourceTree = "<group>"; };
+		D87BFF86F618D31D6568A4FC /* Pods_Siri_Shortcut_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortcut_Handler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D9CF223F5EBCB81DCFB705FF /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
 		E1007A5121F631960019B901 /* OnboardingPageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageViewController.swift; sourceTree = "<group>"; };
 		E101CB98219363CD001D7A76 /* DataDisclaimer.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DataDisclaimer.xib; sourceTree = "<group>"; };
@@ -830,9 +827,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A1E20CCA53861C5D988F0A83 /* Pods_Siri_Shortuct_Handler.framework in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
-				DF55419E7C41652E54CB0329 /* Pods_Siri_Shortuct_Handler.framework in Frameworks */,
+				333BD905132E44B71647B9E9 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -877,25 +873,25 @@
 				F378E296FEC07B9B460E3AE8 /* Pods-ProtonVPN.release.xcconfig */,
 				D9CF223F5EBCB81DCFB705FF /* Pods-Quick Connect Widget.debug.xcconfig */,
 				3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */,
-				6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortuct Handler.debug.xcconfig */,
-				7C7703F928568A899E7E37DD /* Pods-Siri Shortuct Handler.release.xcconfig */,
+				6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortcut Handler.debug.xcconfig */,
+				7C7703F928568A899E7E37DD /* Pods-Siri Shortcut Handler.release.xcconfig */,
 				9BB3122EE86400E6944A5766 /* Pods-ProtonVPN Debug.debug.xcconfig */,
 				F6C8521424D97F81125A7364 /* Pods-ProtonVPN Debug.release.xcconfig */,
 				457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */,
 				D4C13D55C880EFAB425D778F /* Pods-Quick Connect Widget Debug.release.xcconfig */,
-				5A5A86B5BF186DCEAEAEE26B /* Pods-Siri Shortuct Handler Debug.debug.xcconfig */,
-				125A0B79AE0587E6AB4911A7 /* Pods-Siri Shortuct Handler Debug.release.xcconfig */,
+				5A5A86B5BF186DCEAEAEE26B /* Pods-Siri Shortcut Handler Debug.debug.xcconfig */,
+				125A0B79AE0587E6AB4911A7 /* Pods-Siri Shortcut Handler Debug.release.xcconfig */,
 				85C0FF4470A1FEB2BFC53FD0 /* Pods-ProtonVPN.test.xcconfig */,
 				4A860229338490F8F43FA399 /* Pods-ProtonVPN Debug.test.xcconfig */,
 				A09B44D1E00EEFCD461ACF3D /* Pods-ProtonVPNTests.test.xcconfig */,
 				27DC9BC0C1E48172BB2D32C6 /* Pods-Quick Connect Widget.test.xcconfig */,
 				D2F21A496EC7CAAC042D9C4A /* Pods-Quick Connect Widget Debug.test.xcconfig */,
 				B0647F1679DBDF94C906B748 /* Pods-Siri Shortuct Handler.test.xcconfig */,
-				3F338F475F96CA85D904FF56 /* Pods-Siri Shortuct Handler Debug.test.xcconfig */,
+				3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */,
 				8811D5FDB915A2E5AA55B6D1 /* Pods-ProtonVPN.staging.xcconfig */,
 				E1250CBEBCC1911C54F5DFF4 /* Pods-ProtonVPNTests.staging.xcconfig */,
 				6B32F52842911147DAAFB4F5 /* Pods-Quick Connect Widget.staging.xcconfig */,
-				3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortuct Handler.staging.xcconfig */,
+				3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */,
 				051EAEBDE97B0CEC48A61EA1 /* Pods-OpenVPN Extension.debug.xcconfig */,
 				503F9DA27A37743165674D71 /* Pods-OpenVPN Extension.staging.xcconfig */,
 				AEB7742676650AA4EA36B3BE /* Pods-OpenVPN Extension.release.xcconfig */,
@@ -949,7 +945,7 @@
 				791DE5DB208DDA3000A29EA5 /* ProtonVPN */,
 				E14414F822EF38ED00894DD0 /* OpenVPN Extension */,
 				E148AE4121C141B0007AB65A /* Quick Connect Widget */,
-				D55455402280280B006574F9 /* Siri Shortuct Handler */,
+				D55455402280280B006574F9 /* Siri Shortcut Handler */,
 				E1F2621521D0E13C003A4401 /* Shared */,
 				791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7E229BBD870087B63A /* ProtonVPNUITests */,
@@ -959,6 +955,7 @@
 				0B38DA56FE6E009523226E66 /* Pods */,
 				D5136C0F22841AC70002C095 /* .swiftlint.yml */,
 				D5811D8B229C01D70087B63A /* .gitlab-ci.yml */,
+				D5B5D99023EAAADC009F89A5 /* THANKS */,
 			);
 			sourceTree = "<group>";
 		};
@@ -968,7 +965,7 @@
 				791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */,
 				791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */,
 				E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */,
-				D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */,
+				D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */,
 				D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */,
 				E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */,
 			);
@@ -983,8 +980,8 @@
 				7995FCD620908E1E0030E1EB /* Constants */,
 				79F17EFB20A55753004D2696 /* Core */,
 				D563319F23228EC800CE2EE3 /* Coordinators */,
-				D5F56897232620B000795953 /* Dependecy injection */,
-				7995FCE1209092F30030E1EB /* Extentions */,
+				D5F56897232620B000795953 /* Dependency injection */,
+				7995FCE1209092F30030E1EB /* Extensions */,
 				7995FD112090AD050030E1EB /* Management */,
 				D5BF95112355A52700C7D1E7 /* Misc */,
 				E169FC392289ABD000FDC933 /* Models */,
@@ -1151,13 +1148,12 @@
 			path = Constants;
 			sourceTree = "<group>";
 		};
-		7995FCE1209092F30030E1EB /* Extentions */ = {
+		7995FCE1209092F30030E1EB /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				E18006EC218B12A4009E01E3 /* Compare+Extension.swift */,
 				E134558821889EC500FEEECE /* Data+Extension.swift */,
 				79AFDA9720DC31ED002F8751 /* NSAttributedString+Extension.swift */,
-				79AFDA9920DC3546002F8751 /* UIImage+Extension.swift */,
 				79DE13FC216C8A85007A7161 /* UIDevice+Extension.swift */,
 				D594A957227C0E470041D423 /* UIView+nib.swift */,
 				D594A964227C466F0041D423 /* UIView+constraints.swift */,
@@ -1166,7 +1162,7 @@
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D53E83D6232A5F4D0031CD49 /* String+Validation.swift */,
 			);
-			path = Extentions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		7995FCFF2090A66F0030E1EB /* Frameworks */ = {
@@ -1181,13 +1177,13 @@
 				E148AE3F21C141B0007AB65A /* NotificationCenter.framework */,
 				CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */,
 				D55455492280280B006574F9 /* IntentsUI.framework */,
-				CC490E419F40437F46BCDCCB /* Pods_Siri_Shortuct_Handler.framework */,
 				749D21D871A63CC1B873DB25 /* Pods_ProtonVPNTests.framework */,
 				6A69E59BAF3DC06849E45AB4 /* Pods_ProtonVPNUITests.framework */,
 				70D96DE2CD3CB1FCCAB04746 /* Pods_ProtonVPN_Debug.framework */,
 				01D0F264DFBFEEF5277A994B /* Pods_Quick_Connect_Widget_Debug.framework */,
 				ED741DA236AF3C7A3709C6E8 /* Pods_Siri_Shortuct_Handler_Debug.framework */,
 				6DB679EE574B8A710446C434 /* Pods_OpenVPN_Extension.framework */,
+				D87BFF86F618D31D6568A4FC /* Pods_Siri_Shortcut_Handler.framework */,
 			);
 			path = Frameworks;
 			sourceTree = "<group>";
@@ -1526,15 +1522,15 @@
 			path = Subscriptions;
 			sourceTree = "<group>";
 		};
-		D55455402280280B006574F9 /* Siri Shortuct Handler */ = {
+		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXGroup;
 			children = (
-				D554555F2280435B006574F9 /* Siri Shortuct Handler.entitlements */,
+				D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */,
 				D55455412280280B006574F9 /* IntentHandler.swift */,
 				D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */,
 				D55455432280280B006574F9 /* Info.plist */,
 			);
-			path = "Siri Shortuct Handler";
+			path = "Siri Shortcut Handler";
 			sourceTree = "<group>";
 		};
 		D563319F23228EC800CE2EE3 /* Coordinators */ = {
@@ -1655,12 +1651,12 @@
 			path = "Human Verification";
 			sourceTree = "<group>";
 		};
-		D5F56897232620B000795953 /* Dependecy injection */ = {
+		D5F56897232620B000795953 /* Dependency injection */ = {
 			isa = PBXGroup;
 			children = (
 				D5F56898232620C600795953 /* DependencyContainer.swift */,
 			);
-			path = "Dependecy injection";
+			path = "Dependency injection";
 			sourceTree = "<group>";
 		};
 		D5F5689E23277EC500795953 /* Coordinators */ = {
@@ -1915,9 +1911,9 @@
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D554553E2280280B006574F9 /* Siri Shortuct Handler */ = {
+		D554553E2280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortuct Handler" */;
+			buildConfigurationList = D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */;
 			buildPhases = (
 				267F161C2675144DF87CD995 /* [CP] Check Pods Manifest.lock */,
 				D554553B2280280B006574F9 /* Sources */,
@@ -1929,9 +1925,9 @@
 			);
 			dependencies = (
 			);
-			name = "Siri Shortuct Handler";
-			productName = "Siri Shortuct Handler";
-			productReference = D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */;
+			name = "Siri Shortcut Handler";
+			productName = "Siri Shortcut Handler";
+			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D5811D7C229BBD870087B63A /* ProtonVPNUITests */ = {
@@ -2101,7 +2097,7 @@
 				791DE5D8208DDA3000A29EA5 /* ProtonVPN */,
 				E14414F622EF38ED00894DD0 /* OpenVPN Extension */,
 				E148AE3D21C141B0007AB65A /* Quick Connect Widget */,
-				D554553E2280280B006574F9 /* Siri Shortuct Handler */,
+				D554553E2280280B006574F9 /* Siri Shortcut Handler */,
 				791DE5EE208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7C229BBD870087B63A /* ProtonVPNUITests */,
 			);
@@ -2230,7 +2226,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Siri Shortuct Handler-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-Siri Shortcut Handler-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -2575,7 +2571,6 @@
 				E134558121876A3100FEEECE /* VerificationCodeViewModel.swift in Sources */,
 				E1C2261922720E21001B208C /* HumanVerificationOptionsViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
-				79AFDA9A20DC3546002F8751 /* UIImage+Extension.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				79C2424420FE90DA00E0D410 /* VerificationEmailViewModel.swift in Sources */,
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
@@ -2611,7 +2606,6 @@
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
-				D5136C2D228592E80002C095 /* UIImage+Extension.swift in Sources */,
 				E169FC4D228B1D8700FDC933 /* PhoneCountryCodeViewModel.swift in Sources */,
 				D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
@@ -2826,7 +2820,7 @@
 		};
 		D55455562280280B006574F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D554553E2280280B006574F9 /* Siri Shortuct Handler */;
+			target = D554553E2280280B006574F9 /* Siri Shortcut Handler */;
 			targetProxy = D55455552280280B006574F9 /* PBXContainerItemProxy */;
 		};
 		D5811D83229BBD870087B63A /* PBXTargetDependency */ = {
@@ -3187,13 +3181,13 @@
 		};
 		D554555C2280280B006574F9 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortuct Handler.debug.xcconfig */;
+			baseConfigurationReference = 6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortcut Handler.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3203,7 +3197,7 @@
 				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -3213,12 +3207,12 @@
 		};
 		D554555D2280280B006574F9 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 7C7703F928568A899E7E37DD /* Pods-Siri Shortuct Handler.release.xcconfig */;
+			baseConfigurationReference = 7C7703F928568A899E7E37DD /* Pods-Siri Shortcut Handler.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3227,7 +3221,7 @@
 				);
 				MARKETING_VERSION = 2.0.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -3423,14 +3417,14 @@
 		};
 		E1144E4422E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortuct Handler.staging.xcconfig */;
+			baseConfigurationReference = 3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3440,7 +3434,7 @@
 				MARKETING_VERSION = 2.0.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -3665,7 +3659,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortuct Handler" */ = {
+		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D554555C2280280B006574F9 /* Debug */,

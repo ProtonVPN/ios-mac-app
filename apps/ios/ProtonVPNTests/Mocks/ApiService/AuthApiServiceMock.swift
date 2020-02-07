@@ -28,7 +28,7 @@ class AuthApiServiceMock: AuthApiService {
     var callbackauthenticate: ((String, String, ((AuthCredentials) -> Void), ((Error) -> Void)) -> Void)?
     var callbackmodulus: ((((ModulusResponse) -> Void), ((Error) -> Void)) -> Void)?
     
-    // MARK: Implemenetation
+    // MARK: Implementation
     
     func authenticate(username: String, password: String, success: @escaping (AuthCredentials) -> Void, failure: @escaping (Error) -> Void) {
         callbackauthenticate?(username, password, success, failure)

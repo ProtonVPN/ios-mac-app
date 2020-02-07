@@ -49,6 +49,7 @@ protocol AppSessionManager {
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func refreshData()
+    func canPreviewApp() -> Bool
 }
 
 class AppSessionManagerImplementation: AppSessionManager {
@@ -125,6 +126,13 @@ class AppSessionManagerImplementation: AppSessionManager {
         }
         // swiftlint:enable unused_optional_binding
         
+        return true
+    }
+    
+    func canPreviewApp() -> Bool {
+        guard !self.serverStorage.fetch().isEmpty, self.propertiesManager.userIp != nil else {
+            return false
+        }
         return true
     }
     
@@ -318,7 +326,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         lastRefresh = Date()
         if loggedIn {
             attemptDataRefreshWithoutLogin(success: {}, failure: { error in
-                PMLog.D("Failed to reistablish vpn credentials: \(error.localizedDescription)", level: .error)
+                PMLog.D("Failed to reestablish vpn credentials: \(error.localizedDescription)", level: .error)
                 
                 let error = error as NSError
                 switch error.code {

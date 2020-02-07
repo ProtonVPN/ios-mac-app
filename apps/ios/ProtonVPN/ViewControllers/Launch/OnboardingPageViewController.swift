@@ -1,5 +1,5 @@
 //
-//  OnboardingPageViewConrtoller.swift
+//  OnboardingPageViewController.swift
 //  ProtonVPN - Created on 01.07.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG

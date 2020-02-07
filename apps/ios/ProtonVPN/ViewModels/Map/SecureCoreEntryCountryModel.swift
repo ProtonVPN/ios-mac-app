@@ -102,7 +102,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
         return // don't respond to taps
     }
     
-    func hightlight(_ highlight: Bool) {
+    func highlight(_ highlight: Bool) {
         if highlight && viewState == .idle {
             viewState = .selected
         } else if !highlight && viewState == .selected {

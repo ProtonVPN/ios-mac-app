@@ -73,7 +73,7 @@
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="t5z-qa-oEb">
                                     <rect key="frame" x="18" y="164" width="378" height="54"/>
-                                    <string key="text">_Upon confirming your purchase of a paid plan, you iTunes account will be charged the amount diplayed, which includes the service plan, and Apple’s</string>
+                                    <string key="text">_Upon confirming your purchase of a paid plan, you iTunes account will be charged the amount displayed, which includes the service plan, and Apple’s</string>
                                     <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>

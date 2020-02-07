@@ -81,7 +81,7 @@ class LoginViewModel {
                 appSessionManager.loadDataWithoutLogin(success: { [unowned self] in
                     self.loginService.presentOnboarding()
                 }, failure: { [unowned self] _ in
-                    self.loginService.presentLogin(dismissible: false)
+                    self.loginService.presentOnboarding()
                 })
             })
         }
