@@ -1,5 +1,5 @@
-framework module Pods_Siri_Shortuct_Handler {
-  umbrella header "Pods-Siri Shortuct Handler-umbrella.h"
+framework module Pods_Siri_Shortcut_Handler {
+  umbrella header "Pods-Siri Shortcut Handler-umbrella.h"
 
   export *
   module * { export * }
