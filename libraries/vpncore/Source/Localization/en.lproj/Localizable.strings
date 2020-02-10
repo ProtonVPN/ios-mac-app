@@ -388,7 +388,7 @@
 "_protonvpn_macos" = "ProtonVPN macOS";
 
 "_error_mitm_title" = "Insecure connection";
-"_error_mitm_description" = "The TLS certificate validation failed. Your current Internet connection may be monitored. To keep your data secure, the app is being temporarily blocked.\nTo establish a VPN connection, switch to a new network and try to connect again.";
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
 
 "_error_invalid_human_verification_code_title" = "Invalid verification code";
 "_error_invalid_human_verification_code_message" = "Would you like to receive a new verification code or use an alternative verification method?";
@@ -495,7 +495,7 @@
 "_most_popular" = "Most popular";
 "_select_plan" = "Select plan";
 "_advanced_features" = "+ Advanced features";
-"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes the service plan, and Apple’s in-app purchase fee (Apple charges a fee of approximately 30% on purchases made through your iPhone/iPad). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
 "_per_year_short" = "/ yr";
 
 // Plan selection: advances features
