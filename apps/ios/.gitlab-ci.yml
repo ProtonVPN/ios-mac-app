@@ -114,7 +114,6 @@ publish-internal-build:
     - pod install
     - fastlane sigh download_all --download_xcode_profiles
     - cd ProtonVPN/ && ../../vpncore/Source/prepare_obfuscated_constants.sh && cd ..
-    - cat ProtonVPN/ObfuscatedConstants.swift
     - fastlane ios internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
   tags:
     - iOS-deploy
