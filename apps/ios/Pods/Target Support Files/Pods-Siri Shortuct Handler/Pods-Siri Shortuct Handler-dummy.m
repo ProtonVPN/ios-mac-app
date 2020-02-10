@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_Siri_Shortuct_Handler : NSObject
+@interface PodsDummy_Pods_Siri_Shortcut_Handler : NSObject
 @end
-@implementation PodsDummy_Pods_Siri_Shortuct_Handler
+@implementation PodsDummy_Pods_Siri_Shortcut_Handler
 @end

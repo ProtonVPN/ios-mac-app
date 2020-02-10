@@ -31,8 +31,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "D554553E2280280B006574F9"
-            BuildableName = "Siri Shortuct Handler.appex"
-            BlueprintName = "Siri Shortuct Handler"
+            BuildableName = "Siri Shortcut Handler.appex"
+            BlueprintName = "Siri Shortcut Handler"
             ReferencedContainer = "container:ProtonVPN.xcodeproj">
          </BuildableReference>
       </CodeCoverageTargets>

@@ -11,6 +11,6 @@
 #endif
 
 
-FOUNDATION_EXPORT double Pods_Siri_Shortuct_HandlerVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Siri_Shortuct_HandlerVersionString[];
+FOUNDATION_EXPORT double Pods_Siri_Shortcut_HandlerVersionNumber;
+FOUNDATION_EXPORT const unsigned char Pods_Siri_Shortcut_HandlerVersionString[];
 

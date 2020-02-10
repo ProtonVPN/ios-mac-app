@@ -219,7 +219,7 @@
 		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
 		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
-		D55455572280280B006574F9 /* Siri Shortuct Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */; };
 		D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		D554556522805D0F006574F9 /* Client.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79C5598320AAC59F00E6D3F6 /* Client.plist */; };
@@ -437,7 +437,7 @@
 			dstSubfolderSpec = 13;
 			files = (
 				E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */,
-				D55455572280280B006574F9 /* Siri Shortuct Handler.appex in Embed App Extensions */,
+				D55455572280280B006574F9 /* Siri Shortcut Handler.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -589,11 +589,11 @@
 		D55131702319406200784ED0 /* PlanCardView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanCardView.xib; sourceTree = "<group>"; };
 		D55131722319425900784ED0 /* RoundCheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoundCheckboxView.xib; sourceTree = "<group>"; };
 		D55131762319427900784ED0 /* RoundCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCheckboxView.swift; sourceTree = "<group>"; };
-		D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortuct Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D55455412280280B006574F9 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D55455432280280B006574F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D55455492280280B006574F9 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
-		D554555F2280435B006574F9 /* Siri Shortuct Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortuct Handler.entitlements"; sourceTree = "<group>"; };
+		D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Siri Shortcut Handler.entitlements"; sourceTree = "<group>"; };
 		D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SiriHandlerViewModel.swift; sourceTree = "<group>"; };
 		D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
 		D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
@@ -879,7 +879,7 @@
 				791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7E229BBD870087B63A /* ProtonVPNUITests */,
 				E148AE4121C141B0007AB65A /* Quick Connect Widget */,
-				D55455402280280B006574F9 /* Siri Shortuct Handler */,
+				D55455402280280B006574F9 /* Siri Shortcut Handler */,
 				E1F2621521D0E13C003A4401 /* Shared */,
 				791DE5DA208DDA3000A29EA5 /* Products */,
 				7995FCFF2090A66F0030E1EB /* Frameworks */,
@@ -896,7 +896,7 @@
 				791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */,
 				791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */,
 				E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */,
-				D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */,
+				D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */,
 				D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */,
 			);
 			name = Products;
@@ -1440,15 +1440,15 @@
 			path = Subscriptions;
 			sourceTree = "<group>";
 		};
-		D55455402280280B006574F9 /* Siri Shortuct Handler */ = {
+		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXGroup;
 			children = (
-				D554555F2280435B006574F9 /* Siri Shortuct Handler.entitlements */,
+				D554555F2280435B006574F9 /* Siri Shortcut Handler.entitlements */,
 				D55455412280280B006574F9 /* IntentHandler.swift */,
 				D554556122804DF2006574F9 /* SiriHandlerViewModel.swift */,
 				D55455432280280B006574F9 /* Info.plist */,
 			);
-			path = "Siri Shortuct Handler";
+			path = "Siri Shortcut Handler";
 			sourceTree = "<group>";
 		};
 		D563319F23228EC800CE2EE3 /* Coordinators */ = {
@@ -1817,9 +1817,9 @@
 			productReference = 791DE5EF208DDA3200A29EA5 /* ProtonVPNTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		D554553E2280280B006574F9 /* Siri Shortuct Handler */ = {
+		D554553E2280280B006574F9 /* Siri Shortcut Handler */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortuct Handler" */;
+			buildConfigurationList = D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */;
 			buildPhases = (
 				267F161C2675144DF87CD995 /* [CP] Check Pods Manifest.lock */,
 				E1461DAD22EAEC9E005D04C2 /* Sync Version Number */,
@@ -1833,9 +1833,9 @@
 			);
 			dependencies = (
 			);
-			name = "Siri Shortuct Handler";
+			name = "Siri Shortcut Handler";
 			productName = "Siri Shortuct Handler";
-			productReference = D554553F2280280B006574F9 /* Siri Shortuct Handler.appex */;
+			productReference = D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 		D5811D7C229BBD870087B63A /* ProtonVPNUITests */ = {
@@ -1973,7 +1973,7 @@
 			targets = (
 				791DE5D8208DDA3000A29EA5 /* ProtonVPN */,
 				E148AE3D21C141B0007AB65A /* Quick Connect Widget */,
-				D554553E2280280B006574F9 /* Siri Shortuct Handler */,
+				D554553E2280280B006574F9 /* Siri Shortcut Handler */,
 				791DE5EE208DDA3200A29EA5 /* ProtonVPNTests */,
 				D5811D7C229BBD870087B63A /* ProtonVPNUITests */,
 			);
@@ -2221,7 +2221,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    buildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortuct Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1079)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortuct Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1144E4B22EA0C550087A685 /* Increment Build Number */ = {
@@ -2240,7 +2240,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1079)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1144E4C22EA0C760087A685 /* Increment Build Number */ = {
@@ -2259,7 +2259,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=$(git rev-list HEAD | wc -l | tr -d ' ')\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1079)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1461DAC22EAEACA005D04C2 /* Sync Version Number */ = {
@@ -2713,7 +2713,7 @@
 		};
 		D55455562280280B006574F9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D554553E2280280B006574F9 /* Siri Shortuct Handler */;
+			target = D554553E2280280B006574F9 /* Siri Shortcut Handler */;
 			targetProxy = D55455552280280B006574F9 /* PBXContainerItemProxy */;
 		};
 		D5811D83229BBD870087B63A /* PBXTargetDependency */ = {
@@ -3067,11 +3067,11 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6504E88B7E3B30EC87FEC206 /* Pods-Siri Shortuct Handler.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3081,7 +3081,7 @@
 				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -3093,10 +3093,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 7C7703F928568A899E7E37DD /* Pods-Siri Shortuct Handler.release.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3105,7 +3105,7 @@
 				);
 				MARKETING_VERSION = 1.4.0;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -3301,12 +3301,12 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortuct Handler.staging.xcconfig */;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Siri Shortuct Handler/Siri Shortuct Handler.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
-				INFOPLIST_FILE = "Siri Shortuct Handler/Info.plist";
+				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -3316,7 +3316,7 @@
 				MARKETING_VERSION = 1.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortuct-Handler";
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
@@ -3464,7 +3464,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortuct Handler" */ = {
+		D554555B2280280B006574F9 /* Build configuration list for PBXNativeTarget "Siri Shortcut Handler" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D554555C2280280B006574F9 /* Debug */,
