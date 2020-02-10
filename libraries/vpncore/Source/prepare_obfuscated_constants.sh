@@ -10,10 +10,9 @@ class $CLASS_NAME {
     
 "
 
-# $1: variable name
-# $2: variable value
+# $1: variable line
 addVariableToFile () {
-    VARIABLE_STRING="    static let $1: String = \"$2\"" # only allows type String
+    VARIABLE_STRING="    $1"
     FILE_CONTENT="$FILE_CONTENT$VARIABLE_STRING
 "
 }
@@ -30,8 +29,7 @@ do
 
         VARIABLE_VALUE=$(eval echo "\$$VARIABLE_NAME")
         if [[ ! -z "$VARIABLE_VALUE" ]]; then
-            VARIABLE_VALUE="${VARIABLE_VALUE//\"}" # removes any " from string
-            addVariableToFile "$VARIABLE_NAME" "$VARIABLE_VALUE"
+            addVariableToFile "$VARIABLE_VALUE"
             ((ENV_VARS_FOUND++))
         else # copy line verbatum from example file
             FILE_CONTENT="$FILE_CONTENT$line
