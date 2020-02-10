@@ -1878,7 +1878,6 @@
 				A7044BD4F2C24F6CFB7C2C51 /* [CP] Embed Pods Frameworks */,
 				E148AE4E21C141B0007AB65A /* Embed App Extensions */,
 				D5136C0C2284154F0002C095 /* Run SwiftLint Script */,
-				E14FE854216361B50062E624 /* Sentry dSYM upload */,
 			);
 			buildRules = (
 			);
@@ -2383,20 +2382,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
-		};
-		E14FE854216361B50062E624 /* Sentry dSYM upload */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Sentry dSYM upload";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nif which sentry-cli >/dev/null; then\nexport SENTRY_URL='https://sentry.protontech.ch/'\nexport SENTRY_ORG='sentry'\nexport SENTRY_PROJECT='ios-vpn-prod'\nsource ~/.bashrc # get auth token here\n# export SENTRY_AUTH_TOKEN=YOU_AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\nfi\n";
 		};
 		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3095,8 +3080,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3118,7 +3103,7 @@
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Release";
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/SupportingFiles/SwiftObjC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
@@ -3210,7 +3195,8 @@
 			baseConfigurationReference = 7C7703F928568A899E7E37DD /* Pods-Siri Shortcut Handler.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3223,6 +3209,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Siri Shortcuts Release";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3353,8 +3340,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = "$(inherited)";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -3376,7 +3363,7 @@
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug;
 				PRODUCT_NAME = "$(TARGET_NAME) Test";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Debug";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE";
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/SupportingFiles/SwiftObjC-Bridging-Header.h";
@@ -3392,8 +3379,8 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Quick Connect Widget/Info.plist";
@@ -3408,7 +3395,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Widget Debug";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3420,8 +3407,8 @@
 			baseConfigurationReference = 3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
@@ -3436,7 +3423,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Siri Shortcuts Debug";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3529,8 +3516,8 @@
 			baseConfigurationReference = 503F9DA27A37743165674D71 /* Pods-OpenVPN Extension.staging.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3543,6 +3530,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Debug";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3554,8 +3542,8 @@
 			baseConfigurationReference = AEB7742676650AA4EA36B3BE /* Pods-OpenVPN Extension.release.xcconfig */;
 			buildSettings = {
 				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3568,6 +3556,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Release";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -3607,7 +3596,8 @@
 			buildSettings = {
 				APPLICATION_EXTENSION_API_ONLY = NO;
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Quick Connect Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
@@ -3620,6 +3610,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Widget Release";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
