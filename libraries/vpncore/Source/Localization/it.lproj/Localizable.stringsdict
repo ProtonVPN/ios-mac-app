@@ -12,14 +12,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d kraje</string>
-			<key>many</key>
-			<string>%d krajów</string>
 			<key>one</key>
-			<string>%d kraj</string>
+			<string>%d paese</string>
 			<key>other</key>
-			<string>%d krajów</string>
+			<string>%d paesi</string>
 		</dict>
 	</dict>
 	<key>_countries_count_plus</key>
@@ -32,14 +28,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>Ponad %d kraje</string>
-			<key>many</key>
-			<string>Ponad %d krajów</string>
 			<key>one</key>
-			<string>Ponad %d kraj</string>
+			<string>%d+ paese</string>
 			<key>other</key>
-			<string>Ponad %d krajów</string>
+			<string>%d+ paesi</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>
@@ -52,14 +44,10 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>few</key>
-			<string>%d połączenia</string>
-			<key>many</key>
-			<string>%d połączeń</string>
 			<key>one</key>
-			<string>%d połączenie</string>
+			<string>%d connessione</string>
 			<key>other</key>
-			<string>%d połączeń</string>
+			<string>%d connessioni</string>
 		</dict>
 	</dict>
 </dict>
