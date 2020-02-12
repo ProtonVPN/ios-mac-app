@@ -71,7 +71,7 @@
 "_auto_assigned" = "Asignado automáticamente";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Conectar automáticamente";
+"_auto_connect" = "Auto conectar";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Al iniciar la app, estarás conectado al perfil seleccionado";
