@@ -119,10 +119,10 @@
 "_connecting" = "Connessione in corso";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
-"_connecting_to" = "Connettendo a %@";
+"_connecting_to" = "Connessione a %@";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
-"_connecting_vpn" = "Connettendo %@";
+"_connecting_vpn" = "Connessione %@";
 
 /* iOS: connection bar, iOS widget */
 "_connecting..." = "Connessione in corso...";
@@ -141,6 +141,12 @@
 
 /* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
 "_countries" = "Paesi";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. */
+"_countries_count" = "_countries_count";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
+"_countries_count_plus" = "_countries_count_plus";
 
 /* iOS: countries list section header */
 "_countries_free" = "Paesi gratuiti";
@@ -849,6 +855,12 @@
 
 /* Plan speed */
 "_plan_speed_medium" = "Velocità media";
+
+/* Account plan description */
+"_plans_connection" = "_plans_connection";
+
+/* No comment provided by engineer. */
+"_plans_connections" = "_plans_connections";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";

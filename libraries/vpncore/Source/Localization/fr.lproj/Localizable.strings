@@ -142,6 +142,12 @@
 /* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
 "_countries" = "Pays";
 
+/* iOS advandced plan features view. %@ is changed with the number of countries. */
+"_countries_count" = "_countries_count";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
+"_countries_count_plus" = "_countries_count_plus";
+
 /* iOS: countries list section header */
 "_countries_free" = "Pays gratuits";
 
@@ -849,6 +855,12 @@
 
 /* Plan speed */
 "_plan_speed_medium" = "Vitesse moyenne";
+
+/* Account plan description */
+"_plans_connection" = "_plans_connection";
+
+/* No comment provided by engineer. */
+"_plans_connections" = "_plans_connections";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
