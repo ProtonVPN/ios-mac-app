@@ -82,20 +82,6 @@ class HeaderViewModel {
         return vpnGateway.activeServer?.load
     }
     
-    var profileButtonLabel: NSAttributedString? {
-        return formProfileButtonLabel()
-    }
-    
-    func profileAction() {
-        if let server = vpnGateway.activeServer {
-            if profileManager.profile(withServer: server) != nil {
-                navService.openProfiles(.overview)
-            } else {
-                _ = profileManager.createProfile(withServer: server)
-            }
-        }
-    }
-    
     func quickConnectAction() {
         isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
     }
