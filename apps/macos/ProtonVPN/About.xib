@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
-        <plugIn identifier="com.apple.WebKit2IBPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.WebKit2IBPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,7 +36,7 @@
                             </constraints>
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="protonvpn-green-transparent" id="eB4-E3-MWA"/>
                         </imageView>
-                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="Rmd-fh-L9T" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Rmd-fh-L9T" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="133" y="321" width="483" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="_Version_" id="C5Z-yY-4TR">
                                 <font key="font" metaFont="system"/>
@@ -44,15 +44,15 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ywI-rG-Ydf" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="ywI-rG-Ydf" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="18" y="321" width="109" height="16"/>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Current version_" id="64B-Cc-Wx8">
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Current version_" usesSingleLineMode="YES" id="64B-Cc-Wx8">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="249" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-pC-uav" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                        <textField horizontalHuggingPriority="249" verticalHuggingPriority="750" horizontalCompressionResistancePriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="OV0-pC-uav" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="133" y="295" width="483" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="_date_" id="6EH-ba-U1g">
                                 <font key="font" metaFont="system"/>
@@ -62,7 +62,7 @@
                         </textField>
                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qML-de-p0H" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="18" y="295" width="109" height="16"/>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Last update_" id="sgd-rm-IRW">
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="left" title="_Last update_" usesSingleLineMode="YES" id="sgd-rm-IRW">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -449,24 +449,34 @@
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6Hl-tc-aEX" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="640" y="15" width="130" height="40"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="130" id="cbS-Wi-SVF"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="cbS-Wi-SVF"/>
                                 <constraint firstAttribute="height" constant="40" id="zDN-SB-42j"/>
                             </constraints>
                             <buttonCell key="cell" type="bevel" title="_Send" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="uSX-Nz-380">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="25"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qdv-jc-KAZ" customClass="ClearCancellationButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="480" y="15" width="130" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="coO-OR-Odz"/>
-                                <constraint firstAttribute="width" constant="130" id="hVU-Vv-7vP"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="hVU-Vv-7vP"/>
                             </constraints>
                             <buttonCell key="cell" type="bevel" title="_Cancel" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="vzJ-z1-b7k">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="25"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                         </button>
                     </subviews>
                     <constraints>
