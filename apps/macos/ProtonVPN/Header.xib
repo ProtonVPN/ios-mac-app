@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -19,7 +19,6 @@
                 <outlet property="loadLineHorizontalConstraint2" destination="eHN-FP-7sk" id="YNI-ck-46k"/>
                 <outlet property="loadLineHorizontalConstraint3" destination="VW3-Je-f0W" id="Nsy-FS-ofv"/>
                 <outlet property="loadLineHorizontalConstraint4" destination="Msp-Lg-Nn9" id="PZ9-db-PIk"/>
-                <outlet property="profileButton" destination="vJy-BT-WNC" id="qKu-Dn-hYs"/>
                 <outlet property="speedLabel" destination="fcs-WH-EAh" id="qjT-Ap-JeE"/>
                 <outlet property="view" destination="c22-O7-iKe" id="zXf-hO-kwe"/>
             </connections>
@@ -69,16 +68,6 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vJy-BT-WNC" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="38" y="73" width="132" height="20"/>
-                                            <constraints>
-                                                <constraint firstAttribute="height" constant="20" id="YAf-RJ-wfq"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="bevel" title="Profile button" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="0fB-Bz-YgF">
-                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                        </button>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
                                             <rect key="frame" x="216" y="103" width="66" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Load label" id="jml-MJ-Fs6">
@@ -100,24 +89,20 @@
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="SOe-d7-1zi" firstAttribute="centerX" secondItem="lCW-hX-bS7" secondAttribute="centerX" id="197-NE-qNj"/>
-                                        <constraint firstItem="vJy-BT-WNC" firstAttribute="leading" secondItem="pHx-RQ-OMh" secondAttribute="leading" constant="-2" id="3e3-pP-3fg"/>
                                         <constraint firstItem="OVs-pX-cwh" firstAttribute="centerY" secondItem="6Yt-JV-yHv" secondAttribute="centerY" id="3zp-b3-6YK"/>
-                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="centerY" secondItem="vJy-BT-WNC" secondAttribute="centerY" id="4T8-B4-hqX"/>
+                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="top" secondItem="OVs-pX-cwh" secondAttribute="bottom" constant="12" id="6N3-m3-ac2"/>
                                         <constraint firstItem="8Rp-H8-tLg" firstAttribute="centerX" secondItem="lCW-hX-bS7" secondAttribute="centerX" id="890-eb-vyF"/>
                                         <constraint firstItem="8Rp-H8-tLg" firstAttribute="leading" secondItem="lCW-hX-bS7" secondAttribute="leading" constant="40" id="LHV-JP-8bX"/>
                                         <constraint firstAttribute="trailing" secondItem="6Yt-JV-yHv" secondAttribute="trailing" constant="40" id="Msp-Lg-Nn9"/>
                                         <constraint firstItem="pHx-RQ-OMh" firstAttribute="leading" secondItem="8Rp-H8-tLg" secondAttribute="leading" id="Rk2-u5-rkE"/>
+                                        <constraint firstItem="SOe-d7-1zi" firstAttribute="top" secondItem="fcs-WH-EAh" secondAttribute="bottom" constant="12" id="VKp-es-QhI"/>
                                         <constraint firstItem="6Yt-JV-yHv" firstAttribute="leading" secondItem="OVs-pX-cwh" secondAttribute="trailing" constant="5" id="VW3-Je-f0W"/>
                                         <constraint firstItem="OVs-pX-cwh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="pHx-RQ-OMh" secondAttribute="trailing" constant="5" id="eHN-FP-7sk"/>
                                         <constraint firstItem="SOe-d7-1zi" firstAttribute="trailing" secondItem="fcs-WH-EAh" secondAttribute="trailing" id="ffK-wZ-EY1"/>
                                         <constraint firstItem="pHx-RQ-OMh" firstAttribute="top" secondItem="8Rp-H8-tLg" secondAttribute="bottom" constant="15" id="gjN-4O-sjH"/>
-                                        <constraint firstItem="SOe-d7-1zi" firstAttribute="top" secondItem="vJy-BT-WNC" secondAttribute="bottom" constant="10" id="hR5-ZZ-pmw"/>
                                         <constraint firstItem="fcs-WH-EAh" firstAttribute="trailing" secondItem="6Yt-JV-yHv" secondAttribute="trailing" id="hzV-kK-3gA"/>
                                         <constraint firstItem="8Rp-H8-tLg" firstAttribute="top" secondItem="lCW-hX-bS7" secondAttribute="top" constant="20" id="mbb-Ev-QQp"/>
-                                        <constraint firstItem="vJy-BT-WNC" firstAttribute="top" secondItem="pHx-RQ-OMh" secondAttribute="bottom" constant="10" id="o2n-Us-8o1"/>
-                                        <constraint firstItem="fcs-WH-EAh" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="vJy-BT-WNC" secondAttribute="trailing" constant="5" id="pt2-Ho-ijd"/>
                                         <constraint firstItem="6Yt-JV-yHv" firstAttribute="centerY" secondItem="pHx-RQ-OMh" secondAttribute="centerY" id="sro-hK-daz"/>
-                                        <constraint firstAttribute="centerX" secondItem="vJy-BT-WNC" secondAttribute="trailing" priority="750" id="uXe-sX-6ej"/>
                                     </constraints>
                                 </customView>
                             </subviews>

@@ -30,7 +30,6 @@ class HeaderViewController: NSViewController {
     @IBOutlet weak var ipLabel: NSTextField!
     @IBOutlet weak var loadLabel: NSTextField!
     @IBOutlet weak var loadIcon: LoadCircle!
-    @IBOutlet weak var profileButton: GreenActionButton!
     @IBOutlet weak var speedLabel: NSTextField!
     @IBOutlet weak var connectButton: LargeConnectButton!
     @IBOutlet weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
@@ -65,10 +64,7 @@ class HeaderViewController: NSViewController {
     private func setupPersistentView() {
         backgroundView.wantsLayer = true
         backgroundView.layer?.backgroundColor = NSColor.protonDarkGrey().cgColor
-        
-        profileButton.target = self
-        profileButton.action = #selector(profileButtonAction)
-        
+                
         connectButton.target = self
         connectButton.action = #selector(quickConnectButtonAction)
     }
@@ -81,7 +77,6 @@ class HeaderViewController: NSViewController {
         
         setupLoad()
         setupBitrate()
-        setupProfileButton()
         
         connectButton.isConnected = viewModel.isConnected
     }
@@ -118,19 +113,6 @@ class HeaderViewController: NSViewController {
         } else {
             speedLabel.isHidden = true
         }
-    }
-    
-    private func setupProfileButton() {
-        if viewModel.isConnected, let title = viewModel.profileButtonLabel {
-            profileButton.attributedTitle = title
-            profileButton.isHidden = false
-        } else {
-            profileButton.isHidden = true
-        }
-    }
-    
-    @objc private func profileButtonAction() {
-        viewModel.profileAction()
     }
     
     @objc private func quickConnectButtonAction() {
