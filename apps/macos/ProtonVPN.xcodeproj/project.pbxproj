@@ -406,6 +406,7 @@
 		D5AC137F23796B8800244066 /* Acknowledgements.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
 		D5ADF5322282D00E0062367C /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = ../../../vpncore/Source/Intents.intentdefinition; sourceTree = "<group>"; };
+		D5B7E01C23F53E7500725406 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E8C2359D8AE00A9A75D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E8D2359D8BB00A9A75D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E8E2359D8C700A9A75D /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = pl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1903,6 +1904,7 @@
 				"pt-BR",
 				es,
 				"es-MX",
+				nl,
 			);
 			mainGroup = EED534781EEC112000013607;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
@@ -2579,6 +2581,7 @@
 				D5CC3E8F2359D8D400A9A75D /* pt-BR */,
 				D5CC3E902359D8E300A9A75D /* es */,
 				D5CC3E912359D8F800A9A75D /* es-MX */,
+				D5B7E01C23F53E7500725406 /* nl */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
