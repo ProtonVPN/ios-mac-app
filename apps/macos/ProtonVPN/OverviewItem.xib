@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner"/>
@@ -23,7 +21,7 @@
                     </constraints>
                 </customView>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="748" translatesAutoresizingMaskIntoConstraints="NO" id="jG4-kk-OGN">
-                    <rect key="frame" x="78" y="17" width="80" height="17"/>
+                    <rect key="frame" x="78" y="17" width="80" height="16"/>
                     <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Profile name" usesSingleLineMode="YES" id="6Rx-cN-P5Q">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -31,7 +29,7 @@
                     </textFieldCell>
                 </textField>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="6fy-ok-TTw">
-                    <rect key="frame" x="278" y="17" width="116" height="17"/>
+                    <rect key="frame" x="278" y="17" width="116" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="More about profile" id="Lln-v1-izd">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +55,7 @@
                     </constraints>
                 </box>
                 <stackView distribution="equalSpacing" orientation="horizontal" alignment="top" spacing="5" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IL8-Y8-fue">
-                    <rect key="frame" x="660" y="15" width="220" height="20"/>
+                    <rect key="frame" x="610" y="15" width="270" height="20"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IpR-bN-7QI" userLabel="Connect Button" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="0.0" y="0.0" width="56" height="20"/>
@@ -70,7 +68,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oiv-pw-b41" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="102" y="0.0" width="28" height="20"/>
+                            <rect key="frame" x="127" y="0.0" width="28" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="5qz-87-TIm"/>
                             </constraints>
@@ -80,7 +78,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="een-eS-fDW" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="176" y="0.0" width="44" height="20"/>
+                            <rect key="frame" x="226" y="0.0" width="44" height="20"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="20" id="aVJ-Lu-guR"/>
                             </constraints>
@@ -103,7 +101,7 @@
                 </stackView>
             </subviews>
             <constraints>
-                <constraint firstItem="IL8-Y8-fue" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="660" id="06L-SS-23W"/>
+                <constraint firstItem="IL8-Y8-fue" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="610" id="06L-SS-23W"/>
                 <constraint firstItem="CFE-9s-pzL" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="2UX-SU-g1N"/>
                 <constraint firstItem="6fy-ok-TTw" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="Bzm-Jg-xll"/>
                 <constraint firstItem="IL8-Y8-fue" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6fy-ok-TTw" secondAttribute="trailing" constant="15" id="DoL-1t-EuO"/>

@@ -65,7 +65,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E5f-As-vpM" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="660" y="9" width="75" height="16"/>
+                            <rect key="frame" x="610" y="9" width="75" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Action label" id="BVS-q9-ROH">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -79,7 +79,7 @@
                         <constraint firstItem="dbz-Ck-3hX" firstAttribute="centerY" secondItem="wcq-1v-gDz" secondAttribute="centerY" id="NH8-o7-3y3"/>
                         <constraint firstItem="E5f-As-vpM" firstAttribute="centerY" secondItem="dbz-Ck-3hX" secondAttribute="centerY" id="dCD-Yb-Ggf"/>
                         <constraint firstAttribute="height" constant="50" id="fUs-xc-6TG"/>
-                        <constraint firstItem="E5f-As-vpM" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="662" id="nfX-kF-lbI"/>
+                        <constraint firstItem="E5f-As-vpM" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="612" id="nfX-kF-lbI"/>
                         <constraint firstItem="dbz-Ck-3hX" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="280" id="xfr-xO-dDH"/>
                     </constraints>
                 </customView>
