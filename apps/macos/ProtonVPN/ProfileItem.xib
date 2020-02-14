@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,7 +32,7 @@
                             </constraints>
                         </customView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xpv-N4-o42">
-                            <rect key="frame" x="53" y="17" width="176" height="17"/>
+                            <rect key="frame" x="53" y="17" width="176" height="16"/>
                             <textFieldCell key="cell" lineBreakMode="truncatingTail" truncatesLastVisibleLine="YES" sendsActionOnEndEditing="YES" title="Profile name" usesSingleLineMode="YES" id="yF6-mZ-uH9">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -41,7 +40,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" horizontalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="XIf-zM-8Jt" userLabel="Secondary Description Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="240" y="17" width="82" height="17"/>
+                            <rect key="frame" x="240" y="17" width="82" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="Maintenance" usesSingleLineMode="YES" id="HTq-Vg-LGS">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -76,15 +75,19 @@
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ex-Ki-c2M" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="235" y="10" width="85" height="30"/>
+                    <rect key="frame" x="264" y="10" width="56" height="30"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="30" id="dgB-KL-vVY"/>
-                        <constraint firstAttribute="width" constant="85" id="yza-ap-0xG"/>
                     </constraints>
                     <buttonCell key="cell" type="bevel" title="Connect" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="wvO-d7-tY4">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                            <real key="value" value="20"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
                 </button>
             </subviews>
             <constraints>
@@ -104,6 +107,7 @@
                 <outlet property="rowSeparator" destination="cNp-oL-Grh" id="Vju-FN-G9D"/>
                 <outlet property="secondaryDescription" destination="XIf-zM-8Jt" id="MNP-Qg-785"/>
             </connections>
+            <point key="canvasLocation" x="140" y="154"/>
         </customView>
     </objects>
 </document>
