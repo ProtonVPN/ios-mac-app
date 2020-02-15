@@ -29,8 +29,9 @@ public class CoreAppConstants {
         public static let free = 0
         public static let basic = 1
         public static let visionary = 2
+        public static let max = 3
         
-        public static let allCases = [free, basic, visionary]
+        public static let allCases = [free, basic, visionary, max]
     }
     
     public struct ProtonMailLinks {
@@ -57,14 +58,16 @@ public class CoreAppConstants {
         public static let fontAwesomeLicense = "https://creativecommons.org/licenses/by/4.0/"
     }
     
-    public static func planTranslatedName(forTier tier: Int) -> String {
+    public static func serverTierName(forTier tier: Int) -> String {
         switch tier {
+        case 0:
+            return LocalizedString.freeServers
         case 1:
             return LocalizedString.basicServers
         case 2:
             return LocalizedString.plusServers
         default:
-            return LocalizedString.freeServers
+            return LocalizedString.testServers
         }
     }
 }

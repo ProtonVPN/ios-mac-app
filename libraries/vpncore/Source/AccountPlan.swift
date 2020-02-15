@@ -145,22 +145,19 @@ public enum AccountPlan: String {
     }
     
     public var countriesCount: String {
-        let count: String
         switch self {
         case .free:
-            count = "3"
+            return LocalizedString.countriesCount(3)
         case .basic, .plus, .visionary, .trial:
-            count = "40+"
+            return LocalizedString.countriesCountPlus(40)
         }
-        return String(format: LocalizedString.countriesCount, count)
     }
     
     public var devices: String {
         guard let details = fetchDetails() else {
             return ""
         }
-        
-        return "\(details.maxVPN) \(details.maxVPN == 1 ? LocalizedString.planConnection : LocalizedString.planConnections)"
+        return LocalizedString.planConnections(details.maxVPN)
     }
     
     public var devicesCount: Int {

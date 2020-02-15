@@ -61,6 +61,8 @@ public class NetworkErrorCode {
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost
     public static let networkConnectionLost = NSURLErrorNetworkConnectionLost
     public static let notConnectedToInternet = NSURLErrorNotConnectedToInternet
+    
+    public static let tls = 3500
 }
 
 public class HttpStatusCode { // http status codes returned by the api

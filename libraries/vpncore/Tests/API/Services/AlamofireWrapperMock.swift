@@ -30,7 +30,7 @@ class AlamofireWrapperMock: AlamofireWrapper {
     var nextJsonRequestHandler: ( (URLRequestConvertible, (JSONDictionary) -> Void, (Error) -> Void) -> Void )?
     var nextStringRequestHandler: ( (URLRequestConvertible, (String) -> Void, (Error) -> Void) -> Void )?
     var nextUploadHandler: ( (URLRequestConvertible, [String : String], [String : URL], ((JSONDictionary) -> Void), ((Error) -> Void)) -> Void )?
-    
+    var markAsFailedTLSHandler: ( (URLRequest) -> Void )?
     var refreshAccessToken: ((@escaping (() -> Void), @escaping ((Error) -> Void)) -> Void)?
     
     var alertService: CoreAlertService?
@@ -71,6 +71,12 @@ class AlamofireWrapperMock: AlamofireWrapper {
     
     func setHumanVerification(token: HumanVerificationToken?) {
         self.humanVerificationToken = token
+    }
+    
+    func markAsFailedTLS(request: URLRequest) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
+            self.markAsFailedTLSHandler?(request)
+        }
     }
     
 }
