@@ -117,6 +117,8 @@ publish-internal-build:
     - fastlane ios internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
   tags:
     - iOS-deploy
+  environment:
+    name: deployment
   only:
     refs:
       - release
