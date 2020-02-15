@@ -125,15 +125,6 @@ class ConnectionSettingsViewModel {
     }
     
     private func enableKillSwitch() {
-        let fontSize: Double = 14
-        let text = String(format: LocalizedString.killSwitchHelperInstallPopupBody, LocalizedString.macPassword)
-        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .left))
-        
-        let passwordRange = (text as NSString).range(of: LocalizedString.macPassword)
-        
-        description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSize)), range: passwordRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: passwordRange)
-    
         firewallManager.installHelperIfNeeded(.userInitiated)
     }
     

@@ -57,6 +57,7 @@ class NavigationService {
     
     var appHasPresented = false
     var upsellPresented = false
+    var isSystemLoggingOff = false
     
     init(_ factory: Factory) { // be careful not to initialize anything that could create a cycle if that object were to use the NavigationService (e.g. AppStateManager)
         self.factory = factory
@@ -210,7 +211,14 @@ extension NavigationService {
     }
     
     @objc private func powerOff(_ notification: Notification) {
-        NSApp.reply(toApplicationShouldTerminate: true)
+        PMLog.D("System user is being logged off", level: .trace)
+        isSystemLoggingOff = true
+        vpnGateway?.disconnect {
+            self.firewallManager.disableFirewall {
+                self.isSystemLoggingOff = false
+                NSApp.reply(toApplicationShouldTerminate: true)
+            }
+        }
     }
     
     private func openRequiredWindow() {
@@ -247,7 +255,9 @@ extension NavigationService {
     }
     
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
-        appSessionManager.replyToApplicationShouldTerminate()
+        if !isSystemLoggingOff { // Do not show disconnect modal, because user asked for macOS logOff/shutdown
+            appSessionManager.replyToApplicationShouldTerminate()
+        }
         return .terminateLater
     }
 }

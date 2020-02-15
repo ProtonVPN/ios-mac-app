@@ -105,7 +105,7 @@ class CountriesSectionViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     
     var contentChanged: ((ContentChange) -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?

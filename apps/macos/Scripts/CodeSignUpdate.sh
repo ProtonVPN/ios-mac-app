@@ -69,7 +69,7 @@ function developerID {
 
 function macDeveloper {
     macDeveloperCN="${EXPANDED_CODE_SIGN_IDENTITY_NAME}"
-    if ! [[ ${macDeveloperCN} =~ ^Mac\ Developer:\ .*\ \([A-Z0-9]{10}\)$ ]]; then
+    if ! [[ ${macDeveloperCN} =~ ^Mac\ Developer:\ .*\ \([A-Z0-9]{10}\)$ ]] && ! [[ ${macDeveloperCN} =~ ^Apple\ Development:\ .*\ \([A-Z0-9]{10}\)$ ]]; then
         printf "%s\n" "Invalid Mac Developer CN: ${macDeveloperCN}"
         exit 1
     fi

@@ -21,14 +21,17 @@
 //
 
 import Cocoa
+import vpncore
 
 class ProtonVpnMenuController: NSObject {
     
     @IBOutlet weak var aboutItem: NSMenuItem!
     @IBOutlet weak var checkForUpdatesItem: NSMenuItem!
     @IBOutlet weak var preferencesItem: NSMenuItem!
-    @IBOutlet weak var logOutItem: NSMenuItem!
+    @IBOutlet weak var hideProtonItem: NSMenuItem!
+    @IBOutlet weak var hideOthersItem: NSMenuItem!
     @IBOutlet weak var showAllItem: NSMenuItem!
+    @IBOutlet weak var logOutItem: NSMenuItem!
     @IBOutlet weak var quitItem: NSMenuItem!
     
     private var viewModel: ProtonVpnMenuViewModel!
@@ -45,29 +48,39 @@ class ProtonVpnMenuController: NSObject {
     
     // MARK: - Private functions
     private func setupPersistentView() {
+        
+        aboutItem.title = LocalizedString.menuAbout
         aboutItem.isEnabled = true
         aboutItem.target = self
         aboutItem.action = #selector(aboutItemAction)
         
+        checkForUpdatesItem.title = LocalizedString.menuCheckUpdates
         checkForUpdatesItem.isEnabled = true
         checkForUpdatesItem.target = self
         checkForUpdatesItem.action = #selector(checkForUpdatesAction)
         
+        preferencesItem.title = LocalizedString.menuPreferences
         preferencesItem.isEnabled = false
         preferencesItem.target = self
         preferencesItem.action = #selector(preferencesItemAction)
         
+        logOutItem.title = LocalizedString.menuLogout
         logOutItem.isEnabled = false
         logOutItem.target = self
         logOutItem.action = #selector(logOutItemAction)
         
+        showAllItem.title = LocalizedString.menuShowAll
         showAllItem.isEnabled = true
         showAllItem.target = self
         showAllItem.action = #selector(showAllItemAction)
         
+        quitItem.title = LocalizedString.menuQuit
         quitItem.isEnabled = true
         quitItem.target = self
         quitItem.action = #selector(quitItemAction)
+        
+        hideProtonItem.title = LocalizedString.menuHideSelf
+        hideOthersItem.title = LocalizedString.menuHideOthers
     }
     
     private func setupEphemeralView() {

@@ -28,7 +28,7 @@ class TourController {
     private let mainWindow: NSWindow
     private let numberPositions: [CGPoint]
     
-    private let cardWidth: CGFloat = 220
+    private let cardWidth: CGFloat = 250
     private let cardHeight: CGFloat = 220
     
     private var tourViewController: TourViewController!
