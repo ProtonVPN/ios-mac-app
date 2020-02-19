@@ -73,6 +73,7 @@ unit_tests:
   before_script:
     - *before_script_mac
   script:
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - pod install
     - fastlane test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.test_result/3_Test/action.xccovreport
