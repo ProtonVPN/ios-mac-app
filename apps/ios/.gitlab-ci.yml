@@ -124,7 +124,7 @@ publish-internal-build:
   only:
     refs:
       - release
-      - release-candidate-2.0.0
+      - open-vpn
 
 sync-app:
   extends: .linux-common
