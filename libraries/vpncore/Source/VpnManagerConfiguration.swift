@@ -11,6 +11,7 @@ import Foundation
 
 public struct VpnManagerConfiguration {
     
+    public let hostname: String
     public let serverId: String
     public let entryServerAddress: String
     public let exitServerAddress: String
@@ -19,7 +20,8 @@ public struct VpnManagerConfiguration {
     public let passwordReference: Data
     public let vpnProtocol: VpnProtocol
     
-    public init(serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol) {
+        self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
         self.exitServerAddress = exitServerAddress
@@ -52,8 +54,15 @@ public class VpnManagerConfigurationPreparer {
             let entryServer = connectionConfig.serverIp.entryIp
             let exitServer = connectionConfig.serverIp.exitIp
             
-            return VpnManagerConfiguration(serverId: connectionConfig.server.id, entryServerAddress: entryServer, exitServerAddress: exitServer,
-                                           username: vpnCredentials.name, password: vpnCredentials.password, passwordReference: passwordRef, vpnProtocol: connectionConfig.vpnProtocol)
+            return VpnManagerConfiguration(hostname: connectionConfig.server.domain,
+                                           serverId: connectionConfig.server.id,
+                                 entryServerAddress: entryServer,
+                                  exitServerAddress: exitServer,
+                                           username: vpnCredentials.name,
+                                           password: vpnCredentials.password,
+                                  passwordReference: passwordRef,
+                                        vpnProtocol: connectionConfig.vpnProtocol
+            )
         } catch {
             // issues retrieving vpn keychain item
             alertService.push(alert: CannotAccessVpnCredentialsAlert())

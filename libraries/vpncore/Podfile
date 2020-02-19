@@ -12,7 +12,8 @@ abstract_target 'vpncore' do
     pod 'KeychainAccess', '~> 3.0'
     pod 'Sentry', '~> 4.0'
     pod 'ReachabilitySwift', '~> 4.0'
-    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => '4d61734ae6'
+#    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => '4d61734ae6'
+    pod 'TunnelKit', :path => '../tunnelkit'
 
     # Checks code style and bad practices
     pod 'SwiftLint'
