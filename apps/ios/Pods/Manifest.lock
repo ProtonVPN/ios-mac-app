@@ -10,15 +10,15 @@ PODS:
   - SwiftLint (0.33.1)
   - SwiftyBeaver (1.8.4)
   - TrustKit (1.6.1)
-  - TunnelKit (2.0.5):
-    - TunnelKit/Protocols/OpenVPN (= 2.0.5)
-  - TunnelKit/AppExtension (2.0.5):
+  - TunnelKit (2.2.2):
+    - TunnelKit/Protocols/OpenVPN (= 2.2.2)
+  - TunnelKit/AppExtension (2.2.2):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.0.5):
+  - TunnelKit/Core (2.2.2):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.0.5):
-    - OpenSSL-Apple (~> 1.1.0j.4)
+  - TunnelKit/Protocols/OpenVPN (2.2.2):
+    - OpenSSL-Apple (~> 1.1.1d.5a)
     - TunnelKit/AppExtension
     - TunnelKit/Core
   - vpncore (1.0.0):
@@ -27,7 +27,7 @@ PODS:
     - ReachabilitySwift (~> 4.0)
     - Sentry (~> 4.0)
     - TrustKit (~> 1.0)
-    - TunnelKit (~> 2.0.5)
+    - TunnelKit
 
 DEPENDENCIES:
   - Alamofire (~> 4.0)
@@ -36,6 +36,7 @@ DEPENDENCIES:
   - ReachabilitySwift (~> 4.0)
   - Sentry (~> 4.0)
   - SwiftLint
+  - TunnelKit (from `../tunnelkit`)
   - vpncore (from `../vpncore`)
 
 SPEC REPOS:
@@ -49,9 +50,10 @@ SPEC REPOS:
     - SwiftLint
     - SwiftyBeaver
     - TrustKit
-    - TunnelKit
 
 EXTERNAL SOURCES:
+  TunnelKit:
+    :path: "../tunnelkit"
   vpncore:
     :path: "../vpncore"
 
@@ -65,9 +67,9 @@ SPEC CHECKSUMS:
   SwiftLint: 9fc1143bbacec37f94994a7d0d2a85b2154b6294
   SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
-  TunnelKit: f33216415cd9d5e37b6acf02edb0c79350598b36
-  vpncore: 4b26ccac59763ee7570893eff154bbe3a8967f55
+  TunnelKit: 1733ed87934deb57edc7aa5f4b25185bf302a7d4
+  vpncore: 8e4731709d9d9fe36a351ee2b46dee69e4a1a056
 
-PODFILE CHECKSUM: d515041cc08cfe9df40fc82d805a3bda22b95f69
+PODFILE CHECKSUM: d2b89376177bb5aa65e7f63618113d894e1ab467
 
 COCOAPODS: 1.8.4

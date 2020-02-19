@@ -9,6 +9,7 @@ inhibit_all_warnings!
 
 def sharedpods
   # development pods
+  pod 'TunnelKit', :path => '../tunnelkit'
   pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 
   # third party pods
