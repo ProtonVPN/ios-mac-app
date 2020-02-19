@@ -160,6 +160,9 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         configurationBuilder.compressionFraming = .compress
         configurationBuilder.renegotiatesAfter = 0
         configurationBuilder.hostname = connectionConfiguration.entryServerAddress
+        configurationBuilder.checksEKU = true
+        configurationBuilder.checksSANHost = true
+        configurationBuilder.sanHost = connectionConfiguration.hostname
         
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
         

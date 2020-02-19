@@ -9,15 +9,15 @@ PODS:
   - SwiftLint (0.32.0)
   - SwiftyBeaver (1.8.4)
   - TrustKit (1.6.1)
-  - TunnelKit (2.1.0):
-    - TunnelKit/Protocols/OpenVPN (= 2.1.0)
-  - TunnelKit/AppExtension (2.1.0):
+  - TunnelKit (2.2.2):
+    - TunnelKit/Protocols/OpenVPN (= 2.2.2)
+  - TunnelKit/AppExtension (2.2.2):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.1.0):
+  - TunnelKit/Core (2.2.2):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.1.0):
-    - OpenSSL-Apple (~> 1.1.0j.4)
+  - TunnelKit/Protocols/OpenVPN (2.2.2):
+    - OpenSSL-Apple (~> 1.1.1d.5a)
     - TunnelKit/AppExtension
     - TunnelKit/Core
 
@@ -28,7 +28,7 @@ DEPENDENCIES:
   - Sentry (~> 4.0)
   - SwiftLint
   - TrustKit
-  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `4d61734ae6`)
+  - TunnelKit (from `../tunnelkit`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -43,13 +43,7 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :commit: 4d61734ae6
-    :git: https://github.com/passepartoutvpn/tunnelkit
-
-CHECKOUT OPTIONS:
-  TunnelKit:
-    :commit: 4d61734ae6
-    :git: https://github.com/passepartoutvpn/tunnelkit
+    :path: "../tunnelkit"
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -60,8 +54,8 @@ SPEC CHECKSUMS:
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
   SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
-  TunnelKit: 0743f0306be0869d51118ac33e274e7507a93537
+  TunnelKit: 1733ed87934deb57edc7aa5f4b25185bf302a7d4
 
-PODFILE CHECKSUM: eb729d9b5795d68b768d50d2f580dda67a55c47a
+PODFILE CHECKSUM: 8c7bf4fb5f2c0c12e041284a405b0cc1b19a3457
 
 COCOAPODS: 1.8.4
