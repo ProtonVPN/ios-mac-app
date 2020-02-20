@@ -122,10 +122,7 @@ publish-internal-build:
     - iOS-deploy
   environment:
     name: deployment
-  only:
-    refs:
-      - release
-      - open-vpn
+  when: manual
 
 sync-app:
   extends: .linux-common
