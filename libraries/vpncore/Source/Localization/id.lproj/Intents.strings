@@ -1,23 +1,23 @@
 /* (No Comment) */
-"1l8xNj" = "Desconectar";
+"1l8xNj" = "Putus";
 
 /* (No Comment) */
 "2LMbbw" = "Get ProtonVPN Connection Status";
 
 /* (No Comment) */
-"8tZ81X" = "Conectar a ProtonVPN";
+"8tZ81X" = "Sambung ke ProtonVPN";
 
 /* (No Comment) */
-"cQ4Mju" = "Desconectar de ProtonVPN";
+"cQ4Mju" = "Putuskan sambungan ProtonVPN";
 
 /* (No Comment) */
 "hIcJsr" = "Get ProtonVPN Connection Status";
 
 /* (No Comment) */
-"jf696t" = "Conectar a ProtonVPN";
+"jf696t" = "Sambung ke ProtonVPN";
 
 /* (No Comment) */
-"ksQcRb" = "Desconectar de ProtonVPN";
+"ksQcRb" = "Putus sambungan ProtonVPN";
 
 /* (No Comment) */
 "NzUfmp" = "${status}";
@@ -26,7 +26,7 @@
 "ujOFps" = "Status";
 
 /* (No Comment) */
-"Ya0ZRy" = "Conexión rápida";
+"Ya0ZRy" = "Sambungan Cepat";
 
 /* (No Comment) */
 "ZqjXZN" = "${status}";

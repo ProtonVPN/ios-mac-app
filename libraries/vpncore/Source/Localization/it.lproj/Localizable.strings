@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Disconnesso";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Disconnessione in corso";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Scopri l'app";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "Impossibile aggiornare il carico del server";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Connessione non sicura";
@@ -861,6 +867,9 @@
 
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Errore di connessione";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Non hai effettuato l'accesso a ProtonVPN. Apri l'app ProtonVPN e accedi.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Attenzione";
