@@ -29,9 +29,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d+ país</string>
+			<string>+%d país</string>
 			<key>other</key>
-			<string>%d+ países</string>
+			<string>+%d países</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>
@@ -45,9 +45,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>one</key>
-			<string>%d conexión</string>
+			<string>%d ligação</string>
 			<key>other</key>
-			<string>%d conexiones</string>
+			<string>%d ligações</string>
 		</dict>
 	</dict>
 </dict>

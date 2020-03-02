@@ -2,10 +2,16 @@
 "1l8xNj" = "Se déconnecter";
 
 /* (No Comment) */
+"2LMbbw" = "Obtenir le statut de connexion ProtonVPN";
+
+/* (No Comment) */
 "8tZ81X" = "Se connecter à ProtonVPN";
 
 /* (No Comment) */
 "cQ4Mju" = "Se déconnecter de ProtonVPN";
+
+/* (No Comment) */
+"hIcJsr" = "Obtenir le statut de connexion ProtonVPN";
 
 /* (No Comment) */
 "jf696t" = "Se connecter à ProtonVPN";
@@ -14,5 +20,14 @@
 "ksQcRb" = "Se déconnecter de ProtonVPN";
 
 /* (No Comment) */
+"NzUfmp" = "${status}";
+
+/* (No Comment) */
+"ujOFps" = "Statut";
+
+/* (No Comment) */
 "Ya0ZRy" = "Connexion rapide";
+
+/* (No Comment) */
+"ZqjXZN" = "${status}";
 

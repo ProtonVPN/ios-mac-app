@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Déconnecté";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Déconnexion";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Découvrez l'application";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "Impossible de mettre à jour les charges du serveur";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "La validation du certificat TLS a échoué lors de la tentative de connexion à l'API ProtonVPN. Votre connexion Internet actuelle peut être surveillée. Pour assurer la sécurité de vos données, nous empêchons l'application d'accéder à l'API ProtonVPN.\nPour vous connecter ou accéder à votre compte, passez par un nouveau réseau et essayez de vous connecter à nouveau.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Connexion non sécurisée";
@@ -713,7 +719,7 @@
 "_menu_window" = "Fenêtre";
 
 /* Label in several trial screens on MacOS */
-"_money_back_guarantee" = "Remboursement garantit pendant 30 jours";
+"_money_back_guarantee" = "Remboursement garanti pendant 30 jours";
 
 /* Label in Plan information */
 "_most_popular" = "Le plus populaire";
@@ -861,6 +867,9 @@
 
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Dès confirmation de votre souscription à un abonnement payant, votre compte iTunes se verra facturé le montant affiché, qui comprend les taxes et les frais supplémentaires de plate-forme (qui ne sont pas facturés directement par Proton). Après l’achat, vous serez automatiquement basculé vers l'abonnement sélectionné pour une période d'un an. Passé ce délai vous pourrez le renouveler ou l'annuler soit en ligne, soit via notre application iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Erreur de connexion";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Vous n'êtes pas connecté à ProtonVPN. Ouvrez l'application ProtonVPN et connectez-vous.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Attention";
