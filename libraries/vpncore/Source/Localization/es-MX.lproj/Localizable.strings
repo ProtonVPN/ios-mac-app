@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Desconectado";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Desconectando";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Descubrir la app";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "Falló la verificación del certificado TLS al intentar conectarse a la API de ProtonVPN. Su conexión actual a internet puede ser monitoreada. Para mantener sus datos seguros, la app está siendo bloqueada de acceder a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a otra red e intente conectar otra vez.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Conexión insegura";
@@ -861,6 +867,9 @@
 
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Al confirmar su compra de un plan de pago, la cantidad mostrada se cargará a su cuenta de iTunes, la cual incluye impuestos y cargos adicionales de Apple (que no son cobrados directamente por Proton). Después de realizar la compra, su cuenta será automáticamente cambiada al plan seleccionado por un periodo de 1 año, después de ese plazo podrá renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Error de conexión";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "No ha iniciado sesión en ProtonVPN. Abra la app de ProtonVPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";

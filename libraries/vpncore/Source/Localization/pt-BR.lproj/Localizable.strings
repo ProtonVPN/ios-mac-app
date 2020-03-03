@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Desconectado";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Desconectando";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Conheça o aplicativo";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "Não é possível atualizar as cargas do servidor";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "A validação do certificado TLS falhou. Sua conexão com a internet pode estar sendo monitorada. Para manter seus dados seguros, estamos impedindo que o aplicativo acesse a API do ProtonVPN.\nPara iniciar sessão ou acessar sua conta, troque para uma nova rede e tente conectar-se novamente.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Conexão não seguro";
@@ -861,6 +867,9 @@
 
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Após confirmar a compra de um plano pago, a sua conta iTunes será cobrada o valor apresentado, que inclui o plano de serviço, e a taxa de compra no aplicativo da Apple (a Apple cobra uma taxa de aproximadamente 30% sobre as compras feitas através do seu iPhone/iPad). Após a realização da compra, você será automaticamente atualizado para o plano selecionado pelo período de 1 ano, e após esse período você poderá renovar ou cancelar, seja online ou através de nosso aplicativo iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Erro de conexão";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Você não está logado no ProtonVPN. Abra o aplicativo ProtonVPN e inicie a sessão.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Aviso";

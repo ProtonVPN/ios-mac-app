@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Niet verbonden";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Verbinding verbreken";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Ontdek de app";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "Kan serverloads niet bijwerken";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "De validatie van het TLS-certificaat is mislukt bij het maken van een verbinding met de ProtonVPN-API. Uw huidige internetverbinding kan worden gecontroleerd. Om uw gegevens veilig te houden, voorkomen wij dat de app toegang krijgt tot de ProtonVPN API.\nOm in te loggen of toegang te krijgen tot uw account, schakelt u over naar een nieuw netwerk en probeert u opnieuw verbinding te maken.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Onveilige verbinding";
@@ -861,6 +867,9 @@
 
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald plan wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde plan voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Verbindingsfout";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "U bent niet ingelogd bij ProtonVPN. Open de ProtonVPN-app en log in.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Waarschuwing";

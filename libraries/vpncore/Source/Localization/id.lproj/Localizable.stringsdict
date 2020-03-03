@@ -12,10 +12,8 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>%d país</string>
 			<key>other</key>
-			<string>%d países</string>
+			<string>%d negara</string>
 		</dict>
 	</dict>
 	<key>_countries_count_plus</key>
@@ -28,10 +26,8 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>%d+ país</string>
 			<key>other</key>
-			<string>%d+ países</string>
+			<string>%d+ negara</string>
 		</dict>
 	</dict>
 	<key>_plans_connections</key>
@@ -44,10 +40,8 @@
 			<string>NSStringPluralRuleType</string>
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
-			<key>one</key>
-			<string>%d conexión</string>
 			<key>other</key>
-			<string>%d conexiones</string>
+			<string>%d sambungan</string>
 		</dict>
 	</dict>
 </dict>

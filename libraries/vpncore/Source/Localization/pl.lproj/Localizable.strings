@@ -29,7 +29,7 @@
 "_activate_widget_step_1" = "Aby wyświetlić widżety, przejdź z ekranu początkowego do skrajnie lewego ekranu.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Przesuń do dołu ekranu i kliknij przycisk Edycja.";
+"_activate_widget_step_2" = "Przewiń do dołu ekranu i kliknij przycisk Edycja.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_3" = "Dodaj widżet aplikacji ProtonVPN do listy aktywnych widżetów.";
@@ -238,6 +238,9 @@
 /* Common word */
 "_disconnected" = "Rozłączono";
 
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Rozłączanie";
+
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Poznaj aplikację";
 
@@ -345,6 +348,9 @@
 
 /* Parsing error */
 "_error_loads" = "Nie można zaktualizować obciążenia serwera";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem API ProtonVPN. Twoje bieżące połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do interfejsu API został tymczasowo zablokowany.\nAby się zalogować lub uzyskać dostęp do konta, wybierz nową sieć i spróbuj połączyć się ponownie.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Niezabezpieczone połączenie";
@@ -563,7 +569,7 @@
 "_ios_onboarding_page1_title" = "Witaj w lepszym Internecie";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page2_description" = "Pokonaj cenzurę i ograniczenia regionalne. Nie mamy reklam, limitów danych i nie sprzedajemy Twoich danych.";
+"_ios_onboarding_page2_description" = "Pokonaj cenzurę i ograniczenia regionalne. Nie posiadamy reklam, limitów danych i nie sprzedajemy Twoich informacji.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_title" = "Wierzymy w konieczność wolności w Internecie";
@@ -862,6 +868,9 @@
 /* No comment provided by engineer. */
 "_plans_connections" = "_plans_connections";
 
+/* Text description in plan selection screen */
+"_plans_footer" = "Po potwierdzeniu zakupu płatnego planu, Twoje konto iTunes zostanie obciążone podaną kwotą, zawierającą podatki i dodatkowe opłaty wewnętrzne platformy (nie są to opłaty pobierane bezpośrednio przez firmę Proton). Po dokonaniu zakupu, Twoje konto zostanie automatycznie zaktualizowane do wybranego planu na okres jednego roku. Po tym czasie możesz odnowić lub anulować subskrypcję za pomocą naszej strony lub aplikacji iOS.";
+
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
 
@@ -998,7 +1007,7 @@
 "_report_bug" = "Zgłoś błąd";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Upewnij się, że informacje o problemie, który napotkałeś są wystarczające oraz dołącz pliki, które pomogą nam odtworzyć problem. Podaj nam sposób skontaktowania się z Tobą, jeśli będziemy potrzebowali więcej informacji.";
+"_report_description" = "Upewnij się, że informacje o problemie, który napotkałeś są wystarczające oraz dołącz pliki, które pomogą nam odtworzyć problem. Podaj nam swój kontakt, na wypadek gdybyśmy potrzebowali więcej informacji.";
 
 /* Mac bug report: label before username */
 "_report_field_account" = "Konto:";
@@ -1013,7 +1022,7 @@
 "_report_field_feedback" = "Opinia";
 
 /* Mac bug report: Internet Service Provider field label */
-"_report_field_isp" = "Dostawca internetu:";
+"_report_field_isp" = "Dostawca Internetu:";
 
 /* Mac bug report: label before users protonvpn plan */
 "_report_field_plan" = "Plan:";
@@ -1139,10 +1148,10 @@
 "_server_under_maintenance" = "Serwer jest w trakcie przerwy technicznej";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Osiągnąłeś maksymalną liczbę jednoczesnych połączeń, dozwolonych dla Twojego konta. Aby zwiększyć liczbę połączeń, ulepsz swój plan ProtonVPN.";
+"_session_count_reached_description" = "Limit maksymalnej liczby jednoczesnych połączeń, dozwolonych dla Twojego konta, został osiągnięty. Aby zwiększyć liczbę połączeń, ulepsz swój plan ProtonVPN.";
 
 /* Session count limit alert */
-"_session_count_reached_title" = "Osiągnięto limit połączeń";
+"_session_count_reached_title" = "Limit połączeń został osiągnięty";
 
 /* iOS status view */
 "_session_time" = "Czas trwania sesji";
@@ -1217,7 +1226,7 @@
 "_terms_and_conditions" = "regulamin";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
-"_terms_and_conditions_disclaimer" = "Korzystając z usługi ProtonVPN, akceptujesz nasz %@ i%@";
+"_terms_and_conditions_disclaimer" = "Korzystając z usługi ProtonVPN, akceptujesz nasz %@ i %@";
 
 /* iOS: section header in countries list */
 "_test_servers" = "TESTOWE SERWERY";
@@ -1379,6 +1388,9 @@
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_title" = "Błąd połączenia";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Nie jesteś zalogowany do usługi ProtonVPN. Otwórz aplikację i zaloguj się.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Ostrzeżenie";
