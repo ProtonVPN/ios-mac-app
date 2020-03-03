@@ -64,8 +64,8 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
         self.planService = planService
     }
 
-    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
-        return PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed, servicePlanDataService: ServicePlanDataServiceMock(), planSelectionFinished: planSelectionFinished, storeKitManager: StoreKitManagerMock())
+    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
+        return PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed, servicePlanDataService: ServicePlanDataServiceMock(), planSelectionFinished: planSelectionFinished, storeKitManager: StoreKitManagerMock(), alertService: alertService)
     }
     
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel {
@@ -82,5 +82,9 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     
     func makeSignUpFormViewModel(plan: AccountPlan) -> SignUpFormViewModel {
         return SignUpFormViewModelMock()
+    }
+    
+    func makeCoreAlertService() -> CoreAlertService {
+        return AlertServiceEmptyStub()
     }
 }

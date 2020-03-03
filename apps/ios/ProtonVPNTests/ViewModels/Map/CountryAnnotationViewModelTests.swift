@@ -50,7 +50,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned false while all serversa are under maintenance")
+            ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
         
     }
 

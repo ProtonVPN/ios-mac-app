@@ -31,7 +31,7 @@ class UserApiServiceMock: UserApiService {
     var callbackcheckAvailability: ((String, (() -> Void), ((Error) -> Void)) -> Void)?
     var callbackcreateUser: ((UserProperties, (() -> Void), ((Error) -> Void)) -> Void)?
     
-    // MARK: Implemenetation
+    // MARK: Implementation
     
     func verificationCodeRequest(tokenType: HumanVerificationToken.TokenType, receiverAddress: String, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
         callbackverificationCodeRequest?(tokenType, success, failure)

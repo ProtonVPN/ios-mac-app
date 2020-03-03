@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1083</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>NSAppTransportSecurity</key>
@@ -53,6 +53,7 @@
 	<key>NSUserActivityTypes</key>
 	<array>
 		<string>DisconnectIntent</string>
+		<string>GetConnectionStatusIntent</string>
 		<string>QuickConnectIntent</string>
 	</array>
 	<key>UILaunchStoryboardName</key>

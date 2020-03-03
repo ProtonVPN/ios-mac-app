@@ -94,6 +94,7 @@ class OnboardingViewController: UIViewController {
             
             self.secondaryButton.setTitle(viewModel.secondaryButtonTitle(), for: .normal)
             self.secondaryButton.accessibilityIdentifier = viewModel.secondaryButtonAccessibilityId()
+            self.secondaryButton.isHidden = viewModel.isSecondaryButtonHidden()
             self.secondaryButton.layoutIfNeeded()
         }
     }

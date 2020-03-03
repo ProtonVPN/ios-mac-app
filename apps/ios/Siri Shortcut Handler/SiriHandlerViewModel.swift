@@ -116,6 +116,28 @@ class SiriHandlerViewModel {
         }
     }
     
+    public func getConnectionStatus(_ completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
+        let status = getConnectionStatusString(connection: vpnGateway?.connection)
+        let response = GetConnectionStatusIntentResponse.success(status: status)
+        
+        completion(response)
+    }
+    
+    private func getConnectionStatusString(connection: ConnectionStatus?) -> String {
+        switch connection {
+        case .connected:
+            return LocalizedString.connected
+        case .connecting:
+            return LocalizedString.connecting
+        case .disconnected:
+            return LocalizedString.disconnected
+        case .disconnecting:
+            return LocalizedString.disconnecting
+        default:
+            return LocalizedString.vpnStatusNotLoggedIn
+        }
+    }
+    
     @objc private func connectionChanged() {
         guard let currentAction = currentAction else { return }
         

@@ -238,7 +238,7 @@ class SettingsViewModel {
         return description
     }
     
-    private func trunctateIfNecessary(itemName name: String) -> String {
+    private func truncateIfNecessary(itemName name: String) -> String {
         var adjustedName: String = name
         if name.count > maxCharCount {
             adjustedName = name[0..<maxCharCount] + "..."

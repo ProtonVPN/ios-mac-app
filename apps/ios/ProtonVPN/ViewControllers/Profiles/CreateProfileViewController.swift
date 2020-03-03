@@ -283,6 +283,7 @@ class CreateProfileViewController: UITableViewController {
     }
     
     private func setupProfileNameRow() {
+        profileNameLabel.text = LocalizedString.name
         profileNameTableViewCell.contentView.backgroundColor = .protonGrey()
         profileNameTableViewCell.backgroundColor = .protonGrey()
         profileNameTableViewCell.selectionStyle = .none

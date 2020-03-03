@@ -68,7 +68,7 @@ extension IosAlertService: CoreAlertService {
         case is UpgradeRequiredAlert:
             showDefaultSystemAlert(alert)
             
-        case is UpgradeUnavailbleAlert:
+        case is UpgradeUnavailableAlert:
             showDefaultSystemAlert(alert)
             
         case is DelinquentUserAlert:

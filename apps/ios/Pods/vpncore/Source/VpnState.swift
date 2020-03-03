@@ -50,7 +50,7 @@ public enum VpnState {
     /*
      *  NEVPNStatusReasserting - VPN is reconnecting following loss
      *  of underlying network connectivity to server whose properties
-     *  are givent through ServerDescriptor.
+     *  are given through ServerDescriptor.
      */
     case reasserting(ServerDescriptor)
     
