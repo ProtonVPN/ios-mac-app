@@ -30,6 +30,7 @@
 "_log_out" = "Log Out";
 "_log_out_warning" = "Logging out will end your VPN session.";
 "_log_out_warning_long" = "Logging out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_change_protocol_disconnect_warning" = "Changing protocols will end your current VPN session.";
 "_loading_screen_slogan" = "Secure Internet Anywhere";
 "_report_an_issue" = "Report an Issue...";
 "_help" = "Help";
@@ -457,8 +458,16 @@
 "_security_options" = "Security Options";
 "_subscription_plan" = "Subscription Plan";
 "_choose_plan" = "Choose Subscription";
+"_protocol" = "Protocol";
+"_vpn_protocol" = "VPN Protocol";
+"_openvpn" = "OpenVPN";
+"_ikev2" = "IKEv2";
+"_tcp" = "TCP";
+"_udp" = "UDP";
 "_view_logs" = "View Logs";
 "_logs" = "Logs";
+"_application_logs" = "Application Logs";
+"_open_vpn_logs" = "OpenVPN Logs";
 "_activate_widget" = "Activate Widget";
 "_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
