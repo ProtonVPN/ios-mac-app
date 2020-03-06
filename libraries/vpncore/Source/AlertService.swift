@@ -449,13 +449,25 @@ public class ReportBugAlert: SystemAlert {
 }
 
 public class MITMAlert: SystemAlert {
+    public enum MessageType {
+        case api
+        case vpn
+    }
+    
     public var title: String? = LocalizedString.errorMITMTitle
     public var message: String? = LocalizedString.errorMITMdescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init() {}
+    public init(messageType: MessageType = .api) {
+        switch messageType {
+        case .api:
+            message = LocalizedString.errorMITMdescription
+        case .vpn:
+            message = LocalizedString.errorMITMVpnDescription
+        }        
+    }
 }
 
 public class InvalidHumanVerificationCodeAlert: SystemAlert {
