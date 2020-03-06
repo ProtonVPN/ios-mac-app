@@ -32,7 +32,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let alamofireWrapper = AlamofireWrapperImplementation()
         let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
         let appGroup = "group.ch.protonmail.vpn"
-        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: PropertiesManager())), vpnKeychain: VpnKeychain(), propertiesManager: PropertiesManager())
+        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: PropertiesManager()), appGroup: appGroup), vpnKeychain: VpnKeychain(), propertiesManager: PropertiesManager())
         
         super.init()
     }

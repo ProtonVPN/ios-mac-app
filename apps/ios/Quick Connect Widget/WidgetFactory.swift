@@ -70,7 +70,7 @@ class WidgetFactory {
         vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
         let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
         let appGroup = "group.ch.protonmail.vpn"
-        vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager))
+        vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup)
         vpnKeychain = VpnKeychain()
         configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
     }
