@@ -41,7 +41,7 @@ variables:
 
 .before_script_mac: &before_script_mac
   - rm -fr ../tunnelkit || true # ignore failure to delete
-  - git clone -b san-host https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_TUNNELKIT_REPO} ../tunnelkit
+  - git clone -b fixed https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_TUNNELKIT_REPO} ../tunnelkit
 
 lint:
   stage: linting

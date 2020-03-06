@@ -39,6 +39,8 @@ public enum ProtonVpnError: LocalizedError {
     case connectionFailed
     case vpnManagerUnavailable
     case removeVpnProfileFailed
+    case tlsInitialisation
+    case tlsServerVerification
     
     //case other(error: String)
     public var errorDescription: String? {
@@ -61,6 +63,10 @@ public enum ProtonVpnError: LocalizedError {
             return "Couldn't retrieve vpn manager"
         case .removeVpnProfileFailed:
             return "Failed to remove VPN profile"
+        case .tlsInitialisation:
+            return LocalizedString.errorTlsInitialisation
+        case .tlsServerVerification:
+            return LocalizedString.errorTlsServerVerification
         }
     }
 }

@@ -273,7 +273,11 @@ public class LocalizedString {
     public static let errorInvalidHumanVerificationCodeResend = NSLocalizedString("_error_invalid_human_verification_code_resend", comment: "Invalid human verification code alert button")
     
     public static let errorMITMTitle = NSLocalizedString("_error_mitm_title", comment: "Man In The Middle attack alert")
-    public static let errorMITMdescription = NSLocalizedString("_error_mitm_description", comment: "Man In The Middle attack alert")
+    public static let errorMITMdescription = NSLocalizedString("_error_mitm_description", comment: "Man In The Middle attack alert (API)")
+    public static let errorMITMVpnDescription = NSLocalizedString("_error_mitm_vpn_description", comment: "Man In The Middle attack alert (VPN)")
+    
+    public static let errorTlsInitialisation = NSLocalizedString("_error_tls_initialisation", comment: "Internal error message when there is a problem with initializing tls and connection cannot be established.")
+    public static let errorTlsServerVerification = NSLocalizedString("_error_tls_server_verification", comment: "Internal error message when there is a problem with server certificate and connection cannot be established.")
     
     // MARK: - Password encoding errors
     public static let errorModulusSignature = NSLocalizedString("_error_modulus_signature", comment: "Error when try to parse modulus signature")

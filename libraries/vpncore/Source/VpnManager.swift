@@ -88,9 +88,15 @@ public class VpnManager: VpnManagerProtocol {
     }
     public var stateChanged: (() -> Void)?
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory) {
+    /// App group is used to read errors from OpenVPN in user defaults
+    private let appGroup: String
+    private let alertService: CoreAlertService?
+    
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
+        self.appGroup = appGroup
+        self.alertService = alertService
         
         prepareManagers()
     }
@@ -360,7 +366,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity function_body_length
     private func setState(withError error: Error? = nil) {
         if let error = error {
             PMLog.ET("VPN error: \(error.localizedDescription)")
@@ -399,7 +405,18 @@ public class VpnManager: VpnManagerProtocol {
                 if let currentVpnProtocol = self.currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
                     self.propertiesManager.hasConnected = true
                 }
-            case .disconnected, .invalid, .error:
+            case .error(let error):
+                if case ProtonVpnError.tlsServerVerification = error {
+                    self.disconnect {}
+                    self.alertService?.push(alert: MITMAlert(messageType: .vpn))
+                    break
+                }
+                if case ProtonVpnError.tlsInitialisation = error {
+                    self.disconnect {} // Prevent infinite connection loop
+                    break
+                }
+                fallthrough
+            case .disconnected, .invalid:
                 self.disconnectCompletion?()
                 self.disconnectCompletion = nil
             default:
@@ -409,7 +426,7 @@ public class VpnManager: VpnManagerProtocol {
             self.stateChanged?()
         }
     }
-    // swiftlint:enable cyclomatic_complexity
+    // swiftlint:enable cyclomatic_complexity function_body_length
     
     private func newState(forManager vpnManager: NEVPNManager) -> VpnState {
         let status = vpnManager.connection.status.rawValue
@@ -420,6 +437,13 @@ public class VpnManager: VpnManagerProtocol {
         case 0:
             return .invalid
         case 1:
+            if let error = lastError() {
+                switch error {
+                case ProtonVpnError.tlsServerVerification, ProtonVpnError.tlsInitialisation:
+                    return .error(error)
+                default: break
+                }
+            }
             return .disconnected
         case 2:
             return .connecting(ServerDescriptor(username: username, address: serverAddress))
@@ -430,6 +454,27 @@ public class VpnManager: VpnManagerProtocol {
         default:
             return .disconnecting(ServerDescriptor(username: username, address: serverAddress))
         }
+    }
+    
+    /// Get last VPN connectino error.
+    /// Currently detects only errors from OpenVPN connection.
+    private func lastError() -> Error? {
+        let defaults = UserDefaults(suiteName: appGroup)
+        let errorKey = "TunnelKitLastError"
+        guard let lastError = defaults?.object(forKey: errorKey) else {
+            return nil
+        }
+        if let error = lastError as? String {
+            switch error {
+            case "tlsServerVerification": return ProtonVpnError.tlsServerVerification
+            case "tlsInitialization": return ProtonVpnError.tlsInitialisation
+            default: break
+            }
+        }
+        if let errorString = lastError as? String {
+            return NSError(code: 0, localizedDescription: errorString)
+        }
+        return nil
     }
     
     /*
