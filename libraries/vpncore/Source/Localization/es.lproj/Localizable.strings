@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Application Logs";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Asignado automáticamente";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Cancelar";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Changing protocols will end your current VPN session.";
 
 /* MacOS: About window */
 "_changelog" = "Registro de cambios";
@@ -239,7 +245,7 @@
 "_disconnected" = "Desconectado";
 
 /* Status of VPN connection reported by Siri */
-"_disconnecting" = "Disconnecting";
+"_disconnecting" = "Desconectando";
 
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Descubre la aplicación";
@@ -350,7 +356,7 @@
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Su conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intente conectarse de nuevo.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Conexión insegura";
@@ -552,6 +558,9 @@
 
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorar";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
 
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Inicializando conexión...";
@@ -799,6 +808,12 @@
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostrar ProtonVPN para iniciar sesión...";
 
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN Logs";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Vista General";
 
@@ -945,6 +960,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Perfiles";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protocol";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1219,6 +1237,9 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Hacer recorrido";
 
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
 /* iOS status view */
 "_technical_details" = "Detalles técnicos";
 
@@ -1289,6 +1310,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Vuelva a intentarlo";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "No disponible";
@@ -1382,6 +1406,9 @@
 
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "Conexión VPN activa";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN Protocol";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo finalizar una sesión VPN anterior. Necesitarás reiniciar tu dispositivo antes de establecer una nueva conexión VPN.";

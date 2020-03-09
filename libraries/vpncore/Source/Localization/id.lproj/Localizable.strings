@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "VPN Selalu-aktif otomatis akan menyambungkan Anda kembali";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Catatan Aplikasi";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Tetapkan secara otomatis";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Batal";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Sambungan VPN ini akan diputus apabila protokolnya diubah.";
 
 /* MacOS: About window */
 "_changelog" = "Log Perubahan";
@@ -239,7 +245,7 @@
 "_disconnected" = "Terputus";
 
 /* Status of VPN connection reported by Siri */
-"_disconnecting" = "Disconnecting";
+"_disconnecting" = "Memutus sambungan";
 
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Temukan aplikasinya";
@@ -350,7 +356,7 @@
 "_error_loads" = "Tidak dapat memperbarui konten server";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "Validasi sertifikat TLS gagal saat mencoba tersambung ke API ProtonVPN. Sambungan Internet Anda saat ini mungkin diawasi. Untuk melindungi data Anda, aplikasi ini sementara diblokir dari API ProtonVPN.\nUntuk masuk atau mengakses akun Anda, pindah ke jaringan baru dan coba sambungkan lagi.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Sambungan tidak aman";
@@ -552,6 +558,9 @@
 
 /* Button in Kill switch error alert */
 "_ignore" = "Abaikan";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
 
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Memulai Sambungan...";
@@ -799,6 +808,12 @@
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Tampilkan ProtonVPN untuk masuk...";
 
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Catatan OpenVPN";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Pratinjau";
 
@@ -869,7 +884,7 @@
 "_plans_connections" = "_plans_connections";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_plans_footer" = "Apabila paket pilihan Anda telah dikonfirmasi, akun iTunes Anda akan ditagih sesuai harga yang tertera, termasuk harga paket dan biaya transaksi aplikasi Apple (tidak ditarik oleh Proton). Usai pembayaran, Anda bisa segera menikmati paket yang dipilih selama 1 tahun. Setelah itu, Anda bisa memperpanjang atau membatalkan paket melalui web atau aplikasi kami di iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -945,6 +960,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Profil";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protokol";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1219,6 +1237,9 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Ikuti Tur";
 
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
 /* iOS status view */
 "_technical_details" = "Rincian Teknis";
 
@@ -1229,7 +1250,7 @@
 "_terms_and_conditions_disclaimer" = "Menggunakan ProtonVPN, Anda setuju terhadap\n%@ dan %@";
 
 /* iOS: section header in countries list */
-"_test_servers" = "TEST SERVERS";
+"_test_servers" = "SERVER UJI COBA";
 
 /* MacOS: connecting overlay */
 "_timed_out" = "waktu habis";
@@ -1289,6 +1310,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Coba lagi";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Tidak tersedia";
@@ -1383,6 +1407,9 @@
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "Sambungan VPN Aktif";
 
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Protokol VPN";
+
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Perangkat Anda gagal mengakhiri sesi VPN sebelumnya. Anda perlu memulai ulang perangkat Anda sebelum membuat sambungan VPN baru.";
 
@@ -1390,7 +1417,7 @@
 "_vpn_stuck_disconnecting_title" = "Sambungan bermasalah";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
+"_vpnstatus_not_loggedin" = "Anda belum masuk ke ProtonVPN. Buka aplikasinya dan masuk di sana.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Peringatan";
