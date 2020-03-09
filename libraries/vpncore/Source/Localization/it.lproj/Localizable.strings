@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "La VPN sempre attiva ti riconnetterà automaticamente";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Log applicazione";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Assegnato automaticamente";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Annulla";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Cambiando protocolli verrà terminata la sessione VPN attuale.";
 
 /* MacOS: About window */
 "_changelog" = "Changelog";
@@ -553,6 +559,9 @@
 /* Button in Kill switch error alert */
 "_ignore" = "Ignora";
 
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Inizializzazione della connessione...";
 
@@ -799,6 +808,12 @@
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostra ProtonVPN per accedere...";
 
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Log OpenVPN";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Panoramica";
 
@@ -945,6 +960,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Profili";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protocollo";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1219,6 +1237,9 @@
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Fai un tour";
 
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
 /* iOS status view */
 "_technical_details" = "Dettagli tecnici";
 
@@ -1289,6 +1310,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Riprova";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Non disponibile";
@@ -1382,6 +1406,9 @@
 
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "Connessione VPN attiva";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Protocollo VPN";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Il dispositivo non è riuscito a terminare una sessione VPN precedente. Sarà necessario riavviare il dispositivo prima di poter stabilire una nuova connessione VPN.";
