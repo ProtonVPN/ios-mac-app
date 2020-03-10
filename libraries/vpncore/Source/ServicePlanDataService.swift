@@ -23,14 +23,14 @@ import Foundation
 
 protocol ServicePlanDataStorage {
     var servicePlansDetails: [ServicePlanDetails]? { get set }
-    var isIAPAvailable: Bool { get set }
+    var isIAPUpgradePlanAvailable: Bool { get set }
     var defaultPlanDetails: ServicePlanDetails? { get set }
     var currentSubscription: Subscription? { get set }
 }
 
 public protocol ServicePlanDataService {
     func updateServicePlans(completion: ((Error?) -> Void)?)
-    var isIAPAvailable: Bool { get set }
+    var isIAPUpgradePlanAvailable: Bool { get set }
 }
 
 public protocol ServicePlanDataServiceFactory {
@@ -48,7 +48,7 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
     internal init(localStorage: ServicePlanDataStorage) {
         self.localStorage = localStorage
         self.allPlanDetails = localStorage.servicePlansDetails ?? []
-        self.isIAPAvailable = localStorage.isIAPAvailable
+        self.isIAPUpgradePlanAvailable = localStorage.isIAPUpgradePlanAvailable
         self.defaultPlanDetails = localStorage.defaultPlanDetails
         self.currentSubscription = localStorage.currentSubscription
         
@@ -59,8 +59,8 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
         willSet { localStorage.servicePlansDetails = newValue }
     }
     
-    public var isIAPAvailable: Bool {
-        willSet { localStorage.isIAPAvailable = newValue }
+    public var isIAPUpgradePlanAvailable: Bool {
+        willSet { localStorage.isIAPUpgradePlanAvailable = newValue }
     }
     
     public var defaultPlanDetails: ServicePlanDetails? {
@@ -86,7 +86,7 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
                 available = false
             }
             
-            self?.isIAPAvailable = available
+            self?.isIAPUpgradePlanAvailable = available
             self?.allPlanDetails = properties.plansDetails
             self?.defaultPlanDetails = properties.defaultPlanDetails
             completion?(nil)

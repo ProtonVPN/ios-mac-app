@@ -14,6 +14,7 @@
 "_warning" = "Warning";
 "_upgrade" = "Upgrade";
 "_upgrade_subscription" = "Upgrade Subscription";
+"_manage_subscription" = "Manage Subscription" ;
 "_upgrade_required" = "Upgrade Required";
 "_maintenance" = "Maintenance";
 "_quit" = "Quit";
@@ -495,13 +496,15 @@
 "_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
 "_per_year_short" = "/ yr";
 
-// Plan selection: advances features
+// Plan selection: advances features; Manage subscription
 "_feature_server_count" = "Connect to servers in";
 "_feature_speed" = "Speed";
 "_feature_connections" = "Simultaneous VPN connections";
 "_feature_secure_streaming" = "Secure Streaming";
 "_feature_tor" = "Tor over VPN";
 "_feature_secure_core" = "Secure Core";
+"_feature_blocked_content" = "Access blocked content";
+"_feature_bt" = "BitTorrent/file-sharing support";
 
 
 
