@@ -86,6 +86,7 @@ protocol PlanService {
     func makePurchaseCompleteViewController(plan: AccountPlan) -> PurchaseCompleteViewController?
     func presentPlanSelection(viewModel: PlanSelectionViewModel)
     func presentPlanSelection()
+    func presentSubscriptionManagement(plan: AccountPlan)
 }
 
 // MARK: Country Service
@@ -139,7 +140,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -433,7 +434,7 @@ extension NavigationService: PlanService {
     /// Shorthand version for presenting plen selection view controller.
     /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
     func presentPlanSelection() {
-        guard servicePlanDataService.isIAPAvailable else {
+        guard servicePlanDataService.isIAPUpgradePlanAvailable else {
             alertService.push(alert: UpgradeUnavailableAlert())
             return
         }
@@ -444,6 +445,27 @@ extension NavigationService: PlanService {
         }
         presentPlanSelection(viewModel: viewModel)
     }
+    
+    func presentSubscriptionManagement(viewModel: SubscriptionInfoViewModel) {
+        let controller = SubscriptionInfoController(viewModel: viewModel)
+        let nc = UINavigationController(rootViewController: controller)
+        
+        nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+        nc.navigationBar.shadowImage = UIImage()
+        nc.navigationBar.isTranslucent = true
+        nc.modalPresentationStyle = .fullScreen
+        
+        self.windowService.replace(with: nc)
+    }
+    
+    func presentSubscriptionManagement(plan: AccountPlan) {
+        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan)
+        viewModel.cancelled = {
+            self.windowService.dismissModal()
+        }
+        presentSubscriptionManagement(viewModel: viewModel)
+    }
+    
 }
 
 extension NavigationService: TrialService {

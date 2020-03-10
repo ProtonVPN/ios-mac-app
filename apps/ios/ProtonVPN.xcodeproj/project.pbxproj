@@ -196,6 +196,11 @@
 		D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C912285A9190002C095 /* ServerUtilityTests.swift */; };
 		D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
 		D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */; };
+		D513DCFE2416695200B5D2AB /* SubscriptionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DCFC2416695200B5D2AB /* SubscriptionInfoController.swift */; };
+		D513DCFF2416695200B5D2AB /* SubscriptionInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D513DCFD2416695200B5D2AB /* SubscriptionInfoController.xib */; };
+		D513DD012416752A00B5D2AB /* SubscriptionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DD002416752A00B5D2AB /* SubscriptionInfoViewModel.swift */; };
+		D513DD04241680D300B5D2AB /* PlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DD03241680D300B5D2AB /* PlanInfoView.swift */; };
+		D513DD062416811500B5D2AB /* PlanInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D513DD052416811500B5D2AB /* PlanInfoView.xib */; };
 		D5296778237D358700D479F2 /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
 		D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
 		D53E83CC2328C3FC0031CD49 /* SignUpFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */; };
@@ -572,6 +577,11 @@
 		D5136C912285A9190002C095 /* ServerUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUtilityTests.swift; sourceTree = "<group>"; };
 		D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItemViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
+		D513DCFC2416695200B5D2AB /* SubscriptionInfoController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoController.swift; sourceTree = "<group>"; };
+		D513DCFD2416695200B5D2AB /* SubscriptionInfoController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SubscriptionInfoController.xib; sourceTree = "<group>"; };
+		D513DD002416752A00B5D2AB /* SubscriptionInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoViewModel.swift; sourceTree = "<group>"; };
+		D513DD03241680D300B5D2AB /* PlanInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInfoView.swift; sourceTree = "<group>"; };
+		D513DD052416811500B5D2AB /* PlanInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanInfoView.xib; sourceTree = "<group>"; };
 		D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewController.swift; sourceTree = "<group>"; };
 		D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewModel.swift; sourceTree = "<group>"; };
 		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
@@ -858,7 +868,6 @@
 		791C54F3214A775900C6F337 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				E11DA6B22188C10300CDF310 /* PlanSelectionViewModel.swift */,
 				7980ECD520F70C0800D5432B /* TabBarViewModel.swift */,
 				791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */,
 				E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */,
@@ -987,9 +996,9 @@
 			children = (
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
+				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
-				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -1266,6 +1275,7 @@
 				E12DF61D2231497C006EC61F /* Onboarding */,
 				79AFDA9020DB16BD002F8751 /* Profiles */,
 				79F986F120D838C30064C1C7 /* Settings */,
+				D513DCFB2416670000B5D2AB /* Subscriptions */,
 				D53E83CE2329043D0031CD49 /* Signup */,
 				E1C8705A22BA0690009CF4CE /* Trial */,
 			);
@@ -1384,6 +1394,42 @@
 			path = Countries;
 			sourceTree = "<group>";
 		};
+		D513DCFB2416670000B5D2AB /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				E11DA6B22188C10300CDF310 /* PlanSelectionViewModel.swift */,
+				D513DD002416752A00B5D2AB /* SubscriptionInfoViewModel.swift */,
+			);
+			path = Subscriptions;
+			sourceTree = "<group>";
+		};
+		D513DD022416808600B5D2AB /* PlanInfo */ = {
+			isa = PBXGroup;
+			children = (
+				D513DD03241680D300B5D2AB /* PlanInfoView.swift */,
+				D513DD052416811500B5D2AB /* PlanInfoView.xib */,
+			);
+			path = PlanInfo;
+			sourceTree = "<group>";
+		};
+		D513DD072417791C00B5D2AB /* PlanCardView */ = {
+			isa = PBXGroup;
+			children = (
+				D551316E2319405200784ED0 /* PlanCardView.swift */,
+				D55131702319406200784ED0 /* PlanCardView.xib */,
+			);
+			path = PlanCardView;
+			sourceTree = "<group>";
+		};
+		D513DD082417792C00B5D2AB /* PlanAdvancedFeaturesView */ = {
+			isa = PBXGroup;
+			children = (
+				D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */,
+				D5FA16A9231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib */,
+			);
+			path = PlanAdvancedFeaturesView;
+			sourceTree = "<group>";
+		};
 		D53E83CD2328C4080031CD49 /* Signup */ = {
 			isa = PBXGroup;
 			children = (
@@ -1430,10 +1476,9 @@
 		D551316D2319400900784ED0 /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
-				D551316E2319405200784ED0 /* PlanCardView.swift */,
-				D55131702319406200784ED0 /* PlanCardView.xib */,
-				D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */,
-				D5FA16A9231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib */,
+				D513DD082417792C00B5D2AB /* PlanAdvancedFeaturesView */,
+				D513DD072417791C00B5D2AB /* PlanCardView */,
+				D513DD022416808600B5D2AB /* PlanInfo */,
 			);
 			path = Subscriptions;
 			sourceTree = "<group>";
@@ -1707,6 +1752,7 @@
 			isa = PBXGroup;
 			children = (
 				E11DA6B92189AFEF00CDF310 /* PlanSelection.xib */,
+				D513DCFD2416695200B5D2AB /* SubscriptionInfoController.xib */,
 			);
 			path = Subscriptions;
 			sourceTree = "<group>";
@@ -1716,6 +1762,7 @@
 			children = (
 				E11DA6B02188C07900CDF310 /* PlanSelectionViewController.swift */,
 				E11DA6B62188C3E400CDF310 /* PurchaseCompleteViewController.swift */,
+				D513DCFC2416695200B5D2AB /* SubscriptionInfoController.swift */,
 			);
 			path = Subscriptions;
 			sourceTree = "<group>";
@@ -1987,7 +2034,9 @@
 				E169FC412289B87F00FDC933 /* PhoneCountryCodeTableViewCell.xib in Resources */,
 				D5FA16AA231E8B76004D9B8D /* PlanAdvancedFeaturesView.xib in Resources */,
 				791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */,
+				D513DD062416811500B5D2AB /* PlanInfoView.xib in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
+				D513DCFF2416695200B5D2AB /* SubscriptionInfoController.xib in Resources */,
 				7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */,
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
@@ -2367,6 +2416,7 @@
 				792B58C22150E278000BB3A3 /* StatusViewModel.swift in Sources */,
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
 				E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
+				D513DCFE2416695200B5D2AB /* SubscriptionInfoController.swift in Sources */,
 				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				E169FC3B2289ABF700FDC933 /* PhoneCountryCode.swift in Sources */,
 				79DD19F120BD6B2300505906 /* LoginViewController.swift in Sources */,
@@ -2415,6 +2465,7 @@
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				E16F562021F87201007BAB77 /* OnboardingViewController.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
+				D513DD012416752A00B5D2AB /* SubscriptionInfoViewModel.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
 				E11DA6B72188C3E400CDF310 /* PurchaseCompleteViewController.swift in Sources */,
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
@@ -2429,6 +2480,7 @@
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */,
+				D513DD04241680D300B5D2AB /* PlanInfoView.swift in Sources */,
 				E1A9A67922BA3FE90073711B /* Alerts.swift in Sources */,
 				7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */,
 				796BD1D121144D49003D6B8D /* ServersHeaderView.swift in Sources */,
