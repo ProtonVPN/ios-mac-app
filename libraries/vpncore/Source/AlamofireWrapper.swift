@@ -203,7 +203,7 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
             } else if code == ApiErrorCode.humanVerificationRequired {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             } else {
-                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error")))
+                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             }
         } else if let url = try? request.asURLRequest().url, let index = tlsFailedRequests.firstIndex(where: { $0.url?.absoluteString == url?.absoluteString }) {
             tlsFailedRequests.remove(at: index)
