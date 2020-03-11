@@ -86,29 +86,31 @@ class VerificationCodeViewModel {
             self.tokenReceived?(token)
             
         }, failure: { (error) in
-            
-            if let apiError = error as? ApiError {
-                switch apiError.code {
-                case ApiErrorCode.invalidHumanVerificationCode:
-                    self.alertService.push(alert: InvalidHumanVerificationCodeAlert(tryAnother: {
-                        self.chooseAnotherMethod?()
-                    }, resend: {
-                        self.resendCode(.normalEmpty)
-                    }))
-                case ApiErrorCode.apiOffline:
-                    self.show(error: error)
-                default:
-                    self.errorReceived?(error)
-                }
-                return
-            }
-            
-            if error.isNetworkError {
-                self.show(error: error)
-                return
-            }
-            
-            self.errorReceived?(error)
+            // DEBUGGING
+            self.show(error: error)
+            // END
+//            if let apiError = error as? ApiError {
+//                switch apiError.code {
+//                case ApiErrorCode.invalidHumanVerificationCode:
+//                    self.alertService.push(alert: InvalidHumanVerificationCodeAlert(tryAnother: {
+//                        self.chooseAnotherMethod?()
+//                    }, resend: {
+//                        self.resendCode(.normalEmpty)
+//                    }))
+//                case ApiErrorCode.apiOffline:
+//                    self.show(error: error)
+//                default:
+//                    self.errorReceived?(error)
+//                }
+//                return
+//            }
+//
+//            if error.isNetworkError {
+//                self.show(error: error)
+//                return
+//            }
+//
+//            self.errorReceived?(error)
         })
     }
     
@@ -135,7 +137,15 @@ class VerificationCodeViewModel {
     private func show(error: Error) {
         DispatchQueue.main.async {
             self.verificationButtonEnabled?(true)
-            PMLog.ET(error.localizedDescription)
+            // DEBUG
+            let text: String
+            if let apiError = error as? ApiError, let body = apiError.responseBody {
+                text = String(format: "%@ %@", error.localizedDescription, body)
+            } else {
+                text = error.localizedDescription
+            }
+            // END
+            PMLog.ET(text)
             self.alertService.push(alert: ErrorNotificationAlert(error: error))
         }
     }

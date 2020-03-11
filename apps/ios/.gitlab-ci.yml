@@ -1,9 +1,9 @@
 stages:
-  - linting
-  - unit_tests
-  - screenshots
+  # - linting
+  # - unit_tests
+  # - screenshots
   - beta
-  - mirror
+  # - mirror
 
 variables:
   LC_ALL: "en_US.UTF-8"
