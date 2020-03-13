@@ -55,7 +55,6 @@ class CountryAnnotationViewModelTests: XCTestCase {
     }
 
     // MARK: Mocks
-    // FUTUREFIX: Make/find a factory for creating mocks
     
     private func viewModel(withServers servers: [ServerModel]) -> CountryAnnotationViewModel {
         let country = CountryModel(serverModel: ServerModel(
