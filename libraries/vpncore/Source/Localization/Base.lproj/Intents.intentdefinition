@@ -117,6 +117,8 @@
 			<string>generic</string>
 			<key>INIntentConfigurable</key>
 			<true/>
+			<key>INIntentDescription</key>
+			<string>Get ProtonVPN Connection Status</string>
 			<key>INIntentDescriptionID</key>
 			<string>JOCERT</string>
 			<key>INIntentIneligibleForSuggestions</key>
@@ -183,7 +185,7 @@
 				</array>
 			</dict>
 			<key>INIntentTitle</key>
-			<string>Get ProtonVPN Connection Status</string>
+			<string>Connection Status</string>
 			<key>INIntentTitleID</key>
 			<string>2LMbbw</string>
 			<key>INIntentType</key>
