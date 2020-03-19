@@ -140,7 +140,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -166,6 +166,8 @@ class NavigationService {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var servicePlanDataService: ServicePlanDataService = factory.makeServicePlanDataService()
+    private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
+    private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     
     private var trialChecker: TrialChecker?
     
@@ -459,7 +461,7 @@ extension NavigationService: PlanService {
     }
     
     func presentSubscriptionManagement(plan: AccountPlan) {
-        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan)
+        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan, servicePlanDataStorage: self.servicePlanDataStorage, vpnKeychain: self.vpnKeychain, storeKitManager: self.storeKitManager)
         viewModel.cancelled = {
             self.windowService.dismissModal()
         }

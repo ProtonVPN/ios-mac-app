@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionInfoController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="buyButton" destination="zwi-Lm-U16" id="gC1-pV-Q3a"/>
                 <outlet property="scrollView" destination="nA5-Gq-dKo" id="cwE-dl-mqx"/>
                 <outlet property="scrollViewBody" destination="2zB-IR-0Lt" id="qT3-Aa-LNh"/>
                 <outlet property="titleLabel" destination="Hgg-id-Bt0" id="iCD-zd-RUx"/>
@@ -32,6 +33,15 @@
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zB-IR-0Lt">
                             <rect key="frame" x="16" y="0.0" width="382" height="600"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwi-Lm-U16" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="168" y="285" width="46" height="30"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
+                                    <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
+                                    <state key="normal" title="Button"/>
+                                </button>
+                            </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         </view>
                     </subviews>

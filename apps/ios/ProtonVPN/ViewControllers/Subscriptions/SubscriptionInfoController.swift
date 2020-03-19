@@ -30,8 +30,12 @@ class SubscriptionInfoController: UIViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var scrollView: UIScrollView!
     @IBOutlet weak var scrollViewBody: UIView!
+    @IBOutlet weak var buyButton: ProtonButton!
+    
+    private let textFontSize: CGFloat = 14
     
     private let viewModel: SubscriptionInfoViewModel
+    public var storeKitManager: StoreKitManager!
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -46,7 +50,7 @@ class SubscriptionInfoController: UIViewController {
         super.viewDidLoad()
         self.navigationItem.title = " " // Remove "Back" from back button on navigation bar
         setupView()
-        renderPlanInfo()
+        render()
     }
     
     private func setupView() {
@@ -69,11 +73,93 @@ class SubscriptionInfoController: UIViewController {
 
     // MARK: Views
     
-    private func renderPlanInfo() {
+    private func render() {
+        // Plan
         let planView = PlanInfoView.loadViewFromNib() as PlanInfoView
         planView.plan = viewModel.plan
-        
         scrollViewBody.add(subView: planView, withTopMargin: 0, rightMargin: 0, bottomMargin: nil, leftMargin: 0)
+        
+        var lastView: UIView = planView
+        
+        // Expiration
+        if let expirationText = viewModel.expirationText {
+            lastView = addExpirationLabel(text: expirationText, lastView: lastView)
+        }
+        
+        // Description
+        if let description = viewModel.description {
+            lastView = addDescritpionLabel(text: description, lastView: lastView)
+        }
+        
+        // Buy button
+        buyButton.removeFromSuperview()
+        if viewModel.showBuyButton {
+            lastView = addBuyButton(lastView: lastView)
+        }
+        
+        // Footer text
+        if let footerText = viewModel.footerText {
+            lastView = addFooterLabel(text: footerText, lastView: lastView)
+        }
+    }
+    
+    private func addExpirationLabel(text: String, lastView: UIView) -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: textFontSize)
+        label.text = text
+        label.numberOfLines = 0
+            
+        scrollViewBody.add(subView: label, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: 0)
+        label.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 24).isActive = true
+        return label
+    }
+    
+    private func addDescritpionLabel(text: String, lastView: UIView) -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .justified
+        label.font = UIFont.systemFont(ofSize: textFontSize)
+        label.text = text
+        label.textColor = .protonFontLightGrey()
+        label.numberOfLines = 0
+        
+        scrollViewBody.add(subView: label, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: 0)
+        label.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 24).isActive = true
+        return label
+    }
+    
+    private func addBuyButton(lastView: UIView) -> UIView {
+        let button = buyButton!
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.styleCenterMultiline()
+        button.setTitle(String(format: LocalizedString.subscritpionButton, viewModel.planPrice), for: .normal)
+        button.addTarget(self, action: #selector(onButtonClick), for: .touchUpInside)
+
+        scrollViewBody.add(subView: button, withTopMargin: nil, rightMargin: nil, bottomMargin: nil, leftMargin: nil)
+        button.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 24).isActive = true
+        button.centerXAnchor.constraint(equalTo: scrollViewBody.centerXAnchor).isActive = true
+        return button
+    }
+    
+    private func addFooterLabel(text: String, lastView: UIView) -> UIView {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.textAlignment = .justified
+        label.font = UIFont.systemFont(ofSize: textFontSize)
+        label.text = text
+        label.textColor = .protonFontLightGrey()
+        label.numberOfLines = 0
+        
+        scrollViewBody.add(subView: label, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: 0)
+        label.topAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 24).isActive = true
+        return label
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction func onButtonClick() {
         
     }
     

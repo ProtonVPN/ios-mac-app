@@ -203,6 +203,7 @@
 		D513DD062416811500B5D2AB /* PlanInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D513DD052416811500B5D2AB /* PlanInfoView.xib */; };
 		D5296778237D358700D479F2 /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
 		D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
+		D53A459C241FA2F6008D7066 /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53A459B241FA2F6008D7066 /* Date+Formatters.swift */; };
 		D53E83CC2328C3FC0031CD49 /* SignUpFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */; };
 		D53E83D02329048C0031CD49 /* SignUpFormViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */; };
 		D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
@@ -267,6 +268,7 @@
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
+		D5E761C92420D59500DBD6B1 /* Date+Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E761C82420D59500DBD6B1 /* Date+Misc.swift */; };
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
@@ -582,6 +584,7 @@
 		D513DD002416752A00B5D2AB /* SubscriptionInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoViewModel.swift; sourceTree = "<group>"; };
 		D513DD03241680D300B5D2AB /* PlanInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanInfoView.swift; sourceTree = "<group>"; };
 		D513DD052416811500B5D2AB /* PlanInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlanInfoView.xib; sourceTree = "<group>"; };
+		D53A459B241FA2F6008D7066 /* Date+Formatters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewController.swift; sourceTree = "<group>"; };
 		D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewModel.swift; sourceTree = "<group>"; };
 		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
@@ -646,6 +649,7 @@
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
 		D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStorageArrayMock.swift; sourceTree = "<group>"; };
+		D5E761C82420D59500DBD6B1 /* Date+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Misc.swift"; sourceTree = "<group>"; };
 		D5F56898232620C600795953 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		D5F5689A23263C7D00795953 /* IosAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosAlertService.swift; sourceTree = "<group>"; };
 		D5F5689F23277EF000795953 /* SignUpCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -1091,6 +1095,8 @@
 				E1A9A67E22BA603C0073711B /* PlanUpgradeChecker.swift */,
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D53E83D6232A5F4D0031CD49 /* String+Validation.swift */,
+				D53A459B241FA2F6008D7066 /* Date+Formatters.swift */,
+				D5E761C82420D59500DBD6B1 /* Date+Misc.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2490,7 +2496,9 @@
 				E1A9A67F22BA603C0073711B /* PlanUpgradeChecker.swift in Sources */,
 				79312B832119924400E79D09 /* SelectionViewController.swift in Sources */,
 				D53E83CC2328C3FC0031CD49 /* SignUpFormViewController.swift in Sources */,
+				D5E761C92420D59500DBD6B1 /* Date+Misc.swift in Sources */,
 				79C2424020FE86D300E0D410 /* VerificationEmailViewController.swift in Sources */,
+				D53A459C241FA2F6008D7066 /* Date+Formatters.swift in Sources */,
 				793ECF412148EA0B00C186A7 /* ButtonTableViewCell.swift in Sources */,
 				79C559A120AEC73A00E6D3F6 /* CountryViewCell.swift in Sources */,
 				79848BAC20D1B9DC00EF6F9F /* CountriesViewModel.swift in Sources */,

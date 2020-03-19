@@ -51,6 +51,11 @@ class ProtonButton: UIButton {
         setUpView()
     }
     
+    init() {
+        super.init(frame: .zero)
+        setUpView()
+    }
+    
     private func setUpView() {
         clipsToBounds = true
         tintColor = .protonWhite()
@@ -122,4 +127,12 @@ class ProtonButton: UIButton {
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
         self.addConstraint(yCenterConstraint)
     }
+    
+    // MARK: - Style
+    
+    public func styleCenterMultiline() {
+        titleLabel?.lineBreakMode = .byWordWrapping
+        titleLabel?.textAlignment = .center
+    }
+    
 }
