@@ -389,17 +389,9 @@ public class ErrorNotificationAlert: SystemAlert {
     public var accessibilityIdentifier: String?
     
     public init(error: Error) {
-        // DEBUG
-        if let apiError = error as? ApiError, let body = apiError.responseBody {
-            message = String(format: "%@ %@", error.localizedDescription, body)
-        } else {
-            message = error.localizedDescription
-        }
-        // END
-//        message = error.localizedDescription
-        if let nsError = error as? NSError {
-            accessibilityIdentifier = "Error notification with code \(nsError.code)"
-        }
+        message = error.localizedDescription
+        let nsError = error as NSError
+        accessibilityIdentifier = "Error notification with code \(nsError.code)"
     }
 }
 
