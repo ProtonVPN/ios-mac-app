@@ -158,7 +158,7 @@
 "_countries_free" = "Free страны";
 
 /* iOS: countries list section header */
-"_countries_premium" = "Премиум страны";
+"_countries_premium" = "Premium страны";
 
 /* MacOS app tour: countries list description */
 "_countries_tour_description" = "Выберите страну и сервер, которые вы хотите использовать для вашего конечного IP адреса.";
@@ -554,7 +554,7 @@
 "_high" = "Высокая";
 
 /* Value of speed in _speed */
-"_highest" = "Максимальная";
+"_highest" = "Наивысшая";
 
 /* Button in Kill switch error alert */
 "_ignore" = "Игнорировать";
@@ -626,7 +626,7 @@
 "_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
 
 /* MacOS: link in login screen */
-"_learn_more" = "Подробнее";
+"_learn_more" = "Узнать больше";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Узнайте больше о Secure Core";
