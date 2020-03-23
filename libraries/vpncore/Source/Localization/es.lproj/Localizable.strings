@@ -68,7 +68,7 @@
 "_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "Application Logs";
+"_application_logs" = "Registro de la aplicación";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Asignado automáticamente";
@@ -86,7 +86,7 @@
 "_cancel" = "Cancelar";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "Changing protocols will end your current VPN session.";
+"_change_protocol_disconnect_warning" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
 
 /* MacOS: About window */
 "_changelog" = "Registro de cambios";
@@ -356,7 +356,7 @@
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Su conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intente conectarse de nuevo.";
+"_error_mitm_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Su conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intente conectarse de nuevo.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Conexión insegura";
@@ -809,7 +809,7 @@
 "_open_app_to_log_in" = "Mostrar ProtonVPN para iniciar sesión...";
 
 /* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "OpenVPN Logs";
+"_open_vpn_logs" = "Registros de OpenVPN";
 
 /* iOS Settings -> Protocol: OpenVPN option */
 "_openvpn" = "OpenVPN";
@@ -884,7 +884,7 @@
 "_plans_connections" = "_plans_connections";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_plans_footer" = "Al confirmar su compra de un plan pago, se le cobrará a su cuenta de iTunes la cantidad que se muestra, incluye impuestos y tarifas de plataforma adicionales (que Proton no cobra directamente). Después de realizar la compra, se lo actualizará automáticamente al plan seleccionado por un período de 1 año, después de este tiempo puede renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -962,7 +962,7 @@
 "_profiles_tour_title" = "Perfiles";
 
 /* iOS Settings: VPN protocol label. */
-"_protocol" = "Protocol";
+"_protocol" = "Protocolo";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1408,7 +1408,7 @@
 "_vpn_connection_active" = "Conexión VPN activa";
 
 /* iOS Settings -> Protocol: screen title */
-"_vpn_protocol" = "VPN Protocol";
+"_vpn_protocol" = "Protocolo VPN";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo finalizar una sesión VPN anterior. Necesitarás reiniciar tu dispositivo antes de establecer una nueva conexión VPN.";
@@ -1417,7 +1417,7 @@
 "_vpn_stuck_disconnecting_title" = "Error de conexión";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
+"_vpnstatus_not_loggedin" = "No has iniciado sesión en ProtonVPN. Abra la aplicación de ProtonVPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";
