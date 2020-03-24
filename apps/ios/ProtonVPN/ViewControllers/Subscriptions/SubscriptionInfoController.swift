@@ -34,15 +34,16 @@ class SubscriptionInfoController: UIViewController {
     
     private let textFontSize: CGFloat = 14
     
-    private let viewModel: SubscriptionInfoViewModel
-    public var storeKitManager: StoreKitManager!
+    private let viewModel: SubscriptionInfoViewModel 
+    private let alertService: CoreAlertService
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(viewModel: SubscriptionInfoViewModel) {
+    init(viewModel: SubscriptionInfoViewModel, alertService: CoreAlertService) {
         self.viewModel = viewModel
+        self.alertService = alertService
         super.init(nibName: "SubscriptionInfoController", bundle: nil)
     }
     
@@ -51,6 +52,16 @@ class SubscriptionInfoController: UIViewController {
         self.navigationItem.title = " " // Remove "Back" from back button on navigation bar
         setupView()
         render()
+        
+        viewModel.showError = { [weak self] error in
+            self?.showError(error)
+        }
+        viewModel.showSuccess = { [weak self] text in
+            self?.showSuccess(message: text)
+        }
+        viewModel.loadingStateChanged = { [weak self] loading in
+            self?.showLoading(loading)
+        }
     }
     
     private func setupView() {
@@ -62,7 +73,6 @@ class SubscriptionInfoController: UIViewController {
         navCloseButton = UIBarButtonItem(image: closeImage, style: .done, target: self, action: #selector(closeButtonTapped(_:)))
         navCloseButton.accessibilityIdentifier = "close"
         self.navigationItem.setLeftBarButton(navCloseButton, animated: false)
-            
     }
     
     // MARK: User actions
@@ -74,6 +84,10 @@ class SubscriptionInfoController: UIViewController {
     // MARK: Views
     
     private func render() {
+        scrollViewBody.subviews.forEach { view in
+            view.removeFromSuperview()
+        }
+        
         // Plan
         let planView = PlanInfoView.loadViewFromNib() as PlanInfoView
         planView.plan = viewModel.plan
@@ -101,6 +115,8 @@ class SubscriptionInfoController: UIViewController {
         if let footerText = viewModel.footerText {
             lastView = addFooterLabel(text: footerText, lastView: lastView)
         }
+        
+        scrollViewBody.bottomAnchor.constraint(equalTo: lastView.bottomAnchor, constant: 24).isActive = true
     }
     
     private func addExpirationLabel(text: String, lastView: UIView) -> UIView {
@@ -157,10 +173,30 @@ class SubscriptionInfoController: UIViewController {
         return label
     }
     
+    private func showError(_ error: Error) {
+        PMLog.ET(error.localizedDescription)
+        alertService.push(alert: ErrorNotificationAlert(error: error))
+    }
+    
+    private func showSuccess(message: String) {
+        alertService.push(alert: SuccessNotificationAlert(message: message))
+    }
+    
+    private func showLoading(_ loading: Bool) {
+        if loading {
+            buyButton.showLoading()
+            buyButton.isEnabled = false
+        } else {
+            buyButton.hideLoading()
+            buyButton.isEnabled = true
+            render()
+        }
+    }
+    
     // MARK: - Actions
     
     @IBAction func onButtonClick() {
-        
+        viewModel.startBuy()
     }
     
 }

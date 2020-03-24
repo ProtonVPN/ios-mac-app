@@ -56,6 +56,11 @@ class ProtonButton: UIButton {
         setUpView()
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
+    }
+    
     private func setUpView() {
         clipsToBounds = true
         tintColor = .protonWhite()
@@ -85,8 +90,6 @@ class ProtonButton: UIButton {
             layer.borderWidth = 0.0
             setTitleColor(.protonWhite(), for: .normal)
         }
-        
-        layer.cornerRadius = bounds.height / 2
     }
     
     func showLoading() {

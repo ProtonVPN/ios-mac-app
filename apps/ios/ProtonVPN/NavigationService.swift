@@ -449,7 +449,7 @@ extension NavigationService: PlanService {
     }
     
     func presentSubscriptionManagement(viewModel: SubscriptionInfoViewModel) {
-        let controller = SubscriptionInfoController(viewModel: viewModel)
+        let controller = SubscriptionInfoController(viewModel: viewModel, alertService: self.alertService)
         let nc = UINavigationController(rootViewController: controller)
         
         nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
@@ -461,7 +461,7 @@ extension NavigationService: PlanService {
     }
     
     func presentSubscriptionManagement(plan: AccountPlan) {
-        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan, servicePlanDataStorage: self.servicePlanDataStorage, vpnKeychain: self.vpnKeychain, storeKitManager: self.storeKitManager)
+        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan)
         viewModel.cancelled = {
             self.windowService.dismissModal()
         }

@@ -28,18 +28,21 @@
                     <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Gq-dKo">
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="740" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Gq-dKo">
                     <rect key="frame" x="0.0" y="103" width="414" height="554"/>
                     <subviews>
-                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2zB-IR-0Lt">
-                            <rect key="frame" x="16" y="0.0" width="382" height="600"/>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2zB-IR-0Lt">
+                            <rect key="frame" x="16" y="0.0" width="382" height="554"/>
                             <subviews>
                                 <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwi-Lm-U16" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="168" y="285" width="46" height="30"/>
+                                    <rect key="frame" x="88" y="294" width="206" height="120"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="17"/>
-                                    <inset key="contentEdgeInsets" minX="20" minY="10" maxX="20" maxY="10"/>
-                                    <state key="normal" title="Button"/>
+                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                    <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
+                                    <state key="normal">
+                                        <string key="title">Extend plan
+$00.00</string>
+                                    </state>
                                 </button>
                             </subviews>
                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -47,9 +50,9 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="2zB-IR-0Lt" firstAttribute="leading" secondItem="Omg-bk-E7N" secondAttribute="leading" constant="16" id="738-rF-BEG"/>
-                        <constraint firstItem="2zB-IR-0Lt" firstAttribute="top" secondItem="Omg-bk-E7N" secondAttribute="top" id="VJ8-3u-rBf"/>
+                        <constraint firstItem="2zB-IR-0Lt" firstAttribute="top" secondItem="nA5-Gq-dKo" secondAttribute="top" id="VJ8-3u-rBf"/>
                         <constraint firstItem="2zB-IR-0Lt" firstAttribute="trailing" secondItem="Omg-bk-E7N" secondAttribute="trailing" constant="-16" id="m22-E7-ZG4"/>
-                        <constraint firstItem="Omg-bk-E7N" firstAttribute="bottom" secondItem="2zB-IR-0Lt" secondAttribute="bottom" id="tPu-JT-xEc"/>
+                        <constraint firstAttribute="bottom" secondItem="2zB-IR-0Lt" secondAttribute="bottom" constant="20" symbolic="YES" id="tPu-JT-xEc"/>
                     </constraints>
                     <viewLayoutGuide key="contentLayoutGuide" id="r6e-uv-l4X"/>
                     <viewLayoutGuide key="frameLayoutGuide" id="Omg-bk-E7N"/>

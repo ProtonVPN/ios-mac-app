@@ -33,4 +33,5 @@ class ObfuscatedConstants {
     
     static let internalUrls: [String] = [String]()
     
+    static let specialCoupons: [String] = [String]()
 }

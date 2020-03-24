@@ -24,12 +24,12 @@ import Foundation
 import vpncore
 
 protocol SubscriptionInfoViewModelFactory {
-    func makeSubscriptionInfoViewModel(plan: AccountPlan, servicePlanDataStorage: ServicePlanDataStorage, vpnKeychain: VpnKeychainProtocol, storeKitManager: StoreKitManager) -> SubscriptionInfoViewModel
+    func makeSubscriptionInfoViewModel(plan: AccountPlan) -> SubscriptionInfoViewModel
 }
 
 extension DependencyContainer: SubscriptionInfoViewModelFactory {
-    func makeSubscriptionInfoViewModel(plan: AccountPlan, servicePlanDataStorage: ServicePlanDataStorage, vpnKeychain: VpnKeychainProtocol, storeKitManager: StoreKitManager) -> SubscriptionInfoViewModel {
-        return SubscriptionInfoViewModelImplementation(plan: plan, servicePlanDataStorage: servicePlanDataStorage, vpnKeychain: vpnKeychain, storeKitManager: storeKitManager)
+    func makeSubscriptionInfoViewModel(plan: AccountPlan) -> SubscriptionInfoViewModel {
+        return SubscriptionInfoViewModelImplementation(plan: plan, factory: self)
     }
 }
 
@@ -45,24 +45,41 @@ protocol SubscriptionInfoViewModel: class {
     var cancelled: (() -> Void)? { get set }
     func cancel()
     
+    var showSuccess: ((String) -> Void)? { get set }
+    var showError: ((Error) -> Void)? { get set }
+    var loadingStateChanged: ((Bool) -> Void)? { get set }
+    
+    func startBuy()
 }
 
 class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
     
     var plan: AccountPlan
     
-    private let servicePlanDataStorage: ServicePlanDataStorage
-    private let vpnKeychain: VpnKeychainProtocol
-    private let storeKitManager: StoreKitManager
-    
-    public init(plan: AccountPlan, servicePlanDataStorage: ServicePlanDataStorage, vpnKeychain: VpnKeychainProtocol, storeKitManager: StoreKitManager) {
-        self.plan = plan
-        self.servicePlanDataStorage = servicePlanDataStorage
-        self.vpnKeychain = vpnKeychain
-        self.storeKitManager = storeKitManager
-    }
-    
+    // Callbacks
+    var showSuccess: ((String) -> Void)?
+    var showError: ((Error) -> Void)?
     var cancelled: (() -> Void)?
+    
+    // Loading indicator
+    var isLoading = false { didSet { DispatchQueue.main.async { self.loadingStateChanged?(self.isLoading) } } }
+    var loadingStateChanged: ((Bool) -> Void)?
+    
+    // Factory
+    typealias Factory = StoreKitManagerFactory & PaymentsApiServiceFactory & ServicePlanDataStorageFactory & VpnKeychainFactory & AppSessionManagerFactory
+    private let factory: Factory
+    
+    // Dependencies
+    private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
+    private lazy var paymentsApiService: PaymentsApiService = factory.makePaymentsApiService()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    
+    public init(plan: AccountPlan, factory: Factory) {
+        self.plan = plan
+        self.factory = factory
+    }
     
     func cancel() {
         cancelled?()
@@ -84,15 +101,14 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
     }
     
     var description: String? {
-        if self.willRenewAutomcatically {
+        guard showBuyButton else {
             return nil
         }
         return LocalizedString.subscritpionDescription
     }
     
     var showBuyButton: Bool {
-        return true
-//        return !willRenewAutomcatically && isOnYearlyPlan
+        return !willRenewAutomcatically && isOnYearlyPlan
     }
     
     var footerText: String? {
@@ -128,7 +144,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
             return false
         }
         // Special coupon that will extent subscription
-        if subscription.hasNeverendingCoupon {
+        if subscription.hasSpecialCoupon {
             return true
         }
         // User has payment method setup that will extend subscription automatically
@@ -149,6 +165,63 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
     private var hasEnoughCreditToExtendSubscription: Bool {
         let credit = (try? vpnKeychain.fetch().credit) ?? 0
         return credit >= plan.yearlyCost
+    }
+    
+    // MARK: Buy
+    
+    public func startBuy() {
+        guard plan.paid, let productId = plan.storeKitProductId else {
+            PMLog.ET("IAP errored", level: .error)
+            self.failed(withError: nil)
+            return
+        }
+        isLoading = true
+
+        storeKitManager.subscribeToPaymentQueue()
+        storeKitManager.purchaseProduct(withId: productId, refreshHandler: { [weak self] in
+            self?.failed(withError: nil)
+
+        }, successCompletion: { [weak self] _ in
+            PMLog.ET("IAP succeeded", level: .info)
+            self?.reload()
+            
+        }, errorCompletion: { [weak self] (error) in
+            PMLog.ET("IAP errored: \(error.localizedDescription)")
+            self?.failed(withError: error)
+
+        }, deferredCompletion: {
+            PMLog.ET("IAP deferred", level: .warn)
+
+        })
+    }
+    
+    private func failed(withError error: Error?) {
+        isLoading = false
+        if let error = error {
+            DispatchQueue.main.async {
+                self.showError?(error)
+            }
+        }
+    }
+    
+    private func reload(showSuccessfullPayment: Bool = true) {
+        isLoading = true
+        let successMessage = String(format: LocalizedString.subscritpionExtendSuccess, servicePlanDataStorage.currentSubscription?.endDate?.formattedShortDate ?? "")
+        
+        appSessionManager.loadDataWithoutLogin(success: { [weak self] in
+            self?.isLoading = false
+            if showSuccessfullPayment {
+                self?.showSuccess?(successMessage)
+            }
+            
+        }, failure: { [weak self] error in
+            self?.isLoading = false
+            if showSuccessfullPayment { // Payment went successfully, this is error on reaload info only
+                self?.showSuccess?(successMessage)
+            } else {
+                self?.showError?(error)
+            }
+        })
     }
     
 }
