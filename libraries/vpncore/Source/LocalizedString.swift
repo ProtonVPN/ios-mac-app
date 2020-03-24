@@ -39,6 +39,7 @@ public class LocalizedString {
     public static let warning = NSLocalizedString("_warning", comment: "Used as a title in alerts/modals")
     public static let upgrade = NSLocalizedString("_upgrade", comment: "Button in many placen in both iOS and MacOS apps")
     public static let upgradeSubscription = NSLocalizedString("_upgrade_subscription", comment: "iOS: Plan selection during plan upgarde, button insettings screen")
+    public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
@@ -461,12 +462,14 @@ public class LocalizedString {
     public static let plansFooter = NSLocalizedString("_plans_footer", comment: "Text description in plan selection screen")
     public static let perYearShort = NSLocalizedString("_per_year_short", comment: "Per year. Appended to plan price.")
     public static let free = NSLocalizedString("_free", comment: "Used instead of price for free plans.")
-    public static let featureServerCount = NSLocalizedString("_feature_server_count", comment: "iOS advanced plan feature")
-    public static let featureSpeed = NSLocalizedString("_feature_speed", comment: "iOS advanced plan feature")
-    public static let featureConnections = NSLocalizedString("_feature_connections", comment: "iOS advanced plan feature")
-    public static let featureSecureStreaming = NSLocalizedString("_feature_secure_streaming", comment: "iOS advanced plan feature")
-    public static let featureTor = NSLocalizedString("_feature_tor", comment: "iOS advanced plan feature")
-    public static let featureSecureCore = NSLocalizedString("_feature_secure_core", comment: "iOS advanced plan feature")
+    public static let featureServerCount = NSLocalizedString("_feature_server_count", comment: "iOS plan feature")
+    public static let featureSpeed = NSLocalizedString("_feature_speed", comment: "iOS plan feature")
+    public static let featureConnections = NSLocalizedString("_feature_connections", comment: "iOS plan feature")
+    public static let featureSecureStreaming = NSLocalizedString("_feature_secure_streaming", comment: "iOS plan feature")
+    public static let featureTor = NSLocalizedString("_feature_tor", comment: "iOS plan feature")
+    public static let featureSecureCore = NSLocalizedString("_feature_secure_core", comment: "iOS plan feature")
+    public static let featureBlockedContent = NSLocalizedString("_feature_blocked_content", comment: "iOS plan feature")
+    public static let featureBT = NSLocalizedString("_feature_bt", comment: "iOS plan feature")
     
     // MARK: - Upsell & Onboard - macOS
     public static let welcomeTitle = NSLocalizedString("_welcome_title", comment: "MacOS welcome screen: title")
@@ -568,5 +571,12 @@ public class LocalizedString {
     public static let openAppToLogIn = NSLocalizedString("_open_app_to_log_in", comment: "Main mac app menu item")
     public static let clearApplicationData = NSLocalizedString("_clear_application_data", comment: "Main mac app menu item")
     public static let reportAnIssue = NSLocalizedString("_report_an_issue", comment: "Main mac app menu item")
-        
+
+    // MARK: Manage subscription
+    public static let subscritpionWillExpire = NSLocalizedString("_subscription_will_expire", comment: "Subscription expiration text with a date inserted instead of %@")
+    public static let subscritpionWillRenew = NSLocalizedString("_subscription_will_renew", comment: "Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@")
+    public static let subscritpionDescription = NSLocalizedString("_subscription_description", comment: "Text under current plan information")
+    public static let subscritpionButton = NSLocalizedString("_subscription_button", comment: "Text under current plan information")
+    public static let subscritpionExtendSuccess = NSLocalizedString("_subscription_extended_success", comment: "Message shown to user after he bought credits to extend subscription.")
+    
 }
