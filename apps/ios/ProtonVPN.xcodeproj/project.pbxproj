@@ -268,6 +268,9 @@
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
+		D5E853E3242A57D5002EBF05 /* SubscriptionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DCFC2416695200B5D2AB /* SubscriptionInfoController.swift */; };
+		D5E853E4242A57DB002EBF05 /* SubscriptionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DD002416752A00B5D2AB /* SubscriptionInfoViewModel.swift */; };
+		D5E853E5242A5801002EBF05 /* PlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513DD03241680D300B5D2AB /* PlanInfoView.swift */; };
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
@@ -2600,6 +2603,7 @@
 				D5136C3E228592E80002C095 /* CountryViewController.swift in Sources */,
 				D5136C3F228592E80002C095 /* MapViewController.swift in Sources */,
 				D53E83E0232B6F300031CD49 /* UserApiServiceMock.swift in Sources */,
+				D5E853E3242A57D5002EBF05 /* SubscriptionInfoController.swift in Sources */,
 				D5136C40228592E80002C095 /* ProtonQCViewController.swift in Sources */,
 				D5136C41228592E80002C095 /* ProfilesViewController.swift in Sources */,
 				E1404BC6228EBD9600E41D6C /* SignupNavigationController.swift in Sources */,
@@ -2642,6 +2646,7 @@
 				D5136C5A228592E80002C095 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				E169FC47228B163800FDC933 /* VerificationSmsViewModel.swift in Sources */,
 				D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */,
+				D5E853E5242A5801002EBF05 /* PlanInfoView.swift in Sources */,
 				D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */,
 				D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */,
 				D5136C5B228592E80002C095 /* ColorPickerViewModel.swift in Sources */,
@@ -2706,6 +2711,7 @@
 				D5136C85228592E80002C095 /* ProtonButton.swift in Sources */,
 				D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */,
 				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,
+				D5E853E4242A57DB002EBF05 /* SubscriptionInfoViewModel.swift in Sources */,
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,

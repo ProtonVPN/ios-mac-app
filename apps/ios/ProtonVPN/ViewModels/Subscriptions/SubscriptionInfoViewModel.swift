@@ -143,7 +143,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
         guard let subscription = servicePlanDataStorage.currentSubscription else {
             return false
         }
-        // Special coupon that will extent subscription
+        // Special coupon that will extend subscription
         if subscription.hasSpecialCoupon {
             return true
         }
