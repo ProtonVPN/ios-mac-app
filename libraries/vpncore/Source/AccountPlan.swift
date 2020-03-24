@@ -109,7 +109,7 @@ public enum AccountPlan: String {
     }
     
     // FUTUREFIXME: should get this from api
-    internal var yearlyCost: Int {
+    public var yearlyCost: Int {
         switch self {
         case .free, .trial:
             return 0

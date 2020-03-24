@@ -21,11 +21,15 @@
 
 import Foundation
 
-protocol ServicePlanDataStorage {
+public protocol ServicePlanDataStorage {
     var servicePlansDetails: [ServicePlanDetails]? { get set }
     var isIAPUpgradePlanAvailable: Bool { get set }
     var defaultPlanDetails: ServicePlanDetails? { get set }
     var currentSubscription: Subscription? { get set }
+}
+
+public protocol ServicePlanDataStorageFactory {
+    func makeServicePlanDataStorage() -> ServicePlanDataStorage
 }
 
 public protocol ServicePlanDataService {
@@ -111,7 +115,7 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
             completion?()
         }, failure: { [weak self] error in
             if (error as NSError).code == ApiErrorCode.noActiveSubscription { // no subscription stands for free/default plan
-                self?.currentSubscription = Subscription(start: nil, end: nil, planDetails: nil, paymentMethods: nil)
+                self?.currentSubscription = Subscription(start: nil, end: nil, planDetails: nil, paymentMethods: nil, couponCode: nil, cycle: nil)
             } else {
                 self?.currentSubscription = nil // ensures we have up to date knowledge of the currect subscription before showing upgrade button
             }

@@ -24,11 +24,12 @@ import Foundation
 public protocol PaymentsApiService {
     func servicePlans(success: @escaping ((ServicePlansProperties) -> Void), failure: @escaping ((Error) -> Void))
     func applyCredit(forPlanId planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void))
-    func credit(amount: Int, receipt: String, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void))
+    func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void))
     func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void))
     func verifyPayment(amount: Int, receipt: String, success: @escaping ((String) -> Void), failure: @escaping ((Error) -> Void))
     func methods(success: @escaping (([PaymentMethod]?) -> Void), failure: @escaping ((Error) -> Void))
     func subscription(success: @escaping ((Subscription?) -> Void), failure: @escaping ((Error) -> Void))
+    func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void))
 }
 
 public struct ServicePlansProperties {
@@ -164,8 +165,8 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         alamofireWrapper.request(PaymentsRouter.plans, success: successWrapper, failure: failure)
     }
     
-    public func credit(amount: Int, receipt: String, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
-        alamofireWrapper.request(PaymentsRouter.credit(amount: amount, receipt: receipt), success: success, failure: failure)
+    public func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
+        alamofireWrapper.request(PaymentsRouter.credit(amount: amount, payment: receipt), success: success, failure: failure)
     }
     
     public func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void)) {
@@ -215,6 +216,23 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         alamofireWrapper.request(PaymentsRouter.verify(amount: amount, receipt: receipt), success: successWrapper, failure: failure)
     }
     
+    public func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void)) {
+        let successWrapper: (JSONDictionary) -> Void = { json in
+            do {
+                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                let decoder = JSONDecoder()
+                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let token = try decoder.decode(PaymentToken.self, from: data)
+                
+                success(token)
+            } catch let error {
+                failure(error)
+            }
+        }
+        alamofireWrapper.request(PaymentsRouter.createPaymentToken(amount: amount, receipt: receipt), success: successWrapper, failure: failure)
+    }
+    
     // MARK: - Private
     private struct Key: CodingKey {
         var stringValue: String
@@ -252,11 +270,13 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
             let endRaw = json["PeriodEnd"] as? Int else {
             throw ParseError.subscriptionsParse
         }
+        let couponCode = json["PeriodEnd"] as? String
+        let cycle = json["Cycle"] as? Int
         
         let plans = try self.plansResponse(json)
         let start = Date(timeIntervalSince1970: Double(startRaw))
         let end = Date(timeIntervalSince1970: Double(endRaw))
-        let subscription = Subscription(start: start, end: end, planDetails: plans, paymentMethods: nil)
+        let subscription = Subscription(start: start, end: end, planDetails: plans, paymentMethods: nil, couponCode: couponCode, cycle: cycle)
         return subscription
     }
 }

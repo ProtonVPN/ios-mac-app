@@ -571,5 +571,12 @@ public class LocalizedString {
     public static let openAppToLogIn = NSLocalizedString("_open_app_to_log_in", comment: "Main mac app menu item")
     public static let clearApplicationData = NSLocalizedString("_clear_application_data", comment: "Main mac app menu item")
     public static let reportAnIssue = NSLocalizedString("_report_an_issue", comment: "Main mac app menu item")
-        
+
+    // MARK: Manage subscription
+    public static let subscritpionWillExpire = NSLocalizedString("_subscription_will_expire", comment: "Subscription expiration text with a date inserted instead of %@")
+    public static let subscritpionWillRenew = NSLocalizedString("_subscription_will_renew", comment: "Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@")
+    public static let subscritpionDescription = NSLocalizedString("_subscription_description", comment: "Text under current plan information")
+    public static let subscritpionButton = NSLocalizedString("_subscription_button", comment: "Text under current plan information")
+    public static let subscritpionExtendSuccess = NSLocalizedString("_subscription_extended_success", comment: "Message shown to user after he bought credits to extend subscription.")
+    
 }
