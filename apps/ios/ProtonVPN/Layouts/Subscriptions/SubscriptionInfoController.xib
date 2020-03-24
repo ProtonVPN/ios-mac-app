@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SubscriptionInfoController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="buyButton" destination="zwi-Lm-U16" id="gC1-pV-Q3a"/>
+                <outlet property="scrollView" destination="nA5-Gq-dKo" id="cwE-dl-mqx"/>
+                <outlet property="scrollViewBody" destination="2zB-IR-0Lt" id="qT3-Aa-LNh"/>
+                <outlet property="titleLabel" destination="Hgg-id-Bt0" id="iCD-zd-RUx"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="657"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Manage subscription_" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hgg-id-Bt0">
+                    <rect key="frame" x="88.5" y="8" width="237" height="29"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="24"/>
+                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" verticalCompressionResistancePriority="740" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Gq-dKo">
+                    <rect key="frame" x="0.0" y="103" width="414" height="554"/>
+                    <subviews>
+                        <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2zB-IR-0Lt">
+                            <rect key="frame" x="16" y="0.0" width="382" height="554"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zwi-Lm-U16" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="88" y="294" width="206" height="120"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <fontDescription key="fontDescription" name=".AppleSystemUIFont" family=".AppleSystemUIFont" pointSize="17"/>
+                                    <inset key="contentEdgeInsets" minX="50" minY="10" maxX="50" maxY="10"/>
+                                    <state key="normal">
+                                        <string key="title">Extend plan
+$00.00</string>
+                                    </state>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        </view>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="2zB-IR-0Lt" firstAttribute="leading" secondItem="Omg-bk-E7N" secondAttribute="leading" constant="16" id="738-rF-BEG"/>
+                        <constraint firstItem="2zB-IR-0Lt" firstAttribute="top" secondItem="nA5-Gq-dKo" secondAttribute="top" id="VJ8-3u-rBf"/>
+                        <constraint firstItem="2zB-IR-0Lt" firstAttribute="trailing" secondItem="Omg-bk-E7N" secondAttribute="trailing" constant="-16" id="m22-E7-ZG4"/>
+                        <constraint firstAttribute="bottom" secondItem="2zB-IR-0Lt" secondAttribute="bottom" constant="20" symbolic="YES" id="tPu-JT-xEc"/>
+                    </constraints>
+                    <viewLayoutGuide key="contentLayoutGuide" id="r6e-uv-l4X"/>
+                    <viewLayoutGuide key="frameLayoutGuide" id="Omg-bk-E7N"/>
+                </scrollView>
+            </subviews>
+            <color key="backgroundColor" red="0.090196078430000007" green="0.090196078430000007" blue="0.090196078430000007" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <constraints>
+                <constraint firstItem="nA5-Gq-dKo" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="2Th-Mv-OmL"/>
+                <constraint firstItem="nA5-Gq-dKo" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="FUr-c6-59g"/>
+                <constraint firstItem="nA5-Gq-dKo" firstAttribute="width" secondItem="i5M-Pr-FkT" secondAttribute="width" id="OYT-Pr-n1Y"/>
+                <constraint firstItem="nA5-Gq-dKo" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="TRT-A8-QVR"/>
+                <constraint firstItem="Hgg-id-Bt0" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="-36" id="bI0-Su-d5c"/>
+                <constraint firstItem="Hgg-id-Bt0" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="gNs-gf-UdL"/>
+                <constraint firstItem="nA5-Gq-dKo" firstAttribute="top" secondItem="Hgg-id-Bt0" secondAttribute="bottom" constant="20" id="xqT-g9-8E1"/>
+            </constraints>
+            <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="140.57971014492756" y="73.325892857142847"/>
+        </view>
+    </objects>
+</document>

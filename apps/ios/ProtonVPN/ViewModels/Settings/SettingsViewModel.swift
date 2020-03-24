@@ -67,8 +67,14 @@ class SettingsViewModel {
         return sections
     }
     
-    func manageSubscriptionAction() {
-        planService.presentPlanSelection() 
+    /// Open modal with new plan selection (for free/trial users)
+    func buySubscriptionAction() {
+        planService.presentPlanSelection()
+    }
+    
+    /// Open screen with info about current plan
+    func manageSubscriptionAction(plan: AccountPlan) {
+        planService.presentSubscriptionManagement(plan: plan)
     }
     
     var isSessionEstablished: Bool {
@@ -151,27 +157,46 @@ class SettingsViewModel {
     
     private var accountSection: TableViewSection {
         let username: String
-        let accountPlan: String
+        let accountPlanName: String
         let allowUpgrade: Bool
+        let allowPlanManagement: Bool
+        let accountPlan: AccountPlan?
         
         if let authCredentials = AuthKeychain.fetch(),
             let vpnCredentials = try? vpnKeychain.fetch() {
+            
+            accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username
-            accountPlan = vpnCredentials.accountPlan.description
-            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPAvailable
+            accountPlanName = vpnCredentials.accountPlan.description
+            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPUpgradePlanAvailable
+            
+            switch accountPlan {
+            case .basic, .plus:
+                allowPlanManagement = true
+            default:
+                allowPlanManagement = false
+            }
+            
         } else {
             username = LocalizedString.unavailable
-            accountPlan = LocalizedString.unavailable
+            accountPlanName = LocalizedString.unavailable
             allowUpgrade = false
+            allowPlanManagement = false
+            accountPlan = nil
         }
         
         var cells: [TableViewCellModel] = [
             .keyValue(key: LocalizedString.username, value: username),
-            .keyValue(key: LocalizedString.subscriptionPlan, value: accountPlan)
+            .keyValue(key: LocalizedString.subscriptionPlan, value: accountPlanName)
         ]
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .protonConnectGreen(), handler: { [manageSubscriptionAction] in
-                manageSubscriptionAction()
+            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .protonConnectGreen(), handler: { [buySubscriptionAction] in
+                buySubscriptionAction()
+            }))
+        }
+        if allowPlanManagement {
+            cells.append(TableViewCellModel.button(title: LocalizedString.settingsManageSubscription, accessibilityIdentifier: "Manage subscription", color: .protonConnectGreen(), handler: { [weak self, accountPlan] in
+                self?.manageSubscriptionAction(plan: accountPlan!)
             }))
         }
         

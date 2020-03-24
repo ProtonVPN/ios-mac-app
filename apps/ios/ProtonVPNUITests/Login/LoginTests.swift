@@ -80,6 +80,13 @@ class LoginTests: ProtonVPNUITests {
         XCTAssert(app.staticTexts[credentials.username].exists)
         XCTAssert(app.staticTexts[credentials.plan].exists)
         
+        switch credentials.plan {
+        case "ProtonVPN Basic", "ProtonVPN Plus":
+            XCTAssert(app.buttons["Manage subscription"].exists)            
+        default:
+            XCTAssertFalse(app.buttons["Manage subscription"].exists)
+        }
+        
     }
     
     // MARK: - Helper methods

@@ -168,8 +168,9 @@ class AppSessionManagerImplementation: AppSessionManager {
     
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         // update IAPs
-        ServicePlanDataServiceImplementation.shared.updateCurrentSubscription()
-        storeKitManager.subscribeToPaymentQueue()
+        ServicePlanDataServiceImplementation.shared.updateCurrentSubscription { [weak self] in
+            self?.storeKitManager.subscribeToPaymentQueue()
+        }
         
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp, success: { [weak self] properties in
             guard let `self` = self else { return }

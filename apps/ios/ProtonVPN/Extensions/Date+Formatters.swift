@@ -1,6 +1,6 @@
 //
-//  ServicePlanDataServiceMock.swift
-//  ProtonVPN - Created on 14/10/2019.
+//  Date+Formatters.swift
+//  ProtonVPN - Created on 2020-03-16.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,17 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
+import Foundation
 
-class ServicePlanDataServiceMock: ServicePlanDataService {
+extension Date {
     
-    var isIAPUpgradePlanAvailable: Bool = true
-    
-    var callbackUpdateServicePlans: ((((Error?) -> Void)?) -> Void)?
-    
-    // MARK: ServicePlanDataService implementation
-        
-    func updateServicePlans(completion: ((Error?) -> Void)?) {
-        callbackUpdateServicePlans?(completion)
+    private var shortDateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter
     }
+    
+    public var formattedShortDate: String {
+        shortDateFormatter.string(from: self)
+    }
+    
 }
