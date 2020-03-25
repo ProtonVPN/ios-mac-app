@@ -2274,7 +2274,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1079)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortuct Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1079)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Siri Shortcut Handler/Info.plist\"\n    /usr/libexec/PlistBuddy -c \"set :CFBundleVersion $buildNumber\" \"Quick Connect Widget/Info.plist\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1144E4B22EA0C550087A685 /* Increment Build Number */ = {
