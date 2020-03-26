@@ -624,9 +624,9 @@
 
 // Manage subscription
 
-"_subscription_will_expire" = "Current plan will expire on %@";
-"_subscription_will_renew" = "Current plan will automatically renew on %@";
-"_subscription_description" = "You can purchase more credits to automatically extend your current plan. Available credits will be automatically deducted from your account to extend the plan you are on at the end of your current subscription period.";
-"_subscription_button" = "Extend plan for 1 more year \n%@";
+"_subscription_will_expire" = "Current plan will expire on %@.";
+"_subscription_will_renew" = "Current plan will automatically renew on %@.";
+"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+"_subscription_button" = "Extend plan for 1 year \n%@.";
 "_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
  
