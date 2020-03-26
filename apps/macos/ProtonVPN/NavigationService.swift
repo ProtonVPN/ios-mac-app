@@ -30,7 +30,7 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory
+    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -132,13 +132,13 @@ class NavigationService {
     private func showLogIn() {
         appHasPresented = true
         
-        let viewModel = LoginViewModel(appSessionManager: appSessionManager, navService: self, firewallManager: firewallManager)
+        let viewModel = LoginViewModel(factory: factory)
         windowService.showLogin(viewModel: viewModel)
         NSApp.activate(ignoringOtherApps: true)
     }
     
     private func attemptSilentLogIn() {
-        let viewModel = LoginViewModel(appSessionManager: appSessionManager, navService: self, firewallManager: firewallManager)
+        let viewModel = LoginViewModel(factory: factory)
         viewModel.logInSilently()
     }
     
