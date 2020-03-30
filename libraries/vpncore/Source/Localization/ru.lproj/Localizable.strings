@@ -484,22 +484,22 @@
 /* Profile create/change form */
 "_feature" = "Функция";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_connections" = "Одновременные VPN-подключения";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Безопасный стриминг";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Подключение к серверам в";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Скорость";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
 
 /* iOS: button in login screen */
@@ -830,7 +830,7 @@
 "_p2p_detected_popup_title" = "P2P трафик не разрешен на этом сервере";
 
 /* P2P forward alert */
-"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со значком P2P, чтобы избежать переадресации трафика.";
+"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы с меткой P2P, чтобы избежать переадресации трафика.";
 
 /* P2P forward alert */
 "_p2p_forwarded_popup_body_p1" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со";

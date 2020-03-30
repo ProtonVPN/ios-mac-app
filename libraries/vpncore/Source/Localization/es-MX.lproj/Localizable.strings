@@ -484,22 +484,22 @@
 /* Profile create/change form */
 "_feature" = "Función";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_connections" = "Conexiones VPN simultáneas";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Transmisión segura";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Conectar a servidores en";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Velocidad";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor sobre VPN";
 
 /* iOS: button in login screen */
