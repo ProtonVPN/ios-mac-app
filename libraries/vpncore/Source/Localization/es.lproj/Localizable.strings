@@ -368,7 +368,7 @@
 "_error_no_active_username" = "Inicia sesión con la cuenta para la que estás mejorando el plan de servicio para que podamos completar su compra.";
 
 /* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "La mejora de su suscripción fue exitosa. Vuelva a iniciar la aplicación para beneficiarse de su nuevo plan de servicio.";
+"_error_no_new_subscription_in_successfull_response" = "La mejora de tu suscripción se ha realizado correctamente. Por favor, vuelve a lanzar la aplicación para beneficiarte de tu nuevo plan de servicio.";
 
 /* In App Purchase error alert */
 "_error_occured" = "Ocurrió un error";
@@ -484,22 +484,22 @@
 /* Profile create/change form */
 "_feature" = "Característica";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_connections" = "Conexiones VPN simultáneas";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Transmisión segura";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Conéctese a los servidores en";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Velocidad";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor sobre VPN";
 
 /* iOS: button in login screen */
@@ -1187,7 +1187,7 @@
 "_setup_complete_free" = "Ahora estás registrado en un plan ProtonVPN Free. Para comenzar, disfrute de siete días de nuestro plan ProtonVPN Plus de forma gratuita.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Tu compra fue exitosa. Tu plan ProtonVPN Plus ahora está activo.";
+"_setup_complete_plus" = "Tu compra se ha realizado correctamente. Tu plan ProtonVPN Plus está ahora activo.";
 
 /* Show/hide password switch */
 "_show" = "Mostrar";
