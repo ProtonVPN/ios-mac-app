@@ -96,6 +96,7 @@ public struct ApiConstants {
     
 }
 
+#if os(iOS)
 extension UIDevice {
     
     /// Get device model name
@@ -113,3 +114,4 @@ extension UIDevice {
     }
     
 }
+#endif
