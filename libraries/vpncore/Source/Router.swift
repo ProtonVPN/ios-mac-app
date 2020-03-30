@@ -54,7 +54,8 @@ public extension Router {
             "x-pm-appversion": ApiConstants.appVersion,
             "x-pm-apiversion": self.version,
             "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+            "Accept": ApiConstants.mediaType,
+            "User-Agent": ApiConstants.userAgent
         ]
     }
     
@@ -67,7 +68,8 @@ public extension Router {
             "x-pm-appversion": ApiConstants.appVersion,
             "x-pm-apiversion": self.version,
             "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+            "Accept": ApiConstants.mediaType,
+            "User-Agent": ApiConstants.userAgent
         ]
     }
     
@@ -76,7 +78,8 @@ public extension Router {
             "x-pm-appversion": ApiConstants.appVersion,
             "x-pm-apiversion": self.version,
             "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+            "Accept": ApiConstants.mediaType,
+            "User-Agent": ApiConstants.userAgent
         ]
     }
     
