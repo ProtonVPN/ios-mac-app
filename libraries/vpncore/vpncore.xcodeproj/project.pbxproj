@@ -44,6 +44,12 @@
 		D5A8812E22CE06F6009B63D1 /* test_log_2.log in Resources */ = {isa = PBXBuildFile; fileRef = D5A8812C22CE06F6009B63D1 /* test_log_2.log */; };
 		D5ADF5192281975E0062367C /* SiriHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADF5162281975D0062367C /* SiriHelperProtocol.swift */; };
 		D5ADF51A2281975E0062367C /* SiriHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADF5162281975D0062367C /* SiriHelperProtocol.swift */; };
+		D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
+		D5BBC818243329DA001DC783 /* DictionaryMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC817243329DA001DC783 /* DictionaryMerge.swift */; };
+		D5BBC819243329DA001DC783 /* DictionaryMerge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC817243329DA001DC783 /* DictionaryMerge.swift */; };
+		D5BBC81A24332BF6001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
+		D5BBC81B24332BF7001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
+		D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
 		D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		D5D606A32292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
 		D5D606A42292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
@@ -331,6 +337,8 @@
 		D5A8812922CE06EB009B63D1 /* test_log_1.log */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_log_1.log; sourceTree = "<group>"; };
 		D5A8812C22CE06F6009B63D1 /* test_log_2.log */ = {isa = PBXFileReference; lastKnownFileType = text; path = test_log_2.log; sourceTree = "<group>"; };
 		D5ADF5162281975D0062367C /* SiriHelperProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SiriHelperProtocol.swift; sourceTree = "<group>"; };
+		D5BBC81324332965001DC783 /* Dictionary+Merge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Dictionary+Merge.swift"; sourceTree = "<group>"; };
+		D5BBC817243329DA001DC783 /* DictionaryMerge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DictionaryMerge.swift; sourceTree = "<group>"; };
 		D5CD4B03236709820006AAF7 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = Localization/pl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CD4B09236724A90006AAF7 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = Localization/nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CD4B0B236724D00006AAF7 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = Localization/fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -611,6 +619,14 @@
 				E1828571236C74D400E397A5 /* Intents.intentdefinition */,
 			);
 			name = Intents;
+			sourceTree = "<group>";
+		};
+		D5BBC816243329B8001DC783 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D5BBC817243329DA001DC783 /* DictionaryMerge.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D5D606A52292DC5B00394CF9 /* Management */ = {
@@ -906,6 +922,7 @@
 			isa = PBXGroup;
 			children = (
 				D5A8812322CDDAB5009B63D1 /* API */,
+				D5BBC816243329B8001DC783 /* Extensions */,
 				D5A8811F22CDD560009B63D1 /* ViewModel */,
 				D5D606A52292DC5B00394CF9 /* Management */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
@@ -990,6 +1007,7 @@
 			children = (
 				E129C6D522A9488900D8437E /* CLLocationCoordinate2D+Extension.swift */,
 				E1B5F66821B81F8500B558B0 /* Dictionary+Extension.swift */,
+				D5BBC81324332965001DC783 /* Dictionary+Merge.swift */,
 				E148AE6D21C2A452007AB65A /* Foundation+Extension.swift */,
 				E1B5F68321B840C900B558B0 /* NSCoding+Extension.swift */,
 				E148AE7521C2B12C007AB65A /* NSError+Extension.swift */,
@@ -1400,6 +1418,7 @@
 				D5A8811D22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
 				E1616BEC21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
+				D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */,
 				E1B5F63B21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				E1616B8421C7AC1300F42D79 /* VpnApiService.swift in Sources */,
@@ -1496,7 +1515,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5BBC818243329DA001DC783 /* DictionaryMerge.swift in Sources */,
 				D5A8812622CDDAD1009B63D1 /* AlamofireWrapperMock.swift in Sources */,
+				D5BBC81A24332BF6001DC783 /* Dictionary+Merge.swift in Sources */,
 				E10155D4230988C600A4B5CB /* AppStateManagerTests.swift in Sources */,
 				D5D606A82292DC9500394CF9 /* TrialCheckerTests.swift in Sources */,
 				E1B5F60621B6953200B558B0 /* AppStateTests.swift in Sources */,
@@ -1527,6 +1548,7 @@
 				D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
 				E1616BED21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6F21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
+				D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */,
 				E1B5F63C21B6B5BB00B558B0 /* IkeProtocolFactory.swift in Sources */,
 				E1B5F68521B840C900B558B0 /* NSCoding+Extension.swift in Sources */,
 				E1616B8521C7AC1300F42D79 /* VpnApiService.swift in Sources */,
@@ -1623,7 +1645,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5BBC819243329DA001DC783 /* DictionaryMerge.swift in Sources */,
 				D5A8812722CDDAD1009B63D1 /* AlamofireWrapperMock.swift in Sources */,
+				D5BBC81B24332BF7001DC783 /* Dictionary+Merge.swift in Sources */,
 				E10155D3230988C500A4B5CB /* AppStateManagerTests.swift in Sources */,
 				D5D606A92292DC9500394CF9 /* TrialCheckerTests.swift in Sources */,
 				E1B5F62721B6A24D00B558B0 /* AppStateTests.swift in Sources */,
