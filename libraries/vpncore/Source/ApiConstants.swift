@@ -20,6 +20,9 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+#if os(iOS)
+import UIKit
+#endif
 
 public struct ApiConstants {
     
@@ -70,4 +73,45 @@ public struct ApiConstants {
     static var appVersion: String {
         return clientId + "_" + bundleShortVersion
     }
+    
+    static var userAgent: String {
+        let info = ProcessInfo()
+        let osVersion = info.operatingSystemVersion
+        let processName = info.processName
+        var os = "unknown"
+        var device = ""
+        #if os(iOS)
+            os = "iOS"
+            device = "; \(UIDevice.current.modelName)"
+        #elseif os(macOS)
+            os = "Mac OS X"
+        #elseif os(watchOS)
+            os = "watchOS"
+        #elseif os(tvOS)
+            os = "tvOS"
+        #endif
+        
+        return "\(processName)/\(bundleShortVersion) (\(os) \(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)\(device))"
+    }
+    
 }
+
+#if os(iOS)
+extension UIDevice {
+    
+    /// Get device model name
+    var modelName: String {
+        var systemInfo = utsname()
+        uname(&systemInfo)
+        let mirror = Mirror(reflecting: systemInfo.machine)
+        let identifier = mirror.children.reduce("") { identifier, element in
+            guard let value = element.value as? Int8, value != 0 else {
+                return identifier
+            }
+            return identifier + String(UnicodeScalar(UInt8(value)))
+        }
+        return identifier
+    }
+    
+}
+#endif
