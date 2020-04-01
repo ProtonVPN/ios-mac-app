@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		1D533E7ACCBB4672CD678E98 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
+		42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
+		42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
+		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
+		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		4B321D2FF7B51E388C059E38 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
@@ -451,6 +455,8 @@
 		3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
 		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
+		42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCardViewPresenter.swift; sourceTree = "<group>"; };
+		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.debug.xcconfig"; sourceTree = "<group>"; };
 		4A860229338490F8F43FA399 /* Pods-ProtonVPN Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN Debug/Pods-ProtonVPN Debug.test.xcconfig"; sourceTree = "<group>"; };
 		539B7C3B982207CF8C92B3EB /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -832,6 +838,22 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		42C37AF92434E52500366B79 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				42C37AFA2434E52E00366B79 /* Subscriptions */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		42C37AFA2434E52E00366B79 /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */,
+			);
+			path = Subscriptions;
+			sourceTree = "<group>";
+		};
 		791C54EF214A759900C6F337 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -915,6 +937,7 @@
 				D5BF95112355A52700C7D1E7 /* Misc */,
 				E169FC392289ABD000FDC933 /* Models */,
 				E11DA6B82189AFCA00CDF310 /* Layouts */,
+				42C37AF92434E52500366B79 /* Presenters */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
 				791DE618208E2D4300A29EA5 /* Storyboards */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
@@ -1750,6 +1773,7 @@
 			children = (
 				79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */,
 				7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */,
+				42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2361,6 +2385,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1828587236C786900E397A5 /* Intents.intentdefinition in Sources */,
+				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
 				D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */,
 				79848BB220D2012B00EF6F9F /* MapViewModel.swift in Sources */,
@@ -2426,6 +2451,7 @@
 				E1A15A9B215905A90068A5EF /* GradientSeparator.swift in Sources */,
 				D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */,
 				7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */,
+				42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */,
@@ -2621,6 +2647,8 @@
 				D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */,
 				D53E83DC232B6D320031CD49 /* SignUpFormViewModelTests.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
+				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
+				42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
 				D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */,
 				D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */,
 				D5136C75228592E80002C095 /* CreateProfileTableViewCell.swift in Sources */,
