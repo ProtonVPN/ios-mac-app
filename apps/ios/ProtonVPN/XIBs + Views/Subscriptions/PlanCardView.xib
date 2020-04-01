@@ -113,17 +113,29 @@
                                         <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="WvK-29-E9U">
                                             <rect key="frame" x="0.0" y="57" width="340" height="147"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="_Feature1" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j99-wz-ShT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="166" height="147"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="31R-da-2ml">
-                                                    <rect key="frame" x="174" y="0.0" width="166" height="147"/>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P7Y-p7-Ktk">
+                                                    <rect key="frame" x="0.0" y="0.0" width="248.5" height="147"/>
                                                     <subviews>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" adjustsLetterSpacingToFitWidth="YES" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="coX-e1-xwZ">
-                                                            <rect key="frame" x="0.0" y="99" width="150" height="48"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="_Feature1" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j99-wz-ShT">
+                                                            <rect key="frame" x="12" y="127.5" width="108" height="19.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <constraints>
+                                                        <constraint firstItem="j99-wz-ShT" firstAttribute="top" relation="greaterThanOrEqual" secondItem="P7Y-p7-Ktk" secondAttribute="top" constant="8" id="EpK-2O-jpd"/>
+                                                        <constraint firstAttribute="bottom" secondItem="j99-wz-ShT" secondAttribute="bottom" id="KFk-gg-3rv"/>
+                                                        <constraint firstAttribute="trailing" secondItem="j99-wz-ShT" secondAttribute="trailing" id="aq7-z9-dMI"/>
+                                                        <constraint firstItem="j99-wz-ShT" firstAttribute="leading" secondItem="P7Y-p7-Ktk" secondAttribute="leading" id="x8G-8i-Bqr"/>
+                                                    </constraints>
+                                                </view>
+                                                <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="31R-da-2ml">
+                                                    <rect key="frame" x="256.5" y="0.0" width="83.5" height="147"/>
+                                                    <subviews>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" text="100" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.59999999999999998" adjustsLetterSpacingToFitWidth="YES" translatesAutoresizingMaskIntoConstraints="NO" id="coX-e1-xwZ">
+                                                            <rect key="frame" x="0.0" y="102" width="67.5" height="48"/>
                                                             <fontDescription key="fontDescription" type="system" pointSize="40"/>
                                                             <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
@@ -132,7 +144,7 @@
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <constraints>
                                                         <constraint firstItem="coX-e1-xwZ" firstAttribute="leading" secondItem="31R-da-2ml" secondAttribute="leading" id="1e3-tT-foz"/>
-                                                        <constraint firstAttribute="bottom" secondItem="coX-e1-xwZ" secondAttribute="bottom" id="RVw-ZF-c3f"/>
+                                                        <constraint firstAttribute="bottom" secondItem="coX-e1-xwZ" secondAttribute="bottom" constant="-3" id="RVw-ZF-c3f"/>
                                                         <constraint firstAttribute="trailing" secondItem="coX-e1-xwZ" secondAttribute="trailing" constant="16" id="etY-1a-gjq"/>
                                                         <constraint firstItem="coX-e1-xwZ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="31R-da-2ml" secondAttribute="top" constant="8" id="iTK-2w-UFm"/>
                                                     </constraints>

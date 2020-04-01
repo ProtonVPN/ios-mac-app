@@ -106,16 +106,16 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
     
     private func organizeLayout() {
         
-        let widthThreshold = UIScreen.main.bounds.width * 0.4
-        
         //because of the stackview at this point we don't have a real size
         //a new label has to be created with the same configuration to get a real size
         
         let featuresSize = view.featuresLabel.realSize
 
-        //if the size exceds a 40% of the screen it should be splited in two rows
+        //if the size exceds a 30% of the screen it should be splited in two rows
         
-        if featuresSize.width > widthThreshold {
+        let featuresThreshold = UIScreen.main.bounds.width * 0.3
+        
+        if featuresSize.width > featuresThreshold {
             view.priceStackView.axis = .vertical
             view.priceLabel.textAlignment = .left
         }
@@ -128,7 +128,11 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
         
         let titleSize = view.titleLabel.realSize
         
-        guard titleSize.width > widthThreshold else {
+        //if the size exceds a 40% of the screen it should be splited in two rows
+        
+        let titleThreshold = UIScreen.main.bounds.width * 0.4
+        
+        guard titleSize.width > titleThreshold else {
             return
         }
 
