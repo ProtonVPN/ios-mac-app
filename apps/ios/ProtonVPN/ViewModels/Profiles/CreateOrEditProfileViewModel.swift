@@ -328,7 +328,7 @@ extension CreateOrEditProfileViewModel {
     }
     
     public var serverSelectionDataSet: SelectionDataSet? {
-        // Get newest data, because servers list may have been updated since selectecd group was set
+        // Get newest data, because servers list may have been updated since selected group was set
         guard let row = countries.firstIndex(where: { $0.0 == selectedCountryGroup?.0 }) else {
             return nil
         }
@@ -361,7 +361,7 @@ extension CreateOrEditProfileViewModel {
         ]
         
         sections.append(contentsOf: serversByTier.map { serverGroup in
-            return SelectionSection(title: CoreAppConstants.planTranslatedName(forTier: serverGroup.tier),
+            return SelectionSection(title: CoreAppConstants.serverTierName(forTier: serverGroup.tier),
                                     cells: serverGroup.servers.map { server in
                                         return SelectionRow(title: serverDescriptor(for: server), object: ServerOffering.custom(ServerWrapper(server: server)))
                                     }

@@ -24,17 +24,18 @@ import UIKit
 import vpncore
 
 protocol PlanSelectionViewModelFactory {
-    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel
+    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel
 }
 
 extension DependencyContainer: PlanSelectionViewModelFactory {
     
-    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
+    func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
         return PlanSelectionSimpleViewModel(isDismissalAllowed: isDismissalAllowed,
                                             servicePlanDataService: makeServicePlanDataService(),
                                             planSelectionFinished: planSelectionFinished,
-                                            storeKitManager: self.makeStoreKitManager())
+                                            storeKitManager: self.makeStoreKitManager(),
+                                            alertService: alertService)
     }
     
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel {
@@ -63,6 +64,7 @@ protocol PlanSelectionViewModel: class {
     var headingString: String { get }
     func finishPlanSelection(_ plan: AccountPlan)
     func cancel()
+    var viewBecameVisible: Bool { get set }
 }
 
 class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
@@ -73,6 +75,7 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
     var cancelled: (() -> Void)?
     weak var navigationController: UINavigationController?
     var storeKitManager: StoreKitManager
+    var alertService: AlertService
     
     var plans: [AccountPlan] { didSet { plansChanged?() } }
     var selectedPlan: AccountPlan? { didSet { selectedPlanChanged?() } }
@@ -81,9 +84,19 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
     var headingString: String = LocalizedString.choosePlan
     let servicePlanDataService: ServicePlanDataService
     
-    fileprivate init(servicePlanDataService: ServicePlanDataService, storeKitManager: StoreKitManager) {
+    var viewBecameVisible: Bool = false {
+        didSet {
+            if viewBecameVisible {
+                displayAlertIfNeeded()
+            }
+        }
+    }
+    private var postponedAlert: SystemAlert?
+    
+    fileprivate init(servicePlanDataService: ServicePlanDataService, storeKitManager: StoreKitManager, alertService: AlertService) {
         self.servicePlanDataService = servicePlanDataService
         self.storeKitManager = storeKitManager
+        self.alertService = alertService
         plans = []
     }
     
@@ -93,10 +106,14 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
     
     func fetchPlanDetails() {
         plansLoadingChanged?(true)
-        servicePlanDataService.updateServicePlans {
-            self.plansLoadingChanged?(false)
-            self.plans = [AccountPlan.plus, AccountPlan.basic, AccountPlan.free].filter { (plan) -> Bool in
-                return plan.fetchDetails() != nil
+        servicePlanDataService.updateServicePlans { [weak self] error in
+            self?.plansLoadingChanged?(false)
+            if let error = error {
+                self?.push(alert: error.isTlsError ? MITMAlert() : ErrorNotificationAlert(error: error))
+            } else {
+                self?.plans = [AccountPlan.plus, AccountPlan.basic, AccountPlan.free].filter { (plan) -> Bool in
+                    return plan.fetchDetails() != nil
+                }
             }
         }
     }
@@ -108,6 +125,23 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
     func finishPlanSelection(_ plan: AccountPlan) {
     }
     
+    /// Show allert immediately if view is visible. Otherwise postopones it until view becomes visible.
+    fileprivate func push(alert: SystemAlert) {
+        guard viewBecameVisible else {
+            postponedAlert = alert
+            return
+        }
+        alertService.push(alert: alert)
+    }
+    
+    private func displayAlertIfNeeded() {
+        guard viewBecameVisible, let alert = postponedAlert else {
+            return
+        }
+        alertService.push(alert: alert)
+        postponedAlert = nil
+    }
+    
 }
 
 /// ViewModel used when only plan selection should be done, without actual purchase
@@ -115,9 +149,9 @@ class PlanSelectionSimpleViewModel: AbstractPlanSelectionViewModel {
     
     private var planSelectionFinished: (AccountPlan) -> Void
     
-    init(isDismissalAllowed: Bool, servicePlanDataService: ServicePlanDataService, planSelectionFinished: @escaping (AccountPlan) -> Void, storeKitManager: StoreKitManager) {
+    init(isDismissalAllowed: Bool, servicePlanDataService: ServicePlanDataService, planSelectionFinished: @escaping (AccountPlan) -> Void, storeKitManager: StoreKitManager, alertService: AlertService) {
         self.planSelectionFinished = planSelectionFinished
-        super.init(servicePlanDataService: servicePlanDataService, storeKitManager: storeKitManager)
+        super.init(servicePlanDataService: servicePlanDataService, storeKitManager: storeKitManager, alertService: alertService)
         self.allowDismissal = isDismissalAllowed
         
         self.plans = [AccountPlan.plus, AccountPlan.basic, AccountPlan.free].filter { (plan) -> Bool in
@@ -139,14 +173,12 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
     
     private let appSessionManager: AppSessionManager
     private let planService: PlanService
-    private let alertService: AlertService
     
     init(appSessionManager: AppSessionManager, planService: PlanService, alertService: AlertService, servicePlanDataService: ServicePlanDataService, storeKitManager: StoreKitManager) {
         self.appSessionManager = appSessionManager
         self.planService = planService
-        self.alertService = alertService
         
-        super.init(servicePlanDataService: servicePlanDataService, storeKitManager: storeKitManager)
+        super.init(servicePlanDataService: servicePlanDataService, storeKitManager: storeKitManager, alertService: alertService)
         
         headingString = LocalizedString.upgradeSubscription
         allowDismissal = true
@@ -200,7 +232,7 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
         DispatchQueue.main.asyncAfter(deadline: .now() + .milliseconds(100)) { [weak self] in
             self?.selectionLoadingChanged?(false)
             if let error = error {
-                self?.alertService.push(alert: PlanPurchaseErrorAlert(error: error, planDescription: plan.description))
+                self?.push(alert: PlanPurchaseErrorAlert(error: error, planDescription: plan.description))
             }
         }
     }

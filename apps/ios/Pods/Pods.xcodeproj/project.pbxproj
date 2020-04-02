@@ -66,8 +66,9 @@
 		191C1520502AAB098C51136683384305 /* SrpClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D33EFE4A444201FB77442DD19D40B51 /* SrpClientExtension.swift */; };
 		19B2149FE0D936F8DF5D373EE676F51F /* it.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 5FC1FC07FB4386E359C87C40102BCCAC /* it.lproj */; };
 		1A8C60E23C2222C13FACFEEE95CADE6A /* NSDate+Extras.m in Sources */ = {isa = PBXBuildFile; fileRef = 68A077648551AA00E0D05177A85BAD2A /* NSDate+Extras.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		1AF378509091246DFC8D651B267F570D /* Pods-ProtonVPN-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E10F48E44A89FAD566729FF00B116B22 /* Pods-ProtonVPN-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1AF378509091246DFC8D651B267F570D /* Pods-ProtonVPN-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F2988DA0CADCA54B8700FE4CB4A5DF69 /* Pods-ProtonVPN-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1C52B0D2E54F99EBF51E83DF74A2D79D /* TrialServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = C7D6D66819C8E851D385FDF246602D77 /* TrialServiceMock.swift */; };
+		1D7CD69B98E78E8482EF63CA99E20595 /* Pods-Siri Shortcut Handler-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 9FF9D061DA59C2293224A6DF8C4C037B /* Pods-Siri Shortcut Handler-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1D8D42138FA1277A676A5F2D58684F50 /* SentryContext.m in Sources */ = {isa = PBXBuildFile; fileRef = C2F1825968734E2E9C8ABC64E373F87D /* SentryContext.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		1DEF901D54DC1BEBE691887420CD1559 /* SentryEvent.h in Headers */ = {isa = PBXBuildFile; fileRef = 50F728C2FFCD40A635491A3E7613834F /* SentryEvent.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1DF1DFFBA7041919B64A98A6B5B83DF2 /* ServerTierChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D80E6AA0B298AF1FAEDD4377AC4934F /* ServerTierChecker.swift */; };
@@ -83,7 +84,6 @@
 		24CCD57A6A63BB941D83659020E8F6AE /* SentryCrashFileUtils.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F813F9C1DB63732717686B8A73441FE /* SentryCrashFileUtils.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		24FF1509F31074EF91A67AA26B7C788F /* SentryDebugMeta.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E0AF8AADC1231E3F3BDA6154A94F8CC /* SentryDebugMeta.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		25133BCB3B36705AA90D010DE3B427C8 /* SentryCrashDoctor.h in Headers */ = {isa = PBXBuildFile; fileRef = BDFD66213BCA6CC4B44288A0C3484815 /* SentryCrashDoctor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		25507F58D576750EB1C0075EF3C5D110 /* Pods-Siri Shortuct Handler-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = F9FA9743D7C0EC884710DCBFA898ED56 /* Pods-Siri Shortuct Handler-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		25A64093E61CFAABE61577C1EA561148 /* Subscription.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8725B55A38F1F621985E902CA07C135 /* Subscription.swift */; };
 		27427196569AFB6FFE00AF46D072EE52 /* TrialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 77575ED8C1B66330339D271CD4F1ECAD /* TrialService.swift */; };
 		277CB9B5F0B87D1284C37C89F1AF90A3 /* init_registry_tables.c in Sources */ = {isa = PBXBuildFile; fileRef = 10F54D86544910BB38F28CFD0CDAE998 /* init_registry_tables.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -96,10 +96,9 @@
 		29BF3028388D1A37A50ECA26E1979D58 /* SessionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A051CF1FD59E8AA59FA70019273D46DD /* SessionModel.swift */; };
 		29C863B6B146904F1FFC36D85ADD0560 /* SentryCrashThread.c in Sources */ = {isa = PBXBuildFile; fileRef = 84B3638C5D5BB8A88C949FF65D3E454C /* SentryCrashThread.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2A0BDB0E0380A4505B2D82D853FBF1F1 /* TSKNSURLSessionDelegateProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = DBD4D71B6299283B0078E5983BABD0BF /* TSKNSURLSessionDelegateProxy.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		2A1A43F7DC3C593F3788EF4E170C0147 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4921B371107B1B48D2D90D0B88DD19 /* Foundation.framework */; };
 		2B6273BBA6A0E681FF50AEA1BDA93C5B /* SentryJavaScriptBridgeHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D4B910B0EB9C9BD1D607B7807874A2E /* SentryJavaScriptBridgeHelper.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2BB320B00596E7F75DD4F7C95C96E6CD /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E7F6A33C9B61B1B869BEDE86329F78D2 /* Logger.swift */; };
-		2C4DCABAFC60B0C23D0BDA8261F5459B /* Pods-ProtonVPN-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FE28253C6ACB91E00591D92FEF6A57E7 /* Pods-ProtonVPN-dummy.m */; };
+		2C4DCABAFC60B0C23D0BDA8261F5459B /* Pods-ProtonVPN-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = CBF4C239B3D8A68FD6DBD78D8AF603DE /* Pods-ProtonVPN-dummy.m */; };
 		2C517BFDAB422FDF94C207803349C013 /* SentryCrashID.c in Sources */ = {isa = PBXBuildFile; fileRef = F0BF2B6B5138AECB2AA66D0E323AF027 /* SentryCrashID.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		2E0DC4DD22853B0A490A387A1331BB75 /* SentryNSURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 41744C51807DD07FAD277991ECF9F899 /* SentryNSURLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E24A2697C77B6E09D6C9A8E0F648A87 /* SentryCrashStackCursor_SelfThread.h in Headers */ = {isa = PBXBuildFile; fileRef = 7113A990F32B33DEC411990494294570 /* SentryCrashStackCursor_SelfThread.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -134,7 +133,6 @@
 		46542F85A10A2F16008179589640BA05 /* TSKNSURLConnectionDelegateProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = A437A14F8707F16C0B5DF96DBD27B391 /* TSKNSURLConnectionDelegateProxy.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		4656FFE84358A09099172821A8242FC4 /* SentryCrashCPU_arm64.c in Sources */ = {isa = PBXBuildFile; fileRef = 755AF258B9976471A9E35603F0F3C718 /* SentryCrashCPU_arm64.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		4662BC4C2BB9C8408286C2975C66FA7B /* fr.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 61FAB65137C2C39244206DEFDBFCBCA5 /* fr.lproj */; };
-		46C61C2307E0B7D02E4BE6F12696CEAB /* Pods-Siri Shortuct Handler-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D1E516B4C8043C74F5329E4500B61B /* Pods-Siri Shortuct Handler-dummy.m */; };
 		4705079C73F17767BF6C18BBE48B1567 /* AlamofireWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59DB8B7400A45FE3D634AE9ACB3AF863 /* AlamofireWrapper.swift */; };
 		47598A8FC1A067E79C115EF79A9827F2 /* TSKPinningValidator_Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 58A6A05A6B61B6410521AB4EF3AB4D7C /* TSKPinningValidator_Private.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		478EB10184E565B0663F367AD8D8E006 /* NSCoding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3704E9F44F84CF43F352C788968E5D9D /* NSCoding+Extension.swift */; };
@@ -198,7 +196,7 @@
 		6E19492B3134F5B12C502F867F6F34B3 /* es.lproj in Resources */ = {isa = PBXBuildFile; fileRef = 2DFBCEBA8522F6FD7655137563F8525D /* es.lproj */; };
 		6E41D7C4776A06B782D2E7B1AACE248F /* GSMessages-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 39DAB562B6E4858F6A89C00932CFB185 /* GSMessages-dummy.m */; };
 		6ED59869CD9AE5BA509DF3DA106E2CFA /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6AFDA3E305FD8F505CACA20AA1AA7158 /* Keychain.swift */; };
-		6F8F9FA9860ABFD3BB75CE036C0C7A9D /* Pods-Quick Connect Widget-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = D28A7CA5D478E0DDB67D9A05C9AF6FA4 /* Pods-Quick Connect Widget-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6F8F9FA9860ABFD3BB75CE036C0C7A9D /* Pods-Quick Connect Widget-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = C529793593EFB97A5B8E3F9B9C2AAD02 /* Pods-Quick Connect Widget-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		6FD16CBF7DF3E883B3B04D87C455C145 /* NSData+Compression.m in Sources */ = {isa = PBXBuildFile; fileRef = 541E25C9614D63CCD61C07C5C168A579 /* NSData+Compression.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		71F8D5A206387A4EF01A43BFEA84F287 /* ProfileConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9719F5E829212204F9B15EBA285544C /* ProfileConstants.swift */; };
 		72AE1496FA10BD97AC4AB981382C02BA /* ProfileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4202F068005F5AD01BC05604AA75762D /* ProfileManager.swift */; };
@@ -228,7 +226,7 @@
 		800C602944148633B74430ED9BAC474E /* SentryCrashDynamicLinker.h in Headers */ = {isa = PBXBuildFile; fileRef = AE43E4B30D8221A85AE3B8606627A7CF /* SentryCrashDynamicLinker.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		802FFB331944BCCF6492A045F19AA2D9 /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5AF0C111DEE66525259A5E64420AB37B /* ErrorCodes.swift */; };
 		806D02FF86E566E9D158E72B80BA7B33 /* Container+DeepSearch.m in Sources */ = {isa = PBXBuildFile; fileRef = F3123EEAF9E3F02138BC96F43B0339C6 /* Container+DeepSearch.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
-		81DB34761916564B4088E73FA708FDBA /* Pods-Quick Connect Widget-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = C2EF1BBFA160A2418A5230319C507A2E /* Pods-Quick Connect Widget-dummy.m */; };
+		81DB34761916564B4088E73FA708FDBA /* Pods-Quick Connect Widget-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 656A5CC4CB1BF650863674B5A7755F55 /* Pods-Quick Connect Widget-dummy.m */; };
 		827B059D2B2949CB37FD49EC83AB8060 /* VpnGatewayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 088077FBC5760ACDD9216ACE56F0864D /* VpnGatewayMock.swift */; };
 		829389706D5A0A131ECA6672EBA7AF80 /* SentryCrashMonitor_Deadlock.m in Sources */ = {isa = PBXBuildFile; fileRef = D4749B0603E179253DAE8C63D2FF66E9 /* SentryCrashMonitor_Deadlock.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		8300DC6C4C459EE9F242E9E99160AFB0 /* SentryCrashMonitor_CPPException.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 84213D71DF42C3B2D949950DC5106BA4 /* SentryCrashMonitor_CPPException.cpp */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
@@ -289,6 +287,7 @@
 		A8D41532619839AFB9B9093598F3ECB2 /* SentryCrashMachineContext.c in Sources */ = {isa = PBXBuildFile; fileRef = D1B51A7B89C3125EEE430D762ABD39B2 /* SentryCrashMachineContext.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		A8DC794893F6511E61591CB9A255F0FA /* SentryCrashExceptionApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = C3DCE26D21C7DDE619A621BC77182E9D /* SentryCrashExceptionApplication.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		A8E337135BED4D7C39807D440DE13895 /* ChecksRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B486908AFABCA1D6E67585917525437 /* ChecksRouter.swift */; };
+		A91580B3A38AA5C10630C202FA9253C5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4921B371107B1B48D2D90D0B88DD19 /* Foundation.framework */; };
 		AB93DDE36FF00326EF7ACCF3C653020B /* SentryCrashJSONCodecObjC.h in Headers */ = {isa = PBXBuildFile; fileRef = FD04AC91E972115305CD2E292C5EF0BE /* SentryCrashJSONCodecObjC.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		AB9B46BE446E69AC691B8843CFBB78F0 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = F50F086E7E728C97400648E49CCB04F8 /* ApiConstants.swift */; };
 		ACABE95112EC1F892E006A894D41AC78 /* configuration_utils.h in Headers */ = {isa = PBXBuildFile; fileRef = C7EDD4B934FAE1A2CA71125980540AEA /* configuration_utils.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -321,6 +320,7 @@
 		BB90C45AFA7D56DF748ED2C2F33BE047 /* domain_registry.h in Headers */ = {isa = PBXBuildFile; fileRef = 99CCD6F6976A89AF70AF5644589D8765 /* domain_registry.h */; settings = {ATTRIBUTES = (Project, ); }; };
 		BC8F487D28A26B52511596FF0A76543E /* SentryEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 2E8E6347AF2355CA3AD01DEE28996FC6 /* SentryEvent.m */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-all-checks"; }; };
 		BCEEF72C7E1F8803A00BC3D7D89462D5 /* SentryCrashMonitor_AppState.h in Headers */ = {isa = PBXBuildFile; fileRef = A293C794682DFED5AAC7D0DD6B7CC57A /* SentryCrashMonitor_AppState.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BD96492077A4FE7CBC0E6B0462888EF0 /* Pods-Siri Shortcut Handler-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7C5A1B4601058BBF84526640660A2AF8 /* Pods-Siri Shortcut Handler-dummy.m */; };
 		BDD3A48D45990EEEF00DE7E0CF681155 /* ReportBugViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ADFD0EFF7501E55E5D9049D167A6141 /* ReportBugViewModel.swift */; };
 		BE14D18343592EBE0831862407BEB12E /* ParameterEncoding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B868DA122AB97E9DCF3467EB2524549 /* ParameterEncoding.swift */; };
 		BE2E4C91C83E55290BC65762E619BF2B /* SentryCrashLogger.h in Headers */ = {isa = PBXBuildFile; fileRef = 6097D35EE3D436F111B0AD55A49A3C29 /* SentryCrashLogger.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -360,7 +360,7 @@
 		D8CDD36258FC9F7346B2C5BA6D238B10 /* TSKPinningValidatorResult.h in Headers */ = {isa = PBXBuildFile; fileRef = EC60929B28BB8331B490A1342B3D2144 /* TSKPinningValidatorResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D8F65132FFF0C137BE935D6C9FCE98B7 /* ConnectingCellDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBD603C45FA49623067E8E3FE47FCAFB /* ConnectingCellDelegate.swift */; };
 		DA7269BC828649D8F8B052DC01F5FEDE /* SentryInstallation.h in Headers */ = {isa = PBXBuildFile; fileRef = AFD06A59F57DA9B7BF119FC25D704BF8 /* SentryInstallation.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		DB5144F54B1B81F7968D0D03EC089424 /* Pods-ProtonVPNTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = BD572C07040FDD449291A66F0856302E /* Pods-ProtonVPNTests-dummy.m */; };
+		DB5144F54B1B81F7968D0D03EC089424 /* Pods-ProtonVPNTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 96C94A42D81D8FBEC3B1C57FBFFB1222 /* Pods-ProtonVPNTests-dummy.m */; };
 		DC069F4793945F35895C24496C2D7645 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BA4921B371107B1B48D2D90D0B88DD19 /* Foundation.framework */; };
 		DCBAAC299672F6440B43BB493C229B59 /* SentryCrashString.h in Headers */ = {isa = PBXBuildFile; fileRef = 465CA7BFEF977DD1B92B4B56AF557D43 /* SentryCrashString.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		DD47CAB2BCAFEC1788312A200D60C166 /* TSKBackgroundReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 68BE90380E0B0F706B9D182143FC47A7 /* TSKBackgroundReporter.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -396,7 +396,7 @@
 		F34332A859B14475305971B0B2C91DA8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C10E765A986D808C56AED009280203F /* SystemConfiguration.framework */; };
 		F39ECF4F2043EC447509C647A479F538 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5239BA710430D004D23177EFFF1450E5 /* Security.framework */; };
 		F5CCCF43F2719CCB829E7874C929D4B7 /* SentryCrashCString.h in Headers */ = {isa = PBXBuildFile; fileRef = 01EFE1E65B2CDF94BDC5F66D434D23A3 /* SentryCrashCString.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		F5F28F4D93C0DB775DB395025916C96E /* Pods-ProtonVPNTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 61351F20603419F661BC32FB664C38A0 /* Pods-ProtonVPNTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		F5F28F4D93C0DB775DB395025916C96E /* Pods-ProtonVPNTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 3EBE2D63A84A2FA5E8851519800E49AA /* Pods-ProtonVPNTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F608E03CE87FB4363EE65243B5D513D6 /* NetworkReachabilityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5FEC73D6E1EF1E0C85D6E4EB256744E /* NetworkReachabilityManager.swift */; };
 		F62F0A8B48E51CF1039D5D40B9412B4E /* Alamofire-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = EB4A784304DBF5E5BE429AB9740A74D4 /* Alamofire-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F6A0FCA683C2050A2F777D5A27B58AE9 /* TSKPublicKeyAlgorithm.h in Headers */ = {isa = PBXBuildFile; fileRef = 81694C9D0EC241C5D2AAB20227D8977B /* TSKPublicKeyAlgorithm.h */; settings = {ATTRIBUTES = (Project, ); }; };
@@ -465,7 +465,7 @@
 			remoteGlobalIDString = 94BDCD90B52278D1FB244A66E8B95A4A;
 			remoteInfo = Sentry;
 		};
-		5ACFBF3DF090F215CDDA3D47F2B07454 /* PBXContainerItemProxy */ = {
+		57E3616DF2DFC4073350A4154D0C56FF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
@@ -546,7 +546,6 @@
 		03231587AA71151A95315C63DA093BC6 /* SentryCrashMonitorType.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitorType.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitorType.h; sourceTree = "<group>"; };
 		033CEFAD286448F2C6144B8E4F7A0E50 /* SentrySerializable.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentrySerializable.h; path = Sources/Sentry/include/SentrySerializable.h; sourceTree = "<group>"; };
 		03C7E059D2AA5EED8111AB76651BF66F /* SafariService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SafariService.swift; path = Source/SafariService.swift; sourceTree = "<group>"; };
-		03D1E516B4C8043C74F5329E4500B61B /* Pods-Siri Shortuct Handler-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Siri Shortuct Handler-dummy.m"; sourceTree = "<group>"; };
 		04869B73DCC0F901D2A1CF113A44D133 /* Response.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Response.swift; path = Source/Response.swift; sourceTree = "<group>"; };
 		06B43FDE4EB47491504068884DA8135D /* SentryStacktrace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryStacktrace.h; path = Sources/Sentry/include/SentryStacktrace.h; sourceTree = "<group>"; };
 		077935BFD64097D1EBEEDCB151783493 /* AFError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AFError.swift; path = Source/AFError.swift; sourceTree = "<group>"; };
@@ -566,7 +565,6 @@
 		0EDB9D5915C474AF121E11CC46DF6C69 /* MultipartFormData.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MultipartFormData.swift; path = Source/MultipartFormData.swift; sourceTree = "<group>"; };
 		0F7110840826A6D8C353F18C8D6D18F2 /* SentryCrashJSONCodecObjC.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashJSONCodecObjC.m; path = Sources/SentryCrash/Recording/Tools/SentryCrashJSONCodecObjC.m; sourceTree = "<group>"; };
 		0F813F9C1DB63732717686B8A73441FE /* SentryCrashFileUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashFileUtils.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashFileUtils.h; sourceTree = "<group>"; };
-		0FD375DAC236EF72D0D6EF78C4D65B1D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
 		0FF8CEC68E7862B448943E2C808AC316 /* TSKTrustDecision.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKTrustDecision.h; path = TrustKit/TSKTrustDecision.h; sourceTree = "<group>"; };
 		10B903124ADE45AA87D2DD3B07FD5F12 /* VpnManagerMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnManagerMock.swift; path = Source/VpnManagerMock.swift; sourceTree = "<group>"; };
 		10F54D86544910BB38F28CFD0CDAE998 /* init_registry_tables.c */ = {isa = PBXFileReference; includeInIndex = 1; name = init_registry_tables.c; path = TrustKit/Dependencies/domain_registry/private/init_registry_tables.c; sourceTree = "<group>"; };
@@ -583,6 +581,7 @@
 		16651CEE526F7704C8EA4FA8EF034334 /* Collection+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Collection+Extension.swift"; path = "Source/Collection+Extension.swift"; sourceTree = "<group>"; };
 		1716B430F84A74F5DE3B499441748D3F /* SessionManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionManager.swift; path = Source/SessionManager.swift; sourceTree = "<group>"; };
 		177E73EF6C65EED50BC45E17B7D08655 /* reporting_utils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = reporting_utils.h; path = TrustKit/Reporting/reporting_utils.h; sourceTree = "<group>"; };
+		17955206D1B2C81199AF09E7F8EC46E0 /* Pods-Quick Connect Widget-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Quick Connect Widget-Info.plist"; sourceTree = "<group>"; };
 		188E8E36F8F7BAA2E3E2FCA9FCE30D80 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = vpncore.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		18E62656512F133F74AC07157960DB0F /* VpnCredentials.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnCredentials.swift; path = Source/VpnCredentials.swift; sourceTree = "<group>"; };
 		1A4516D2F7A1CA8331B01E16B74A5B11 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ProtonVPN.framework; path = "Pods-ProtonVPN.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -601,9 +600,9 @@
 		225C09C7F73FAEFBA2C6CA4479A43787 /* ResourceBundle-vpncore-vpncore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-vpncore-vpncore-Info.plist"; sourceTree = "<group>"; };
 		22AA6D4D3F0A7BCF84D99B1BAB5E2CCD /* Sentry-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Sentry-umbrella.h"; sourceTree = "<group>"; };
 		2647ACAAE52703D54F954E7DC50BF779 /* SentryCrashObjCApple.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashObjCApple.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashObjCApple.h; sourceTree = "<group>"; };
+		26746C0A3D673B1495622F9EF35C811F /* Pods-ProtonVPNTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-Info.plist"; sourceTree = "<group>"; };
 		275F7B7FB0CAFB358F45DC45CB96A163 /* NSError+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSError+Extension.swift"; path = "Source/NSError+Extension.swift"; sourceTree = "<group>"; };
 		278254F84EE64900EDF32DDD2A3F7089 /* TSKNSURLSessionDelegateProxy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKNSURLSessionDelegateProxy.h; path = TrustKit/Swizzling/TSKNSURLSessionDelegateProxy.h; sourceTree = "<group>"; };
-		278D2D28B55E127C499A767F83D9DA6B /* Pods-Siri Shortuct Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortuct Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		27EFD510BFE1F09E9840848B213AD919 /* SentryCrashMach.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashMach.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashMach.c; sourceTree = "<group>"; };
 		287257B112385F50F9DB8E400C9BF8DA /* TrialChecker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrialChecker.swift; path = Source/TrialChecker.swift; sourceTree = "<group>"; };
 		28E38BBB2D856B8D9D3AF3CF5707E420 /* VpnState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnState.swift; path = Source/VpnState.swift; sourceTree = "<group>"; };
@@ -622,7 +621,6 @@
 		34D0B89CD97F512E505F54CF28F13FD6 /* SentryDsn.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryDsn.m; path = Sources/Sentry/SentryDsn.m; sourceTree = "<group>"; };
 		34D6CA2FA789AF7FC5B5D092413E43A2 /* TrustKit.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TrustKit.h; path = TrustKit/TrustKit.h; sourceTree = "<group>"; };
 		3637B103F93683AB39183F9607114381 /* TrustKitHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrustKitHelper.swift; path = Source/TrustKitHelper.swift; sourceTree = "<group>"; };
-		3664C850FEE9EB91BF6105BE4212441F /* Pods-Quick Connect Widget-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Quick Connect Widget-Info.plist"; sourceTree = "<group>"; };
 		3704E9F44F84CF43F352C788968E5D9D /* NSCoding+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "NSCoding+Extension.swift"; path = "Source/NSCoding+Extension.swift"; sourceTree = "<group>"; };
 		3990BEEB59FC62E818AA2134A2EB9CB2 /* vpncore-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "vpncore-umbrella.h"; sourceTree = "<group>"; };
 		39DAB562B6E4858F6A89C00932CFB185 /* GSMessages-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "GSMessages-dummy.m"; sourceTree = "<group>"; };
@@ -634,16 +632,17 @@
 		3C36E5F9335FDF7E9DC793BEBC162CBA /* TSKPinningValidatorCallback.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKPinningValidatorCallback.h; path = TrustKit/TSKPinningValidatorCallback.h; sourceTree = "<group>"; };
 		3CBBE89C32B5E67F6DA1255FE799A27D /* SentryCrashSystemCapabilities.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashSystemCapabilities.h; path = Sources/SentryCrash/Recording/SentryCrashSystemCapabilities.h; sourceTree = "<group>"; };
 		3CEC828C5C45AA59E93DE2C3CB09C3D0 /* registry_tables.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = registry_tables.h; path = TrustKit/Dependencies/domain_registry/registry_tables_genfiles/registry_tables.h; sourceTree = "<group>"; };
+		3D07EF073FA20DF7227BC24E683BC11A /* Pods-ProtonVPN-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProtonVPN-acknowledgements.markdown"; sourceTree = "<group>"; };
 		3D1821595DD94DC55FFDAD0329450C09 /* SentryCrashMachineContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMachineContext.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashMachineContext.h; sourceTree = "<group>"; };
-		3D40DC900EA4D2BA648813068DC369F5 /* Pods_Siri_Shortuct_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Siri_Shortuct_Handler.framework; path = "Pods-Siri Shortuct Handler.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D4168388EDAE7B3A797680A24646B84 /* GSMessages.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = GSMessages.framework; path = GSMessages.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E432891A2283C42275C2F51EFA5BFE5 /* SentryCrashMachineContext_Apple.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMachineContext_Apple.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashMachineContext_Apple.h; sourceTree = "<group>"; };
-		3F6253366DEF7262D5F875289B8A4BC9 /* Pods-ProtonVPNTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ProtonVPNTests.modulemap"; sourceTree = "<group>"; };
+		3EBE2D63A84A2FA5E8851519800E49AA /* Pods-ProtonVPNTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProtonVPNTests-umbrella.h"; sourceTree = "<group>"; };
 		3F818B77B3DAE2920557A348BF60A1AD /* VpnKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnKeychain.swift; path = Source/VpnKeychain.swift; sourceTree = "<group>"; };
 		40309BBB9A196DFE5732D996E40EF72D /* TSKPinFailureReport.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKPinFailureReport.m; path = TrustKit/Reporting/TSKPinFailureReport.m; sourceTree = "<group>"; };
 		409045AB54090C8CEBC07ABC92C2C227 /* Alamofire.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Alamofire.modulemap; sourceTree = "<group>"; };
 		40AF17FC943AA4C2C83EAC71605AF4FC /* SentryCrashCPU_x86_32.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashCPU_x86_32.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU_x86_32.c; sourceTree = "<group>"; };
 		41744C51807DD07FAD277991ECF9F899 /* SentryNSURLRequest.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryNSURLRequest.h; path = Sources/Sentry/include/SentryNSURLRequest.h; sourceTree = "<group>"; };
+		418A1846754C22241F5120AC1685A561 /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		41C6B5AA3280928A48DDA00F892410D9 /* TSKPinningValidatorResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKPinningValidatorResult.m; path = TrustKit/TSKPinningValidatorResult.m; sourceTree = "<group>"; };
 		4202F068005F5AD01BC05604AA75762D /* ProfileManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileManager.swift; path = Source/ProfileManager.swift; sourceTree = "<group>"; };
 		4242BBE81F520BE4011D5BB48F86CDD0 /* ReachabilitySwift-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ReachabilitySwift-Info.plist"; sourceTree = "<group>"; };
@@ -658,7 +657,7 @@
 		492CECF02A1DD4D6478AD73A172D6ABC /* Alamofire.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Alamofire.swift; path = Source/Alamofire.swift; sourceTree = "<group>"; };
 		499B4E48ADB52655B713BAB3CE8E7569 /* TSKPinningValidator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKPinningValidator.h; path = TrustKit/TSKPinningValidator.h; sourceTree = "<group>"; };
 		4BBD5384D9AAD4503B302F5212DE1BB8 /* SentryCrashDoctor.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashDoctor.m; path = Sources/SentryCrash/Recording/SentryCrashDoctor.m; sourceTree = "<group>"; };
-		4BC59E3316EC34FE496CFE2E8FBB2978 /* Pods-Siri Shortuct Handler-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Siri Shortuct Handler-acknowledgements.plist"; sourceTree = "<group>"; };
+		4C89E9CC42E63F406048FA85C0266C39 /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
 		4CA6423F465E67B7D32946881CDE8A34 /* Sentry.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Sentry.xcconfig; sourceTree = "<group>"; };
 		4D4B910B0EB9C9BD1D607B7807874A2E /* SentryJavaScriptBridgeHelper.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryJavaScriptBridgeHelper.m; path = Sources/Sentry/SentryJavaScriptBridgeHelper.m; sourceTree = "<group>"; };
 		4DEEC016F4CBF241EC13F70D735805A9 /* SentryCrashCPU.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashCPU.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU.h; sourceTree = "<group>"; };
@@ -678,6 +677,7 @@
 		543EDE6D0CBA1FBACD05E4D6F2CE6138 /* SentryCrashVarArgs.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashVarArgs.h; path = Sources/SentryCrash/Reporting/Filters/Tools/SentryCrashVarArgs.h; sourceTree = "<group>"; };
 		54AA245061E7EC44031171E3AAF6032F /* SentryCrashStackCursor_MachineContext.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashStackCursor_MachineContext.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor_MachineContext.c; sourceTree = "<group>"; };
 		54D7C11BAF374580906B51A4DD3AF5CA /* SentryCrashStackCursor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashStackCursor.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor.h; sourceTree = "<group>"; };
+		553BCFD727724666EC9398C4140C2072 /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
 		560E1192E3C83F26C5A17BD4AE770F0A /* SentryCrashReportStore.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashReportStore.c; path = Sources/SentryCrash/Recording/SentryCrashReportStore.c; sourceTree = "<group>"; };
 		576CA97D1B8D2DF1D2B9E3074D23EE04 /* SentryCrashInstallation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashInstallation.h; path = Sources/SentryCrash/Installations/SentryCrashInstallation.h; sourceTree = "<group>"; };
 		58319542EC6D5DE2BAD0BA7C0E7A2CBE /* GSMessage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = GSMessage.swift; path = GSMessages/GSMessage.swift; sourceTree = "<group>"; };
@@ -692,7 +692,6 @@
 		5BF4E30274069217632DF1D515EB3DA2 /* Arithmetic.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Arithmetic.swift; path = Source/Arithmetic.swift; sourceTree = "<group>"; };
 		5C93638C533207749EBC6F8376721D94 /* SentryCrashMach.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMach.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashMach.h; sourceTree = "<group>"; };
 		5D33EFE4A444201FB77442DD19D40B51 /* SrpClientExtension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SrpClientExtension.swift; path = Source/SrpClientExtension.swift; sourceTree = "<group>"; };
-		5D34FF38D9146C1CD49E0A2B534DC3A3 /* Pods-Quick Connect Widget.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Quick Connect Widget.modulemap"; sourceTree = "<group>"; };
 		5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Alamofire.framework; path = Alamofire.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DBDED68BDDBA9E01BFDA57695A3E1DF /* SentryClient.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryClient.h; path = Sources/Sentry/include/SentryClient.h; sourceTree = "<group>"; };
 		5DC2AFFD7C47FE8E2F1E6E8CD94C6A82 /* Alamofire-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Alamofire-Info.plist"; sourceTree = "<group>"; };
@@ -704,13 +703,13 @@
 		602104993F8B88CAC2BDCDF3E47AF621 /* Pods_ProtonVPNTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ProtonVPNTests.framework; path = "Pods-ProtonVPNTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6097D35EE3D436F111B0AD55A49A3C29 /* SentryCrashLogger.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashLogger.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashLogger.h; sourceTree = "<group>"; };
 		60DB257301F3BBB08647B869D8A029DE /* SentryQueueableRequestManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryQueueableRequestManager.m; path = Sources/Sentry/SentryQueueableRequestManager.m; sourceTree = "<group>"; };
-		61351F20603419F661BC32FB664C38A0 /* Pods-ProtonVPNTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProtonVPNTests-umbrella.h"; sourceTree = "<group>"; };
 		6138ABEF469D12E384A37A16EB5B9A2C /* AuthKeychain.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthKeychain.swift; path = Source/AuthKeychain.swift; sourceTree = "<group>"; };
 		61434729BF9CD6CF8BB8EB4E1C7F4B7E /* SentryCrashMonitor_System.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor_System.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_System.h; sourceTree = "<group>"; };
 		61D968DF05D15C728AB551FCCF482459 /* LocalizationUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocalizationUtility.swift; path = Source/LocalizationUtility.swift; sourceTree = "<group>"; };
 		61FAB65137C2C39244206DEFDBFCBCA5 /* fr.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = fr.lproj; path = Source/Localization/fr.lproj; sourceTree = "<group>"; };
 		6290430E6781B25B1D6C22FCB9BCD20B /* vpncore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "vpncore-dummy.m"; sourceTree = "<group>"; };
-		6519C24AC55568911E8DF7AD4DF8FC35 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
+		65268BC6C30949598DFDAD4A483BF0CC /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
+		656A5CC4CB1BF650863674B5A7755F55 /* Pods-Quick Connect Widget-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Quick Connect Widget-dummy.m"; sourceTree = "<group>"; };
 		658F27CAD0981C0CEBBF9AE83529AA13 /* AlertService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlertService.swift; path = Source/AlertService.swift; sourceTree = "<group>"; };
 		6594B6525F57383708E307E04E2A5A4C /* ServerLocation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerLocation.swift; path = Source/ServerLocation.swift; sourceTree = "<group>"; };
 		65BDDB8F9D8AFD9736A62D11B33FB682 /* GSMessages-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GSMessages-umbrella.h"; sourceTree = "<group>"; };
@@ -730,11 +729,9 @@
 		6B9086966D9F6EF5EB246F1F0DC00103 /* TSKSPKIHashCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKSPKIHashCache.m; path = TrustKit/Pinning/TSKSPKIHashCache.m; sourceTree = "<group>"; };
 		6C1D54FB9B03A4823FBF28A0F8DA51C1 /* VpnApiService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnApiService.swift; path = Source/VpnApiService.swift; sourceTree = "<group>"; };
 		6C534EE2A3CEA7C216B4B7A3A589E559 /* SentryCrashInstallation+Private.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SentryCrashInstallation+Private.h"; path = "Sources/SentryCrash/Installations/SentryCrashInstallation+Private.h"; sourceTree = "<group>"; };
-		6C6C02E76157EF231887873AC7280A2C /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		6CDE0CFC358F92234CEC9D0944E130FC /* SentryClient.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryClient.m; path = Sources/Sentry/SentryClient.m; sourceTree = "<group>"; };
 		6D5D1F10BC5D2BFD30DE8EF919F0B5A1 /* MapConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = MapConstants.swift; path = Source/MapConstants.swift; sourceTree = "<group>"; };
 		6D98C75CF17CD2C08E74D20343381DC1 /* TaskDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TaskDelegate.swift; path = Source/TaskDelegate.swift; sourceTree = "<group>"; };
-		6E8F2F284024837C7FA59CCBCF581578 /* Pods-Siri Shortuct Handler-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Siri Shortuct Handler-Info.plist"; sourceTree = "<group>"; };
 		6F44FC49A289BF17543383A4A5D622F9 /* Request.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Request.swift; path = Source/Request.swift; sourceTree = "<group>"; };
 		6F4BB55F933E3A26F36AD74E687230A1 /* ssl_pin_verifier.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ssl_pin_verifier.h; path = TrustKit/Pinning/ssl_pin_verifier.h; sourceTree = "<group>"; };
 		702B0ACE95FB2CC05E7E28F3BDE6FAA0 /* SentryCrashMonitor_User.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor_User.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_User.h; sourceTree = "<group>"; };
@@ -751,41 +748,36 @@
 		74BD26BFF9674A2F1859546F0D8BBC1F /* SentryCrashObjC.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashObjC.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashObjC.c; sourceTree = "<group>"; };
 		755AF258B9976471A9E35603F0F3C718 /* SentryCrashCPU_arm64.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashCPU_arm64.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU_arm64.c; sourceTree = "<group>"; };
 		757542A77E15166B9FC97659654207E8 /* KeychainError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = KeychainError.swift; path = Source/KeychainError.swift; sourceTree = "<group>"; };
-		76BD8544761767A6D87D1779FFCB83A5 /* Pods-Siri Shortuct Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortuct Handler.release.xcconfig"; sourceTree = "<group>"; };
 		77575ED8C1B66330339D271CD4F1ECAD /* TrialService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrialService.swift; path = Source/TrialService.swift; sourceTree = "<group>"; };
 		777F5E6E341379D3212D2D0F5AB6601C /* AccountPlan.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AccountPlan.swift; path = Source/AccountPlan.swift; sourceTree = "<group>"; };
-		77886071A283ADD0188E48A9AB6EF735 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		77BF0AAB15EBD616D2E217BD81055A28 /* ProtonVpnError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProtonVpnError.swift; path = Source/ProtonVpnError.swift; sourceTree = "<group>"; };
 		783CE00B716FFBC77E526172A04C1856 /* SentryBreadcrumbStore.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryBreadcrumbStore.m; path = Sources/Sentry/SentryBreadcrumbStore.m; sourceTree = "<group>"; };
 		78E8674AEE6C3541A7C8218CB2298232 /* string_util.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = string_util.h; path = TrustKit/Dependencies/domain_registry/private/string_util.h; sourceTree = "<group>"; };
-		792588F5B417D58186F04309AF339257 /* Pods-Quick Connect Widget.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.staging.xcconfig"; sourceTree = "<group>"; };
 		7A5D5DBEEE9F5CFBDA206C06BA47CF41 /* PropertiesManagerMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PropertiesManagerMock.swift; path = Source/PropertiesManagerMock.swift; sourceTree = "<group>"; };
 		7A693F91E7E8A37EBAB4FE9B90F70129 /* SentryBreadcrumb.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryBreadcrumb.m; path = Sources/Sentry/SentryBreadcrumb.m; sourceTree = "<group>"; };
 		7B486908AFABCA1D6E67585917525437 /* ChecksRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ChecksRouter.swift; path = Source/ChecksRouter.swift; sourceTree = "<group>"; };
 		7BE1955CB98DB7634972221A085A45CC /* SentryCrashSignalInfo.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashSignalInfo.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashSignalInfo.c; sourceTree = "<group>"; };
 		7C0D0776FFD4AD341E07D8DE8D9E74A0 /* tsk_assert.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = tsk_assert.h; path = TrustKit/Dependencies/domain_registry/private/tsk_assert.h; sourceTree = "<group>"; };
 		7C44BFD5DB6D0D3C0A2D121D4539BC5B /* registry_types.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = registry_types.h; path = TrustKit/Dependencies/domain_registry/private/registry_types.h; sourceTree = "<group>"; };
+		7C5A1B4601058BBF84526640660A2AF8 /* Pods-Siri Shortcut Handler-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Siri Shortcut Handler-dummy.m"; sourceTree = "<group>"; };
+		7C960A403BEE4BF006C04EBF9B67C0C9 /* Pods-Quick Connect Widget.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Quick Connect Widget.modulemap"; sourceTree = "<group>"; };
 		7D0A47738602C0A52D71439FAC7318E8 /* String+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "String+Extension.swift"; path = "Source/String+Extension.swift"; sourceTree = "<group>"; };
 		7D8162EC13B24CF03BD1DE196AFF0A54 /* TSKBackgroundReporter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKBackgroundReporter.m; path = TrustKit/Reporting/TSKBackgroundReporter.m; sourceTree = "<group>"; };
 		7D884512A8650A8693628A28EBD93607 /* ReachabilitySwift-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ReachabilitySwift-umbrella.h"; sourceTree = "<group>"; };
 		7D9381F44078CE7C59273374878E864D /* PaymentsApiService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentsApiService.swift; path = Source/PaymentsApiService.swift; sourceTree = "<group>"; };
 		7D9F8DC4670C8458D5BCF71991594959 /* SentryJavaScriptBridgeHelper.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryJavaScriptBridgeHelper.h; path = Sources/Sentry/include/SentryJavaScriptBridgeHelper.h; sourceTree = "<group>"; };
-		7E1EA0A16D0899484BDB8813F4F6B552 /* Pods-ProtonVPN-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProtonVPN-frameworks.sh"; sourceTree = "<group>"; };
-		7FB05825DE67CDFE4FF3EF861000EACA /* Pods-ProtonVPNTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProtonVPNTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		7FFF86DF8E0305CA1ECCE63AF0E03545 /* GSMessages-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "GSMessages-prefix.pch"; sourceTree = "<group>"; };
 		81694C9D0EC241C5D2AAB20227D8977B /* TSKPublicKeyAlgorithm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKPublicKeyAlgorithm.h; path = TrustKit/Pinning/TSKPublicKeyAlgorithm.h; sourceTree = "<group>"; };
 		8194A2517F9240AA4C914C0CD435C227 /* SentryException.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryException.m; path = Sources/Sentry/SentryException.m; sourceTree = "<group>"; };
 		81C0CFAAC4C8695FAC6EB6D58C0AF387 /* SentryCrashReportSink.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReportSink.h; path = Sources/Sentry/include/SentryCrashReportSink.h; sourceTree = "<group>"; };
 		81EB66F4F2E3D6F93D16FAD5463C1CA7 /* PaymentMethod.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentMethod.swift; path = Source/PaymentMethod.swift; sourceTree = "<group>"; };
-		834C68603A9EE8D7FFC9726C5CF933AB /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
 		8390416149F069B10F6F06F40BDB9FB1 /* SentryCrash.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrash.h; path = Sources/SentryCrash/Recording/SentryCrash.h; sourceTree = "<group>"; };
-		83D21DD16B271A32250A54494905C781 /* Pods-ProtonVPN.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ProtonVPN.modulemap"; sourceTree = "<group>"; };
 		83E9E500656ACBD95EE44FAECAE0F6D3 /* SentryInstallation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryInstallation.m; path = Sources/Sentry/SentryInstallation.m; sourceTree = "<group>"; };
 		84213D71DF42C3B2D949950DC5106BA4 /* SentryCrashMonitor_CPPException.cpp */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashMonitor_CPPException.cpp; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_CPPException.cpp; sourceTree = "<group>"; };
+		846A3ABD4E3A76D007CFB0FBE1BED3ED /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
 		84B3638C5D5BB8A88C949FF65D3E454C /* SentryCrashThread.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashThread.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashThread.c; sourceTree = "<group>"; };
-		8544EEBF7FE138494145457048443742 /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
 		875AB97719DD2717E3118DC7B7110FBB /* SiriHelperProtocol.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SiriHelperProtocol.swift; path = Source/SiriHelperProtocol.swift; sourceTree = "<group>"; };
-		88009EA8E733263A4EBA3DA864990985 /* Pods-Siri Shortuct Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortuct Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		87FC67BEC6FB9766FF2F478A4D1DCE41 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		8906C8C12850C1ACA7D405D4B7F436F8 /* SentryCrashJSONCodec.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashJSONCodec.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashJSONCodec.h; sourceTree = "<group>"; };
 		8A0F43624EFF3BDEF05AA899C976AF1D /* SentryCrashMonitor_NSException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor_NSException.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_NSException.h; sourceTree = "<group>"; };
 		8A3BE01FCB4A710FDD098A83D78C0DFE /* SentryCrashCPU_Apple.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashCPU_Apple.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU_Apple.h; sourceTree = "<group>"; };
@@ -795,20 +787,24 @@
 		8B868DA122AB97E9DCF3467EB2524549 /* ParameterEncoding.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ParameterEncoding.swift; path = Source/ParameterEncoding.swift; sourceTree = "<group>"; };
 		8C21150BCE7213C8ECDC1BF0EFAA8F77 /* SentryCrashMonitor_User.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashMonitor_User.c; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_User.c; sourceTree = "<group>"; };
 		8C3BF25F94E4D4E7349759CFCE49976A /* AppState.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppState.swift; path = Source/AppState.swift; sourceTree = "<group>"; };
-		8CC4DEE04981302488FE089896B76C04 /* Pods-Quick Connect Widget-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Quick Connect Widget-acknowledgements.plist"; sourceTree = "<group>"; };
+		8CAF45115ED8DF53F26FE68B947F0080 /* Pods-Siri Shortcut Handler-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Siri Shortcut Handler-acknowledgements.plist"; sourceTree = "<group>"; };
 		8D84B5F8802A93C2FA61813E0E9210B3 /* SentrySwizzle.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentrySwizzle.m; path = Sources/Sentry/SentrySwizzle.m; sourceTree = "<group>"; };
 		8E39E28D7F9D990006D4E1BAB9003C94 /* SentryCrashMonitor_Signal.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashMonitor_Signal.c; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_Signal.c; sourceTree = "<group>"; };
 		8EEF0E05682899903675E0A4C4949B1C /* SentryMechanism.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryMechanism.h; path = Sources/Sentry/include/SentryMechanism.h; sourceTree = "<group>"; };
+		8FA47261F44248091F5F7ACC7D1A2B1D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
+		8FC9B839D74EBB237934CF9FAE3E5CA8 /* Pods-ProtonVPN.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ProtonVPN.modulemap"; sourceTree = "<group>"; };
+		903EE243BA860B09751818093EBBF94F /* Pods_Siri_Shortcut_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Siri_Shortcut_Handler.framework; path = "Pods-Siri Shortcut Handler.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		90624B9F9F21BAA0077D4A2B1EE21F6A /* en.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = en.lproj; path = Source/Localization/en.lproj; sourceTree = "<group>"; };
 		90ADB4B69DA8AEC78255374B0DAE809F /* SentryCrashReportSink.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashReportSink.m; path = Sources/Sentry/SentryCrashReportSink.m; sourceTree = "<group>"; };
 		912D46FC665C59BC14F2D8BAFCE50C42 /* trie_search.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = trie_search.h; path = TrustKit/Dependencies/domain_registry/private/trie_search.h; sourceTree = "<group>"; };
 		9184DB95BF5BADDF1755922726BEB1B9 /* SentryFrame.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryFrame.h; path = Sources/Sentry/include/SentryFrame.h; sourceTree = "<group>"; };
 		93B9818E0A430F882613782A2E7068DD /* ConnectionRequest.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConnectionRequest.swift; path = Source/ConnectionRequest.swift; sourceTree = "<group>"; };
-		944A6F404200B62EFFA1468C8C62C144 /* Pods-Siri Shortuct Handler-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Siri Shortuct Handler-acknowledgements.markdown"; sourceTree = "<group>"; };
+		950C61627E93D70A98BDDDCAEDE7D13E /* Pods-ProtonVPNTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ProtonVPNTests.modulemap"; sourceTree = "<group>"; };
 		95E90960DEA89E9217E34B75ADA62FDF /* SentryLog.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryLog.h; path = Sources/Sentry/include/SentryLog.h; sourceTree = "<group>"; };
 		95EEAAC047652CA5B43A7E7DEE78FF74 /* Validation.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Validation.swift; path = Source/Validation.swift; sourceTree = "<group>"; };
 		9618B1DF21A823555FBB4A458CB19723 /* AuthInfoResponse.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthInfoResponse.swift; path = Source/AuthInfoResponse.swift; sourceTree = "<group>"; };
 		96A6074B19C0BE3D823745D54DD2DD67 /* SentryCrashDate.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashDate.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashDate.h; sourceTree = "<group>"; };
+		96C94A42D81D8FBEC3B1C57FBFFB1222 /* Pods-ProtonVPNTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProtonVPNTests-dummy.m"; sourceTree = "<group>"; };
 		96E84096E0AD352598505BF30277E5F6 /* SentryCrashSymbolicator.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashSymbolicator.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashSymbolicator.h; sourceTree = "<group>"; };
 		99B4A6CD0F159F971F18F43194E49EAE /* SentryBreadcrumbStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryBreadcrumbStore.h; path = Sources/Sentry/include/SentryBreadcrumbStore.h; sourceTree = "<group>"; };
 		99CCD6F6976A89AF70AF5644589D8765 /* domain_registry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = domain_registry.h; path = TrustKit/Dependencies/domain_registry/domain_registry.h; sourceTree = "<group>"; };
@@ -823,7 +819,9 @@
 		9EB985DC06ACBF3D4234272A6836D3F9 /* ServerOffering.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerOffering.swift; path = Source/ServerOffering.swift; sourceTree = "<group>"; };
 		9F1F4C2A10977BF45BF6BCE4245A1E07 /* ProfileUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileUtility.swift; path = Source/ProfileUtility.swift; sourceTree = "<group>"; };
 		9F9465258EE834CFFEA4B00E95667BAE /* TSKPinningValidator.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKPinningValidator.m; path = TrustKit/TSKPinningValidator.m; sourceTree = "<group>"; };
+		9FF9D061DA59C2293224A6DF8C4C037B /* Pods-Siri Shortcut Handler-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Siri Shortcut Handler-umbrella.h"; sourceTree = "<group>"; };
 		A051CF1FD59E8AA59FA70019273D46DD /* SessionModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SessionModel.swift; path = Source/SessionModel.swift; sourceTree = "<group>"; };
+		A09E1D48551F2415C13B78989D6CAEA1 /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
 		A1102623266D8893771501631C29F8AA /* SentryCrashThread.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashThread.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashThread.h; sourceTree = "<group>"; };
 		A2403EDB91021E1D2E4056CC06496EDF /* ContinuousServerProperties.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ContinuousServerProperties.swift; path = Source/ContinuousServerProperties.swift; sourceTree = "<group>"; };
 		A28103F49D15CB019D53DB38DB15C9F0 /* SentryCrash.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrash.m; path = Sources/SentryCrash/Recording/SentryCrash.m; sourceTree = "<group>"; };
@@ -837,10 +835,10 @@
 		A520BC2A1DE14D8E4BB927D0BF1D3805 /* configuration_utils.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = configuration_utils.m; path = TrustKit/configuration_utils.m; sourceTree = "<group>"; };
 		A59D53B69F6AB570A2487311CFE0B524 /* SentryCrashMonitor_MachException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor_MachException.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_MachException.h; sourceTree = "<group>"; };
 		A6915BD9E0C7803B9C78E258B6000E6A /* vendor_identifier.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = vendor_identifier.h; path = TrustKit/Reporting/vendor_identifier.h; sourceTree = "<group>"; };
+		A6DB53BB7373E4F695F839F4C93C0BE6 /* Pods-ProtonVPNTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProtonVPNTests-acknowledgements.markdown"; sourceTree = "<group>"; };
 		A7F0949DEBCFE606B098CE7A13897EF9 /* TrustKit.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = TrustKit.modulemap; sourceTree = "<group>"; };
 		A805115EE5634A83654A557D1569CC18 /* NetworkError.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkError.swift; path = Source/NetworkError.swift; sourceTree = "<group>"; };
 		AB7172A0DF24C35F396C734C739659DF /* vendor_identifier.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = vendor_identifier.m; path = TrustKit/Reporting/vendor_identifier.m; sourceTree = "<group>"; };
-		AC52B1E0503EF84B539F8D247284AD79 /* Pods-ProtonVPNTests-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-Info.plist"; sourceTree = "<group>"; };
 		AD0237CD4E5E3E6BA10956C3806D82DC /* SentryMechanism.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryMechanism.m; path = Sources/Sentry/SentryMechanism.m; sourceTree = "<group>"; };
 		AD3D7D60DED3E992F4D027095857DEBC /* ReachabilitySwift.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ReachabilitySwift.modulemap; sourceTree = "<group>"; };
 		AD9D2EFBC02BAB20DB2817C37C65E1A5 /* SentryNSURLRequest.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryNSURLRequest.m; path = Sources/Sentry/SentryNSURLRequest.m; sourceTree = "<group>"; };
@@ -855,30 +853,30 @@
 		B438C56AC8D528D2B0ADA42D7B1B2D59 /* CountryModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CountryModel.swift; path = Source/CountryModel.swift; sourceTree = "<group>"; };
 		B456CB72543F4AA7CC3CB78BFBA8CB62 /* pt-BR.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "pt-BR.lproj"; path = "Source/Localization/pt-BR.lproj"; sourceTree = "<group>"; };
 		B47259E872C2969CD2E0462EE3DCC0FC /* QuickConnect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = QuickConnect.swift; path = Source/QuickConnect.swift; sourceTree = "<group>"; };
+		B49D7E330864EBCAB255E1438909DC9B /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
 		B4D8C688BECBE6AE6E8310E5E9EBADE8 /* SentryCrashMonitor_Signal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor_Signal.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_Signal.h; sourceTree = "<group>"; };
+		B536D45AD3A2E4469F2A1D2DFC7005DD /* Pods-Siri Shortcut Handler.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Siri Shortcut Handler.modulemap"; sourceTree = "<group>"; };
 		B676F8C71E9DDC75CAF1FB65CB64D44C /* SentryCrashReportStore.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReportStore.h; path = Sources/SentryCrash/Recording/SentryCrashReportStore.h; sourceTree = "<group>"; };
 		B67B84E1A25D54394FD8D83F49D42653 /* PropertiesManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PropertiesManager.swift; path = Source/PropertiesManager.swift; sourceTree = "<group>"; };
 		B691302521F16C460FF8EFC0934E3E18 /* Pods_Quick_Connect_Widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_Quick_Connect_Widget.framework; path = "Pods-Quick Connect Widget.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
 		B716C6BB567A4D987A8D3B68F02913EC /* tsk_assert.c */ = {isa = PBXFileReference; includeInIndex = 1; name = tsk_assert.c; path = TrustKit/Dependencies/domain_registry/private/tsk_assert.c; sourceTree = "<group>"; };
-		B8174F149BCE5CA6F6BF149D2CFF9EEA /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
 		B84D9EFC1A23A39565CEF6898F2122AF /* SentryBreadcrumbTracker.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryBreadcrumbTracker.h; path = Sources/Sentry/include/SentryBreadcrumbTracker.h; sourceTree = "<group>"; };
 		B9070A4F397114B257FB6AD4B50E2174 /* SentryCrashMonitor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitor.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor.h; sourceTree = "<group>"; };
 		B95F1F18C522CD0C88DDB91C653BD913 /* TrustKit-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TrustKit-umbrella.h"; sourceTree = "<group>"; };
 		BA4921B371107B1B48D2D90D0B88DD19 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS12.2.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		BB44C11B3DF767E3715A2B7E53DE9306 /* Pods-ProtonVPN-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ProtonVPN-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BC3106D31DA4A5137388C8A451C974FC /* KeychainAccess.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KeychainAccess.xcconfig; sourceTree = "<group>"; };
 		BC5E3167E7C13FF32C98B0607606F707 /* ServicePlanDataService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServicePlanDataService.swift; path = Source/ServicePlanDataService.swift; sourceTree = "<group>"; };
 		BC9A11E0CC46F5CBD32C6FC30DC09675 /* SentryCrashReportFields.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReportFields.h; path = Sources/SentryCrash/Recording/SentryCrashReportFields.h; sourceTree = "<group>"; };
-		BD572C07040FDD449291A66F0856302E /* Pods-ProtonVPNTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProtonVPNTests-dummy.m"; sourceTree = "<group>"; };
 		BDCA3A446AE2C016945A6E9FECB76D95 /* Sentry.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = Sentry.h; path = Sources/Sentry/include/Sentry.h; sourceTree = "<group>"; };
 		BDFD66213BCA6CC4B44288A0C3484815 /* SentryCrashDoctor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashDoctor.h; path = Sources/SentryCrash/Recording/SentryCrashDoctor.h; sourceTree = "<group>"; };
 		BFA881C8DDAF98521C260D40A077A3BA /* SentryCrashSignalInfo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashSignalInfo.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashSignalInfo.h; sourceTree = "<group>"; };
+		BFB4D3EB133AF9127BA6E593CE262F36 /* Pods-Siri Shortcut Handler-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Siri Shortcut Handler-acknowledgements.markdown"; sourceTree = "<group>"; };
 		BFBAA9B4474007C60B187AF21967BF0E /* SentryCrashStackCursor_Backtrace.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashStackCursor_Backtrace.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor_Backtrace.c; sourceTree = "<group>"; };
 		C095A63512F577B0B29AD6DD25DA55FD /* ProfileStorage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileStorage.swift; path = Source/ProfileStorage.swift; sourceTree = "<group>"; };
+		C0B85B7DA4B08E3A7F077EA6AA3C4F2F /* Pods-Siri Shortcut Handler-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Siri Shortcut Handler-Info.plist"; sourceTree = "<group>"; };
 		C1D3131536E1C95056275F5BF4818515 /* AppStateManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AppStateManager.swift; path = Source/AppStateManager.swift; sourceTree = "<group>"; };
-		C219AB39D7C11D69D404687413769E40 /* Pods-ProtonVPN-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-acknowledgements.plist"; sourceTree = "<group>"; };
+		C1F35E53C69AD892AC9765506DC6E2FF /* Pods-Quick Connect Widget-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Quick Connect Widget-acknowledgements.markdown"; sourceTree = "<group>"; };
 		C25C04E2A379B63FA9DC83EED0B82D15 /* SentryCrashReportConverter.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashReportConverter.m; path = Sources/Sentry/SentryCrashReportConverter.m; sourceTree = "<group>"; };
-		C2EF1BBFA160A2418A5230319C507A2E /* Pods-Quick Connect Widget-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-Quick Connect Widget-dummy.m"; sourceTree = "<group>"; };
 		C2F1825968734E2E9C8ABC64E373F87D /* SentryContext.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryContext.m; path = Sources/Sentry/SentryContext.m; sourceTree = "<group>"; };
 		C3031CA6C1A8A86F212029D24EDAEC55 /* PaymentsRouter.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PaymentsRouter.swift; path = Source/PaymentsRouter.swift; sourceTree = "<group>"; };
 		C321714EE5DC5D1052B00517032C01D7 /* SentryCrashReport.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReport.h; path = Sources/SentryCrash/Recording/SentryCrashReport.h; sourceTree = "<group>"; };
@@ -886,6 +884,7 @@
 		C462F836C38535C9FF44B8AA886F5907 /* SentryThread.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryThread.h; path = Sources/Sentry/include/SentryThread.h; sourceTree = "<group>"; };
 		C4CB2006B2D4D361CB61DF22B257D655 /* SentryCrashLogger.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashLogger.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashLogger.c; sourceTree = "<group>"; };
 		C52628082BBE95BEB4594CF539C8EEEA /* SentryFileManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryFileManager.m; path = Sources/Sentry/SentryFileManager.m; sourceTree = "<group>"; };
+		C529793593EFB97A5B8E3F9B9C2AAD02 /* Pods-Quick Connect Widget-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Quick Connect Widget-umbrella.h"; sourceTree = "<group>"; };
 		C54B08B17CF196A631AA0F869662938C /* KeychainAccess.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KeychainAccess.modulemap; sourceTree = "<group>"; };
 		C5FEC73D6E1EF1E0C85D6E4EB256744E /* NetworkReachabilityManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NetworkReachabilityManager.swift; path = Source/NetworkReachabilityManager.swift; sourceTree = "<group>"; };
 		C7D6D66819C8E851D385FDF246602D77 /* TrialServiceMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TrialServiceMock.swift; path = Source/TrialServiceMock.swift; sourceTree = "<group>"; };
@@ -896,7 +895,9 @@
 		C997A9EF7E85EE5C669C64E27F717FE4 /* Responses.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Responses.swift; path = Source/Responses.swift; sourceTree = "<group>"; };
 		C9BF14274E0D69E7EE9B9171C74A4A41 /* SentryCrashReportFixer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReportFixer.h; path = Sources/SentryCrash/Recording/SentryCrashReportFixer.h; sourceTree = "<group>"; };
 		CAA53AF394B261B9C6748C5C3A9A2B96 /* pl.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = pl.lproj; path = Source/Localization/pl.lproj; sourceTree = "<group>"; };
+		CB4CDCBC5F130C2566DE63FA2087C6C4 /* Pods-ProtonVPN-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-acknowledgements.plist"; sourceTree = "<group>"; };
 		CBC854BA4CCA6E8B810B349A52A70CBA /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
+		CBF4C239B3D8A68FD6DBD78D8AF603DE /* Pods-ProtonVPN-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProtonVPN-dummy.m"; sourceTree = "<group>"; };
 		CE888AAB122976312B39B0A582F2AD89 /* Profile.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Profile.swift; path = Source/Profile.swift; sourceTree = "<group>"; };
 		CEAACEB5BA498722BE8F3E9F77F96239 /* AttachmentRowViewModel.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AttachmentRowViewModel.swift; path = Source/AttachmentRowViewModel.swift; sourceTree = "<group>"; };
 		CF4E183EFB3FF450AA73D5053EBE5516 /* ServerFeature.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerFeature.swift; path = Source/ServerFeature.swift; sourceTree = "<group>"; };
@@ -907,8 +908,6 @@
 		D10760050D098B5F32F55F8513DC4870 /* NSData+Compression.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSData+Compression.h"; path = "Sources/Sentry/include/NSData+Compression.h"; sourceTree = "<group>"; };
 		D1B51A7B89C3125EEE430D762ABD39B2 /* SentryCrashMachineContext.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashMachineContext.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashMachineContext.c; sourceTree = "<group>"; };
 		D22925DD96D636B1DFB62269E869938D /* ReachabilitySwift-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ReachabilitySwift-dummy.m"; sourceTree = "<group>"; };
-		D28A7CA5D478E0DDB67D9A05C9AF6FA4 /* Pods-Quick Connect Widget-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Quick Connect Widget-umbrella.h"; sourceTree = "<group>"; };
-		D4410C7D53B81A1868BD0E12E448FD7B /* Pods-Quick Connect Widget-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-Quick Connect Widget-acknowledgements.markdown"; sourceTree = "<group>"; };
 		D4749B0603E179253DAE8C63D2FF66E9 /* SentryCrashMonitor_Deadlock.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashMonitor_Deadlock.m; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitor_Deadlock.m; sourceTree = "<group>"; };
 		D507895E2B6FBC65DFB196A3049D0075 /* ServerManager.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerManager.swift; path = Source/ServerManager.swift; sourceTree = "<group>"; };
 		D5E15799405F66ECAA97CD9E0A111B92 /* KeychainAccess-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KeychainAccess-Info.plist"; sourceTree = "<group>"; };
@@ -921,23 +920,21 @@
 		DB96E4C0EA205A68156C36EDD8AED01A /* ServerIp.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerIp.swift; path = Source/ServerIp.swift; sourceTree = "<group>"; };
 		DBD4D71B6299283B0078E5983BABD0BF /* TSKNSURLSessionDelegateProxy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = TSKNSURLSessionDelegateProxy.m; path = TrustKit/Swizzling/TSKNSURLSessionDelegateProxy.m; sourceTree = "<group>"; };
 		DCCAE3C57A5DB4DED428C542BC07ACAD /* SentryUser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryUser.h; path = Sources/Sentry/include/SentryUser.h; sourceTree = "<group>"; };
+		DD4EB81C94D78714FD08FB397EC30A64 /* Pods-ProtonVPN-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ProtonVPN-frameworks.sh"; sourceTree = "<group>"; };
 		DDCCB8C7D1765ECD4B605AE389F19086 /* SentryFrame.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryFrame.m; path = Sources/Sentry/SentryFrame.m; sourceTree = "<group>"; };
 		DE4377A7832B9A4E8CEFAD0A9575AFDA /* SentryCrashCPU.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashCPU.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU.c; sourceTree = "<group>"; };
-		E10F48E44A89FAD566729FF00B116B22 /* Pods-ProtonVPN-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProtonVPN-umbrella.h"; sourceTree = "<group>"; };
 		E1368BED002FD922CFEA1C13E1FC8DC1 /* SentryException.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryException.h; path = Sources/Sentry/include/SentryException.h; sourceTree = "<group>"; };
 		E157919FE1F91EC6FF8C582103440D8A /* vpncore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = vpncore.modulemap; sourceTree = "<group>"; };
 		E166B65E993C627E8AF1D75636ED6B9A /* es-MX.lproj */ = {isa = PBXFileReference; includeInIndex = 1; name = "es-MX.lproj"; path = "Source/Localization/es-MX.lproj"; sourceTree = "<group>"; };
 		E19D28B59E7931E67CB48F942E7603B9 /* AuthApiService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AuthApiService.swift; path = Source/AuthApiService.swift; sourceTree = "<group>"; };
 		E1DBC01EC40F967E3F3EFACBAAF9FEC2 /* ProfileType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileType.swift; path = Source/ProfileType.swift; sourceTree = "<group>"; };
-		E21060A6A6FCC3D5903FD894DB5332AB /* Pods-Siri Shortuct Handler.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-Siri Shortuct Handler.modulemap"; sourceTree = "<group>"; };
 		E21B382D36DF1AD34C4FA8BD10633716 /* SentryClient+Internal.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "SentryClient+Internal.h"; path = "Sources/Sentry/include/SentryClient+Internal.h"; sourceTree = "<group>"; };
 		E290C661D7D6D499C8E5301CDE54C136 /* ServerTrustPolicy.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ServerTrustPolicy.swift; path = Source/ServerTrustPolicy.swift; sourceTree = "<group>"; };
 		E2E787444D5344733B4A6F613ABCA2FA /* SentryCrashSysCtl.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashSysCtl.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashSysCtl.h; sourceTree = "<group>"; };
-		E33A0E793B753F0A6B5F7C0FF1E35946 /* Pods-ProtonVPN-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-Info.plist"; sourceTree = "<group>"; };
 		E345D360FE878DE7714A8A225AFAF09B /* SentryCrashReportConverter.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashReportConverter.h; path = Sources/Sentry/include/SentryCrashReportConverter.h; sourceTree = "<group>"; };
+		E3B28AD21EEF34F1C650520B63EB4A97 /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E3BC3A2394C5BB40199C3A37571B82CD /* Sentry.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Sentry.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3D876F5357B11D0EA6E5666C2909374 /* SentryCrashCString.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = SentryCrashCString.m; path = Sources/SentryCrash/Reporting/Tools/SentryCrashCString.m; sourceTree = "<group>"; };
-		E40D4C2B8FD8648F8CBEEDFD73FEF40C /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		E421B19CEDC6F09827E331F8C20C3D3B /* ReachabilitySwift.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ReachabilitySwift.xcconfig; sourceTree = "<group>"; };
 		E4868713A9036454EEB5ACE86016E053 /* SentryCrashReport.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashReport.c; path = Sources/SentryCrash/Recording/SentryCrashReport.c; sourceTree = "<group>"; };
 		E54100ED8319532BB00C21729F04373E /* ReportsApiService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ReportsApiService.swift; path = Source/ReportsApiService.swift; sourceTree = "<group>"; };
@@ -956,11 +953,11 @@
 		E996F9DFBAD83143127F4556FAA612B4 /* GSMessages-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "GSMessages-Info.plist"; sourceTree = "<group>"; };
 		E9E43BF5FEA0E80E51970B6C16D674AC /* TrustKit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TrustKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4A784304DBF5E5BE429AB9740A74D4 /* Alamofire-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Alamofire-umbrella.h"; sourceTree = "<group>"; };
+		EB60F3E44889084E47899CBEF4EE3821 /* Pods-Quick Connect Widget-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Quick Connect Widget-acknowledgements.plist"; sourceTree = "<group>"; };
 		EB9A6E6B525FE12C0C4975E077B3BBD2 /* trie_search.c */ = {isa = PBXFileReference; includeInIndex = 1; name = trie_search.c; path = TrustKit/Dependencies/domain_registry/private/trie_search.c; sourceTree = "<group>"; };
 		EBD603C45FA49623067E8E3FE47FCAFB /* ConnectingCellDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ConnectingCellDelegate.swift; path = Source/ConnectingCellDelegate.swift; sourceTree = "<group>"; };
 		EC60929B28BB8331B490A1342B3D2144 /* TSKPinningValidatorResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = TSKPinningValidatorResult.h; path = TrustKit/TSKPinningValidatorResult.h; sourceTree = "<group>"; };
 		ECB5D9742888B7B81BCDFFC5F58E30F6 /* SentryCrashStackCursor_Backtrace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashStackCursor_Backtrace.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor_Backtrace.h; sourceTree = "<group>"; };
-		ED2A6B66C2695B56CD15F69B01269115 /* Pods-ProtonVPNTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		EE30321A704992FECBBF0895A4FD434A /* SentryCrashStackCursor.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashStackCursor.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor.c; sourceTree = "<group>"; };
 		EE48896E2BF19C7AD865AF6450453D0C /* TrustKit-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "TrustKit-prefix.pch"; sourceTree = "<group>"; };
 		EEBE7956CFFFCEA576BDCA89BC10479D /* Sentry-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Sentry-prefix.pch"; sourceTree = "<group>"; };
@@ -968,6 +965,7 @@
 		F0BF2B6B5138AECB2AA66D0E323AF027 /* SentryCrashID.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashID.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashID.c; sourceTree = "<group>"; };
 		F12F6A2065E08F90695EDE5192B1D54A /* CoreAppConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreAppConstants.swift; path = Source/CoreAppConstants.swift; sourceTree = "<group>"; };
 		F14DEF573DA1C419D8FE95267325E1AE /* vpncore.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = vpncore.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		F2988DA0CADCA54B8700FE4CB4A5DF69 /* Pods-ProtonVPN-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ProtonVPN-umbrella.h"; sourceTree = "<group>"; };
 		F2B3D18E70E699850A7050F965984783 /* SentryCrashDebug.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashDebug.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashDebug.c; sourceTree = "<group>"; };
 		F3123EEAF9E3F02138BC96F43B0339C6 /* Container+DeepSearch.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "Container+DeepSearch.m"; path = "Sources/SentryCrash/Reporting/Filters/Tools/Container+DeepSearch.m"; sourceTree = "<group>"; };
 		F37180E4B3AB2FE5C9675A260762C0B1 /* CodingErrors.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CodingErrors.swift; path = Source/CodingErrors.swift; sourceTree = "<group>"; };
@@ -977,26 +975,28 @@
 		F47368BD9AFB5FC0206BB90FD0019F7D /* SentryCrashMonitorContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashMonitorContext.h; path = Sources/SentryCrash/Recording/Monitors/SentryCrashMonitorContext.h; sourceTree = "<group>"; };
 		F50F086E7E728C97400648E49CCB04F8 /* ApiConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ApiConstants.swift; path = Source/ApiConstants.swift; sourceTree = "<group>"; };
 		F5C4B7C06F272A0DB443A2A24FF3436C /* SentryAsynchronousOperation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryAsynchronousOperation.h; path = Sources/Sentry/include/SentryAsynchronousOperation.h; sourceTree = "<group>"; };
+		F5F863121AC28668247B44A5BAF4400A /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
 		F63085946AF83D011D23AA2ED15B1550 /* VpnKeychainMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VpnKeychainMock.swift; path = Source/VpnKeychainMock.swift; sourceTree = "<group>"; };
 		F683B42421F736BE954B6B8C62356365 /* SentryCrashC.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashC.c; path = Sources/SentryCrash/Recording/SentryCrashC.c; sourceTree = "<group>"; };
 		F6FA9B25B011C3359E518225D86B50DF /* SentryCrashStackCursor_MachineContext.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashStackCursor_MachineContext.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashStackCursor_MachineContext.h; sourceTree = "<group>"; };
+		F6FB742C2D68626EE744415F1DE478BA /* Pods-ProtonVPNTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-acknowledgements.plist"; sourceTree = "<group>"; };
 		F89CCB5C439672CACB2BCA4008320957 /* SentryCrashReportFixer.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashReportFixer.c; path = Sources/SentryCrash/Recording/SentryCrashReportFixer.c; sourceTree = "<group>"; };
 		F8E6CB4F1064DA9A6039937734AAE16C /* AlertServiceMock.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AlertServiceMock.swift; path = Source/AlertServiceMock.swift; sourceTree = "<group>"; };
 		F952AD2F43EE11F32E75DD06889788EC /* NSError+SimpleConstructor.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSError+SimpleConstructor.h"; path = "Sources/SentryCrash/Recording/Tools/NSError+SimpleConstructor.h"; sourceTree = "<group>"; };
 		F9719F5E829212204F9B15EBA285544C /* ProfileConstants.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProfileConstants.swift; path = Source/ProfileConstants.swift; sourceTree = "<group>"; };
 		F9C8FD893081E77A4F03C010AEAC0790 /* NSDate+Extras.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDate+Extras.h"; path = "Sources/Sentry/include/NSDate+Extras.h"; sourceTree = "<group>"; };
-		F9FA9743D7C0EC884710DCBFA898ED56 /* Pods-Siri Shortuct Handler-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-Siri Shortuct Handler-umbrella.h"; sourceTree = "<group>"; };
 		FA055D0456C22374DBFE82500B5C2813 /* RSSwizzle.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = RSSwizzle.h; path = TrustKit/Dependencies/RSSwizzle/RSSwizzle.h; sourceTree = "<group>"; };
+		FA70F6684F8B4A5416D5DFE33198C0C8 /* Pods-ProtonVPN-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-Info.plist"; sourceTree = "<group>"; };
 		FA807405717580449B41A8BADB5015F8 /* SwiftLint.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftLint.xcconfig; sourceTree = "<group>"; };
 		FA99648805A3549298F9492BC912FC7C /* Dictionary+Extension.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Dictionary+Extension.swift"; path = "Source/Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		FB536FE36CA717001CA8E47DC501F316 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; path = LICENSE; sourceTree = "<group>"; };
 		FC7D5331C8C8219A7A53A5C6143524F3 /* SentryCrashCPU_arm.c */ = {isa = PBXFileReference; includeInIndex = 1; name = SentryCrashCPU_arm.c; path = Sources/SentryCrash/Recording/Tools/SentryCrashCPU_arm.c; sourceTree = "<group>"; };
 		FCD349E4E742AB4A0D726B1BB96ED7F3 /* ResponseSerialization.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ResponseSerialization.swift; path = Source/ResponseSerialization.swift; sourceTree = "<group>"; };
 		FD04AC91E972115305CD2E292C5EF0BE /* SentryCrashJSONCodecObjC.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SentryCrashJSONCodecObjC.h; path = Sources/SentryCrash/Recording/Tools/SentryCrashJSONCodecObjC.h; sourceTree = "<group>"; };
-		FE28253C6ACB91E00591D92FEF6A57E7 /* Pods-ProtonVPN-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ProtonVPN-dummy.m"; sourceTree = "<group>"; };
 		FEF0997ACC434C97BC7847B55342F28A /* vpncore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "vpncore-Info.plist"; sourceTree = "<group>"; };
 		FF03327E78660419BAB290464E3C764C /* LocationUtility.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = LocationUtility.swift; path = Source/LocationUtility.swift; sourceTree = "<group>"; };
 		FF1F8C579074EF7A5691D010294B3AC3 /* Sentry-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Sentry-dummy.m"; sourceTree = "<group>"; };
+		FF9A20BA56918144C275490A47E16041 /* Pods-Quick Connect Widget.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-Quick Connect Widget.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1004,6 +1004,14 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5F7F04891B19211D3ED190A0FA947E8F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A91580B3A38AA5C10630C202FA9253C5 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,14 +1025,6 @@
 				95C29BA72D6BA400E99F129AE8A5D331 /* Reachability.framework in Frameworks */,
 				7F127390070B4B30AE9FE781FDCFA702 /* Sentry.framework in Frameworks */,
 				1FF9BFEB298450AEBD4B5DDBE409279B /* TrustKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		7B43EFDCC9244ABF8F6F17F0AC643101 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				2A1A43F7DC3C593F3788EF4E170C0147 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1163,6 +1163,17 @@
 			path = KeychainAccess;
 			sourceTree = "<group>";
 		};
+		2B4641744B1411A79302FB823D5BED28 /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				73B56194BFD5B7E558EF9ED1573FE887 /* Pods-ProtonVPN */,
+				FD3887603E4E3E8EBC911A6EE89D55A6 /* Pods-ProtonVPNTests */,
+				D4A62C0E7152B0DBCDEF18808EF5F39E /* Pods-Quick Connect Widget */,
+				C269DA85AC93993BDAA3826263885E62 /* Pods-Siri Shortcut Handler */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
 		35BB8E0210550213C821BC157E48562D /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1175,60 +1186,6 @@
 			);
 			name = "Support Files";
 			path = "../Target Support Files/ReachabilitySwift";
-			sourceTree = "<group>";
-		};
-		3C4ABF87FDE585F1ECF89686E78ECBC0 /* Pods-ProtonVPN */ = {
-			isa = PBXGroup;
-			children = (
-				83D21DD16B271A32250A54494905C781 /* Pods-ProtonVPN.modulemap */,
-				BB44C11B3DF767E3715A2B7E53DE9306 /* Pods-ProtonVPN-acknowledgements.markdown */,
-				C219AB39D7C11D69D404687413769E40 /* Pods-ProtonVPN-acknowledgements.plist */,
-				FE28253C6ACB91E00591D92FEF6A57E7 /* Pods-ProtonVPN-dummy.m */,
-				7E1EA0A16D0899484BDB8813F4F6B552 /* Pods-ProtonVPN-frameworks.sh */,
-				E33A0E793B753F0A6B5F7C0FF1E35946 /* Pods-ProtonVPN-Info.plist */,
-				E10F48E44A89FAD566729FF00B116B22 /* Pods-ProtonVPN-umbrella.h */,
-				6519C24AC55568911E8DF7AD4DF8FC35 /* Pods-ProtonVPN.debug.xcconfig */,
-				0FD375DAC236EF72D0D6EF78C4D65B1D /* Pods-ProtonVPN.release.xcconfig */,
-				B8174F149BCE5CA6F6BF149D2CFF9EEA /* Pods-ProtonVPN.staging.xcconfig */,
-			);
-			name = "Pods-ProtonVPN";
-			path = "Target Support Files/Pods-ProtonVPN";
-			sourceTree = "<group>";
-		};
-		3E2792A88B4EC581F7F3191F93D37367 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */,
-				3D4168388EDAE7B3A797680A24646B84 /* GSMessages.framework */,
-				E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */,
-				1A4516D2F7A1CA8331B01E16B74A5B11 /* Pods_ProtonVPN.framework */,
-				602104993F8B88CAC2BDCDF3E47AF621 /* Pods_ProtonVPNTests.framework */,
-				B691302521F16C460FF8EFC0934E3E18 /* Pods_Quick_Connect_Widget.framework */,
-				3D40DC900EA4D2BA648813068DC369F5 /* Pods_Siri_Shortuct_Handler.framework */,
-				21B03CA622E690725A6626C088E1D09F /* Reachability.framework */,
-				0115C3C00C175D77422084DD0542CE6F /* Sentry.framework */,
-				B29A6D14F953D27E9C58C9DA8C2D09BA /* TrustKit.framework */,
-				00291299999C54327AB03CE114389517 /* vpncore.bundle */,
-				188E8E36F8F7BAA2E3E2FCA9FCE30D80 /* vpncore.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
-		47EA54F7BBDAFA2586C8403F9EFD35CA /* Pods-Siri Shortuct Handler */ = {
-			isa = PBXGroup;
-			children = (
-				E21060A6A6FCC3D5903FD894DB5332AB /* Pods-Siri Shortuct Handler.modulemap */,
-				944A6F404200B62EFFA1468C8C62C144 /* Pods-Siri Shortuct Handler-acknowledgements.markdown */,
-				4BC59E3316EC34FE496CFE2E8FBB2978 /* Pods-Siri Shortuct Handler-acknowledgements.plist */,
-				03D1E516B4C8043C74F5329E4500B61B /* Pods-Siri Shortuct Handler-dummy.m */,
-				6E8F2F284024837C7FA59CCBCF581578 /* Pods-Siri Shortuct Handler-Info.plist */,
-				F9FA9743D7C0EC884710DCBFA898ED56 /* Pods-Siri Shortuct Handler-umbrella.h */,
-				88009EA8E733263A4EBA3DA864990985 /* Pods-Siri Shortuct Handler.debug.xcconfig */,
-				76BD8544761767A6D87D1779FFCB83A5 /* Pods-Siri Shortuct Handler.release.xcconfig */,
-				278D2D28B55E127C499A767F83D9DA6B /* Pods-Siri Shortuct Handler.staging.xcconfig */,
-			);
-			name = "Pods-Siri Shortuct Handler";
-			path = "Target Support Files/Pods-Siri Shortuct Handler";
 			sourceTree = "<group>";
 		};
 		48602D4C1BBA6E4740C7CA6D24AF241B /* Frameworks */ = {
@@ -1295,6 +1252,43 @@
 			);
 			name = ReachabilitySwift;
 			path = ReachabilitySwift;
+			sourceTree = "<group>";
+		};
+		73B56194BFD5B7E558EF9ED1573FE887 /* Pods-ProtonVPN */ = {
+			isa = PBXGroup;
+			children = (
+				8FC9B839D74EBB237934CF9FAE3E5CA8 /* Pods-ProtonVPN.modulemap */,
+				3D07EF073FA20DF7227BC24E683BC11A /* Pods-ProtonVPN-acknowledgements.markdown */,
+				CB4CDCBC5F130C2566DE63FA2087C6C4 /* Pods-ProtonVPN-acknowledgements.plist */,
+				CBF4C239B3D8A68FD6DBD78D8AF603DE /* Pods-ProtonVPN-dummy.m */,
+				DD4EB81C94D78714FD08FB397EC30A64 /* Pods-ProtonVPN-frameworks.sh */,
+				FA70F6684F8B4A5416D5DFE33198C0C8 /* Pods-ProtonVPN-Info.plist */,
+				F2988DA0CADCA54B8700FE4CB4A5DF69 /* Pods-ProtonVPN-umbrella.h */,
+				F5F863121AC28668247B44A5BAF4400A /* Pods-ProtonVPN.debug.xcconfig */,
+				8FA47261F44248091F5F7ACC7D1A2B1D /* Pods-ProtonVPN.release.xcconfig */,
+				553BCFD727724666EC9398C4140C2072 /* Pods-ProtonVPN.staging.xcconfig */,
+			);
+			name = "Pods-ProtonVPN";
+			path = "Target Support Files/Pods-ProtonVPN";
+			sourceTree = "<group>";
+		};
+		7BCB18B79D6B743A453B6A9E2D11AB01 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5D797E9A5C5782CE845840781FA1CC81 /* Alamofire.framework */,
+				3D4168388EDAE7B3A797680A24646B84 /* GSMessages.framework */,
+				E8EE7F078656FABB8F6821D10FF994BB /* KeychainAccess.framework */,
+				1A4516D2F7A1CA8331B01E16B74A5B11 /* Pods_ProtonVPN.framework */,
+				602104993F8B88CAC2BDCDF3E47AF621 /* Pods_ProtonVPNTests.framework */,
+				B691302521F16C460FF8EFC0934E3E18 /* Pods_Quick_Connect_Widget.framework */,
+				903EE243BA860B09751818093EBBF94F /* Pods_Siri_Shortcut_Handler.framework */,
+				21B03CA622E690725A6626C088E1D09F /* Reachability.framework */,
+				0115C3C00C175D77422084DD0542CE6F /* Sentry.framework */,
+				B29A6D14F953D27E9C58C9DA8C2D09BA /* TrustKit.framework */,
+				00291299999C54327AB03CE114389517 /* vpncore.bundle */,
+				188E8E36F8F7BAA2E3E2FCA9FCE30D80 /* vpncore.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		99C4BB6640941200CC654873B9A9E9B0 /* vpncore */ = {
@@ -1415,23 +1409,6 @@
 			path = ../../vpncore;
 			sourceTree = "<group>";
 		};
-		A2E8A7F3B750B1A8C1B8E5ABD69BC0BF /* Pods-Quick Connect Widget */ = {
-			isa = PBXGroup;
-			children = (
-				5D34FF38D9146C1CD49E0A2B534DC3A3 /* Pods-Quick Connect Widget.modulemap */,
-				D4410C7D53B81A1868BD0E12E448FD7B /* Pods-Quick Connect Widget-acknowledgements.markdown */,
-				8CC4DEE04981302488FE089896B76C04 /* Pods-Quick Connect Widget-acknowledgements.plist */,
-				C2EF1BBFA160A2418A5230319C507A2E /* Pods-Quick Connect Widget-dummy.m */,
-				3664C850FEE9EB91BF6105BE4212441F /* Pods-Quick Connect Widget-Info.plist */,
-				D28A7CA5D478E0DDB67D9A05C9AF6FA4 /* Pods-Quick Connect Widget-umbrella.h */,
-				8544EEBF7FE138494145457048443742 /* Pods-Quick Connect Widget.debug.xcconfig */,
-				834C68603A9EE8D7FFC9726C5CF933AB /* Pods-Quick Connect Widget.release.xcconfig */,
-				792588F5B417D58186F04309AF339257 /* Pods-Quick Connect Widget.staging.xcconfig */,
-			);
-			name = "Pods-Quick Connect Widget";
-			path = "Target Support Files/Pods-Quick Connect Widget";
-			sourceTree = "<group>";
-		};
 		A6A7E89ED9EDE6F98015435B3B37A6FD /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
@@ -1519,6 +1496,23 @@
 			path = "../Target Support Files/KeychainAccess";
 			sourceTree = "<group>";
 		};
+		C269DA85AC93993BDAA3826263885E62 /* Pods-Siri Shortcut Handler */ = {
+			isa = PBXGroup;
+			children = (
+				B536D45AD3A2E4469F2A1D2DFC7005DD /* Pods-Siri Shortcut Handler.modulemap */,
+				BFB4D3EB133AF9127BA6E593CE262F36 /* Pods-Siri Shortcut Handler-acknowledgements.markdown */,
+				8CAF45115ED8DF53F26FE68B947F0080 /* Pods-Siri Shortcut Handler-acknowledgements.plist */,
+				7C5A1B4601058BBF84526640660A2AF8 /* Pods-Siri Shortcut Handler-dummy.m */,
+				C0B85B7DA4B08E3A7F077EA6AA3C4F2F /* Pods-Siri Shortcut Handler-Info.plist */,
+				9FF9D061DA59C2293224A6DF8C4C037B /* Pods-Siri Shortcut Handler-umbrella.h */,
+				A09E1D48551F2415C13B78989D6CAEA1 /* Pods-Siri Shortcut Handler.debug.xcconfig */,
+				B49D7E330864EBCAB255E1438909DC9B /* Pods-Siri Shortcut Handler.release.xcconfig */,
+				65268BC6C30949598DFDAD4A483BF0CC /* Pods-Siri Shortcut Handler.staging.xcconfig */,
+			);
+			name = "Pods-Siri Shortcut Handler";
+			path = "Target Support Files/Pods-Siri Shortcut Handler";
+			sourceTree = "<group>";
+		};
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
@@ -1526,9 +1520,26 @@
 				6004345E1CCB5AFF439331952345AC9A /* Development Pods */,
 				DD77179408C4CDA8B90940C964CBD705 /* Frameworks */,
 				5A0E0E4921DE612EE1C2993AD7583594 /* Pods */,
-				3E2792A88B4EC581F7F3191F93D37367 /* Products */,
-				FF91AA6389147BBD5342D7859D951F67 /* Targets Support Files */,
+				7BCB18B79D6B743A453B6A9E2D11AB01 /* Products */,
+				2B4641744B1411A79302FB823D5BED28 /* Targets Support Files */,
 			);
+			sourceTree = "<group>";
+		};
+		D4A62C0E7152B0DBCDEF18808EF5F39E /* Pods-Quick Connect Widget */ = {
+			isa = PBXGroup;
+			children = (
+				7C960A403BEE4BF006C04EBF9B67C0C9 /* Pods-Quick Connect Widget.modulemap */,
+				C1F35E53C69AD892AC9765506DC6E2FF /* Pods-Quick Connect Widget-acknowledgements.markdown */,
+				EB60F3E44889084E47899CBEF4EE3821 /* Pods-Quick Connect Widget-acknowledgements.plist */,
+				656A5CC4CB1BF650863674B5A7755F55 /* Pods-Quick Connect Widget-dummy.m */,
+				17955206D1B2C81199AF09E7F8EC46E0 /* Pods-Quick Connect Widget-Info.plist */,
+				C529793593EFB97A5B8E3F9B9C2AAD02 /* Pods-Quick Connect Widget-umbrella.h */,
+				846A3ABD4E3A76D007CFB0FBE1BED3ED /* Pods-Quick Connect Widget.debug.xcconfig */,
+				4C89E9CC42E63F406048FA85C0266C39 /* Pods-Quick Connect Widget.release.xcconfig */,
+				FF9A20BA56918144C275490A47E16041 /* Pods-Quick Connect Widget.staging.xcconfig */,
+			);
+			name = "Pods-Quick Connect Widget";
+			path = "Target Support Files/Pods-Quick Connect Widget";
 			sourceTree = "<group>";
 		};
 		DD77179408C4CDA8B90940C964CBD705 /* Frameworks */ = {
@@ -1802,32 +1813,21 @@
 			path = GSMessages;
 			sourceTree = "<group>";
 		};
-		FD74B8454A66838DC3C435CCDB0409E8 /* Pods-ProtonVPNTests */ = {
+		FD3887603E4E3E8EBC911A6EE89D55A6 /* Pods-ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				3F6253366DEF7262D5F875289B8A4BC9 /* Pods-ProtonVPNTests.modulemap */,
-				7FB05825DE67CDFE4FF3EF861000EACA /* Pods-ProtonVPNTests-acknowledgements.markdown */,
-				ED2A6B66C2695B56CD15F69B01269115 /* Pods-ProtonVPNTests-acknowledgements.plist */,
-				BD572C07040FDD449291A66F0856302E /* Pods-ProtonVPNTests-dummy.m */,
-				AC52B1E0503EF84B539F8D247284AD79 /* Pods-ProtonVPNTests-Info.plist */,
-				61351F20603419F661BC32FB664C38A0 /* Pods-ProtonVPNTests-umbrella.h */,
-				E40D4C2B8FD8648F8CBEEDFD73FEF40C /* Pods-ProtonVPNTests.debug.xcconfig */,
-				77886071A283ADD0188E48A9AB6EF735 /* Pods-ProtonVPNTests.release.xcconfig */,
-				6C6C02E76157EF231887873AC7280A2C /* Pods-ProtonVPNTests.staging.xcconfig */,
+				950C61627E93D70A98BDDDCAEDE7D13E /* Pods-ProtonVPNTests.modulemap */,
+				A6DB53BB7373E4F695F839F4C93C0BE6 /* Pods-ProtonVPNTests-acknowledgements.markdown */,
+				F6FB742C2D68626EE744415F1DE478BA /* Pods-ProtonVPNTests-acknowledgements.plist */,
+				96C94A42D81D8FBEC3B1C57FBFFB1222 /* Pods-ProtonVPNTests-dummy.m */,
+				26746C0A3D673B1495622F9EF35C811F /* Pods-ProtonVPNTests-Info.plist */,
+				3EBE2D63A84A2FA5E8851519800E49AA /* Pods-ProtonVPNTests-umbrella.h */,
+				E3B28AD21EEF34F1C650520B63EB4A97 /* Pods-ProtonVPNTests.debug.xcconfig */,
+				87FC67BEC6FB9766FF2F478A4D1DCE41 /* Pods-ProtonVPNTests.release.xcconfig */,
+				418A1846754C22241F5120AC1685A561 /* Pods-ProtonVPNTests.staging.xcconfig */,
 			);
 			name = "Pods-ProtonVPNTests";
 			path = "Target Support Files/Pods-ProtonVPNTests";
-			sourceTree = "<group>";
-		};
-		FF91AA6389147BBD5342D7859D951F67 /* Targets Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				3C4ABF87FDE585F1ECF89686E78ECBC0 /* Pods-ProtonVPN */,
-				FD74B8454A66838DC3C435CCDB0409E8 /* Pods-ProtonVPNTests */,
-				A2E8A7F3B750B1A8C1B8E5ABD69BC0BF /* Pods-Quick Connect Widget */,
-				47EA54F7BBDAFA2586C8403F9EFD35CA /* Pods-Siri Shortuct Handler */,
-			);
-			name = "Targets Support Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1838,6 +1838,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				1AF378509091246DFC8D651B267F570D /* Pods-ProtonVPN-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1A0947BBAB586E624800C477ADD725D5 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1D7CD69B98E78E8482EF63CA99E20595 /* Pods-Siri Shortcut Handler-umbrella.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1955,14 +1963,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		6AA30A6F67377E4D54864A9975572442 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				25507F58D576750EB1C0075EF3C5D110 /* Pods-Siri Shortuct Handler-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		751C56295EDD89E015D7DB8EDF2F346F /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -2059,25 +2059,6 @@
 			name = ReachabilitySwift;
 			productName = ReachabilitySwift;
 			productReference = 21B03CA622E690725A6626C088E1D09F /* Reachability.framework */;
-			productType = "com.apple.product-type.framework";
-		};
-		30D862164E2D0794E853DFDF61873FE2 /* Pods-Siri Shortuct Handler */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = BCF4BAB8FF3E114FB8C4A84F260A948E /* Build configuration list for PBXNativeTarget "Pods-Siri Shortuct Handler" */;
-			buildPhases = (
-				6AA30A6F67377E4D54864A9975572442 /* Headers */,
-				06E4F22EF09E2047EF08FE024B4782E2 /* Sources */,
-				7B43EFDCC9244ABF8F6F17F0AC643101 /* Frameworks */,
-				32D51EA7C9DB0EC4A47F89490B01572B /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				F6CA5133554BBF867D69AFB8FA38781A /* PBXTargetDependency */,
-			);
-			name = "Pods-Siri Shortuct Handler";
-			productName = "Pods-Siri Shortuct Handler";
-			productReference = 3D40DC900EA4D2BA648813068DC369F5 /* Pods_Siri_Shortuct_Handler.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		394E1047B71296E99CE801C463CB6D2A /* Pods-Quick Connect Widget */ = {
@@ -2212,6 +2193,25 @@
 			productReference = 188E8E36F8F7BAA2E3E2FCA9FCE30D80 /* vpncore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		C50357F8029AA57771701A4867B8804F /* Pods-Siri Shortcut Handler */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DCA4CF2A322B831B2C56434059885B8E /* Build configuration list for PBXNativeTarget "Pods-Siri Shortcut Handler" */;
+			buildPhases = (
+				1A0947BBAB586E624800C477ADD725D5 /* Headers */,
+				95D53067431DDD3FCA7BDF6148B98078 /* Sources */,
+				5F7F04891B19211D3ED190A0FA947E8F /* Frameworks */,
+				B012845B1772B6F17D8BD7FAF179D390 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				042C41CCA34CC0367D5E4A5243A44F01 /* PBXTargetDependency */,
+			);
+			name = "Pods-Siri Shortcut Handler";
+			productName = "Pods-Siri Shortcut Handler";
+			productReference = 903EE243BA860B09751818093EBBF94F /* Pods_Siri_Shortcut_Handler.framework */;
+			productType = "com.apple.product-type.framework";
+		};
 		CDEC7E6C4F0FCB1CD8F3BB1F22A8A9D4 /* Pods-ProtonVPN */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = FFD22F0615C711268F98046912AE3538 /* Build configuration list for PBXNativeTarget "Pods-ProtonVPN" */;
@@ -2293,7 +2293,7 @@
 				Base,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
-			productRefGroup = 3E2792A88B4EC581F7F3191F93D37367 /* Products */;
+			productRefGroup = 7BCB18B79D6B743A453B6A9E2D11AB01 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
@@ -2303,7 +2303,7 @@
 				CDEC7E6C4F0FCB1CD8F3BB1F22A8A9D4 /* Pods-ProtonVPN */,
 				E913717E8465DC1901C9088509598D9A /* Pods-ProtonVPNTests */,
 				394E1047B71296E99CE801C463CB6D2A /* Pods-Quick Connect Widget */,
-				30D862164E2D0794E853DFDF61873FE2 /* Pods-Siri Shortuct Handler */,
+				C50357F8029AA57771701A4867B8804F /* Pods-Siri Shortcut Handler */,
 				0B00B2C167CD783351BD1D00BD5AD1F8 /* ReachabilitySwift */,
 				94BDCD90B52278D1FB244A66E8B95A4A /* Sentry */,
 				52B60EC2A583F24ACBB69C113F5488B9 /* SwiftLint */,
@@ -2330,13 +2330,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		2C7211F3C4E74E7F87396923204C49E9 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		32D51EA7C9DB0EC4A47F89490B01572B /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -2409,17 +2402,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-/* End PBXResourcesBuildPhase section */
-
-/* Begin PBXSourcesBuildPhase section */
-		06E4F22EF09E2047EF08FE024B4782E2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
+		B012845B1772B6F17D8BD7FAF179D390 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46C61C2307E0B7D02E4BE6F12696CEAB /* Pods-Siri Shortuct Handler-dummy.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
 		1F7A6D7A16696EAE4ABC673C1883ED22 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2592,6 +2584,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		95D53067431DDD3FCA7BDF6148B98078 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BD96492077A4FE7CBC0E6B0462888EF0 /* Pods-Siri Shortcut Handler-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		B422E494D79801898D206F07759FF36F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2735,6 +2735,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		042C41CCA34CC0367D5E4A5243A44F01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-ProtonVPN";
+			target = CDEC7E6C4F0FCB1CD8F3BB1F22A8A9D4 /* Pods-ProtonVPN */;
+			targetProxy = 57E3616DF2DFC4073350A4154D0C56FF /* PBXContainerItemProxy */;
+		};
 		11AD8C0B3696888BE00627B91F96BC55 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Pods-ProtonVPN";
@@ -2818,12 +2824,6 @@
 			name = TrustKit;
 			target = 6F1FB895CC1291D054E2CDBB81121BA9 /* TrustKit */;
 			targetProxy = 63A8270C02AF814301CF909BACAECADD /* PBXContainerItemProxy */;
-		};
-		F6CA5133554BBF867D69AFB8FA38781A /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Pods-ProtonVPN";
-			target = CDEC7E6C4F0FCB1CD8F3BB1F22A8A9D4 /* Pods-ProtonVPN */;
-			targetProxy = 5ACFBF3DF090F215CDDA3D47F2B07454 /* PBXContainerItemProxy */;
 		};
 		F91FBAE0E6D2DD1B86D56DAAFFA8DF59 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3071,7 +3071,7 @@
 		};
 		1CDD5058F14943E70693D0EB2617979D /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6519C24AC55568911E8DF7AD4DF8FC35 /* Pods-ProtonVPN.debug.xcconfig */;
+			baseConfigurationReference = F5F863121AC28668247B44A5BAF4400A /* Pods-ProtonVPN.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -3145,9 +3145,49 @@
 			};
 			name = Release;
 		};
+		23A81EE43D266FF820EB5A1BBAA938F0 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65268BC6C30949598DFDAD4A483BF0CC /* Pods-Siri Shortcut Handler.staging.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Staging;
+		};
 		27BECDC6EDF0F6784F16F1AF54C5964D /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = B8174F149BCE5CA6F6BF149D2CFF9EEA /* Pods-ProtonVPN.staging.xcconfig */;
+			baseConfigurationReference = 553BCFD727724666EC9398C4140C2072 /* Pods-ProtonVPN.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -3260,6 +3300,46 @@
 			};
 			name = Staging;
 		};
+		3CC95A3BF745894D874915E7F0388E14 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = B49D7E330864EBCAB255E1438909DC9B /* Pods-Siri Shortcut Handler.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
 		3D0609637276F7F5990034B56E8FB698 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3359,7 +3439,7 @@
 		};
 		3ED32AF60690048F140D8312D367D58B /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 834C68603A9EE8D7FFC9726C5CF933AB /* Pods-Quick Connect Widget.release.xcconfig */;
+			baseConfigurationReference = 4C89E9CC42E63F406048FA85C0266C39 /* Pods-Quick Connect Widget.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -3542,46 +3622,6 @@
 			};
 			name = Staging;
 		};
-		5EEF2726C31553066933E44D3115D436 /* Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 278D2D28B55E127C499A767F83D9DA6B /* Pods-Siri Shortuct Handler.staging.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Staging;
-		};
 		668B66D90E6FB30FD19A3C7125F66AE9 /* Staging */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 1F3FF84F84BF059EB203F5FC6028CF04 /* GSMessages.xcconfig */;
@@ -3637,9 +3677,48 @@
 			};
 			name = Release;
 		};
+		88C3C51509896AD83BACF4F3A3C61BD9 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A09E1D48551F2415C13B78989D6CAEA1 /* Pods-Siri Shortcut Handler.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_BITCODE = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
 		914CCFF57A71F486A6F32A124D2E031D /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77886071A283ADD0188E48A9AB6EF735 /* Pods-ProtonVPNTests.release.xcconfig */;
+			baseConfigurationReference = 87FC67BEC6FB9766FF2F478A4D1DCE41 /* Pods-ProtonVPNTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -3942,7 +4021,7 @@
 		};
 		D7B51676EB2B5A62B17563AAF59B1BC5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E40D4C2B8FD8648F8CBEEDFD73FEF40C /* Pods-ProtonVPNTests.debug.xcconfig */;
+			baseConfigurationReference = E3B28AD21EEF34F1C650520B63EB4A97 /* Pods-ProtonVPNTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -3979,49 +4058,9 @@
 			};
 			name = Debug;
 		};
-		DA381F04F9FEFBE8AFDF67A704FC3C27 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76BD8544761767A6D87D1779FFCB83A5 /* Pods-Siri Shortuct Handler.release.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
 		DAC99CBBABD0FD21C6C0706F61B5A524 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6C6C02E76157EF231887873AC7280A2C /* Pods-ProtonVPNTests.staging.xcconfig */;
+			baseConfigurationReference = 418A1846754C22241F5120AC1685A561 /* Pods-ProtonVPNTests.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -4099,7 +4138,7 @@
 		};
 		EE57F67A014F877D4C421DC8E186C075 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0FD375DAC236EF72D0D6EF78C4D65B1D /* Pods-ProtonVPN.release.xcconfig */;
+			baseConfigurationReference = 8FA47261F44248091F5F7ACC7D1A2B1D /* Pods-ProtonVPN.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -4159,7 +4198,7 @@
 		};
 		F7074EB35C0084D2CB9477E37DEB8959 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8544EEBF7FE138494145457048443742 /* Pods-Quick Connect Widget.debug.xcconfig */;
+			baseConfigurationReference = 846A3ABD4E3A76D007CFB0FBE1BED3ED /* Pods-Quick Connect Widget.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -4269,48 +4308,9 @@
 			};
 			name = Debug;
 		};
-		FCD17A6642B6F775C67852C2D0DACAD2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 88009EA8E733263A4EBA3DA864990985 /* Pods-Siri Shortuct Handler.debug.xcconfig */;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				CODE_SIGN_IDENTITY = "";
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_BITCODE = NO;
-				INFOPLIST_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 10.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-Siri Shortuct Handler/Pods-Siri Shortuct Handler.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
 		FD4F14F2538BAA09C96F9681C6413157 /* Staging */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 792588F5B417D58186F04309AF339257 /* Pods-Quick Connect Widget.staging.xcconfig */;
+			baseConfigurationReference = FF9A20BA56918144C275490A47E16041 /* Pods-Quick Connect Widget.staging.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
@@ -4488,22 +4488,22 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		BCF4BAB8FF3E114FB8C4A84F260A948E /* Build configuration list for PBXNativeTarget "Pods-Siri Shortuct Handler" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				FCD17A6642B6F775C67852C2D0DACAD2 /* Debug */,
-				DA381F04F9FEFBE8AFDF67A704FC3C27 /* Release */,
-				5EEF2726C31553066933E44D3115D436 /* Staging */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D5EC26770840DB6C50AE6FD885F3BEAF /* Build configuration list for PBXNativeTarget "Sentry" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				0A350CCEEDFC87F88797F0A5A86ABE22 /* Debug */,
 				22B6EEB5F81509B359801B109A1482F1 /* Release */,
 				2FA4DF134162E1A6ECB70ABB2700DF72 /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DCA4CF2A322B831B2C56434059885B8E /* Build configuration list for PBXNativeTarget "Pods-Siri Shortcut Handler" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88C3C51509896AD83BACF4F3A3C61BD9 /* Debug */,
+				3CC95A3BF745894D874915E7F0388E14 /* Release */,
+				23A81EE43D266FF820EB5A1BBAA938F0 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

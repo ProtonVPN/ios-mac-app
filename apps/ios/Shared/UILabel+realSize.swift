@@ -1,6 +1,6 @@
 //
-//  AuthApiServiceMock.swift
-//  ProtonVPN - Created on 13/09/2019.
+//  UILabel+realSize.swift
+//  ProtonVPN - Created on 01/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,22 +20,17 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
-import vpncore
+import UIKit
 
-class AuthApiServiceMock: AuthApiService {
-    
-    var callbackauthenticate: ((String, String, ((AuthCredentials) -> Void), ((Error) -> Void)) -> Void)?
-    var callbackmodulus: ((((ModulusResponse) -> Void), ((Error) -> Void)) -> Void)?
-    
-    // MARK: Implementation
-    
-    func authenticate(username: String, password: String, success: @escaping (AuthCredentials) -> Void, failure: @escaping (Error) -> Void) {
-        callbackauthenticate?(username, password, success, failure)
+extension UILabel {
+
+    /// Calculate the real content size of a UILabel which value could be depending of a second view p.e: stackviews.
+    var realSize: CGSize {
+        let sizeLabel = UILabel()
+        sizeLabel.numberOfLines = numberOfLines
+        sizeLabel.font = font
+        sizeLabel.text = text
+        sizeLabel.sizeToFit()
+        return sizeLabel.bounds.size
     }
-    
-    func modulus(success: @escaping ((ModulusResponse) -> Void), failure: @escaping ((Error) -> Void)) {
-        callbackmodulus?(success, failure)
-    }
-    
 }

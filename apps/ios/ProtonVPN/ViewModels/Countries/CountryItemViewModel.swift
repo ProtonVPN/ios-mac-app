@@ -128,21 +128,21 @@ class CountryItemViewModel {
     
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
         let freeServers = serverModels.filter { (serverModel) -> Bool in
-            serverModel.tier == 0
+            serverModel.tier == CoreAppConstants.VpnTiers.free
         }
         return serverViewModels(for: freeServers)
     }()
     
     private lazy var basicServerViewModels: [ServerItemViewModel] = {
         let basicServers = serverModels.filter({ (serverModel) -> Bool in
-            serverModel.tier == 1
+            serverModel.tier == CoreAppConstants.VpnTiers.basic
         })
         return serverViewModels(for: basicServers)
     }()
     
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
         let plusServers = serverModels.filter({ (serverModel) -> Bool in
-            serverModel.tier == 2
+            serverModel.tier >= CoreAppConstants.VpnTiers.visionary
         })
         return serverViewModels(for: plusServers)
     }()
@@ -213,7 +213,7 @@ class CountryItemViewModel {
     }
     
     func titleFor(section: Int) -> String {
-        return CoreAppConstants.planTranslatedName(forTier: serverViewModels[section].tier)
+        return CoreAppConstants.serverTierName(forTier: serverViewModels[section].tier)
     }
     
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {

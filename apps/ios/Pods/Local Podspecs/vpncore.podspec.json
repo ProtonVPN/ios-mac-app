@@ -2,7 +2,7 @@
   "name": "vpncore",
   "version": "0.9.0",
   "summary": "Core VPN components for use in ProtonVPN macOS and iOS apps",
-  "description": "Contains primatives, coordinators, services and extensions related to managing VPN connections.",
+  "description": "Contains primitives, coordinators, services and extensions related to managing VPN connections.",
   "homepage": "https://protonvpn.com",
   "license": {
     "type": "GPL3",

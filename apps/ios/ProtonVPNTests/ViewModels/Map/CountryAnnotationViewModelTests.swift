@@ -50,12 +50,11 @@ class CountryAnnotationViewModelTests: XCTestCase {
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned false while all serversa are under maintenance")
+            ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
         
     }
 
     // MARK: Mocks
-    // FUTUREFIX: Make/find a factory for creating mocks
     
     private func viewModel(withServers servers: [ServerModel]) -> CountryAnnotationViewModel {
         let country = CountryModel(serverModel: ServerModel(

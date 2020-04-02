@@ -430,11 +430,11 @@ extension NavigationService: PlanService {
         self.windowService.replace(with: nc)
     }
     
-    /// Shorthand versino for presenting plen selection view controller.
+    /// Shorthand version for presenting plen selection view controller.
     /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
     func presentPlanSelection() {
         guard servicePlanDataService.isIAPAvailable else {
-            alertService.push(alert: UpgradeUnavailbleAlert())
+            alertService.push(alert: UpgradeUnavailableAlert())
             return
         }
 
@@ -503,7 +503,7 @@ extension NavigationService: ProfileService {
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete()))
+            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()))
             return createProfileViewController
         }
         return nil

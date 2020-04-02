@@ -25,7 +25,8 @@ import vpncore
 
 class OnboardingViewModel: NSObject {
     
-    typealias Factory = LoginServiceFactory & PropertiesManagerFactory
+    typealias Factory = LoginServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory
+    private var factory: Factory
     
     let pageViewController: OnboardingPageViewController
     let pages: [UIViewController]
@@ -34,6 +35,7 @@ class OnboardingViewModel: NSObject {
     
     private let loginService: LoginService
     private let propertiesManager: PropertiesManagerProtocol
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     
     private lazy var endpoints = [ApiConstants.liveURL] + ObfuscatedConstants.internalUrls
     
@@ -57,6 +59,7 @@ class OnboardingViewModel: NSObject {
     init(pageViewController: OnboardingPageViewController, factory: Factory) {
         self.pageViewController = pageViewController
         
+        self.factory = factory
         self.loginService = factory.makeLoginService()
         self.propertiesManager = factory.makePropertiesManager()
         
@@ -88,6 +91,14 @@ class OnboardingViewModel: NSObject {
     
     func secondaryButtonAccessibilityId() -> String {
         return onLastPage ? "Discover the app" : "Skip"
+    }
+    
+    func isSecondaryButtonHidden() -> Bool {
+        guard onLastPage else {
+            return false
+        }
+        
+        return !appSessionManager.canPreviewApp() // Servers are not loaded so app can not be browsed without prior login and synchronization
     }
     
     func next() {
