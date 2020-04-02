@@ -31,6 +31,8 @@ class NetworkError {
                                                        localizedDescription: LocalizedString.neNetworkConnectionLost)
     private static let notConnectedToInternet = NSError(code: NetworkErrorCode.notConnectedToInternet,
                                                         localizedDescription: LocalizedString.neNotConnectedToTheInternet)
+    private static let tls = NSError(code: NetworkErrorCode.tls,
+                                     localizedDescription: LocalizedString.errorMITMdescription)
     
     static func error(forCode code: Int) -> NSError {
         let error: NSError
@@ -43,6 +45,8 @@ class NetworkError {
             error = networkConnectionLost
         case NetworkErrorCode.notConnectedToInternet:
             error = notConnectedToInternet
+        case NetworkErrorCode.tls:
+            error = tls
         default:
             // FUTURETODO::fix error
             error = NSError(code: code, localizedDescription: LocalizedString.neNotConnectedToTheInternet)
@@ -57,6 +61,16 @@ extension Error {
         let nsError = self as NSError
         switch nsError.code {
         case NetworkErrorCode.timedOut, NetworkErrorCode.cannotConnectToHost, NetworkErrorCode.networkConnectionLost, NetworkErrorCode.notConnectedToInternet, NetworkErrorCode.cannotFindHost:
+            return true
+        default:
+            return false
+        }
+    }
+    
+    public var isTlsError: Bool {
+        let nsError = self as NSError
+        switch nsError.code {
+        case NetworkErrorCode.tls:
             return true
         default:
             return false

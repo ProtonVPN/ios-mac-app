@@ -1,6 +1,7 @@
 stages:
   - linting
   - unit_tests
+  - i18n
   - mirror
 
 variables:
@@ -116,3 +117,57 @@ publish-github-release:
   script:
     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
     - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
+
+
+# --- Translation related tasks ---
+
+# Auto push new translations to crowdin
+i18n_update_crowdin:
+  stage: i18n
+  tags:
+    - iOS-deploy
+  environment:
+    name: i18n
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
+    - git config --global user.email $GIT_CI_EMAIL
+    - git config --global user.name $GIT_CI_USERNAME
+    - git config --global url."https://".insteadOf git://
+    - rm -rf /tmp/__PROTON_I18N
+    - git clone "$I18N_PROTON" --depth 1 /tmp/__PROTON_I18N
+  only:
+    refs:
+       - develop
+  script:
+    - /tmp/__PROTON_I18N/update crowdin #--debug
+
+
+# Auto pull new translations from crowdin and make commit
+.i18n_update_app_translations:
+  stage: i18n
+  tags:
+    - iOS-deploy
+  environment:
+    name: i18n
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
+    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
+    - git config --global user.email $GIT_CI_EMAIL
+    - git config --global user.name $GIT_CI_USERNAME
+    - git config --global url."https://".insteadOf git://
+  script:
+    - ./i18n.import.sh
+
+i18n_update_app_translations_manual:
+  extends: .i18n_update_app_translations
+  when: manual
+
+i18n_update_app_translations_scheduled:
+  extends: .i18n_update_app_translations
+  only:
+    - schedules
+
+

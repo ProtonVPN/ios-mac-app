@@ -5,6 +5,7 @@
 "_delete" = "Delete";
 "_disconnect" = "Disconnect";
 "_disconnected" = "Disconnected";
+"_disconnecting" = "Disconnecting";
 "_done" = "Done";
 "_edit" = "Edit";
 "_ok" = "OK";
@@ -22,9 +23,7 @@
 "_disable" = "Disable";
 "_report" = "Report";
 "_ignore" = "Ignore";
-"_info" = "Info";
 "_continue" = "Continue";
-"_here" = "Here";
 "_network_unreachable" = "Network Unreachable";
 "_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the Internet.";
 "_vpn_connection_active" = "VPN Connection Active";
@@ -44,7 +43,6 @@
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Public IP: %@";
 "_quick_connect" = "Quick Connect";
-"_connect_to" = "Connect to...";
 "_secure_core" = "Secure Core";
 
 /* %@ is a country e.g. Secure Core Switzerland */
@@ -74,6 +72,7 @@
 "_free_servers" = "FREE SERVERS";
 "_basic_servers" = "BASIC SERVERS";
 "_plus_servers" = "PLUS SERVERS";
+"_test_servers" = "TEST SERVERS";
 "_initializing_connection" = "Initializing Connection...";
 "_successfully_connected" = "Successfully Connected";
 "_failed" = "failed";
@@ -171,7 +170,6 @@
 /* %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
 "_via" = "via";
-"_you_are_not_protected" = "You are not protected!";
 "_load" = "Load";
 "_countries" = "Countries";
 "_no_servers_to_show" = "There are currently no servers to show here.";
@@ -212,7 +210,6 @@
 "_overview" = "Overview";
 "_connection" = "Connection";
 "_action" = "Action";
-"_default" = "Default";
 "_fastest" = "Fastest";
 "_fastest_available_server" = "Fastest available server";
 "_fastest_connection" = "Fastest Connection";
@@ -239,10 +236,9 @@
 "_country_selection_is_required" = "Please select a country";
 "_server_selection_is_required" = "Please select a server";
 "_profile_name_needs_to_be_unique" = "Profile with same name already exists";
-"_country_and_server_combination_needs_to_be_unique" = "Profile with same server already exists";
 "_current_selection_will_be_lost" = "By continuing, current selection will be lost. Do you want to continue?";
 "_check_if_fields_present" = "Please check if all the fields are filled in";
-"_delete_profile" = "Delete Profile";
+"_delete_profile_header" = "Delete Profile";
 "_delete_profile_warning" = "The profile will be permanently deleted. Do you want to continue?";
 "_select_profile_color" = "Select profile color";
 
@@ -336,7 +332,6 @@
 "_upgrade_plan_to_access_server" = "Sorry, this server is not available for your subscription tier. If you would like to access more servers, consider upgrading your subscription.";
 "_upgrade_plan_to_access_secure_core_p1" = "Secure Core is a premium feature which requires ProtonVPN Plus or higher. Secure Core adds advanced protection against VPN server monitoring.";
 "_upgrade_plan_to_access_secure_core_p2" = "To access Secure Core, check out our other subscription plans which include this feature.";
-"_servers_under_maintenance" = "Servers under maintenance";
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
@@ -450,8 +445,6 @@
 "_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost. Note that your VPN connection will be terminated when you switch Mac accounts.";
 "_always_on_vpn" = "Always-on VPN";
 "_always_on_vpn_tooltip_ios" = "Kill Switch is not supported on iOS. Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.";
-"_always_on_vpn_connection_will_restart" = "Enabling Always-on VPN will reconnect the active connection. Do you want to continue?";
-"_always_on_vpn_connection_will_drop" = "You are currently connected with Always-on VPN enabled. Disabling Always-on VPN will end your connection. Do you want to continue?";
 "_auto_connect" = "Auto Connect";
 "_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
 "_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
@@ -476,11 +469,8 @@
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Get %@ Plan";
-"_countries_count" = "%@ countries";
 "_free_countries" = "3 Countries";
 "_all_countries" = "40+ countries";
-"_plans_connection" = "Connection";
-"_plans_connections" = "Connections";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ speed";
@@ -489,8 +479,6 @@
 "_highest" = "Highest";
 "_plus_plan_features" = "Plus Servers\nSecure Core\nTor Servers";
 "_free" = "Free";
-"_for_a_year" = "for one year";
-"_plan_unavailable_button" = "Temporarily Unavailable";
 "_do_you_want_to_activate_subscription_for" = "Do you want to activate the purchased subscription for ";
 "_most_popular" = "Most popular";
 "_select_plan" = "Select plan";
@@ -585,6 +573,7 @@
 "_extensions" = "Extensions";
 "_widget" = "iOS Widget";
 "_log_in_to_use_widget" = "Please log in to get started";
+"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
 
 // Report bug
 "_report_attachments" = "Attachments";
@@ -605,3 +594,16 @@
 "_report_field_feedback" = "Feedback";
 "_report_add_file" = "Add file";
 "_report_max_file_size" = "Max file size limit: 488 KB";
+
+// Mac main menu
+
+"_menu_about" = "About ProtonVPN";
+"_menu_check_updates" = "Check for Updates...";
+"_menu_preferences" = "Preferences";
+"_menu_hide_self" = "Hide ProtonVPN";
+"_menu_hide_others" = "Hide Others";
+"_menu_show_all" = "Show All";
+"_menu_logout" = "Log Out";
+"_menu_quit" = "Quit ProtonVPN";
+"_menu_window" = "Window";
+"_menu_minimize" = "Minimize";

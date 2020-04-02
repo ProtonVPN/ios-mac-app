@@ -10,6 +10,10 @@
 		1EF48C10ADF53C56CCF9D10E /* Pods_vpncore_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */; };
 		384FCC46E272DE21E4736436 /* Pods_vpncore_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */; };
 		C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */; };
+		D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
+		D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
 		D52FF533235DE27700E8C7B8 /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */; };
 		D52FF534235DE27700E8C7B8 /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */; };
 		D53E8406233367D40031CD49 /* HumanVerificationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */; };
@@ -273,6 +277,23 @@
 		478276B7416570BEC6FC8B85 /* Pods-vpncore-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
 		4E8BE95F0BCA7D9C97EE85C0 /* Pods-vpncore-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A1D4DCE67493ADC788AF98B /* Pods-vpncore-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macos/Pods-vpncore-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
+		668D2481240CFC0800480599 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		668D2482240CFC0800480599 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		668D2483240CFC0800480599 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Localization/de.lproj/Intents.strings; sourceTree = "<group>"; };
+		668D2484240CFC0800480599 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = Localization/de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		66B69050240CFC140064004D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		66B69051240CFC140064004D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = id.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		66B69052240CFC140064004D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = id; path = id.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		66B69053240CFC140064004D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = Localization/id.lproj/Intents.strings; sourceTree = "<group>"; };
+		66B69054240CFC140064004D /* id */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = id; path = Localization/id.lproj/Localizable.strings; sourceTree = "<group>"; };
+		66DEB022240CFC2300558BCE /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pt; path = pt.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		66DEB023240CFC2300558BCE /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = Localization/pt.lproj/Intents.strings; sourceTree = "<group>"; };
+		66DEB024240CFC2300558BCE /* pt */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pt; path = Localization/pt.lproj/Localizable.strings; sourceTree = "<group>"; };
+		66E61902240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		66E61903240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		66E61904240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		66E61905240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
+		66E61906240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		7E53FE08745AA7E51ADC0504 /* Pods-vpncore-vpncore-macosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -280,11 +301,19 @@
 		B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DB9D1719D98EC41F005D62 /* Pods-vpncore-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
+		D51FBDD223E81E9C0056DC09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustKitHelper.swift; sourceTree = "<group>"; };
 		D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationAdapter.swift; sourceTree = "<group>"; };
 		D53E840923338C830031CD49 /* GenericRequestRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRequestRetrier.swift; sourceTree = "<group>"; };
 		D563B26A2345DA4300F98797 /* FormValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidationError.swift; sourceTree = "<group>"; };
 		D563B26D2345DA5800F98797 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
+		D582A7DD23F2D76400B5FD77 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D582A7DE23F2D76F00B5FD77 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = nl; path = nl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D582A7DF23F2D77C00B5FD77 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fr; path = fr.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D582A7E023F2D7A100B5FD77 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "pt-BR"; path = "pt-BR.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
+		D582A7E123F2D7B200B5FD77 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = es; path = es.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
+		D582A7E223F2D7C000B5FD77 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = "es-MX"; path = "es-MX.lproj/Localizable.stringsdict"; sourceTree = "<group>"; };
 		D5906F1C22D46469001BC074 /* AttachmentRowViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AttachmentRowViewModel.swift; sourceTree = "<group>"; };
 		D5906F1F22D774E7001BC074 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 		D5A880F522C9D767009B63D1 /* ReportsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsRouter.swift; sourceTree = "<group>"; };
@@ -687,6 +716,7 @@
 			isa = PBXGroup;
 			children = (
 				E1C99F4D21C3C56600C54333 /* Localizable.strings */,
+				D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -1110,6 +1140,10 @@
 				"pt-BR",
 				es,
 				"es-MX",
+				de,
+				id,
+				pt,
+				ru,
 			);
 			mainGroup = E1B5F5CE21B68ABD00B558B0;
 			productRefGroup = E1B5F5D921B68ABD00B558B0 /* Products */;
@@ -1131,6 +1165,7 @@
 			files = (
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1139,6 +1174,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */,
+				D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */,
 				D5A8812D22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
@@ -1149,6 +1185,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1144D4E22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
 				E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */,
 			);
@@ -1161,6 +1198,7 @@
 				D5EF8FA32293E9B100B713BD /* Localizable.strings in Resources */,
 				E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */,
 				D5A8812B22CE06EB009B63D1 /* test_log_1.log in Resources */,
+				D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812E22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1592,6 +1630,26 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D51FBDD223E81E9C0056DC09 /* en */,
+				D51FBDD423E81E9E0056DC09 /* pl */,
+				D582A7DD23F2D76400B5FD77 /* it */,
+				D582A7DE23F2D76F00B5FD77 /* nl */,
+				D582A7DF23F2D77C00B5FD77 /* fr */,
+				D582A7E023F2D7A100B5FD77 /* pt-BR */,
+				D582A7E123F2D7B200B5FD77 /* es */,
+				D582A7E223F2D7C000B5FD77 /* es-MX */,
+				668D2482240CFC0800480599 /* de */,
+				66B69052240CFC140064004D /* id */,
+				66DEB022240CFC2300558BCE /* pt */,
+				66E61904240CFC26005E9950 /* ru */,
+			);
+			name = Localizable.stringsdict;
+			path = Localization;
+			sourceTree = "<group>";
+		};
 		E1828571236C74D400E397A5 /* Intents.intentdefinition */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -1604,6 +1662,10 @@
 				E182857A236C74EC00E397A5 /* pt-BR */,
 				E182857B236C74EE00E397A5 /* es */,
 				E182857C236C74F100E397A5 /* es-MX */,
+				668D2483240CFC0800480599 /* de */,
+				66B69053240CFC140064004D /* id */,
+				66DEB023240CFC2300558BCE /* pt */,
+				66E61905240CFC26005E9950 /* ru */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
@@ -1618,6 +1680,8 @@
 				E185A878237165C00039E625 /* es-MX */,
 				E185A879237165C80039E625 /* pl */,
 				E185A87A237165CF0039E625 /* es */,
+				66B69051240CFC140064004D /* id */,
+				66E61902240CFC26005E9950 /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
@@ -1633,6 +1697,10 @@
 				D5CD4B0F2367250A0006AAF7 /* pt-BR */,
 				D5CD4B112367252A0006AAF7 /* es */,
 				D5CD4B13236725580006AAF7 /* es-MX */,
+				668D2484240CFC0800480599 /* de */,
+				66B69054240CFC140064004D /* id */,
+				66DEB024240CFC2300558BCE /* pt */,
+				66E61906240CFC26005E9950 /* ru */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -1644,6 +1712,9 @@
 				E1E892B82369EDF7001A436E /* pt-BR */,
 				E1E892B92369EEB9001A436E /* es-MX */,
 				E185A875237165B20039E625 /* nl */,
+				668D2481240CFC0800480599 /* de */,
+				66B69050240CFC140064004D /* id */,
+				66E61903240CFC26005E9950 /* ru */,
 			);
 			name = InfoPlist.strings;
 			sourceTree = "<group>";

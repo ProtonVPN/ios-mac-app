@@ -29,7 +29,7 @@ protocol ServicePlanDataStorage {
 }
 
 public protocol ServicePlanDataService {
-    func updateServicePlans(completion: (() -> Void)?)
+    func updateServicePlans(completion: ((Error?) -> Void)?)
     var isIAPAvailable: Bool { get set }
 }
 
@@ -75,7 +75,7 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
         return self.allPlanDetails.first(where: { $0.name == name }) ?? self.defaultPlanDetails
     }
     
-    public func updateServicePlans(completion: (() -> Void)? = nil) {
+    public func updateServicePlans(completion: ((Error?) -> Void)? = nil) {
         paymentsService?.servicePlans(success: { [weak self] (properties) in
             // Auth and vpn credentials are optional (since user may be purchasing a subscription during signup)
             var available = properties.available && self?.currentSubscription?.hasExistingProtonSubscription == false
@@ -89,9 +89,9 @@ public class ServicePlanDataServiceImplementation: NSObject, ServicePlanDataServ
             self?.isIAPAvailable = available
             self?.allPlanDetails = properties.plansDetails
             self?.defaultPlanDetails = properties.defaultPlanDetails
-            completion?()
+            completion?(nil)
         }, failure: { (error) in
-            completion?()
+            completion?(error)
         })
     }
     

@@ -61,6 +61,8 @@ public class NetworkErrorCode {
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost
     public static let networkConnectionLost = NSURLErrorNetworkConnectionLost
     public static let notConnectedToInternet = NSURLErrorNotConnectedToInternet
+    
+    public static let tls = 3500
 }
 
 public class HttpStatusCode { // http status codes returned by the api
@@ -83,6 +85,7 @@ public class ApiErrorCode { // error codes returned by the api
     public static let wrongLoginCredentials = 8002
     
     public static let humanVerificationRequired = 9001
+    public static let invalidEmail = 12083
     public static let invalidHumanVerificationCode = 12087
     
     public static let disabled = 10003
