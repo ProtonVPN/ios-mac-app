@@ -255,9 +255,12 @@ extension NavigationService {
     }
     
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
-        if !isSystemLoggingOff { // Do not show disconnect modal, because user asked for macOS logOff/shutdown
-            appSessionManager.replyToApplicationShouldTerminate()
+        if isSystemLoggingOff {
+            // Do not show disconnect modal, because user asked for macOS logOff/shutdown
+            return .terminateNow
         }
+        
+        appSessionManager.replyToApplicationShouldTerminate()
         return .terminateLater
     }
 }
