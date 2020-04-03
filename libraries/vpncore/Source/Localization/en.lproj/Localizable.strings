@@ -5,6 +5,7 @@
 "_delete" = "Delete";
 "_disconnect" = "Disconnect";
 "_disconnected" = "Disconnected";
+"_disconnecting" = "Disconnecting";
 "_done" = "Done";
 "_edit" = "Edit";
 "_ok" = "OK";
@@ -481,11 +482,8 @@
 
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Get %@ Plan";
-"_countries_count" = "%@ countries";
 "_free_countries" = "3 Countries";
 "_all_countries" = "40+ countries";
-"_plans_connection" = "Connection";
-"_plans_connections" = "Connections";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ speed";
@@ -588,6 +586,7 @@
 "_extensions" = "Extensions";
 "_widget" = "iOS Widget";
 "_log_in_to_use_widget" = "Please log in to get started";
+"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
 
 // Report bug
 "_report_attachments" = "Attachments";

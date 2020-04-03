@@ -55,3 +55,6 @@ fastlane/test_output
 
 # Cocoapods
 Pods/
+
+# Proton specific
+_translations

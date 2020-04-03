@@ -30,6 +30,7 @@ public class LocalizedString {
     public static let delete = NSLocalizedString("_delete", comment: "Common word")
     public static let disconnect = NSLocalizedString("_disconnect", comment: "Common word")
     public static let disconnected = NSLocalizedString("_disconnected", comment: "Common word")
+    public static let disconnecting = NSLocalizedString("_disconnecting", comment: "Status of VPN connection reported by Siri")
     public static let done = NSLocalizedString("_done", comment: "Common word")
     public static let edit = NSLocalizedString("_edit", comment: "Common word")
     public static let ok = NSLocalizedString("_ok", comment: "Common word")
@@ -94,7 +95,12 @@ public class LocalizedString {
     public static let on = NSLocalizedString("_switch_side_button_on", comment: "Custom switch on")
     public static let off = NSLocalizedString("_switch_side_button_off", comment: "Custom switch off")
     
-    public static let countriesCount = NSLocalizedString("_countries_count", comment: "iOS advandced plan features view. %@ is changed with the number of countries")
+    public static func countriesCount(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_countries_count", comment: "iOS advandced plan features view. %@ is changed with the number of countries."), number)
+    }
+    public static func countriesCountPlus(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_countries_count_plus", comment: "iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number."), number)
+    }
     public static let countriesFree = NSLocalizedString("_countries_free", comment: "iOS: countries list section header")
     public static let countriesPremium = NSLocalizedString("_countries_premium", comment: "iOS: countries list section header")
     public static let close = NSLocalizedString("_close", comment: "Common word")
@@ -444,7 +450,9 @@ public class LocalizedString {
     public static let freeCountries = NSLocalizedString("_free_countries", comment: "Account plan description")
     public static let allCountries = NSLocalizedString("_all_countries", comment: "Account plan description")
     public static let planConnection = NSLocalizedString("_plans_connection", comment: "Account plan description")
-    public static let planConnections = NSLocalizedString("_plans_connections", comment: "Account plan description")
+    public static func planConnections(_ number: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), number)
+    }
     public static let speed = NSLocalizedString("_speed", comment: "%@ is a speed description e.g. Speed: Highest")
     public static let medium = NSLocalizedString("_medium", comment: "Value of speed in _speed")
     public static let high = NSLocalizedString("_high", comment: "Value of speed in _speed")
@@ -526,6 +534,7 @@ public class LocalizedString {
     public static let extensions = NSLocalizedString("_extensions", comment: "iOS: Table header in settings screen")
     public static let widget = NSLocalizedString("_widget", comment: "iOS: 1. Menu point in settings screen. 2. Widget description screen title.")
     public static let logInToUseWidget = NSLocalizedString("_log_in_to_use_widget", comment: "iOS widget: text for not-logged-in user")
+    public static let vpnStatusNotLoggedIn = NSLocalizedString("_vpnstatus_not_loggedin", comment: "Status of VPN connection reported by Siri")
     
     // MARK: - Report bugs
     public static let reportAttachments = NSLocalizedString("_report_attachments", comment: "Bug report attachments")

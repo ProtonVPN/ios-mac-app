@@ -49,7 +49,7 @@ public extension Router {
             return nonAuthenticatedHeader
         }
         return  [
-            "Authorization": authCredentials.accessToken,
+            "Authorization": "Bearer \(authCredentials.accessToken)",
             "x-pm-uid": authCredentials.sessionId,
             "x-pm-appversion": ApiConstants.appVersion,
             "x-pm-apiversion": self.version,

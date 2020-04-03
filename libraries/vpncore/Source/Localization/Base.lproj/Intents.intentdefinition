@@ -112,6 +112,85 @@
 			<key>INIntentVerb</key>
 			<string>Do</string>
 		</dict>
+		<dict>
+			<key>INIntentCategory</key>
+			<string>generic</string>
+			<key>INIntentConfigurable</key>
+			<true/>
+			<key>INIntentDescriptionID</key>
+			<string>JOCERT</string>
+			<key>INIntentIneligibleForSuggestions</key>
+			<true/>
+			<key>INIntentManagedParameterCombinations</key>
+			<dict>
+				<key></key>
+				<dict>
+					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
+					<true/>
+					<key>INIntentParameterCombinationTitle</key>
+					<string>Get ProtonVPN Connection Status</string>
+					<key>INIntentParameterCombinationTitleID</key>
+					<string>hIcJsr</string>
+					<key>INIntentParameterCombinationUpdatesLinked</key>
+					<true/>
+				</dict>
+			</dict>
+			<key>INIntentName</key>
+			<string>GetConnectionStatus</string>
+			<key>INIntentResponse</key>
+			<dict>
+				<key>INIntentResponseCodes</key>
+				<array>
+					<dict>
+						<key>INIntentResponseCodeConciseFormatString</key>
+						<string>${status}</string>
+						<key>INIntentResponseCodeConciseFormatStringID</key>
+						<string>NzUfmp</string>
+						<key>INIntentResponseCodeFormatString</key>
+						<string>${status}</string>
+						<key>INIntentResponseCodeFormatStringID</key>
+						<string>ZqjXZN</string>
+						<key>INIntentResponseCodeName</key>
+						<string>success</string>
+						<key>INIntentResponseCodeSuccess</key>
+						<true/>
+					</dict>
+					<dict>
+						<key>INIntentResponseCodeName</key>
+						<string>failure</string>
+					</dict>
+				</array>
+				<key>INIntentResponseLastParameterTag</key>
+				<integer>6</integer>
+				<key>INIntentResponseOutput</key>
+				<string>status</string>
+				<key>INIntentResponseParameters</key>
+				<array>
+					<dict>
+						<key>INIntentResponseParameterDisplayName</key>
+						<string>Status</string>
+						<key>INIntentResponseParameterDisplayNameID</key>
+						<string>ujOFps</string>
+						<key>INIntentResponseParameterDisplayPriority</key>
+						<integer>1</integer>
+						<key>INIntentResponseParameterName</key>
+						<string>status</string>
+						<key>INIntentResponseParameterTag</key>
+						<integer>5</integer>
+						<key>INIntentResponseParameterType</key>
+						<string>String</string>
+					</dict>
+				</array>
+			</dict>
+			<key>INIntentTitle</key>
+			<string>Get ProtonVPN Connection Status</string>
+			<key>INIntentTitleID</key>
+			<string>2LMbbw</string>
+			<key>INIntentType</key>
+			<string>Custom</string>
+			<key>INIntentVerb</key>
+			<string>Do</string>
+		</dict>
 	</array>
 	<key>INTypes</key>
 	<array/>

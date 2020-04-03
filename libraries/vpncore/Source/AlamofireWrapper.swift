@@ -200,10 +200,8 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
         if response.result.isSuccess, let statusCode = response.response?.statusCode, let json = response.result.value as? JSONDictionary, let code = json.int(key: "Code") {
             if statusCode == 200 && code == 1000 {
                 return .success(json)
-            } else if code == ApiErrorCode.humanVerificationRequired {
-                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             } else {
-                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error")))
+                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             }
         } else if let url = try? request.asURLRequest().url, let index = tlsFailedRequests.firstIndex(where: { $0.url?.absoluteString == url?.absoluteString }) {
             tlsFailedRequests.remove(at: index)
@@ -336,7 +334,8 @@ public class AlamofireWrapperImplementation: AlamofireWrapper {
                     NSURLErrorNetworkConnectionLost,
                     NSURLErrorCannotConnectToHost,
                     HttpStatusCode.serviceUnavailable,
-                    ApiErrorCode.apiOffline:
+                    ApiErrorCode.apiOffline,
+                    ApiErrorCode.invalidEmail:
                 failure(error)
             default:
                 failure(UserError.failedHumanValidation)
