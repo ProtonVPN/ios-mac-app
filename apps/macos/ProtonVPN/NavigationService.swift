@@ -213,12 +213,6 @@ extension NavigationService {
     @objc private func powerOff(_ notification: Notification) {
         PMLog.D("System user is being logged off", level: .trace)
         isSystemLoggingOff = true
-        vpnGateway?.disconnect {
-            self.firewallManager.disableFirewall {
-                self.isSystemLoggingOff = false
-                NSApp.reply(toApplicationShouldTerminate: true)
-            }
-        }
     }
     
     private func openRequiredWindow() {
@@ -255,12 +249,24 @@ extension NavigationService {
     }
     
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
-        if isSystemLoggingOff {
-            // Do not show disconnect modal, because user asked for macOS logOff/shutdown
-            return .terminateNow
+        guard isSystemLoggingOff else {
+            appSessionManager.replyToApplicationShouldTerminate()
+            return .terminateLater
         }
         
-        appSessionManager.replyToApplicationShouldTerminate()
+        // Do not show disconnect modal, because user asked for macOS logOff/shutdown
+        // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
+        
+        guard let vpnGateway = self.vpnGateway, vpnGateway.connection != .disconnected else {
+            return.terminateNow
+        }
+        
+        vpnGateway.disconnect {
+            self.firewallManager.disableFirewall()
+            self.isSystemLoggingOff = false
+            NSApp.reply(toApplicationShouldTerminate: true)
+        }
+        
         return .terminateLater
     }
 }

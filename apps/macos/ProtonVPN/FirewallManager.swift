@@ -171,10 +171,14 @@ class FirewallManager {
     func isProtonFirewallEnabled(completion: @escaping (Bool) -> Void) {
         guard let helper = self.helper() else {
             PMLog.ET("Can not retrieve network helper", level: .debug)
+            completion(false)
             return
         }
         
-        guard let activeEntryIp = propertiesManager.lastServerEntryIp else { return }
+        guard let activeEntryIp = propertiesManager.lastServerEntryIp else {
+            completion(false)
+            return
+        }
         
         helper.firewallEnabled(forServer: activeEntryIp) { (exitCode) in
             PMLog.D("firewallEnabled result: \(exitCode)")
@@ -228,11 +232,12 @@ class FirewallManager {
     
     private func helper(_ completion: ((Bool) -> Void)? = nil) -> NetworkHelperProtocol? {
         // Get the current helper connection and return the remote object (NetworkHelper.swift) as a proxy object to call functions on
-        guard let helper = helperConnection()?.remoteObjectProxyWithErrorHandler({ [unowned self] error in
+        
+        guard let helper1 = helperConnection()?.remoteObjectProxyWithErrorHandler({ [unowned self] error in
             PMLog.D("Helper connection was closed with error: \(error)", level: .error)
             if let onCompletion = completion { onCompletion(false) }
             self.installHelperIfNeeded()
-        }) as? NetworkHelperProtocol else { return nil }
+        }), let helper = helper1 as? NetworkHelperProtocol else { return nil }
         return helper
     }
     
