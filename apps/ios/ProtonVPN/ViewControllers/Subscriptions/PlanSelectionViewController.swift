@@ -76,16 +76,6 @@ class PlanSelectionViewController: UIViewController {
         }
     }
     
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-    
-        plansStack.arrangedSubviews.forEach { view in
-            guard let planView = view as? PlanCardView else { return }
-            planView.checkWidth()
-        }
-    
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.viewBecameVisible = true
@@ -134,11 +124,10 @@ class PlanSelectionViewController: UIViewController {
         
         viewModel.plans.enumerated().forEach { (i: Int, plan: AccountPlan) in
             let planView = PlanCardView.loadViewFromNib() as PlanCardView
-            planView.storeKitManager = viewModel.storeKitManager
-            planView.plan = plan // StoreKit manager must be set before setting plan!
-            planView.moreFeaturesSelected = { [weak self] plan in
+            planView.presenter = PlanCardViewPresenterImplementation(plan, storeKitManager: viewModel.storeKitManager) { [weak self] plan in
                 self?.showAdvancedFeatures(forPlan: plan)
             }
+
             plansStack.addArrangedSubview(planView)
             planView.leadingAnchor.constraint(equalTo: plansStack.leadingAnchor).isActive = true
             planView.trailingAnchor.constraint(equalTo: plansStack.trailingAnchor).isActive = true
@@ -147,7 +136,7 @@ class PlanSelectionViewController: UIViewController {
     }
     
     @objc private func planViewSelected(_ recognizer: UIGestureRecognizer) {
-        guard let planView = recognizer.view as? PlanCardView, let plan = planView.plan else {
+        guard let planView = recognizer.view as? PlanCardView, let plan = planView.presenter.plan else {
             return
         }
         viewModel.selectedPlan = plan
@@ -156,7 +145,7 @@ class PlanSelectionViewController: UIViewController {
     private func selectedPlanChanged() {
         plansStack.subviews.forEach { view in
             guard let planView = view as? PlanCardView else { return }
-            planView.setSelected(planView.plan == viewModel.selectedPlan)
+            planView.setSelected(planView.presenter.plan == viewModel.selectedPlan)
         }        
         if let plan = viewModel.selectedPlan {
             if plan.storeKitProductId != nil { // keeps button enabled if free or trial
