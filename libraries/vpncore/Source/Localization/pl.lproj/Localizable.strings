@@ -485,6 +485,12 @@
 "_feature" = "Funkcja";
 
 /* iOS plan feature */
+"_feature_blocked_content" = "Dostęp do zablokowanych treści";
+
+/* iOS plan feature */
+"_feature_bt" = "Wsparcie BitTorrent/udostępnianie plików";
+
+/* iOS plan feature */
 "_feature_connections" = "Jednoczesne połączenia VPN";
 
 /* iOS plan feature */
@@ -672,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Zarządzaj profilami";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Zarządzaj subskrypcją";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Zarządzaj swoją subskrypcją poprzez stronę internetową";
@@ -1219,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Wyślij";
 
+/* Text under current plan information */
+"_subscription_button" = "Przedłuż plan na rok \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Możesz kupić więcej środków, aby automatycznie przedłużyć obecny plan. Pod koniec okresu obecnej subskrypcji środki te zostaną wykorzystane do kontynuacji planu.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Kupiłeś środki, aby przedłużyć swój obecny plan.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plan subskrypcji";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Obecny plan wygaśnie w dniu %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony w dniu %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Połączono";
