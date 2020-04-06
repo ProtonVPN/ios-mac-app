@@ -19,7 +19,7 @@
 	<key>CFBundleShortVersionString</key>
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
-	<string>1060</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>NSAppTransportSecurity</key>
 	<dict>
 		<key>NSExceptionDomains</key>
@@ -44,6 +44,7 @@
 			<key>IntentsSupported</key>
 			<array>
 				<string>DisconnectIntent</string>
+				<string>GetConnectionStatusIntent</string>
 				<string>QuickConnectIntent</string>
 			</array>
 		</dict>
