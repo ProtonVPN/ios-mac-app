@@ -485,6 +485,12 @@
 "_feature" = "Функция";
 
 /* iOS plan feature */
+"_feature_blocked_content" = "Доступ к заблокированному контенту";
+
+/* iOS plan feature */
+"_feature_bt" = "Поддержка BitTorrent/файлообмена";
+
+/* iOS plan feature */
 "_feature_connections" = "Одновременные VPN-подключения";
 
 /* iOS plan feature */
@@ -672,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Управление профилями";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Управление подпиской";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Управляйте своей подпиской в личном кабинете на сайте";
@@ -1219,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Отправить";
 
+/* Text under current plan information */
+"_subscription_button" = "Продлить подписку на 1 год \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "План подписки";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Текущий тариф истекает %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Успешное подключение";

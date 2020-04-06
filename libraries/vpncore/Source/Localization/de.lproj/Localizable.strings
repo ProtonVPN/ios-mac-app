@@ -485,6 +485,12 @@
 "_feature" = "Funktion";
 
 /* iOS plan feature */
+"_feature_blocked_content" = "Zugriff auf gesperrte Inhalte";
+
+/* iOS plan feature */
+"_feature_bt" = "Unterstützung für BitTorrent/Dateifreigabe";
+
+/* iOS plan feature */
 "_feature_connections" = "Gleichzeitige VPN‐Verbindungen";
 
 /* iOS plan feature */
@@ -672,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Profile verwalten";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Abonnement verwalten";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Verwalten Sie Ihr Abonnement im Web‐Dashboard";
@@ -1219,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Absenden";
 
+/* Text under current plan information */
+"_subscription_button" = "Abo um 1 Jahr verlängern \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Sie können weiteres Guthaben erwerben, um Ihr aktuelles Abonnement automatisch zu verlängern. Am Ende Ihrer aktuellen Abonnementperiode wird dieses Guthaben zur Fortsetzung Ihres Abos verwendet.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Sie haben erfolgreich Guthaben erworben, um Ihr aktuelles Abonnement verlängern zu können.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Abonnement";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Das derzeitige Abonnement ist nur noch bis zum %@ gültig.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Das aktuelle Abonnement verlängert sich automatisch am %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Erfolgreich verbunden";

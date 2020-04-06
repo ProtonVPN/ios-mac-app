@@ -485,6 +485,12 @@
 "_feature" = "Fitur";
 
 /* iOS plan feature */
+"_feature_blocked_content" = "Akses konten yang diblokir";
+
+/* iOS plan feature */
+"_feature_bt" = "Dukungan BitTorrent/berbagi berkas";
+
+/* iOS plan feature */
 "_feature_connections" = "Sambungan VPN serentak";
 
 /* iOS plan feature */
@@ -672,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Kelola Profil";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Kelola Langganan";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Kelola langganan Anda di dasbor web";
@@ -1219,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Kirim";
 
+/* Text under current plan information */
+"_subscription_button" = "Extend plan for 1 year \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Paket Berlangganan";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Current plan will expire on %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Current plan will automatically renew on %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Berhasil Tersambung";
