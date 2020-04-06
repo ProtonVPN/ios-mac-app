@@ -156,7 +156,7 @@ class FirewallManager {
         inactiveFirewallTimer?.invalidate()
         inactiveFirewallTimer = nil
         
-        guard let helper = self.helper() else {
+        guard let helper = self.helper({ success in completion?() }) else {
             PMLog.ET("Can not retrieve network helper")
             completion?()
             return
@@ -233,11 +233,11 @@ class FirewallManager {
     private func helper(_ completion: ((Bool) -> Void)? = nil) -> NetworkHelperProtocol? {
         // Get the current helper connection and return the remote object (NetworkHelper.swift) as a proxy object to call functions on
         
-        guard let helper1 = helperConnection()?.remoteObjectProxyWithErrorHandler({ [unowned self] error in
+        guard let helper = helperConnection()?.remoteObjectProxyWithErrorHandler({ [unowned self] error in
             PMLog.D("Helper connection was closed with error: \(error)", level: .error)
             if let onCompletion = completion { onCompletion(false) }
             self.installHelperIfNeeded()
-        }), let helper = helper1 as? NetworkHelperProtocol else { return nil }
+        }) as? NetworkHelperProtocol else { return nil }
         return helper
     }
     

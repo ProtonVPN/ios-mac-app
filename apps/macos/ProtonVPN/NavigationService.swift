@@ -262,9 +262,12 @@ extension NavigationService {
         }
         
         vpnGateway.disconnect {
-            self.firewallManager.disableFirewall()
-            self.isSystemLoggingOff = false
-            NSApp.reply(toApplicationShouldTerminate: true)
+            self.firewallManager.disableFirewall {
+                DispatchQueue.main.async {
+                    self.isSystemLoggingOff = false
+                    NSApp.reply(toApplicationShouldTerminate: true)
+                }
+            }
         }
         
         return .terminateLater
