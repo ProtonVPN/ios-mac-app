@@ -40,8 +40,11 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        return;
-        guard vpnGateway != nil else { return }
+        
+        guard vpnGateway != nil else {
+            viewController?.displayNoGateWay()
+            return
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
@@ -53,16 +56,8 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        viewController?.electronContainer?.animate()
-        displayConnectoinState()
-        return;        
         guard vpnGateway != nil else {
-            viewController?.connectionIcon?.tintColor = .protonGreen()
-            viewController?.connectionLabel.attributedText = LocalizedString
-                .logInToUseWidget
-                .attributed(withColor: .protonWhite(), font: .systemFont(ofSize: 16, weight: .regular))
-            viewController?.connectButton.customState = .primary
-            viewController?.setConnectButtonTitle(LocalizedString.logIn)
+            viewController?.displayNoGateWay()
             return
         }
         
@@ -73,11 +68,15 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
         super.viewWillAppear(animated)
         // refresh data
         ProfileManager.shared.refreshProfiles()
+        viewController?.displayBlank()
+        connectionChanged()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        reset()
+        timer?.invalidate()
+        timer = nil
+        viewController?.displayBlank()
     }
     
     deinit { reachability?.stopNotifier() }
@@ -87,12 +86,13 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
     @objc private func connectionChanged() {
         timer?.invalidate()
         timer = nil
-     
+        connectionFailed = false
+        
         if let reachability = reachability, reachability.connection == .none {
             viewController?.displayUnreachable()
             return
         }
-            
+        
         viewController?.connectButton.isHidden = false
         
         guard let vpnGateway = vpnGateway else { return }
@@ -100,10 +100,6 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
         switch vpnGateway.connection {
         case .connected:
             connectionFailed = false
-            viewController?.connectionIcon?.tintColor = UIColor.protonGreen()
-            viewController?.connectButton.customState = .destructive
-            viewController?.setConnectButtonTitle(LocalizedString.disconnect)
-//            viewController?.electronContainer?.stopAnimating()
             displayConnectoinState()
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
                 DispatchQueue.main.async { self?.displayConnectoinState() }
@@ -111,27 +107,12 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
             
         case .connecting:
             connectionFailed = false
-            viewController?.connectionIcon?.tintColor = UIColor.protonGreen()
-            viewController?.connectionLabel.attributedText = LocalizedString.connectingDotDotDot.attributed(withColor: UIColor.protonGreen(), font: .systemFont(ofSize: 16, weight: .bold))
-            viewController?.connectButton.customState = .destructive
-            viewController?.setConnectButtonTitle(LocalizedString.cancel)
-//            viewController?.electronContainer?.animate()
+            viewController?.displayConnecting()
             
         case .disconnected, .disconnecting:
             if connectionFailed { break }
-            viewController?.connectionIcon?.tintColor = UIColor.protonUnavailableGrey()
-            viewController?.connectionLabel.attributedText = LocalizedString.disconnected.attributed(withColor: UIColor.protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
-            viewController?.connectButton.customState = .primary
-            viewController?.setConnectButtonTitle(LocalizedString.quickConnect)
-//            viewController?.electronContainer?.stopAnimating()
+            viewController?.displayDisconnected()
         }
-    }
-    
-    fileprivate func reset() {
-        timer?.invalidate()
-        timer = nil
-        connectionFailed = false
-        viewController?.displayBlank()
     }
     
     @objc private func connectAction(_ sender: Any) {

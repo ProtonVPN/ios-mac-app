@@ -22,17 +22,18 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-e6-n86">
                                         <rect key="frame" x="0.0" y="0.0" width="74" height="66"/>
                                         <subviews>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFs-vG-rdO" userLabel="electron" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                            </view>
-                                            <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
                                                 <rect key="frame" x="16" y="5.5" width="50" height="55"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="height" multiplier="69:76" id="icq-9a-DQU"/>
                                                     <constraint firstAttribute="width" constant="50" id="ofH-qU-pfl"/>
                                                 </constraints>
                                             </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFs-vG-rdO" userLabel="electron" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
+                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
@@ -48,23 +49,23 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-sb-fwc">
                                         <rect key="frame" x="82" y="0.0" width="88.5" height="66"/>
                                         <subviews>
-                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="-4" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qcx-0u-h3u">
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qcx-0u-h3u">
                                                 <rect key="frame" x="0.0" y="8" width="88.5" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="GcN-lo-r42">
-                                                        <rect key="frame" x="0.0" y="0.0" width="88.5" height="33"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="88.5" height="30.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
-                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="wOd-SV-ui6" userLabel="Country Label">
-                                                        <rect key="frame" x="0.0" y="8.5" width="88.5" height="33"/>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="wOd-SV-ui6" userLabel="Country Label">
+                                                        <rect key="frame" x="0.0" y="10" width="88.5" height="30"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="rzr-7N-SlG" userLabel="IP Label">
-                                                        <rect key="frame" x="0.0" y="17" width="88.5" height="33"/>
+                                                        <rect key="frame" x="0.0" y="19.5" width="88.5" height="30.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>
@@ -84,7 +85,7 @@
                                         <rect key="frame" x="178.5" y="0.0" width="141.5" height="66"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mC-03-j2D" customClass="ProtonButton" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                                <rect key="frame" x="42.5" y="16" width="91" height="34"/>
+                                                <rect key="frame" x="34.5" y="16" width="91" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="Y6E-NM-iog"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fnW-Pj-sDN"/>
@@ -97,7 +98,7 @@
                                         <constraints>
                                             <constraint firstItem="9mC-03-j2D" firstAttribute="centerY" secondItem="zN2-ME-QzW" secondAttribute="centerY" id="Qp0-OO-RIK"/>
                                             <constraint firstItem="9mC-03-j2D" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zN2-ME-QzW" secondAttribute="leading" id="Sab-ve-qln"/>
-                                            <constraint firstAttribute="trailing" secondItem="9mC-03-j2D" secondAttribute="trailing" constant="8" id="i6b-ck-JUf"/>
+                                            <constraint firstAttribute="trailing" secondItem="9mC-03-j2D" secondAttribute="trailing" constant="16" id="i6b-ck-JUf"/>
                                         </constraints>
                                     </view>
                                 </subviews>

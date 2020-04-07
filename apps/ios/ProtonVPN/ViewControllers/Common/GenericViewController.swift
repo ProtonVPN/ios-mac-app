@@ -26,7 +26,7 @@ class GenericViewController: UIViewController {
     
     var viewModel: GenericViewModel!
     
-    //MARK: - View cycle
+    // MARK: - View cycle
     
     override func viewDidLoad() {
         super.viewDidLoad()

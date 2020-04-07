@@ -47,6 +47,8 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         super.viewDidLoad()
         view.backgroundColor = UIColor(red: 30, green: 30, blue: 32)
         connectionIcon?.image = connectionIcon?.image?.withRenderingMode(.alwaysTemplate)
+        connectionIcon?.tintColor = .protonGreen()
+        electronContainer.animate()
     }
     
     override func viewWillLayoutSubviews() {
@@ -54,14 +56,18 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
             electronContainerView?.isHidden = true
         }
     }
-
+    
+    func setConnectButtonTitle(_ title: String) {
+        UIView.performWithoutAnimation {
+            connectButton.setTitle(title, for: .normal)
+            connectButton.layoutIfNeeded()
+        }
+    }
+    
     // MARK: - NCWidgetProviding
     
     func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        print("------------------------------------------------------------")
-        print("--------------------widgetPerformUpdate-----------------------")
-        print("------------------------------------------------------------")
-//        displayBlank()
+        viewModel.viewWillAppear(false)
         completionHandler(NCUpdateResult.newData)
     }
     
@@ -73,62 +79,83 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.text = ""
         setConnectButtonTitle("")
         buttonContainerView.isHidden = true
-        connectButton.isHidden = true
-    }
-    
-    func setConnectButtonTitle(_ title: String) {
-        UIView.performWithoutAnimation {
-            connectButton.setTitle(title, for: .normal)
-            connectButton.layoutIfNeeded()
-        }
+        ipLabel.isHidden = true
+        countryLabel.isHidden = true
     }
     
     func displayUnreachable() {
-        connectionIcon?.tintColor = UIColor.protonUnavailableGrey()
+        buttonContainerView.isHidden = true
+        ipLabel.isHidden = true
+        countryLabel.isHidden = true
+        connectionIcon?.tintColor = .protonUnavailableGrey()
         electronContainer?.stopAnimating()
         connectionLabel.attributedText = LocalizedString
             .networkUnreachable
             .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
-        setConnectButtonTitle("")
-        connectButton.isHidden = true
     }
     
     func displayError() {
+        ipLabel.isHidden = true
+        countryLabel.isHidden = true
         connectionIcon?.tintColor = UIColor.protonUnavailableGrey()
-        connectionLabel.attributedText = LocalizedString
-            .connectionFailed
-            .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
         connectButton.customState = .primary
         setConnectButtonTitle(LocalizedString.ok)
         electronContainer?.stopAnimating()
+        connectionLabel.attributedText = LocalizedString
+            .connectionFailed
+            .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
     }
         
+    func displayNoGateWay(){
+        electronContainer?.stopAnimating()
+        countryLabel.isHidden = true
+        ipLabel.isHidden = true
+        connectButton.customState = .primary
+        setConnectButtonTitle(LocalizedString.logIn)
+        connectionIcon?.tintColor = .protonGreen()
+        connectionLabel.attributedText = LocalizedString
+            .logInToUseWidget
+            .attributed(withColor: .protonWhite(), font: .systemFont(ofSize: 16, weight: .regular))
+    }
+    
     func displayConnected( _ server:String?, country:String? ){
-        ipLabel.isHidden = false
-        countryLabel.isHidden = false
-        countryLabel.attributedText = country?.attributed(withColor: .protonRed(), fontSize: 16)
-        ipLabel.attributedText = server?.attributed(withColor: .protonRed(), fontSize: 16)
+        ipLabel.isHidden = server == nil
+        countryLabel.isHidden = country == nil
+        buttonContainerView.isHidden = false
+        connectButton.customState = .destructive
+        countryLabel.attributedText = country?.attributed(withColor: .protonWhite(), fontSize: 16)
+        ipLabel.attributedText = server?.attributed(withColor: .protonWhite(), fontSize: 16)
+        electronContainer?.stopAnimating()
         connectButton.setTitle(LocalizedString.disconnect, for: .normal)
-        electronContainer?.animate()
         connectionIcon?.tintColor = .protonGreen()
         connectionLabel.attributedText = LocalizedString
             .connected
             .attributed(withColor: .protonGreen(), font: .boldSystemFont(ofSize: 16))
     }
     
-    func setConnectedLabel( _ connectedText: NSMutableAttributedString) {       
-        let fullRange = (connectedText.string as NSString).range(of: connectedText.string)
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = .left
-        paragraphStyle.lineSpacing = 6
-        
-        let runningRange = (connectedText.string as NSString).range(of: LocalizedString.connected)
-        let runningParagraphStyle = NSMutableParagraphStyle()
-        runningParagraphStyle.alignment = .left
-        runningParagraphStyle.lineSpacing = 4
-        
-        connectedText.addAttribute(.paragraphStyle, value: paragraphStyle, range: fullRange)
-        connectedText.addAttribute(.paragraphStyle, value: runningParagraphStyle, range: runningRange)
-        connectionLabel.attributedText = connectedText
+    func displayDisconnected(){
+        ipLabel.isHidden = true
+        countryLabel.isHidden = true
+        buttonContainerView.isHidden = false
+        connectionIcon?.tintColor = UIColor.protonUnavailableGrey()
+        connectButton.customState = .primary
+        setConnectButtonTitle(LocalizedString.quickConnect)
+        electronContainer?.stopAnimating()
+        connectionLabel.attributedText = LocalizedString
+            .disconnected
+            .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
+    }
+    
+    func displayConnecting(){
+        ipLabel.isHidden = true
+        countryLabel.isHidden = true
+        buttonContainerView.isHidden = false
+        setConnectButtonTitle(LocalizedString.cancel)
+        electronContainer?.animate()
+        connectionIcon?.tintColor = UIColor.protonGreen()
+        connectButton.customState = .destructive
+        connectionLabel.attributedText = LocalizedString
+            .connectingDotDotDot
+            .attributed(withColor: .protonGreen(), font: .systemFont(ofSize: 16, weight: .bold))
     }
 }
