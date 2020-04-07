@@ -12,6 +12,12 @@
 		42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
+		42F2541B243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
+		42F2541C243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
+		42F2541D243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
+		42F2541F243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
+		42F25420243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
+		42F25421243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
 		4B321D2FF7B51E388C059E38 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
@@ -466,6 +472,8 @@
 		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
 		42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCardViewPresenter.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
+		42F2541A243C7218007D5D90 /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
+		42F2541E243C73AA007D5D90 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.debug.xcconfig"; sourceTree = "<group>"; };
 		4A860229338490F8F43FA399 /* Pods-ProtonVPN Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN Debug/Pods-ProtonVPN Debug.test.xcconfig"; sourceTree = "<group>"; };
 		539B7C3B982207CF8C92B3EB /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -877,6 +885,7 @@
 				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
 				791DE616208E0E5500A29EA5 /* TabBarController.swift */,
 				E185A86423707D1A0039E625 /* TrackedAlertController.swift */,
+				42F2541E243C73AA007D5D90 /* GenericViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -899,6 +908,7 @@
 				791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */,
 				E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */,
 				792B58C12150E278000BB3A3 /* StatusViewModel.swift */,
+				42F2541A243C7218007D5D90 /* GenericViewModel.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2469,6 +2479,7 @@
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
 				E17BE41522819B7F00D0F652 /* VerificationSmsViewController.swift in Sources */,
+				42F2541F243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				E11DA6B32188C10300CDF310 /* PlanSelectionViewModel.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
@@ -2549,6 +2560,7 @@
 				791DE617208E0E5500A29EA5 /* TabBarController.swift in Sources */,
 				E16F562621F8A09E007BAB77 /* OnboardingContentViewModel.swift in Sources */,
 				79AFDA9220DB370E002F8751 /* ProfilesViewModel.swift in Sources */,
+				42F2541B243C7218007D5D90 /* GenericViewModel.swift in Sources */,
 				D5439079236191420094451D /* VerificationCaptchaViewController.swift in Sources */,
 				E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */,
 				E1007A5221F631960019B901 /* OnboardingPageViewController.swift in Sources */,
@@ -2591,6 +2603,7 @@
 				D5136C24228592E80002C095 /* AppSessionManager.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
+				42F2541D243C7218007D5D90 /* GenericViewModel.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
@@ -2656,6 +2669,7 @@
 				D5136C50228592E80002C095 /* VerificationEmailViewModel.swift in Sources */,
 				D5136C52228592E80002C095 /* VerificationCodeViewModel.swift in Sources */,
 				D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */,
+				42F25421243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				D53E83E4232B76540031CD49 /* String+Validation.swift in Sources */,
 				D5136C53228592E80002C095 /* CountriesViewModel.swift in Sources */,
 				D5136C54228592E80002C095 /* CountryItemViewModel.swift in Sources */,
@@ -2780,10 +2794,12 @@
 			files = (
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */,
+				42F25420243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				E1828588236C78FC00E397A5 /* Intents.intentdefinition in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
 				E1C983B921E4D77400C81666 /* UIKitString+Extension.swift in Sources */,
+				42F2541C243C7218007D5D90 /* GenericViewModel.swift in Sources */,
 				E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */,
 				E169D52C21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 			);
