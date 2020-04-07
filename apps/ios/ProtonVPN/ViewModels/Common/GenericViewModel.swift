@@ -27,21 +27,20 @@ protocol GenericViewModel {
     
     func viewDidLoad()
     
-    func viewWillAppear( _ animated:Bool)
+    func viewWillAppear( _ animated: Bool)
     
-    func viewDidAppear( _ animated:Bool)
+    func viewDidAppear( _ animated: Bool)
     
-    func viewWillDisappear( _ animated:Bool)
+    func viewWillDisappear( _ animated: Bool)
     
-    func viewDidDisappear( _ animated:Bool)
+    func viewDidDisappear( _ animated: Bool)
 }
 
-
-class GenericViewModelImplementation<V:UIViewController>: GenericViewModel {
+class GenericViewModelImplementation<V: UIViewController>: NSObject, GenericViewModel {
     
-    weak var viewController:V?
+    weak var viewController: V?
     
-    //MARK: - Override
+    // MARK: - Override
     
     func viewDidLoad() {
         
