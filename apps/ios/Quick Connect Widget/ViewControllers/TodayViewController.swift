@@ -51,12 +51,6 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         electronContainer.animate()
     }
     
-    override func viewWillLayoutSubviews() {
-        if view.frame.width < 358 { // to fit everything on small screen sizes
-            electronContainerView?.isHidden = true
-        }
-    }
-    
     func setConnectButtonTitle(_ title: String) {
         UIView.performWithoutAnimation {
             connectButton.setTitle(title, for: .normal)
@@ -81,6 +75,7 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         buttonContainerView.isHidden = true
         ipLabel.isHidden = true
         countryLabel.isHidden = true
+        reAdjustSize()
     }
     
     func displayUnreachable() {
@@ -92,6 +87,7 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.attributedText = LocalizedString
             .networkUnreachable
             .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
+        reAdjustSize()
     }
     
     func displayError() {
@@ -104,6 +100,7 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.attributedText = LocalizedString
             .connectionFailed
             .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
+        reAdjustSize()
     }
         
     func displayNoGateWay(){
@@ -116,6 +113,7 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.attributedText = LocalizedString
             .logInToUseWidget
             .attributed(withColor: .protonWhite(), font: .systemFont(ofSize: 16, weight: .regular))
+        reAdjustSize()
     }
     
     func displayConnected( _ server:String?, country:String? ){
@@ -123,14 +121,15 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = false
         connectButton.customState = .destructive
-        countryLabel.attributedText = country?.attributed(withColor: .protonWhite(), fontSize: 16)
-        ipLabel.attributedText = server?.attributed(withColor: .protonWhite(), fontSize: 16)
+        countryLabel.attributedText = country?.attributed(withColor: .protonWhite(), fontSize: 14, lineSpacing: -2)
+        ipLabel.attributedText = server?.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14)
         electronContainer?.stopAnimating()
         connectButton.setTitle(LocalizedString.disconnect, for: .normal)
         connectionIcon?.tintColor = .protonGreen()
         connectionLabel.attributedText = LocalizedString
             .connected
             .attributed(withColor: .protonGreen(), font: .boldSystemFont(ofSize: 16))
+        reAdjustSize()
     }
     
     func displayDisconnected(){
@@ -144,6 +143,7 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.attributedText = LocalizedString
             .disconnected
             .attributed(withColor: .protonUnavailableGrey(), font: .systemFont(ofSize: 16, weight: .bold))
+        reAdjustSize()
     }
     
     func displayConnecting(){
@@ -157,5 +157,18 @@ class TodayViewController: GenericViewController, NCWidgetProviding {
         connectionLabel.attributedText = LocalizedString
             .connectingDotDotDot
             .attributed(withColor: .protonGreen(), font: .systemFont(ofSize: 16, weight: .bold))
+        reAdjustSize()
+    }
+    
+    // MARK: - Util
+    
+    private func reAdjustSize() {
+        guard let buttonWidth = connectButton.titleLabel?.realSize.width,
+            view.frame.width > 357 else { // to fit everything on small screen sizes
+                electronContainerView?.isHidden = true
+                return
+        }
+        // if the size of both components is too big for the screen, we hide the loader
+        electronContainerView?.isHidden = buttonWidth + connectionLabel.realSize.width > view.frame.width - 140
     }
 }

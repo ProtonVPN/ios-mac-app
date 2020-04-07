@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1D533E7ACCBB4672CD678E98 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
+		422A3953243CEDAE0022797F /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
@@ -2812,6 +2813,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				42F25426243C7512007D5D90 /* TodayViewModel.swift in Sources */,
+				422A3953243CEDAE0022797F /* UILabel+realSize.swift in Sources */,
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */,
 				42F25420243C73AA007D5D90 /* GenericViewController.swift in Sources */,
