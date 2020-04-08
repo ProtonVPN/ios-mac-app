@@ -30,12 +30,12 @@ protocol TodayViewControllerProtocol: class {
     func displayBlank()
     func displayUnreachable()
     func displayError()
-    func displayConnected( _ server:String?, country:String? )
+    func displayConnected( _ server: String?, country: String? )
     func displayDisconnected()
     func displayConnecting()
     func displayNoGateWay()
     
-    func extensionOpenUrl( _ url:URL )
+    func extensionOpenUrl( _ url: URL )
 }
 
 class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControllerProtocol {
@@ -60,7 +60,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = UIColor(red: 30, green: 30, blue: 32)
+        view.backgroundColor = .protonWidgetBackground
         connectionIcon?.image = connectionIcon?.image?.withRenderingMode(.alwaysTemplate)
         viewModel?.viewDidLoad()
     }
@@ -113,7 +113,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         genericStyle( LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
     }
     
-    func displayConnected( _ server:String?, country:String? ){
+    func displayConnected( _ server: String?, country: String? ){
         genericStyle( LocalizedString.disconnect, buttonState: .destructive,
                       ipAddress: server, country: country, connectionString: LocalizedString.connected )
     }
@@ -143,10 +143,10 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         electronContainerView?.isHidden = buttonWidth + connectionLabel.realSize.width > view.frame.width - 140
     }
     
-    private func genericStyle( _ buttonTitle:String = "", buttonState:ProtonButton.CustomState = .primary,
-                               ipAddress:String? = nil, country:String? = nil, buttonHidden:Bool = false,
-                               connectionString:String = "", connectionLabelTint:UIColor = .protonGreen(),
-                               iconTint: UIColor = .protonGreen(), animate:Bool = false ) {
+    private func genericStyle( _ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
+                               ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
+                               connectionString: String = "", connectionLabelTint: UIColor = .protonGreen(),
+                               iconTint: UIColor = .protonGreen(), animate: Bool = false ) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden

@@ -24,7 +24,7 @@ import Reachability
 import vpncore
 import NotificationCenter
 
-protocol TodayViewModel:GenericViewModel {
+protocol TodayViewModel: GenericViewModel {
     
     var viewController: TodayViewControllerProtocol? { get set }
     
@@ -41,7 +41,7 @@ class TodayViewModelImplementation: TodayViewModel {
     private var timer: Timer?
     private var connectionFailed = false
     
-    init( _ appStateManager:AppStateManager, vpnGateWay:VpnGatewayProtocol? ){
+    init( _ appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol? ){
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateWay
     }
@@ -93,9 +93,9 @@ class TodayViewModelImplementation: TodayViewModel {
         switch vpnGateway.connection {
         case .connected:
             connectionFailed = false
-            displayConnectoinState()
+            displayConnectionState()
             timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                DispatchQueue.main.async { self?.displayConnectoinState() }
+                DispatchQueue.main.async { self?.displayConnectionState() }
             }
             
         case .connecting:
@@ -135,7 +135,7 @@ class TodayViewModelImplementation: TodayViewModel {
         }
     }
     
-    private func displayConnectoinState() {
+    private func displayConnectionState() {
         switch vpnGateway?.connection {
         case .connected:
             guard let server = vpnGateway?.activeServer else { break }
