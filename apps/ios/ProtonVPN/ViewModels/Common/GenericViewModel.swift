@@ -1,6 +1,6 @@
 //
-//  UILabel+realSize.swift
-//  ProtonVPN - Created on 01/04/2020.
+//  GenericViewModel.swift
+//  ProtonVPN - Created on 07/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,18 +20,22 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Foundation
 
-extension UILabel {
+protocol GenericViewModel {
+    func viewDidLoad()
+    func viewWillAppear( _ animated: Bool)
+    func viewDidAppear( _ animated: Bool)
+    func viewWillDisappear( _ animated: Bool)
+    func viewDidDisappear( _ animated: Bool)
+}
 
-    /// Calculate the real content size of a UILabel which value could be depending of a second view p.e: stackviews.
-    var realSize: CGSize {
-        let sizeLabel = UILabel()
-        sizeLabel.numberOfLines = numberOfLines
-        sizeLabel.font = font
-        sizeLabel.text = text
-        sizeLabel.attributedText = attributedText
-        sizeLabel.sizeToFit()
-        return sizeLabel.bounds.size
-    }
+// MARK: - Optionals
+
+extension GenericViewModel {
+    func viewDidLoad() {}
+    func viewWillAppear( _ animated: Bool){}
+    func viewDidAppear( _ animated: Bool){}
+    func viewWillDisappear( _ animated: Bool){}
+    func viewDidDisappear( _ animated: Bool){}
 }

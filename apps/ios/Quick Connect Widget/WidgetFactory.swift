@@ -46,6 +46,7 @@ class WidgetFactory {
     }()
     
     private var _vpnGateway: VpnGatewayProtocol?
+    
     var vpnGateway: VpnGatewayProtocol? {
         guard let _ = try? vpnKeychain.fetch() else {
             _vpnGateway = nil
@@ -59,6 +60,12 @@ class WidgetFactory {
         return _vpnGateway
     }
     
+    var todayViewModel:TodayViewModel {
+        let viewModel = TodayViewModelImplementation( self.appStateManager, vpnGateWay: self.vpnGateway )
+        self.alertService.delegate = viewModel
+        return viewModel
+    }
+    
     private init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
@@ -68,4 +75,5 @@ class WidgetFactory {
         vpnManager = VpnManager()
         vpnKeychain = VpnKeychain()
     }
+    
 }
