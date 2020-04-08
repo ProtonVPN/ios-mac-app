@@ -16,9 +16,6 @@
 		42F2541B243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
 		42F2541C243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
 		42F2541D243C7218007D5D90 /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541A243C7218007D5D90 /* GenericViewModel.swift */; };
-		42F2541F243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
-		42F25420243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
-		42F25421243C73AA007D5D90 /* GenericViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F2541E243C73AA007D5D90 /* GenericViewController.swift */; };
 		42F25426243C7512007D5D90 /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F25424243C7512007D5D90 /* TodayViewModel.swift */; };
 		4B321D2FF7B51E388C059E38 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
@@ -475,7 +472,6 @@
 		42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCardViewPresenter.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		42F2541A243C7218007D5D90 /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
-		42F2541E243C73AA007D5D90 /* GenericViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewController.swift; sourceTree = "<group>"; };
 		42F25424243C7512007D5D90 /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.debug.xcconfig"; sourceTree = "<group>"; };
 		4A860229338490F8F43FA399 /* Pods-ProtonVPN Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN Debug/Pods-ProtonVPN Debug.test.xcconfig"; sourceTree = "<group>"; };
@@ -904,7 +900,6 @@
 				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
 				791DE616208E0E5500A29EA5 /* TabBarController.swift */,
 				E185A86423707D1A0039E625 /* TrackedAlertController.swift */,
-				42F2541E243C73AA007D5D90 /* GenericViewController.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2499,7 +2494,6 @@
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
 				E17BE41522819B7F00D0F652 /* VerificationSmsViewController.swift in Sources */,
-				42F2541F243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				E11DA6B32188C10300CDF310 /* PlanSelectionViewModel.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
@@ -2689,7 +2683,6 @@
 				D5136C50228592E80002C095 /* VerificationEmailViewModel.swift in Sources */,
 				D5136C52228592E80002C095 /* VerificationCodeViewModel.swift in Sources */,
 				D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */,
-				42F25421243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				D53E83E4232B76540031CD49 /* String+Validation.swift in Sources */,
 				D5136C53228592E80002C095 /* CountriesViewModel.swift in Sources */,
 				D5136C54228592E80002C095 /* CountryItemViewModel.swift in Sources */,
@@ -2816,7 +2809,6 @@
 				422A3953243CEDAE0022797F /* UILabel+realSize.swift in Sources */,
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */,
-				42F25420243C73AA007D5D90 /* GenericViewController.swift in Sources */,
 				E1828588236C78FC00E397A5 /* Intents.intentdefinition in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,

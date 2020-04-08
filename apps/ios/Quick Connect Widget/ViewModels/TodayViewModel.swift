@@ -24,7 +24,16 @@ import Reachability
 import vpncore
 import NotificationCenter
 
-class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
+protocol TodayViewModel:GenericViewModel {
+    
+    var viewController: TodayViewControllerProtocol? { get set }
+    
+    func connectAction( _ sender: Any )
+}
+
+class TodayViewModelImplementation: TodayViewModel {
+    
+    weak var viewController: TodayViewControllerProtocol?
     
     private let reachability = Reachability()
     private let appStateManager: AppStateManager!
@@ -34,13 +43,10 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
     
     init( _ appStateManager:AppStateManager, vpnGateWay:VpnGatewayProtocol? ){
         self.appStateManager = appStateManager
-        super.init()
         self.vpnGateway = vpnGateWay
     }
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
+    func viewDidLoad() {
         guard vpnGateway != nil else {
             viewController?.displayNoGateWay()
             return
@@ -50,30 +56,16 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.viewController?.displayUnreachable() }
         try? reachability?.startNotifier()
-        
-        viewController?.connectButton.addTarget(self, action: #selector(connectAction(_:)), for: .touchUpInside)
     }
     
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        guard vpnGateway != nil else {
-            viewController?.displayNoGateWay()
-            return
-        }
-        
-        connectionChanged()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
+    func viewWillAppear(_ animated: Bool) {
         // refresh data
         ProfileManager.shared.refreshProfiles()
         viewController?.displayBlank()
         connectionChanged()
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
+    func viewWillDisappear(_ animated: Bool) {
         timer?.invalidate()
         timer = nil
         viewController?.displayBlank()
@@ -92,10 +84,11 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
             viewController?.displayUnreachable()
             return
         }
-        
-        viewController?.connectButton.isHidden = false
-        
-        guard let vpnGateway = vpnGateway else { return }
+                
+        guard let vpnGateway = vpnGateway else {
+            viewController?.displayNoGateWay()
+            return
+        }
 
         switch vpnGateway.connection {
         case .connected:
@@ -115,18 +108,20 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
         }
     }
     
-    @objc private func connectAction(_ sender: Any) {
+    @objc func connectAction(_ sender: Any) {
         
         guard let vpnGateway = vpnGateway else {
             connectionFailed = false
             // not logged in so open the app
-            viewController?.extensionContext?.open(URL(string: "protonvpn://")!, completionHandler: nil)
+            let url = URL(string: "protonvpn://")!
+            viewController?.extensionOpenUrl(url)
             return
         }
         
         if connectionFailed {
             // error
-            viewController?.extensionContext?.open(URL(string: "protonvpn://")!, completionHandler: nil)
+            let url = URL(string: "protonvpn://")!
+            viewController?.extensionOpenUrl(url)
             return
         }
         
@@ -153,7 +148,7 @@ class TodayViewModel: GenericViewModelImplementation<TodayViewController> {
     }
 }
 
-extension TodayViewModel: ExtensionAlertServiceDelegate {
+extension TodayViewModelImplementation: ExtensionAlertServiceDelegate {
     func actionErrorReceived() {
         connectionFailed = true
         viewController?.displayError()

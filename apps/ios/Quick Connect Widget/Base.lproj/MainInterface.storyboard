@@ -92,6 +92,9 @@
                                                 </constraints>
                                                 <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
                                                 <state key="normal" title="Connect"/>
+                                                <connections>
+                                                    <action selector="didTapConnectButton:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="5An-BF-4J4"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
