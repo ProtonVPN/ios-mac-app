@@ -138,7 +138,11 @@ class TodayViewModelImplementation: TodayViewModel {
     private func displayConnectionState() {
         switch vpnGateway?.connection {
         case .connected:
-            guard let server = appStateManager.activeConnection()?.server else { break }
+            guard let server = appStateManager.activeConnection()?.server else {
+                connectionFailed = true
+                viewController?.displayError()
+                break
+            }
             let country = LocalizationUtility.countryName(forCode: server.countryCode)
             let ip = server.ips.first?.entryIp
             viewController?.displayConnected(ip, country: country)
