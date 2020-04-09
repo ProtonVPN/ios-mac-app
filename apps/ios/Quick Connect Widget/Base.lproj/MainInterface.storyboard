@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="M4Y-Lb-cyx">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -16,83 +16,122 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="110"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="GcN-lo-r42">
-                                <rect key="frame" x="82" y="44" width="146" height="66"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="19p-4Y-Cn2">
-                                <rect key="frame" x="228" y="44" width="92" height="66"/>
-                                <connections>
-                                    <action selector="connectAction:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="ghT-Hr-1ZT"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mC-03-j2D" customClass="ProtonButton" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                <rect key="frame" x="244" y="60" width="60" height="34"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="34" id="Y6E-NM-iog"/>
-                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fnW-Pj-sDN"/>
-                                </constraints>
-                                <state key="normal" title="Connect"/>
-                                <connections>
-                                    <action selector="connectAction:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="Rl2-Yv-3xm"/>
-                                </connections>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
-                                <rect key="frame" x="16" y="49.5" width="50" height="55"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="height" multiplier="69:76" id="icq-9a-DQU"/>
-                                    <constraint firstAttribute="width" constant="50" id="ofH-qU-pfl"/>
-                                </constraints>
-                            </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-e6-n86" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                <rect key="frame" x="16" y="49.5" width="50" height="55"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JGL-Z5-wKS">
+                                <rect key="frame" x="0.0" y="44" width="320" height="66"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-e6-n86">
+                                        <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
+                                        <subviews>
+                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
+                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="height" multiplier="69:76" id="icq-9a-DQU"/>
+                                                    <constraint firstAttribute="width" constant="50" id="ofH-qU-pfl"/>
+                                                </constraints>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFs-vG-rdO" userLabel="electron" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
+                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
+                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                            </view>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="height" secondItem="pE6-gs-k9n" secondAttribute="height" id="4j4-YI-HI7"/>
+                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="centerY" secondItem="pE6-gs-k9n" secondAttribute="centerY" id="CNn-1u-VHJ"/>
+                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="centerX" secondItem="pE6-gs-k9n" secondAttribute="centerX" id="SX8-lS-LSs"/>
+                                            <constraint firstItem="pE6-gs-k9n" firstAttribute="leading" secondItem="XpW-e6-n86" secondAttribute="leading" constant="16" id="Xs0-rU-PIa"/>
+                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="width" id="kbi-JQ-1as"/>
+                                            <constraint firstItem="pE6-gs-k9n" firstAttribute="centerY" secondItem="XpW-e6-n86" secondAttribute="centerY" id="xDg-Y0-bF0"/>
+                                            <constraint firstAttribute="trailing" secondItem="pE6-gs-k9n" secondAttribute="trailing" id="xDr-Bs-pc7"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-sb-fwc">
+                                        <rect key="frame" x="74" y="0.0" width="112.5" height="66"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qcx-0u-h3u">
+                                                <rect key="frame" x="16" y="8" width="88.5" height="50"/>
+                                                <subviews>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="GcN-lo-r42">
+                                                        <rect key="frame" x="0.0" y="0.0" width="88.5" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="wOd-SV-ui6" userLabel="Country Label">
+                                                        <rect key="frame" x="0.0" y="12.5" width="88.5" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="rzr-7N-SlG" userLabel="IP Label">
+                                                        <rect key="frame" x="0.0" y="25" width="88.5" height="25"/>
+                                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                        <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                </subviews>
+                                            </stackView>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="qcx-0u-h3u" firstAttribute="leading" secondItem="Y49-sb-fwc" secondAttribute="leading" constant="16" id="1FT-Dz-m8L"/>
+                                            <constraint firstAttribute="trailing" secondItem="qcx-0u-h3u" secondAttribute="trailing" constant="8" id="3Wa-28-DZ0"/>
+                                            <constraint firstItem="qcx-0u-h3u" firstAttribute="top" secondItem="Y49-sb-fwc" secondAttribute="top" constant="8" id="CwS-nb-IcN"/>
+                                            <constraint firstAttribute="bottom" secondItem="qcx-0u-h3u" secondAttribute="bottom" constant="8" id="WSH-o8-ci5"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zN2-ME-QzW" userLabel="Button Container">
+                                        <rect key="frame" x="194.5" y="0.0" width="125.5" height="66"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mC-03-j2D" customClass="ProtonButton" customModule="Quick_Connect_Widget" customModuleProvider="target">
+                                                <rect key="frame" x="18.5" y="16" width="91" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="Y6E-NM-iog"/>
+                                                    <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fnW-Pj-sDN"/>
+                                                </constraints>
+                                                <inset key="contentEdgeInsets" minX="16" minY="8" maxX="16" maxY="8"/>
+                                                <state key="normal" title="Connect"/>
+                                                <connections>
+                                                    <action selector="didTapConnectButton:" destination="M4Y-Lb-cyx" eventType="touchUpInside" id="5An-BF-4J4"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="9mC-03-j2D" firstAttribute="centerY" secondItem="zN2-ME-QzW" secondAttribute="centerY" id="Qp0-OO-RIK"/>
+                                            <constraint firstItem="9mC-03-j2D" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="zN2-ME-QzW" secondAttribute="leading" constant="8" id="Sab-ve-qln"/>
+                                            <constraint firstAttribute="trailing" secondItem="9mC-03-j2D" secondAttribute="trailing" constant="16" id="i6b-ck-JUf"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <constraints>
-                            <constraint firstItem="XpW-e6-n86" firstAttribute="trailing" secondItem="pE6-gs-k9n" secondAttribute="trailing" id="1dn-j4-tEN"/>
-                            <constraint firstItem="ssy-KU-ocm" firstAttribute="bottom" secondItem="19p-4Y-Cn2" secondAttribute="bottom" id="5Gw-sZ-FFr"/>
-                            <constraint firstItem="19p-4Y-Cn2" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="CUD-fe-vnS"/>
-                            <constraint firstItem="XpW-e6-n86" firstAttribute="leading" secondItem="pE6-gs-k9n" secondAttribute="leading" id="E7l-xm-EEB"/>
-                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="19p-4Y-Cn2" secondAttribute="trailing" id="JIc-Hd-ZiO"/>
-                            <constraint firstItem="GcN-lo-r42" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="16" id="R7J-x1-NP2"/>
-                            <constraint firstItem="pE6-gs-k9n" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" constant="16" id="Rfe-9k-DcY"/>
-                            <constraint firstItem="XpW-e6-n86" firstAttribute="top" secondItem="pE6-gs-k9n" secondAttribute="top" id="Uc4-eU-qTu"/>
-                            <constraint firstItem="GcN-lo-r42" firstAttribute="leading" secondItem="pE6-gs-k9n" secondAttribute="trailing" constant="16" id="VKZ-l0-23j"/>
-                            <constraint firstItem="GcN-lo-r42" firstAttribute="trailing" secondItem="19p-4Y-Cn2" secondAttribute="leading" id="dbu-rR-7tl"/>
-                            <constraint firstItem="9mC-03-j2D" firstAttribute="leading" secondItem="GcN-lo-r42" secondAttribute="trailing" constant="16" id="e9F-Kg-iLf"/>
-                            <constraint firstItem="pE6-gs-k9n" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="gh6-34-hxz"/>
-                            <constraint firstItem="GcN-lo-r42" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" symbolic="YES" id="mYS-Cv-VNx"/>
-                            <constraint firstItem="9mC-03-j2D" firstAttribute="trailing" secondItem="ssy-KU-ocm" secondAttribute="trailing" constant="-16" id="ooa-YI-65k"/>
-                            <constraint firstItem="XpW-e6-n86" firstAttribute="bottom" secondItem="pE6-gs-k9n" secondAttribute="bottom" id="rMe-FM-ieH"/>
-                            <constraint firstItem="9mC-03-j2D" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="txI-TW-tYc"/>
-                            <constraint firstItem="GcN-lo-r42" firstAttribute="centerY" secondItem="ssy-KU-ocm" secondAttribute="centerY" id="xPy-hu-NUI"/>
+                            <constraint firstItem="JGL-Z5-wKS" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" id="1BQ-dy-CMa"/>
+                            <constraint firstAttribute="bottom" secondItem="JGL-Z5-wKS" secondAttribute="bottom" id="IpN-QB-eTD"/>
+                            <constraint firstItem="JGL-Z5-wKS" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="LH6-Zz-mMc"/>
+                            <constraint firstItem="ssy-KU-ocm" firstAttribute="trailing" secondItem="JGL-Z5-wKS" secondAttribute="trailing" id="ZEd-oo-Bqg"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="R7J-x1-NP2"/>
-                            </mask>
-                        </variation>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
                     <size key="freeformSize" width="320" height="110"/>
                     <connections>
+                        <outlet property="buttonContainerView" destination="zN2-ME-QzW" id="cOb-yT-U3M"/>
                         <outlet property="connectButton" destination="9mC-03-j2D" id="bWQ-9p-Suc"/>
                         <outlet property="connectionIcon" destination="pE6-gs-k9n" id="xYl-hV-phA"/>
-                        <outlet property="connectionLabel" destination="GcN-lo-r42" id="aMQ-RL-MDd"/>
-                        <outlet property="electronContainer" destination="XpW-e6-n86" id="65J-IY-tpU"/>
-                        <outlet property="invisibleConnectButton" destination="19p-4Y-Cn2" id="Tr8-GX-pik"/>
-                        <outlet property="largeScreenLeadingConstraint" destination="VKZ-l0-23j" id="nJE-ZD-ua3"/>
-                        <outlet property="smallScreenLeadingConstraint" destination="R7J-x1-NP2" id="yMI-80-pyk"/>
+                        <outlet property="connectionLabel" destination="GcN-lo-r42" id="Bn2-Jm-U8w"/>
+                        <outlet property="countryLabel" destination="wOd-SV-ui6" id="pRi-Ww-guj"/>
+                        <outlet property="electronContainer" destination="xFs-vG-rdO" id="DRc-l9-FmL"/>
+                        <outlet property="electronContainerView" destination="XpW-e6-n86" id="Icp-nJ-x5y"/>
+                        <outlet property="ipLabel" destination="rzr-7N-SlG" id="mX9-JI-qM9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="140.80000000000001" y="133.5832083958021"/>
+            <point key="canvasLocation" x="140.57971014492756" y="132.58928571428572"/>
         </scene>
     </scenes>
     <resources>

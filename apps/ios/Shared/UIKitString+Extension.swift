@@ -29,14 +29,16 @@ extension String {
                     fontSize: CGFloat,
                     bold: Bool = false,
                     alignment: NSTextAlignment = .left,
+                    lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
-
-        return attributed(withColor: color, font: bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize), alignment: alignment, lineBreakMode: lineBreakMode)
+        let font = bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
+        return attributed(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
     }
     
     func attributed(withColor color: UIColor,
                     font: UIFont,
                     alignment: NSTextAlignment = .left,
+                    lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         let newString = NSMutableAttributedString(string: self)
         let range = (self as NSString).range(of: self)
@@ -46,9 +48,9 @@ extension String {
         
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = alignment
-        if let lineBreakMode = lineBreakMode {
-            paragraphStyle.lineBreakMode = lineBreakMode
-        }
+        
+        if let lineBreakMode = lineBreakMode { paragraphStyle.lineBreakMode = lineBreakMode }
+        if let lineSpacing = lineSpacing { paragraphStyle.lineSpacing = lineSpacing }
         newString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
         
         return newString
