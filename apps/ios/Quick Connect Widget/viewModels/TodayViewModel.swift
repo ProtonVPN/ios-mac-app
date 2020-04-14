@@ -126,12 +126,12 @@ class TodayViewModelImplementation: TodayViewModel {
         }
         
         switch vpnGateway.connection {
-        case .connected:
-            vpnGateway.disconnect()
-        case .connecting:
-            vpnGateway.stopConnecting(userInitiated: true)
+        case .connected, .connecting:
+            let url = URL(string: "protonvpn://disconnect")!
+            viewController?.extensionOpenUrl(url)
         case .disconnected, .disconnecting:
-            vpnGateway.quickConnect()
+            let url = URL(string: "protonvpn://connect")!
+            viewController?.extensionOpenUrl(url)
         }
     }
     
@@ -140,6 +140,8 @@ class TodayViewModelImplementation: TodayViewModel {
         case .connected:
             guard let server = appStateManager.activeConnection()?.server else {
                 connectionFailed = true
+                timer?.invalidate()
+                timer = nil
                 viewController?.displayError()
                 break
             }

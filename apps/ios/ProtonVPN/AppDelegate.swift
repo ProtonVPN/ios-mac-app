@@ -92,8 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         case "connect":
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway?.connect(with: PropertiesManager().lastConnectionRequest)
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         case "disconnect":
             navigationService.vpnGateway?.disconnect()
+            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         default:
             PMLog.printToConsole("Invalid url action: \(action)")
             return false
