@@ -275,3 +275,10 @@ extension DependencyContainer: SigninInfoContainerFactory {
         return signinInfoContainer
     }    
 }
+
+// MARK: ServicePlanDataStorageFactory
+extension DependencyContainer: ServicePlanDataStorageFactory {
+    func makeServicePlanDataStorage() -> ServicePlanDataStorage {
+        return PropertiesManager()
+    }
+}

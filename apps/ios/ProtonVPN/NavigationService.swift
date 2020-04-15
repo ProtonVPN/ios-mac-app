@@ -446,7 +446,7 @@ extension NavigationService: PlanService {
     /// Shorthand version for presenting plen selection view controller.
     /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
     func presentPlanSelection() {
-        guard servicePlanDataService.isIAPAvailable else {
+        guard servicePlanDataService.isIAPUpgradePlanAvailable else {
             alertService.push(alert: UpgradeUnavailableAlert())
             return
         }

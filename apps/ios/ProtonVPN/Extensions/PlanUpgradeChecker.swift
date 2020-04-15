@@ -40,7 +40,7 @@ public class PlanUpgradeChecker: PlanUpgradeCheckerProtocol {
     public func canUpgrade() -> Bool {
         let propertiesManager = PropertiesManager()
         
-        if let authCredentials = AuthKeychain.fetch(), let vpnCredentials = try? vpnKeychain.fetch(), !vpnCredentials.accountPlan.paid && authCredentials.scopes.contains(.payments) && propertiesManager.isIAPAvailable && propertiesManager.currentSubscription?.hasExistingProtonSubscription == false {
+        if let authCredentials = AuthKeychain.fetch(), let vpnCredentials = try? vpnKeychain.fetch(), !vpnCredentials.accountPlan.paid && authCredentials.scopes.contains(.payments) && propertiesManager.isIAPUpgradePlanAvailable && propertiesManager.currentSubscription?.hasExistingProtonSubscription == false {
             return true
         } else {
             return false
