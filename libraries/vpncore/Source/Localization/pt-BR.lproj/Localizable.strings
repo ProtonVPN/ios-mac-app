@@ -1232,19 +1232,19 @@
 "_subscription_button" = "Estender o plano por 1 ano \n%@.";
 
 /* Text under current plan information */
-"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+"_subscription_description" = "Você pode comprar mais créditos para estender automaticamente o seu plano atual. No final do período da sua assinatura, estes créditos serão aplicados para prolongar o seu plano.";
 
 /* Message shown to user after he bought credits to extend subscription. */
-"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
+"_subscription_extended_success" = "Compra de créditos efetuadas com sucesso para estender o seu plano atual.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plano de assinatura";
 
 /* Subscription expiration text with a date inserted instead of %@ */
-"_subscription_will_expire" = "Current plan will expire on %@.";
+"_subscription_will_expire" = "O plano atual irá expirar em %@.";
 
 /* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
-"_subscription_will_renew" = "Current plan will automatically renew on %@.";
+"_subscription_will_renew" = "O plano actual será automaticamente renovado em %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado com sucesso";

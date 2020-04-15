@@ -1,0 +1,1466 @@
+/* Mac: Used in several Trial screens */
+"_5_connections" = "5 kapcsolódás";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_5_connections_description" = "Kapcsolódjon akár 5\neszközről egy időben";
+
+/* MacOS: About window title */
+"_about" = "Névjegy";
+
+/* Account tab button in settings window (MacOS) and in several modals (both MacOS and iOS) */
+"_account" = "Felhasználó";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Felhasználó csomag";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Felhasználó típus";
+
+/* MacOS: About window */
+"_acknowledgements" = "Közreműködők";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Művelet";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Widget aktiválása";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "A kezdőképernyőn húzd az ujjad a bal oldalra, hogy elérd a widgetteket.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Görgess lefelé és érintsd meg a szerkesztés gombot.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Add hozzá a ProtonVPN-t az aktív widgettekhez.";
+
+/* Plan information */
+"_advanced_features" = "+ Speciális szolgáltatások";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Nem sikerült beszerezni a vpn információkat";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Hibás felhasználónév vagy jelszó";
+
+/* Account plan description */
+"_all_countries" = "40+ ország";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Az ország összes szervere karbantartás alatt áll. Kérlek kapcsolódj egy másik országhoz.";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Profilszerver(ek) karbantartás alatt állnak";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Minden szerver karbantartás alatt áll. Ez általában azt jelenti, hogy technikai nehézségek vannak a ProtonVPN oldalán, vagy a hálózat korlátozott.";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Már van fiókom";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Mindig bekapcsolt VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Az IOS nem támogatja a Kill Switch szolgáltatást. A mindig bekapcsolt VPN gyorsan és automatikusan visszaállítja a biztonságos VPN kapcsolatot. A biztonságod érdekében ez a szolgáltatás mindig be van kapcsolva.";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "A mindig bekapcsolt VPN automatikusan újracsatlakozik";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Alkalmazás napló";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_auto_assigned" = "Automatikusan hozzárendelve";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Automatikus kapcsolódás";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Az alkalmazás indításakor kapcsolódik a kiválasztott profilhoz";
+
+/* iOS: section header in countries list */
+"_basic_servers" = "BASIC SZERVEREK";
+
+/* Common word */
+"_cancel" = "Mégsem";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "A protokollok módosítása bezárja a jelenlegi VPN-munkameneteket.";
+
+/* MacOS: About window */
+"_changelog" = "Változások listája";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Ellenőrizd, hogy az összes mező ki lett-e töltve";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Válassz előfizetést";
+
+/* iOS status view */
+"_city" = "Település";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Alkalmazás gyorsítótár ürítése";
+
+/* Common word */
+"_close" = "Bezárás";
+
+/* Profile create/change form */
+"_color" = "Szín";
+
+/* Common word */
+"_connect" = "Kapcsolódás";
+
+/* Common word */
+"_connected" = "Kapcsolódva";
+
+/* iOS status view */
+"_connected_to" = "Kapcsolódva ehhez";
+
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Kapcsolódva ehhez %@";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Kapcsolódás";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "Kapcsolódás ehhez %@";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Kapcsolódás %@";
+
+/* iOS: connection bar, iOS widget */
+"_connecting..." = "Kapcsolódás...";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Kapcsolódás";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Kapcsolódás sikertelen";
+
+/* Profile create/change form */
+"_connection_settings" = "Kapcsolódás beállítások";
+
+/* Button in some alerts */
+"_continue" = "Tovább";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Országok";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. */
+"_countries_count" = "_countries_count";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
+"_countries_count_plus" = "_countries_count_plus";
+
+/* iOS: countries list section header */
+"_countries_free" = "Ingyenes országok";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Prémium országok";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Válaszd ki, hogy melyik országot és szervert szeretnéd használni a végső IP-címhez.";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Országok";
+
+/* Profile create/edit menu */
+"_country" = "Ország";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Kérlek válassz országot";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ karbantartás alatt álló szerver";
+
+/* MacOS: button in login screen */
+"_create_account" = "Fiók létrehozása";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Profil létrehozása";
+
+/* Profile create/change form */
+"_create_profile" = "Profil létrehozása";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "A folytatással az aktuális módosítás elveszik. Szeretnéd folytatni?";
+
+/* iOS: data disclaimen screen button */
+"_data_disclaimer_agree" = "Egyetértek és folytatás";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_device_details" = "Eszköz típusa és az operációs rendszer verziója";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_text" = "A ProtonVPN elkötelezett a személyes adataid védelme és tiszteletben tartása mellett. A mi irányadó elveink szerint a lehető legkevesebb felhasználói adatot gyűjtsük, hogy biztosítsuk a magán- és névtelen felhasználói élményt az alkalmazás használatában, különösen:\n\n%@ - bejelentkezés, az elveszett jelszó helyreállításához és a fontos szolgáltatásfrissítések küldéséhez.\n\n%@ - csak összeomlási jelentésekhez és hibákhoz.\n\nA ProtonVPN alkalmazás ezen adatokon kívül nem dolgoz fel felhasználói információkat. Nem naplózzuk az online tevékenységeket, semmilyen személyes azonosítható információt nem gyűjtünk. Az összes fent felsorolt adatot a ProtonVPN saját rendszerén tároljuk és dolgozzuk fel, harmadik fél még soha nem fért hozzá.";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_title" = "Védd magad online";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_user_details" = "Felhasználó név, email cím";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "A \"Gyors kapcsolódás\" gomb alapértelmezett profilt használ.";
+
+/* Common word */
+"_delete" = "Törlés";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Minden ProtonVPN adat törlődik, és az alkalmazás kilép. Szeretnéd folytatni?";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Alkalmazás gyorsítótár ürítése";
+
+/* Button */
+"_delete_profile" = "Profil törlése";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Profil törlése";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Ezzel a profilod végérvényesen törlődik. Biztosan törlöd?";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Fiókod jelenleg késedelmes számlát tartalmaz. Kérlek egyenlítsd ki az összes számládat";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Kifizetetlen számlák";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Mindig más szerver";
+
+/* Button in some alerts */
+"_disable" = "Letiltás";
+
+/* Common word */
+"_disabled" = "Letiltva";
+
+/* Common word */
+"_disconnect" = "Lekapcsolódás";
+
+/* Common word */
+"_disconnected" = "Lekapcsolódva";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Lekapcsolódás";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Alkalmazás felfedezése";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS szivárgásvédelem";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Megakadályozza a DNS-lekérdezések részleteinek kiszivárgását harmadik felek számára. Mindig bekapcsolva.";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Aktiválja a megvásárolt csomagot a következőhöz ";
+
+/* Common word */
+"_done" = "Kész";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Korai hozzáférés";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Legyél az elsők között, akik megkapják a legújabb frissítéseket. Kérjük, ne feledd, hogy a korai verziók kevésbé lehetnek stabilak.";
+
+/* Common word */
+"_edit" = "Szerkeszt";
+
+/* Common word */
+"_enabled" = "Elérhető";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "Bezárás";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "PRÓBÁLD KI A %@ CSOMAGOT INGYEN!";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Írd be az email címed";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Írd be a profilnevet";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* API error */
+"_error_api_offline" = "A ProtonMail API jelenleg nem elérhető";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_message" = "Sikeresen regisztráltál, de a fizetés nem került feldolgozásra. A fizetési információk újbóli elküldéséhez kattints az Újra gombra. A díj csak egyszer kerül felszámolásra. Ha a probléma továbbra is fennáll, fordulj az ügyfélszolgálatunkhoz.";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_support" = "Ügyfélszolgálat elérése";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_title" = "Sikertelen fizetés";
+
+/* In App Purchase error */
+"_error_credit_applied" = "Vedd fel velünk a kapcsolatot a support@protonvpn.com címen a vásárlás befejezéséhez.";
+
+/* Error decoding an object */
+"_error_decode" = "Nem sikerült dekódolni az osztály archivált adatait: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Az email ellenőrzés átmenetileg le van tiltva";
+
+/* Application error */
+"_error_existing_session_to_server" = "Nem lehet csatlakozni a szerverhez, mert már aktív munkamenetet folytat a felhasználó";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Nem találom a felhasználót a munkamenetből";
+
+/* Form validation error */
+"_error_field_email_wrong_format" = "Helytelen e-mail cím formátum";
+
+/* Form validation error */
+"_error_field_passwords_dont_match" = "A jelszavak nem egyeznek";
+
+/* Form validation error */
+"_error_field_required" = "A mező kitöltése kötelező";
+
+/* Form validation error */
+"_error_field_unknown" = "Ez a mező javításra szorul";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Kulcs generálás sikertelen";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Nem sikerült a felhasználói jelszó";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Belső API hiba";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_message" = "Szeretnél egy új ellenőrző kódot kapni, vagy alternatív ellenőrzési módszert használnál?";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_resend" = "Újraküldés";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_title" = "Érvénytelen ellenőrző kód";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_try_other" = "Próbálj meg más módszert";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Kulcstár-hiba.";
+
+/* Parsing error */
+"_error_loads" = "Nem lehet frissíteni a szerver betöltését";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "A TLS tanúsítvány érvényesítése sikertelen volt, amikor megpróbáltunk csatlakozni a ProtonVPN API-hoz. Lehet, hogy megfigyelhető a jelenlegi internet-kapcsolat. Az adatok biztonságának megőrzése érdekében megakadályozzuk az alkalmazás hozzáférését a ProtonVPN API-hoz.\nA bejelentkezéshez vagy a fiók eléréséhez válts egy új hálózatra, és próbálj meg újra csatlakozni.";
+
+/* Man In The Middle attack alert */
+"_error_mitm_title" = "Nem biztonságos kapcsolat";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "A modulus aláírás üres";
+
+/* In App Purchase error */
+"_error_no_active_username" = "Kélek jelentkezz be azzal a fiókkal, amellyel frissíteni szeretnéd a csomagot, hogy befejezzük a vásárlást.";
+
+/* In App Purchase error */
+"_error_no_new_subscription_in_successfull_response" = "Az előfizetés frissítése sikeres volt. Indítsd újra az alkalmazást, hogy használhasd az új szolgáltatásokat.";
+
+/* In App Purchase error alert */
+"_error_occured" = "Hiba történt";
+
+/* In App Purchase error */
+"_error_purchased_plan_does_not_match_available" = "Nem voltunk képesek egyeztetni az App Store terméket a szerverünkön található termékekkel. Kérlek vedd fel a kapcsolatot az ügyfélszolgálattal.";
+
+/* In App Purchase error */
+"_error_receipt_lost" = "Elveszett az App Store nyugta. Vedd fel a kapcsolatot az ügyfélszolgálattal, ha a csomag aktiválása nem sikerült.";
+
+/* In App Purchase error */
+"_error_sandbox_receipt" = "A vásárlások nem érhetők el az iOS alkalmazás béta verziójában. Nem számítottunk fel díjat.";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "A válasz nem értelmezhető";
+
+/* Parsing error */
+"_error_session_count_parser" = "Nem lehet feldolgozni a munkamenetet";
+
+/* Error when the user attempts to sign up using an existing ProtonMail email address */
+"_error_signup_using_protonmail_address" = "ProtonMail-fiókod már konfigurálva van a VPN-hez. Jelentkezz be a meglévő hitelesítő adatokkal.";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Nem lehet elemezni az előfizetési információkat";
+
+/* In App Purchase error */
+"_error_transaction_failed_by_unknown_reason" = "Az App Store nem tudta feldolgozni a vásárlást.";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "A vásárlást más ProtonVPN felhasználónévvel kezdték meg.";
+
+/* In App Purchase error */
+"_error_unavailable_product" = "Nem sikerült beolvasni az elérhető áruk listáját az App Store-ból.";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Ismeretlen hiba";
+
+/* user cancelled human validation procedure */
+"_error_user_cancelled" = "Művelet megszakítva";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "A fiók létrehozása sikertelen";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "A felhasználói hitelesítő adatok lejártak. Kérlek jelentkezz be";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Hiányoznak a felhasználói hitelesítő adatok. Nem sikerült bejelentkezni";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Nem sikerült a robotellenőrzés. Kérlek próbáld meg újra a prémium csomag megvásárlását.";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_no_vpn_access" = "A fiókoddal nem lehet a VPN szerverekhez hozzáférni. Kérlek vedd fel a kapcsolatot a rendszergazdával";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_not_signed_up" = "Még nem regisztráltál a ProtonVPN-re";
+
+/* VPN credentials can't be loaded error */
+"_error_user_is_on_waitlist" = "Jelenleg várólistán vagy, a fiókod még nem készült el";
+
+/* Username unavailable error */
+"_error_username_unavailable" = "A felhasználónév már foglalt";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Nem sikerült az ellenőrzés";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "A kulcstartóból hiányoznak a VPN-hitelesítő adatok";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Nem sikerült lekérni a VPN beállításokat!";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "A ProtonVPN munkamenet aktív";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_body" = "A ProtonVPN csomagszűrő tűzfalat használ a Kill Switch megvalósításához. A Kill Switch engedélyezésével felülírod az eszköz jelenlegi tűzfal-beállításait. Ha használod ezt a tűzfalkonfigurációt, akkor ne engedélyezd a Kill Switch szolgáltatást.\n\nA Kill Switch használatához és a jelenlegi tűzfal-beállítások felülírásához válaszd a FOLYTATÁS lehetőséget.\n\nA Kill Switch letiltásához és a jelenlegi tűzfal-beállítások megtartásához válaszd a MÉGSEM lehetőséget.";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_title" = "Tűzfalat észleltük";
+
+/* Existing connection alert */
+"_existing_session" = "A szerver nem elérhető";
+
+/* Existing connection alert */
+"_existing_session_to_server" = "Kérlek válassz másik szervert.";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "LEJÁRT";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Kiegészítések";
+
+/* MacOS: connecting overlay */
+"_failed" = "sikertelen";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_description" = "A VPN-hitelesítő adatok letöltése nem sikerült. Kérlek jelentkezz be újra a probléma megoldásához.";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_title" = "Hiányoznak a VPN-hitelesítő adatok";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Leggyorsabb";
+
+/* Profile create/change form */
+"_fastest_available_server" = "A leggyorsabban elérhető szerver";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Leggyorsabb kapcsolat";
+
+/* Profile create/change form */
+"_feature" = "Funkció";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Hozzáférés a blokkolt tartalomhoz";
+
+/* iOS plan feature */
+"_feature_bt" = "BitTorrent/file-megosztás támogatás";
+
+/* iOS plan feature */
+"_feature_connections" = "Egyidejű VPN-kapcsolat";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Biztonsági mag";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Biztonságos adatfolyam";
+
+/* iOS plan feature */
+"_feature_server_count" = "Csatlakozás a szerverhez itt";
+
+/* iOS plan feature */
+"_feature_speed" = "Sebesség";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor VPN-en";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Elfelejtett jelszó?";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Elfelejtett felhasználónév";
+
+/* Used instead of price for free plans. */
+"_free" = "Ingyenes";
+
+/* Account plan description */
+"_free_countries" = "3 ország";
+
+/* iOS: section header in countries list */
+"_free_servers" = "INGYENES SZERVEREK";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Frissíts a %@-ra, hogy továbbra is használhasd ezeket a funkciókat:";
+
+/* MacOS: \"Trial about to expire\" screen title */
+"_free_trial_about_to_expire_title" = "Az ingyenes próbaverzió lejárt!";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "A fiókod átváltottuk a ProtonVPN ingyenes csomagjába. Ezeket a funkciókat nem tartalmazza az ingyenes szolgáltatás %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "INGYENES PRÓBAVERZIÓ %@";
+
+/* MacOS: General tab in setting window */
+"_general" = "Általános";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ csomag kiválasztása";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Megerősítő e-mail küldése";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Ellenőrző SMS kérése";
+
+/* Button in several different alerts */
+"_got_it" = "Értem!";
+
+/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+"_help" = "Segítség";
+
+/* Show/hide password switch */
+"_hide" = "ELREJTÉS";
+
+/* Value of speed in _speed */
+"_high" = "Gyors";
+
+/* Value of speed in _speed */
+"_highest" = "Leggyorsabb";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Mellőzés";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Kapcsolat létrehozása...";
+
+/* Token expired alert */
+"_invalid_refresh_token" = "A munkamenet lejárt";
+
+/* Token expired alert */
+"_invalid_refresh_token_please_login" = "Egy ideje már nem használtad a ProtonVPN alkalmazást, ezért biztonsági okokból újra be kell jelentkezned.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "A ProtonMail-t alkotó tudósok és mérnökök nevében üdvözlünk a biztonságosabb interneten.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Üdvözlünk egy jobb interneten";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Beat cenzúra és regionális korlátozások. Nincsenek hirdetések, sávszélesség-korlátozások, és nem adjuk el az adataid.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Úgy gondoljuk, hogy az internetnek ingyenesnek kell lennie";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Biztonsági cég vagyunk. Függetlenül attól, hogy biztonságos központi architektúránk vagy fejlett titkosítás-e, a biztonság mindig az első.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "A te biztonságod a mi küldetésünk";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Megszakadt a kapcsolat a VPN kiszolgálókkal. A Kill Switch blokkolta az összes kapcsolatot az adatok kiszivárgásának elkerülése érdekében. A ProtonVPN megpróbál automatikusan újracsatlakozni. Az ablak bezárásához kattints az OK gombra.\n\nHa átmenetileg le szeretnéd tiltani a Kill Switch szolgáltatást, és újra csatlakozni szeretnél az internethez VPN védelem NÉLKÜL, kattints a KIKAPCSOLÁS gombra.\n\nA Kill Switch végleges kikapcsolásához kattints ide %@.";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Kill Switch blokkolja az összes kapcsolatot";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_title" = "A Kill Switch blokkolja az IP szivárgásokat";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_body" = "A Kill Switch szolgáltatás nem működik megfelelően. Ha szeretnéd jelenteni a hibát a ProtonVPN támogatási csoportnak, kattints a Jelentés gombra.\nHa figyelmen kívül hagynád a hibát, és folytatni a böngészést Kill Switch NÉLKÜL, kattints a letiltás gombra.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_title" = "A Kill Switch működésében hibát észleltünk";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "Probléma merült fel a Kill Switch telepítésében vagy frissítésében.\n\nAz újbóli próbálkozáshoz kattints a VISSZA gombra.\n\nHa szeretnéd kikapcsolni a Kill Switch szolgáltatást, kattints a LETILTÁS gombra.";
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "A Kill Switch engedélyezéséhez meg kell adni a fiókod jelszavát. Ha megjelenik egy kérés, írja be a %@-ot az elfogadáshoz.\n\nElőfordulhat, hogy a ProtonVPN alkalmazás frissítéskor ismét megjelenik ez a kérés.";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "A frissítéshez meg kell adnod a fiókod jelszavát. Amikor a kérés megjelenik, kérlek írd be a %@ -ot az elfogadáshoz.\n\nHa nem adod meg a fiókod jelszavát, a Kill Switch ki lesz kapcsolva.";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Blokkolva lesz az összes hálózati forgalmat, ha a VPN-alagút elveszik. Vedd figyelembe, hogy a VPN-kapcsolat megszűnik, amikor átváltasz a Mac-fiókra.";
+
+/* MacOS: link in login screen */
+"_learn_more" = "További információk";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "További információk a biztonsági magról";
+
+/* Server load. Used together with actual server load in percents. */
+"_load" = "Betöltés";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Biztonságos internet bárhol";
+
+/* iOS status view */
+"_location" = "Hely";
+
+/* iOS: Login button in several places */
+"_log_in" = "Bejelentkezés";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Kérlek jelentkezz be az indításhoz";
+
+/* iOS: button in settings screen */
+"_log_out" = "Kijelentkezés";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "A kijelentkezés bezárja a VPN-munkamenetet.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Az alkalmazásból való kijelentkezés megszakítja az aktív VPN-kapcsolatot. Szeretnéd folytatni?";
+
+/* MacOS: Login button */
+"_login" = "Bejelentkezés";
+
+/* iOS logs screen title */
+"_logs" = "Napló";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac jelszó";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Karbantartás";
+
+/* Profile create/change form */
+"_make_default_profile" = "Alapértelmezett profil készítése";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Profilok kezelése";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Előfizetés kezelése";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription_on_web" = "Az előfizetésedet az irányítópulton kezelheted";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Térkép";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_hide" = "Térkép elrejtése";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_show" = "Térkép megjelenítése";
+
+/* MacOS app tour: map description */
+"_map_tour_description" = "Nézd meg a VPN kiszolgálók helyét. Keresd meg a hozzád legközelebb esőt.";
+
+/* MacOS app tour: map title */
+"_map_tour_title" = "Térkép";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Talán később";
+
+/* Value of speed in _speed */
+"_medium" = "Közepes";
+
+/* Main mac app menu item */
+"_menu_about" = "A ProtonVPN-ről";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Frissítések keresése...";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Többi elrejtése";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "ProtonVPN elrejtése";
+
+/* Main mac app menu item */
+"_menu_logout" = "Kijelentkezés";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Kis méret";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Beállítások";
+
+/* Main mac app menu item */
+"_menu_quit" = "Kilépés a ProtonVPN-ből";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Összes megjelenítése";
+
+/* Main mac app menu item */
+"_menu_window" = "Ablak";
+
+/* Label in several trial screens on MacOS */
+"_money_back_guarantee" = "30 napos pénz-visszafizetési garancia";
+
+/* Label in Plan information */
+"_most_popular" = "Legnépszerűbb";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Több ország";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_description" = "Több száz szerver a világ összes országában";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_title" = "Több kiszolgáló";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Profilom";
+
+/* Profile create/change form */
+"_name" = "Név";
+
+/* Network error */
+"_ne_network_connection_lost" = "A hálózati kapcsolat megszakadt";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Nincs internet kapcsolat";
+
+/* Network error */
+"_ne_request_timed_out" = "Hálózati időtúllépés";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "A szolgáltatás nem elérhető";
+
+/* Mac: neagent help screen */
+"_neagent_always_allow" = "Mindig engedélyez";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Kérlek add meg a %@\nhogy csatlakozz a ProtonVPN szolgáltatáshoz. Ha ez a kérés megjelenik,\nadd meg a(z) %@ %@ és kattints a(z) %@ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "számítógépes fiók jelszava";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* MacOS: button in login screen */
+"_need_help" = "Segítségre van szükséged?";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "A hálózat nem elérhető";
+
+/* iOS onboarding next item button */
+"_next" = "Következő";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "Következő tipp";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Nincs elérhető leírás";
+
+/* (No Comment) */
+"_no_servers_to_show" = "Jelenleg nincs megjelenítendő szerver.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Nem, köszönöm";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Nem kapcsolódik";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Nem sikerült létrehozni a VPN-kapcsolatot. Nem csatlakozol az internethez.";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "ProtonVPN bejelentkezés megjelenítése...";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN napló";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Áttekintés";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Támogatja a P2P forgalmat";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_body" = "A kapcsolat le lett tiltva, mert olyan szerverre csatlakoztál, amely nem támogatja a peer-to-peer (P2P) forgalmat. A P2P-t nem támogatják ingyenes kiszolgálók, illetve a 100 vagy annál nagyobb számú szerverek. Kérlek válassz másik kiszolgálót a P2P számára.";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_title" = "A P2P forgalom nem engedélyezett ezen a szerveren";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body" = "A kapcsolat automatikusan átirányításra került egy másik kiszolgálón keresztül, mert egyes szerverek nem támogatják a fájlmegosztó (P2P) forgalmat. Ez csökkentheti a kapcsolat sebességét. Használj P2P ikonnal rendelkező szervereket.";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p1" = "A kapcsolat automatikusan átirányításra került egy másik kiszolgálón keresztül, mert egyes szerverek nem támogatják a fájlmegosztó (P2P) forgalmat. Ez csökkentheti a kapcsolat sebességét. Használj P2P ikonnal rendelkező szervereket";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p2" = "a forgalom átirányításának elkerülése.";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_title" = "Kapcsolódási probléma";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_p2p_server" = "P2P szerver";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P szerverek";
+
+/* Plan upgrade required alert */
+"_paid_required" = "Előfizetéses ProtonVPN csomag szükséges";
+
+/* Used in sign-in, sign-up */
+"_password" = "Jelszó";
+
+/* Sign-up form */
+"_password_confirm" = "Jelszó újra";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ év";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Kód";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Add meg a telefonszámod";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "A csomag nem tartalmazza a biztonsági mag szolgáltatást.";
+
+/* Plan speed */
+"_plan_speed_fastest" = "Leggyorsabb sebesség";
+
+/* Plan speed */
+"_plan_speed_high" = "Nagy sebesség";
+
+/* Plan speed */
+"_plan_speed_medium" = "Közepes sebesség";
+
+/* Account plan description */
+"_plans_connection" = "_plans_connection";
+
+/* No comment provided by engineer. */
+"_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "A fizetett csomag megvásárlása után az iTunes-fiókodban felszámolásra kerül a megjelenített összeg, amely tartalmazza az adókat és a kiegészítő platformdíjakat (amelyeket a Proton nem számít fel közvetlenül). A vásárlás után automatikusan frissül a kiválasztott csomag egy évre, amely után megújíthatod vagy lemondhatod online vagy iOS-alkalmazásunkon keresztül.";
+
+/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "PLUS";
+
+/* Features of account plan */
+"_plus_plan_features" = "Plusz szerverek\nBiztonsági mag\nTor szerverek";
+
+/* Plan upgrade required alert */
+"_plus_required" = "Plusz vagy Visionary előfizetés szükséges";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "PLUSZ SZERVEREK";
+
+/* MacOS: Upgrade screen text */
+"_plus_upgrade_description" = "Használd a biztonsági mag szolgáltatást, nézd kedvenc TV műsoraid,\nhasználj akár 5 különböző eszközt, stb!";
+
+/* MacOS: Upgrade screen title */
+"_plus_upgrade_title" = "Tettszik a ProtonVPN?\nVálaszd a Plus csomagunkat, mindössze 8$/hó áron";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Beállítások";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Prémium szerver";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_premium_server" = "Prémium szerver";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Szerver elérhetőségének ellenőrzése";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Adatvédelmi irányelvek";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Profil";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Az új profil mentve";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "A profilt nem sikerült létrehozni";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "A profil törölve";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "A profilt nem lehet törölni";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Profil frissítve";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Írj be egy nevet";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "A profilnév maximális hossza 25 karakter lehet";
+
+/* Error when profile name is already taken */
+"_profile_name_needs_to_be_unique" = "Már létezik ilyen nevű profil";
+
+/* Profile create/change form */
+"_profile_settings" = "Profil beállítások";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Profilok";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Profilok áttekintése";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Mentsd el a kívánt beállításokat és kiszolgálókat a későbbi használathoz.";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Profilok";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protokoll";
+
+/* Mac: neagent help screen */
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+/* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Publikus IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Gyors kapcsolódás";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "A gyors csatlakozás gomb az előre kiválasztott szerverhez kapcsolódik";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Automatikusan csatlakozik ahhoz a szerverhez, amely a leggyorsabb kapcsolatot biztosítja.";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "Gyors kapcsolódás";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Kilépés";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Az alkalmazásból való kilépés megszakítja az aktív VPN-kapcsolatot. Szeretnéd folytatni?";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Véletlenszerű";
+
+/* Profile create/change form */
+"_random_available_server" = "Véletlenszerű szerver";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Véletlenszerű kapcsolat";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Ajánlott";
+
+/* MacOS: About window */
+"_release_date" = "Megjelenési dátum:";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Jelszó mentése";
+
+/* Button in Kill switch error alert */
+"_report" = "Jelentés";
+
+/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
+"_report_add_file" = "Fájl hozzáadása";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Hibabejelentés...";
+
+/* Bug report attachments */
+"_report_attachments" = "Mellékletek";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Hibajelentés";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Adj részletes leírást a felmerült problémáról, és csatolj minden olyan fájlt, amely segíthet nekünk a probléma megoldásában. Kérjük, hogy adj meg egy elérhetőséget is, hogy kapcsolatba léphessünk veled, ha további információra lenne szükség.";
+
+/* Mac bug report: label before username */
+"_report_field_account" = "Felhasználó:";
+
+/* Mac bug report: country field label */
+"_report_field_country" = "Ország:";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "Email:";
+
+/* Mac bug report: message field label */
+"_report_field_feedback" = "Visszajelzés";
+
+/* Mac bug report: Internet Service Provider field label */
+"_report_field_isp" = "ISP:";
+
+/* Mac bug report: label before users protonvpn plan */
+"_report_field_plan" = "Csomag:";
+
+/* Mac bug report: label before app version number */
+"_report_field_version" = "Verzió:";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN napló";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Ennek engedélyezésével az ügyféloldali VPN-naplók hozzáadódnak ehhez a jelentéshez";
+
+/* Mac bug report: info text */
+"_report_max_file_size" = "Maximum fájlméret korlát: 488 KB";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Kapcsolattartó email";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Írd be az üzeneted...";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Üzenet jelentése";
+
+/* Bug report: Send report button text */
+"_report_send" = "Visszajelzés küldése";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Köszönjük a bejelentést";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Kézi aktiválás kérése";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Új kód kérése";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Nem kaptad meg a kódot?";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Új kód kérése";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Jelszó visszaállítás";
+
+/* Button in some alerts */
+"_retry" = "Újra";
+
+/* Common word */
+"_save" = "Mentés";
+
+/* Button */
+"_save_as_profile" = "Profil mentése";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Keresés az országok között";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Ország keresése";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Biztonsági mag";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Biztonsági mag %@";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_core_description" = "Rendkívül biztonságos szerverek\náltalunk üzemeltetett";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "További védelmet nyújt a VPN-kiszolgálók veszélyeivel szemben, ha a forgalmat a biztonsági mag hálózatunkon keresztül irányítod át";
+
+/* MacOS app tour: secure core description */
+"_secure_core_tour_description" = "A biztonsági mag a forgalmat további kiszolgálókon keresztül továbbítja. A szolgáltatás a Plus és a Visionary csomagokkal használható.";
+
+/* MacOS app tour: secure core title */
+"_secure_core_tour_title" = "Biztonsági mag";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_description" = "Kedvenc tartalmaidnak biztonságos streamingje";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_title" = "Biztonságos streamelés";
+
+/* iOS Settings: table section header */
+"_security_options" = "Biztonsági beállítások";
+
+/* Profile create/change form */
+"_select_country" = "Ország kiválasztása";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Országkód kiválasztása";
+
+/* Button in plan selection */
+"_select_plan" = "Csomag kiválasztása";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Profil szín kiválasztása";
+
+/* Profile create/change form */
+"_select_server" = "Szerver kiválasztása";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Válassz egy ellenőrzési módot a folytatáshoz:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "A visszaélések elkerülése érdekében igazolnod kell, hogy nem vagy robot.";
+
+/* Profile create/change form */
+"_server" = "Szerver";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_ip" = "Szerver IP:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_load" = "Szerver terheltség:";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Kérlek válassz szervert";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "A szerver karbantartás alatt áll";
+
+/* Session count limit alert */
+"_session_count_reached_description" = "Elérted a csomagban engedélyezett egyidejű csatlakozások maximális számát. Válts magasabb csomagra, ha egyidejűleg több eszközről szeretnéd használni a szolgáltatást.";
+
+/* Session count limit alert */
+"_session_count_reached_title" = "Elérted a munkamenet limitet";
+
+/* iOS status view */
+"_session_time" = "Eltelt idő";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Beállítások";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Telepítés kész";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_basic" = "A vásárlás sikerült. Aktiváltuk a megrendelt ProtonVPN csomagot.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "A ProtonVPN ingyenes csomagját választottad. Mivel új felhasználó vagy, hét napig ingyenesen használhatod a ProtonVPN Plus összes szolgáltatását.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "A vásárlás sikerült. Aktiváltuk a megrendelt ProtonVPN csomagot.";
+
+/* Show/hide password switch */
+"_show" = "MEGJELENÍT";
+
+/* MacOS: button in custom status menu */
+"_show_protonvpn" = "ProtonVPN megjelenítése";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Regisztráció";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Kihagy";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ sebesség";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Alapértelmezett";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Indítás a háttérben";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Indítás a rendszerrel";
+
+/* iOS status view */
+"_status" = "Állapot";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Küldés";
+
+/* Text under current plan information */
+"_subscription_button" = "Csomag meghosszabbítása 1 évre \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Előre vásárolhatsz kreditet a jelenlegi csomag automatikus meghosszabbításához. A jelenlegi előfizetési időszak végén ezekből a kreditekből vonjuk le a szolgáltatás díját.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Sikeresen vásároltál kreditet a jelenlegi csomag meghosszabbításához.";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Csomagod";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "A jelenlegi csomagod lejár ekkor %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "A jelenlegi csomagod automatikusan megújításra kerül ekkor %@.";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Sikeres kapcsolódás";
+
+/* Custom switch off */
+"_switch_side_button_off" = "KI";
+
+/* Custom switch on */
+"_switch_side_button_on" = "BE";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Rendszer értesítések";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Tekintsd át";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
+/* iOS status view */
+"_technical_details" = "Technikai részletek";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Szerződési feltételeket";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "A ProtonVPN használatával elfogadod\na %@ és %@";
+
+/* iOS: section header in countries list */
+"_test_servers" = "PRÓBA SZERVEREK";
+
+/* MacOS: connecting overlay */
+"_timed_out" = "időtúllépés";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Kapcsolódás a TOR hálózathoz";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_tor_server" = "Tor szerver";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_body_iOS" = "A ProtonVPN Plus 7 napos ingyenes próbaverziója lejárt. Folytathatod a ProtonVPN ingyenes csomag használatával, de ha támogatni szeretnéd a projektet, és nagyobb sebességgel, illetve több funkcióval rendelkező szolgáltatást szeretnél, kérlek válts egy fizetős csomagra.";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_title_iOS" = "A ProtonVPN Plus próbaverzió lejárt";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "A ProtonVPN Plus szolgáltatásaihoz való állandó hozzáférés érdekében frissítheted a csomagod.";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "Élvezd a biztonságos internet teljes előnyeit bárhol a ProtonVPN segítségével";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "Üdvözlő ajándékként hozzáférhetsz a %@ csomagunkhoz, beleértve az összes prémium szoláltatásunkat. A próbaverzió lejárati ideje";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "ingyenes váltás a ProtonVPN Plus-ra";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "teljes ProtonVPN előfizetés";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Kaptál tőlünk egy %@-t, mely több szervert és szolgáltatást tartalmaz. A ProtonVPN Plus próbaverzió ideje 7 nap.";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "Köszönjük a ProtonVPN használatát!";
+
+/* (No Comment) */
+"_trial_popup_title" = "ProtonVPN próba";
+
+/* iOS trial welcome screen */
+"_trial_welcome_description_iOS" = "Üdvözlő ajándékként hozzáférhetsz a ProtonVPN összes fizetős szolgáltatásához!";
+
+/* iOS trial welcome screen */
+"_trial_welcome_ends_in_iOS" = "A próbaidőszak lejár";
+
+/* iOS trial welcome screen */
+"_trial_welcome_heading_iOS" = "Üdvözlünk a fedélzeten";
+
+/* MacOS: button in connecting overlay */
+"_try_agian" = "Próbáld újra";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
+
+/* Common word */
+"_unavailable" = "Nem elérhető";
+
+/* App update required alert */
+"_update_required" = "Frissítés szükséges";
+
+/* App update required alert */
+"_update_required_no_longer_supported" = "A ProtonVPN ezt a verziót már nem támogatja. Kérlek frissítsd az alkalmazásod a egy újabb verzióra.";
+
+/* App update required alert */
+"_update_required_support" = "Kapcsolat velünk";
+
+/* App update required alert */
+"_update_required_update" = "Frissítés";
+
+/* Button in many placen in both iOS and MacOS apps */
+"_upgrade" = "Csomagváltás";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "biztonsági mag használata";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Csomagváltás";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Csomagváltás most";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_country" = "Sajnáljuk, de a jelenlegi csomagoddal nem csatlakozhatsz ehhez a kiszolgálóhoz. Ha több szervert szeretnél elérni, fontold meg a csomagváltást.";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p1" = "A biztonsági mag egy prémium szolgáltatás, amelyhez legalább ProtonVPN Plus csomag szükséges. A biztonsági mag fejlett védelmet nyújt a VPN-kiszolgálók figyelése ellen.";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p2" = "A biztonsági mag használatához olyan csomagot kell választanod, amely tartalmazza ezt a funkciót.";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Sajnos erre a szerverre nem csatlakozhatsz a jelenlegi előfizetéseddel. Ha több szervert szeretnél elérni, nagyobb csomagra kell váltanod.";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Frissítés szükséges";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Csomag frissítése";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Váltás a Plus csomagra";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "A ProtonVPN csomag nem frissíthető az alkalmazáson belül, a frissítéshez kérlek látogass el a account.protonvpn.com webhelyre.";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Nincs elérhető frissítés az alkalmazáshoz";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Ellenőrzés CAPTCHA-val";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Ellenőrzés email-el";
+
+/* Profile create/change form */
+"_use_secure_core" = "Biztonsági mag használata";
+
+/* iOS: human verification option select button */
+"_use_sms_verification" = "Ellenőrzés SMS-el";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Felhasználónév";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Elküldtünk egy ellenőrző kódot, kérlek írd be a lentebb.";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Verzió";
+
+/* MacOS: About window */
+"_version_current" = "Aktuális verzió:";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "keresztül";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "keresztül %@";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Napló megtekintése";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "A biztonsági magra váltással megszakad a jelenlegi kapcsolat.";
+
+/* MacOS: alert before disconnection on SecureCore state change */
+"_vpn_connection_active" = "VPN kapcsolat aktiválása";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN protokoll";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Az eszköz nem fejezte be a korábbi VPN-munkamenetet. Új VPN-kapcsolat létrehozása előtt újra kell indítani a készüléket.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Kapcsolódási hiba";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Nem vagy bejelentkezve a ProtonVPN-be. Nyisd meg a ProtonVPN alkalmazást, és jelentkezz be.";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Figyelem";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Egy másik felhasználó ProtonVPN munkamenete aktív ezen az eszközön. A bejelentkezési folyamat folytatásával az aktuális munkamenet leáll. Szeretnéd folytatni?";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Köszönjük a ProtonVPN használatát. Vess egy pillantást\naz alkalmazás főbb jellemzőire.";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "Üdvözlő ajándékként 7 napos hozzáférést kapsz az a(z)\n%@ csomaghoz, ami az alábbiakat tartalmazza:";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ÜDVÖZÖLÜNK A FEDÉLZETEN!";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS Widget";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Nincs kapcsolat";
+
