@@ -23,14 +23,21 @@ import Foundation
 
 public class Subscription: NSObject, Codable {
     internal let start, end: Date?
-    internal var paymentMethods: [PaymentMethod]?
+    public var paymentMethods: [PaymentMethod]?
     private let planDetails: [ServicePlanDetails]?
+    let couponCode: String?
+    public let cycle: Int?
     
-    internal init(start: Date?, end: Date?, planDetails: [ServicePlanDetails]?, paymentMethods: [PaymentMethod]?) {
+    /// Special coupons have to be set from app using this library
+    public static var specialCoupons: [String] = [String]()
+    
+    internal init(start: Date?, end: Date?, planDetails: [ServicePlanDetails]?, paymentMethods: [PaymentMethod]?, couponCode: String?, cycle: Int?) {
         self.start = start
         self.end = end
         self.planDetails = planDetails
         self.paymentMethods = paymentMethods
+        self.couponCode = couponCode
+        self.cycle = cycle
         super.init()
     }
 }
@@ -66,4 +73,16 @@ extension Subscription {
         }
         return allMethods.map { $0.type }.contains(.card)
     }
+    
+    public var endDate: Date? {
+        return end
+    }
+    
+    public var hasSpecialCoupon: Bool {
+        guard let couponCode = couponCode else {
+            return false
+        }
+        return Subscription.specialCoupons.contains(couponCode)
+    }
+    
 }

@@ -48,35 +48,32 @@ public extension Router {
         guard let authCredentials = AuthKeychain.fetch() else {
             return nonAuthenticatedHeader
         }
-        return  [
+        return defaultHeader + [
             "Authorization": "Bearer \(authCredentials.accessToken)",
-            "x-pm-uid": authCredentials.sessionId,
-            "x-pm-appversion": ApiConstants.appVersion,
-            "x-pm-apiversion": self.version,
-            "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+            "x-pm-uid": authCredentials.sessionId
         ]
     }
     
     var expiredTokenHeader: [String: String]? {
         guard let authCredentials = AuthKeychain.fetch() else {
-            return nil
+            return defaultHeader
         }
-        return  [
-            "x-pm-uid": authCredentials.sessionId,
-            "x-pm-appversion": ApiConstants.appVersion,
-            "x-pm-apiversion": self.version,
-            "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+        return defaultHeader + [
+            "x-pm-uid": authCredentials.sessionId
         ]
     }
     
     var nonAuthenticatedHeader: [String: String]? {
+        return defaultHeader
+    }
+    
+    private var defaultHeader: [String: String] {
         return [
             "x-pm-appversion": ApiConstants.appVersion,
             "x-pm-apiversion": self.version,
             "Content-Type": ApiConstants.contentType,
-            "Accept": ApiConstants.mediaType
+            "Accept": ApiConstants.mediaType,
+            "User-Agent": ApiConstants.userAgent
         ]
     }
     

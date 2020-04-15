@@ -86,7 +86,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let servicePlans = "servicePlans"
         static let currentSubscription = "currentSubscription"
         static let defaultPlanDetails = "defaultPlanDetails"
-        static let isIAPAvailable = "isIAPAvailable"
+        static let isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
         
         static let customServers = "CustomServers"
         
@@ -405,12 +405,12 @@ extension PropertiesManager: ServicePlanDataStorage {
         }
     }
     
-    public var isIAPAvailable: Bool {
+    public var isIAPUpgradePlanAvailable: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: Keys.isIAPAvailable)
+            return Storage.userDefaults().bool(forKey: Keys.isIAPUpgradePlanAvailable)
         }
         set {
-            Storage.setValue(newValue, forKey: Keys.isIAPAvailable)
+            Storage.setValue(newValue, forKey: Keys.isIAPUpgradePlanAvailable)
         }
     }
 }

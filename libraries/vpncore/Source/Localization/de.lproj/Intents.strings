@@ -2,7 +2,7 @@
 "1l8xNj" = "Verbindung trennen";
 
 /* (No Comment) */
-"2LMbbw" = "ProtonVPN-Verbindungsstatus abrufen";
+"2LMbbw" = "Verbindungsstatus";
 
 /* (No Comment) */
 "8tZ81X" = "Mit ProtonVPN verbinden";
@@ -15,6 +15,9 @@
 
 /* (No Comment) */
 "jf696t" = "Mit ProtonVPN verbinden";
+
+/* (No Comment) */
+"JOCERT" = "ProtonVPN-Verbindungsstatus abrufen";
 
 /* (No Comment) */
 "ksQcRb" = "Verbindung zu ProtonVPN trennen";

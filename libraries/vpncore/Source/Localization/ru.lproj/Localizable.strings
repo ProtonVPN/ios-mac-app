@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "«Постоянный VPN» восстановит ваше подключение автоматически";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Журналы приложения";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Назначается автоматически";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Отмена";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Изменение протоколов завершит вашу текущую сессию VPN.";
 
 /* MacOS: About window */
 "_changelog" = "Список изменений";
@@ -152,7 +158,7 @@
 "_countries_free" = "Free страны";
 
 /* iOS: countries list section header */
-"_countries_premium" = "Премиум страны";
+"_countries_premium" = "Premium страны";
 
 /* MacOS app tour: countries list description */
 "_countries_tour_description" = "Выберите страну и сервер, которые вы хотите использовать для вашего конечного IP адреса.";
@@ -478,22 +484,28 @@
 /* Profile create/change form */
 "_feature" = "Функция";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
+"_feature_blocked_content" = "Доступ к заблокированному контенту";
+
+/* iOS plan feature */
+"_feature_bt" = "Поддержка BitTorrent/файлообмена";
+
+/* iOS plan feature */
 "_feature_connections" = "Одновременные VPN-подключения";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Безопасный стриминг";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Подключение к серверам в";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Скорость";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
 
 /* iOS: button in login screen */
@@ -548,10 +560,13 @@
 "_high" = "Высокая";
 
 /* Value of speed in _speed */
-"_highest" = "Максимальная";
+"_highest" = "Наивысшая";
 
 /* Button in Kill switch error alert */
 "_ignore" = "Игнорировать";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
 
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Инициализация подключения...";
@@ -617,7 +632,7 @@
 "_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
 
 /* MacOS: link in login screen */
-"_learn_more" = "Подробнее";
+"_learn_more" = "Узнать больше";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Узнайте больше о Secure Core";
@@ -663,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Управление профилями";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Управление подпиской";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Управляйте своей подпиской в личном кабинете на сайте";
@@ -799,6 +817,12 @@
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Показать ProtonVPN, чтобы войти...";
 
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Журналы OpenVPN";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Обзор";
 
@@ -815,7 +839,7 @@
 "_p2p_detected_popup_title" = "P2P трафик не разрешен на этом сервере";
 
 /* P2P forward alert */
-"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со значком P2P, чтобы избежать переадресации трафика.";
+"_p2p_forwarded_popup_body" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы с меткой P2P, чтобы избежать переадресации трафика.";
 
 /* P2P forward alert */
 "_p2p_forwarded_popup_body_p1" = "Ваше соединение было автоматически переадресовано через другой сервер, потому что некоторые серверы не поддерживают P2P трафик. Это может снизить скорость подключения. Пожалуйста, используйте серверы со";
@@ -945,6 +969,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Профили";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Протокол";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN для macOS";
@@ -1201,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Отправить";
 
+/* Text under current plan information */
+"_subscription_button" = "Продлить подписку на 1 год \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "План подписки";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Текущий тариф истекает %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Успешное подключение";
@@ -1218,6 +1260,9 @@
 
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Ознакомительный тур";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
 
 /* iOS status view */
 "_technical_details" = "Техническая информация";
@@ -1289,6 +1334,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Попробовать снова";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Недоступно";
@@ -1382,6 +1430,9 @@
 
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "VPN-подключение активно";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Протокол VPN";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Вашему устройству не удалось завершить предыдущий VPN сеанс. Вам нужно перезагрузить устройство, прежде чем вы сможете установить новое VPN-соединение.";

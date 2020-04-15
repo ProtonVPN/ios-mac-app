@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "La VPN siempre activa te reconectará automáticamente";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Registro de la aplicación";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Asignado automáticamente";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Cancelar";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
 
 /* MacOS: About window */
 "_changelog" = "Registro de cambios";
@@ -239,7 +245,7 @@
 "_disconnected" = "Desconectado";
 
 /* Status of VPN connection reported by Siri */
-"_disconnecting" = "Disconnecting";
+"_disconnecting" = "Desconectando";
 
 /* iOS onboarding button to check app without logging in */
 "_discover_the_app" = "Descubre la aplicación";
@@ -350,7 +356,7 @@
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
 
 /* Man In The Middle attack alert */
-"_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Su conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intente conectarse de nuevo.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Conexión insegura";
@@ -362,7 +368,7 @@
 "_error_no_active_username" = "Inicia sesión con la cuenta para la que estás mejorando el plan de servicio para que podamos completar su compra.";
 
 /* In App Purchase error */
-"_error_no_new_subscription_in_successfull_response" = "La mejora de su suscripción fue exitosa. Vuelva a iniciar la aplicación para beneficiarse de su nuevo plan de servicio.";
+"_error_no_new_subscription_in_successfull_response" = "La mejora de tu suscripción se ha realizado correctamente. Por favor, vuelve a lanzar la aplicación para beneficiarte de tu nuevo plan de servicio.";
 
 /* In App Purchase error alert */
 "_error_occured" = "Ocurrió un error";
@@ -478,22 +484,28 @@
 /* Profile create/change form */
 "_feature" = "Característica";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
+"_feature_blocked_content" = "Acceso a contenido bloqueado";
+
+/* iOS plan feature */
+"_feature_bt" = "BitTorrent/soporte para compartir archivos";
+
+/* iOS plan feature */
 "_feature_connections" = "Conexiones VPN simultáneas";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Transmisión segura";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Conéctese a los servidores en";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Velocidad";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor sobre VPN";
 
 /* iOS: button in login screen */
@@ -552,6 +564,9 @@
 
 /* Button in Kill switch error alert */
 "_ignore" = "Ignorar";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
 
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Inicializando conexión...";
@@ -663,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Gestionar perfiles";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Administrar suscripción";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Administra tu suscripción en el panel web";
@@ -799,6 +817,12 @@
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostrar ProtonVPN para iniciar sesión...";
 
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "Registros de OpenVPN";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Vista General";
 
@@ -869,7 +893,7 @@
 "_plans_connections" = "_plans_connections";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
+"_plans_footer" = "Al confirmar su compra de un plan pago, se le cobrará a su cuenta de iTunes la cantidad que se muestra, incluye impuestos y tarifas de plataforma adicionales (que Proton no cobra directamente). Después de realizar la compra, se lo actualizará automáticamente al plan seleccionado por un período de 1 año, después de este tiempo puede renovar o cancelar, ya sea en línea o a través de nuestra aplicación iOS.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -945,6 +969,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Perfiles";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protocolo";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1169,7 +1196,7 @@
 "_setup_complete_free" = "Ahora estás registrado en un plan ProtonVPN Free. Para comenzar, disfrute de siete días de nuestro plan ProtonVPN Plus de forma gratuita.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "Tu compra fue exitosa. Tu plan ProtonVPN Plus ahora está activo.";
+"_setup_complete_plus" = "Tu compra se ha realizado correctamente. Tu plan ProtonVPN Plus está ahora activo.";
 
 /* Show/hide password switch */
 "_show" = "Mostrar";
@@ -1201,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Enviar";
 
+/* Text under current plan information */
+"_subscription_button" = "Amplía el plan por 1 año %@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Puedes adquirir más créditos para ampliar automáticamente tu plan actual. Al final de tu período de suscripción actual, estos créditos se utilizarán para prolongar tu plan.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Has adquirido con éxito créditos para ampliar tu plan actual.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plan de suscripción";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "El plan actual expirará el %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "El plan actual se renovará automáticamente el %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado con éxito";
@@ -1218,6 +1260,9 @@
 
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Hacer recorrido";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
 
 /* iOS status view */
 "_technical_details" = "Detalles técnicos";
@@ -1289,6 +1334,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Vuelva a intentarlo";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "No disponible";
@@ -1383,6 +1431,9 @@
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "Conexión VPN activa";
 
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Protocolo VPN";
+
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Su dispositivo no pudo finalizar una sesión VPN anterior. Necesitarás reiniciar tu dispositivo antes de establecer una nueva conexión VPN.";
 
@@ -1390,7 +1441,7 @@
 "_vpn_stuck_disconnecting_title" = "Error de conexión";
 
 /* Status of VPN connection reported by Siri */
-"_vpnstatus_not_loggedin" = "You are not logged in to ProtonVPN. Open the ProtonVPN app and sign in.";
+"_vpnstatus_not_loggedin" = "No has iniciado sesión en ProtonVPN. Abra la aplicación de ProtonVPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
 "_warning" = "Advertencia";
