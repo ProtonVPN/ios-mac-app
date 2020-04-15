@@ -121,11 +121,11 @@ class TodayViewModelImplementation: TodayViewModel {
         
         switch vpnGateway.connection {
         case .connected, .connecting:
-            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
+            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
                 viewController?.extensionOpenUrl(url)
             }
         case .disconnected, .disconnecting:
-            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
+            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
                 viewController?.extensionOpenUrl(url)
             }
         }
