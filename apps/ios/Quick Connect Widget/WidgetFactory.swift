@@ -62,6 +62,12 @@ class WidgetFactory {
         return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer)
     }()
     
+    var todayViewModel:TodayViewModel {
+        let viewModel = TodayViewModelImplementation( self.appStateManager, vpnGateWay: self.vpnGateway )
+        self.alertService.delegate = viewModel
+        return viewModel
+    }
+    
     private init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)

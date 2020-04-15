@@ -30,7 +30,7 @@ class ElectronViewContainer: UIView {
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        
+        electron.isHidden = true
         electron.backgroundColor = .protonGreen()
         electron.isUserInteractionEnabled = false
         addSubview(electron)
