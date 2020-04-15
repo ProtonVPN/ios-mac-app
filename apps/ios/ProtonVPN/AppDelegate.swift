@@ -85,15 +85,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func handleAction(_ action: String) -> Bool {
         switch action {
-        case "login":
+        case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
                 self?.navigationService.presentLogin(dismissible: false)
             }
-        case "connect":
+        case URLConstants.deepLinkConnectAction:
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway?.connect(with: PropertiesManager().lastConnectionRequest)
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
-        case "disconnect":
+        case URLConstants.deepLinkDisconnectAction:
             navigationService.vpnGateway?.disconnect()
             UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
         default:

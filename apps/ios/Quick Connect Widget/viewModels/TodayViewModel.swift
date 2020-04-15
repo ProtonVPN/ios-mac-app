@@ -110,28 +110,24 @@ class TodayViewModelImplementation: TodayViewModel {
     
     @objc func connectAction(_ sender: Any) {
         
-        guard let vpnGateway = vpnGateway else {
+        guard let vpnGateway = vpnGateway, !connectionFailed else {
             connectionFailed = false
-            // not logged in so open the app
-            let url = URL(string: "protonvpn://")!
-            viewController?.extensionOpenUrl(url)
-            return
-        }
-        
-        if connectionFailed {
-            // error
-            let url = URL(string: "protonvpn://")!
-            viewController?.extensionOpenUrl(url)
+            // not logged in so open the app or the connection failed
+            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
+                viewController?.extensionOpenUrl(url)
+            }
             return
         }
         
         switch vpnGateway.connection {
         case .connected, .connecting:
-            let url = URL(string: "protonvpn://disconnect")!
-            viewController?.extensionOpenUrl(url)
+            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
+                viewController?.extensionOpenUrl(url)
+            }
         case .disconnected, .disconnecting:
-            let url = URL(string: "protonvpn://connect")!
-            viewController?.extensionOpenUrl(url)
+            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
+                viewController?.extensionOpenUrl(url)
+            }
         }
     }
     
