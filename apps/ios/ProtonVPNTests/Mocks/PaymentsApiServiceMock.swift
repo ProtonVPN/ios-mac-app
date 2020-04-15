@@ -27,12 +27,14 @@ class PaymentsApiServiceMock: PaymentsApiService {
     
     public var callbackServicePlans: ((((ServicePlansProperties) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackApplyCredit: ((String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
-    public var callbackCredit: ((Int, String, (() -> Void), ((Error) -> Void)) -> Void)?
+    public var callbackCredit: ((Int, PaymentAction, (() -> Void), ((Error) -> Void)) -> Void)?
     public var callbackPostReceipt: ((Int, String, String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackVerifyPayment: ((Int, String, ((String) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackMethods: (((([PaymentMethod]?) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackSubscription: ((((Subscription?) -> Void), ((Error) -> Void)) -> Void)?
+    public var callbackCreatePaymentToken: ((Int, String, ((PaymentToken) -> Void), ((Error) -> Void)) -> Void)?
     
+
     // MARK: PaymentsApiService implementation
     
     func servicePlans(success: @escaping ((ServicePlansProperties) -> Void), failure: @escaping ((Error) -> Void)) {
@@ -43,7 +45,7 @@ class PaymentsApiServiceMock: PaymentsApiService {
         callbackApplyCredit?(planId, success, failure)
     }
     
-    func credit(amount: Int, receipt: String, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
+    func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
         callbackCredit?(amount, receipt, success, failure)
     }
     
@@ -63,4 +65,8 @@ class PaymentsApiServiceMock: PaymentsApiService {
         callbackSubscription?(success, failure)
     }
     
+    func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void)) {
+        callbackCreatePaymentToken?(amount, receipt, success, failure)
+    }
+
 }

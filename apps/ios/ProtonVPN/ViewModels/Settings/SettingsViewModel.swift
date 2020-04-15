@@ -163,7 +163,7 @@ class SettingsViewModel {
             let vpnCredentials = try? vpnKeychain.fetch() {
             username = authCredentials.username
             accountPlan = vpnCredentials.accountPlan.description
-            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPAvailable
+            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPUpgradePlanAvailable
         } else {
             username = LocalizedString.unavailable
             accountPlan = LocalizedString.unavailable
