@@ -32,6 +32,8 @@ public class VpnCredentials: NSObject, NSCoding {
     public let name: String
     public let password: String
     public let delinquent: Int
+    public let credit: Int
+    public let currency: String
     
     override public var description: String {
         return
@@ -65,7 +67,7 @@ public class VpnCredentials: NSObject, NSCoding {
         return name
     }
     
-    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int) {
+    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String) {
         self.status = status
         self.expirationTime = expirationTime
         self.accountPlan = accountPlan
@@ -76,6 +78,8 @@ public class VpnCredentials: NSObject, NSCoding {
         self.name = name
         self.password = password
         self.delinquent = delinquent
+        self.credit = credit
+        self.currency = currency
         super.init()
     }
     
@@ -103,6 +107,8 @@ public class VpnCredentials: NSObject, NSCoding {
         name = try vpnDic.stringOrThrow(key: "Name")
         password = try vpnDic.stringOrThrow(key: "Password")
         delinquent = try dic.intOrThrow(key: "Delinquent")
+        credit = try dic.intOrThrow(key: "Credit")
+        currency = try dic.stringOrThrow(key: "Currency")
         super.init()
     }
     
@@ -118,6 +124,8 @@ public class VpnCredentials: NSObject, NSCoding {
         static let name = "name"
         static let password = "password"
         static let delinquent = "delinquent"
+        static let credit = "credit"
+        static let currency = "currency"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -130,7 +138,10 @@ public class VpnCredentials: NSObject, NSCoding {
                   groupId: aDecoder.decodeObject(forKey: CoderKey.groupId) as! String,
                   name: aDecoder.decodeObject(forKey: CoderKey.name) as! String,
                   password: aDecoder.decodeObject(forKey: CoderKey.password) as! String,
-                  delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent))
+                  delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
+                  credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
+                  currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? ""
+        )
     }
 
     public func encode(with aCoder: NSCoder) {
@@ -144,5 +155,7 @@ public class VpnCredentials: NSObject, NSCoding {
         aCoder.encode(name, forKey: CoderKey.name)
         aCoder.encode(password, forKey: CoderKey.password)
         aCoder.encode(delinquent, forKey: CoderKey.delinquent)
+        aCoder.encode(credit, forKey: CoderKey.credit)
+        aCoder.encode(currency, forKey: CoderKey.currency)
     }
 }

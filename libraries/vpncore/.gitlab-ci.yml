@@ -1,7 +1,7 @@
 stages:
   - linting
   - unit_tests
-  - i18n
+  - bot # comes from translations/generator job
   - mirror
 
 variables:
@@ -60,7 +60,7 @@ lint:
     paths:
       - swiftlint.xml
     reports:
-      junit: 
+      junit:
         - swiftlint.xml
     expire_in: 90 days
 
@@ -71,7 +71,7 @@ unit_tests:
     - *before_script_mac
   script:
     - pod install
-    
+
     - fastlane ios test
 
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
@@ -83,7 +83,7 @@ unit_tests:
     - macOS
   artifacts:
     reports:
-      junit: 
+      junit:
         - fastlane/test_output/report.junit
 
 sync-app:
@@ -130,54 +130,22 @@ publish-github-release:
 
 
 # --- Translation related tasks ---
+include:
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/sync-crowdin.gitlab-ci.yml'
 
-# Auto push new translations to crowdin
-i18n_update_crowdin:
-  stage: i18n
-  tags:
-    - iOS-deploy
-  environment:
-    name: i18n
-  before_script:
-    - eval $(ssh-agent -s)
-    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
-    - git config --global user.email $GIT_CI_EMAIL
-    - git config --global user.name $GIT_CI_USERNAME
-    - git config --global url."https://".insteadOf git://
-    - rm -rf /tmp/__PROTON_I18N
-    - git clone "$I18N_PROTON" --depth 1 /tmp/__PROTON_I18N
-  only:
-    refs:
-       - develop
-  script:
-    - /tmp/__PROTON_I18N/update crowdin #--debug
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/commit-locales.gitlab-ci.yml'
 
+i18n-sync-crowdin:
+  variables:
+      I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
+  extends: .i18n-sync-crowdin-shared-apple
 
-# Auto pull new translations from crowdin and make commit
-.i18n_update_app_translations:
-  stage: i18n
-  tags:
-    - iOS-deploy
-  environment:
-    name: i18n
-  before_script:
-    - eval $(ssh-agent -s)
-    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
-    - git config --global user.email $GIT_CI_EMAIL
-    - git config --global user.name $GIT_CI_USERNAME
-    - git config --global url."https://".insteadOf git://
-  script:
-    - ./i18n.import.sh
-
-i18n_update_app_translations_manual:
-  extends: .i18n_update_app_translations
-  when: manual
-
-i18n_update_app_translations_scheduled:
-  extends: .i18n_update_app_translations
-  only:
-    - schedules
-
+i18n-commit-locales:
+  variables:
+      I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
+  extends: .i18n-commit-locales-shared-apple
 

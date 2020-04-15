@@ -29,10 +29,11 @@ enum PaymentsRouter: Router {
     case subscription
     case defaultPlan
     case plans
-    case credit(amount: Int, receipt: String)
+    case credit(amount: Int, payment: PaymentAction)
     case receipt(amount: Int, receipt: String, planId: String)
     case applyCredit(planId: String) // The same as receipt, but uses account credit for a purchase
     case verify(amount: Int, receipt: String)
+    case createPaymentToken(amount: Int, receipt: String)
     
     var path: String {
         let base = ApiConstants.baseURL + "/payments"
@@ -53,19 +54,21 @@ enum PaymentsRouter: Router {
             return base + "/subscription"
         case .verify:
             return base + "/verify"
+        case .createPaymentToken:
+            return base + "/tokens"
         }
     }
     
     var version: String {
         switch self {
-        case .status, .methods, .subscription, .defaultPlan, .plans, .credit, .receipt, .verify, .applyCredit:
+        case .status, .methods, .subscription, .defaultPlan, .plans, .credit, .receipt, .verify, .applyCredit, .createPaymentToken:
             return "3"
         }
     }
     
     var method: HTTPMethod {
         switch self {
-        case .credit, .receipt, .verify, .applyCredit:
+        case .credit, .receipt, .verify, .applyCredit, .createPaymentToken:
             return .post
         default:
             return .get
@@ -80,16 +83,11 @@ enum PaymentsRouter: Router {
         switch self {
         case .plans:
             return  ["Currency": "USD", "Cycle": 12]
-        case .credit(let credit, let receipt):
+        case .credit(let credit, let payment):
             return [
                 "Amount": credit,
                 "Currency": "USD",
-                "Payment": [
-                    "Type": "apple",
-                    "Details": [
-                        "Receipt": receipt
-                    ]
-                ]
+                "Payment": payment.postDictionary
             ]
         case .receipt(let credit, let receipt, let planId):
             return [
@@ -126,6 +124,17 @@ enum PaymentsRouter: Router {
                     ]
                 ]
             ]
+        case .createPaymentToken(let credit, let receipt):
+        return [
+            "Amount": credit,
+            "Currency": "USD",
+            "Payment": [
+                "Type": "apple",
+                "Details": [
+                    "Receipt": receipt
+                ]
+            ]
+        ]
             
         default:
             return nil

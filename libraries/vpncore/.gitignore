@@ -58,3 +58,4 @@ Pods/
 
 # Proton specific
 _translations
+.env-i18n

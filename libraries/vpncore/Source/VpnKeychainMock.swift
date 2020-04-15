@@ -57,7 +57,9 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             groupId: "grid1",
             name: "username",
             password: "",
-            delinquent: 0
+            delinquent: 0,
+            credit: 0,
+            currency: ""
         )
     }
     
