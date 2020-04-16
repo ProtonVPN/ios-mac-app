@@ -30,7 +30,7 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory
+    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -132,13 +132,13 @@ class NavigationService {
     private func showLogIn() {
         appHasPresented = true
         
-        let viewModel = LoginViewModel(appSessionManager: appSessionManager, navService: self, firewallManager: firewallManager)
+        let viewModel = LoginViewModel(factory: factory)
         windowService.showLogin(viewModel: viewModel)
         NSApp.activate(ignoringOtherApps: true)
     }
     
     private func attemptSilentLogIn() {
-        let viewModel = LoginViewModel(appSessionManager: appSessionManager, navService: self, firewallManager: firewallManager)
+        let viewModel = LoginViewModel(factory: factory)
         viewModel.logInSilently()
     }
     
@@ -213,12 +213,6 @@ extension NavigationService {
     @objc private func powerOff(_ notification: Notification) {
         PMLog.D("System user is being logged off", level: .trace)
         isSystemLoggingOff = true
-        vpnGateway?.disconnect {
-            self.firewallManager.disableFirewall {
-                self.isSystemLoggingOff = false
-                NSApp.reply(toApplicationShouldTerminate: true)
-            }
-        }
     }
     
     private func openRequiredWindow() {
@@ -255,9 +249,27 @@ extension NavigationService {
     }
     
     func handleApplicationShouldTerminate() -> NSApplication.TerminateReply {
-        if !isSystemLoggingOff { // Do not show disconnect modal, because user asked for macOS logOff/shutdown
+        guard isSystemLoggingOff else {
             appSessionManager.replyToApplicationShouldTerminate()
+            return .terminateLater
         }
+        
+        // Do not show disconnect modal, because user asked for macOS logOff/shutdown
+        // Make sure to disconnect the gateway and disable the firewall before logOff/shutdown
+        
+        guard let vpnGateway = self.vpnGateway, vpnGateway.connection != .disconnected else {
+            return.terminateNow
+        }
+        
+        vpnGateway.disconnect {
+            self.firewallManager.disableFirewall {
+                DispatchQueue.main.async {
+                    self.isSystemLoggingOff = false
+                    NSApp.reply(toApplicationShouldTerminate: true)
+                }
+            }
+        }
+        
         return .terminateLater
     }
 }
