@@ -2,7 +2,7 @@
 "1l8xNj" = "Отключиться";
 
 /* (No Comment) */
-"2LMbbw" = "Получить состояние соединения ProtonVPN";
+"2LMbbw" = "Статус соединения";
 
 /* (No Comment) */
 "8tZ81X" = "Подключиться к ProtonVPN";
@@ -15,6 +15,9 @@
 
 /* (No Comment) */
 "jf696t" = "Подключиться к ProtonVPN";
+
+/* (No Comment) */
+"JOCERT" = "Получить состояние соединения ProtonVPN";
 
 /* (No Comment) */
 "ksQcRb" = "Отключиться от ProtonVPN";

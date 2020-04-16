@@ -2,7 +2,7 @@
 "1l8xNj" = "Disconnetti";
 
 /* (No Comment) */
-"2LMbbw" = "Ottieni lo stato di connessione di ProtonVPN";
+"2LMbbw" = "Stato connessione";
 
 /* (No Comment) */
 "8tZ81X" = "Connettiti a ProtonVPN";
@@ -15,6 +15,9 @@
 
 /* (No Comment) */
 "jf696t" = "Connettiti a ProtonVPN";
+
+/* (No Comment) */
+"JOCERT" = "Ottieni lo stato di connessione di ProtonVPN";
 
 /* (No Comment) */
 "ksQcRb" = "Disconnettiti da ProtonVPN";

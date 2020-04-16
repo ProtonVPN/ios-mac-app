@@ -2,7 +2,7 @@
 "1l8xNj" = "Verbinding verbreken";
 
 /* (No Comment) */
-"2LMbbw" = "Krijg ProtonVPN verbindingsstatus";
+"2LMbbw" = "Verbinding Status";
 
 /* (No Comment) */
 "8tZ81X" = "Verbinding maken met ProtonVPN";
@@ -11,10 +11,13 @@
 "cQ4Mju" = "Verbinding verbreken met ProtonVPN";
 
 /* (No Comment) */
-"hIcJsr" = "Krijg ProtonVPN verbindingsstatus";
+"hIcJsr" = "Bekijk ProtonVPN's verbindingsstatus";
 
 /* (No Comment) */
 "jf696t" = "Verbinding maken met ProtonVPN";
+
+/* (No Comment) */
+"JOCERT" = "Bekijk ProtonVPN's verbindingsstatus";
 
 /* (No Comment) */
 "ksQcRb" = "Verbinding verbreken met ProtonVPN";
