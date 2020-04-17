@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14313.18"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -33,7 +33,7 @@
                             </constraints>
                         </customView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QaR-f9-QCI">
-                            <rect key="frame" x="16" y="227" width="37" height="17"/>
+                            <rect key="frame" x="16" y="227" width="37" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="HlB-Qz-qxW">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -41,7 +41,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pCA-0i-rAl">
-                            <rect key="frame" x="62" y="227" width="37" height="17"/>
+                            <rect key="frame" x="62" y="227" width="37" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="sn5-kJ-dsv">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -65,19 +65,24 @@
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dXd-kW-1gU" customClass="TourNextButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="52" y="3" width="164" height="41"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="152" id="7RY-fq-gFC"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="152" id="7RY-fq-gFC"/>
                                 <constraint firstAttribute="height" constant="30" id="9dF-zv-hpw"/>
                             </constraints>
                             <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="PLw-pb-fa8" customClass="TourNextButtonCell" customModule="ProtonVPN" customModuleProvider="target">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="next:" target="-2" id="IiY-Fa-1QT"/>
                             </connections>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="chQ-uI-kyp" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="14" y="179" width="37" height="17"/>
+                            <rect key="frame" x="14" y="180" width="37" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="width" relation="lessThanOrEqual" constant="188" id="nn7-J5-rVh"/>
                             </constraints>
@@ -110,6 +115,7 @@
                 <constraint firstAttribute="trailing" secondItem="Q9s-QJ-Bzz" secondAttribute="trailing" constant="-16" id="gth-Sh-xWn"/>
                 <constraint firstItem="Q9s-QJ-Bzz" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="pTB-bx-pxS"/>
             </constraints>
+            <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
 </document>

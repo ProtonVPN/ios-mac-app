@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14460.31"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,32 +16,32 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                                 <menu key="submenu" title="ProtonVPN" systemMenu="apple" autoenablesItems="NO" id="KRh-uR-HLK">
                                     <items>
-                                        <menuItem title="About ProtonVPN" id="vP3-tn-eYl">
+                                        <menuItem title="_About ProtonVPN" id="vP3-tn-eYl">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
-                                        <menuItem title="Check for Updates..." id="Cj0-Uq-nbX">
+                                        <menuItem title="_Check for Updates..." id="Cj0-Uq-nbX">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="MB8-ys-omS"/>
-                                        <menuItem title="Preferences..." enabled="NO" keyEquivalent="," id="Eh5-UX-qbQ"/>
+                                        <menuItem title="_Preferences..." enabled="NO" keyEquivalent="," id="Eh5-UX-qbQ"/>
                                         <menuItem isSeparatorItem="YES" id="Kbm-xb-JYd"/>
-                                        <menuItem title="Hide ProtonVPN" keyEquivalent="h" id="4ci-va-LpU">
+                                        <menuItem title="_Hide ProtonVPN" keyEquivalent="h" id="4ci-va-LpU">
                                             <connections>
                                                 <action selector="hide:" target="Rfr-RJ-rux" id="Xow-I1-oOY"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Hide Others" keyEquivalent="h" id="0uV-Fc-ulM">
+                                        <menuItem title="_Hide Others" keyEquivalent="h" id="0uV-Fc-ulM">
                                             <modifierMask key="keyEquivalentModifierMask" option="YES" command="YES"/>
                                             <connections>
                                                 <action selector="hideOtherApplications:" target="Rfr-RJ-rux" id="OU9-4r-I0z"/>
                                             </connections>
                                         </menuItem>
-                                        <menuItem title="Show All" id="aqi-V1-OKY">
+                                        <menuItem title="_Show All" id="aqi-V1-OKY">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="Dpa-Ex-rg1"/>
-                                        <menuItem title="Log Out" keyEquivalent="W" id="fMB-J1-ZCn"/>
-                                        <menuItem title="Quit ProtonVPN" keyEquivalent="q" id="T4h-7x-f33"/>
+                                        <menuItem title="_Log Out" keyEquivalent="W" id="fMB-J1-ZCn"/>
+                                        <menuItem title="_Quit ProtonVPN" keyEquivalent="q" id="T4h-7x-f33"/>
                                     </items>
                                 </menu>
                             </menuItem>
@@ -55,11 +55,11 @@
                                     </items>
                                 </menu>
                             </menuItem>
-                            <menuItem title="Window" id="NbC-9A-ZUM">
+                            <menuItem title="_Window" id="NbC-9A-ZUM">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Window" systemMenu="window" id="MwC-dM-Zc0">
+                                <menu key="submenu" title="_Window" systemMenu="window" id="MwC-dM-Zc0">
                                     <items>
-                                        <menuItem title="Minimize" keyEquivalent="m" id="zsQ-yh-Eqf">
+                                        <menuItem title="_Minimize" keyEquivalent="m" id="zsQ-yh-Eqf">
                                             <connections>
                                                 <action selector="miniaturize:" target="Rfr-RJ-rux" id="DK1-3R-281"/>
                                             </connections>
@@ -105,6 +105,8 @@
                     <connections>
                         <outlet property="aboutItem" destination="vP3-tn-eYl" id="mtp-wZ-zav"/>
                         <outlet property="checkForUpdatesItem" destination="Cj0-Uq-nbX" id="ziP-f4-tEi"/>
+                        <outlet property="hideOthersItem" destination="0uV-Fc-ulM" id="NgQ-rn-3oH"/>
+                        <outlet property="hideProtonItem" destination="4ci-va-LpU" id="mgD-x0-IBU"/>
                         <outlet property="logOutItem" destination="fMB-J1-ZCn" id="6gD-Qx-PDk"/>
                         <outlet property="preferencesItem" destination="Eh5-UX-qbQ" id="VLD-xF-Zhl"/>
                         <outlet property="quitItem" destination="T4h-7x-f33" id="HJ9-vE-u08"/>
@@ -122,11 +124,18 @@
                     <connections>
                         <outlet property="clearApplicationDataItem" destination="OOQ-ac-X8f" id="Qdl-PZ-hwW"/>
                         <outlet property="helpItem" destination="OK2-4f-4vJ" id="IBe-qE-jlf"/>
+                        <outlet property="helpMenu" destination="wED-7F-VQJ" id="dyB-Ri-iNg"/>
                         <outlet property="logsItem" destination="Td7-XY-QFc" id="nHY-1C-tGF"/>
                         <outlet property="reportAnIssueItem" destination="a5J-cy-nfO" id="4BY-VB-g72"/>
                     </connections>
                 </customObject>
                 <customObject id="zgJ-n0-DCA" customClass="StatusMenuWindowController" customModule="ProtonVPN" customModuleProvider="target"/>
+                <customObject id="OOE-T5-kGj" customClass="WindowMenuController" customModule="ProtonVPN" customModuleProvider="target">
+                    <connections>
+                        <outlet property="minimizeItem" destination="zsQ-yh-Eqf" id="ayV-ka-s5i"/>
+                        <outlet property="windowMenu" destination="MwC-dM-Zc0" id="yXL-EF-8nu"/>
+                    </connections>
+                </customObject>
             </objects>
             <point key="canvasLocation" x="840" y="-593"/>
         </scene>

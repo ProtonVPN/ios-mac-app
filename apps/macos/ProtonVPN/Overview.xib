@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -49,7 +49,7 @@
                     <rect key="frame" x="0.0" y="325" width="900" height="50"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="wcq-1v-gDz" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="40" y="8" width="76" height="17"/>
+                            <rect key="frame" x="40" y="9" width="76" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Profile label" id="6c3-C2-Oe1">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +57,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dbz-Ck-3hX" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="278" y="8" width="106" height="17"/>
+                            <rect key="frame" x="278" y="9" width="106" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Connection label" id="mcf-JF-ZJc">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +65,7 @@
                             </textFieldCell>
                         </textField>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="E5f-As-vpM" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="660" y="8" width="75" height="17"/>
+                            <rect key="frame" x="610" y="9" width="75" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Action label" id="BVS-q9-ROH">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -79,7 +79,7 @@
                         <constraint firstItem="dbz-Ck-3hX" firstAttribute="centerY" secondItem="wcq-1v-gDz" secondAttribute="centerY" id="NH8-o7-3y3"/>
                         <constraint firstItem="E5f-As-vpM" firstAttribute="centerY" secondItem="dbz-Ck-3hX" secondAttribute="centerY" id="dCD-Yb-Ggf"/>
                         <constraint firstAttribute="height" constant="50" id="fUs-xc-6TG"/>
-                        <constraint firstItem="E5f-As-vpM" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="662" id="nfX-kF-lbI"/>
+                        <constraint firstItem="E5f-As-vpM" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="612" id="nfX-kF-lbI"/>
                         <constraint firstItem="dbz-Ck-3hX" firstAttribute="leading" secondItem="ozC-hD-pew" secondAttribute="leading" constant="280" id="xfr-xO-dDH"/>
                     </constraints>
                 </customView>
@@ -91,14 +91,14 @@
                         <subviews>
                             <tableView verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnSelection="YES" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="HoN-iP-1gv">
                                 <rect key="frame" x="0.0" y="0.0" width="900" height="265"/>
-                                <autoresizingMask key="autoresizingMask"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn identifier="" width="897" minWidth="40" maxWidth="1000" id="KLW-5k-xyq">
+                                    <tableColumn width="897" minWidth="40" maxWidth="1000" id="KLW-5k-xyq">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
-                                            <font key="font" metaFont="smallSystem"/>
+                                            <font key="font" metaFont="controlContent" size="11"/>
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
                                         </tableHeaderCell>
@@ -132,12 +132,13 @@
                                 </tableColumns>
                             </tableView>
                         </subviews>
+                        <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="APQ-9W-9BZ" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="APQ-9W-9BZ" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
                         <rect key="frame" x="0.0" y="249" width="900" height="16"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="3rL-8R-8Rf" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="3rL-8R-8Rf" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
                         <rect key="frame" x="224" y="17" width="15" height="102"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -155,6 +156,7 @@
                 <constraint firstAttribute="trailing" secondItem="4Vo-Eb-7K7" secondAttribute="trailing" id="rCd-mB-wxC"/>
                 <constraint firstItem="4Vo-Eb-7K7" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="rUI-oH-4Zh"/>
             </constraints>
+            <point key="canvasLocation" x="-279" y="155"/>
         </customView>
     </objects>
 </document>

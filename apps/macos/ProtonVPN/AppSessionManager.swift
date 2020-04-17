@@ -317,9 +317,12 @@ class AppSessionManagerImplementation: AppSessionManager {
         }
         
         let confirmationClosure: () -> Void = { [weak self] in
-            self?.firewallManager.disableFirewall()
             self?.appStateManager.disconnect {
-                NSApp.reply(toApplicationShouldTerminate: true)
+                self?.firewallManager.disableFirewall {
+                    DispatchQueue.main.async {
+                        NSApp.reply(toApplicationShouldTerminate: true)
+                    }
+                }
             }
         }
 

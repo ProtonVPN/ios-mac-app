@@ -50,7 +50,7 @@ class MapSectionViewModel {
     private let countrySelected = Notification.Name("MapSectionViewModelCountrySelected")
     private let scEntryCountrySelected = Notification.Name("MapSectionViewModelScEntryCountrySelected")
     private let scExitCountrySelected = Notification.Name("MapSectionViewModelScExitCountrySelected")
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     private let appStateManager: AppStateManager
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService

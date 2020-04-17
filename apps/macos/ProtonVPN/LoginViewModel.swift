@@ -27,19 +27,21 @@ import vpncore
 
 class LoginViewModel {
     
-    private let propertiesManager = PropertiesManager()
-    private let appSessionManager: AppSessionManager
-    private let navService: NavigationService
-    private let firewallManager: FirewallManager
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & FirewallManagerFactory & CoreAlertServiceFactory
+    private let factory: Factory
+    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var navService: NavigationService = factory.makeNavigationService()
+    private lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
     var logInFailureWithSupport: ((String?) -> Void)?
 
-    init(appSessionManager: AppSessionManager, navService: NavigationService, firewallManager: FirewallManager) {
-        self.appSessionManager = appSessionManager
-        self.navService = navService
-        self.firewallManager = firewallManager
+    init (factory: Factory) {
+        self.factory = factory
     }
     
     var rememberLogin: Bool {
@@ -97,7 +99,12 @@ class LoginViewModel {
         }, failure: { [weak self] error in
             guard let `self` = self else { return }
             self.specialErrorCaseNotification(error)
-            self.logInFailure?(error.localizedDescription)
+            if (error as NSError).code == NetworkErrorCode.tls {
+                self.alertService.push(alert: MITMAlert())
+                self.logInFailure?(nil)
+            } else {
+                self.logInFailure?(error.localizedDescription)
+            }
         })
     }
     
