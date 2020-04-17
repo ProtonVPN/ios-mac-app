@@ -148,7 +148,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
             return true
         }
         // User has payment method setup that will extend subscription automatically
-        if !(subscription.paymentMethods?.isEmpty ?? true) {
+        if (try? vpnKeychain.fetch().hasPaymentMethod) ?? false {
             return true
         }
         // Has credit that will be used for renewal
