@@ -55,3 +55,4 @@ fastlane/test_output
 
 # Proton specific
 _translations
+.env-i18n

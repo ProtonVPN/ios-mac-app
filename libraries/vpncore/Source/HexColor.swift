@@ -24,20 +24,14 @@ import UIKit
 
 extension UIColor {
     
-    private convenience init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
+    public convenience init(red: Int, green: Int, blue: Int) {
+        checkColors(red, green, blue)
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
     }
     
     public convenience init(rgbHex: Int) {
-        self.init(
-            red: (rgbHex >> 16) & 0xFF,
-            green: (rgbHex >> 8) & 0xFF,
-            blue: rgbHex & 0xFF
-        )
+        let components = rgbHex.rgbComponents
+        self.init( red: components.r, green: components.g, blue: components.b )
     }
     
     public var hexRepresentation: Int {
@@ -46,33 +40,23 @@ extension UIColor {
         var b: CGFloat = 0
         var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
-        
-        let red = Int((r * 255.0).rounded())
-        let green = Int((g * 255.0).rounded())
-        let blue = Int((b * 255.0).rounded())
-        let hex = (red << 16) | (green << 8) | (blue)
-        return hex
+        return convert2Hex(r, g, b, a)
     }
 }
+
 #elseif canImport(Cocoa)
 import Cocoa
 
 extension NSColor {
     
-    private convenience init(red: Int, green: Int, blue: Int) {
-        assert(red >= 0 && red <= 255, "Invalid red component")
-        assert(green >= 0 && green <= 255, "Invalid green component")
-        assert(blue >= 0 && blue <= 255, "Invalid blue component")
-        
+    public convenience init(red: Int, green: Int, blue: Int) {
+        checkColors(red, green, blue)
         self.init(red: CGFloat(red) / 255.0, green: CGFloat(green) / 255.0, blue: CGFloat(blue) / 255.0, alpha: 1.0)
     }
     
     public convenience init(rgbHex: Int) {
-        self.init(
-            red: (rgbHex >> 16) & 0xFF,
-            green: (rgbHex >> 8) & 0xFF,
-            blue: rgbHex & 0xFF
-        )
+        let components = rgbHex.rgbComponents
+        self.init( red: components.r, green: components.g, blue: components.b )
     }
     
     public var hexRepresentation: Int {
@@ -81,12 +65,29 @@ extension NSColor {
         var b: CGFloat = 0
         var a: CGFloat = 0
         getRed(&r, green: &g, blue: &b, alpha: &a)
-        
-        let red = Int((r * 255.0).rounded())
-        let green = Int((g * 255.0).rounded())
-        let blue = Int((b * 255.0).rounded())
-        let hex = (red << 16) | (green << 8) | (blue)
-        return hex
+        return convert2Hex(r, g, b, a)
     }
 }
 #endif
+
+private typealias RGB = (r: Int, g: Int, b: Int)
+
+private func checkColors( _ red: Int, _ green: Int, _ blue: Int) {
+    assert(red >= 0 && red <= 255, "Invalid red component")
+    assert(green >= 0 && green <= 255, "Invalid green component")
+    assert(blue >= 0 && blue <= 255, "Invalid blue component")
+}
+
+private func convert2Hex( _ r: CGFloat, _ g: CGFloat, _ b: CGFloat, _ a: CGFloat ) -> Int {
+    let red = Int((r * 255.0).rounded())
+    let green = Int((g * 255.0).rounded())
+    let blue = Int((b * 255.0).rounded())
+    let hex = (red << 16) | (green << 8) | (blue)
+    return hex
+}
+
+extension Int {
+    fileprivate var rgbComponents: RGB {
+        return RGB( (self >> 16) & 0xFF, (self >> 8) & 0xFF, self & 0xFF )
+    }
+}

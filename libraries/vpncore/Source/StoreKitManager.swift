@@ -38,11 +38,12 @@ public protocol StoreKitManager: NSObjectProtocol {
 
 public class StoreKitManagerImplementation: NSObject, StoreKitManager {
    
-    public typealias Factory = CoreAlertServiceFactory & PaymentsApiServiceFactory
+    public typealias Factory = CoreAlertServiceFactory & PaymentsApiServiceFactory & ServicePlanDataStorageFactory
     private let factory: Factory
         
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var paymentsService: PaymentsApiService = factory.makePaymentsApiService()
+    private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
         
     public init(factory: Factory) {
         self.factory = factory
@@ -218,7 +219,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         processAllTransactions(transactionsFinishHandler)
     }
     
-    /// Adds operation to queue plus adds additional operation that check if queue is empty and calls finish handler ir available
+    /// Adds operation to queue plus adds additional operation that check if queue is empty and calls finish handler if available
     private func addOperation(block: @escaping () -> Void) {
         let mainOperation = BlockOperation(block: block)
         let finishOperation = BlockOperation(block: { [weak self] in
@@ -302,13 +303,14 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         }
         
         switch processingType {
-        case .existingUser:
-            
+        case .existingUserNewSubscription:
             if transactionsMadeBeforeSignup.contains(transaction) {
                 processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
             } else {
                 try processAuthenticated(transaction: transaction, plan: plan, planId: planId)
             }
+        case .existingUserAddCredits:
+            try processAuthenticatedAddCredits(transaction: transaction, plan: plan)
         case .registration:
             try processUnauthenticated(transaction: transaction, plan: plan)
         }
@@ -327,7 +329,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             switch (error as NSError).code {
             case 22101:
                 // ammount mismatch - try report only credits without activating the plan
-                self.paymentsService.credit(amount: plan.yearlyCost, receipt: receipt, success: {
+                self.paymentsService.credit(amount: plan.yearlyCost, receipt: .apple(token: receipt), success: {
                     self.errorCompletion(Errors.creditsApplied)
                     SKPaymentQueue.default().finishTransaction(transaction)
                 }, failure: { (error) in
@@ -371,6 +373,25 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         })
     }
     
+    /// Add credits to user account 
+    private func processAuthenticatedAddCredits(transaction: SKPaymentTransaction, plan: AccountPlan) throws {
+        let receipt = try self.readReceipt()
+        paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
+            self?.paymentsService.credit(amount: plan.yearlyCost, receipt: .protonToken(token: token.token), success: {
+                self?.successCompletion?(nil)
+                SKPaymentQueue.default().finishTransaction(transaction)
+            }, failure: { (error) in
+                if (error as NSError).code == 22916 { // Apple payment already registered
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                } else {
+                    self?.errorCompletion(error)
+                }
+            })
+        }, failure: { [weak self] error in
+            self?.errorCompletion(error)
+        })
+    }
+    
     private func finish(transaction: SKPaymentTransaction) {
         SKPaymentQueue.default().finishTransaction(transaction)
         transactionsMadeBeforeSignup.removeAll(where: { $0 == transaction })
@@ -391,13 +412,17 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     
     var processingType: ProcessingType {
         if let userId = AuthKeychain.fetch()?.userId, !userId.isEmpty {
-            return .existingUser
+            if servicePlanDataStorage.currentSubscription?.endDate?.isFuture ?? false {
+                return .existingUserAddCredits
+            }
+            return .existingUserNewSubscription
         }
         return .registration
     }
     
     enum ProcessingType {
-        case existingUser
+        case existingUserNewSubscription
+        case existingUserAddCredits
         case registration
     }
 }

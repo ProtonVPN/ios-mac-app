@@ -14,6 +14,7 @@
 "_warning" = "Warning";
 "_upgrade" = "Upgrade";
 "_upgrade_subscription" = "Upgrade Subscription";
+"_manage_subscription" = "Manage Subscription" ;
 "_upgrade_required" = "Upgrade Required";
 "_maintenance" = "Maintenance";
 "_quit" = "Quit";
@@ -30,6 +31,7 @@
 "_log_out" = "Log Out";
 "_log_out_warning" = "Logging out will end your VPN session.";
 "_log_out_warning_long" = "Logging out of the application will disconnect the active VPN connection. Do you want to continue?";
+"_change_protocol_disconnect_warning" = "Changing protocols will end your current VPN session.";
 "_loading_screen_slogan" = "Secure Internet Anywhere";
 "_report_an_issue" = "Report an Issue...";
 "_help" = "Help";
@@ -457,8 +459,16 @@
 "_security_options" = "Security Options";
 "_subscription_plan" = "Subscription Plan";
 "_choose_plan" = "Choose Subscription";
+"_protocol" = "Protocol";
+"_vpn_protocol" = "VPN Protocol";
+"_openvpn" = "OpenVPN";
+"_ikev2" = "IKEv2";
+"_tcp" = "TCP";
+"_udp" = "UDP";
 "_view_logs" = "View Logs";
 "_logs" = "Logs";
+"_application_logs" = "Application Logs";
+"_open_vpn_logs" = "OpenVPN Logs";
 "_activate_widget" = "Activate Widget";
 "_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
@@ -486,13 +496,15 @@
 "_plans_footer" = "Upon confirming your purchase of a paid plan, your iTunes account will be charged the amount displayed, which includes taxes and additional platform fees (which are not charged by Proton directly). After making the purchase, you will automatically be upgraded to the selected plan for a 1 year period, after which time you can renew or cancel, either online or through our iOS app.";
 "_per_year_short" = "/ yr";
 
-// Plan selection: advances features
+// Plan selection: advances features; Manage subscription
 "_feature_server_count" = "Connect to servers in";
 "_feature_speed" = "Speed";
 "_feature_connections" = "Simultaneous VPN connections";
 "_feature_secure_streaming" = "Secure Streaming";
 "_feature_tor" = "Tor over VPN";
 "_feature_secure_core" = "Secure Core";
+"_feature_blocked_content" = "Access blocked content";
+"_feature_bt" = "BitTorrent/file-sharing support";
 
 
 
@@ -595,6 +607,7 @@
 "_report_add_file" = "Add file";
 "_report_max_file_size" = "Max file size limit: 488 KB";
 
+
 // Mac main menu
 
 "_menu_about" = "About ProtonVPN";
@@ -606,4 +619,14 @@
 "_menu_logout" = "Log Out";
 "_menu_quit" = "Quit ProtonVPN";
 "_menu_window" = "Window";
-"_menu_minimize" = "Minimize";
+"_menu_minimize" = "Minimize";
+
+
+// Manage subscription
+
+"_subscription_will_expire" = "Current plan will expire on %@.";
+"_subscription_will_renew" = "Current plan will automatically renew on %@.";
+"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+"_subscription_button" = "Extend plan for 1 year \n%@.";
+"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
+ 

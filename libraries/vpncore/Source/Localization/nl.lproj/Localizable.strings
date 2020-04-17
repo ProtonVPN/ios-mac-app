@@ -67,6 +67,9 @@
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Altijd-actieve VPN zal u automatisch opnieuw verbinden";
 
+/* iOS Settings: applications logs row */
+"_application_logs" = "Toepassingslogboek";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Automatisch toegewezen";
 
@@ -81,6 +84,9 @@
 
 /* Common word */
 "_cancel" = "Annuleren";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Het wijzigen van protocollen zal uw huidige VPN-sessie beëindigen.";
 
 /* MacOS: About window */
 "_changelog" = "Wat is er veranderd";
@@ -478,22 +484,28 @@
 /* Profile create/change form */
 "_feature" = "Soort";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
+"_feature_blocked_content" = "Toegang tot geblokkeerde inhoud";
+
+/* iOS plan feature */
+"_feature_bt" = "BitTorrent/bestandsdelen ondersteuning";
+
+/* iOS plan feature */
 "_feature_connections" = "Gelijktijdige VPN-verbindingen";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_core" = "Secure Core";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_secure_streaming" = "Veilig Streamen";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_server_count" = "Verbinden met servers in";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_speed" = "Snelheid";
 
-/* iOS advanced plan feature */
+/* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
 
 /* iOS: button in login screen */
@@ -552,6 +564,9 @@
 
 /* Button in Kill switch error alert */
 "_ignore" = "Negeren";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
 
 /* MacOS: connecting overlay */
 "_initializing_connection" = "Verbinding initialiseren...";
@@ -663,6 +678,9 @@
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Beheer profielen";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Abonnement beheren";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Beheer uw abonnement vanaf het web dashboard";
@@ -798,6 +816,12 @@
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Toon ProtonVPN om in te loggen...";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN Logs";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Overzicht";
@@ -945,6 +969,9 @@
 
 /* MacOS app tour: profiles title */
 "_profiles_tour_title" = "Profielen";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Protocol";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1201,8 +1228,23 @@
 /* iOS: button in human verification code form */
 "_submit_verification_code" = "Bevestigen";
 
+/* Text under current plan information */
+"_subscription_button" = "Abonnement verlengen voor 1 jaar \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "U kunt meer credits kopen om uw huidige abonnement automatisch te verlengen. Aan het einde van uw huidige abonnementsperiode zullen deze credits worden toegepast om door te gaan met uw plan.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "U heeft met succes credits gekocht om uw huidige abonnement te verlengen.";
+
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Abonnement";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Huidige abonnement verloopt op %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Succesvol verbonden";
@@ -1218,6 +1260,9 @@
 
 /* MacOS welcome screen: take a tour button */
 "_take_tour" = "Rondleiding nemen";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
 
 /* iOS status view */
 "_technical_details" = "Technische gegevens";
@@ -1289,6 +1334,9 @@
 
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Probeer opnieuw";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
 
 /* Common word */
 "_unavailable" = "Niet beschikbaar";
@@ -1382,6 +1430,9 @@
 
 /* MacOS: alert before disconnection on SecureCore state change */
 "_vpn_connection_active" = "VPN-verbinding actief";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN Protocol";
 
 /* VPN stuck alert */
 "_vpn_stuck_disconnecting_body" = "Uw apparaat kon een eerdere VPN-sessie niet beëindigen. U moet uw apparaat herstarten voordat u een nieuwe VPN-verbinding kunt aanmaken.";
