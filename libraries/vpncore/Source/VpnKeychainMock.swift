@@ -59,7 +59,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             password: "",
             delinquent: 0,
             credit: 0,
-            currency: ""
+            currency: "",
+            hasPaymentMethod: false
         )
     }
     
