@@ -9,6 +9,7 @@ inhibit_all_warnings!
 
 def common_pods
     # development pods
+    pod 'TunnelKit', :path => '../tunnelkit'
     pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 end
 
