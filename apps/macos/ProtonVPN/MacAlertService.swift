@@ -93,8 +93,8 @@ extension MacAlertService: CoreAlertService {
         case is MaintenanceAlert:
             showDefaultSystemAlert(alert)
             
-        case is ConfirmVpnDisconnectAlert:
-            showDefaultSystemAlert(alert)
+//        case is ConfirmVpnDisconnectAlert:
+//            showDefaultSystemAlert(alert)
             
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)

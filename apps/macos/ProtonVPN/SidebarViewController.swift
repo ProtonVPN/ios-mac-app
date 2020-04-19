@@ -73,7 +73,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel(vpnGateway: self.vpnGateway)
+        return MapHeaderViewModel(vpnGateway: self.vpnGateway, appStateManager: self.appStateManager)
     }()
     
     private lazy var mapSectionViewModel: MapSectionViewModel = {

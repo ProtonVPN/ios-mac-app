@@ -88,7 +88,8 @@ class HelpMenuViewModel {
         } catch {}
 
         // vpn profile
-        self.vpnManager.removeConfiguration(completionHandler: nil)
+        
+//        self.vpnManager.removeConfiguration(completionHandler: nil)
         
         // quit
         DispatchQueue.main.async {

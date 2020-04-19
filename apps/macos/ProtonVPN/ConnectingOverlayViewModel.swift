@@ -199,19 +199,21 @@ class ConnectingOverlayViewModel {
             return
         }
         
-        if case AppState.disconnected = state, appStateManager.isOnDemandEnabled {
-            return // prevents misleading UI updates
-        }
-        
-        if case AppState.aborted(let userInitiated) = state, !userInitiated {
-            timedOut = true
-        }
-        
-        self.state = state
-        
-        if let delegate = delegate {
-            DispatchQueue.main.async {
-                delegate.stateChanged()
+        appStateManager.isOnDemandEnabled { [weak self] isOnDemandEnabled in
+            if case AppState.disconnected = state, isOnDemandEnabled {
+                return // prevents misleading UI updates
+            }
+            
+            if case AppState.aborted(let userInitiated) = state, !userInitiated {
+                self?.timedOut = true
+            }
+            
+            self?.state = state
+            
+            if let delegate = self?.delegate {
+                DispatchQueue.main.async {
+                    delegate.stateChanged()
+                }
             }
         }
     }
