@@ -240,7 +240,7 @@ class StatusMenuViewModel {
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
         
-        serverType = vpnGateway.activeServerType
+        serverType = propertiesManager.serverTypeToggle
         
         do {
             let tier = try vpnKeychain.fetch().maxTier
@@ -281,10 +281,7 @@ class StatusMenuViewModel {
     }
     
     @objc private func handleVpnChange() {
-        if let vpnGateway = vpnGateway {
-            serverType = vpnGateway.activeServerType
-        }
-        
+        serverType = propertiesManager.serverTypeToggle
         contentChanged?()
     }
     

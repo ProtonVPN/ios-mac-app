@@ -79,7 +79,7 @@ class MapSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: serverManager.contentChanged, object: nil)
         
-        activeView = vpnGateway.activeServerType
+        activeView = propertiesManager.serverTypeToggle
         annotations = annotations(forView: activeView)
         connections = connections(forView: activeView)
     }

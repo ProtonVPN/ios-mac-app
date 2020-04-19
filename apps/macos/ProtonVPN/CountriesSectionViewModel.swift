@@ -105,6 +105,7 @@ class CountriesSectionViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
+    private let propertiesManager: PropertiesManagerProtocol
     private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     
     var contentChanged: ((ContentChange) -> Void)?
@@ -119,13 +120,14 @@ class CountriesSectionViewModel {
     private var state: ModelState
     private var userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     private let factory: Factory
     
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
         self.alertService = factory.makeCoreAlertService()
+        self.propertiesManager = factory.makePropertiesManager()
         
         do {
             userTier = try vpnGateway.userTier()
@@ -133,7 +135,7 @@ class CountriesSectionViewModel {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             userTier = CoreAppConstants.VpnTiers.free
         }
-        state = vpnGateway.activeServerType == .standard ? .standard([], []) : .secureCore([], [])
+        state = propertiesManager.serverTypeToggle == .standard ? .standard([], []) : .secureCore([], [])
         
         resetCurrentState()
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
@@ -296,7 +298,8 @@ class CountriesSectionViewModel {
     }
     
     @objc private func vpnConnectionChanged() {
-        if vpnGateway.activeServerType != state.serverType {
+        
+        if propertiesManager.serverTypeToggle != state.serverType {
             updateSecureCoreState()
         }
     }
