@@ -180,8 +180,14 @@ class CreateNewProfileViewModel {
             serverOffering = .custom(ServerWrapper(server: serverModel))
         }
         
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name)
+        let profile = Profile(id: id,
+                              accessTier: accessTier,
+                              profileIcon: .circle(color.hexRepresentation),
+                              profileType: .user,
+                              serverType: serverType,
+                              serverOffering: serverOffering,
+                              name: name,
+                              vpnProtocol: PropertiesManager().vpnProtocol)
         
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
