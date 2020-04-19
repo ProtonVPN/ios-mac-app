@@ -35,7 +35,8 @@ extension DependencyContainer: StatusMenuViewModelFactory {
 
 class StatusMenuViewModel {
     
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory
+        & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -44,6 +45,7 @@ class StatusMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -58,7 +60,6 @@ class StatusMenuViewModel {
     
     init(factory: Factory) {
         self.factory = factory
-        
         startObserving()
     }
     
@@ -299,8 +300,7 @@ class StatusMenuViewModel {
     
     private func getCurrentIp() -> String? {
         if isConnected {
-            guard let vpnGateway = vpnGateway else { return nil }
-            return vpnGateway.activeIp
+            return appStateManager.activeConnection()?.serverIp.entryIp
         } else {
             return propertiesManager.userIp
         }
@@ -311,7 +311,7 @@ class StatusMenuViewModel {
             return LocalizedString.notConnected.attributed(withColor: .protonRed(), fontSize: 14)
         }
         
-        guard let server = vpnGateway?.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 14)
         }
         

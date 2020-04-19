@@ -26,12 +26,13 @@ import vpncore
 class MapHeaderViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
     
     var contentChanged: (() -> Void)?
     
-    init(vpnGateway: VpnGatewayProtocol) {
+    init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager) {
         self.vpnGateway = vpnGateway
-        
+        self.appStateManager = appStateManager
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
@@ -49,7 +50,7 @@ class MapHeaderViewModel {
     }
     
     var isSecureCore: Bool {
-        if let server = vpnGateway.activeServer {
+        if let server = appStateManager.activeConnection()?.server {
             return server.isSecureCore
         }
         return false
