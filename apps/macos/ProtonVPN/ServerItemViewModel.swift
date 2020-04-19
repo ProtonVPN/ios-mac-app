@@ -26,6 +26,7 @@ import vpncore
 class ServerItemViewModel {
     
     fileprivate let vpnGateway: VpnGatewayProtocol
+    fileprivate let appStateManager: AppStateManager
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
     
     let serverModel: ServerModel
@@ -85,18 +86,19 @@ class ServerItemViewModel {
         }
     }
     
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol,
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
         self.serverModel = serverModel
+        self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.countriesSectionViewModel = countriesSectionViewModel
         self.requiresUpgrade = requiresUpgrade
         self.underMaintenance = serverModel.underMaintenance
         isConnected = canConnect && vpnGateway.connection == .connected
-            && vpnGateway.activeServer?.id == serverModel.id
+            && appStateManager.activeConnection()?.server.id == serverModel.id
         isCountryConnected = vpnGateway.connection == .connected
-            && vpnGateway.activeServer?.isSecureCore == false
-            && vpnGateway.activeServer?.countryCode == serverModel.countryCode
+            && appStateManager.activeConnection()?.server.isSecureCore == false
+            && appStateManager.activeConnection()?.server.countryCode == serverModel.countryCode
         
         if canConnect {
             startObserving()
@@ -136,7 +138,7 @@ class ServerItemViewModel {
     
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
-            if vpnGateway.connection == .connected, let activeServer = vpnGateway.activeServer {
+            if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server {
                 isConnected = activeServer.id == serverModel.id
                 isCountryConnected = activeServer.countryCode == serverModel.countryCode
             } else {
@@ -175,13 +177,14 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
         return formSecondaryDescription()
     }
     
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol,
+    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
                   countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, countriesSectionViewModel: countriesSectionViewModel, requiresUpgrade: requiresUpgrade)
+        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                   countriesSectionViewModel: countriesSectionViewModel, requiresUpgrade: requiresUpgrade)
         
         isCountryConnected = vpnGateway.connection == .connected
-            && vpnGateway.activeServer?.hasSecureCore == true
-            && vpnGateway.activeServer?.countryCode == serverModel.countryCode
+            && appStateManager.activeConnection()?.server.hasSecureCore == true
+            && appStateManager.activeConnection()?.server.countryCode == serverModel.countryCode
     }
     
     override fileprivate func startObserving() {

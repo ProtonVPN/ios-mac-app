@@ -37,6 +37,7 @@ protocol MapSectionViewModelFactory {
 extension DependencyContainer: MapSectionViewModelFactory {
     func makeMapSectionViewModel(viewToggle: Notification.Name) -> MapSectionViewModel {
         return MapSectionViewModel(appStateManager: makeAppStateManager(),
+                                   propertiesManager: makePropertiesManager(),
                                    vpnGateway: makeVpnGateway(),
                                    navService: makeNavigationService(),
                                    vpnKeychain: makeVpnKeychain(),
@@ -55,6 +56,7 @@ class MapSectionViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let navService: NavigationService
     private let vpnKeychain: VpnKeychainProtocol
+    private let propertiesManager: PropertiesManagerProtocol
     private let alertService: CoreAlertService
     
     var contentChanged: ((AnnotationChange) -> Void)?
@@ -65,8 +67,12 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol, viewToggle: Notification.Name, alertService: CoreAlertService) {
+    init(appStateManager: AppStateManager, propertiesManager:PropertiesManagerProtocol,
+         vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
+         viewToggle: Notification.Name, alertService: CoreAlertService) {
+        
         self.appStateManager = appStateManager
+        self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.vpnKeychain = vpnKeychain
@@ -87,7 +93,7 @@ class MapSectionViewModel {
     // MARK: - Private functions
     @objc private func appStateChanged() {
         if appStateManager.state.isConnected,
-           let serverType = appStateManager.activeServer?.serverType, serverType != activeView {
+            let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)
         }
         

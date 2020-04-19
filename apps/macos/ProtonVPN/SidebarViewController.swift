@@ -287,7 +287,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     private func setupHeader() {
-        let viewModel = HeaderViewModel(vpnGateway: vpnGateway, navService: navService)
+        let viewModel = HeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager, navService: navService)
         headerViewController = HeaderViewController(viewModel: viewModel)
         headerControllerViewContainer.pin(viewController: headerViewController)
         

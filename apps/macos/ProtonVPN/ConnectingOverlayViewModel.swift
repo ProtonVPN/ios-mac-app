@@ -76,7 +76,7 @@ class ConnectingOverlayViewModel {
             boldString = LocalizedString.timedOut
             string = String(format: LocalizedString.connectingVpn, boldString)
         } else {
-            if let server = appStateManager.activeServer {
+            if let server = appStateManager.activeConnection()?.server {
                 boldString = (server.country + " " + server.name)
                 boldString = boldString.preg_replace_none_regex(" ", replaceto: "\u{a0}")
                 boldString = boldString.preg_replace_none_regex("-", replaceto: "\u{2011}")

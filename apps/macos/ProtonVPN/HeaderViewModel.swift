@@ -31,6 +31,7 @@ protocol HeaderViewModelDelegate: class {
 class HeaderViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
     private let propertiesManager = PropertiesManager()
     private let serverStorage = ServerStorageConcrete()
     private let profileManager: ProfileManager
@@ -47,9 +48,10 @@ class HeaderViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService) {
+    init(vpnGateway: VpnGatewayProtocol, appStateManager:AppStateManager, navService: NavigationService) {
         self.vpnGateway = vpnGateway
         self.navService = navService
+        self.appStateManager = appStateManager
         profileManager = ProfileManager.shared
         startObserving()
     }
@@ -59,7 +61,7 @@ class HeaderViewModel {
     }
     
     var connectedCountryCode: String? {
-        return vpnGateway.activeServer?.countryCode
+        return appStateManager.activeConnection()?.server.countryCode
     }
     
     var headerLabel: NSAttributedString {
@@ -79,7 +81,7 @@ class HeaderViewModel {
     }
     
     var loadPercentage: Int? {
-        return vpnGateway.activeServer?.load
+        return appStateManager.activeConnection()?.server.load
     }
     
     func quickConnectAction() {
@@ -151,7 +153,7 @@ class HeaderViewModel {
             return LocalizedString.youAreNotConnected.attributed(withColor: .protonRed(), fontSize: 16, bold: true, alignment: .left)
         }
         
-        guard let server = vpnGateway.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 16, bold: false, alignment: .left)
         }
         
@@ -179,14 +181,14 @@ class HeaderViewModel {
     
     private func getCurrentIp() -> String? {
         if isConnected {
-            return vpnGateway.activeIp
+            return appStateManager.activeConnection()?.serverIp.entryIp
         } else {
             return propertiesManager.userIp
         }
     }
     
     private func formLoadLabel() -> NSAttributedString? {
-        guard let server = vpnGateway.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
         return ("\(server.load)% " + LocalizedString.load).attributed(withColor: .protonWhite(),
@@ -195,7 +197,7 @@ class HeaderViewModel {
     }
     
     private func formLoadLabelShort() -> NSAttributedString? {
-        guard let server = vpnGateway.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
         return ("\(server.load)%").attributed(withColor: .protonWhite(),
@@ -204,7 +206,7 @@ class HeaderViewModel {
     }
     
     private func formProfileButtonLabel() -> NSAttributedString? {
-        guard let server = vpnGateway.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return nil
         }
         
