@@ -48,7 +48,7 @@ class HeaderViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, appStateManager:AppStateManager, navService: NavigationService) {
+    init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, navService: NavigationService) {
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.appStateManager = appStateManager

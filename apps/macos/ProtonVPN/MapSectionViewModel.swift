@@ -67,7 +67,7 @@ class MapSectionViewModel {
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
     
-    init(appStateManager: AppStateManager, propertiesManager:PropertiesManagerProtocol,
+    init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
          vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
          viewToggle: Notification.Name, alertService: CoreAlertService) {
         
