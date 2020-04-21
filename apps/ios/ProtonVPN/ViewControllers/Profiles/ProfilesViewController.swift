@@ -62,6 +62,7 @@ class ProfilesViewController: UIViewController {
         
         tableView.reloadData()
         renderEditButton()
+        renderEditing(tableView.isEditing)
     }
 
     private func setupView() {
@@ -183,6 +184,10 @@ extension ProfilesViewController: UITableViewDataSource, UITableViewDelegate {
     
     override func setEditing(_ editing: Bool, animated: Bool) {
         super.setEditing(editing, animated: animated)
+        renderEditing(editing)
+    }
+    
+    private func renderEditing(_ editing: Bool) {
         if editing && !tableView.isEditing {
             tableView.setEditing(true, animated: true)
             self.editButtonItem.title = LocalizedString.done

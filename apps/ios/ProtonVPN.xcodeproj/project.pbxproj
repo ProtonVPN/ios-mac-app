@@ -643,6 +643,14 @@
 		D5ADF52D2282C3F10062367C /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = ../../../vpncore/Source/Intents.intentdefinition; sourceTree = "<group>"; };
 		D5ADF5312282C6DA0062367C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D5B5D99023EAAADC009F89A5 /* THANKS */ = {isa = PBXFileReference; lastKnownFileType = text; path = THANKS; sourceTree = "<group>"; };
+		D5B694D52449D9D8009DCF36 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = ../vpncore/Source/Localization/de.lproj/Intents.strings; sourceTree = "<group>"; };
+		D5B694D62449D9D9009DCF36 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5B694D72449D9E7009DCF36 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ../vpncore/Source/Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
+		D5B694D82449D9E7009DCF36 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5B694D92449DA4B009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = ../vpncore/Source/Localization/fa.lproj/Intents.strings; sourceTree = "<group>"; };
+		D5B694DA2449DA4B009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5B694DF244D98EE009DCF36 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "../vpncore/Source/Localization/pt-PT.lproj/Intents.strings"; sourceTree = "<group>"; };
+		D5B694E0244D98EE009DCF36 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWrapperMock.swift; sourceTree = "<group>"; };
 		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
@@ -2065,6 +2073,10 @@
 				"pt-BR",
 				es,
 				"es-MX",
+				de,
+				ru,
+				fa,
+				"pt-PT",
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
@@ -2896,6 +2908,10 @@
 				D5CD4B18236725B30006AAF7 /* pt-BR */,
 				D5CD4B19236725BE0006AAF7 /* es */,
 				D5CD4B1A236725D10006AAF7 /* es-MX */,
+				D5B694D62449D9D9009DCF36 /* de */,
+				D5B694D82449D9E7009DCF36 /* ru */,
+				D5B694DA2449DA4B009DCF36 /* fa */,
+				D5B694E0244D98EE009DCF36 /* pt-PT */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";
@@ -2920,6 +2936,10 @@
 				E182858F236C790E00E397A5 /* pt-BR */,
 				E1828590236C791000E397A5 /* es */,
 				E1828591236C791200E397A5 /* es-MX */,
+				D5B694D52449D9D8009DCF36 /* de */,
+				D5B694D72449D9E7009DCF36 /* ru */,
+				D5B694D92449DA4B009DCF36 /* fa */,
+				D5B694DF244D98EE009DCF36 /* pt-PT */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
