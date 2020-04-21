@@ -406,6 +406,10 @@
 		D5AC137F23796B8800244066 /* Acknowledgements.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Acknowledgements.xib; sourceTree = "<group>"; };
 		D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OsxUiAlertService.swift; sourceTree = "<group>"; };
 		D5ADF5322282D00E0062367C /* Intents.intentdefinition */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.intentdefinition; name = Intents.intentdefinition; path = ../../../vpncore/Source/Intents.intentdefinition; sourceTree = "<group>"; };
+		D5B694DB244D98B4009DCF36 /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "pt-PT.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D5B694DC244D98BD009DCF36 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5B694DD244D98C5009DCF36 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		D5B694DE244D98DC009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5B7E01C23F53E7500725406 /* nl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = nl; path = nl.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E8C2359D8AE00A9A75D /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E8D2359D8BB00A9A75D /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1905,6 +1909,10 @@
 				es,
 				"es-MX",
 				nl,
+				"pt-PT",
+				de,
+				ru,
+				fa,
 			);
 			mainGroup = EED534781EEC112000013607;
 			productRefGroup = EED534821EEC112000013607 /* Products */;
@@ -2582,6 +2590,10 @@
 				D5CC3E902359D8E300A9A75D /* es */,
 				D5CC3E912359D8F800A9A75D /* es-MX */,
 				D5B7E01C23F53E7500725406 /* nl */,
+				D5B694DB244D98B4009DCF36 /* pt-PT */,
+				D5B694DC244D98BD009DCF36 /* de */,
+				D5B694DD244D98C5009DCF36 /* ru */,
+				D5B694DE244D98DC009DCF36 /* fa */,
 			);
 			name = Localizable.strings;
 			sourceTree = "<group>";

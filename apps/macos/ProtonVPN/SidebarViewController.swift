@@ -174,6 +174,15 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
             self.expandButtonLeading.constant = -expandButtonWidth
             self.expandButton.setAccessibilityLabel(LocalizedString.mapHide)
         }
+        
+        switch view.userInterfaceLayoutDirection {
+        case .leftToRight:
+            self.expandButton.transform = NSAffineTransform()
+        case .rightToLeft:
+            self.expandButton.transform = NSAffineTransform()
+            self.expandButton.transform.translateX(by: self.expandButton.bounds.size.width, yBy: 0)
+            self.expandButton.transform.scaleX(by: -1, yBy: 1)
+        }
     }
     
     private func showLoadingOverlay(with viewModel: ConnectingOverlayViewModel) {

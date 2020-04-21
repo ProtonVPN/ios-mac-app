@@ -30,14 +30,32 @@ class ProfilesTabBarView: NSView {
     
     var activeTab: ProfilesTab? {
         didSet {
+            prepareTransformation()
             needsDisplay = true
         }
+    }
+    
+    private var transform: NSAffineTransform = NSAffineTransform()
+    
+    private func prepareTransformation() {
+        switch self.userInterfaceLayoutDirection {
+        case .leftToRight:
+            transform = NSAffineTransform()
+        case .rightToLeft:
+            transform = NSAffineTransform()
+            transform.translateX(by: bounds.size.width, yBy: 0)
+            transform.scaleX(by: -1, yBy: 1)
+        }
+    }
+    
+    private func isFocused(tabIndex index: ProfilesTab) -> Bool {
+        return activeTab == index
     }
     
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
 
-        guard let context = NSGraphicsContext.current?.cgContext, let activeTab = activeTab else {
+        guard let context = NSGraphicsContext.current?.cgContext, activeTab != nil else {
             return
         }
         
@@ -46,11 +64,13 @@ class ProfilesTabBarView: NSView {
             return
         }
         
+        transform.concat() // Transform for right-to-left languages (if needed)
+        
         let leftRect = NSRect(x: bounds.origin.x, y: bounds.origin.y, width: tabWidth, height: tabHeight)
         let rightRect = NSRect(x: bounds.origin.x + tabWidth, y: bounds.origin.y, width: tabWidth, height: tabHeight)
         
-        drawLeftSection(context: context, rect: leftRect, focused: activeTab == .overview)
-        drawRightSection(context: context, rect: rightRect, focused: activeTab != .overview)
+        drawLeftSection(context: context, rect: leftRect, focused: isFocused(tabIndex: .overview))
+        drawRightSection(context: context, rect: rightRect, focused: isFocused(tabIndex: .createNewProfile))
     }
     
     private func drawLeftSection(context: CGContext, rect: CGRect, focused: Bool) {
