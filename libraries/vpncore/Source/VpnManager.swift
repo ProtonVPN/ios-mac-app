@@ -160,6 +160,7 @@ public class VpnManager: VpnManagerProtocol {
             dispatchGroup.leave()
         }
         
+        dispatchGroup.enter()
         removeConfiguration(openVpnProtocolFactory) { e in
             if e != nil {
                 error = e
