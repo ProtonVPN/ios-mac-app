@@ -85,22 +85,44 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func handleAction(_ action: String) -> Bool {
         switch action {
+            
         case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
                 self?.navigationService.presentLogin(dismissible: false)
             }
+            
         case URLConstants.deepLinkConnectAction:
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway?.connect(with: PropertiesManager().lastConnectionRequest)
-            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
+            
         case URLConstants.deepLinkDisconnectAction:
-            navigationService.vpnGateway?.disconnect()
-            UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            navigationService.vpnGateway?.disconnect {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                    UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+                }
+            }
         default:
             PMLog.printToConsole("Invalid url action: \(action)")
             return false
         }
         
         return true
+    }
+    
+    @objc private func stateDidUpdate() {
+        switch appStateManager.state {
+        case .connected:
+            NotificationCenter.default.removeObserver(self)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
+            }
+        case .connecting, .preparingConnection:
+            //wait
+            return
+        default:
+            NotificationCenter.default.removeObserver(self)
+            return
+        }
     }
 }

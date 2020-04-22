@@ -25,9 +25,7 @@ import vpncore
 import NotificationCenter
 
 protocol TodayViewModel: GenericViewModel {
-    
     var viewController: TodayViewControllerProtocol? { get set }
-    
     func connectAction( _ sender: Any )
 }
 
@@ -36,17 +34,19 @@ class TodayViewModelImplementation: TodayViewModel {
     weak var viewController: TodayViewControllerProtocol?
     
     private let reachability = Reachability()
-    private let appStateManager: AppStateManager!
+    private let appStateManager: AppStateManager
+    private let factory: WidgetFactory
     private var vpnGateway: VpnGatewayProtocol?
-    private var timer: Timer?
-    private var connectionFailed = false
     
-    init( _ appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol? ){
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateWay
+    init( _ factory: WidgetFactory ){
+        self.appStateManager = factory.appStateManager
+        self.factory = factory
     }
     
     func viewDidLoad() {
+        factory.refreshVpnManager()
+        vpnGateway = factory.vpnGateway
+        
         guard vpnGateway != nil else {
             viewController?.displayNoGateWay()
             return
@@ -59,16 +59,9 @@ class TodayViewModelImplementation: TodayViewModel {
     }
     
     func viewWillAppear(_ animated: Bool) {
-        // refresh data
         ProfileManager.shared.refreshProfiles()
-        viewController?.displayBlank()
+        factory.refreshVpnManager()
         connectionChanged()
-    }
-    
-    func viewWillDisappear(_ animated: Bool) {
-        timer?.invalidate()
-        timer = nil
-        viewController?.displayBlank()
     }
     
     deinit { reachability?.stopNotifier() }
@@ -76,9 +69,6 @@ class TodayViewModelImplementation: TodayViewModel {
     // MARK: - Utils
     
     @objc private func connectionChanged() {
-        timer?.invalidate()
-        timer = nil
-        connectionFailed = false
         
         if let reachability = reachability, reachability.connection == .none {
             viewController?.displayUnreachable()
@@ -92,26 +82,22 @@ class TodayViewModelImplementation: TodayViewModel {
 
         switch vpnGateway.connection {
         case .connected:
-            connectionFailed = false
-            displayConnectionState()
-            timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { [weak self] _ in
-                DispatchQueue.main.async { self?.displayConnectionState() }
-            }
-            
+            let server = appStateManager.activeConnection()?.server
+            let country = LocalizationUtility.countryName(forCode: server?.countryCode ?? "")
+            let ip = server?.ips.first?.entryIp
+            viewController?.displayConnected(ip, country: country)
+
         case .connecting:
-            connectionFailed = false
             viewController?.displayConnecting()
             
         case .disconnected, .disconnecting:
-            if connectionFailed { break }
             viewController?.displayDisconnected()
         }
     }
     
     @objc func connectAction(_ sender: Any) {
         
-        guard let vpnGateway = vpnGateway, !connectionFailed else {
-            connectionFailed = false
+        guard let vpnGateway = vpnGateway else {
             // not logged in so open the app or the connection failed
             if let url = URL(string: URLConstants.deepLinkBaseUrl) {
                 viewController?.extensionOpenUrl(url)
@@ -130,30 +116,10 @@ class TodayViewModelImplementation: TodayViewModel {
             }
         }
     }
-    
-    private func displayConnectionState() {
-        switch vpnGateway?.connection {
-        case .connected:
-            guard let server = appStateManager.activeConnection()?.server else {
-                connectionFailed = true
-                timer?.invalidate()
-                timer = nil
-                viewController?.displayError()
-                break
-            }
-            let country = LocalizationUtility.countryName(forCode: server.countryCode)
-            let ip = server.ips.first?.entryIp
-            viewController?.displayConnected(ip, country: country)
-            break
-        default:
-            break
-        }
-    }
 }
 
 extension TodayViewModelImplementation: ExtensionAlertServiceDelegate {
     func actionErrorReceived() {
-        connectionFailed = true
         viewController?.displayError()
     }
 }
