@@ -63,7 +63,7 @@ class WidgetFactory {
     }()
     
     var todayViewModel:TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self.appStateManager, vpnGateWay: self.vpnGateway )
+        let viewModel = TodayViewModelImplementation( self )
         self.alertService.delegate = viewModel
         return viewModel
     }

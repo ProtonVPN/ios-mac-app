@@ -36,17 +36,21 @@ class TodayViewModelImplementation: TodayViewModel {
     weak var viewController: TodayViewControllerProtocol?
     
     private let reachability = Reachability()
-    private let appStateManager: AppStateManager!
+    private let appStateManager: AppStateManager
+    private let factory: WidgetFactory
     private var vpnGateway: VpnGatewayProtocol?
     private var timer: Timer?
     private var connectionFailed = false
     
-    init( _ appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol? ){
-        self.appStateManager = appStateManager
-        self.vpnGateway = vpnGateWay
+    init( _ factory: WidgetFactory ){
+        self.appStateManager = factory.appStateManager
+        self.factory = factory
     }
     
     func viewDidLoad() {
+        factory.refreshVpnManager()
+        vpnGateway = factory.vpnGateway
+        
         guard vpnGateway != nil else {
             viewController?.displayNoGateWay()
             return
@@ -59,16 +63,13 @@ class TodayViewModelImplementation: TodayViewModel {
     }
     
     func viewWillAppear(_ animated: Bool) {
-        // refresh data
         ProfileManager.shared.refreshProfiles()
-        viewController?.displayBlank()
         connectionChanged()
     }
     
     func viewWillDisappear(_ animated: Bool) {
         timer?.invalidate()
         timer = nil
-        viewController?.displayBlank()
     }
     
     deinit { reachability?.stopNotifier() }
