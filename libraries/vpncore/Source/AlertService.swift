@@ -213,7 +213,7 @@ public class VpnStuckAlert: SystemAlert {
     public init() {}
 }
 
-public class NetworkUnreachableAlert: SystemAlert {
+public class VpnNetworkUnreachableAlert: SystemAlert {
     public var title: String? = LocalizedString.notConnectedToTheInternet
     public var message: String?
     public var actions = [AlertAction]()
