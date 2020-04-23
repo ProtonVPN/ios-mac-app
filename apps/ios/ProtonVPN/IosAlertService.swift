@@ -77,7 +77,7 @@ extension IosAlertService: CoreAlertService {
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
             
-        case is NetworkUnreachableAlert:
+        case is VpnNetworkUnreachableAlert:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
             
         case is SessionCountLimitAlert:
