@@ -93,7 +93,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             
         case URLConstants.deepLinkConnectAction:
             // Extensions requesting a connection should set a connection request first
-            navigationService.vpnGateway?.connect(with: PropertiesManager().lastConnectionRequest)
+            navigationService.vpnGateway?.quickConnect()
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
             
         case URLConstants.deepLinkDisconnectAction:
