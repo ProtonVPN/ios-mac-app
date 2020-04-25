@@ -48,7 +48,7 @@ class ExpandCellButton: HoverDetectionButton {
             context.setStrokeColor(NSColor.protonWhite().cgColor)
             context.setFillColor(NSColor.protonGreen().cgColor)
         } else {
-            context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+            context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
         }
         
         context.setLineWidth(2.0)
@@ -68,7 +68,7 @@ class ExpandCellButton: HoverDetectionButton {
         wantsLayer = true
         layer?.cornerRadius = bounds.height / 2
         layer?.borderWidth = 2
-        layer?.borderColor = isHovered ? NSColor.protonGreen().cgColor : NSColor.protonLightGrey().cgColor
+        layer?.borderColor = isHovered ? NSColor.protonGreen().cgColor : NSColor.protonGreyOutOfFocus().cgColor
         layer?.backgroundColor = isHovered ? NSColor.protonGreen().cgColor : NSColor.protonGrey().cgColor
     }
 }
