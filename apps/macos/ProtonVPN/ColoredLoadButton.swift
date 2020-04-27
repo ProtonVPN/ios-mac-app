@@ -47,7 +47,7 @@ class ColoredLoadButton: NSButton {
         let icb = CGRect(x: 1.5, y: 1.5, width: bounds.width - 3, height: bounds.height - 3)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+        context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
         context.drawPath(using: .stroke)
         
         // outer circle segment
@@ -76,7 +76,7 @@ class ColoredLoadButton: NSButton {
         let desiredSize = CGSize(width: infoSize.width / (infoSize.height / desiredHeight), height: desiredHeight)
         var infoRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
                               size: desiredSize)
-        if let image = #imageLiteral(resourceName: "info").cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
+        if let image = #imageLiteral(resourceName: "info").colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
             context.draw(image, in: infoRect)
         }
     }
