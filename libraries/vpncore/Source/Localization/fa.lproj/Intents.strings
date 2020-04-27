@@ -1,24 +1,36 @@
-"1l8xNj" = "Disconnect";
+/* (No Comment) */
+"1l8xNj" = "قطع ارتباط";
 
-"2LMbbw" = "Connection Status";
+/* (No Comment) */
+"2LMbbw" = "وضعیت اتصال";
 
-"8tZ81X" = "Connect to ProtonVPN";
+/* (No Comment) */
+"8tZ81X" = "اتصال به ProtonVPN";
 
-"JOCERT" = "Get ProtonVPN Connection Status";
+/* (No Comment) */
+"cQ4Mju" = "قطع اتصال از ProtonVPN";
 
+/* (No Comment) */
+"hIcJsr" = "دریافت وضعیت اتصال ProtonVPN";
+
+/* (No Comment) */
+"jf696t" = "اتصال به ProtonVPN";
+
+/* (No Comment) */
+"JOCERT" = "دریافت وضعیت اتصال ProtonVPN";
+
+/* (No Comment) */
+"ksQcRb" = "قطع اتصال از ProtonVPN";
+
+/* (No Comment) */
 "NzUfmp" = "${status}";
 
-"Ya0ZRy" = "Quick Connect";
+/* (No Comment) */
+"ujOFps" = "وضعیت";
 
+/* (No Comment) */
+"Ya0ZRy" = "اتصال سریع";
+
+/* (No Comment) */
 "ZqjXZN" = "${status}";
-
-"cQ4Mju" = "Disconnect from ProtonVPN";
-
-"hIcJsr" = "Get ProtonVPN Connection Status";
-
-"jf696t" = "Connect to ProtonVPN";
-
-"ksQcRb" = "Disconnect from ProtonVPN";
-
-"ujOFps" = "Status";
 

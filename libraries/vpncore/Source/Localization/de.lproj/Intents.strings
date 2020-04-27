@@ -1,24 +1,36 @@
-"1l8xNj" = "Disconnect";
+/* (No Comment) */
+"1l8xNj" = "Verbindung trennen";
 
-"2LMbbw" = "Connection Status";
+/* (No Comment) */
+"2LMbbw" = "Verbindungsstatus";
 
-"8tZ81X" = "Connect to ProtonVPN";
+/* (No Comment) */
+"8tZ81X" = "Mit ProtonVPN verbinden";
 
-"JOCERT" = "Get ProtonVPN Connection Status";
+/* (No Comment) */
+"cQ4Mju" = "Verbindung zu ProtonVPN trennen";
 
+/* (No Comment) */
+"hIcJsr" = "ProtonVPN-Verbindungsstatus abrufen";
+
+/* (No Comment) */
+"jf696t" = "Mit ProtonVPN verbinden";
+
+/* (No Comment) */
+"JOCERT" = "ProtonVPN-Verbindungsstatus abrufen";
+
+/* (No Comment) */
+"ksQcRb" = "Verbindung zu ProtonVPN trennen";
+
+/* (No Comment) */
 "NzUfmp" = "${status}";
 
-"Ya0ZRy" = "Quick Connect";
-
-"ZqjXZN" = "${status}";
-
-"cQ4Mju" = "Disconnect from ProtonVPN";
-
-"hIcJsr" = "Get ProtonVPN Connection Status";
-
-"jf696t" = "Connect to ProtonVPN";
-
-"ksQcRb" = "Disconnect from ProtonVPN";
-
+/* (No Comment) */
 "ujOFps" = "Status";
+
+/* (No Comment) */
+"Ya0ZRy" = "Schnellverbindung";
+
+/* (No Comment) */
+"ZqjXZN" = "${status}";
 
