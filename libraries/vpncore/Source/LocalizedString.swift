@@ -294,6 +294,8 @@ public class LocalizedString {
     public static let neNetworkConnectionLost = NSLocalizedString("_ne_network_connection_lost", comment: "Network error")
     public static let neNotConnectedToTheInternet = NSLocalizedString("_ne_not_connected_to_the_internet", comment: "Network error")
     
+    public static let neTroubleshoot = NSLocalizedString("_ne_troubleshoot", comment: "Button on alert after a problem with internet connection")
+    
     // MARK: - API errors
     public static let aeWrongLoginCredentials = NSLocalizedString("_ae_wrong_login_credentials", comment: "API error")
     public static let aeVpnInfoNotReceived = NSLocalizedString("_ae_vpn_info_not_received", comment: "API error")
@@ -578,5 +580,31 @@ public class LocalizedString {
     public static let subscritpionDescription = NSLocalizedString("_subscription_description", comment: "Text under current plan information")
     public static let subscritpionButton = NSLocalizedString("_subscription_button", comment: "Text under current plan information")
     public static let subscritpionExtendSuccess = NSLocalizedString("_subscription_extended_success", comment: "Message shown to user after he bought credits to extend subscription.")
+    
+    // MARK: Connection troubleshooting
+    public static let troubleshootTitle = NSLocalizedString("_troubleshoot_title", comment: "Title of connection troubleshooting screen")
+    public static let troubleshootItemTitleAlternative = NSLocalizedString("_troubleshoot_item_alt_title", comment: "Title of troubleshooting item")
+    public static let troubleshootItemDescriptionAlternative = NSLocalizedString("_troubleshoot_item_alt_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkAlternative1 = NSLocalizedString("_troubleshoot_item_alt_link1", comment: "Text that will become a Learn more link in _troubleshoot_item_alt_description")
+    public static let troubleshootItemTitleNoInternet = NSLocalizedString("_troubleshoot_item_nointernet_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionNoInternet = NSLocalizedString("_troubleshoot_item_nointernet_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleISP = NSLocalizedString("_troubleshoot_item_isp_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionISP = NSLocalizedString("_troubleshoot_item_isp_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkISP1 = NSLocalizedString("_troubleshoot_item_isp_link1", comment: "Text that will become a link to Tor in _troubleshoot_item_isp_description")
+    public static let troubleshootItemTitleGovernment = NSLocalizedString("_troubleshoot_item_gov_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionGovernment = NSLocalizedString("_troubleshoot_item_gov_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkGovernment1 = NSLocalizedString("_troubleshoot_item_gov_link1", comment: "Text that will become a link to Tor in _troubleshoot_item_gov_description")
+    public static let troubleshootItemTitleAntivirus = NSLocalizedString("_troubleshoot_item_antivirus_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionAntivirus = NSLocalizedString("_troubleshoot_item_antivirus_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleProxy = NSLocalizedString("_troubleshoot_item_proxy_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionProxy = NSLocalizedString("_troubleshoot_item_proxy_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleProton = NSLocalizedString("_troubleshoot_item_proton_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionProton = NSLocalizedString("_troubleshoot_item_proton_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkProton1 = NSLocalizedString("_troubleshoot_item_proton_link1", comment: "Text that will become a link to proton status page in _troubleshoot_item_proton_description")
+    public static let troubleshootItemTitleOther = NSLocalizedString("_troubleshoot_item_other_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionOther = NSLocalizedString("_troubleshoot_item_other_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkOther1 = NSLocalizedString("_troubleshoot_item_other_link1", comment: "Text that will become a link to supporyt form in _troubleshoot_item_other_description")
+    public static let troubleshootItemLinkOther2 = NSLocalizedString("_troubleshoot_item_other_link2", comment: "Text that will become a link to email in _troubleshoot_item_other_description")
+    public static let troubleshootItemLinkOther3 = NSLocalizedString("_troubleshoot_item_other_link3", comment: "Text that will become a link to twitter in _troubleshoot_item_other_description")
     
 }
