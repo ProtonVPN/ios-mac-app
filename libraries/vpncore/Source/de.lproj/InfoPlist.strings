@@ -1,0 +1,6 @@
+/* Bundle name */
+"CFBundleName" = "vpncore";
+
+/* Copyright (human-readable) */
+"NSHumanReadableCopyright" = "Copyright © 2019 Proton Technologies AG. All rights reserved.";
+

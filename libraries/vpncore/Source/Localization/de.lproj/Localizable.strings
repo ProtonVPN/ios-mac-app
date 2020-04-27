@@ -242,7 +242,7 @@
 "_disconnect" = "Verbindung trennen";
 
 /* Common word */
-"_disconnected" = "Verbindung getrennt";
+"_disconnected" = "Getrennt";
 
 /* Status of VPN connection reported by Siri */
 "_disconnecting" = "Verbindung wird getrennt";

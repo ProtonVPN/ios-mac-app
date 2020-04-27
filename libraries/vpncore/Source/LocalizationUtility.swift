@@ -24,10 +24,6 @@ import Foundation
 public class LocalizationUtility {
     
     public static func countryName(forCode countryCode: String) -> String? {
-        if countryCode.uppercased() == "HK" {
-            return "Hong Kong"
-        }
-        
         let locale: Locale
         if let language = Locale.preferredLanguages[0].components(separatedBy: "-").first {
             locale = Locale(identifier: language)
