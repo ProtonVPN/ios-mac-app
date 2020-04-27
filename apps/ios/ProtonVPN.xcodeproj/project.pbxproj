@@ -243,6 +243,12 @@
 		D563319B23211D7600CE2EE3 /* PlanAdvancedFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */; };
 		D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D56331A123228EEA00CE2EE3 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
+		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
+		D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8124518567003C34B9 /* TroubleshootViewController.xib */; };
+		D580AB8524518766003C34B9 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */; };
+		D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
+		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
+		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
@@ -253,6 +259,11 @@
 		D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */; };
 		D5A8813122CE270A009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
 		D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */; };
+		D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
+		D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
+		D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
+		D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
+		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12A229D28E400EA839A /* Credentials.swift */; };
 		D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12D229D337300EA839A /* LoginTests.swift */; };
@@ -653,6 +664,12 @@
 		D55565C22387F28A00A10DA9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninInfoContainer.swift; sourceTree = "<group>"; };
 		D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
+		D580AB8024518567003C34B9 /* TroubleshootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewController.swift; sourceTree = "<group>"; };
+		D580AB8124518567003C34B9 /* TroubleshootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootViewController.xib; sourceTree = "<group>"; };
+		D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
+		D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingCell.swift; sourceTree = "<group>"; };
+		D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingCell.xib; sourceTree = "<group>"; };
+		D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinator.swift; sourceTree = "<group>"; };
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -663,6 +680,9 @@
 		D594A962227C3A500041D423 /* LogoWithMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoWithMapView.xib; sourceTree = "<group>"; };
 		D594A964227C466F0041D423 /* UIView+constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+constraints.swift"; sourceTree = "<group>"; };
 		D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
+		D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingSwitchCell.swift; sourceTree = "<group>"; };
+		D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingSwitchCell.xib; sourceTree = "<group>"; };
 		D5AAA127229D23F500EA839A /* credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D5AAA12A229D28E400EA839A /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5AAA12D229D337300EA839A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
@@ -1038,6 +1058,7 @@
 				E11DA6B82189AFCA00CDF310 /* Layouts */,
 				42C37AF92434E52500366B79 /* Presenters */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
+				D580AB8F2452CA08003C34B9 /* Scenes */,
 				791DE618208E2D4300A29EA5 /* Storyboards */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
 				791DE613208E0AE300A29EA5 /* ViewControllers */,
@@ -1591,8 +1612,28 @@
 				D5C137692334A54D00D20514 /* Coordinator.swift */,
 				D5C1376B2334A57600D20514 /* HumanVerificationCoordinator.swift */,
 				D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */,
+				D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */,
 			);
 			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		D580AB862452C70D003C34B9 /* Troubleshooting */ = {
+			isa = PBXGroup;
+			children = (
+				D5A8CD7A24570AC700F9B0C9 /* Views */,
+				D580AB8024518567003C34B9 /* TroubleshootViewController.swift */,
+				D580AB8124518567003C34B9 /* TroubleshootViewController.xib */,
+				D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */,
+			);
+			path = Troubleshooting;
+			sourceTree = "<group>";
+		};
+		D580AB8F2452CA08003C34B9 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				D580AB862452C70D003C34B9 /* Troubleshooting */,
+			);
+			path = Scenes;
 			sourceTree = "<group>";
 		};
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
@@ -1625,6 +1666,17 @@
 				D594A962227C3A500041D423 /* LogoWithMapView.xib */,
 			);
 			path = "Logo with map";
+			sourceTree = "<group>";
+		};
+		D5A8CD7A24570AC700F9B0C9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */,
+				D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */,
+				D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */,
+				D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D5AAA129229D28CC00EA839A /* Other classes */ = {
@@ -1900,6 +1952,7 @@
 				79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */,
 				7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */,
 				42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */,
+				D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2178,6 +2231,7 @@
 				793ECF3E2148E84500C186A7 /* TooltipTableViewCell.xib in Resources */,
 				D55131712319406200784ED0 /* PlanCardView.xib in Resources */,
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
+				D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */,
 				D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */,
 				79DEE90D2111E5EA00C354EF /* ServerTypeHeader.xib in Resources */,
 				D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */,
@@ -2197,6 +2251,7 @@
 				79F88AF920EC68DD001ADEB3 /* LoginBoxView.xib in Resources */,
 				E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */,
 				E19D11AF22B97C8100D41C23 /* TrialWelcome.xib in Resources */,
+				D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */,
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
@@ -2207,6 +2262,7 @@
 				791DE5E4208DDA3000A29EA5 /* Main.storyboard in Resources */,
 				E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */,
 				E13EDF7321F0C79A00030CE7 /* InstructionStepView.xib in Resources */,
+				D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */,
 				E1D187EA2301A20700C5F492 /* VpnProtocol.xib in Resources */,
 				D554789F22C601CE00AD3C5B /* ReportBugViewController.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
@@ -2516,6 +2572,7 @@
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
 				E17BE41522819B7F00D0F652 /* VerificationSmsViewController.swift in Sources */,
+				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				E11DA6B32188C10300CDF310 /* PlanSelectionViewModel.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
@@ -2528,6 +2585,7 @@
 				E11DA6B12188C07900CDF310 /* PlanSelectionViewController.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
 				E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */,
+				D580AB8524518766003C34B9 /* TroubleshootViewModel.swift in Sources */,
 				422EAB1B243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */,
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
@@ -2546,6 +2604,7 @@
 				79DD19F420BD6F0B00505906 /* LoginViewModel.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				E16F562021F87201007BAB77 /* OnboardingViewController.swift in Sources */,
+				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
@@ -2588,6 +2647,7 @@
 				791DE5E1208DDA3000A29EA5 /* MapViewController.swift in Sources */,
 				E13EDF7121F0C53F00030CE7 /* InstructionStepView.swift in Sources */,
 				D5439077236189FA0094451D /* VerificationCaptchaViewModel.swift in Sources */,
+				D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */,
 				793ECF392148DCF900C186A7 /* KeyValueTableViewCell.swift in Sources */,
 				79DE13FD216C8A86007A7161 /* UIDevice+Extension.swift in Sources */,
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
@@ -2616,9 +2676,11 @@
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				79C2424420FE90DA00E0D410 /* VerificationEmailViewModel.swift in Sources */,
+				D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */,
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
 				79848BB420D201AC00EF6F9F /* ConnectionViewModel.swift in Sources */,
 				E134557F218764B300FEEECE /* VerificationCodeViewController.swift in Sources */,
+				D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */,
 				E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */,
 				D53E83D7232A5F4D0031CD49 /* String+Validation.swift in Sources */,
 				7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */,
@@ -2817,6 +2879,7 @@
 			files = (
 				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
+				D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1828589236C78FD00E397A5 /* Intents.intentdefinition in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
 			);
@@ -2849,6 +2912,7 @@
 				422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */,
+				D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1828588236C78FC00E397A5 /* Intents.intentdefinition in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
