@@ -55,7 +55,6 @@ class TroubleshootViewController: UIViewController {
         tableView.register(TroubleshootingSwitchCell.nib, forCellReuseIdentifier: TroubleshootingSwitchCell.identifier)
         tableView.rowHeight = UITableView.automaticDimension
         tableView.estimatedRowHeight = 44.0
-        tableView.delegate = self
         tableView.dataSource = self
     }
     
@@ -79,7 +78,7 @@ class TroubleshootViewController: UIViewController {
 
 // MARK: TableView
 
-extension TroubleshootViewController: UITableViewDelegate, UITableViewDataSource {
+extension TroubleshootViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.items.count
