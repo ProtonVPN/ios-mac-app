@@ -28,10 +28,6 @@ class TroubleshootingCell: UITableViewCell {
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var descriptionLabel: UITextView!
     
-    // Description text
-    private let descriptionTextColor: UIColor = .protonFontLightGrey()
-    private let descriptionFontSize: CGFloat = 17.0
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -75,7 +71,7 @@ class TroubleshootingCell: UITableViewCell {
         }
         set {
             let string = NSMutableAttributedString(attributedString: newValue)
-            string.addTextAttributes(withColor: descriptionTextColor, font: UIFont.systemFont(ofSize: descriptionFontSize), alignment: .left)
+            string.addTextAttributes(withColor: .protonFontLightGrey(), font: UIFont.systemFont(ofSize: 17), alignment: .left)
             descriptionLabel.attributedText = string
             descriptionLabel.sizeToFit()
         }
