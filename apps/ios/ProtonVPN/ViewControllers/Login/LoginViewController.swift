@@ -267,9 +267,12 @@ extension LoginViewController: LoginViewModelDelegate {
     func showError(_ error: Error) {
         PMLog.ET(error.localizedDescription)
         loginButton.hideLoading()
-                
-        if error.isTlsError {
-            alertService.push(alert: MITMAlert())
+        
+        if error.isTlsError || error.isNetworkError {
+            alertService.push(alert: UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+            }))
+            
         } else {
             alertService.push(alert: ErrorNotificationAlert(error: error))
             usernameIcon.tintColor = .protonRed()
