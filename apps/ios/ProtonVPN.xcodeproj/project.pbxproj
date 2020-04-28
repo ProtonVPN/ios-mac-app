@@ -239,6 +239,13 @@
 		D55565C32387F28A00A10DA9 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55565C22387F28A00A10DA9 /* SnapshotHelper.swift */; };
 		D55B20E223840CD000AEB7FE /* SigninInfoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */; };
 		D55B20E323851F3300AEB7FE /* SigninInfoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */; };
+		D55B36C82457FDF500D8B0B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
+		D55B36C92457FE1700D8B0B9 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */; };
+		D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
+		D55B36CB2457FF0600D8B0B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
+		D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
+		D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */; };
+		D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */; };
 		D563319A23211D7300CE2EE3 /* PlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D551316E2319405200784ED0 /* PlanCardView.swift */; };
 		D563319B23211D7600CE2EE3 /* PlanAdvancedFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FA16A7231E8B5E004D9B8D /* PlanAdvancedFeaturesView.swift */; };
 		D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
@@ -663,6 +670,7 @@
 		D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ReportBugViewController.xib; sourceTree = "<group>"; };
 		D55565C22387F28A00A10DA9 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = fastlane/SnapshotHelper.swift; sourceTree = SOURCE_ROOT; };
 		D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SigninInfoContainer.swift; sourceTree = "<group>"; };
+		D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinatorMock.swift; sourceTree = "<group>"; };
 		D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
 		D580AB8024518567003C34B9 /* TroubleshootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewController.swift; sourceTree = "<group>"; };
 		D580AB8124518567003C34B9 /* TroubleshootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootViewController.xib; sourceTree = "<group>"; };
@@ -1490,6 +1498,7 @@
 			isa = PBXGroup;
 			children = (
 				D53E83DE232B6F130031CD49 /* ApiService */,
+				D55B36CE2458002000D8B0B9 /* Coordinator */,
 				D5BF95152355A58600C7D1E7 /* Misc */,
 				D5BF950B2354AD7000C7D1E7 /* ViewModels */,
 				D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */,
@@ -1604,6 +1613,14 @@
 				D55455432280280B006574F9 /* Info.plist */,
 			);
 			path = "Siri Shortcut Handler";
+			sourceTree = "<group>";
+		};
+		D55B36CE2458002000D8B0B9 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */,
+			);
+			path = Coordinator;
 			sourceTree = "<group>";
 		};
 		D563319F23228EC800CE2EE3 /* Coordinators */ = {
@@ -2707,6 +2724,7 @@
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
+				D55B36C92457FE1700D8B0B9 /* TroubleshootViewModel.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
@@ -2716,6 +2734,7 @@
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
 				E169FC44228B15E400FDC933 /* SmsCountryCodeViewController.swift in Sources */,
+				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
 				E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */,
 				D5BF95072354A03C00C7D1E7 /* HumanVerificationCoordinator.swift in Sources */,
 				D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */,
@@ -2729,6 +2748,7 @@
 				D5136C33228592E80002C095 /* GenericTableViewDataSource.swift in Sources */,
 				D5296778237D358700D479F2 /* VerificationCaptchaViewController.swift in Sources */,
 				D5136C34228592E80002C095 /* StatusViewController.swift in Sources */,
+				D55B36C82457FDF500D8B0B9 /* TroubleshootCoordinator.swift in Sources */,
 				E1D187ED2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				D5136C35228592E80002C095 /* TabBarController.swift in Sources */,
 				E169FC48228B165100FDC933 /* HumanVerificationOptionsViewModel.swift in Sources */,
@@ -2764,8 +2784,10 @@
 				D5136C4A228592E80002C095 /* PlanSelectionViewModel.swift in Sources */,
 				D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */,
 				D5136C4B228592E80002C095 /* TabBarViewModel.swift in Sources */,
+				D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */,
 				D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */,
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
+				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E169FC4A228B167200FDC933 /* PhoneCountryCode.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				422395842446EF660089002F /* URLConstants.swift in Sources */,
@@ -2840,6 +2862,7 @@
 				D5136C76228592E80002C095 /* DefaultProfileTableViewCell.swift in Sources */,
 				D5136C77228592E80002C095 /* AppVersionView.swift in Sources */,
 				D53E83E2232B710E0031CD49 /* AuthApiServiceMock.swift in Sources */,
+				D55B36CB2457FF0600D8B0B9 /* TroubleshootingCell.swift in Sources */,
 				E197BD4422C0DFD6004E0FE7 /* PlanServiceMock.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
 				D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */,
@@ -2867,6 +2890,7 @@
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */,
 				D5136C1B228591FB0002C095 /* LoginService.swift in Sources */,
+				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,
 				D5136C1D2285924E0002C095 /* VerificationCodeViewController.swift in Sources */,
 				D5136C1422858D9D0002C095 /* CountryAnnotationViewModel.swift in Sources */,

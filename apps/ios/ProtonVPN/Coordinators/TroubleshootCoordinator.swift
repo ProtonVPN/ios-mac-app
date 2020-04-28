@@ -28,11 +28,14 @@ protocol TroubleshootCoordinatorFactory {
 
 extension DependencyContainer: TroubleshootCoordinatorFactory {
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
-        return TroubleshootCoordinator(self)
+        return TroubleshootCoordinatorImplementation(self)
     }
 }
 
-class TroubleshootCoordinator: Coordinator {
+protocol TroubleshootCoordinator: Coordinator {
+}
+
+class TroubleshootCoordinatorImplementation: TroubleshootCoordinator {
     
     typealias Factory = WindowServiceFactory & TroubleshootViewModelFactory
     private let factory: Factory
