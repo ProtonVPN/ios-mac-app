@@ -61,6 +61,7 @@ public class NetworkErrorCode {
     public static let cannotConnectToHost = NSURLErrorCannotConnectToHost
     public static let networkConnectionLost = NSURLErrorNetworkConnectionLost
     public static let notConnectedToInternet = NSURLErrorNotConnectedToInternet
+    public static let DNSLookupFailed = NSURLErrorDNSLookupFailed
     
     public static let tls = 3500
 }

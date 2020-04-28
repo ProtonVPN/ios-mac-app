@@ -449,7 +449,7 @@ public class AppStateManager {
         
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            self.alertService?.push(alert: NetworkUnreachableAlert())
+            self.alertService?.push(alert: VpnNetworkUnreachableAlert())
         }
     }
     
