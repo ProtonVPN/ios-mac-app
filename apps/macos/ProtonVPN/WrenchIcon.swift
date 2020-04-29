@@ -24,6 +24,8 @@ import Cocoa
 
 class WrenchIcon: NSImageView {
 
+    private let wrenchIcon = #imageLiteral(resourceName: "wrench")
+
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext else { return }
 
@@ -35,12 +37,12 @@ class WrenchIcon: NSImageView {
         context.drawPath(using: .stroke)
 
         // wrench icon
-        let wrenchSize = #imageLiteral(resourceName: "wrench").size
+        let wrenchSize = wrenchIcon.size
         let desiredHeight = bounds.height / 2
         let desiredSize = CGSize(width: wrenchSize.width / (wrenchSize.height / desiredHeight), height: desiredHeight)
         var infoRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredSize.width / 2, y: bounds.height / 2 - desiredHeight / 2),
                               size: desiredSize)
-        if let image = #imageLiteral(resourceName: "wrench").colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
+        if let image = wrenchIcon.colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &infoRect, context: nil, hints: nil) {
             context.draw(image, in: infoRect)
         }
     }
