@@ -7,7 +7,7 @@ PODS:
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - SwiftLint (0.32.0)
-  - SwiftyBeaver (1.8.4)
+  - SwiftyBeaver (1.9.0)
   - TrustKit (1.6.1)
   - TunnelKit (2.2.2):
     - TunnelKit/Protocols/OpenVPN (= 2.2.2)
@@ -28,7 +28,7 @@ DEPENDENCIES:
   - Sentry (~> 4.0)
   - SwiftLint
   - TrustKit
-  - TunnelKit (from `../tunnelkit`)
+  - TunnelKit (from `https://github.com/jaroslavas/tunnelkit`, commit `18b508f`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -43,7 +43,13 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :path: "../tunnelkit"
+    :commit: 18b508f
+    :git: https://github.com/jaroslavas/tunnelkit
+
+CHECKOUT OPTIONS:
+  TunnelKit:
+    :commit: 18b508f
+    :git: https://github.com/jaroslavas/tunnelkit
 
 SPEC CHECKSUMS:
   Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
@@ -52,10 +58,10 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
-  SwiftyBeaver: f9a9aba96a6a6166e21682377804d728b0d20b95
+  SwiftyBeaver: d39e7c376bf15e9fffca8263b8fd1f42ea56aa2d
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 1733ed87934deb57edc7aa5f4b25185bf302a7d4
 
-PODFILE CHECKSUM: 8c7bf4fb5f2c0c12e041284a405b0cc1b19a3457
+PODFILE CHECKSUM: 83ae6a5c33a9402d7b554e69e04c19630780303f
 
 COCOAPODS: 1.8.4
