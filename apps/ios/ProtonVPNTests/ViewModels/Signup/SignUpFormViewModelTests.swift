@@ -164,7 +164,7 @@ class SignUpFormViewModelTests: XCTestCase {
         }
         viewModel.startRegistration()
         
-        wait(for: [expectationError, expectationSuccess, expectationPurchaseProductAPICalled, expectationModulusCalled, expectationCreateUserCalled, expectationLoginCalled], timeout: 0.02)
+        wait(for: [expectationError, expectationSuccess, expectationPurchaseProductAPICalled, expectationModulusCalled, expectationCreateUserCalled, expectationLoginCalled], timeout: 0.2)
     }
     
 }
