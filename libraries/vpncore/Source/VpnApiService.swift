@@ -27,11 +27,13 @@ public struct VpnProperties {
     public let serverModels: [ServerModel]
     public let vpnCredentials: VpnCredentials?
     public let ip: String?
+    public let openVpnConfig: OpenVpnConfig
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, sessionModels: [SessionModel]?, ip: String?, appStateManager: AppStateManager?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, sessionModels: [SessionModel]?, ip: String?, openVpnConfig: OpenVpnConfig, appStateManager: AppStateManager?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.ip = ip
+        self.openVpnConfig = openVpnConfig
         
         guard let sessionModels = sessionModels else {
             return
@@ -41,7 +43,7 @@ public struct VpnProperties {
             session.vpnProtocol == .ikev2
         }
         
-        let connectedIp = appStateManager?.activeIp
+        let connectedIp = appStateManager?.activeConnection()?.serverIp.exitIp
         
         self.serverModels.forEach { server in
             server.ips.forEach { ip in
@@ -73,6 +75,7 @@ public class VpnApiService {
         self.alamofireWrapper = alamofireWrapper
     }
     
+    // swiftlint:disable function_body_length
     public func vpnProperties(lastKnownIp: String?, success: @escaping ((VpnProperties) -> Void), failure: @escaping ((Error) -> Void)) {
         let dispatchGroup = DispatchGroup()
         
@@ -80,6 +83,7 @@ public class VpnApiService {
         var rServerModels: [ServerModel]?
         var rSessionModels: [SessionModel]?
         var rUserIp: String?
+        var rOpenVpnConfig: OpenVpnConfig?
         var rError: Error?
         
         let failureClosure: (Error) -> Void = { error in
@@ -121,9 +125,15 @@ public class VpnApiService {
             dispatchGroup.leave()
         }, failure: silentFailureClosure)
         
+        dispatchGroup.enter()
+        clientConfig(success: { openVpnConfig in
+            rOpenVpnConfig = openVpnConfig
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, sessionModels: rSessionModels, ip: rUserIp, appStateManager: self?.appStateManager))
+            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, sessionModels: rSessionModels, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -131,12 +141,14 @@ public class VpnApiService {
             }
         }
     }
+    // swiftlint:enable function_body_length
     
     public func refreshServerInfoIfIpChanged(lastKnownIp: String?, success: @escaping ((VpnProperties) -> Void), failure: @escaping ((Error) -> Void)) {
         let dispatchGroup = DispatchGroup()
         
         var rServerModels: [ServerModel]?
         var rUserIp: String?
+        var rOpenVpnConfig: OpenVpnConfig?
         var rError: Error?
         
         let failureClosure: (Error) -> Void = { error in
@@ -163,9 +175,15 @@ public class VpnApiService {
         dispatchGroup.enter()
         userIp(success: ipResolvedClosure, failure: failureClosure)
         
+        dispatchGroup.enter()
+        clientConfig(success: { openVpnConfig in
+            rOpenVpnConfig = openVpnConfig
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, sessionModels: nil, ip: rUserIp, appStateManager: self?.appStateManager))
+            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, sessionModels: nil, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -301,6 +319,29 @@ public class VpnApiService {
         }
         
         alamofireWrapper.request(VpnRouter.loads, success: successWrapper, failure: failure)
+    }
+    
+    public func clientConfig(success: @escaping (OpenVpnConfig) -> Void, failure: @escaping (Error) -> Void) {
+        let successWrapper: (JSONDictionary) -> Void = { response in
+            guard let openVpnConfigJson = response.jsonDictionary(key: "OpenVPNConfig") else {
+                PMLog.D("'OpenVPNConfig' field not present in clientconfig response", level: .error)
+                let error = ParseError.clientConfigParse
+                PMLog.ET(error.localizedDescription)
+                failure(error)
+                return
+            }
+            
+            do {
+                let openVpnConfig = try OpenVpnConfig(dic: openVpnConfigJson)
+                success(openVpnConfig)
+            } catch {
+                PMLog.D("Failed to parse load info for json: \(openVpnConfigJson)", level: .error)
+                let error = ParseError.loadsParse
+                PMLog.ET(error.localizedDescription)
+            }
+        }
+        
+        alamofireWrapper.request(VpnRouter.clientConfig, success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

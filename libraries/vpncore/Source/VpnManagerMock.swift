@@ -32,11 +32,13 @@ public class VpnManagerMock: VpnManagerProtocol {
             stateChanged?()
         }
     }
-    public var isOnDemandEnabled: Bool {
-        return onDemand
-    }
+    public var currentVpnProtocol: VpnProtocol? = .ike
     
     public init() {}
+    
+    public func isOnDemandEnabled(handler: (Bool) -> Void) {
+        handler(onDemand)
+    }
     
     public func setOnDemand(_ enabled: Bool) {
         onDemand = enabled
@@ -46,14 +48,24 @@ public class VpnManagerMock: VpnManagerProtocol {
     
     public func disconnect(completion: @escaping () -> Void) {}
     
-    public func connectedDate() -> Date? { return nil }
+    public func connectedDate(completion: @escaping (Date?) -> Void) {}
     
     public func refreshState() {}
         
-    public func removeConfiguration(completionHandler: ((Error?) -> Void)? = nil) {
+    public func removeConfigurations(completionHandler: ((Error?) -> Void)? = nil) {
         completionHandler?(removeConfigurationError)
     }
     
     public var removeConfigurationError: Error?
+    
+    public func logsContent(for vpnProtocol: VpnProtocol, completion: @escaping (String?) -> Void) {
+        completion(nil)
+    }
+    
+    public func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void) {
+        completion(nil)
+    }
+    
+    public func refreshManagers() {}
     
 }

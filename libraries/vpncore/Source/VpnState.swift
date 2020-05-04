@@ -36,8 +36,15 @@ public struct ServerDescriptor {
     }
 }
 
-public enum VpnState {
+extension ServerDescriptor: Equatable {
     
+    public static func == (lhs: ServerDescriptor, rhs: ServerDescriptor) -> Bool {
+        return lhs.username == rhs.username && lhs.address == rhs.address
+    }
+}
+
+public enum VpnState {
+
     /*
      *  NEVPNStatusInvalid - VPN is not configured.
      */
@@ -138,6 +145,30 @@ public enum VpnState {
         switch self {
         case .connecting, .reasserting, .disconnecting:
             return true
+        default:
+            return false
+        }
+    }
+}
+
+extension VpnState: Equatable {
+    
+    public static func == (lhs: VpnState, rhs: VpnState) -> Bool {
+        switch (lhs, rhs) {
+        case (.invalid, .invalid):
+            return true
+        case (.disconnected, .disconnected):
+            return true
+        case (.connecting(let descriptorLhs), .connecting(let descriptorRhs)):
+            return descriptorLhs == descriptorRhs
+        case (.connected(let descriptorLhs), .connected(let descriptorRhs)):
+            return descriptorLhs == descriptorRhs
+        case (.reasserting(let descriptorLhs), .reasserting(let descriptorRhs)):
+            return descriptorLhs == descriptorRhs
+        case (.disconnecting(let descriptorLhs), .disconnecting(let descriptorRhs)):
+            return descriptorLhs == descriptorRhs
+        case (.error(let errorLhs), .error(let errorRhs)):
+            return (errorLhs as NSError).isEqual((errorRhs as NSError))
         default:
             return false
         }

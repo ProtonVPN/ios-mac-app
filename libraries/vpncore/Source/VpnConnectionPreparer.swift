@@ -31,8 +31,6 @@ class VpnConnectionPreparer {
     
     public weak var alertService: CoreAlertService?
     
-    private var cancelConnectionAttempt = false
-    
     init(appStateManager: AppStateManager, vpnApiService: VpnApiService, alertService: CoreAlertService?, serverTierChecker: ServerTierChecker, vpnKeychain: VpnKeychainProtocol) {
         self.appStateManager = appStateManager
         self.vpnApiService = vpnApiService
@@ -41,95 +39,29 @@ class VpnConnectionPreparer {
         self.vpnKeychain = vpnKeychain
     }
     
-    func prepareConnection(selectServerClosure: @escaping ([SessionModel]?) -> (ServerModel?)) {
-        startConnectionProcess { [weak self] sessions in
-            let server = selectServerClosure(sessions)
-            if let configuration = self?.formConfiguration(fromServer: server, sessions: sessions) {
-                guard let cancelConnectionAttempt = self?.cancelConnectionAttempt, !cancelConnectionAttempt else {
-                    return // connection attempt cancelled
-                }
-                
-                self?.appStateManager.connect(withConfiguration: configuration)
-            }
-        }
-    }
-    
-    func cancelPreparingConnection() {
-        cancelConnectionAttempt = true
-        
-        if case AppState.connecting = appStateManager.state {
-            appStateManager.cancelConnectionAttempt()
+    func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel) {
+        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server) {
+            appStateManager.connect(withConfiguration: configuration)
         }
     }
     
     // MARK: - Private functions
-    private func startConnectionProcess(completion: @escaping ([SessionModel]) -> Void) {
-        self.getExistingSessions { sessions in
-            completion(sessions)
-        }
-    }
-    
-    private func getExistingSessions(completion: @escaping ([SessionModel]) -> Void) {
-        vpnApiService.sessions(success: { sessions in
-            completion(sessions)
-        }, failure: { [weak self] error in
-            guard let `self` = self else { return }
-            PMLog.D("Failed to retrieve active session info", level: .warn)
-            if case AppState.preparingConnection = self.appStateManager.state {
-                completion([])
-            }
-            return
-        })
-    }
-    
-    private func updateScores(completion: @escaping () -> Void) {
-        vpnApiService.loads(success: { [weak self] (loads) in
-            self?.serverStorage.update(continuousServerProperties: loads)
-            completion()
-        }, failure: { (_) in
-            completion() // ignore errors
-        })
-    }
-    
-    private func formConfiguration(fromServer serverModel: ServerModel?, sessions: [SessionModel]?) -> VpnManagerConfiguration? {
+    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer serverModel: ServerModel?) -> ConnectionConfiguration? {
         guard let server = serverModel else { return nil }
-        do {
-            let vpnCredentials = try vpnKeychain.fetch()
-            let password = try vpnKeychain.fetchOpenVpnPassword()
-            
-            if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
-                return nil
-            }
-            
-            var serverIps: [ServerIp]
-            if let sessions = sessions {
-                serverIps = server.ips.filter { serverIp in
-                    return !sessions.contains { session in
-                        return session.vpnProtocol == .ikev2 && session.exitIp == serverIp.exitIp
-                    }
-                }
-            } else {
-                serverIps = server.ips
-            }
-            serverIps = serverIps.filter { !$0.underMaintenance }
-            
-            guard !serverIps.isEmpty else {
-                serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)
-                return nil
-            }
-            
-            let serverIp = serverIps[Int(arc4random_uniform(UInt32(serverIps.count)))]
-            let entryServer = serverIp.entryIp
-            let exitServer = serverIp.exitIp
-            
-            return VpnManagerConfiguration(serverId: server.id, entryServerAddress: entryServer, exitServerAddress: exitServer,
-                                           username: vpnCredentials.name, password: password)
-        } catch {
-            // issues retrieving vpn keychain item
-            alertService?.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: { [weak self] in
-                self?.appStateManager.cancelConnectionAttempt()
-            }))
+        
+        if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
             return nil
         }
+        
+        let availableServerIps = server.ips.filter { !$0.underMaintenance }
+        
+        guard !availableServerIps.isEmpty else {
+            serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)
+            return nil
+        }
+        
+        let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))]
+        
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol)
     }
 }

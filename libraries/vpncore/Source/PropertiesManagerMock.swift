@@ -27,14 +27,16 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var userIpNotification: Notification.Name = Notification.Name("")
     public var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
     public var hasConnected: Bool = false
-    public var lastServerId: String?
-    public var lastServerIp: String?
-    public var lastServerEntryIp: String?
+    public var lastIkeConnection: ConnectionConfiguration?
+    public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastConnectedTimeStamp: Double = 0
     public var lastConnectionRequest: ConnectionRequest?
     public var lastUserAccountPlan: AccountPlan?
     public var quickConnect: String?
     public var secureCoreToggle: Bool = false
+    public var serverTypeToggle: ServerType {
+        return secureCoreToggle ? .secureCore : .standard
+    }
     public var intentionallyDisconnected: Bool = false
     public var userIp: String?
     public var userDataDisclaimerAgreed: Bool = false
@@ -42,6 +44,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var warnedTrialExpiring: Bool = false
     public var warnedTrialExpired: Bool = false
     public var reportBugEmail: String?
+    public var openVpnConfig: OpenVpnConfig?
+    public var vpnProtocol: VpnProtocol = .ike
     public var currentSubscription: Subscription?
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
@@ -51,9 +55,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public func logoutCleanup() {
         hasConnected = false
         secureCoreToggle = false
-        lastServerId = nil
-        lastServerIp = nil
-        lastServerEntryIp = nil
+        lastIkeConnection = nil
+        lastOpenVpnConnection = nil
         lastConnectedTimeStamp = -1
         reportBugEmail = nil
     }

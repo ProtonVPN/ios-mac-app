@@ -22,26 +22,11 @@
 import Foundation
 import NetworkExtension
 
-public struct VpnManagerConfiguration {
+public class IkeProtocolFactory: VpnProtocolFactory {
     
-    public let serverId: String
-    public let entryServerAddress: String
-    public let exitServerAddress: String
-    public let username: String
-    public let password: Data
+    public init() {}
     
-    public init(serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: Data) {
-        self.serverId = serverId
-        self.entryServerAddress = entryServerAddress
-        self.exitServerAddress = exitServerAddress
-        self.username = username
-        self.password = password
-    }
-}
-
-public class IkeProtocolFactory {
-    
-    public static func create(_ configuration: VpnManagerConfiguration) -> NEVPNProtocol {
+    public func create(_ configuration: VpnManagerConfiguration) -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
         
         // Identify client to vpn server
@@ -55,7 +40,7 @@ public class IkeProtocolFactory {
         config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
         config.serverAddress = configuration.entryServerAddress
         config.useExtendedAuthentication = true
-        config.passwordReference = configuration.password
+        config.passwordReference = configuration.passwordReference
         config.disconnectOnSleep = false
         config.enablePFS = false
         config.deadPeerDetectionRate = .high
@@ -76,5 +61,24 @@ public class IkeProtocolFactory {
         config.childSecurityAssociationParameters.lifetimeMinutes = 60
         
         return config
+    }
+    
+    public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
+        NEVPNManager.shared().loadFromPreferences { loadError in
+            if let loadError = loadError {
+                completion(nil, loadError)
+                return
+            }
+            
+            completion(NEVPNManager.shared(), nil)
+        }
+    }
+    
+    public func logs(completion: @escaping (String?) -> Void) {
+        completion(nil)
+    }
+    
+    public func logFile(completion: @escaping (URL?) -> Void) {
+        completion(nil)
     }
 }

@@ -76,7 +76,7 @@ public class ReportsApiService {
         
         var i = 0
         var files = [String: URL]()
-        for file in bug.files {
+        for file in bug.files.reachable() {
             files["File\(i)"] = file
             i += 1
         }

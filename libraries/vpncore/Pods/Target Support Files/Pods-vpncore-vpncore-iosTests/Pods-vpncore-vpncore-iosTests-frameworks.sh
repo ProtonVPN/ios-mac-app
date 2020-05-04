@@ -163,16 +163,22 @@ strip_invalid_archs() {
 if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess-iOS/KeychainAccess.framework"
+  install_framework "${PODS_ROOT}/OpenSSL-Apple/frameworks/iPhone/openssl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Sentry-iOS/Sentry.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver-iOS/SwiftyBeaver.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit-iOS/TunnelKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire-iOS/Alamofire.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/KeychainAccess-iOS/KeychainAccess.framework"
+  install_framework "${PODS_ROOT}/OpenSSL-Apple/frameworks/iPhone/openssl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/ReachabilitySwift-iOS/Reachability.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/Sentry-iOS/Sentry.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver-iOS/SwiftyBeaver.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TrustKit-iOS/TrustKit.framework"
+  install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit-iOS/TunnelKit.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait

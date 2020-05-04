@@ -227,7 +227,7 @@
 "_enter_profile_name" = "Enter Profile Name";
 "_color" = "Color";
 "_make_default_profile" = "Make Default Profile";
-"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.";
+"_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 "_feature" = "Feature";
 "_use_secure_core" = "Use Secure Core";
 "_select_country" = "Select Country";
@@ -386,6 +386,10 @@
 
 "_error_mitm_title" = "Insecure connection";
 "_error_mitm_description" = "The TLS certificate validation failed when trying to connect to the ProtonVPN API. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing the ProtonVPN API.\nTo log in or access your account, switch to a new network and try to connect again.";
+"_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
+
+"_error_tls_initialisation" = "TLS initialisation error";
+"_error_tls_server_verification" = "Server certificate can't be verified.";
 
 "_error_invalid_human_verification_code_title" = "Invalid verification code";
 "_error_invalid_human_verification_code_message" = "Would you like to receive a new verification code or use an alternative verification method?";

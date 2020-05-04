@@ -29,9 +29,9 @@ public class ProfileConstants {
     
     // WARNING: consuming client must contain "fastest" and "random" image assets
     public static let defaultProfiles = [ Profile(id: "st_f", accessTier: 0, profileIcon: .image("fastest"), profileType: .system,
-                                           serverType: .unspecified, serverOffering: .fastest(nil), name: LocalizedString.fastest),
+                                           serverType: .unspecified, serverOffering: .fastest(nil), name: LocalizedString.fastest, vpnProtocol: PropertiesManager().vpnProtocol),
                                           Profile(id: "st_r", accessTier: 0, profileIcon: .image("random"), profileType: .system,
-                                           serverType: .unspecified, serverOffering: .random(nil), name: LocalizedString.random) ]
+                                           serverType: .unspecified, serverOffering: .random(nil), name: LocalizedString.random, vpnProtocol: PropertiesManager().vpnProtocol) ]
 
     #if canImport(UIKit)
     public static let profileColors = [

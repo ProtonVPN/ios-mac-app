@@ -73,8 +73,8 @@ public class ProfileManager {
         return ProfileUtility.existsProfile(withServer: server, in: customProfiles)
     }
     
-    public func createProfile(withServer server: ServerModel) -> ProfileManagerOperationOutcome {
-        let result = ProfileUtility.createProfile(with: server, in: customProfiles)
+    public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol) -> ProfileManagerOperationOutcome {
+        let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
             ProfileStorage.store(updatedProfiles)
