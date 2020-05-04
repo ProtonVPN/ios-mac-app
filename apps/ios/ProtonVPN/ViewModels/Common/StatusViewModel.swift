@@ -29,6 +29,7 @@ class StatusViewModel {
     private let appSessionManager: AppSessionManager
     private let propertiesManager: PropertiesManagerProtocol
     private let profileManager: ProfileManager
+    private let appStateManager: AppStateManager
     private let vpnGateway: VpnGatewayProtocol?
  
     weak var delegate: ConnectionBarViewModelDelegate?
@@ -55,11 +56,13 @@ class StatusViewModel {
          propertiesManager: PropertiesManagerProtocol,
          profileManager: ProfileManager,
          vpnGateway: VpnGatewayProtocol?,
+         appStateManager: AppStateManager,
          delegate: ConnectionBarViewModelDelegate) {
         self.appSessionManager = appSessionManager
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         self.vpnGateway = vpnGateway
+        self.appStateManager = appStateManager
         self.delegate = delegate
         
         startObserving()
@@ -83,7 +86,7 @@ class StatusViewModel {
     
     private var locationSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .keyValue(key: LocalizedString.connectedTo, value: vpnGateway?.activeServer?.country ?? ""),
+            .staticKeyValue(key: LocalizedString.connectedTo, value: appStateManager.activeConnection()?.server.country ?? ""),
             secondaryLocationCell
         ]
         
@@ -91,22 +94,25 @@ class StatusViewModel {
     }
     
     private var secondaryLocationCell: TableViewCellModel {
-        if let type = vpnGateway?.activeServerType, type == .secureCore {
-            if let entryCountryCode = vpnGateway?.activeServer?.entryCountryCode {
-                return .keyValue(key: LocalizedString.via, value: LocalizationUtility.countryName(forCode: entryCountryCode) ?? "")
+        if propertiesManager.serverTypeToggle == .secureCore {
+            if let entryCountryCode = appStateManager.activeConnection()?.server.entryCountryCode {
+                return .staticKeyValue(key: LocalizedString.via, value: LocalizationUtility.countryName(forCode: entryCountryCode) ?? "")
             } else {
-                return .keyValue(key: LocalizedString.unavailable, value: LocalizedString.unavailable)
+                return .staticKeyValue(key: "", value: "")
             }
         } else {
-            return .keyValue(key: LocalizedString.city, value: vpnGateway?.activeServer?.city ?? "")
+            return .staticKeyValue(key: LocalizedString.city, value: appStateManager.activeConnection()?.server.city ?? "")
         }
     }
     
     private var technicalDetailsSection: TableViewSection {
+        let activeConnection = appStateManager.activeConnection()
+        
         let cells: [TableViewCellModel] = [
-            .keyValue(key: LocalizedString.ip, value: vpnGateway?.activeIp ?? ""),
-            .keyValue(key: LocalizedString.server, value: vpnGateway?.activeServer?.name ?? ""),
-            .keyValue(key: LocalizedString.sessionTime, value: currentTime)
+            .staticKeyValue(key: LocalizedString.ip, value: activeConnection?.serverIp.exitIp ?? ""),
+            .staticKeyValue(key: LocalizedString.server, value: activeConnection?.server.name ?? ""),
+            .staticKeyValue(key: LocalizedString.protocolLabel, value: activeConnection?.vpnProtocol.localizedString ?? ""),
+            .staticKeyValue(key: LocalizedString.sessionTime, value: currentTime)
         ]
         
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
@@ -114,7 +120,7 @@ class StatusViewModel {
     
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
-        if let server = vpnGateway?.activeServer, profileManager.existsProfile(withServer: server) {
+        if let server = appStateManager.activeConnection()?.server, profileManager.existsProfile(withServer: server) {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier:"Delete Profile", color: .protonRed(), handler: { [deleteProfile] in
                 deleteProfile()
             })
@@ -145,7 +151,7 @@ class StatusViewModel {
             
             switch vpnGateway.connection {
             case .connected, .disconnecting:
-                description = String(format: LocalizedString.ip, vpnGateway.activeIp ?? LocalizedString.unavailable)
+                description = String(format: LocalizedString.ip, appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
             default:
                 if let userIp = propertiesManager.userIp {
                     description = String(format: LocalizedString.publicIp, userIp)
@@ -170,7 +176,7 @@ class StatusViewModel {
     
     // MARK: Save as Profile
     private func saveAsProfile() {
-        guard let server = vpnGateway?.activeServer,
+        guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
             PMLog.ET("Could not create profile because matching profile already exists")
             messageHandler?(LocalizedString.profileCreationFailed,
@@ -180,7 +186,8 @@ class StatusViewModel {
             return
         }
         
-        _ = profileManager.createProfile(withServer: server)
+        let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
+        _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol)
         messageHandler?(LocalizedString.profileCreatedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
@@ -188,7 +195,7 @@ class StatusViewModel {
     }
     
     private func deleteProfile() {
-        guard let server = vpnGateway?.activeServer,
+        guard let server = appStateManager.activeConnection()?.server,
               let existingProfile = profileManager.profile(withServer: server) else {
             PMLog.ET("Could not find profile to delete")
             messageHandler?(LocalizedString.profileDeletionFailed,

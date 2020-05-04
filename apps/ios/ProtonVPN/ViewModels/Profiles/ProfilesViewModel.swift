@@ -98,7 +98,7 @@ class ProfilesViewModel {
     
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
-        return DefaultProfileViewModel(serverOffering: serverOffering, vpnGateway: vpnGateway, loginService: loginService)
+        return DefaultProfileViewModel(serverOffering: serverOffering, vpnGateway: vpnGateway, propertiesManager: PropertiesManager(), loginService: loginService)
     }
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {

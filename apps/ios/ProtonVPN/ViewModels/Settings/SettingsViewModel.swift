@@ -28,9 +28,11 @@ class SettingsViewModel {
     private let maxCharCount = 20
     private let propertiesManager = PropertiesManager()
     private let appSessionManager: AppSessionManager
+    private let appStateManager: AppStateManager
     private let alertService: AlertService
     private let planService: PlanService
     private let settingsService: SettingsService
+    private let protocolService: ProtocolService
     private let vpnKeychain: VpnKeychainProtocol
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
@@ -41,12 +43,14 @@ class SettingsViewModel {
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    init(appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, vpnKeychain: VpnKeychainProtocol) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol) {
+        self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.planService = planService
         self.settingsService = settingsService
+        self.protocolService = protocolService
         self.vpnKeychain = vpnKeychain
         
         startObserving()
@@ -57,6 +61,7 @@ class SettingsViewModel {
             accountSection,
             securitySection,
             extensionsSection,
+            logSection,
             bottomSection
         ]
         
@@ -158,7 +163,7 @@ class SettingsViewModel {
             let vpnCredentials = try? vpnKeychain.fetch() {
             username = authCredentials.username
             accountPlan = vpnCredentials.accountPlan.description
-            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPAvailable
+            allowUpgrade = ServicePlanDataServiceImplementation.shared.isIAPUpgradePlanAvailable
         } else {
             username = LocalizedString.unavailable
             accountPlan = LocalizedString.unavailable
@@ -166,8 +171,8 @@ class SettingsViewModel {
         }
         
         var cells: [TableViewCellModel] = [
-            .keyValue(key: LocalizedString.username, value: username),
-            .keyValue(key: LocalizedString.subscriptionPlan, value: accountPlan)
+            .staticKeyValue(key: LocalizedString.username, value: username),
+            .staticKeyValue(key: LocalizedString.subscriptionPlan, value: accountPlan)
         ]
         if allowUpgrade {
             cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .protonConnectGreen(), handler: { [manageSubscriptionAction] in
@@ -179,7 +184,12 @@ class SettingsViewModel {
     }
     
     private var securitySection: TableViewSection {
+        let vpnProtocol = propertiesManager.vpnProtocol
+        
         let cells: [TableViewCellModel] = [
+            .pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
+                protocolCellAction()
+            }),
             .toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil),
             .tooltip(text: LocalizedString.alwaysOnVpnTooltipIos)
         ]
@@ -189,7 +199,7 @@ class SettingsViewModel {
     
     private var extensionsSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .standard(title: LocalizedString.widget, handler: { [pushExtensionsViewController] in
+            .pushStandard(title: LocalizedString.widget, handler: { [pushExtensionsViewController] in
                 pushExtensionsViewController()
             })
         ]
@@ -197,9 +207,19 @@ class SettingsViewModel {
         return TableViewSection(title: LocalizedString.extensions.uppercased(), cells: cells)
     }
     
+    private var logSection: TableViewSection {
+        let cells: [TableViewCellModel] = [
+            .pushStandard(title: LocalizedString.viewLogs, handler: { [pushLogSelectionViewController] in
+                pushLogSelectionViewController()
+            })
+        ]
+        
+        return TableViewSection(title: "", cells: cells)
+    }
+
     private var developerSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .standard(title: "Custom VPN Servers", handler: { [pushCustomServerViewController] in
+            .pushStandard(title: "Custom VPN Servers", handler: { [pushCustomServerViewController] in
                 pushCustomServerViewController()
             })
         ]
@@ -209,9 +229,6 @@ class SettingsViewModel {
     
     private var bottomSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .button(title: LocalizedString.viewLogs, accessibilityIdentifier: "View Logs", color: .protonWhite(), handler: { [showLogs] in
-                showLogs()
-            }),
             .button(title: LocalizedString.reportBug, accessibilityIdentifier: "Report Bug", color: .protonWhite(), handler: { [reportBug] in
                 reportBug()
             }),
@@ -238,32 +255,43 @@ class SettingsViewModel {
         return description
     }
     
-    private func truncateIfNecessary(itemName name: String) -> String {
-        var adjustedName: String = name
-        if name.count > maxCharCount {
-            adjustedName = name[0..<maxCharCount] + "..."
+    private func protocolCellAction() {
+        if appStateManager.state.isSafeToEnd {
+            pushProtocolViewController()
+        } else {
+            alertService.push(alert: ChangeProtocolDisconnectAlert { [weak self] in
+                self?.appStateManager.disconnect()
+                self?.pushProtocolViewController()
+            })
         }
-        return adjustedName
+    }
+    
+    private func pushProtocolViewController() {
+        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: propertiesManager.vpnProtocol)
+        vpnProtocolViewModel.protocolChanged = { [self] vpnProtocol in
+            self.propertiesManager.vpnProtocol = vpnProtocol
+        }
+        pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }
     
     private func pushExtensionsViewController() {
         pushHandler?(settingsService.makeExtensionsSettingsViewController())
     }
     
+    private func pushLogSelectionViewController() {
+        pushHandler?(settingsService.makeLogSelectionViewController())
+    }
+    
     private func pushCustomServerViewController() {
         pushHandler?(settingsService.makeCustomServerViewController())
     }
-    
-    private func showLogs() {
-        settingsService.presentLogs()
+
+    private func reportBug() {
+        settingsService.presentReportBug()
     }
     
     private func logOut() {
         appSessionManager.logOut(force: false)
-    }
-    
-    private func reportBug() {
-        settingsService.presentReportBug()
     }
     
 }

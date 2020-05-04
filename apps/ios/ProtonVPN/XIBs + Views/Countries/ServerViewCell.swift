@@ -61,7 +61,7 @@ class ServerViewCell: UITableViewCell {
     }
     
     func connect() {
-        viewModel?.connectAction(delegate: self)
+        viewModel?.connectAction()
         stateChanged()
     }
     
@@ -81,13 +81,5 @@ class ServerViewCell: UITableViewCell {
             connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
         }
-    }
-}
-
-extension ServerViewCell: ConnectingCellDelegate {
-    
-    func disableConnecting() {
-        viewModel?.connectPressed = false
-        renderConnectButton()
     }
 }

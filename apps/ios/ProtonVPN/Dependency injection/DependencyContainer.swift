@@ -27,9 +27,13 @@ import vpncore
 
 class DependencyContainer {
     
+    private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
+    private let appGroup = "group.ch.protonmail.vpn"
+    
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager()
+     
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager()), appGroup: appGroup, alertService: iosAlertService)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private var alamofireWrapper: AlamofireWrapper?
@@ -39,7 +43,8 @@ class DependencyContainer {
                                                                         alertService: makeCoreAlertService(),
                                                                         timerFactory: TimerFactory(),
                                                                         propertiesManager: makePropertiesManager(),
-                                                                        vpnKeychain: makeVpnKeychain())
+                                                                        vpnKeychain: makeVpnKeychain(),
+                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var appSessionManager: AppSessionManager = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
@@ -78,6 +83,13 @@ extension DependencyContainer: SettingsServiceFactory {
 extension DependencyContainer: VpnManagerFactory {
     func makeVpnManager() -> VpnManagerProtocol {
         return vpnManager
+    }
+}
+
+// MARK: VpnManagerConfigurationPreparer
+extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
+    func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
+        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService())
     }
 }
 
@@ -262,4 +274,11 @@ extension DependencyContainer: SigninInfoContainerFactory {
     func makeSigninInfoContainer() -> SigninInfoContainer {
         return signinInfoContainer
     }    
+}
+
+// MARK: ServicePlanDataStorageFactory
+extension DependencyContainer: ServicePlanDataStorageFactory {
+    func makeServicePlanDataStorage() -> ServicePlanDataStorage {
+        return PropertiesManager()
+    }
 }

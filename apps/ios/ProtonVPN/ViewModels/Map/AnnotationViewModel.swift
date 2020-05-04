@@ -39,6 +39,7 @@ protocol AnnotationViewModel {
     var available: Bool { get }
     
     var isConnected: Bool { get }
+    var isConnecting: Bool { get }
     var connectedUiState: Bool { get }
     var connectIconTint: UIColor { get }
     var connectIcon: UIImage? { get }
@@ -65,13 +66,13 @@ protocol AnnotationViewModel {
     
     var showAnchor: Bool { get }
     
-    func tapped(delegate: ConnectingCellDelegate)
+    func tapped()
 }
 
 extension AnnotationViewModel {
     
     var connectedUiState: Bool { // ui connected state
-        return isConnected
+        return isConnected || isConnecting
     }
     
     var pinHeight: CGFloat {

@@ -79,7 +79,7 @@ class ProfilesTableViewCell: UITableViewCell {
     }
     
     @IBAction func connect(_ sender: Any) {
-        viewModel?.connectAction(delegate: self)
+        viewModel?.connectAction()
     }
     
     private func stateChanged() {
@@ -99,11 +99,4 @@ class ProfilesTableViewCell: UITableViewCell {
         }
     }
     
-}
-
-extension ProfilesTableViewCell: ConnectingCellDelegate {
-    
-    func disableConnecting() {
-        renderConnectButton()
-    }
 }

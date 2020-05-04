@@ -24,7 +24,7 @@ import vpncore
 
 class ServicePlanDataServiceMock: ServicePlanDataService {
     
-    var isIAPAvailable: Bool = true
+    var isIAPUpgradePlanAvailable: Bool = true
     
     var callbackUpdateServicePlans: ((((Error?) -> Void)?) -> Void)?
     
@@ -34,3 +34,4 @@ class ServicePlanDataServiceMock: ServicePlanDataService {
         callbackUpdateServicePlans?(completion)
     }
 }
+

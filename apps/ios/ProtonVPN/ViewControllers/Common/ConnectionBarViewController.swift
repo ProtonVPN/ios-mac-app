@@ -83,9 +83,16 @@ class ConnectionBarViewController: UIViewController {
         self.connectedLabel.isHidden = false
         self.timerLabel.isHidden = false
         self.notConnectedLabel.isHidden = true
-        self.arrowImage.isHidden = false
+        
+        guard let viewModel = viewModel else { return }
+        
+        self.arrowImage.isHidden = !viewModel.allowTapping()
         if let tap = self.tap {
-            self.view.addGestureRecognizer(tap)
+            if viewModel.allowTapping() {
+                self.view.addGestureRecognizer(tap)
+            } else {
+                self.view.removeGestureRecognizer(tap)
+            }
         }
         
         self.view.setNeedsDisplay()

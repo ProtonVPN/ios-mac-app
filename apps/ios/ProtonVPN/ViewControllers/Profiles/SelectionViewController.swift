@@ -33,9 +33,7 @@ struct SelectionRow {
 }
 
 struct SelectionDataSet {
-    var barTitle: String
-    var backgroundColor: UIColor
-    var cellHeight: CGFloat
+    var dataTitle: String
     var data: [SelectionSection]
     var selectedIndex: IndexPath?
     
@@ -63,7 +61,7 @@ class SelectionViewController: UIViewController {
     }
     
     func setupView() {
-        self.title = dataSet.barTitle
+        self.title = dataSet.dataTitle
     }
     
     func setupTableView() {
@@ -72,7 +70,7 @@ class SelectionViewController: UIViewController {
         
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.backgroundColor = .protonDarkGrey()
-        tableView.rowHeight = dataSet.cellHeight
+        tableView.rowHeight = UIConstants.cellHeight
         tableView.separatorStyle = .singleLine
         tableView.separatorColor = .protonBlack()
         tableView.register(SelectionTableViewCell.nib, forCellReuseIdentifier: SelectionTableViewCell.identifier)

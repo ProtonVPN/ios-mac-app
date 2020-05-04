@@ -26,19 +26,17 @@ import vpncore
 @available(iOSApplicationExtension 12.0, *)
 class SiriHandlerViewModel {
     
-    private var currentAction: Action?
-    private var quickConnectCompletion: ((QuickConnectIntentResponse) -> Void)?
-    private var disconnectCompletion: ((DisconnectIntentResponse) -> Void)?
-    
     private let alamofireWrapper: AlamofireWrapper
     private let vpnApiService: VpnApiService
     private let vpnManager: VpnManager
     private let vpnKeychain: VpnKeychainProtocol
+    private let propertiesManager: PropertiesManagerProtocol
+    private let configurationPreparer: VpnManagerConfigurationPreparer
     
     private let alertService = ExtensionAlertService()
     
     lazy var appStateManager = { [unowned self] in
-        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: PropertiesManager(), vpnKeychain: vpnKeychain)
+        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer)
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?
@@ -53,7 +51,7 @@ class SiriHandlerViewModel {
         return _vpnGateway
     }
     
-    init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol) {
+    init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
         
@@ -61,68 +59,46 @@ class SiriHandlerViewModel {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain
+        self.propertiesManager = propertiesManager
+        self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
         
         self.alertService.delegate = self
-        
-        if vpnGateway != nil {
-            NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        }
     }
     
     public func connect(_ completion: @escaping (QuickConnectIntentResponse) -> Void) {
         guard let vpnGateway = vpnGateway else {
             // Not logged in so open the app
-            completion(QuickConnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
+            completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: nil))
             return
         }
         
         // Without refresh, from time to time it doesn't see newest default profile
         ProfileManager.shared.refreshProfiles()
         
-        switch vpnGateway.connection {
-        case .connected, .connecting:
-            quickConnectCompletion = completion
-            currentAction = .reconnect
-            vpnGateway.disconnect {
-                vpnGateway.quickConnect()
-            }
-            
-        case .disconnected, .disconnecting:
-            quickConnectCompletion = completion
-            currentAction = .quickConnect
-            vpnGateway.quickConnect()
-        }
+        propertiesManager.lastConnectionRequest = vpnGateway.quickConnectConnectionRequest()
+        
+        let activity = NSUserActivity(activityType: "com.protonmail.vpn.connect")
+        completion(QuickConnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
     
     public func disconnect(_ completion: @escaping (DisconnectIntentResponse) -> Void) {
-        guard let vpnGateway = vpnGateway else {
+        guard vpnGateway != nil else {
             // Not logged in so open the app
-            completion(DisconnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
+            completion(DisconnectIntentResponse(code: .continueInApp, userActivity: nil))
             return
         }
         
-        switch vpnGateway.connection {
-        case .connected:
-            disconnectCompletion = completion
-            currentAction = .disconnect
-            vpnGateway.disconnect()
-            
-        case .connecting:
-            vpnGateway.stopConnecting(userInitiated: true)
-            completion(DisconnectIntentResponse(code: .success, userActivity: nil))
-            
-        case .disconnected, .disconnecting:
-            completion(DisconnectIntentResponse(code: .success, userActivity: nil))
-        }
+        let activity = NSUserActivity(activityType: "com.protonmail.vpn.disconnect")
+        completion(DisconnectIntentResponse(code: .continueInApp, userActivity: activity))
     }
     
     public func getConnectionStatus(_ completion: @escaping (GetConnectionStatusIntentResponse) -> Void) {
         let status = getConnectionStatusString(connection: vpnGateway?.connection)
         let response = GetConnectionStatusIntentResponse.success(status: status)
-        
+
         completion(response)
     }
-    
+
     private func getConnectionStatusString(connection: ConnectionStatus?) -> String {
         switch connection {
         case .connected:
@@ -138,81 +114,11 @@ class SiriHandlerViewModel {
         }
     }
     
-    @objc private func connectionChanged() {
-        guard let currentAction = currentAction else { return }
-        
-        switch currentAction {
-        case .quickConnect:
-            connectedSuccessfully()
-            
-        case .disconnect:
-            disconnectedSuccessfully()
-            
-        case .reconnect:
-            if vpnGateway?.connection == .connected {
-                connectedSuccessfully()
-            }
-        }
-    }
-    
-    private func connectedSuccessfully() {
-        guard let completion = quickConnectCompletion else {
-            self.currentAction = nil
-            return
-        }
-        guard let vpnGateway = vpnGateway else { return }
-        
-        switch vpnGateway.connection {
-        case .connected:
-            completion(QuickConnectIntentResponse(code: .success, userActivity: nil))
-            quickConnectCompletion = nil
-        case .disconnected, .disconnecting:
-            completion(QuickConnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
-            quickConnectCompletion = nil
-        default:
-            break // Do nothing
-        }
-    }
-    
-    private func disconnectedSuccessfully() {
-        guard let completion = disconnectCompletion else {
-            self.currentAction = nil
-            return
-        }
-        guard let vpnGateway = vpnGateway else { return }
-        
-        switch vpnGateway.connection {
-        case .connected:
-            completion(DisconnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
-            disconnectCompletion = nil
-        case .disconnected:
-            completion(DisconnectIntentResponse(code: .success, userActivity: nil))
-            disconnectCompletion = nil
-        default:
-            break // Do nothing
-        }
-    }
-    
-    enum Action {
-        case quickConnect
-        case disconnect
-        case reconnect
-    }
-    
 }
 
 @available(iOSApplicationExtension 12.0, *)
 extension SiriHandlerViewModel: ExtensionAlertServiceDelegate {
     
-    func actionErrorReceived() {
-        if disconnectCompletion != nil {
-            disconnectCompletion?(DisconnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
-            disconnectCompletion = nil
-        }
-        if quickConnectCompletion != nil {
-            quickConnectCompletion?(QuickConnectIntentResponse(code: .failureRequiringAppLaunch, userActivity: nil))
-            quickConnectCompletion = nil
-        }
-    }
+    func actionErrorReceived() {}
     
 }

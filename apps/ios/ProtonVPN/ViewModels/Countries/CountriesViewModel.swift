@@ -55,14 +55,17 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
     
+    private let appStateManager: AppStateManager
+    private let propertiesManager: PropertiesManagerProtocol
     private let countryService: CountryService
     private let loginService: LoginService
-    internal let alertService: AlertService
     private let planService: PlanService
     
     private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
     private var state: ModelState = .standard([])
+    
+    internal let alertService: AlertService
     
     var activeView: ServerType {
         return state.serverType
@@ -77,15 +80,17 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, countryService: CountryService, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, countryService: CountryService, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+        self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
+        self.propertiesManager = propertiesManager
         self.countryService = countryService
         self.alertService = alertService
         self.loginService = loginService
         self.planService = planService
         
         setTier()
-        setStateOf(type: vpnGateway?.activeServerType ?? .standard) // if last showing SC, then launch into SC
+        setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
         
         addObservers()
     }
@@ -137,6 +142,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         
         return CountryItemViewModel(countryGroup: countryGroup,
                                     serverType: state.serverType,
+                                    appStateManager: appStateManager,
                                     vpnGateway: vpnGateway,
                                     alertService: alertService,
                                     loginService: loginService,
@@ -198,18 +204,13 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     @objc private func activeServerTypeSet() {
-        guard let vpnGateway = vpnGateway,
-            vpnGateway.activeServerType != activeView else { return }
+        guard propertiesManager.serverTypeToggle != activeView else { return }
         
         resetCurrentState()
     }
 
-    @objc private func resetCurrentState() {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
-        setStateOf(type: vpnGateway.activeServerType)
+    @objc private func resetCurrentState() {        
+        setStateOf(type: propertiesManager.serverTypeToggle)
         contentChanged?()
     }
     

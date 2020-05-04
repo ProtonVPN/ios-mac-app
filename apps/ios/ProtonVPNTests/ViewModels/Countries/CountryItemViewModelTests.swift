@@ -39,21 +39,19 @@ class CountryItemViewModelTests: XCTestCase {
             serverModel(withStatus: 5),
             serverModel(withStatus: 1),
             serverModel(withStatus: 25),
-            ]).underMaintenance, "UnderMaintenance returned true while no server is under maintenance")
+            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned true while no server is under maintenance")
         
         XCTAssertFalse(self.viewModel(withServers: [
             serverModel(withStatus: 5),
             serverModel(withStatus: 1),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned true while at least one server is not under maintenance")
+            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned true while at least one server is not under maintenance")
         
         XCTAssertTrue(self.viewModel(withServers: [
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).underMaintenance, "UnderMaintenance returned false while all servers are under maintenance")
-        
-        
+            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned false while all servers are under maintenance")
     }
 
     // MARK: Mocks
@@ -62,10 +60,15 @@ class CountryItemViewModelTests: XCTestCase {
     private func viewModel(withServers servers: [ServerModel]) -> CountryItemViewModel {
         let country = CountryModel(serverModel: self.serverModel(withStatus: 22))
         let group: CountryGroup = (country, servers)
+        let alamofireWrapper = AlamofireWrapperImplementation()
+        let vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
+        let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+        let appStateManager = AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
         
         let viewModel = CountryItemViewModel(
             countryGroup: group,
             serverType: ServerType.standard,
+            appStateManager: appStateManager,
             vpnGateway: nil,
             alertService: AlertServiceEmptyStub(),
             loginService: LoginServiceMock(),
@@ -75,7 +78,7 @@ class CountryItemViewModelTests: XCTestCase {
         return viewModel
     }
     
-    private func serverModel(withStatus status: Int) -> ServerModel{
+    private func serverModel(withStatus status: Int) -> ServerModel {
         return ServerModel(
             id: "",
             name: "1",

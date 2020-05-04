@@ -53,18 +53,11 @@ class DefaultProfileTableViewCell: UITableViewCell {
     }
     
     @IBAction func connect(_ sender: Any) {
-        viewModel?.connectAction(delegate: self)
+        viewModel?.connectAction()
     }
     
     private func stateChanged() {
         connectButton.setImage(viewModel?.connectIcon, for: .normal)
     }
     
-}
-
-extension DefaultProfileTableViewCell: ConnectingCellDelegate {
-    
-    func disableConnecting() {
-        connectButton.setImage(viewModel?.connectIcon, for: .normal)
-    }
 }

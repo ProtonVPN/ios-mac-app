@@ -251,11 +251,6 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="colorPickerCollectionView" destination="06a-UV-LLe" id="pvN-ZG-c9J"/>
-                        <outlet property="colorTableViewCell" destination="CzI-ya-npv" id="x56-90-Lay"/>
-                        <outlet property="profileNameLabel" destination="s65-zX-XXJ" id="MWS-RD-9wW"/>
-                        <outlet property="profileNameTableViewCell" destination="riX-TC-sVo" id="7k0-I1-VPu"/>
-                        <outlet property="profileNameTextField" destination="xph-F7-ThB" id="ee9-x4-83P"/>
                         <outlet property="tableView" destination="ejt-a8-6y8" id="3jC-DS-RxM"/>
                     </connections>
                 </tableViewController>
