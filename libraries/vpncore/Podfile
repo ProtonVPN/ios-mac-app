@@ -7,11 +7,16 @@ workspace 'vpncore'
 inhibit_all_warnings!
 
 abstract_target 'vpncore' do
+    # third party pods
     pod 'Alamofire', '~> 4.0'
     pod 'KeychainAccess', '~> 3.0'
     pod 'Sentry', '~> 4.0'
     pod 'ReachabilitySwift', '~> 4.0'
-    
+    # TODO: Move back to TunnelKit after our PR's are accepted
+#    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => '4d61734ae6'
+#    pod 'TunnelKit', :path => '../tunnelkit'
+    pod 'TunnelKit', :git => 'https://github.com/jaroslavas/tunnelkit', :commit => '18b508f'
+
     # Checks code style and bad practices
     pod 'SwiftLint'
 
@@ -19,13 +24,13 @@ abstract_target 'vpncore' do
     pod 'TrustKit'
     
     target 'vpncore-ios' do
-        platform :ios, '10.0'
+        platform :ios, '11.0'
     end
     target 'vpncore-macos' do
         platform :osx, '10.12'
     end
     target 'vpncore-iosTests' do
-        platform :ios, '10.0'
+        platform :ios, '11.0'
     end
     target 'vpncore-macosTests' do
         platform :osx, '10.12'

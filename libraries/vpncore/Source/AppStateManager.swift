@@ -35,6 +35,7 @@ public class AppStateManager {
     private let serverStorage: ServerStorage = ServerStorageConcrete()
     private let timerFactory: TimerFactoryProtocol
     private let vpnKeychain: VpnKeychainProtocol
+    private let configurationPreparer: VpnManagerConfigurationPreparer
     
     public let stateChange = Notification.Name("AppStateManagerStateChange")
     public let wake = Notification.Name("AppStateManagerWake")
@@ -44,7 +45,7 @@ public class AppStateManager {
     private var reachability = Reachability()
     public private(set) var state: AppState = .disconnected
     private var vpnState: VpnState = .invalid
-    private var lastAttemptedConfiguration: VpnManagerConfiguration?
+    private var lastAttemptedConfiguration: ConnectionConfiguration?
     private var attemptingConnection = false
     private var stuckDisconnecting = false {
         didSet {
@@ -58,19 +59,7 @@ public class AppStateManager {
     private var timeoutTimer: Timer?
     private var serviceChecker: ServiceChecker?
     
-    public var isOnDemandEnabled: Bool {
-        return vpnManager.isOnDemandEnabled
-    }
-    
-    public var activeIp: String? {
-        return propertiesManager.lastServerIp
-    }
-    
-    public var activeServer: ServerModel? {
-        return fetchActiveServer()
-    }
-    
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.alamofireWrapper = alamofireWrapper
@@ -78,6 +67,7 @@ public class AppStateManager {
         self.timerFactory = timerFactory
         self.propertiesManager = propertiesManager
         self.vpnKeychain = vpnKeychain
+        self.configurationPreparer = configurationPreparer
         
         handleVpnStateChange(vpnManager.state)
         setupReachability()
@@ -86,6 +76,10 @@ public class AppStateManager {
     
     deinit {
         reachability?.stopNotifier()
+    }
+    
+    public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
+        vpnManager.isOnDemandEnabled(handler: handler)
     }
     
     public func prepareToConnect() {
@@ -132,7 +126,7 @@ public class AppStateManager {
         vpnManager.refreshState()
     }
     
-    public func connect(withConfiguration configuration: VpnManagerConfiguration) {
+    public func connect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
         
@@ -153,6 +147,7 @@ public class AppStateManager {
         }
         
         lastAttemptedConfiguration = configuration
+        
         attemptingConnection = true
         
         let serverAge = ServerStorageConcrete().fetchAge()
@@ -162,7 +157,7 @@ public class AppStateManager {
         }
         
         PMLog.D("Connect started")
-        makeConnection(configuration: configuration)
+        makeConnection(configuration)
     }
     
     public func disconnect() {
@@ -175,13 +170,28 @@ public class AppStateManager {
         vpnManager.disconnect(completion: completion)
     }
     
-    public func connectedDate() -> Date? {
+    public func connectedDate(completion: @escaping (Date?) -> Void) {
         let savedDate = Date(timeIntervalSince1970: propertiesManager.lastConnectedTimeStamp)
-        if let connectionDate = vpnManager.connectedDate(), connectionDate > savedDate {
-            propertiesManager.lastConnectedTimeStamp = connectionDate.timeIntervalSince1970
-            return connectionDate
-        } else {
-            return savedDate
+        vpnManager.connectedDate { [weak self] (date) in
+            if let connectionDate = date, connectionDate > savedDate {
+                self?.propertiesManager.lastConnectedTimeStamp = connectionDate.timeIntervalSince1970
+                completion(connectionDate)
+            } else {
+                completion(savedDate)
+            }
+        }
+    }
+    
+    public func activeConnection() -> ConnectionConfiguration? {
+        guard let currentVpnProtocol = vpnManager.currentVpnProtocol else {
+            return nil
+        }
+        
+        switch currentVpnProtocol {
+        case .ike:
+            return propertiesManager.lastIkeConnection
+        case .openVpn:
+            return propertiesManager.lastOpenVpnConnection
         }
     }
     
@@ -214,21 +224,23 @@ public class AppStateManager {
         disconnect()
     }
     
-    private func makeConnection(configuration: VpnManagerConfiguration) {
+    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration) {
         let completion: () -> Void = { [weak self] in
-            self?.propertiesManager.lastServerId = configuration.serverId
-            self?.propertiesManager.lastServerIp = configuration.exitServerAddress
-            self?.propertiesManager.lastServerEntryIp = configuration.entryServerAddress
+            // assign proper
+            switch connectionConfiguration.vpnProtocol {
+            case .ike:
+                self?.propertiesManager.lastIkeConnection = connectionConfiguration
+            case .openVpn:
+                self?.propertiesManager.lastOpenVpnConnection = connectionConfiguration
+            }
         }
         
-        switch vpnState {
-        case VpnState.connected(_), VpnState.disconnecting(_):
-            disconnect { [weak self] in
-                self?.vpnManager.connect(configuration: configuration, completion: completion)
-            }
-        default:
-            vpnManager.connect(configuration: configuration, completion: completion)
+        guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration) else {
+            cancelConnectionAttempt()
+            return
         }
+        
+        vpnManager.connect(configuration: vpnManagerConfiguration, completion: completion)
     }
     
     private func setupReachability() {
@@ -306,10 +318,6 @@ public class AppStateManager {
             attemptingConnection = false
             state = .connected(descriptor)
             cancelTimout()
-            
-            if !propertiesManager.hasConnected {
-                propertiesManager.hasConnected = true
-            }
         case .reasserting:
             return // usually this step is quick
         case .disconnecting(let descriptor):
@@ -374,47 +382,55 @@ public class AppStateManager {
                 return
             }
             
-            let dispatchGroup = DispatchGroup()
+            checkApiForFailureReason(vpnCredentials: vpnCredentials)
+        } catch {
+            connectionFailed()
+            alertService?.push(alert: CannotAccessVpnCredentialsAlert())
+        }
+    }
+    
+    private func checkApiForFailureReason(vpnCredentials: VpnCredentials) {
+        let dispatchGroup = DispatchGroup()
+        
+        var rSessionCount: Int?
+        var rVpnCredentials: VpnCredentials?
+        
+        let failureClosure: (Error) -> Void = { error in
+            dispatchGroup.leave()
+        }
+        
+        dispatchGroup.enter()
+        vpnApiService.sessions(success: { sessions in
+            rSessionCount = sessions.count
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
+        dispatchGroup.enter()
+        vpnApiService.clientCredentials(success: { newVpnCredentials in
+            rVpnCredentials = newVpnCredentials
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
+        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+            guard let `self` = self, self.state.isDisconnected else { return }
             
-            var rSessionCount: Int?
-            var rVpnCredentials: VpnCredentials?
-            
-            let failureClosure: (Error) -> Void = { error in
-                dispatchGroup.leave()
-            }
-            
-            dispatchGroup.enter()
-            vpnApiService.sessions(success: { sessions in
-                rSessionCount = sessions.count
-                dispatchGroup.leave()
-            }, failure: failureClosure)
-            
-            dispatchGroup.enter()
-            vpnApiService.clientCredentials(success: { newVpnCredentials in
-                rVpnCredentials = newVpnCredentials
-                dispatchGroup.leave()
-            }, failure: failureClosure)
-            
-            dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-                guard let `self` = self, self.state.isDisconnected else { return }
-                
-                if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                    self.alertService?.push(alert: SessionCountLimitAlert())
-                    self.connectionFailed()
-                } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
-                    self.vpnKeychain.store(vpnCredentials: newVpnCredentials)
-                    guard let lastConfiguration = self.lastAttemptedConfiguration else {
-                        return
-                    }
-                    if self.state.isDisconnected, !self.isOnDemandEnabled {
+            if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
+                self.alertService?.push(alert: SessionCountLimitAlert())
+                self.connectionFailed()
+            } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
+                self.vpnKeychain.store(vpnCredentials: newVpnCredentials)
+                guard let lastConfiguration = self.lastAttemptedConfiguration else {
+                    return
+                }
+                if self.state.isDisconnected {
+                    self.isOnDemandEnabled { enabled in
+                        guard !enabled else { return }
+                        
                         PMLog.D("Attempt connection after handling error")
                         self.connect(withConfiguration: lastConfiguration)
                     }
                 }
             }
-        } catch {
-            connectionFailed()
-            alertService?.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
     
@@ -437,19 +453,8 @@ public class AppStateManager {
         }
     }
     
-    private func fetchActiveServer() -> ServerModel? {
-        var serverModel: ServerModel?
-        if let serverId = propertiesManager.lastServerId {
-            serverModel = serverStorage.fetch().filter { $0.id == serverId }.first
-        } else if let currentDomain = state.descriptor?.address {
-            serverModel = serverStorage.fetch().filter({ $0.contains(domain: currentDomain) }).min(by: { $0.tier < $1.tier })
-        }
-        
-        return serverModel
-    }
-    
     private func vpnStuck() {
-        vpnManager.removeConfiguration(completionHandler: { [weak self] error in
+        vpnManager.removeConfigurations(completionHandler: { [weak self] error in
             guard let `self` = self else { return }
             guard error == nil, self.reconnectingAfterStuckDisconnecting == false, let lastConfig = self.lastAttemptedConfiguration else {
                 self.alertService?.push(alert: VpnStuckAlert())

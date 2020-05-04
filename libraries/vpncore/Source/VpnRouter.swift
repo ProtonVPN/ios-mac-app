@@ -29,6 +29,7 @@ enum VpnRouter: Router {
     case location
     case sessions
     case loads
+    case clientConfig
     
     var path: String {
         let base = ApiConstants.baseURL
@@ -47,19 +48,21 @@ enum VpnRouter: Router {
             return base + "/vpn/sessions"
         case .loads:
             return base + "/vpn/loads"
+        case .clientConfig:
+            return base + "/vpn/clientconfig"
         }
     }
     
     var version: String {
         switch self {
-        case .clientCredentials, .logicalServices, .location, .sessions, .loads:
+        case .clientCredentials, .logicalServices, .location, .sessions, .loads, .clientConfig:
             return "3"
         }
     }
     
     var method: Alamofire.HTTPMethod {
         switch self {
-        case .clientCredentials, .logicalServices, .location, .sessions, .loads:
+        case .clientCredentials, .logicalServices, .location, .sessions, .loads, .clientConfig:
             return .get
         }
     }

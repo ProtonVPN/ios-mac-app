@@ -30,6 +30,7 @@ public class Profile: NSObject, NSCoding {
     public let serverType: ServerType
     public let serverOffering: ServerOffering
     public let name: String
+    public let vpnProtocol: VpnProtocol
     
     override public var description: String {
         return
@@ -39,29 +40,30 @@ public class Profile: NSObject, NSCoding {
             "Profile type: \(profileType.description)\n" +
             "Server type: \(serverType.description)\n" +
             "Server offering: \(serverOffering.description)\n" +
-            "Name: \(name)\n"
+            "Name: \(name)\n" +
+            "Protocol: \(vpnProtocol)\n"
     }
     
     public var connectionRequest: ConnectionRequest {
         switch serverOffering {
         case .fastest(let cCode):
             if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .fastest))
+                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .fastest), vpnProtocol: vpnProtocol)
             } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .fastest)
+                return ConnectionRequest(serverType: serverType, connectionType: .fastest, vpnProtocol: vpnProtocol)
             }
         case .random(let cCode):
             if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .random))
+                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .random), vpnProtocol: vpnProtocol)
             } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .random)
+                return ConnectionRequest(serverType: serverType, connectionType: .random, vpnProtocol: vpnProtocol)
             }
         case .custom(let sWrapper):
-            return ConnectionRequest(serverType: serverType, connectionType: .country(sWrapper.server.countryCode, .server(sWrapper.server)))
+            return ConnectionRequest(serverType: serverType, connectionType: .country(sWrapper.server.countryCode, .server(sWrapper.server)), vpnProtocol: vpnProtocol)
         }
     }
     
-    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String) {
+    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
         self.id = id
         self.accessTier = accessTier
         self.profileIcon = profileIcon
@@ -69,12 +71,13 @@ public class Profile: NSObject, NSCoding {
         self.serverType = serverType
         self.serverOffering = serverOffering
         self.name = name
+        self.vpnProtocol = vpnProtocol ?? .ike
     }
     
-    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String) {
+    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
         let id = String.randomString(length: Profile.idLength)
         self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType,
-                  serverType: serverType, serverOffering: serverOffering, name: name)
+                  serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
     }
     
     // MARK: - NSCoding
@@ -91,7 +94,8 @@ public class Profile: NSObject, NSCoding {
                   profileType: ProfileType(coder: aDecoder),
                   serverType: ServerType(coder: aDecoder),
                   serverOffering: ServerOffering(coder: aDecoder),
-                  name: aDecoder.decodeObject(forKey: CoderKey.name) as! String)
+                  name: aDecoder.decodeObject(forKey: CoderKey.name) as! String,
+                  vpnProtocol: VpnProtocol(coder: aDecoder))
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -102,5 +106,6 @@ public class Profile: NSObject, NSCoding {
         serverType.encode(with: aCoder)
         serverOffering.encode(with: aCoder)
         aCoder.encode(name, forKey: CoderKey.name)
+        vpnProtocol.encode(with: aCoder)
     }
 }

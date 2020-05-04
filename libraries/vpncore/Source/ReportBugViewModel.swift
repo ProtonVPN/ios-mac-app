@@ -113,6 +113,11 @@ open class ReportBugViewModel {
         attachmentsListRefreshed?()
     }
     
+    public func removeAllFiles() {
+        bug.files.removeAll()
+        attachmentsListRefreshed?()
+    }
+    
     public var filesCount: Int {
         return bug.files.count
     }

@@ -53,6 +53,9 @@ fastlane/Preview.html
 fastlane/screenshots
 fastlane/test_output
 
+# Cocoapods
+Pods/
+
 # Proton specific
 _translations
 .env-i18n
