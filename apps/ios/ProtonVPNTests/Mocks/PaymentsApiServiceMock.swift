@@ -25,6 +25,7 @@ import vpncore
 
 class PaymentsApiServiceMock: PaymentsApiService {
     
+    
     public var callbackServicePlans: ((((ServicePlansProperties) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackApplyCredit: ((String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackCredit: ((Int, PaymentAction, (() -> Void), ((Error) -> Void)) -> Void)?

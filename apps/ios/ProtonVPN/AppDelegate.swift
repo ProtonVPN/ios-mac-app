@@ -41,6 +41,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
         
+        Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
+        
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
         PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
         #endif

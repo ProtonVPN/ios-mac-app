@@ -41,6 +41,7 @@ class WidgetFactory {
     private let configurationPreparer: VpnManagerConfigurationPreparer
     
     private var _vpnGateway: VpnGatewayProtocol?
+    
     var vpnGateway: VpnGatewayProtocol? {
         guard let _ = try? vpnKeychain.fetch() else {
             _vpnGateway = nil
@@ -84,4 +85,5 @@ class WidgetFactory {
     public func refreshVpnManager() {
         vpnManager.refreshManagers()
     }
+    
 }

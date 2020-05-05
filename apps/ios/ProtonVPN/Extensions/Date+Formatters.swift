@@ -1,6 +1,6 @@
 //
-//  UILabel+realSize.swift
-//  ProtonVPN - Created on 01/04/2020.
+//  Date+Formatters.swift
+//  ProtonVPN - Created on 2020-03-16.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,18 +20,19 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Foundation
 
-extension UILabel {
-
-    /// Calculate the real content size of a UILabel which value could be depending of a second view p.e: stackviews.
-    var realSize: CGSize {
-        let sizeLabel = UILabel()
-        sizeLabel.numberOfLines = numberOfLines
-        sizeLabel.font = font
-        sizeLabel.text = text
-        sizeLabel.attributedText = attributedText
-        sizeLabel.sizeToFit()
-        return sizeLabel.bounds.size
+extension Date {
+    
+    private var shortDateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .medium
+        dateFormatter.timeStyle = .none
+        return dateFormatter
     }
+    
+    public var formattedShortDate: String {
+        shortDateFormatter.string(from: self)
+    }
+    
 }
