@@ -652,6 +652,10 @@
 		D5110850246150DE0018872A /* Date+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		D5110853246151330018872A /* SubscriptionInfoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SubscriptionInfoController.swift; sourceTree = "<group>"; };
 		D5110855246153500018872A /* SubscriptionInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionInfoController.xib; sourceTree = "<group>"; };
+		D511085724615F210018872A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = ../vpncore/Source/Localization/de.lproj/Intents.strings; sourceTree = "<group>"; };
+		D511085824615F310018872A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ../vpncore/Source/Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
+		D511085924615F740018872A /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = ../vpncore/Source/Localization/fa.lproj/Intents.strings; sourceTree = "<group>"; };
+		D511085A24615FAD0018872A /* pt-PT */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-PT"; path = "../vpncore/Source/Localization/pt-PT.lproj/Intents.strings"; sourceTree = "<group>"; };
 		D5136C0F22841AC70002C095 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = .swiftlint.yml; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C1522858E340002C095 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -2259,6 +2263,10 @@
 				"pt-BR",
 				es,
 				"es-MX",
+				de,
+				ru,
+				fa,
+				"pt-PT",
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
@@ -3107,6 +3115,10 @@
 				E182858F236C790E00E397A5 /* pt-BR */,
 				E1828590236C791000E397A5 /* es */,
 				E1828591236C791200E397A5 /* es-MX */,
+				D511085724615F210018872A /* de */,
+				D511085824615F310018872A /* ru */,
+				D511085924615F740018872A /* fa */,
+				D511085A24615FAD0018872A /* pt-PT */,
 			);
 			name = Intents.intentdefinition;
 			sourceTree = "<group>";
