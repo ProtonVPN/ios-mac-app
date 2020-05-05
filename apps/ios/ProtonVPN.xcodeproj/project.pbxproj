@@ -119,6 +119,12 @@
 		D5110852246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
 		D5110854246151330018872A /* SubscriptionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110853246151330018872A /* SubscriptionInfoController.swift */; };
 		D5110856246153500018872A /* SubscriptionInfoController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5110855246153500018872A /* SubscriptionInfoController.xib */; };
+		D511085B246189A60018872A /* PlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511083D24614D480018872A /* PlanCardView.swift */; };
+		D511085C246189AC0018872A /* PlanSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511084C246150090018872A /* PlanSelectionViewModel.swift */; };
+		D511085D246189BE0018872A /* SubscriptionInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511084D246150090018872A /* SubscriptionInfoViewModel.swift */; };
+		D511085E246189D60018872A /* PlanAdvancedFeaturesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511084124614D480018872A /* PlanAdvancedFeaturesView.swift */; };
+		D511085F246189DC0018872A /* SubscriptionInfoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110853246151330018872A /* SubscriptionInfoController.swift */; };
+		D5110860246189F30018872A /* PlanInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511084424614D480018872A /* PlanInfoView.swift */; };
 		D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
 		D5136C1422858D9D0002C095 /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAF20D2011500EF6F9F /* CountryAnnotationViewModel.swift */; };
 		D5136C1622858E340002C095 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5136C1522858E340002C095 /* vpncore.framework */; };
@@ -2790,6 +2796,8 @@
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
+				D511085E246189D60018872A /* PlanAdvancedFeaturesView.swift in Sources */,
+				D511085C246189AC0018872A /* PlanSelectionViewModel.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
 				E169FC4D228B1D8700FDC933 /* PhoneCountryCodeViewModel.swift in Sources */,
 				D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */,
@@ -2832,6 +2840,7 @@
 				D5136C40228592E80002C095 /* ProtonQCViewController.swift in Sources */,
 				D5136C41228592E80002C095 /* ProfilesViewController.swift in Sources */,
 				E1404BC6228EBD9600E41D6C /* SignupNavigationController.swift in Sources */,
+				D511085D246189BE0018872A /* SubscriptionInfoViewModel.swift in Sources */,
 				D5136C42228592E80002C095 /* CreateProfileViewController.swift in Sources */,
 				D5136C43228592E80002C095 /* SelectionViewController.swift in Sources */,
 				D5136C45228592E80002C095 /* SettingsViewController.swift in Sources */,
@@ -2848,6 +2857,7 @@
 				D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */,
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
+				D5110860246189F30018872A /* PlanInfoView.swift in Sources */,
 				E169FC4A228B167200FDC933 /* PhoneCountryCode.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				422395842446EF660089002F /* URLConstants.swift in Sources */,
@@ -2896,6 +2906,7 @@
 				D5136C67228592E80002C095 /* ServerViewCell.swift in Sources */,
 				D5136C68228592E80002C095 /* ServerTypeHeader.swift in Sources */,
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
+				D511085B246189A60018872A /* PlanCardView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5136C6A228592E80002C095 /* LoginBoxView.swift in Sources */,
 				E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */,
@@ -2913,6 +2924,7 @@
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */,
+				D511085F246189DC0018872A /* SubscriptionInfoController.swift in Sources */,
 				42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
 				D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */,
 				D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */,
