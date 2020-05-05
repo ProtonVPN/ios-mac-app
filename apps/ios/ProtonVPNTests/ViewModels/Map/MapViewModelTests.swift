@@ -32,12 +32,14 @@ class MapViewModelTests: XCTestCase {
     
     override func setUp() {
         ServerManagerImplementation.reset()
-        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock())
+        let vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
+        let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+        appStateManager = AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
     }
     
     func testSecureCoreAnnotationLocations() {
         let serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
-        let mapViewModel = MapViewModel(appStateManager: appStateManager, loginService: LoginServiceMock(), alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: VpnKeychainMock())
+        let mapViewModel = MapViewModel(appStateManager: appStateManager, loginService: LoginServiceMock(), alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: VpnKeychainMock(), propertiesManager: PropertiesManagerMock())
         mapViewModel.setStateOf(type: .secureCore)
         
         let annotations = mapViewModel.annotations

@@ -36,74 +36,63 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv8", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
         serverModel("serv9", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
         ])
-    var viewModel: CreateOrEditProfileViewModel!
+    
+    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
+    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
+    
+    lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
+                                                              profileService: profileService,
+                                                              protocolSelectionService: ProtocolServiceMock(),
+                                                              alertService: AlertServiceEmptyStub(),
+                                                              vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage))
+    lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
+                                                              profileService: profileService,
+                                                              protocolSelectionService: ProtocolServiceMock(),
+                                                              alertService: AlertServiceEmptyStub(),
+                                                              vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage))
+    
+    var profileService: ProfileServiceMock!
     
     var usIndexStandard = 2
     var usIndexSecureCore = 3
     
     override func setUp() {
         ServerManagerImplementation.reset() // Use new server manager
-        
-        viewModel = CreateOrEditProfileViewModel(for: nil,
-                                                     profileService: ProfileServiceMock(),
-                                                     alertService: AlertServiceEmptyStub(),
-                                                     vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                     serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
-        )
-    }
-    
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    func testCountryCounter_standard() {
-        viewModel.secureCore(enabled: false)
-        XCTAssertEqual(3, viewModel.countryCount)
-    }
-    
-    func testCountryCounter_secureCore() {
-        viewModel.secureCore(enabled: true)
-        XCTAssertEqual(4, viewModel.countryCount)
-    }
-    
-    func testServerCounter_standard() {
-        viewModel.secureCore(enabled: false)
-        XCTAssertEqual(2 + 2, viewModel.serverCount(for: usIndexStandard)) // +2 for fastest and random connections
-    }
-    
-    func testServerCounter_secureCore() {
-        viewModel.secureCore(enabled: true)
-        XCTAssertEqual(1 + 2, viewModel.serverCount(for: usIndexSecureCore)) // +2 for fastest and random connections
+        profileService = ProfileServiceMock() // Ensures dataSet isn't carried over from previously run tests
     }
     
     func testCountriesList_standard() {
-        viewModel.secureCore(enabled: false)
-        let dataSet = viewModel.countrySelectionDataSet
+        triggerDataSetCreation(secureCore: false, dataSetType: .country)
+        
+        let dataSet = profileService.dataSet!
         XCTAssertEqual(1, dataSet.data.count)
         XCTAssertEqual(3, dataSet.data[0].cells.count)
     }
     
     func testCountriesList_secureCore() {
-        viewModel.secureCore(enabled: true)
-        let dataSet = viewModel.countrySelectionDataSet
+        triggerDataSetCreation(secureCore: true, dataSetType: .country)
+
+        let dataSet = profileService.dataSet!
         XCTAssertEqual(1, dataSet.data.count)
         XCTAssertEqual(4, dataSet.data[0].cells.count)
     }
-    
+
     func testServersList_standard() {
-        viewModel.secureCore(enabled: false)
-        viewModel.selectedCountryGroup = viewModel.countrySelectionDataSet.data[0].cells[usIndexStandard].object as? CountryGroup
-        let dataSet = viewModel.serverSelectionDataSet!
+        triggerDataSetCreation(secureCore: false, dataSetType: .server)
+
+        let dataSet = profileService.dataSet!
         XCTAssertEqual(3, dataSet.data.count)
         XCTAssertEqual(2, dataSet.data[0].cells.count) // Random and fastest
         XCTAssertEqual(1, dataSet.data[1].cells.count)
         XCTAssertEqual(1, dataSet.data[2].cells.count)
     }
-    
+
     func testServersList_secureCore() {
-        viewModel.secureCore(enabled: true)
-        viewModel.selectedCountryGroup = viewModel.countrySelectionDataSet.data[0].cells[usIndexStandard].object as? CountryGroup
-        let dataSet = viewModel.serverSelectionDataSet!
+        triggerDataSetCreation(secureCore: true, dataSetType: .server)
+        
+        let dataSet = profileService.dataSet!
         XCTAssertEqual(2, dataSet.data.count)
         XCTAssertEqual(2, dataSet.data[0].cells.count) // Random and fastest
         XCTAssertEqual(1, dataSet.data[1].cells.count)
@@ -129,4 +118,32 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         )
     }
     
+    private enum DataSetType {
+        case country
+        case server
+    }
+
+    private func triggerDataSetCreation(secureCore: Bool, dataSetType: DataSetType) {
+        let viewModel = secureCore ? secureCoreViewModel : standardViewModel
+        let tableViewCellTitle: String
+        switch dataSetType {
+        case .country:
+            tableViewCellTitle = LocalizedString.country
+        case .server:
+            tableViewCellTitle = LocalizedString.server
+        }
+        
+        viewModel.tableViewData.forEach { section in
+            section.cells.forEach { cell in
+                switch cell {
+                case .pushKeyValueAttributed(key: let key, value: _, handler: let handler):
+                    if key == tableViewCellTitle {
+                        // Triggers request on profileService to create selection VS, which causes profileService's dataSet to be filled by viewModel's countrySelectionDataSet
+                        handler()
+                    }
+                default: break
+                }
+            }
+        }
+    }
 }

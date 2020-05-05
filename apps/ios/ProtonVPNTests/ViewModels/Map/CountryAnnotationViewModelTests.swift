@@ -73,7 +73,11 @@ class CountryAnnotationViewModelTests: XCTestCase {
             location: ServerLocation(lat: 1, long: 2)
             )
         )
-        let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: nil, enabled: true, alertService: AlertServiceEmptyStub(), loginService: LoginServiceMock())
+        let alamofireWrapper = AlamofireWrapperImplementation()
+        let vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
+        let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+        let appStateManager = AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
+        let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: nil, appStateManager: appStateManager, enabled: true, alertService: AlertServiceEmptyStub(), loginService: LoginServiceMock())
         
         return viewModel
     }

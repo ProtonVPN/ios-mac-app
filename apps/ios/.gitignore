@@ -67,5 +67,8 @@ Carthage/
 **/fastlane/screenshots
 **/fastlane/test_output
 
+# Cocoapods
+Pods/
+
 # Obfuscated constants
 **/ObfuscatedConstants.swift

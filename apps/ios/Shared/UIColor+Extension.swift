@@ -180,4 +180,9 @@ extension UIColor {
                        alpha: 0)
     }
     
+    // MARK: - Widged Colors
+    
+    class var protonWidgetBackground: UIColor {
+        return UIColor(red: 30, green: 30, blue: 32)
+    }
 }

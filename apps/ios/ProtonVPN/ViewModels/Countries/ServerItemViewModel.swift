@@ -27,17 +27,20 @@ class ServerItemViewModel {
     
     fileprivate let serverModel: ServerModel
     fileprivate var vpnGateway: VpnGatewayProtocol?
+    fileprivate let appStateManager: AppStateManager
     private let alertService: AlertService
     private let loginService: LoginService
     private var planService: PlanService
     
-    let userTier: Int
-    let underMaintenance: Bool
+    private let userTier: Int
+    fileprivate var isUsersTierTooLow: Bool {
+        return userTier < serverModel.tier
+    }
     
-    let backgroundColor = UIColor.protonGrey()
+    fileprivate let underMaintenance: Bool
     
-    var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeServer = vpnGateway.activeServer {
+    private var isConnected: Bool {
+        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
             if vpnGateway.connection == .connected, activeServer.id == serverModel.id {
                 return true
             }
@@ -45,14 +48,26 @@ class ServerItemViewModel {
         return false
     }
     
-    fileprivate(set) var isCountryConnected: Bool = false
-    var connectPressed = false
-    var connectionChanged: (() -> Void)?
-    var countryConnectionChanged: Notification.Name?
+    private var isConnecting: Bool {
+        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(_, let countryRequestType) = activeConnection.connectionType, case CountryConnectionRequestType.server(let activeServer) = countryRequestType, activeServer == serverModel {
+            return true
+        }
+        return false
+    }
+    
+    private var connectedUiState: Bool {
+        return isConnected || isConnecting
+    }
     
     fileprivate var canConnect: Bool {
         return !isUsersTierTooLow && !underMaintenance
     }
+    
+    let backgroundColor = UIColor.protonGrey()
+    
+    fileprivate(set) var isCountryConnected: Bool = false
+    var connectionChanged: (() -> Void)?
+    var countryConnectionChanged: Notification.Name?
     
     // MARK: First line in the TableCell
     var description: NSAttributedString {
@@ -91,7 +106,7 @@ class ServerItemViewModel {
             return UIImage(named: "con-locked")
         } else if underMaintenance {
             return UIImage(named: "con-unavailable")
-        } else if isConnected || connectPressed {
+        } else if connectedUiState {
             return UIImage(named: "con-connected")
         } else {
             return UIImage(named: "con-available")
@@ -102,20 +117,12 @@ class ServerItemViewModel {
         return isUsersTierTooLow ? LocalizedString.upgrade : nil
     }
     
-    var isUsersTierTooLow: Bool {
-        return userTier < serverModel.tier
-    }
-    
     var alphaOfMainElements: CGFloat {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
 
     var secondaryDescription: NSAttributedString {
         return formSecondaryDescription()
-    }
-    
-    var hasKeyword: Bool {
-        return serverModel.feature.rawValue > 1
     }
     
     var keywordIcons: [(UIImage, String)] {
@@ -134,17 +141,20 @@ class ServerItemViewModel {
         return icons
     }
     
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
+        self.appStateManager = appStateManager
         self.underMaintenance = serverModel.underMaintenance
         self.alertService = alertService
         self.loginService = loginService
         self.planService = planService
         
+        let activeConnection = appStateManager.activeConnection()
+        
         isCountryConnected = vpnGateway?.connection == .connected
-            && vpnGateway?.activeServer?.isSecureCore == false
-            && vpnGateway?.activeServer?.countryCode == serverModel.countryCode
+            && activeConnection?.server.isSecureCore == false
+            && activeConnection?.server.countryCode == serverModel.countryCode
         
         do {
             if let vpnGateway = vpnGateway {
@@ -161,27 +171,21 @@ class ServerItemViewModel {
         }
     }
     
-    func connectAction(delegate: ConnectingCellDelegate) {
+    func connectAction() {
         guard let vpnGateway = vpnGateway else {
             loginService.presentSignup()
             return
         }
         
         if isUsersTierTooLow {
-            planService.presentPlanSelection()  
+            planService.presentPlanSelection()
         } else if underMaintenance {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
-        } else if vpnGateway.connection == .connecting, delegate === vpnGateway.connectingCellDelegate {
-            vpnGateway.stopConnecting(userInitiated: true)
-        } else if isConnected || connectPressed {
+        } else if isConnected {
             vpnGateway.disconnect()
+        } else if isConnecting {
+            vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            if let delegate = vpnGateway.connectingCellDelegate {
-                vpnGateway.stopConnecting(userInitiated: true)
-                delegate.disableConnecting()
-            }
-            connectPressed = true
-            vpnGateway.connectingCellDelegate = delegate
             vpnGateway.connectTo(server: serverModel)
         }
     }
@@ -206,12 +210,8 @@ class ServerItemViewModel {
     }
     
     @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged, let vpnGateway = vpnGateway {
-            if vpnGateway.connection != .connecting { // allow button to be turned off
-                connectPressed = false
-            }
-            
-            if !connectPressed {
+        if let connectionChanged = connectionChanged {
+            DispatchQueue.main.async {
                 connectionChanged()
             }
         }
@@ -237,12 +237,14 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
         return formSecondaryDescription()
     }
     
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, alertService: alertService, loginService: loginService, planService: planService)
+    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService)
+        
+        let activeConnection = appStateManager.activeConnection()
         
         isCountryConnected = vpnGateway?.connection == .connected
-            && vpnGateway?.activeServer?.hasSecureCore == true
-            && vpnGateway?.activeServer?.countryCode == serverModel.countryCode
+            && activeConnection?.server.hasSecureCore == true
+            && activeConnection?.server.countryCode == serverModel.countryCode
     }
     
     override fileprivate func startObserving() {

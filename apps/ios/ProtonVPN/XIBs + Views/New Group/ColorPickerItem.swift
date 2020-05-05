@@ -47,25 +47,24 @@ class ColorPickerItem: UICollectionViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        self.layer.cornerRadius = self.frame.size.height / 2
-
-        let bgFrame = spaceBackgroundView.frame
-        spaceBackgroundView.layer.cornerRadius = bgFrame.size.height / 2
-
-        colorCircleView.frame = CGRect(x: bgFrame.origin.x + 4,
-                                       y: bgFrame.origin.y + 4,
-                                       width: bgFrame.size.width - 8,
-                                       height: bgFrame.size.height - 8)
-        colorCircleView.layer.cornerRadius = colorCircleView.frame.size.height / 2
+        layer.cornerRadius = layer.frame.size.height / 2
+        spaceBackgroundView.layer.cornerRadius = spaceBackgroundView.layer.frame.size.height / 2
+        colorCircleView.layer.cornerRadius = colorCircleView.layer.frame.size.height / 2
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
-
-//        self.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-//        self.translatesAutoresizingMaskIntoConstraints = true
         
-        backgroundColor = .protonGrey()
+        autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        translatesAutoresizingMaskIntoConstraints = true
+
+        spaceBackgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        spaceBackgroundView.translatesAutoresizingMaskIntoConstraints = true
+
+        colorCircleView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
+        colorCircleView.translatesAutoresizingMaskIntoConstraints = true
+        
+        backgroundColor = isSelected ? .protonWhite() : .protonGrey()
         spaceBackgroundView.backgroundColor = .protonGrey()
     }
 }

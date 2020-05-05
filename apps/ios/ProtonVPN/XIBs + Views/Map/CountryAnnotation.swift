@@ -170,13 +170,6 @@ class CountryAnnotation: AnnotationView {
     }
     
     @objc private func tapped() {
-        viewModel.tapped(delegate: self)
-    }
-}
-
-extension CountryAnnotation: ConnectingCellDelegate {
-    
-    func disableConnecting() {
-        setNeedsDisplay()
+        viewModel.tapped()
     }
 }
