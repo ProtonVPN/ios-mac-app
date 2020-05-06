@@ -24,6 +24,7 @@ import Cocoa
 
 class ServerItemView: NSView {
     
+    @IBOutlet weak var maintenanceIcon: WrenchIcon!
     @IBOutlet weak var loadIcon: ColoredLoadButton!
     @IBOutlet weak var descriptionLabel: NSTextField!
     @IBOutlet weak var secondaryDescription: NSTextField!
@@ -49,7 +50,7 @@ class ServerItemView: NSView {
             removeTrackingArea(trackingArea)
         }
     }
-    
+
     override func mouseEntered(with event: NSEvent) {
         if viewModel.isParentExpanded() {
             isHovered = true
@@ -66,12 +67,11 @@ class ServerItemView: NSView {
     
     func updateView(withModel viewModel: ServerItemViewModel) {
         self.viewModel = viewModel
-        
         loadIcon.load = viewModel.load
         descriptionLabel.attributedStringValue = viewModel.description
         secondaryDescription.attributedStringValue = viewModel.secondaryDescription
         
-        setupInfoButton()
+        setupInfoView()
         setupKeywordIcon()
         setupConnectButton()
         
@@ -81,10 +81,15 @@ class ServerItemView: NSView {
     }
     
     // MARK: - Private functions
-    
-    private func setupInfoButton() {
-        loadIcon.target = self
-        loadIcon.action = #selector(showInfo)
+
+    private func setupInfoView() {
+        let isUnderMaintenance = viewModel.underMaintenance
+        loadIcon.isHidden = isUnderMaintenance
+        maintenanceIcon.isHidden = !isUnderMaintenance
+        if !isUnderMaintenance {
+            loadIcon.target = self
+            loadIcon.action = #selector(showInfo)
+        }
     }
     
     private func setupBackground() {

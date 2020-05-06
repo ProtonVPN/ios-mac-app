@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
-        <capability name="stacking Non-gravity area distributions on NSStackView" minToolsVersion="7.0" minSystemVersion="10.11"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner"/>
@@ -17,8 +16,15 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="gWj-qZ-t8z">
                     <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
                     <subviews>
+                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3oU-2H-z1E" customClass="WrenchIcon" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="20" y="14" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="EPN-mc-WxR"/>
+                                <constraint firstAttribute="height" constant="22" id="qgf-Jl-dqx"/>
+                            </constraints>
+                        </customView>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="rdo-bb-f1n" customClass="ColoredLoadButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="20" y="15" width="22" height="22"/>
+                            <rect key="frame" x="20" y="14" width="22" height="22"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="22" id="heA-Q6-1O2"/>
                                 <constraint firstAttribute="height" constant="22" id="xvT-N8-igd"/>
@@ -29,7 +35,7 @@
                             </buttonCell>
                         </button>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="UZk-ql-4iA">
-                            <rect key="frame" x="50" y="17" width="81" height="17"/>
+                            <rect key="frame" x="50" y="17" width="81" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Server name" id="Y1U-DA-54n">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -43,7 +49,7 @@
                             </constraints>
                         </stackView>
                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kyO-CJ-Qn4" userLabel="Secondary Description Label">
-                            <rect key="frame" x="263" y="17" width="59" height="17"/>
+                            <rect key="frame" x="263" y="17" width="59" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="right" title="Server IP" id="F6E-tk-iET">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -56,10 +62,13 @@
                         <constraint firstItem="UZk-ql-4iA" firstAttribute="centerY" secondItem="gWj-qZ-t8z" secondAttribute="centerY" id="8xi-8c-Ci1"/>
                         <constraint firstItem="rdo-bb-f1n" firstAttribute="centerY" secondItem="UZk-ql-4iA" secondAttribute="centerY" id="BOg-Sy-ZOT"/>
                         <constraint firstItem="kyO-CJ-Qn4" firstAttribute="centerY" secondItem="gWj-qZ-t8z" secondAttribute="centerY" id="M3p-Ad-OtA"/>
+                        <constraint firstItem="3oU-2H-z1E" firstAttribute="leading" secondItem="gWj-qZ-t8z" secondAttribute="leading" constant="20" id="RYP-fA-iMN"/>
                         <constraint firstAttribute="trailing" secondItem="kyO-CJ-Qn4" secondAttribute="trailing" constant="20" id="UXf-nr-M4G"/>
                         <constraint firstItem="UZk-ql-4iA" firstAttribute="leading" secondItem="rdo-bb-f1n" secondAttribute="trailing" constant="10" id="UdU-lr-f7W"/>
                         <constraint firstItem="ejA-k1-l8S" firstAttribute="centerY" secondItem="UZk-ql-4iA" secondAttribute="centerY" id="bwQ-0v-5Kp"/>
+                        <constraint firstItem="3oU-2H-z1E" firstAttribute="centerY" secondItem="UZk-ql-4iA" secondAttribute="centerY" id="n1V-0W-Tmf"/>
                         <constraint firstItem="rdo-bb-f1n" firstAttribute="leading" secondItem="gWj-qZ-t8z" secondAttribute="leading" constant="20" id="oI3-3B-CYA"/>
+                        <constraint firstItem="UZk-ql-4iA" firstAttribute="leading" secondItem="3oU-2H-z1E" secondAttribute="trailing" constant="10" id="wLs-fK-jR9"/>
                     </constraints>
                 </customView>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PQb-oY-xva" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
@@ -86,8 +95,10 @@
                 <outlet property="descriptionLabel" destination="UZk-ql-4iA" id="hfT-3R-0E9"/>
                 <outlet property="keywordStackView" destination="ejA-k1-l8S" id="hde-ln-b8V"/>
                 <outlet property="loadIcon" destination="rdo-bb-f1n" id="Ygw-MS-wFP"/>
+                <outlet property="maintenanceIcon" destination="3oU-2H-z1E" id="JvJ-go-ysU"/>
                 <outlet property="secondaryDescription" destination="kyO-CJ-Qn4" id="Yp6-Nv-hom"/>
             </connections>
+            <point key="canvasLocation" x="139" y="154"/>
         </customView>
     </objects>
 </document>

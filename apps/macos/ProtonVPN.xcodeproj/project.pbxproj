@@ -13,6 +13,7 @@
 		985D133D616AD7F5D71C3259 /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718D28DE3D1BDC1722D36497 /* Pods_ProtonVPNTests.framework */; };
 		B4A128DBA36867898BCF0C77 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E324FF337BBDB3F68C164D3 /* Pods-ProtonVPN-metadata.plist */; };
 		BBEEE05867D68EB7FB991D6B /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */; };
+		D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6822A116C100FFAB99 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6722A116C100FFAB99 /* LoginTests.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
@@ -382,6 +383,7 @@
 		900F963017E6F076D2F699F1 /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2BF0045374CBBA2E07C56A4 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
+		D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrenchIcon.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6722A116C100FFAB99 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
@@ -1416,6 +1418,7 @@
 			children = (
 				E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */,
 				E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */,
+				D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */,
 				E1454CF1206FE2C300E6D396 /* HelpPopoverBackgroundView.swift */,
 				E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */,
 				EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */,
@@ -2394,6 +2397,7 @@
 				E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */,
 				EE4943EE1F29C20200CF980F /* LoginViewController.swift in Sources */,
 				E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */,
+				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,

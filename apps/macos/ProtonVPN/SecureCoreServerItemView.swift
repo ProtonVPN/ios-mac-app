@@ -24,6 +24,7 @@ import Cocoa
 
 class SecureCoreServerItemView: NSView {
     
+    @IBOutlet weak var maintenanceIcon: WrenchIcon!
     @IBOutlet weak var loadIcon: ColoredLoadButton!
     @IBOutlet weak var countryFlagIcon: NSImageView!
     @IBOutlet weak var countryNameLabel: PVPNTextField!
@@ -73,7 +74,7 @@ class SecureCoreServerItemView: NSView {
         secondaryDescription.attributedStringValue = viewModel.secondaryDescription
         
         loadIcon.load = viewModel.load
-        setupInfoButton()
+        setupInfoView()
         setupConnectButton()
         
         setupBackground()
@@ -85,9 +86,14 @@ class SecureCoreServerItemView: NSView {
     
     // MARK: - Private functions
     
-    private func setupInfoButton() {
-        loadIcon.target = self
-        loadIcon.action = #selector(showInfo)
+    private func setupInfoView() {
+        let isUnderMaintenance = viewModel.underMaintenance
+        loadIcon.isHidden = isUnderMaintenance
+        maintenanceIcon.isHidden = !isUnderMaintenance
+        if !isUnderMaintenance {
+            loadIcon.target = self
+            loadIcon.action = #selector(showInfo)
+        }
     }
     
     private func setupBackground() {
