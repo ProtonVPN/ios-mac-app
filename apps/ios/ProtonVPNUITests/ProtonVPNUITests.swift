@@ -81,17 +81,31 @@ class ProtonVPNUITests: XCTestCase {
         XCTAssert(app.secureTextFields["Password"].exists)
     }
     
-    func assertRegistrationScreenOpen() {
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["Enter email address"], handler: nil)
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Get verification email"], handler: nil)
+    func assertPlanSelectScreenOpen() {
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Select plan"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.otherElements["free"], handler: nil)
         waitForExpectations(timeout: 2, handler: nil)
+        XCTAssert(app.buttons["Select plan"].exists)
+        XCTAssert(app.otherElements["free"].exists)
         
         if app.buttons["Agree & Continue"].exists {
             app.buttons["Agree & Continue"].tap()
         }
+    }
+    
+    func assertRegistrationScreenOpen() {
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["email"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["username"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["pass1"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["pass2"], handler: nil)
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["mainButton"], handler: nil)
+        waitForExpectations(timeout: 2, handler: nil)
         
-        XCTAssert(app.textFields["Enter email address"].exists)
-        XCTAssert(app.buttons["Get verification email"].exists)
+        XCTAssert(app.textFields["email"].exists)
+        XCTAssert(app.textFields["username"].exists)
+        XCTAssert(app.secureTextFields["pass1"].exists)
+        XCTAssert(app.secureTextFields["pass2"].exists)
+        XCTAssert(app.buttons["mainButton"].exists)
     }
         
 }
