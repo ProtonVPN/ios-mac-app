@@ -177,17 +177,7 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         paymentVerificationCode = nil
         if let error = error {
             DispatchQueue.main.async {
-                switch (error as NSError).code {
-                case ApiErrorCode.alreadyRegistered:
-                    self.loadingStateChanged?(true)
-                    self.alertService.push(alert: RegistrationUserAlreadyExistsAlert(error: error, forgotCallback: {
-                        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
-                    }, resetCallback: {
-                        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
-                    }))
-                default:
-                    self.showError?(error)
-                }
+                self.showError?(error)
             }
         }
     }
