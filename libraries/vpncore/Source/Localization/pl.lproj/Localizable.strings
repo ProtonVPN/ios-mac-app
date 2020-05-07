@@ -227,7 +227,7 @@
 "_delinquent_user_description" = "Twoje konto ma obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
 
 /* Delinquent user alert */
-"_delinquent_user_title" = "Nieopłacone faktury";
+"_delinquent_user_title" = "Nieopłacona faktura";
 
 /* Profile create/change form */
 "_different_server_each_time" = "Za każdym razem inny serwer";
