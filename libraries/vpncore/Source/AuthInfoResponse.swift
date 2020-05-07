@@ -65,8 +65,10 @@ class AuthenticationInfoResponse {
         
         let srpClient = try auth.generateProofs(2048)
         
-        let clientEphemeral = srpClient.clientEphemeral().base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        let clientProof = srpClient.clientProof().base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        
+        //TODO:: fix me . ! part need to add null check
+        let clientEphemeral = srpClient.clientEphemeral!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        let clientProof = srpClient.clientProof!.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
         
         return AuthenticationProperties(username: username, clientEphemeral: clientEphemeral,
                                         clientProof: clientProof, session: srpSession)
