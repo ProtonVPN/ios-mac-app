@@ -86,7 +86,7 @@
 "_cancel" = "لغو";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
-"_change_protocol_disconnect_warning" = "تغییر دادن پروتکلها نشست جاری VPN شما را پایان میبخشد.";
+"_change_protocol_disconnect_warning" = "تغییر دادن پروتکل ها، نشست جاری VPN شما را پایان میبخشد.";
 
 /* MacOS: About window */
 "_changelog" = "لیست تغییرات";
