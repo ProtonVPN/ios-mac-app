@@ -143,6 +143,9 @@ extension IosAlertService: CoreAlertService {
         case is ConnectionTroubleshootingAlert:
             show(alert as! ConnectionTroubleshootingAlert)
             
+        case is RegistrationUserAlreadyExistsAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

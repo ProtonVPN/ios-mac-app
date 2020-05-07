@@ -177,7 +177,17 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         paymentVerificationCode = nil
         if let error = error {
             DispatchQueue.main.async {
-                self.showError?(error)
+                switch (error as NSError).code {
+                case ApiErrorCode.alreadyRegistered:
+                    self.loadingStateChanged?(true)
+                    self.alertService.push(alert: RegistrationUserAlreadyExistsAlert(error: error, forgotCallback: {
+                        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
+                    }, resetCallback: {
+                        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
+                    }))
+                default:
+                    self.showError?(error)
+                }
             }
         }
     }
@@ -249,7 +259,6 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
             
             self.userApiService.createUser(userProperties: userProperties, success: { [weak self] in
                 self?.step6login()
-
             }, failure: { [weak self] (error) in
                 self?.failed(withError: error)
             })
@@ -265,7 +274,6 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         // login
         appSessionManager.logIn(username: username, password: password, success: { [weak self] in
             self?.finishedSuccessfully(loggedIn: true)
-            
         }, failure: { [weak self] (_) in
             self?.finishedSuccessfully(loggedIn: false)
         })

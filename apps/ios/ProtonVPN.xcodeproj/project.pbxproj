@@ -10,7 +10,6 @@
 		0EFF42E4DD19397A4AA28559 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB679EE574B8A710446C434 /* Pods_OpenVPN_Extension.framework */; };
 		1D533E7ACCBB4672CD678E98 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
 		333BD905132E44B71647B9E9 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87BFF86F618D31D6568A4FC /* Pods_Siri_Shortcut_Handler.framework */; };
-		421F11982461840800B78599 /* RegisterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421F11972461840800B78599 /* RegisterTests.swift */; };
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
@@ -519,7 +518,6 @@
 		3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
 		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
-		421F11972461840800B78599 /* RegisterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterTests.swift; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		422EAB18243F202B00C7A16C /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		422EAB1A243F20D800C7A16C /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
@@ -946,14 +944,6 @@
 				FB58D1A671E132A3AC40A112 /* Pods-ProtonVPN-settings-metadata.plist */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		421F1196246183B600B78599 /* Register */ = {
-			isa = PBXGroup;
-			children = (
-				421F11972461840800B78599 /* RegisterTests.swift */,
-			);
-			path = Register;
 			sourceTree = "<group>";
 		};
 		422EAB16243F200900C7A16C /* viewControllers */ = {
@@ -1666,7 +1656,6 @@
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				421F1196246183B600B78599 /* Register */,
 				D5811D87229BE20F0087B63A /* Unlogged user */,
 				D5AAA12C229D334900EA839A /* Login */,
 				E167688322E0BF27007B3DDE /* User */,
@@ -2926,7 +2915,6 @@
 			files = (
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
-				421F11982461840800B78599 /* RegisterTests.swift in Sources */,
 				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
 				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,
 				D55565C32387F28A00A10DA9 /* SnapshotHelper.swift in Sources */,
