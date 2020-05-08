@@ -506,3 +506,18 @@ public class ConnectionTroubleshootingAlert: SystemAlert {
     
     public init() {}
 }
+
+public class RegistrationUserAlreadyExistsAlert: SystemAlert {
+    public var title: String? = LocalizedString.warning
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(error: Error, forgotCallback: @escaping () -> Void, resetCallback: @escaping () -> Void ) {
+        message = error.localizedDescription
+        actions.append(AlertAction(title: LocalizedString.forgotUsername, style: .confirmative, handler: forgotCallback))
+        actions.append(AlertAction(title: LocalizedString.resetPassword, style: .confirmative, handler: resetCallback))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+    }
+}

@@ -76,6 +76,8 @@ public class HttpStatusCode { // http status codes returned by the api
 
 public class ApiErrorCode { // error codes returned by the api
     
+    public static let alreadyRegistered = 2500
+    
     public static let authInfo = 5001
     public static let appVersionBad = 5003
     public static let srpProof = 5004
