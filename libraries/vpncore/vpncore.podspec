@@ -17,7 +17,7 @@ Pod::Spec.new do |s|
 
     s.vendored_frameworks = 'Frameworks/*'
     
-    s.dependency 'Alamofire', '~> 4.0'
+    s.dependency 'Alamofire', '~> 5.1'
     s.dependency 'KeychainAccess', '~> 3.0'
     s.dependency 'ReachabilitySwift', '~> 4.0'
     s.dependency 'Sentry', '~> 4.0'

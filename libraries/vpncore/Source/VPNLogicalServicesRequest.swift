@@ -1,6 +1,6 @@
 //
-//  GenericRequestRetrier.swift
-//  vpncore - Created on 19/09/2019.
+//  VPNLogicalServicesRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,26 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-public protocol GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier
-}
-
-public class GenericRequestRetrier: RequestRetrier {
-
-    public init() {}
+class VPNLogicalServicesRequest: VPNBaseRequest {
     
-    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        if (error as NSError).code == (-1005), request.retryCount < 1 {
-            completion(.retryWithDelay(1))
-        } else {
-            completion(.doNotRetryWithError(error))
+    let ip: String?
+    
+    init( _ ip: String? ){
+        self.ip = ip
+        super.init()
+    }
+    
+    //MARK: - Override
+    
+    override func path() -> String {
+        let endpoint = super.path() + "/logicals"
+        guard let ip = ip else {
+            return endpoint
         }
+        return endpoint + "?IP=\(ip)"
     }
 }

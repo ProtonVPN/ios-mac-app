@@ -1,6 +1,6 @@
 //
-//  GenericRequestRetrier.swift
-//  vpncore - Created on 19/09/2019.
+//  AuthModulusRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,19 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-public protocol GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier
-}
-
-public class GenericRequestRetrier: RequestRetrier {
-
-    public init() {}
+class AuthModulusRequest: AuthBaseRequest {
     
-    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        if (error as NSError).code == (-1005), request.retryCount < 1 {
-            completion(.retryWithDelay(1))
-        } else {
-            completion(.doNotRetryWithError(error))
-        }
+    //MARK: - Override
+    
+    override func path() -> String {
+        return super.path() + "/modulus"
+    }
+  
+    override var header: [String : String]? {
+        return nonAuthenticatedHeader
     }
 }

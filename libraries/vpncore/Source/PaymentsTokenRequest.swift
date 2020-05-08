@@ -1,6 +1,6 @@
 //
-//  GenericRequestRetrier.swift
-//  vpncore - Created on 19/09/2019.
+//  PaymentsTokenRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,39 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-public protocol GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier
-}
-
-public class GenericRequestRetrier: RequestRetrier {
-
-    public init() {}
+class PaymentsTokenRequest: PaymentsBaseRequest {
     
-    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        if (error as NSError).code == (-1005), request.retryCount < 1 {
-            completion(.retryWithDelay(1))
-        } else {
-            completion(.doNotRetryWithError(error))
-        }
+    let amount: Int
+    let receipt: String
+    
+    init ( _ amount: Int, receipt: String) {
+        self.amount = amount
+        self.receipt = receipt
+        super.init()
+    }
+    
+    override func path() -> String {
+        return super.path() + "/tokens"
+    }
+    
+    override var method: HTTPMethod {
+        return .post
+    }
+    
+    override var parameters: [String : Any]? {
+        return [
+            "Amount": amount,
+            "Currency": "USD",
+            "Payment": [
+                "Type": "apple",
+                "Details": [
+                    "Receipt": receipt
+                ]
+            ]
+        ]
     }
 }

@@ -1,6 +1,6 @@
 //
-//  GenericRequestRetrier.swift
-//  vpncore - Created on 19/09/2019.
+//  ReportsBaseRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,29 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-public protocol GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier
-}
-
-public class GenericRequestRetrier: RequestRetrier {
-
-    public init() {}
+class ReportsBaseRequest: BaseRequest {
     
-    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        if (error as NSError).code == (-1005), request.retryCount < 1 {
-            completion(.retryWithDelay(1))
-        } else {
-            completion(.doNotRetryWithError(error))
-        }
+    //MARK: - Override
+    
+    override func path() -> String {
+        return super.path() + "/reports"
+    }
+    
+    override var method: HTTPMethod {
+        return .post
+    }
+    
+    override func asURLRequest() throws -> URLRequest {
+        let url = URL(string: path())!
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = self.method.rawValue
+        urlRequest.allHTTPHeaderFields = header
+        urlRequest.cachePolicy = .reloadIgnoringCacheData
+        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
+        return urlRequest
     }
 }
