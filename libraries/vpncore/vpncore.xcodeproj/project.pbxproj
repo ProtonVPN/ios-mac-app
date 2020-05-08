@@ -57,8 +57,6 @@
 		4242B04C2465A4380042145A /* AuthModulusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0442465A4370042145A /* AuthModulusRequest.swift */; };
 		4242B04D2465A4380042145A /* AuthRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0452465A4370042145A /* AuthRefreshRequest.swift */; };
 		4242B04E2465A4380042145A /* AuthRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0452465A4370042145A /* AuthRefreshRequest.swift */; };
-		4242B04F2465A4380042145A /* AuthRevokeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0462465A4370042145A /* AuthRevokeRequest.swift */; };
-		4242B0502465A4380042145A /* AuthRevokeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0462465A4370042145A /* AuthRevokeRequest.swift */; };
 		4242B0512465A4380042145A /* AuthBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0472465A4380042145A /* AuthBaseRequest.swift */; };
 		4242B0522465A4380042145A /* AuthBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0472465A4380042145A /* AuthBaseRequest.swift */; };
 		4242B0532465A4380042145A /* AuthAuthenticateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */; };
@@ -400,7 +398,6 @@
 		4242B0432465A4360042145A /* AuthInfoRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthInfoRequest.swift; sourceTree = "<group>"; };
 		4242B0442465A4370042145A /* AuthModulusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModulusRequest.swift; sourceTree = "<group>"; };
 		4242B0452465A4370042145A /* AuthRefreshRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRefreshRequest.swift; sourceTree = "<group>"; };
-		4242B0462465A4370042145A /* AuthRevokeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRevokeRequest.swift; sourceTree = "<group>"; };
 		4242B0472465A4380042145A /* AuthBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBaseRequest.swift; sourceTree = "<group>"; };
 		4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAuthenticateRequest.swift; sourceTree = "<group>"; };
 		4242B0552465A43D0042145A /* UserBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBaseRequest.swift; sourceTree = "<group>"; };
@@ -758,7 +755,6 @@
 				4242B0432465A4360042145A /* AuthInfoRequest.swift */,
 				4242B0442465A4370042145A /* AuthModulusRequest.swift */,
 				4242B0452465A4370042145A /* AuthRefreshRequest.swift */,
-				4242B0462465A4370042145A /* AuthRevokeRequest.swift */,
 			);
 			name = Auth;
 			sourceTree = "<group>";
@@ -1775,7 +1771,6 @@
 				4242B0652465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
-				4242B04F2465A4380042145A /* AuthRevokeRequest.swift in Sources */,
 				E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				4242B0492465A4380042145A /* AuthInfoRequest.swift in Sources */,
 				E1616B9A21C7B31500F42D79 /* PaymentMethod.swift in Sources */,
@@ -1950,7 +1945,6 @@
 				4242B0662465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127222F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BEA21C93ACA00F42D79 /* Profile.swift in Sources */,
-				4242B0502465A4380042145A /* AuthRevokeRequest.swift in Sources */,
 				E1828574236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				4242B04A2465A4380042145A /* AuthInfoRequest.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,

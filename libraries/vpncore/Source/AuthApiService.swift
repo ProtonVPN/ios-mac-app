@@ -104,14 +104,7 @@ public class AuthApiServiceImplementation: AuthApiService {
         
         alamofireWrapper.request(AuthModulusRequest(), success: successWrapper, failure: failure)
     }
-    
-    public func revokeToken( success: @escaping SuccessCallback, failure: @escaping ErrorCallback ){
-        let successWrapper: JSONCallback = { json in
-            success()
-        }
-        alamofireWrapper.request(AuthRevokeRequest(), success: successWrapper, failure: failure)
-    }
-    
+
     // MARK: - Internal
     
     func refreshAccessToken(success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
