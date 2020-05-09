@@ -18,7 +18,7 @@ target 'ProtonVPN' do
     common_pods
     
     # third party pods
-    pod 'Alamofire', '~> 4.0'
+    pod 'Alamofire', '~> 5.1'
     pod 'KeychainAccess', '~> 3.0'
     pod 'ReachabilitySwift', '~> 4.0'
     pod 'Sentry', '~> 4.0'
