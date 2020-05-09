@@ -203,11 +203,35 @@ class ConnectionSettingsViewController: NSViewController {
     }
     
     private func refreshProtocol() {
-        
+        protocolList.removeAllItems()
+        let count = viewModel.protocolItemCount
+        (0..<count).forEach { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.protocolItem(for: index)
+            protocolList.menu?.addItem(menuItem)
+        }
+        protocolList.selectItem(at: viewModel.protocolProfileIndex)
     }
     
     private func refreshOpenVPNProtocol() {
-        openVPNView.isHidden = true
+        openVPNList.removeAllItems()
+        let count = viewModel.openVPNItemCount
+        (0..<count).forEach { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.openVPNItem(for: index)
+            openVPNList.menu?.addItem(menuItem)
+        }
+        openVPNList.selectItem(at: viewModel.openVPNProfileIndex)
+        displayOpenVPNView()
+    }
+    
+    private func displayOpenVPNView() {
+        switch viewModel.vpnProtocol {
+        case .ike:
+            openVPNView.isHidden = true
+        default:
+            openVPNView.isHidden = false
+        }
     }
     
     // MARK: - Actions
@@ -229,11 +253,12 @@ class ConnectionSettingsViewController: NSViewController {
     }
     
     @objc private func protocolItemSelected() {
-        
+        viewModel.setProtocol(protocolList.indexOfSelectedItem)
+        displayOpenVPNView()
     }
     
     @objc private func openVPNItemSelected() {
-        
+        viewModel.setOpenVPN(openVPNList.indexOfSelectedItem)
     }
 }
 
