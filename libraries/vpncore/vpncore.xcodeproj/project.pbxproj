@@ -20,6 +20,10 @@
 		D53E8407233367D40031CD49 /* HumanVerificationAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */; };
 		D53E840A23338C830031CD49 /* GenericRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E840923338C830031CD49 /* GenericRequestRetrier.swift */; };
 		D53E840B23338C830031CD49 /* GenericRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E840923338C830031CD49 /* GenericRequestRetrier.swift */; };
+		D54B78AE2469501F00305B9F /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54B78AD2469501F00305B9F /* country-names.plist */; };
+		D54B78AF2469501F00305B9F /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54B78AD2469501F00305B9F /* country-names.plist */; };
+		D54B78B12469740D00305B9F /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54B78AD2469501F00305B9F /* country-names.plist */; };
+		D54B78B22469741800305B9F /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D54B78AD2469501F00305B9F /* country-names.plist */; };
 		D563B26B2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26E2345DA5800F98797 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26D2345DA5800F98797 /* UserError.swift */; };
@@ -329,6 +333,7 @@
 		D52FF532235DE27700E8C7B8 /* TrustKitHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrustKitHelper.swift; sourceTree = "<group>"; };
 		D53E8405233367D40031CD49 /* HumanVerificationAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationAdapter.swift; sourceTree = "<group>"; };
 		D53E840923338C830031CD49 /* GenericRequestRetrier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericRequestRetrier.swift; sourceTree = "<group>"; };
+		D54B78AD2469501F00305B9F /* country-names.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "country-names.plist"; sourceTree = "<group>"; };
 		D563B26A2345DA4300F98797 /* FormValidationError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormValidationError.swift; sourceTree = "<group>"; };
 		D563B26D2345DA5800F98797 /* UserError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserError.swift; sourceTree = "<group>"; };
 		D582A7DD23F2D76400B5FD77 /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = it; path = it.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -577,6 +582,16 @@
 			name = "Network helpers";
 			sourceTree = "<group>";
 		};
+		D54B78B024696AE600305B9F /* Localization */ = {
+			isa = PBXGroup;
+			children = (
+				E148AE6A21C2A263007AB65A /* LocalizedString.swift */,
+				E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */,
+				E148AE7121C2AF38007AB65A /* Resources */,
+			);
+			name = Localization;
+			sourceTree = "<group>";
+		};
 		D5A880FB22C9E408009B63D1 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -759,6 +774,7 @@
 			children = (
 				E1C99F4D21C3C56600C54333 /* Localizable.strings */,
 				D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */,
+				D54B78AD2469501F00305B9F /* country-names.plist */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -923,6 +939,7 @@
 				E116D76D22C22AE900D14A51 /* Encryption */,
 				E1B5F66721B81F5200B558B0 /* Extensions */,
 				E1616BC921C7D88D00F42D79 /* Factories */,
+				D54B78B024696AE600305B9F /* Localization */,
 				E1616B9021C7AD9E00F42D79 /* Management */,
 				E129C6BF22A90E4C00D8437E /* Mocks */,
 				E1B5F65121B81E1200B558B0 /* Models */,
@@ -952,7 +969,6 @@
 		E1B5F63721B6B1A800B558B0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				E148AE7121C2AF38007AB65A /* Resources */,
 				E1B5F62E21B6B18C00B558B0 /* Info.plist */,
 				E185A871237163AC0039E625 /* InfoPlist.strings */,
 				E1B5F62F21B6B18C00B558B0 /* vpncore.h */,
@@ -964,7 +980,6 @@
 			isa = PBXGroup;
 			children = (
 				E1616B8021C7AA9E00F42D79 /* AppStateManager.swift */,
-				E148AE6A21C2A263007AB65A /* LocalizedString.swift */,
 				E1B5F63021B6B18C00B558B0 /* AppState.swift */,
 				E1B5F63A21B6B5BB00B558B0 /* IkeProtocolFactory.swift */,
 				E1B5F64321B6BAF100B558B0 /* Logger.swift */,
@@ -993,7 +1008,6 @@
 			children = (
 				E1B5F67821B824A500B558B0 /* Arithmetic.swift */,
 				E1616BEE21C951DB00F42D79 /* HexColor.swift */,
-				E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */,
 				E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */,
 				E160845821DE1E9100E34D04 /* SafariService.swift */,
 				D5ADF51E2282A4DA0062367C /* Siri */,
@@ -1216,6 +1230,7 @@
 			files = (
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D54B78AE2469501F00305B9F /* country-names.plist in Resources */,
 				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1224,6 +1239,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54B78B12469740D00305B9F /* country-names.plist in Resources */,
 				D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */,
 				D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */,
@@ -1236,6 +1252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1144D4E22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
+				D54B78AF2469501F00305B9F /* country-names.plist in Resources */,
 				D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
 				E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */,
@@ -1246,6 +1263,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D54B78B22469741800305B9F /* country-names.plist in Resources */,
 				D5EF8FA32293E9B100B713BD /* Localizable.strings in Resources */,
 				E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */,
 				D5A8812B22CE06EB009B63D1 /* test_log_1.log in Resources */,

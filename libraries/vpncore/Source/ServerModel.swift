@@ -93,15 +93,15 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public var entryCountry: String {
-        return LocalizationUtility.countryName(forCode: self.entryCountryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: self.entryCountryCode) ?? ""
     }
     
     public var exitCountry: String {
-        return LocalizationUtility.countryName(forCode: self.exitCountryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
     }
     
     public var country: String {
-        return LocalizationUtility.countryName(forCode: self.exitCountryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: self.exitCountryCode) ?? ""
     }
     
     public var countryCode: String {
