@@ -1,6 +1,6 @@
 //
-//  GenericRequestRetrier.swift
-//  vpncore - Created on 19/09/2019.
+//  AFDataResponse+Filter.swift
+//  vpncore - Created on 08/05/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,23 +18,27 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-public protocol GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier
+public enum ApiResponse {
+    case success(JSONDictionary)
+    case failure(Error)
 }
 
-public class GenericRequestRetrier: RequestRetrier {
-
-    public init() {}
-    
-    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
-        if (error as NSError).code == (-1005), request.retryCount < 1 {
-            completion(.retryWithDelay(1))
+extension DataResponse {
+    var mapApiResponse: ApiResponse {
+        if let error = self.error as? ApiError {
+            return .failure(error)
+        } else if let json = self.data?.jsonDictionary, let statusCode = self.response?.statusCode, let code = json.int(key: "Code") {
+            if statusCode == 200 && code == 1000 {
+                return .success(json)
+            } else {
+                return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
+            }
         } else {
-            completion(.doNotRetryWithError(error))
+            return .failure(ApiError.unknownError)
         }
     }
 }

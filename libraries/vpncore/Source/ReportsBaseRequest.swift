@@ -1,6 +1,6 @@
 //
-//  ChecksRouter.swift
-//  vpncore - Created on 26.06.19.
+//  ReportsBaseRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,44 +18,24 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
 import Alamofire
 
-enum ChecksRouter: Router {
+class ReportsBaseRequest: BaseRequest {
     
-    case status
+    //MARK: - Override
     
-    var path: String {
-        switch self {
-        case .status:
-            return ApiConstants.statusURL + "/vpn_status"
-        }
+    override func path() -> String {
+        return super.path() + "/reports"
     }
     
-    var version: String {
-        switch self {
-        case .status:
-            return "1"
-        }
+    override var method: HTTPMethod {
+        return .post
     }
     
-    var method: HTTPMethod {
-        switch self {
-        case .status:
-            return .get
-        }
-    }
-    
-    var header: [String: String]? {
-        switch self {
-        case .status:
-            return [:]
-        }
-    }
-    
-    func asURLRequest() throws -> URLRequest {
-        let url = URL(string: path)!
+    override func asURLRequest() throws -> URLRequest {
+        let url = URL(string: path())!
         var urlRequest = URLRequest(url: url)
         urlRequest.httpMethod = self.method.rawValue
         urlRequest.allHTTPHeaderFields = header

@@ -1,6 +1,6 @@
 //
-//  Router.swift
-//  vpncore - Created on 26.06.19.
+//  BaseRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,32 +18,61 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
 import Alamofire
-import Foundation
 
-public protocol Router: URLRequestConvertible {
+class BaseRequest: URLRequestConvertible {
     
-    var path: String { get }
-    var version: String { get }
-    var method: HTTPMethod { get }
-    var header: [String: String]? { get }
-    var parameters: [String: Any]? { get }
+    //MARK: - Override
     
-    var authenticatedHeader: [String: String]? { get }
-    var nonAuthenticatedHeader: [String: String]? { get }
+    func path() -> String {
+        return ApiConstants.baseURL
+    }
     
-    var parameterEncoding: ParameterEncoding { get }
+    //MARK: - Computed
     
-    func asURLRequest() throws -> URLRequest
-}
-
-public extension Router {
+    var version: String {
+        return "3"
+    }
+    
+    var method: HTTPMethod {
+        return .get
+    }
     
     var header: [String: String]? {
         return authenticatedHeader
     }
     
+    var parameters: [String: Any]? {
+        return nil
+    }
+    
+    var parameterEncoding: ParameterEncoding {
+        switch method {
+        case .get:
+            return URLEncoding.default
+        default:
+            return JSONEncoding.default
+        }
+    }
+    
+    //MARK: - URLRequestConvertible
+    
+    func asURLRequest() throws -> URLRequest {
+        let url = URL(string: path())!
+        var urlRequest = URLRequest(url: url)
+        urlRequest.httpMethod = self.method.rawValue
+        urlRequest.allHTTPHeaderFields = header
+        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
+        return try parameterEncoding.encode(urlRequest, with: parameters)
+    }
+}
+
+extension BaseRequest {
+    
+    var nonAuthenticatedHeader: [String: String]? {  return defaultHeader }
+
     var authenticatedHeader: [String: String]? {
         guard let authCredentials = AuthKeychain.fetch() else {
             return nonAuthenticatedHeader
@@ -63,9 +92,7 @@ public extension Router {
         ]
     }
     
-    var nonAuthenticatedHeader: [String: String]? {
-        return defaultHeader
-    }
+    //MARK: - Private
     
     private var defaultHeader: [String: String] {
         return [
@@ -75,27 +102,5 @@ public extension Router {
             "Accept": ApiConstants.mediaType,
             "User-Agent": ApiConstants.userAgent
         ]
-    }
-    
-    var parameters: [String: Any]? {
-        return nil
-    }
-    
-    var parameterEncoding: ParameterEncoding {
-        switch method {
-        case .get:
-            return URLEncoding.default
-        default:
-            return JSONEncoding.default
-        }
-    }
-    
-    func asURLRequest() throws -> URLRequest {
-        let url = URL(string: path)!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = self.method.rawValue
-        urlRequest.allHTTPHeaderFields = header
-        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
-        return try parameterEncoding.encode(urlRequest, with: parameters)
     }
 }
