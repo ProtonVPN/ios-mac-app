@@ -125,7 +125,7 @@ class CountryItemViewModel {
     }
     
     fileprivate func formDescription() -> NSAttributedString {
-        let country = LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         return country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
@@ -156,7 +156,7 @@ class SecureCoreCountryItemViewModel: CountryItemViewModel {
     
     override fileprivate func formDescription() -> NSAttributedString {
         let arrows = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 10, height: 10)!
-        let country = LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         let attributedCountry = ("  " + country).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         return NSAttributedString.concatenate(arrows, attributedCountry)
     }
