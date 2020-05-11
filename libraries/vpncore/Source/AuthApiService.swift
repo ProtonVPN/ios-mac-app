@@ -84,7 +84,7 @@ public class AuthApiServiceImplementation: AuthApiService {
                 }
             }
             
-            self.alamofireWrapper.request(AuthAuthenticateRequest(authProperties), success: authSuccessWrapper, failure: failure)
+            self.alamofireWrapper.request(AuthenticateRequest(authProperties), success: authSuccessWrapper, failure: failure)
         }
     
         alamofireWrapper.request(AuthInfoRequest(username), success: authInfoSuccessWrapper, failure: failure)

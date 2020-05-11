@@ -23,7 +23,7 @@
 import Foundation
 import Alamofire
 
-class HumanVerificationHelper {
+final class HumanVerificationHelper {
     
     let alamofireWrapper: AlamofireWrapper
     let alertService: CoreAlertService?

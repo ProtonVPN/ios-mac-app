@@ -1,5 +1,5 @@
 //
-//  AuthAuthenticateRequest.swift
+//  AuthenticateRequest.swift
 //  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,7 +22,7 @@
 
 import Alamofire
 
-class AuthAuthenticateRequest: AuthBaseRequest {
+class AuthenticateRequest: AuthBaseRequest {
 
     let properties: AuthenticationProperties
     

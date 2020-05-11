@@ -59,8 +59,8 @@
 		4242B04E2465A4380042145A /* AuthRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0452465A4370042145A /* AuthRefreshRequest.swift */; };
 		4242B0512465A4380042145A /* AuthBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0472465A4380042145A /* AuthBaseRequest.swift */; };
 		4242B0522465A4380042145A /* AuthBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0472465A4380042145A /* AuthBaseRequest.swift */; };
-		4242B0532465A4380042145A /* AuthAuthenticateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */; };
-		4242B0542465A4380042145A /* AuthAuthenticateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */; };
+		4242B0532465A4380042145A /* AuthenticateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0482465A4380042145A /* AuthenticateRequest.swift */; };
+		4242B0542465A4380042145A /* AuthenticateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0482465A4380042145A /* AuthenticateRequest.swift */; };
 		4242B05A2465A43E0042145A /* UserBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0552465A43D0042145A /* UserBaseRequest.swift */; };
 		4242B05B2465A43E0042145A /* UserBaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0552465A43D0042145A /* UserBaseRequest.swift */; };
 		4242B05C2465A43E0042145A /* UserCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0562465A43D0042145A /* UserCheckRequest.swift */; };
@@ -399,7 +399,7 @@
 		4242B0442465A4370042145A /* AuthModulusRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthModulusRequest.swift; sourceTree = "<group>"; };
 		4242B0452465A4370042145A /* AuthRefreshRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRefreshRequest.swift; sourceTree = "<group>"; };
 		4242B0472465A4380042145A /* AuthBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthBaseRequest.swift; sourceTree = "<group>"; };
-		4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthAuthenticateRequest.swift; sourceTree = "<group>"; };
+		4242B0482465A4380042145A /* AuthenticateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticateRequest.swift; sourceTree = "<group>"; };
 		4242B0552465A43D0042145A /* UserBaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserBaseRequest.swift; sourceTree = "<group>"; };
 		4242B0562465A43D0042145A /* UserCheckRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCheckRequest.swift; sourceTree = "<group>"; };
 		4242B0572465A43D0042145A /* UserCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCodeRequest.swift; sourceTree = "<group>"; };
@@ -750,7 +750,7 @@
 		4242B0012465A3C70042145A /* Auth */ = {
 			isa = PBXGroup;
 			children = (
-				4242B0482465A4380042145A /* AuthAuthenticateRequest.swift */,
+				4242B0482465A4380042145A /* AuthenticateRequest.swift */,
 				4242B0472465A4380042145A /* AuthBaseRequest.swift */,
 				4242B0432465A4360042145A /* AuthInfoRequest.swift */,
 				4242B0442465A4370042145A /* AuthModulusRequest.swift */,
@@ -1808,7 +1808,7 @@
 				E148AE7621C2B12C007AB65A /* NSError+Extension.swift in Sources */,
 				E116D77022C22B0000D14A51 /* Hash.swift in Sources */,
 				4242B0A12465A7CB0042145A /* AFDataResponse+Filter.swift in Sources */,
-				4242B0532465A4380042145A /* AuthAuthenticateRequest.swift in Sources */,
+				4242B0532465A4380042145A /* AuthenticateRequest.swift in Sources */,
 				E1616B8121C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67621B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
 				E148AE6521C29A20007AB65A /* ProtonApiError.swift in Sources */,
@@ -1982,7 +1982,7 @@
 				E1616BFD21C95C5C00F42D79 /* Weak.swift in Sources */,
 				E116D77122C22B0000D14A51 /* Hash.swift in Sources */,
 				4242B0A22465A7CB0042145A /* AFDataResponse+Filter.swift in Sources */,
-				4242B0542465A4380042145A /* AuthAuthenticateRequest.swift in Sources */,
+				4242B0542465A4380042145A /* AuthenticateRequest.swift in Sources */,
 				E148AE7721C2B12C007AB65A /* NSError+Extension.swift in Sources */,
 				E1616B8221C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67721B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
