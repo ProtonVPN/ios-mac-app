@@ -22,6 +22,9 @@ def sharedpods
   # Checks code style and bad practices
   pod 'SwiftLint'
 
+  # OpenVPN support
+  pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+  
 end
 
 target 'ProtonVPN' do
