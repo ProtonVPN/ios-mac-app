@@ -219,3 +219,10 @@ extension DependencyContainer: TrustKitHelperFactory {
         return trustKitHelper
     }
 }
+
+// MARK: WiFiSecurityMonitorFactory
+extension DependencyContainer: WiFiSecurityMonitorFactory {
+    func makeWiFiSecurityMonitor() -> WiFiSecurityMonitor {
+        return WiFiSecurityMonitor()
+    }
+}

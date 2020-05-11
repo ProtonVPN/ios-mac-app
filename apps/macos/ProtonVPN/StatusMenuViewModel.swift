@@ -35,7 +35,7 @@ extension DependencyContainer: StatusMenuViewModelFactory {
 
 class StatusMenuViewModel {
     
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory & WiFiSecurityMonitorFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -44,9 +44,11 @@ class StatusMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
     
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
+    var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
     
     var serverType: ServerType = .standard
     var standardCountries: [CountryGroup]?
@@ -60,6 +62,8 @@ class StatusMenuViewModel {
         self.factory = factory
         
         startObserving()
+        wifiSecurityMonitor.startMonitoring()
+        wifiSecurityMonitor.delegate = self
     }
     
     var isSessionEstablished: Bool {
@@ -216,6 +220,19 @@ class StatusMenuViewModel {
                                               onConfirm: confirmationClosure)
         disconnectWarning?(viewModel)
     }
+
+    private func presentUnsecureWiFiWarning() {
+        let confirmationClosure: () -> Void = {
+            PMLog.D("user accepted unsecure option")
+        }
+
+        let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
+                                              title: "Unsecure Network Detected",
+                                              description: "You are connected to unsecure Wi-Fi network. You privacy can be compromized. We recommend you to change WiFi network or connect to VPN asap.",
+                                              onConfirm: confirmationClosure)
+
+        unsecureWiFiWarning?(viewModel)
+    }
     
     private func updateCountryList() {
         standardCountries = serverManager?.grouping(for: .standard)
@@ -362,5 +379,15 @@ class StatusMenuViewModel {
             adjustedName = name[0..<maxCharCount] + "..."
         }
         return adjustedName
+    }
+}
+
+// MARK: Unsecure Network Discoverage
+
+extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
+
+    func unsecureWiFiDetected() {
+        guard !isConnecting && !isConnected else { return }
+        presentUnsecureWiFiWarning()
     }
 }
