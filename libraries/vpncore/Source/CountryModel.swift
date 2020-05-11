@@ -40,7 +40,7 @@ public class CountryModel: Comparable, Hashable {
     }
     
     public var country: String {
-        return LocalizationUtility.countryName(forCode: countryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
     }
     // FUTURETODO: need change to load from server response. right not the response didnt in used
     public var location: CLLocationCoordinate2D {
