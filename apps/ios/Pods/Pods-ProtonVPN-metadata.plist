@@ -374,7 +374,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>A script for compiling OpenSSL for Apple Devices</string>
 			<key>version</key>
-			<string>1.1.1d.5a</string>
+			<string>1.1.1g.6</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -474,28 +474,7 @@ SOFTWARE.
 			<key>homepage</key>
 			<string>https://github.com/realm/SwiftLint</string>
 			<key>licenseText</key>
-			<string>The MIT License (MIT)
-
-Copyright (c) 2015 Realm Inc.
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-</string>
+			<string></string>
 			<key>licenseType</key>
 			<string>MIT</string>
 			<key>name</key>
@@ -514,7 +493,7 @@ SOFTWARE.
 				<string>s.kreutzberger@googlemail.com</string>
 			</dict>
 			<key>description</key>
-			<string>&lt;p&gt;Easy-to-use, extensible &amp;amp; powerful logging &amp;amp; analytics for Swift 2 to Swift 5.
+			<string>&lt;p&gt;Easy-to-use, extensible &amp;amp; powerful logging &amp;amp; analytics for Swift 4 and Swift 5.
 Great for development &amp;amp; release due to its support for many logging destinations &amp;amp; platforms.&lt;/p&gt;
 </string>
 			<key>homepage</key>
@@ -549,9 +528,9 @@ SOFTWARE.
 			<key>socialMediaURL</key>
 			<string></string>
 			<key>summary</key>
-			<string>Convenient logging during development &amp; release in Swift 2, 3, 4 &amp; 5.</string>
+			<string>Convenient logging during development &amp; release in Swift 4 &amp; 5.</string>
 			<key>version</key>
-			<string>1.8.4</string>
+			<string>1.9.1</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -612,7 +591,11 @@ THE SOFTWARE.
 			<key>homepage</key>
 			<string>https://github.com/passepartoutvpn/tunnelkit</string>
 			<key>licenseText</key>
-			<string>                    GNU GENERAL PUBLIC LICENSE
+			<string>Copyright (c) 2020 Davide De Rosa
+
+Full license follows:
+
+                    GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. &lt;https://fsf.org/&gt;
@@ -1296,7 +1279,7 @@ Public License instead of this License.  But first, please read
 			<key>summary</key>
 			<string>Non-official OpenVPN client for Apple platforms.</string>
 			<key>version</key>
-			<string>2.2.2</string>
+			<string>2.2.4</string>
 		</dict>
 	</array>
 </dict>
