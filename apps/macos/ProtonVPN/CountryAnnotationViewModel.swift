@@ -58,7 +58,7 @@ class CountryAnnotationViewModel {
     }
     
     var attributedCountry: NSAttributedString {
-        return (LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable).attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14)
+        return (LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable).attributed(withColor: available ? .protonWhite() : .protonGreyOutOfFocus(), fontSize: 14)
     }
     
     var buttonWidth: CGFloat {
@@ -215,7 +215,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     }
     
     override var attributedCountry: NSAttributedString {
-        return String(format: LocalizedString.secureCoreCountry, (LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable)).attributed(withColor: .protonWhite(), fontSize: 14)
+        return String(format: LocalizedString.secureCoreCountry, (LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable)).attributed(withColor: .protonWhite(), fontSize: 14)
     }
     
     override var buttonWidth: CGFloat {
@@ -228,7 +228,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
         self.exitCountryCodes = exitCountryCodes
-        self.country = LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        self.country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         super.init(appStateManager: appStateManager, countryCode: countryCode, coordinate: coordinate)
     }
     
