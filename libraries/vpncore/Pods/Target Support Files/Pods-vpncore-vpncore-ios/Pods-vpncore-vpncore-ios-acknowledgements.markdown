@@ -381,6 +381,10 @@ THE SOFTWARE.
 
 ## TunnelKit
 
+Copyright (c) 2020 Davide De Rosa
+
+Full license follows:
+
                     GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 

@@ -440,7 +440,11 @@ THE SOFTWARE.
 		</dict>
 		<dict>
 			<key>FooterText</key>
-			<string>                    GNU GENERAL PUBLIC LICENSE
+			<string>Copyright (c) 2020 Davide De Rosa
+
+Full license follows:
+
+                    GNU GENERAL PUBLIC LICENSE
                        Version 3, 29 June 2007
 
  Copyright (C) 2007 Free Software Foundation, Inc. &lt;https://fsf.org/&gt;
