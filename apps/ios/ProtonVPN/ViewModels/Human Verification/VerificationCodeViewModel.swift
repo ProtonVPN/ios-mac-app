@@ -97,6 +97,10 @@ class VerificationCodeViewModel {
                     }))
                 case ApiErrorCode.apiOffline:
                     self.show(error: error)
+                    
+                case ApiErrorCode.alreadyRegistered:
+                    self.showAlreadyRegisterdUserError(error: error)
+                    
                 default:
                     self.errorReceived?(error)
                 }
@@ -140,4 +144,15 @@ class VerificationCodeViewModel {
         }
     }
     
+    private func showAlreadyRegisterdUserError(error: Error) {
+        DispatchQueue.main.async {
+            self.verificationButtonEnabled?(true)
+            PMLog.ET(error.localizedDescription)
+            self.alertService.push(alert: RegistrationUserAlreadyExistsAlert(error: error, forgotCallback: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
+            }, resetCallback: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
+            }))
+        }
+    }
 }
