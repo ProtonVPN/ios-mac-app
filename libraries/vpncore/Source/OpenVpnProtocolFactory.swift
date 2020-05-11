@@ -168,9 +168,9 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         
         let ports: [Int]
         switch socketType {
-        case .tcp:
+        case .tcp, .tcp4, .tcp6:
             ports = portsConfig().defaultTcpPorts.shuffled()
-        case .udp:
+        case .udp, .udp4, .udp6:
             ports = portsConfig().defaultUdpPorts.shuffled()
         }
         
