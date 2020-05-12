@@ -13,7 +13,10 @@ Pod::Spec.new do |s|
     s.osx.deployment_target = '10.12'
     
     s.source_files = 'Source/*.swift', 'Source/*.sh'
-    s.resource_bundle = { 'vpncore' => 'Source/Localization/*.lproj' }
+    s.resource_bundle = { 'vpncore' => [
+        'Source/Localization/*.lproj',
+        'Source/country-names.plist'
+        ] }
 
     s.vendored_frameworks = 'Frameworks/*'
     
