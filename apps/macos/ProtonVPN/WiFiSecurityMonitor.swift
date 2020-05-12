@@ -63,7 +63,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
         do {
             try reachability.startNotifier()
         } catch {
-            PMLog.D("could not start reachability notifier")
+            PMLog.D("Could not start reachability notifier")
         }
     }
 

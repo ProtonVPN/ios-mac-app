@@ -224,7 +224,7 @@ class StatusMenuViewModel {
     // MARK: - Present unsecure connection
     private func presentUnsecureWiFiWarning() {
         let confirmationClosure: () -> Void = {
-            PMLog.D("user accepted unsecure option")
+            PMLog.D("User accepted unsecure option")
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
