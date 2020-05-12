@@ -221,14 +221,15 @@ class StatusMenuViewModel {
         disconnectWarning?(viewModel)
     }
 
+    // MARK: - Present unsecure connection
     private func presentUnsecureWiFiWarning() {
         let confirmationClosure: () -> Void = {
             PMLog.D("user accepted unsecure option")
         }
-
+        guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: "Unsecure Network Detected",
-                                              description: "You are connected to unsecure Wi-Fi network. You privacy can be compromized. We recommend you to change WiFi network or connect to VPN asap.",
+                                              title: "Insecure Wi-Fi Detected",
+                                              description: "\(LocalizedString.unsecureWiFi): \(wifiName). \(LocalizedString.unsecureWiFiLearnMore)",
                                               onConfirm: confirmationClosure)
 
         unsecureWiFiWarning?(viewModel)

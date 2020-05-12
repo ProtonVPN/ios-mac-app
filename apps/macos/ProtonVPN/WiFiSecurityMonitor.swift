@@ -53,6 +53,8 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
     private let reachability = Reachability()
     private let wifiClient: CWWiFiClient = CWWiFiClient()
 
+    public private(set) var wifiName: String?
+
     weak var delegate: WiFiSecurityMonitorDelegate?
 
     func startMonitoring() {
@@ -68,15 +70,19 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
     @objc func reachabilityChanged(note: Notification) {
         
         let reachability = note.object as! Reachability
-        // TODO: - @vv check if I connected on cable
-        let interface: CWInterface = wifiClient.interface(withName: "en0")!
-        let security: CWSecurity = interface.security()
+        guard let interfaces = wifiClient.interfaces() else { return }
 
         switch reachability.connection {
         case .wifi:
             PMLog.D("Reachable via WiFi")
-            if security.rawValue == 0 {
-                delegate?.unsecureWiFiDetected()
+            // just check all available wifi connections and if at least one of them is insecure we call the delegate and stop the loop
+            for interface in interfaces {
+                let security: CWSecurity = interface.security()
+                if security.rawValue == 0 {
+                    wifiName = interface.ssid()
+                    delegate?.unsecureWiFiDetected()
+                    break
+                }
             }
         case .cellular:
             PMLog.D("Reachable via Cellular")
