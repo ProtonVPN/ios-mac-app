@@ -74,7 +74,7 @@
 "_auto_assigned" = "Назначается автоматически";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоматическое подключение";
+"_auto_connect" = "Автоподключение";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
