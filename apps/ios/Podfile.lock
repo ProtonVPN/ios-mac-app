@@ -1,27 +1,42 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (5.1.0)
   - GSMessages (1.7.3)
   - KeychainAccess (3.1.2)
+  - OpenSSL-Apple (1.1.1g.6)
   - ReachabilitySwift (4.3.0)
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - SwiftLint (0.33.1)
+  - SwiftyBeaver (1.9.1)
   - TrustKit (1.6.1)
-  - vpncore (0.9.0):
-    - Alamofire (~> 4.0)
+  - TunnelKit (2.2.4):
+    - TunnelKit/Protocols/OpenVPN (= 2.2.4)
+  - TunnelKit/AppExtension (2.2.4):
+    - SwiftyBeaver
+    - TunnelKit/Core
+  - TunnelKit/Core (2.2.4):
+    - SwiftyBeaver
+  - TunnelKit/Protocols/OpenVPN (2.2.4):
+    - OpenSSL-Apple (~> 1.1.1g.6)
+    - TunnelKit/AppExtension
+    - TunnelKit/Core
+  - vpncore (1.0.0):
+    - Alamofire (~> 5.1)
     - KeychainAccess (~> 3.0)
     - ReachabilitySwift (~> 4.0)
     - Sentry (~> 4.0)
     - TrustKit (~> 1.0)
+    - TunnelKit
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire (~> 5.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
   - Sentry (~> 4.0)
   - SwiftLint
+  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
   - vpncore (from `../vpncore`)
 
 SPEC REPOS:
@@ -29,25 +44,38 @@ SPEC REPOS:
     - Alamofire
     - GSMessages
     - KeychainAccess
+    - OpenSSL-Apple
     - ReachabilitySwift
     - Sentry
     - SwiftLint
+    - SwiftyBeaver
     - TrustKit
 
 EXTERNAL SOURCES:
+  TunnelKit:
+    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
+    :git: https://github.com/passepartoutvpn/tunnelkit
   vpncore:
     :path: "../vpncore"
 
+CHECKOUT OPTIONS:
+  TunnelKit:
+    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
+    :git: https://github.com/passepartoutvpn/tunnelkit
+
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   GSMessages: b9bcf210247426ae113ff22eac1d8f03ad5dee53
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
+  OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: 9fc1143bbacec37f94994a7d0d2a85b2154b6294
+  SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
-  vpncore: d0f5e68be3088d1c73ba6f442a8092684acbcda9
+  TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
+  vpncore: 63142b9490fe31618a3bfdf1f01a72b8e074caa6
 
-PODFILE CHECKSUM: 7b7a2d891d65fab25deda13319039183cf34289d
+PODFILE CHECKSUM: 06875763d2c16618366a51ba0dfca4f916f0d06f
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1

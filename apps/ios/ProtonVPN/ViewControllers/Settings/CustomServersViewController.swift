@@ -115,12 +115,12 @@ extension CustomServersViewController: UITableViewDelegate, UITableViewDataSourc
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch viewModel.tableViewData[indexPath.section].cells[indexPath.row] {
-        case .standard(title: let title, handler: let handler):
+        case .pushStandard(title: let title, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
             }
             cell.accessoryType = .none
-            cell.label.text = title
+            cell.titleLabel.text = title
             cell.completionHandler = handler
             return cell
         default:
@@ -143,7 +143,7 @@ extension CustomServersViewController: UITableViewDelegate, UITableViewDataSourc
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .standard:
+        case .pushStandard:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()

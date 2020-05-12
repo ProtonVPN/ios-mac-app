@@ -30,16 +30,16 @@ extension CreateOrEditProfileViewModel {
         let countryString = ("  " + country.country)
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
-            nameAttributedString = countryString.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            nameAttributedString = countryString.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
         } else {
-            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .left)
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
-            let via = "\(LocalizedString.via)  ".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let via = "\(LocalizedString.via)  ".attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
             let entryCountryFlag = embededImageIcon(named: server.entryCountryCode.lowercased() + "-plain")
             let entryCountry = ("  " + server.entryCountry).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
@@ -48,9 +48,9 @@ extension CreateOrEditProfileViewModel {
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
-                serverDescriptor = serverString.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+                serverDescriptor = serverString.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
             } else {
-                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
+                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .left)
             }
             return NSAttributedString.concatenate(countryFlag, serverDescriptor)
         }

@@ -72,8 +72,8 @@ class AlertTests: XCTestCase {
             cancelRan = true
         }
         
-        let alert1 = ConfirmVpnDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
-        let alert2 = ConfirmVpnDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
+        let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
+        let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
         
         alertService.push(alert: alert1)
         XCTAssert(windowService.displayCount == 1)
@@ -111,6 +111,7 @@ fileprivate class WindowServiceMock: WindowService {
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
+    
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
     }
@@ -131,6 +132,9 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
         return SettingsServiceMock()
     }
     
+    func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
+        return TroubleshootCoordinatorMock();
+    }
     
 }
 
@@ -146,6 +150,15 @@ fileprivate class CustomServersViewModelFactoryMock: CustomServersViewModel.Fact
 }
 
 fileprivate class SettingsServiceMock: SettingsService {
+    func makeLogSelectionViewController() -> LogSelectionViewController {
+        let viewModel = LogSelectionViewModel(vpnManager: VpnManagerMock(), settingsService: self)
+        return LogSelectionViewController(viewModel: viewModel)
+    }
+    
+    func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
+        let viewModel = LogsViewModel(title: "", logs: "", logFile: URL(fileURLWithPath: ""))
+        return LogsViewController(viewModel: viewModel)
+    }
     
     func makeCustomServerViewController() -> CustomServersViewController {
         let viewModel = CustomServersViewModel(factory: CustomServersViewModelFactoryMock(), vpnGateway: nil)

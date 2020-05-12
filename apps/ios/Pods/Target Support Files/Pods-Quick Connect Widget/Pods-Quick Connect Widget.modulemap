@@ -1,6 +1,0 @@
-framework module Pods_Quick_Connect_Widget {
-  umbrella header "Pods-Quick Connect Widget-umbrella.h"
-
-  export *
-  module * { export * }
-}

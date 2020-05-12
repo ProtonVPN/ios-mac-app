@@ -25,25 +25,27 @@ import vpncore
 
 class CountryItemViewModel {
     
+    private let countryModel: CountryModel
+    private let serverModels: [ServerModel]
+    private let appStateManager: AppStateManager
+    private let alertService: AlertService
+    private let loginService: LoginService
+    private let planService: PlanService
+    
+    private var vpnGateway: VpnGatewayProtocol?
+    private var serverType: ServerType
+    
     private var userTier: Int
+    private var isUsersTierTooLow: Bool {
+        return userTier < countryModel.lowestTier
+    }
     
-    fileprivate let countryModel: CountryModel
-    fileprivate let serverModels: [ServerModel]
-    fileprivate var vpnGateway: VpnGatewayProtocol?
-    fileprivate let alertService: AlertService
-    fileprivate let loginService: LoginService
-    fileprivate let planService: PlanService
-    
-    var connectionChanged: (() -> Void)?
-    
-    var serverType: ServerType
-    
-    var underMaintenance: Bool {
+    private var underMaintenance: Bool {
         return !serverModels.contains { !$0.underMaintenance }
     }
     
-    var isConnected: Bool {
-        if let vpnGateway = vpnGateway, let activeServer = vpnGateway.activeServer {
+    private var isConnected: Bool {
+        if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
             if vpnGateway.connection == .connected, activeServer.countryCode == countryCode {
                 var found = false
                 serverModels.forEach { (server) in
@@ -57,16 +59,18 @@ class CountryItemViewModel {
         return false
     }
     
-    var isConnecting: Bool {
-        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.activeConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
+    private var isConnecting: Bool {
+        if let vpnGateway = vpnGateway, let activeConnection = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting, case ConnectionRequestType.country(let activeCountryCode, _) = activeConnection.connectionType, activeCountryCode == countryCode {
             return true
         }
         return false
     }
     
-    var connectedUiState: Bool {
+    private var connectedUiState: Bool {
         return isConnected || isConnecting
     }
+    
+    var connectionChanged: (() -> Void)?
     
     var countryCode: String {
         return countryModel.countryCode
@@ -118,10 +122,6 @@ class CountryItemViewModel {
         return isUsersTierTooLow ? LocalizedString.upgrade : nil
     }
     
-    var isUsersTierTooLow: Bool {
-        return userTier < countryModel.lowestTier
-    }
-    
     var alphaOfMainElements: CGFloat {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
@@ -151,9 +151,9 @@ class CountryItemViewModel {
         return servers.map { (server) -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
-                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, alertService: alertService, loginService: loginService, planService: planService)
+                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService)
             case .secureCore:
-                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, alertService: alertService, loginService: loginService, planService: planService)
+                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService)
             }
         }
     }
@@ -182,9 +182,10 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
+        self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.loginService = loginService
@@ -220,7 +221,7 @@ class CountryItemViewModel {
         return serverViewModels[section].viewModels[row]
     }
     
-    func connectAction(delegate: ConnectingCellDelegate) {
+    func connectAction() {
         guard let vpnGateway = vpnGateway else {
             loginService.presentSignup()
             return
@@ -232,14 +233,9 @@ class CountryItemViewModel {
             alertService.push(alert: MaintenanceAlert(countryName: countryName))
         } else if isConnected {
             vpnGateway.disconnect()
-        } else if vpnGateway.connection == .connecting, delegate === vpnGateway.connectingCellDelegate {
+        } else if isConnecting {
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
-            if let delegate = vpnGateway.connectingCellDelegate {
-                vpnGateway.stopConnecting(userInitiated: true)
-                delegate.disableConnecting()
-            }
-            vpnGateway.connectingCellDelegate = delegate
             vpnGateway.connectTo(country: countryCode, ofType: serverType)
         }
     }

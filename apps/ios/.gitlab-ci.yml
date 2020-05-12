@@ -2,6 +2,7 @@ stages:
   - linting
   - unit_tests
   - screenshots
+  - beta
   - mirror
 
 variables:
@@ -42,8 +43,9 @@ variables:
 
 .before_script_mac: &before_script_mac
   - rm -fr ../vpncore || true # ignore failure to delete
-  - git clone -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch
+  - git clone -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone -b open-vpn https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch (2020-05-12 temporarily changed to open-vpn until mac app is ready)
   - cd ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ..
+  - pod install
 
 lint:
   stage: linting
@@ -51,7 +53,8 @@ lint:
     - iOS
   before_script:
     - *before_script_mac
-  script: Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
+  script:
+    - Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
@@ -68,7 +71,7 @@ unit_tests:
   before_script:
     - *before_script_mac
   script:
-    - pod install
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.test_result/3_Test/action.xccovreport
   tags:
@@ -88,7 +91,6 @@ screenshots:
   before_script:
     - *before_script_mac
   script:
-    - pod install
     - fastlane screenshots
   tags:
     - iOS
@@ -99,7 +101,23 @@ screenshots:
       - fastlane/screenshots/
     expire_in: 3 days
   only:
-  - schedules
+    - schedules
+
+publish-internal-build:
+  stage: beta
+  before_script:
+    - *before_script_mac
+  script:
+    - curl -sL https://sentry.io/get-cli/ | bash || true
+    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
+    - fastlane sigh download_all --download_xcode_profiles
+    - cd ProtonVPN/ && ../../vpncore/Source/prepare_obfuscated_constants.sh && cd ..
+    - fastlane ios internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
+  tags:
+    - iOS-deploy
+  environment:
+    name: deployment
+  when: manual
 
 sync-app:
   extends: .linux-common
@@ -110,35 +128,21 @@ sync-app:
   artifacts:
     expire_in: 1 day
     paths:
-    - log.txt
+      - log.txt
   script:
     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
     - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
-  
-sync-app-2.0:
-  extends: .linux-common
-  <<: *linux-common
-  only:
-      refs:
-        - release-candidate-2.0.0
-  artifacts:
-    expire_in: 1 day
-    paths:
-    - log.txt
-  script:
-    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL --branch release-candidate-2.0.0"
   
 publish-github-release:
   extends: .linux-common
   <<: *linux-common
   only:
     refs:
-    - tags
+      - tags
   artifacts:
     expire_in: 1 day
     paths:
-    - log.txt
+      - log.txt
   script:
     - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
     - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"

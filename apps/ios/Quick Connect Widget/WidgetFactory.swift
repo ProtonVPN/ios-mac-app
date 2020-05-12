@@ -34,16 +34,11 @@ class WidgetFactory {
     
     static var shared = WidgetFactory()
     
-    let alertService = ExtensionAlertService()
-    
     private let alamofireWrapper: AlamofireWrapper
     private let vpnApiService: VpnApiService
     private let vpnManager: VpnManager
     private let vpnKeychain: VpnKeychainProtocol
-    
-    lazy var appStateManager = { [unowned self] in
-        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: PropertiesManager(), vpnKeychain: vpnKeychain)
-    }()
+    private let configurationPreparer: VpnManagerConfigurationPreparer
     
     private var _vpnGateway: VpnGatewayProtocol?
     
@@ -60,8 +55,16 @@ class WidgetFactory {
         return _vpnGateway
     }
     
+    let alertService = ExtensionAlertService()
+    
+    let propertiesManager = PropertiesManager()
+    
+    lazy var appStateManager = { [unowned self] in
+        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer)
+    }()
+    
     var todayViewModel:TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self.appStateManager, vpnGateWay: self.vpnGateway )
+        let viewModel = TodayViewModelImplementation( self )
         self.alertService.delegate = viewModel
         return viewModel
     }
@@ -72,8 +75,15 @@ class WidgetFactory {
         
         alamofireWrapper = AlamofireWrapperImplementation()
         vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
-        vpnManager = VpnManager()
+        let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
+        let appGroup = "group.ch.protonmail.vpn"
+        vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup)
         vpnKeychain = VpnKeychain()
+        configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+    }
+    
+    public func refreshVpnManager() {
+        vpnManager.refreshManagers()
     }
     
 }

@@ -25,6 +25,8 @@ import vpncore
 
 class ProfileServiceMock: ProfileService {
     
+    var dataSet: SelectionDataSet?
+    
     func makeProfilesViewController() -> ProfilesViewController {
         return ProfilesViewController()
     }
@@ -33,8 +35,9 @@ class ProfileServiceMock: ProfileService {
         return nil
     }
     
-    func makeSelectionViewController() -> SelectionViewController? {
-        return nil
+    func makeSelectionViewController(dataSet: SelectionDataSet, dataSelected: @escaping (Any) -> Void) -> SelectionViewController {
+        self.dataSet = dataSet
+        return SelectionViewController()
     }
     
 }

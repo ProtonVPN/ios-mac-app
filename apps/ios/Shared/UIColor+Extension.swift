@@ -185,5 +185,4 @@ extension UIColor {
     class var protonWidgetBackground: UIColor {
         return UIColor(red: 30, green: 30, blue: 32)
     }
-    
 }

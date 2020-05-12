@@ -30,6 +30,8 @@ class SelectionTableViewCell: UITableViewCell {
         super.awakeFromNib()
         
         backgroundColor = .protonGrey()
+        tintColor = .protonWhite()
+        
         nameLabel.textColor = .white
     }
 

@@ -1,6 +1,6 @@
 //
 //  GenericViewModel.swift
-//  ProtonVPN - Created on 07/04/2020.
+//  ProtonVPN - Created on 09/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -34,8 +34,8 @@ protocol GenericViewModel {
 
 extension GenericViewModel {
     func viewDidLoad() {}
-    func viewWillAppear( _ animated: Bool){}
-    func viewDidAppear( _ animated: Bool){}
-    func viewWillDisappear( _ animated: Bool){}
-    func viewDidDisappear( _ animated: Bool){}
+    func viewWillAppear( _ animated: Bool) {}
+    func viewDidAppear( _ animated: Bool) {}
+    func viewWillDisappear( _ animated: Bool) {}
+    func viewDidDisappear( _ animated: Bool) {}
 }
