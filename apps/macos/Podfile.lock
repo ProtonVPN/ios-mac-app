@@ -6,7 +6,7 @@ PODS:
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - Sparkle (1.21.3)
-  - SwiftLint (0.32.0)
+  - SwiftLint (0.39.2)
   - TrustKit (1.6.3)
   - vpncore (0.9.0):
     - Alamofire (~> 4.0)
@@ -44,9 +44,9 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
-  SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
+  SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   TrustKit: a2f0c3a926f0a3ce3c082db9a39f1f540dbb04cb
-  vpncore: d0f5e68be3088d1c73ba6f442a8092684acbcda9
+  vpncore: 6b51cd9d859c07bd9d6a0bfca5c449232ff08dd3
 
 PODFILE CHECKSUM: 3158300ca6b752839f7cbb82c523d1f3a00b9cbf
 

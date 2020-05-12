@@ -25,7 +25,10 @@
     "Source/*.sh"
   ],
   "resource_bundles": {
-    "vpncore": "Source/Localization/*.lproj"
+    "vpncore": [
+      "Source/Localization/*.lproj",
+      "Source/country-names.plist"
+    ]
   },
   "vendored_frameworks": "Frameworks/*",
   "dependencies": {
