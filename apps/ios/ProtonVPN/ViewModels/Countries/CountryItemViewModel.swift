@@ -77,7 +77,7 @@ class CountryItemViewModel {
     }
     
     var countryName: String {
-        return LocalizationUtility.countryName(forCode: countryCode) ?? ""
+        return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
     }
     
     var description: NSAttributedString {
@@ -247,7 +247,7 @@ class CountryItemViewModel {
     }
     
     private func formDescription() -> NSAttributedString {
-        let country = LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         let attributedCountry = NSMutableAttributedString(attributedString: country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left))
         let hyphenParagraphStyle = NSMutableParagraphStyle()
         hyphenParagraphStyle.hyphenationFactor = 0.5

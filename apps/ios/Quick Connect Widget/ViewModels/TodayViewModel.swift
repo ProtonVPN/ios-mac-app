@@ -83,7 +83,7 @@ class TodayViewModelImplementation: TodayViewModel {
         switch vpnGateway.connection {
         case .connected:
             let server = appStateManager.activeConnection()?.server
-            let country = LocalizationUtility.countryName(forCode: server?.countryCode ?? "")
+            let country = LocalizationUtility.default.countryName(forCode: server?.countryCode ?? "")
             let ip = server?.ips.first?.entryIp
             viewController?.displayConnected(ip, country: country)
 

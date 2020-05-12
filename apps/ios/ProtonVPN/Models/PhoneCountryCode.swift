@@ -38,7 +38,7 @@ public class PhoneCountryCode {
         
         self.countryCode = countryCode
         self.phoneCode = phoneCode
-        self.localizedCountryName = LocalizationUtility.countryName(forCode: countryCode) ?? englishCountryName
+        self.localizedCountryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? englishCountryName
     }
     
     // MARK: - Static functions

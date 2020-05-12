@@ -239,7 +239,7 @@ class ProfileItemViewModel {
         
         let buffer = "  ".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         let profileDescription = description.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        let countryName = LocalizationUtility.countryName(forCode: countryCode) ?? ""
+        let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
         let attributedCountryName = countryName.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
         
