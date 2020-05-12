@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (5.1.0)
   - KeychainAccess (3.1.2)
   - OpenSSL-Apple (1.1.1g.6)
   - ReachabilitySwift (4.3.0)
@@ -22,7 +22,7 @@ PODS:
     - TunnelKit/Core
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire (~> 5.1)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
   - Sentry (~> 4.0)
@@ -52,7 +52,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
@@ -62,6 +62,6 @@ SPEC CHECKSUMS:
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
-PODFILE CHECKSUM: 00695652af62933d79389c29f95c92245f928b74
+PODFILE CHECKSUM: 0b2c923b9c9266349b3b4349f7b61c4f650b978d
 
 COCOAPODS: 1.9.1
