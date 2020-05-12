@@ -28,7 +28,7 @@ class PaymentsPlansRequest: PaymentsBaseRequest {
         return super.path() + "/plans"
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return  ["Currency": "USD", "Cycle": 12]
     }
 }

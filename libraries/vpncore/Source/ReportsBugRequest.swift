@@ -26,18 +26,17 @@ class ReportsBugRequest: ReportsBaseRequest {
     
     let bug: ReportBug
     
-    init( _ bug: ReportBug ){
+    init( _ bug: ReportBug ) {
         self.bug = bug
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/bug"
     }
     
-
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "OS": bug.os,
             "OSVersion": bug.osVersion,

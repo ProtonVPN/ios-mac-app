@@ -33,7 +33,7 @@ final class HumanVerificationHelper {
         self.alertService = alertService
     }
     
-    func requestHumanVerification( _ request: URLRequestConvertible, apiError:ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback ){
+    func requestHumanVerification( _ request: URLRequestConvertible, apiError: ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         guard let verificationMethods = VerificationMethods.fromApiError(apiError: apiError), let alertService = self.alertService else {
             failure(apiError)
             return
@@ -44,7 +44,6 @@ final class HumanVerificationHelper {
             self.alamofireWrapper.request(request, success: success, failure: failure)
         }, failure: { error in
             PMLog.ET("Getting human verification token failed with error: \(error)")
-            var completionError: Error
             switch (error as NSError).code {
             case NSURLErrorTimedOut, NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost,
                  NSURLErrorCannotConnectToHost, HttpStatusCode.serviceUnavailable, ApiErrorCode.apiOffline,

@@ -26,12 +26,12 @@ class AuthRefreshRequest: AuthBaseRequest {
     
     let properties: RefreshAccessTokenProperties
     
-    init( _ properties: RefreshAccessTokenProperties ){
+    init( _ properties: RefreshAccessTokenProperties) {
         self.properties = properties
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/refresh"
@@ -41,11 +41,11 @@ class AuthRefreshRequest: AuthBaseRequest {
         return .post
     }
     
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return expiredTokenHeader
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "ResponseType": "token",
             "GrantType": "refresh_token",

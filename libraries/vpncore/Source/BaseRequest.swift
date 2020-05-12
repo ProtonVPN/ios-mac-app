@@ -24,13 +24,13 @@ import Alamofire
 
 class BaseRequest: URLRequestConvertible {
     
-    //MARK: - Override
+    // MARK: - Override
     
     func path() -> String {
         return ApiConstants.baseURL
     }
     
-    //MARK: - Computed
+    // MARK: - Computed
     
     var version: String {
         return "3"
@@ -57,7 +57,7 @@ class BaseRequest: URLRequestConvertible {
         }
     }
     
-    //MARK: - URLRequestConvertible
+    // MARK: - URLRequestConvertible
     
     func asURLRequest() throws -> URLRequest {
         let url = URL(string: path())!
@@ -71,7 +71,7 @@ class BaseRequest: URLRequestConvertible {
 
 extension BaseRequest {
     
-    var nonAuthenticatedHeader: [String: String]? {  return defaultHeader }
+    var nonAuthenticatedHeader: [String: String]? { return defaultHeader }
 
     var authenticatedHeader: [String: String]? {
         guard let authCredentials = AuthKeychain.fetch() else {
@@ -92,7 +92,7 @@ extension BaseRequest {
         ]
     }
     
-    //MARK: - Private
+    // MARK: - Private
     
     private var defaultHeader: [String: String] {
         return [

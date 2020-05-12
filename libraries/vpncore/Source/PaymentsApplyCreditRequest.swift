@@ -39,7 +39,7 @@ class PaymentsApplyCreditRequest: PaymentsBaseRequest {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "Amount": 0,
             "Currency": "USD",

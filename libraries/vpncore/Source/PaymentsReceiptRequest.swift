@@ -28,7 +28,7 @@ class PaymentsReceiptRequest: PaymentsBaseRequest {
     let receipt: String
     let planId: String
     
-    init( _ amount: Int, receipt: String, planId: String){
+    init( _ amount: Int, receipt: String, planId: String) {
         self.amount = amount
         self.receipt = receipt
         self.planId = planId
@@ -42,7 +42,7 @@ class PaymentsReceiptRequest: PaymentsBaseRequest {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "Amount": amount,
             "Currency": "USD",

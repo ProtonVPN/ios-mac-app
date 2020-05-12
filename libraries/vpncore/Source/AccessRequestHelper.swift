@@ -27,11 +27,11 @@ class AccessRequestHelper {
     
     let alamofireWrapper: AlamofireWrapper
     
-    public init( _ alamofireWrapper: AlamofireWrapper ){
+    public init( _ alamofireWrapper: AlamofireWrapper) {
         self.alamofireWrapper = alamofireWrapper
     }
     
-    func requestAccessTokenVerification( _ request: URLRequestConvertible, apiError:ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback ){
+    func requestAccessTokenVerification( _ request: URLRequestConvertible, apiError: ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         fetchNewAccessToken({
             self.alamofireWrapper.request(request, success: success, failure: failure)
         }, currentError: apiError, failure: { error in
@@ -41,7 +41,7 @@ class AccessRequestHelper {
     
     // MARK: - Private
     
-    private func fetchNewAccessToken( _ success: @escaping SuccessCallback, currentError: Error,  failure: @escaping ErrorCallback ) {
+    private func fetchNewAccessToken( _ success: @escaping SuccessCallback, currentError: Error, failure: @escaping ErrorCallback ) {
         guard let refreshAccessToken = alamofireWrapper.refreshAccessToken else {
             failure(currentError)
             return
