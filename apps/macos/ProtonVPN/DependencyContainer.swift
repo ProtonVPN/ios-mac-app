@@ -27,8 +27,8 @@ import vpncore
 
 class DependencyContainer {
     
-    private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-    private let appGroup = "group.ch.protonmail.vpn"
+    private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
+    private let appGroup = "J6S6Q257EK.group.ch.protonvpn.mac"
     
     // Singletons
     private lazy var navigationService = NavigationService(self)
