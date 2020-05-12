@@ -158,7 +158,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             switch response.mapApiResponse {
             case .success(let json):
                 success(json)
-            case .failure(let error):
+            case .failure:
                 break
             }
         }

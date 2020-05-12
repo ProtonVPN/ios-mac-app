@@ -41,7 +41,7 @@ class PaymentsTokenRequest: PaymentsBaseRequest {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "Amount": amount,
             "Currency": "USD",

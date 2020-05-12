@@ -26,22 +26,22 @@ class AuthenticateRequest: AuthBaseRequest {
 
     let properties: AuthenticationProperties
     
-    init( _ properties: AuthenticationProperties ){
+    init( _ properties: AuthenticationProperties ) {
         self.properties = properties
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override var method: HTTPMethod {
         return .post
     }
     
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return nonAuthenticatedHeader
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "ClientSecret": ApiConstants.clientSecret,
             "Username": properties.username,

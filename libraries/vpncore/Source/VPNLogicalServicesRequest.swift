@@ -26,12 +26,12 @@ class VPNLogicalServicesRequest: VPNBaseRequest {
     
     let ip: String?
     
-    init( _ ip: String? ){
+    init( _ ip: String? ) {
         self.ip = ip
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         let endpoint = super.path() + "/logicals"

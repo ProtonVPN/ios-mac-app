@@ -26,18 +26,18 @@ class UserCreateRequest: UserBaseRequest {
     
     let userProperties: UserProperties
     
-    init( _ userProperties: UserProperties ){
+    init( _ userProperties: UserProperties ) {
         self.userProperties = userProperties
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
 
     override var method: HTTPMethod {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         var params: [String: Any] = [
             "Email": userProperties.email,
             "Username": userProperties.username,

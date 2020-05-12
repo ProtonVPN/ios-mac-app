@@ -27,13 +27,13 @@ class UserCodeRequest: UserBaseRequest {
     let type: HumanVerificationToken.TokenType
     let receiver: String
     
-    init( _ type: HumanVerificationToken.TokenType, receiver: String ){
+    init( _ type: HumanVerificationToken.TokenType, receiver: String) {
         self.type = type
         self.receiver = receiver
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/code"
@@ -43,7 +43,7 @@ class UserCodeRequest: UserBaseRequest {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         let destinationType: String
         switch type {
         case .email:

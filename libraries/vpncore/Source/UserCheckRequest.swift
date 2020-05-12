@@ -26,12 +26,12 @@ class UserCheckRequest: UserBaseRequest {
     
     let token: HumanVerificationToken
     
-    init( _ token: HumanVerificationToken ){
+    init( _ token: HumanVerificationToken) {
         self.token = token
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/check"
@@ -41,7 +41,7 @@ class UserCheckRequest: UserBaseRequest {
         return .put
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "Token": "\(token.fullValue)",
             "TokenType": token.type.rawValue,

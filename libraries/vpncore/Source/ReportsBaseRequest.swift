@@ -24,7 +24,7 @@ import Alamofire
 
 class ReportsBaseRequest: BaseRequest {
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/reports"

@@ -24,13 +24,13 @@ import Alamofire
 
 class AuthModulusRequest: AuthBaseRequest {
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/modulus"
     }
   
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return nonAuthenticatedHeader
     }
 }
