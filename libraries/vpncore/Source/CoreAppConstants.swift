@@ -51,6 +51,7 @@ public class CoreAppConstants {
         public static let termsAndConditions = "https://protonvpn.com/terms-and-conditions"
         public static let privacyPolicy = "https://protonvpn.com/privacy-policy"
         public static let appstoreIosUrl: String = "http://itunes.apple.com/app/id1437005085"
+        public static let unsecureWiFiUrl: String "https://protonvpn.com/blog/public-wifi-safety/"
     }
     
     public struct AttributionLinks {
