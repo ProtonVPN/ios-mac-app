@@ -25,7 +25,7 @@ import vpncore
 
 class IosAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & HumanVerificationCoordinatorFactory & WindowServiceFactory & SettingsServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & HumanVerificationCoordinatorFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -77,7 +77,7 @@ extension IosAlertService: CoreAlertService {
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
             
-        case is NetworkUnreachableAlert:
+        case is VpnNetworkUnreachableAlert:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
             
         case is SessionCountLimitAlert:
@@ -135,6 +135,15 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is InvalidHumanVerificationCodeAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is UnreachableNetworkAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is ConnectionTroubleshootingAlert:
+            show(alert as! ConnectionTroubleshootingAlert)
+            
+        case is RegistrationUserAlreadyExistsAlert:
             showDefaultSystemAlert(alert)
             
         default:
@@ -202,4 +211,9 @@ extension IosAlertService: CoreAlertService {
     private func showNotificationStyleAlert(message: String, type: NotificationStyleAlertType = .error, accessibilityIdentifier: String? = nil) {
         uiAlertService.displayNotificationStyleAlert(message: message, type: type, accessibilityIdentifier: accessibilityIdentifier)
     }
+    
+    private func show(_ alert: ConnectionTroubleshootingAlert) {
+        factory.makeTroubleshootCoordinator().start()
+    }
+    
 }

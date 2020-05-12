@@ -96,7 +96,7 @@ class StatusViewModel {
     private var secondaryLocationCell: TableViewCellModel {
         if propertiesManager.serverTypeToggle == .secureCore {
             if let entryCountryCode = appStateManager.activeConnection()?.server.entryCountryCode {
-                return .staticKeyValue(key: LocalizedString.via, value: LocalizationUtility.countryName(forCode: entryCountryCode) ?? "")
+                return .staticKeyValue(key: LocalizedString.via, value: LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? "")
             } else {
                 return .staticKeyValue(key: "", value: "")
             }

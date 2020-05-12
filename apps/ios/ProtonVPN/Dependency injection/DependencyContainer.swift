@@ -107,6 +107,13 @@ extension DependencyContainer: PropertiesManagerFactory {
     }
 }
 
+// MARK: ServicePlanDataStorageFactory
+extension DependencyContainer: ServicePlanDataStorageFactory {
+    func makeServicePlanDataStorage() -> ServicePlanDataStorage {
+        return PropertiesManager()
+    }
+}
+
 // MARK: WindowServiceFactory
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
@@ -274,11 +281,4 @@ extension DependencyContainer: SigninInfoContainerFactory {
     func makeSigninInfoContainer() -> SigninInfoContainer {
         return signinInfoContainer
     }    
-}
-
-// MARK: ServicePlanDataStorageFactory
-extension DependencyContainer: ServicePlanDataStorageFactory {
-    func makeServicePlanDataStorage() -> ServicePlanDataStorage {
-        return PropertiesManager()
-    }
 }

@@ -118,13 +118,18 @@ class SignUpFormViewController: UIViewController {
         password1Field.textChanged = { [weak self] textField in self?.viewModel.password1 = textField.text }
         password2Field.textChanged = { [weak self] textField in self?.viewModel.password2 = textField.text }
         
+        emailField.textField.accessibilityIdentifier = "email"
+        usernameField.textField.accessibilityIdentifier = "username"
+        password1Field.textField.accessibilityIdentifier = "pass1"
+        password2Field.textField.accessibilityIdentifier = "pass2"
+        
         formHeightConstraint.constant = 88 * 4 + 50
         view.setNeedsLayout()
     }
     
     private func setupMainButton() {
         mainButton.setTitle(LocalizedString.createAccount, for: .normal)
-        
+        mainButton.accessibilityIdentifier = "mainButton"
         self.renderMainButton()
         viewModel.formDataChanged = { [weak self] in
             self?.renderMainButton()
