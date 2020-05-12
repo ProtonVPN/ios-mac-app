@@ -403,6 +403,8 @@ public class LocalizedString {
     
     public static let existingFirewallPopupTitle = NSLocalizedString("_existing_firewall_popup_title", comment: "MacOS: Existing firewall alert")
     public static let existingFirewallPopupBody = NSLocalizedString("_existing_firewall_popup_body", comment: "MacOS: Existing firewall alert")
+    public static let unsecureWiFi = NSLocalizedString("_unsecure_wifi", comment: "MacOS: Alert when user connects to WiFi without password")
+    public static let unsecureWiFiLearnMore = NSLocalizedString("_unsecure_wifi_learn_more", comment: "The link to this website https://protonvpn.com/blog/public-wifi-safety/")
         
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
