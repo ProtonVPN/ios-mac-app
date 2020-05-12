@@ -59,13 +59,13 @@
 "_already_have_account" = "Ho già un account";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN sempre attiva";
+"_always_on_vpn" = "VPN Sempre Attiva";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "Kill Switch non è supportato su iOS. La VPN sempre attiva ripristina una connessione VPN sicura in modo rapido e automatico. Per la tua sicurezza, questa funzionalità è sempre attiva.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "La VPN sempre attiva ti riconnetterà automaticamente";
+"_always_on_will_reconnect" = "VPN Sempre Attiva ti riconnetterà automaticamente";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Log applicazione";

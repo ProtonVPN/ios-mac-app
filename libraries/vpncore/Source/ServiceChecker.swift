@@ -71,7 +71,7 @@ class ServiceChecker {
             PMLog.ET(error.localizedDescription)
         }
         
-        alamofireWrapper.request(ChecksRouter.status, success: success, failure: failure)
+        alamofireWrapper.request(CheckStatusRequest(), success: success, failure: failure)
     }
     
     private func trafficForwarded() {

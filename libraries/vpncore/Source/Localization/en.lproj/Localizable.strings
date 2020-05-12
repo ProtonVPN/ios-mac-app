@@ -634,3 +634,29 @@
 "_subscription_button" = "Extend plan for 1 year \n%@.";
 "_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
  
+// Internet connection troubleshoting
+"_ne_troubleshoot" = "Troubleshoot";
+"_troubleshoot_title" = "Troubleshooting";
+"_troubleshoot_item_alt_title" = "Allow alternative routing";
+"_troubleshoot_item_alt_description" = "In case Proton sites are blocked, this setting allows the app to try alternative network routing to reach Proton, which can be useful for bypassing firewalls or network issues. We recommend keeping this setting on for greater reliability. \nLearn more";
+"_troubleshoot_item_alt_link1" = "Learn more";
+"_troubleshoot_item_nointernet_title" = "No internet connection";
+"_troubleshoot_item_nointernet_description" = "Please make sure that your internet connection is working.";
+"_troubleshoot_item_isp_title" = "Internet Service Provider (ISP) problem";
+"_troubleshoot_item_isp_description" = "Try connecting to Proton from a different network (or Tor).";
+"_troubleshoot_item_isp_link1" = "Tor";
+"_troubleshoot_item_gov_title" = "Government block";
+"_troubleshoot_item_gov_description" = "Your country may be blocking access to Proton. Try using Tor to access Proton.";
+"_troubleshoot_item_gov_link1" = "Tor";
+"_troubleshoot_item_antivirus_title" = "Antivirus interference";
+"_troubleshoot_item_antivirus_description" = "Temporarily disable or remove your antivirus software.";
+"_troubleshoot_item_proxy_title" = "Proxy/Firewall interference";
+"_troubleshoot_item_proxy_description" = "Disable any proxies or firewalls, or contact your network administrator.";
+"_troubleshoot_item_proton_title" = "Proton is down";
+"_troubleshoot_item_proton_description" = "Check Proton Status for our system status.";
+"_troubleshoot_item_proton_link1" = "Proton Status";
+"_troubleshoot_item_other_title" = "Still can’t find a solution";
+"_troubleshoot_item_other_description" = "Contact us directly through our support form, email (%@), or Twitter.";
+"_troubleshoot_item_other_link1" = "support form";
+"_troubleshoot_item_other_link2" = "email";
+"_troubleshoot_item_other_link3" = "Twitter";

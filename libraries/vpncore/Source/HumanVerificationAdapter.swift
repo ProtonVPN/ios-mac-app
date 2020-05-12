@@ -26,22 +26,22 @@ public protocol HumanVerificationAdapterFactory {
     func makeHumanVerificationAdapter() -> HumanVerificationAdapter
 }
 
-public class HumanVerificationAdapter {
-    var token: HumanVerificationToken?
-    public init() {
-    }
-}
-
-// MARK: RequestAdapter
-
-extension HumanVerificationAdapter: RequestAdapter {
+public class HumanVerificationAdapter: RequestAdapter {
     
-    public func adapt(_ urlRequest: URLRequest) throws -> URLRequest {
-        guard let humanToken = token else { return urlRequest }
+    var token: HumanVerificationToken?
+    
+    public init() { }
+
+    // MARK: RequestAdapter
+    
+    public func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        
+        guard let humanToken = token else { return completion(.success(urlRequest)) }
         
         var request = urlRequest
         request.addValue(humanToken.fullValue, forHTTPHeaderField: "X-PM-Human-Verification-Token")
         request.addValue(humanToken.type.rawValue, forHTTPHeaderField: "X-PM-Human-Verification-Token-Type")
-        return request
+        return completion(.success(request))
+        
     }
 }

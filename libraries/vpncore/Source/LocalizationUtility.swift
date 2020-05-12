@@ -23,11 +23,17 @@ import Foundation
 
 public class LocalizationUtility {
     
-    public static func countryName(forCode countryCode: String) -> String? {
-        if countryCode.uppercased() == "HK" {
-            return "Hong Kong"
-        }
-        
+    public static let `default` = LocalizationUtility()
+    
+    public init() {
+        loadShortNames()
+    }
+    
+    public func shortenIfNeeded(_ name: String) -> String {
+        return namesToShorten[name] ?? name
+    }
+    
+    public func countryName(forCode countryCode: String) -> String? {
         let locale: Locale
         if let language = Locale.preferredLanguages[0].components(separatedBy: "-").first {
             locale = Locale(identifier: language)
@@ -35,6 +41,25 @@ public class LocalizationUtility {
             locale = Locale.current
         }
         
-        return locale.localizedString(forRegionCode: countryCode)
+        guard let name = locale.localizedString(forRegionCode: countryCode) else {
+            return nil
+        }
+        return shortenIfNeeded(name)
     }
+    
+    // MARK: - Name shortening
+    
+    private var namesToShorten = [String: String]()
+    
+    private func loadShortNames() {
+        do {
+            let vpnCoreBundle = Bundle(path: Bundle(for: LocalizationUtility.self).path(forResource: "vpncore", ofType: "bundle")!)!
+            let data = try Data(contentsOf: vpnCoreBundle.url(forResource: "country-names", withExtension: "plist")!)
+            let decoder = PropertyListDecoder()
+            namesToShorten = try decoder.decode([String: String].self, from: data)
+        } catch {
+            namesToShorten = [String: String]()
+        }
+    }
+    
 }

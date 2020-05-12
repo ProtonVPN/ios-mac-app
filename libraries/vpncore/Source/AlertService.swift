@@ -213,7 +213,7 @@ public class VpnStuckAlert: SystemAlert {
     public init() {}
 }
 
-public class NetworkUnreachableAlert: SystemAlert {
+public class VpnNetworkUnreachableAlert: SystemAlert {
     public var title: String? = LocalizedString.notConnectedToTheInternet
     public var message: String?
     public var actions = [AlertAction]()
@@ -481,4 +481,43 @@ public class InvalidHumanVerificationCodeAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.errorInvalidHumanVerificationCodeTryOther, style: .cancel, handler: tryAnother))
         actions.append(AlertAction(title: LocalizedString.errorInvalidHumanVerificationCodeResend, style: .confirmative, handler: resend))
     }    
+}
+
+public class UnreachableNetworkAlert: SystemAlert {
+    public var title: String? = LocalizedString.warning
+    public var message: String? = LocalizedString.neUnableToConnectToHost
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(error: Error, troubleshoot: @escaping () -> Void) {
+        message = error.localizedDescription
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.neTroubleshoot, style: .confirmative, handler: troubleshoot))
+    }
+}
+
+public class ConnectionTroubleshootingAlert: SystemAlert {
+    public var title: String? = LocalizedString.errorUnknownTitle
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init() {}
+}
+
+public class RegistrationUserAlreadyExistsAlert: SystemAlert {
+    public var title: String? = LocalizedString.warning
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(error: Error, forgotCallback: @escaping () -> Void, resetCallback: @escaping () -> Void ) {
+        message = error.localizedDescription
+        actions.append(AlertAction(title: LocalizedString.forgotUsername, style: .confirmative, handler: forgotCallback))
+        actions.append(AlertAction(title: LocalizedString.resetPassword, style: .confirmative, handler: resetCallback))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+    }
 }

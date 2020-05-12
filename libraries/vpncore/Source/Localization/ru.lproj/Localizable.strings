@@ -74,7 +74,7 @@
 "_auto_assigned" = "Назначается автоматически";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоматическое подключение";
+"_auto_connect" = "Автоподключение";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
@@ -473,7 +473,7 @@
 "_failed_to_access_vpn_credentials_title" = "Отсутствуют учетные данные VPN";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "К самому быстрому";
+"_fastest" = "Самый быстрый";
 
 /* Profile create/change form */
 "_fastest_available_server" = "Самый быстрый доступный сервер";
@@ -674,7 +674,7 @@
 "_maintenance" = "Техобслуживание";
 
 /* Profile create/change form */
-"_make_default_profile" = "Использовать как профиль по умолчанию";
+"_make_default_profile" = "Использовать по умолчанию";
 
 /* MacOS: button in profiles tab in main window */
 "_manage_profiles" = "Управление профилями";

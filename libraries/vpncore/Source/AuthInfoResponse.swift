@@ -65,8 +65,13 @@ class AuthenticationInfoResponse {
         
         let srpClient = try auth.generateProofs(2048)
         
-        let clientEphemeral = srpClient.clientEphemeral().base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
-        let clientProof = srpClient.clientProof().base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0))
+        guard let clientEphemeral = srpClient.clientEphemeral?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)) else {
+            throw ProtonVpnError.generateSrp
+        }
+        
+        guard let clientProof = srpClient.clientProof?.base64EncodedString(options: NSData.Base64EncodingOptions(rawValue: 0)) else {
+            throw ProtonVpnError.generateSrp
+        }
         
         return AuthenticationProperties(username: username, clientEphemeral: clientEphemeral,
                                         clientProof: clientProof, session: srpSession)

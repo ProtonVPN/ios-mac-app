@@ -1,0 +1,1466 @@
+/* Mac: Used in several Trial screens */
+"_5_connections" = "5 Συνδέσεις";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_5_connections_description" = "Συνδέστε έως και 5 συσκευές\nταυτόχρονα";
+
+/* MacOS: About window title */
+"_about" = "Σχετικά";
+
+/* Account tab button in settings window (MacOS) and in several modals (both MacOS and iOS) */
+"_account" = "Λογαριασμός";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "Πλάνο Λογαριασμού";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "Τύπος λογαριασμού";
+
+/* MacOS: About window */
+"_acknowledgements" = "Ευχαριστίες";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "Ενέργεια";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "Ενεργοποίηση Widget";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "Από την αρχική οθόνη, σύρετε προς τα αριστερά στην οθόνη για να αποκτήσετε πρόσβαση στα widget σας.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "Κάντε κύλιση προς τα κάτω και πατήστε το κουμπί επεξεργασίας.";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "Προσθέστε το ProtonVPN widget στη λίστα των ενεργών widget.";
+
+/* Plan information */
+"_advanced_features" = "+ Προηγμένα χαρακτηριστικά";
+
+/* API error */
+"_ae_vpn_info_not_received" = "Δεν είναι δυνατή η λήψη πληροφοριών vpn";
+
+/* API error */
+"_ae_wrong_login_credentials" = "Λάθος όνομα χρήστη ή κωδικός πρόσβασης";
+
+/* Account plan description */
+"_all_countries" = "40+ χώρες";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "Όλοι οι διακομιστές σε αυτήν τη χώρα βρίσκονται υπό συντήρηση. Παρακαλώ συνδεθείτε σε άλλη χώρα.";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "Το προφίλ διακομιστή/ων βρίσκεται υπό συντήρηση";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "Όλοι οι διακομιστές βρίσκονται υπό συντήρηση. Αυτό συνήθως σημαίνει πως είτε υπάρχουν τεχνικές δυσκολίες απο την πλευρά του ProtonVPN, είτε το δίκτυό σας είναι περιορισμένο.";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "Έχω ήδη ένα λογαριασμό";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "Πάντα-ενεργό VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "Το Kill Switch δεν υποστηρίζεται στο iOS. Το Πάντα-ενεργό VPN, επανεκκινεί μια ασφαλή σύνδεση VPN ομαλά και αυτόματα. Για την ασφάλειά σας, αυτή η λειτουργία είναι πάντα ενεργοποιημένη.";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "Το Πάντα-ενεργό VPN θα σας επανασυνδέσει αυτόματα";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "Καταγραφές Εφαρμογών";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_auto_assigned" = "Εκχωρήθηκε αυτόματα";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "Αυτόματη σύνδεση";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "Κατά την εκκίνηση της εφαρμογής, θα είστε συνδεδεμένοι στο επιλεγμένο προφίλ";
+
+/* iOS: section header in countries list */
+"_basic_servers" = "ΒΑΣΙΚΟΙ ΔΙΑΚΟΜΙΣΤΕΣ";
+
+/* Common word */
+"_cancel" = "Ακύρωση";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "Αλλάζοντας πρωτόκολλα θα τερματιστεί η τρέχουσα σύνδεση σας στο VPN.";
+
+/* MacOS: About window */
+"_changelog" = "Αρχείο αλλαγών";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "Παρακαλώ ελέγξτε εάν έχουν συμπληρωθεί όλα τα πεδία";
+
+/* iOS plan selection: header */
+"_choose_plan" = "Επιλέξτε Συνδρομή";
+
+/* iOS status view */
+"_city" = "Πόλη";
+
+/* Main mac app menu item */
+"_clear_application_data" = "Εκκαθάριση Δεδομένων Εφαρμογής";
+
+/* Common word */
+"_close" = "Κλείσιμο";
+
+/* Profile create/change form */
+"_color" = "Χρώμα";
+
+/* Common word */
+"_connect" = "Σύνδεση";
+
+/* Common word */
+"_connected" = "Συνδέθηκε";
+
+/* iOS status view */
+"_connected_to" = "Συνδεδεμένο με";
+
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "Συνδέθηκε σε %@";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "Συνδέεται";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "Συνδέεται σε %@";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "Γίνεται σύνδεση %@";
+
+/* iOS: connection bar, iOS widget */
+"_connecting..." = "Συνδέεται...";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "Σύνδεση";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "Η Σύνδεση Απέτυχε";
+
+/* Profile create/change form */
+"_connection_settings" = "Ρυθμίσεις σύνδεσης";
+
+/* Button in some alerts */
+"_continue" = "Συνέχεια";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "Χώρες";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. */
+"_countries_count" = "_countries_count";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
+"_countries_count_plus" = "_countries_count_plus";
+
+/* iOS: countries list section header */
+"_countries_free" = "Δωρεάν χώρες";
+
+/* iOS: countries list section header */
+"_countries_premium" = "Premium χώρες";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "Επιλέξτε τη χώρα και το διακομιστή που θέλετε να χρησιμοποιήσετε για την τελική διεύθυνση IP.";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "Χώρες";
+
+/* Profile create/edit menu */
+"_country" = "Χώρα";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "Παρακαλώ επιλέξτε μια χώρα";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@ οι διακομιστές είναι υπό συντήρηση";
+
+/* MacOS: button in login screen */
+"_create_account" = "Δημιουργία Λογαριασμού";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "Δημιουργία Προφίλ";
+
+/* Profile create/change form */
+"_create_profile" = "Δημιουργία Προφίλ";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "Συνεχίζοντας, η τρέχουσα επιλογή θα χαθεί. Θέλετε να συνεχίσετε;";
+
+/* iOS: data disclaimen screen button */
+"_data_disclaimer_agree" = "Συμφωνήστε & Συνεχίστε";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_device_details" = "Το μοντέλο της συσκευής σας και η έκδοση λειτουργικού συστήματος";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_text" = "Το ProtonVPN δεσμεύεται να προστατεύει και να σέβεται τα προσωπικά σας δεδομένα. Είναι η πρωταρχική πολιτική μας να συλλέγουμε όσο το δυνατόν λιγότερα δεδομένα χρήστη για να διασφαλίσουμε μια ιδιωτική και ανώνυμη εμπειρία χρήστη κατά την χρήση της εφαρμογής, συγκεκριμένα:\n\n%@ – για να συνδεθείτε, βοήθεια για να ανακτήσετε έναν χαμένο κωδικό πρόσβασης και να στείλετε σημαντικές ενημερώσεις υπηρεσίας.\n\n%@ – για αναφορές σφαλμάτων και σφάλματα μόνο.\n\nΗ εφαρμογή ProtonVPN δεν επεξεργάζεται πληροφορίες χρηστών εκτός αυτών των δεδομένων. Δεν καταγράφουμε την ηλεκτρονική σας δραστηριότητα ούτε τυχόν προσωπικά αναγνωρίσιμα στοιχεία. Όλα τα δεδομένα που αναφέρονται παραπάνω αποθηκεύονται και επεξεργάζονται στο σύστημα του ProtonVPN, χωρίς ποτέ να έχει πρόσβαση τρίτο μέρος σε αυτό.";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_title" = "Προστατεύστε τον εαυτό σας online";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_user_details" = "Όνομα χρήστη, διεύθυνση email";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "Το κουμπί \"Γρήγορη Σύνδεση\" χρησιμοποιεί το προεπιλεγμένο προφίλ.";
+
+/* Common word */
+"_delete" = "Διαγραφή";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "Όλα τα δεδομένα ProtonVPN θα διαγραφούν και η εφαρμογή θα τερματιστεί. Επιθυμείτε να συνεχίσετε;";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "Εκκαθάριση δεδομένων εφαρμογής";
+
+/* Button */
+"_delete_profile" = "Διαγραφή προφίλ";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "Διαγραφή Προφίλ";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "Το προφίλ θα διαγραφεί οριστικά. Θέλετε να συνεχίσετε;";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "Ο λογαριασμός σας έχει καθυστερημένο υπόλοιπο. Παρακαλώ πληρώστε όλα τα μη καταβληθέντα υπόλοιπα στο account.protonvpn.com";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "Ανεξόφλητο υπόλοιπο";
+
+/* Profile create/change form */
+"_different_server_each_time" = "Διαφορετικός διακομιστής κάθε φορά";
+
+/* Button in some alerts */
+"_disable" = "Απενεργοποίηση";
+
+/* Common word */
+"_disabled" = "Απενεργοποιημένο";
+
+/* Common word */
+"_disconnect" = "Αποσύνδεση";
+
+/* Common word */
+"_disconnected" = "Αποσυνδεδεμένο";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "Γίνεται Αποσύνδεση";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "Ανακαλύψτε την εφαρμογή";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "Προστασία Διαρροής DNS";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "Αποτρέπει την διαρροή πληροφοριών του DNS queries σε τρίτους. Πάντα ανοιχτό.";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "Θέλετε να ενεργοποιήσετε τη συνδρομή που έχετε αγοράσει για ";
+
+/* Common word */
+"_done" = "Έτοιμο";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "Πρώιμη Πρόσβαση";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "Γίνετε οι πρώτοι που θα λάβετε τις πιο πρόσφατες ενημερώσεις. Λάβετε υπόψη ότι οι πρώτες εκδόσεις ενδέχεται να είναι λιγότερο σταθερές.";
+
+/* Common word */
+"_edit" = "Επεξεργασία";
+
+/* Common word */
+"_enabled" = "Ενεργοποιημένο";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "Λήξη Περιήγησης";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "ΑΠΟΛΑΥΣΤΕ %@ ΔΩΡΕΑΝ!";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "Εισάγετε την διεύθυνση email σας";
+
+/* Profile create/change form */
+"_enter_profile_name" = "Εισάγετε Όνομα Προφίλ";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* API error */
+"_error_api_offline" = "Το API του ProtonVPN, είναι προσωρινά εκτός σύνδεσης";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_message" = "Έχετε εγγραφεί επιτυχώς, αλλά η πληρωμή σας δεν υποβλήθηκε σε επεξεργασία. Για να στείλετε ξανά τα στοιχεία πληρωμής σας, κάντε κλικ στο Επανάληψη. Θα χρεωθείτε μόνο μία φορά. Εάν το πρόβλημα παραμένει, επικοινωνήστε με την υποστήριξη πελατών.";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_support" = "Επικοινωνήστε με την υποστήριξη πελατών";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_title" = "Η πληρωμή απέτυχε";
+
+/* In App Purchase error */
+"_error_credit_applied" = "Επικοινωνήστε με το support@protonvpn.com για να ολοκληρώσετε την αγορά σας.";
+
+/* Error decoding an object */
+"_error_decode" = "Αποτυχία αποκωδικοποίησης αρχειοθετημένων δεδομένων στην κλάση: %@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "Η επαλήθευση E-mail έχει τεθεί προσωρινά εκτός λειτουργίας";
+
+/* Application error */
+"_error_existing_session_to_server" = "Δεν είναι δυνατή η σύνδεση με διακομιστή επειδή υπάρχει ήδη μια ενεργή συνεδρία από το χρήστη";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "Δεν είναι δυνατή η εύρεση του χρήστη από τη συνεδρία";
+
+/* Form validation error */
+"_error_field_email_wrong_format" = "Η διεύθυνση email δεν έχει τη σωστή μορφή";
+
+/* Form validation error */
+"_error_field_passwords_dont_match" = "Οι κωδικοί πρόσβασης δεν ταιριάζουν";
+
+/* Form validation error */
+"_error_field_required" = "Αυτό το πεδίο είναι υποχρεωτικό";
+
+/* Form validation error */
+"_error_field_unknown" = "Παρακαλώ ελέγξτε αυτό το πεδίο";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "Η δημιουργία SRP απέτυχε";
+
+/* Error when try to hash password */
+"_error_hash_password" = "Δεν είναι δυνατό το hash του κωδικού χρήστη";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "Εσωτερικό σφάλμα API";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_message" = "Θέλετε να λάβετε έναν νέο κωδικό επαλήθευσης ή να χρησιμοποιήσετε μια εναλλακτική μέθοδο επαλήθευσης;";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_resend" = "Αποστολή ξανά";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_title" = "Μη έγκυρος κωδικός επαλήθευσης";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_try_other" = "Δοκιμάστε άλλη μέθοδο";
+
+/* Keychain error */
+"_error_keychain_fetch" = "Σφάλμα κλειδιού.";
+
+/* Parsing error */
+"_error_loads" = "Δεν είναι δυνατή η ενημέρωση των φορτίων διακομιστή";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "Η επαλήθευση του πιστοποιητικού TLS απέτυχε όταν προσπαθήσατε να συνδεθείτε στο API του ProtonVPN. Η τρέχουσα σύνδεση στο Internet μπορεί να παρακολουθείται. Για να διατηρήσουμε τα δεδομένα σας ασφαλή, αποτρέπουμε την πρόσβαση της εφαρμογής στο ProtonVPN API.\nΓια να συνδεθείτε ή να αποκτήσετε πρόσβαση στο λογαριασμό σας, μεταβείτε σε ένα νέο δίκτυο και προσπαθήστε να συνδεθείτε ξανά.";
+
+/* Man In The Middle attack alert */
+"_error_mitm_title" = "Μη-ασφαλής σύνδεση";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Η υπογραφή Modulus είναι κενή";
+
+/* In App Purchase error */
+"_error_no_active_username" = "Παρακαλώ συνδεθείτε με τον λογαριασμό που αναβαθμίζετε το service πλάνο για να μπορέσουμε να ολοκληρώσουμε την αγορά σας.";
+
+/* In App Purchase error */
+"_error_no_new_subscription_in_successfull_response" = "Η αναβάθμιση της συνδρομής σας ήταν επιτυχής. Κάντε επανεκκίνηση της εφαρμογής για να επωφεληθείτε από το νέο σας service πλάνο.";
+
+/* In App Purchase error alert */
+"_error_occured" = "Παρουσιάστηκε σφάλμα";
+
+/* In App Purchase error */
+"_error_purchased_plan_does_not_match_available" = "Δεν ήμασταν σε θέση να αντιστοιχίσουμε το προϊόν του App Store με τα προϊόντα στον διακομιστή μας. Παρακαλώ επικοινωνήστε με την υποστήριξη.";
+
+/* In App Purchase error */
+"_error_receipt_lost" = "Η απόδειξη App Store χάθηκε. Παρακαλώ επικοινωνήστε με την υποστήριξη εάν το πακέτο σας δεν έχει ενεργοποιήθει.";
+
+/* In App Purchase error */
+"_error_sandbox_receipt" = "Οι αγορές δεν είναι διαθέσιμες στη beta έκδοση της εφαρμογής iOS. Δεν έχετε χρεωθεί.";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "Δεν είναι δυνατή η ανάλυση πληροφοριών των διακομιστών";
+
+/* Parsing error */
+"_error_session_count_parser" = "Δεν είναι δυνατή η ανάλυση του αριθμού συνεδριών";
+
+/* Error when the user attempts to sign up using an existing ProtonMail email address */
+"_error_signup_using_protonmail_address" = "Ο λογαριασμός σας ProtonMail έχει ήδη ρυθμιστεί για VPN. Συνδεθείτε με τα υπάρχοντα διαπιστευτήριά σας.";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "Δεν είναι δυνατή η ανάλυση των πληροφοριών συνδρομής";
+
+/* In App Purchase error */
+"_error_transaction_failed_by_unknown_reason" = "Το App Store δεν μπορεί να επεξεργαστεί την αγορά σας.";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "Ξεκίνησε μια αγορά με διαφορετικό όνομα χρήστη ProtonVPN.";
+
+/* In App Purchase error */
+"_error_unavailable_product" = "Αποτυχία λήψης λίστας διαθέσιμων προϊόντων από το App Store.";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "Άγνωστο σφάλμα";
+
+/* user cancelled human validation procedure */
+"_error_user_cancelled" = "Η ενέργεια ακυρώθηκε";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "Η Δημιουργία λογαριασμού απέτυχε";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "Τα διαπιστευτήρια χρήστη έχουν λήξει. Παρακαλώ συνδεθείτε";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "Δεν υπάρχουν διαπιστευτήρια χρήστη. Δεν είναι δυνατή η πρόσβαση";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "Δεν μπορέσαμε να επαληθεύσουμε ότι είστε άνθρωπος. Δοκιμάστε ξανά ή αγοράστε ένα πακέτο premium.";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_no_vpn_access" = "Ο λογαριασμός σας δεν διαθέτει πρόσβαση VPN. Επικοινωνήστε με τον διαχειριστή του λογαριασμού σας";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_not_signed_up" = "Δεν έχετε ακόμη εγγραφεί στο ProtonVPN";
+
+/* VPN credentials can't be loaded error */
+"_error_user_is_on_waitlist" = "Αυτήν τη στιγμή βρίσκεστε στην αναμονή και ο λογαριασμός σας δεν είναι ακόμα έτοιμος";
+
+/* Username unavailable error */
+"_error_username_unavailable" = "Το όνομα χρήστη χρησιμοποιείται ήδη";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "Δεν είναι δυνατή η ανάλυση μεθόδων επαλήθευσης";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "Τα διαπιστευτήρια VPN λείπουν από την αλυσίδα κλειδιού";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "Δεν είναι δυνατή η εξαγωγή ιδιοτήτων VPN!";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "Η περίοδος συνεδρίας ProtonVPN είναι ενεργή";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_body" = "Το ProtonVPN χρησιμοποιεί ένα firewall πακέτων φίλτρων για την εφαρμογή ενός Kill Switch. Με την ενεργοποίηση του Kill Switch, θα αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall της συσκευής σας. Αν βασίζεστε σε αυτή τη διαμόρφωση του firewall, δεν θα πρέπει να χρησιμοποιήσετε το Kill Switch.\n\nΓια να χρησιμοποιήσετε τον Kill Switch και να αντικαταστήσετε τις τρέχουσες ρυθμίσεις του firewall, επιλέξτε CONTINUE.\n\nΓια να απενεργοποιήσετε τον Kill Switch και να συνεχίσετε να χρησιμοποιείτε το τρέχον firewall, επιλέξτε CANCEL.";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_title" = "Εντοπίστηκε Firewall";
+
+/* Existing connection alert */
+"_existing_session" = "Ο διακομιστής δεν είναι διαθέσιμος";
+
+/* Existing connection alert */
+"_existing_session_to_server" = "Παρακαλώ δοκιμάστε έναν διαφορετικό διακομιστή.";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "ΕΛΗΞΕ";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "Επεκτάσεις";
+
+/* MacOS: connecting overlay */
+"_failed" = "απέτυχε";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_description" = "Αποτυχία ανάκτησης πιστοποιήσεων VPN, συνδεθείτε ξανά για να επιλύσετε το ζήτημα.";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_title" = "Τα διαπιστευτήρια VPN λείπουν";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "Γρηγορότερο";
+
+/* Profile create/change form */
+"_fastest_available_server" = "Ο Γρηγορότερος διαθέσιμος διακομιστής";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "Η Γρηγορότερη Σύνδεση";
+
+/* Profile create/change form */
+"_feature" = "Χαρακτηριστικό";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "Πρόσβαση σε μπλοκαρισμένο περιεχόμενο";
+
+/* iOS plan feature */
+"_feature_bt" = "Υποστήριξη BitTorrent/file-sharing";
+
+/* iOS plan feature */
+"_feature_connections" = "Ταυτόχρονες συνδέσεις VPN";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "Ασφαλές Streaming";
+
+/* iOS plan feature */
+"_feature_server_count" = "Σύνδεση σε διακομιστές στο";
+
+/* iOS plan feature */
+"_feature_speed" = "Ταχύτητα";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor μέσω VPN";
+
+/* iOS: button in login screen */
+"_forgot_password" = "Ξεχάσατε τον Κωδικό;";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "Ξέχασα το Όνομα Χρήστη";
+
+/* Used instead of price for free plans. */
+"_free" = "Δωρεάν";
+
+/* Account plan description */
+"_free_countries" = "3 Χώρες";
+
+/* iOS: section header in countries list */
+"_free_servers" = "ΔΩΡΕΑΝ ΔΙΑΚΟΜΙΣΤΕΣ";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "Αναβαθμίστε σε %@ και συνεχίστε να απολαμβάνετε αυτές τις λειτουργίες:";
+
+/* MacOS: \"Trial about to expire\" screen title */
+"_free_trial_about_to_expire_title" = "Η δωρεάν περίοδος δοκιμής σας πρόκειται να λήξει!";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "Ο λογαριασμός σας έχει υποβαθμιστεί σε ProtonVPN FREE.\nΔείτε τι χάνετε από %@:";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "Η ΔΩΡΕΑΝ ΠΕΡΙΟΔΟΣ ΔΟΚΙΜΗΣ ΣΑΣ %@";
+
+/* MacOS: General tab in setting window */
+"_general" = "Γενικά";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "Λάβετε %@ Πλάνο";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "Λάβετε email επαλήθευσης";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "Λάβετε SMS επαλήθευσης";
+
+/* Button in several different alerts */
+"_got_it" = "Το κατάλαβα!";
+
+/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+"_help" = "Βοήθεια";
+
+/* Show/hide password switch */
+"_hide" = "ΑΠΟΚΡΥΨΗ";
+
+/* Value of speed in _speed */
+"_high" = "Υψηλή";
+
+/* Value of speed in _speed */
+"_highest" = "Ύψιστη";
+
+/* Button in Kill switch error alert */
+"_ignore" = "Αγνόηση";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "Εκκίνηση Σύνδεσης...";
+
+/* Token expired alert */
+"_invalid_refresh_token" = "Η συνεδρία έληξε";
+
+/* Token expired alert */
+"_invalid_refresh_token_please_login" = "Έχει καιρό από τότε που χρησιμοποιήσατε τελευταία φορά την εφαρμογή ProtonVPN. Παρακαλούμε συνδεθείτε ξανά.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "Από τους επιστήμονες και τους μηχανικούς που δημιούργησαν το ProtonMail, καλωσήρθατε σε ένα ασφαλέστερο και ιδιωτικό Διαδίκτυο.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "Καλωσήρθατε σε ένα καλύτερο Internet";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "Καταπολέμηση της λογοκρισίας και των περιφερειακών περιορισμών. Δεν έχουμε διαφημίσεις, δεν υπάρχουν όρια bandwidth και δεν πουλάμε τα δεδομένα σας.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "Πιστεύουμε ότι το διαδίκτυο πρέπει να είναι ελεύθερο";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "Είμαστε μια εταιρεία ασφάλειας. Είτε είναι secure core είτε προηγμένη κρυπτογράφηση, η ασφάλεια έρχεται πάντα πρώτη.";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "Η ασφάλεια σας είναι προτεραιότητα μας";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "Kill Switch";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Έχετε χάσει τη σύνδεση με το διακομιστή VPN. Το Kill Switch μπλοκάρει όλες τις συνδέσεις για να αποφύγει τη διαρροή των δεδομένων σας. Το ProtonVPN θα προσπαθήσει να επανασυνδεθεί αυτόματα. Για να απορρίψετε αυτό το παράθυρο, κάντε κλικ στο κουμπί OK.\n\nΕάν θέλετε να απενεργοποιήσετε προσωρινά το Kill Switch και να επανασυνδεθείτε στο Internet ΧΩΡΙΣ προστασια VPN, κάντε κλικ ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.\n\nΓια να κλείστε το Kill Switch μόνιμα, πηγαίνετε στο %@.";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "Το Kill Switch μπλοκάρει όλες τις συνδέσεις";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_title" = "Το Kill Switch αυτή τη στιγμή εμποδίζει διαρροές IP";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_body" = "Ο Kill Switch δεν λειτουργεί σωστά. Αν θέλετε να αναφέρετε αυτό το σφάλμα στην ομάδα υποστήριξης του ProtonVPN, κάντε κλικ στην επιλογή Αναφορά.\nΕάν θέλετε να αγνοήσετε αυτό το σφάλμα και να συνεχίσετε να περιηγείστε στο Internet ΧΩΡΙΣ Kill Switch, κάντε κλικ στην επιλογή Αγνόηση.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_title" = "Έχει εντοπιστεί σφάλμα Kill Switch";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "Παρουσιάστηκε πρόβλημα κατά την εγκατάσταση ή την ενημέρωση του Kill Switch.\n\nΓια να προσπαθήστε ξανά, κάντε κλικ στο ΕΠΑΝΑΛΗΨΗ.\n\nΓια να συνεχίσετε χωρίς το Kill Switch, κάντε κλικ στο ΑΠΕΝΕΡΓΟΠΟΙΗΣΗ.";
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "Για να ενεργοποιήσετε το Kill Switch, ίσως σας ζητηθεί να δώσετε τον κωδικό του λογαριασμού υπολογιστή σας. Εάν εμφανιστεί ένα αίτημα, πληκτρολογήστε το %@ και κάντε αποδοχή.\n\nΕνδέχεται να δείτε ξανά αυτό το αίτημα περιστασιακά όταν η εφαρμογή ProtonVPN λαμβάνει ενημερώσεις.";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "Η πιο πρόσφατη ενημέρωση που κατεβάσατε, απαιτεί να δώσετε τον κωδικό πρόσβασης του υπολογιστή σας. Όταν εμφανιστεί το αίτημα, εισαγάγετε το %@ και αποδεχτείτε.\n\nΕάν δεν εισάγετε τον κωδικό Mac σας, το Kill Switch θα απενεργοποιηθεί.";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "Μπλοκάρει όλη την κίνηση δικτύου όταν χαθεί το VPN tunnel. Σημειώστε ότι η σύνδεση VPN θα τερματιστεί όταν εναλλάσετε λογαριασμούς Mac.";
+
+/* MacOS: link in login screen */
+"_learn_more" = "Μάθετε περισσότερα";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Μάθετε περισσότερα για το Secure Core";
+
+/* Server load. Used together with actual server load in percents. */
+"_load" = "Φόρτος";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "Ασφαλές Διαδίκτυο Οπουδήποτε";
+
+/* iOS status view */
+"_location" = "Τοποθεσία";
+
+/* iOS: Login button in several places */
+"_log_in" = "Είσοδος";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "Παρακαλούμε συνδεθείτε για να ξεκινήσετε";
+
+/* iOS: button in settings screen */
+"_log_out" = "Αποσύνδεση";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "Κάνοντας αποσύνδεση θα τερματίστει η συνεδρία σύνδεσης VPN.";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "Η αποσύνδεση της εφαρμογής θα αποσυνδέσει επίσης την ενεργή συνεδρία VPN. Θέλετε να συνεχίσετε;";
+
+/* MacOS: Login button */
+"_login" = "Είσοδος";
+
+/* iOS logs screen title */
+"_logs" = "Logs";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Κωδικός Mac";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "Συντήρηση";
+
+/* Profile create/change form */
+"_make_default_profile" = "Ορισμός Προεπιλεγμένου Προφίλ";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "Διαχείριση Προφίλ";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "Διαχείριση Συνδρομής";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription_on_web" = "Διαχειριστείτε τη συνδρομή σας στον πίνακα ελέγχου web";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "Χάρτης";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_hide" = "Απόκρυψη χάρτη";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_show" = "Εμφάνιση χάρτη";
+
+/* MacOS app tour: map description */
+"_map_tour_description" = "Δείτε πού βρίσκονται οι διακομιστές VPN. Βρείτε το πλησιέστερο στην τοποθεσία σας.";
+
+/* MacOS app tour: map title */
+"_map_tour_title" = "Χάρτης";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "Ίσως Αργότερα";
+
+/* Value of speed in _speed */
+"_medium" = "Μέτρια";
+
+/* Main mac app menu item */
+"_menu_about" = "Σχετικά με το ProtonVPN";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "Έλεγχος για Ενημερώσεις...";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "Απόκρυψη Άλλων";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "Απόκρυψη ProtonVPN";
+
+/* Main mac app menu item */
+"_menu_logout" = "Αποσύνδεση";
+
+/* Main mac app menu item */
+"_menu_minimize" = "Ελαχιστοποίηση";
+
+/* Main mac app menu item */
+"_menu_preferences" = "Προτιμήσεις";
+
+/* Main mac app menu item */
+"_menu_quit" = "Έξοδος απο το ProtonVPN";
+
+/* Main mac app menu item */
+"_menu_show_all" = "Εμφάνιση Όλων";
+
+/* Main mac app menu item */
+"_menu_window" = "Παράθυρο";
+
+/* Label in several trial screens on MacOS */
+"_money_back_guarantee" = "Εγγύηση Επιστροφής Χρημάτων εντός 30 ημερών";
+
+/* Label in Plan information */
+"_most_popular" = "Τα πιο δημοφιλή";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "Πολλαπλές χώρες";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_description" = "Εκατοντάδες διακομιστές\nσε όλο το κόσμο";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_title" = "Πολλαπλοί Διακομιστές";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "Το προφίλ μου";
+
+/* Profile create/change form */
+"_name" = "Όνομα";
+
+/* Network error */
+"_ne_network_connection_lost" = "Η Σύνδεση δικτύου χάθηκε";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "Δεν είναι συνδεδεμένο στο Διαδίκτυο";
+
+/* Network error */
+"_ne_request_timed_out" = "Η Αίτηση δικτύου έληξε";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "Η υπηρεσία δεν είναι προσβάσιμη";
+
+/* Mac: neagent help screen */
+"_neagent_always_allow" = "Να Επιτρέπεται Πάντα";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "Ενδέχεται να σας ζητηθεί να δώσετε το δικό σας %@\nγια να συνδεθείτε με την υπηρεσία ProtonVPN. Εάν εμφανιστεί αυτό το αίτημα,\nΕισάγετε το %@ %@ και κάντε κλίκ %@ ’ %@.";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "κωδικό πρόσβασης λογαριασμού υπολογιστή";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* MacOS: button in login screen */
+"_need_help" = "Χρειάζεστε Βοήθεια;";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "Δίκτυο μη Προσβάσιμο";
+
+/* iOS onboarding next item button */
+"_next" = "Επόμενο";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "Επόμενη Συμβουλή";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "Δεν υπάρχει διαθέσιμη περιγραφή";
+
+/* (No Comment) */
+"_no_servers_to_show" = "Αυτήν τη στιγμή δεν υπάρχουν διακομιστές που να εμφανίζονται εδώ.";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "Όχι ευχαριστώ";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "Μη Συνδεδεμένο";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "Δεν είναι δυνατή η δημιουργία σύνδεσης VPN. Δεν είστε συνδεδεμένοι στο Διαδίκτυο.";
+
+/* Common word */
+"_ok" = "ΟΚ";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "Εμφάνιση του ProtonVPN για σύνδεση...";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN Logs";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "Επισκόπηση";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "Υποστηρίζει κίνηση P2P";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_body" = "Η σύνδεση σας έχει απενεργοποιηθεί επειδή χρησιμοποιείτε διακομιστές που δεν υποστηρίζουν κίνηση από χρήστες P2P. Το P2P δεν υποστηρίζεται σε δωρεάν διακομιστές ή διακομιστές με αριθμό 100 ή μεγαλύτερο αυτού.";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_title" = "Η κίνηση P2P δεν επιτρέπεται σε αυτόν τον διακομιστή";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body" = "Η σύνδεση σας έχει επαναδρομολογηθεί αυτόματα μέσω άλλου διακομιστή, επειδή ορισμένοι διακομιστές δεν υποστηρίζουν κυκλοφορία P2P. Αυτό μπορεί να μειώσει την ταχύτητα σύνδεσης. Χρησιμοποιήστε διακομιστές με την ετικέτα P2P για να αποφύγετε την επαναδρομολόγηση.";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p1" = "Η σύνδεσή σας έχει επαναδρομολογηθεί αυτόματα μέσω άλλου διακομιστή, επειδή ορισμένοι διακομιστές δεν υποστηρίζουν κυκλοφορία P2P. Αυτό μπορεί να μειώσει την ταχύτητα σύνδεσης. Χρησιμοποιήστε διακομιστές με το";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p2" = "εικονίδιο για να αποφύγετε την επαναδρομολόγηση της κίνησης.";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_title" = "Η σύνδεση επαναδρομολογήθηκε";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_p2p_server" = "Διακομιστής P2P";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "Διακομιστές P2P";
+
+/* Plan upgrade required alert */
+"_paid_required" = "Απαιτείται πλάνο ProtonVPN επι πληρωμής";
+
+/* Used in sign-in, sign-up */
+"_password" = "Κωδικός";
+
+/* Sign-up form */
+"_password_confirm" = "Επιβεβαίωση κωδικού";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/ χρ";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "Κωδικός";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "Εισάγετε αριθμό τηλεφώνου";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "Το πακέτο σας δεν περιλαμβάνει τη λειτουργία Secure Core.";
+
+/* Plan speed */
+"_plan_speed_fastest" = "Μεγαλύτερη δυνατή ταχύτητα";
+
+/* Plan speed */
+"_plan_speed_high" = "Υψηλή ταχύτητα";
+
+/* Plan speed */
+"_plan_speed_medium" = "Μέτρια ταχύτητα";
+
+/* Account plan description */
+"_plans_connection" = "_plans_connection";
+
+/* No comment provided by engineer. */
+"_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "Μόλις επιβεβαιώσετε την αγορά ενός πακέτου, ο λογαριασμός σας στο iTunes θα χρεωθεί με το ποσό που εμφανίζεται, το οποίο περιλαμβάνει φόρους και πρόσθετα τέλη πλατφόρμας (τα οποία δεν χρεώνονται απευθείας από την Proton). Αφού πραγματοποιήσετε την αγορά, θα αναβαθμιστεί αυτόματα το πακέτο για περίοδο ενός έτους, μετά από την οποία μπορείτε να ανανεώσετε ή να το ακυρώσετε, είτε online είτε μέσω της εφαρμογής iOS.";
+
+/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "PLUS";
+
+/* Features of account plan */
+"_plus_plan_features" = "Διακομιστές Plus\nSecure Core\nΔιακομιστές Tor";
+
+/* Plan upgrade required alert */
+"_plus_required" = "Απαιτείται συνδρομή Plus ή Visionary";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "ΔΙΑΚΟΜΙΣΤΕΣ PLUS";
+
+/* MacOS: Upgrade screen text */
+"_plus_upgrade_description" = "Χρησιμοποιήστε το Secure Core, μεταδώστε τις αγαπημένες σας τηλεοπτικές εκπομπές,\nχρήση σε έως και 5 διαφορετικές συσκευές και πολλά άλλα!";
+
+/* MacOS: Upgrade screen title */
+"_plus_upgrade_title" = "Απολαμβάνετε το ProtonVPN;\nΠάρτε Plus για μόνο 8 $ /μήνα";
+
+/* MacOS: Settings screen title */
+"_preferences" = "Προτιμήσεις";
+
+/* Description shown together with server info icon */
+"_premium_description" = "Premium διακομιστής";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_premium_server" = "Premium Διακομιστής";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "Έλεγχος διαθεσιμότητας διακομιστή";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "Πολιτική Απορρήτου";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "Προφίλ";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "Αποθηκεύτηκε νέο Προφίλ";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "Το προφίλ δε μπόρεσε να δημιουργηθεί";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "Το προφίλ έχει διαγραφεί";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "Το προφίλ δε μπόρεσε να διαγραφεί";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "Το προφίλ ενημερώθηκε";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "Παρακαλώ εισάγετε ένα όνομα";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "Το μέγιστο μήκος, ονόματος προφίλ, είναι 25 χαρακτήρες";
+
+/* Error when profile name is already taken */
+"_profile_name_needs_to_be_unique" = "Υπάρχει ήδη προφίλ με αυτό το όνομα";
+
+/* Profile create/change form */
+"_profile_settings" = "Ρυθμίσεις προφίλ";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "Προφίλ";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "Επισκόπηση προφίλ";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "Αποθηκεύστε τις προτιμώμενες ρυθμίσεις και τους διακομιστές σας για μελλοντική χρήση.";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "Προφίλ";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "Πρωτόκολλο";
+
+/* Mac: neagent help screen */
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+/* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "Δημόσια IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "Γρήγορη Σύνδεση";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "Το κουμπί Γρήγορης Σύνδεσης θα σας συνδέσει με το επιλεγμένο προφίλ";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "Αυτόματη σύνδεση με το διακομιστή που θα σας παρέχει την πιο γρήγορη σύνδεση.";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "Γρήγορη Σύνδεση";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "Έξοδος";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "Η έξοδος από την εφαρμογή θα αποσυνδέσει την ενεργή συνεδρία VPN. Θέλετε να συνεχίσετε;";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "Τυχαίο";
+
+/* Profile create/change form */
+"_random_available_server" = "Τυχαίος διαθέσιμος διακομιστής";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "Τυχαία Σύνδεση";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "Προτεινόμενο";
+
+/* MacOS: About window */
+"_release_date" = "Ημερομηνία κυκλοφορίας:";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "Απομνημόνευση Σύνδεσης";
+
+/* Button in Kill switch error alert */
+"_report" = "Αναφορά";
+
+/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
+"_report_add_file" = "Προσθήκη αρχείου";
+
+/* Main mac app menu item */
+"_report_an_issue" = "Αναφορά προβλήματος...";
+
+/* Bug report attachments */
+"_report_attachments" = "Συνημμένα";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "Αναφορά Σφάλματος";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Δώστε λεπτομερείς πληροφορίες σχετικά με το πρόβλημα που αντιμετωπίσατε και επισυνάψτε τυχόν αρχεία που θα μας βοηθήσουν να αναπαράγουμε το πρόβλημα. Επίσης, μας δώστε μας έναν τρόπο να επικοινωνήσουμε μαζί σας για περισσότερες πληροφορίες.";
+
+/* Mac bug report: label before username */
+"_report_field_account" = "Λογαριασμός:";
+
+/* Mac bug report: country field label */
+"_report_field_country" = "Χώρα:";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "E-mail:";
+
+/* Mac bug report: message field label */
+"_report_field_feedback" = "Αξιολόγηση";
+
+/* Mac bug report: Internet Service Provider field label */
+"_report_field_isp" = "ISP:";
+
+/* Mac bug report: label before users protonvpn plan */
+"_report_field_plan" = "Πακέτο:";
+
+/* Mac bug report: label before app version number */
+"_report_field_version" = "Έκδοση:";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN logs";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "Ενεργοποιώντας το, θα προστεθούν τα αρχεία καταγραφής VPN του πελάτη σας σε αυτήν την αναφορά";
+
+/* Mac bug report: info text */
+"_report_max_file_size" = "Μέγιστο όριο μεγέθους αρχείου: 488 KB";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "Email επικοινωνίας";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "Το μήνυμα σας...";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "Αναφορά μηνύματος";
+
+/* Bug report: Send report button text */
+"_report_send" = "Αποστολή Αναφοράς";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "Ευχαριστούμε για την αναφορά σας";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "Ζητήστε χειροκίνητη ενεργοποίηση";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "Ζητήστε νέο κωδικό";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "Δεν λάβατε τον κωδικό;";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "Ζητήθηκε νέος κωδικός";
+
+/* MacOS: button in login screen */
+"_reset_password" = "Επαναφορά Κωδικού";
+
+/* Button in some alerts */
+"_retry" = "Επανάληψη";
+
+/* Common word */
+"_save" = "Αποθήκευση";
+
+/* Button */
+"_save_as_profile" = "Αποθήκευση ως προφίλ";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "Αναζήτηση για χώρα";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "Αναζήτηση χώρας";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_core_description" = "Εξαιρετικά ασφαλείς διακομιστές\nhosted από εμάς";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Παρέχει επιπρόσθετη προστασία ενάντια στην έκθεση του διακομιστή VPN, δρομολογώντας την κίνηση μέσω του Δικτύου Secure Core";
+
+/* MacOS app tour: secure core description */
+"_secure_core_tour_description" = "Ενεργοποιήστε τον Secure Core για να κατευθύνετε την κίνηση σας μέσω πρόσθετων διακομιστών για ένα άλλο επίπεδο ασφάλειας δικτύου. Διατίθεται στα μέλη Plus και Visionary.";
+
+/* MacOS app tour: secure core title */
+"_secure_core_tour_title" = "Secure Core";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_description" = "Ασφαλίστε τη ροή του\nαγαπημένου σας περιεχομένου";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_title" = "Ασφαλές Streaming";
+
+/* iOS Settings: table section header */
+"_security_options" = "Επιλογές Ασφαλείας";
+
+/* Profile create/change form */
+"_select_country" = "Επιλογή Χώρας";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "Επιλέξτε Κωδικό Χώρας";
+
+/* Button in plan selection */
+"_select_plan" = "Επιλέξτε πλάνο";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "Επιλογή χρώματος προφίλ";
+
+/* Profile create/change form */
+"_select_server" = "Επιλογή Διακομιστή";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "Επιλέξτε μια επιλογή επαλήθευσης για να προχωρήσετε:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "Για να αποτρέψουμε την κατάχρηση, θα πρέπει να επαληθεύσετε ότι είστε άνθρωπος.";
+
+/* Profile create/change form */
+"_server" = "Διακομιστής";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_ip" = "IP Διακομιστή:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_load" = "Φορτίο Διακομιστή:";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "Παρακαλώ επιλέξτε ένα διακομιστή";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "Διακομιστής υπό συντήρηση";
+
+/* Session count limit alert */
+"_session_count_reached_description" = "Έχετε φτάσει τον μέγιστο αριθμό ταυτόχρονων συνδέσεων που επιτρέπονται για το λογαριασμό σας. Κάντε αναβάθμιση του πακέτου ProtonVPN για περισσότερες συνδέσεις.";
+
+/* Session count limit alert */
+"_session_count_reached_title" = "Το όριο συνεδριών έχει επιτευχθεί";
+
+/* iOS status view */
+"_session_time" = "Διάρκεια Συνεδρίας";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "Ρυθμίσεις";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "Η Εγκατάσταση Ολοκληρώθηκε";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_basic" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας ProtonVPN Basic είναι τώρα ενεργό.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "Τώρα έχετε εγγραφεί για ένα δωρεάν πρόγραμμα ProtonVPN. Για να ξεκινήσετε, απολαύστε δωρεάν τις επτά ημέρες του πακέτου ProtonVPN Plus.";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "Η αγορά σας ήταν επιτυχής. Το πακέτο σας ProtonVPN Plus είναι τώρα ενεργό.";
+
+/* Show/hide password switch */
+"_show" = "ΕΜΦΑΝΙΣΗ";
+
+/* MacOS: button in custom status menu */
+"_show_protonvpn" = "Εμφάνιση ProtonVPN";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "Εγγραφή";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "Παράλειψη";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ ταχύτητα";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "Τυπική";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "Εκκίνηση με Ελαχιστοποίηση";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "Έναρξη κατά την εκκίνηση";
+
+/* iOS status view */
+"_status" = "Κατάσταση";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "Υποβολή";
+
+/* Text under current plan information */
+"_subscription_button" = "Επεκτείνετε το πλάνο για 1 χρόνο \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "Μπορείτε να αγοράσετε περισσότερα credits για να επεκτείνετε αυτόματα το τρέχον πακέτο σας. Στο τέλος της τρέχουσας περιόδου εγγραφής σας, οι πιστώσεις αυτές θα εφαρμοστούν προκειμένου να συνεχίσετε το πακέτο σας.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "Έχετε αγοράσει με επιτυχία μονάδες για την επέκταση του τρέχοντος πακέτου σας.";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "Πλάνο Συνδρομής";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "Το τρέχον πλάνο θα λήξει στις %@.";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "Το τρέχον πλάνο θα ανανεωθεί αυτόματα στις %@.";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "Συνδέθηκε με Επιτυχία";
+
+/* Custom switch off */
+"_switch_side_button_off" = "OFF";
+
+/* Custom switch on */
+"_switch_side_button_on" = "ON";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "Ειδοποιήσεις Συστήματος";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "Κάντε μια Περιήγηση";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
+/* iOS status view */
+"_technical_details" = "Τεχνικές Λεπτομέρειες";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "Όροι και Προϋποθέσεις";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "Χρησιμοποιώντας το ProtonVPN, συμφωνείτε με %@ και %@";
+
+/* iOS: section header in countries list */
+"_test_servers" = "ΔΙΑΚΟΜΙΣΤΕΣ ΔΟΚΙΜΩΝ";
+
+/* MacOS: connecting overlay */
+"_timed_out" = "λήξη χρόνου";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Συνδέεται με το δίκτυο TOR";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_tor_server" = "Διακομιστής Tor";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_body_iOS" = "Η δοκιμαστική περίοδος για 7 ημέρες ProtonVPN Plus έχει λήξει. Μπορείτε να συνεχίσετε να χρησιμοποιείτε το ProtonVPN Free, αλλά αν θέλετε να υποστηρίξετε το έργο μας και να αποκτήσετε πρόσβαση σε περισσότερες χώρες και δυνατότητες, παρακαλούμε αναβαθμίστε σε ένα πακέτο επί πληρωμής.";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_title_iOS" = "Η δοκιμαστική περίοδος ProtonVPN Plus έληξε";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "Για να έχετε μόνιμη πρόσβαση στις λειτουργίες ProtonVPN Plus, μπορείτε να αναβαθμίσετε το πακέτο σας.";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "Απολαύστε τα οφέλη ενός ασφαλές διαδικτύου οπουδήποτε, με το ProtonVPN";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "Ως δώρο καλωσορίσματος, έχετε πρόσβαση σε %@, συμπεριλαμβανομένων των προηγμένων λειτουργιών για τις πρώτες ημέρες! Η δοκιμαστική περίοδος, λήγει σε";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "free αναβάθμιση σε ProtonVPN Plus";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "πλήρης συνδρομή ProtonVPN";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "Σας έχουμε δώσει ένα %@ το οποίο περιλαμβάνει περισσότερους διακομιστές και επιπλέον λειτουργίες. Η δοκιμαστική περίοδος σας στο ProtonVPN Plus λήγει σε 7 ημέρες.";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "Ευχαριστούμε που χρησιμοποιείτε το ProtonVPN!";
+
+/* (No Comment) */
+"_trial_popup_title" = "ProtonVPN Trial";
+
+/* iOS trial welcome screen */
+"_trial_welcome_description_iOS" = "Ως δώρο καλωσορίσματος έχετε πρόσβαση σε μια πλήρη συνδρομή ProtonVPN που περιλαμβάνει προηγμένες λειτουργίες για τις πρώτες μέρες!";
+
+/* iOS trial welcome screen */
+"_trial_welcome_ends_in_iOS" = "Η δοκιμαστική περίοδος λήγει σε";
+
+/* iOS trial welcome screen */
+"_trial_welcome_heading_iOS" = "Καλώς ήρθατε";
+
+/* MacOS: button in connecting overlay */
+"_try_agian" = "Δοκιμάστε ξανά";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
+
+/* Common word */
+"_unavailable" = "Μη διαθέσιμο";
+
+/* App update required alert */
+"_update_required" = "Απαιτείται ενημέρωση";
+
+/* App update required alert */
+"_update_required_no_longer_supported" = "Αυτή η έκδοση του ProtonVPN δεν υποστηρίζεται πλέον, ενημερώστε την εφαρμογή για να συνεχίσετε να τη χρησιμοποιείτε.";
+
+/* App update required alert */
+"_update_required_support" = "Επικοινωνήστε με την υποστήριξη";
+
+/* App update required alert */
+"_update_required_update" = "Ενημέρωση";
+
+/* Button in many placen in both iOS and MacOS apps */
+"_upgrade" = "Αναβάθμιση";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "για χρήση Secure Core";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "Αναβαθμίστε το Πακέτο μου";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "Αναβαθμίστε τώρα";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_country" = "Λυπούμαστε, δεν υπάρχουν διακομιστές που να είναι διαθέσιμοι για τη βαθμίδα εγγραφής σας στη συγκεκριμένη χώρα αυτήν τη στιγμή. Εάν θέλετε να αποκτήσετε πρόσβαση σε περισσότερους διακομιστές, εξετάστε την αναβάθμιση της συνδρομής σας.";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p1" = "Το Secure Core είναι ένα premium χαρακτηριστικό που απαιτεί πακέτο ProtonVPN Plus ή μεγαλύτερο. Το Secure Core προσθέτει προηγμένη προστασία ενάντια στην παρακολούθηση διακομιστών VPN.";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p2" = "Για να αποκτήσετε πρόσβαση στο Secure Core, ανατρέξτε στα άλλα πακέτα συνδρομών που περιλαμβάνουν αυτή τη λειτουργία.";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "Λυπούμαστε, αυτός ο διακομιστής δεν είναι διαθέσιμος για το πακέτο συνδρομής σας. Εάν θέλετε να αποκτήσετε πρόσβαση σε περισσότερους διακομιστές, εξετάστε την αναβάθμιση της συνδρομής σας.";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "Απαιτείται Αναβάθμιση";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "Αναβάθμιση Συνδρομής";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "Αναβάθμιση σε Plus";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "Η συνδρομή σας ProtonVPN δεν μπορεί να αναβαθμιστεί μέσα από την εφαρμογή, επισκεφθείτε το account.protonvpn.com για αναβάθμιση.";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "Αναβάθμιση μη διαθέσιμη στην εφαρμογή";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "Επαλήθευση με CAPTCHA";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "Επαλήθευση με email";
+
+/* Profile create/change form */
+"_use_secure_core" = "Χρήση Secure Core";
+
+/* iOS: human verification option select button */
+"_use_sms_verification" = "Επαλήθευση με SMS";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "Όνομα χρήστη";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "Σας έχει σταλεί ένας κωδικός επαλήθευσης, παρακαλώ πληκτρολογήστε τον παρακάτω.";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "Έκδοση";
+
+/* MacOS: About window */
+"_version_current" = "Τρέχουσα έκδοση:";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "μέσω";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "μέσω %@";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "Προβολή Logs";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Κάνοντας εναλλαγή στο Secure Core θα τερματίσει την τρέχουσα σύνδεση σας.";
+
+/* MacOS: alert before disconnection on SecureCore state change */
+"_vpn_connection_active" = "Ενεργή Σύνδεση VPN";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "Πρωτόκολλο VPN";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "Η συσκευή σας απέτυχε να τερματίσει μια προηγούμενη συνεδρία VPN. Θα χρειαστεί να κάνετε επανεκκίνηση της συσκευής προκειμένου να μπορέσετε να δημιουργήσετε μια νέα σύνδεση VPN.";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "Σφάλμα σύνδεσης";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "Δεν είστε συνδεδεμένοι στο ProtonVPN. Ανοίξτε την εφαρμογή ProtonVPN και συνδεθείτε.";
+
+/* Used as a title in alerts/modals */
+"_warning" = "Προειδοποίηση";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "Η συνεδρία ενός άλλου χρήστη ProtonVPN, είναι ενεργή σε αυτήν τη συσκευή. Η συνέχιση της διαδικασίας σύνδεσης θα προκαλέσει τη λήξη της τρέχουσας συνεδρίας. Θέλετε να συνεχίσετε;";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "Ευχαριστούμε που χρησιμοποιείτε το ProtonVPN. Ρίξτε μια γρήγορη ματιά\nστις κύριες λειτουργίες της εφαρμογής.";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "Ως δώρο καλωσορίσματος, σας παρέχεται πρόσβαση για 7 ημέρες σε μια\n%@ συνδρομή που σας δίνει:";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ΚΑΛΩΣ ΗΛΘΑΤΕ!";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS Widget";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "Δεν είστε συνδεδεμένοι";
+

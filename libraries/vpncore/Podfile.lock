@@ -1,34 +1,34 @@
 PODS:
-  - Alamofire (4.8.0)
+  - Alamofire (5.1.0)
   - KeychainAccess (3.1.2)
-  - OpenSSL-Apple (1.1.1d.5a)
+  - OpenSSL-Apple (1.1.1g.6)
   - ReachabilitySwift (4.3.0)
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
   - SwiftLint (0.32.0)
-  - SwiftyBeaver (1.9.0)
+  - SwiftyBeaver (1.9.1)
   - TrustKit (1.6.1)
-  - TunnelKit (2.2.2):
-    - TunnelKit/Protocols/OpenVPN (= 2.2.2)
-  - TunnelKit/AppExtension (2.2.2):
+  - TunnelKit (2.2.4):
+    - TunnelKit/Protocols/OpenVPN (= 2.2.4)
+  - TunnelKit/AppExtension (2.2.4):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.2.2):
+  - TunnelKit/Core (2.2.4):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.2.2):
-    - OpenSSL-Apple (~> 1.1.1d.5a)
+  - TunnelKit/Protocols/OpenVPN (2.2.4):
+    - OpenSSL-Apple (~> 1.1.1g.6)
     - TunnelKit/AppExtension
     - TunnelKit/Core
 
 DEPENDENCIES:
-  - Alamofire (~> 4.0)
+  - Alamofire (~> 5.1)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
   - Sentry (~> 4.0)
   - SwiftLint
   - TrustKit
-  - TunnelKit (from `https://github.com/jaroslavas/tunnelkit`, commit `18b508f`)
+  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -43,25 +43,25 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :commit: 18b508f
-    :git: https://github.com/jaroslavas/tunnelkit
+    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
+    :git: https://github.com/passepartoutvpn/tunnelkit
 
 CHECKOUT OPTIONS:
   TunnelKit:
-    :commit: 18b508f
-    :git: https://github.com/jaroslavas/tunnelkit
+    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
+    :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
-  Alamofire: 3ec537f71edc9804815215393ae2b1a8ea33a844
+  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
-  OpenSSL-Apple: 2c9efbc94e0a1ada434cc197b02bd70052a82281
+  OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
-  SwiftyBeaver: d39e7c376bf15e9fffca8263b8fd1f42ea56aa2d
+  SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
-  TunnelKit: 1733ed87934deb57edc7aa5f4b25185bf302a7d4
+  TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
-PODFILE CHECKSUM: 83ae6a5c33a9402d7b554e69e04c19630780303f
+PODFILE CHECKSUM: 0b2c923b9c9266349b3b4349f7b61c4f650b978d
 
-COCOAPODS: 1.8.4
+COCOAPODS: 1.9.1
