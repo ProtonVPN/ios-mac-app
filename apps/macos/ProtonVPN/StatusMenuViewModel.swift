@@ -138,6 +138,11 @@ class StatusMenuViewModel {
         }
         isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
     }
+
+    // MARK: - General section
+    var unprotectedNetworkNotifications: Bool {
+        return propertiesManager.unprotectedNetworkNotifications
+    }
  
     // MARK: - Connect section - Outputs
     func countryCount() -> Int {
@@ -390,7 +395,7 @@ class StatusMenuViewModel {
 extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
 
     func unsecureWiFiDetected() {
-        guard !isConnecting && !isConnected else { return }
+        guard unprotectedNetworkNotifications && !isConnecting && !isConnected else { return }
         presentUnsecureWiFiWarning()
     }
 }

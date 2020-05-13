@@ -46,6 +46,10 @@ class GeneralViewModel {
     var earlyAccess: Bool {
         return propertiesManager.earlyAccess
     }
+
+    var unprotectedNetworkNotifications: Bool {
+        return propertiesManager.unprotectedNetworkNotifications
+    }
     
     func setRememberLogin(_ enabled: Bool) {
         propertiesManager.rememberLogin = enabled
@@ -65,5 +69,9 @@ class GeneralViewModel {
     
     func setEarlyAccess(_ enabled: Bool) {
         propertiesManager.earlyAccess = enabled
+    }
+
+    func setUnprotectedNetworkNotifications(_ enabled: Bool) {
+        propertiesManager.unprotectedNetworkNotifications = enabled
     }
 }
