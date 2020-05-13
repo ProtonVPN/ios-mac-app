@@ -425,6 +425,8 @@ public class LocalizedString {
     public static let systemNotifications = NSLocalizedString("_system_notifications", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccess = NSLocalizedString("_early_access", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccessTooltip = NSLocalizedString("_early_access_tooltip", comment: "MacOS: Settings -> General: description.")
+    public static let unprotectedNetwork = NSLocalizedString("_unprotected_network", comment: "MacOS: Settings -> General: name of field.")
+    public static let unprotectedNetworkTooltip = NSLocalizedString("_unprotected_network_tooltip", comment: "MacOS: Settings -> General: description")
     public static let dnsLeakProtection = NSLocalizedString("_dns_leak_protection", comment: "MacOS: Settings -> Connection: name of field.")
     public static let dnsLeakProtectionTooltip = NSLocalizedString("_dns_leak_protection_tooltip", comment: "MacOS: Settings -> Connection: description.")
     public static let securityOptions = NSLocalizedString("_security_options", comment: "iOS Settings: table section header")

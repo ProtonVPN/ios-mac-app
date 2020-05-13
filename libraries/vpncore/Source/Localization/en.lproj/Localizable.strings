@@ -456,6 +456,8 @@
 "_system_notifications" = "System Notifications";
 "_early_access" = "Early Access";
 "_early_access_tooltip" = "Be the first to get the latest updates. Please keep in mind that early versions may be less stable.";
+"_unprotected_network" = "Notify unprotected networks";
+"_unprotected_network_tooltip" = "Receive a notification when ProtonVPN detects you are connected to an unprotected network.";
 "_dns_leak_protection" = "DNS Leak Protection";
 "_dns_leak_protection_tooltip" = "Prevent leaking details of DNS queries to third parties. Always on.";
 "_security_options" = "Security Options";
