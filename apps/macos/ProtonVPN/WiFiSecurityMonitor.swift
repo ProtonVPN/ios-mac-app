@@ -78,7 +78,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
             // just check all available wifi connections and if at least one of them is insecure we call the delegate and stop the loop
             for interface in interfaces {
                 let security: CWSecurity = interface.security()
-                if security.rawValue == 0 {
+                if security.rawValue == 0 || security.rawValue == 1 {
                     wifiName = interface.ssid()
                     delegate?.unsecureWiFiDetected()
                     break
