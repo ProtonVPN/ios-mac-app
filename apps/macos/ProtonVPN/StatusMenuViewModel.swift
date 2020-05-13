@@ -230,6 +230,8 @@ class StatusMenuViewModel {
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
                                               title: "Insecure Wi-Fi Detected",
                                               description: "\(LocalizedString.unsecureWiFi): \(wifiName). \(LocalizedString.unsecureWiFiLearnMore)",
+                                              linkDescription: LocalizedString.unsecureWiFiLearnMore,
+                                              url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
                                               onConfirm: confirmationClosure)
 
         unsecureWiFiWarning?(viewModel)
