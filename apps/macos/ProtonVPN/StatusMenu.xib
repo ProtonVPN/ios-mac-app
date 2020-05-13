@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -31,7 +31,7 @@
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
-        <customView misplaced="YES" id="Hz6-mo-xeY" customClass="ClickDetectingVisualEffectView" customModule="ProtonVPN" customModuleProvider="target">
+        <customView id="Hz6-mo-xeY" customClass="ClickDetectingVisualEffectView" customModule="ProtonVPN" customModuleProvider="target">
             <rect key="frame" x="0.0" y="0.0" width="300" height="530"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
@@ -107,14 +107,14 @@
                                     <constraints>
                                         <constraint firstAttribute="bottom" secondItem="V73-4C-3dg" secondAttribute="bottom" constant="20" id="13o-Jx-5TX"/>
                                         <constraint firstItem="V73-4C-3dg" firstAttribute="top" secondItem="csD-Jk-NjT" secondAttribute="bottom" constant="17" id="2sc-xY-CDX"/>
-                                        <constraint firstAttribute="trailing" secondItem="d7S-0B-OtT" secondAttribute="trailing" constant="25" id="45G-Tc-ftN"/>
-                                        <constraint firstItem="V73-4C-3dg" firstAttribute="leading" secondItem="ntN-xc-0F9" secondAttribute="leading" constant="25" id="G4f-AL-oYx"/>
+                                        <constraint firstAttribute="right" secondItem="d7S-0B-OtT" secondAttribute="right" constant="25" id="45G-Tc-ftN"/>
+                                        <constraint firstItem="V73-4C-3dg" firstAttribute="left" secondItem="ntN-xc-0F9" secondAttribute="left" constant="25" id="G4f-AL-oYx"/>
                                         <constraint firstItem="w1C-eT-cdk" firstAttribute="top" secondItem="ntN-xc-0F9" secondAttribute="top" constant="20" id="OYa-4I-DCd"/>
                                         <constraint firstItem="w1C-eT-cdk" firstAttribute="centerX" secondItem="ntN-xc-0F9" secondAttribute="centerX" id="T5s-Km-Ude"/>
                                         <constraint firstItem="csD-Jk-NjT" firstAttribute="centerX" secondItem="ntN-xc-0F9" secondAttribute="centerX" id="VhK-DY-m9a"/>
                                         <constraint firstItem="d7S-0B-OtT" firstAttribute="top" secondItem="csD-Jk-NjT" secondAttribute="bottom" constant="17" id="Z8h-Z8-gM4"/>
                                         <constraint firstItem="csD-Jk-NjT" firstAttribute="top" secondItem="w1C-eT-cdk" secondAttribute="bottom" constant="8" id="esX-iG-DJc"/>
-                                        <constraint firstItem="d7S-0B-OtT" firstAttribute="leading" secondItem="V73-4C-3dg" secondAttribute="trailing" id="t4h-Go-2fM"/>
+                                        <constraint firstItem="d7S-0B-OtT" firstAttribute="left" secondItem="V73-4C-3dg" secondAttribute="right" id="t4h-Go-2fM"/>
                                     </constraints>
                                 </customView>
                                 <box verticalHuggingPriority="750" boxType="separator" translatesAutoresizingMaskIntoConstraints="NO" id="BuT-3N-7AL">
