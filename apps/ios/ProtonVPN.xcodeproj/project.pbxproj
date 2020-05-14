@@ -1364,7 +1364,6 @@
 		79C5599320AEC6A500E6D3F6 /* XIBs + Views */ = {
 			isa = PBXGroup;
 			children = (
-				D551316D2319400900784ED0 /* Subscriptions */,
 				D594A95F227C3A2F0041D423 /* Logo with map */,
 				791C54F0214A75B600C6F337 /* Common */,
 				79C5599420AEC6BB00E6D3F6 /* Countries */,
@@ -1372,6 +1371,7 @@
 				E119AF712170B88100255F7E /* Map */,
 				79AFDA8F20DB1659002F8751 /* Profiles */,
 				793ECF362148DCCA00C186A7 /* Settings */,
+				D551316D2319400900784ED0 /* Subscriptions */,
 			);
 			path = "XIBs + Views";
 			sourceTree = "<group>";
