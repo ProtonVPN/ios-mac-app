@@ -13,7 +13,10 @@
 		985D133D616AD7F5D71C3259 /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718D28DE3D1BDC1722D36497 /* Pods_ProtonVPNTests.framework */; };
 		B4A128DBA36867898BCF0C77 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E324FF337BBDB3F68C164D3 /* Pods-ProtonVPN-metadata.plist */; };
 		BBEEE05867D68EB7FB991D6B /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */; };
+		D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
 		D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
+		D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */; };
+		D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6822A116C100FFAB99 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6722A116C100FFAB99 /* LoginTests.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
@@ -383,7 +386,10 @@
 		900F963017E6F076D2F699F1 /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C2BF0045374CBBA2E07C56A4 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
+		D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PVPNTextViewLink.swift; sourceTree = "<group>"; };
 		D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrenchIcon.swift; sourceTree = "<group>"; };
+		D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiFiSecurityMonitor.swift; sourceTree = "<group>"; };
+		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6722A116C100FFAB99 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
@@ -781,6 +787,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		D202EF18246C02C300617BD2 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */,
+			);
+			name = TextView;
+			sourceTree = "<group>";
+		};
 		D5204E6622A1169800FFAB99 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -1075,6 +1089,7 @@
 				EEA1C8D91F2797C200B2036E /* Custom */,
 				EEB493CC1F20EA1500A979DC /* ScrollView */,
 				EE4FCF5E1F21F87100B04EF8 /* TextField */,
+				D202EF18246C02C300617BD2 /* TextView */,
 				EE68DD501F49F4BE00F218B8 /* TabBarView.swift */,
 				EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */,
 				EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */,
@@ -1197,6 +1212,7 @@
 				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
 				EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */,
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
+				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1652,6 +1668,7 @@
 			isa = PBXGroup;
 			children = (
 				E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */,
+				D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */,
 				E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */,
 				E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */,
 			);
@@ -2472,6 +2489,7 @@
 				E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
+				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
 				E1B5F67F21B8295700B558B0 /* CocoaString+Extension.swift in Sources */,
 				EE2FE5971F5EF41E00ABA7DE /* MapView.swift in Sources */,
 				EEBE350E1EFAC508000ACCD1 /* NSString+Extension.swift in Sources */,
@@ -2494,6 +2512,7 @@
 				D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */,
 				E13464D32035774200C0DB7D /* ShadowView.swift in Sources */,
 				EE69C8CF1F5D7FBD00C3065C /* SettingsWindowController.swift in Sources */,
+				D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */,
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
 				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
@@ -2517,6 +2536,7 @@
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
+				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,
 				E125DCE2221ADBED00027272 /* NetworkHelper.swift in Sources */,
 				EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */,

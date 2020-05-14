@@ -69,6 +69,10 @@ class StatusMenuViewController: NSViewController {
         viewModel.disconnectWarning = { [unowned self] viewModel in
             self.disconnectWarning(viewModel)
         }
+
+        viewModel.unsecureWiFiWarning = { [unowned self] viewModel in
+            self.unsecureWarning(viewModel)
+        }
         
         initialViewSetup()
     }
@@ -237,6 +241,10 @@ class StatusMenuViewController: NSViewController {
                 countryItem.button.updateTrackingAreas()
             }
         }
+    }
+
+    private func unsecureWarning(_ viewModel: WarningPopupViewModel) {
+        presentAsModalWindow(WiFiWarningPopupViewController(viewModel: viewModel))
     }
     
     private func disconnectWarning(_ viewModel: WarningPopupViewModel) {
