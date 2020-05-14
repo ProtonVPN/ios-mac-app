@@ -337,6 +337,7 @@
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
 "_unsecure_wifi" = "Insecure Wi-Fi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
+"_unsecure_wifi_title" = "Insecure Wi-Fi Detected";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
