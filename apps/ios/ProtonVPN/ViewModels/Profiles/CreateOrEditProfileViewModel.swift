@@ -233,25 +233,6 @@ class CreateOrEditProfileViewModel: NSObject {
         }
     }
     
-    var footerView: UIView {
-        let view = UIView(frame: CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIConstants.cellHeight))
-        let label = UILabel(frame: CGRect(x: 18, y: 0, width: UIScreen.main.bounds.width - 18 * 2, height: UIConstants.cellHeight))
-        label.text = LocalizedString.defaultProfileTooltip
-        label.textColor = .protonFontLightGrey()
-        label.font = .systemFont(ofSize: 15)
-        label.numberOfLines = 0
-        
-        label.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(label)
-        
-        label.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 10).isActive = true
-        label.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor).isActive = true
-        label.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        label.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        
-        return view
-    }
-    
     private var quickConnectCell: TableViewCellModel {
         return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: isDefaultProfile, enabled: true) { [weak self] on in
             self?.toggleDefault()
