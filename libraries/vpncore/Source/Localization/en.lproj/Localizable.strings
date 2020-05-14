@@ -335,6 +335,9 @@
 "_upgrade_plan_to_access_secure_core_p1" = "Secure Core is a premium feature which requires ProtonVPN Plus or higher. Secure Core adds advanced protection against VPN server monitoring.";
 "_upgrade_plan_to_access_secure_core_p2" = "To access Secure Core, check out our other subscription plans which include this feature.";
 "_all_servers_in_country_under_maintenance" = "All servers in this country are under maintenance. Please connect to another country.";
+"_unsecure_wifi" = "Insecure Wi-Fi connection detected";
+"_unsecure_wifi_learn_more" = "Learn More";
+"_unsecure_wifi_title" = "Insecure Wi-Fi Detected";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
@@ -454,6 +457,8 @@
 "_system_notifications" = "System Notifications";
 "_early_access" = "Early Access";
 "_early_access_tooltip" = "Be the first to get the latest updates. Please keep in mind that early versions may be less stable.";
+"_unprotected_network" = "Notify unprotected networks";
+"_unprotected_network_tooltip" = "Receive a notification when ProtonVPN detects you are connected to an unprotected network.";
 "_dns_leak_protection" = "DNS Leak Protection";
 "_dns_leak_protection_tooltip" = "Prevent leaking details of DNS queries to third parties. Always on.";
 "_security_options" = "Security Options";

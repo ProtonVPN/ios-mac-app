@@ -403,6 +403,9 @@ public class LocalizedString {
     
     public static let existingFirewallPopupTitle = NSLocalizedString("_existing_firewall_popup_title", comment: "MacOS: Existing firewall alert")
     public static let existingFirewallPopupBody = NSLocalizedString("_existing_firewall_popup_body", comment: "MacOS: Existing firewall alert")
+    public static let unsecureWiFi = NSLocalizedString("_unsecure_wifi", comment: "MacOS: Alert when user connects to WiFi without password")
+    public static let unsecureWiFiLearnMore = NSLocalizedString("_unsecure_wifi_learn_more", comment: "The link to this website https://protonvpn.com/blog/public-wifi-safety/")
+    public static let unsecureWiFiTitle = NSLocalizedString("_unsecure_wifi_title", comment: "MacOS")
         
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
@@ -423,6 +426,8 @@ public class LocalizedString {
     public static let systemNotifications = NSLocalizedString("_system_notifications", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccess = NSLocalizedString("_early_access", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccessTooltip = NSLocalizedString("_early_access_tooltip", comment: "MacOS: Settings -> General: description.")
+    public static let unprotectedNetwork = NSLocalizedString("_unprotected_network", comment: "MacOS: Settings -> General: name of field.")
+    public static let unprotectedNetworkTooltip = NSLocalizedString("_unprotected_network_tooltip", comment: "MacOS: Settings -> General: description")
     public static let dnsLeakProtection = NSLocalizedString("_dns_leak_protection", comment: "MacOS: Settings -> Connection: name of field.")
     public static let dnsLeakProtectionTooltip = NSLocalizedString("_dns_leak_protection_tooltip", comment: "MacOS: Settings -> Connection: description.")
     public static let securityOptions = NSLocalizedString("_security_options", comment: "iOS Settings: table section header")
