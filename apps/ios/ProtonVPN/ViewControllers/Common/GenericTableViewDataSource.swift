@@ -202,11 +202,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section].cells[indexPath.row] {
-        case .tooltip(let text):
-            let attributedText = TooltipTableViewCell.attributedText(for: text)
-            let size = CGSize(width: tableView.contentSize.width - tableView.layoutMargins.left - tableView.layoutMargins.right, height: .greatestFiniteMagnitude)
-            let boundingRect = attributedText.boundingRect(with: size, options: [.usesLineFragmentOrigin], context: nil)
-            return ceil(boundingRect.size.height) + tableView.layoutMargins.top + tableView.layoutMargins.bottom
+        case .tooltip:
+            return -1 // allows for self sizing
         case .instructionStep:
             return -1 // allows for self sizing
         case .colorPicker(viewModel: let viewModel):

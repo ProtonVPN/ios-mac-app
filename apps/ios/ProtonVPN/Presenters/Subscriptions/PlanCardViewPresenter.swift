@@ -69,6 +69,7 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
         view.moreFeaturesButton.isHidden = !plan.hasAdvancedFeatures
         view.bottomSeparatorView.isHidden = !plan.hasAdvancedFeatures
         view.featuresLabel.text = "\(plan.countries)\n\(plan.devices)\n\(plan.speedDescription)"
+        view.featuresLabel.textAlignment = .natural
         view.mostPopularContainerView.isHidden = !plan.isMostPopular
                 
         guard let productId = plan.storeKitProductId, let price = storeKitManager.priceLabelForProduct(id: productId) else {
@@ -117,23 +118,19 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
         
         if featuresSize.width > featuresThreshold {
             view.priceStackView.axis = .vertical
-            view.priceLabel.textAlignment = .left
+            view.priceLabel.textAlignment = .right
         }
         
         guard plan.isMostPopular else {
-            return
+            return // If it is not a popular plan we don't bother on checking its real size
         }
         
-        //if it is not a popular plan we don't bother on checking its real size
+        let titleWidth = view.titleLabel.realSize.width + view.titleLabel.frame.origin.x
+        let popularSize = view.popularLabel.realSize.width + view.mostPopularTrailingConstant.constant * view.mostPopularTrailingConstant.multiplier
+        let widthThreshold = UIScreen.main.bounds.width * 0.98
         
-        let titleSize = view.titleLabel.realSize
-        
-        //if the size exceds a 40% of the screen it should be splited in two rows
-        
-        let titleThreshold = UIScreen.main.bounds.width * 0.4
-        
-        guard titleSize.width > titleThreshold else {
-            return
+        guard titleWidth + popularSize > widthThreshold else {
+            return // Title and "Most popular" fit nicely, no need to split
         }
 
         view.titleStackView.axis = .vertical
