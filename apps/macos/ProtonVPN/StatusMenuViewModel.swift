@@ -233,7 +233,7 @@ class StatusMenuViewModel {
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: "Insecure Wi-Fi Detected",
+                                              title: LocalizedString.unsecureWiFiTitle,
                                               description: "\(LocalizedString.unsecureWiFi): \(wifiName). \(LocalizedString.unsecureWiFiLearnMore)",
                                               linkDescription: LocalizedString.unsecureWiFiLearnMore,
                                               url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
