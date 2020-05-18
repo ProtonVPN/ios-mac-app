@@ -28,7 +28,7 @@ extension String {
     public func attributed(withColor color: UIColor,
                     fontSize: CGFloat,
                     bold: Bool = false,
-                    alignment: NSTextAlignment = .left,
+                    alignment: NSTextAlignment = .natural,
                     lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         let font = bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
@@ -37,7 +37,7 @@ extension String {
     
     func attributed(withColor color: UIColor,
                     font: UIFont,
-                    alignment: NSTextAlignment = .left,
+                    alignment: NSTextAlignment = .natural,
                     lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         
