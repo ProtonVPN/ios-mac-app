@@ -43,6 +43,8 @@ class ConnectionBarViewController: UIViewController {
         
         connectedLabel.text = LocalizedString.connected
         
+        arrowImage.image = arrowImage.image?.imageFlippedForRightToLeftLayoutDirection()
+        
         viewModel?.setConnecting = { [weak self] in self?.setConnecting() }
         viewModel?.setConnected = { [weak self] in self?.setConnected() }
         viewModel?.updateConnected = { [weak self] in self?.updateConnected() }
