@@ -1001,9 +1001,7 @@
 		791C54EF214A759900C6F337 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				791C54F1214A75DB00C6F337 /* ConnectionBarViewController.swift */,
 				E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */,
-				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
 				791DE616208E0E5500A29EA5 /* TabBarController.swift */,
 				E185A86423707D1A0039E625 /* TrackedAlertController.swift */,
 			);
@@ -1025,9 +1023,7 @@
 			isa = PBXGroup;
 			children = (
 				7980ECD520F70C0800D5432B /* TabBarViewModel.swift */,
-				791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */,
 				E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */,
-				792B58C12150E278000BB3A3 /* StatusViewModel.swift */,
 				422EAB1A243F20D800C7A16C /* GenericViewModel.swift */,
 			);
 			path = Common;
@@ -1188,7 +1184,6 @@
 		791DE618208E2D4300A29EA5 /* Storyboards */ = {
 			isa = PBXGroup;
 			children = (
-				791C54EC214A751F00C6F337 /* Common.storyboard */,
 				7995FAAA209080E70030E1EB /* Countries.storyboard */,
 				791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */,
 				79DD19ED20BD681A00505906 /* Login.storyboard */,
@@ -1494,6 +1489,34 @@
 			path = Launch;
 			sourceTree = "<group>";
 		};
+		D50342602472C82A005F6B90 /* ConnectionBar */ = {
+			isa = PBXGroup;
+			children = (
+				D50342612472C90B005F6B90 /* Bar */,
+				D50342622472C917005F6B90 /* Status Details */,
+				791C54EC214A751F00C6F337 /* Common.storyboard */,
+			);
+			path = ConnectionBar;
+			sourceTree = "<group>";
+		};
+		D50342612472C90B005F6B90 /* Bar */ = {
+			isa = PBXGroup;
+			children = (
+				791C54F1214A75DB00C6F337 /* ConnectionBarViewController.swift */,
+				791C54F4214A777500C6F337 /* ConnectionBarViewModel.swift */,
+			);
+			path = Bar;
+			sourceTree = "<group>";
+		};
+		D50342622472C917005F6B90 /* Status Details */ = {
+			isa = PBXGroup;
+			children = (
+				792B58BF2150DEA3000BB3A3 /* StatusViewController.swift */,
+				792B58C12150E278000BB3A3 /* StatusViewModel.swift */,
+			);
+			path = "Status Details";
+			sourceTree = "<group>";
+		};
 		D511083C24614D480018872A /* PlanCardView */ = {
 			isa = PBXGroup;
 			children = (
@@ -1704,6 +1727,7 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				D50342602472C82A005F6B90 /* ConnectionBar */,
 				D580AB862452C70D003C34B9 /* Troubleshooting */,
 			);
 			path = Scenes;
@@ -3313,7 +3337,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE";
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/SupportingFiles/SwiftObjC-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
