@@ -55,10 +55,9 @@ class FirewallManager {
     private var lastVpnServerIp: String?
     
     private var killSwitchBlockingShownSinceLatestSuccessfullConnection = false
-    
     private var inactiveFirewallTimer: Timer?
-    
     private var helperInstallInProgress = false
+    fileprivate var killSwitchWaiting = false
     
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
@@ -115,17 +114,18 @@ class FirewallManager {
     }
     
     func installHelperIfNeeded(_ trigger: HelperInstallTrigger = .silent) {
+        
         guard self.propertiesManager.killSwitch, !helperInstallInProgress else { return }
-        
+                
         helperInstallInProgress = true
-        
+        checkKillSwitch(trigger)
         helperInstallStatus { [unowned self] (installed) in
+            self.killSwitchWaiting = false
             if installed {
                 self.helperSuccessfullyInstalled(trigger)
                 self.helperInstallInProgress = false
             } else {
                 let unloadAndInstallClosure = { [unowned self] in self.unloadAndInstallHelper(trigger) }
-                
                 switch trigger {
                 case .userInitiated:
                     self.alertService.push(alert: InstallingHelperAlert(confirmHandler: unloadAndInstallClosure))
@@ -497,5 +497,22 @@ extension FirewallManager: AppProtocol {
     
     func log(_ log: String) {
         PMLog.D(log)
+    }
+}
+
+// MARK: - Kill Switch Checker
+
+fileprivate extension FirewallManager {
+    func checkKillSwitch( _ trigger: HelperInstallTrigger = .silent ) {
+        killSwitchWaiting = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            guard self.killSwitchWaiting else { return }
+            self.propertiesManager.killSwitch = false
+            self.helperInstallInProgress = false
+            self.disableFirewall()
+            let alert = StoreKitUserValidationByPassAlert(withMessage: "KILLSWITCH Failed") {
+            }
+            self.alertService.push(alert: alert)
+        }
     }
 }
