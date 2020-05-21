@@ -87,4 +87,8 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     func makeCoreAlertService() -> CoreAlertService {
         return AlertServiceEmptyStub()
     }
+    
+    func makeStoreKitManager() -> StoreKitManager {
+        return StoreKitManagerMock()
+    }
 }
