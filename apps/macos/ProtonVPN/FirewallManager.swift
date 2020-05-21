@@ -504,6 +504,8 @@ extension FirewallManager: AppProtocol {
 
 fileprivate extension FirewallManager {
     func checkKillSwitch( _ trigger: HelperInstallTrigger = .silent ) {
+        if #available(OSX 10.14.4, *) { return }
+        //This check is no longer necesary on new OSX versions
         killSwitchWaiting = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
             guard self.killSwitchWaiting else { return }
