@@ -512,7 +512,9 @@ fileprivate extension FirewallManager {
             self.propertiesManager.killSwitch = false
             self.helperInstallInProgress = false
             self.disableFirewall()
-            let alert = StoreKitUserValidationByPassAlert(withMessage: "KILLSWITCH Failed") {
+            let alert = KillSwitchRequiresSwift5Alert {
+                self.propertiesManager.killSwitch = true
+                self.installHelperIfNeeded(trigger)
             }
             self.alertService.push(alert: alert)
         }

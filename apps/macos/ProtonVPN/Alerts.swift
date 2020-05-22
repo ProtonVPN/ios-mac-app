@@ -65,6 +65,19 @@ public class KillSwitchBlockingAlert: SystemAlert {
     }
 }
 
+public class KillSwitchRequiresSwift5Alert: SystemAlert {
+    public var title: String? = LocalizedString.killSwitchBlockingTitle
+    public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.killSwitchEnableAgain, style: .destructive, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.killSwitchKeepDisabled, style: .cancel, handler: nil))
+    }
+}
+
 public class HelperInstallFailedAlert: SystemAlert {
     public var title: String?
     public var message: String? = LocalizedString.killSwitchHelperInstallIssuePopupBody
