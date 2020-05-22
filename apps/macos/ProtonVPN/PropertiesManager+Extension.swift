@@ -49,15 +49,6 @@ extension PropertiesManagerProtocol {
         }
     }
     
-    var rememberLogin: Bool {
-        get {
-            return (Storage.userDefaults().object(forKey: AppConstants.UserDefaults.rememberLogin) as? Bool) ?? true
-        }
-        set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.rememberLogin)
-        }
-    }
-    
     var rememberLoginAfterUpdate: Bool {
         get {
             return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)

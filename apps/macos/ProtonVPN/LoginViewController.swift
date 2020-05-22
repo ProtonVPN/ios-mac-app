@@ -32,7 +32,6 @@ class LoginViewController: NSViewController {
     }
     
     fileprivate enum Switch: Int {
-        case rememberLogin
         case startOnBoot
     }
     
@@ -178,14 +177,6 @@ class LoginViewController: NSViewController {
     }
     
     private func setupSwitchSection() {
-        rememberLoginLabel.attributedStringValue = LocalizedString.rememberLogin.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
-        rememberLoginLabel.setAccessibilityLabel(LocalizedString.rememberLogin)
-        
-        rememberLoginButton.drawsUnderOverlay = false
-        rememberLoginButton.buttonView?.tag = Switch.rememberLogin.rawValue
-        rememberLoginButton.setState(viewModel.rememberLogin ? .on : .off)
-        rememberLoginButton.delegate = self
-        
         startOnBootLabel.attributedStringValue = LocalizedString.startOnBoot.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
         startOnBootButton.setAccessibilityLabel(LocalizedString.startOnBoot)
         
@@ -321,8 +312,6 @@ extension LoginViewController: SwitchButtonDelegate {
     
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
-        case Switch.rememberLogin.rawValue:
-            viewModel.rememberLogin(enabled: rememberLoginButton.currentButtonState == .on)
         case Switch.startOnBoot.rawValue:
             viewModel.startOnBoot(enabled: startOnBootButton.currentButtonState == .on)
         default:
