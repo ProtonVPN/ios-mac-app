@@ -122,6 +122,9 @@ extension MacAlertService: CoreAlertService {
             
         case is KillSwitchBlockingAlert:
             show(alert as! KillSwitchBlockingAlert)
+            
+        case is KillSwitchRequiresSwift5Alert:
+            show(alert as! KillSwitchRequiresSwift5Alert)
            
         case is HelperInstallFailedAlert:
             showDefaultSystemAlert(alert)
@@ -183,7 +186,7 @@ extension MacAlertService: CoreAlertService {
         let neagentViewController = NeagentHelpPopUpViewController()
         windowService.presentKeyModal(viewController: neagentViewController)
     }
-    
+
     private func show(_ alert: P2pForwardedAlert) {
         guard let p2pIcon = NSAttributedString.imageAttachment(named: "p2p-white", width: 15, height: 12) else { return }
         
@@ -265,4 +268,9 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert, message: description)
     }
     
+    private func show( _ alert: KillSwitchRequiresSwift5Alert ) {
+        let killSwitch5ViewController = KillSwitchSwift5Popup()
+        killSwitch5ViewController.alert = alert
+        windowService.presentKeyModal(viewController: killSwitch5ViewController)
+    }
 }
