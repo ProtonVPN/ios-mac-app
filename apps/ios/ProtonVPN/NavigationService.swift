@@ -351,7 +351,6 @@ extension NavigationService: LoginService {
             
             if self.windowService.navigationStackAvailable {
                 self.windowService.addToStack(controller)
-                
             } else {
                 let nc = UINavigationController(rootViewController: controller)
 
