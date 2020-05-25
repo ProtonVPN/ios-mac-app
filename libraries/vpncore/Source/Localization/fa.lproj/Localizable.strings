@@ -766,6 +766,9 @@
 /* Network error */
 "_ne_request_timed_out" = "مهلت اتصال به شبکه تمام شد";
 
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "عیب یابی";
+
 /* Network error */
 "_ne_unable_to_connect_to_host" = "سرویس در دسترس نیست";
 
@@ -1332,6 +1335,78 @@
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "خوش آمدید";
 
+/* Description of troubleshooting item */
+"_troubleshoot_item_alt_description" = "در حالتیکه سایتهای Proton مسدود هستند، این گزینه به برنامه امکان می‌دهد که مسیریابی جایگزین شبکه را به منظور دسترسی به Proton امتحان کند، که میتواند برای دور زدن دیوار آتشین یا اشکالات شبکه مفید باشد. ما پیشنهاد می‌کنیم که این دکمه را جهت قابلیت اطمینان بالاتر روشن نگه دارید. \nبیشتر بدانید";
+
+/* Text that will become a Learn more link in _troubleshoot_item_alt_description */
+"_troubleshoot_item_alt_link1" = "بیشتر بدانید";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_alt_title" = "اجازه مسیریابی جایگزین";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_antivirus_description" = "نرم‌افزار ضد ویروس خود را بطور موقت غیرفعال یا حذف کنید.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_antivirus_title" = "تداخل ضد ویروس";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_gov_description" = "کشور شما ممکن است دسترسی به Proton را مسدود کرده باشد. سعی کنید برای دسترسی به Proton از Tor استفاده کنید.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_gov_description */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_gov_title" = "محدودیت حکومتی";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_isp_description" = "سعی کنید از یک شبکه دیگر (یا Tor) به Proton متصل شوید.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_isp_description */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_isp_title" = "مشکل ارائه‌دهنده خدمات اینترنتی (ISP)";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_nointernet_description" = "لطفاً مطمئن شوید که اتصال اینترنت شما کار میکند.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_nointernet_title" = "عدم اتصال به اینترنت";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_other_description" = "با ما مستقیماً از طریق فرم پشتیبانی، ایمیل(%@)، یا Twitter تماس بگیرید.";
+
+/* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link1" = "فرم پشتیبانی";
+
+/* Text that will become a link to email in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link2" = "ایمیل";
+
+/* Text that will become a link to twitter in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_other_title" = "هنوز راه حلی پیدا نشده است";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proton_description" = "برای وضعیت سیستم ما  Proton Status را چک کنید.";
+
+/* Text that will become a link to proton status page in _troubleshoot_item_proton_description */
+"_troubleshoot_item_proton_link1" = "Proton Status";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proton_title" = "Proton کار نمی‌کند";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proxy_description" = "هرگونه پروکسی یا دیوار آتشین را غیر فعال کنید، یا با مدیر شبکه خود تماس بگیرید.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proxy_title" = "تداخل پروکسی/دیوار آتشین";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "عیب یابی";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "تلاش دوباره";
 
@@ -1340,6 +1415,21 @@
 
 /* Common word */
 "_unavailable" = "ناموجود";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "اعلام کردن شبکه‌های محافظت نشده";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "دریافت یک اخطار هنگامیکه ProtonVPN می‌یابد که شما به یک شبکه محافظت نشده متصل شده اید.";
+
+/* MacOS: Alert when user connects to WiFi without password */
+"_unsecure_wifi" = "اتصال WiFi ناامن شناسایی شد";
+
+/* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
+"_unsecure_wifi_learn_more" = "بیشتر بدانید";
+
+/* MacOS */
+"_unsecure_wifi_title" = "WiFi ناامن شناسایی شد";
 
 /* App update required alert */
 "_update_required" = "به‌روزرسانی لازم است";
