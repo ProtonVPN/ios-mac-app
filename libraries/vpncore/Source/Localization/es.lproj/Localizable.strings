@@ -1423,13 +1423,13 @@
 "_unprotected_network_tooltip" = "Recibir una notificación cuando ProtonVPN detecta que está conectado a una red sin protección.";
 
 /* MacOS: Alert when user connects to WiFi without password */
-"_unsecure_wifi" = "Insecure WiFi connection detected";
+"_unsecure_wifi" = "Conexión Wi-Fi insegura detectada";
 
 /* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
 "_unsecure_wifi_learn_more" = "Más información";
 
 /* MacOS */
-"_unsecure_wifi_title" = "Insecure WiFi Detected";
+"_unsecure_wifi_title" = "WiFi inseguro detectado";
 
 /* App update required alert */
 "_update_required" = "Actualización requerida";
