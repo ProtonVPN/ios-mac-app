@@ -406,6 +406,10 @@ public class LocalizedString {
     public static let unsecureWiFi = NSLocalizedString("_unsecure_wifi", comment: "MacOS: Alert when user connects to WiFi without password")
     public static let unsecureWiFiLearnMore = NSLocalizedString("_unsecure_wifi_learn_more", comment: "The link to this website https://protonvpn.com/blog/public-wifi-safety/")
     public static let unsecureWiFiTitle = NSLocalizedString("_unsecure_wifi_title", comment: "MacOS")
+    
+    public static let killSwitchRequiresSwiftPopupBody = NSLocalizedString("_ks_requires_swift5_popup_title", comment: "MacOS: Swift 5 required to KillSwitch to work")
+    public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
+    public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
         
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")

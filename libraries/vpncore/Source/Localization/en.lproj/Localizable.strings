@@ -338,6 +338,9 @@
 "_unsecure_wifi" = "Insecure WiFi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";
+"_ks_requires_swift5_popup_title" = "KillSwitch cannot be enabled because Swift 5 Runtime Support is not available in your system, please download and install Swift 5 and retry to enable the KillSwitch option.";
+"_ks_enable_again" = "Try to enable KillSwitch again";
+"_ks_keep_disabled" = "Keep KillSwitch disabled";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
