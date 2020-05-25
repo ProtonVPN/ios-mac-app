@@ -407,7 +407,8 @@ public class LocalizedString {
     public static let unsecureWiFiLearnMore = NSLocalizedString("_unsecure_wifi_learn_more", comment: "The link to this website https://protonvpn.com/blog/public-wifi-safety/")
     public static let unsecureWiFiTitle = NSLocalizedString("_unsecure_wifi_title", comment: "MacOS")
     
-    public static let killSwitchRequiresSwiftPopupBody = NSLocalizedString("_ks_requires_swift5_popup_title", comment: "MacOS: Swift 5 required to KillSwitch to work")
+    public static let killSwitchRequiresSwiftPopupMsg = NSLocalizedString("_ks_requires_swift5_popup_msg", comment: "MacOS: Swift 5 required to KillSwitch to work")
+    public static let killSwitchRequiresSwiftPopupMsg2 = NSLocalizedString("_ks_requires_swift5_popup_msg2", comment: "MacOS: Swift 5 required and user didn't install it")
     public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
     public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
         
