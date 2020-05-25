@@ -766,6 +766,9 @@
 /* Network error */
 "_ne_request_timed_out" = "Истекло время ожидания запроса";
 
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Устранение неполадок";
+
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Служба недоступна";
 
@@ -1332,6 +1335,78 @@
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "Добро пожаловать на борт";
 
+/* Description of troubleshooting item */
+"_troubleshoot_item_alt_description" = "В случае блокировки сайтов Proton эта настройка позволяет приложению попробовать альтернативную сетевую маршрутизацию, чтобы добраться до Proton, что может быть полезно для обхода брандмауэров или сетевых проблем. Для большей надежности мы рекомендуем оставить эту настройку включенной.\nПодробнее";
+
+/* Text that will become a Learn more link in _troubleshoot_item_alt_description */
+"_troubleshoot_item_alt_link1" = "Подробнее";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_alt_title" = "Разрешить альтернативную маршрутизацию";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_antivirus_description" = "Временно отключите или удалите антивирус.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_antivirus_title" = "Конфликт с антивирусом";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_gov_description" = "Возможно, ваша страна блокирует доступ к Proton. Попробуйте использовать Tor для доступа к Proton.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_gov_description */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_gov_title" = "Правительственная блокировка";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_isp_description" = "Попробуйте подключиться к Proton из другой сети (либо Tor).";
+
+/* Text that will become a link to Tor in _troubleshoot_item_isp_description */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_isp_title" = "Проблема с Интернет-провайдером (ISP)";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_nointernet_description" = "Пожалуйста, убедитесь, что ваше Интернет-соединение работает.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_nointernet_title" = "Нет подключения к интернету";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_other_description" = "Свяжитесь с нами напрямую через нашу форму поддержки, по эл. почте (%@), или Twitter.";
+
+/* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link1" = "форма поддержки";
+
+/* Text that will become a link to email in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link2" = "эл. почта";
+
+/* Text that will become a link to twitter in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_other_title" = "Так и не нашлось решение";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proton_description" = "Проверьте статус Proton для нашей системы.";
+
+/* Text that will become a link to proton status page in _troubleshoot_item_proton_description */
+"_troubleshoot_item_proton_link1" = "Статус Proton";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proton_title" = "Proton не работает";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proxy_description" = "Отключите все прокси-серверы или брандмауэры, или обратитесь к своему сетевому администратору.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proxy_title" = "Конфликт с прокси-сервером/брандмауэром";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Устранение неисправностей";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Попробовать снова";
 
@@ -1340,6 +1415,21 @@
 
 /* Common word */
 "_unavailable" = "Недоступно";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Уведомить о работе в незащищенной сети";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Получать уведомление, когда ProtonVPN обнаруживает, что вы подключены к незащищенной сети.";
+
+/* MacOS: Alert when user connects to WiFi without password */
+"_unsecure_wifi" = "Обнаружено небезопасное подключение к Wi-Fi";
+
+/* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
+"_unsecure_wifi_learn_more" = "Подробнее";
+
+/* MacOS */
+"_unsecure_wifi_title" = "Обнаружен небезопасный Wi-Fi";
 
 /* App update required alert */
 "_update_required" = "Требуется обновление";
