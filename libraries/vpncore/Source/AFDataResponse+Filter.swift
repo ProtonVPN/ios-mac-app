@@ -38,7 +38,9 @@ extension DataResponse {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             }
         } else {
-            return .failure(ApiError.unknownError)
+            print("--------------------MAP--ERROR---------------------------------------")
+            print("\(self.error)")
+            return .failure(self.error ?? ApiError.unknownError)
         }
     }
 }
