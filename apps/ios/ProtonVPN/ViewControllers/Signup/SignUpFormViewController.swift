@@ -50,6 +50,7 @@ class SignUpFormViewController: UIViewController {
     @IBOutlet weak var termsAndConditionsTextView: UITextView!
     @IBOutlet weak var footerStackView: UIStackView!
     @IBOutlet weak var underLogoLabel: UILabel!
+    @IBOutlet weak var dismissButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,6 +70,7 @@ class SignUpFormViewController: UIViewController {
         minVisibleConstraint.constant = visibleConstraintConstant
         self.view.layoutIfNeeded()
         
+        setupCloseButton()
         setupTextFields()
         setupMainButton()
         setupFooterSection()
@@ -77,6 +79,9 @@ class SignUpFormViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChangeFrame), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        if shouldShowCloseButton {
+            navigationController?.setNavigationBarHidden(true, animated: animated)
+        }
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -84,16 +89,32 @@ class SignUpFormViewController: UIViewController {
         if !wasShownBefore {
             emailField.becomeFirstResponder()
             wasShownBefore = true
-        }        
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         NotificationCenter.default.removeObserver(self)
         view.endEditing(true)
+        if shouldShowCloseButton {
+            navigationController?.setNavigationBarHidden(false, animated: animated)
+        }
     }
     
     // MARK: UI
+    
+    private var shouldShowCloseButton: Bool {
+        guard let navigationController = navigationController else {
+            return true
+        }
+        return navigationController.children[0] == self
+    }
+    
+    private func setupCloseButton() {
+        dismissButton.imageView?.image = dismissButton.imageView?.image?.withRenderingMode(.alwaysTemplate)
+        dismissButton.accessibilityIdentifier = "close"
+        dismissButton.isHidden = !shouldShowCloseButton
+    }
     
     private func setupTextFields() {
         textFieldStackView.removeArrangedSubview(mainButton)
@@ -230,6 +251,10 @@ class SignUpFormViewController: UIViewController {
     
     @IBAction func switchToLogin(_ sender: Any) {
         viewModel?.switchToLogin()
+    }
+    
+    @IBAction private func closeButtonTapped(_ sender: Any) {
+        viewModel.cancel()
     }
     
 }

@@ -60,6 +60,7 @@ protocol SignUpFormViewModel {
     
     func startRegistration()
     func switchToLogin()
+    func cancel()
 }
 
 class SignUpFormViewModelImplementation: SignUpFormViewModel {

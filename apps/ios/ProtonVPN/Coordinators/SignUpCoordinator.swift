@@ -38,11 +38,12 @@ class SignUpCoordinator: Coordinator {
     var finished: ((_ loggedIn: Bool) -> Void)?
     var cancelled: (() -> Void)?
     
-    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory & CoreAlertServiceFactory
+    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory & CoreAlertServiceFactory & StoreKitManagerFactory
     private let factory: Factory
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     
     private var plan: AccountPlan?
     
@@ -51,18 +52,27 @@ class SignUpCoordinator: Coordinator {
     }
     
     func start() {
+        guard storeKitManager.readyToPurchaseProduct() else {
+            // There is unfinished IAP transaction.
+            // User will register with free account and get credits from IAP after the first login.
+            selected(plan: .free)
+            return
+        }
+        startPlanSelection()
+    }
+        
+    func cancel() {
+        cancelled?()
+    }
+    
+    private func startPlanSelection() {
         let viewModel = factory.makePlanSelectionSimpleViewModel(isDismissalAllowed: true, alertService: alertService, planSelectionFinished: { plan in
-            debugPrint("plan selected!", plan)
             self.selected(plan: plan)
         })
         viewModel.cancelled = {
             self.cancel()
         }
         planService.presentPlanSelection(viewModel: viewModel)
-    }
-        
-    func cancel() {
-        cancelled?()
     }
     
     private func selected(plan: AccountPlan) {
