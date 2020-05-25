@@ -37,10 +37,12 @@ extension DataResponse {
             } else {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             }
-        } else {
+        } else if let error = self.error {
             print("--------------------MAP--ERROR---------------------------------------")
-            print("\(self.error)")
-            return .failure(self.error ?? ApiError.unknownError)
+            print("\(error)")
+            return .failure(NetworkError.error(forCode: (error as NSError).code))
+        } else {
+            return .failure(ApiError.unknownError)
         }
     }
 }
