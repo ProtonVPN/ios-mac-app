@@ -106,6 +106,7 @@ class UpdateManager: NSObject {
         NSApp.windows.forEach { (window) in
             if window.title == "Software Update" {
                 window.makeKeyAndOrderFront(self)
+                window.level = .floating
                 return
             }
         }
