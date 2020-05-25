@@ -54,7 +54,7 @@ lint:
   before_script:
     - *before_script_mac
   script:
-    - Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
+    - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
     name: "ios-lint-$CI_COMMIT_TAG"
