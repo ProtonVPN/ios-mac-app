@@ -338,9 +338,10 @@
 "_unsecure_wifi" = "Insecure WiFi connection detected";
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";
-"_ks_requires_swift5_popup_title" = "KillSwitch cannot be enabled because Swift 5 Runtime Support is not available in your system, please download and install Swift 5 and retry to enable the KillSwitch option.";
-"_ks_enable_again" = "Try to enable KillSwitch again";
-"_ks_keep_disabled" = "Keep KillSwitch disabled";
+"_ks_requires_swift5_popup_msg" = "You cannot enable KillSwitch because Swift 5 Runtime Support is not installed on your device. To use KillSwitch, please first download and install Swift 5.";
+"_ks_requires_swift5_popup_msg2" = "You still have not intalled Swift 5 Runtime Support. ProtonVPN cannot run KillSwitch without Swift 5. If you choose not to install Swift 5 on your device, you will not be able to use KillSwitch to protect your device. ";
+"_ks_enable_again" = "Enable KillSwitch again";
+"_ks_keep_disabled" = "Leave KillSwitch off";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
