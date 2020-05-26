@@ -343,16 +343,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		423F0329246AC26600DD20E4 /* Embed App Extensions */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 13;
-			files = (
-			);
-			name = "Embed App Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E17DE0F921FB4DF3008CCC13 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1864,7 +1854,6 @@
 				E148AE5521C2628A007AB65A /* Sentry dSYM upload */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
 				E19CE84A22C7B702002595D0 /* Revert Plist */,
-				423F0329246AC26600DD20E4 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
