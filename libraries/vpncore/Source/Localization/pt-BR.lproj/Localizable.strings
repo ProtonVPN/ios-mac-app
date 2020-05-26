@@ -766,6 +766,9 @@
 /* Network error */
 "_ne_request_timed_out" = "Solicitação de rede expirada";
 
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Solução de problemas";
+
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Serviço indisponível";
 
@@ -1332,6 +1335,78 @@
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "Bem-vindo(a) a bordo";
 
+/* Description of troubleshooting item */
+"_troubleshoot_item_alt_description" = "No caso dos sites da Proton estarem bloqueados, esta configuração permite que o aplicativo tente um roteamento de rede alternativo para alcançar o Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos manter esta configuração ativa para uma maior confiabilidade. [Saiba mais]";
+
+/* Text that will become a Learn more link in _troubleshoot_item_alt_description */
+"_troubleshoot_item_alt_link1" = "Saiba mais";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_alt_title" = "Permitir redirecionamento alternativo";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_antivirus_description" = "Desative ou remova temporariamente o seu antivírus.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_antivirus_title" = "Interferência do antivírus";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_gov_description" = "Seu país pode estar bloqueando o acesso ao Proton. Tente usar o Tor para acessar o Proton.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_gov_description */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_gov_title" = "Bloqueio governamental";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_isp_description" = "Tente conectar ao Proton a partir de uma rede diferente (ou Tor).";
+
+/* Text that will become a link to Tor in _troubleshoot_item_isp_description */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_isp_title" = "Problema no provedor de serviços internet (ISP)";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_nointernet_description" = "Por favor, verifique se sua conexão com à internet esteja funcionando corretamente.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_nointernet_title" = "Sem conexão com a internet";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_other_description" = "Entre em contato conosco através de nosso formulário de suporte, e-mail (%@), ou Twitter.";
+
+/* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link1" = "formulário de suporte";
+
+/* Text that will become a link to email in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link2" = "e-mail";
+
+/* Text that will become a link to twitter in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_other_title" = "Ainda não encontrei uma solução";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proton_description" = "Verifique o status do Proton em nosso sistema.";
+
+/* Text that will become a link to proton status page in _troubleshoot_item_proton_description */
+"_troubleshoot_item_proton_link1" = "Status do Proton";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proton_title" = "O Proton está indisponível";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proxy_description" = "Desative quaisquer proxies ou firewalls, ou entre em contato com o administrador da sua rede.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proxy_title" = "Interferência de Proxy/Firewall";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Solução de problemas";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Tentar novamente";
 
@@ -1340,6 +1415,21 @@
 
 /* Common word */
 "_unavailable" = "Indisponível";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Notificar redes desprotegidas";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Receba uma notificação quando o ProtonVPN detectar que você está conectado a uma rede desprotegida.";
+
+/* MacOS: Alert when user connects to WiFi without password */
+"_unsecure_wifi" = "Conexão WiFi insegura detectada";
+
+/* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
+"_unsecure_wifi_learn_more" = "Saiba mais";
+
+/* MacOS */
+"_unsecure_wifi_title" = "Wi-Fi inseguro detectado";
 
 /* App update required alert */
 "_update_required" = "Atualização necessária";
