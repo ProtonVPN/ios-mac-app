@@ -66,7 +66,8 @@ extension Error {
              NetworkErrorCode.notConnectedToInternet,
              NetworkErrorCode.cannotFindHost,
              NetworkErrorCode.DNSLookupFailed,
-             -1200, 451, 310
+             -1200, 451, 310,
+             8 // No internet
              :
             return true
         default:
