@@ -7,16 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		24FD2F38090479BF66CF7C78 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */; };
-		421E5B12246AF21B00CF1F1C /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
-		423F0323246AC26600DD20E4 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423F0322246AC26600DD20E4 /* PacketTunnelProvider.swift */; };
-		423F0328246AC26600DD20E4 /* OpenVPN Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 423F0320246AC26600DD20E4 /* OpenVPN Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
 		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7561512A1FD8B4A8009224E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7561512C1FD8B4A8009224E7 /* Localizable.strings */; };
-		8D01B2CA88323AF1AD8866FF /* Pods-OpenVPN Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */; };
 		985D133D616AD7F5D71C3259 /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718D28DE3D1BDC1722D36497 /* Pods_ProtonVPNTests.framework */; };
 		B4A128DBA36867898BCF0C77 /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8E324FF337BBDB3F68C164D3 /* Pods-ProtonVPN-metadata.plist */; };
 		BBEEE05867D68EB7FB991D6B /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */; };
@@ -324,13 +319,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		423F0326246AC26600DD20E4 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EED534791EEC112000013607 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 423F031F246AC26600DD20E4;
-			remoteInfo = "OpenVPN Extension";
-		};
 		D591170B229F9574005829DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EED534791EEC112000013607 /* Project object */;
@@ -361,7 +349,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				423F0328246AC26600DD20E4 /* OpenVPN Extension.appex in Embed App Extensions */,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,15 +389,11 @@
 /* Begin PBXFileReference section */
 		27F7409F724A637E79F6FE80 /* Pods-ProtonVPN.debug beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug beta.xcconfig"; sourceTree = "<group>"; };
 		3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPNTests-metadata.plist"; path = "Pods/Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
-		423F0320246AC26600DD20E4 /* OpenVPN Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "OpenVPN Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		423F0322246AC26600DD20E4 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
-		423F0324246AC26600DD20E4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		423F0325246AC26600DD20E4 /* OpenVPN_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN_Extension.entitlements; sourceTree = "<group>"; };
+		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
+		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-OpenVPN Extension-metadata.plist"; path = "Pods/Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
 		648B664D9C62F2876C096974 /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
-		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
-		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		718D28DE3D1BDC1722D36497 /* Pods_ProtonVPNTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		7561512E1FD8B5DE009224E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -747,15 +730,6 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		423F031D246AC26600DD20E4 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				24FD2F38090479BF66CF7C78 /* Pods_OpenVPN_Extension.framework in Frameworks */,
-				421E5B12246AF21B00CF1F1C /* NetworkExtension.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5911703229F9574005829DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -820,16 +794,6 @@
 				4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		423F0321246AC26600DD20E4 /* OpenVPN Extension */ = {
-			isa = PBXGroup;
-			children = (
-				423F0322246AC26600DD20E4 /* PacketTunnelProvider.swift */,
-				423F0324246AC26600DD20E4 /* Info.plist */,
-				423F0325246AC26600DD20E4 /* OpenVPN_Extension.entitlements */,
-			);
-			path = "OpenVPN Extension";
 			sourceTree = "<group>";
 		};
 		7461E535C10E886FBC226611 /* Frameworks */ = {
@@ -1662,7 +1626,6 @@
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
-				423F0321246AC26600DD20E4 /* OpenVPN Extension */,
 				EED534821EEC112000013607 /* Products */,
 				D5911710229F9917005829DA /* fastlane */,
 				7461E535C10E886FBC226611 /* Frameworks */,
@@ -1680,7 +1643,6 @@
 				E15B754D20FA83CB0022C406 /* ProtonVPNTests.xctest */,
 				E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */,
 				D5911706229F9574005829DA /* ProtonVPNUITests.xctest */,
-				423F0320246AC26600DD20E4 /* OpenVPN Extension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1807,24 +1769,6 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		423F031F246AC26600DD20E4 /* OpenVPN Extension */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 423F032D246AC26600DD20E4 /* Build configuration list for PBXNativeTarget "OpenVPN Extension" */;
-			buildPhases = (
-				A05EBAE756843C23245F96C7 /* [CP] Check Pods Manifest.lock */,
-				423F031C246AC26600DD20E4 /* Sources */,
-				423F031D246AC26600DD20E4 /* Frameworks */,
-				423F031E246AC26600DD20E4 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "OpenVPN Extension";
-			productName = "OpenVPN Extension";
-			productReference = 423F0320246AC26600DD20E4 /* OpenVPN Extension.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		D5911705229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */;
@@ -1927,7 +1871,6 @@
 			);
 			dependencies = (
 				E125DD2C221B1E0100027272 /* PBXTargetDependency */,
-				423F0327246AC26600DD20E4 /* PBXTargetDependency */,
 			);
 			name = ProtonVPN;
 			productName = ProtonVPN;
@@ -1944,9 +1887,6 @@
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
-					423F031F246AC26600DD20E4 = {
-						CreatedOnToolsVersion = 11.4.1;
-					};
 					D5911705229F9574005829DA = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = EED534801EEC112000013607;
@@ -2033,20 +1973,11 @@
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911705229F9574005829DA /* ProtonVPNUITests */,
-				423F031F246AC26600DD20E4 /* OpenVPN Extension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		423F031E246AC26600DD20E4 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D01B2CA88323AF1AD8866FF /* Pods-OpenVPN Extension-metadata.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5911704229F9574005829DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2259,28 +2190,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		A05EBAE756843C23245F96C7 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-OpenVPN Extension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
 		B8D036D42989A043E361F738 /* [CP] Prepare Artifacts */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2465,14 +2374,6 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		423F031C246AC26600DD20E4 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				423F0323246AC26600DD20E4 /* PacketTunnelProvider.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		D5911702229F9574005829DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2749,11 +2650,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		423F0327246AC26600DD20E4 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 423F031F246AC26600DD20E4 /* OpenVPN Extension */;
-			targetProxy = 423F0326246AC26600DD20E4 /* PBXContainerItemProxy */;
-		};
 		D591170C229F9574005829DA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EED534801EEC112000013607 /* ProtonVPN */;
@@ -2802,94 +2698,6 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
-		423F032A246AC26600DD20E4 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9D607FF6CDB5857F208146AC /* Pods-OpenVPN Extension.debug.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Debug;
-		};
-		423F032B246AC26600DD20E4 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9BAC2FD1140CE1A4710A2D74 /* Pods-OpenVPN Extension.release.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Release;
-		};
-		423F032C246AC26600DD20E4 /* Staging */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 648B664D9C62F2876C096974 /* Pods-OpenVPN Extension.staging.xcconfig */;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "OpenVPN Extension/OpenVPN_Extension.entitlements";
-				CODE_SIGN_IDENTITY = "Apple Development";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				ENABLE_HARDENED_RUNTIME = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = "OpenVPN Extension/Info.plist";
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/../Frameworks",
-					"@executable_path/../../../../Frameworks",
-				);
-				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE_SPECIFIER = "";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 5.0;
-			};
-			name = Staging;
-		};
 		D591170D229F9574005829DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3512,16 +3320,6 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		423F032D246AC26600DD20E4 /* Build configuration list for PBXNativeTarget "OpenVPN Extension" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				423F032A246AC26600DD20E4 /* Debug */,
-				423F032B246AC26600DD20E4 /* Release */,
-				423F032C246AC26600DD20E4 /* Staging */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

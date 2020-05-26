@@ -35,11 +35,6 @@ target 'ProtonVPNTests' do
     common_pods
 end
 
-target 'OpenVPN Extension' do
-    inherit! :search_paths
-    common_pods
-end
-
 post_install do | installer |
     # Create plist with info about used frameworks
     plugin 'cocoapods-acknowledgements', :exclude => ['vpncore']
