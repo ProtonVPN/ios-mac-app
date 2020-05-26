@@ -59,8 +59,10 @@ class KillSwitchSwift5Popup: NSViewController {
     // MARK: - Actions
     
     @objc fileprivate func didTapUrl() {
-        let url = URL(string: self.utilUrl)
-        NSWorkspace.shared.open(url!)
+        guard let url = URL(string: self.utilUrl) else {
+            return
+        }
+        NSWorkspace.shared.open(url)
     }
     
     @IBAction func didTapTryConnect(_ sender: Any) {
