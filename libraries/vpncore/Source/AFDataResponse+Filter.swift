@@ -37,6 +37,8 @@ extension DataResponse {
             } else {
                 return .failure(ApiError(httpStatusCode: statusCode, code: code, localizedDescription: json.string("Error"), responseBody: json))
             }
+        } else if let error = self.error {
+            return .failure(NetworkError.error(forCode: (error as NSError).code))
         } else {
             return .failure(ApiError.unknownError)
         }
