@@ -195,7 +195,7 @@ class ConnectionSettingsViewModel {
     }
     
     private func enableKillSwitch() {
-        firewallManager.installHelperIfNeeded(.userInitiated)
+        firewallManager.installHelperIfNeeded(trigger: .userInitiated)
     }
     
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {
