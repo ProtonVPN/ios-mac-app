@@ -12,8 +12,6 @@
 	<array>
 		<string>$(TeamIdentifierPrefix)group.ch.protonvpn.mac</string>
 	</array>
-	<key>com.apple.security.network.client</key>
-	<true/>
 	<key>keychain-access-groups</key>
 	<array>
 		<string>$(AppIdentifierPrefix)ch.protonvpn.macos.Extension</string>
