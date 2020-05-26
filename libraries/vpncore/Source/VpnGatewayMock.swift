@@ -23,17 +23,16 @@ import Foundation
 
 public class VpnGatewayMock: VpnGatewayProtocol {
     
-    public init(activeServerType: ServerType, connection: ConnectionStatus) {
-        self.activeServerType = activeServerType
+    public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {
         self.connection = connection
+        
+        propertiesManager.secureCoreToggle = activeServerType == .secureCore
     }
     
-    public var activeServerType: ServerType
-    public weak var connectingCellDelegate: ConnectingCellDelegate?
     public var connection: ConnectionStatus
     public var activeIp: String?
     public var activeServer: ServerModel?
-    public var activeConnectionRequest: ConnectionRequest?
+    public var lastConnectionRequest: ConnectionRequest?
     
     private var _userTier: Int = 0
     
@@ -42,7 +41,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func changeActiveServerType(_ serverType: ServerType) {
-        activeServerType = serverType
+        
     }
     
     public func autoConnect() {
@@ -51,6 +50,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     
     public func quickConnect() {
         
+    }
+    
+    public func quickConnectConnectionRequest() -> ConnectionRequest {
+        return ConnectionRequest(serverType: .standard, connectionType: .fastest, vpnProtocol: .ike)
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
@@ -66,6 +69,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func retryConnection() {
+        
+    }
+    
+    public func connect(with request: ConnectionRequest?) {
         
     }
     

@@ -24,7 +24,7 @@ import XCTest
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: Data())
+    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), vpnProtocol: .ike)
     let alamofireWrapper = AlamofireWrapperImplementation()
     let vpnKeychain = VpnKeychainMock()
     
@@ -39,7 +39,8 @@ class StateAlertTests: XCTestCase {
         alertService = CoreAlertServiceMock()
         timerFactory = TimerFactoryMock()
         propertiesManager = PropertiesManagerMock()
-        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain)
+        let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer)
     }
 
     func testDisconnectingAlertFirtTimeConnecting() {
@@ -47,7 +48,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: vpnConfig)
+        appStateManager.connect(withConfiguration: connectionConfig)
         
         assert(alertService.alerts.count == 1)
         assert(alertService.alerts.first is VpnStuckAlert)
@@ -58,7 +59,7 @@ class StateAlertTests: XCTestCase {
         
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: vpnConfig)
+        appStateManager.connect(withConfiguration: connectionConfig)
         
         assert(alertService.alerts.count == 0)
         
@@ -72,7 +73,7 @@ class StateAlertTests: XCTestCase {
     func testFirstTimeConnectingAlert() {
         propertiesManager.hasConnected = false
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: vpnConfig)
+        appStateManager.connect(withConfiguration: connectionConfig)
         
         assert(alertService.alerts.count == 1)
         assert(alertService.alerts.first is FirstTimeConnectingAlert)
@@ -81,9 +82,15 @@ class StateAlertTests: XCTestCase {
     func testNormalConnectingNoAlerts() {
         propertiesManager.hasConnected = true
         appStateManager.prepareToConnect()
-        appStateManager.connect(withConfiguration: vpnConfig)
+        appStateManager.connect(withConfiguration: connectionConfig)
         
         assert(alertService.alerts.count == 0)
     }
+    
+    lazy var connectionConfig: ConnectionConfiguration = {
+        let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0))
+        let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike)
+    }()
     
 }

@@ -27,21 +27,14 @@ public protocol GenericRequestRetrierFactory {
 }
 
 public class GenericRequestRetrier: RequestRetrier {
+
+    public init() {}
     
-    public init() {
-    }
-    
-    public func should(_ manager: SessionManager, retry request: Request, with error: Error, completion: @escaping RequestRetryCompletion) {
-        let result = should(manager, retry: request, with: error)
-        completion(result.0, result.1)
-    }
-    
-    public func should(_ manager: SessionManager, retry request: Request, with error: Error) -> (Bool, TimeInterval) {
+    public func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         if (error as NSError).code == (-1005), request.retryCount < 1 {
-            return (true, 1.0) // retry after 1 second
+            completion(.retryWithDelay(1))
         } else {
-            return (false, 0.0) // don't retry
+            completion(.doNotRetryWithError(error))
         }
     }
-    
 }

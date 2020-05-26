@@ -8,12 +8,13 @@
 //  See LICENSE for up to date license information.
 
 import TrustKit
+import Alamofire
 
 public protocol TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper?
 }
 
-public final class TrustKitHelper {
+public final class TrustKitHelper: SessionDelegate {
     
     typealias Configuration = [String: Any]
     
@@ -67,24 +68,23 @@ public final class TrustKitHelper {
     public init(factory: Factory, hardfail: Bool = true) {
         self.factory = factory
         trustKit = TrustKit(configuration: TrustKitHelper.configuration(hardfail: hardfail))
+        super.init()
     }
         
-    public var authenticationChallengeTask: ((URLSession, URLSessionTask, URLAuthenticationChallenge, @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) -> Void)? {
-        return { session, task, challenge, completionHandler in
-            
-            let wrappedCompletionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void = { [self, task] disposition, credential in
-                if disposition == .cancelAuthenticationChallenge, let request = task.originalRequest {
-                    self.alamofireWrapper.markAsFailedTLS(request: request)
-                }
-                completionHandler(disposition, credential)
+    // MARK: - SessionDelegate
+    
+    override public func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        let wrappedCompletionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void = { [self, task] disposition, credential in
+            if disposition == .cancelAuthenticationChallenge, let request = task.originalRequest {
+                self.alamofireWrapper.markAsFailedTLS(request: request)
             }
-            
-            if self.trustKit.pinningValidator.handle(challenge, completionHandler: wrappedCompletionHandler) == false {
-                // TrustKit did not handle this challenge: perhaps it was not for server trust
-                // or the domain was not pinned. Fall back to the default behavior
-                completionHandler(.performDefaultHandling, nil)
-            }
+            completionHandler(disposition, credential)
+        }
+        
+        if self.trustKit.pinningValidator.handle(challenge, completionHandler: wrappedCompletionHandler) == false {
+            // TrustKit did not handle this challenge: perhaps it was not for server trust
+            // or the domain was not pinned. Fall back to the default behavior
+            completionHandler(.performDefaultHandling, nil)
         }
     }
-    
 }

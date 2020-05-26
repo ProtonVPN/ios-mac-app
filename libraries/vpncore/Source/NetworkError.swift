@@ -60,7 +60,15 @@ extension Error {
     public var isNetworkError: Bool {
         let nsError = self as NSError
         switch nsError.code {
-        case NetworkErrorCode.timedOut, NetworkErrorCode.cannotConnectToHost, NetworkErrorCode.networkConnectionLost, NetworkErrorCode.notConnectedToInternet, NetworkErrorCode.cannotFindHost:
+        case NetworkErrorCode.timedOut,
+             NetworkErrorCode.cannotConnectToHost,
+             NetworkErrorCode.networkConnectionLost,
+             NetworkErrorCode.notConnectedToInternet,
+             NetworkErrorCode.cannotFindHost,
+             NetworkErrorCode.DNSLookupFailed,
+             -1200, 451, 310,
+             8 // No internet
+             :
             return true
         default:
             return false

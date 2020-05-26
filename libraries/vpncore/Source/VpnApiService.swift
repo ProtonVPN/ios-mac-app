@@ -20,44 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Alamofire
-import Foundation
 
-public struct VpnProperties {
-    
-    public let serverModels: [ServerModel]
-    public let vpnCredentials: VpnCredentials?
-    public let ip: String?
-    
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, sessionModels: [SessionModel]?, ip: String?, appStateManager: AppStateManager?) {
-        self.serverModels = serverModels
-        self.vpnCredentials = vpnCredentials
-        self.ip = ip
-        
-        guard let sessionModels = sessionModels else {
-            return
-        }
-        
-        let ikeSessions = sessionModels.filter { session -> Bool in
-            session.vpnProtocol == .ikev2
-        }
-        
-        let connectedIp = appStateManager?.activeIp
-        
-        self.serverModels.forEach { server in
-            server.ips.forEach { ip in
-                ip.hasExistingSession = false
-                ikeSessions.forEach { session in
-                    if ip.exitIp == session.exitIp {
-                        if let connectedIp = connectedIp, connectedIp == ip.exitIp {
-                        } else {
-                            ip.hasExistingSession = true
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
+public typealias OpenVpnConfigCallback = GenericCallback<OpenVpnConfig>
+public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
+public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
+public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
+public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
+public typealias OptionalStringCallback = GenericCallback<String?>
+public typealias ContinuousServerPropertiesCallback = GenericCallback<ContinuousServerPropertiesDictionary>
 
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
@@ -73,25 +43,27 @@ public class VpnApiService {
         self.alamofireWrapper = alamofireWrapper
     }
     
-    public func vpnProperties(lastKnownIp: String?, success: @escaping ((VpnProperties) -> Void), failure: @escaping ((Error) -> Void)) {
+    // swiftlint:disable function_body_length
+    public func vpnProperties(lastKnownIp: String?, success: @escaping VpnPropertiesCallback, failure: @escaping ErrorCallback) {
         let dispatchGroup = DispatchGroup()
         
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
         var rSessionModels: [SessionModel]?
         var rUserIp: String?
+        var rOpenVpnConfig: OpenVpnConfig?
         var rError: Error?
         
-        let failureClosure: (Error) -> Void = { error in
+        let failureClosure: ErrorCallback = { error in
             rError = error
             dispatchGroup.leave()
         }
         
-        let silentFailureClosure: (Error) -> Void = { _ in
+        let silentFailureClosure: ErrorCallback = { _ in
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure: (String?) -> Void = { [weak self] ip in
+        let ipResolvedClosure: OptionalStringCallback = { [weak self] ip in
             rUserIp = ip
             
             self?.serverInfo(for: rUserIp,
@@ -121,9 +93,15 @@ public class VpnApiService {
             dispatchGroup.leave()
         }, failure: silentFailureClosure)
         
+        dispatchGroup.enter()
+        clientConfig(success: { openVpnConfig in
+            rOpenVpnConfig = openVpnConfig
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, sessionModels: rSessionModels, ip: rUserIp, appStateManager: self?.appStateManager))
+            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, sessionModels: rSessionModels, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -131,20 +109,22 @@ public class VpnApiService {
             }
         }
     }
+    // swiftlint:enable function_body_length
     
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, success: @escaping ((VpnProperties) -> Void), failure: @escaping ((Error) -> Void)) {
+    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, success: @escaping VpnPropertiesCallback, failure: @escaping ErrorCallback) {
         let dispatchGroup = DispatchGroup()
         
         var rServerModels: [ServerModel]?
         var rUserIp: String?
+        var rOpenVpnConfig: OpenVpnConfig?
         var rError: Error?
         
-        let failureClosure: (Error) -> Void = { error in
+        let failureClosure: ErrorCallback = { error in
             rError = error
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure: (String?) -> Void = { [weak self] ip in
+        let ipResolvedClosure: OptionalStringCallback = { [weak self] ip in
             rUserIp = ip
             
             // Only update servers if the user's IP has changed
@@ -163,9 +143,15 @@ public class VpnApiService {
         dispatchGroup.enter()
         userIp(success: ipResolvedClosure, failure: failureClosure)
         
+        dispatchGroup.enter()
+        clientConfig(success: { openVpnConfig in
+            rOpenVpnConfig = openVpnConfig
+            dispatchGroup.leave()
+        }, failure: failureClosure)
+        
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, sessionModels: nil, ip: rUserIp, appStateManager: self?.appStateManager))
+            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, sessionModels: nil, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -174,8 +160,8 @@ public class VpnApiService {
         }
     }
     
-    public func clientCredentials(success: @escaping ((VpnCredentials) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { json in
+    public func clientCredentials(success: @escaping VpnCredentialsCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
             do {
                 let vpnCredential = try VpnCredentials(dic: json)
                 success(vpnCredential)
@@ -193,11 +179,11 @@ public class VpnApiService {
             }
         }
         
-        alamofireWrapper.request(VpnRouter.clientCredentials, success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNClientCredentialsRequest(), success: successWrapper, failure: failure)
     }
     
-    public func serverInfoSuccessWrapper(success: @escaping (([ServerModel]) -> Void), failure: @escaping ((Error) -> Void)) -> ((JSONDictionary) -> Void) {
-        let successWrapper: (JSONDictionary) -> Void = { response in
+    public func serverInfoSuccessWrapper(success: @escaping ServerModelsCallback, failure: @escaping ErrorCallback) -> JSONCallback {
+        let successWrapper: JSONCallback = { response in
             guard let serversJson = response.jsonArray(key: "LogicalServers") else {
                 PMLog.D("'Servers' field not present in server info request's response", level: .error)
                 let error = ParseError.serverParse
@@ -223,18 +209,18 @@ public class VpnApiService {
     }
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(for ip: String?, success: @escaping (([ServerModel]) -> Void), failure: @escaping ((Error) -> Void)) {
+    public func serverInfo(for ip: String?, success: @escaping ServerModelsCallback, failure: @escaping ErrorCallback) {
         var shortenedIp: String?
         if let ip = ip {
             shortenedIp = truncatedIp(ip)
         }
         
         let successWrapper = serverInfoSuccessWrapper(success: success, failure: failure)
-        alamofireWrapper.request(VpnRouter.logicalServices(ip: shortenedIp), success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNLogicalServicesRequest(shortenedIp), success: successWrapper, failure: failure)
     }
     
-    public func userIp(success: @escaping ((String) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { response in
+    public func userIp(success: @escaping StringCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
             guard let ip = response.string("IP") else {
                 PMLog.D("'IP' field not present in user's ip location response", level: .error)
                 let error = ParseError.userIpParse
@@ -245,11 +231,11 @@ public class VpnApiService {
             success(ip)
         }
         
-        alamofireWrapper.request(VpnRouter.location, success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNLocationRequest(), success: successWrapper, failure: failure)
     }
     
-    public func sessions(success: @escaping (([SessionModel]) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { response in
+    public func sessions(success: @escaping SessionModelsCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
             guard let sessionsJson = response.jsonArray(key: "Sessions") else {
                 PMLog.D("'Sessions' field not present in user's sessions response", level: .error)
                 let error = ParseError.sessionCountParse
@@ -272,11 +258,11 @@ public class VpnApiService {
             success(sessions)
         }
         
-        alamofireWrapper.request(VpnRouter.sessions, success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)
     }
     
-    public func loads(success: @escaping ((ContinuousServerPropertiesDictionary) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { response in
+    public func loads(success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
             guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
                 PMLog.D("'LogicalServers' field not present in loads response", level: .error)
                 let error = ParseError.loadsParse
@@ -300,7 +286,30 @@ public class VpnApiService {
             success(loads)
         }
         
-        alamofireWrapper.request(VpnRouter.loads, success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNLoadsRequest(), success: successWrapper, failure: failure)
+    }
+    
+    public func clientConfig(success: @escaping OpenVpnConfigCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
+            guard let openVpnConfigJson = response.jsonDictionary(key: "OpenVPNConfig") else {
+                PMLog.D("'OpenVPNConfig' field not present in clientconfig response", level: .error)
+                let error = ParseError.clientConfigParse
+                PMLog.ET(error.localizedDescription)
+                failure(error)
+                return
+            }
+            
+            do {
+                let openVpnConfig = try OpenVpnConfig(dic: openVpnConfigJson)
+                success(openVpnConfig)
+            } catch {
+                PMLog.D("Failed to parse load info for json: \(openVpnConfigJson)", level: .error)
+                let error = ParseError.loadsParse
+                PMLog.ET(error.localizedDescription)
+            }
+        }
+        
+        alamofireWrapper.request(VPNClientConfigRequest(), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

@@ -21,43 +21,6 @@
 
 import Foundation
 
-public struct ReportBug {
-    
-    public let os: String // iOS, MacOS
-    public let osVersion: String
-    public let client: String
-    public let clientVersion: String
-    public let clientType: Int // 1 = email, 2 = VPN
-    public var title: String
-    public var description: String
-    public let username: String
-    public var email: String
-    public var country: String
-    public var ISP: String
-    public var plan: String
-    public var files = [URL]() // Param names: File0, File1, File2...
-    
-    public init(os: String, osVersion: String, client: String, clientVersion: String, clientType: Int, title: String, description: String, username: String, email: String, country: String, ISP: String, plan: String) {
-        self.os = os
-        self.osVersion = osVersion
-        self.client = client
-        self.clientVersion = clientVersion
-        self.clientType = clientType
-        self.title = title
-        self.description = description
-        self.username = username
-        self.email = email
-        self.country = country
-        self.ISP = ISP
-        self.plan = plan
-    }
-    
-    public var canBeSent: Bool {
-        return !description.isEmpty && !email.isEmpty
-    }
-    
-}
-
 public protocol ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService
 }
@@ -70,25 +33,18 @@ public class ReportsApiService {
         self.alamofireWrapper = alamofireWrapper
     }
     
-    public func report(bug: ReportBug,
-                       success: @escaping (() -> Void),
-                       failure: @escaping ((Error) -> Void)) {
+    public func report(bug: ReportBug, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
         
         var i = 0
         var files = [String: URL]()
-        for file in bug.files {
+        for file in bug.files.reachable() {
             files["File\(i)"] = file
             i += 1
         }
         
-        let request = ReportsRouter.bug(bug)
-        alamofireWrapper.upload(request,
-                                parameters: request.parameters ?? [:],
-                                files: files,
-                                success: {_ in
-                                    success()
-                                },
-                                failure: failure)
+        let request = ReportsBugRequest(bug)
+        let params = (request.parameters as? [String: String]) ?? [:]
+        let successWrapper: JSONCallback = { _ in success() }
+        alamofireWrapper.upload(request, parameters: params, files: files, success: successWrapper, failure: failure)
     }
-
 }

@@ -21,22 +21,24 @@
 
 import Foundation
 
-public protocol PaymentsApiService {
-    func servicePlans(success: @escaping ((ServicePlansProperties) -> Void), failure: @escaping ((Error) -> Void))
-    func applyCredit(forPlanId planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void))
-    func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void))
-    func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void))
-    func verifyPayment(amount: Int, receipt: String, success: @escaping ((String) -> Void), failure: @escaping ((Error) -> Void))
-    func methods(success: @escaping (([PaymentMethod]?) -> Void), failure: @escaping ((Error) -> Void))
-    func subscription(success: @escaping ((Subscription?) -> Void), failure: @escaping ((Error) -> Void))
-    func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void))
-}
+public typealias PlanPropsCallback = GenericCallback<ServicePlansProperties>
+public typealias PaymentTokenCallback = GenericCallback<PaymentToken>
+public typealias SubscriptionCallback = GenericCallback<Subscription>
+public typealias OptionalSubCallback = GenericCallback<Subscription?>
+public typealias PaymentsMethodCallback = GenericCallback<[PaymentMethod]?>
+public typealias OptionalPlanDetailsCallback = GenericCallback<ServicePlanDetails?>
+public typealias PlansDetailsCallback = GenericCallback<[ServicePlanDetails]>
+public typealias BoolCallback = GenericCallback<Bool>
 
-public struct ServicePlansProperties {
-    
-    public let available: Bool
-    public let plansDetails: [ServicePlanDetails]
-    public let defaultPlanDetails: ServicePlanDetails?
+public protocol PaymentsApiService {
+    func servicePlans(success: @escaping PlanPropsCallback, failure: @escaping ErrorCallback)
+    func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
+    func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
+    func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
+    func verifyPayment(amount: Int, receipt: String, success: @escaping StringCallback, failure: @escaping ErrorCallback)
+    func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback)
+    func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback)
+    func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback)
 }
 
 public protocol PaymentsApiServiceFactory {
@@ -52,7 +54,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
     }
     
     // makes calls asynchronously and returns results if successful else error if any issues
-    public func servicePlans(success: @escaping ((ServicePlansProperties) -> Void), failure: @escaping ((Error) -> Void)) {
+    public func servicePlans(success: @escaping PlanPropsCallback, failure: @escaping ErrorCallback) {
         let dispatchGroup = DispatchGroup()
         
         var _available: Bool?
@@ -61,7 +63,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         
         var _error: Error?
         
-        let failureClosure: (Error) -> Void = { error in
+        let failureClosure: ErrorCallback = { error in
             _error = error
             dispatchGroup.leave()
         }
@@ -95,16 +97,15 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         }
     }
     
-    func status(success: @escaping ((Bool) -> Void),
-                failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { json in
+    func status(success: @escaping BoolCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
             success(json.bool(key: "Apple", or: false))
         }
-        alamofireWrapper.request(PaymentsRouter.status, success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsStatusRequest(), success: successWrapper, failure: failure)
     }
     
-    public func methods(success: @escaping (([PaymentMethod]?) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { json in
+    public func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
             do {
                 let data = try JSONSerialization.data(withJSONObject: json["PaymentMethods"] as Any, options: [])
                 let decoder = JSONDecoder()
@@ -117,11 +118,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.methods, success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsMethodsRequest(), success: successWrapper, failure: failure)
     }
     
-    public func subscription(success: @escaping ((Subscription?) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { [weak self] json in
+    public func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
             do {
                 guard let `self` = self else { return }
                 success(try self.subscriptionResponse(json))
@@ -129,12 +130,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.subscription, success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsSubscriptionRequest(), success: successWrapper, failure: failure)
     }
     
-    func defaultPlan(success: @escaping ((ServicePlanDetails?) -> Void),
-                     failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { [weak self] json in
+    func defaultPlan(success: @escaping OptionalPlanDetailsCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
             do {
                 guard let `self` = self else { return }
                 let servicePlans = try self.plansResponse(json)
@@ -147,12 +147,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.defaultPlan, success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsDefaultPlanRequest(), success: successWrapper, failure: failure)
     }
     
-    func plans(success: @escaping (([ServicePlanDetails]) -> Void),
-               failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { [weak self] json in
+    func plans(success: @escaping PlansDetailsCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
             do {
                 guard let `self` = self else { return }
                 let plans = try self.plansResponse(json)
@@ -162,15 +161,15 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.plans, success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsPlansRequest(), success: successWrapper, failure: failure)
     }
     
-    public func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
-        alamofireWrapper.request(PaymentsRouter.credit(amount: amount, payment: receipt), success: success, failure: failure)
+    public func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
+        alamofireWrapper.request(PaymentsCreditRequest(amount, payment: receipt), success: success, failure: failure)
     }
     
-    public func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { [weak self] json in
+    public func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
             do {
                 guard let `self` = self else { return }
                 guard let code = json["Code"] as? Int, code == 1000 else {
@@ -182,11 +181,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.receipt(amount: amount, receipt: receipt, planId: planId), success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsReceiptRequest(amount, receipt: receipt, planId: planId), success: successWrapper, failure: failure)
     }
     
-    public func applyCredit(forPlanId planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { [weak self] json in
+    public func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
             do {
                 guard let `self` = self else { return }
                 guard let code = json["Code"] as? Int, code == 1000 else {
@@ -198,12 +197,12 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.applyCredit(planId: planId), success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsApplyCreditRequest(planId), success: successWrapper, failure: failure)
     }
     
-    public func verifyPayment(amount: Int, receipt: String, success: @escaping ((String) -> Void), failure: @escaping ((Error) -> Void)) {
+    public func verifyPayment(amount: Int, receipt: String, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         
-        let successWrapper: (JSONDictionary) -> Void = { json in
+        let successWrapper: JSONCallback = { json in
             do {
                 guard let code = json["Code"] as? Int, code == 1000, let verificationCode = json["VerifyCode"] as? String else {
                     throw ParseError.paymentVerificationParse
@@ -213,11 +212,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.verify(amount: amount, receipt: receipt), success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsVerifyRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
     }
     
-    public func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { json in
+    public func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
             do {
                 let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
                 let decoder = JSONDecoder()
@@ -230,7 +229,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsRouter.createPaymentToken(amount: amount, receipt: receipt), success: successWrapper, failure: failure)
+        alamofireWrapper.request(PaymentsTokenRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private
@@ -268,7 +267,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         guard let json = json["Subscription"] as? JSONDictionary,
             let startRaw = json["PeriodStart"] as? Int,
             let endRaw = json["PeriodEnd"] as? Int else {
-            throw ParseError.subscriptionsParse
+                throw ParseError.subscriptionsParse
         }
         let couponCode = json["PeriodEnd"] as? String
         let cycle = json["Cycle"] as? Int

@@ -32,14 +32,14 @@ public protocol PropertiesManagerProtocol: class {
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
-    var lastServerId: String? { get set }
-    var lastServerIp: String? { get set }
-    var lastServerEntryIp: String? { get set }
+    var lastIkeConnection: ConnectionConfiguration? { get set }
+    var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastConnectedTimeStamp: Double { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
     var lastUserAccountPlan: AccountPlan? { get set }
-    var quickConnect: String? { get set }
+    var quickConnect: String? { get set } // profile + username (incase multiple users are using the app)
     var secureCoreToggle: Bool { get set }
+    var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     
     // Destinguishes if kill switch should be disabled
@@ -51,6 +51,8 @@ public protocol PropertiesManagerProtocol: class {
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
     
+    var openVpnConfig: OpenVpnConfig? { get set }
+    var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
     
     // Development properties
@@ -61,16 +63,15 @@ public protocol PropertiesManagerProtocol: class {
     
 }
 
-public class PropertiesManager: PropertiesManagerProtocol {
+public class PropertiesManager: PropertiesManagerProtocol {    
     
     private struct Keys {
       
         static let autoConnect = "AutoConnect"
         static let autoConnectProfile = "AutoConnect_"
         static let connectOnDemand = "ConnectOnDemand"
-        static let lastServerId = "LastServerId"
-        static let lastServerIp = "LastServerIp" // exit IP
-        static let lastServerEntryIp = "LastServerEntryIp"
+        static let lastIkeConnection = "LastIkeConnection"
+        static let lastOpenVpnConnection = "LastOpenVPNConnection"
         static let lastConnectedTimeStamp = "LastConnectedTimeStamp"
         static let lastConnectionRequest = "LastConnectionRequest"
         static let lastUserAccountPlan = "LastUserAccountPlan"
@@ -93,6 +94,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let trialWelcomed = "TrialWelcomed"
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
+        
+        // OpenVPN
+        static let openVpnConfig = "OpenVpnConfig"
+        static let vpnProtocol = "VpnProtocol"
         
         static let apiEndpoint = "ApiEndpoint"
     }
@@ -131,30 +136,35 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var lastServerId: String? {
+    public var lastIkeConnection: ConnectionConfiguration? {
         get {
-            return Storage.userDefaults().string(forKey: Keys.lastServerId)
+            guard let data = Storage.userDefaults().data(forKey: Keys.lastIkeConnection) else { return nil }
+            
+            do {
+                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
+            } catch {
+                return nil
+            }
         }
         set {
-            Storage.setValue(newValue, forKey: Keys.lastServerId)
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastIkeConnection)
         }
     }
     
-    public var lastServerIp: String? {
+    public var lastOpenVpnConnection: ConnectionConfiguration? {
         get {
-            return Storage.userDefaults().string(forKey: Keys.lastServerIp)
+            guard let data = Storage.userDefaults().data(forKey: Keys.lastOpenVpnConnection) else { return nil }
+            
+            do {
+                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
+            } catch {
+                return nil
+            }
         }
         set {
-            Storage.setValue(newValue, forKey: Keys.lastServerIp)
-        }
-    }
-    
-    public var lastServerEntryIp: String? {
-        get {
-            return Storage.userDefaults().string(forKey: Keys.lastServerEntryIp)
-        }
-        set {
-            Storage.setValue(newValue, forKey: Keys.lastServerEntryIp)
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastOpenVpnConnection)
         }
     }
     
@@ -210,6 +220,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             Storage.setValue(newValue, forKey: Keys.secureCoreToggle)
         }
+    }
+    
+    public var serverTypeToggle: ServerType {
+        return secureCoreToggle ? .secureCore : .standard
     }
     
     public var reportBugEmail: String? {
@@ -299,14 +313,43 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
+    public var openVpnConfig: OpenVpnConfig? {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.openVpnConfig) else {
+                return nil
+            }
+            return try? PropertyListDecoder().decode(OpenVpnConfig.self, from: data)
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.openVpnConfig)
+        }
+    }
+    
+    public var vpnProtocol: VpnProtocol {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
+                return .ike
+            }
+            do {
+                return try PropertyListDecoder().decode(VpnProtocol.self, from: data)
+            } catch {
+                return .ike
+            }
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.vpnProtocol)
+        }
+    }
+    
     public init() {} // makes the class accessable publicly
     
     public func logoutCleanup() {
         hasConnected = false
         secureCoreToggle = false
-        lastServerId = nil
-        lastServerIp = nil
-        lastServerEntryIp = nil
+        lastIkeConnection = nil
+        lastOpenVpnConnection = nil
         lastConnectedTimeStamp = -1
         trialWelcomed = false
         warnedTrialExpiring = false

@@ -25,6 +25,7 @@ public struct ConnectionRequest: Codable {
     
     public let serverType: ServerType
     public let connectionType: ConnectionRequestType
+    public let vpnProtocol: VpnProtocol
 }
 
 public enum ConnectionRequestType {
@@ -125,7 +126,7 @@ extension CountryConnectionRequestType: Codable {
 extension ConnectionRequest: Equatable {
     
     public static func == (lhs: ConnectionRequest, rhs: ConnectionRequest) -> Bool {
-        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType
+        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.vpnProtocol == rhs.vpnProtocol
     }
 }
 

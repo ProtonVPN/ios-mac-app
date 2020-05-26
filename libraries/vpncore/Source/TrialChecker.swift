@@ -85,7 +85,7 @@ public class TrialChecker {
                         propertiesManager.warnedTrialExpired = true
                     }
                     
-                    if vpnGateway.activeServerType == .secureCore {
+                     if propertiesManager.secureCoreToggle {
                         disableSecureCore()
                     }
                 }
