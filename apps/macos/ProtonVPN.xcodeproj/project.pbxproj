@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
+		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7561512A1FD8B4A8009224E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7561512C1FD8B4A8009224E7 /* Localizable.strings */; };
@@ -377,6 +379,8 @@
 /* Begin PBXFileReference section */
 		27F7409F724A637E79F6FE80 /* Pods-ProtonVPN.debug beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug beta.xcconfig"; sourceTree = "<group>"; };
 		3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPNTests-metadata.plist"; path = "Pods/Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
+		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
+		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		718D28DE3D1BDC1722D36497 /* Pods_ProtonVPNTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		7561512E1FD8B5DE009224E7 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1200,6 +1204,7 @@
 				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
 				EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */,
 				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
+				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1213,6 +1218,7 @@
 				EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */,
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
 				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
+				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1986,6 +1992,7 @@
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
 				E180D1522125621300F4D1C7 /* Upsell.xib in Resources */,
 				EECEF3DB1F169A0500A16606 /* ServerItem.xib in Resources */,
+				42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
@@ -2486,6 +2493,7 @@
 				E1F2621921D68BDB003A4401 /* ProfileManager+Extension.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
+				42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */,
 				E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,

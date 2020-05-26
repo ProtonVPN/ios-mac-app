@@ -26,17 +26,12 @@ import vpncore
 class GeneralSettingsViewController: NSViewController {
     
     fileprivate enum SwitchButtonOption: Int {
-        case rememberLogin
         case startOnBoot
         case startMinimized
         case systemNotifications
         case earlyAccess
         case unprotectedNetworkNotifications
     }
-    
-    @IBOutlet weak var rememberLoginLabel: PVPNTextField!
-    @IBOutlet weak var rememberLoginButton: SwitchButton!
-    @IBOutlet weak var rememberLoginSeparator: NSBox!
     
     @IBOutlet weak var startOnBootLabel: PVPNTextField!
     @IBOutlet weak var startOnBootButton: SwitchButton!
@@ -75,7 +70,6 @@ class GeneralSettingsViewController: NSViewController {
         super.viewDidLoad()
         
         setupView()
-        setupRememberLoginItem()
         setupStartOnBootItem()
         setupStartMinimizedItem()
         setupSystemNotificationsItem()
@@ -86,16 +80,6 @@ class GeneralSettingsViewController: NSViewController {
     private func setupView() {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.protonGrey().cgColor
-    }
-    
-    private func setupRememberLoginItem() {
-        rememberLoginLabel.attributedStringValue = LocalizedString.rememberLogin.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        
-        rememberLoginButton.setState(viewModel.rememberLogin ? .on : .off)
-        rememberLoginButton.buttonView?.tag = SwitchButtonOption.rememberLogin.rawValue
-        rememberLoginButton.delegate = self
-        
-        rememberLoginSeparator.fillColor = .protonLightGrey()
     }
     
     private func setupStartOnBootItem() {
@@ -159,8 +143,6 @@ extension GeneralSettingsViewController: SwitchButtonDelegate {
     
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
-        case SwitchButtonOption.rememberLogin.rawValue:
-            viewModel.setRememberLogin(rememberLoginButton.currentButtonState == .on)
         case SwitchButtonOption.startOnBoot.rawValue:
             viewModel.setStartOnBoot(startOnBootButton.currentButtonState == .on)
         case SwitchButtonOption.startMinimized.rawValue:

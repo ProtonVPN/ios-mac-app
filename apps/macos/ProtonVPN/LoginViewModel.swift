@@ -44,16 +44,8 @@ class LoginViewModel {
         self.factory = factory
     }
     
-    var rememberLogin: Bool {
-        return propertiesManager.rememberLogin
-    }
-    
     var startOnBoot: Bool {
         return propertiesManager.startOnBoot
-    }
-    
-    func rememberLogin(enabled: Bool) {
-        propertiesManager.rememberLogin = enabled
     }
     
     func startOnBoot(enabled: Bool) {
@@ -61,11 +53,6 @@ class LoginViewModel {
     }
     
     func logInSilently() {
-        guard propertiesManager.rememberLogin || propertiesManager.rememberLoginAfterUpdate else {
-            navService.handleSilentLoginFailure()
-            return
-        }
-        
         logInInProgress?()
         appSessionManager.attemptRememberLogIn(success: { [silantlyCheckForUpdates] in
             NSApp.setActivationPolicy(.accessory)
@@ -78,10 +65,6 @@ class LoginViewModel {
     }
     
     func logInApperared() {
-        guard propertiesManager.rememberLogin || propertiesManager.rememberLoginAfterUpdate else {
-            return
-        }
-        
         logInInProgress?()
         appSessionManager.attemptRememberLogIn(success: { [silantlyCheckForUpdates] in
             silantlyCheckForUpdates()
