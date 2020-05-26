@@ -27,7 +27,7 @@ class PaymentsCreditRequest: PaymentsBaseRequest {
     let amount: Int
     let payment: PaymentAction
     
-    init( _ amount: Int, payment: PaymentAction ){
+    init( _ amount: Int, payment: PaymentAction) {
         self.amount = amount
         self.payment = payment
         super.init()
@@ -41,7 +41,7 @@ class PaymentsCreditRequest: PaymentsBaseRequest {
         return .post
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "Amount": amount,
             "Currency": "USD",

@@ -26,12 +26,12 @@ class AuthInfoRequest: AuthBaseRequest {
     
     let username: String
     
-    init( _ username: String ){
+    init( _ username: String) {
         self.username = username
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/info"
@@ -41,11 +41,11 @@ class AuthInfoRequest: AuthBaseRequest {
         return .post
     }
     
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return nonAuthenticatedHeader
     }
     
-    override var parameters: [String : Any]? {
+    override var parameters: [String: Any]? {
         return [
             "ClientSecret": ApiConstants.clientSecret,
             "Username": username

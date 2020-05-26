@@ -24,7 +24,7 @@ import Foundation
 
 class VPNBaseRequest: BaseRequest {
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/vpn"

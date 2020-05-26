@@ -26,12 +26,12 @@ class UserCheckUsernameRequest: UserBaseRequest {
     
     let username: String
     
-    init( _ username: String ){
+    init( _ username: String ) {
         self.username = username
         super.init()
     }
     
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return super.path() + "/available?Name=" + username.addingPercentEncoding(withAllowedCharacters: .urlHostAllowed)!

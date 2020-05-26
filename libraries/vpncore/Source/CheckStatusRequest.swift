@@ -24,13 +24,13 @@ import Alamofire
 
 class CheckStatusRequest: BaseRequest {
 
-    //MARK: - Override
+    // MARK: - Override
     
     override func path() -> String {
         return ApiConstants.statusURL + "/vpn_status"
     }
     
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return [:]
     }
     
