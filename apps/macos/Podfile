@@ -10,7 +10,6 @@ inhibit_all_warnings!
 def common_pods
     # development pods
     #pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
-    pod 'TunnelKit', :path => '../tunnelkit'
     pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 end
 
