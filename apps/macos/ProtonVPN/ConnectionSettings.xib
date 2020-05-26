@@ -29,6 +29,7 @@
                 <outlet property="protocolLabel" destination="VyN-C7-RJs" id="KJ3-Cf-3vO"/>
                 <outlet property="protocolList" destination="QNh-jH-qdA" id="7vD-WP-F1O"/>
                 <outlet property="protocolSeparator" destination="hhN-6A-ZEd" id="hNf-00-MeN"/>
+                <outlet property="protocolView" destination="MAN-k2-pDp" id="4Ml-hz-coW"/>
                 <outlet property="quickConnectInfoIcon" destination="ZTJ-dJ-CnK" id="lfF-Lf-il9"/>
                 <outlet property="quickConnectLabel" destination="oot-M1-Qpj" id="rxz-fv-rpY"/>
                 <outlet property="quickConnectList" destination="VNa-Jv-QSm" id="cqk-i6-6OZ"/>

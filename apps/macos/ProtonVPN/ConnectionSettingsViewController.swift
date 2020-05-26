@@ -44,6 +44,7 @@ class ConnectionSettingsViewController: NSViewController {
     @IBOutlet weak var killSwitchSeparator: NSBox!
     @IBOutlet weak var killSwitchInfoIcon: NSImageView!
     
+    @IBOutlet weak var protocolView: NSView!
     @IBOutlet weak var protocolLabel: PVPNTextField!
     @IBOutlet weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet weak var protocolSeparator: NSBox!
@@ -80,8 +81,11 @@ class ConnectionSettingsViewController: NSViewController {
         setupAutoConnectItem()
         setupQuickConnectItem()
         setupKillSwitchItem()
-        setupProtocolItem()
-        setupOpenVPNProtocolItem()
+        //These two views will remain disabled until we can stablish openVPN connection
+        protocolView.isHidden = true
+        openVPNView.isHidden = true
+//        setupProtocolItem()
+//        setupOpenVPNProtocolItem()
         setupDnsLeakProtectionItem()
     }
     
