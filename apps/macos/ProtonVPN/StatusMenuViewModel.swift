@@ -54,7 +54,6 @@ class StatusMenuViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
 
-    
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
