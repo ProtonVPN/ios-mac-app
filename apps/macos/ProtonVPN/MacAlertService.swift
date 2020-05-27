@@ -78,7 +78,7 @@ extension MacAlertService: CoreAlertService {
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
             
-        case is NetworkUnreachableAlert:
+        case is VpnNetworkUnreachableAlert:
             showDefaultSystemAlert(alert)
             
         case is SessionCountLimitAlert:
@@ -91,9 +91,6 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is MaintenanceAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is ConfirmVpnDisconnectAlert:
             showDefaultSystemAlert(alert)
             
         case is LogoutWarningAlert:
@@ -136,6 +133,9 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is QuitWarningAlert:
+            showDefaultSystemAlert(alert)
+
+        case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
         default:

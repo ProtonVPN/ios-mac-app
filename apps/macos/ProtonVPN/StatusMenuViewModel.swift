@@ -35,7 +35,14 @@ extension DependencyContainer: StatusMenuViewModelFactory {
 
 class StatusMenuViewModel {
     
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory & WiFiSecurityMonitorFactory
+    typealias Factory = AppSessionManagerFactory
+        & NavigationServiceFactory
+        & VpnKeychainFactory
+        & PropertiesManagerFactory
+        & CoreAlertServiceFactory
+        & AppStateManagerFactory
+        & WiFiSecurityMonitorFactory
+
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -44,8 +51,9 @@ class StatusMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
-    
+
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
@@ -60,7 +68,6 @@ class StatusMenuViewModel {
     
     init(factory: Factory) {
         self.factory = factory
-        
         startObserving()
         wifiSecurityMonitor.startMonitoring()
         wifiSecurityMonitor.delegate = self
@@ -265,7 +272,7 @@ class StatusMenuViewModel {
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
         
-        serverType = vpnGateway.activeServerType
+        serverType = propertiesManager.serverTypeToggle
         
         do {
             let tier = try vpnKeychain.fetch().maxTier
@@ -306,10 +313,7 @@ class StatusMenuViewModel {
     }
     
     @objc private func handleVpnChange() {
-        if let vpnGateway = vpnGateway {
-            serverType = vpnGateway.activeServerType
-        }
-        
+        serverType = propertiesManager.serverTypeToggle
         contentChanged?()
     }
     
@@ -327,8 +331,7 @@ class StatusMenuViewModel {
     
     private func getCurrentIp() -> String? {
         if isConnected {
-            guard let vpnGateway = vpnGateway else { return nil }
-            return vpnGateway.activeIp
+            return appStateManager.activeConnection()?.serverIp.entryIp
         } else {
             return propertiesManager.userIp
         }
@@ -339,7 +342,7 @@ class StatusMenuViewModel {
             return LocalizedString.notConnected.attributed(withColor: .protonRed(), fontSize: 14)
         }
         
-        guard let server = vpnGateway?.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 14)
         }
         

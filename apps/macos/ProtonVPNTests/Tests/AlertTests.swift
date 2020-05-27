@@ -72,8 +72,8 @@ class AlertTests: XCTestCase {
             cancelRan = true
         }
         
-        let alert1 = ConfirmVpnDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
-        let alert2 = ConfirmVpnDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
+        let alert1 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler1, cancelHandler: cancellationHandler1)
+        let alert2 = SecureCoreToggleDisconnectAlert(confirmHandler: confirmationHandler2, cancelHandler: cancellationHandler2)
         
         alertService.push(alert: alert1)
         XCTAssert(windowService.displayCount == 1)

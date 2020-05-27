@@ -104,7 +104,9 @@ class CountriesSectionViewModel {
     }
     
     private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
+    private let propertiesManager: PropertiesManagerProtocol
     private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     
     var contentChanged: ((ContentChange) -> Void)?
@@ -119,13 +121,15 @@ class CountriesSectionViewModel {
     private var state: ModelState
     private var userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory
     private let factory: Factory
     
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
+        self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
+        self.propertiesManager = factory.makePropertiesManager()
         
         do {
             userTier = try vpnGateway.userTier()
@@ -133,7 +137,7 @@ class CountriesSectionViewModel {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             userTier = CoreAppConstants.VpnTiers.free
         }
-        state = vpnGateway.activeServerType == .standard ? .standard([], []) : .secureCore([], [])
+        state = propertiesManager.serverTypeToggle == .standard ? .standard([], []) : .secureCore([], [])
         
         resetCurrentState()
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
@@ -223,12 +227,14 @@ class CountriesSectionViewModel {
             case .country(let country, let expanded):
                 return .country(CountryItemViewModel(countryModel: country,
                                                      vpnGateway: vpnGateway,
+                                                     appStateManager: appStateManager,
                                                      countriesSectionViewModel: self,
                                                      enabled: userTier >= country.lowestTier,
                                                      state: expanded ? .expanded : .normal))
             case .server(let server):
                 return .server(ServerItemViewModel(serverModel: server,
                                                    vpnGateway: vpnGateway,
+                                                   appStateManager: appStateManager,
                                                    countriesSectionViewModel: self,
                                                    requiresUpgrade: userTier < server.tier))
             }
@@ -241,12 +247,14 @@ class CountriesSectionViewModel {
             case .country(let country, let expanded):
                 return .secureCoreCountry(SecureCoreCountryItemViewModel(countryModel: country,
                                                                          vpnGateway: vpnGateway,
+                                                                         appStateManager: appStateManager,
                                                                          countriesSectionViewModel: self,
                                                                          enabled: userTier >= country.lowestTier,
                                                                          state: expanded ? .expanded : .normal))
             case .server(let server):
                 return .secureCoreServer(SecureCoreServerItemViewModel(serverModel: server,
                                                                        vpnGateway: vpnGateway,
+                                                                       appStateManager: appStateManager,
                                                                        countriesSectionViewModel: self,
                                                                        requiresUpgrade: userTier < server.tier))
             }
@@ -296,7 +304,8 @@ class CountriesSectionViewModel {
     }
     
     @objc private func vpnConnectionChanged() {
-        if vpnGateway.activeServerType != state.serverType {
+        
+        if propertiesManager.serverTypeToggle != state.serverType {
             updateSecureCoreState()
         }
     }

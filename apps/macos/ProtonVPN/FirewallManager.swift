@@ -175,7 +175,8 @@ class FirewallManager {
             return
         }
         
-        guard let activeEntryIp = propertiesManager.lastServerEntryIp else {
+        guard let activeEntryIp = propertiesManager.lastIkeConnection?.serverIp.entryIp
+            ?? propertiesManager.lastOpenVpnConnection?.serverIp.entryIp else {
             completion(false)
             return
         }
