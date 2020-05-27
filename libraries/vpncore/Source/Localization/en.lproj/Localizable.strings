@@ -285,6 +285,7 @@
 "_ne_unable_to_connect_to_host" = "Service unreachable";
 "_ne_network_connection_lost" = "Network connection lost";
 "_ne_not_connected_to_the_internet" = "Not connected to the Internet";
+"_ne_couldnt_reach_server" = "We could not reach Proton servers";
 
 // API errors
 "_ae_wrong_login_credentials" = "Wrong username or password";
