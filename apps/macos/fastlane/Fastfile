@@ -47,7 +47,6 @@ platform :mac do
     scan(
       scheme: "ProtonVPN",
       clean: true,
-      xcargs: "-UseModernBuildSystem=NO",
       result_bundle: true
     )
   end

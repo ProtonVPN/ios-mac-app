@@ -134,6 +134,9 @@ extension MacAlertService: CoreAlertService {
             
         case is QuitWarningAlert:
             showDefaultSystemAlert(alert)
+
+        case is SecureCoreToggleDisconnectAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG
