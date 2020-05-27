@@ -41,6 +41,7 @@ class CountryItemViewModel {
     
     fileprivate let countryModel: CountryModel
     fileprivate let vpnGateway: VpnGatewayProtocol
+    fileprivate let appStateManager: AppStateManager
     private let countriesSectionViewModel: CountriesSectionViewModel
     
     let enabled: Bool
@@ -90,16 +91,17 @@ class CountryItemViewModel {
         }
     }
     
-    init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol,
+    init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
         self.countryModel = countryModel
         self.vpnGateway = vpnGateway
         self.countriesSectionViewModel = countriesSectionViewModel
         self.enabled = enabled
         self.state = state
+        self.appStateManager = appStateManager
         isConnected = enabled && vpnGateway.connection == .connected
-            && vpnGateway.activeServer?.isSecureCore == false
-            && vpnGateway.activeServer?.countryCode == countryModel.countryCode
+            && appStateManager.activeConnection()?.server.isSecureCore == false
+            && appStateManager.activeConnection()?.server.countryCode == countryModel.countryCode
         
         if enabled {
             startObserving()
@@ -131,7 +133,7 @@ class CountryItemViewModel {
     
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
-            if vpnGateway.connection == .connected, let activeServer = vpnGateway.activeServer,
+            if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server,
                 activeServer.countryCode == countryCode {
                 isConnected = true
             } else {
@@ -145,13 +147,14 @@ class CountryItemViewModel {
 // MARK: - SecureCoreCountryItemViewModel subclass
 class SecureCoreCountryItemViewModel: CountryItemViewModel {
     
-    override init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol,
+    override init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
                   countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
-        super.init(countryModel: countryModel, vpnGateway: vpnGateway, countriesSectionViewModel: countriesSectionViewModel, enabled: enabled, state: state)
+        super.init(countryModel: countryModel, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                   countriesSectionViewModel: countriesSectionViewModel, enabled: enabled, state: state)
         
         isConnected = enabled && vpnGateway.connection == .connected
-            && vpnGateway.activeServer?.isSecureCore == true
-            && vpnGateway.activeServer?.countryCode == countryModel.countryCode
+            && appStateManager.activeConnection()?.server.isSecureCore == true
+            && appStateManager.activeConnection()?.server.countryCode == countryModel.countryCode
     }
     
     override fileprivate func formDescription() -> NSAttributedString {

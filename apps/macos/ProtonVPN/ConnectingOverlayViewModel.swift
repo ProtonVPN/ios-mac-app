@@ -76,7 +76,7 @@ class ConnectingOverlayViewModel {
             boldString = LocalizedString.timedOut
             string = String(format: LocalizedString.connectingVpn, boldString)
         } else {
-            if let server = appStateManager.activeServer {
+            if let server = appStateManager.activeConnection()?.server {
                 boldString = (server.country + " " + server.name)
                 boldString = boldString.preg_replace_none_regex(" ", replaceto: "\u{a0}")
                 boldString = boldString.preg_replace_none_regex("-", replaceto: "\u{2011}")
@@ -199,19 +199,21 @@ class ConnectingOverlayViewModel {
             return
         }
         
-        if case AppState.disconnected = state, appStateManager.isOnDemandEnabled {
-            return // prevents misleading UI updates
-        }
-        
-        if case AppState.aborted(let userInitiated) = state, !userInitiated {
-            timedOut = true
-        }
-        
-        self.state = state
-        
-        if let delegate = delegate {
-            DispatchQueue.main.async {
-                delegate.stateChanged()
+        appStateManager.isOnDemandEnabled { [weak self] isOnDemandEnabled in
+            if case AppState.disconnected = state, isOnDemandEnabled {
+                return // prevents misleading UI updates
+            }
+            
+            if case AppState.aborted(let userInitiated) = state, !userInitiated {
+                self?.timedOut = true
+            }
+            
+            self?.state = state
+            
+            if let delegate = self?.delegate {
+                DispatchQueue.main.async {
+                    delegate.stateChanged()
+                }
             }
         }
     }
