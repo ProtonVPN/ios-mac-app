@@ -467,6 +467,8 @@
 		B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DB9D1719D98EC41F005D62 /* Pods-vpncore-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
+		D5063A6F247FB09E008DBEF9 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
+		D5063A70247FB09E008DBEF9 /* .gitlab-ci.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = ".gitlab-ci.yml"; sourceTree = "<group>"; };
 		D51FBDD223E81E9C0056DC09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D52193EA247E912F004089CB /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = "Frameworks-ios/Srp.framework"; sourceTree = "<group>"; };
@@ -1159,6 +1161,8 @@
 				5FE4DDBFBDF1DCD71FEB5BA6 /* Pods */,
 				1424DAA14443FC92F0DE44D8 /* Frameworks */,
 				D5906F1F22D774E7001BC074 /* fastlane */,
+				D5063A70247FB09E008DBEF9 /* .gitlab-ci.yml */,
+				D5063A6F247FB09E008DBEF9 /* .swiftlint.yml */,
 				D585B50C244705FF00E901F3 /* Recovered References */,
 			);
 			sourceTree = "<group>";
