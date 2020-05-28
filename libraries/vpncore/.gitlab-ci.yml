@@ -36,7 +36,7 @@ lint:
     - *before_script_mac
   script:
     - pod install
-    - Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
+    - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
     name: "core-lint-$CI_COMMIT_TAG"
@@ -52,7 +52,6 @@ unit_tests:
   stage: unit_tests
   before_script:
     - *before_script_mac
-  allow_failure: true # TODO: Set to false after Srp/cocoapods issues are fixed
   script:
     - pod install
 
