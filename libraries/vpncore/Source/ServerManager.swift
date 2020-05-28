@@ -115,6 +115,7 @@ public class ServerManagerImplementation: ServerManager {
     
     private func setupServers() {
         servers = serverStorage.fetch()
+        PMLog.D("user's tier \(userTier)")
         standardCountriesServers = sort(countryGroups: formGrouping(from: servers.filter { !$0.isSecureCore }))
         secureCoreCountriesServers = sort(countryGroups: formGrouping(from: servers.filter { $0.isSecureCore && $0.tier <= userTier }))
         p2pServers = formGrouping(from: servers.filter { $0.supportsP2P && $0.tier <= userTier })
