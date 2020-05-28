@@ -4,7 +4,6 @@
  devices([
    "iPhone 8",
    "iPhone 8 Plus",
-   "iPhone SE",
    "iPhone 11",
    "iPhone 11 Pro",
    "iPhone 11 Pro Max",
@@ -14,14 +13,17 @@
  ])
 
 languages([
-  "en-US",
   "pl-PL",
   "it-IT",
   "es-ES",
   "es-MX",
   "fr-FR",
   "nl-NL",
-  "pt-BR"
+  "pt-PT",
+  "ru-RU",
+  "fa-FA",
+  "de-DE",
+  "en-US",
 ])
 
 scheme("ProtonVPN")
