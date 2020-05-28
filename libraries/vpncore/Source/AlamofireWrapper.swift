@@ -144,11 +144,6 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
                 multipartFormData.append(file, withName: name)
             })
         }, with: request).validated.responseJSON {[weak self] response in
-            if let encodingError = response.error {
-                PMLog.D("File encoding error: \(encodingError)", level: .error)
-                failure(encodingError)
-                return
-            }
             
             if let error = self?.failsTLS(request) {
                 failure(error)
@@ -158,8 +153,8 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             switch response.mapApiResponse {
             case .success(let json):
                 success(json)
-            case .failure:
-                break
+            case .failure(let error):
+                self?.didReceiveError(request, error: error, success: success, failure: failure)
             }
         }
     }
