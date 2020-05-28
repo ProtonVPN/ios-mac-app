@@ -13,11 +13,12 @@
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
-		422EAB19243F202B00C7A16C /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB18243F202B00C7A16C /* TodayViewModel.swift */; };
 		422EAB1B243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
+		42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */; };
+		42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */; };
 		42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
@@ -346,7 +347,6 @@
 		E14414FF22EF38ED00894DD0 /* OpenVPN Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E14414F722EF38ED00894DD0 /* OpenVPN Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E144150422EF39F700894DD0 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E148AE4021C141B0007AB65A /* NotificationCenter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE3F21C141B0007AB65A /* NotificationCenter.framework */; };
-		E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E148AE4221C141B0007AB65A /* TodayViewController.swift */; };
 		E148AE4621C141B0007AB65A /* MainInterface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E148AE4421C141B0007AB65A /* MainInterface.storyboard */; };
 		E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E148AE5421C1684F007AB65A /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -529,8 +529,9 @@
 		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
-		422EAB18243F202B00C7A16C /* TodayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		422EAB1A243F20D800C7A16C /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
+		42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
+		42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCardViewPresenter.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		457BF2F11DD1730CB72C33ED /* Pods-Quick Connect Widget Debug.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget Debug.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget Debug/Pods-Quick Connect Widget Debug.debug.xcconfig"; sourceTree = "<group>"; };
@@ -782,7 +783,6 @@
 		E14414FC22EF38ED00894DD0 /* OpenVPN_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = OpenVPN_Extension.entitlements; sourceTree = "<group>"; };
 		E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Quick Connect Widget.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E148AE3F21C141B0007AB65A /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
-		E148AE4221C141B0007AB65A /* TodayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		E148AE4521C141B0007AB65A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/MainInterface.storyboard; sourceTree = "<group>"; };
 		E148AE4721C141B0007AB65A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E148AE5121C1681F007AB65A /* Quick Connect Widget.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Quick Connect Widget.entitlements"; sourceTree = "<group>"; };
@@ -966,20 +966,20 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		422EAB16243F200900C7A16C /* viewControllers */ = {
+		42BB5E5A247FFD7F0002DA8A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				E148AE4221C141B0007AB65A /* TodayViewController.swift */,
+				42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */,
 			);
-			path = viewControllers;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		422EAB17243F201100C7A16C /* viewModels */ = {
+		42BB5E5C247FFD7F0002DA8A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				422EAB18243F202B00C7A16C /* TodayViewModel.swift */,
+				42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */,
 			);
-			path = viewModels;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		42C37AF92434E52500366B79 /* Presenters */ = {
@@ -1950,11 +1950,11 @@
 		E148AE4121C141B0007AB65A /* Quick Connect Widget */ = {
 			isa = PBXGroup;
 			children = (
-				422EAB17243F201100C7A16C /* viewModels */,
-				422EAB16243F200900C7A16C /* viewControllers */,
 				E148AE4721C141B0007AB65A /* Info.plist */,
 				E148AE4421C141B0007AB65A /* MainInterface.storyboard */,
 				E148AE5121C1681F007AB65A /* Quick Connect Widget.entitlements */,
+				42BB5E5C247FFD7F0002DA8A /* ViewControllers */,
+				42BB5E5A247FFD7F0002DA8A /* ViewModels */,
 				E1A28FAF21E8F73A00E1C33C /* WidgetFactory.swift */,
 			);
 			path = "Quick Connect Widget";
@@ -3049,16 +3049,16 @@
 			files = (
 				422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
-				E148AE4321C141B0007AB65A /* TodayViewController.swift in Sources */,
 				D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E1828588236C78FC00E397A5 /* Intents.intentdefinition in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
 				E17A259E2295670100D78C19 /* ExtensionAlertService.swift in Sources */,
 				E1C983B921E4D77400C81666 /* UIKitString+Extension.swift in Sources */,
+				42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */,
 				E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */,
+				42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */,
 				E169D52C21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				422395832446E9E00089002F /* URLConstants.swift in Sources */,
-				422EAB19243F202B00C7A16C /* TodayViewModel.swift in Sources */,
 				422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
