@@ -107,7 +107,6 @@ class CountriesSectionViewModel {
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     
     var contentChanged: ((ContentChange) -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -117,7 +116,8 @@ class CountriesSectionViewModel {
     var secureCoreState: ButtonState {
         return state.serverType == .standard ? .off : .on
     }
-    
+
+    private var serverManager: ServerManager
     private var state: ModelState
     private var userTier: Int
     
@@ -137,6 +137,7 @@ class CountriesSectionViewModel {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             userTier = CoreAppConstants.VpnTiers.free
         }
+        self.serverManager = ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
         state = propertiesManager.serverTypeToggle == .standard ? .standard([], []) : .secureCore([], [])
         
         resetCurrentState()
