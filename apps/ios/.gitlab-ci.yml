@@ -43,7 +43,7 @@ variables:
 
 .before_script_mac: &before_script_mac
   - rm -fr ../vpncore || true # ignore failure to delete
-  - git clone -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone -b open-vpn https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch (2020-05-12 temporarily changed to open-vpn until mac app is ready)
+  - git clone -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch 
   - cd ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ..
   - pod install
 
