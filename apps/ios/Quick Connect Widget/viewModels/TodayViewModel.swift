@@ -34,23 +34,21 @@ class TodayViewModelImplementation: TodayViewModel {
     weak var viewController: TodayViewControllerProtocol?
     
     private let reachability = Reachability()
-    private let appStateManager: AppStateManager
     private let factory: WidgetFactory
-    private var vpnGateway: VpnGatewayProtocol?
+//    private var vpnGateway: VpnGatewayProtocol?
     
     init( _ factory: WidgetFactory ){
-        self.appStateManager = factory.appStateManager
         self.factory = factory
     }
     
     func viewDidLoad() {
         factory.refreshVpnManager()
-        vpnGateway = factory.vpnGateway
+//        vpnGateway = factory.vpnGateway
         
-        guard vpnGateway != nil else {
-            viewController?.displayNoGateWay()
-            return
-        }
+//        guard vpnGateway != nil else {
+//            viewController?.displayNoGateWay()
+//            return
+//        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
@@ -68,53 +66,72 @@ class TodayViewModelImplementation: TodayViewModel {
     
     // MARK: - Utils
     
+    private func displayConnection() {
+        let properties = factory.propertiesManager
+        guard let request = properties.lastConnectionRequest,
+            let connection = request.vpnProtocol == .ike ? properties.lastIkeConnection : properties.lastOpenVpnConnection else {
+                viewController?.displayNoGateWay()
+                return
+        }
+        
+        let server = connection.server
+        let country = LocalizationUtility.default.countryName(forCode: server.countryCode)
+        let ip = server.ips.first?.exitIp
+        viewController?.displayConnected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country)
+    }
+    
     @objc private func connectionChanged() {
         
         if let reachability = reachability, reachability.connection == .none {
             viewController?.displayUnreachable()
             return
         }
-                
-        guard let vpnGateway = vpnGateway else {
-            viewController?.displayNoGateWay()
-            return
-        }
+         
+        
 
-        switch vpnGateway.connection {
-        case .connected:
-            let server = appStateManager.activeConnection()?.server
-            let country = LocalizationUtility.default.countryName(forCode: server?.countryCode ?? "")
-            let ip = server?.ips.first?.entryIp
-            viewController?.displayConnected(ip, country: country)
-
-        case .connecting:
-            viewController?.displayConnecting()
-            
-        case .disconnected, .disconnecting:
-            viewController?.displayDisconnected()
-        }
+        
+//        viewController?.displayNoGateWay()
+        displayConnection()
+//        guard let vpnGateway = vpnGateway else {
+//            viewController?.displayNoGateWay()
+//            return
+//        }
+//
+//        switch vpnGateway.connection {
+//        case .connected:
+//            let server = appStateManager.activeConnection()?.server
+//            let country = LocalizationUtility.default.countryName(forCode: server?.countryCode ?? "")
+//            let ip = server?.ips.first?.entryIp
+//            viewController?.displayConnected(ip, country: country)
+//
+//        case .connecting:
+//            viewController?.displayConnecting()
+//
+//        case .disconnected, .disconnecting:
+//            viewController?.displayDisconnected()
+//        }
     }
     
     @objc func connectAction(_ sender: Any) {
         
-        guard let vpnGateway = vpnGateway else {
-            // not logged in so open the app or the connection failed
-            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
-            return
-        }
-        
-        switch vpnGateway.connection {
-        case .connected, .connecting:
-            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
-        case .disconnected, .disconnecting:
-            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
-        }
+//        guard let vpnGateway = vpnGateway else {
+//            // not logged in so open the app or the connection failed
+//            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
+//                viewController?.extensionOpenUrl(url)
+//            }
+//            return
+//        }
+//
+//        switch vpnGateway.connection {
+//        case .connected, .connecting:
+//            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
+//                viewController?.extensionOpenUrl(url)
+//            }
+//        case .disconnected, .disconnecting:
+//            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
+//                viewController?.extensionOpenUrl(url)
+//            }
+//        }
     }
 }
 

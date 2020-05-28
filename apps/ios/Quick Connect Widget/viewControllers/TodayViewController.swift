@@ -30,7 +30,7 @@ protocol TodayViewControllerProtocol: class {
     func displayBlank()
     func displayUnreachable()
     func displayError()
-    func displayConnected( _ server: String?, country: String? )
+    func displayConnected( _ server: String?, entryCountry: String?, country: String? )
     func displayDisconnected()
     func displayConnecting()
     func displayNoGateWay()
@@ -113,9 +113,17 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         genericStyle( LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
     }
     
-    func displayConnected( _ server: String?, country: String? ){
-        genericStyle( LocalizedString.disconnect, buttonState: .destructive,
-                      ipAddress: server, country: country, connectionString: LocalizedString.connected )
+    func displayConnected( _ server: String?, entryCountry:String?, country: String? ){
+        var connectionString = LocalizedString.connected
+        if let entryCountry = entryCountry {
+             connectionString += " " + LocalizedString.via + " \(entryCountry)"
+        }
+        
+        genericStyle( LocalizedString.disconnect,
+                      buttonState: .destructive,
+                      ipAddress: server,
+                      country: country,
+                      connectionString: connectionString )
     }
     
     func displayDisconnected(){
