@@ -47,7 +47,7 @@ class TodayViewModelImplementation: TodayViewModel {
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.viewController?.displayUnreachable() }
         try? reachability?.startNotifier()
-        timer = Timer.scheduledTimer(withTimeInterval: 0.1, repeats: true, block: { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             self?.connectionChanged()
         })
     }
