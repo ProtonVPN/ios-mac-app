@@ -65,7 +65,7 @@ lint:
         - swiftlint.xml
     expire_in: 90 days
 
- unit_tests:
+unit_tests:
    dependencies: []
    stage: unit_tests
    before_script:
