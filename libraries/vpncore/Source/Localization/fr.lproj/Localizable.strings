@@ -1554,3 +1554,5 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Vous n'êtes pas connecté";
 
+/* Network error */
+"_ne_couldnt_reach_server" = "Les serveurs de Proton sont injoignables";
