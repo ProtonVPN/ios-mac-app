@@ -1,6 +1,5 @@
 #!/bin/bash
 
 cd ..
-commitCount=$(git rev-list --count HEAD)
-buildNumber=$(expr $commitCount + 1161)
+buildNumber=$(date +"%m%d%H%M")
 xcrun agvtool new-version -all $buildNumber
