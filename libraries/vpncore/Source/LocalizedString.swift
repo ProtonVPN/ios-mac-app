@@ -297,6 +297,7 @@ public class LocalizedString {
     public static let neUnableToConnectToHost = NSLocalizedString("_ne_unable_to_connect_to_host", comment: "Network error")
     public static let neNetworkConnectionLost = NSLocalizedString("_ne_network_connection_lost", comment: "Network error")
     public static let neNotConnectedToTheInternet = NSLocalizedString("_ne_not_connected_to_the_internet", comment: "Network error")
+    public static let neCouldntReachServer = NSLocalizedString("_ne_couldnt_reach_server", comment: "Network error")
     
     public static let neTroubleshoot = NSLocalizedString("_ne_troubleshoot", comment: "Button on alert after a problem with internet connection")
     

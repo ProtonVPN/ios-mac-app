@@ -49,7 +49,7 @@ class NetworkError {
             error = tls
         default:
             // FUTURETODO::fix error
-            error = NSError(code: code, localizedDescription: LocalizedString.neNotConnectedToTheInternet)
+            error = NSError(code: code, localizedDescription: LocalizedString.neCouldntReachServer)
         }
         return error
     }
