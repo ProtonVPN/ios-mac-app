@@ -19,6 +19,8 @@
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+
 public class AttachmentRowViewModel {
     
     public var url: URL
