@@ -62,7 +62,7 @@ class VpnServerSelector {
             sortedServers = serverGrouping
                 .map({ $0.1 })
                 .flatMap({ $0 })
-                .sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
+                .sorted(by: { $0.score < $1.score }) // sort by highest tier first, then lowest score
             forSpecificCountry = false
         }
             
