@@ -406,6 +406,9 @@ THE SOFTWARE.
 
 
 ## TunnelKit
+Copyright (c) 2020 Davide De Rosa
+
+Full license follows:
 
 Copyright (c) 2020 Davide De Rosa
 
