@@ -54,7 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
         storeKitManager.updateAvailableProductsList()
-        
+        _ = storeKitManager.readyToPurchaseProduct() //initial response is always true due to lazy load
         navigationService.launched()
         
         return true
