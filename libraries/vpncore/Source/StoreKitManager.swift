@@ -75,6 +75,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     private var successCompletion: ((String?) -> Void)?
     private var deferredCompletion: (() -> Void)?
     private lazy var errorCompletion: (Error) -> Void = { error in
+        PMLog.ET("StoreKit error: \(error.localizedDescription)")
         DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(3)) { [weak self] in
             self?.alertService.push(alert: StoreKitErrorAlert(withMessage: error.localizedDescription))
             
@@ -144,6 +145,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         }
         
         SKPaymentQueue.default().add(payment)
+        PMLog.D("StoreKit: Purchase started")
     }
     
     private func networkReachable() {
@@ -209,6 +211,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             return
         }
         
+        PMLog.D("StoreKit transaction queue contains transaction(s). Will handle it now.")
         transactionsFinishHandler = finishHandler
         SKPaymentQueue.default().transactions.forEach { transaction in
             self.addOperation { self.process(transaction) }
@@ -321,6 +324,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let receipt = try self.readReceipt()
         // payments/subscription
         paymentsService.postReceipt(amount: plan.yearlyCost, receipt: receipt, planId: planId, success: { [weak self] subscription in
+            PMLog.D("StoreKit: success (1)")
             ServicePlanDataServiceImplementation.shared.currentSubscription = subscription
             self?.successCompletion?(nil)
             SKPaymentQueue.default().finishTransaction(transaction)
@@ -328,12 +332,14 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             guard let `self` = self else { return }
             switch (error as NSError).code {
             case 22101:
+                PMLog.D("StoreKit: amount mismatch")
                 // ammount mismatch - try report only credits without activating the plan
                 self.paymentsService.credit(amount: plan.yearlyCost, receipt: .apple(token: receipt), success: {
                     self.errorCompletion(Errors.creditsApplied)
                     SKPaymentQueue.default().finishTransaction(transaction)
                 }, failure: { (error) in
                     if (error as NSError).code == 22916 { // Apple payment already registered
+                        PMLog.D("StoreKit: apple payment already registered")
                         SKPaymentQueue.default().finishTransaction(transaction)
                     } else {
                         self.errorCompletion(error)
@@ -343,6 +349,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 SKPaymentQueue.default().finishTransaction(transaction)
                 self.errorCompletion(error)
             case 22916: // Apple payment already registered
+                PMLog.D("StoreKit: apple payment already registered (2)")
                 SKPaymentQueue.default().finishTransaction(transaction)
             default:
                 self.errorCompletion(error)
@@ -352,14 +359,15 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     
     private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan) {
         guard let details = plan.fetchDetails(), let planId = details.iD else {
-            PMLog.ET("Can't fetch plan details")
+            PMLog.ET("StoreKit: Can't fetch plan details")
             return
         }
         paymentsService.applyCredit(forPlanId: planId, success: { [weak self] subscription in
+            PMLog.D("StoreKit: success (2)")
             self?.finish(transaction: transaction)
             
         }, failure: {[weak self] error in
-            PMLog.ET("Apply credit failed: \(error.localizedDescription)")
+            PMLog.ET("StoreKit: Apply credit failed: \(error.localizedDescription)")
             
             self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(
                 retryHandler: {
@@ -378,10 +386,12 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let receipt = try self.readReceipt()
         paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
             self?.paymentsService.credit(amount: plan.yearlyCost, receipt: .protonToken(token: token.token), success: {
+                PMLog.D("StoreKit: credits added")
                 self?.successCompletion?(nil)
                 SKPaymentQueue.default().finishTransaction(transaction)
             }, failure: { (error) in
                 if (error as NSError).code == 22916 { // Apple payment already registered
+                    PMLog.D("StoreKit: apple payment already registered (3)")
                     SKPaymentQueue.default().finishTransaction(transaction)
                 } else {
                     self?.errorCompletion(error)
@@ -401,6 +411,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let receipt = try self.readReceipt()
         
         paymentsService.verifyPayment(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] verificationCode in
+            PMLog.D("StoreKit: payment verified")
             self?.successCompletion?(verificationCode)
             self?.transactionsMadeBeforeSignup.append(transaction)
             // Transaction will be finished after login
