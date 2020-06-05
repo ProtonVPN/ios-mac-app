@@ -44,11 +44,20 @@ final class HumanVerificationHelper {
             self.alamofireWrapper.request(request, success: success, failure: failure)
         }, failure: { error in
             PMLog.ET("Getting human verification token failed with error: \(error)")
+            
             switch (error as NSError).code {
             case NSURLErrorTimedOut, NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost,
                  NSURLErrorCannotConnectToHost, HttpStatusCode.serviceUnavailable, ApiErrorCode.apiOffline,
                  ApiErrorCode.alreadyRegistered, ApiErrorCode.invalidEmail:
                 failure(error)
+            default:
+                break
+            }
+            
+            switch error as? UserError {
+            case .cancelled:
+                failure(UserError.cancelled)
+                return
             default:
                 failure(UserError.failedHumanValidation)
             }
