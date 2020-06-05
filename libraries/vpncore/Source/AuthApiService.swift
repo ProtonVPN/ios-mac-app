@@ -22,16 +22,17 @@
 import Alamofire
 import Foundation
 
+public typealias AuthCredentialsCallback = GenericCallback<AuthCredentials>
+public typealias ModulusResponseCallback = GenericCallback<ModulusResponse>
+
 public protocol AuthApiServiceFactory {
     func makeAuthApiService() -> AuthApiService
 }
 
 public protocol AuthApiService {
-    func authenticate(username: String,
-                      password: String,
-                      success: @escaping (AuthCredentials) -> Void,
-                      failure: @escaping (Error) -> Void)
-    func modulus(success: @escaping ((ModulusResponse) -> Void), failure: @escaping ((Error) -> Void))
+    
+    func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
+    func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback)
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
@@ -46,12 +47,9 @@ public class AuthApiServiceImplementation: AuthApiService {
         }
     }
     
-    public func authenticate(username: String,
-                             password: String,
-                             success: @escaping (AuthCredentials) -> Void,
-                             failure: @escaping (Error) -> Void) {
+    public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
         
-        let authInfoSuccessWrapper: (JSONDictionary) -> Void = { [unowned self] json in
+        let authInfoSuccessWrapper: JSONCallback = { [unowned self] json in
             
             let authInfoReponse: AuthenticationInfoResponse
             do {
@@ -74,7 +72,7 @@ public class AuthApiServiceImplementation: AuthApiService {
                 return
             }
             
-            let authSuccessWrapper: (JSONDictionary) -> Void = { json in
+            let authSuccessWrapper: JSONCallback = { json in
                 do {
                     let authCredentials = try AuthCredentials(username: username, dic: json)
                     success(authCredentials)
@@ -86,14 +84,14 @@ public class AuthApiServiceImplementation: AuthApiService {
                 }
             }
             
-            self.alamofireWrapper.request(AuthRouter.auth(authProperties), success: authSuccessWrapper, failure: failure)
+            self.alamofireWrapper.request(AuthenticateRequest(authProperties), success: authSuccessWrapper, failure: failure)
         }
-        
-        alamofireWrapper.request(AuthRouter.authInfo(username), success: authInfoSuccessWrapper, failure: failure)
+    
+        alamofireWrapper.request(AuthInfoRequest(username), success: authInfoSuccessWrapper, failure: failure)
     }
     
-    public func modulus(success: @escaping ((ModulusResponse) -> Void), failure: @escaping ((Error) -> Void)) {
-        let successWrapper: (JSONDictionary) -> Void = { json in
+    public func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
             do {
                 let response = try ModulusResponse(dic: json)
                 success(response)
@@ -104,19 +102,19 @@ public class AuthApiServiceImplementation: AuthApiService {
             }
         }
         
-        alamofireWrapper.request(AuthRouter.modulus, success: successWrapper, failure: failure)
+        alamofireWrapper.request(AuthModulusRequest(), success: successWrapper, failure: failure)
     }
-    
+
     // MARK: - Internal
     
-    func refreshAccessToken(success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
+    func refreshAccessToken(success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
         guard let authCreds = AuthKeychain.fetch() else {
             let error = KeychainError.fetchFailure
             failure(error)
             return
         }
         
-        let successWrapper: (JSONDictionary) -> Void = { json in
+        let successWrapper: JSONCallback = { json in
             do {
                 let response = try RefreshAccessTokenResponse(dic: json)
                 let updatedCreds = authCreds.updatedWithAccessToken(response: response)
@@ -130,6 +128,6 @@ public class AuthApiServiceImplementation: AuthApiService {
         }
         
         let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
-        alamofireWrapper.request(AuthRouter.refreshAccessToken(refreshProperties), success: successWrapper, failure: failure)
+        alamofireWrapper.request(AuthRefreshRequest(refreshProperties), success: successWrapper, failure: failure)
     }
 }

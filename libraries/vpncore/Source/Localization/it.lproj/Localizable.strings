@@ -59,13 +59,13 @@
 "_already_have_account" = "Ho già un account";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN sempre attiva";
+"_always_on_vpn" = "VPN Sempre Attiva";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "Kill Switch non è supportato su iOS. La VPN sempre attiva ripristina una connessione VPN sicura in modo rapido e automatico. Per la tua sicurezza, questa funzionalità è sempre attiva.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "La VPN sempre attiva ti riconnetterà automaticamente";
+"_always_on_will_reconnect" = "VPN Sempre Attiva ti riconnetterà automaticamente";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Log applicazione";
@@ -766,6 +766,9 @@
 /* Network error */
 "_ne_request_timed_out" = "Richiesta di rete scaduta";
 
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Risoluzione problemi";
+
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Servizio non raggiungibile";
 
@@ -1332,6 +1335,78 @@
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "Benvenuto a bordo";
 
+/* Description of troubleshooting item */
+"_troubleshoot_item_alt_description" = "Nel caso in cui i siti Proton siano bloccati, questa impostazione consente all'app di provare l'instradamento di rete alternativo per raggiungere Proton, che può essere utile per aggirare i firewall o problemi di rete. Consigliamo di mantenere questa impostazione per una maggiore affidabilità. [Per saperne di più]";
+
+/* Text that will become a Learn more link in _troubleshoot_item_alt_description */
+"_troubleshoot_item_alt_link1" = "Per saperne di più";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_alt_title" = "Consenti routing alternativo";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_antivirus_description" = "Disattivare o rimuovere temporaneamente il software antivirus.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_antivirus_title" = "Interferenza antivirus";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_gov_description" = "Il tuo paese potrebbe bloccare l'accesso a Proton. Prova ad utilizzare Tor per accedere a Proton.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_gov_description */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_gov_title" = "Blocco di governo";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_isp_description" = "Prova a connetterti a Proton da una rete diversa (o Tor).";
+
+/* Text that will become a link to Tor in _troubleshoot_item_isp_description */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_isp_title" = "Problema del provider Internet (ISP)";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_nointernet_description" = "Per favore assicurati che la connessione internet funzioni.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_nointernet_title" = "Nessuna connessione Internet";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_other_description" = "Contattaci attraverso il nostro modulo di supporto, email (%@), o Twitter.";
+
+/* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link1" = "modulo di assistenza";
+
+/* Text that will become a link to email in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link2" = "email";
+
+/* Text that will become a link to twitter in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_other_title" = "Non è ancora possibile trovare una soluzione";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proton_description" = "Controlla lo Stato di Proton per lo stato del nostro sistema.";
+
+/* Text that will become a link to proton status page in _troubleshoot_item_proton_description */
+"_troubleshoot_item_proton_link1" = "Stato Proton";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proton_title" = "Proton è offline";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proxy_description" = "Disabilita proxy o firewall, o contatta l'amministratore di rete.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proxy_title" = "Interferenza del Proxy/Firewall";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Risoluzione problemi";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Riprova";
 
@@ -1340,6 +1415,21 @@
 
 /* Common word */
 "_unavailable" = "Non disponibile";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Notifica reti non protette";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Ricevi una notifica quando ProtonVPN rileva che sei connesso ad una rete non protetta.";
+
+/* MacOS: Alert when user connects to WiFi without password */
+"_unsecure_wifi" = "Rilevata connessione WiFi non sicura";
+
+/* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
+"_unsecure_wifi_learn_more" = "Per saperne di più";
+
+/* MacOS */
+"_unsecure_wifi_title" = "Rilevato WiFi non sicuro";
 
 /* App update required alert */
 "_update_required" = "Aggiornamento richiesto";
@@ -1464,3 +1554,5 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Non sei connesso";
 
+/* Network error */
+"_ne_couldnt_reach_server" = "Impossibile raggiungere i server di Proton";

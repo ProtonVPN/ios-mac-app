@@ -766,6 +766,9 @@
 /* Network error */
 "_ne_request_timed_out" = "Netwerkverzoek timed out";
 
+/* Button on alert after a problem with internet connection */
+"_ne_troubleshoot" = "Probleemoplossing";
+
 /* Network error */
 "_ne_unable_to_connect_to_host" = "Dienst niet bereikbaar";
 
@@ -1332,6 +1335,78 @@
 /* iOS trial welcome screen */
 "_trial_welcome_heading_iOS" = "Welkom bij ProtonVPN";
 
+/* Description of troubleshooting item */
+"_troubleshoot_item_alt_description" = "In het geval dat Proton-sites worden geblokkeerd, stelt deze instelling de app in staat om alternatieve netwerkroutering te proberen om Proton te bereiken, wat nuttig kan zijn voor het omzeilen van firewalls of netwerkproblemen. We raden aan deze instelling aan te houden voor een grotere betrouwbaarheid. Meer informatie";
+
+/* Text that will become a Learn more link in _troubleshoot_item_alt_description */
+"_troubleshoot_item_alt_link1" = "Meer informatie";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_alt_title" = "Alternatieve routing toestaan";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_antivirus_description" = "Tijdelijk uitschakelen of verwijderen van uw antivirussoftware.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_antivirus_title" = "Antivirus storing";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_gov_description" = "Uw land blokkeert mogelijk de toegang tot Proton. Probeer Tor te gebruiken om Proton te openen.";
+
+/* Text that will become a link to Tor in _troubleshoot_item_gov_description */
+"_troubleshoot_item_gov_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_gov_title" = "Overheid blokkage";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_isp_description" = "Probeer verbinding te maken met Proton vanuit een ander netwerk (of Tor).";
+
+/* Text that will become a link to Tor in _troubleshoot_item_isp_description */
+"_troubleshoot_item_isp_link1" = "Tor";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_isp_title" = "Probleem met Internet Service Provider (ISP)";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_nointernet_description" = "Zorg ervoor dat uw internetverbinding werkt.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_nointernet_title" = "Geen internetverbinding";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_other_description" = "Neem rechtstreeks contact met ons op via ons ondersteuningsformulier, e-mail (%@), of Twitter.";
+
+/* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link1" = "contactformulier";
+
+/* Text that will become a link to email in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link2" = "e-mail";
+
+/* Text that will become a link to twitter in _troubleshoot_item_other_description */
+"_troubleshoot_item_other_link3" = "Twitter";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_other_title" = "Kan nog steeds geen oplossing vinden";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proton_description" = "Controleer Proton Status voor onze systeemstatus.";
+
+/* Text that will become a link to proton status page in _troubleshoot_item_proton_description */
+"_troubleshoot_item_proton_link1" = "Proton Status";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proton_title" = "Proton werkt niet meer";
+
+/* Description of troubleshooting item */
+"_troubleshoot_item_proxy_description" = "Schakel eventuele proxy's of firewalls uit of neem contact op met uw netwerkbeheerder.";
+
+/* Title of troubleshooting item */
+"_troubleshoot_item_proxy_title" = "Proxy/Firewall interferentie";
+
+/* Title of connection troubleshooting screen */
+"_troubleshoot_title" = "Probleemoplossing";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Probeer opnieuw";
 
@@ -1340,6 +1415,21 @@
 
 /* Common word */
 "_unavailable" = "Niet beschikbaar";
+
+/* MacOS: Settings -> General: name of field. */
+"_unprotected_network" = "Onbeschermde netwerken informeren";
+
+/* MacOS: Settings -> General: description */
+"_unprotected_network_tooltip" = "Ontvang een melding wanneer ProtonVPN detecteert dat u verbonden bent met een onbeveiligd netwerk.";
+
+/* MacOS: Alert when user connects to WiFi without password */
+"_unsecure_wifi" = "Onveilige wifi-verbinding gedetecteerd";
+
+/* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
+"_unsecure_wifi_learn_more" = "Meer informatie";
+
+/* MacOS */
+"_unsecure_wifi_title" = "Onveilige WiFi gedetecteerd";
 
 /* App update required alert */
 "_update_required" = "Update vereist";
@@ -1464,3 +1554,5 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "U bent niet verbonden";
 
+/* Network error */
+"_ne_couldnt_reach_server" = "We konden geen Proton servers bereiken";

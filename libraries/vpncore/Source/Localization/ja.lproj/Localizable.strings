@@ -1,0 +1,1466 @@
+/* Mac: Used in several Trial screens */
+"_5_connections" = "5つの同時接続";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_5_connections_description" = "最大5台のデバイスを同時に接続可能";
+
+/* MacOS: About window title */
+"_about" = "アプリについて";
+
+/* Account tab button in settings window (MacOS) and in several modals (both MacOS and iOS) */
+"_account" = "アカウント";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_plan" = "アカウントプラン";
+
+/* MacOS: Settings -> Account: name of field. */
+"_account_type" = "アカウントの種類";
+
+/* MacOS: About window */
+"_acknowledgements" = "謝辞";
+
+/* MacOS Profiles Overview: Table header for buttons column */
+"_action" = "操作";
+
+/* iOS widget help screen: title */
+"_activate_widget" = "ウィジェットのアクティベート";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_1" = "ホーム画面から一番左までスワイプしてウィジェットを表示させます。";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_2" = "一番下までスクロールして編集ボタンをタップします。";
+
+/* iOS widget help screen: text */
+"_activate_widget_step_3" = "有効なウィジェットのリストにProtonVPNウィジェットを追加します。";
+
+/* Plan information */
+"_advanced_features" = "+ 高度な機能";
+
+/* API error */
+"_ae_vpn_info_not_received" = "VPN情報を取得できません。";
+
+/* API error */
+"_ae_wrong_login_credentials" = "ユーザー名またはパスワードが間違っています";
+
+/* Account plan description */
+"_all_countries" = "40か国以上の国";
+
+/* Under maintenance alert */
+"_all_servers_in_country_under_maintenance" = "この国の全てのサーバーはメンテナンス中です。別の国をお試しください。";
+
+/* Under maintenance alert */
+"_all_servers_in_profile_under_maintenance" = "プロファイルサーバー はメンテナンス中です。";
+
+/* Under maintenance alert */
+"_all_servers_under_maintenance" = "全てのサーバー はメンテナンス中です。ProtonVPNの技術的な問題かネットワークが不安定な可能性があります。";
+
+/* iOS: button for switching from sign-up to sign-in screen */
+"_already_have_account" = "既にアカウントをお持ちの方はこちら";
+
+/* iOS Settings: toggle name */
+"_always_on_vpn" = "常時接続 VPN";
+
+/* iOS Settinsg screen: always-on description under the switch */
+"_always_on_vpn_tooltip_ios" = "iOS はキルスイッチに対応していません。常時接続 VPN では、安全な VPN 接続を迅速かつ自動的に再確立します。セキュリティを保つため、この設定は常に有効になっています。";
+
+/* Disconnect notification */
+"_always_on_will_reconnect" = "常に VPN を使用する設定の場合、自動的に再接続します。";
+
+/* iOS Settings: applications logs row */
+"_application_logs" = "アプリケーションログ";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_auto_assigned" = "自動割り当て";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_auto_connect" = "自動接続";
+
+/* MacOS: Settings -> Connection: description. */
+"_auto_connect_tooltip" = "アプリ起動時に、選択されたプロファイルに接続します。";
+
+/* iOS: section header in countries list */
+"_basic_servers" = "BASIC サーバー";
+
+/* Common word */
+"_cancel" = "キャンセル";
+
+/* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
+"_change_protocol_disconnect_warning" = "プロトコルを切り替えると現在のVPNセッションは切断されます。";
+
+/* MacOS: About window */
+"_changelog" = "更新履歴";
+
+/* iOS: new profkle can't be created because not all required fields are filled */
+"_check_if_fields_present" = "未入力の項目がないか確認してください";
+
+/* iOS plan selection: header */
+"_choose_plan" = "サブスクリプションの選択";
+
+/* iOS status view */
+"_city" = "市町村";
+
+/* Main mac app menu item */
+"_clear_application_data" = "アプリケーション・データの消去";
+
+/* Common word */
+"_close" = "閉じる";
+
+/* Profile create/change form */
+"_color" = "色";
+
+/* Common word */
+"_connect" = "接続";
+
+/* Common word */
+"_connected" = "接続完了";
+
+/* iOS status view */
+"_connected_to" = "接続先";
+
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+"_connected_to_vpn" = "%@ に接続完了";
+
+/* iOS: main button in tabbar during connecting to vpn phase */
+"_connecting" = "接続中";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+"_connecting_to" = "%@ に接続中";
+
+/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+"_connecting_vpn" = "%@ に接続中";
+
+/* iOS: connection bar, iOS widget */
+"_connecting..." = "接続中...";
+
+/* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
+"_connection" = "接続";
+
+/* Connection error translation. iOS quick connect widget: text shown on error. */
+"_connection_failed" = "接続に失敗しました";
+
+/* Profile create/change form */
+"_connection_settings" = "接続設定";
+
+/* Button in some alerts */
+"_continue" = "続行";
+
+/* iOS: Countries screen title, tab bar item title; MacOS: TabBar tab title; */
+"_countries" = "国別リスト";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. */
+"_countries_count" = "_countries_count";
+
+/* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
+"_countries_count_plus" = "_countries_count_plus";
+
+/* iOS: countries list section header */
+"_countries_free" = "FREEプランの国一覧";
+
+/* iOS: countries list section header */
+"_countries_premium" = "PREMIUMプランの国一覧";
+
+/* MacOS app tour: countries list description */
+"_countries_tour_description" = "あなたの IP アドレスとして利用したい国とサーバーを選択できます。";
+
+/* MacOS app tour: countries list title */
+"_countries_tour_title" = "国別リスト";
+
+/* Profile create/edit menu */
+"_country" = "国";
+
+/* Error when user hasn't selected profile country */
+"_country_selection_is_required" = "国を選択してください";
+
+/* Under maintenance alert */
+"_country_servers_under_maintenance" = "%@のサーバー はメンテナンス中です";
+
+/* MacOS: button in login screen */
+"_create_account" = "アカウントの作成";
+
+/* MacOS: Buttons in several places; iOS: profile creation screen title */
+"_create_new_profile" = "プロファイルを作成";
+
+/* Profile create/change form */
+"_create_profile" = "プロファイルを作成";
+
+/* MacOS: profile creation cancel alert text */
+"_current_selection_will_be_lost" = "続行すると現在の変更内容は失われます。処理を続けますか？";
+
+/* iOS: data disclaimen screen button */
+"_data_disclaimer_agree" = "同意して続ける";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_device_details" = "デバイスの種類とOSのバージョン";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_text" = "ProtonVPNはユーザーのプライバシーを尊重し、保護します。アプリを利用する個人及び匿名ユーザーの使いやすさを実現するため、以下のデータを含む必要最低限のユーザーデータのみを収集します。\n\n%@：　ログイン、パスワードのリセット、重要な更新のお知らせ\n\n%@：　クラッシュレポートやエラー発生時のみ\n\nProtonVPNアプリは、前出のユーザーデータ以外のユーザー情報を利用しません。また、オンラインアクティビティログや個人を特定可能な情報も収集しません。収集した前出のユーザーデータは、第三者によるアクセスが不可能なProtonVPN独自のシステム内で保存・処理されます。";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_title" = "オンライン上の自分自身を保護";
+
+/* iOS: data disclaimen screen */
+"_data_disclaimer_user_details" = "ユーザー名、メールアドレス";
+
+/* Profile create/change form */
+"_default_profile_tooltip" = "\"クイック接続\" ボタンは既定のプロファイルを使用します。";
+
+/* Common word */
+"_delete" = "削除";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_body" = "全てのProtonVPNデータを削除してアプリを終了します。処理を続けますか？";
+
+/* MacOS: clear application data alert */
+"_delete_application_data_popup_title" = "アプリケーションデータの削除";
+
+/* Button */
+"_delete_profile" = "プロファイルを削除";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_header" = "プロファイルを削除";
+
+/* MacOS: profile deletion warning */
+"_delete_profile_warning" = "プロファイルを完全に削除します。続行しますか？";
+
+/* Delinquent user alert */
+"_delinquent_user_description" = "支払い期限の過ぎた請求があります。 account.protonvpn.com へアクセスし、未払い分を清算してください。";
+
+/* Delinquent user alert */
+"_delinquent_user_title" = "未払い請求";
+
+/* Profile create/change form */
+"_different_server_each_time" = "毎回別のサーバーに接続";
+
+/* Button in some alerts */
+"_disable" = "無効化";
+
+/* Common word */
+"_disabled" = "無効";
+
+/* Common word */
+"_disconnect" = "接続解除";
+
+/* Common word */
+"_disconnected" = "未接続";
+
+/* Status of VPN connection reported by Siri */
+"_disconnecting" = "切断中";
+
+/* iOS onboarding button to check app without logging in */
+"_discover_the_app" = "アプリを知る";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_dns_leak_protection" = "DNS 漏洩防止";
+
+/* MacOS: Settings -> Connection: description. */
+"_dns_leak_protection_tooltip" = "DNS クエリの内容が外部に漏洩するのを防ぎます。この設定は常に有効です。";
+
+/* Alert message during In App Purchase */
+"_do_you_want_to_activate_subscription_for" = "購入したサブスクリプションを有効化しますか ";
+
+/* Common word */
+"_done" = "完了";
+
+/* MacOS: Settings -> General: name of field. */
+"_early_access" = "早期アクセス";
+
+/* MacOS: Settings -> General: description. */
+"_early_access_tooltip" = "アプリの最新版を試せます。最新バージョンは動作が不安定な場合もあります。";
+
+/* Common word */
+"_edit" = "編集";
+
+/* Common word */
+"_enabled" = "有効";
+
+/* MacOS app tour: end tour button */
+"_end_tour" = "ツアーを終了";
+
+/* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
+"_enjoy_for_free" = "無料で %@ をお試しください！";
+
+/* iOS: placeholder for email field in signup and email verification screens */
+"_enter_email_address" = "メールアドレスを入力";
+
+/* Profile create/change form */
+"_enter_profile_name" = "プロファイル名を入力";
+
+/* iOS: placeholder for code in human verification code form */
+"_enter_verification_code" = "123 456";
+
+/* API error */
+"_error_api_offline" = "Proton VPNは現在オフラインです";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_message" = "登録は完了しましたが、支払いが未完了です。支払い情報を再送するには【再試行】をタップしてください。重複して課金されることはありません。問題が発生した場合は、カスタマーサポートへご連絡ください。";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_support" = "カスタマーサポートに連絡する";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_title" = "支払いに失敗しました";
+
+/* In App Purchase error */
+"_error_credit_applied" = "support@protonvpn.com へ連絡し、購入手続きを完了してください。";
+
+/* Error decoding an object */
+"_error_decode" = "アーカイブデータのデコードに失敗しました。クラス：%@";
+
+/* Internal application error */
+"_error_email_verification_disabled" = "メールによる確認は一時的に利用できません";
+
+/* Application error */
+"_error_existing_session_to_server" = "ユーザーによるセッションが既に確立しているため、サーバー に接続できません";
+
+/* Error try to restore user from the session */
+"_error_fetch_session" = "セッション中にユーザーが見つかりません";
+
+/* Form validation error */
+"_error_field_email_wrong_format" = "メールアドレスが有効な形式ではありません";
+
+/* Form validation error */
+"_error_field_passwords_dont_match" = "パスワードが一致しません";
+
+/* Form validation error */
+"_error_field_required" = "このフィールドは必須です";
+
+/* Form validation error */
+"_error_field_unknown" = "このフィールドを確認してください";
+
+/* Error when generate srp clint */
+"_error_generate_srp" = "SRPの生成に失敗しました";
+
+/* Error when try to hash password */
+"_error_hash_password" = "ユーザーパスワードをハッシュ化できません";
+
+/* Unknown error that has no better description */
+"_error_internal_error" = "内部 API エラー";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_message" = "新しい確認コードを受け取るか、他の検証方法を使用しますか？";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_resend" = "再送信";
+
+/* Invalid human verification code alert */
+"_error_invalid_human_verification_code_title" = "無効な検証コード";
+
+/* Invalid human verification code alert button */
+"_error_invalid_human_verification_code_try_other" = "他の方法を試してください";
+
+/* Keychain error */
+"_error_keychain_fetch" = "キーチェーンでエラーが発生しました。";
+
+/* Parsing error */
+"_error_loads" = "サーバー 負荷情報を更新できません";
+
+/* Man In The Middle attack alert */
+"_error_mitm_description" = "TLS認証の検証に失敗しました。現在のインターネット接続は盗聴される可能性があります。データを守るため、アプリは一時的にブロックされました。\nVPN接続を確立するためには、新しいネットワークに切り替えて再接続してください。";
+
+/* Man In The Middle attack alert */
+"_error_mitm_title" = "安全ではない接続";
+
+/* Error when try to parse modulus signature */
+"_error_modulus_signature" = "Modulus署名が空です";
+
+/* In App Purchase error */
+"_error_no_active_username" = "サービスプランをアップグレードするアカウントでログインし、購入手続きを完了してください。";
+
+/* In App Purchase error */
+"_error_no_new_subscription_in_successfull_response" = "サブスクリプションのアップグレードが完了しました。アプリを再起動して新しいサービスプランを有効にしてください。";
+
+/* In App Purchase error alert */
+"_error_occured" = "エラーが発生しました";
+
+/* In App Purchase error */
+"_error_purchased_plan_does_not_match_available" = "App Storeのプロダクトと同社サーバー上のプロダクトが一致しません。サポートへご連絡ください。";
+
+/* In App Purchase error */
+"_error_receipt_lost" = "App Store の領収書が失われました。プランをアクティベートできない場合はサポートへご連絡ください。";
+
+/* In App Purchase error */
+"_error_sandbox_receipt" = "iOS版ベータバージョンのアプリでは購入ができず、課金もされません。";
+
+/* Error when try to parse the server info */
+"_error_server_info_parser" = "サーバー情報を解析できません";
+
+/* Parsing error */
+"_error_session_count_parser" = "セッションカウントを解析できません";
+
+/* Error when the user attempts to sign up using an existing ProtonMail email address */
+"_error_signup_using_protonmail_address" = "このProtonMailアカウントは既にVPNが設定されています。認証済みの既存アカウントでログインしてください。";
+
+/* Error when try to parse subscription info */
+"_error_subscription_parser" = "サブスクリプション情報を解析できません";
+
+/* In App Purchase error */
+"_error_transaction_failed_by_unknown_reason" = "App Storeは購入手続きを処理できませんでした。";
+
+/* In App Purchase error */
+"_error_transaction_of_other_user" = "別のProtonVPNユーザー名で購入手続きを開始しました。";
+
+/* In App Purchase error */
+"_error_unavailable_product" = "App Store 上の利用可能製品の一覧の取得に失敗しました。";
+
+/* General title for several error alerts */
+"_error_unknown_title" = "不明なエラー";
+
+/* user cancelled human validation procedure */
+"_error_user_cancelled" = "操作はキャンセルされました";
+
+/* Error when the app fails to create a user */
+"_error_user_creation" = "アカウントの作成に失敗しました";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_expired" = "ユーザー認証の有効期限が切れました。ログインしてください";
+
+/* VPN credentials can't be loaded error */
+"_error_user_credentials_missing" = "ユーザー認証情報がありません。ログインできません";
+
+/* Human validation failed */
+"_error_user_failed_human_validation" = "人による操作であることが確認できません。再試行するかPREMIUMプランを購入してください。";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_no_vpn_access" = "このアカウントには VPN へのアクセス権がありません。アカウント管理者へご連絡ください。";
+
+/* VPN credentials can't be loaded error */
+"_error_user_has_not_signed_up" = "ProtonVPNに登録されていません";
+
+/* VPN credentials can't be loaded error */
+"_error_user_is_on_waitlist" = "待機リストにいるため、アカウントはまだ作成されていません。";
+
+/* Username unavailable error */
+"_error_username_unavailable" = "既に使用されているユーザー名です。";
+
+/* Error when try to parse verification methods */
+"_error_verification_methods_parser" = "検証方法を解析できません";
+
+/* VPN credentials can't be loaded error */
+"_error_vpn_credentials_missing" = "キーチェーンにVPN認証情報がありません";
+
+/* Default error when vpn properties fetch failed */
+"_error_vpn_properties" = "VPN の詳細を取得できません！";
+
+/* VPN session is active error */
+"_error_vpn_session_is_active" = "ProtonVPNセッションはアクティブです";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_body" = "ProtonVPNはキルスイッチを実装するために、パケットフィルターファイヤーウォールを使用しています。キルスイッチを有効にすると、デバイスの現在のファイヤーウォール設定が上書きされます。現在のファイヤーウォール設定を変更したくない場合は、キルスイッチを使用しないでください。\n\nキルスイッチを有効にして現在のファイヤーウォール設定を上書きするには【続行】を押してください。\n\nキルスイッチを無効にして現在のファーヤーウォール設定を維持する場合は【キャンセル】を選択してください。";
+
+/* MacOS: Existing firewall alert */
+"_existing_firewall_popup_title" = "ファイヤーウォールが検出されました";
+
+/* Existing connection alert */
+"_existing_session" = "サーバーが利用できません";
+
+/* Existing connection alert */
+"_existing_session_to_server" = "別のサーバーを選択してください。";
+
+/* MAC: is inserted into _free_trial_expired_title insteadof %@ */
+"_expired" = "期限切れ";
+
+/* iOS: Table header in settings screen */
+"_extensions" = "拡張機能";
+
+/* MacOS: connecting overlay */
+"_failed" = "失敗";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_description" = "VPN認証情報の取得に失敗しました。問題解決のため、再ログインしてください。";
+
+/* VPN credentials not accessible alert */
+"_failed_to_access_vpn_credentials_title" = "VPN認証情報がありません";
+
+/* Used for both profile description when fastest server option is selected and Plan speed description */
+"_fastest" = "最速";
+
+/* Profile create/change form */
+"_fastest_available_server" = "利用可能な最速のサーバー";
+
+/* iOS: Predefined profile with fastest connection */
+"_fastest_connection" = "最速の接続";
+
+/* Profile create/change form */
+"_feature" = "プラン";
+
+/* iOS plan feature */
+"_feature_blocked_content" = "ブロックされたコンテンツへアクセス";
+
+/* iOS plan feature */
+"_feature_bt" = "BitTorrent/ファイル共有 対応";
+
+/* iOS plan feature */
+"_feature_connections" = "同時接続";
+
+/* iOS plan feature */
+"_feature_secure_core" = "Secure Core";
+
+/* iOS plan feature */
+"_feature_secure_streaming" = "安全なストリーミング";
+
+/* iOS plan feature */
+"_feature_server_count" = "のサーバーへ接続";
+
+/* iOS plan feature */
+"_feature_speed" = "速度";
+
+/* iOS plan feature */
+"_feature_tor" = "Tor over VPN";
+
+/* iOS: button in login screen */
+"_forgot_password" = "パスワードをお忘れですか？";
+
+/* MacOS: button in login screen */
+"_forgot_username" = "ユーザー名を忘れた";
+
+/* Used instead of price for free plans. */
+"_free" = "無料";
+
+/* Account plan description */
+"_free_countries" = "3か国";
+
+/* iOS: section header in countries list */
+"_free_servers" = "無料サーバー";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+"_free_trial_about_to_expire_description" = "%@ へアップグレードして以下の機能を引き続き利用する：";
+
+/* MacOS: \"Trial about to expire\" screen title */
+"_free_trial_about_to_expire_title" = "無料トライアルの期間がまもなく終了します！";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
+"_free_trial_expired_description" = "アカウントは ProtonVPN FREE へダウングレードされました。\n%@ プランからのダウングレードで利用できなくなった機能：";
+
+/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
+"_free_trial_expired_title" = "%@ の無料トライアル";
+
+/* MacOS: General tab in setting window */
+"_general" = "一般";
+
+/* %@ is a plan name e.g. Get Plus Plan */
+"_get_plan" = "%@ プランに申し込む";
+
+/* iOS: Button in email verification screen */
+"_get_verification_email" = "確認メールを送信";
+
+/* iOS: Button in SMS verification screen */
+"_get_verification_sms" = "SMSで確認メッセージを送信";
+
+/* Button in several different alerts */
+"_got_it" = "了解";
+
+/* Main app menu; User with \"ProtonVPN\" inside the same main menu as a name for item that opens help page. */
+"_help" = "ヘルプ";
+
+/* Show/hide password switch */
+"_hide" = "非表示";
+
+/* Value of speed in _speed */
+"_high" = "高速";
+
+/* Value of speed in _speed */
+"_highest" = "最高速";
+
+/* Button in Kill switch error alert */
+"_ignore" = "無視";
+
+/* iOS Settings -> Protocol: IKEv2 option */
+"_ikev2" = "IKEv2";
+
+/* MacOS: connecting overlay */
+"_initializing_connection" = "接続を初期化中...";
+
+/* Token expired alert */
+"_invalid_refresh_token" = "セッションの有効期限が切れました";
+
+/* Token expired alert */
+"_invalid_refresh_token_please_login" = "ProtonVPNアプリをしばらく起動していないため、再ログインが必要です。";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_description" = "ProtonMailを開発した科学者やエンジニアが、より安全でプライベートなインターネット接続を提供します。";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page1_title" = "より良いインターネットへようこそ";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_description" = "検閲や地域的制約に縛られず、帯域幅の制限もありません。広告表示もなく、個人情報を第三者に販売しません。";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page2_title" = "インターネットは自由であるべきだと考えます";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_description" = "私たちはセキュリティを提供する企業です。常にセキュリティを第一に考え、 Secure Core アーキテクチャや最新の暗号化技術等を提供しています。";
+
+/* iOS onboarding texts */
+"_ios_onboarding_page3_title" = "ユーザーのセキュリティが私たちの最優先事項です";
+
+/* iOS: Status view */
+"_ip" = "IP";
+
+/* %@ is an IP address e.g. IP: 123.45.67.890 */
+"_ip_value" = "IP: %@";
+
+/* MacOS: Settings -> Connection: name of field. */
+"_kill_switch" = "キルスイッチ";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "VPN サーバーとの接続が切断されました。データの漏洩を防ぐため、キルスイッチが全ての接続をブロックしています。ProtonVPNは自動的に再接続を試行します。このウィンドウを閉じるには【OK】を押します。\n\n一時的にキルスイッチを無効にし、VPNを経由せずインターネットへ再接続する場合は【無効化】を押してください。\n\nキルスイッチを随時無効にするには、%@ で設定します。";
+
+/* Disconnect notification */
+"_kill_switch_blocking_connection" = "全ての接続をブロックするキルスイッチ";
+
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_title" = "キルスイッチがIPアドレスの漏洩をブロックしています。";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_body" = "キルスイッチが正常に機能していません。ProtonVPNのサポートチームへ問題を報告する場合は【報告】をクリックしてください。\nエラーを無視してキルスイッチによる保護なしにインターネット接続を続けるには【無視】をクリックしてください。";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_title" = "キルスイッチのエラーが検出されました";
+
+/* MacOS: killswicth install error alert */
+"_kill_switch_helper_install_issue_popup_body" = "キルスイッチのインストールまたはアップデート時にエラーが発生するしました。\n\nもう一度処理を繰り返す場合は【再試行】をクリックしてください。\n\nキルスイッチを使用せずに続行する場合は【無効化】をクリックします。";
+
+/* MacOS: killswitch alert */
+"_kill_switch_helper_install_popup_body" = "キルスイッチを有効にするには、お使いのコンピュータに設定したアカウントのパスワードが必要です。入力を促すポップアップウィンドウが表示されたら %@ を入力し【了解】をクリックしてください。\n\nProtonVPNがアップデートされる際、再度入力が必要な場合もあります。";
+
+/* MacOS: updating helper alert */
+"_kill_switch_helper_update_popup_body" = "ダウンロードした最新アップデートを適用するには、コンピュータに設定したアカウントのパスワードが必要です。入力を促すポップアップウィンドウが表示されたら %@ を入力し【了解】をクリックしてください。 \n\nMacアカウントのパスワードを入力しない場合、キルスイッチは無効になります。";
+
+/* MacOS: Settings -> Connection. Kill switch functionality description. */
+"_kill_switch_tooltip" = "VPNトンネルが失われると、全てのネットワークトラフィックがブロックされます。Macアカウントを切り替えた場合、VPN接続は切断されるのでご注意ください。";
+
+/* MacOS: link in login screen */
+"_learn_more" = "より詳しく";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_learn_more_about_secure_core" = "Secure Coreの詳細情報";
+
+/* Server load. Used together with actual server load in percents. */
+"_load" = "負荷";
+
+/* Slogan text under the logo in may places in iOS and MacOS apps */
+"_loading_screen_slogan" = "どこでも安全なインターネットを";
+
+/* iOS status view */
+"_location" = "位置";
+
+/* iOS: Login button in several places */
+"_log_in" = "ログイン";
+
+/* iOS widget: text for not-logged-in user */
+"_log_in_to_use_widget" = "開始するにはログインしてください";
+
+/* iOS: button in settings screen */
+"_log_out" = "ログアウト";
+
+/* iOS: Logout alert */
+"_log_out_warning" = "ログアウトするとVPNセッションが終了します。";
+
+/* MacOS: Logout alert */
+"_log_out_warning_long" = "アプリケーションからログアウトすると、現在有効なVPN接続が解除されます。続行しますか？";
+
+/* MacOS: Login button */
+"_login" = "ログイン";
+
+/* iOS logs screen title */
+"_logs" = "ログ";
+
+/* Mac: neagent help screen */
+"_mac_password" = "Mac のパスワード";
+
+/* Server status in many places in iOS and MacOS apps */
+"_maintenance" = "メンテナンス";
+
+/* Profile create/change form */
+"_make_default_profile" = "デフォルトのプロファイル";
+
+/* MacOS: button in profiles tab in main window */
+"_manage_profiles" = "プロファイルの管理";
+
+/* iOS: Button in settings screen */
+"_manage_subscription" = "サブスクリプションの管理";
+
+/* MacOS: Settings -> Account. Button leading to web interface. */
+"_manage_subscription_on_web" = "ダッシュボードで登録プランを管理する";
+
+/* iOS: Map screen title and tabbar item */
+"_map" = "マップ";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_hide" = "マップを隠す";
+
+/* MacOS: Map view toggle button accessibility label (used by screen readers) */
+"_map_show" = "マップを表示";
+
+/* MacOS app tour: map description */
+"_map_tour_description" = "VPNサーバーの所在地を確認できます。あなたの現在地に最も近いサーバーも確認可能です。";
+
+/* MacOS app tour: map title */
+"_map_tour_title" = "マップ";
+
+/* Cancel button in trial modals used in both iOS and MacOS */
+"_maybe_later" = "後にする";
+
+/* Value of speed in _speed */
+"_medium" = "中速";
+
+/* Main mac app menu item */
+"_menu_about" = "ProtonVPN について";
+
+/* Main mac app menu item */
+"_menu_check_updates" = "更新を確認...";
+
+/* Main mac app menu item */
+"_menu_hide_others" = "他を隠す";
+
+/* Main mac app menu item */
+"_menu_hide_self" = "ProtonVPN を隠す";
+
+/* Main mac app menu item */
+"_menu_logout" = "ログアウト";
+
+/* Main mac app menu item */
+"_menu_minimize" = "最小化";
+
+/* Main mac app menu item */
+"_menu_preferences" = "設定";
+
+/* Main mac app menu item */
+"_menu_quit" = "ProtonVPN を終了";
+
+/* Main mac app menu item */
+"_menu_show_all" = "全て表示";
+
+/* Main mac app menu item */
+"_menu_window" = "ウィンドウ";
+
+/* Label in several trial screens on MacOS */
+"_money_back_guarantee" = "30日間返金保証";
+
+/* Label in Plan information */
+"_most_popular" = "最も人気";
+
+/* Mac: Used in several Trial screens */
+"_multiple_countries" = "多数の国々";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_description" = "世界中の何百ものサーバー";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_multiple_servers_title" = "多数のサーバー";
+
+/* iOS: table header section in profiles screen */
+"_my_profiles" = "プロファイル";
+
+/* Profile create/change form */
+"_name" = "名前";
+
+/* Network error */
+"_ne_network_connection_lost" = "ネットワークへの接続を失いました";
+
+/* Network error */
+"_ne_not_connected_to_the_internet" = "インターネットに接続されていません";
+
+/* Network error */
+"_ne_request_timed_out" = "ネットワークリクエストがタイムアウトしました";
+
+/* Network error */
+"_ne_unable_to_connect_to_host" = "サービスに接続できません";
+
+/* Mac: neagent help screen */
+"_neagent_always_allow" = "常に許可";
+
+/* Mac: neagent help screen */
+"_neagent_description" = "ProtonVPNサービスへアクセスするには %@ が必要です。入力を促すポップアップウィンドウが表示されたら %@ %@ を入力し【%@】%@ をクリックしてください。";
+
+/* Mac: neagent help screen */
+"_neagent_first_step" = "(1)";
+
+/* Mac: neagent help screen */
+"_neagent_password" = "コンピュータアカウントのパスワード";
+
+/* Mac: neagent help screen */
+"_neagent_second_step" = "(2)";
+
+/* MacOS: button in login screen */
+"_need_help" = "お困りですか？";
+
+/* iOS: quick connect widget */
+"_network_unreachable" = "ネットワークに接続できません";
+
+/* iOS onboarding next item button */
+"_next" = "次へ";
+
+/* MacOS app tour: next tip button */
+"_next_tip" = "次のヒント";
+
+/* Text used when no active server information is available */
+"_no_description_available" = "説明はありません";
+
+/* (No Comment) */
+"_no_servers_to_show" = "該当するサーバーがありません。";
+
+/* MacOS welcome screen: cancel button */
+"_no_thanks" = "今はしない";
+
+/* iOS: connection bar; Main mac app menu item; */
+"_not_connected" = "接続されていません";
+
+/* Title in no internet alert */
+"_not_connected_to_the_internet" = "VPN接続を確立できません。現在インターネットに接続していません。";
+
+/* Common word */
+"_ok" = "OK";
+
+/* Main mac app menu item */
+"_open_app_to_log_in" = "ProtonVPN を表示してログイン...";
+
+/* iOS Settings: OpenVPN logs row */
+"_open_vpn_logs" = "OpenVPN のログ";
+
+/* iOS Settings -> Protocol: OpenVPN option */
+"_openvpn" = "OpenVPN";
+
+/* MacOS menu item; MacOS Profiles tab title; */
+"_overview" = "概要";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_p2p" = "P2P";
+
+/* Description shown together with server info icon */
+"_p2p_description" = "P2P 通信対応";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_body" = "接続中のサーバーはピアツーピア(P2P)による通信に対応していないため、接続が解除されました。無料プランのサーバーや番号100番以降のサーバーは P2P に対応していません。";
+
+/* P2P blocked alert */
+"_p2p_detected_popup_title" = "このサーバーは P2P 通信に対応していません。";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P の表示付きのサーバーを選択してください。";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p1" = "経路上に P2P 通信に対応していないサーバーが存在するため、自動的に別のサーバー経由の経路へ切り替えました。結果として接続速度が低下する可能性があります。経路の迂回を避けるため、 P2P アイコン付きのサーバーを選択してください。";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_body_p2" = "　";
+
+/* P2P forward alert */
+"_p2p_forwarded_popup_title" = "接続経路が変更されました";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_p2p_server" = "P2P サーバー";
+
+/* MacOS: Used ir trial welcome and trial expired screens */
+"_p2p_servers" = "P2P サーバー";
+
+/* Plan upgrade required alert */
+"_paid_required" = "ProtonVPN の有料プランが必要です";
+
+/* Used in sign-in, sign-up */
+"_password" = "パスワード";
+
+/* Sign-up form */
+"_password_confirm" = "パスワードの確認";
+
+/* Per year. Appended to plan price. */
+"_per_year_short" = "/年";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_country_code_placeholder" = "コード";
+
+/* iOS: placeholder in phone verification screen */
+"_phone_number_placeholder" = "電話番号を入力してください";
+
+/* MacOS: SecureCore warning alert when users plan has to be upgraded */
+"_plan_does_not_include_secure_core" = "現在のプランにSecure Core機能は含まれません。";
+
+/* Plan speed */
+"_plan_speed_fastest" = "最速";
+
+/* Plan speed */
+"_plan_speed_high" = "高速";
+
+/* Plan speed */
+"_plan_speed_medium" = "中速";
+
+/* Account plan description */
+"_plans_connection" = "_plans_connection";
+
+/* No comment provided by engineer. */
+"_plans_connections" = "_plans_connections";
+
+/* Text description in plan selection screen */
+"_plans_footer" = "有料プランの購入を確定すると、あなたの iTunes アカウントにご希望のサービスプランおよびアプリ内購入にかかる手数料(これらの手数料は弊社より直接請求されません)が請求されます。購入後、自動的に選択したプランに1年間アップグレードされます。サービスプランは私たちの iOS アプリもしくはオンラインで更新やキャンセルが可能です。";
+
+/* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
+"_plus" = "PLUS プラン";
+
+/* Features of account plan */
+"_plus_plan_features" = "PLUS サーバー\nSecure Core\nTor サーバー";
+
+/* Plan upgrade required alert */
+"_plus_required" = "PLUS または VISIONARY プランが必要です";
+
+/* iOS: section header in countries list */
+"_plus_servers" = "PLUS サーバー";
+
+/* MacOS: Upgrade screen text */
+"_plus_upgrade_description" = "Secure Core、お気に入りのテレビ番組のストリーミング、複数デバイス（最大5台）からのアクセスなど、さまざまな機能が利用できます！";
+
+/* MacOS: Upgrade screen title */
+"_plus_upgrade_title" = "ProtonVPNを気に入っていただけましたか？\nPlusプランは月額わずか8ドルです";
+
+/* MacOS: Settings screen title */
+"_preferences" = "設定";
+
+/* Description shown together with server info icon */
+"_premium_description" = "プレミアムサーバー";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_premium_server" = "プレミアムサーバー";
+
+/* MacOS: connecting overlay */
+"_preparing_connection" = "サーバーをチェックしています";
+
+/* iOS: link inside text under sign-up form */
+"_privacy_policy" = "プライバシー ポリシー";
+
+/* MacOS Profiles Overview: Table column header */
+"_profile" = "プロファイル";
+
+/* iOS: success message after profile is saved */
+"_profile_created_successfully" = "新しいプロファイルを保存しました";
+
+/* iOS: failure message after profile is saved */
+"_profile_creation_failed" = "プロファイルは作成されませんでした";
+
+/* iOS: Success message on profile deletion */
+"_profile_deleted_successfully" = "プロファイルは削除されました";
+
+/* iOS: Error message if profile can't be deleted */
+"_profile_deletion_failed" = "プロファイルは削除されませんでした";
+
+/* iOS: success message after profile is saved */
+"_profile_edited_successfully" = "プロファイルは更新されました";
+
+/* Error in profile create/change form */
+"_profile_name_is_required" = "名前を入力してください";
+
+/* Error in profile create/change form */
+"_profile_name_is_too_long" = "プロファイル名は最大25文字です";
+
+/* Error when profile name is already taken */
+"_profile_name_needs_to_be_unique" = "同じ名前のプロファイルが既に存在します";
+
+/* Profile create/change form */
+"_profile_settings" = "プロファイル設定";
+
+/* MacOS: menu item, profiles window main header, sidebar tab title; iOS: Profiles screen title and tabbar item title; */
+"_profiles" = "プロファイル";
+
+/* MacOS: profiles window title */
+"_profiles_overview" = "プロファイルの概要";
+
+/* MacOS app tour: profiles description */
+"_profiles_tour_description" = "好みの設定とサーバーをプロファイルとして保存できます。";
+
+/* MacOS app tour: profiles title */
+"_profiles_tour_title" = "プロファイル";
+
+/* iOS Settings: VPN protocol label. */
+"_protocol" = "プロトコル";
+
+/* Mac: neagent help screen */
+"_protonvpn_macos" = "ProtonVPN macOS";
+
+/* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
+"_protonvpn_plus" = "ProtonVPN PLUS";
+
+/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
+"_public_ip" = "公開 IP: %@";
+
+/* Several places in both iOS and Mac apps */
+"_quick_connect" = "クイック接続";
+
+/* MacOS: Settings -> Connection: description. */
+"_quick_connect_tooltip" = "クイック接続ボタンをクリックすると、選択されたプロファイルに接続します。";
+
+/* MacOS app tour: quick connect description */
+"_quick_connect_tour_description" = "自動的に最も高速なサーバーに接続されます。";
+
+/* MacOS app tour: quick connect title */
+"_quick_connect_tour_title" = "クイック接続";
+
+/* MacOS: quit application button in custom status menu */
+"_quit" = "終了";
+
+/* MacOS: alert show before quitting app if VPN is connected */
+"_quit_warning" = "アプリケーションを終了すると、現在有効なVPN接続が解除されます。続行しますか？";
+
+/* Profile create/change form and other places describing profile */
+"_random" = "ランダム";
+
+/* Profile create/change form */
+"_random_available_server" = "ランダムに選択されたサーバー";
+
+/* iOS: Predefined profile with random server */
+"_random_connection" = "ランダムな接続";
+
+/* iOS: table header section in profiles screen */
+"_recommended" = "推奨";
+
+/* MacOS: About window */
+"_release_date" = "リリース日:";
+
+/* MacOS: label in login and settings screens */
+"_remember_login" = "ログインを保持";
+
+/* Button in Kill switch error alert */
+"_report" = "レポート";
+
+/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
+"_report_add_file" = "ファイルを追加";
+
+/* Main mac app menu item */
+"_report_an_issue" = "問題を報告";
+
+/* Bug report attachments */
+"_report_attachments" = "添付ファイル";
+
+/* Report bug screen title; iOS settings screen: item; */
+"_report_bug" = "バグの報告";
+
+/* Mac bug report: description text before bug report form */
+"_report_description" = "発生した問題の状況をできるだけ詳細にお知らせください。画面コピーなどのファイルを添付いただくと問題の再現に役立ちます。また、さらに詳細な情報をお伺いする場合もあるため、連絡方法も併せてお知らせください。";
+
+/* Mac bug report: label before username */
+"_report_field_account" = "アカウント:";
+
+/* Mac bug report: country field label */
+"_report_field_country" = "国:";
+
+/* Mac bug report: email field label */
+"_report_field_email" = "メールアドレス:";
+
+/* Mac bug report: message field label */
+"_report_field_feedback" = "ご意見";
+
+/* Mac bug report: Internet Service Provider field label */
+"_report_field_isp" = "ISP:";
+
+/* Mac bug report: label before users protonvpn plan */
+"_report_field_plan" = "プラン:";
+
+/* Mac bug report: label before app version number */
+"_report_field_version" = "バージョン:";
+
+/* iOS bug report: header before logs description */
+"_report_logs" = "VPN のログ";
+
+/* iOS bug report: description of log selection switch */
+"_report_logs_description" = "オンにすることで、クライアント側のVPNログがレポートに付加されます";
+
+/* Mac bug report: info text */
+"_report_max_file_size" = "最大ファイルサイズ制限: 488 KB";
+
+/* iOS bug report: Placeholder for email form field */
+"_report_placeholder_email" = "連絡先のメールアドレス";
+
+/* Bug report: Placeholder for text form field */
+"_report_placeholder_message" = "あなたのメッセージ...";
+
+/* iOS bug report: Title before report bug form */
+"_report_report" = "問題の報告";
+
+/* Bug report: Send report button text */
+"_report_send" = "レポートを送信";
+
+/* Bug report: Success message after report was sent */
+"_report_success" = "ご報告ありがとうございます";
+
+/* iOS: human verification option select button */
+"_request_invitation" = "手動での有効化をリクエストする";
+
+/* iOS: button in human verification code form */
+"_resend_code" = "新しいコードの発行";
+
+/* iOS: button in human verification code form */
+"_resend_no_code" = "認証コードを受け取っていませんか？";
+
+/* iOS: message after human verification code resending */
+"_resend_success" = "新しいコードを要求しました";
+
+/* MacOS: button in login screen */
+"_reset_password" = "パスワードをリセット";
+
+/* Button in some alerts */
+"_retry" = "再試行";
+
+/* Common word */
+"_save" = "保存";
+
+/* Button */
+"_save_as_profile" = "プロファイルとして保存";
+
+/* MacOS: placeholder for country search */
+"_search_for_country" = "国を検索";
+
+/* iOS: placeholder in phone country code selection screen */
+"_search_phone_country_code_placeholder" = "国を検索";
+
+/* Used in many places in MacOS app */
+"_secure_core" = "Secure Core";
+
+/* %@ is a country e.g. Secure Core Switzerland */
+"_secure_core_country" = "Secure Core %@";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_core_description" = "私達によってホストされた非常に安全性の高いサーバー";
+
+/* MacOS: secure core tooltip */
+"_secure_core_info" = "Secure Coreネットワークを経由するようにルーティングすることにより、VPNサーバーの侵害に対する追加の保護を提供します。";
+
+/* MacOS app tour: secure core description */
+"_secure_core_tour_description" = "Secure Coreをオンにすると、安全なサーバーを経由してトラフィックをルーティングするため、追加のセキュリティ保護を得られます。PLUSおよびVISIONARYプランのユーザーが利用可能です。";
+
+/* MacOS app tour: secure core title */
+"_secure_core_tour_title" = "Secure Core";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_description" = "あなたのお気に入りのコンテンツを安全にストリーミングする";
+
+/* MacOS: \"Trial about to expire\" screen */
+"_secure_streaming_title" = "安全なストリーミング";
+
+/* iOS Settings: table section header */
+"_security_options" = "セキュリティオプション";
+
+/* Profile create/change form */
+"_select_country" = "国を選択";
+
+/* iOS: title of phone country code selection screen */
+"_select_phone_country_code" = "国コードを選択";
+
+/* Button in plan selection */
+"_select_plan" = "プランを選択";
+
+/* iOS: new profile screen */
+"_select_profile_color" = "プロファイルの色を選択";
+
+/* Profile create/change form */
+"_select_server" = "サーバーを選択";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option" = "次に進むために検証オプションを選択してください:";
+
+/* iOS: text in human verification options screen */
+"_select_verification_option_top_message" = "不正利用を防ぐためにあなたが人間であることを確認しなければなりません。";
+
+/* Profile create/change form */
+"_server" = "サーバー";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_ip" = "サーバー IP:";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_server_load" = "サーバー負荷:";
+
+/* Error when user hasn't selected profile server */
+"_server_selection_is_required" = "サーバーを選択してください";
+
+/* Under maintenance alert */
+"_server_under_maintenance" = "サーバーはメンテナンス中です";
+
+/* Session count limit alert */
+"_session_count_reached_description" = "現在のアカウントに設定されている同時接続の最大数に達しました。接続数を増やすにはProtonVPNプランをアップグレードしてください。";
+
+/* Session count limit alert */
+"_session_count_reached_title" = "セッション数制限に達しました";
+
+/* iOS status view */
+"_session_time" = "接続時間";
+
+/* iOS: Settings screen title and tab title */
+"_settings" = "設定";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete" = "セットアップ完了";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_basic" = "購入手続きが完了しました。ProtonVPN Basicプランを利用できます。";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_free" = "ProtonVPN Freeプランへの登録が完了しました。ProtonVPN Plusプランを7日間無料でお試しいただけます。";
+
+/* iOS: title of the screen after successfull purchase */
+"_setup_complete_plus" = "購入手続きが完了しました。ProtonVPN Plusプランを利用できます。";
+
+/* Show/hide password switch */
+"_show" = "表示";
+
+/* MacOS: button in custom status menu */
+"_show_protonvpn" = "ProtonVPN を表示";
+
+/* iOS: button in login and onboarding screens */
+"_sign_up" = "新規登録";
+
+/* MacOS welcome screen: skip button */
+"_skip" = "スキップ";
+
+/* %@ is a speed description e.g. Speed: Highest */
+"_speed" = "%@ 速度";
+
+/* MacOS profile form: feature selection value */
+"_standard" = "標準";
+
+/* MacOS: Settings -> General: name of field. */
+"_start_minimized" = "最小化して起動";
+
+/* MacOS: label in login and settings screens */
+"_start_on_boot" = "システム起動時に実行";
+
+/* iOS status view */
+"_status" = "状態";
+
+/* iOS: button in human verification code form */
+"_submit_verification_code" = "送信";
+
+/* Text under current plan information */
+"_subscription_button" = "Extend plan for 1 year \n%@.";
+
+/* Text under current plan information */
+"_subscription_description" = "You can purchase more credits to automatically extend your current plan. At the end of your current subscription period, these credits will be applied to continue your plan.";
+
+/* Message shown to user after he bought credits to extend subscription. */
+"_subscription_extended_success" = "You have successfully bought credits to extend your current plan.";
+
+/* iOS Settings -> Connection: name of field. */
+"_subscription_plan" = "サブスクリプションプラン";
+
+/* Subscription expiration text with a date inserted instead of %@ */
+"_subscription_will_expire" = "%@ に、現在のプランの有効期限が切れます。";
+
+/* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
+"_subscription_will_renew" = "%@ に、自動的に現在のプランが更新されます。";
+
+/* MacOS: connecting overlay */
+"_successfully_connected" = "接続に成功しました";
+
+/* Custom switch off */
+"_switch_side_button_off" = "オフ";
+
+/* Custom switch on */
+"_switch_side_button_on" = "オン";
+
+/* MacOS: Settings -> General: name of field. */
+"_system_notifications" = "システム通知";
+
+/* MacOS welcome screen: take a tour button */
+"_take_tour" = "ツアーを開始";
+
+/* iOS Settings -> Protocol -> OpenVPN: TCP option */
+"_tcp" = "TCP";
+
+/* iOS status view */
+"_technical_details" = "技術的な詳細";
+
+/* iOS: link inside text under sign-up form */
+"_terms_and_conditions" = "利用規約";
+
+/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+"_terms_and_conditions_disclaimer" = "ProtonVPNを利用することにより、%@および%@に同意したものとみなされます。";
+
+/* iOS: section header in countries list */
+"_test_servers" = "テスト用サーバー";
+
+/* MacOS: connecting overlay */
+"_timed_out" = "タイムアウト";
+
+/* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
+"_tor" = "TOR";
+
+/* Description shown together with server info icon */
+"_tor_description" = "Tor ネットワークに接続します";
+
+/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+"_tor_server" = "Tor サーバー";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_body_iOS" = "7日間のProtonVPN Plus無料評価期間は終了しました。ProtonVPN Freeの使用をご継続いただけますが、プロジェクトへの支援・より多くの国や機能へのアクセスをご希望の場合は有料プランへのアップグレードをお願いいたします。";
+
+/* iOS trial expired screen */
+"_trial_expired_alert_title_iOS" = "ProtonVPN Plusプランの試用期間が終了しました。";
+
+/* (No Comment) */
+"_trial_popup_call_to_upgrade" = "ProtonVPN Plusの機能を引き続き利用する場合は、プランのアップグレードが必要です。";
+
+/* (No Comment) */
+"_trial_popup_enjoy" = "ProtonVPNは、どこでも安全なインターネット環境を実現します";
+
+/* Final text:
+ 
+ As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
+ 1 day, 2 hours, 30 minutes */
+"_trial_popup_explanation" = "ウエルカムギフトとして、最初の数日間は拡張機能を含む%@をお試しいただけます。試用期間終了まで";
+
+/* (No Comment) */
+"_trial_popup_free_upgrade" = "ProtonVPN PLUSへの無料アップグレード";
+
+/* (No Comment) */
+"_trial_popup_full_subscription" = "完全な ProtonVPN サブスクリプション";
+
+/* Final text:
+ 
+ We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
+"_trial_popup_introduction" = "%@の追加機能やより多くのサーバーをお試しいただけます。ProtonVPN PLUSの試用期間は7日間です。";
+
+/* (No Comment) */
+"_trial_popup_thanks" = "ProtonVPNをご利用いただきありがとうございます!";
+
+/* (No Comment) */
+"_trial_popup_title" = "ProtonVPN トライアル";
+
+/* iOS trial welcome screen */
+"_trial_welcome_description_iOS" = "ウェルカムギフトとして、高度な機能を含む完全な ProtonVPN サブスクリプションへの1日アクセス権を獲得しました。";
+
+/* iOS trial welcome screen */
+"_trial_welcome_ends_in_iOS" = "試用期間終了まで";
+
+/* iOS trial welcome screen */
+"_trial_welcome_heading_iOS" = "ProtonVPNへようこそ";
+
+/* MacOS: button in connecting overlay */
+"_try_agian" = "再試行";
+
+/* iOS Settings -> Protocol -> OpenVPN: UDP option */
+"_udp" = "UDP";
+
+/* Common word */
+"_unavailable" = "使用不可";
+
+/* App update required alert */
+"_update_required" = "アップデートが必要です。";
+
+/* App update required alert */
+"_update_required_no_longer_supported" = "このバージョンの ProtonVPN はサポートされていません。使用を継続するにはアップデートしてください。";
+
+/* App update required alert */
+"_update_required_support" = "サポートへ連絡";
+
+/* App update required alert */
+"_update_required_update" = "更新";
+
+/* Button in many placen in both iOS and MacOS apps */
+"_upgrade" = "アップグレード";
+
+/* Main mac app menu item */
+"_upgrade_for_secure_core" = "Secure Coreを使用するために";
+
+/* MacOS: Button in Upgrade screen */
+"_upgrade_my_plan" = "プランをアップグレード";
+
+/* Upgrade button in trial modals used in both iOS and MacOS */
+"_upgrade_now" = "今すぐアップグレード";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_country" = "申し訳ございませんが、この国にあなたのサブスクリプションで接続できるサーバーはありません。より多くのサーバーにアクセスするために、サブスクリプションのアップグレードをご検討ください。";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p1" = "Secure Core は ProtonVPN PLUS 以上のサブスクリプションが必要なプレミアム機能です。 Secure Core は VPN サーバーへの監視に対する追加の保護を提供します。";
+
+/* macOS: plan upgrade for SecureCore required alert */
+"_upgrade_plan_to_access_secure_core_p2" = "Secure Coreを利用するには、この機能を利用可能なサブスクリプションプランをご覧ください。";
+
+/* macOS: plan upgrade required alert */
+"_upgrade_plan_to_access_server" = "申し訳ございませんが、あなたのサブスクリプションで接続できるサーバーはありません。より多くのサーバーにアクセスするために、サブスクリプションのアップグレードをご検討ください。";
+
+/* iOS & MacOS: text near country or server; MacOS: title of several alerts */
+"_upgrade_required" = "アップグレードが必要";
+
+/* iOS: Plan selection during plan upgarde, button insettings screen */
+"_upgrade_subscription" = "サブスクリプションをアップグレード";
+
+/* Main mac app menu item */
+"_upgrade_to_plus" = "PLUS プランにアップグレード";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_body" = "ProtonVPN サブスクリプションはアプリ内でアップグレードできません。 アップグレードするために account.protonvpn.com へアクセスしてください。";
+
+/* Plan upgrade unavailable alert */
+"_upgrade_unavailable_title" = "アプリ内でアップグレードできません";
+
+/* iOS: human verification option select button */
+"_use_captcha_verification" = "CAPTCHA で検証してください";
+
+/* iOS: human verification option select button */
+"_use_other_email_address" = "メールで認証";
+
+/* Profile create/change form */
+"_use_secure_core" = "Secure Core を利用";
+
+/* iOS: human verification option select button */
+"_use_sms_verification" = "SMS で認証";
+
+/* Used in sign-in, sign-up and in settings */
+"_username" = "ユーザー名";
+
+/* iOS: text in human verification code form */
+"_verification_instructions" = "認証コードは送信されました。下に入力してください。";
+
+/* iOS setting: after this word actual version and build number are appended */
+"_version" = "バージョン";
+
+/* MacOS: About window */
+"_version_current" = "現在のバージョン:";
+
+/* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
+"_via" = "経由国";
+
+/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+"_via_country" = "経由国 %@";
+
+/* MacOS menu item; iOS setting screen item */
+"_view_logs" = "ログを見る";
+
+/* Text in warning screen before actions that will disconnect VPN */
+"_view_toggle_will_cause_disconnect" = "Secure Coreを切り替えると現在の接続は終了します。";
+
+/* MacOS: alert before disconnection on SecureCore state change */
+"_vpn_connection_active" = "VPN 接続が有効です";
+
+/* iOS Settings -> Protocol: screen title */
+"_vpn_protocol" = "VPN プロトコル";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_body" = "あなたのデバイスは以前の VPN セッションの終了に失敗しました。新たな VPN 接続を確立する前にデバイスの再起動が必要です。";
+
+/* VPN stuck alert */
+"_vpn_stuck_disconnecting_title" = "接続エラー";
+
+/* Status of VPN connection reported by Siri */
+"_vpnstatus_not_loggedin" = "ProtonVPN にログインしていません。 ProtonVPN アプリを開いてログインしてください。";
+
+/* Used as a title in alerts/modals */
+"_warning" = "警告";
+
+/* MacOS: alert shown during login if already connected to VPN */
+"_warning_vpn_session_is_active" = "他のユーザーが ProtonVPN セッションをこのデバイス上で有効化しています。ログイン処理を継続すると現在のセッションが終了します。処理を継続しますか?";
+
+/* MacOS welcome screen: description */
+"_welcome_description" = "ProtonVPNをご利用いただきありがとうございます。ツアーでこのアプリの機能をご説明します。";
+
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+"_welcome_gift_description" = "ウェルカムギフトとして7日間のアクセス権を獲得しました\n%@ サブスクリプションは次の機能を含みます:";
+
+/* MacOS welcome screen: title */
+"_welcome_title" = "ProtonVPN へようこそ！";
+
+/* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
+"_widget" = "iOS ウィジェット";
+
+/* MacOS: text in main window */
+"_you_are_not_connected" = "現在 VPN に接続されていません";
+

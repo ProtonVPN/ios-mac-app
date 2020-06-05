@@ -1,9 +1,0 @@
-${PODS_ROOT}/Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests-frameworks.sh
-${BUILT_PRODUCTS_DIR}/Alamofire-macOS/Alamofire.framework
-${BUILT_PRODUCTS_DIR}/KeychainAccess-macOS/KeychainAccess.framework
-${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX/openssl.framework
-${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework
-${BUILT_PRODUCTS_DIR}/Sentry-macOS/Sentry.framework
-${BUILT_PRODUCTS_DIR}/SwiftyBeaver-macOS/SwiftyBeaver.framework
-${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework
-${BUILT_PRODUCTS_DIR}/TunnelKit-macOS/TunnelKit.framework

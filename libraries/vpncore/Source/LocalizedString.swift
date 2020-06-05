@@ -297,6 +297,9 @@ public class LocalizedString {
     public static let neUnableToConnectToHost = NSLocalizedString("_ne_unable_to_connect_to_host", comment: "Network error")
     public static let neNetworkConnectionLost = NSLocalizedString("_ne_network_connection_lost", comment: "Network error")
     public static let neNotConnectedToTheInternet = NSLocalizedString("_ne_not_connected_to_the_internet", comment: "Network error")
+    public static let neCouldntReachServer = NSLocalizedString("_ne_couldnt_reach_server", comment: "Network error")
+    
+    public static let neTroubleshoot = NSLocalizedString("_ne_troubleshoot", comment: "Button on alert after a problem with internet connection")
     
     // MARK: - API errors
     public static let aeWrongLoginCredentials = NSLocalizedString("_ae_wrong_login_credentials", comment: "API error")
@@ -405,6 +408,14 @@ public class LocalizedString {
     
     public static let existingFirewallPopupTitle = NSLocalizedString("_existing_firewall_popup_title", comment: "MacOS: Existing firewall alert")
     public static let existingFirewallPopupBody = NSLocalizedString("_existing_firewall_popup_body", comment: "MacOS: Existing firewall alert")
+    public static let unsecureWiFi = NSLocalizedString("_unsecure_wifi", comment: "MacOS: Alert when user connects to WiFi without password")
+    public static let unsecureWiFiLearnMore = NSLocalizedString("_unsecure_wifi_learn_more", comment: "The link to this website https://protonvpn.com/blog/public-wifi-safety/")
+    public static let unsecureWiFiTitle = NSLocalizedString("_unsecure_wifi_title", comment: "MacOS")
+    
+    public static let killSwitchRequiresSwiftPopupMsg = NSLocalizedString("_ks_requires_swift5_popup_msg", comment: "MacOS: Swift 5 required to KillSwitch to work")
+    public static let killSwitchRequiresSwiftPopupMsg2 = NSLocalizedString("_ks_requires_swift5_popup_msg2", comment: "MacOS: Swift 5 required and user didn't install it")
+    public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
+    public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
         
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
@@ -425,6 +436,8 @@ public class LocalizedString {
     public static let systemNotifications = NSLocalizedString("_system_notifications", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccess = NSLocalizedString("_early_access", comment: "MacOS: Settings -> General: name of field.")
     public static let earlyAccessTooltip = NSLocalizedString("_early_access_tooltip", comment: "MacOS: Settings -> General: description.")
+    public static let unprotectedNetwork = NSLocalizedString("_unprotected_network", comment: "MacOS: Settings -> General: name of field.")
+    public static let unprotectedNetworkTooltip = NSLocalizedString("_unprotected_network_tooltip", comment: "MacOS: Settings -> General: description")
     public static let dnsLeakProtection = NSLocalizedString("_dns_leak_protection", comment: "MacOS: Settings -> Connection: name of field.")
     public static let dnsLeakProtectionTooltip = NSLocalizedString("_dns_leak_protection_tooltip", comment: "MacOS: Settings -> Connection: description.")
     public static let securityOptions = NSLocalizedString("_security_options", comment: "iOS Settings: table section header")
@@ -582,5 +595,31 @@ public class LocalizedString {
     public static let subscritpionDescription = NSLocalizedString("_subscription_description", comment: "Text under current plan information")
     public static let subscritpionButton = NSLocalizedString("_subscription_button", comment: "Text under current plan information")
     public static let subscritpionExtendSuccess = NSLocalizedString("_subscription_extended_success", comment: "Message shown to user after he bought credits to extend subscription.")
+    
+    // MARK: Connection troubleshooting
+    public static let troubleshootTitle = NSLocalizedString("_troubleshoot_title", comment: "Title of connection troubleshooting screen")
+    public static let troubleshootItemTitleAlternative = NSLocalizedString("_troubleshoot_item_alt_title", comment: "Title of troubleshooting item")
+    public static let troubleshootItemDescriptionAlternative = NSLocalizedString("_troubleshoot_item_alt_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkAlternative1 = NSLocalizedString("_troubleshoot_item_alt_link1", comment: "Text that will become a Learn more link in _troubleshoot_item_alt_description")
+    public static let troubleshootItemTitleNoInternet = NSLocalizedString("_troubleshoot_item_nointernet_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionNoInternet = NSLocalizedString("_troubleshoot_item_nointernet_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleISP = NSLocalizedString("_troubleshoot_item_isp_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionISP = NSLocalizedString("_troubleshoot_item_isp_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkISP1 = NSLocalizedString("_troubleshoot_item_isp_link1", comment: "Text that will become a link to Tor in _troubleshoot_item_isp_description")
+    public static let troubleshootItemTitleGovernment = NSLocalizedString("_troubleshoot_item_gov_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionGovernment = NSLocalizedString("_troubleshoot_item_gov_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkGovernment1 = NSLocalizedString("_troubleshoot_item_gov_link1", comment: "Text that will become a link to Tor in _troubleshoot_item_gov_description")
+    public static let troubleshootItemTitleAntivirus = NSLocalizedString("_troubleshoot_item_antivirus_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionAntivirus = NSLocalizedString("_troubleshoot_item_antivirus_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleProxy = NSLocalizedString("_troubleshoot_item_proxy_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionProxy = NSLocalizedString("_troubleshoot_item_proxy_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemTitleProton = NSLocalizedString("_troubleshoot_item_proton_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionProton = NSLocalizedString("_troubleshoot_item_proton_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkProton1 = NSLocalizedString("_troubleshoot_item_proton_link1", comment: "Text that will become a link to proton status page in _troubleshoot_item_proton_description")
+    public static let troubleshootItemTitleOther = NSLocalizedString("_troubleshoot_item_other_title", comment: "Title of troubleshooting item")
+    public static let troubleshootDescriptionOther = NSLocalizedString("_troubleshoot_item_other_description", comment: "Description of troubleshooting item")
+    public static let troubleshootItemLinkOther1 = NSLocalizedString("_troubleshoot_item_other_link1", comment: "Text that will become a link to supporyt form in _troubleshoot_item_other_description")
+    public static let troubleshootItemLinkOther2 = NSLocalizedString("_troubleshoot_item_other_link2", comment: "Text that will become a link to email in _troubleshoot_item_other_description")
+    public static let troubleshootItemLinkOther3 = NSLocalizedString("_troubleshoot_item_other_link3", comment: "Text that will become a link to twitter in _troubleshoot_item_other_description")
     
 }

@@ -359,7 +359,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             self?.finish(transaction: transaction)
             
         }, failure: {[weak self] error in
-            PMLog.ET("Apply credit failed")
+            PMLog.ET("Apply credit failed: \(error.localizedDescription)")
             
             self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(
                 retryHandler: {
