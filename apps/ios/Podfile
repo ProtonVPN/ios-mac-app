@@ -9,11 +9,11 @@ inhibit_all_warnings!
 
 def sharedpods
   # development pods
-  pod 'TunnelKit', :path => '../tunnelkit'
+  pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
   pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 
   # third party pods
-  pod 'Alamofire', '~> 4.0'
+  pod 'Alamofire', '~> 5.1'
   pod 'GSMessages', '~> 1.0'
   pod 'KeychainAccess', '~> 3.0'
   pod 'ReachabilitySwift', '~> 4.0'
@@ -22,6 +22,9 @@ def sharedpods
   # Checks code style and bad practices
   pod 'SwiftLint'
 
+  # OpenVPN support
+  pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+  
 end
 
 target 'ProtonVPN' do

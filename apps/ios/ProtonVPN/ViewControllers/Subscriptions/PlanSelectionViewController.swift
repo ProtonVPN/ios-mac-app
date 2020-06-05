@@ -83,7 +83,7 @@ class PlanSelectionViewController: UIViewController {
     
     private func setupView() {
         view.backgroundColor = .protonPlansGrey()
-        
+        selectButton.accessibilityIdentifier = "Select plan"
         if !viewModel.allowDismissal {
             closeButton.isHidden = true
         } else {
@@ -129,6 +129,7 @@ class PlanSelectionViewController: UIViewController {
             }
 
             plansStack.addArrangedSubview(planView)
+            planView.accessibilityIdentifier = plan.rawValue
             planView.leadingAnchor.constraint(equalTo: plansStack.leadingAnchor).isActive = true
             planView.trailingAnchor.constraint(equalTo: plansStack.trailingAnchor).isActive = true
             planView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(planViewSelected(_:))))

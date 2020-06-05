@@ -28,7 +28,7 @@ extension String {
     public func attributed(withColor color: UIColor,
                     fontSize: CGFloat,
                     bold: Bool = false,
-                    alignment: NSTextAlignment = .left,
+                    alignment: NSTextAlignment = .natural,
                     lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         let font = bold ? UIFont.boldSystemFont(ofSize: fontSize) : UIFont.systemFont(ofSize: fontSize)
@@ -37,22 +37,12 @@ extension String {
     
     func attributed(withColor color: UIColor,
                     font: UIFont,
-                    alignment: NSTextAlignment = .left,
+                    alignment: NSTextAlignment = .natural,
                     lineSpacing: CGFloat? = nil,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
+        
         let newString = NSMutableAttributedString(string: self)
-        let range = (self as NSString).range(of: self)
-        newString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
-        newString.addAttribute(NSAttributedString.Key.font, value: font, range: range)
-        newString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
-        
-        let paragraphStyle = NSMutableParagraphStyle()
-        paragraphStyle.alignment = alignment
-        
-        if let lineBreakMode = lineBreakMode { paragraphStyle.lineBreakMode = lineBreakMode }
-        if let lineSpacing = lineSpacing { paragraphStyle.lineSpacing = lineSpacing }
-        newString.addAttribute(.paragraphStyle, value: paragraphStyle, range: range)
-        
+        newString.addTextAttributes(withColor: color, font: font, alignment: alignment, lineSpacing: lineSpacing, lineBreakMode: lineBreakMode)
         return newString
     }
     

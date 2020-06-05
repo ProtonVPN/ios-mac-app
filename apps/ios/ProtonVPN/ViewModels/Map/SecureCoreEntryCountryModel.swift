@@ -75,7 +75,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     }
     
     var labelString: NSAttributedString {
-        return String(format: LocalizedString.viaCountry, LocalizationUtility.countryName(forCode: countryCode) ?? "").attributed(withColor: .protonWhite(), fontSize: 18, alignment: .center)
+        return String(format: LocalizedString.viaCountry, LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .protonWhite(), fontSize: 18, alignment: .center)
     }
     
     var labelColor: UIColor {

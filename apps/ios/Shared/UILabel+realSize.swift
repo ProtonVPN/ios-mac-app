@@ -30,6 +30,7 @@ extension UILabel {
         sizeLabel.numberOfLines = numberOfLines
         sizeLabel.font = font
         sizeLabel.text = text
+        sizeLabel.attributedText = attributedText
         sizeLabel.sizeToFit()
         return sizeLabel.bounds.size
     }

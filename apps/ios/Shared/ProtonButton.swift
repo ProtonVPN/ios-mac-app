@@ -51,6 +51,16 @@ class ProtonButton: UIButton {
         setUpView()
     }
     
+    init() {
+        super.init(frame: .zero)
+        setUpView()
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        layer.cornerRadius = bounds.height / 2
+    }
+    
     private func setUpView() {
         clipsToBounds = true
         tintColor = .protonWhite()
@@ -80,8 +90,6 @@ class ProtonButton: UIButton {
             layer.borderWidth = 0.0
             setTitleColor(.protonWhite(), for: .normal)
         }
-        
-        layer.cornerRadius = bounds.height / 2
     }
     
     func showLoading() {
@@ -122,4 +130,12 @@ class ProtonButton: UIButton {
         let yCenterConstraint = NSLayoutConstraint(item: self, attribute: .centerY, relatedBy: .equal, toItem: activityIndicator, attribute: .centerY, multiplier: 1, constant: 0)
         self.addConstraint(yCenterConstraint)
     }
+    
+    // MARK: - Style
+    
+    public func styleCenterMultiline() {
+        titleLabel?.lineBreakMode = .byWordWrapping
+        titleLabel?.textAlignment = .center
+    }
+    
 }

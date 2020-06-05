@@ -111,6 +111,7 @@ fileprivate class WindowServiceMock: WindowService {
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
+    
     func makeUIAlertService() -> UIAlertService {
         return uiAlertService
     }
@@ -131,6 +132,9 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
         return SettingsServiceMock()
     }
     
+    func makeTroubleshootCoordinator() -> TroubleshootCoordinator {
+        return TroubleshootCoordinatorMock();
+    }
     
 }
 

@@ -212,7 +212,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     }
     
     private func formDescription() -> NSAttributedString {
-        let country = LocalizationUtility.countryName(forCode: countryCode) ?? LocalizedString.unavailable
+        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         return country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
