@@ -37,7 +37,7 @@ class WidgetFactory {
     let alertService = ExtensionAlertService()
     let propertiesManager = PropertiesManager()
 
-    var todayViewModel:TodayViewModel {
+    var todayViewModel: TodayViewModel {
         let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager )
         self.alertService.delegate = viewModel
         return viewModel
@@ -50,13 +50,12 @@ class WidgetFactory {
     
     // MARK: - Lazy
     
-    lazy var vpnManager: VpnManagerProtocol = {
+    var vpnManager: VpnManagerProtocol {
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: self.openVpnExtensionBundleIdentifier,
                                                     appGroup: self.appGroup,
                                                     propertiesManager: self.propertiesManager)
-        
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
                           appGroup: self.appGroup)
-    }()
+    }
 }
