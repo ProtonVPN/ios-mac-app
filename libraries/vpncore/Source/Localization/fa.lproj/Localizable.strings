@@ -26,7 +26,7 @@
 "_activate_widget" = "فعال‌سازی ویجت";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_1" = "از صفحه خانه، به سمت چپ‌ترین صفحه بروید تا به ویجت‌هایتان دسترسی پیدا کنید.";
+"_activate_widget_step_1" = "از صفحه خانه، به آخرین صفحه سمت چپ بروید تا به ویجت‌هایتان دسترسی پیدا کنید.";
 
 /* iOS widget help screen: text */
 "_activate_widget_step_2" = "به پایین صفحه بروید و دکمه‌ی ویرایش را بزنید.";
@@ -59,16 +59,16 @@
 "_already_have_account" = "من از قبل یک حساب کاربری دارم";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "VPN همیشه فعال";
+"_always_on_vpn" = "قابلیت VPN همیشه روشن";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Kill Switch در iOS پشتیبانی نمی‌شود. VPN همیشه-روشن یک اتصال VPN امن بطور سریع و خودکار ایجاد میکند. به منظور امنیت شما، این امکان همیشه روشن میباشد.";
+"_always_on_vpn_tooltip_ios" = "قابلیت Kill Switch در iOS پشتیبانی نمی‌شود. در صورت قطع شدن، VPN همیشه روشن دوباره یک اتصال VPN امن را به صورت سریع و خودکار برقرار می‌کند. به منظور حفظ امنیت شما، این قابلیت همیشه روشن می‌ماند.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "VPN همیشه فعال به صورت خودکار شما را قطع و دوباره متصل می‌کند";
+"_always_on_will_reconnect" = "قابلیت VPN همیشه فعال به صورت خودکار شما را دوباره متصل می‌کند";
 
 /* iOS Settings: applications logs row */
-"_application_logs" = "رکوردهای برنامه";
+"_application_logs" = "لاگ‌های برنامه";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "تخصیص خودکار";
@@ -80,7 +80,7 @@
 "_auto_connect_tooltip" = "در آغاز برنامه، شما به پروفایل انتخاب شده متصل هستید";
 
 /* iOS: section header in countries list */
-"_basic_servers" = "سرورهای ساده";
+"_basic_servers" = "سرورهای پایه";
 
 /* Common word */
 "_cancel" = "لغو";
@@ -152,13 +152,13 @@
 "_countries_count" = "_کشورها_تعداد";
 
 /* iOS advandced plan features view. %@ is changed with the number of countries. has plus after the number. */
-"_countries_count_plus" = "_کشورها_تعداد_plus";
+"_countries_count_plus" = "_countries_count_plus";
 
 /* iOS: countries list section header */
 "_countries_free" = "کشورهای رایگان";
 
 /* iOS: countries list section header */
-"_countries_premium" = "کشورهای غیر رایگان";
+"_countries_premium" = "کشورهای ویژه";
 
 /* MacOS app tour: countries list description */
 "_countries_tour_description" = "کشور و سروری که می‌خواهید IP شما به آن تغییر کند را انتخاب کنید.";
@@ -194,16 +194,16 @@
 "_data_disclaimer_device_details" = "مدل و نسخه‌ی سیستم‌عامل دستگاه شما";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_text" = "ProtonVPN برای امنیت و حریم شخصی شما احترام قائل بوده و متعهد است. برای اطمینان از محافظت از حریم شخصی و هویت کاربر به هنگام استفاده از اپلیکیشن، این داده‌ها به عنوان حداقل داده‌هایی که از سمت کاربر نگه‌داری می‌شود مد نظر است:\n\n%@ - برای ورود، کمک به بازیابی رمزعبور، و ارسال به‌روزرسانی‌های مهم.\n\n%@ - تنها برای ارسال گزارش‌های خرابی و خطاها.\n\nاپلیکیشن ProtonVPN هیچ اطلاعاتی را در کنار این داده‌ها پردازش نمی‌کند. ما فعالیت‌های آنلاین شما و هیچ داده‌ای که هویت‌تان را شامل شود، ذخیره نمی‌کنیم. همه اطلاعات یاد شده در بالا در سرورهای ProtonVPN ذخیره شده، و هیچ مجموعه دیگری هرگز امکان دسترسی به آن‌ها را نخواهد داشت.";
+"_data_disclaimer_text" = "تیم ProtonVPN برای امنیت و حریم شخصی شما احترام قائل بوده و متعهد است. برای اطمینان از محافظت از حریم شخصی و هویت کاربر به هنگام استفاده از اپلیکیشن، این داده‌ها به عنوان حداقل داده‌هایی که از سمت کاربر نگه‌داری می‌شود مد نظر است:\n\n%@ - برای ورود، کمک به بازیابی رمزعبور، و ارسال به‌روزرسانی‌های مهم.\n\n%@ - تنها برای ارسال گزارش‌های خرابی و خطاها.\n\nاپلیکیشن ProtonVPN هیچ اطلاعاتی را در کنار این داده‌ها پردازش نمی‌کند. ما فعالیت‌های آنلاین شما و هیچ داده‌ای که هویت‌تان را شامل شود، ذخیره نمی‌کنیم. همه اطلاعات یاد شده در بالا در سرورهای ProtonVPN ذخیره شده، و هیچ مجموعه دیگری هرگز امکان دسترسی به آن‌ها را نخواهد داشت.";
 
 /* iOS: data disclaimen screen */
 "_data_disclaimer_title" = "خودتان را در زمان آنلاین بودن محافظت کنید";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_user_details" = "نام کاربری، رایانامه";
+"_data_disclaimer_user_details" = "نام کاربری، آدرس ایمیل";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.";
+"_default_profile_tooltip" = "دکمه‌ی «اتصال سریع» از پروفایل پیشفرض استفاده می‌کند.\n";
 
 /* Common word */
 "_delete" = "حذف";
@@ -254,7 +254,7 @@
 "_dns_leak_protection" = "محافظت از نشت DNS";
 
 /* MacOS: Settings -> Connection: description. */
-"_dns_leak_protection_tooltip" = "پیشگیری از لو رفتن در خواست های DNS به اشخاص ثالث. همیشه روشن.";
+"_dns_leak_protection_tooltip" = "جلوگیری از نشت پرسمان‌های DNS به اشخاص ثالث. همیشه روشن.";
 
 /* Alert message during In App Purchase */
 "_do_you_want_to_activate_subscription_for" = "آیا می‌خواهید اشتراکی که قبلا خریداری کرده‌اید را فعال کنید برای ";
@@ -263,7 +263,7 @@
 "_done" = "ﺍﻧﺠﺎﻡ";
 
 /* MacOS: Settings -> General: name of field. */
-"_early_access" = "دسترسی زود هنگام";
+"_early_access" = "دسترسی زودهنگام";
 
 /* MacOS: Settings -> General: description. */
 "_early_access_tooltip" = "برای گرفتن آخرین به‌روزرسانی‌ها نفر اول باشید. در نظر داشته باشید که نسخه‌های زودهنگام ممکن است پایداری کمتری داشته باشند.";
@@ -278,10 +278,10 @@
 "_end_tour" = "اتمام تور";
 
 /* %@ is always 'PLUS' e.g. ENJOY PLUS FOR FREE! */
-"_enjoy_for_free" = "از طرح %@ به رایگان لذت ببرید!";
+"_enjoy_for_free" = "از طرح %@ به صورت رایگان لذت ببرید!";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "آدرس رایانامه را وارد کنید";
+"_enter_email_address" = "آدرس ایمیل را وارد کنید";
 
 /* Profile create/change form */
 "_enter_profile_name" = "نام پروفایل را وارد کنید";
@@ -308,7 +308,7 @@
 "_error_decode" = "رمزگشایی اطلاعات آرشیو شده در کلاس %@ ناموفق بود";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "تایید رایانامه به صورت موقت غیرفعال است";
+"_error_email_verification_disabled" = "تایید ایمیلی به صورت موقت غیرفعال است";
 
 /* Application error */
 "_error_existing_session_to_server" = "اتصال ناموفق بود چرا که در حال حاضر حساب کاربری شما جایی دیگر در حال استفاده است";
@@ -317,7 +317,7 @@
 "_error_fetch_session" = "حساب کاربری از طریق نشست مربوطه پیدا نشد";
 
 /* Form validation error */
-"_error_field_email_wrong_format" = "آدرس ایمیل در قالب درست نیست";
+"_error_field_email_wrong_format" = "آدرس ایمیل در قالب درستی\n نیست";
 
 /* Form validation error */
 "_error_field_passwords_dont_match" = "رمزهای عبور مطابقت ندارند";
@@ -355,11 +355,14 @@
 /* Parsing error */
 "_error_loads" = "وضعیت بار بر روی سرور به‌روز نشد";
 
-/* Man In The Middle attack alert */
+/* Man In The Middle attack alert (API) */
 "_error_mitm_description" = "تایید اعتبار گواهی TLS در هنگام تلاش برای اتصال به ProtonVPN API ناموفق بود. اتصال فعلی اینترنت شما ممکن است زیر نظر باشد. به منظور حفظ اطلاعات شما، ما از دسترسی اپ به ProtonVPN API جلوگیری کردیم.\nبه منظور وارد شدن یا دسترسی به حساب کاربری خود، به یک شبکه جدید متصل شوید و دوباره تلاش کنید.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "اتصال نا امن";
+
+/* Man In The Middle attack alert (VPN) */
+"_error_mitm_vpn_description" = "تایید اعتبار گواهی TLS در هنگام تلاش برای اتصال به سرور VPN ناموفق بود. اتصال فعلی اینترنت شما ممکن است زیر نظر باشد. به منظور حفظ اطلاعات شما، ما از دسترسی اپ به این سرور VPN جلوگیری میکنیم.\nلطفا سرور دیگری انتخاب کنید.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "امضا یا کلید خصوصی ماژول خالی است";
@@ -394,6 +397,12 @@
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "امکان دریافت اطلاعات مربوط به اشتراک حساب وجود ندارد";
 
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "خطای شروع TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "گواهی سرور نميتواند تایید شود.";
+
 /* In App Purchase error */
 "_error_transaction_failed_by_unknown_reason" = "پردازش خرید شما از سوی App Store ناموفق بود.";
 
@@ -419,7 +428,7 @@
 "_error_user_credentials_missing" = "اطلاعات هویتی کاربر پیدا نشد. ورود ممکن نیست";
 
 /* Human validation failed */
-"_error_user_failed_human_validation" = "ما نتوانسته ایم تایید کنیم که شما انسان هستید. لطفاً دوباره سعی کنید یا یک طرح ویژه خریداری کنید.";
+"_error_user_failed_human_validation" = "ما نتوانستیم تایید کنیم که شما انسان هستید. لطفاً دوباره سعی کنید یا یک طرح ویژه خریداری کنید.";
 
 /* VPN credentials can't be loaded error */
 "_error_user_has_no_vpn_access" = "حساب کاربری شما به VPN دسترسی ندارد. لطفا با مدیر حساب خود تماس بگیرید";
@@ -446,7 +455,7 @@
 "_error_vpn_session_is_active" = "نشست ProtonVPN فعال است";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN برای امکان Kill Switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی Kill Switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت Kill Switch استفاده نکنید.\n\nبرای استفاده از Kill Switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن Kill Switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";
+"_existing_firewall_popup_body" = "برنامه ProtonVPN برای امکان Kill Switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی Kill Switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت Kill Switch استفاده نکنید.\n\nبرای استفاده از Kill Switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن Kill Switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "دیوار آتش تشخیص داده شد";
@@ -497,7 +506,7 @@
 "_feature_secure_core" = "Secure Core";
 
 /* iOS plan feature */
-"_feature_secure_streaming" = "Stream امن";
+"_feature_secure_streaming" = "استریم امن";
 
 /* iOS plan feature */
 "_feature_server_count" = "اتصال به سرورهای";
@@ -506,7 +515,7 @@
 "_feature_speed" = "سرعت";
 
 /* iOS plan feature */
-"_feature_tor" = "Tor روی VPN";
+"_feature_tor" = "قابلیت Tor روی VPN";
 
 /* iOS: button in login screen */
 "_forgot_password" = "رمز عبورتان را فراموش کرده‌ايد؟";
@@ -524,16 +533,16 @@
 "_free_servers" = "سرورهای رایگان";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
-"_free_trial_about_to_expire_description" = "به %@ ارتقا دهید و از این امکانات بهره‌مند شوید:";
+"_free_trial_about_to_expire_description" = "به %@ ارتقا دهید و از این قابلیت‌ها بهره‌مند شوید:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "دوره آزمایشی رایگان شما رو به اتمام است!";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "حساب شما به ProtonVPN Free بازگشته است.\nقابلیت‌هایی که بدون %@ از دست می‌دهید:";
+"_free_trial_expired_description" = "حساب شما به حالت رایگان بازگشته است.\nقابلیت‌هایی که بدون %@ از دست می‌دهید:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-"_free_trial_expired_title" = "دوره حساب رایگان شما %@";
+"_free_trial_expired_title" = "طرح آزمایشی رایگان شما %@";
 
 /* MacOS: General tab in setting window */
 "_general" = "عمومی";
@@ -542,7 +551,7 @@
 "_get_plan" = "گرفتن طرح %@";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "گرفتن رایانامه فعال‌سازی";
+"_get_verification_email" = "گرفتن ایمیل فعال‌سازی";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "گرفتن پیامک فعال‌سازی";
@@ -590,7 +599,7 @@
 "_ios_onboarding_page2_title" = "ما معتقدیم اینترنت باید آزاد باشد";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page3_description" = "ما یک شرکت امنیتی هستیم. خواه معماری Secure Core ماست یا رمزنگاری پیشرفته امان، امنیت همیشه در صدر قرار میگیرد.";
+"_ios_onboarding_page3_description" = "ما یک شرکت امنیتی هستیم. چه در معماری Secure Core و چه در رمزگذاری پیشرفته، امنیت همیشه اولویت اول ماست.";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page3_title" = "امنیت شما، اولویت ماست";
@@ -608,13 +617,13 @@
 "_kill_switch_blocking_body" = "شما اتصال با سرور VPN را از دست دادید. Kill Switch همه ارتباطات را برای پیشگیری از نشت اطلاعات شما مسدود کرده است. ProtonVPN تلاش می‌کند دوباره به صورت خودکار اتصال را برقرار کند. کلید OK را برای بستن این اخطار ببندید.\n\nاگر قصد خاموش کردن موقت Kill Switch را دارید، برای اتصال دوباره به اینترنت 'بدون' حفاظ VPN، کلید 'غیرفعال‌سازی' را انتخاب کنید.\n\nبرای خاموش کردن دائمی Kill Switch به %@ بروید.";
 
 /* Disconnect notification */
-"_kill_switch_blocking_connection" = "Kill Switch همه ارتباطات را مسدود کرده است";
+"_kill_switch_blocking_connection" = "قابلیت Kill Switch همه ارتباطات را مسدود کرده است";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
+"_kill_switch_blocking_title" = "قابلیت Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch به خوبی کار نمی‌کند. در صورتی که می‌خواهید این خطا را به تیم پشتیبانی ProtonVPN ارسال کنید، 'گزارش' را انتخاب کنید.\nاگر می‌خواهید این خطا را نادیده گرفته و به مرور اینترنت 'بدون' حفاظت با Kill Switch ادامه دهید، گزینه 'چشم‌پوشی' را انتخاب کنید.";
+"_kill_switch_error_body" = "قابلیت Kill Switch به خوبی کار نمی‌کند. در صورتی که می‌خواهید این خطا را به تیم پشتیبانی ProtonVPN ارسال کنید، «گزارش» را انتخاب کنید.\nاگر می‌خواهید این خطا را نادیده گرفته و به مرور اینترنت «بدون» حفاظت با Kill Switch ادامه دهید، گزینه 'چشم‌پوشی' را انتخاب کنید.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "یک خطا در عملکرد Kill Switch شناسایی شد";
@@ -630,6 +639,18 @@
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "کل ترافیک شبکه در زمانی که اتصال VPN قطع شود مسدود خواهد شد. به یاد داشته باشید که اتصال VPN شما به هنگام تعویض کاربر در مک قطع خواهد شد.";
+
+/* MacOS: Try again to connect KillSwitch */
+"_ks_enable_again" = "دوباره فعال کردن KillSwitch";
+
+/* MacOS: Keep disabled the KillSwitch component */
+"_ks_keep_disabled" = "خاموش رها کردن KillSwitch";
+
+/* MacOS: Swift 5 required to KillSwitch to work */
+"_ks_requires_swift5_popup_msg" = "شما نمیتوانید KillSwitch را فعال کنید چون Swift 5 Runtime Support روی دستگاه شما نصب نشده است. برای استفاده از KillSwitch, لطفا ابتدا Swift 5 را بارگیری و نصب کنید.";
+
+/* MacOS: Swift 5 required and user didn't install it */
+"_ks_requires_swift5_popup_msg2" = "شما هنوز Swift 5 Runtime Support را نصب نکرده اید. ProtonVPN نمیتواند بدون Swift 5 اجرا شود. اگر شما عدم نصب Swift 5 را انتخاب کنید، قادر نخواهید بود که برای محافظت دستگاهتان از KillSwitch استفاده نمایید. ";
 
 /* MacOS: link in login screen */
 "_learn_more" = "بیشتر بدانید";
@@ -758,6 +779,9 @@
 "_name" = "نام";
 
 /* Network error */
+"_ne_couldnt_reach_server" = "ما نتوانستیم به سرور‌های Proton دست یابیم";
+
+/* Network error */
 "_ne_network_connection_lost" = "ارتباط با شبکه قطع شده است";
 
 /* Network error */
@@ -773,7 +797,7 @@
 "_ne_unable_to_connect_to_host" = "سرویس در دسترس نیست";
 
 /* Mac: neagent help screen */
-"_neagent_always_allow" = "همیشه مجاز";
+"_neagent_always_allow" = "همیشه اجازه داده شود";
 
 /* Mac: neagent help screen */
 "_neagent_description" = "ممکن است از شما در مورد %@تان برای اتصال به سرویس ProtonVPN پرسیده شود. اگر این درخواست ظاهر شد، %@ %@ خود را وارد کرده و سپس '%@' %@ را انتخاب کنید.";
@@ -821,7 +845,7 @@
 "_open_app_to_log_in" = "نمایش ProtonVPN برای ورود...";
 
 /* iOS Settings: OpenVPN logs row */
-"_open_vpn_logs" = "رکوردهای OpenVPN";
+"_open_vpn_logs" = "لاگ‌های OpenVPN";
 
 /* iOS Settings -> Protocol: OpenVPN option */
 "_openvpn" = "OpenVPN";
@@ -899,22 +923,22 @@
 "_plans_footer" = "به محض تایید شدن خرید طرح پرداختی شما، از حساب iTunes شما مبلغ نمایش داده شده کسر خواهد شد،که شامل مالیات و اجرتهای اضافی پلتفرم میباشد (که بطور مستقیم توسط پروتون کسر نمیشود). بعد از انجام خرید، شما بطور خودکار به طرح انتخاب شده به مدّت یک سال ارتقاء داده میشوید، که بعد از این دوره میتوانید تمدید یا لغو نمایید، چه آنلاین یا چه از طریق اپ iOS ما.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
-"_plus" = "PLUS";
+"_plus" = "پلاس";
 
 /* Features of account plan */
-"_plus_plan_features" = "سرور های Plus\nSecure Core\nسرور های Tor";
+"_plus_plan_features" = "سرورهای پلاس\nقابلیت Secure Core\nسرورهای Tor";
 
 /* Plan upgrade required alert */
-"_plus_required" = "اشتراک Plus یا Visionary مورد نیاز است";
+"_plus_required" = "اشتراک پلاس یا رویایی مورد نیاز است";
 
 /* iOS: section header in countries list */
-"_plus_servers" = "سرورهای PLUS";
+"_plus_servers" = "سرورهای پلاس";
 
 /* MacOS: Upgrade screen text */
 "_plus_upgrade_description" = "با استفاده از Secure Core برنامه های تلویزیونی مورد علاقه خود را تماشا کنید، قابل استفاده بر روی حداکثر 5 دستگاه مختلف و بیشتر!";
 
 /* MacOS: Upgrade screen title */
-"_plus_upgrade_title" = "از ProtonVPN لذت می برید؟\nبا فقط 8 دلار در ماه Plus را دریافت کنید";
+"_plus_upgrade_title" = "از ProtonVPN لذت می برید؟\nفقط با 8 دلار در ماه طرح Plus را دریافت کنید";
 
 /* MacOS: Settings screen title */
 "_preferences" = "تنظیمات";
@@ -980,7 +1004,7 @@
 "_protonvpn_macos" = "ProtonVPN برای macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "طرح ProtonVPN پلاس";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "آی پی آدرس عمومی: %@";
@@ -1064,13 +1088,13 @@
 "_report_logs" = "لاگ‌های VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "با فعال کردن این گزینه کارنامۀ سمت کلاینت VPN به این گزارش افزوده می‌شود";
+"_report_logs_description" = "فعال کردن این گزینه لاگ‌های VPN سمت کاربر را به این گزارش می‌افزاید";
 
 /* Mac bug report: info text */
 "_report_max_file_size" = "حداکثر سایز مجاز فایل: ۴۴۸ کیلوبایت";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "رایانامه مخاطب";
+"_report_placeholder_email" = "ایمیل";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "پیام شما...";
@@ -1127,7 +1151,7 @@
 "_secure_core_info" = "ایجاد محافظ بیشتر علیه مصادرۀ سرور VPN، به کمک ارسال ترافیک از طریق شبکۀ «هستۀ امن»";
 
 /* MacOS app tour: secure core description */
-"_secure_core_tour_description" = "فعال کردن Secure Core برای ارسال ترافیک از طریق سرورهای بیشتر به منظور افزودن یک لایۀ دیگرِ امنیت شبکه. قابل استفاده برای اعضای Plus و Visionary.";
+"_secure_core_tour_description" = "فعال کردن Secure Core برای ارسال ترافیک از طریق سرورهای بیشتر به منظور افزودن یک لایۀ دیگرِ امنیت شبکه. قابل استفاده برای مشترکین پلاس و رویایی.";
 
 /* MacOS app tour: secure core title */
 "_secure_core_tour_title" = "Secure Core";
@@ -1136,7 +1160,7 @@
 "_secure_streaming_description" = "پخش آنلاین محتوای دلخواه شما";
 
 /* MacOS: \"Trial about to expire\" screen */
-"_secure_streaming_title" = "Stream امن";
+"_secure_streaming_title" = "استریم امن";
 
 /* iOS Settings: table section header */
 "_security_options" = "تنظیمات امنیتی";
@@ -1193,13 +1217,13 @@
 "_setup_complete" = "اتمام پیکربندی";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_basic" = "خرید شما موفق بود. اکنون طرح ProtonVPN Basic شما فعال است.";
+"_setup_complete_basic" = "خرید شما موفق بود. اکنون طرح ProtonVPN پایه شما فعال است.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "شما برای طرح ProtonVPN Free ثبت‌نام کرده‌اید. برای شروع، به رایگان از هفت روز سرویس ProtonVPN Plus لذت ببرید.";
+"_setup_complete_free" = "شما برای طرح ProtonVPN رایگان ثبت‌نام کرده‌اید. برای شروع، به رایگان از هفت روز سرویس ProtonVPN پلاس لذت ببرید.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_plus" = "خرید شما موفق بود. اکنون طرح ProtonVPN Plus شما فعال است.";
+"_setup_complete_plus" = "خرید شما موفق بود. اکنون طرح ProtonVPN پلاس شما فعال است.";
 
 /* Show/hide password switch */
 "_show" = "نمایش";
@@ -1220,7 +1244,7 @@
 "_standard" = "استاندارد";
 
 /* MacOS: Settings -> General: name of field. */
-"_start_minimized" = "شروع به حالت کوچک شده";
+"_start_minimized" = "شروع در پس‌زمینه";
 
 /* MacOS: label in login and settings screens */
 "_start_on_boot" = "شروع در راه‌اندازی دستگاه";
@@ -1292,10 +1316,10 @@
 "_tor_server" = "سرور TOR";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "حساب ۷ روزه free آزمایشی Plus شما در ProtonVPN منقضی شده است. شما می‌توانید کماکان از نسخه Free در ProtonVPN استفاده کنید، اما در صورتی که به حمایت از این پروژه و دسترسی به کشورها و امکانات بیشتر علاقمند هستید، لطفا حساب خود را به یک طرح پولی ارتقا دهید.";
+"_trial_expired_alert_body_iOS" = "طرح ۷ روزه ProtonVPN آزمایشی شما منقضی شده است. شما می‌توانید کماکان از نسخه رایگان در ProtonVPN استفاده کنید، اما در صورتی که به حمایت از این پروژه و دسترسی به کشورها و امکانات بیشتر علاقه‌مند هستید، لطفا حساب خود را به یک طرح ویژه ارتقا دهید.";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_title_iOS" = "دوره آزمایشی ProtonVPN در طرح Plus منقضی شد";
+"_trial_expired_alert_title_iOS" = "دوره آزمایشی ProtonVPN پلاس به پایان رسید";
 
 /* (No Comment) */
 "_trial_popup_call_to_upgrade" = "برای دسترسی دایمی به طرح Plus در ProtonVPN، می‌توانید حساب خود را ارتقا دهید.";
@@ -1310,7 +1334,7 @@
 "_trial_popup_explanation" = "به عنوان هدیه، شما به یک دوره %@، که برای چند روز امکانات پیشرفته را در اختیار شما قرار می‌دهد دسترسی دارید! این دوره آزمایشی هدیه به پایان می‌رسد در";
 
 /* (No Comment) */
-"_trial_popup_free_upgrade" = "ارتقای رایگان به طرح Plus در ProtonVPN";
+"_trial_popup_free_upgrade" = "ارتقای رایگان به طرح ProtonVPN پلاس";
 
 /* (No Comment) */
 "_trial_popup_full_subscription" = "اشتراک کامل ProtonVPN";
@@ -1318,7 +1342,7 @@
 /* Final text:
  
  We have given you a free upgrade to ProtonVPN Plus, which includes more servers and additional features. Your ProtonVPN Plus trial ends in 7 days. */
-"_trial_popup_introduction" = "ما به شما یک %@ داده‌ایم که سرورها و امکانات بیشتر را شامل می‌شود. دوره آزمایشی ProtonVPN Plus ظرف ۷ روز به پایان می‌رسد.";
+"_trial_popup_introduction" = "ما به شما یک %@ داده‌ایم که سرورها و امکانات بیشتر را شامل می‌شود. دوره آزمایشی ProtonVPN پلاس ظرف ۷ روز به پایان می‌رسد.";
 
 /* (No Comment) */
 "_trial_popup_thanks" = "از شما به‌خاطر استفاده از ProtonVPN سپاسگزاریم!";
@@ -1396,7 +1420,7 @@
 "_troubleshoot_item_proton_link1" = "Proton Status";
 
 /* Title of troubleshooting item */
-"_troubleshoot_item_proton_title" = "Proton کار نمی‌کند";
+"_troubleshoot_item_proton_title" = "برنامه Proton کار نمی‌کند";
 
 /* Description of troubleshooting item */
 "_troubleshoot_item_proxy_description" = "هرگونه پروکسی یا دیوار آتشین را غیر فعال کنید، یا با مدیر شبکه خود تماس بگیرید.";
@@ -1429,7 +1453,7 @@
 "_unsecure_wifi_learn_more" = "بیشتر بدانید";
 
 /* MacOS */
-"_unsecure_wifi_title" = "WiFi ناامن شناسایی شد";
+"_unsecure_wifi_title" = "شبکه WiFi ناامن شناسایی شد";
 
 /* App update required alert */
 "_update_required" = "به‌روزرسانی لازم است";
@@ -1459,7 +1483,7 @@
 "_upgrade_plan_to_access_country" = "متأسفیم، با توجه به اشتراک شما هیچ سرور آزادی در این کشور در دسترس نیست. برای دسترسی به سرورهای بیشتر، می‌توانید اشتراک خود را ارتقا دهید.";
 
 /* macOS: plan upgrade for SecureCore required alert */
-"_upgrade_plan_to_access_secure_core_p1" = "Secure Core قابلیتی ویژه است که برای دسترسی به آن به اشتراک Plus یا بالاتر در ProtonVPN نیاز است. Secure Core یک لایه امنیتی پیشرفته برای جلوگیری از مانیتورینگ سرور VPN است.";
+"_upgrade_plan_to_access_secure_core_p1" = "قابلیت Secure Core یک قابلیت ویژه است که نیاز به اشتراک ProtonVPN پلاس یا بالاتر دارد. Secure Core حفاظت پیشرفته را در برابر شنود سرورهای VPN فراهم می‌کند.";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p2" = "برای دسترسی به Secure Core، طرح‌هایی که این قابلیت را در بر می‌گیرند را انتخاب کنید.";
@@ -1474,7 +1498,7 @@
 "_upgrade_subscription" = "ارتقای اشتراک";
 
 /* Main mac app menu item */
-"_upgrade_to_plus" = "ارتقا به Plus";
+"_upgrade_to_plus" = "ارتقا به پلاس";
 
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "اشتراک ProtonVPN شما از داخل برنامه نمی‌تواند ارتقا داده شود، لطفاً به منظور ارتقا به account.protonvpn.com مراجعه کنید.";
@@ -1513,7 +1537,7 @@
 "_via_country" = "از طریق %@";
 
 /* MacOS menu item; iOS setting screen item */
-"_view_logs" = "مشاهده لاگ‌ها";
+"_view_logs" = "مشاهدهٔ لاگ‌ها";
 
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "روشن کردن Secure Core اتصال فعلی شما را قطع می‌کند.";
@@ -1543,7 +1567,7 @@
 "_welcome_description" = "بابت استفاده از ProtonVPN سپاسگزاریم. نگاهی گذرا به ویژگی های اصلی برنامه بیندازید.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "به عنوان هدیهٔ ورود برای شما یک اشتراک ۷ روزه %@ در نظر گرفته شده که این امکانات را شامل می‌شود:";
+"_welcome_gift_description" = "به عنوان هدیهٔ ورود برای شما یک اشتراک ۷ روزه %@ در نظر گرفته شده که شامل این قابلیت‌ها می‌شود:";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "خوش آمدید!";

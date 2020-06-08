@@ -29,10 +29,10 @@
 "_activate_widget_step_1" = "Смахните вправо на экране «Домой», экране блокировки или в программе «Центр уведомлений», чтобы получить доступ к виджетам.";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку редактирования.";
+"_activate_widget_step_2" = "Прокрутите в самый низ и нажмите кнопку \"Изменить\".";
 
 /* iOS widget help screen: text */
-"_activate_widget_step_3" = "Добавить виджет ProtonVPN в список активных виджетов.";
+"_activate_widget_step_3" = "Добавьте виджет ProtonVPN в список активных виджетов.";
 
 /* Plan information */
 "_advanced_features" = "+ Дополнительные возможности";
@@ -203,7 +203,7 @@
 "_data_disclaimer_user_details" = "Имя пользователя, адрес электронной почты";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.";
+"_default_profile_tooltip" = "Кнопка «Быстрое подключение» использует профиль по умолчанию.\n";
 
 /* Common word */
 "_delete" = "Удалить";
@@ -355,11 +355,14 @@
 /* Parsing error */
 "_error_loads" = "Не могу обновить данные о нагрузке на сервер";
 
-/* Man In The Middle attack alert */
-"_error_mitm_description" = "Сбой проверка TLS-сертификата при попытке подключения к ProtonVPN API. Ваше подключение к интернет прослушивается. Чтобы сохранить ваши данные в безопасности, мы предотвратили доступ приложения к ProtonVPN API.\nДля входа в приложение или доступа к учетной записи, подключитесь к другой сети и попробуйте снова.";
+/* Man In The Middle attack alert (API) */
+"_error_mitm_description" = "Сбой проверки TLS-сертификата при попытке подключения к ProtonVPN API. Возможно, Ваше подключение к интернет прослушивается. Чтобы сохранить ваши данные в безопасности, мы предотвратили доступ приложения к ProtonVPN API.\nДля входа в приложение или доступа к учетной записи, подключитесь к другой сети и попробуйте снова.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Небезопасное соединение";
+
+/* Man In The Middle attack alert (VPN) */
+"_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к VPN серверу. Ваше текущее подключение к Интернету, возможно, прослушивается. Чтобы защитить ваши данные, мы не позволяем приложению получить доступ к этому VPN серверу.\nПожалуйста, выберите другой сервер.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Пустая сигнатура остатка";
@@ -393,6 +396,12 @@
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Не могу разобрать информацию о подписке";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Ошибка инициализации TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Невозможно проверить сертификат сервера.";
 
 /* In App Purchase error */
 "_error_transaction_failed_by_unknown_reason" = "App Store не смог обработать вашу покупку.";
@@ -485,10 +494,10 @@
 "_feature" = "Функция";
 
 /* iOS plan feature */
-"_feature_blocked_content" = "Доступ к заблокированному контенту";
+"_feature_blocked_content" = "Обход блокировок";
 
 /* iOS plan feature */
-"_feature_bt" = "Поддержка BitTorrent/файлообмена";
+"_feature_bt" = "BitTorrent/файлообмен";
 
 /* iOS plan feature */
 "_feature_connections" = "Одновременные VPN-подключения";
@@ -631,6 +640,18 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
 
+/* MacOS: Try again to connect KillSwitch */
+"_ks_enable_again" = "Включить Kill Switch снова";
+
+/* MacOS: Keep disabled the KillSwitch component */
+"_ks_keep_disabled" = "Оставить Kill Switch выключенным";
+
+/* MacOS: Swift 5 required to KillSwitch to work */
+"_ks_requires_swift5_popup_msg" = "Вы не можете включить Kill Switch, потому что поддержка среды исполнения Swift 5 не установлена на вашем устройстве. Чтобы использовать Kill Switch, сначала загрузите и установите Swift 5.";
+
+/* MacOS: Swift 5 required and user didn't install it */
+"_ks_requires_swift5_popup_msg2" = "У вас по-прежнему не установлена поддержка среды исполнения Swift. ProtonVPN не может запускать Kill Switch без Swift 5. Если вы решите не устанавливать Swift 5 на устройстве, вы не сможете использовать Kill Switch для защиты вашего устройства. ";
+
 /* MacOS: link in login screen */
 "_learn_more" = "Узнать больше";
 
@@ -725,10 +746,10 @@
 "_menu_minimize" = "Свернуть";
 
 /* Main mac app menu item */
-"_menu_preferences" = "Параметры";
+"_menu_preferences" = "Настройки";
 
 /* Main mac app menu item */
-"_menu_quit" = "Выйти из ProtonVPN";
+"_menu_quit" = "Закрыть ProtonVPN";
 
 /* Main mac app menu item */
 "_menu_show_all" = "Показать все";
@@ -756,6 +777,9 @@
 
 /* Profile create/change form */
 "_name" = "Название";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Мы не смогли подключиться к серверам Proton";
 
 /* Network error */
 "_ne_network_connection_lost" = "Потеряно подключение к сети";
@@ -881,7 +905,7 @@
 "_plan_does_not_include_secure_core" = "Ваш план не включает в себя функцию Secure Core.";
 
 /* Plan speed */
-"_plan_speed_fastest" = "Самая высокая скорость";
+"_plan_speed_fastest" = "Высочайшая скорость";
 
 /* Plan speed */
 "_plan_speed_high" = "Высокая скорость";
@@ -917,7 +941,7 @@
 "_plus_upgrade_title" = "Наслаждаетесь ProtonVPN?\nПолучите Plus всего за 8 долларов в месяц";
 
 /* MacOS: Settings screen title */
-"_preferences" = "Параметры";
+"_preferences" = "Настройки";
 
 /* Description shown together with server info icon */
 "_premium_description" = "Премиум сервер";
@@ -929,7 +953,7 @@
 "_preparing_connection" = "Проверка доступности сервера";
 
 /* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Политика конфиденциальности";
+"_privacy_policy" = "Политикой конфиденциальности";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Профиль";
@@ -1064,7 +1088,7 @@
 "_report_logs" = "Журналы VPN";
 
 /* iOS bug report: description of log selection switch */
-"_report_logs_description" = "Включение этого параметра добавит журналы работы VPN на стороне клиента в этот отчет";
+"_report_logs_description" = "Включение этого параметра добавит журналы VPN на стороне клиента в этот отчет";
 
 /* Mac bug report: info text */
 "_report_max_file_size" = "Ограничение на максимальный размер файла: 488 КБ";
@@ -1271,7 +1295,7 @@
 "_technical_details" = "Техническая информация";
 
 /* iOS: link inside text under sign-up form */
-"_terms_and_conditions" = "Условия и положения";
+"_terms_and_conditions" = "Условиями и положениями";
 
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
 "_terms_and_conditions_disclaimer" = "Используя ProtonVPN, вы соглашаетесь с нашими\n%@ и %@";
@@ -1554,5 +1578,3 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Вы не подключены";
 
-/* Network error */
-"_ne_couldnt_reach_server" = "Мы не смогли подключиться к серверам Proton";

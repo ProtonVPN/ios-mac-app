@@ -203,7 +203,7 @@
 "_data_disclaimer_user_details" = "Utilizador, endereço de email";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil predefinido.";
+"_default_profile_tooltip" = "O botão \"Ligação rápida\" usa o perfil predefinido.\n";
 
 /* Common word */
 "_delete" = "Eliminar";
@@ -355,11 +355,14 @@
 /* Parsing error */
 "_error_loads" = "Impossível actualizar cargas do servidor";
 
-/* Man In The Middle attack alert */
+/* Man In The Middle attack alert (API) */
 "_error_mitm_description" = "A validação do certificado TLS falhou ao tentar ligar à API do ProtonVPN. A sua actual ligação à Internet pode estar a ser monitorizada. Para manter os seus dados seguros, estamos a impedir a aplicação de aceder à API do ProtonVPN.\nPara aceder à sua conta, mude para outra rede e tente ligar novamente.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Ligação insegura";
+
+/* Man In The Middle attack alert (VPN) */
+"_error_mitm_vpn_description" = "A validação do certificado TLS falhou ao tentar ligar ao servidor VPN. A sua actual ligação à Internet pode estar a ser monitorizada. Para manter os seus dados seguros, estamos a impedir a aplicação de aceder ao servidor VPN.\nPor favor, escolha outro servidor.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "A assinatura do módulo está vazia";
@@ -393,6 +396,12 @@
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Impossível analisar a informação da subscrição";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Erro de inicialização TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Impossível verificar o certificado do servidor.";
 
 /* In App Purchase error */
 "_error_transaction_failed_by_unknown_reason" = "A App Store não pôde processar a sua compra.";
@@ -631,6 +640,18 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloqueia todo o tráfego de rede quando o túnel VPN se perde. Note que a ligação VPN é terminada quando troca de conta Mac.";
 
+/* MacOS: Try again to connect KillSwitch */
+"_ks_enable_again" = "Reactivar o Kill Switch";
+
+/* MacOS: Keep disabled the KillSwitch component */
+"_ks_keep_disabled" = "Manter o Kill Switch desactivado";
+
+/* MacOS: Swift 5 required to KillSwitch to work */
+"_ks_requires_swift5_popup_msg" = "Não pode activar o Kill Switch porque o suporte a Swift 5 Runtime não está instalado no dispositivo. Para utilizar o Kill Switch, por favor comece por instalar o Swift 5.";
+
+/* MacOS: Swift 5 required and user didn't install it */
+"_ks_requires_swift5_popup_msg2" = "Ainda não instalou o suporte a Swift 5 Runtime. O ProtonVPN não pode executar o Kill Switch sem o Swift 5. Se decidir não instalar o Swift 5 no dispositivo, não poderá utilizar o Kill Switch para proteger o dispositivo. ";
+
 /* MacOS: link in login screen */
 "_learn_more" = "Saiba mais";
 
@@ -756,6 +777,9 @@
 
 /* Profile create/change form */
 "_name" = "Nome";
+
+/* Network error */
+"_ne_couldnt_reach_server" = "Impossível aceder aos servidores Proton";
 
 /* Network error */
 "_ne_network_connection_lost" = "Ligação de rede perdida";
@@ -1554,5 +1578,3 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Não há ligação";
 
-/* Network error */
-"_ne_couldnt_reach_server" = "Impossível aceder aos servidores Proton";
