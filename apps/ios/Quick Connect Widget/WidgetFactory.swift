@@ -48,15 +48,14 @@ class WidgetFactory {
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: self.appGroup)!)
     }
     
-    // MARK: - Lazy
+    // MARK: - Computed
     
-    lazy var vpnManager: VpnManagerProtocol = {
+    var vpnManager: VpnManagerProtocol {
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: self.openVpnExtensionBundleIdentifier,
                                                     appGroup: self.appGroup,
                                                     propertiesManager: self.propertiesManager)
-        
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
                           appGroup: self.appGroup)
-    }()
+    }
 }
