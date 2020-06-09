@@ -37,10 +37,12 @@ class TodayViewModelImplementation: TodayViewModel {
     private var timer: Timer?
     private let propertiesManager: PropertiesManager
     private let vpnManager: VpnManagerProtocol
+    private let appStateManager: AppStateManager
     
-    init( _ propertiesManager: PropertiesManager, vpnManager: VpnManagerProtocol ){
+    init( _ propertiesManager: PropertiesManager, vpnManager: VpnManagerProtocol, appStateManager: AppStateManager ){
         self.propertiesManager = propertiesManager
         self.vpnManager = vpnManager
+        self.appStateManager = appStateManager
     }
     
     func viewDidLoad() {
@@ -61,15 +63,15 @@ class TodayViewModelImplementation: TodayViewModel {
     // MARK: - Utils
     
     private func displayConnected() {
-        guard let request = propertiesManager.lastConnectionRequest,
-            let connection = request.vpnProtocol == .ike ? propertiesManager.lastIkeConnection : propertiesManager.lastOpenVpnConnection else {
-                viewController?.displayNoGateWay()
+        guard let connection = appStateManager.activeConnection() else {
+                viewController?.displayDisconnected()
                 return
         }
-        
+                
         let server = connection.server
         let country = LocalizationUtility.default.countryName(forCode: server.countryCode)
-        let ip = server.ips.first?.exitIp
+        let ip = connection.serverIp.exitIp
+        
         viewController?.displayConnected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country)
     }
     

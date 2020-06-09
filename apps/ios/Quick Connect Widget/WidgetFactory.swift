@@ -38,7 +38,7 @@ class WidgetFactory {
     let propertiesManager = PropertiesManager()
 
     var todayViewModel:TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager )
+        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )
         self.alertService.delegate = viewModel
         return viewModel
     }
@@ -47,6 +47,7 @@ class WidgetFactory {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: self.appGroup)!)
     }
+    
     
     // MARK: - Computed
     
@@ -57,5 +58,19 @@ class WidgetFactory {
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
                           appGroup: self.appGroup)
+    }
+    
+    var appStateManager: AppStateManager {
+        let keychain = VpnKeychain()
+        let alamofireWrapper = AlamofireWrapperImplementation()
+        return AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
+                               vpnManager: self.vpnManager,
+                               alamofireWrapper: alamofireWrapper,
+                               alertService: alertService,
+                               timerFactory: TimerFactory(),
+                               propertiesManager: self.propertiesManager,
+                               vpnKeychain: keychain,
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService)
+        )
     }
 }
