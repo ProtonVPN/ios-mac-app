@@ -203,7 +203,7 @@
 "_data_disclaimer_user_details" = "Nazwa użytkownika, adres e-mail";
 
 /* Profile create/change form */
-"_default_profile_tooltip" = "Przycisk \"Szybkie połączenie\" używa domyślnego profilu.";
+"_default_profile_tooltip" = "Przycisk \"Szybkie połączenie\" używa domyślnego profilu.\n";
 
 /* Common word */
 "_delete" = "Usuń";
@@ -355,11 +355,14 @@
 /* Parsing error */
 "_error_loads" = "Nie można zaktualizować obciążenia serwera";
 
-/* Man In The Middle attack alert */
+/* Man In The Middle attack alert (API) */
 "_error_mitm_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem API ProtonVPN. Twoje bieżące połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do interfejsu API został tymczasowo zablokowany.\nAby się zalogować lub uzyskać dostęp do konta, wybierz nową sieć i spróbuj połączyć się ponownie.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Niezabezpieczone połączenie";
+
+/* Man In The Middle attack alert (VPN) */
+"_error_mitm_vpn_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem serwera VPN. Twoje bieżące połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do serwera VPN został tymczasowo zablokowany.\nWybierz inny serwer.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Podpis modułu jest pusty";
@@ -393,6 +396,12 @@
 
 /* Error when try to parse subscription info */
 "_error_subscription_parser" = "Nie można przetworzyć informacji o subskrypcji";
+
+/* Internal error message when there is a problem with initializing tls and connection cannot be established. */
+"_error_tls_initialisation" = "Błąd inicjowania połączenia TLS";
+
+/* Internal error message when there is a problem with server certificate and connection cannot be established. */
+"_error_tls_server_verification" = "Certyfikat serwera nie może zostać zweryfikowany.";
 
 /* In App Purchase error */
 "_error_transaction_failed_by_unknown_reason" = "Sklep App Store nie mógł przetworzyć zakupu.";
@@ -428,7 +437,7 @@
 "_error_user_has_not_signed_up" = "Nie zarejestrowałeś się jeszcze w ProtonVPN";
 
 /* VPN credentials can't be loaded error */
-"_error_user_is_on_waitlist" = "Jesteś aktualnie na liście oczekujących i Twoje konto nie jest jeszcze gotowe";
+"_error_user_is_on_waitlist" = "Obecnie znajdujesz się na liście oczekujących i Twoje konto nie jest jeszcze gotowe";
 
 /* Username unavailable error */
 "_error_username_unavailable" = "Nazwa użytkownika jest już zajęta";
@@ -437,7 +446,7 @@
 "_error_verification_methods_parser" = "Nie można przetworzyć metod weryfikacji";
 
 /* VPN credentials can't be loaded error */
-"_error_vpn_credentials_missing" = "W łańcuchu klucza brakuje danych logowania VPN";
+"_error_vpn_credentials_missing" = "Brak danych logowania VPN w łańcuchu klucza";
 
 /* Default error when vpn properties fetch failed */
 "_error_vpn_properties" = "Nie można pobrać ustawień VPN!";
@@ -470,7 +479,7 @@
 "_failed_to_access_vpn_credentials_description" = "Nie udało się pobrać danych logowania VPN. Zaloguj się ponownie, aby rozwiązać ten problem.";
 
 /* VPN credentials not accessible alert */
-"_failed_to_access_vpn_credentials_title" = "Brakujące dane logowania VPN";
+"_failed_to_access_vpn_credentials_title" = "Brak danych logowania VPN";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
 "_fastest" = "Najszybszy";
@@ -631,6 +640,18 @@
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokuje cały ruch sieciowy, kiedy tunel VPN zostanie przerwany. Pamiętaj, że połączenie VPN zostanie zakończone przy zmianie konta Mac.";
 
+/* MacOS: Try again to connect KillSwitch */
+"_ks_enable_again" = "Włącz ponownie funkcję Kill Switch";
+
+/* MacOS: Keep disabled the KillSwitch component */
+"_ks_keep_disabled" = "Wyłącz funkcję Kill Switch";
+
+/* MacOS: Swift 5 required to KillSwitch to work */
+"_ks_requires_swift5_popup_msg" = "Nie możesz włączyć funkcji Kill Switch, ponieważ środowisko Swift 5 nie jest zainstalowane na Twoim urządzeniu. Pobierz i zainstaluj oprogramowanie, aby móc korzystać z funkcji Kill Switch.";
+
+/* MacOS: Swift 5 required and user didn't install it */
+"_ks_requires_swift5_popup_msg2" = "Nadal nie zainstalowałeś środowiska Swift 5. Aplikacja ProtonVPN nie może włączyć funkcji Kill Switch bez tego oprogramowania. Jeśli nie zainstalujesz tego oprogramowania, nie będziesz mógł korzystać z funkcji Kill Switch, aby chronić swoje urządzenie. ";
+
 /* MacOS: link in login screen */
 "_learn_more" = "Dowiedz się więcej";
 
@@ -758,6 +779,9 @@
 "_name" = "Nazwa";
 
 /* Network error */
+"_ne_couldnt_reach_server" = "Serwery Proton są niedostępne";
+
+/* Network error */
 "_ne_network_connection_lost" = "Połączenie z siecią zostało utracone";
 
 /* Network error */
@@ -803,7 +827,7 @@
 "_no_description_available" = "Brak dostępnego opisu";
 
 /* (No Comment) */
-"_no_servers_to_show" = "Nie ma aktualnie żadnych serwerów do wyświetlenia.";
+"_no_servers_to_show" = "Obecnie nie ma żadnych serwerów do wyświetlenia.";
 
 /* MacOS welcome screen: cancel button */
 "_no_thanks" = "Nie, dziękuję";
@@ -1456,7 +1480,7 @@
 "_upgrade_now" = "Ulepsz teraz";
 
 /* macOS: plan upgrade required alert */
-"_upgrade_plan_to_access_country" = "Aktualnie nie ma dostępnych serwerów dla Twojej subskrypcji w tym kraju. Ulepsz swój plan, aby uzyskać dostęp do większej ilości serwerów.";
+"_upgrade_plan_to_access_country" = "Obecnie nie ma dostępnych serwerów dla Twojej subskrypcji w tym kraju. Ulepsz swój plan, aby uzyskać dostęp do większej ilości serwerów.";
 
 /* macOS: plan upgrade for SecureCore required alert */
 "_upgrade_plan_to_access_secure_core_p1" = "Secure Core to funkcja premium, która wymaga planu ProtonVPN Plus lub wyższego. Funkcja Secure Core dodaje zaawansowaną ochronę przed monitorowaniem serwera VPN.";
@@ -1554,5 +1578,3 @@
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Nie jesteś połączony";
 
-/* Network error */
-"_ne_couldnt_reach_server" = "Serwery Proton są niedostępne";
