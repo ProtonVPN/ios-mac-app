@@ -348,7 +348,20 @@ extension NavigationService: LoginService {
         DispatchQueue.main.async { [unowned self] in
             guard let controller = self.loginStoryboard.instantiateViewController(withIdentifier: "SignUpFormViewController") as? SignUpFormViewController else { return }
             controller.viewModel = viewModel 
-            self.windowService.addToStack(controller)
+            
+            if self.windowService.navigationStackAvailable {
+                self.windowService.addToStack(controller)
+            } else {
+                let nc = UINavigationController(rootViewController: controller)
+
+                nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
+                nc.navigationBar.shadowImage = UIImage()
+                nc.navigationBar.isTranslucent = true
+                nc.modalPresentationStyle = .fullScreen
+                
+                self.windowService.replace(with: nc)
+            }
+            
         }
     }
     

@@ -21,7 +21,6 @@ or alternatively using `brew cask install fastlane`
 fastlane ios test
 ```
 Run all the tests
-
 ### ios internal_beta
 ```
 fastlane ios internal_beta
