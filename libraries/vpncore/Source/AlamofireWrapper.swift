@@ -60,7 +60,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     private var humanVerificationHandler: HumanVerificationAdapter?
     
     private lazy var humanVerificationHelper = HumanVerificationHelper(self, alertService: self.alertService)
-    private lazy var accessTokenHelper = AccessRequestHelper(self)
+    private lazy var accessTokenHelper = AccessRequestHelper(self, alertService: self.alertService)
     
     public func markAsFailedTLS(request: URLRequest) {
         tlsFailedRequests.append(request)
@@ -204,6 +204,9 @@ extension AlamofireWrapperImplementation {
         case ApiErrorCode.humanVerificationRequired:
             humanVerificationHelper.requestHumanVerification(request, apiError: apiError, success: success, failure: failure)
             return
+        case ApiErrorCode.noActiveSubscription:
+            failure(apiError) // don't write these errors to the logs
+            return
         default:
             break
         }
@@ -211,15 +214,9 @@ extension AlamofireWrapperImplementation {
         switch (error as NSError).code {
         case HttpStatusCode.invalidAccessToken :
             accessTokenHelper.requestAccessTokenVerification(request, apiError: apiError, success: success, failure: failure)
-        case 400..<500:
-            if propertiesManager?.hasConnected == true {
-                PMLog.ET("User logged out due to refresh access token failure with error: \(error)")
-                alertService?.push(alert: RefreshTokenExpiredAlert())
-            } else {
-                failure(error)
-            }
         default:
-            failure(error)
+            PMLog.D("Network request failed with error: \(apiError)", level: .error)
+            failure(apiError)
         }
     }
 }

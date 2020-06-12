@@ -26,9 +26,11 @@ import Alamofire
 class AccessRequestHelper {
     
     let alamofireWrapper: AlamofireWrapper
+    let alertService: CoreAlertService?
     
-    public init( _ alamofireWrapper: AlamofireWrapper) {
+    public init( _ alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService? ) {
         self.alamofireWrapper = alamofireWrapper
+        self.alertService = alertService
     }
     
     func requestAccessTokenVerification( _ request: URLRequestConvertible, apiError: ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
@@ -49,8 +51,23 @@ class AccessRequestHelper {
         refreshAccessToken({
             success()
         }, { error in
-            PMLog.D("Refresh access token failed with error: \(error)")
-            failure(error)
+            guard let apiError = error as? ApiError else {
+                failure(error)
+                return
+            }
+            
+            switch (apiError.httpStatusCode, apiError.code) {
+            case (HttpStatusCode.tooManyRequests, _):
+                failure(error)
+            case (400...499, _):
+                PMLog.ET("User logged out due to refresh access token failure with error: \(error)")
+                DispatchQueue.main.async { [weak self] in
+                    guard let alertService = self?.alertService else { return }
+                    alertService.push(alert: RefreshTokenExpiredAlert())
+                }
+            default:
+                failure(error)
+            }
         })
     }
 }
