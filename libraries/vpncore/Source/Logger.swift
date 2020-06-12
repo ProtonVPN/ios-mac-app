@@ -62,7 +62,7 @@ public class PMLog {
     
     public static let logsDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true)
     
-    private static let maxLogLines = 200
+    private static let maxLogLines = 2000
     
     public static func setupSentry(dsn: String) {
         // Create a Sentry client and start crash handler
