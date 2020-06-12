@@ -68,4 +68,6 @@ class SignUpFormViewModelMock: SignUpFormViewModel {
     func switchToLogin() {
     }
     
+    func cancel(){
+    }
 }

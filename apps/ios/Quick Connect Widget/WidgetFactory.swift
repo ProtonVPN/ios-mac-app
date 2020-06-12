@@ -24,66 +24,53 @@ import Foundation
 import vpncore
 
 class AlertServiceStub: CoreAlertService {
-
-    func push(alert: SystemAlert) {
-    }
-    
+    func push(alert: SystemAlert) { }
 }
 
 class WidgetFactory {
     
     static var shared = WidgetFactory()
     
-    private let alamofireWrapper: AlamofireWrapper
-    private let vpnApiService: VpnApiService
-    private let vpnManager: VpnManager
-    private let vpnKeychain: VpnKeychainProtocol
-    private let configurationPreparer: VpnManagerConfigurationPreparer
-    
-    private var _vpnGateway: VpnGatewayProtocol?
-    
-    var vpnGateway: VpnGatewayProtocol? {
-        guard let _ = try? vpnKeychain.fetch() else {
-            _vpnGateway = nil
-            return nil
-        }
-        
-        if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper())
-        }
-        
-        return _vpnGateway
-    }
-    
+    private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
+    private let appGroup = "group.ch.protonmail.vpn"
+
     let alertService = ExtensionAlertService()
-    
     let propertiesManager = PropertiesManager()
-    
-    lazy var appStateManager = { [unowned self] in
-        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer)
-    }()
-    
+
     var todayViewModel:TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self )
+        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )
         self.alertService.delegate = viewModel
         return viewModel
     }
     
     private init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
-        
-        alamofireWrapper = AlamofireWrapperImplementation()
-        vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
-        let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-        let appGroup = "group.ch.protonmail.vpn"
-        vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup)
-        vpnKeychain = VpnKeychain()
-        configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: self.appGroup)!)
     }
     
-    public func refreshVpnManager() {
-        vpnManager.refreshManagers()
+    
+    // MARK: - Computed
+    
+    var vpnManager: VpnManagerProtocol {
+        let openVpnFactory = OpenVpnProtocolFactory(bundleId: self.openVpnExtensionBundleIdentifier,
+                                                    appGroup: self.appGroup,
+                                                    propertiesManager: self.propertiesManager)
+        return VpnManager(ikeFactory: IkeProtocolFactory(),
+                          openVpnFactory: openVpnFactory,
+                          appGroup: self.appGroup)
     }
     
+    var appStateManager: AppStateManager {
+        let keychain = VpnKeychain()
+        let alamofireWrapper = AlamofireWrapperImplementation()
+        return AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
+                               vpnManager: self.vpnManager,
+                               alamofireWrapper: alamofireWrapper,
+                               alertService: alertService,
+                               timerFactory: TimerFactory(),
+                               propertiesManager: self.propertiesManager,
+                               vpnKeychain: keychain,
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService)
+        )
+    }
 }

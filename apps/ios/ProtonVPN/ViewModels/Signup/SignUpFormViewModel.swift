@@ -60,6 +60,7 @@ protocol SignUpFormViewModel {
     
     func startRegistration()
     func switchToLogin()
+    func cancel()
 }
 
 class SignUpFormViewModelImplementation: SignUpFormViewModel {
@@ -175,6 +176,12 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     private func failed(withError error: Error?) {
         isLoading = false
         paymentVerificationCode = nil
+        
+        if let userError = error as? UserError, userError == .cancelled {
+            //the user cancelled the validation do not display error message
+            return
+        }
+        
         if let error = error {
             DispatchQueue.main.async {
                 self.showError?(error)

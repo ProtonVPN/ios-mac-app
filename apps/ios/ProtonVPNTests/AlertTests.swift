@@ -108,6 +108,8 @@ fileprivate class WindowServiceMock: WindowService {
     func popStackToRoot() {
     
     }
+    
+    var navigationStackAvailable: Bool = true
 }
 
 fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {

@@ -33,6 +33,7 @@ protocol WindowService: class {
     func show(viewController: UIViewController)
     func addToStack(_ controller: UIViewController)
     func popStackToRoot()
+    var navigationStackAvailable: Bool { get }
     
     func present(modal: UIViewController)
     func replace(with modal: UIViewController)
@@ -104,6 +105,10 @@ class WindowServiceImplementation: WindowService {
     func popStackToRoot() {
         let navigationController = topMostNavigationController()
         navigationController?.popToRootViewController(animated: true)
+    }
+    
+    var navigationStackAvailable: Bool {
+        return topMostNavigationController() != nil
     }
     
     // MARK: - Modal presentation

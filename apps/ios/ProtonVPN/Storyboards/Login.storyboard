@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,16 +23,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="477"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="tB4-s5-jz3">
-                                        <rect key="frame" x="-34" y="206" width="482" height="65"/>
+                                        <rect key="frame" x="87" y="206" width="240" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="vel-rQ-phb">
-                                                <rect key="frame" x="0.0" y="0.0" width="482" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="JFq-gI-nLu"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fcs-MV-VDY">
-                                                <rect key="frame" x="0.0" y="48" width="482" height="17"/>
+                                                <rect key="frame" x="0.0" y="48" width="240" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -71,7 +71,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Voe-bO-TUc">
-                                                <rect key="frame" x="40" y="11.5" width="294" height="21"/>
+                                                <rect key="frame" x="40" y="11.5" width="294" height="22"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Username"/>
                                                 <attributedString key="attributedText"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES" textContentType="username"/>
@@ -125,7 +125,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="249" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Password" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="sAJ-pA-g3T">
-                                                <rect key="frame" x="40" y="11.5" width="236" height="21"/>
+                                                <rect key="frame" x="40" y="11.5" width="236" height="22"/>
                                                 <accessibility key="accessibilityConfiguration" identifier="Password"/>
                                                 <attributedString key="attributedText"/>
                                                 <textInputTraits key="textInputTraits" spellCheckingType="no" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="password"/>
@@ -311,16 +311,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="527"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="734-DO-1A4">
-                                        <rect key="frame" x="-34" y="231" width="482" height="65"/>
+                                        <rect key="frame" x="87" y="231" width="240" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="4yR-SB-Pfd">
-                                                <rect key="frame" x="0.0" y="0.0" width="482" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="uRG-9R-ZzC"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ovf-6n-VYo">
-                                                <rect key="frame" x="0.0" y="48" width="482" height="17"/>
+                                                <rect key="frame" x="0.0" y="48" width="240" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -359,7 +359,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Email" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="MsT-D3-GDG" userLabel="Email">
-                                                <rect key="frame" x="45.5" y="11.5" width="288.5" height="21"/>
+                                                <rect key="frame" x="45.5" y="11.5" width="288.5" height="22"/>
                                                 <attributedString key="attributedText"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                             </textField>
@@ -461,16 +461,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="527"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="E9h-b3-YhG">
-                                        <rect key="frame" x="86.5" y="231" width="241" height="65"/>
+                                        <rect key="frame" x="87" y="231" width="240" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="ej4-92-gut">
-                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Lwx-hR-OOo"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="31q-wb-Owd">
-                                                <rect key="frame" x="0.0" y="48" width="241" height="17"/>
+                                                <rect key="frame" x="0.0" y="48" width="240" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -508,7 +508,7 @@
                                                 </constraints>
                                             </view>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DYq-j8-GZH" userLabel="Email">
-                                                <rect key="frame" x="0.0" y="11.5" width="334" height="21"/>
+                                                <rect key="frame" x="0.0" y="10.5" width="334" height="22"/>
                                                 <attributedString key="attributedText"/>
                                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="numberPad" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="one-time-code"/>
                                             </textField>
@@ -706,16 +706,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="527"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="2IP-oC-GQt">
-                                        <rect key="frame" x="86.5" y="231" width="241" height="65"/>
+                                        <rect key="frame" x="87" y="231" width="240" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="jtb-QA-tps">
-                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="R7p-3i-YR2"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TQg-b5-jq6">
-                                                <rect key="frame" x="0.0" y="48" width="241" height="17"/>
+                                                <rect key="frame" x="0.0" y="48" width="240" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -750,7 +750,7 @@
                                                         </constraints>
                                                     </view>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Code" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="2eu-jL-3bq">
-                                                        <rect key="frame" x="0.0" y="12.5" width="64" height="21"/>
+                                                        <rect key="frame" x="0.0" y="12.5" width="64" height="22"/>
                                                         <attributedString key="attributedText"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="email"/>
                                                     </textField>
@@ -787,7 +787,7 @@
                                                         </constraints>
                                                     </view>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" usesAttributedText="YES" placeholder="Phone" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ufh-BI-f1P" userLabel="Phone">
-                                                        <rect key="frame" x="0.0" y="12.5" width="214" height="21"/>
+                                                        <rect key="frame" x="0.0" y="12.5" width="214" height="22"/>
                                                         <attributedString key="attributedText"/>
                                                         <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" enablesReturnKeyAutomatically="YES" smartDashesType="no" smartInsertDeleteType="no" smartQuotesType="no" textContentType="tel"/>
                                                     </textField>
@@ -1191,16 +1191,16 @@
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="319"/>
                                     </imageView>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="18" translatesAutoresizingMaskIntoConstraints="NO" id="roa-uu-XJa">
-                                        <rect key="frame" x="86.5" y="127" width="241" height="65"/>
+                                        <rect key="frame" x="87" y="127" width="240" height="65"/>
                                         <subviews>
                                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="blz-8C-IYU">
-                                                <rect key="frame" x="0.0" y="0.0" width="241" height="30"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="1b0-eA-4ul"/>
                                                 </constraints>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="755" text="SECURE INTERNET ANYWHERE" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yXV-3A-QbM">
-                                                <rect key="frame" x="0.0" y="48" width="241" height="17"/>
+                                                <rect key="frame" x="0.0" y="48" width="240" height="17"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <color key="textColor" red="0.4823529412" green="0.4823529412" blue="0.50588235290000005" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1219,6 +1219,21 @@
                                     <constraint firstItem="roa-uu-XJa" firstAttribute="top" relation="greaterThanOrEqual" secondItem="BQK-Iw-Bhu" secondAttribute="top" constant="25" id="au8-ZG-mMw"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IhX-ll-Y7u">
+                                <rect key="frame" x="0.0" y="44" width="60" height="60"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="60" id="9a8-xH-wPr"/>
+                                    <constraint firstAttribute="width" secondItem="IhX-ll-Y7u" secondAttribute="height" multiplier="1:1" id="mZE-gd-1VY"/>
+                                </constraints>
+                                <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <inset key="imageEdgeInsets" minX="20" minY="20" maxX="20" maxY="20"/>
+                                <state key="normal" image="close">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="closeButtonTapped:" destination="Ikd-bK-TtT" eventType="touchUpInside" id="7bN-aK-KLJ"/>
+                                </connections>
+                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="rQ0-IB-aHH" userLabel="Footer Stack View">
                                 <rect key="frame" x="40" y="771" width="334" height="91"/>
                                 <subviews>
@@ -1266,6 +1281,7 @@
                         <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="pTz-Hs-vmU" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="IxU-eF-pJa" secondAttribute="leading" constant="40" id="3KI-8O-iHd"/>
+                            <constraint firstItem="IhX-ll-Y7u" firstAttribute="top" secondItem="IxU-eF-pJa" secondAttribute="top" id="4r5-Hz-soJ"/>
                             <constraint firstItem="BQK-Iw-Bhu" firstAttribute="trailing" secondItem="IxU-eF-pJa" secondAttribute="trailing" id="7kj-x7-pEF"/>
                             <constraint firstItem="BQK-Iw-Bhu" firstAttribute="top" secondItem="x0c-Lb-aEC" secondAttribute="top" id="Bbk-LG-PUV"/>
                             <constraint firstItem="rQ0-IB-aHH" firstAttribute="centerX" secondItem="IxU-eF-pJa" secondAttribute="centerX" id="FiP-MZ-uAN"/>
@@ -1276,6 +1292,7 @@
                             <constraint firstItem="IxU-eF-pJa" firstAttribute="trailing" secondItem="rQ0-IB-aHH" secondAttribute="trailing" constant="40" id="fQR-zg-vpk"/>
                             <constraint firstItem="rQ0-IB-aHH" firstAttribute="leading" secondItem="IxU-eF-pJa" secondAttribute="leading" constant="40" id="irg-RQ-pdy"/>
                             <constraint firstItem="pTz-Hs-vmU" firstAttribute="centerX" secondItem="IxU-eF-pJa" secondAttribute="centerX" id="nIy-5W-v8I"/>
+                            <constraint firstItem="IhX-ll-Y7u" firstAttribute="leading" secondItem="IxU-eF-pJa" secondAttribute="leading" id="osP-jd-ZFJ"/>
                             <constraint firstItem="pTz-Hs-vmU" firstAttribute="leading" secondItem="IxU-eF-pJa" secondAttribute="leading" priority="750" constant="40" id="rad-lr-CZu"/>
                             <constraint firstAttribute="leading" secondItem="IxU-eF-pJa" secondAttribute="leading" id="w3E-ej-QYs"/>
                             <constraint firstItem="BQK-Iw-Bhu" firstAttribute="leading" secondItem="IxU-eF-pJa" secondAttribute="leading" id="wrx-Rr-aL6"/>
@@ -1287,6 +1304,7 @@
                         </connections>
                     </view>
                     <connections>
+                        <outlet property="dismissButton" destination="IhX-ll-Y7u" id="hv6-2h-Mjj"/>
                         <outlet property="footerStackView" destination="rQ0-IB-aHH" id="Vvf-4E-SGW"/>
                         <outlet property="formHeightConstraint" destination="WCd-xw-TCn" id="ebf-Gd-LmH"/>
                         <outlet property="loginButton" destination="BCO-ER-pzU" id="xOL-xh-xCS"/>
@@ -1323,7 +1341,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="protonvpn-white-transparent" translatesAutoresizingMaskIntoConstraints="NO" id="vut-iO-EvR">
-                                        <rect key="frame" x="-34" y="27" width="482" height="30"/>
+                                        <rect key="frame" x="87" y="27" width="240" height="30"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="c4d-oN-BtF"/>
                                         </constraints>
