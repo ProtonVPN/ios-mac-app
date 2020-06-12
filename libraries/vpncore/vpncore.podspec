@@ -18,7 +18,8 @@ Pod::Spec.new do |s|
         'Source/country-names.plist'
         ] }
 
-    s.vendored_frameworks = 'Frameworks/*'
+    s.ios.vendored_frameworks = 'Frameworks-ios/*'
+    s.osx.vendored_frameworks = 'Frameworks-mac/*'
     
     s.dependency 'Alamofire', '~> 5.1'
     s.dependency 'KeychainAccess', '~> 3.0'

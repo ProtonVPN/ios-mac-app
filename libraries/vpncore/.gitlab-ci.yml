@@ -23,20 +23,14 @@ variables:
   GEM_HOME: "$CI_PROJECT_DIR/gem"
   PUBLIC_REPO_URL: git@github.com:ProtonVPN/vpncore.git
 
-.before_script_mac: &before_script_mac
-  - rm -fr ../tunnelkit || true # ignore failure to delete
-  - git clone -b fixed https://gitlab-ci-token:${CI_JOB_TOKEN}@${CI_TUNNELKIT_REPO} ../tunnelkit
-
 lint:
   stage: linting
   tags:
     - iOS
     - macOS
-  before_script:
-    - *before_script_mac
   script:
     - pod install
-    - Pods/SwiftLint/swiftlint --reporter junit > swiftlint.xml
+    - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
     name: "core-lint-$CI_COMMIT_TAG"
@@ -50,9 +44,6 @@ lint:
 unit_tests:
   dependencies: []
   stage: unit_tests
-  before_script:
-    - *before_script_mac
-  allow_failure: true # TODO: Set to false after Srp/cocoapods issues are fixed
   script:
     - pod install
 
