@@ -37,8 +37,8 @@ class WidgetFactory {
     let alertService = ExtensionAlertService()
     let propertiesManager = PropertiesManager()
 
-    var todayViewModel: TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager )
+    var todayViewModel:TodayViewModel {
+        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )
         self.alertService.delegate = viewModel
         return viewModel
     }
@@ -48,7 +48,8 @@ class WidgetFactory {
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: self.appGroup)!)
     }
     
-    // MARK: - Lazy
+    
+    // MARK: - Computed
     
     var vpnManager: VpnManagerProtocol {
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: self.openVpnExtensionBundleIdentifier,
@@ -57,5 +58,19 @@ class WidgetFactory {
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
                           appGroup: self.appGroup)
+    }
+    
+    var appStateManager: AppStateManager {
+        let keychain = VpnKeychain()
+        let alamofireWrapper = AlamofireWrapperImplementation()
+        return AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
+                               vpnManager: self.vpnManager,
+                               alamofireWrapper: alamofireWrapper,
+                               alertService: alertService,
+                               timerFactory: TimerFactory(),
+                               propertiesManager: self.propertiesManager,
+                               vpnKeychain: keychain,
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService)
+        )
     }
 }
