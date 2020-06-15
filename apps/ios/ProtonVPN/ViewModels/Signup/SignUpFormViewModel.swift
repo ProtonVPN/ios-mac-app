@@ -175,7 +175,6 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     
     private func failed(withError error: Error?) {
         isLoading = false
-        paymentVerificationCode = nil
         
         if let userError = error as? UserError, userError == .cancelled {
             //the user cancelled the validation do not display error message
@@ -215,7 +214,12 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
             
         }, errorCompletion: { [weak self] (error) in
             PMLog.ET("IAP errored: \(error.localizedDescription)")
-            self?.failed(withError: error)
+            if 22916 == (error as NSError).code && self?.paymentVerificationCode != nil { // 22916 - apple receipt already used
+                PMLog.D("Ignoring IAP error because we already have a token")
+                self?.step3modulus()
+            } else {
+                self?.failed(withError: error)
+            }
                 
         }, deferredCompletion: {
             PMLog.ET("IAP deferred", level: .warn)
