@@ -23,6 +23,8 @@
 import Alamofire
 
 extension DataResponse {
+    
+    /// Prints debug info. Only for local debugging,
     func debugLog() {
         #if DEBUG
         debugPrint("======================================= start =======================================")

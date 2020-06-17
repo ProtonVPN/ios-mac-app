@@ -93,7 +93,8 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         
         self.session = Session(
             delegate: self.trustKitHelper ?? SessionDelegate(),
-            interceptor: interceptor
+            interceptor: interceptor,
+            eventMonitors: [APILogger()]
         )
     }
     
