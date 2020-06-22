@@ -662,7 +662,7 @@
 "_load" = "Нагрузка";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
-"_loading_screen_slogan" = "Безопасный Интернет всюду";
+"_loading_screen_slogan" = "Безопасный Интернет где угодно";
 
 /* iOS status view */
 "_location" = "Местоположение";
@@ -1325,7 +1325,7 @@
 "_trial_popup_call_to_upgrade" = "Чтобы иметь постоянный доступ к функциям ProtonVPN Plus, вы можете обновить свой план.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Наслаждайтесь полными преимуществами безопасного интернета всюду с ProtonVPN";
+"_trial_popup_enjoy" = "Наслаждайтесь полными преимуществами безопасного Интернета где угодно с ProtonVPN";
 
 /* Final text:
  

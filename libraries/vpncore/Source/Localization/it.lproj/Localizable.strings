@@ -647,10 +647,10 @@
 "_ks_keep_disabled" = "Lascia Kill Switch spento";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "You cannot enable Kill Switch because Swift 5 Runtime Support is not installed on your device. To use Kill Switch, please first download and install Swift 5.";
+"_ks_requires_swift5_popup_msg" = "Non puoi abilitare Kill Switch perché il supporto Swift 5 Runtime non è installato sul tuo dispositivo. Per utilizzare Kill Switch, scarica e installa Swift 5.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "You still have not intalled Swift 5 Runtime Support. ProtonVPN cannot run Kill Switch without Swift 5. If you choose not to install Swift 5 on your device, you will not be able to use Kill Switch to protect your device. ";
+"_ks_requires_swift5_popup_msg2" = "Non hai ancora intallato il supporto all'esecuzione di Swift 5. ProtonVPN non può eseguire Kill Switch senza Swift 5. Se si sceglie di non installare Swift 5 sul dispositivo, non sarà possibile utilizzare Kill Switch per proteggere il dispositivo. ";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Per saperne di più";

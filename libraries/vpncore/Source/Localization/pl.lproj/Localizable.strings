@@ -356,13 +356,13 @@
 "_error_loads" = "Nie można zaktualizować obciążenia serwera";
 
 /* Man In The Middle attack alert (API) */
-"_error_mitm_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem API ProtonVPN. Twoje bieżące połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do interfejsu API został tymczasowo zablokowany.\nAby się zalogować lub uzyskać dostęp do konta, wybierz nową sieć i spróbuj połączyć się ponownie.";
+"_error_mitm_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem API ProtonVPN. Twoje obecne połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do interfejsu API został tymczasowo zablokowany.\nAby się zalogować lub uzyskać dostęp do konta, wybierz nową sieć i spróbuj połączyć się ponownie.";
 
 /* Man In The Middle attack alert */
 "_error_mitm_title" = "Niezabezpieczone połączenie";
 
 /* Man In The Middle attack alert (VPN) */
-"_error_mitm_vpn_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem serwera VPN. Twoje bieżące połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do serwera VPN został tymczasowo zablokowany.\nWybierz inny serwer.";
+"_error_mitm_vpn_description" = "Weryfikacja certyfikatu TLS nie powiodła się podczas próby połączenia z interfejsem serwera VPN. Twoje obecne połączenie internetowe może być monitorowane. Aby zachować bezpieczeństwo danych, dostęp aplikacji do serwera VPN został tymczasowo zablokowany.\nWybierz inny serwer.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "Podpis modułu jest pusty";
