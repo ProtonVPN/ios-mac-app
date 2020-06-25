@@ -81,9 +81,9 @@ public class VpnManagerConfigurationPreparer {
     private var extraConfiguration: String {
         
         #if os(iOS)
-        let extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
-        #else
         let extraConfiguration: [VpnManagerClientConfiguration] = [.iosClient]
+        #else
+        let extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
         
         return extraConfiguration.reduce(""){
