@@ -30,6 +30,7 @@ class StoreKitManagerMock: NSObject, StoreKitManager {
     public var callbackUpdateAvailableProductsList: (() -> Void)?
     public var isReadyToPurchaseProduct = true
     public var callbackPriceLabelForProduct: ((String) -> (NSDecimalNumber, Locale)?)?
+    public var predefinedCurrentTransaction: SKPaymentTransaction? = nil
     
     // MARK: StoreKitManager implementation
     
@@ -58,6 +59,10 @@ class StoreKitManagerMock: NSObject, StoreKitManager {
     
     func priceLabelForProduct(id: String) -> (NSDecimalNumber, Locale)? {
         return callbackPriceLabelForProduct?(id)
+    }
+    
+    func currentTransaction() -> SKPaymentTransaction? {
+        return predefinedCurrentTransaction
     }
     
 }

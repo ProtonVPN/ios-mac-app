@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import KeychainAccess
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -57,6 +58,8 @@ class DependencyContainer {
     
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
+    
+    private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly))
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -281,4 +284,20 @@ extension DependencyContainer: SigninInfoContainerFactory {
     func makeSigninInfoContainer() -> SigninInfoContainer {
         return signinInfoContainer
     }    
+}
+
+// MARK: PaymentTokenStorageFactory
+
+extension DependencyContainer: PaymentTokenStorageFactory {
+    func makePaymentTokenStorage() -> PaymentTokenStorage {
+        return paymentTokenStorage
+    }
+}
+
+// MARK: StoreKitStateCheckerFactory
+
+extension DependencyContainer: StoreKitStateCheckerFactory {
+    func makeStoreKitStateChecker() -> StoreKitStateChecker {
+        return StoreKitStateCheckerImplementation(factory: self)
+    }
 }
