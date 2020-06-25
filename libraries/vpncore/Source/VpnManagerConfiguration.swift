@@ -9,6 +9,12 @@
 
 import Foundation
 
+public enum VpnManagerClientConfiguration: String {
+    case iOSClient = "pi"
+    case macClient = "pm"
+    case adBlocking = "f1"
+}
+
 public struct VpnManagerConfiguration {
     
     public let hostname: String
@@ -56,17 +62,32 @@ public class VpnManagerConfigurationPreparer {
             
             return VpnManagerConfiguration(hostname: connectionConfig.server.domain,
                                            serverId: connectionConfig.server.id,
-                                 entryServerAddress: entryServer,
-                                  exitServerAddress: exitServer,
-                                           username: vpnCredentials.name,
+                                           entryServerAddress: entryServer,
+                                           exitServerAddress: exitServer,
+                                           username: vpnCredentials.name + self.extraConfiguration,
                                            password: vpnCredentials.password,
-                                  passwordReference: passwordRef,
-                                        vpnProtocol: connectionConfig.vpnProtocol
+                                           passwordReference: passwordRef,
+                                           vpnProtocol: connectionConfig.vpnProtocol
             )
         } catch {
             // issues retrieving vpn keychain item
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             return nil
+        }
+    }
+    
+    // MARK: - Private
+    
+    private var extraConfiguration: String {
+        
+        #if os(iOS)
+        let extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
+        #else
+        let extraConfiguration: [VpnManagerClientConfiguration] = [.iosClient]
+        #endif
+        
+        return extraConfiguration.reduce(""){
+            $0 + "+" + $1.rawValue
         }
     }
 }
