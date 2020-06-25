@@ -12,7 +12,6 @@ import Foundation
 public enum VpnManagerClientConfiguration: String {
     case iOSClient = "pi"
     case macClient = "pm"
-    case adBlocking = "f1"
 }
 
 public struct VpnManagerConfiguration {
@@ -86,7 +85,7 @@ public class VpnManagerConfigurationPreparer {
         let extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
         
-        return extraConfiguration.reduce(""){
+        return extraConfiguration.reduce("") {
             $0 + "+" + $1.rawValue
         }
     }
