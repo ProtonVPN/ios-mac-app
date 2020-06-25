@@ -22,6 +22,7 @@
 
 import Alamofire
 
+@available(*, deprecated)
 class PaymentsReceiptRequest: PaymentsBaseRequest {
     
     let amount: Int

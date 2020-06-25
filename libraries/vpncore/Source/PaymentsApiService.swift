@@ -35,10 +35,10 @@ public protocol PaymentsApiService {
     func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
     func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
     func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
-    func verifyPayment(amount: Int, receipt: String, success: @escaping StringCallback, failure: @escaping ErrorCallback)
     func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback)
     func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback)
     func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback)
+    func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
 }
 
 public protocol PaymentsApiServiceFactory {
@@ -200,21 +200,6 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         alamofireWrapper.request(PaymentsApplyCreditRequest(planId), success: successWrapper, failure: failure)
     }
     
-    public func verifyPayment(amount: Int, receipt: String, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
-        
-        let successWrapper: JSONCallback = { json in
-            do {
-                guard let code = json["Code"] as? Int, code == 1000, let verificationCode = json["VerifyCode"] as? String else {
-                    throw ParseError.paymentVerificationParse
-                }
-                success(verificationCode)
-            } catch let error {
-                failure(error)
-            }
-        }
-        alamofireWrapper.request(PaymentsVerifyRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
-    }
-    
     public func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { json in
             do {
@@ -230,6 +215,22 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
             }
         }
         alamofireWrapper.request(PaymentsTokenRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
+    }
+    
+    public func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { [weak self] json in
+            do {
+                guard let `self` = self else { return }
+                guard let code = json["Code"] as? Int, code == 1000 else {
+                    throw ParseError.subscriptionsParse
+                }
+                let subscription = try self.subscriptionResponse(json)
+                success(subscription)
+            } catch let error {
+                failure(error)
+            }
+        }
+        alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

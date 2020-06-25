@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  PaymentTokenStorage.swift
+//  vpncore - Created on 2020-06-22.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,30 +22,18 @@
 
 import Foundation
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
+/// Storage for current Payment Token that is not yet used.
+/// Can hold exactly one token as it is meant to be short lived and should be consumed at the first possibility.
+public protocol PaymentTokenStorage {
+    func add(_ token: PaymentToken)
+    func get() -> PaymentToken?
+    func clear()
 }
 
-extension PaymentAction {
-    
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
-        }
-    }
-    
+extension PaymentTokenStorage {
+    var isEmpty: Bool { self.get() != nil }
+}
+
+public protocol PaymentTokenStorageFactory {
+    func makePaymentTokenStorage() -> PaymentTokenStorage
 }

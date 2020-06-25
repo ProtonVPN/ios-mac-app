@@ -30,3 +30,12 @@ class UserBaseRequest: BaseRequest {
         return super.path() + "/users"
     }
 }
+
+class UserBaseV4Request: BaseRequest {
+    
+    let vpnType = 2
+    
+    override func path() -> String {
+        return super.path() + "/v4/users"
+    }
+}

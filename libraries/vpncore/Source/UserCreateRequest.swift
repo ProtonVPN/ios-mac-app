@@ -22,7 +22,7 @@
 
 import Alamofire
 
-class UserCreateRequest: UserBaseRequest {
+class UserCreateRequest: UserBaseV4Request {
     
     let userProperties: UserProperties
     

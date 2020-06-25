@@ -1,6 +1,6 @@
 //
-//  PaymentsVerifyRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  BuyPlanRequest.swift
+//  vpncore - Created on 2020-06-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,19 +22,21 @@
 
 import Alamofire
 
-class PaymentsVerifyRequest: PaymentsBaseRequest {
+class BuyPlanRequest: PaymentsBaseRequest {
     
     let amount: Int
-    let receipt: String
+    let planId: String
+    let payment: PaymentAction
     
-    init ( _ amount: Int, receipt: String) {
+    init ( _ planId: String, amount: Int, payment: PaymentAction) {
+        self.planId = planId
         self.amount = amount
-        self.receipt = receipt
+        self.payment = payment
         super.init()
     }
     
     override func path() -> String {
-        return super.path() + "/verify"
+        return super.path() + "/subscription"
     }
     
     override var method: HTTPMethod {
@@ -45,12 +47,12 @@ class PaymentsVerifyRequest: PaymentsBaseRequest {
         return [
             "Amount": amount,
             "Currency": "USD",
-            "Payment": [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": receipt
-                ]
-            ]
+            "PlanIDs": [
+                planId: 1
+            ],
+            "Cycle": 12,
+            "Payment": payment.postDictionary
         ]
     }
+    
 }
