@@ -35,19 +35,54 @@ class SignUpCoordinatorTests: XCTestCase {
 
     func testPlanSelectionIsFirstOption() {
         var planSelectionOpened = false
+        var signupOpened = false
         
         let loginService = LoginServiceMock()
+        loginService.callbackPresentSignup = { _ in
+            signupOpened = true
+        }
         let planService = PlanServiceMock()
         planService.callbackPresentPlanSelection = {
             planSelectionOpened = true
         }
         let appSessionManager = AppSessionManagerMock(sessionStatus: .notEstablished, loggedIn: false, sessionChanged: Notification.Name("sessionChanged"))
-        let factory = CoordinatorFactory(appSessionManager: appSessionManager, loginService: loginService, planService: planService)
+        let factory = CoordinatorFactory(appSessionManager: appSessionManager, loginService: loginService, planService: planService, storeKitStateChecker: StoreKitStateCheckerMock())
         let coordinator = SignUpCoordinator(factory: factory)
         
         XCTAssertFalse(planSelectionOpened)
+        XCTAssertFalse(signupOpened)
         coordinator.start()
         XCTAssertTrue(planSelectionOpened, "Plan selection was not opened")
+        XCTAssertFalse(signupOpened, "Signup was opened")
+    }
+
+    func testPlanPreselectedIfPaidBefore() {
+        var planSelectionOpened = false
+        var signupOpened = false
+        var accountPlan: AccountPlan?
+        
+        let loginService = LoginServiceMock()
+        loginService.callbackPresentRegistrationForm = { viewModel in
+            signupOpened = true
+            accountPlan = (viewModel as! SignUpFormViewModelMock).accountPlan
+        }
+        let planService = PlanServiceMock()
+        planService.callbackPresentPlanSelection = {
+            planSelectionOpened = true
+        }
+        let appSessionManager = AppSessionManagerMock(sessionStatus: .notEstablished, loggedIn: false, sessionChanged: Notification.Name("sessionChanged"))
+        let stateChecker = StoreKitStateCheckerMock()
+        stateChecker.accountPlan = .plus
+        stateChecker.buyProcessRunning = true
+        let factory = CoordinatorFactory(appSessionManager: appSessionManager, loginService: loginService, planService: planService, storeKitStateChecker: stateChecker)
+        let coordinator = SignUpCoordinator(factory: factory)
+        
+        XCTAssertFalse(planSelectionOpened)
+        XCTAssertFalse(signupOpened)
+        coordinator.start()
+        XCTAssertFalse(planSelectionOpened, "Plan selection was opened when it shouldn't")
+        XCTAssertTrue(signupOpened, "Signup was not opened")
+        XCTAssertTrue(accountPlan == .plus, "Wrong account plan selected")
     }
 
 }
@@ -57,11 +92,13 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     var appSessionManager: AppSessionManager
     var loginService: LoginService
     var planService: PlanService
+    var storeKitStateChecker: StoreKitStateChecker
 
-    init(appSessionManager: AppSessionManager, loginService: LoginService, planService: PlanService) {
+    init(appSessionManager: AppSessionManager, loginService: LoginService, planService: PlanService, storeKitStateChecker: StoreKitStateChecker) {
         self.appSessionManager = appSessionManager
         self.loginService = loginService
         self.planService = planService
+        self.storeKitStateChecker = storeKitStateChecker
     }
 
     func makePlanSelectionSimpleViewModel(isDismissalAllowed: Bool, alertService: AlertService, planSelectionFinished: @escaping (AccountPlan) -> Void) -> PlanSelectionViewModel {
@@ -81,7 +118,9 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     }
     
     func makeSignUpFormViewModel(plan: AccountPlan) -> SignUpFormViewModel {
-        return SignUpFormViewModelMock()
+        let mock = SignUpFormViewModelMock()
+        mock.accountPlan = plan
+        return mock
     }
     
     func makeCoreAlertService() -> CoreAlertService {
@@ -91,4 +130,23 @@ fileprivate class CoordinatorFactory: SignUpCoordinator.Factory {
     func makeStoreKitManager() -> StoreKitManager {
         return StoreKitManagerMock()
     }
+    
+    func makeStoreKitStateChecker() -> StoreKitStateChecker {
+        return storeKitStateChecker
+    }
+}
+
+fileprivate class StoreKitStateCheckerMock: StoreKitStateChecker {
+    
+    public var buyProcessRunning = false
+    public var accountPlan: AccountPlan?
+    
+    func isBuyProcessRunning() -> Bool {
+        return buyProcessRunning
+    }
+    
+    func planBuyStarted() -> AccountPlan? {
+        return accountPlan
+    }
+        
 }

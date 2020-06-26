@@ -99,14 +99,14 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     private let factory: Factory
     
     private let plan: AccountPlan
-    private var paymentVerificationCode: String? {
+    private var paymentToken: PaymentToken? {
         didSet {
-            let token: HumanVerificationToken? // = TokenType.payment(paymentVerificationCode ?? "")
-            if let paymentVerificationCode = paymentVerificationCode {
+            let token: HumanVerificationToken?
+            if let paymentVerificationCode = paymentToken?.token {
                 token = HumanVerificationToken(type: .payment, token: paymentVerificationCode)
             } else {
                 token = nil
-            }            
+            }
             alamofireWrapper.setHumanVerification(token: token)
         }
     }
@@ -207,14 +207,14 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         storeKitManager.purchaseProduct(withId: productId, refreshHandler: { [weak self] in
             self?.failed(withError: nil)
             
-        }, successCompletion: { [weak self] verificationCode in
+        }, successCompletion: { [weak self] token in
             PMLog.ET("IAP succeeded", level: .info)
-            self?.paymentVerificationCode = verificationCode
+            self?.paymentToken = token
             self?.step3modulus()
             
         }, errorCompletion: { [weak self] (error) in
             PMLog.ET("IAP errored: \(error.localizedDescription)")
-            if 22916 == (error as NSError).code && self?.paymentVerificationCode != nil { // 22916 - apple receipt already used
+            if 22916 == (error as NSError).code && self?.paymentToken != nil { // 22916 - apple receipt already used
                 PMLog.D("Ignoring IAP error because we already have a token")
                 self?.step3modulus()
             } else {

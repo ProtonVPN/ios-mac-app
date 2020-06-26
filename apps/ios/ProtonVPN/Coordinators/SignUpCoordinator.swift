@@ -38,12 +38,13 @@ class SignUpCoordinator: Coordinator {
     var finished: ((_ loggedIn: Bool) -> Void)?
     var cancelled: (() -> Void)?
     
-    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory & CoreAlertServiceFactory & StoreKitManagerFactory
+    typealias Factory = PlanSelectionViewModelFactory & LoginServiceFactory & PlanServiceFactory & SignUpFormViewModelFactory & CoreAlertServiceFactory & StoreKitManagerFactory & StoreKitStateCheckerFactory
     private let factory: Factory
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
+    private lazy var storeKitStateChecker: StoreKitStateChecker = factory.makeStoreKitStateChecker()
     
     private var plan: AccountPlan?
     
@@ -52,12 +53,20 @@ class SignUpCoordinator: Coordinator {
     }
     
     func start() {
-        guard storeKitManager.readyToPurchaseProduct() else {
+        guard !storeKitStateChecker.isBuyProcessRunning() else {
             // There is unfinished IAP transaction.
+            
+            if let plan = storeKitStateChecker.planBuyStarted() {
+                // Pre-select plan that user already purchased
+                selected(plan: plan)
+                return
+            }
+            
             // User will register with free account and get credits from IAP after the first login.
             selected(plan: .free)
             return
         }
+        
         startPlanSelection()
     }
         
