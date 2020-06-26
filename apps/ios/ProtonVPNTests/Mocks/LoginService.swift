@@ -25,19 +25,44 @@ import vpncore
 
 class LoginServiceMock: LoginService {
     
-    func presentRegistrationForm(viewModel: SignUpFormViewModel) { }
+    public var callbackPresentRegistrationForm: ((SignUpFormViewModel) -> Void)?
+    public var callbackPresentLogin: ((Bool, String?, String?) -> Void)?
+    public var callbackPresentSignup: ((Bool) -> Void)?
+    public var callbackPresentOnboarding: (() -> Void)?
+    public var callbackMainInterface: (() -> Void)?
     
-    func presentLogin(dismissible: Bool, username: String?, errorMessage: String?) { }
+    // MARK: -
     
-    func presentLogin(dismissible: Bool) { }
+    func presentRegistrationForm(viewModel: SignUpFormViewModel) {
+        callbackPresentRegistrationForm?(viewModel)
+    }
     
-    func presentLogin() { }
+    func presentLogin(dismissible: Bool, username: String?, errorMessage: String?) {
+        callbackPresentLogin?(dismissible, username, errorMessage)
+    }
     
-    func presentSignup(dismissible: Bool) { }
+    func presentLogin(dismissible: Bool) {
+        callbackPresentLogin?(dismissible, nil, nil)
+    }
     
-    func presentSignup() { }
+    func presentLogin() {
+        callbackPresentLogin?(true, nil, nil)
+    }
     
-    func presentOnboarding() { }
+    func presentSignup(dismissible: Bool) {
+        callbackPresentSignup?(dismissible)
+    }
     
-    func presentMainInterface() { }
+    func presentSignup() {
+        callbackPresentSignup?(true)
+    }
+    
+    func presentOnboarding() {
+        callbackPresentOnboarding?()
+    }
+    
+    func presentMainInterface() {
+        callbackMainInterface?()
+    }
+        
 }

@@ -21,11 +21,12 @@
 //
 
 import vpncore
+import StoreKit
 
-class StoreKitManagerMock: NSObject, StoreKitManager {
+class StoreKitManagerMock: NSObject, StoreKitManager {    
     
     public var callbackSubscribeToPaymentQueue: (() -> Void)?
-    public var callbackPurchaseProduct: ((String, () -> Void, (String?) -> Void, (Error) -> Void, () -> Void) -> Void)?
+    public var callbackPurchaseProduct: ((String, () -> Void, StoreKitManager.SuccessCallback, (Error) -> Void, () -> Void) -> Void)?
     public var callbackProcessAllTransactions: (() -> Void)?
     public var callbackUpdateAvailableProductsList: (() -> Void)?
     public var isReadyToPurchaseProduct = true
@@ -37,7 +38,7 @@ class StoreKitManagerMock: NSObject, StoreKitManager {
     func subscribeToPaymentQueue() {
         callbackSubscribeToPaymentQueue?()
     }
-    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping (String?) -> Void, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void) {
+    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping StoreKitManager.SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void) {
         callbackPurchaseProduct?(id, refreshHandler, successCompletion, errorCompletion, deferredCompletion)
     }
     
