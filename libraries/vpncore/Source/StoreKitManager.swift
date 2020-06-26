@@ -27,23 +27,28 @@ public protocol StoreKitManagerFactory {
 }
 
 public protocol StoreKitManager: NSObjectProtocol {
+
+    typealias SuccessCallback = (PaymentToken?) -> Void
+    
     func subscribeToPaymentQueue()
-    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping (String?) -> Void, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
+    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
     func processAllTransactions()
     func processAllTransactions(_ finishHandler: (() -> Void)?)
     func updateAvailableProductsList()
     func readyToPurchaseProduct() -> Bool
+    func currentTransaction() -> SKPaymentTransaction?
     func priceLabelForProduct(id: String) -> (NSDecimalNumber, Locale)?
 }
 
 public class StoreKitManagerImplementation: NSObject, StoreKitManager {
    
-    public typealias Factory = CoreAlertServiceFactory & PaymentsApiServiceFactory & ServicePlanDataStorageFactory
+    public typealias Factory = CoreAlertServiceFactory & PaymentsApiServiceFactory & ServicePlanDataStorageFactory & PaymentTokenStorageFactory
     private let factory: Factory
         
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var paymentsService: PaymentsApiService = factory.makePaymentsApiService()
     private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
+    private lazy var tokenStorage: PaymentTokenStorage = factory.makePaymentTokenStorage()
         
     public init(factory: Factory) {
         self.factory = factory
@@ -72,7 +77,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     private var transactionsFinishHandler: (() -> Void)?
         
     internal var refreshHandler: (() -> Void)? // allow hook for ui updates
-    private var successCompletion: ((String?) -> Void)?
+    private var successCompletion: StoreKitManager.SuccessCallback?
     private var deferredCompletion: (() -> Void)?
     private lazy var errorCompletion: (Error) -> Void = { error in
         PMLog.ET("StoreKit error: \(error.localizedDescription)")
@@ -122,9 +127,13 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         return SKPaymentQueue.default().transactions.filter { $0.transactionState != .failed }.isEmpty
     }
     
+    public func currentTransaction() -> SKPaymentTransaction? {
+        return SKPaymentQueue.default().transactions.filter { $0.transactionState != .failed }.first
+    }
+    
     public func purchaseProduct(withId id: String,
                                 refreshHandler: @escaping () -> Void,
-                                successCompletion: @escaping (String?) -> Void,
+                                successCompletion: @escaping StoreKitManager.SuccessCallback,
                                 errorCompletion: @escaping (Error) -> Void,
                                 deferredCompletion: @escaping () -> Void) {
 
@@ -362,12 +371,18 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             PMLog.ET("StoreKit: Can't fetch plan details")
             return
         }
-        paymentsService.applyCredit(forPlanId: planId, success: { [weak self] subscription in
+        guard let token = tokenStorage.get() else {
+            PMLog.ET("StoreKit: No proton tokan found!")
+            return
+        }
+        
+        paymentsService.buyPlan(id: planId, price: plan.yearlyCost, paymentToken: .protonToken(token: token.token), success: { [weak self] subscription in
             PMLog.D("StoreKit: success (2)")
             self?.finish(transaction: transaction)
+            self?.tokenStorage.clear()
             
-        }, failure: {[weak self] error in
-            PMLog.ET("StoreKit: Apply credit failed: \(error.localizedDescription)")
+        }, failure: { [weak self] error in
+            PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
             
             self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(
                 retryHandler: {
@@ -379,6 +394,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 })
             )
         })
+        
     }
     
     /// Add credits to user account 
@@ -409,16 +425,18 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     
     private func processUnauthenticated(transaction: SKPaymentTransaction, plan: AccountPlan) throws {
         let receipt = try self.readReceipt()
-        
-        paymentsService.verifyPayment(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] verificationCode in
-            PMLog.D("StoreKit: payment verified")
-            self?.successCompletion?(verificationCode)
+                
+        paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
+            PMLog.D("StoreKit: payment token created for signup")
+            self?.tokenStorage.add(token)
+            self?.successCompletion?(token)
             self?.transactionsMadeBeforeSignup.append(transaction)
             // Transaction will be finished after login
             
         }, failure: { [weak self] error in
             self?.errorCompletion(error)
         })
+                
     }
     
     var processingType: ProcessingType {
