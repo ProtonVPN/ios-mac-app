@@ -1,6 +1,6 @@
 //
-//  UserBaseRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  UserBaseV4Request.swift
+//  vpncore - Created on 2020-06-26.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,11 +22,12 @@
 
 import Foundation
 
-class UserBaseRequest: BaseRequest {
+/// The same as UserBaseRequest but for updated signup process (v4)
+class UserBaseV4Request: BaseRequest {
     
     let vpnType = 2
     
     override func path() -> String {
-        return super.path() + "/users"
+        return super.path() + "/v4/users"
     }
 }
