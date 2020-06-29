@@ -329,12 +329,14 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public var vpnProtocol: VpnProtocol {
         get {
             guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
-                return .ike
+                return DefaultConstants.vpnProtocol
             }
+            
             do {
                 return try PropertyListDecoder().decode(VpnProtocol.self, from: data)
             } catch {
-                return .ike
+                return DefaultConstants.vpnProtocol
+                
             }
         }
         set {
