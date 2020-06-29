@@ -115,6 +115,8 @@
 		4242B0A82465A7F60042145A /* DataRequest+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A62465A7F60042145A /* DataRequest+Validation.swift */; };
 		424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
+		424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
+		424A012D24AA013500F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */; };
 		D51D9507249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
@@ -2290,6 +2292,7 @@
 				D5C205272487A0CF004FB58B /* ProtonVpnError.swift in Sources */,
 				D5C205282487A0CF004FB58B /* UserError.swift in Sources */,
 				D5C205292487A0CF004FB58B /* SrpClientExtension.swift in Sources */,
+				424A012D24AA013500F3EEE4 /* DefaultConstants.swift in Sources */,
 				D5C2052A2487A0CF004FB58B /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				D5C2052B2487A0CF004FB58B /* Date+Misc.swift in Sources */,
 				D5C2052C2487A0CF004FB58B /* Foundation+Extension.swift in Sources */,
@@ -2635,6 +2638,7 @@
 				D5C204A724866B81004FB58B /* VpnProtocolFactory.swift in Sources */,
 				D5C204A824866B81004FB58B /* AppStateManager.swift in Sources */,
 				D5C204A924866B81004FB58B /* LocalizedString.swift in Sources */,
+				424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */,
 				D5C204AA24866B81004FB58B /* ServerTierChecker.swift in Sources */,
 				D5C204AB24866B81004FB58B /* VpnConnectionPreparer.swift in Sources */,
 				D5C204AC24866B81004FB58B /* VpnManager.swift in Sources */,
