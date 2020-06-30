@@ -68,7 +68,6 @@ class ConnectionOverlay: NSView {
     
     private func buildLayerBlurEffect() {
         layer?.masksToBounds = true
-        layerUsesCoreImageFilters = true
         
         layer?.needsDisplayOnBoundsChange = true
         
@@ -81,7 +80,6 @@ class ConnectionOverlay: NSView {
     }
     
     private func removeLayerBlurEffects() {
-        layerUsesCoreImageFilters = false
         layer?.needsDisplayOnBoundsChange = false
     }
     
