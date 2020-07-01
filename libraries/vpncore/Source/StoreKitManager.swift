@@ -366,24 +366,15 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         })
     }
     
+    // swiftlint:disable function_body_length
     private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan) {
         guard let details = plan.fetchDetails(), let planId = details.iD else {
             PMLog.ET("StoreKit: Can't fetch plan details")
             return
         }
-        guard let token = tokenStorage.get() else {
-            PMLog.ET("StoreKit: No proton tokan found!")
-            return
-        }
-        
-        paymentsService.buyPlan(id: planId, price: plan.yearlyCost, paymentToken: .protonToken(token: token.token), success: { [weak self] subscription in
-            PMLog.D("StoreKit: success (2)")
-            self?.finish(transaction: transaction)
-            self?.tokenStorage.clear()
-            
-        }, failure: { [weak self] error in
-            PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
-            
+                
+        // Ask user if he wants to retry of fill a bug report
+        let retryOnError = { [weak self] in
             self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(
                 retryHandler: {
                     self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
@@ -393,9 +384,69 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                     self?.alertService.push(alert: ReportBugAlert())
                 })
             )
+        }
+        
+        guard let token = tokenStorage.get() else {
+            PMLog.ET("StoreKit: No proton token found!")
+            // Try to recover by recreating the token from our receipt
+            if let receipt = try? self.readReceipt() {
+                paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
+                    PMLog.D("StoreKit: payment token (re)created")
+                    self?.tokenStorage.add(token)
+                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                    
+                    }, failure: { error in
+                        PMLog.D("StoreKit: payment token was not (re)created")
+                        retryOnError()
+                })
+            }
+            return
+        }
+        
+        paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
+            
+            switch tokenStatus.status {
+            case .pending: // Waiting for the token to get ready to be charged (should not happen with IAP)
+                let retryIn: Double = 30
+                PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
+                DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
+                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                }
+                return
+                
+            case .chargeable: // Gr8 success
+                self?.paymentsService.buyPlan(id: planId, price: plan.yearlyCost, paymentToken: .protonToken(token: token.token), success: { [weak self] subscription in
+                    PMLog.D("StoreKit: success (2)")
+                    self?.finish(transaction: transaction)
+                    self?.tokenStorage.clear()
+                    
+                }, failure: { error in
+                    PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
+                    retryOnError()
+                })
+                
+            case .failed: // throw away token and retry with the new one
+                PMLog.D("StoreKit: token failed")
+                self?.tokenStorage.clear()
+                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                
+            case .consumed: // throw away token and receipt
+                PMLog.D("StoreKit: token already consumed")
+                self?.finish(transaction: transaction)
+                self?.tokenStorage.clear()
+                
+            case .notSupported: // throw away token and retry
+                self?.tokenStorage.clear()
+                retryOnError()
+            }
+                        
+        }, failure: { error in
+            PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
+            retryOnError()
         })
         
     }
+    // swiftlint:enable function_body_length
     
     /// Add credits to user account 
     private func processAuthenticatedAddCredits(transaction: SKPaymentTransaction, plan: AccountPlan) throws {

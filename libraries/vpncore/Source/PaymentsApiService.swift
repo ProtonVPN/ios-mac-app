@@ -23,6 +23,7 @@ import Foundation
 
 public typealias PlanPropsCallback = GenericCallback<ServicePlansProperties>
 public typealias PaymentTokenCallback = GenericCallback<PaymentToken>
+public typealias PaymentTokenStatusCallback = GenericCallback<PaymentTokenStatusResponse>
 public typealias SubscriptionCallback = GenericCallback<Subscription>
 public typealias OptionalSubCallback = GenericCallback<Subscription?>
 public typealias PaymentsMethodCallback = GenericCallback<[PaymentMethod]?>
@@ -38,6 +39,8 @@ public protocol PaymentsApiService {
     func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback)
     func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback)
     func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback)
+    /// Get current token status
+    func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback)
     func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
 }
 
@@ -215,6 +218,23 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
             }
         }
         alamofireWrapper.request(PaymentsTokenRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
+    }
+    
+    public func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
+            do {
+                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                let decoder = JSONDecoder()
+                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let token = try decoder.decode(PaymentTokenStatusResponse.self, from: data)
+                
+                success(token)
+            } catch let error {
+                failure(error)
+            }
+        }
+        alamofireWrapper.request(GetPaymentsTokenRequest(token), success: successWrapper, failure: failure)
     }
     
     public func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
