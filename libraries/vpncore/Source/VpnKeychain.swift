@@ -29,6 +29,8 @@ public protocol VpnKeychainProtocol {
     func fetch() throws -> VpnCredentials
     func fetchOpenVpnPassword() throws -> Data
     func store(vpnCredentials: VpnCredentials)
+    func getServerCertificate() throws -> SecCertificate
+    func storeServerCertificate() throws
     func clear()
     
     // Dealing with old vpn password entry.
@@ -47,6 +49,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let vpnCredentials = "vpnCredentials"
         static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"
+        static let serverCertificate = "ProtonVPN_ike_root"
     }
     
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
@@ -89,6 +92,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     
     public func clear() {
         appKeychain[data: StorageKey.vpnCredentials] = nil
+        deleteServerCertificate()
         do {
             try clearPassword()
             DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: nil) }
@@ -199,6 +203,41 @@ public class VpnKeychain: VpnKeychainProtocol {
         if result != errSecSuccess {
             throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
         }
+    }
+    
+    public func getServerCertificate() throws -> SecCertificate {
+        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
+                                    kSecAttrLabel as String: StorageKey.serverCertificate,
+                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        var item: CFTypeRef?
+        let result = SecItemCopyMatching(query as CFDictionary, &item)
+        guard result == errSecSuccess else {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
+        }
+
+        return item as! SecCertificate
+    }
+    
+    public func storeServerCertificate() throws {
+        let certificateFile = Bundle.vpncore.path(forResource: StorageKey.serverCertificate, ofType: "der")!
+        let certificateData = NSData(contentsOfFile: certificateFile)!
+        let certificate = SecCertificateCreateWithData(nil, certificateData)!
+        
+        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
+                                    kSecValueRef as String: certificate,
+                                    kSecAttrLabel as String: StorageKey.serverCertificate]
+        
+        let result = SecItemAdd(query as CFDictionary, nil)
+        guard result == errSecSuccess else {
+            throw NSError(domain: NSOSStatusErrorDomain, code: Int(result), userInfo: nil)
+        }
+    }
+    
+    private func deleteServerCertificate() {
+        let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
+                                    kSecAttrLabel as String: StorageKey.serverCertificate,
+                                    kSecReturnRef as String: kCFBooleanTrue as Any]
+        SecItemDelete(query as CFDictionary)
     }
     
 }

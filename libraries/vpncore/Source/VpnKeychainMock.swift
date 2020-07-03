@@ -40,6 +40,13 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     }
     
     public func store(vpnCredentials: VpnCredentials) {}
+    
+    public func getServerCertificate() throws -> SecCertificate {
+        throw NSError()
+    }
+    
+    public func storeServerCertificate() throws {}
+    
     public func clear() {}
     
     public func setVpnCredentials(with accountPlan: AccountPlan, maxTier: Int = 0) {

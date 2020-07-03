@@ -682,6 +682,12 @@
 		E1B5F68221B839A300B558B0 /* ServerStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F68021B839A300B558B0 /* ServerStorage.swift */; };
 		E1B5F68421B840C900B558B0 /* NSCoding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F68321B840C900B558B0 /* NSCoding+Extension.swift */; };
 		E1B5F68521B840C900B558B0 /* NSCoding+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B5F68321B840C900B558B0 /* NSCoding+Extension.swift */; };
+		E1B6A33024AC5C050004322A /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */; };
+		E1B6A33124AC5C050004322A /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */; };
+		E1B828B824ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */; };
+		E1B828B924ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */; };
+		E1B828BB24ACDEFB0070C53C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B828BA24ACDEFB0070C53C /* Bundle+Extension.swift */; };
+		E1B828BC24ACDEFB0070C53C /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1B828BA24ACDEFB0070C53C /* Bundle+Extension.swift */; };
 		E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		E1D187F82302B0AA00C5F492 /* VpnProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187F72302B0AA00C5F492 /* VpnProtocol.swift */; };
 		E1D187F92302B0AA00C5F492 /* VpnProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D187F72302B0AA00C5F492 /* VpnProtocol.swift */; };
@@ -973,6 +979,8 @@
 		E1B5F67B21B8253500B558B0 /* String+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		E1B5F68021B839A300B558B0 /* ServerStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerStorage.swift; sourceTree = "<group>"; };
 		E1B5F68321B840C900B558B0 /* NSCoding+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSCoding+Extension.swift"; sourceTree = "<group>"; };
+		E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */ = {isa = PBXFileReference; lastKnownFileType = file; path = ProtonVPN_ike_root.der; sourceTree = "<group>"; };
+		E1B828BA24ACDEFB0070C53C /* Bundle+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extension.swift"; sourceTree = "<group>"; };
 		E1C99F4E21C3C56600C54333 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = Localization/en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		E1D187F72302B0AA00C5F492 /* VpnProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocol.swift; sourceTree = "<group>"; };
 		E1E892B62369EDBE001A436E /* it */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -1378,6 +1386,7 @@
 		E148AE7121C2AF38007AB65A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E1B6A32F24AC5C050004322A /* ProtonVPN_ike_root.der */,
 				E1C99F4D21C3C56600C54333 /* Localizable.strings */,
 				D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */,
 			);
@@ -1561,6 +1570,7 @@
 		E1B5F5E521B68ABD00B558B0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
+				E1B6A33224AC5D3F0004322A /* Models */,
 				D5A8812322CDDAB5009B63D1 /* API */,
 				D5C2042224866456004FB58B /* Core */,
 				D5ADFBCD23A0D07C00C28CFF /* Extensions */,
@@ -1666,6 +1676,7 @@
 				4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */,
 				4242B0A62465A7F60042145A /* DataRequest+Validation.swift */,
 				D55D79132498F63C009669E0 /* String+Cleanup.swift */,
+				E1B828BA24ACDEFB0070C53C /* Bundle+Extension.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -1680,6 +1691,13 @@
 				424A012924A9F41800F3EEE4 /* DefaultConstants.swift */,
 			);
 			name = Constants;
+			sourceTree = "<group>";
+		};
+		E1B6A33224AC5D3F0004322A /* Models */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1850,6 +1868,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E1B6A33024AC5C050004322A /* ProtonVPN_ike_root.der in Resources */,
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
 				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
@@ -1863,6 +1882,7 @@
 				D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */,
 				D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */,
+				E1B828B924ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */,
 				D5A8812D22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1874,6 +1894,7 @@
 				E1144D4E22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
 				D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
+				E1B6A33124AC5C050004322A /* ProtonVPN_ike_root.der in Resources */,
 				E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1886,6 +1907,7 @@
 				E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */,
 				D5A8812B22CE06EB009B63D1 /* test_log_1.log in Resources */,
 				D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
+				E1B828B824ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */,
 				D5A8812E22CE06F6009B63D1 /* test_log_2.log in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2108,6 +2130,7 @@
 				4242B05A2465A43E0042145A /* UserBaseRequest.swift in Sources */,
 				E1B5F67C21B8253500B558B0 /* String+Extension.swift in Sources */,
 				E1616B8E21C7AD2300F42D79 /* ServicePlanDetails.swift in Sources */,
+				E1B828BB24ACDEFB0070C53C /* Bundle+Extension.swift in Sources */,
 				E129C6C222A90E6500D8437E /* VpnGatewayMock.swift in Sources */,
 				E1616BD721C7DF8800F42D79 /* VpnKeychain.swift in Sources */,
 				D5FFE6E424A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
@@ -2450,6 +2473,7 @@
 				4242B05B2465A43E0042145A /* UserBaseRequest.swift in Sources */,
 				E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */,
 				E1B5F67D21B8253500B558B0 /* String+Extension.swift in Sources */,
+				E1B828BC24ACDEFB0070C53C /* Bundle+Extension.swift in Sources */,
 				E129C6C522A90E6600D8437E /* VpnGatewayMock.swift in Sources */,
 				E1616B8F21C7AD2300F42D79 /* ServicePlanDetails.swift in Sources */,
 				D5FFE6E624A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
