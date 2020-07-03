@@ -228,7 +228,7 @@ public class AppStateManager {
     
     private func prepareServerCertificate() {
         do {
-            try vpnKeychain.getServerCertificate()
+            _ = try vpnKeychain.getServerCertificate()
         } catch {
             try? vpnKeychain.storeServerCertificate()
         }
