@@ -301,3 +301,11 @@ extension DependencyContainer: StoreKitStateCheckerFactory {
         return StoreKitStateCheckerImplementation(factory: self)
     }
 }
+
+// MARK: ProtonAPIAuthenticatorFactory
+
+extension DependencyContainer: ProtonAPIAuthenticatorFactory {
+    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
+        return ProtonAPIAuthenticator(self)
+    }
+}

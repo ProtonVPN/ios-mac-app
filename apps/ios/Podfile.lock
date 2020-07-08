@@ -1,5 +1,5 @@
 PODS:
-  - Alamofire (5.1.0)
+  - Alamofire (5.2.1)
   - GSMessages (1.7.3)
   - KeychainAccess (3.1.2)
   - OpenSSL-Apple (1.1.1g.6)
@@ -22,7 +22,7 @@ PODS:
     - TunnelKit/AppExtension
     - TunnelKit/Core
   - vpncore (1.0.0):
-    - Alamofire (~> 5.1)
+    - Alamofire (~> 5.2)
     - KeychainAccess (~> 3.0)
     - ReachabilitySwift (~> 4.0)
     - Sentry (~> 4.0)
@@ -30,7 +30,6 @@ PODS:
     - TunnelKit
 
 DEPENDENCIES:
-  - Alamofire (~> 5.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
@@ -64,7 +63,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
-  Alamofire: 9d5c5f602928e512395b30950c5984eca840093c
+  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   GSMessages: b9bcf210247426ae113ff22eac1d8f03ad5dee53
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
@@ -74,8 +73,8 @@ SPEC CHECKSUMS:
   SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
-  vpncore: 81748b0ef29a8ba426755f4bdccbbb2866bd1915
+  vpncore: 03316df672cd73873052c147bada2af092f5f135
 
-PODFILE CHECKSUM: 06875763d2c16618366a51ba0dfca4f916f0d06f
+PODFILE CHECKSUM: d5fa0c5073e4d2e0e53e28e32e175ebc725fd931
 
 COCOAPODS: 1.9.2
