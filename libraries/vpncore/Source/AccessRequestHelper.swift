@@ -23,51 +23,51 @@
 import Foundation
 import Alamofire
 
-class AccessRequestHelper {
-    
-    let alamofireWrapper: AlamofireWrapper
-    let alertService: CoreAlertService?
-    
-    public init( _ alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService? ) {
-        self.alamofireWrapper = alamofireWrapper
-        self.alertService = alertService
-    }
-    
-    func requestAccessTokenVerification( _ request: URLRequestConvertible, apiError: ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
-        fetchNewAccessToken({
-            self.alamofireWrapper.request(request, success: success, failure: failure)
-        }, currentError: apiError, failure: { error in
-            failure(error)
-        })
-    }
-    
-    // MARK: - Private
-    
-    private func fetchNewAccessToken( _ success: @escaping SuccessCallback, currentError: Error, failure: @escaping ErrorCallback ) {
-        guard let refreshAccessToken = alamofireWrapper.refreshAccessToken else {
-            failure(currentError)
-            return
-        }
-        refreshAccessToken({
-            success()
-        }, { error in
-            guard let apiError = error as? ApiError else {
-                failure(error)
-                return
-            }
-            
-            switch (apiError.httpStatusCode, apiError.code) {
-            case (HttpStatusCode.tooManyRequests, _):
-                failure(error)
-            case (400...499, _):
-                PMLog.ET("User logged out due to refresh access token failure with error: \(error)")
-                DispatchQueue.main.async { [weak self] in
-                    guard let alertService = self?.alertService else { return }
-                    alertService.push(alert: RefreshTokenExpiredAlert())
-                }
-            default:
-                failure(error)
-            }
-        })
-    }
-}
+//class AccessRequestHelper {
+//    
+//    let alamofireWrapper: AlamofireWrapper
+//    let alertService: CoreAlertService?
+//    
+//    public init( _ alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService? ) {
+//        self.alamofireWrapper = alamofireWrapper
+//        self.alertService = alertService
+//    }
+//    
+//    func requestAccessTokenVerification( _ request: URLRequestConvertible, apiError: ApiError, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
+//        fetchNewAccessToken({
+//            self.alamofireWrapper.request(request, success: success, failure: failure)
+//        }, currentError: apiError, failure: { error in
+//            failure(error)
+//        })
+//    }
+//    
+//    // MARK: - Private
+//    
+//    private func fetchNewAccessToken( _ success: @escaping SuccessCallback, currentError: Error, failure: @escaping ErrorCallback ) {
+//        guard let refreshAccessToken = alamofireWrapper.refreshAccessToken else {
+//            failure(currentError)
+//            return
+//        }
+//        refreshAccessToken({
+//            success()
+//        }, { error in
+//            guard let apiError = error as? ApiError else {
+//                failure(error)
+//                return
+//            }
+//            
+//            switch (apiError.httpStatusCode, apiError.code) {
+//            case (HttpStatusCode.tooManyRequests, _):
+//                failure(error)
+//            case (400...499, _):
+//                PMLog.ET("User logged out due to refresh access token failure with error: \(error)")
+//                DispatchQueue.main.async { [weak self] in
+//                    guard let alertService = self?.alertService else { return }
+//                    alertService.push(alert: RefreshTokenExpiredAlert())
+//                }
+//            default:
+//                failure(error)
+//            }
+//        })
+//    }
+//}

@@ -34,8 +34,6 @@ public protocol AlamofireWrapperFactory {
 
 public protocol AlamofireWrapper: class {
     
-    var refreshAccessToken: ((_ success: @escaping (() -> Void), _ failure: @escaping ((Error) -> Void)) -> Void)? { get set }
-    
     func getHumanVerificationToken() -> HumanVerificationToken?
     func setHumanVerification(token: HumanVerificationToken?)
     
@@ -51,7 +49,8 @@ public protocol AlamofireWrapper: class {
 
 public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
-    public typealias Factory = CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory
+    public typealias Factory = CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory
+    private var factory: Factory?
     
     private var alertService: CoreAlertService?
     private var trustKitHelper: TrustKitHelper?
@@ -60,7 +59,6 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     private var humanVerificationHandler: HumanVerificationAdapter?
     
     private lazy var humanVerificationHelper = HumanVerificationHelper(self, alertService: self.alertService)
-    private lazy var accessTokenHelper = AccessRequestHelper(self, alertService: self.alertService)
     
     public func markAsFailedTLS(request: URLRequest) {
         tlsFailedRequests.append(request)
@@ -69,13 +67,14 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     private let requestQueue = DispatchQueue(label: "ch.protonvpn.alamofire")
     private var session: Session!
     private var propertiesManager: PropertiesManagerProtocol?
-    
-    public var refreshAccessToken: ((_ success: @escaping SuccessCallback, _ failure: @escaping ErrorCallback) -> Void)?
-    
+        
     public init(factory: Factory? = nil) {
         super.init()
         
+        self.factory = factory
+        
         var adapters: [RequestAdapter] = []
+        let retriers: [RequestRetrier] = [ GenericRequestRetrier() ]
         
         if let factory = factory {
             let humanVerificationAdapter = factory.makeHumanVerificationAdapter()
@@ -88,7 +87,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         
         let interceptor = Interceptor(
             adapters: adapters,
-            retriers: [ GenericRequestRetrier() ]
+            retriers: retriers
         )
         
         self.session = Session(
@@ -96,6 +95,27 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             interceptor: interceptor,
             eventMonitors: [APILogger()]
         )
+    }
+    
+    private var _authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
+    
+    private func authInterceptor(for request: URLRequestConvertible) -> AuthenticationInterceptor<ProtonAPIAuthenticator>? {
+        // No need 
+        guard !(request is AuthRefreshRequest) else {
+            return nil
+        }
+        guard let factory = factory else {
+            return nil
+        }
+        guard let authCredentials = AuthKeychain.fetch() else {
+            _authInterceptor = nil
+            return nil
+        }
+        if (_authInterceptor?.credential?.accessToken == authCredentials.accessToken) {
+            return _authInterceptor
+        }
+        _authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
+        return _authInterceptor
     }
     
     // MARK: - Request
@@ -107,7 +127,8 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
     public func request(_ request: URLRequestConvertible, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
-        session.request(request).validated.responseJSON(queue: requestQueue) { [weak self] response in
+                
+        session.request(request, interceptor: self.authInterceptor(for:request)).validated.responseJSON(queue: requestQueue) { [weak self] response in
             response.debugLog()
             
             if let error = self?.failsTLS(request) {
@@ -126,7 +147,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
     public func request(_ request: URLRequestConvertible, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
-        session.request(request).validated.responseString(queue: requestQueue) { response in
+        session.request(request, interceptor: self.authInterceptor(for:request)).validated.responseString(queue: requestQueue) { response in
             if let result = try? response.result.get() {
                 success(result)
             }
@@ -144,7 +165,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             files.forEach({ (name, file) in
                 multipartFormData.append(file, withName: name)
             })
-        }, with: request).validated.responseJSON {[weak self] response in
+        }, with: request, interceptor: self.authInterceptor(for:request)).validated.responseJSON {[weak self] response in
             
             if let error = self?.failsTLS(request) {
                 failure(error)
@@ -212,12 +233,12 @@ extension AlamofireWrapperImplementation {
             break
         }
         
-        switch (error as NSError).code {
-        case HttpStatusCode.invalidAccessToken :
-            accessTokenHelper.requestAccessTokenVerification(request, apiError: apiError, success: success, failure: failure)
-        default:
+//        switch (error as NSError).code {
+//        case HttpStatusCode.invalidAccessToken :
+//            accessTokenHelper.requestAccessTokenVerification(request, apiError: apiError, success: success, failure: failure)
+//        default:
             PMLog.D("Network request failed with error: \(apiError)", level: .error)
             failure(apiError)
-        }
+//        }
     }
 }

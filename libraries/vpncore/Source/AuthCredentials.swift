@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Alamofire
 
 public class AuthCredentials: NSObject, NSCoding {
     
@@ -131,4 +132,14 @@ public class AuthCredentials: NSObject, NSCoding {
         let scopesData = NSKeyedArchiver.archivedData(withRootObject: scopes.map { $0.rawValue })
         aCoder.encode(scopesData, forKey: CoderKey.scopes)
     }
+    
+}
+
+// Used for refreshing auth token on API
+extension AuthCredentials: AuthenticationCredential {
+    
+    public var requiresRefresh: Bool {
+        return Date(timeIntervalSinceNow: 60 * 5) > expiration
+    }
+    
 }

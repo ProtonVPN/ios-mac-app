@@ -73,15 +73,8 @@ extension BaseRequest {
     
     var nonAuthenticatedHeader: [String: String]? { return defaultHeader }
 
-    var authenticatedHeader: [String: String]? {
-        guard let authCredentials = AuthKeychain.fetch() else {
-            return nonAuthenticatedHeader
-        }
-        return defaultHeader + [
-            "Authorization": "Bearer \(authCredentials.accessToken)",
-            "x-pm-uid": authCredentials.sessionId
-        ]
-    }
+    // Authentication headers moved to `ProtonAPIAuthenticator`
+    var authenticatedHeader: [String: String]? { return defaultHeader }
     
     var expiredTokenHeader: [String: String]? {
         guard let authCredentials = AuthKeychain.fetch() else {

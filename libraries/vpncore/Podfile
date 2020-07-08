@@ -8,7 +8,7 @@ inhibit_all_warnings!
 
 abstract_target 'vpncore' do
     # third party pods
-    pod 'Alamofire', '~> 5.1'
+    pod 'Alamofire', '~> 5.2'
     pod 'KeychainAccess', '~> 3.0'
     pod 'Sentry', '~> 4.0'
     pod 'ReachabilitySwift', '~> 4.0'
