@@ -37,7 +37,9 @@ public struct ApiConstants {
         return propertiesManager.apiEndpoint ?? liveURL
     }
     
-    public static let baseHost = "api.protonvpn.ch"
+    public static var baseHost: String {
+        return baseURL.domainWithoutPathAndProtocol
+    }
     public static let captchaHost = "secure.protonmail.com"
     
     internal static let statusURL = "http://protonstatus.com"
