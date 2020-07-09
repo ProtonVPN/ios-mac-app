@@ -362,7 +362,7 @@
 "_error_mitm_title" = "Connessione non sicura";
 
 /* Man In The Middle attack alert (VPN) */
-"_error_mitm_vpn_description" = "The TLS certificate validation failed when trying to connect to the VPN server. Your current Internet connection may be monitored. To keep your data secure, we are preventing the app from accessing this VPN server.\nPlease select other server.";
+"_error_mitm_vpn_description" = "La convalida del certificato TLS non è riuscita nel tentativo di connettersi al server VPN. La tua connessione Internet attuale potrebbe essere monitorata. Per mantenere i tuoi dati al sicuro, stiamo impedendo all'app di accedere a questo server VPN.\nPer favore seleziona un altro server.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del modulo è vuota";

@@ -704,7 +704,7 @@
 "_manage_subscription" = "Управление подпиской";
 
 /* MacOS: Settings -> Account. Button leading to web interface. */
-"_manage_subscription_on_web" = "Управляйте своей подпиской в личном кабинете на сайте";
+"_manage_subscription_on_web" = "Управляйте своей подпиской в личном кабинете";
 
 /* iOS: Map screen title and tabbar item */
 "_map" = "Карта";
