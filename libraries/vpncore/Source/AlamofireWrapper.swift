@@ -97,7 +97,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         )
     }
     
-    private var _authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
+    private var authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
     
     private func authInterceptor(for request: URLRequestConvertible) -> AuthenticationInterceptor<ProtonAPIAuthenticator>? {
         // No need 
@@ -108,14 +108,14 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             return nil
         }
         guard let authCredentials = AuthKeychain.fetch() else {
-            _authInterceptor = nil
+            authInterceptor = nil
             return nil
         }
-        if _authInterceptor?.credential?.accessToken == authCredentials.accessToken {
-            return _authInterceptor
+        if authInterceptor?.credential?.accessToken == authCredentials.accessToken {
+            return authInterceptor
         }
-        _authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
-        return _authInterceptor
+        authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
+        return authInterceptor
     }
     
     // MARK: - Request
