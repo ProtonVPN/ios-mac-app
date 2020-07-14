@@ -103,8 +103,6 @@
 		4242B0982465A4E60042145A /* HumanVerificationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0902465A4E60042145A /* HumanVerificationHelper.swift */; };
 		4242B0992465A4E60042145A /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0912465A4E60042145A /* TrustKitHelper.swift */; };
 		4242B09A2465A4E60042145A /* TrustKitHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0912465A4E60042145A /* TrustKitHelper.swift */; };
-		4242B09B2465A4E60042145A /* AccessRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0922465A4E60042145A /* AccessRequestHelper.swift */; };
-		4242B09C2465A4E60042145A /* AccessRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0922465A4E60042145A /* AccessRequestHelper.swift */; };
 		4242B09E2465A7A30042145A /* AFDataResponse+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B09D2465A7A30042145A /* AFDataResponse+Debugging.swift */; };
 		4242B09F2465A7A30042145A /* AFDataResponse+Debugging.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B09D2465A7A30042145A /* AFDataResponse+Debugging.swift */; };
 		4242B0A12465A7CB0042145A /* AFDataResponse+Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A02465A7CB0042145A /* AFDataResponse+Filter.swift */; };
@@ -130,6 +128,10 @@
 		D52193EC247E912F004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193EA247E912F004089CB /* Srp.framework */; };
 		D52193EE247E918C004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193ED247E918C004089CB /* Srp.framework */; };
 		D52193EF247E918C004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193ED247E918C004089CB /* Srp.framework */; };
+		D523F11924BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */; };
+		D523F11A24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */; };
+		D523F11B24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */; };
+		D523F11C24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */; };
 		D55D790A24978996009669E0 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D790924978996009669E0 /* APILogger.swift */; };
 		D55D790B24978996009669E0 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D790924978996009669E0 /* APILogger.swift */; };
 		D55D790C24978996009669E0 /* APILogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55D790924978996009669E0 /* APILogger.swift */; };
@@ -293,7 +295,6 @@
 		D5C2049824866B81004FB58B /* ReportBug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07A2465A4D00042145A /* ReportBug.swift */; };
 		D5C2049924866B81004FB58B /* ServicePlansProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07E2465A4D10042145A /* ServicePlansProperties.swift */; };
 		D5C2049A24866B81004FB58B /* RequestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0792465A4D00042145A /* RequestItem.swift */; };
-		D5C2049B24866B81004FB58B /* AccessRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0922465A4E60042145A /* AccessRequestHelper.swift */; };
 		D5C2049C24866B81004FB58B /* GenericRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B08E2465A4E50042145A /* GenericRequestRetrier.swift */; };
 		D5C2049D24866B81004FB58B /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0692465A48A0042145A /* AuthApiService.swift */; };
 		D5C2049E24866B81004FB58B /* PaymentsApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B06A2465A48A0042145A /* PaymentsApiService.swift */; };
@@ -407,7 +408,6 @@
 		D5C2050B2487A0CE004FB58B /* ReportBug.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07A2465A4D00042145A /* ReportBug.swift */; };
 		D5C2050C2487A0CE004FB58B /* ServicePlansProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07E2465A4D10042145A /* ServicePlansProperties.swift */; };
 		D5C2050D2487A0CE004FB58B /* RequestItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0792465A4D00042145A /* RequestItem.swift */; };
-		D5C2050E2487A0CE004FB58B /* AccessRequestHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0922465A4E60042145A /* AccessRequestHelper.swift */; };
 		D5C2050F2487A0CE004FB58B /* GenericRequestRetrier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B08E2465A4E50042145A /* GenericRequestRetrier.swift */; };
 		D5C205102487A0CE004FB58B /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0692465A48A0042145A /* AuthApiService.swift */; };
 		D5C205112487A0CE004FB58B /* PaymentsApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B06A2465A48A0042145A /* PaymentsApiService.swift */; };
@@ -757,7 +757,6 @@
 		4242B08F2465A4E60042145A /* HumanVerificationAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanVerificationAdapter.swift; sourceTree = "<group>"; };
 		4242B0902465A4E60042145A /* HumanVerificationHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HumanVerificationHelper.swift; sourceTree = "<group>"; };
 		4242B0912465A4E60042145A /* TrustKitHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrustKitHelper.swift; sourceTree = "<group>"; };
-		4242B0922465A4E60042145A /* AccessRequestHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccessRequestHelper.swift; sourceTree = "<group>"; };
 		4242B09D2465A7A30042145A /* AFDataResponse+Debugging.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AFDataResponse+Debugging.swift"; sourceTree = "<group>"; };
 		4242B0A02465A7CB0042145A /* AFDataResponse+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AFDataResponse+Filter.swift"; sourceTree = "<group>"; };
 		4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONDictionary.swift"; sourceTree = "<group>"; };
@@ -808,6 +807,7 @@
 		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D52193EA247E912F004089CB /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = "Frameworks-ios/Srp.framework"; sourceTree = "<group>"; };
 		D52193ED247E918C004089CB /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = "Frameworks-mac/Srp.framework"; sourceTree = "<group>"; };
+		D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonAPIAuthenticator.swift; sourceTree = "<group>"; };
 		D55D790924978996009669E0 /* APILogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APILogger.swift; sourceTree = "<group>"; };
 		D55D79132498F63C009669E0 /* String+Cleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Cleanup.swift"; sourceTree = "<group>"; };
 		D55D79182498F65B009669E0 /* StringCleanup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringCleanup.swift; sourceTree = "<group>"; };
@@ -1144,10 +1144,10 @@
 		4242B0682465A4700042145A /* Network helpers */ = {
 			isa = PBXGroup;
 			children = (
-				4242B0922465A4E60042145A /* AccessRequestHelper.swift */,
 				4242B08E2465A4E50042145A /* GenericRequestRetrier.swift */,
 				4242B08F2465A4E60042145A /* HumanVerificationAdapter.swift */,
 				4242B0902465A4E60042145A /* HumanVerificationHelper.swift */,
+				D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */,
 				4242B0912465A4E60042145A /* TrustKitHelper.swift */,
 			);
 			name = "Network helpers";
@@ -2167,6 +2167,7 @@
 				E1616B8821C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
 				4242B0742465A48B0042145A /* VpnApiService.swift in Sources */,
 				E1B5F63E21B6B5E000B558B0 /* VpnManager.swift in Sources */,
+				D523F11924BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				E196BE4C23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E116D76822C229FB00D14A51 /* AuthInfoResponse.swift in Sources */,
 				E1B5F68121B839A300B558B0 /* ServerStorage.swift in Sources */,
@@ -2204,7 +2205,6 @@
 				4242B02C2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				E123909E227C4E5A004B607A /* ApplicationError.swift in Sources */,
 				E148AE6B21C2A263007AB65A /* LocalizedString.swift in Sources */,
-				4242B09B2465A4E60042145A /* AccessRequestHelper.swift in Sources */,
 				E1616BAD21C7B8F000F42D79 /* AuthCredentials.swift in Sources */,
 				E148AE6221C29818007AB65A /* ErrorCodes.swift in Sources */,
 				E1B5F64121B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
@@ -2263,7 +2263,6 @@
 				D5C2050B2487A0CE004FB58B /* ReportBug.swift in Sources */,
 				D5C2050C2487A0CE004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2050D2487A0CE004FB58B /* RequestItem.swift in Sources */,
-				D5C2050E2487A0CE004FB58B /* AccessRequestHelper.swift in Sources */,
 				D5C2050F2487A0CE004FB58B /* GenericRequestRetrier.swift in Sources */,
 				D5C205102487A0CE004FB58B /* AuthApiService.swift in Sources */,
 				D5C205112487A0CE004FB58B /* PaymentsApiService.swift in Sources */,
@@ -2383,6 +2382,7 @@
 				D5C2046724866AD9004FB58B /* PropertiesManager.swift in Sources */,
 				D5C204522486692B004FB58B /* ProfileType.swift in Sources */,
 				D5C204282486664E004FB58B /* ServerType.swift in Sources */,
+				D523F11A24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				D5C2044224866724004FB58B /* Logger.swift in Sources */,
 				D5A8812122CDD5A3009B63D1 /* ReportBugViewModelTests.swift in Sources */,
 				D5C2046124866A41004FB58B /* HumanVerificationToken.swift in Sources */,
@@ -2509,6 +2509,7 @@
 				E1616BF021C951DB00F42D79 /* HexColor.swift in Sources */,
 				4242B0752465A48B0042145A /* VpnApiService.swift in Sources */,
 				E1616B8921C7AC9B00F42D79 /* VpnCredentials.swift in Sources */,
+				D523F11B24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */,
 				E116D76922C229FB00D14A51 /* AuthInfoResponse.swift in Sources */,
 				E1B5F63F21B6B5E000B558B0 /* VpnManager.swift in Sources */,
@@ -2546,7 +2547,6 @@
 				4242B02D2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				E123909F227C4E5A004B607A /* ApplicationError.swift in Sources */,
 				E1B5F63321B6B19200B558B0 /* AppState.swift in Sources */,
-				4242B09C2465A4E60042145A /* AccessRequestHelper.swift in Sources */,
 				E148AE6C21C2A263007AB65A /* LocalizedString.swift in Sources */,
 				E1616BAE21C7B8F000F42D79 /* AuthCredentials.swift in Sources */,
 				E148AE6321C29818007AB65A /* ErrorCodes.swift in Sources */,
@@ -2621,7 +2621,6 @@
 				D5C2049824866B81004FB58B /* ReportBug.swift in Sources */,
 				D5C2049924866B81004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2049A24866B81004FB58B /* RequestItem.swift in Sources */,
-				D5C2049B24866B81004FB58B /* AccessRequestHelper.swift in Sources */,
 				D5C2049C24866B81004FB58B /* GenericRequestRetrier.swift in Sources */,
 				D5C2049D24866B81004FB58B /* AuthApiService.swift in Sources */,
 				D5C2049E24866B81004FB58B /* PaymentsApiService.swift in Sources */,
@@ -2651,6 +2650,7 @@
 				D5C204B324866B81004FB58B /* ProtonApiError.swift in Sources */,
 				D5C204B424866B81004FB58B /* ProtonVpnError.swift in Sources */,
 				D5C204B524866B81004FB58B /* UserError.swift in Sources */,
+				D523F11C24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				D5C204B624866B81004FB58B /* TimerFactory.swift in Sources */,
 				D5C204B724866B81004FB58B /* ProfileManager.swift in Sources */,
 				D5C204B824866B81004FB58B /* ProfileStorage.swift in Sources */,

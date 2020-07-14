@@ -111,7 +111,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             _authInterceptor = nil
             return nil
         }
-        if (_authInterceptor?.credential?.accessToken == authCredentials.accessToken) {
+        if _authInterceptor?.credential?.accessToken == authCredentials.accessToken {
             return _authInterceptor
         }
         _authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
@@ -128,7 +128,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     public func request(_ request: URLRequestConvertible, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
                 
-        session.request(request, interceptor: self.authInterceptor(for:request)).validated.responseJSON(queue: requestQueue) { [weak self] response in
+        session.request(request, interceptor: self.authInterceptor(for: request)).validated.responseJSON(queue: requestQueue) { [weak self] response in
             response.debugLog()
             
             if let error = self?.failsTLS(request) {
@@ -147,7 +147,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
     public func request(_ request: URLRequestConvertible, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
-        session.request(request, interceptor: self.authInterceptor(for:request)).validated.responseString(queue: requestQueue) { response in
+        session.request(request, interceptor: self.authInterceptor(for: request)).validated.responseString(queue: requestQueue) { response in
             if let result = try? response.result.get() {
                 success(result)
             }
@@ -165,7 +165,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             files.forEach({ (name, file) in
                 multipartFormData.append(file, withName: name)
             })
-        }, with: request, interceptor: self.authInterceptor(for:request)).validated.responseJSON {[weak self] response in
+        }, with: request, interceptor: self.authInterceptor(for: request)).validated.responseJSON {[weak self] response in
             
             if let error = self?.failsTLS(request) {
                 failure(error)
@@ -217,7 +217,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
 }
 
 extension AlamofireWrapperImplementation {
-    fileprivate func didReceiveError( _ request: URLRequestConvertible, error: Error, success: @escaping JSONCallback, failure: @escaping ErrorCallback ) {
+    fileprivate func didReceiveError(_ request: URLRequestConvertible, error: Error, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         guard let apiError = error as? ApiError else { return failure(error) }
         switch apiError.code {
         case ApiErrorCode.appVersionBad, ApiErrorCode.apiVersionBad:
@@ -233,12 +233,31 @@ extension AlamofireWrapperImplementation {
             break
         }
         
-//        switch (error as NSError).code {
-//        case HttpStatusCode.invalidAccessToken :
-//            accessTokenHelper.requestAccessTokenVerification(request, apiError: apiError, success: success, failure: failure)
-//        default:
+        if request is AuthRefreshRequest {
+            return didReceiveTokenRefreshError(request, error: error, success: success, failure: failure)
+        }
+        
+        PMLog.D("Network request failed with error: \(apiError)", level: .error)
+        failure(apiError)
+    }
+    
+    private func didReceiveTokenRefreshError(_ request: URLRequestConvertible, error: Error, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
+        guard let apiError = error as? ApiError else { return failure(error) }
+        
+        switch apiError.httpStatusCode {
+        case HttpStatusCode.invalidRefreshToken, HttpStatusCode.badRequest:
+            PMLog.ET("User logged out due to refresh token failure with error: \(error)")
+            DispatchQueue.main.async { [weak self] in
+                guard let alertService = self?.alertService else { return }
+                alertService.push(alert: RefreshTokenExpiredAlert())
+            }
+            failure(apiError)
+            return
+            
+        default:
             PMLog.D("Network request failed with error: \(apiError)", level: .error)
             failure(apiError)
-//        }
+        }
     }
+    
 }

@@ -27,18 +27,18 @@ extension DataResponse {
     /// Prints debug info. Only for local debugging,
     func debugLog() {
         #if DEBUG
-        debugPrint("======================================= start =======================================")
-        debugPrint(request?.url as Any)
-        debugPrint(request?.allHTTPHeaderFields as Any)
-        if let data = request?.httpBody {
-            debugPrint(String(data: data, encoding: .utf8) as Any)
-        }
-        debugPrint("------------------------------------- response -------------------------------------")
-        debugPrint(response?.statusCode as Any)
-        if let result = try? result.get() {
-            debugPrint(result as Any)
-        }
-        debugPrint("======================================= end =======================================")
+//        debugPrint("======================================= start =======================================")
+//        debugPrint(request?.url as Any)
+//        debugPrint(request?.allHTTPHeaderFields as Any)
+//        if let data = request?.httpBody {
+//            debugPrint(String(data: data, encoding: .utf8) as Any)
+//        }
+//        debugPrint("------------------------------------- response -------------------------------------")
+//        debugPrint(response?.statusCode as Any)
+//        if let result = try? result.get() {
+//            debugPrint(result as Any)
+//        }
+//        debugPrint("======================================= end =======================================")
         #endif
     }
 }

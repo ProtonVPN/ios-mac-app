@@ -138,6 +138,7 @@ public class AuthCredentials: NSObject, NSCoding {
 // Used for refreshing auth token on API
 extension AuthCredentials: AuthenticationCredential {
     
+    // Refresh the token even before we actually receive 401 from the server.
     public var requiresRefresh: Bool {
         return Date(timeIntervalSinceNow: 60 * 5) > expiration
     }
