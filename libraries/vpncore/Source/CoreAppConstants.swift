@@ -71,4 +71,9 @@ public class CoreAppConstants {
             return LocalizedString.testServers
         }
     }
+    
+    public struct UpdateTime {
+        public static let quickUpdateTime: Double = 3.0
+        public static let quickReconnectTime: Double = 0.5
+    }
 }

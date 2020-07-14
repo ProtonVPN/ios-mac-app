@@ -44,6 +44,8 @@ public protocol VpnManagerFactory {
 }
 
 public class VpnManager: VpnManagerProtocol {
+        
+    private var quickReconnection = false
     
     private let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
     private let propertiesManager = PropertiesManager()
@@ -383,7 +385,7 @@ public class VpnManager: VpnManagerProtocol {
         }
         
         currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let `self` = self else { return }
+            guard let `self` = self, !self.quickReconnection else { return }
             if let error = error {
                 self.setState(withError: error)
                 return
@@ -391,42 +393,70 @@ public class VpnManager: VpnManagerProtocol {
             guard let vpnManager = vpnManager else { return }
             
             let newState = self.newState(forManager: vpnManager)
+
             guard newState != self.state else { return }
             
-            self.state = newState
-            PMLog.D(self.state.logDescription)
-            
-            switch self.state {
-            case .connecting:
-                if !self.connectAllowed {
-                    self.disconnect {}
-                    return // prevent UI from updating with the connecting state
+            switch newState {
+            case .disconnecting:
+                self.quickReconnection = true
+                self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
+                    let newState = self.newState(forManager: vpnManager)
+                    switch newState {
+                    case .connecting:
+                        self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+                            self.updateState(vpnManager)
+                        }
+                        break
+                    default:
+                        self.updateState(vpnManager)
+                    }
                 }
-                
-                if let currentVpnProtocol = self.currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
-                    self.propertiesManager.hasConnected = true
-                }
-            case .error(let error):
-                if case ProtonVpnError.tlsServerVerification = error {
-                    self.disconnect {}
-                    self.alertService?.push(alert: MITMAlert(messageType: .vpn))
-                    break
-                }
-                if case ProtonVpnError.tlsInitialisation = error {
-                    self.disconnect {} // Prevent infinite connection loop
-                    break
-                }
-                fallthrough
-            case .disconnected, .invalid:
-                self.disconnectCompletion?()
-                self.disconnectCompletion = nil
+                return
             default:
-                break
+                self.updateState(vpnManager)
             }
-
-            self.stateChanged?()
         }
     }
+    
+    private func updateState( _ vpnManager: NEVPNManager ) {
+        quickReconnection = false
+        let newState = self.newState(forManager: vpnManager)
+        guard newState != self.state else { return }
+        self.state = newState
+        PMLog.D(self.state.logDescription)
+        
+        switch self.state {
+        case .connecting:
+            if !self.connectAllowed {
+                self.disconnect {}
+                return // prevent UI from updating with the connecting state
+            }
+            
+            if let currentVpnProtocol = self.currentVpnProtocol, case VpnProtocol.ike = currentVpnProtocol, !self.propertiesManager.hasConnected {
+                self.propertiesManager.hasConnected = true
+            }
+        case .error(let error):
+            if case ProtonVpnError.tlsServerVerification = error {
+                self.disconnect {}
+                self.alertService?.push(alert: MITMAlert(messageType: .vpn))
+                break
+            }
+            if case ProtonVpnError.tlsInitialisation = error {
+                self.disconnect {} // Prevent infinite connection loop
+                break
+            }
+            fallthrough
+        case .disconnected, .invalid:
+            self.disconnectCompletion?()
+            self.disconnectCompletion = nil
+        default:
+            break
+        }
+
+        self.stateChanged?()
+    }
+    
+    
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     private func newState(forManager vpnManager: NEVPNManager) -> VpnState {
