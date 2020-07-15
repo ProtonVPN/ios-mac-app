@@ -33,8 +33,7 @@ class VerificationCaptchaViewController: UIViewController {
     var viewModel: VerificationCaptchaViewModel!
     
     var captchaToken: String {
-//        return viewModel.captchaToken // Bring this back when backend is ready
-        return "signup" // Temporary solution compatible with old backend
+        return viewModel.captchaToken
     }
     
     private lazy var captchaUrl = "https://\(ApiConstants.captchaHost)/captcha/captcha.html?client=ios&host=\(ApiConstants.baseHost)&token=\(captchaToken)"
