@@ -406,7 +406,6 @@ public class VpnManager: VpnManagerProtocol {
                         self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
                             self.updateState(vpnManager)
                         }
-                        break
                     default:
                         self.updateState(vpnManager)
                     }
@@ -418,7 +417,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    private func updateState( _ vpnManager: NEVPNManager ) {
+    private func updateState(_ vpnManager: NEVPNManager) {
         quickReconnection = false
         let newState = self.newState(forManager: vpnManager)
         guard newState != self.state else { return }
