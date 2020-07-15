@@ -456,7 +456,6 @@ public class VpnManager: VpnManagerProtocol {
         self.stateChanged?()
     }
     
-    
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     private func newState(forManager vpnManager: NEVPNManager) -> VpnState {
