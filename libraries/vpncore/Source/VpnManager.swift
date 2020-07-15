@@ -369,7 +369,6 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    // swiftlint:disable cyclomatic_complexity function_body_length
     private func setState(withError error: Error? = nil) {
         if let error = error {
             PMLog.ET("VPN error: \(error.localizedDescription)")
@@ -410,7 +409,6 @@ public class VpnManager: VpnManagerProtocol {
                         self.updateState(vpnManager)
                     }
                 }
-                return
             default:
                 self.updateState(vpnManager)
             }
