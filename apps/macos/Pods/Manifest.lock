@@ -22,7 +22,7 @@ PODS:
     - TunnelKit/AppExtension
     - TunnelKit/Core
   - vpncore (1.0.0):
-    - Alamofire (~> 5.1)
+    - Alamofire (~> 5.2)
     - KeychainAccess (~> 3.0)
     - ReachabilitySwift (~> 4.0)
     - Sentry (~> 4.0)
@@ -74,7 +74,7 @@ SPEC CHECKSUMS:
   SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
   TrustKit: a2f0c3a926f0a3ce3c082db9a39f1f540dbb04cb
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
-  vpncore: 81748b0ef29a8ba426755f4bdccbbb2866bd1915
+  vpncore: e49b0721747083ec9e54dda23dd482ed1f8d8818
 
 PODFILE CHECKSUM: 35770ef71bd1704b5be3ecf347a3359f2401d3d4
 

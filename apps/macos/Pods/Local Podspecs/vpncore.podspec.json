@@ -27,7 +27,8 @@
   "resource_bundles": {
     "vpncore": [
       "Source/Localization/*.lproj",
-      "Source/country-names.plist"
+      "Source/country-names.plist",
+      "Source/*.der"
     ]
   },
   "ios": {
@@ -38,7 +39,7 @@
   },
   "dependencies": {
     "Alamofire": [
-      "~> 5.1"
+      "~> 5.2"
     ],
     "KeychainAccess": [
       "~> 3.0"
