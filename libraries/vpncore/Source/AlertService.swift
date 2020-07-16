@@ -432,9 +432,23 @@ public class ApplyCreditAfterRegistrationFailedAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(retryHandler: @escaping () -> Void, supportHandler: @escaping () -> Void) {
+    public init(type: MessageType, retryHandler: @escaping () -> Void, supportHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: LocalizedString.retry, style: .confirmative, handler: retryHandler))
         actions.append(AlertAction(title: LocalizedString.errorApplyPaymentOnRegistrationSupport, style: .confirmative, handler: supportHandler))
+        
+        switch type {
+        case .registration:
+            title = LocalizedString.errorApplyPaymentOnRegistrationTitle
+            message = LocalizedString.errorApplyPaymentOnRegistrationMessage
+        case .upgrade:
+            title = LocalizedString.errorApplyPaymentOnUpgradeTitle
+            message = LocalizedString.errorApplyPaymentOnUpgradeMessage
+        }
+    }
+    
+    public enum MessageType {
+        case registration
+        case upgrade
     }
 }
 

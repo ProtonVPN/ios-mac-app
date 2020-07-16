@@ -274,6 +274,9 @@ public class LocalizedString {
     public static let errorApplyPaymentOnRegistrationMessage = NSLocalizedString("_error_apply_payment_failed_on_registration_message", comment: "Error applying credit after registration alert")
     public static let errorApplyPaymentOnRegistrationSupport = NSLocalizedString("_error_apply_payment_failed_on_registration_support", comment: "Error applying credit after registration alert")
     
+    public static let errorApplyPaymentOnUpgradeTitle = NSLocalizedString("_error_apply_payment_failed_on_upgrade_title", comment: "Error applying credit after upgrade alert")
+    public static let errorApplyPaymentOnUpgradeMessage = NSLocalizedString("_error_apply_payment_failed_on_upgrade_message", comment: "Error applying credit after upgrade alert")
+    
     public static let errorInvalidHumanVerificationCodeTitle = NSLocalizedString("_error_invalid_human_verification_code_title", comment: "Invalid human verification code alert")
     public static let errorInvalidHumanVerificationCodeMessage = NSLocalizedString("_error_invalid_human_verification_code_message", comment: "Invalid human verification code alert")
     public static let errorInvalidHumanVerificationCodeTryOther = NSLocalizedString("_error_invalid_human_verification_code_try_other", comment: "Invalid human verification code alert button")
