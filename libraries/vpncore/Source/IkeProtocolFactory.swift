@@ -45,6 +45,11 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         config.enablePFS = false
         config.deadPeerDetectionRate = .high
         
+        #if os(OSX)
+        config.authenticationMethod = .certificate
+        config.serverCertificateIssuerCommonName = "ProtonVPN Root CA"
+        #endif
+        
         config.disableMOBIKE = false
         config.disableRedirect = false
         config.enableRevocationCheck = false

@@ -93,6 +93,8 @@ public class AppStateManager {
             }
         }
         
+        prepareServerCertificate()
+        
         if vpnKeychain.hasOldVpnPassword() {
             try? vpnKeychain.clearOldVpnPassword()
             alertService?.push(alert: FirstTimeConnectingAlert())
@@ -222,6 +224,14 @@ public class AppStateManager {
         cancelTimout()
         handleVpnError(vpnState)
         disconnect()
+    }
+    
+    private func prepareServerCertificate() {
+        do {
+            _ = try vpnKeychain.getServerCertificate()
+        } catch {
+            try? vpnKeychain.storeServerCertificate()
+        }
     }
     
     private func makeConnection(_ connectionConfiguration: ConnectionConfiguration) {

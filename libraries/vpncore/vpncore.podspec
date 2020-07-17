@@ -15,7 +15,8 @@ Pod::Spec.new do |s|
     s.source_files = 'Source/*.swift', 'Source/*.sh'
     s.resource_bundle = { 'vpncore' => [
         'Source/Localization/*.lproj',
-        'Source/country-names.plist'
+        'Source/country-names.plist',
+        'Source/*.der'
         ] }
 
     s.ios.vendored_frameworks = 'Frameworks-ios/*'
