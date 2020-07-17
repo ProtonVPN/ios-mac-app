@@ -37,4 +37,10 @@ extension String {
         }
     }
     
+    public func removeLastSubstring( _ separator: Character )-> String {
+        guard let last = self.index(of: separator) else {
+            return self
+        }
+        return String(self[startIndex..<last])
+    }
 }
