@@ -236,3 +236,11 @@ extension DependencyContainer: TrustKitHelperFactory {
         return trustKitHelper
     }
 }
+
+// MARK: ProtonAPIAuthenticatorFactory
+
+extension DependencyContainer: ProtonAPIAuthenticatorFactory {
+    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
+        return ProtonAPIAuthenticator(self)
+    }
+}

@@ -2110,7 +2110,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1149)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		75482B271F7EF33F00B0BFFB /* Increment Build Number Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2124,7 +2124,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\ncommitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\nbuildNumber=$(expr $commitCount + 1149)\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		8E8238B7086B43E82E17214A /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2194,7 +2194,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    commitCount=$(git rev-list HEAD | wc -l | tr -d ' ')\n    buildNumber=$(expr $commitCount + 1149)\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    buildNumber=${BUILD_NUMBER:-1234}\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 			showEnvVarsInLog = 0;
 		};
 		E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */ = {
@@ -2786,6 +2786,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2845,6 +2846,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3042,6 +3044,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3070,6 +3073,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3222,6 +3226,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3259,6 +3264,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MARKETING_VERSION = 1.7.0;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
