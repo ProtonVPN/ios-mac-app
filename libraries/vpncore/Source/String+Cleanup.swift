@@ -37,8 +37,9 @@ extension String {
         }
     }
     
-    public func removeLastSubstring( _ separator: Character ) -> String {
-        guard let last = self.index(of: separator) else {
+    /// Returns the first characters in the string until the startingChacater
+    public func removeSubstring( _ startingCharacter: Character ) -> String {
+        guard let last = self.index(of: startingCharacter) else {
             return self
         }
         return String(self[startIndex..<last])
