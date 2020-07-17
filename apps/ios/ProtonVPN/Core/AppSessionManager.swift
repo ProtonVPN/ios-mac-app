@@ -223,7 +223,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             return
         }
         
-        if activeUsername == vpnCredentials.name {
+        if activeUsername.removeSubstrig("+") == vpnCredentials.name.removeSubstrig("+") {
             success()
             return
         }
