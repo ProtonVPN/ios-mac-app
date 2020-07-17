@@ -30,5 +30,10 @@ class StringCleanup: XCTestCase {
         let clean = string.cleanedForLog
         XCTAssert(clean == "\(startPart)X.X.X.X")
     }
-
+    
+    func testRemoveLastSubstring() throws {
+        let string = "username+f1+pm"
+        let clean = string.removeLastSubstring("+")
+        XCTAssert(clean == "username")
+    }
 }
