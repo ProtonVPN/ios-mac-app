@@ -235,6 +235,30 @@ public class VpnGateway: VpnGatewayProtocol {
         connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request))
     }
     
+    private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
+        do {
+            let currentUserTier = try self.userTier() // accessing from the keychain for each server is very expensive
+            
+            let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
+            
+            let selector = VpnServerSelector(serverType: type, userTier: currentUserTier, serverGrouping: serverManager.grouping(for: type), appStateGetter: {
+                return self.appStateManager.state
+            })
+            selector.changeActiveServerType = { [self] serverType in
+                self.changeActiveServerType(serverType)
+            }
+            selector.notifyResolutionUnavailable = { [self] forSpecificCountry, type, reason in
+                self.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
+            }
+            
+            return selector.selectServer(connectionRequest: connectionRequest)
+            
+        } catch {
+            alertService?.push(alert: CannotAccessVpnCredentialsAlert())
+            return nil
+        }
+    }
+    
     public func stopConnecting(userInitiated: Bool) {
         PMLog.D("Connecting cancelled, userInitiated: \(userInitiated)")
         connectionPreparer = nil
@@ -270,100 +294,6 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     // MARK: - Private functions
-    private func filter(servers: [ServerModel], forSpecificCountry: Bool, type: ServerType) -> [ServerModel] {
-        do {
-            let userTier = try self.userTier() // accessing from the keychain for each server is very expensive
-            
-            let serversWithoutUpgrades = servers.filter { $0.tier <= userTier }
-            if serversWithoutUpgrades.isEmpty {
-                notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: .upgrade(servers.reduce(Int.max, { (lowestTier, server) -> Int in
-                    return lowestTier > server.tier ? server.tier : lowestTier
-                })))
-                return []
-            }
-            
-            let serversWithoutMaintenance = serversWithoutUpgrades.filter { !$0.underMaintenance }
-            if serversWithoutMaintenance.isEmpty {
-                notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: .maintenance)
-                return []
-            }
-            
-            return serversWithoutMaintenance
-        } catch {
-            alertService?.push(alert: CannotAccessVpnCredentialsAlert())
-            return []
-        }
-    }
-    
-    private func userAccessibleGrouping(_ type: ServerType, countryCode: String) -> CountryGroup? {
-        return serverManager.grouping(for: type)
-            .filter({ $0.0.countryCode == countryCode })
-            .first
-    }
-    
-    private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
-        // use the ui to determine connection type if unspecified
-        let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
-        
-        let sortedServers: [ServerModel]
-        let forSpecificCountry: Bool
-        if case ConnectionRequestType.country(let countryCode, _) = connectionRequest.connectionType { // servers of a single country
-            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode) else {
-                return nil
-            }
-            sortedServers = countryGroup.1.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
-            forSpecificCountry = true
-        } else { // all servers
-            sortedServers = serverManager.grouping(for: type)
-                .map({ $0.1 })
-                .flatMap({ $0 })
-                .sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
-            forSpecificCountry = false
-        }
-            
-        let servers = filter(servers: sortedServers, forSpecificCountry: forSpecificCountry, type: type)
-        
-        guard !servers.isEmpty else {
-            return nil
-        }
-        
-        let filtered: [ServerModel]
-        if type != .tor {
-            filtered = servers.filter { $0.feature.contains(.tor) == false } // only include tor servers if those are the servers we explicitly want
-        } else {
-            filtered = servers
-        }
-        
-        changeActiveServerType(type)
-        
-        if !filtered.isEmpty {
-            return pickServer(from: filtered, connectionRequest: connectionRequest)
-        }
-        
-        if case AppState.preparingConnection = self.appStateManager.state {
-            return pickServer(from: servers, connectionRequest: connectionRequest)
-        } else {
-            return nil
-        }
-    }
-    
-    private func pickServer(from servers: [ServerModel], connectionRequest: ConnectionRequest) -> ServerModel? {
-        switch connectionRequest.connectionType {
-        case .fastest:
-            return servers.first
-        case .random:
-            return servers[Int(arc4random_uniform(UInt32(servers.count)))]
-        case .country(_, let countryType):
-            switch countryType {
-            case .fastest:
-                return servers.first
-            case .random:
-                return servers[Int(arc4random_uniform(UInt32(servers.count)))]
-            case .server(let server):
-                return server
-            }
-        }
-    }
     
     private func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
         stopConnecting(userInitiated: false)

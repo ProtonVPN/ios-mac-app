@@ -1,6 +1,6 @@
 //
-//  PaymentsVerifyRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  UserBaseV4Request.swift
+//  vpncore - Created on 2020-06-26.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,37 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import Foundation
 
-class PaymentsVerifyRequest: PaymentsBaseRequest {
+/// The same as UserBaseRequest but for updated signup process (v4)
+class UserBaseV4Request: BaseRequest {
     
-    let amount: Int
-    let receipt: String
-    
-    init ( _ amount: Int, receipt: String) {
-        self.amount = amount
-        self.receipt = receipt
-        super.init()
-    }
+    let vpnType = 2
     
     override func path() -> String {
-        return super.path() + "/verify"
-    }
-    
-    override var method: HTTPMethod {
-        return .post
-    }
-    
-    override var parameters: [String: Any]? {
-        return [
-            "Amount": amount,
-            "Currency": "USD",
-            "Payment": [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": receipt
-                ]
-            ]
-        ]
+        return super.path() + "/v4/users"
     }
 }

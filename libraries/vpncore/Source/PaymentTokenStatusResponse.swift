@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  PaymentTokenStatusResponse.swift
+//  vpncore - Created on 2020-07-01.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,30 +22,8 @@
 
 import Foundation
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
-}
-
-extension PaymentAction {
+public struct PaymentTokenStatusResponse: Codable {
     
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
-        }
-    }
+    public let status: PaymentToken.Status
     
 }

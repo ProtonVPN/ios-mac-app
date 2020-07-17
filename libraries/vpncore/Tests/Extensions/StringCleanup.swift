@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  StringCleanup.swift
+//  vpncore - Created on 2020-06-16.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,32 +20,15 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import XCTest
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
-}
+class StringCleanup: XCTestCase {
 
-extension PaymentAction {
-    
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
-        }
+    func testRemovesIPFromUrl() throws {
+        let startPart = "https://protonmail.com/api/vpn/logicals?IP="
+        let string = "\(startPart)10.10.10.10"
+        let clean = string.cleanedForLog
+        XCTAssert(clean == "\(startPart)X.X.X.X")
     }
-    
+
 }

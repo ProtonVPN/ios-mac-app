@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  DefaultConstants.swift
+//  vpncore - Created on 29/06/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,32 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
+struct DefaultConstants { }
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
+#if os(iOS)
+extension DefaultConstants {
+    static let vpnProtocol: VpnProtocol = .openVpn(.udp)
 }
-
-extension PaymentAction {
-    
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
-        }
-    }
-    
+#else
+extension DefaultConstants {
+    static let vpnProtocol: VpnProtocol = .ike
 }
+#endif

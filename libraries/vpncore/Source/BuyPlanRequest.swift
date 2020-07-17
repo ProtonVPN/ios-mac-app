@@ -1,6 +1,6 @@
 //
-//  UserCreateRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  BuyPlanRequest.swift
+//  vpncore - Created on 2020-06-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,38 +22,37 @@
 
 import Alamofire
 
-class UserCreateRequest: UserBaseV4Request {
+class BuyPlanRequest: PaymentsBaseRequest {
     
-    let userProperties: UserProperties
+    let amount: Int
+    let planId: String
+    let payment: PaymentAction
     
-    init( _ userProperties: UserProperties ) {
-        self.userProperties = userProperties
+    init ( _ planId: String, amount: Int, payment: PaymentAction) {
+        self.planId = planId
+        self.amount = amount
+        self.payment = payment
         super.init()
     }
     
-    // MARK: - Override
-
+    override func path() -> String {
+        return super.path() + "/subscription"
+    }
+    
     override var method: HTTPMethod {
         return .post
     }
     
     override var parameters: [String: Any]? {
-        var params: [String: Any] = [
-            "Email": userProperties.email,
-            "Username": userProperties.username,
-            "Type": vpnType,
-            "Auth": [
-                "Version": 4,
-                "ModulusID": userProperties.modulusID,
-                "Salt": userProperties.salt,
-                "Verifier": userProperties.verifier
-            ]
+        return [
+            "Amount": amount,
+            "Currency": "USD",
+            "PlanIDs": [
+                planId: 1
+            ],
+            "Cycle": 12,
+            "Payment": payment.postDictionary
         ]
-        if let token = userProperties.appleToken {
-            params["Payload"] = [
-                "higgs-boson": token.base64EncodedString()
-            ]
-        }
-        return params
     }
+    
 }

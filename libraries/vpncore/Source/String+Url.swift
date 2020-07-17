@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  String+Url.swift
+//  vpncore - Created on 2020-07-09.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,30 +22,12 @@
 
 import Foundation
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
-}
-
-extension PaymentAction {
+extension String {
     
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
-        }
+    var domainWithoutPathAndProtocol: String {
+        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
+        let noPath = url.split(separator: "/").first
+        return noPath != nil ? String(noPath!) : url
     }
     
 }

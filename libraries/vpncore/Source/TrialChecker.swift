@@ -33,7 +33,7 @@ public class TrialChecker {
     
     public static let trialExpired = Notification.Name("ProfileStorageTrialExpired")
     
-    public typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & TrialServiceFactory
+    public typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & TrialServiceFactory & StoreKitStateCheckerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -41,6 +41,7 @@ public class TrialChecker {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var trialService: TrialService = factory.makeTrialService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var storeKitStateChecker: StoreKitStateChecker = factory.makeStoreKitStateChecker()
     
     private var trialEndTimer: Timer?
     
@@ -62,6 +63,12 @@ public class TrialChecker {
     @objc public func vpnCredentialsChanged() {
         do {
             endTrialEndTimer()
+            
+            // User started buying a plan, no need for a trial popup
+            guard !storeKitStateChecker.isBuyProcessRunning() else {
+                return
+            }
+            
             let credentials = try vpnKeychain.fetch()
             self.credentials = credentials
             

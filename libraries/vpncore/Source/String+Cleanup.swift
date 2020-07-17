@@ -1,6 +1,6 @@
 //
-//  PaymentAction.swift
-//  vpncore - Created on 2020-03-23.
+//  String+Cleanup.swift
+//  vpncore - Created on 2020-06-16.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,29 +22,18 @@
 
 import Foundation
 
-public enum PaymentAction {
-    @available(*, deprecated) case apple(token: String)
-    case protonToken(token: String)
-}
-
-extension PaymentAction {
+extension String {
     
-    var postDictionary: [String: Any] {
-        switch self {
-        case .apple(let token):
-            return [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": token
-                ]
-            ]
-        case .protonToken(let token):
-            return [
-                "Type": "token",
-                "Details": [
-                    "Token": token
-                ]
-            ]
+    /// String cleaned up from the info that should not go to logs
+    var cleanedForLog: String {
+        do {
+            let regex = try NSRegularExpression(pattern: "IP=(?:[0-9]{1,3}\\.){3}[0-9]{1,3}", options: NSRegularExpression.Options.caseInsensitive)
+            let range = NSRange(location: 0, length: self.count)
+            let cleanString = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "IP=X.X.X.X")
+            return cleanString
+            
+        } catch {
+            return self
         }
     }
     
