@@ -16,6 +16,8 @@ public enum VpnManagerClientConfiguration: String {
 
 public struct VpnManagerConfiguration {
     
+    public static let configConcatChar: Character = "+"
+    
     public let hostname: String
     public let serverId: String
     public let entryServerAddress: String
@@ -86,7 +88,7 @@ public class VpnManagerConfigurationPreparer {
         #endif
         
         return extraConfiguration.reduce("") {
-            $0 + "\(CoreAppConstants.vpnConfigConcatChar)" + $1.rawValue
+            $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.rawValue
         }
     }
 }
