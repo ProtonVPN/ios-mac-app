@@ -86,7 +86,7 @@ public class VpnManagerConfigurationPreparer {
         #endif
         
         return extraConfiguration.reduce("") {
-            $0 + "+" + $1.rawValue
+            $0 + "\(CoreAppConstants.vpnConfigConcatChar)" + $1.rawValue
         }
     }
 }

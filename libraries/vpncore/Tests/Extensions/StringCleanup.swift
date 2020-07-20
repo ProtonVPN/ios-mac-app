@@ -33,7 +33,7 @@ class StringCleanup: XCTestCase {
     
     func testRemoveSubstring() throws {
         let string = "username+f1+pm"
-        let clean = string.removeSubstring("+")
+        let clean = string.removeSubstring(startingWithCharacter: "+")
         XCTAssert(clean == "username")
     }
 }

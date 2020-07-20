@@ -76,4 +76,6 @@ public class CoreAppConstants {
         public static let quickUpdateTime: Double = 3.0
         public static let quickReconnectTime: Double = 0.5
     }
+    
+    public static let vpnConfigConcatChar: Character = "+"
 }
