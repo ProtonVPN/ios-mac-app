@@ -32,6 +32,7 @@ class PaymentsApiServiceMock: PaymentsApiService {
     public var callbackSubscription: ((((Subscription?) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackCreatePaymentToken: ((Int, String, ((PaymentToken) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackBuyPlan: ((String, Int, PaymentAction, SubscriptionCallback, ErrorCallback) -> Void)?
+    public var callbackGetPaymentTokenStatus: ((PaymentToken, PaymentTokenStatusCallback, ErrorCallback) -> Void)?
 
     // MARK: PaymentsApiService implementation
     
@@ -61,6 +62,10 @@ class PaymentsApiServiceMock: PaymentsApiService {
     
     func createPaymentToken(amount: Int, receipt: String, success: @escaping ((PaymentToken) -> Void), failure: @escaping ((Error) -> Void)) {
         callbackCreatePaymentToken?(amount, receipt, success, failure)
+    }
+    
+    func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback) {
+        callbackGetPaymentTokenStatus?(token, success, failure)
     }
 
     func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
