@@ -223,7 +223,8 @@ class AppSessionManagerImplementation: AppSessionManager {
             return
         }
         
-        if activeUsername.removeSubstrig("+") == vpnCredentials.name.removeSubstrig("+") {
+        if activeUsername.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar)
+            == vpnCredentials.name.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar) {
             success()
             return
         }
