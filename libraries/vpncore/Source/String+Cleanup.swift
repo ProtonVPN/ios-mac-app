@@ -38,7 +38,7 @@ extension String {
     }
     
     /// Returns the first characters in the string until the startingChacater
-    public func removeSubstring( startingWithCharacter char: Character ) -> String {
+    public func removeSubstring(startingWithCharacter char: Character) -> String {
         guard let last = self.index(of: char) else {
             return self
         }
