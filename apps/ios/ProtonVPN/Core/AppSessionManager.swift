@@ -223,12 +223,11 @@ class AppSessionManagerImplementation: AppSessionManager {
             return
         }
         
-        if activeUsername.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar)
-            == vpnCredentials.name.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar) {
+        if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
+            == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
             success()
             return
         }
-        
     }
     
     private func disconnectIfNeeded() {
