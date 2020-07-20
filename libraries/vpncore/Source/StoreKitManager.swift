@@ -331,21 +331,6 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     
     private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String) throws {
         let receipt = try self.readReceipt()
-                
-        // Ask user if she wants to retry or fill a bug report
-        let retryOnError: (Error) -> Void = { [weak self] error in
-            self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(type: .upgrade,
-                retryHandler: {
-                    try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
-                },
-                supportHandler: {
-//                    self?.finish(transaction: transaction)
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                    self?.errorCompletion(error)
-                    self?.alertService.push(alert: ReportBugAlert())
-                })
-            )
-        }
         
         // 1. Create token
         guard let token = tokenStorage.get() else {
@@ -359,10 +344,12 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 switch (error as NSError).code {
                 case 22914: // sandbox receipt sent to BE
                     SKPaymentQueue.default().finishTransaction(transaction)
+                    self?.tokenStorage.clear()
                     self?.errorCompletion(error)
                 case 22916: // Apple payment already registered
                     PMLog.D("StoreKit: apple payment already registered (2)")
                     SKPaymentQueue.default().finishTransaction(transaction)
+                    self?.tokenStorage.clear()
                     self?.successCompletion?(nil)
                 default:
                     self?.errorCompletion(error)
@@ -391,32 +378,29 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                     
                 }, failure: { error in
                     PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
-                    
-                    // MORE here
-                    
-                    retryOnError(error)
-                    
-                    
+                                        
                     guard let `self` = self else { return }
                     switch (error as NSError).code {
-                    case 22101:
+                    case 22101: // ammount mismatch
                         PMLog.D("StoreKit: amount mismatch")
                         // ammount mismatch - try report only credits without activating the plan
                         self.paymentsService.credit(amount: plan.yearlyCost, receipt: .protonToken(token: token.token), success: {
-                            self.errorCompletion(Errors.creditsApplied)
                             SKPaymentQueue.default().finishTransaction(transaction)
-                        }, failure: { (error) in
+                            self.tokenStorage.clear()
+                            self.errorCompletion(Errors.creditsApplied)
+                        }, failure: { [weak self] (error) in
                             if (error as NSError).code == 22916 { // Apple payment already registered
                                 PMLog.D("StoreKit: apple payment already registered")
                                 SKPaymentQueue.default().finishTransaction(transaction)
+                                self?.tokenStorage.clear()
+                                self?.successCompletion?(nil)
                             } else {
-                                self.errorCompletion(error)
+                                self?.errorCompletion(error)
                             }
                         })
                     default:
                         self.errorCompletion(error)
                     }
-                    
                     
                 })
                 
@@ -432,6 +416,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 self?.successCompletion?(nil)
                 
             case .notSupported: // throw away token and retry
+                PMLog.D("StoreKit: token not supported")
                 self?.tokenStorage.clear()
                 try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
             }
@@ -441,45 +426,6 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             self.errorCompletion(error)
         })
         
-        
-               
-        
-        /**** */
-        
-        // payments/subscription
-        paymentsService.postReceipt(amount: plan.yearlyCost, receipt: receipt, planId: planId, success: { [weak self] subscription in
-            PMLog.D("StoreKit: success (1)")
-            ServicePlanDataServiceImplementation.shared.currentSubscription = subscription
-            self?.successCompletion?(nil)
-            SKPaymentQueue.default().finishTransaction(transaction)
-        }, failure: { [weak self] (error) in
-            guard let `self` = self else { return }
-            switch (error as NSError).code {
-            case 22101:
-                PMLog.D("StoreKit: amount mismatch")
-                // ammount mismatch - try report only credits without activating the plan
-                self.paymentsService.credit(amount: plan.yearlyCost, receipt: .apple(token: receipt), success: {
-                    self.errorCompletion(Errors.creditsApplied)
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                }, failure: { (error) in
-                    if (error as NSError).code == 22916 { // Apple payment already registered
-                        PMLog.D("StoreKit: apple payment already registered")
-                        SKPaymentQueue.default().finishTransaction(transaction)
-                    } else {
-                        self.errorCompletion(error)
-                    }
-                })
-            case 22914: // sandbox receipt sent to BE
-                SKPaymentQueue.default().finishTransaction(transaction)
-                self.errorCompletion(error)
-            case 22916: // Apple payment already registered
-                PMLog.D("StoreKit: apple payment already registered (2)")
-                SKPaymentQueue.default().finishTransaction(transaction)
-            default:
-                self.errorCompletion(error)
-            }
-        })
-        /*  END of code for deletion  */
     }
     
     // swiftlint:disable function_body_length
