@@ -163,7 +163,8 @@ class AppSessionManagerImplementation: AppSessionManager {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             
-            if activeUsername.removeSubstring("+") == vpnCredentials.name.removeSubstring("+") {
+            if activeUsername.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar)
+                == vpnCredentials.name.removeSubstring(startingWithCharacter: CoreAppConstants.vpnConfigConcatChar) {
                 success()
                 return
             }
