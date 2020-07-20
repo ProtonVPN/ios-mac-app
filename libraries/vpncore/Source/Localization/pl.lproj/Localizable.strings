@@ -929,7 +929,7 @@
 "_plus_plan_features" = "Dodatkowe serwery\nSecure Core\nSerwery Tor";
 
 /* Plan upgrade required alert */
-"_plus_required" = "Subskrypcja Plus lub Visionary jest wymagana";
+"_plus_required" = "Subskrypcja planu Plus lub Visionary jest wymagana";
 
 /* iOS: section header in countries list */
 "_plus_servers" = "DODATKOWE SERWERY";
