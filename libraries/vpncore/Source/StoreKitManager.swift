@@ -26,6 +26,7 @@ public protocol StoreKitManagerFactory {
     func makeStoreKitManager() -> StoreKitManager
 }
 
+// FUTUREDO: Refactor this whole thing
 public protocol StoreKitManager: NSObjectProtocol {
 
     typealias SuccessCallback = (PaymentToken?) -> Void
@@ -331,6 +332,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         
     }
     
+    // swiftlint:disable cyclomatic_complexity function_body_length
     private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String) throws {
         let receipt = try self.readReceipt()
         
@@ -427,8 +429,8 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
             self.errorCompletion(error)
         })
-        
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
     
     // swiftlint:disable function_body_length
     private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan) {
