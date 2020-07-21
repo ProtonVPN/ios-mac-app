@@ -321,6 +321,7 @@
 "_error_transaction_failed_by_unknown_reason" = "App Store could not process your purchase.";
 "_error_no_active_username" = "Please login with the account you're upgrading the service plan for so we can complete your purchase.";
 "_error_no_new_subscription_in_successfull_response" = "Your subscription upgrade was successful. Please relaunch the app to benefit from your new service plan.";
+"_error_wrong_payment_token_status" = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
 
 // Alerts
 "_delinquent_user_title" = "Unpaid invoice";

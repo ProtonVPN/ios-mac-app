@@ -171,6 +171,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         case transactionFailedByUnknownReason
         case noActiveUsername
         case noNewSubscriptionInSuccessfullResponse
+        case wrongTokenStatus(PaymentToken.Status)
         
         public var errorDescription: String? {
             switch self {
@@ -183,6 +184,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             case .transactionFailedByUnknownReason: return LocalizedString.errorTransactionFailedByUnknownReason
             case .noActiveUsername: return LocalizedString.errorNoActiveUsername
             case .noNewSubscriptionInSuccessfullResponse: return LocalizedString.errorNoNewSubscriptionInSuccessfullResponse
+            case .wrongTokenStatus: return LocalizedString.errorWrongPaymentTokenStatus
             }
         }
     }
@@ -332,7 +334,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String) throws {
         let receipt = try self.readReceipt()
         
-        // 1. Create token
+        // Create token
         guard let token = tokenStorage.get() else {
             PMLog.ET("StoreKit: No proton token found")
             paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
@@ -407,7 +409,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             case .failed: // throw away token and retry with the new one
                 PMLog.D("StoreKit: token failed")
                 self?.tokenStorage.clear()
-                try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
                 
             case .consumed: // throw away token and receipt
                 PMLog.D("StoreKit: token already consumed")
@@ -418,7 +420,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             case .notSupported: // throw away token and retry
                 PMLog.D("StoreKit: token not supported")
                 self?.tokenStorage.clear()
-                try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
             }
                         
         }, failure: { error in

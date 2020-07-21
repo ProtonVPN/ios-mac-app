@@ -331,6 +331,7 @@ public class LocalizedString {
     public static let errorTransactionFailedByUnknownReason = NSLocalizedString("_error_transaction_failed_by_unknown_reason", comment: "In App Purchase error")
     public static let errorNoActiveUsername = NSLocalizedString("_error_no_active_username", comment: "In App Purchase error")
     public static let errorNoNewSubscriptionInSuccessfullResponse = NSLocalizedString("_error_no_new_subscription_in_successfull_response", comment: "In App Purchase error")
+    public static let errorWrongPaymentTokenStatus = NSLocalizedString("_error_wrong_payment_token_status", comment: "In App Purchase error")
     
     // MARK: - Alerts
     public static let errorUnknownTitle = NSLocalizedString("_error_unknown_title", comment: "General title for several error alerts")
