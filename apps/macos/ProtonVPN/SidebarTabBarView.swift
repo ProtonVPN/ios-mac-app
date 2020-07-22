@@ -33,8 +33,17 @@ class SidebarTabBarView: NSView {
         }
     }
     
+    private func isFocused(tabIndex index: SidebarTab) -> Bool {
+        switch self.userInterfaceLayoutDirection {
+        case .leftToRight:
+            return activeTab == index
+        case .rightToLeft:
+            return activeTab != index
+        }
+    }
+    
     override func draw(_ dirtyRect: NSRect) {
-        guard let activeTab = activeTab else {
+        guard activeTab != nil else {
             PMLog.D("Active tab not properly configured for sidebar tab bar view.", level: .debug)
             return
         }
@@ -48,8 +57,8 @@ class SidebarTabBarView: NSView {
         let rightRect = NSRect(x: bounds.origin.x + bounds.width / 2, y: bounds.origin.y, width: bounds.width / 2, height: bounds.height)
         
         drawBackground(context: context, rect: bounds)
-        drawLeftSection(context: context, rect: leftRect, focused: activeTab == .countries)
-        drawRightSection(context: context, rect: rightRect, focused: activeTab == .profiles)
+        drawLeftSection(context: context, rect: leftRect, focused: isFocused(tabIndex: .countries))
+        drawRightSection(context: context, rect: rightRect, focused: isFocused(tabIndex: .profiles))
     }
     
     private func drawBackground(context: CGContext, rect: CGRect) {

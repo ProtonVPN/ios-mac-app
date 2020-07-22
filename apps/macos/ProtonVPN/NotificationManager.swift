@@ -60,7 +60,7 @@ class NotificationManager: NSObject {
         if let newState = notification.object as? AppState {
             if case AppState.connecting(_) = newState {
                 firstTimeConnection = !PropertiesManager().hasConnected // prevents disconnected notification showing on first connection
-            } else if case AppState.connected(_) = newState, let server = appStateManager.activeServer, shouldShowNotification {
+            } else if case AppState.connected(_) = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
                 fire(connectedNotification(for: server))
             } else if case AppState.disconnected = newState, case AppState.connected(_) = nonTransientState, shouldShowNotification, !firstTimeConnection {
                 disconnectedNotification { [weak self] (notification) in
@@ -94,9 +94,10 @@ class NotificationManager: NSObject {
         let notification = NSUserNotification()
         notification.hasActionButton = false
         notification.title = "ProtonVPN " + LocalizedString.disconnected
-        if appStateManager.isOnDemandEnabled {
+        appStateManager.isOnDemandEnabled { [weak self] enabled in
+            guard enabled else { return completion(notification) }
             if PropertiesManager().killSwitch {
-                firewallManager.isProtonFirewallEnabled { (enabled) in
+                self?.firewallManager.isProtonFirewallEnabled { (enabled) in
                     notification.subtitle = enabled ? LocalizedString.killSwitchBlockingConnection : LocalizedString.alwaysOnWillReconnect
                     completion(notification)
                 }
@@ -104,8 +105,6 @@ class NotificationManager: NSObject {
                 notification.subtitle = LocalizedString.alwaysOnWillReconnect
                 completion(notification)
             }
-        } else {
-            completion(notification)
         }
     }
     
@@ -118,7 +117,7 @@ class NotificationManager: NSObject {
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return String(format: LocalizedString.ipValue, appStateManager.activeIp ?? LocalizedString.unavailable)
+        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.entryIp ?? LocalizedString.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {

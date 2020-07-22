@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,6 +20,16 @@
                 <outlet property="killSwitchInfoIcon" destination="VcB-rm-Y4N" id="t0i-85-9lY"/>
                 <outlet property="killSwitchLabel" destination="CAM-Fp-3vc" id="7Ha-fj-N8I"/>
                 <outlet property="killSwitchSeparator" destination="ZIP-UN-GXu" id="Hnb-Wy-zKT"/>
+                <outlet property="openVPNInfoIcon" destination="clC-7T-0V5" id="s01-ya-VCv"/>
+                <outlet property="openVPNLabel" destination="RrN-V4-aHA" id="noy-N8-FFH"/>
+                <outlet property="openVPNList" destination="zh6-Nf-2vX" id="MKl-GS-Ohx"/>
+                <outlet property="openVPNSeparator" destination="XQX-yv-rA9" id="blB-86-h54"/>
+                <outlet property="openVPNView" destination="2rB-Br-veB" id="hRC-RL-2Cw"/>
+                <outlet property="protocolInfoIcon" destination="aLO-su-KqV" id="EEq-Bk-eMD"/>
+                <outlet property="protocolLabel" destination="VyN-C7-RJs" id="KJ3-Cf-3vO"/>
+                <outlet property="protocolList" destination="QNh-jH-qdA" id="7vD-WP-F1O"/>
+                <outlet property="protocolSeparator" destination="hhN-6A-ZEd" id="hNf-00-MeN"/>
+                <outlet property="protocolView" destination="MAN-k2-pDp" id="4Ml-hz-coW"/>
                 <outlet property="quickConnectInfoIcon" destination="ZTJ-dJ-CnK" id="lfF-Lf-il9"/>
                 <outlet property="quickConnectLabel" destination="oot-M1-Qpj" id="rxz-fv-rpY"/>
                 <outlet property="quickConnectList" destination="VNa-Jv-QSm" id="cqk-i6-6OZ"/>
@@ -30,13 +40,13 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="XBX-SA-q2x">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="273"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="327"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hW-yr-SCJ">
-                    <rect key="frame" x="0.0" y="33" width="500" height="240"/>
+                    <rect key="frame" x="0.0" y="-13" width="500" height="340"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="ebY-r7-unO">
-                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="280" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="koN-do-dR6" userLabel="Auto Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="118" height="16"/>
@@ -72,7 +82,7 @@
                                     </constraints>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="cU2-Kb-GiS" id="X1a-l1-XBY">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" metaFont="system"/>
                                         <menu key="menu" id="rpP-BX-LMw">
                                             <items>
                                                 <menuItem title="Item 1" state="on" id="cU2-Kb-GiS"/>
@@ -97,7 +107,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="n39-Af-5V1">
-                            <rect key="frame" x="0.0" y="130" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oot-M1-Qpj" userLabel="Quick Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="124" height="16"/>
@@ -132,7 +142,7 @@
                                     </constraints>
                                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="u45-MI-gPc" id="kba-uk-uh5">
                                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="menu"/>
+                                        <font key="font" metaFont="system"/>
                                         <menu key="menu" id="u3b-bv-wFm">
                                             <items>
                                                 <menuItem title="Item 1" state="on" id="u45-MI-gPc"/>
@@ -155,7 +165,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="pyc-57-mMC">
-                            <rect key="frame" x="0.0" y="80" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="CAM-Fp-3vc" userLabel="Kill Switch Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="97" height="16"/>
@@ -200,6 +210,122 @@
                                 <constraint firstItem="vTI-Jj-f9g" firstAttribute="centerY" secondItem="pyc-57-mMC" secondAttribute="centerY" id="pVH-mA-9fg"/>
                                 <constraint firstItem="VcB-rm-Y4N" firstAttribute="leading" secondItem="CAM-Fp-3vc" secondAttribute="trailing" constant="5" id="t85-sE-cQ4"/>
                                 <constraint firstAttribute="bottom" secondItem="ZIP-UN-GXu" secondAttribute="bottom" id="xbm-BH-mjt"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="MAN-k2-pDp">
+                            <rect key="frame" x="0.0" y="130" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VyN-C7-RJs" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="55" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol" id="Dmg-Oo-SnH">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="hhN-6A-ZEd" userLabel="Protocol Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="qKE-p4-SFA">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Deu-v6-pA9"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aLO-su-KqV" userLabel="Protocol Info Icon">
+                                    <rect key="frame" x="98" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="WYM-Dx-0H6"/>
+                                        <constraint firstAttribute="height" constant="15" id="yHF-4k-XkO"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Ybr-fj-Zk5"/>
+                                </imageView>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNh-jH-qdA" userLabel="Protocol List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="248" y="12" width="213" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="rVX-A7-qQl"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="CZp-ll-ce2" id="Z1F-GZ-Mi1">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                        <menu key="menu" id="eRe-zh-kmG">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="CZp-ll-ce2"/>
+                                                <menuItem title="Item 2" id="jyD-0c-lur"/>
+                                                <menuItem title="Item 3" id="fXu-Tv-y3k"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="hhN-6A-ZEd" firstAttribute="trailing" secondItem="QNh-jH-qdA" secondAttribute="trailing" id="447-7W-QFu"/>
+                                <constraint firstItem="hhN-6A-ZEd" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="leading" id="Ho3-6I-1Db"/>
+                                <constraint firstAttribute="height" constant="50" id="Mci-ga-hpU"/>
+                                <constraint firstItem="QNh-jH-qdA" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="Ogw-Id-R6W"/>
+                                <constraint firstItem="VyN-C7-RJs" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="bKT-YT-reV"/>
+                                <constraint firstItem="aLO-su-KqV" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="onb-ch-IdL"/>
+                                <constraint firstAttribute="bottom" secondItem="hhN-6A-ZEd" secondAttribute="bottom" id="sRN-RQ-Myr"/>
+                                <constraint firstItem="aLO-su-KqV" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="trailing" constant="5" id="yb0-Iz-f1C"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="2rB-Br-veB">
+                            <rect key="frame" x="0.0" y="80" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RrN-V4-aHA" userLabel="OpenVPN Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="63" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="OpenVPN" id="nE7-hc-rHQ">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="XQX-yv-rA9" userLabel="OpenVPN Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="gjX-eI-JwQ">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Yef-7w-YOi"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="clC-7T-0V5" userLabel="OpenVPN Info Icon">
+                                    <rect key="frame" x="106" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="5wa-8v-0hh"/>
+                                        <constraint firstAttribute="width" constant="15" id="77a-gW-8nZ"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Eip-we-GIK"/>
+                                </imageView>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zh6-Nf-2vX" userLabel="OpenVPN List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="248" y="12" width="213" height="25"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="r4A-ex-u9O"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="iO4-Lk-esI" id="ahj-nV-tE1">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                        <menu key="menu" id="gNT-Xk-CVQ">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="iO4-Lk-esI"/>
+                                                <menuItem title="Item 2" id="8t4-T2-aC4"/>
+                                                <menuItem title="Item 3" id="Waz-G3-34A"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="6t7-C9-GWq"/>
+                                <constraint firstAttribute="bottom" secondItem="XQX-yv-rA9" secondAttribute="bottom" id="BXc-fC-yHK"/>
+                                <constraint firstItem="XQX-yv-rA9" firstAttribute="trailing" secondItem="zh6-Nf-2vX" secondAttribute="trailing" id="CGr-Nm-ZJg"/>
+                                <constraint firstItem="clC-7T-0V5" firstAttribute="leading" secondItem="RrN-V4-aHA" secondAttribute="trailing" constant="5" id="GcX-0b-KOY"/>
+                                <constraint firstItem="XQX-yv-rA9" firstAttribute="leading" secondItem="RrN-V4-aHA" secondAttribute="leading" id="ZdF-ad-jGD"/>
+                                <constraint firstItem="clC-7T-0V5" firstAttribute="centerY" secondItem="2rB-Br-veB" secondAttribute="centerY" id="bMO-T8-qW9"/>
+                                <constraint firstItem="zh6-Nf-2vX" firstAttribute="centerY" secondItem="2rB-Br-veB" secondAttribute="centerY" id="fdt-sy-xp3"/>
+                                <constraint firstItem="RrN-V4-aHA" firstAttribute="centerY" secondItem="2rB-Br-veB" secondAttribute="centerY" id="gz5-Q2-AZo"/>
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw">
@@ -254,13 +380,19 @@
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
                     <constraints>
                         <constraint firstItem="pyc-57-mMC" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="3ip-We-jeR"/>
+                        <constraint firstItem="RrN-V4-aHA" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="4gd-Ny-EBZ"/>
+                        <constraint firstItem="VyN-C7-RJs" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="9ih-Mj-H5x"/>
                         <constraint firstItem="vTI-Jj-f9g" firstAttribute="trailing" secondItem="VNa-Jv-QSm" secondAttribute="trailing" id="ECs-6s-g3m"/>
                         <constraint firstItem="KlO-7n-dB1" firstAttribute="trailing" secondItem="vTI-Jj-f9g" secondAttribute="trailing" id="KYF-Gc-duk"/>
                         <constraint firstItem="VNa-Jv-QSm" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="PeO-47-IIh"/>
                         <constraint firstAttribute="trailing" secondItem="pyc-57-mMC" secondAttribute="trailing" id="PhY-U1-d3N"/>
+                        <constraint firstItem="zh6-Nf-2vX" firstAttribute="leading" secondItem="kkM-EL-YsG" secondAttribute="leading" id="Ub0-UE-75d"/>
                         <constraint firstAttribute="trailing" secondItem="n39-Af-5V1" secondAttribute="trailing" id="VTh-dM-0cx"/>
+                        <constraint firstItem="zh6-Nf-2vX" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="YUT-Sz-bIA"/>
                         <constraint firstItem="oot-M1-Qpj" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="b56-QG-VJF"/>
                         <constraint firstItem="oot-M1-Qpj" firstAttribute="leading" secondItem="CAM-Fp-3vc" secondAttribute="leading" id="eC1-bg-LfD"/>
+                        <constraint firstItem="QNh-jH-qdA" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="fQX-JN-DTD"/>
+                        <constraint firstItem="QNh-jH-qdA" firstAttribute="leading" secondItem="kkM-EL-YsG" secondAttribute="leading" id="fmX-x6-HiB"/>
                         <constraint firstItem="ebY-r7-unO" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="iQp-83-RpY"/>
                         <constraint firstItem="VNa-Jv-QSm" firstAttribute="leading" secondItem="kkM-EL-YsG" secondAttribute="leading" id="j99-Ye-RAU"/>
                         <constraint firstItem="n39-Af-5V1" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="o14-1A-Bpe"/>
@@ -275,8 +407,12 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -289,7 +425,7 @@
                 <constraint firstAttribute="trailing" secondItem="6hW-yr-SCJ" secondAttribute="trailing" id="q3d-2s-BSE"/>
                 <constraint firstItem="6hW-yr-SCJ" firstAttribute="top" secondItem="XBX-SA-q2x" secondAttribute="top" id="xaz-BL-cZA"/>
             </constraints>
-            <point key="canvasLocation" x="121" y="301.5"/>
+            <point key="canvasLocation" x="121" y="328.5"/>
         </customView>
     </objects>
 </document>

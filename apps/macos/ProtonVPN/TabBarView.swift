@@ -71,49 +71,11 @@ class TabBarView: NSView {
             return
         }
         
+        let startX = (bounds.size.width - (tabWidth * CGFloat(tabCount))) / 2
         for i in 0..<tabCount {
-            let rect = NSRect(x: bounds.origin.x + CGFloat(i) * tabWidth, y: bounds.origin.y, width: tabWidth, height: tabHeight)
-            if i == 0 {
-                drawLeftmostSection(context: context, rect: rect, sectionIndex: i)
-            } else {
-                drawSection(context: context, rect: rect, sectionIndex: i)
-            }
-        }
-    }
-    
-    private func drawLeftmostSection(context: CGContext, rect: CGRect, sectionIndex index: Int) {
-        var path = CGMutablePath()
-        
-        path.move(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY))
-        path.addLine(to: CGPoint(x: rect.maxX - 35, y: rect.maxY))
-        path.addQuadCurve(to: CGPoint(x: rect.maxX, y: rect.maxY / 2), control: CGPoint(x: rect.maxX - 10, y: rect.maxY))
-        
-        if !isRightNeighbourPresent(forIndex: index) {
-            path.addQuadCurve(to: CGPoint(x: rect.maxX + 25, y: rect.minY), control: CGPoint(x: rect.maxX + 5, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        }
-        
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        
-        var color = getColor(forFocus: isFocused(tabIndex: index))
-        context.setFillColor(color)
-        context.addPath(path)
-        context.drawPath(using: .fill)
-        
-        if isRightNeighbourFocused(forIndex: index) {
-            path = CGMutablePath()
-            
-            path.move(to: CGPoint(x: rect.maxX, y: rect.maxY / 2))
-            path.addQuadCurve(to: CGPoint(x: rect.maxX - 25, y: rect.minY), control: CGPoint(x: rect.maxX - 5, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
-            path.addLine(to: CGPoint(x: rect.maxX, y: rect.maxY / 2))
-            
-            color = getColor(forFocus: true)
-            context.setFillColor(color)
-            context.addPath(path)
-            context.drawPath(using: .fill)
+            let x = startX + bounds.origin.x + CGFloat(i) * tabWidth
+            let rect = NSRect(x: x, y: bounds.origin.y, width: tabWidth, height: tabHeight)
+            drawSection(context: context, rect: rect, sectionIndex: i)
         }
     }
     
@@ -133,7 +95,13 @@ class TabBarView: NSView {
         path.addLine(to: CGPoint(x: rect.minX + 35, y: rect.maxY))
         path.addQuadCurve(to: CGPoint(x: rect.minX, y: rect.maxY / 2), control: CGPoint(x: rect.minX + 10, y: rect.maxY))
         path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
-        path.addLine(to: CGPoint(x: rect.maxX, y: rect.minY))
+        
+        if !isLeftNeighbourPresent(forIndex: index) {
+            path.move(to: CGPoint(x: rect.minX, y: rect.maxY / 2))
+            path.addQuadCurve(to: CGPoint(x: rect.minX - 25, y: rect.minY), control: CGPoint(x: rect.minX - 5, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.minY))
+            path.addLine(to: CGPoint(x: rect.minX, y: rect.maxY / 2))
+        }
         
         var color = getColor(forFocus: isFocused(tabIndex: index))
         context.setFillColor(color)
@@ -172,11 +140,20 @@ class TabBarView: NSView {
     }
     
     private func isFocused(tabIndex index: Int) -> Bool {
-        return focusedTabIndex == index
+        switch self.userInterfaceLayoutDirection {
+        case .leftToRight:
+            return focusedTabIndex == index
+        case .rightToLeft:
+            return focusedTabIndex == (tabCount ?? 0) - index - 1
+        }
+    }
+    
+    private func isLeftNeighbourPresent(forIndex index: Int) -> Bool {
+        return index > 0
     }
     
     private func isLeftNeighbourFocused(forIndex index: Int) -> Bool {
-        return focusedTabIndex == index - 1
+        return isFocused(tabIndex: index - 1)
     }
     
     private func isRightNeighbourPresent(forIndex index: Int) -> Bool {
@@ -184,6 +161,6 @@ class TabBarView: NSView {
     }
     
     private func isRightNeighbourFocused(forIndex index: Int) -> Bool {
-        return focusedTabIndex == index + 1
+        return isFocused(tabIndex: index + 1)
     }
 }

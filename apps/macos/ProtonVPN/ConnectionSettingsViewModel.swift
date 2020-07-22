@@ -39,6 +39,8 @@ class ConnectionSettingsViewModel {
         self.firewallManager = firewallManager
     }
     
+    // MARK: - Current Index
+    
     var autoConnectProfileIndex: Int {
         let autoConnect = propertiesManager.autoConnect
         
@@ -67,6 +69,26 @@ class ConnectionSettingsViewModel {
         return profileIndex
     }
     
+    var protocolProfileIndex: Int {
+        switch vpnProtocol {
+        case .ike:
+            return 0
+        default:
+            return 1
+        }
+    }
+    
+    var openVPNProfileIndex: Int {
+        switch vpnProtocol {
+        case .openVpn(.udp):
+            return 1
+        default:
+            return 0
+        }
+    }
+    
+    // MARK: - Item counts
+    
     var autoConnectItemCount: Int {
         return profileManager.allProfiles.count + 1
     }
@@ -74,6 +96,12 @@ class ConnectionSettingsViewModel {
     var quickConnectItemCount: Int {
         return profileManager.allProfiles.count
     }
+    
+    var protocolItemCount: Int { return 2 }
+    
+    var openVPNItemCount: Int { return 2 }
+        
+    // MARK: - Setters
     
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
@@ -97,6 +125,24 @@ class ConnectionSettingsViewModel {
         propertiesManager.quickConnect = selectedProfile.id
     }
     
+    func setProtocol(_ index: Int) {
+        if index == 0 {
+            propertiesManager.vpnProtocol = .ike
+        } else {
+            propertiesManager.vpnProtocol = .openVpn(.tcp)
+        }
+    }
+    
+    func setOpenVPN(_ index: Int) {
+        if index == 0 {
+            propertiesManager.vpnProtocol = .openVpn(.tcp)
+        } else {
+            propertiesManager.vpnProtocol = .openVpn(.udp)
+        }
+    }
+    
+    // MARK: - Item
+    
     func autoConnectItem(for index: Int) -> NSAttributedString {
         if index > 0 {
             return profileString(for: index - 1)
@@ -109,9 +155,33 @@ class ConnectionSettingsViewModel {
     func quickConnectItem(for index: Int) -> NSAttributedString {
         return profileString(for: index)
     }
+        
+    func protocolItem(for index: Int) -> NSAttributedString {
+        switch index {
+        case 0:
+            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        default:
+            return LocalizedString.openVpn.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        }
+    }
+        
+    func openVPNItem(for index: Int) -> NSAttributedString {
+        switch index {
+        case 0:
+            return LocalizedString.tcp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        default:
+            return LocalizedString.udp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        }
+    }
+    
+    // MARK: - Values
     
     var killSwitch: Bool {
         return propertiesManager.killSwitch
+    }
+    
+    var vpnProtocol: VpnProtocol {
+        return propertiesManager.vpnProtocol
     }
     
     func setKillSwitch(_ enabled: Bool) {
@@ -125,7 +195,7 @@ class ConnectionSettingsViewModel {
     }
     
     private func enableKillSwitch() {
-        firewallManager.installHelperIfNeeded(.userInitiated)
+        firewallManager.installHelperIfNeeded(trigger: .userInitiated)
     }
     
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {

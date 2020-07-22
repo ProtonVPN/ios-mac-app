@@ -73,7 +73,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var mapHeaderViewModel: MapHeaderViewModel = { [unowned self] in
-        return MapHeaderViewModel(vpnGateway: self.vpnGateway)
+        return MapHeaderViewModel(vpnGateway: self.vpnGateway, appStateManager: self.appStateManager)
     }()
     
     private lazy var mapSectionViewModel: MapSectionViewModel = {
@@ -173,6 +173,15 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
             self.expandButton.expandState = .expanded
             self.expandButtonLeading.constant = -expandButtonWidth
             self.expandButton.setAccessibilityLabel(LocalizedString.mapHide)
+        }
+        
+        switch view.userInterfaceLayoutDirection {
+        case .leftToRight:
+            self.expandButton.transform = NSAffineTransform()
+        case .rightToLeft:
+            self.expandButton.transform = NSAffineTransform()
+            self.expandButton.transform.translateX(by: self.expandButton.bounds.size.width, yBy: 0)
+            self.expandButton.transform.scaleX(by: -1, yBy: 1)
         }
     }
     
@@ -287,7 +296,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     private func setupHeader() {
-        let viewModel = HeaderViewModel(vpnGateway: vpnGateway, navService: navService)
+        let viewModel = HeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager, navService: navService)
         headerViewController = HeaderViewController(viewModel: viewModel)
         headerControllerViewContainer.pin(viewController: headerViewController)
         

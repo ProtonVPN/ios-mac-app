@@ -35,7 +35,14 @@ extension DependencyContainer: StatusMenuViewModelFactory {
 
 class StatusMenuViewModel {
     
-    typealias Factory = AppSessionManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & CoreAlertServiceFactory
+    typealias Factory = AppSessionManagerFactory
+        & NavigationServiceFactory
+        & VpnKeychainFactory
+        & PropertiesManagerFactory
+        & CoreAlertServiceFactory
+        & AppStateManagerFactory
+        & WiFiSecurityMonitorFactory
+
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -44,9 +51,12 @@ class StatusMenuViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
+
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
+    var unsecureWiFiWarning: ((WarningPopupViewModel) -> Void)?
     
     var serverType: ServerType = .standard
     var standardCountries: [CountryGroup]?
@@ -58,8 +68,9 @@ class StatusMenuViewModel {
     
     init(factory: Factory) {
         self.factory = factory
-        
         startObserving()
+        wifiSecurityMonitor.startMonitoring()
+        wifiSecurityMonitor.delegate = self
     }
     
     var isSessionEstablished: Bool {
@@ -133,6 +144,11 @@ class StatusMenuViewModel {
             return
         }
         isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
+    }
+
+    // MARK: - General section
+    var unprotectedNetworkNotifications: Bool {
+        return propertiesManager.unprotectedNetworkNotifications
     }
  
     // MARK: - Connect section - Outputs
@@ -216,6 +232,22 @@ class StatusMenuViewModel {
                                               onConfirm: confirmationClosure)
         disconnectWarning?(viewModel)
     }
+
+    // MARK: - Present unsecure connection
+    private func presentUnsecureWiFiWarning() {
+        let confirmationClosure: () -> Void = {
+            PMLog.D("User accepted unsecure option")
+        }
+        guard let wifiName = wifiSecurityMonitor.wifiName else { return }
+        let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
+                                              title: LocalizedString.unsecureWiFiTitle,
+                                              description: "\(LocalizedString.unsecureWiFi): \(wifiName). \(LocalizedString.unsecureWiFiLearnMore)",
+                                              linkDescription: LocalizedString.unsecureWiFiLearnMore,
+                                              url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
+                                              onConfirm: confirmationClosure)
+
+        unsecureWiFiWarning?(viewModel)
+    }
     
     private func updateCountryList() {
         standardCountries = serverManager?.grouping(for: .standard)
@@ -240,7 +272,7 @@ class StatusMenuViewModel {
     private func sessionEstablished(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
         
-        serverType = vpnGateway.activeServerType
+        serverType = propertiesManager.serverTypeToggle
         
         do {
             let tier = try vpnKeychain.fetch().maxTier
@@ -281,10 +313,7 @@ class StatusMenuViewModel {
     }
     
     @objc private func handleVpnChange() {
-        if let vpnGateway = vpnGateway {
-            serverType = vpnGateway.activeServerType
-        }
-        
+        serverType = propertiesManager.serverTypeToggle
         contentChanged?()
     }
     
@@ -302,8 +331,7 @@ class StatusMenuViewModel {
     
     private func getCurrentIp() -> String? {
         if isConnected {
-            guard let vpnGateway = vpnGateway else { return nil }
-            return vpnGateway.activeIp
+            return appStateManager.activeConnection()?.serverIp.entryIp
         } else {
             return propertiesManager.userIp
         }
@@ -314,7 +342,7 @@ class StatusMenuViewModel {
             return LocalizedString.notConnected.attributed(withColor: .protonRed(), fontSize: 14)
         }
         
-        guard let server = vpnGateway?.activeServer else {
+        guard let server = appStateManager.activeConnection()?.server else {
             return LocalizedString.noDescriptionAvailable.attributed(withColor: .protonWhite(), fontSize: 14)
         }
         
@@ -362,5 +390,15 @@ class StatusMenuViewModel {
             adjustedName = name[0..<maxCharCount] + "..."
         }
         return adjustedName
+    }
+}
+
+// MARK: Unsecure Network Discoverage
+
+extension StatusMenuViewModel: WiFiSecurityMonitorDelegate {
+
+    func unsecureWiFiDetected() {
+        guard unprotectedNetworkNotifications && !isConnecting && !isConnected else { return }
+        presentUnsecureWiFiWarning()
     }
 }

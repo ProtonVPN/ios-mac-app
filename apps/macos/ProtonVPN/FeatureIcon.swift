@@ -35,7 +35,7 @@ class FeatureIcon: NSImageView {
         let icb = CGRect(x: 0.5, y: 0.5, width: bounds.width - 1, height: bounds.height - 1)
         context.setLineWidth(1.0)
         context.addEllipse(in: icb)
-        context.setStrokeColor(NSColor.protonLightGrey().cgColor)
+        context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
         context.drawPath(using: .stroke)
         
         // draw image
@@ -52,7 +52,7 @@ class FeatureIcon: NSImageView {
                 imageRect = CGRect(origin: CGPoint(x: bounds.width / 2 - desiredWidth / 2, y: bounds.height / 2 - desiredSize.height / 2),
                                       size: desiredSize)
             }
-            if let image = image.cgImage(forProposedRect: &imageRect, context: nil, hints: nil) {
+            if let image = image.colored(NSColor.protonGreyOutOfFocus()).cgImage(forProposedRect: &imageRect, context: nil, hints: nil) {
                 context.draw(image, in: imageRect)
             }
         }

@@ -27,19 +27,32 @@ class WarningPopupViewModel {
     let image: NSImage?
     let title: String
     let description: String
+    let linkDescription: String?
+    let url: String?
     let onConfirm: () -> Void
     let onCancel: (() -> Void)?
     
-    init(image: NSImage?, title: String, description: String,
-         onConfirm: @escaping () -> Void, onCancel: (() -> Void)?) {
+    init(image: NSImage?,
+         title: String,
+         description: String,
+         linkDescription: String?,
+         url: String?,
+         onConfirm: @escaping () -> Void,
+         onCancel: (() -> Void)?) {
         self.image = image
         self.title = title
         self.description = description
         self.onConfirm = onConfirm
         self.onCancel = onCancel
+        self.linkDescription = linkDescription
+        self.url = url
     }
     
     convenience init(image: NSImage?, title: String, description: String, onConfirm: @escaping () -> Void) {
-        self.init(image: image, title: title, description: description, onConfirm: onConfirm, onCancel: nil)
+        self.init(image: image, title: title, description: description, linkDescription: nil, url: nil, onConfirm: onConfirm, onCancel: nil)
+    }
+
+    convenience init(image: NSImage?, title: String, description: String, linkDescription: String?, url: String?, onConfirm: @escaping () -> Void) {
+        self.init(image: image, title: title, description: description, linkDescription: linkDescription, url: url, onConfirm: onConfirm, onCancel: nil)
     }
 }

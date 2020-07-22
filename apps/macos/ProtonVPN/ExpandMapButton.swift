@@ -28,6 +28,8 @@ enum ExpandMapButtonState {
 }
 
 class ExpandMapButton: HoverDetectionButton {
+    
+    public var transform: NSAffineTransform = NSAffineTransform()
 
     var expandState: ExpandMapButtonState = .compact {
         didSet {
@@ -45,6 +47,7 @@ class ExpandMapButton: HoverDetectionButton {
     override func draw(_ dirtyRect: NSRect) {
         super.draw(dirtyRect)
         guard let context = NSGraphicsContext.current?.cgContext else { return }
+        transform.concat()
         
         context.setStrokeColor(NSColor.protonGreyOutOfFocus().cgColor)
         context.setFillColor(NSColor.protonGrey().cgColor)

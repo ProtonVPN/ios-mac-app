@@ -196,7 +196,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             let vpnCredentials = try vpnKeychain.fetch()
 
             if case AppState.connected(_) = appStateManager.state {
-                if let server = appStateManager.activeServer {
+                if let server = appStateManager.activeConnection()?.server {
                     if server.tier > vpnCredentials.maxTier {
                         appStateManager.disconnect()
                     }

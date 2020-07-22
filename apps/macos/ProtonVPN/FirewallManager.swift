@@ -55,10 +55,9 @@ class FirewallManager {
     private var lastVpnServerIp: String?
     
     private var killSwitchBlockingShownSinceLatestSuccessfullConnection = false
-    
     private var inactiveFirewallTimer: Timer?
-    
     private var helperInstallInProgress = false
+    fileprivate var killSwitchWaiting = false
     
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
@@ -95,7 +94,7 @@ class FirewallManager {
             PMLog.D("Failed to update the authorization database rights with error: \(error)", level: .error)
         }
         
-        installHelperIfNeeded(.update)
+        installHelperIfNeeded(trigger: .update)
     }
     
     func helperInstallStatus(completion: @escaping (_ installed: Bool) -> Void) {
@@ -114,18 +113,19 @@ class FirewallManager {
         }
     }
     
-    func installHelperIfNeeded(_ trigger: HelperInstallTrigger = .silent) {
+    func installHelperIfNeeded( _ retries: Int = 0, trigger: HelperInstallTrigger = .silent) {
+        
         guard self.propertiesManager.killSwitch, !helperInstallInProgress else { return }
-        
+                
         helperInstallInProgress = true
-        
+        checkKillSwitch(retries, trigger: trigger)
         helperInstallStatus { [unowned self] (installed) in
+            self.killSwitchWaiting = false
             if installed {
                 self.helperSuccessfullyInstalled(trigger)
                 self.helperInstallInProgress = false
             } else {
                 let unloadAndInstallClosure = { [unowned self] in self.unloadAndInstallHelper(trigger) }
-                
                 switch trigger {
                 case .userInitiated:
                     self.alertService.push(alert: InstallingHelperAlert(confirmHandler: unloadAndInstallClosure))
@@ -175,7 +175,8 @@ class FirewallManager {
             return
         }
         
-        guard let activeEntryIp = propertiesManager.lastServerEntryIp else {
+        guard let activeEntryIp = propertiesManager.lastIkeConnection?.serverIp.entryIp
+            ?? propertiesManager.lastOpenVpnConnection?.serverIp.entryIp else {
             completion(false)
             return
         }
@@ -497,5 +498,26 @@ extension FirewallManager: AppProtocol {
     
     func log(_ log: String) {
         PMLog.D(log)
+    }
+}
+
+// MARK: - Kill Switch Checker
+
+fileprivate extension FirewallManager {
+    func checkKillSwitch( _ retries: Int, trigger: HelperInstallTrigger = .silent ) {
+        if #available(OSX 10.14.4, *) { return }
+        //This check is no longer necesary on new OSX versions
+        killSwitchWaiting = true
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
+            guard self.killSwitchWaiting else { return }
+            self.propertiesManager.killSwitch = false
+            self.helperInstallInProgress = false
+            self.disableFirewall()
+            let alert = KillSwitchRequiresSwift5Alert(retries) {
+                self.propertiesManager.killSwitch = true
+                self.installHelperIfNeeded(retries + 1, trigger: trigger)
+            }
+            self.alertService.push(alert: alert)
+        }
     }
 }

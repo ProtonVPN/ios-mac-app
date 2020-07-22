@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +26,7 @@
                     <rect key="frame" x="0.0" y="40" width="500" height="85"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="glc-99-b6K">
-                            <rect key="frame" x="40" y="21" width="242" height="44"/>
+                            <rect key="frame" x="40" y="21" width="247" height="43"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Settings header" id="137-Tu-s8p">
                                 <font key="font" metaFont="system" size="36"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -45,7 +45,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="500" height="40"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fqE-or-95S" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="0.0" y="0.0" width="150" height="40"/>
+                            <rect key="frame" x="25" y="0.0" width="150" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="KAs-XC-3sd"/>
                             </constraints>
@@ -55,7 +55,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dVx-Mt-eNR" userLabel="Connection Button" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="150" y="0.0" width="150" height="40"/>
+                            <rect key="frame" x="175" y="0.0" width="150" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="Zy3-w0-Swb"/>
                             </constraints>
@@ -65,7 +65,7 @@
                             </buttonCell>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7XQ-En-Ong" customClass="TabBarButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="300" y="0.0" width="150" height="40"/>
+                            <rect key="frame" x="325" y="0.0" width="150" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="150" id="BKN-UZ-ZHJ"/>
                             </constraints>
@@ -82,7 +82,7 @@
                         <constraint firstItem="7XQ-En-Ong" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="FAu-af-Tji"/>
                         <constraint firstAttribute="height" constant="40" id="GKL-Ka-0lE"/>
                         <constraint firstItem="dVx-Mt-eNR" firstAttribute="trailing" secondItem="7XQ-En-Ong" secondAttribute="leading" id="MWi-qV-bGl"/>
-                        <constraint firstItem="fqE-or-95S" firstAttribute="leading" secondItem="NQ8-0j-JaE" secondAttribute="leading" id="Tb9-nI-DjI"/>
+                        <constraint firstItem="fqE-or-95S" firstAttribute="leading" secondItem="NQ8-0j-JaE" secondAttribute="leading" constant="25" id="Tb9-nI-DjI"/>
                         <constraint firstAttribute="bottom" secondItem="7XQ-En-Ong" secondAttribute="bottom" id="Upb-4S-wBF"/>
                         <constraint firstItem="dVx-Mt-eNR" firstAttribute="leading" secondItem="fqE-or-95S" secondAttribute="trailing" id="WAt-mM-nRp"/>
                         <constraint firstItem="dVx-Mt-eNR" firstAttribute="top" secondItem="NQ8-0j-JaE" secondAttribute="top" id="nNr-0e-53v"/>
