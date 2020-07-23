@@ -24,6 +24,17 @@ import XCTest
 
 class MigrationVersionTest: XCTestCase {
     
+    func testCompare() {
+        let v1 = MigrationVersion("1.6.0")
+        let v2 = MigrationVersion("1.6.1")
+        let v3 = MigrationVersion("1.5.0")
+        
+        XCTAssertEqual(v1 > v2, false)
+        XCTAssertEqual(v1 > v1, false)
+        XCTAssertEqual(v1 > v3, true)
+        XCTAssertEqual(v3 > v2, false)
+    }
+    
     func testMigration1() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
@@ -33,7 +44,7 @@ class MigrationVersionTest: XCTestCase {
             completion(nil)
         }
         
-        manager.migrate { error in
+        manager.migrate { _ in
             XCTAssertEqual(checkValue, 1)
         }
     }
@@ -42,6 +53,7 @@ class MigrationVersionTest: XCTestCase {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
         var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        
         manager.addCheck("1.5.9") { _ , completion in
             checkValue = 1
             completion(nil)
@@ -52,8 +64,43 @@ class MigrationVersionTest: XCTestCase {
             completion(nil)
         }
         
-        manager.migrate { error in
+        manager.migrate { _ in
             XCTAssertEqual(checkValue, 0)
+        }
+    }
+    
+    func testMigration3() {
+        var checkValue = 0
+        let propertiesManager = PropertiesManager()
+        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        
+        manager.addCheck("1.5.9") { _ , completion in
+            checkValue = checkValue + 1
+            completion(nil)
+        }
+        
+        manager.addCheck("1.6.0") { _ , completion in
+            checkValue = checkValue + 1
+            completion(nil)
+        }
+        
+        manager.addCheck("1.6.1") { _ , completion in
+            checkValue = checkValue + 1
+            completion(nil)
+        }
+        
+        manager.addCheck("1.7.1") { _ , completion in
+            checkValue = checkValue + 1
+            completion(nil)
+        }
+        
+        manager.addCheck("1.8") { _ , completion in
+            checkValue = checkValue + 1
+            completion(nil)
+        }
+        
+        manager.migrate { _ in
+            XCTAssertEqual(checkValue, 3)
         }
     }
 }
