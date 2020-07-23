@@ -29,7 +29,7 @@ public typealias MigrationBlock = (( _ version: MigrationVersion, _ completion: 
 public protocol MigrationManagerProtocol {
     
     init( _ propertiesManager: PropertiesManager, currentAppVersion: String )
-        
+    
     mutating func addCheck( _ version: String, block: @escaping MigrationBlock )
     
     func migrate( _ completion: OptionalErrorBlock )
@@ -52,7 +52,7 @@ public struct MigrationManager: MigrationManagerProtocol {
     public mutating func addCheck(_ version: String, block: @escaping MigrationBlock) {
         self.migrationBlocks.append( ( version, block ) )
     }
-
+    
     public func migrate(_ completion: OptionalErrorBlock) {
         migrate(completion, step: 0)
     }
@@ -78,7 +78,7 @@ public struct MigrationManager: MigrationManagerProtocol {
                 completion(error)
             }
         } else {
-            completion(nil)
+            self.migrate(completion, step: step + 1)
         }
     }
 }
