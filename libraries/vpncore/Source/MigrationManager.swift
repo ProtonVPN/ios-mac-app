@@ -22,9 +22,9 @@
 
 import Foundation
 
-public typealias OptionalErrorBlock = (Error?) -> (Void)
+public typealias OptionalErrorBlock = ( Error? ) -> (Void)
 
-public typealias MigrationBlock = ( (_ version: MigrationVersion, _ completion: OptionalErrorBlock) -> (Void) )
+public typealias MigrationBlock = ( ( _ version: MigrationVersion, _ completion: OptionalErrorBlock) -> (Void) )
 
 public protocol MigrationManagerProtocol {
     
@@ -70,9 +70,9 @@ struct MigrationManager: MigrationManagerProtocol {
         let block = migrationBlocks[step].1
         
         if migrationVersion > self.currentVersion {
-            block( migrationVersion ){ error in
+            block( migrationVersion ) { error in
                 guard let error = error else {
-                    self.migrate(completion, step: step+1)
+                    self.migrate(completion, step: step + 1)
                     return
                 }
                 completion(error)
