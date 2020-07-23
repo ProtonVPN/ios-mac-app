@@ -22,7 +22,9 @@
 
 import Foundation
 
-public typealias MigrationBlock = ((_ version: MigrationVersion, _ completion: (Error?) -> (Void) ) -> (Void) )
+public typealias OptionalErrorBlock = (Error?) -> (Void)
+
+public typealias MigrationBlock = ( (_ version: MigrationVersion, _ completion: OptionalErrorBlock) -> (Void) )
 
 public protocol MigrationManagerProtocol {
     
@@ -30,7 +32,7 @@ public protocol MigrationManagerProtocol {
         
     mutating func addCheck( _ version: String, block: @escaping MigrationBlock )
     
-    func migrate( _ completion: (Error?)->(Void) )
+    func migrate( _ completion: OptionalErrorBlock )
 }
 
 struct MigrationManager: MigrationManagerProtocol {
@@ -51,13 +53,13 @@ struct MigrationManager: MigrationManagerProtocol {
         self.migrationBlocks.append( ( version, block ) )
     }
 
-    func migrate(_ completion: (Error?) -> (Void)) {
+    func migrate(_ completion: OptionalErrorBlock) {
         migrate(completion, step: 0)
     }
     
     // MARK: - Private
     
-    private func migrate( _ completion: (Error?) -> (Void), step: Int ) {
+    private func migrate( _ completion: OptionalErrorBlock, step: Int ) {
         if step >= migrationBlocks.count {
             propertiesManager.lastAppVersion = currentVersion
             completion(nil)
