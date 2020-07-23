@@ -115,6 +115,10 @@
 		424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012D24AA013500F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
+		4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
+		4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
+		4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
+		4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
 		C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */; };
 		D51D9507249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
@@ -782,6 +786,8 @@
 		4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONDictionary.swift"; sourceTree = "<group>"; };
 		4242B0A62465A7F60042145A /* DataRequest+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Validation.swift"; sourceTree = "<group>"; };
 		424A012924A9F41800F3EEE4 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
+		4295DFF824C9D65600EF1A92 /* MigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationManager.swift; sourceTree = "<group>"; };
+		4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationVersion.swift; sourceTree = "<group>"; };
 		478276B7416570BEC6FC8B85 /* Pods-vpncore-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
 		4E8BE95F0BCA7D9C97EE85C0 /* Pods-vpncore-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A1D4DCE67493ADC788AF98B /* Pods-vpncore-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macos/Pods-vpncore-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1193,6 +1199,22 @@
 			name = Utils;
 			sourceTree = "<group>";
 		};
+		4295DFF624C9D60100EF1A92 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */,
+			);
+			name = Migration;
+			sourceTree = "<group>";
+		};
+		4295DFF724C9D64200EF1A92 /* Migration */ = {
+			isa = PBXGroup;
+			children = (
+				4295DFF824C9D65600EF1A92 /* MigrationManager.swift */,
+			);
+			name = Migration;
+			sourceTree = "<group>";
+		};
 		5FE4DDBFBDF1DCD71FEB5BA6 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1437,6 +1459,7 @@
 		E1616B9021C7AD9E00F42D79 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				4295DFF724C9D64200EF1A92 /* Migration */,
 				E1616C1221CBF5DF00F42D79 /* Storage */,
 				E1616BFE21C95D1000F42D79 /* Profile */,
 				E1616BF721C95C2300F42D79 /* Server */,
@@ -1640,6 +1663,7 @@
 		E1B5F65121B81E1200B558B0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4295DFF624C9D60100EF1A92 /* Migration */,
 				E1616BE721C93ABA00F42D79 /* Profiles */,
 				E1616B9521C7AE1200F42D79 /* Subscriptions */,
 				E1616B8621C7AC7B00F42D79 /* Credentials */,
@@ -2167,6 +2191,7 @@
 				4242B0172465A40F0042145A /* PaymentsPlansRequest.swift in Sources */,
 				E148AE5E21C28CF4007AB65A /* AlertService.swift in Sources */,
 				E1616BF921C95C3000F42D79 /* ServerManager.swift in Sources */,
+				4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4242B0892465A4D10042145A /* ServicePlansProperties.swift in Sources */,
 				4242B0602465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
@@ -2186,6 +2211,7 @@
 				E1B5F63221B6B19200B558B0 /* VpnState.swift in Sources */,
 				4242B0232465A40F0042145A /* PaymentsCreditRequest.swift in Sources */,
 				E129C6C122A90E6500D8437E /* PropertiesManagerMock.swift in Sources */,
+				4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
 				E13DEEAA22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
 				424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
@@ -2517,6 +2543,7 @@
 				4242B0182465A40F0042145A /* PaymentsPlansRequest.swift in Sources */,
 				E1616B8C21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
 				E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */,
+				4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4242B08A2465A4D10042145A /* ServicePlansProperties.swift in Sources */,
 				4242B0612465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				4242B0142465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
@@ -2536,6 +2563,7 @@
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
 				4242B0242465A40F0042145A /* PaymentsCreditRequest.swift in Sources */,
 				E129C6C422A90E6600D8437E /* PropertiesManagerMock.swift in Sources */,
+				4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				E1B5F67421B8241B00B558B0 /* MapConstants.swift in Sources */,
 				E13DEEAB22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
 				424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
