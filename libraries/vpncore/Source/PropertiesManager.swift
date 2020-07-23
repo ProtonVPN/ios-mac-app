@@ -328,6 +328,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var vpnProtocol: VpnProtocol {
         get {
+            
+            #if os(OSX)
+                return DefaultConstants.vpnProtocol
+            #endif
+            
             guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
                 return DefaultConstants.vpnProtocol
             }
