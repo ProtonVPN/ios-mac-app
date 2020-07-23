@@ -27,7 +27,7 @@ class MigrationVersionTest: XCTestCase {
     func testMigration1() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
-        let manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
         manager.addCheck("1.6.1") { _ , completion in
             checkValue = 1
             completion(nil)
@@ -38,10 +38,10 @@ class MigrationVersionTest: XCTestCase {
         }
     }
     
-    func testMigration1() {
+    func testMigration2() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
-        let manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
         manager.addCheck("1.5.9") { _ , completion in
             checkValue = 1
             completion(nil)
