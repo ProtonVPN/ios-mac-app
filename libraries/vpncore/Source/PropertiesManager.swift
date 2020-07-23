@@ -100,6 +100,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let vpnProtocol = "VpnProtocol"
         
         static let apiEndpoint = "ApiEndpoint"
+        
+        // Migration
+        
+        static let lastAppVersion = "LastAppVersion"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -347,6 +351,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.vpnProtocol)
+        }
+    }
+    
+    public var lastAppVersion: MigrationVersion {
+        get {
+            if let data = Storage.userDefaults().data(forKey: Keys.lastAppVersion),
+                let version = try? PropertyListDecoder().decode(MigrationVersion.self, from: data) {
+                return version
+            }
+            return MigrationVersion("0.0.0")
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastAppVersion)
         }
     }
     
