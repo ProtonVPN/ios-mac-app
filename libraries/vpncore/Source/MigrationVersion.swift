@@ -58,10 +58,10 @@ public func > (_ v1: MigrationVersion, v2: MigrationVersion) -> Bool {
     let maxValue = max(segment1.count, segment2.count)
     
     for x in 0..<maxValue {
-        guard segment1.count < x, let int1 = Int(segment1[x]) else { return false }
-        guard segment2.count < x, let int2 = Int(segment2[x]) else { return true }
-        if  int1 != int2 { int1 > int2 }
+        guard segment1.count > x, let int1 = Int(segment1[x]) else { return false }
+        guard segment2.count > x, let int2 = Int(segment2[x]) else { return true }
+        if  int1 != int2 { return int1 > int2 }
     }
     
-    return true
+    return false
 }
