@@ -25,7 +25,7 @@ import Foundation
 public typealias OptionalErrorBlock = ((Error?) -> Void)
 
 public typealias MigrationBlock = (( _ version: MigrationVersion, _ completion: OptionalErrorBlock) -> Void)
-
+ 
 public protocol MigrationManagerProtocol {
     
     init( _ propertiesManager: PropertiesManager, currentAppVersion: String )
