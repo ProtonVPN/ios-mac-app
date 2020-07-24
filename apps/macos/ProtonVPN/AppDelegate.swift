@@ -39,7 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManager!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-      
+        
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
             
@@ -131,19 +131,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - Migration
 extension AppDelegate {
     fileprivate func checkMigration() {
-        container.makeMigrationManager().addCheck("1.6.0") { version, completion in
-            
+        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             let appStateManager = self.container.makeAppStateManager()
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {
                     appStateManager.onVpnStateChanged = nil
                 }
-                if case .connected = newState, let connectionConfig = appStateManager.activeConnection() {
-                    appStateManager.connect(withConfiguration: connectionConfig)
+                
+                guard case .connected = newState else { return }
+                
+                appStateManager.disconnect {
+                    self.container.makeVpnGateway().quickConnect()
                 }
             }
-            
         }.migrate { _ in
             //Migration complete
         }
