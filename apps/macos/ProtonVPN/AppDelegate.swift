@@ -131,15 +131,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - Migration
 extension AppDelegate {
     fileprivate func checkMigration() {
-        container.makeMigrationManager().addCheck("1.6.0") { version, completion in
-            let vpn = self.container.makeVpnGateway()
-//            if vpn.connection == .connected {
-                vpn.disconnect {
-                    completion(nil)
-                }
-//            } else {
-//                completion(nil)
-//            }
+        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
+//          print("last version: " + version)
+            completion(nil)
         }.migrate { _ in
             //Migration complete
         }

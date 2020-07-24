@@ -244,9 +244,11 @@ extension DependencyContainer: ProtonAPIAuthenticatorFactory {
     }
 }
 
+// MARK: MigrationManagerFactory
 extension DependencyContainer: MigrationManagerFactory {
     func makeMigrationManager() -> MigrationManagerProtocol {
-        let propertiesManager = PropertiesManager()
-        return MigrationManager( propertiesManager, currentAppVersion: "0")
+        let propertiesManager = makePropertiesManager()
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+        return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
     }
 }
