@@ -24,11 +24,11 @@ import Foundation
 
 public typealias OptionalErrorBlock = ((Error?) -> Void)
 
-public typealias MigrationBlock = (( _ version: MigrationVersion, _ completion: @escaping OptionalErrorBlock) -> Void)
+public typealias MigrationBlock = (( _ version: String, _ completion: @escaping OptionalErrorBlock) -> Void)
 
 public protocol MigrationManagerProtocol {
     
-    init( _ propertiesManager: PropertiesManager, currentAppVersion: String )
+    init( _ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String )
     
     func addCheck( _ version: String, block: @escaping MigrationBlock ) -> MigrationManagerProtocol
     
@@ -42,13 +42,13 @@ public protocol MigrationManagerFactory {
 public class MigrationManager: NSObject, MigrationManagerProtocol {
     
     private let currentVersion: MigrationVersion
-    private let propertiesManager: PropertiesManager
+    private let propertiesManager: PropertiesManagerProtocol
     
     private var migrationBlocks: [(String, MigrationBlock)] = []
     
     // MARK: - MigrationManagerProtocol
     
-    public required init(_ propertiesManager: PropertiesManager, currentAppVersion: String) {
+    public required init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String) {
         self.propertiesManager = propertiesManager
         self.currentVersion = MigrationVersion(currentAppVersion)
         super.init()
@@ -75,8 +75,8 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
         let migrationVersion = MigrationVersion( migrationBlocks[step].0 )
         let block = migrationBlocks[step].1
         
-        if migrationVersion > self.currentVersion {
-            block( self.currentVersion ) { error in
+        if migrationVersion > self.propertiesManager.lastAppVersion {
+            block( self.propertiesManager.lastAppVersion.versionString ) { error in
                 guard let error = error else {
                     self.migrate(completion, step: step + 1)
                     return
