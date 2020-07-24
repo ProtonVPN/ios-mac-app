@@ -238,9 +238,15 @@ extension DependencyContainer: TrustKitHelperFactory {
 }
 
 // MARK: ProtonAPIAuthenticatorFactory
-
 extension DependencyContainer: ProtonAPIAuthenticatorFactory {
     func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
         return ProtonAPIAuthenticator(self)
+    }
+}
+
+extension DependencyContainer: MigrationManagerFactory {
+    func makeMigrationManager() -> MigrationManagerProtocol {
+        let propertiesManager = PropertiesManager()
+        return MigrationManager( propertiesManager, currentAppVersion: "0")
     }
 }

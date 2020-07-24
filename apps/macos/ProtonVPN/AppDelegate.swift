@@ -33,12 +33,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var helpMenu: HelpMenuController!
     @IBOutlet weak var statusMenu: StatusMenuWindowController!
     
-    private let container = DependencyContainer()
+    fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     
     private var notificationManager: NotificationManager!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+      
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
             
@@ -59,6 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
             
+            self.checkMigration()
             self.notificationManager = self.container.makeNotificationManager()
             self.navigationService.launched()
         }
@@ -123,5 +125,23 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         return false
+    }
+}
+
+// MARK: - Migration
+extension AppDelegate {
+    fileprivate func checkMigration() {
+        container.makeMigrationManager().addCheck("1.6.0") { version, completion in
+            let vpn = self.container.makeVpnGateway()
+//            if vpn.connection == .connected {
+                vpn.disconnect {
+                    completion(nil)
+                }
+//            } else {
+//                completion(nil)
+//            }
+        }.migrate { _ in
+            //Migration complete
+        }
     }
 }
