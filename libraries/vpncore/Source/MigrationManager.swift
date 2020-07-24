@@ -44,7 +44,7 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     
     // MARK: - MigrationManagerProtocol
     
-    required public init(_ propertiesManager: PropertiesManager, currentAppVersion: String) {
+    public required init(_ propertiesManager: PropertiesManager, currentAppVersion: String) {
         self.propertiesManager = propertiesManager
         self.currentVersion = MigrationVersion(currentAppVersion)
         super.init()
