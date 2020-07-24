@@ -30,7 +30,7 @@ public protocol MigrationManagerProtocol {
     
     init( _ propertiesManager: PropertiesManager, currentAppVersion: String )
     
-    mutating func addCheck( _ version: String, block: @escaping MigrationBlock )
+    mutating func addCheck( _ version: String, block: @escaping MigrationBlock ) -> MigrationManagerProtocol
     
     func migrate( _ completion: OptionalErrorBlock )
 }
@@ -49,8 +49,9 @@ public struct MigrationManager: MigrationManagerProtocol {
         self.currentVersion = MigrationVersion(currentAppVersion)
     }
     
-    public mutating func addCheck(_ version: String, block: @escaping MigrationBlock) {
+    public mutating func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol {
         self.migrationBlocks.append( ( version, block ) )
+        return self
     }
     
     public func migrate(_ completion: OptionalErrorBlock) {

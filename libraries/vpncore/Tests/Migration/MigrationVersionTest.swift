@@ -39,12 +39,11 @@ class MigrationVersionTest: XCTestCase {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
         var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
+        
         manager.addCheck("1.6.1") { _ , completion in
             checkValue = 1
             completion(nil)
-        }
-        
-        manager.migrate { _ in
+        }.migrate { _ in
             XCTAssertEqual(checkValue, 1)
         }
     }
@@ -57,14 +56,10 @@ class MigrationVersionTest: XCTestCase {
         manager.addCheck("1.5.9") { _ , completion in
             checkValue = 1
             completion(nil)
-        }
-        
-        manager.addCheck("1.6.0") { _ , completion in
+        }.addCheck("1.6.0") { _ , completion in
             checkValue = 2
             completion(nil)
-        }
-        
-        manager.migrate { _ in
+        }.migrate { _ in
             XCTAssertEqual(checkValue, 0)
         }
     }
@@ -77,29 +72,19 @@ class MigrationVersionTest: XCTestCase {
         manager.addCheck("1.5.9") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
-        }
-        
-        manager.addCheck("1.6.0") { _ , completion in
+        }.addCheck("1.6.0") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
-        }
-        
-        manager.addCheck("1.6.1") { _ , completion in
+        }.addCheck("1.6.1") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
-        }
-        
-        manager.addCheck("1.7.1") { _ , completion in
+        }.addCheck("1.7.1") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
-        }
-        
-        manager.addCheck("1.8") { _ , completion in
+        }.addCheck("1.8") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
-        }
-        
-        manager.migrate { _ in
+        }.migrate { _ in
             XCTAssertEqual(checkValue, 3)
         }
     }
