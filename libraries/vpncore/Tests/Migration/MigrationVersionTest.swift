@@ -38,11 +38,9 @@ class MigrationVersionTest: XCTestCase {
     func testMigration1() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
-        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
-        
-        manager.addCheck("1.6.1") { _ , completion in
-            checkValue = 1
-            completion(nil)
+        MigrationManager(propertiesManager, currentAppVersion: "1.6.0").addCheck("1.6.1") { _ , completion in
+                checkValue = 1
+                completion(nil)
         }.migrate { _ in
             XCTAssertEqual(checkValue, 1)
         }
@@ -51,9 +49,7 @@ class MigrationVersionTest: XCTestCase {
     func testMigration2() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
-        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
-        
-        manager.addCheck("1.5.9") { _ , completion in
+        MigrationManager(propertiesManager, currentAppVersion: "1.6.0").addCheck("1.5.9") { _ , completion in
             checkValue = 1
             completion(nil)
         }.addCheck("1.6.0") { _ , completion in
@@ -67,9 +63,8 @@ class MigrationVersionTest: XCTestCase {
     func testMigration3() {
         var checkValue = 0
         let propertiesManager = PropertiesManager()
-        var manager = MigrationManager(propertiesManager, currentAppVersion: "1.6.0")
         
-        manager.addCheck("1.5.9") { _ , completion in
+        MigrationManager(propertiesManager, currentAppVersion: "1.6.0").addCheck("1.5.9") { _ , completion in
             checkValue = checkValue + 1
             completion(nil)
         }.addCheck("1.6.0") { _ , completion in
