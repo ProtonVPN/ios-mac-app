@@ -59,6 +59,8 @@ public protocol PropertiesManagerProtocol: class {
     var apiEndpoint: String? { get set }
     var customServers: [ServerModel]? { get set }
     
+    var lastAppVersion: MigrationVersion { get set }
+    
     func logoutCleanup()
     
 }

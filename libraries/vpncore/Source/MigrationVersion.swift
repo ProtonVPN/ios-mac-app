@@ -24,7 +24,7 @@ import Foundation
 
 public struct MigrationVersion: Equatable {
     
-    fileprivate var versionString: String!
+    fileprivate(set) var versionString: String!
     
     public init( _ version: String ) {
         self.versionString = version
