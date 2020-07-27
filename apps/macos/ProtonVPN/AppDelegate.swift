@@ -55,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-            
+            self.container.makeFirewallManager().silentKillSwitchCheck()
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
