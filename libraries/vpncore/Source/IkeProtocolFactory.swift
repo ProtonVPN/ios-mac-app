@@ -29,15 +29,9 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public func create(_ configuration: VpnManagerConfiguration) -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
         
-        // Identify client to vpn server
-        #if os(OSX)
-        config.remoteIdentifier = "ikev2-macos"
-        #else
-        config.remoteIdentifier = "ikev2-ios"
-        #endif
-        
         config.username = configuration.username
         config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
+        config.remoteIdentifier = configuration.hostname
         config.serverAddress = configuration.entryServerAddress
         config.useExtendedAuthentication = true
         config.passwordReference = configuration.passwordReference
