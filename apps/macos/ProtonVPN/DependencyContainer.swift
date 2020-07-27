@@ -238,9 +238,17 @@ extension DependencyContainer: TrustKitHelperFactory {
 }
 
 // MARK: ProtonAPIAuthenticatorFactory
-
 extension DependencyContainer: ProtonAPIAuthenticatorFactory {
     func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
         return ProtonAPIAuthenticator(self)
+    }
+}
+
+// MARK: MigrationManagerFactory
+extension DependencyContainer: MigrationManagerFactory {
+    func makeMigrationManager() -> MigrationManagerProtocol {
+        let propertiesManager = makePropertiesManager()
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+        return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
     }
 }

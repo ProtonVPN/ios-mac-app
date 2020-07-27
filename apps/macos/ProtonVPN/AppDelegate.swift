@@ -33,12 +33,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var helpMenu: HelpMenuController!
     @IBOutlet weak var statusMenu: StatusMenuWindowController!
     
-    private let container = DependencyContainer()
+    fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     
     private var notificationManager: NotificationManager!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
             
@@ -59,6 +60,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
             
+            self.checkMigration()
             self.notificationManager = self.container.makeNotificationManager()
             self.navigationService.launched()
         }
@@ -123,5 +125,28 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         return false
+    }
+}
+
+// MARK: - Migration
+extension AppDelegate {
+    fileprivate func checkMigration() {
+        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
+            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
+            let appStateManager = self.container.makeAppStateManager()
+            appStateManager.onVpnStateChanged = { newState in
+                if newState != .invalid {
+                    appStateManager.onVpnStateChanged = nil
+                }
+                
+                guard case .connected = newState else { return }
+                
+                appStateManager.disconnect {
+                    self.container.makeVpnGateway().quickConnect()
+                }
+            }
+        }.migrate { _ in
+            //Migration complete
+        }
     }
 }
