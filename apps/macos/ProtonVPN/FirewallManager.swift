@@ -58,6 +58,8 @@ class FirewallManager {
     private var inactiveFirewallTimer: Timer?
     private var helperInstallInProgress = false
     fileprivate var killSwitchWaiting = false
+    fileprivate var killSwitchResponse = false
+    fileprivate var appWasUpdated = false
     
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
@@ -95,6 +97,10 @@ class FirewallManager {
         }
         
         installHelperIfNeeded(trigger: .update)
+    }
+    
+    func setUpdatingState( _ updated: Bool ){
+        self.appWasUpdated = updated
     }
     
     func helperInstallStatus(completion: @escaping (_ installed: Bool) -> Void) {
@@ -337,7 +343,7 @@ class FirewallManager {
     
     private func attemptEnablingFirewallWhileConnecting(ipAddress: String) {
         // If lastConnectedInterfaces is nil, then shouldn't enable firewall
-        guard let interfaces = lastConnectedInterfaces else { return }
+        guard let interfaces = lastConnectedInterfaces, !appWasUpdated else { return }
         
         do {
             try attemptEnablingFirewall(ipAddress: ipAddress, interfaces: interfaces)
