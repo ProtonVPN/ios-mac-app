@@ -534,7 +534,7 @@ extension FirewallManager {
             return
         }
         helper.getVersion { _ in
-            //It doesn't matter the answer, if we recieve any response will mean the Helper is properly connected
+            //It doesn't matter the answer, if we receive any response will mean the Helper is properly connected
             self.killSwitchResponse = true
         }
     }
