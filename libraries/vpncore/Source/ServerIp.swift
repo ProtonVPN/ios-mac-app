@@ -27,7 +27,6 @@ public  class ServerIp: NSObject, NSCoding, Codable {
     public let exitIp: String //"ExitIP": "95.215.61.164"
     public let domain: String  //"Domain": "es-04.protonvpn.com"
     public let status: Int //"Status": 1  (1 - OK, 0 - under maintenance)
-    public var hasExistingSession: Bool = false
     
     override public var description: String {
         return

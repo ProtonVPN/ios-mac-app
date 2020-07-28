@@ -49,7 +49,6 @@ public class VpnApiService {
         
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
-        var rSessionModels: [SessionModel]?
         var rUserIp: String?
         var rOpenVpnConfig: OpenVpnConfig?
         var rError: Error?
@@ -76,7 +75,10 @@ public class VpnApiService {
         // Only retrieve IP address when not connected to VPN
         dispatchGroup.enter()
         if appStateManager?.state.isDisconnected ?? true {
-            userIp(success: ipResolvedClosure, failure: failureClosure)
+            // Just use last known IP if getting new one failed
+            userIp(success: ipResolvedClosure, failure: { _ in
+                ipResolvedClosure(lastKnownIp)
+            })
         } else {
             ipResolvedClosure(lastKnownIp)
         }
@@ -86,13 +88,7 @@ public class VpnApiService {
             rCredentials = credentials
             dispatchGroup.leave()
         }, failure: silentFailureClosure)
-        
-        dispatchGroup.enter()
-        sessions(success: { sessionModels in
-            rSessionModels = sessionModels
-            dispatchGroup.leave()
-        }, failure: silentFailureClosure)
-        
+                
         dispatchGroup.enter()
         clientConfig(success: { openVpnConfig in
             rOpenVpnConfig = openVpnConfig
@@ -100,8 +96,8 @@ public class VpnApiService {
         }, failure: failureClosure)
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, sessionModels: rSessionModels, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
+            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig != nil ? rOpenVpnConfig : OpenVpnConfig.defaultConfig {
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -151,7 +147,7 @@ public class VpnApiService {
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
             if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, sessionModels: nil, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {

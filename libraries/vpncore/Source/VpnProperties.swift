@@ -29,34 +29,10 @@ public struct VpnProperties {
     public let ip: String?
     public let openVpnConfig: OpenVpnConfig
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, sessionModels: [SessionModel]?, ip: String?, openVpnConfig: OpenVpnConfig, appStateManager: AppStateManager?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, openVpnConfig: OpenVpnConfig, appStateManager: AppStateManager?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.ip = ip
         self.openVpnConfig = openVpnConfig
-        
-        guard let sessionModels = sessionModels else {
-            return
-        }
-        
-        let ikeSessions = sessionModels.filter { session -> Bool in
-            session.vpnProtocol == .ikev2
-        }
-        
-        let connectedIp = appStateManager?.activeConnection()?.serverIp.exitIp
-        
-        self.serverModels.forEach { server in
-            server.ips.forEach { ip in
-                ip.hasExistingSession = false
-                ikeSessions.forEach { session in
-                    if ip.exitIp == session.exitIp {
-                        if let connectedIp = connectedIp, connectedIp == ip.exitIp {
-                        } else {
-                            ip.hasExistingSession = true
-                        }
-                    }
-                }
-            }
-        }
     }
 }
