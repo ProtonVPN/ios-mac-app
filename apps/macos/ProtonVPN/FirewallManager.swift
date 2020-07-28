@@ -58,6 +58,7 @@ class FirewallManager {
     private var inactiveFirewallTimer: Timer?
     private var helperInstallInProgress = false
     fileprivate var killSwitchWaiting = false
+    fileprivate var killSwitchResponse = false
     
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
@@ -121,6 +122,7 @@ class FirewallManager {
         checkKillSwitch(retries, trigger: trigger)
         helperInstallStatus { [unowned self] (installed) in
             self.killSwitchWaiting = false
+            self.killSwitchResponse = true
             if installed {
                 self.helperSuccessfullyInstalled(trigger)
                 self.helperInstallInProgress = false
@@ -503,13 +505,14 @@ extension FirewallManager: AppProtocol {
 
 // MARK: - Kill Switch Checker
 
-fileprivate extension FirewallManager {
-    func checkKillSwitch( _ retries: Int, trigger: HelperInstallTrigger = .silent ) {
+extension FirewallManager {
+    fileprivate func checkKillSwitch( _ retries: Int, trigger: HelperInstallTrigger = .silent ) {
+        if killSwitchResponse { return }
         if #available(OSX 10.14.4, *) { return }
         //This check is no longer necesary on new OSX versions
         killSwitchWaiting = true
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.75) {
-            guard self.killSwitchWaiting else { return }
+            guard self.killSwitchWaiting, !self.killSwitchResponse else { return }
             self.propertiesManager.killSwitch = false
             self.helperInstallInProgress = false
             self.disableFirewall()
@@ -518,6 +521,21 @@ fileprivate extension FirewallManager {
                 self.installHelperIfNeeded(retries + 1, trigger: trigger)
             }
             self.alertService.push(alert: alert)
+        }
+    }
+    
+    func silentKillSwitchCheck() {
+        if #available(OSX 10.14.4, *) {
+            self.killSwitchResponse = true
+            return
+        }
+        
+        guard let helper = helperConnection()?.remoteObjectProxyWithErrorHandler({ _ in }) as? NetworkHelperProtocol else {
+            return
+        }
+        helper.getVersion { _ in
+            //It doesn't matter the answer, if we receive any response will mean the Helper is properly connected
+            self.killSwitchResponse = true
         }
     }
 }
