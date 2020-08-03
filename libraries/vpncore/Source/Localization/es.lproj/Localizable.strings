@@ -362,7 +362,7 @@
 "_error_mitm_title" = "Conexión insegura";
 
 /* Man In The Middle attack alert (VPN) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie+a a una nueva red e intenta conectarte de nuevo.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -641,10 +641,10 @@
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Ten en cuenta que tu conexión VPN finalizará cuando cambies las cuenta de Mac.";
 
 /* MacOS: Try again to connect KillSwitch */
-"_ks_enable_again" = "Intentar activar KillSwitch de nuevo";
+"_ks_enable_again" = "Habilitar Kill Switch nuevamente";
 
 /* MacOS: Keep disabled the KillSwitch component */
-"_ks_keep_disabled" = "Dejar apagado Kill";
+"_ks_keep_disabled" = "Dejar desactivado Kill Switch";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
 "_ks_requires_swift5_popup_msg" = "No puedes activar Kill Switch porque el soporte de ejecución de Swift 5 no está instalado en tu dispositivo. Para utilizar Kill Switch, primero descargue e instale Swift 5.";
@@ -1453,7 +1453,7 @@
 "_unsecure_wifi_learn_more" = "Más información";
 
 /* MacOS */
-"_unsecure_wifi_title" = "WiFi inseguro detectado";
+"_unsecure_wifi_title" = "WiFi no seguro detectado";
 
 /* App update required alert */
 "_update_required" = "Actualización requerida";
