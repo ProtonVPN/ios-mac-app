@@ -33,12 +33,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     @IBOutlet weak var helpMenu: HelpMenuController!
     @IBOutlet weak var statusMenu: StatusMenuWindowController!
     
-    private let container = DependencyContainer()
+    fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     
     private var notificationManager: NotificationManager!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        self.checkMigration()
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
             
@@ -54,7 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-            
+            self.container.makeFirewallManager().silentKillSwitchCheck()
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
@@ -123,5 +124,35 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             return true
         }
         return false
+    }
+}
+
+// MARK: - Migration
+extension AppDelegate {
+    fileprivate func checkMigration() {
+        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
+            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
+            PMLog.D("App was updated to version 1.7.1 from version " + version)
+            let firewallManager = self.container.makeFirewallManager()
+            let appStateManager = self.container.makeAppStateManager()
+            firewallManager.setUpdatingState(true)
+            appStateManager.onVpnStateChanged = { newState in
+                if newState != .invalid {
+                    appStateManager.onVpnStateChanged = nil
+                }
+                
+                guard case .connected = newState else {
+                    firewallManager.setUpdatingState(false)
+                    return
+                }
+                
+                appStateManager.disconnect {
+                    self.container.makeVpnGateway().quickConnect()
+                    firewallManager.setUpdatingState(false)
+                }
+            }
+        }.migrate { _ in
+            //Migration complete
+        }
     }
 }
