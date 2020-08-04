@@ -67,15 +67,15 @@ class SCUpgradePopupViewController: NSViewController {
         upgradeIcon.image = #imageLiteral(resourceName: "temp")
         
         upgradeDescriptionPart1.attributedStringValue =
-            LocalizedString.upgradePlanToAccessSecureCore1.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
+            LocalizedString.upgradePlanToAccessSecureCore1.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
 
         learnMoreButton.title = LocalizedString.learnMoreAboutSecureCore
-        learnMoreButton.alignment = .left
+        learnMoreButton.alignment = .natural
         learnMoreButton.target = self
         learnMoreButton.action = #selector(learnMoreButtonAction)
         
         upgradeDescriptionPart2.attributedStringValue =
-            LocalizedString.upgradePlanToAccessSecureCore2.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
+            LocalizedString.upgradePlanToAccessSecureCore2.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
     }
     
     private func setupFooterView() {

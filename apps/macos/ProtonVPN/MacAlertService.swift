@@ -78,7 +78,7 @@ extension MacAlertService: CoreAlertService {
         case is VpnStuckAlert:
             showDefaultSystemAlert(alert)
             
-        case is NetworkUnreachableAlert:
+        case is VpnNetworkUnreachableAlert:
             showDefaultSystemAlert(alert)
             
         case is SessionCountLimitAlert:
@@ -91,9 +91,6 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is MaintenanceAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is ConfirmVpnDisconnectAlert:
             showDefaultSystemAlert(alert)
             
         case is LogoutWarningAlert:
@@ -122,6 +119,9 @@ extension MacAlertService: CoreAlertService {
             
         case is KillSwitchBlockingAlert:
             show(alert as! KillSwitchBlockingAlert)
+            
+        case is KillSwitchRequiresSwift5Alert:
+            show(alert as! KillSwitchRequiresSwift5Alert)
            
         case is HelperInstallFailedAlert:
             showDefaultSystemAlert(alert)
@@ -133,6 +133,9 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is QuitWarningAlert:
+            showDefaultSystemAlert(alert)
+
+        case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
         default:
@@ -183,12 +186,12 @@ extension MacAlertService: CoreAlertService {
         let neagentViewController = NeagentHelpPopUpViewController()
         windowService.presentKeyModal(viewController: neagentViewController)
     }
-    
+
     private func show(_ alert: P2pForwardedAlert) {
         guard let p2pIcon = NSAttributedString.imageAttachment(named: "p2p-white", width: 15, height: 12) else { return }
         
-        let bodyP1 = (LocalizedString.p2pForwardedPopUpBodyP1 + " ").attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
-        let bodyP2 = (" " + LocalizedString.p2pForwardedPopUpBodyP2).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
+        let bodyP1 = (LocalizedString.p2pForwardedPopUpBodyP1 + " ").attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
+        let bodyP2 = (" " + LocalizedString.p2pForwardedPopUpBodyP2).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural)
         let body = NSAttributedString.concatenate(bodyP1, p2pIcon, bodyP2)
         
         alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
@@ -231,7 +234,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: InstallingHelperAlert) {
         let fontSize: Double = 14
         let text = String(format: LocalizedString.killSwitchHelperInstallPopupBody, LocalizedString.macPassword)
-        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .left))
+        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .natural))
         
         let passwordRange = (text as NSString).range(of: LocalizedString.macPassword)
         
@@ -244,7 +247,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: UpdatingHelperAlert) {
         let fontSize: Double = 14
         let text = String(format: LocalizedString.killSwitchHelperUpdatePopupBody, LocalizedString.macPassword)
-        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .left))
+        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .natural))
         
         let passwordRange = (text as NSString).range(of: LocalizedString.macPassword)
         
@@ -257,7 +260,7 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: KillSwitchBlockingAlert) {
         let descriptionText = String(format: LocalizedString.killSwitchBlockingBody,
                                              LocalizedString.preferences)
-        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .left))
+        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .natural))
         
         let settingsRange = (descriptionText as NSString).range(of: LocalizedString.preferences, options: .backwards)
         description.addAttribute(.link, value: "protonvpn://settings/connection", range: settingsRange)
@@ -265,4 +268,9 @@ extension MacAlertService: CoreAlertService {
         uiAlertService.displayAlert(alert, message: description)
     }
     
+    private func show( _ alert: KillSwitchRequiresSwift5Alert ) {
+        let killSwitch5ViewController = KillSwitchSwift5Popup()
+        killSwitch5ViewController.alert = alert
+        windowService.presentKeyModal(viewController: killSwitch5ViewController)
+    }
 }

@@ -61,7 +61,7 @@ class PopUpViewModel: NSObject {
     
     convenience init(alert: SystemAlert, inAppLinkManager: InAppLinkManager? = nil) {
         self.init(alert: alert,
-                  attributedDescription: (alert.message ?? alert.title ?? LocalizedString.errorInternalError).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left),
+                  attributedDescription: (alert.message ?? alert.title ?? LocalizedString.errorInternalError).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .natural),
                   inAppLinkManager: inAppLinkManager)
     }
     

@@ -163,7 +163,8 @@ class AppSessionManagerImplementation: AppSessionManager {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             
-            if activeUsername == vpnCredentials.name {
+            if activeUsername.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar)
+                == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
                 success()
                 return
             }
@@ -196,7 +197,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             let vpnCredentials = try vpnKeychain.fetch()
 
             if case AppState.connected(_) = appStateManager.state {
-                if let server = appStateManager.activeServer {
+                if let server = appStateManager.activeConnection()?.server {
                     if server.tier > vpnCredentials.maxTier {
                         appStateManager.disconnect()
                     }

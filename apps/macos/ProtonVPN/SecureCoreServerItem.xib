@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="15505" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -16,6 +16,13 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="dHi-Ge-dju">
                     <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
                     <subviews>
+                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xRq-bs-M2d" customClass="WrenchIcon" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="20" y="14" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="Jmq-vQ-bLq"/>
+                                <constraint firstAttribute="height" constant="22" id="gGY-qS-5ad"/>
+                            </constraints>
+                        </customView>
                         <button translatesAutoresizingMaskIntoConstraints="NO" id="H0Q-lh-7IV" customClass="ColoredLoadButton" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="20" y="14" width="22" height="22"/>
                             <constraints>
@@ -63,14 +70,17 @@
                     <constraints>
                         <constraint firstItem="3rV-p4-v7F" firstAttribute="leading" secondItem="EYu-J4-hev" secondAttribute="trailing" constant="5" id="4SJ-n5-1AK"/>
                         <constraint firstAttribute="trailing" secondItem="SFv-np-LVj" secondAttribute="trailing" constant="20" id="IDj-ga-oYx"/>
+                        <constraint firstItem="xRq-bs-M2d" firstAttribute="leading" secondItem="dHi-Ge-dju" secondAttribute="leading" constant="20" id="LP7-X4-IyA"/>
                         <constraint firstItem="xq2-Yd-IEe" firstAttribute="leading" secondItem="3rV-p4-v7F" secondAttribute="trailing" constant="5" id="M8j-bL-3vh"/>
                         <constraint firstItem="H0Q-lh-7IV" firstAttribute="centerY" secondItem="dHi-Ge-dju" secondAttribute="centerY" id="Nag-ew-XlC"/>
                         <constraint firstItem="SFv-np-LVj" firstAttribute="centerY" secondItem="dHi-Ge-dju" secondAttribute="centerY" id="Ppz-Eb-XiG"/>
+                        <constraint firstItem="EYu-J4-hev" firstAttribute="leading" secondItem="xRq-bs-M2d" secondAttribute="trailing" constant="10" id="SPt-DJ-15M"/>
                         <constraint firstItem="EYu-J4-hev" firstAttribute="leading" secondItem="H0Q-lh-7IV" secondAttribute="trailing" constant="10" id="Z5m-0o-xyS"/>
                         <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="xq2-Yd-IEe" secondAttribute="trailing" constant="22" id="ZGh-jD-CBG"/>
                         <constraint firstItem="xq2-Yd-IEe" firstAttribute="centerY" secondItem="3rV-p4-v7F" secondAttribute="centerY" id="aII-iz-ekD"/>
                         <constraint firstItem="EYu-J4-hev" firstAttribute="centerY" secondItem="dHi-Ge-dju" secondAttribute="centerY" id="cdP-TR-o4o"/>
                         <constraint firstItem="H0Q-lh-7IV" firstAttribute="leading" secondItem="dHi-Ge-dju" secondAttribute="leading" constant="20" id="m86-10-zBp"/>
+                        <constraint firstItem="xRq-bs-M2d" firstAttribute="centerY" secondItem="dHi-Ge-dju" secondAttribute="centerY" id="tX6-gq-6jW"/>
                         <constraint firstItem="3rV-p4-v7F" firstAttribute="centerY" secondItem="dHi-Ge-dju" secondAttribute="centerY" id="wP3-7U-SX9"/>
                     </constraints>
                 </customView>
@@ -98,6 +108,7 @@
                 <outlet property="countryFlagIcon" destination="EYu-J4-hev" id="ogM-F9-hZ4"/>
                 <outlet property="countryNameLabel" destination="3rV-p4-v7F" id="ANP-gW-N4I"/>
                 <outlet property="loadIcon" destination="H0Q-lh-7IV" id="7gK-nq-9dq"/>
+                <outlet property="maintenanceIcon" destination="xRq-bs-M2d" id="Jgo-aI-AoJ"/>
                 <outlet property="secondaryDescription" destination="SFv-np-LVj" id="XdN-Fg-MrW"/>
             </connections>
             <point key="canvasLocation" x="140" y="154"/>

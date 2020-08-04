@@ -27,9 +27,18 @@ import vpncore
 
 class DependencyContainer {
     
+    private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
+    private let appGroup = "J6S6Q257EK.group.ch.protonvpn.mac"
+    
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager()
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(),
+                                                                 openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
+                                                                                                        appGroup: appGroup,
+                                                                                                        propertiesManager: makePropertiesManager()),
+                                                                 appGroup: appGroup,
+                                                                 alertService: macAlertService)
+    
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var alamofireWrapper: AlamofireWrapper = AlamofireWrapperImplementation(factory: self)
@@ -39,7 +48,8 @@ class DependencyContainer {
                                                                         alertService: macAlertService,
                                                                         timerFactory: TimerFactory(),
                                                                         propertiesManager: PropertiesManager(),
-                                                                        vpnKeychain: vpnKeychain)
+                                                                        vpnKeychain: vpnKeychain,
+                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var firewallManager: FirewallManager = FirewallManager(factory: self)
     private lazy var appSessionManager: AppSessionManager = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
@@ -67,6 +77,13 @@ extension DependencyContainer: NavigationServiceFactory {
 extension DependencyContainer: VpnManagerFactory {
     func makeVpnManager() -> VpnManagerProtocol {
         return vpnManager
+    }
+}
+
+// MARK: VpnManagerConfigurationPreparer
+extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
+    func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
+        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService())
     }
 }
 
@@ -217,5 +234,21 @@ extension DependencyContainer: HumanVerificationAdapterFactory {
 extension DependencyContainer: TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper? {
         return trustKitHelper
+    }
+}
+
+// MARK: ProtonAPIAuthenticatorFactory
+extension DependencyContainer: ProtonAPIAuthenticatorFactory {
+    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
+        return ProtonAPIAuthenticator(self)
+    }
+}
+
+// MARK: MigrationManagerFactory
+extension DependencyContainer: MigrationManagerFactory {
+    func makeMigrationManager() -> MigrationManagerProtocol {
+        let propertiesManager = makePropertiesManager()
+        let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
+        return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
     }
 }
