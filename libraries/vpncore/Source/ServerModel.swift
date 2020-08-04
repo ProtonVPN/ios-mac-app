@@ -82,12 +82,6 @@ public class ServerModel: NSObject, NSCoding, Codable {
         return status == 0
     }
     
-    public var hasExistingSession: Bool {
-        return ips.filter { ip -> Bool in
-            !ip.hasExistingSession
-        }.isEmpty
-    }
-    
     public var serverType: ServerType {
         return isSecureCore ? .secureCore : .standard
     }

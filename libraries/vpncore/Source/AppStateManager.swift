@@ -44,7 +44,12 @@ public class AppStateManager {
     
     private var reachability = Reachability()
     public private(set) var state: AppState = .disconnected
-    private var vpnState: VpnState = .invalid
+    private var vpnState: VpnState = .invalid {
+        didSet {
+            onVpnStateChanged?(vpnState)
+        }
+    }
+    public var onVpnStateChanged: ((VpnState) -> Void)?
     private var lastAttemptedConfiguration: ConnectionConfiguration?
     private var attemptingConnection = false
     private var stuckDisconnecting = false {
@@ -92,6 +97,8 @@ public class AppStateManager {
                 alertService?.push(alert: FirstTimeConnectingAlert())
             }
         }
+        
+        prepareServerCertificate()
         
         if vpnKeychain.hasOldVpnPassword() {
             try? vpnKeychain.clearOldVpnPassword()
@@ -222,6 +229,14 @@ public class AppStateManager {
         cancelTimout()
         handleVpnError(vpnState)
         disconnect()
+    }
+    
+    private func prepareServerCertificate() {
+        do {
+            _ = try vpnKeychain.getServerCertificate()
+        } catch {
+            try? vpnKeychain.storeServerCertificate()
+        }
     }
     
     private func makeConnection(_ connectionConfiguration: ConnectionConfiguration) {

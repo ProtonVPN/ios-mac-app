@@ -33,6 +33,7 @@ public protocol AuthApiService {
     
     func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
     func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback)
+    func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
@@ -41,10 +42,6 @@ public class AuthApiServiceImplementation: AuthApiService {
      
     public init(alamofireWrapper: AlamofireWrapper) {
         self.alamofireWrapper = alamofireWrapper
-        
-        alamofireWrapper.refreshAccessToken = { [weak self] (success, failure) in
-            self?.refreshAccessToken(success: success, failure: failure)
-        }
     }
     
     public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
@@ -105,9 +102,7 @@ public class AuthApiServiceImplementation: AuthApiService {
         alamofireWrapper.request(AuthModulusRequest(), success: successWrapper, failure: failure)
     }
 
-    // MARK: - Internal
-    
-    func refreshAccessToken(success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
+    public func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
         guard let authCreds = AuthKeychain.fetch() else {
             let error = KeychainError.fetchFailure
             failure(error)
@@ -119,7 +114,7 @@ public class AuthApiServiceImplementation: AuthApiService {
                 let response = try RefreshAccessTokenResponse(dic: json)
                 let updatedCreds = authCreds.updatedWithAccessToken(response: response)
                 AuthKeychain.store(updatedCreds)
-                success()
+                success(updatedCreds)
             } catch {
                 PMLog.D("Error occurred during refresh access token parsing", level: .error)
                 let error = ParseError.refreshTokenParse

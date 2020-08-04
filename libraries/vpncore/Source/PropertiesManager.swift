@@ -59,6 +59,8 @@ public protocol PropertiesManagerProtocol: class {
     var apiEndpoint: String? { get set }
     var customServers: [ServerModel]? { get set }
     
+    var lastAppVersion: MigrationVersion { get set }
+    
     func logoutCleanup()
     
 }
@@ -100,6 +102,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let vpnProtocol = "VpnProtocol"
         
         static let apiEndpoint = "ApiEndpoint"
+        
+        // Migration
+        
+        static let lastAppVersion = "LastAppVersion"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -328,6 +334,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var vpnProtocol: VpnProtocol {
         get {
+            
+            #if os(OSX)
+                return DefaultConstants.vpnProtocol
+            #endif
+            
             guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
                 return DefaultConstants.vpnProtocol
             }
@@ -342,6 +353,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.vpnProtocol)
+        }
+    }
+    
+    public var lastAppVersion: MigrationVersion {
+        get {
+            if let data = Storage.userDefaults().data(forKey: Keys.lastAppVersion),
+                let version = try? PropertyListDecoder().decode(MigrationVersion.self, from: data) {
+                return version
+            }
+            return MigrationVersion("0.0.0")
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastAppVersion)
         }
     }
     

@@ -49,6 +49,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var currentSubscription: Subscription?
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
+    public var lastAppVersion = MigrationVersion("0")
     
     public init() {}
     

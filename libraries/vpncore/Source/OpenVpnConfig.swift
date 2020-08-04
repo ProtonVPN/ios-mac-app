@@ -14,6 +14,8 @@ public struct OpenVpnConfig: Codable {
     let defaultTcpPorts: [Int]
     let defaultUdpPorts: [Int]
     
+    public static let defaultConfig = OpenVpnConfig(defaultTcpPorts: [443, 5995, 8443], defaultUdpPorts: [80, 443, 4569, 1194, 5060])
+    
     public init(defaultTcpPorts: [Int], defaultUdpPorts: [Int]) {
         self.defaultTcpPorts = defaultTcpPorts
         self.defaultUdpPorts = defaultUdpPorts

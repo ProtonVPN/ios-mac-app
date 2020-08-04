@@ -1,6 +1,6 @@
 //
-//  VpnProperties.swift
-//  vpncore - Created on 06/05/2020.
+//  Bundle+Extension.swift
+//  vpncore - Created on 01.07.20.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,19 +20,12 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import Foundation
 
-public struct VpnProperties {
+extension Bundle {
     
-    public let serverModels: [ServerModel]
-    public let vpnCredentials: VpnCredentials?
-    public let ip: String?
-    public let openVpnConfig: OpenVpnConfig
-    
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, openVpnConfig: OpenVpnConfig, appStateManager: AppStateManager?) {
-        self.serverModels = serverModels
-        self.vpnCredentials = vpnCredentials
-        self.ip = ip
-        self.openVpnConfig = openVpnConfig
+    public static var vpncore: Bundle {
+        Bundle(path: Bundle(for: LocalizedString.self).path(forResource: "vpncore", ofType: "bundle")!)!
     }
+    
 }
