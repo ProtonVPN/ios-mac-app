@@ -387,19 +387,21 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         }
         
         guard let token = tokenStorage.get() else {
-            PMLog.ET("StoreKit: No proton token found!")
             // Try to recover by recreating the token from our receipt
-            if let receipt = try? self.readReceipt() {
-                paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
-                    PMLog.D("StoreKit: payment token (re)created")
-                    self?.tokenStorage.add(token)
-                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
-                    
-                    }, failure: { error in
-                        PMLog.D("StoreKit: payment token was not (re)created")
-                        retryOnError()
-                })
+            guard let receipt = try? self.readReceipt() else {
+                PMLog.ET("StoreKit: Proton token not found! Apple receipt not found!")
+                return
             }
+            PMLog.D("StoreKit: No proton token found")
+            paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
+                PMLog.D("StoreKit: payment token (re)created")
+                self?.tokenStorage.add(token)
+                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                
+            }, failure: { error in
+                PMLog.D("StoreKit: payment token was not (re)created")
+                retryOnError()
+            })
             return
         }
         
@@ -442,7 +444,18 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                         
         }, failure: { error in
             PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
-            retryOnError()
+            
+            if error.isTlsError || error.isNetworkError {
+                retryOnError()
+                return
+            }
+
+            let retryIn: Double = 10
+            PMLog.D("StoreKit: will cleanup old token and restart procedure in \(retryIn) seconds")
+            self.tokenStorage.clear()
+            DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
+                self.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+            }
         })
         
     }
