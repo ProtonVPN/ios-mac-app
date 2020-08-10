@@ -362,6 +362,8 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             return
         }
         
+        // FUTUREDO: start using coroutines or something similar
+        
         paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
             switch tokenStatus.status {
             case .pending: // Waiting for the token to get ready to be charged (should not happen with IAP)
