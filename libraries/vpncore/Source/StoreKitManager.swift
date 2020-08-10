@@ -561,14 +561,45 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
             PMLog.D("StoreKit: payment token created for signup")
             self?.tokenStorage.add(token)
-            self?.successCompletion?(token)
-            self?.transactionsMadeBeforeSignup.append(transaction)
-            // Transaction will be finished after login
+            
+            self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
             
         }, failure: { [weak self] error in
             self?.errorCompletion(error)
         })
                 
+    }
+    
+    private func processUnauthenticated(withToken token: PaymentToken, transaction: SKPaymentTransaction, plan: AccountPlan) {
+        // In App Payment already succeeded at this point
+        paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
+            switch tokenStatus.status {
+            case .pending: // Waiting for the token to get ready to be charged (should not happen with IAP)
+                let retryIn: Double = 30
+                PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
+                DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
+                    self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
+                }
+                return
+                
+            case .chargeable: // Gr8 success
+                self?.transactionsMadeBeforeSignup.append(transaction)
+                self?.successCompletion?(token)
+                // Transaction will be finished after login
+                
+            default:
+                PMLog.D("StoreKit: token status: \(tokenStatus.status)")
+                self?.tokenStorage.clear()
+                self?.successCompletion?(nil)
+                // Transaction will be finished after login
+            }
+                        
+        }, failure: { [weak self] error in
+            PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
+            self?.tokenStorage.clear()
+            self?.successCompletion?(nil)
+            // Transaction will be finished after login
+        })
     }
     
     var processingType: ProcessingType {
