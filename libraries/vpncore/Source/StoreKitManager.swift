@@ -32,7 +32,7 @@ public protocol StoreKitManager: NSObjectProtocol {
     typealias SuccessCallback = (PaymentToken?) -> Void
     
     func subscribeToPaymentQueue()
-    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
+    func purchaseProduct(withId id: String, successCompletion: @escaping SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
     func processAllTransactions()
     func processAllTransactions(_ finishHandler: (() -> Void)?)
     func updateAvailableProductsList()
@@ -76,8 +76,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     }()
     private var transactionsMadeBeforeSignup = [SKPaymentTransaction]()
     private var transactionsFinishHandler: (() -> Void)?
-        
-    internal var refreshHandler: (() -> Void)? // allow hook for ui updates
+    
     private var successCompletion: StoreKitManager.SuccessCallback?
     private var deferredCompletion: (() -> Void)?
     private lazy var errorCompletion: (Error) -> Void = { error in
@@ -133,7 +132,6 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     }
     
     public func purchaseProduct(withId id: String,
-                                refreshHandler: @escaping () -> Void,
                                 successCompletion: @escaping StoreKitManager.SuccessCallback,
                                 errorCompletion: @escaping (Error) -> Void,
                                 deferredCompletion: @escaping () -> Void) {
@@ -143,7 +141,6 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             return
         }
         
-        self.refreshHandler = refreshHandler
         self.successCompletion = successCompletion
         self.errorCompletion = errorCompletion
         self.deferredCompletion = deferredCompletion
@@ -173,6 +170,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         case noActiveUsername
         case noNewSubscriptionInSuccessfullResponse
         case wrongTokenStatus(PaymentToken.Status)
+        case cancelled
         
         public var errorDescription: String? {
             switch self {
@@ -186,6 +184,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             case .noActiveUsername: return LocalizedString.errorNoActiveUsername
             case .noNewSubscriptionInSuccessfullResponse: return LocalizedString.errorNoNewSubscriptionInSuccessfullResponse
             case .wrongTokenStatus: return LocalizedString.errorWrongPaymentTokenStatus
+            case .cancelled: return nil
             }
         }
     }
@@ -293,14 +292,12 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let error = transaction.error as NSError?
         switch error {
         case .some(SKError.paymentCancelled):
-            break
+            self.errorCompletion(Errors.cancelled)
         case .some(let error):
             self.errorCompletion(error)
         case .none:
             self.errorCompletion(Errors.transactionFailedByUnknownReason)
         }
-        
-        refreshHandler?()
     }
     
     private func proceed(withPurchased transaction: SKPaymentTransaction,
