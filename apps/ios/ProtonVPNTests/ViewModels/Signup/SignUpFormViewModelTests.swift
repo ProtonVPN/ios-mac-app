@@ -140,7 +140,7 @@ class SignUpFormViewModelTests: XCTestCase {
         userApiService.callbackcheckAvailability = { username, success, failure in
             success()
         }
-        storeKitManagerMock.callbackPurchaseProduct = { id, refreshHandler, successCompletion, errorCompletion, deferredCompletion in
+        storeKitManagerMock.callbackPurchaseProduct = { id, successCompletion, errorCompletion, deferredCompletion in
             expectationPurchaseProductAPICalled.fulfill()
         }
         authApiService.callbackmodulus = { success, failure in
