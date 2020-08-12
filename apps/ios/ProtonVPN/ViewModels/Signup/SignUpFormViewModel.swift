@@ -221,12 +221,15 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
                 PMLog.D("Ignoring IAP error because we already have a token")
                 self?.step3modulus()
             } else {
-                self?.failed(withError: error)
+                self?.alertService.push(alert: PaymentFailedAlert(retryHandler: {
+                    self?.startRegistration()
+                }, freeHandler: {
+                    self?.step3modulus()
+                }))
             }
                 
         }, deferredCompletion: {
-            PMLog.ET("IAP deferred", level: .warn)
-            
+            PMLog.D("IAP deferred", level: .debug)
         })
     }
         

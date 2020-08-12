@@ -124,7 +124,43 @@ class SignUpFormViewModelTests: XCTestCase {
         wait(for: [expectationError, expectationSuccess], timeout: 0.02)
     }
     
-    func testRegistrationSuccess() {
+    func testRegistrationShowsRetryMessageOnIAPError() {
+        let expectationError = XCTestExpectation(description: "Error shown", inverted: true)
+        let expectationSuccess = XCTestExpectation(description: "Registration successful", inverted: true)
+        let expectationRetryAlert = XCTestExpectation(description: "Retry alert shown")
+        
+        viewModel = SignUpFormViewModelImplementation(factory: factory, plan: AccountPlan.basic)
+        viewModel.email = "abc"
+        viewModel.username = "abc"
+        viewModel.password1 = "abc"
+        viewModel.password2 = "abc"
+        
+        struct SomeError: Error {}
+        
+        userApiService.callbackcheckAvailability = { username, success, failure in
+            success()
+        }
+        storeKitManagerMock.callbackPurchaseProduct = { id, successCompletion, errorCompletion, deferredCompletion in
+            errorCompletion(SomeError())
+        }        
+        viewModel.registrationFinished = { loggedIn in
+            expectationSuccess.fulfill()
+        }
+        viewModel.showError = { error in
+            expectationError.fulfill()
+        }
+        viewModel.startRegistration()
+        
+        alertService.alerts.forEach { alert in
+            if alert is PaymentFailedAlert {
+                expectationRetryAlert.fulfill()
+            }
+        }
+        
+        wait(for: [expectationError, expectationSuccess, expectationRetryAlert], timeout: 0.02)
+    }
+    
+    func testFreeRegistrationSuccess() {
         let expectationError = XCTestExpectation(description: "Error shown", inverted: true)
         let expectationSuccess = XCTestExpectation(description: "Registration successful")
         let expectationPurchaseProductAPICalled = XCTestExpectation(description: "Product purchase API endpoint called", inverted: true) // We have free plan, so purchase should not be called
@@ -156,6 +192,50 @@ class SignUpFormViewModelTests: XCTestCase {
             success()
         }
         
+        viewModel.showError = { error in
+            expectationError.fulfill()
+        }
+        viewModel.registrationFinished = { loggedIn in
+            expectationSuccess.fulfill()
+        }
+        viewModel.startRegistration()
+        
+        wait(for: [expectationError, expectationSuccess, expectationPurchaseProductAPICalled, expectationModulusCalled, expectationCreateUserCalled, expectationLoginCalled], timeout: 0.2)
+    }
+    
+    func testPaidRegistrationSuccess() {
+        let expectationError = XCTestExpectation(description: "Error shown", inverted: true)
+        let expectationSuccess = XCTestExpectation(description: "Registration successful")
+        let expectationPurchaseProductAPICalled = XCTestExpectation(description: "Product purchase API endpoint called")
+        let expectationModulusCalled = XCTestExpectation(description: "Modulus called")
+        let expectationCreateUserCalled = XCTestExpectation(description: "Create user API endpoint called")
+        let expectationLoginCalled = XCTestExpectation(description: "Log in API endpoint called")
+        
+        viewModel = SignUpFormViewModelImplementation(factory: factory, plan: AccountPlan.basic)
+        viewModel.email = "abc@abc.abc"
+        viewModel.username = "abc"
+        viewModel.password1 = "abcaaa"
+        viewModel.password2 = "abcaaa"
+        
+        userApiService.callbackcheckAvailability = { username, success, failure in
+            success()
+        }
+        storeKitManagerMock.callbackPurchaseProduct = { id, successCompletion, errorCompletion, deferredCompletion in
+            expectationPurchaseProductAPICalled.fulfill()
+            successCompletion(try? PaymentToken(token: "", status: .chargeable))
+        }
+        authApiService.callbackmodulus = { success, failure in
+            expectationModulusCalled.fulfill()
+            success(try! ModulusResponse(dic: ["Modulus": "abc" as AnyObject, "ModulusID": "qwe" as AnyObject]))
+        }
+        userApiService.callbackcreateUser = { userProperties, success, failure in
+            expectationCreateUserCalled.fulfill()
+            success()
+        }
+        appSessionManager.callbackLogIn = { username, password, success, failure in
+            expectationLoginCalled.fulfill()
+            success()
+        }
         viewModel.showError = { error in
             expectationError.fulfill()
         }
@@ -227,5 +307,11 @@ fileprivate class Factory: SignUpFormViewModelImplementation.Factory {
     
     func makeSigninInfoContainer() -> SigninInfoContainer {
         return signinInfoContainer
+    }
+}
+
+fileprivate extension PaymentToken {
+    init(token: String, status: Status) throws {
+        try self.init(from: JSONDecoder().decode(PaymentToken.self, from: "{'token':'\(token)', 'status':'\(status)'}".data(using: .utf8)!) as! Decoder)
     }
 }

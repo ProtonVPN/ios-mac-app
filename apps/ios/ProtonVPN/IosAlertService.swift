@@ -146,6 +146,9 @@ extension IosAlertService: CoreAlertService {
         case is RegistrationUserAlreadyExistsAlert:
             showDefaultSystemAlert(alert)
             
+        case is PaymentFailedAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
