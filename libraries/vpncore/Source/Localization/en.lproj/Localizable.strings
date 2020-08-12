@@ -274,6 +274,11 @@
 "_error_apply_payment_failed_on_upgrade_message" = "You have successfully paid but your purchase was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
 "_error_apply_payment_failed_on_registration_support" = "Contact customer support";
 
+"_error_apply_payment_failed_title" = "Payment failed";
+"_error_apply_payment_failed_message" = "Your payment was not processed. To try again, click Retry. You will only be charged once.\nTo continue with a free account, click Continue with free account. You can upgrade to a paid plan at a later date.";
+"_error_apply_payment_failed_retry" = "Retry";
+"_error_apply_payment_failed_free" = "Continue with free account";
+
 /* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
 "_error_decode" = "Failed to decode archived data in class: %@";
 "_error_email_verification_disabled" = "Email verification temporarily disabled";

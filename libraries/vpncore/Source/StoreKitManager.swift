@@ -562,7 +562,10 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
             
         }, failure: { [weak self] error in
-            self?.errorCompletion(error)
+            PMLog.ET("StoreKit: Create token failed: \(error.localizedDescription)")
+            self?.tokenStorage.clear()
+            self?.successCompletion?(nil)
+            // Transaction will be finished after login
         })
                 
     }

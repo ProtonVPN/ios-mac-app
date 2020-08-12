@@ -535,3 +535,16 @@ public class RegistrationUserAlreadyExistsAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
     }
 }
+
+public class PaymentFailedAlert: SystemAlert {
+    public var title: String? = LocalizedString.errorApplyPaymentTitle
+    public var message: String? = LocalizedString.errorApplyPaymentMessage
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(retryHandler: @escaping () -> Void, freeHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.errorApplyPaymentRetry, style: .confirmative, handler: retryHandler))
+        actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFree, style: .cancel, handler: freeHandler))
+    }
+}

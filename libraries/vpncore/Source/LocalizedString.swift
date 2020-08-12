@@ -274,6 +274,11 @@ public class LocalizedString {
     public static let errorApplyPaymentOnRegistrationMessage = NSLocalizedString("_error_apply_payment_failed_on_registration_message", comment: "Error applying credit after registration alert")
     public static let errorApplyPaymentOnRegistrationSupport = NSLocalizedString("_error_apply_payment_failed_on_registration_support", comment: "Error applying credit after registration alert")
     
+    public static let errorApplyPaymentTitle = NSLocalizedString("_error_apply_payment_failed_title", comment: "Error during payment alert - title")
+    public static let errorApplyPaymentMessage = NSLocalizedString("_error_apply_payment_failed_message", comment: "Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free")
+    public static let errorApplyPaymentRetry = NSLocalizedString("_error_apply_payment_failed_retry", comment: "Error during payment alert - button")
+    public static let errorApplyPaymentFree = NSLocalizedString("_error_apply_payment_failed_free", comment: "Error during payment alert - button")
+        
     public static let errorApplyPaymentOnUpgradeTitle = NSLocalizedString("_error_apply_payment_failed_on_upgrade_title", comment: "Error applying credit after upgrade alert")
     public static let errorApplyPaymentOnUpgradeMessage = NSLocalizedString("_error_apply_payment_failed_on_upgrade_message", comment: "Error applying credit after upgrade alert")
     
