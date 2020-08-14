@@ -50,6 +50,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
     public var lastAppVersion = MigrationVersion("0")
+    public var lastTimeForeground: Date?
     
     public init() {}
     
