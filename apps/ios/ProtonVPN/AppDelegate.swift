@@ -34,6 +34,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var storeKitManager: StoreKitManager = container.makeStoreKitManager()
     private lazy var servicePlanDataService: ServicePlanDataServiceImplementation = ServicePlanDataServiceImplementation.shared
     
+    // MARK: - UIApplicationDelegate
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
@@ -59,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return true
     }
-
+    
     func applicationWillEnterForeground(_ application: UIApplication) {
         appStateManager.refreshState()
     }
@@ -84,8 +86,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         return handleAction(action)
     }
+
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        container.makePropertiesManager().lastTimeForeground = Date()
+    }
     
-    private func handleAction(_ action: String) -> Bool {
+    func applicationDidBecomeActive(_ application: UIApplication) {
+        let appStateManager = container.makeAppStateManager()
+        // If the app was on a closed state, we'll have to wait for the configuration to be stablished
+        appStateManager.onVpnStateChanged = { state in
+            appStateManager.onVpnStateChanged = nil
+            self.checkStuckConnection(state)
+        }
+        
+        // Otherwise just  check directly  the connection
+        let state = container.makeVpnManager().state
+        self.checkStuckConnection(state)
+    }
+}
+
+fileprivate extension AppDelegate {
+    
+    // MARK: - Private
+
+    func handleAction(_ action: String) -> Bool {
         switch action {
             
         case URLConstants.deepLinkLoginAction:
@@ -112,7 +136,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    @objc private func stateDidUpdate() {
+    @objc func stateDidUpdate() {
         switch appStateManager.state {
         case .connected:
             NotificationCenter.default.removeObserver(self)
@@ -125,6 +149,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         default:
             NotificationCenter.default.removeObserver(self)
             return
+        }
+    }
+    
+    func checkStuckConnection( _ state: VpnState) {
+
+        let propertiesManager = container.makePropertiesManager()
+        guard case VpnState.connecting(_) = state else {
+            propertiesManager.lastTimeForeground = nil
+            return
+        }
+        
+        guard let lastTime = propertiesManager.lastTimeForeground else {
+            DispatchQueue.main.asyncAfter(deadline: .now() + AppConstants.Time.waitingTimeForConnectionStuck) {
+                if case VpnState.connecting(_) = self.container.makeVpnManager().state {
+                    self.container.makeVpnGateway().quickConnect()
+                }
+                propertiesManager.lastTimeForeground = nil
+            }
+            return
+        }
+        
+        if lastTime.timeIntervalSinceNow > AppConstants.Time.timeForForegroundStuck {
+            self.container.makeVpnGateway().quickConnect()
+            propertiesManager.lastTimeForeground = nil
         }
     }
 }
