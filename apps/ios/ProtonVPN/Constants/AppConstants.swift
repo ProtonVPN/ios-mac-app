@@ -27,7 +27,7 @@ class AppConstants {
     // Connection stuck timming
     
     struct Time {
-        static let waitingTimeForConnectionStuck: Double = 10
+        static let waitingTimeForConnectionStuck: Double = 3
         static let timeForForegroundStuck: Double = 1800 //30 minutes
     }
 }

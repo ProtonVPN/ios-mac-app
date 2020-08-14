@@ -160,18 +160,20 @@ fileprivate extension AppDelegate {
             return
         }
         
-        guard let lastTime = propertiesManager.lastTimeForeground else {
-            DispatchQueue.main.asyncAfter(deadline: .now() + AppConstants.Time.waitingTimeForConnectionStuck) {
-                if case VpnState.connecting(_) = self.container.makeVpnManager().state {
-                    self.container.makeVpnGateway().quickConnect()
-                }
+        DispatchQueue.main.asyncAfter(deadline: .now() + AppConstants.Time.waitingTimeForConnectionStuck) {
+            let state = self.container.makeVpnManager().state
+            
+            guard case .connecting = state else {
                 propertiesManager.lastTimeForeground = nil
+                return
             }
-            return
-        }
-        
-        if lastTime.timeIntervalSinceNow > AppConstants.Time.timeForForegroundStuck {
-            self.container.makeVpnGateway().quickConnect()
+            
+            let lastTime = propertiesManager.lastTimeForeground
+            
+            if lastTime == nil || lastTime!.timeIntervalSinceNow > AppConstants.Time.timeForForegroundStuck {
+                self.container.makeVpnGateway().quickConnect()
+            }
+                
             propertiesManager.lastTimeForeground = nil
         }
     }
