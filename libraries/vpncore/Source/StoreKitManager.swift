@@ -26,12 +26,13 @@ public protocol StoreKitManagerFactory {
     func makeStoreKitManager() -> StoreKitManager
 }
 
+// FUTUREDO: Refactor this whole thing
 public protocol StoreKitManager: NSObjectProtocol {
 
     typealias SuccessCallback = (PaymentToken?) -> Void
     
     func subscribeToPaymentQueue()
-    func purchaseProduct(withId id: String, refreshHandler: @escaping () -> Void, successCompletion: @escaping SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
+    func purchaseProduct(withId id: String, successCompletion: @escaping SuccessCallback, errorCompletion: @escaping (Error) -> Void, deferredCompletion: @escaping () -> Void)
     func processAllTransactions()
     func processAllTransactions(_ finishHandler: (() -> Void)?)
     func updateAvailableProductsList()
@@ -75,8 +76,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     }()
     private var transactionsMadeBeforeSignup = [SKPaymentTransaction]()
     private var transactionsFinishHandler: (() -> Void)?
-        
-    internal var refreshHandler: (() -> Void)? // allow hook for ui updates
+    
     private var successCompletion: StoreKitManager.SuccessCallback?
     private var deferredCompletion: (() -> Void)?
     private lazy var errorCompletion: (Error) -> Void = { error in
@@ -132,7 +132,6 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
     }
     
     public func purchaseProduct(withId id: String,
-                                refreshHandler: @escaping () -> Void,
                                 successCompletion: @escaping StoreKitManager.SuccessCallback,
                                 errorCompletion: @escaping (Error) -> Void,
                                 deferredCompletion: @escaping () -> Void) {
@@ -142,7 +141,6 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             return
         }
         
-        self.refreshHandler = refreshHandler
         self.successCompletion = successCompletion
         self.errorCompletion = errorCompletion
         self.deferredCompletion = deferredCompletion
@@ -171,6 +169,8 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         case transactionFailedByUnknownReason
         case noActiveUsername
         case noNewSubscriptionInSuccessfullResponse
+        case wrongTokenStatus(PaymentToken.Status)
+        case cancelled
         
         public var errorDescription: String? {
             switch self {
@@ -183,6 +183,8 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             case .transactionFailedByUnknownReason: return LocalizedString.errorTransactionFailedByUnknownReason
             case .noActiveUsername: return LocalizedString.errorNoActiveUsername
             case .noNewSubscriptionInSuccessfullResponse: return LocalizedString.errorNoNewSubscriptionInSuccessfullResponse
+            case .wrongTokenStatus: return LocalizedString.errorWrongPaymentTokenStatus
+            case .cancelled: return nil
             }
         }
     }
@@ -290,14 +292,12 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let error = transaction.error as NSError?
         switch error {
         case .some(SKError.paymentCancelled):
-            break
+            self.errorCompletion(Errors.cancelled)
         case .some(let error):
             self.errorCompletion(error)
         case .none:
             self.errorCompletion(Errors.transactionFailedByUnknownReason)
         }
-        
-        refreshHandler?()
     }
     
     private func proceed(withPurchased transaction: SKPaymentTransaction,
@@ -329,42 +329,107 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         
     }
     
+    // swiftlint:disable cyclomatic_complexity function_body_length
     private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String) throws {
         let receipt = try self.readReceipt()
-        // payments/subscription
-        paymentsService.postReceipt(amount: plan.yearlyCost, receipt: receipt, planId: planId, success: { [weak self] subscription in
-            PMLog.D("StoreKit: success (1)")
-            ServicePlanDataServiceImplementation.shared.currentSubscription = subscription
-            self?.successCompletion?(nil)
-            SKPaymentQueue.default().finishTransaction(transaction)
-        }, failure: { [weak self] (error) in
-            guard let `self` = self else { return }
-            switch (error as NSError).code {
-            case 22101:
-                PMLog.D("StoreKit: amount mismatch")
-                // ammount mismatch - try report only credits without activating the plan
-                self.paymentsService.credit(amount: plan.yearlyCost, receipt: .apple(token: receipt), success: {
-                    self.errorCompletion(Errors.creditsApplied)
+        
+        // Create token
+        guard let token = tokenStorage.get() else {
+            PMLog.ET("StoreKit: No proton token found")
+            paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
+                self?.tokenStorage.add(token)
+                try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                
+            }, failure: { [weak self] error in
+                PMLog.D("StoreKit: payment token was not created")
+                switch (error as NSError).code {
+                case 22914: // sandbox receipt sent to BE
                     SKPaymentQueue.default().finishTransaction(transaction)
-                }, failure: { (error) in
-                    if (error as NSError).code == 22916 { // Apple payment already registered
-                        PMLog.D("StoreKit: apple payment already registered")
-                        SKPaymentQueue.default().finishTransaction(transaction)
-                    } else {
+                    self?.tokenStorage.clear()
+                    self?.errorCompletion(error)
+                case 22916: // Apple payment already registered
+                    PMLog.D("StoreKit: apple payment already registered (2)")
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                    self?.tokenStorage.clear()
+                    self?.successCompletion?(nil)
+                default:
+                    self?.errorCompletion(error)
+                }
+            })
+            return
+        }
+        
+        // FUTUREDO: start using coroutines or something similar
+        
+        paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
+            switch tokenStatus.status {
+            case .pending: // Waiting for the token to get ready to be charged (should not happen with IAP)
+                let retryIn: Double = 30
+                PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
+                DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
+                    try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                }
+                return
+                
+            case .chargeable: // Gr8 success
+                self?.paymentsService.buyPlan(id: planId, price: plan.yearlyCost, paymentToken: .protonToken(token: token.token), success: { [weak self] subscription in
+                    PMLog.D("StoreKit: success (1)")
+                    ServicePlanDataServiceImplementation.shared.currentSubscription = subscription
+                    SKPaymentQueue.default().finishTransaction(transaction)
+                    self?.tokenStorage.clear()
+                    self?.successCompletion?(nil)
+                    
+                }, failure: { error in
+                    PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
+                                        
+                    guard let `self` = self else { return }
+                    switch (error as NSError).code {
+                    case 22101: // ammount mismatch
+                        PMLog.D("StoreKit: amount mismatch")
+                        // ammount mismatch - try report only credits without activating the plan
+                        self.paymentsService.credit(amount: plan.yearlyCost, receipt: .protonToken(token: token.token), success: {
+                            SKPaymentQueue.default().finishTransaction(transaction)
+                            self.tokenStorage.clear()
+                            self.errorCompletion(Errors.creditsApplied)
+                        }, failure: { [weak self] (error) in
+                            if (error as NSError).code == 22916 { // Apple payment already registered
+                                PMLog.D("StoreKit: apple payment already registered")
+                                SKPaymentQueue.default().finishTransaction(transaction)
+                                self?.tokenStorage.clear()
+                                self?.successCompletion?(nil)
+                            } else {
+                                self?.errorCompletion(error)
+                            }
+                        })
+                    default:
                         self.errorCompletion(error)
                     }
+                    
                 })
-            case 22914: // sandbox receipt sent to BE
+                
+            case .failed: // throw away token and retry with the new one
+                PMLog.D("StoreKit: token failed")
+                self?.tokenStorage.clear()
+                self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
+                
+            case .consumed: // throw away token and receipt
+                PMLog.D("StoreKit: token already consumed")
                 SKPaymentQueue.default().finishTransaction(transaction)
-                self.errorCompletion(error)
-            case 22916: // Apple payment already registered
-                PMLog.D("StoreKit: apple payment already registered (2)")
-                SKPaymentQueue.default().finishTransaction(transaction)
-            default:
-                self.errorCompletion(error)
+                self?.tokenStorage.clear()
+                self?.successCompletion?(nil)
+                
+            case .notSupported: // throw away token and retry
+                PMLog.D("StoreKit: token not supported")
+                self?.tokenStorage.clear()
+                self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
             }
+                        
+        }, failure: { error in
+            PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
+            self.errorCompletion(error)
         })
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
     
     // swiftlint:disable function_body_length
     private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan) {
@@ -373,9 +438,9 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             return
         }
                 
-        // Ask user if he wants to retry of fill a bug report
+        // Ask user if he wants to retry or fill a bug report
         let retryOnError = { [weak self] in
-            self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(
+            self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(type: .registration,
                 retryHandler: {
                     self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
                 },
@@ -493,14 +558,48 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
             PMLog.D("StoreKit: payment token created for signup")
             self?.tokenStorage.add(token)
-            self?.successCompletion?(token)
-            self?.transactionsMadeBeforeSignup.append(transaction)
-            // Transaction will be finished after login
+            
+            self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
             
         }, failure: { [weak self] error in
-            self?.errorCompletion(error)
+            PMLog.ET("StoreKit: Create token failed: \(error.localizedDescription)")
+            self?.tokenStorage.clear()
+            self?.successCompletion?(nil)
+            // Transaction will be finished after login
         })
                 
+    }
+    
+    private func processUnauthenticated(withToken token: PaymentToken, transaction: SKPaymentTransaction, plan: AccountPlan) {
+        // In App Payment already succeeded at this point
+        paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
+            switch tokenStatus.status {
+            case .pending: // Waiting for the token to get ready to be charged (should not happen with IAP)
+                let retryIn: Double = 30
+                PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
+                DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
+                    self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
+                }
+                return
+                
+            case .chargeable: // Gr8 success
+                self?.transactionsMadeBeforeSignup.append(transaction)
+                self?.successCompletion?(token)
+                // Transaction will be finished after login
+                
+            default:
+                PMLog.D("StoreKit: token status: \(tokenStatus.status)")
+                self?.tokenStorage.clear()
+                self?.successCompletion?(nil)
+                // Transaction will be finished after login
+            }
+                        
+        }, failure: { [weak self] error in
+            PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
+            self?.tokenStorage.clear()
+            self?.successCompletion?(nil)
+            // Transaction will be finished after login
+        })
     }
     
     var processingType: ProcessingType {

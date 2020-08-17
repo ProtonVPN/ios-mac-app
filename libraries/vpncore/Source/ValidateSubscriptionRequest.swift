@@ -1,6 +1,6 @@
 //
-//  PaymentsReceiptRequest.swift
-//  vpncore - Created on 30/04/2020.
+//  ValidateSubscriptionRequest.swift
+//  vpncore - Created on 2020-08-07.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,41 +22,31 @@
 
 import Alamofire
 
-@available(*, deprecated)
-class PaymentsReceiptRequest: PaymentsBaseRequest {
+class ValidateSubscriptionRequest: PaymentsBaseRequest {
     
-    let amount: Int
-    let receipt: String
     let planId: String
     
-    init( _ amount: Int, receipt: String, planId: String) {
-        self.amount = amount
-        self.receipt = receipt
+    init ( _ planId: String) {
         self.planId = planId
+        super.init()
     }
     
     override func path() -> String {
-        return super.path() + "/subscription"
+        return super.path() + "/subscription/check"
     }
     
     override var method: HTTPMethod {
-        return .post
+        return .put
     }
     
     override var parameters: [String: Any]? {
         return [
-            "Amount": amount,
             "Currency": "USD",
-            "Payment": [
-                "Type": "apple",
-                "Details": [
-                    "Receipt": receipt
-                ]
-            ],
             "PlanIDs": [
                 planId: 1
             ],
-            "Cycle": 12
+            "Cycle": 12,
         ]
     }
+    
 }
