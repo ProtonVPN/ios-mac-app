@@ -55,7 +55,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
-            self.container.makeFirewallManager().silentKillSwitchCheck()
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
@@ -133,22 +132,19 @@ extension AppDelegate {
         container.makeMigrationManager().addCheck("1.7.1") { version, completion in
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
-            let firewallManager = self.container.makeFirewallManager()
             let appStateManager = self.container.makeAppStateManager()
-            firewallManager.setUpdatingState(true)
+
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {
                     appStateManager.onVpnStateChanged = nil
                 }
                 
                 guard case .connected = newState else {
-                    firewallManager.setUpdatingState(false)
                     return
                 }
                 
                 appStateManager.disconnect {
                     self.container.makeVpnGateway().quickConnect()
-                    firewallManager.setUpdatingState(false)
                 }
             }
         }.migrate { _ in
