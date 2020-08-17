@@ -60,6 +60,7 @@ public protocol PropertiesManagerProtocol: class {
     var customServers: [ServerModel]? { get set }
     
     var lastAppVersion: MigrationVersion { get set }
+    var lastTimeForeground: Date? { get set }
     
     func logoutCleanup()
     
@@ -104,8 +105,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let apiEndpoint = "ApiEndpoint"
         
         // Migration
-        
         static let lastAppVersion = "LastAppVersion"
+        
+        // AppState
+        static let lastTimeForeground = "LastTimeForeground"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -367,6 +370,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.lastAppVersion)
+        }
+    }
+    
+    public var lastTimeForeground: Date? {
+        get {
+            guard let timeSince1970 = Storage.userDefaults().value(forKey: Keys.lastTimeForeground) as? Double else { return nil }
+            return Date(timeIntervalSince1970: timeSince1970)
+        }
+        set {
+            Storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground)
         }
     }
     
