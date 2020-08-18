@@ -25,6 +25,7 @@ public typealias OpenVpnConfigCallback = GenericCallback<OpenVpnConfig>
 public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
 public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
 public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
+public typealias VpnServerStateCallback = GenericCallback<VpnServerState>
 public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
 public typealias OptionalStringCallback = GenericCallback<String?>
 public typealias ContinuousServerPropertiesCallback = GenericCallback<ContinuousServerPropertiesDictionary>
@@ -213,6 +214,20 @@ public class VpnApiService {
         
         let successWrapper = serverInfoSuccessWrapper(success: success, failure: failure)
         alamofireWrapper.request(VPNLogicalServicesRequest(shortenedIp), success: successWrapper, failure: failure)
+    }
+    
+    public func serverState(serverId id: String, success: @escaping VpnServerStateCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
+            guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
+                let error = ParseError.serverParse
+                PMLog.D("'Server' field not present in server info request's response", level: .error)
+                PMLog.ET(error.localizedDescription)
+                failure(error)
+                return
+            }
+            success(serverState)
+        }
+        alamofireWrapper.request(VPNServerRequest(id), success: successWrapper, failure: failure)
     }
     
     public func userIp(success: @escaping StringCallback, failure: @escaping ErrorCallback) {

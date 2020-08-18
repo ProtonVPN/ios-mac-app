@@ -119,6 +119,10 @@
 		424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012D24AA013500F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
+		4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */; };
+		4257B21324EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */; };
+		4257B21524EC150000C4E4AC /* VpnServerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21424EC150000C4E4AC /* VpnServerState.swift */; };
+		4257B21624EC150000C4E4AC /* VpnServerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21424EC150000C4E4AC /* VpnServerState.swift */; };
 		4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
@@ -800,6 +804,8 @@
 		4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONDictionary.swift"; sourceTree = "<group>"; };
 		4242B0A62465A7F60042145A /* DataRequest+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Validation.swift"; sourceTree = "<group>"; };
 		424A012924A9F41800F3EEE4 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
+		4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNServerRequest.swift; sourceTree = "<group>"; };
+		4257B21424EC150000C4E4AC /* VpnServerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerState.swift; sourceTree = "<group>"; };
 		4295DFF824C9D65600EF1A92 /* MigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationManager.swift; sourceTree = "<group>"; };
 		4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationVersion.swift; sourceTree = "<group>"; };
 		478276B7416570BEC6FC8B85 /* Pods-vpncore-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1137,6 +1143,7 @@
 				4242B0252465A4190042145A /* VPNLocationRequest.swift */,
 				4242B0292465A41A0042145A /* VPNLogicalServicesRequest.swift */,
 				4242B0262465A4190042145A /* VPNSessionsRequest.swift */,
+				4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */,
 			);
 			name = VPN;
 			sourceTree = "<group>";
@@ -1223,6 +1230,14 @@
 				4242B0792465A4D00042145A /* RequestItem.swift */,
 			);
 			name = Utils;
+			sourceTree = "<group>";
+		};
+		4257B21724EC154000C4E4AC /* Vpn */ = {
+			isa = PBXGroup;
+			children = (
+				4257B21424EC150000C4E4AC /* VpnServerState.swift */,
+			);
+			name = Vpn;
 			sourceTree = "<group>";
 		};
 		4295DFF624C9D60100EF1A92 /* Migration */ = {
@@ -1701,6 +1716,7 @@
 		E1B5F65121B81E1200B558B0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				4257B21724EC154000C4E4AC /* Vpn */,
 				4295DFF624C9D60100EF1A92 /* Migration */,
 				E1616BE721C93ABA00F42D79 /* Profiles */,
 				E1616B9521C7AE1200F42D79 /* Subscriptions */,
@@ -2254,6 +2270,7 @@
 				4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
 				E13DEEAA22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
+				4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
 				D55D790A24978996009669E0 /* APILogger.swift in Sources */,
 				4242B0A42465A7E20042145A /* Data+JSONDictionary.swift in Sources */,
@@ -2311,6 +2328,7 @@
 				4242B0932465A4E60042145A /* GenericRequestRetrier.swift in Sources */,
 				4242B03E2465A4220042145A /* ReportsBaseRequest.swift in Sources */,
 				D5ADF5192281975E0062367C /* SiriHelperProtocol.swift in Sources */,
+				4257B21524EC150000C4E4AC /* VpnServerState.swift in Sources */,
 				E1616BAA21C7B8DD00F42D79 /* AuthKeychain.swift in Sources */,
 				4242B0832465A4D10042145A /* HumanVerificationToken.swift in Sources */,
 				E1D187F82302B0AA00C5F492 /* VpnProtocol.swift in Sources */,
@@ -2613,6 +2631,7 @@
 				4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				E1B5F67421B8241B00B558B0 /* MapConstants.swift in Sources */,
 				E13DEEAB22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
+				4257B21324EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
 				D55D790C24978996009669E0 /* APILogger.swift in Sources */,
 				4242B0A52465A7E20042145A /* Data+JSONDictionary.swift in Sources */,
@@ -2670,6 +2689,7 @@
 				4242B0942465A4E60042145A /* GenericRequestRetrier.swift in Sources */,
 				4242B03F2465A4220042145A /* ReportsBaseRequest.swift in Sources */,
 				D5ADF51A2281975E0062367C /* SiriHelperProtocol.swift in Sources */,
+				4257B21624EC150000C4E4AC /* VpnServerState.swift in Sources */,
 				E148AE6621C29A20007AB65A /* ProtonApiError.swift in Sources */,
 				4242B0842465A4D10042145A /* HumanVerificationToken.swift in Sources */,
 				E1D187F92302B0AA00C5F492 /* VpnProtocol.swift in Sources */,
