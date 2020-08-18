@@ -37,7 +37,7 @@ class VPNServerRequest: VPNBaseRequest {
         return super.path() + "/servers/" + serverId
     }
     
-    override var header: [String : String]? {
+    override var header: [String: String]? {
         return nonAuthenticatedHeader
     }
 }
