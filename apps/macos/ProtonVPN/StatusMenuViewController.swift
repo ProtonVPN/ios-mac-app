@@ -244,6 +244,10 @@ class StatusMenuViewController: NSViewController {
     }
 
     private func unsecureWarning(_ viewModel: WarningPopupViewModel) {
+        // This warning lies! "Cast from 'NSWindowDelegate?' to unrelated type 'WiFiWarningPopupViewController' always fails"
+        if let window = NSApplication.shared.modalWindow, window.delegate is WiFiWarningPopupViewController {
+            return
+        }
         presentAsModalWindow(WiFiWarningPopupViewController(viewModel: viewModel))
     }
     
