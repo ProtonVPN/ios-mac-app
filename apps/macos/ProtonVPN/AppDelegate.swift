@@ -147,6 +147,7 @@ extension AppDelegate {
                     self.container.makeVpnGateway().quickConnect()
                 }
             }
+            completion(nil)
         }.migrate { _ in
             //Migration complete
         }
