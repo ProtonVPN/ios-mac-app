@@ -353,6 +353,7 @@
 "_ks_requires_swift5_popup_msg2" = "You still have not intalled Swift 5 Runtime Support. ProtonVPN cannot run Kill Switch without Swift 5. If you choose not to install Swift 5 on your device, you will not be able to use Kill Switch to protect your device. ";
 "_ks_enable_again" = "Enable Kill Switch again";
 "_ks_keep_disabled" = "Leave Kill Switch off";
+"_maintenance_on_server_detected" = "The VPN server you were connected to is undergoing maintenance. We automatically reconnected you to the fastest available server.";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";

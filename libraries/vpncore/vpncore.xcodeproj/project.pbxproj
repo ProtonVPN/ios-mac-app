@@ -127,6 +127,10 @@
 		4257B21924EC1C1300C4E4AC /* VpnServerState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21424EC150000C4E4AC /* VpnServerState.swift */; };
 		4257B21A24EC1C2B00C4E4AC /* VPNServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */; };
 		4257B21B24EC1C2B00C4E4AC /* VPNServerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */; };
+		42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */; };
+		42878E4124EE6B09001B35BE /* MaintenanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */; };
+		42878E4224EE6B09001B35BE /* MaintenanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */; };
+		42878E4324EE6B09001B35BE /* MaintenanceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */; };
 		4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
@@ -810,6 +814,7 @@
 		424A012924A9F41800F3EEE4 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
 		4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNServerRequest.swift; sourceTree = "<group>"; };
 		4257B21424EC150000C4E4AC /* VpnServerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerState.swift; sourceTree = "<group>"; };
+		42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceManager.swift; sourceTree = "<group>"; };
 		4295DFF824C9D65600EF1A92 /* MigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationManager.swift; sourceTree = "<group>"; };
 		4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationVersion.swift; sourceTree = "<group>"; };
 		478276B7416570BEC6FC8B85 /* Pods-vpncore-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
@@ -1244,6 +1249,14 @@
 			name = Vpn;
 			sourceTree = "<group>";
 		};
+		42878E3E24EE6AED001B35BE /* Maintenance */ = {
+			isa = PBXGroup;
+			children = (
+				42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */,
+			);
+			name = Maintenance;
+			sourceTree = "<group>";
+		};
 		4295DFF624C9D60100EF1A92 /* Migration */ = {
 			isa = PBXGroup;
 			children = (
@@ -1513,6 +1526,7 @@
 		E1616B9021C7AD9E00F42D79 /* Management */ = {
 			isa = PBXGroup;
 			children = (
+				42878E3E24EE6AED001B35BE /* Maintenance */,
 				4295DFF724C9D64200EF1A92 /* Migration */,
 				E1616C1221CBF5DF00F42D79 /* Storage */,
 				E1616BFE21C95D1000F42D79 /* Profile */,
@@ -2254,6 +2268,7 @@
 				E1616BF921C95C3000F42D79 /* ServerManager.swift in Sources */,
 				4295DFF924C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4242B0892465A4D10042145A /* ServicePlansProperties.swift in Sources */,
+				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				4242B0602465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616C0921C95E1800F42D79 /* ProfileConstants.swift in Sources */,
@@ -2517,6 +2532,7 @@
 				D5C2042E24866684004FB58B /* AppState.swift in Sources */,
 				E19CE84E22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
 				D5C20436248666DC004FB58B /* LocalizationUtility.swift in Sources */,
+				42878E4124EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D5C2044E24866903004FB58B /* Storage.swift in Sources */,
 				D5C204482486674D004FB58B /* Profile.swift in Sources */,
 				D5C2043E24866704004FB58B /* ServerFeature.swift in Sources */,
@@ -2617,6 +2633,7 @@
 				E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */,
 				4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */,
 				4242B08A2465A4D10042145A /* ServicePlansProperties.swift in Sources */,
+				42878E4224EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				4242B0612465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				4242B0142465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616BFA21C95C3000F42D79 /* ServerManager.swift in Sources */,
@@ -2818,6 +2835,7 @@
 				D5C204B524866B81004FB58B /* UserError.swift in Sources */,
 				D523F11C24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				D5C204B624866B81004FB58B /* TimerFactory.swift in Sources */,
+				42878E4324EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				D5C204B724866B81004FB58B /* ProfileManager.swift in Sources */,
 				D5C204B824866B81004FB58B /* ProfileStorage.swift in Sources */,
 				D5C204B924866B81004FB58B /* ProfileUtility.swift in Sources */,
