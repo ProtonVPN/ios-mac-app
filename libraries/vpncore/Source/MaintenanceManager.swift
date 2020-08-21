@@ -37,7 +37,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private let vpnGateWay: VpnGatewayProtocol
     private let alertService: CoreAlertService
     
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol, alertService: CoreAlertService){
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol, alertService: CoreAlertService) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.vpnGateWay = vpnGateWay
@@ -75,7 +75,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
             }
-        }){ error in
+        }) { error in
             PMLog.D("Server check request failed with error: \(error)", level: .error)
         }
     }
