@@ -27,17 +27,17 @@ public protocol MaintenanceManagerFactory {
 }
 
 public protocol MaintenanceManagerProtocol {
-    func observeCurrentServerState( serverObservedCallback: @escaping BoolCallback )
+    func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool)
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
-   
+    
     private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
     private let vpnGateWay: VpnGatewayProtocol
     private let alertService: CoreAlertService
-        
-    public init( _ vpnApiService: VpnApiService, _ appStateManager: AppStateManager, _ vpnGateWay: VpnGatewayProtocol, alertService:CoreAlertService ){
+    
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol, alertService: CoreAlertService){
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.vpnGateWay = vpnGateWay
@@ -45,42 +45,38 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     }
     
     // MARK: - MaintenanceManagerProtocol
-        
-    public func observeCurrentServerState (serverObservedCallback: @escaping BoolCallback) {
-        
-        guard let activeConnection = appStateManager.activeConnection() else {
-            serverObservedCallback(false)
+    
+    public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool) {
+        if !repeats || timeInterval <= 0 {
+            self.checkServer()
             return
         }
+        
+        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
+            self.checkServer()
+        }
+    }
+    
+    private func checkServer() {
+        guard let activeConnection = appStateManager.activeConnection() else { return }
         
         switch vpnGateWay.connection {
         case .connected, .connecting:
             break
         default:
-            serverObservedCallback(false)
             return
         }
-
+        
         let serverID = activeConnection.serverIp.id
         
         vpnApiService.serverState(serverId: serverID, success: { vpnServerState in
             if vpnServerState.status != 1 {
-                serverObservedCallback(true)
+                PMLog.D("Current server on maintenance, updating to a new one. ID = \(serverID)", level: .info)
                 self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
-            } else {
-                serverObservedCallback(false)
             }
         }){ error in
-            //Something
-            serverObservedCallback(false)
+            PMLog.D("Server check request failed with error: \(error)", level: .error)
         }
-    }
-    
-    public var getBestScoredServer: ServerModel? {
-        guard let tier = try? vpnGateWay.userTier() else {
-            return nil
-        }
-        return nil
     }
 }
