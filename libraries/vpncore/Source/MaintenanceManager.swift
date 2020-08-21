@@ -48,7 +48,10 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         
     public func observeCurrentServerState (serverObservedCallback: @escaping BoolCallback) {
         
-        guard let activeConnection = appStateManager.activeConnection() else { return }
+        guard let activeConnection = appStateManager.activeConnection() else {
+            serverObservedCallback(false)
+            return
+        }
         
         switch vpnGateWay.connection {
         case .connected, .connecting:
@@ -58,12 +61,15 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             return
         }
 
-        let serverID = activeConnection.server.id
+        let serverID = activeConnection.serverIp.id
         
         vpnApiService.serverState(serverId: serverID, success: { vpnServerState in
             if vpnServerState.status != 1 {
                 serverObservedCallback(true)
+                self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
+            } else {
+                serverObservedCallback(false)
             }
         }){ error in
             //Something
@@ -75,7 +81,6 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         guard let tier = try? vpnGateWay.userTier() else {
             return nil
         }
-        
         return nil
     }
 }

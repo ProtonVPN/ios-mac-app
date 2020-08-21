@@ -548,3 +548,13 @@ public class PaymentFailedAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFree, style: .cancel, handler: freeHandler))
     }
 }
+
+public class VpnServerOnMaintenanceAlert: SystemAlert {
+    public var title: String? = LocalizedString.onMaintenanceDetected
+    public var message: String? = ""
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init() { }
+}
