@@ -75,8 +75,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
                 self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
             }
-        }) { error in
+        }, failure: { error in
             PMLog.D("Server check request failed with error: \(error)", level: .error)
-        }
+        })
     }
 }
