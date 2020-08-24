@@ -292,6 +292,12 @@
 /* API error */
 "_error_api_offline" = "در حال حاضر API برای ProtonVPN آفلاین است";
 
+/* Error during payment alert - button */
+"_error_apply_payment_failed_free" = "ادامه با حساب رایگان";
+
+/* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
+"_error_apply_payment_failed_message" = "پرداخت شما پردازش نشد. برای تلاش مجدد، Retry را کلیک کنید. از شما تنها یک بار کسر خواهد شد. برای ادامه با یک حساب رایگان، ادامه با حساب رایگان را کلیک کنید. شما می‌توانید در آینده به یک طرح پرداختی ارتقا دهید.";
+
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "شما با موفقیت ثبت نام کرده اید اما پرداخت شما انجام نشده است. برای ارسال دوباره اطلاعات پرداخت خود، سعی مجدد را کلیک کنید. شما فقط یکبار هزینه پرداخت خواهید کرد. اگر مشکل همچنان ادامه دارد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
 
@@ -300,6 +306,18 @@
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "پرداخت ناموفق";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_message" = "شما با موفقیت پرداخته‌اید ولی خرید شما پردازش نشد. برای ارسال دوباره اطلاعات پرداخت شما، Retry را بزنید. از شما تنها یکبار کسر خواهد شد. اگر مشکل پافشاری کرد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_title" = "پرداخت ناموفق بود";
+
+/* Error during payment alert - button */
+"_error_apply_payment_failed_retry" = "تلاش مجدد";
+
+/* Error during payment alert - title */
+"_error_apply_payment_failed_title" = "پرداخت ناموفق بود";
 
 /* In App Purchase error */
 "_error_credit_applied" = "برای تکمیل خرید خود با support@protonvpn.com تماس بگیرید.";
@@ -453,6 +471,9 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "نشست ProtonVPN فعال است";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "وضعیت اشتباه توکن پرداخت. لطفاً اپ را دوباره راه‌ بیاندازید. اگر خطا پافشاری کرد، با پشتیبانی تماس بگیرید.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "برنامه ProtonVPN برای امکان Kill Switch از فایروال خود برای فیلتر کردن بسته‌های دریافتی بهره می‌برد. با فعال‌سازی Kill Switch، تنظیمات این فایروال بر روی دستگاه شما بازنگاری می‌شود. اگر شما به پیکربندی فایروال فعلی خود اطمینان دارید، بهتر است از قابلیت Kill Switch استفاده نکنید.\n\nبرای استفاده از Kill Switch و بازنگاری اطلاعات بر روی تنظیمات فعلی فایروال، کلید 'ادامه' را فشار دهید.\n\nبرای خاموش کردن Kill Switch و ادامه با فایروال فعلی، گزینه 'لغو' را انتخاب کنید.";

@@ -292,14 +292,32 @@
 /* API error */
 "_error_api_offline" = "Interfejs API ProtonVPN jest obecnie niedostępny";
 
-/* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_message" = "Zarejestrowałeś się pomyślnie, ale Twoja płatność nie została przetworzona. Aby ponownie wysłać informację dotyczącą płatności, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz. Jeśli ten problem się powtarza, skontaktuj się z działem wsparcia klienta.";
+/* Error during payment alert - button */
+"_error_apply_payment_failed_free" = "Kontynuuj z darmowym kontem";
+
+/* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
+"_error_apply_payment_failed_message" = "Płatność nie została przetworzona. Aby spróbować ponownie, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz.\nAby kontynuować darmową subskrypcję, kliknij przycisk Kontynuuj z darmowym kontem. Możesz ulepszyć swoje konto w późniejszym czasie.";
 
 /* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_support" = "Skontaktuj się z działem wsparcia klienta";
+"_error_apply_payment_failed_on_registration_message" = "Zarejestrowałeś się pomyślnie, ale Twoja płatność nie została przetworzona. Aby ponownie wysłać informację dotyczącą płatności, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz. Jeśli ten problem się powtarza, skontaktuj się ze wsparciem klienta.";
+
+/* Error applying credit after registration alert */
+"_error_apply_payment_failed_on_registration_support" = "Skontaktuj się ze wsparciem klienta";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "Płatność nie powiodła się";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_message" = "Zapłaciłeś pomyślnie, ale płatność nie została przetworzona. Aby ponownie wysłać informację dotyczącą płatności, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz. Jeśli ten problem się powtarza, skontaktuj się ze wsparciem klienta.";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_title" = "Płatność nie powiodła się";
+
+/* Error during payment alert - button */
+"_error_apply_payment_failed_retry" = "Ponów próbę";
+
+/* Error during payment alert - title */
+"_error_apply_payment_failed_title" = "Płatność nie powiodła się";
 
 /* In App Purchase error */
 "_error_credit_applied" = "Skontaktuj się z support@protonvpn.com, aby zakończyć zakup.";
@@ -454,6 +472,9 @@
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Sesja ProtonVPN jest aktywna";
 
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Status tokena płatności jest nieprawidłowy. Uruchom ponownie aplikację. Jeśli błąd będzie się powtarzał, skontaktuj się ze wsparciem klienta.";
+
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN wykorzystuje zaporę sieciową z filtrem pakietów do implementacji funkcji Kill Switch. Włączenie tej funkcji nadpisze aktualne ustawienia zapory na Twoim urządzeniu. Jeśli korzystasz z tej konfiguracji, nie powinieneś używać funkcji Kill Switch.\n\nAby włączyć funkcję Kill Switch i nadpisać aktualne ustawienia zapory, kliknij KONTYNUUJ.\n\nAby wyłączyć funkcję Kill Switch i kontynuować używanie aktualnej zapory sieciowej, kliknij ANULUJ.";
 
@@ -497,7 +518,7 @@
 "_feature_blocked_content" = "Dostęp do zablokowanych treści";
 
 /* iOS plan feature */
-"_feature_bt" = "Wsparcie BitTorrent/udostępnianie plików";
+"_feature_bt" = "Wsparcie BitTorrent / udostępnianie plików";
 
 /* iOS plan feature */
 "_feature_connections" = "Jednoczesne połączenia VPN";
