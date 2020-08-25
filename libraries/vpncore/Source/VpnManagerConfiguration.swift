@@ -61,7 +61,7 @@ public class VpnManagerConfigurationPreparer {
             let entryServer = connectionConfig.serverIp.entryIp
             let exitServer = connectionConfig.serverIp.exitIp
             
-            return VpnManagerConfiguration(hostname: connectionConfig.server.domain,
+            return VpnManagerConfiguration(hostname: connectionConfig.serverIp.domain,
                                            serverId: connectionConfig.server.id,
                                            entryServerAddress: entryServer,
                                            exitServerAddress: exitServer,
