@@ -25,10 +25,14 @@ import vpncore
 import Foundation
 
 protocol NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManager
+    func makeNotificationManager() -> NotificationManagerProtocol
 }
 
-class NotificationManager: NSObject {
+protocol NotificationManagerProtocol {
+    func displayServerGoingOnMaintenance()
+}
+
+class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager

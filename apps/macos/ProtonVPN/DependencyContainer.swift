@@ -204,7 +204,7 @@ extension DependencyContainer: VpnGatewayFactory {
 
 // MARK: NotificationManagerFactory
 extension DependencyContainer: NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManager {
+    func makeNotificationManager() -> NotificationManagerProtocol {
         return NotificationManager(appStateManager: makeAppStateManager(),
                                    appSessionManager: makeAppSessionManager(),
                                    firewallManager: makeFirewallManager())

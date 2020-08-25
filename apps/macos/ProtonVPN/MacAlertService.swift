@@ -31,7 +31,7 @@ class MacAlertService {
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
-    private lazy var notificationManager: NotificationManager = factory.makeNotificationManager()
+    private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     
     fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     

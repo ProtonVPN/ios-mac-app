@@ -36,7 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     
-    private var notificationManager: NotificationManager!
+    private var notificationManager: NotificationManagerProtocol!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
