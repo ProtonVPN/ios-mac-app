@@ -27,7 +27,7 @@ public protocol MaintenanceManagerFactory {
 }
 
 public protocol MaintenanceManagerProtocol {
-    func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool)
+    func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, callback: BoolCallback?)
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
@@ -46,37 +46,52 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     
     // MARK: - MaintenanceManagerProtocol
     
-    public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool) {
+    public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, callback: BoolCallback?) {
         if !repeats || timeInterval <= 0 {
-            self.checkServer()
+            self.checkServer(callback)
             return
         }
         
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
-            self.checkServer()
+            self.checkServer(callback)
         }
     }
     
-    private func checkServer() {
-        guard let activeConnection = appStateManager.activeConnection() else { return }
+    private func checkServer(_ callback: BoolCallback?) {
+        guard let activeConnection = appStateManager.activeConnection() else {
+            callback?(false)
+            return
+        }
         
         switch vpnGateWay.connection {
         case .connected, .connecting:
             break
         default:
+            callback?(false)
             return
         }
         
         let serverID = activeConnection.serverIp.id
         
+        let failureCallback: ErrorCallback = { error in
+            PMLog.D("Server check request failed with error: \(error)", level: .error)
+            self.vpnGateWay.quickConnect()
+            callback?(true)
+        }
+        
         vpnApiService.serverState(serverId: serverID, success: { vpnServerState in
-            if vpnServerState.status != 1 {
-                PMLog.D("Current server on maintenance, updating to a new one. ID = \(serverID)", level: .info)
+            guard vpnServerState.status != 1 else {
+                callback?(false)
+                return
+            }
+            
+            self.vpnApiService.vpnProperties(lastKnownIp: nil, success: { _ in
+                PMLog.D("Reconnecting to a new Server, current one on maintenance ID = \(serverID)", level: .info)
+                callback?(true)
                 self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
-            }
-        }, failure: { error in
-            PMLog.D("Server check request failed with error: \(error)", level: .error)
-        })
+            }, failure: failureCallback)
+            
+        }, failure: failureCallback)
     }
 }

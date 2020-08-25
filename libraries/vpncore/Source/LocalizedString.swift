@@ -425,7 +425,9 @@ public class LocalizedString {
     public static let killSwitchRequiresSwiftPopupMsg2 = NSLocalizedString("_ks_requires_swift5_popup_msg2", comment: "MacOS: Swift 5 required and user didn't install it")
     public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
     public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
-    public static let onMaintenanceDetected = NSLocalizedString("_maintenance_on_server_detected", comment: "MacOS: The current server has going to maintenance.")
+    public static let onMaintenanceDetectedTitle = NSLocalizedString("_maintenance_on_server_detected_title", comment: "MacOS: The current server has going to maintenance.")
+    public static let onMaintenanceDetectedSubtitle = NSLocalizedString("_maintenance_on_server_detected_subtitle", comment: "MacOS: The current server has going to maintenance.")
+    public static let onMaintenanceDetectedDescription = NSLocalizedString("_maintenance_on_server_detected_description", comment: "MacOS: We'll connect to a different server")
 
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")

@@ -550,8 +550,8 @@ public class PaymentFailedAlert: SystemAlert {
 }
 
 public class VpnServerOnMaintenanceAlert: SystemAlert {
-    public var title: String? = LocalizedString.onMaintenanceDetected
-    public var message: String? = ""
+    public var title: String? = LocalizedString.onMaintenanceDetectedTitle
+    public var message: String? = LocalizedString.onMaintenanceDetectedDescription
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
