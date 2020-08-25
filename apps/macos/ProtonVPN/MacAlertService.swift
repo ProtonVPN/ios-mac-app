@@ -142,7 +142,7 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is VpnServerOnMaintenanceAlert:
-            showDefaultSystemAlert(alert)
+            show(alert as! VpnServerOnMaintenanceAlert)
             
         default:
             #if DEBUG
@@ -157,10 +157,10 @@ extension MacAlertService: CoreAlertService {
     // MARK: Alerts UI
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
-        if self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold {
-            self.notificationManager.displayServerGoingOnMaintenance()
+        if alert.actions.isEmpty {
+            alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
         }
-        self.lastTimeCheckMaintenance = Date()
+        uiAlertService.displayAlert(alert)
     }
     
     // MARK: Custom Alerts
@@ -277,5 +277,12 @@ extension MacAlertService: CoreAlertService {
         let killSwitch5ViewController = KillSwitchSwift5Popup()
         killSwitch5ViewController.alert = alert
         windowService.presentKeyModal(viewController: killSwitch5ViewController)
+    }
+    
+    private func show( _ alert: VpnServerOnMaintenanceAlert) {
+        if self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold {
+            self.notificationManager.displayServerGoingOnMaintenance()
+        }
+        self.lastTimeCheckMaintenance = Date()
     }
 }
