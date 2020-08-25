@@ -33,6 +33,8 @@ class MacAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManager = factory.makeNotificationManager()
     
+    fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
+    
     init(factory: Factory) {
         self.factory = factory
     }
@@ -155,7 +157,10 @@ extension MacAlertService: CoreAlertService {
     // MARK: Alerts UI
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
-        self.notificationManager.displayServerGoingOnMaintenance()
+        if self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold {
+            self.notificationManager.displayServerGoingOnMaintenance()
+        }
+        self.lastTimeCheckMaintenance = Date()
     }
     
     // MARK: Custom Alerts

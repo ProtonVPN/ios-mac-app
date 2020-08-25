@@ -56,11 +56,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+            self.notificationManager = self.container.makeNotificationManager()
+            self.container.makeMaintenanceManager().observeCurrentServerState(
+                every: AppConstants.Time.maintenanceCheckTimeInterval,
+                repeats: true,
+                callback: nil)
+            
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-            
-            self.notificationManager = self.container.makeNotificationManager()
+        
             self.navigationService.launched()
         }
     }
@@ -134,7 +139,7 @@ extension AppDelegate {
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
             let appStateManager = self.container.makeAppStateManager()
-
+            
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {
                     appStateManager.onVpnStateChanged = nil
