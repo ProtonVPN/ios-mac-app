@@ -31,16 +31,25 @@ public class AuthKeychain {
     private static let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static func fetch() -> AuthCredentials? {
-        if let data = appKeychain[data: StorageKey.authCredentials] {
-            if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
-                return authCredentials
+        do {
+            if let data = try appKeychain.getData(StorageKey.authCredentials) {
+                if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
+                    return authCredentials
+                }
             }
+        } catch let error {
+            PMLog.D("Keychain (auth) read error: \(error)", level: .error)
         }
+        
         return nil
     }
     
     public static func store(_ credentials: AuthCredentials) {
-        appKeychain[data: StorageKey.authCredentials] = NSKeyedArchiver.archivedData(withRootObject: credentials)
+        do {
+            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+        } catch let error {
+            PMLog.D("Keychain (auth) write error: \(error)", level: .error)
+        }
     }
     
     public static func clear() {

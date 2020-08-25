@@ -59,10 +59,15 @@ public class VpnKeychain: VpnKeychainProtocol {
     public init() {}
     
     public func fetch() throws -> VpnCredentials {
-        if let data = appKeychain[data: StorageKey.vpnCredentials] {
-            if let vpnCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? VpnCredentials {
-                return vpnCredentials
+        
+        do {
+            if let data = try appKeychain.getData(StorageKey.vpnCredentials) {
+                if let vpnCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? VpnCredentials {
+                    return vpnCredentials
+                }
             }
+        } catch let error {
+            PMLog.D("Keychain (vpn) read error: \(error)", level: .error)
         }
         
         let error = ProtonVpnErrorConst.vpnCredentialsMissing
@@ -81,7 +86,12 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func store(vpnCredentials: VpnCredentials) {
-        appKeychain[data: StorageKey.vpnCredentials] = NSKeyedArchiver.archivedData(withRootObject: vpnCredentials)
+        do {
+            try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
+        } catch let error {
+            PMLog.D("Keychain (vpn) write error: \(error)", level: .error)
+        }
+        
         do {
             try setPassword(vpnCredentials.password)
         } catch let error {
