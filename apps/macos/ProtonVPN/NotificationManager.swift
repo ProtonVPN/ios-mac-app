@@ -129,8 +129,20 @@ class NotificationManager: NSObject {
 }
 
 extension NotificationManager: NSUserNotificationCenterDelegate {
-    
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
+    }
+}
+
+// MARK: - Public
+
+extension NotificationManager {
+    func displayServerGoingOnMaintenance() {
+        let notification = NSUserNotification()
+        notification.title = LocalizedString.onMaintenanceDetectedTitle
+        notification.subtitle = LocalizedString.onMaintenanceDetectedSubtitle
+        notification.informativeText = LocalizedString.onMaintenanceDetectedDescription
+        notification.hasActionButton = false
+        fire(notification)
     }
 }

@@ -56,6 +56,13 @@ class DependencyContainer {
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
     
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(
+        vpnApiService: self.makeVpnApiService(),
+        appStateManager: self.makeAppStateManager(),
+        vpnGateWay: self.makeVpnGateway(),
+        alertService: makeCoreAlertService()
+    )
+    
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
     
@@ -250,5 +257,12 @@ extension DependencyContainer: MigrationManagerFactory {
         let propertiesManager = makePropertiesManager()
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
         return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
+    }
+}
+
+// MARK: - MaintenanceManagerFactory
+extension DependencyContainer: MaintenanceManagerFactory {
+    func makeMaintenanceManager() -> MaintenanceManagerProtocol {
+        return maintenanceManager
     }
 }

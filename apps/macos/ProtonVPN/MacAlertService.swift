@@ -25,12 +25,13 @@ import vpncore
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
+    private lazy var notificationManager: NotificationManager = factory.makeNotificationManager()
     
     init(factory: Factory) {
         self.factory = factory
@@ -138,6 +139,9 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
+        case is VpnServerOnMaintenanceAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -151,11 +155,7 @@ extension MacAlertService: CoreAlertService {
     // MARK: Alerts UI
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
-        if alert.actions.isEmpty {
-            alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
-        }
-        
-        uiAlertService.displayAlert(alert)
+        self.notificationManager.displayServerGoingOnMaintenance()
     }
     
     // MARK: Custom Alerts
