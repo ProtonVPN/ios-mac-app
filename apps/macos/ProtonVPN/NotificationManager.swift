@@ -21,16 +21,7 @@
 //
 
 import vpncore
-
 import Foundation
-
-protocol NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManagerProtocol
-}
-
-protocol NotificationManagerProtocol {
-    func displayServerGoingOnMaintenance()
-}
 
 class NotificationManager: NSObject, NotificationManagerProtocol {
     
