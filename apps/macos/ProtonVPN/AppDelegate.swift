@@ -39,6 +39,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManager!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
         self.checkMigration()
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
@@ -147,6 +148,7 @@ extension AppDelegate {
                     self.container.makeVpnGateway().quickConnect()
                 }
             }
+            completion(nil)
         }.migrate { _ in
             //Migration complete
         }
