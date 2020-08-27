@@ -11,7 +11,6 @@
 		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
 		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
-		427A1F1124F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7561512A1FD8B4A8009224E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7561512C1FD8B4A8009224E7 /* Localizable.strings */; };
@@ -2351,7 +2350,6 @@
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
-				427A1F1124F5398900E95912 /* NotificationManagerProtocol.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
