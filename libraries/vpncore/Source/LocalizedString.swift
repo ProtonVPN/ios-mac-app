@@ -263,7 +263,7 @@ public class LocalizedString {
     public static let errorEmailVerificationDisabled = NSLocalizedString("_error_email_verification_disabled", comment: "Internal application error")
     
     public static let errorFieldRequired = NSLocalizedString("_error_field_required", comment: "Form validation error")
-    public static let errorFielWrongdEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
+    public static let errorFieldWrongEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
     public static let errorFieldPasswordDontMatch = NSLocalizedString("_error_field_passwords_dont_match", comment: "Form validation error")
     public static let errorFieldUnknown = NSLocalizedString("_error_field_unknown", comment: "Form validation error")
     
