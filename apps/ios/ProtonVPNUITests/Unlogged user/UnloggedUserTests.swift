@@ -70,25 +70,4 @@ class UnloggedUserTests: ProtonVPNUITests {
                 
         assertLoginScreenOpen()
     }
-    
-    func testPlanListOpensOnSignInStart() {
-        let skipButton = app.buttons["Skip"]
-        skipButton.tap()
-        
-        let signupButton = app.buttons["Sign Up"]
-        signupButton.tap()
-        
-        let agreeButton = app.buttons["Agree & Continue"]
-        if agreeButton.exists {
-            agreeButton.tap()
-        }
-        
-        snapshot("PlanSelection")
-        
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.staticTexts["ProtonVPN PLUS"], handler: nil)
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.staticTexts["ProtonVPN BASIC"], handler: nil)
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.staticTexts["ProtonVPN FREE"], handler: nil)
-        waitForExpectations(timeout: 5, handler: nil)
-        
-    }
 }

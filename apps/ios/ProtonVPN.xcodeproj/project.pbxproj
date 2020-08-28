@@ -272,6 +272,7 @@
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */; };
+		D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874A924F92F640022E438 /* SignUpTests.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A960227C3A460041D423 /* LogoWithMapView.swift */; };
 		D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D594A962227C3A500041D423 /* LogoWithMapView.xib */; };
@@ -707,6 +708,7 @@
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnloggedUserTests.swift; sourceTree = "<group>"; };
 		D5811D8B229C01D70087B63A /* .gitlab-ci.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".gitlab-ci.yml"; sourceTree = "<group>"; };
+		D58874A924F92F640022E438 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
 		D594A957227C0E470041D423 /* UIView+nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+nib.swift"; sourceTree = "<group>"; };
 		D594A960227C3A460041D423 /* LogoWithMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoWithMapView.swift; sourceTree = "<group>"; };
 		D594A962227C3A500041D423 /* LogoWithMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoWithMapView.xib; sourceTree = "<group>"; };
@@ -1752,6 +1754,7 @@
 			isa = PBXGroup;
 			children = (
 				D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */,
+				D58874A924F92F640022E438 /* SignUpTests.swift */,
 			);
 			path = "Unlogged user";
 			sourceTree = "<group>";
@@ -3010,6 +3013,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
+				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
 				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,

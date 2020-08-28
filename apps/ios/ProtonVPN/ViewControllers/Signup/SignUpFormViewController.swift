@@ -134,7 +134,7 @@ class SignUpFormViewController: UIViewController {
             self?.mainButtonTapped(self as Any)
         }
 
-        emailField.textChanged = { [weak self] textField in self?.viewModel.email = textField.text }
+        emailField.textChanged = { [weak self] textField in self?.viewModel.email = textField.text.trimmingCharacters(in: .whitespacesAndNewlines) }
         usernameField.textChanged = { [weak self] textField in self?.viewModel.username = textField.text }
         password1Field.textChanged = { [weak self] textField in self?.viewModel.password1 = textField.text }
         password2Field.textChanged = { [weak self] textField in self?.viewModel.password2 = textField.text }
@@ -188,25 +188,25 @@ class SignUpFormViewController: UIViewController {
     private func validateFormFields() -> Bool {
         var isValid = true
         if let emailError = viewModel.validateEmail() {
-            emailField.state = .error(emailError.localizedDescription)
+            emailField.state = .error(emailError.localizedDescription, emailError.identifier)
             isValid = false
         } else {
             emailField.state = .normal
         }
         if let usernameError = viewModel.validateUserName() {
-            usernameField.state = .error(usernameError.localizedDescription)
+            usernameField.state = .error(usernameError.localizedDescription, usernameError.identifier)
             isValid = false
         } else {
             usernameField.state = .normal
         }
         if let password1Error = viewModel.validatePassword1() {
-            password1Field.state = .error(password1Error.localizedDescription)
+            password1Field.state = .error(password1Error.localizedDescription, password1Error.identifier)
             isValid = false
         } else {
             password1Field.state = .normal
         }
         if let password2Error = viewModel.validatePassword2() {
-            password2Field.state = .error(password2Error.localizedDescription)
+            password2Field.state = .error(password2Error.localizedDescription, password2Error.identifier)
             isValid = false
         } else {
             password2Field.state = .normal
