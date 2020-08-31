@@ -1462,7 +1462,7 @@
 "_unavailable" = "Недоступно";
 
 /* MacOS: Settings -> General: name of field. */
-"_unprotected_network" = "Уведомить о работе в незащищенной сети";
+"_unprotected_network" = "Уведомлять о работе в незащищенной сети";
 
 /* MacOS: Settings -> General: description */
 "_unprotected_network_tooltip" = "Получать уведомление, когда ProtonVPN обнаруживает, что вы подключены к незащищенной сети.";
