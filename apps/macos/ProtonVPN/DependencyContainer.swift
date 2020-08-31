@@ -56,12 +56,7 @@ class DependencyContainer {
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
     
-    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(
-        vpnApiService: self.makeVpnApiService(),
-        appStateManager: self.makeAppStateManager(),
-        vpnGateWay: self.makeVpnGateway(),
-        alertService: makeCoreAlertService()
-    )
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
     
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
