@@ -32,16 +32,17 @@ public protocol MaintenanceManagerProtocol {
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     
-    private let vpnApiService: VpnApiService
-    private let appStateManager: AppStateManager
-    private let vpnGateWay: VpnGatewayProtocol
-    private let alertService: CoreAlertService
+    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory
     
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, vpnGateWay: VpnGatewayProtocol, alertService: CoreAlertService) {
-        self.vpnApiService = vpnApiService
-        self.appStateManager = appStateManager
-        self.vpnGateWay = vpnGateWay
-        self.alertService = alertService
+    private let factory: Factory
+    
+    private lazy var vpnApiService: VpnApiService = self.factory.makeVpnApiService()
+    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
+    private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
+    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
+     
+    public init( factory: Factory) {
+        self.factory = factory
     }
     
     // MARK: - MaintenanceManagerProtocol
