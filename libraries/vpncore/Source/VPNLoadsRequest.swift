@@ -23,7 +23,19 @@
 import Alamofire
 
 class VPNLoadsRequest: VPNBaseRequest {
+    
+    let ip: String?
+    
+    init( _ ip: String? ) {
+        self.ip = ip
+        super.init()
+    }
+    
     override func path() -> String {
-        return super.path() + "/loads"
+        let endpoint = super.path() + "/loads"
+        guard let ip = ip else {
+            return endpoint
+        }
+        return endpoint + "?IP=\(ip)"
     }
 }

@@ -257,7 +257,7 @@ public class VpnApiService {
         alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)
     }
     
-    public func loads(success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
+    public func loads(lastKnownIp: String?, success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { response in
             guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
                 PMLog.D("'LogicalServers' field not present in loads response", level: .error)
@@ -281,8 +281,11 @@ public class VpnApiService {
             
             success(loads)
         }
-        
-        alamofireWrapper.request(VPNLoadsRequest(), success: successWrapper, failure: failure)
+        var shortenedIp: String?
+        if let ip = lastKnownIp {
+            shortenedIp = truncatedIp(ip)
+        }
+        alamofireWrapper.request(VPNLoadsRequest(shortenedIp), success: successWrapper, failure: failure)
     }
     
     public func clientConfig(success: @escaping OpenVpnConfigCallback, failure: @escaping ErrorCallback) {
