@@ -78,7 +78,6 @@ class SignUpTests: ProtonVPNUITests {
         fieldPassword2.typeText("123") // We don't want to proceed with signup
         
         XCTAssert(button.isEnabled)
-        XCTAssert(button.isHittable)
         button.tap()
         expectation(for: NSPredicate(format: "exists == false"), evaluatedWith: app.staticTexts["wrongEmail"], handler: nil)
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.staticTexts["passwordsDontMatch"], handler: nil)
