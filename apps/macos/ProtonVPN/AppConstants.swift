@@ -63,4 +63,11 @@ class AppConstants {
             return try firewallConfigDir().appendingPathComponent("protonvpn.pf.conf")
         }
     }
+    
+    struct Time {
+        // Servers list refresh
+        static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours
+        static let serverLoadsRefresh: TimeInterval = 60 * 15 // 15 minutes
+    }
+    
 }

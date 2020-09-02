@@ -153,7 +153,5 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logOut(force: Bool) {}
     func logOut() {}
-    func scheduleRefreshes(now: Bool) {}
-    func stopRefreshingIfInactive() {}
     func replyToApplicationShouldTerminate() {}
 }

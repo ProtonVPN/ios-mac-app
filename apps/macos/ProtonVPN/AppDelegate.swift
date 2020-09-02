@@ -69,12 +69,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
     
-    func applicationWillBecomeActive(_ notification: Notification) {
-        navigationService.appSessionManager.scheduleRefreshes(now: true)
-    }
-    
-    func applicationDidResignActive(_ notification: Notification) {
-        navigationService.appSessionManager.stopRefreshingIfInactive()
+    func applicationDidBecomeActive(_ notification: Notification) {
+        container.makeRefreshTimer().start(now: true) // refresh data if time passed
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
