@@ -72,11 +72,9 @@ public class RefreshTimer {
     
     public func stop() {
         if let timerFullRefresh = timerFullRefresh {
-            PMLog.D("Data refresh timer stopped", level: .trace)
             timerFullRefresh.invalidate()
         }
         if let timerLoadsRefresh = timerLoadsRefresh {
-            PMLog.D("Loads refresh timer stopped", level: .trace)
             timerLoadsRefresh.invalidate()
         }
         timerFullRefresh = nil
@@ -90,7 +88,6 @@ public class RefreshTimer {
     
     @objc private func refreshLoads() {
         guard canRefreshLoads() else {
-            print("App not active")
             return }
         appSessionRefresher.refreshServerLoads()
     }
