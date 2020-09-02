@@ -46,7 +46,7 @@ class DependencyContainer {
                                                                         propertiesManager: makePropertiesManager(),
                                                                         vpnKeychain: makeVpnKeychain(),
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer())
-    private lazy var appSessionManager: AppSessionManager = AppSessionManagerImplementation(factory: self)
+    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
@@ -60,6 +60,9 @@ class DependencyContainer {
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
     
     private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly))
+    
+    // Refreshes app data at predefined time intervals
+    private lazy var refreshTimer = RefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh)
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -307,5 +310,21 @@ extension DependencyContainer: StoreKitStateCheckerFactory {
 extension DependencyContainer: ProtonAPIAuthenticatorFactory {
     func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
         return ProtonAPIAuthenticator(self)
+    }
+}
+
+// MARK: RefreshTimerFactory
+
+extension DependencyContainer: RefreshTimerFactory {
+    func makeRefreshTimer() -> RefreshTimer {
+        return refreshTimer
+    }
+}
+
+// MARK: - AppSessionRefresherFactory
+
+extension DependencyContainer: AppSessionRefresherFactory {
+    func makeAppSessionRefresher() -> AppSessionRefresher {
+        return appSessionManager
     }
 }

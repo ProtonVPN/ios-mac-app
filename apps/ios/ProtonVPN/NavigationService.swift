@@ -147,7 +147,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -185,7 +185,7 @@ class NavigationService {
         return makeConnectionBarViewController()
     }()
     private lazy var loginViewModel = { [unowned self] in
-        return LoginViewModel(appSessionManager: appSessionManager, loginService: self, alertService: alertService)
+        return LoginViewModel(appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
         }()
     
     private lazy var tabBarController = {
@@ -282,7 +282,7 @@ extension NavigationService: LoginService {
     
     private func makeLoginViewController(dismissible: Bool, username: String? = nil, errorMessage: String? = nil) -> LoginViewController? {
         if let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, appSessionManager: appSessionManager, loginService: self, alertService: alertService)
+            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
             return loginViewController
         }
         return nil

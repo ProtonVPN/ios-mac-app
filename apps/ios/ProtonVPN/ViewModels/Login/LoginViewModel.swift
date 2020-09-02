@@ -34,6 +34,7 @@ class LoginViewModel {
 
     private let propertiesManager = PropertiesManager()
     private let appSessionManager: AppSessionManager
+    private let appSessionRefresher: AppSessionRefresher
     private let loginService: LoginService
     var alertService: AlertService
     
@@ -50,13 +51,14 @@ class LoginViewModel {
     weak var delegate: LoginViewModelDelegate?
     weak var tabBarDelegate: TabBarViewModelModelDelegate?
     
-    init(dismissible: Bool = true, username: String? = nil, errorMessage: String? = nil, appSessionManager: AppSessionManager, loginService: LoginService, alertService: AlertService) {
+    init(dismissible: Bool = true, username: String? = nil, errorMessage: String? = nil, appSessionManager: AppSessionManager, loginService: LoginService, alertService: AlertService, appSessionRefresher: AppSessionRefresher) {
         self.dismissible = dismissible
         self.username = username
         self.openingError = errorMessage
         self.appSessionManager = appSessionManager
         self.loginService = loginService
         self.alertService = alertService
+        self.appSessionRefresher = appSessionRefresher
     }
     
     func logIn(username: String, password: String) {
@@ -73,7 +75,7 @@ class LoginViewModel {
 
     func logInSilently() {
         if appSessionManager.loadDataWithoutFetching() {
-            appSessionManager.refreshData()
+            appSessionRefresher.refreshData()
         } else { // if no data is stored already, then show spinner and wait for data from the api
             appSessionManager.attemptDataRefreshWithoutLogin(success: { [unowned self] in
                 self.loginService.presentMainInterface()

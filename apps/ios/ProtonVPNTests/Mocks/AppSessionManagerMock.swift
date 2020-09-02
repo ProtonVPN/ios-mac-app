@@ -38,6 +38,7 @@ class AppSessionManagerMock: AppSessionManager {
     public var callbackLadDataWithoutFetching: (() -> Bool)?
     public var callbackLoadDataWithoutLogin: ((() -> Void, (Error) -> Void) -> Void)?
     public var callbackRefreshData: (() -> Void)?
+    public var callbackRefreshServerLoads: (() -> Void)?
     public var callbackCanPreviewApp: (() -> Bool)?
     
     // MARK: AppSessionManager implementation
@@ -72,6 +73,10 @@ class AppSessionManagerMock: AppSessionManager {
     
     func refreshData() {
         callbackRefreshData?()
+    }
+    
+    func refreshServerLoads() {
+        callbackRefreshServerLoads?()
     }
     
     func canPreviewApp() -> Bool {

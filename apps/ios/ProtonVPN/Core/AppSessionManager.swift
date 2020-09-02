@@ -48,13 +48,13 @@ protocol AppSessionManager {
     func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func refreshData()
+    
     func canPreviewApp() -> Bool
 }
 
 class AppSessionManagerImplementation: AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & RefreshTimerFactory 
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -69,20 +69,21 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
+    private lazy var refreshTimer: RefreshTimer = factory.makeRefreshTimer()
     var vpnGateway: VpnGatewayProtocol?
     
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
     let logInWarning = Notification.Name("AppSessionManagerLogInWarning")
     let upgradeRequired = Notification.Name("AppSessionManagerUpgradeRequired")
-    
-    let refreshRate: TimeInterval = 3 * 60
-    var lastRefresh = Date()
-    
+        
     var sessionStatus: SessionStatus = .notEstablished
 
-    var loginTimer: Timer?
     var loggedIn = false
+    
+    // AppSessionRefresher
+    var lastDataRefresh: Date?
+    var lastServerLoadsRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
@@ -272,17 +273,17 @@ class AppSessionManagerImplementation: AppSessionManager {
     }
     
     private func logOutCleanup() {
-        loginTimer?.invalidate()
-        loginTimer = nil
+        refreshTimer.stop()
         loggedIn = false
         
         AuthKeychain.clear()
         vpnKeychain.clear()
         
-        propertiesManager.logoutCleanup()        
+        propertiesManager.logoutCleanup()
         alamofireWrapper.setHumanVerification(token: nil)
     }
-    // MARK: - End of the logout logic
+    // End of the logout logic
+    // MARK: -
     
     // Updates the status of the app, including refreshing the VpnGateway object if the VPN creds change
     private func setAndNotify(for state: SessionStatus) {
@@ -306,25 +307,17 @@ class AppSessionManagerImplementation: AppSessionManager {
             NotificationCenter.default.post(name: self.sessionChanged, object: object)
         }
         
-        scheduleRefreshes()
+        refreshTimer.start()
     }
     
-    // MARK: - Refresh
-    private func scheduleRefreshes() {
-        if loginTimer == nil || !loginTimer!.isValid {
-            loginTimer = Timer.scheduledTimer(timeInterval: refreshRate, target: self, selector: #selector(refreshData), userInfo: nil, repeats: true)
-        }
-    }
+}
+
+// MARK: - Refresh - AppSessionRefresher
+
+extension AppSessionManagerImplementation: AppSessionRefresher {
     
-    func stopRefreshingIfInactive() {
-        if UIApplication.shared.applicationState != .active {
-            loginTimer?.invalidate()
-            loginTimer = nil
-        }
-    }
-    
-    @objc func refreshData() {
-        lastRefresh = Date()
+    func refreshData() {
+        lastDataRefresh = Date()
         if loggedIn {
             attemptDataRefreshWithoutLogin(success: {}, failure: { error in
                 PMLog.D("Failed to reestablish vpn credentials: \(error.localizedDescription)", level: .error)
@@ -338,5 +331,17 @@ class AppSessionManagerImplementation: AppSessionManager {
         } else {
             loadDataWithoutLogin(success: {}, failure: { _ in })
         }
+    }
+    
+    func refreshServerLoads() {
+        guard loggedIn else { return }
+        lastServerLoadsRefresh = Date()
+        
+        vpnApiService.loads(lastKnownIp: propertiesManager.userIp, success: { properties in
+            self.serverStorage.update(continuousServerProperties: properties)
+            
+        }, failure: { error in
+            PMLog.D("Error received: \(error)", level: .error)
+        })
     }
 }
