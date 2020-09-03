@@ -51,7 +51,7 @@ class DependencyContainer {
                                                                         vpnKeychain: vpnKeychain,
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var firewallManager: FirewallManager = FirewallManager(factory: self)
-    private lazy var appSessionManager: AppSessionManager = AppSessionManagerImplementation(factory: self)
+    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
@@ -60,6 +60,9 @@ class DependencyContainer {
     
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
+    
+    // Refreshes app data at predefined time intervals
+    private lazy var refreshTimer = RefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, canRefreshFull: { return true }, canRefreshLoads: { return NSApp.isActive })
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -255,9 +258,24 @@ extension DependencyContainer: MigrationManagerFactory {
     }
 }
 
+
 // MARK: - MaintenanceManagerFactory
 extension DependencyContainer: MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol {
         return maintenanceManager
+    }
+}
+
+// MARK: RefreshTimerFactory
+extension DependencyContainer: RefreshTimerFactory {
+    func makeRefreshTimer() -> RefreshTimer {
+        return refreshTimer
+    }
+}
+
+// MARK: - AppSessionRefresherFactory
+extension DependencyContainer: AppSessionRefresherFactory {
+    func makeAppSessionRefresher() -> AppSessionRefresher {
+        return appSessionManager
     }
 }

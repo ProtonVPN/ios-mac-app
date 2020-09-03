@@ -35,7 +35,7 @@ extension DependencyContainer: StatusMenuWindowModelFactory {
 
 class StatusMenuWindowModel {
     
-    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory
+    typealias Factory = AppSessionManagerFactory & StatusMenuViewModelFactory & AppSessionRefresherFactory & RefreshTimerFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -66,7 +66,9 @@ class StatusMenuWindowModel {
     }
     
     func requiresRefreshes(_ required: Bool) {
-        required ? appSessionManager.scheduleRefreshes(now: true) : appSessionManager.stopRefreshingIfInactive()
+        if required {
+            factory.makeRefreshTimer().start(now: true)
+        }
     }
     
     // MARK: - Private functions
