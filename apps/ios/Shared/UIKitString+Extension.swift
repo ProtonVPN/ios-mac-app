@@ -59,10 +59,13 @@ extension String {
         newString.addAttribute(NSAttributedString.Key.font, value: textFont, range: range)
         newString.addAttribute(NSAttributedString.Key.backgroundColor, value: UIColor.clear, range: range)
         
-        if let range2 = self.range(of: #"\d[\d ,\.]*\d"#, options: .regularExpression) {
-            let nsRange = NSRange(range2, in: self)
-            newString.addAttribute(NSAttributedString.Key.foregroundColor, value: numberColor, range: nsRange)
-            newString.addAttribute(NSAttributedString.Key.font, value: numberFont, range: nsRange)
+        let regex = try? NSRegularExpression(pattern: #"[\d\,\.\ ]+"#, options: NSRegularExpression.Options.init())
+        if let matches = regex?.matches(in: self, options: NSRegularExpression.MatchingOptions.init(), range: range) {
+            for match in matches {
+                let nsRange = match.range
+                newString.addAttribute(NSAttributedString.Key.foregroundColor, value: numberColor, range: nsRange)
+                newString.addAttribute(NSAttributedString.Key.font, value: numberFont, range: nsRange)
+            }
         }
         
         return newString
