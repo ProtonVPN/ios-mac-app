@@ -25,6 +25,7 @@
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
 		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
+		D5686B1E24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
@@ -404,6 +405,7 @@
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractProfileViewModel.swift; sourceTree = "<group>"; };
+		D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperTimeoutWrapper.swift; sourceTree = "<group>"; };
 		D57597C023B10C2E002D6631 /* WindowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenuController.swift; sourceTree = "<group>"; };
 		D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlan+Extension.swift"; sourceTree = "<group>"; };
 		D5906F1422D3795C001BC074 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
@@ -1562,6 +1564,7 @@
 				E17DE10B21FB66BC008CCC13 /* FirewallManager.swift */,
 				EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */,
 				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
+				D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */,
 				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
 				E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */,
 				E142F24C20A9B45800029163 /* UpdateManager.swift */,
@@ -2589,6 +2592,7 @@
 				EEBB82E41F1DEF1B0041432A /* ProfilesTabBarView.swift in Sources */,
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
+				D5686B1E24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
@@ -2786,7 +2790,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -2846,7 +2850,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3044,7 +3048,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3073,7 +3077,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3226,7 +3230,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3264,7 +3268,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MARKETING_VERSION = 1.7.1;
+				MARKETING_VERSION = 1.7.2;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
