@@ -292,6 +292,12 @@
 /* API error */
 "_error_api_offline" = "API ProtonVPN в настоящее время отключён";
 
+/* Error during payment alert - button */
+"_error_apply_payment_failed_free" = "Продолжить с бесплатным аккаунтом";
+
+/* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
+"_error_apply_payment_failed_message" = "Ваш платеж не был обработан. Чтобы попробовать еще раз, нажмите Повторить. Платеж будет списан только один раз.\nЧтобы продолжить с бесплатным аккаунтом, нажмите «Продолжить с бесплатным аккаунтом». Вы можете перейти на платный тариф позднее.";
+
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Вы успешно зарегистрированы, но ваш платеж не был обработан. Чтобы повторно отправить платежную информацию, нажмите «Повторить». Плата взимается только один раз. Если проблема не устранена, обратитесь в службу поддержки.";
 
@@ -300,6 +306,18 @@
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "Ошибка платежа";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_message" = "Вы успешно оплатили, но Ваша покупка не была обработана. Чтобы повторно отправить платежную информацию, нажмите «Повторить». Плата взимается только один раз. Если проблема не устранена, обратитесь в службу поддержки.";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_title" = "Сбой платежа";
+
+/* Error during payment alert - button */
+"_error_apply_payment_failed_retry" = "Попробовать повторно";
+
+/* Error during payment alert - title */
+"_error_apply_payment_failed_title" = "Сбой платежа";
 
 /* In App Purchase error */
 "_error_credit_applied" = "Для завершения покупки свяжитесь с нами по адресу support@protonvpn.com.";
@@ -453,6 +471,9 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "Сеанс ProtonVPN активен";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Неправильное состояние токена оплаты. Пожалуйста, перезапустите приложение. Если ошибка повторится, обратитесь в службу поддержки.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN использует брандмауэр устройства для реализации Kill Switch. Включив Kill Switch, вы перепишете текущие настройки брандмауэра вашего устройства. Если вы полагаетесь на эту конфигурацию брандмауэра, вы не должны использовать Kill Switch.\n\nЧтобы использовать Kill Switch и перезаписать текущие настройки брандмауэра, выберите ПРОДОЛЖИТЬ.\n\nЧтобы отключить Kill Switch и продолжить использование ваших текущих настроек брандмауэра, выберите ОТМЕНА.";

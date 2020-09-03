@@ -30,18 +30,20 @@ public typealias PaymentsMethodCallback = GenericCallback<[PaymentMethod]?>
 public typealias OptionalPlanDetailsCallback = GenericCallback<ServicePlanDetails?>
 public typealias PlansDetailsCallback = GenericCallback<[ServicePlanDetails]>
 public typealias BoolCallback = GenericCallback<Bool>
+public typealias ValidateSubscriptionResponseCallback = GenericCallback<ValidateSubscriptionResponse>
 
 public protocol PaymentsApiService {
     func servicePlans(success: @escaping PlanPropsCallback, failure: @escaping ErrorCallback)
     func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
     func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
-    func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
     func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback)
     func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback)
     func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback)
     /// Get current token status
     func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback)
     func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
+    /// Get the amount needed to buy a plan
+    func validateSubscription(id planId: String, success: @escaping ValidateSubscriptionResponseCallback, failure: @escaping ErrorCallback)
 }
 
 public protocol PaymentsApiServiceFactory {
@@ -171,22 +173,6 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         alamofireWrapper.request(PaymentsCreditRequest(amount, payment: receipt), success: success, failure: failure)
     }
     
-    public func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
-            do {
-                guard let `self` = self else { return }
-                guard let code = json["Code"] as? Int, code == 1000 else {
-                    throw ParseError.subscriptionsParse
-                }
-                let subscription = try self.subscriptionResponse(json)
-                success(subscription)
-            } catch let error {
-                failure(error)
-            }
-        }
-        alamofireWrapper.request(PaymentsReceiptRequest(amount, receipt: receipt, planId: planId), success: successWrapper, failure: failure)
-    }
-    
     public func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { [weak self] json in
             do {
@@ -250,7 +236,29 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
+        
+        self.validateSubscription(id: planId, success: {response in
+            self.alamofireWrapper.request(BuyPlanRequest(planId, amount: response.amountDue, payment: paymentToken), success: successWrapper, failure: failure)
+        }, failure: {error in
+            self.alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
+        })
+    }
+    
+    public func validateSubscription(id planId: String, success: @escaping ValidateSubscriptionResponseCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { json in
+            do {
+                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                let decoder = JSONDecoder()
+                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let validateSubscriptionResponse = try decoder.decode(ValidateSubscriptionResponse.self, from: data)
+                
+                success(validateSubscriptionResponse)
+            } catch let error {
+                failure(error)
+            }
+        }
+        alamofireWrapper.request(ValidateSubscriptionRequest(planId), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

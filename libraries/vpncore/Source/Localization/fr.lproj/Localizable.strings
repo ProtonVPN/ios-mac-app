@@ -292,6 +292,12 @@
 /* API error */
 "_error_api_offline" = "L'API ProtonVPN est actuellement hors ligne";
 
+/* Error during payment alert - button */
+"_error_apply_payment_failed_free" = "Continuer avec un compte gratuit";
+
+/* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
+"_error_apply_payment_failed_message" = "Votre paiement n'a pas été effectué. Pour réessayer, cliquez sur Réessayer. Vous ne serez facturé qu'une seule fois.\nPour continuer avec un compte gratuit, cliquez sur Continuer avec un compte gratuit. Vous pouvez passer à une offre payante ultérieurement.";
+
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Vous vous êtes inscrit avec succès mais votre paiement n'a pas été traité. Pour renvoyer vos informations de paiement, cliquez sur Réessayer. Vous ne serez facturé qu'une seule fois. Si le problème persiste, veuillez contacter le support client.";
 
@@ -300,6 +306,18 @@
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "Échec du paiement";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_message" = "Vous avez bien effectué un paiement, mais votre achat n'a pas été traité. Pour renvoyer vos informations de paiement, cliquez sur Réessayer. Vous ne serez facturé qu'une seule fois. Si le problème persiste, veuillez contacter le support client.";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_title" = "Échec du paiement";
+
+/* Error during payment alert - button */
+"_error_apply_payment_failed_retry" = "Réessayer";
+
+/* Error during payment alert - title */
+"_error_apply_payment_failed_title" = "Échec du paiement";
 
 /* In App Purchase error */
 "_error_credit_applied" = "Contactez support@protonvpn.com pour terminer votre achat.";
@@ -453,6 +471,9 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La session ProtonVPN est active";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Statut incorrect du jeton de paiement. Veuillez relancer l'application. Si l'erreur persiste, contactez l’assistance.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN utilise un pare-feu de filtrage de paquets pour implémenter un Kill Switch. En activant le Kill Switch, vous écraserez les paramètres actuels de pare-feu de votre appareil. Si vous comptez sur cette configuration de pare-feu, vous ne devriez pas utiliser le Kill Switch.\n\nPour utiliser le Kill Switch et écraser vos paramètres de pare-feu actuels, sélectionnez CONTINUER.\n\nPour désactiver le Kill Switch et continuer à utiliser votre pare-feu actuel, sélectionnez ANNULER.";

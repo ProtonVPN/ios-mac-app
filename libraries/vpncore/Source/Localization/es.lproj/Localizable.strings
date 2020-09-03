@@ -292,6 +292,12 @@
 /* API error */
 "_error_api_offline" = "La API de ProtonVPN está actualmente fuera de línea";
 
+/* Error during payment alert - button */
+"_error_apply_payment_failed_free" = "Continuar con la cuenta gratuita";
+
+/* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
+"_error_apply_payment_failed_message" = "Tu pago no ha sido procesado. Para intentarlo de nuevo, haz clic en Reintentar. Solo se te cobrará una vez.\nPara continuar con una cuenta gratuita, haga clic en Continuar con una cuenta gratuita. Puedes cambiarte a un plan de pago más en adelante.";
+
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Se ha registrado con éxito pero tu pago no ha sido procesado. Para reenviar tu información de pago, haga clic en Reintentar. Sólo se te cobrará una vez. Si el problema persiste, ponte en contacto con el servicio de atención al cliente.";
 
@@ -300,6 +306,18 @@
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "Pago fallido";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_message" = "Has pagado con éxito pero tu compra no ha sido procesada. Para reenviar tu información de pago, haz clic en Reintentar. Sólo se te cobrará una vez. Si el problema persiste, ponte en contacto con el servicio de atención al cliente.";
+
+/* Error applying credit after upgrade alert */
+"_error_apply_payment_failed_on_upgrade_title" = "Fallo en el pago";
+
+/* Error during payment alert - button */
+"_error_apply_payment_failed_retry" = "Reintentar";
+
+/* Error during payment alert - title */
+"_error_apply_payment_failed_title" = "Fallo en el pago";
 
 /* In App Purchase error */
 "_error_credit_applied" = "Póngase en contacto con support@protonvpn.com para completar su compra.";
@@ -362,7 +380,7 @@
 "_error_mitm_title" = "Conexión insegura";
 
 /* Man In The Middle attack alert (VPN) */
-"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser supervisada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie+a a una nueva red e intenta conectarte de nuevo.";
+"_error_mitm_vpn_description" = "La validación del certificado TLS falló al intentar conectarse a la API de ProtonVPN. Tu conexión actual a Internet puede ser monitoreada. Para mantener tus datos seguros, estamos impidiendo que la aplicación acceda a la API de ProtonVPN.\nPara iniciar sesión o acceder a su cuenta, cambie a una nueva red e intenta conectarte de nuevo.";
 
 /* Error when try to parse modulus signature */
 "_error_modulus_signature" = "La firma del módulo está vacía";
@@ -453,6 +471,9 @@
 
 /* VPN session is active error */
 "_error_vpn_session_is_active" = "La sesión de ProtonVPN está activa";
+
+/* In App Purchase error */
+"_error_wrong_payment_token_status" = "Status incorrecto del token de pago. Por favor, vuelve a abrir la aplicación. Si el error persiste, ponte en contacto con atención al cliente.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN utiliza un firewall para implementar un Kill Switch. Al habilitar Kill Switch, sobrescribirás la configuración actual del firewall del dispositivo. Si confías en esta configuración de firewall, no debes usar Kill Switch.\n\nPara usar Kill Switch y sobrescribir la configuración actual del firewall, selecciona CONTINUAR.\n\nPara desactivar Kill Switch y continuar usando tu firewall actual, selecciona CANCELAR.";
@@ -641,10 +662,10 @@
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Ten en cuenta que tu conexión VPN finalizará cuando cambies las cuenta de Mac.";
 
 /* MacOS: Try again to connect KillSwitch */
-"_ks_enable_again" = "Intentar activar KillSwitch de nuevo";
+"_ks_enable_again" = "Habilitar Kill Switch nuevamente";
 
 /* MacOS: Keep disabled the KillSwitch component */
-"_ks_keep_disabled" = "Dejar apagado Kill";
+"_ks_keep_disabled" = "Dejar desactivado Kill Switch";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
 "_ks_requires_swift5_popup_msg" = "No puedes activar Kill Switch porque el soporte de ejecución de Swift 5 no está instalado en tu dispositivo. Para utilizar Kill Switch, primero descargue e instale Swift 5.";
@@ -1453,7 +1474,7 @@
 "_unsecure_wifi_learn_more" = "Más información";
 
 /* MacOS */
-"_unsecure_wifi_title" = "WiFi inseguro detectado";
+"_unsecure_wifi_title" = "WiFi no seguro detectado";
 
 /* App update required alert */
 "_update_required" = "Actualización requerida";

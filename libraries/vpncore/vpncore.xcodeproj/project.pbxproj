@@ -27,8 +27,6 @@
 		4242B01A2465A40F0042145A /* PaymentsDefaultPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0092465A40E0042145A /* PaymentsDefaultPlanRequest.swift */; };
 		4242B01B2465A40F0042145A /* PaymentsMethodsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */; };
 		4242B01C2465A40F0042145A /* PaymentsMethodsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */; };
-		4242B01D2465A40F0042145A /* PaymentsReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */; };
-		4242B01E2465A40F0042145A /* PaymentsReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */; };
 		4242B01F2465A40F0042145A /* PaymentsSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */; };
 		4242B0202465A40F0042145A /* PaymentsSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */; };
 		4242B0212465A40F0042145A /* PaymentsTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00D2465A40F0042145A /* PaymentsTokenRequest.swift */; };
@@ -162,6 +160,10 @@
 		D563B26C2345DA4300F98797 /* FormValidationError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26A2345DA4300F98797 /* FormValidationError.swift */; };
 		D563B26E2345DA5800F98797 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26D2345DA5800F98797 /* UserError.swift */; };
 		D563B26F2345DA5800F98797 /* UserError.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563B26D2345DA5800F98797 /* UserError.swift */; };
+		D5686B1924E3D2BF00CC8836 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
+		D5686B1A24E3D2BF00CC8836 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
+		D5686B1B24E3D2D600CC8836 /* ValidateSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */; };
+		D5686B1C24E3D2D700CC8836 /* ValidateSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */; };
 		D57A656F2485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
 		D57A65702485330700079E82 /* VpnServerSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57A656E2485330700079E82 /* VpnServerSelector.swift */; };
 		D585B50D2447069000E901F3 /* PaymentAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E853E02428FF4E002EBF05 /* PaymentAction.swift */; };
@@ -194,6 +196,10 @@
 		D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */; };
 		D5ADFBD423A0D50F00C28CFF /* ReportsApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADFBD323A0D50F00C28CFF /* ReportsApiServiceTests.swift */; };
 		D5ADFBD523A0D50F00C28CFF /* ReportsApiServiceTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADFBD323A0D50F00C28CFF /* ReportsApiServiceTests.swift */; };
+		D5B4712324DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */; };
+		D5B4712424DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */; };
+		D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
+		D5B4712724DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
 		D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
 		D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
 		D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */; };
@@ -281,7 +287,6 @@
 		D5C2047924866B81004FB58B /* PaymentsDefaultPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0092465A40E0042145A /* PaymentsDefaultPlanRequest.swift */; };
 		D5C2047A24866B81004FB58B /* PaymentsMethodsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */; };
 		D5C2047B24866B81004FB58B /* PaymentsPlansRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0082465A40E0042145A /* PaymentsPlansRequest.swift */; };
-		D5C2047C24866B81004FB58B /* PaymentsReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */; };
 		D5C2047D24866B81004FB58B /* PaymentsStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0062465A40E0042145A /* PaymentsStatusRequest.swift */; };
 		D5C2047E24866B81004FB58B /* PaymentsSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */; };
 		D5C2047F24866B81004FB58B /* PaymentsTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00D2465A40F0042145A /* PaymentsTokenRequest.swift */; };
@@ -394,7 +399,6 @@
 		D5C204EC2487A0CE004FB58B /* PaymentsDefaultPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0092465A40E0042145A /* PaymentsDefaultPlanRequest.swift */; };
 		D5C204ED2487A0CE004FB58B /* PaymentsMethodsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */; };
 		D5C204EE2487A0CE004FB58B /* PaymentsPlansRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0082465A40E0042145A /* PaymentsPlansRequest.swift */; };
-		D5C204EF2487A0CE004FB58B /* PaymentsReceiptRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */; };
 		D5C204F02487A0CE004FB58B /* PaymentsStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0062465A40E0042145A /* PaymentsStatusRequest.swift */; };
 		D5C204F12487A0CE004FB58B /* PaymentsSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */; };
 		D5C204F22487A0CE004FB58B /* PaymentsTokenRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B00D2465A40F0042145A /* PaymentsTokenRequest.swift */; };
@@ -747,7 +751,6 @@
 		4242B0082465A40E0042145A /* PaymentsPlansRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsPlansRequest.swift; sourceTree = "<group>"; };
 		4242B0092465A40E0042145A /* PaymentsDefaultPlanRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsDefaultPlanRequest.swift; sourceTree = "<group>"; };
 		4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsMethodsRequest.swift; sourceTree = "<group>"; };
-		4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsReceiptRequest.swift; sourceTree = "<group>"; };
 		4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsSubscriptionRequest.swift; sourceTree = "<group>"; };
 		4242B00D2465A40F0042145A /* PaymentsTokenRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsTokenRequest.swift; sourceTree = "<group>"; };
 		4242B00E2465A40F0042145A /* PaymentsCreditRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsCreditRequest.swift; sourceTree = "<group>"; };
@@ -867,6 +870,8 @@
 		D5ADFBC823A0CF2E00C28CFF /* URL+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+Extension.swift"; sourceTree = "<group>"; };
 		D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLArrayTests.swift; sourceTree = "<group>"; };
 		D5ADFBD323A0D50F00C28CFF /* ReportsApiServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsApiServiceTests.swift; sourceTree = "<group>"; };
+		D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSubscriptionRequest.swift; sourceTree = "<group>"; };
+		D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSubscriptionResponse.swift; sourceTree = "<group>"; };
 		D5B694CF2449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5B694D02449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5B694D12449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fa; path = fa.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -1106,12 +1111,12 @@
 				4242B0092465A40E0042145A /* PaymentsDefaultPlanRequest.swift */,
 				4242B00A2465A40E0042145A /* PaymentsMethodsRequest.swift */,
 				4242B0082465A40E0042145A /* PaymentsPlansRequest.swift */,
-				4242B00B2465A40F0042145A /* PaymentsReceiptRequest.swift */,
 				4242B0062465A40E0042145A /* PaymentsStatusRequest.swift */,
 				4242B00C2465A40F0042145A /* PaymentsSubscriptionRequest.swift */,
 				4242B00D2465A40F0042145A /* PaymentsTokenRequest.swift */,
 				D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */,
 				D5E1514624AC7C030087ACFF /* GetPaymentsTokenRequest.swift */,
+				D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */,
 			);
 			name = Payments;
 			sourceTree = "<group>";
@@ -1486,12 +1491,12 @@
 		E1616B9121C7ADAA00F42D79 /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
+				D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */,
+				D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */,
 				E1616B9221C7ADBF00F42D79 /* ServicePlanDataService.swift */,
 				E1616BD921C80D3D00F42D79 /* StoreKitManager.swift */,
-				D5D606A22292DA6E00394CF9 /* TrialChecker.swift */,
-				D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */,
-				D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */,
 				D5FFE6E824A1E28100F0F4A1 /* StoreKitStateChecker.swift */,
+				D5D606A22292DA6E00394CF9 /* TrialChecker.swift */,
 			);
 			name = Subscriptions;
 			sourceTree = "<group>";
@@ -1505,7 +1510,6 @@
 				E1616B9621C7AE1E00F42D79 /* Subscription.swift */,
 				D5E853E02428FF4E002EBF05 /* PaymentAction.swift */,
 				D59BF8B52428B43400E77D36 /* PaymentToken.swift */,
-				D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */,
 			);
 			name = Subscriptions;
 			sourceTree = "<group>";
@@ -1515,6 +1519,8 @@
 			children = (
 				E116D76722C229FB00D14A51 /* AuthInfoResponse.swift */,
 				E1616BBD21C7D24E00F42D79 /* Responses.swift */,
+				D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */,
+				D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */,
 			);
 			name = Responses;
 			sourceTree = "<group>";
@@ -2143,6 +2149,7 @@
 			files = (
 				4242B0322465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				4242B0622465A43E0042145A /* UserCreateRequest.swift in Sources */,
+				D5B4712324DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
 				E129C6CD22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
 				4242B0342465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */,
 				4242B01F2465A40F0042145A /* PaymentsSubscriptionRequest.swift in Sources */,
@@ -2163,6 +2170,7 @@
 				E15367E622663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CB22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				D5A8811D22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
+				D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */,
 				E1616BEC21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6E21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */,
@@ -2213,7 +2221,6 @@
 				4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616C0921C95E1800F42D79 /* ProfileConstants.swift in Sources */,
 				E1616C1421CBF5EE00F42D79 /* Storage.swift in Sources */,
-				4242B01D2465A40F0042145A /* PaymentsReceiptRequest.swift in Sources */,
 				4242B0952465A4E60042145A /* HumanVerificationAdapter.swift in Sources */,
 				D523F11124B7543C007DB086 /* String+Url.swift in Sources */,
 				4242B00F2465A40F0042145A /* PaymentsApplyCreditRequest.swift in Sources */,
@@ -2322,7 +2329,6 @@
 				D5C204EC2487A0CE004FB58B /* PaymentsDefaultPlanRequest.swift in Sources */,
 				D5C204ED2487A0CE004FB58B /* PaymentsMethodsRequest.swift in Sources */,
 				D5C204EE2487A0CE004FB58B /* PaymentsPlansRequest.swift in Sources */,
-				D5C204EF2487A0CE004FB58B /* PaymentsReceiptRequest.swift in Sources */,
 				D5C204F02487A0CE004FB58B /* PaymentsStatusRequest.swift in Sources */,
 				D5C204F12487A0CE004FB58B /* PaymentsSubscriptionRequest.swift in Sources */,
 				D5C204F22487A0CE004FB58B /* PaymentsTokenRequest.swift in Sources */,
@@ -2401,10 +2407,12 @@
 				D5C205362487A0CF004FB58B /* ProfileManager.swift in Sources */,
 				D5C205372487A0CF004FB58B /* ProfileStorage.swift in Sources */,
 				D5FFE6EA24A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */,
+				D5686B1924E3D2BF00CC8836 /* ValidateSubscriptionResponse.swift in Sources */,
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5C205382487A0CF004FB58B /* ProfileUtility.swift in Sources */,
 				D5C205392487A0CF004FB58B /* ServicePlanDataService.swift in Sources */,
 				D5C2053A2487A0CF004FB58B /* StoreKitManager.swift in Sources */,
+				D5686B1B24E3D2D600CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D5C2053B2487A0CF004FB58B /* TrialChecker.swift in Sources */,
 				D5C2053C2487A0CF004FB58B /* AlertServiceMock.swift in Sources */,
 				D5C2053D2487A0CF004FB58B /* PropertiesManagerMock.swift in Sources */,
@@ -2498,6 +2506,7 @@
 			files = (
 				4242B0332465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				4242B0632465A43E0042145A /* UserCreateRequest.swift in Sources */,
+				D5B4712424DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
 				E129C6CE22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
 				4242B0352465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */,
 				4242B0202465A40F0042145A /* PaymentsSubscriptionRequest.swift in Sources */,
@@ -2518,6 +2527,7 @@
 				E15367E722663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
 				E129C6CC22A9205700D8437E /* VpnManagerMock.swift in Sources */,
 				D5A8811E22CCE400009B63D1 /* ReportBugViewModel.swift in Sources */,
+				D5B4712724DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */,
 				E1616BED21C93B0500F42D79 /* ProfileIcon.swift in Sources */,
 				E148AE6F21C2A452007AB65A /* Foundation+Extension.swift in Sources */,
 				D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */,
@@ -2568,7 +2578,6 @@
 				4242B0142465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616BFA21C95C3000F42D79 /* ServerManager.swift in Sources */,
 				E1616C0A21C95E1800F42D79 /* ProfileConstants.swift in Sources */,
-				4242B01E2465A40F0042145A /* PaymentsReceiptRequest.swift in Sources */,
 				4242B0962465A4E60042145A /* HumanVerificationAdapter.swift in Sources */,
 				D523F11324B7543C007DB086 /* String+Url.swift in Sources */,
 				4242B0102465A40F0042145A /* PaymentsApplyCreditRequest.swift in Sources */,
@@ -2673,6 +2682,7 @@
 				D5C204D524866BB5004FB58B /* Date+Misc.swift in Sources */,
 				D5FFE6E224A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */,
 				D5C204D624866BB5004FB58B /* Foundation+Extension.swift in Sources */,
+				D5686B1A24E3D2BF00CC8836 /* ValidateSubscriptionResponse.swift in Sources */,
 				D5C204D724866BB6004FB58B /* NSCoding+Extension.swift in Sources */,
 				D5C204D824866BB6004FB58B /* NSError+Extension.swift in Sources */,
 				D5C204D924866BB6004FB58B /* String+Extension.swift in Sources */,
@@ -2695,7 +2705,6 @@
 				D5C2047A24866B81004FB58B /* PaymentsMethodsRequest.swift in Sources */,
 				D51D950A249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,
 				D5C2047B24866B81004FB58B /* PaymentsPlansRequest.swift in Sources */,
-				D5C2047C24866B81004FB58B /* PaymentsReceiptRequest.swift in Sources */,
 				D5C2047D24866B81004FB58B /* PaymentsStatusRequest.swift in Sources */,
 				D5C2047E24866B81004FB58B /* PaymentsSubscriptionRequest.swift in Sources */,
 				D5C2047F24866B81004FB58B /* PaymentsTokenRequest.swift in Sources */,
@@ -2778,6 +2787,7 @@
 				D5C204C524866B81004FB58B /* AccountPlan.swift in Sources */,
 				D55D79172498F63C009669E0 /* String+Cleanup.swift in Sources */,
 				D5C204C624866B81004FB58B /* ServicePlanDetails.swift in Sources */,
+				D5686B1C24E3D2D700CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D55D790D24978996009669E0 /* APILogger.swift in Sources */,
 				D5C204C724866B81004FB58B /* PaymentAction.swift in Sources */,
 				D5FFE6E724A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
