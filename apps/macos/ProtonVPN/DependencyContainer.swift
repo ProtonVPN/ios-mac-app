@@ -258,7 +258,6 @@ extension DependencyContainer: MigrationManagerFactory {
     }
 }
 
-
 // MARK: - MaintenanceManagerFactory
 extension DependencyContainer: MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol {
