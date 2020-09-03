@@ -280,9 +280,10 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show( _ alert: VpnServerOnMaintenanceAlert) {
-        if self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold {
-            self.notificationManager.displayServerGoingOnMaintenance()
+        guard self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
+            return
         }
+        self.notificationManager.displayServerGoingOnMaintenance()
         self.lastTimeCheckMaintenance = Date()
     }
 }
