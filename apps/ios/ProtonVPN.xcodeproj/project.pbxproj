@@ -277,6 +277,8 @@
 		D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A960227C3A460041D423 /* LogoWithMapView.swift */; };
 		D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D594A962227C3A500041D423 /* LogoWithMapView.xib */; };
 		D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
+		D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
+		D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */; };
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
 		D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */; };
 		D5A8813122CE270A009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
@@ -713,6 +715,8 @@
 		D594A960227C3A460041D423 /* LogoWithMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoWithMapView.swift; sourceTree = "<group>"; };
 		D594A962227C3A500041D423 /* LogoWithMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoWithMapView.xib; sourceTree = "<group>"; };
 		D594A964227C466F0041D423 /* UIView+constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+constraints.swift"; sourceTree = "<group>"; };
+		D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryUsageViewController.swift; sourceTree = "<group>"; };
+		D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatteryUsageViewController.xib; sourceTree = "<group>"; };
 		D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD722456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extension.swift"; sourceTree = "<group>"; };
 		D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingSwitchCell.swift; sourceTree = "<group>"; };
@@ -1153,8 +1157,9 @@
 		791DE610208E08E600A29EA5 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
+				D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */,
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
+				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
 				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
@@ -1931,6 +1936,7 @@
 		E13EDF6921F0A27600030CE7 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
 				E16C2925239E673500E7B61D /* CustomServers.xib */,
 				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
 				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
@@ -2321,6 +2327,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */,
 				D5CD4B08236724400006AAF7 /* Localizable.strings in Resources */,
 				E169FC412289B87F00FDC933 /* PhoneCountryCodeTableViewCell.xib in Resources */,
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
@@ -2661,6 +2668,7 @@
 				E169D52B21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
 				E169FC3B2289ABF700FDC933 /* PhoneCountryCode.swift in Sources */,
 				79DD19F120BD6B2300505906 /* LoginViewController.swift in Sources */,
+				D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */,
 				79DEE90B2111E5C600C354EF /* ServerTypeHeader.swift in Sources */,
 				7904DA4720E58292008A4FCB /* PrefillInformation.swift in Sources */,
 				E169FC402289B87F00FDC933 /* PhoneCountryCodeTableViewCell.swift in Sources */,

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BatteryUsageViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="descriptionLabel" destination="ReS-ZG-Fah" id="KFj-cq-1f2"/>
+                <outlet property="moreButton" destination="VUE-sZ-rrP" id="xdz-0y-d5R"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="250" image="battery-usage" translatesAutoresizingMaskIntoConstraints="NO" id="D47-1G-bAF">
+                    <rect key="frame" x="100" y="153" width="214" height="394"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="D47-1G-bAF" secondAttribute="height" multiplier="107:197" id="GMv-qW-bf0"/>
+                    </constraints>
+                </imageView>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ReS-ZG-Fah">
+                    <rect key="frame" x="20" y="68" width="374" height="61"/>
+                    <string key="text">_All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN._</string>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <nil key="textColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VUE-sZ-rrP">
+                    <rect key="frame" x="127.5" y="585" width="159" height="30"/>
+                    <state key="normal" title="_Whant to learn more?_"/>
+                    <connections>
+                        <action selector="learMore" destination="-1" eventType="touchUpInside" id="UES-fz-b6G"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+            <constraints>
+                <constraint firstItem="VUE-sZ-rrP" firstAttribute="top" secondItem="D47-1G-bAF" secondAttribute="bottom" constant="38" id="Go7-Aw-ugZ"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="VUE-sZ-rrP" secondAttribute="bottom" constant="24" id="IHS-BZ-NXJ"/>
+                <constraint firstItem="D47-1G-bAF" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="fvy-Kc-spj"/>
+                <constraint firstItem="VUE-sZ-rrP" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jDe-cY-E7b"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="ReS-ZG-Fah" secondAttribute="trailing" constant="20" id="k4u-9E-ntW"/>
+                <constraint firstItem="ReS-ZG-Fah" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="24" id="rFy-iG-cBU"/>
+                <constraint firstItem="ReS-ZG-Fah" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="v4x-8b-ctf"/>
+                <constraint firstItem="D47-1G-bAF" firstAttribute="top" secondItem="ReS-ZG-Fah" secondAttribute="bottom" constant="24" id="ybW-lC-Zpb"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="137.68115942028987" y="148.66071428571428"/>
+        </view>
+    </objects>
+    <resources>
+        <image name="battery-usage" width="214" height="394"/>
+    </resources>
+</document>

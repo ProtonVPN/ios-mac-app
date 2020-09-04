@@ -57,16 +57,19 @@ class SettingsViewModel {
     }
     
     var tableViewData: [TableViewSection] {
-        var sections: [TableViewSection] = [
-            accountSection,
-            securitySection,
-            extensionsSection,
-            logSection,
-            bottomSection
-        ]
+        var sections: [TableViewSection] = []
+        
+        sections.append(accountSection)
+        sections.append(securitySection)
+        sections.append(extensionsSection)
+        if let batterySection = batterySection {
+            sections.append(batterySection)
+        }
+        sections.append(logSection)
+        sections.append(bottomSection)
         
         #if !RELEASE
-        sections.insert(developerSection, at: sections.count - 1)
+        sections.append(developerSection)
         #endif
         
         return sections
@@ -232,6 +235,21 @@ class SettingsViewModel {
         return TableViewSection(title: LocalizedString.extensions.uppercased(), cells: cells)
     }
     
+    private var batterySection: TableViewSection? {
+        let vpnProtocol = propertiesManager.vpnProtocol
+        guard case VpnProtocol.openVpn = vpnProtocol else {
+            return nil
+        }
+        
+        let cells: [TableViewCellModel] = [
+            .pushStandard(title: LocalizedString.batteryTitle, handler: { [pushBatteryViewController] in
+                pushBatteryViewController()
+            })
+        ]
+        
+        return TableViewSection(title: "", cells: cells)
+    }
+    
     private var logSection: TableViewSection {
         let cells: [TableViewCellModel] = [
             .pushStandard(title: LocalizedString.viewLogs, handler: { [pushLogSelectionViewController] in
@@ -301,6 +319,10 @@ class SettingsViewModel {
     
     private func pushExtensionsViewController() {
         pushHandler?(settingsService.makeExtensionsSettingsViewController())
+    }
+    
+    private func pushBatteryViewController() {
+        pushHandler?(settingsService.makeBatteryUsageViewController())
     }
     
     private func pushLogSelectionViewController() {

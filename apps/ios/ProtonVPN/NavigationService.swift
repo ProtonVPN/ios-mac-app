@@ -116,6 +116,7 @@ protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
+    func makeBatteryUsageViewController() -> BatteryUsageViewController
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController
     func makeCustomServerViewController() -> CustomServersViewController
     func presentReportBug()
@@ -583,6 +584,10 @@ extension NavigationService: SettingsService {
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
         return LogSelectionViewController(viewModel: LogSelectionViewModel(vpnManager: vpnManager, settingsService: self))
+    }
+    
+    func makeBatteryUsageViewController() -> BatteryUsageViewController {
+        return BatteryUsageViewController()
     }
     
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
