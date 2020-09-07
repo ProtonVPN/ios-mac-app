@@ -715,6 +715,15 @@
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "تعمیر و نگهداری";
 
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "اتّصال مجدد شما به سریعترین سرور موجود.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "سروری که شما به آن متّصل بودید در حال تعمیر میباشد";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "سرور VPN در حال تعمیر است";
+
 /* Profile create/change form */
 "_make_default_profile" = "ساخت حساب کاربری پیشفرض";
 

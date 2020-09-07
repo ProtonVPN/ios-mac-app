@@ -715,6 +715,15 @@
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Przerwa techniczna";
 
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Łączenie ponowne z najszybszym dostępnym serwerem.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Serwer, z którym byłeś połączony, jest w trakcie przerwy technicznej";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "Serwer VPN jest w trakcie przerwy technicznej";
+
 /* Profile create/change form */
 "_make_default_profile" = "Ustaw jako domyślny profil";
 

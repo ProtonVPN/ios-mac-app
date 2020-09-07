@@ -715,6 +715,15 @@
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Manutenzione";
 
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Riconnessione al server più veloce disponibile.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Il server a cui eri connesso è in manutenzione";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "Il server VPN è in manutenzione";
+
 /* Profile create/change form */
 "_make_default_profile" = "Rendi il profilo predefinito";
 

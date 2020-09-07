@@ -715,6 +715,15 @@
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Техобслуживание";
 
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Переподключение к самому быстрому доступному серверу.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Сервер, к которому Вы были подключены, на техобслуживании";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "VPN-сервер на техобслуживании";
+
 /* Profile create/change form */
 "_make_default_profile" = "Использовать по умолчанию";
 
