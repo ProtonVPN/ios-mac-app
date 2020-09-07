@@ -53,7 +53,7 @@ class LargeConnectButton: HoverDetectionButton {
             title = LocalizedString.disconnect
         } else {
             accentColor = isHovered ? .protonGreen() : .protonWhite()
-            title = LocalizedString.quickConnect.capitalized
+            title = LocalizedString.quickConnect
         }
         
         layer?.borderColor = accentColor.cgColor

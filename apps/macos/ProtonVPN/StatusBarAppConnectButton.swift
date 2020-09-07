@@ -94,7 +94,7 @@ class StatusBarAppConnectButton: LargeDropdownButton {
             buttonTitle = LocalizedString.disconnect.attributed(withColor: accentColor, fontSize: 14)
         } else {
             let accentColor: NSColor = .protonWhite()
-            buttonTitle = LocalizedString.quickConnect.capitalized.attributed(withColor: accentColor, fontSize: 14)
+            buttonTitle = LocalizedString.quickConnect.attributed(withColor: accentColor, fontSize: 14)
         }
         let textHeight = buttonTitle.size().height
         buttonTitle.draw(in: CGRect(x: bounds.height/2, y: (bounds.height - textHeight) / 2, width: bounds.width - bounds.height/2, height: textHeight))

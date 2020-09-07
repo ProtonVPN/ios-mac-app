@@ -1646,24 +1646,24 @@
 		EED534831EEC112000013607 /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
-				D5D6A948230D294C00A432D1 /* Dependecy injection */,
-				EE69C8CD1F5D7F9E00C3065C /* Windows */,
-				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
 				EE36B0C91F4B62D6005DB349 /* Constants */,
-				EEE36ED71F1379FC00E8F859 /* Controllers */,
 				EE46A0691F2DE49F008B435C /* Core */,
+				D5D6A948230D294C00A432D1 /* Dependecy injection */,
 				EED534B71EEC14D000013607 /* Extensions */,
 				EE876E0F1F13852300C9B9C2 /* Layouts */,
 				EEBB82FA1F1E2E2C0041432A /* Management */,
 				EE4FCF671F22264E00B04EF8 /* Models */,
 				E17DE11521FEF8C3008CCC13 /* Protocols */,
-				EED534BC1EEC151600013607 /* Utilities */,
-				EECF30661F179A06006F819F /* ViewModels */,
-				EE876E1C1F13CD6500C9B9C2 /* Views */,
+				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
 				EE98CFD81F150639000D6688 /* Resources */,
 				EED534EE1EEC18C500013607 /* SupportingFiles */,
-				E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */,
+				EED534BC1EEC151600013607 /* Utilities */,
+				EEE36ED71F1379FC00E8F859 /* ViewControllers */,
+				EECF30661F179A06006F819F /* ViewModels */,
+				EE876E1C1F13CD6500C9B9C2 /* Views */,
+				EE69C8CD1F5D7F9E00C3065C /* Windows */,
 				E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */,
+				E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -1705,7 +1705,7 @@
 			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		EEE36ED71F1379FC00E8F859 /* Controllers */ = {
+		EEE36ED71F1379FC00E8F859 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				EE98CFDC1F150F32000D6688 /* About */,
@@ -1719,7 +1719,7 @@
 				EE876E0A1F137CF900C9B9C2 /* Sidebar */,
 				E170A92B21240F9D0036326B /* Upsell & Onboarding */,
 			);
-			name = Controllers;
+			name = ViewControllers;
 			sourceTree = "<group>";
 		};
 		EEFE81C01F3F35140052A7A6 /* Map */ = {
