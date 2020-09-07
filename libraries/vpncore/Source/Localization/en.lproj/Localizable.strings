@@ -683,3 +683,8 @@
 "_troubleshoot_item_other_link1" = "support form";
 "_troubleshoot_item_other_link2" = "email";
 "_troubleshoot_item_other_link3" = "Twitter";
+
+// Battery usage
+"_battery_title" = "Battery usage";
+"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_more" = "Want to learn more?";

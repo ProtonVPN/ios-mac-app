@@ -50,8 +50,9 @@ public class CoreAppConstants {
         public static let forgotUsername = "https://account.protonvpn.com/forgot-username"
         public static let termsAndConditions = "https://protonvpn.com/terms-and-conditions"
         public static let privacyPolicy = "https://protonvpn.com/privacy-policy"
-        public static let appstoreIosUrl: String = "http://itunes.apple.com/app/id1437005085"
-        public static let unsecureWiFiUrl: String = "https://protonvpn.com/blog/public-wifi-safety/"
+        public static let appstoreIosUrl = "http://itunes.apple.com/app/id1437005085"
+        public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
+        public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
     }
     
     public struct AttributionLinks {

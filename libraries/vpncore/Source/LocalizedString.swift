@@ -634,4 +634,9 @@ public class LocalizedString {
     public static let troubleshootItemLinkOther2 = NSLocalizedString("_troubleshoot_item_other_link2", comment: "Text that will become a link to email in _troubleshoot_item_other_description")
     public static let troubleshootItemLinkOther3 = NSLocalizedString("_troubleshoot_item_other_link3", comment: "Text that will become a link to twitter in _troubleshoot_item_other_description")
     
+    // MARK: - Battery info
+    public static let batteryTitle = NSLocalizedString("_battery_title", comment: "iOS settings -> Battery usage; Title of battery usage screen;")
+    public static let batteryDescription = NSLocalizedString("_battery_descritption", comment: "Battery usages screen description")
+    public static let batteryMore = NSLocalizedString("_battery_more", comment: "Battery usage More info button text")
+
 }
