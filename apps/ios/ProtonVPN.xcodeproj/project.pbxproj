@@ -264,6 +264,7 @@
 		D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B36CF2458003100D8B0B9 /* TroubleshootCoordinatorMock.swift */; };
 		D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D56331A123228EEA00CE2EE3 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
+		D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
 		D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8124518567003C34B9 /* TroubleshootViewController.xib */; };
 		D580AB8524518766003C34B9 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */; };
@@ -2900,6 +2901,7 @@
 				E169FC4B228B1C6C00FDC933 /* PhoneCountryCodeTableViewCell.swift in Sources */,
 				D5136C4F228592E80002C095 /* LoginViewModel.swift in Sources */,
 				E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
+				D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */,
 				E1D187EE2301A28700C5F492 /* VpnProtocolViewController.swift in Sources */,
 				D5136C50228592E80002C095 /* VerificationEmailViewModel.swift in Sources */,
 				D5136C52228592E80002C095 /* VerificationCodeViewModel.swift in Sources */,
