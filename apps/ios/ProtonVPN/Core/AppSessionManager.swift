@@ -87,6 +87,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     
     init(factory: Factory) {
         self.factory = factory
+        NotificationCenter.default.addObserver(self, selector: #selector(paymentTransactionFinished), name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
     // MARK: - Beginning of the login logic.
@@ -308,6 +309,14 @@ class AppSessionManagerImplementation: AppSessionManager {
         }
         
         refreshTimer.start()
+    }
+    
+    /// If user is already logged in, we have to reload his plan/subscription data
+    @objc func paymentTransactionFinished() {
+        guard AuthKeychain.fetch() != nil else {
+            return
+        }
+        retrievePropertiesAndLogIn(success: {}, failure: { _ in })
     }
     
 }
