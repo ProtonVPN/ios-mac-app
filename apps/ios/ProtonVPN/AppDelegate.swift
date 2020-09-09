@@ -57,7 +57,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
         storeKitManager.updateAvailableProductsList()
         _ = storeKitManager.readyToPurchaseProduct() //initial response is always true due to lazy load
+    
         navigationService.launched()
+        
+        container.makeMaintenanceManager().observeCurrentServerState(every: AppConstants.Time.serverMaintenanceCheckTime, repeats: true, completion: nil, failure: nil)
+        
+        UIApplication.shared.setMinimumBackgroundFetchInterval(AppConstants.Time.serverMaintenanceCheckTime)
         
         return true
     }
@@ -102,6 +107,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Otherwise just  check directly  the connection
         let state = container.makeVpnManager().state
         self.checkStuckConnection(state)
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        container.makeMaintenanceManager().observeCurrentServerState(every: 0, repeats: false, completion: { maintenance in
+            completionHandler( maintenance ? .newData : .noData)
+        }, failure: { _ in
+            completionHandler(.failed)
+        })
     }
 }
 
