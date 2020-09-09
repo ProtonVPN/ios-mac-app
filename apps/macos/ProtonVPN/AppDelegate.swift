@@ -60,7 +60,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.container.makeMaintenanceManager().observeCurrentServerState(
                 every: AppConstants.Time.maintenanceCheckTimeInterval,
                 repeats: true,
-                callback: nil)
+                completion: nil,
+                failure: nil)
             
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
