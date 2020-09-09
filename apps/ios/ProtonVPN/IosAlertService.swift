@@ -149,6 +149,9 @@ extension IosAlertService: CoreAlertService {
         case is PaymentFailedAlert:
             showDefaultSystemAlert(alert)
             
+        case is VpnServerOnMaintenanceAlert:
+            show(alert as! VpnServerOnMaintenanceAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -218,5 +221,8 @@ extension IosAlertService: CoreAlertService {
     private func show(_ alert: ConnectionTroubleshootingAlert) {
         factory.makeTroubleshootCoordinator().start()
     }
-    
+ 
+    private func show( _ alert: VpnServerOnMaintenanceAlert ) {
+        showNotificationStyleAlert(message: alert.title ?? "", type: .success)
+    }
 }

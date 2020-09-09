@@ -56,6 +56,8 @@ class DependencyContainer {
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
     
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
+    
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
     
@@ -290,7 +292,6 @@ extension DependencyContainer: SigninInfoContainerFactory {
 }
 
 // MARK: PaymentTokenStorageFactory
-
 extension DependencyContainer: PaymentTokenStorageFactory {
     func makePaymentTokenStorage() -> PaymentTokenStorage {
         return paymentTokenStorage
@@ -298,7 +299,6 @@ extension DependencyContainer: PaymentTokenStorageFactory {
 }
 
 // MARK: StoreKitStateCheckerFactory
-
 extension DependencyContainer: StoreKitStateCheckerFactory {
     func makeStoreKitStateChecker() -> StoreKitStateChecker {
         return StoreKitStateCheckerImplementation(factory: self)
@@ -306,7 +306,6 @@ extension DependencyContainer: StoreKitStateCheckerFactory {
 }
 
 // MARK: ProtonAPIAuthenticatorFactory
-
 extension DependencyContainer: ProtonAPIAuthenticatorFactory {
     func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
         return ProtonAPIAuthenticator(self)
@@ -314,7 +313,6 @@ extension DependencyContainer: ProtonAPIAuthenticatorFactory {
 }
 
 // MARK: RefreshTimerFactory
-
 extension DependencyContainer: RefreshTimerFactory {
     func makeRefreshTimer() -> RefreshTimer {
         return refreshTimer
@@ -322,9 +320,15 @@ extension DependencyContainer: RefreshTimerFactory {
 }
 
 // MARK: - AppSessionRefresherFactory
-
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         return appSessionManager
+    }
+}
+        
+// MARK: - MaintenanceManagerFactory
+extension DependencyContainer: MaintenanceManagerFactory {
+    func makeMaintenanceManager() -> MaintenanceManagerProtocol {
+        return maintenanceManager
     }
 }
