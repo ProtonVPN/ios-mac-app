@@ -27,12 +27,12 @@ public protocol MaintenanceManagerFactory {
 }
 
 public protocol MaintenanceManagerProtocol {
-    func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, callback: BoolCallback?)
+    func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?)
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
     
-    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory
+    public typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ServerStorageFactory
     
     private let factory: Factory
     
@@ -40,35 +40,38 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateWay: VpnGatewayProtocol = self.factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-     
+    private lazy var serverStorage: ServerStorage = self.factory.makeServerStorage()
+    
     public init( factory: Factory) {
         self.factory = factory
     }
     
     // MARK: - MaintenanceManagerProtocol
     
-    public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, callback: BoolCallback?) {
+    public func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?) {
         if !repeats || timeInterval <= 0 {
-            self.checkServer(callback)
+            self.checkServer(completion, failure: failure)
             return
         }
         
         Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
-            self.checkServer(callback)
+            self.checkServer(completion, failure: failure)
         }
     }
     
-    private func checkServer(_ callback: BoolCallback?) {
+    private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
         guard let activeConnection = appStateManager.activeConnection() else {
-            callback?(false)
+            PMLog.D("No active connection", level: .info)
+            completion?(false)
             return
         }
         
-        switch vpnGateWay.connection {
+        switch appStateManager.state {
         case .connected, .connecting:
             break
         default:
-            callback?(false)
+            PMLog.D("VPN Not connected", level: .info)
+            completion?(false)
             return
         }
         
@@ -76,23 +79,22 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         
         let failureCallback: ErrorCallback = { error in
             PMLog.D("Server check request failed with error: \(error)", level: .error)
-            self.vpnGateWay.quickConnect()
-            callback?(true)
+            self.vpnGateWay.disconnect { }
+            failure?(error)
         }
         
         vpnApiService.serverState(serverId: serverID, success: { vpnServerState in
             guard vpnServerState.status != 1 else {
-                callback?(false)
+                completion?(false)
                 return
             }
             
-            self.vpnApiService.vpnProperties(lastKnownIp: nil, success: { _ in
-                PMLog.D("Reconnecting to a new Server, current one on maintenance ID = \(serverID)", level: .info)
-                callback?(true)
+            self.vpnApiService.serverInfo(for: nil, success: { servers in
+                self.serverStorage.store(servers)
                 self.alertService.push(alert: VpnServerOnMaintenanceAlert())
                 self.vpnGateWay.quickConnect()
+                completion?(true)
             }, failure: failureCallback)
-            
         }, failure: failureCallback)
     }
 }
