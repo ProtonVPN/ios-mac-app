@@ -37,6 +37,13 @@ class NetworkHelperTimeoutWrapper: NetworkHelperProtocol {
     
     enum NHWError: Error {
         case timeOut
+        
+        var unixCode: NSNumber {
+            switch self {
+            case .timeOut:
+                return -1
+            }
+        }
     }
     
     public init(_ helper: NetworkHelperProtocol, errorHandler: @escaping ErrorHandler) {
@@ -117,6 +124,7 @@ class NetworkHelperTimeoutWrapper: NetworkHelperProtocol {
         queue.asyncAfter(deadline: .now() + errorTimeOut, execute: {
             guard !completionsSucceeded else { return }
             PMLog.D("NetworkHelper.disableFirewall timeout")
+            completion(NHWError.timeOut.unixCode)
             self.errorHandler(NHWError.timeOut)
         })
         
