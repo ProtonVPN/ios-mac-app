@@ -113,7 +113,20 @@ class NetworkHelperTimeoutWrapper: NetworkHelperProtocol {
     }
     
     func disableFirewall(completion: @escaping (NSNumber) -> Void) {
-        helper.disableFirewall(completion: completion)
+        var completionsSucceeded = false
+        queue.asyncAfter(deadline: .now() + errorTimeOut, execute: {
+            guard !completionsSucceeded else { return }
+            PMLog.D("NetworkHelper.disableFirewall timeout")
+            self.errorHandler(NHWError.timeOut)
+        })
+        
+        helper.disableFirewall { input in
+            guard !completionsSucceeded else {
+                PMLog.D("NetworkHelper.disableFirewall returned after timeout: \(input)")
+                return
+            }
+            completionsSucceeded = true
+            completion(input)
+        }
     }
-    
 }
