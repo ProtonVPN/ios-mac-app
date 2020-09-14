@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "SERVIDORES BASIC";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Todo el tráfico en su teléfono se gestionará a través de OpenVPN, por lo tanto iOS asignará el uso de la batería de otras aplicaciones a ProtonVPN.";
+
+/* Battery usage More info button text */
+"_battery_more" = "¿Desea saber más?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Uso de batería";
+
 /* Common word */
 "_cancel" = "Cancelar";
 

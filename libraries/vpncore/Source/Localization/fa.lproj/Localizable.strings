@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "سرورهای پایه";
 
+/* Battery usages screen description */
+"_battery_descritption" = "همه ترافیک موبایل شما از طریق OpenVPN مدیریت خواهد شد، بنابراین iOS مصرف باطری دیگر برنامه‌ها را به ProtonVPN اختصاص خواهد داد.";
+
+/* Battery usage More info button text */
+"_battery_more" = "میخواهید بیشتر بیاموزید?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "مصرف باتری";
+
 /* Common word */
 "_cancel" = "لغو";
 

@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "СЕРВЕРЫ BASIC";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет записывать на ProtonVPN то, что скачивают/отправляют другие приложения.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Хотите узнать больше?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Расход батареи";
+
 /* Common word */
 "_cancel" = "Отмена";
 

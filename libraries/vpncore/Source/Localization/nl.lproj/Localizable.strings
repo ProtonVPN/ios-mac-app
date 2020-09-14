@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "BASIS SERVERS";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Al het netwerkverkeer op uw telefoon verloopt via OpenVPN, daarom toont iOS het batterijgebruik van andere apps alsof het van ProtonVPN is.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Wilt u meer weten?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Batterijgebruik";
+
 /* Common word */
 "_cancel" = "Annuleren";
 
@@ -293,10 +302,10 @@
 "_error_api_offline" = "De ProtonVPN-API is momenteel offline";
 
 /* Error during payment alert - button */
-"_error_apply_payment_failed_free" = "Continue with free account";
+"_error_apply_payment_failed_free" = "Doorgaan met gratis account";
 
 /* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
-"_error_apply_payment_failed_message" = "Your payment was not processed. To try again, click Retry. You will only be charged once.\nTo continue with a free account, click Continue with free account. You can upgrade to a paid plan at a later date.";
+"_error_apply_payment_failed_message" = "Uw betaling is niet verwerkt. Om het opnieuw te proberen, klik op Opnieuw. Er wordt slechts één keer in rekening gebracht.\nOm door te gaan met een gratis account, klik op Doorgaan met gratis account. U kunt op een later tijdstip upgraden naar een betaald abonnement.";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "U heeft succesvol geregistreerd maar uw betaling is niet verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenservice.";
@@ -308,16 +317,16 @@
 "_error_apply_payment_failed_on_registration_title" = "Betaling mislukt";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_message" = "You have successfully paid but your purchase was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
+"_error_apply_payment_failed_on_upgrade_message" = "U heeft succesvol betaald maar uw betaling is niet correct verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenservice.";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_title" = "Payment failed";
+"_error_apply_payment_failed_on_upgrade_title" = "Betaling mislukt";
 
 /* Error during payment alert - button */
-"_error_apply_payment_failed_retry" = "Retry";
+"_error_apply_payment_failed_retry" = "Opnieuw proberen";
 
 /* Error during payment alert - title */
-"_error_apply_payment_failed_title" = "Payment failed";
+"_error_apply_payment_failed_title" = "Betaling mislukt";
 
 /* In App Purchase error */
 "_error_credit_applied" = "Neem contact op met support@protonvpn.com om uw aankoop te voltooien.";
@@ -416,7 +425,7 @@
 "_error_subscription_parser" = "Kan de abonnementsinformatie niet verwerken";
 
 /* Internal error message when there is a problem with initializing tls and connection cannot be established. */
-"_error_tls_initialisation" = "TLS initialisatie error";
+"_error_tls_initialisation" = "Fout tijdens het opzetten van een versleutelde TLS-verbinding";
 
 /* Internal error message when there is a problem with server certificate and connection cannot be established. */
 "_error_tls_server_verification" = "Servercertificaat kan niet worden geverifieerd.";
@@ -473,7 +482,7 @@
 "_error_vpn_session_is_active" = "ProtonVPN-sessie is actief";
 
 /* In App Purchase error */
-"_error_wrong_payment_token_status" = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
+"_error_wrong_payment_token_status" = "Verkeerde betalingstoken status. Herstart de app. Als de fout zich blijft voordoen, neem contact op met support.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN gebruikt een pakket firewall om een Kill Switch te implementeren. Door de Kill Switch in te schakelen worden de huidige firewallinstellingen van uw apparaat overschreven. Als u uw eigen firewallconfiguratie wil blijven gebruiken, moet u geen gebruik maken van de Kill Switch.\n\nOm gebruik te maken van de Kill Switch en daarmee uw firewallinstellingen te overschrijven, selecteer DOORGAAN.\n\nom uw huidige firewall te blijven gebruiken, selecteer ANNULEREN.";
@@ -518,7 +527,7 @@
 "_feature_blocked_content" = "Toegang tot geblokkeerde inhoud";
 
 /* iOS plan feature */
-"_feature_bt" = "BitTorrent/bestandsdelen ondersteuning";
+"_feature_bt" = "Ondersteuning voor BitTorrent/bestanden delen";
 
 /* iOS plan feature */
 "_feature_connections" = "Gelijktijdige VPN-verbindingen";
@@ -716,13 +725,13 @@
 "_maintenance" = "Onderhoud";
 
 /* MacOS: We'll connect to a different server */
-"_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
+"_maintenance_on_server_detected_description" = "Opnieuw verbinden met de snelste beschikbare server.";
 
 /* MacOS: The current server has going to maintenance. */
-"_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
+"_maintenance_on_server_detected_subtitle" = "De server waarmee u verbonden was, is in onderhoud";
 
 /* MacOS: The current server has going to maintenance. */
-"_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
+"_maintenance_on_server_detected_title" = "De VPN-server is in onderhoud";
 
 /* Profile create/change form */
 "_make_default_profile" = "Maak standaardprofiel";
@@ -950,7 +959,7 @@
 "_plans_connections" = "_plans_connections";
 
 /* Text description in plan selection screen */
-"_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald plan wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde plan voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
+"_plans_footer" = "Bij de bevestiging van uw aankoop van een betaald abonnement wordt het getoonde bedrag, inclusief belastingen en extra platformkosten (die niet rechtstreeks door Proton in rekening worden gebracht), in rekening gebracht op uw iTunes account. Na de aankoop wordt u automatisch geüpgraded naar het geselecteerde abonnement voor een periode van 1 jaar, waarna u kunt verlengen of annuleren, online of via onze iOS app.";
 
 /* PLUS word that is put inside `enjoyForFree` translation instead of %@ */
 "_plus" = "PLUS";
@@ -1289,7 +1298,7 @@
 "_subscription_button" = "Abonnement verlengen voor 1 jaar \n%@.";
 
 /* Text under current plan information */
-"_subscription_description" = "U kunt meer credits kopen om uw huidige abonnement automatisch te verlengen. Aan het einde van uw huidige abonnementsperiode zullen deze credits worden toegepast om door te gaan met uw plan.";
+"_subscription_description" = "U kunt meer credits kopen om uw huidige abonnement automatisch te verlengen. Aan het einde van uw huidige abonnementsperiode zullen deze credits worden toegepast om uw abonnement te voortzetten.";
 
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "U heeft met succes credits gekocht om uw huidige abonnement te verlengen.";
@@ -1411,7 +1420,7 @@
 "_troubleshoot_item_gov_link1" = "Tor";
 
 /* Title of troubleshooting item */
-"_troubleshoot_item_gov_title" = "Overheid blokkage";
+"_troubleshoot_item_gov_title" = "Blokkade door overheidsinstanties";
 
 /* Description of troubleshooting item */
 "_troubleshoot_item_isp_description" = "Probeer verbinding te maken met Proton vanuit een ander netwerk (of Tor).";

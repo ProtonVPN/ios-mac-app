@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "PODSTAWOWE SERWERY";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Cały ruch sieciowy telefonu będzie zarządzany przez protokół OpenVPN, dlatego system iOS przydzieli użycie baterii innych aplikacji do aplikacji ProtonVPN.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Chcesz dowiedzieć się więcej?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Użycie baterii";
+
 /* Common word */
 "_cancel" = "Anuluj";
 
@@ -353,7 +362,7 @@
 "_error_hash_password" = "Nie można przetworzyć hasła";
 
 /* Unknown error that has no better description */
-"_error_internal_error" = "Wewnętrzny błąd interfejsu API";
+"_error_internal_error" = "Wystąpił wewnętrzny błąd interfejsu API";
 
 /* Invalid human verification code alert */
 "_error_invalid_human_verification_code_message" = "Czy chcesz otrzymać nowy kod weryfikacyjny lub użyć innej metody weryfikacji?";
@@ -431,7 +440,7 @@
 "_error_unavailable_product" = "Nie udało się uzyskać listy dostępnych produktów ze sklepu App Store.";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Nieznany błąd";
+"_error_unknown_title" = "Wystąpił nieznany błąd";
 
 /* user cancelled human validation procedure */
 "_error_user_cancelled" = "Operacja została anulowana";
@@ -716,7 +725,7 @@
 "_maintenance" = "Przerwa techniczna";
 
 /* MacOS: We'll connect to a different server */
-"_maintenance_on_server_detected_description" = "Łączenie ponowne z najszybszym dostępnym serwerem.";
+"_maintenance_on_server_detected_description" = "Ponowne łączenie z najszybszym dostępnym serwerem.";
 
 /* MacOS: The current server has going to maintenance. */
 "_maintenance_on_server_detected_subtitle" = "Serwer, z którym byłeś połączony, jest w trakcie przerwy technicznej";
