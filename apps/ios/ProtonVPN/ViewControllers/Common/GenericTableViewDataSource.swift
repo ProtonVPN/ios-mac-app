@@ -35,6 +35,7 @@ enum TableViewCellModel {
     case instructionStep(number: Int, text: String)
     case checkmarkStandard(title: String, checked: Bool, handler: (() -> Void) )
     case colorPicker(viewModel: ColorPickerViewModel)
+    case invertedKeyValue(key: String, value: String, handler: (() -> Void) )
 }
 
 struct TableViewSection {
@@ -75,6 +76,18 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cellModel = sections[indexPath.section].cells[indexPath.row]
         
         switch cellModel {
+        case .invertedKeyValue(key: let key, value: let value, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
+                return UITableViewCell()
+            }
+                
+            cell.accessoryType = .none
+            cell.titleLabel.text = key
+            cell.subtitleLabel.text = value
+            cell.completionHandler = handler
+            cell.invert()
+                
+            return cell
         case .pushStandard(title: let title, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
                 return UITableViewCell()
@@ -218,7 +231,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed:
+        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()

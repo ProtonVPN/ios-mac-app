@@ -149,6 +149,9 @@ extension IosAlertService: CoreAlertService {
         case is PaymentFailedAlert:
             showDefaultSystemAlert(alert)
             
+        case is ReconnectOnNetshieldChangeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

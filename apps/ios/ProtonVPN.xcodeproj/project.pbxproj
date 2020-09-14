@@ -227,6 +227,9 @@
 		D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C912285A9190002C095 /* ServerUtilityTests.swift */; };
 		D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
 		D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */; };
+		D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
+		D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */; };
+		D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
 		D5296778237D358700D479F2 /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
 		D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
 		D53E83CC2328C3FC0031CD49 /* SignUpFormViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */; };
@@ -274,6 +277,9 @@
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
 		D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */; };
 		D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874A924F92F640022E438 /* SignUpTests.swift */; };
+		D5924D8A250F853E00DCFF15 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
+		D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
+		D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A960227C3A460041D423 /* LogoWithMapView.swift */; };
 		D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D594A962227C3A500041D423 /* LogoWithMapView.xib */; };
@@ -676,6 +682,9 @@
 		D5136C912285A9190002C095 /* ServerUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUtilityTests.swift; sourceTree = "<group>"; };
 		D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItemViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
+		D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewController.swift; sourceTree = "<group>"; };
+		D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetshieldSelectionViewController.xib; sourceTree = "<group>"; };
+		D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewModel.swift; sourceTree = "<group>"; };
 		D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewController.swift; sourceTree = "<group>"; };
 		D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewModel.swift; sourceTree = "<group>"; };
 		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
@@ -712,6 +721,7 @@
 		D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnloggedUserTests.swift; sourceTree = "<group>"; };
 		D5811D8B229C01D70087B63A /* .gitlab-ci.yml */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".gitlab-ci.yml"; sourceTree = "<group>"; };
 		D58874A924F92F640022E438 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
+		D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldServiceMock.swift; sourceTree = "<group>"; };
 		D594A957227C0E470041D423 /* UIView+nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+nib.swift"; sourceTree = "<group>"; };
 		D594A960227C3A460041D423 /* LogoWithMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoWithMapView.swift; sourceTree = "<group>"; };
 		D594A962227C3A500041D423 /* LogoWithMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoWithMapView.xib; sourceTree = "<group>"; };
@@ -1162,6 +1172,8 @@
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
+				D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */,
+				D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */,
 				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
@@ -1479,6 +1491,7 @@
 				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
 				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
 				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
+				D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */,
 				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
 				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
 				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
@@ -1593,6 +1606,7 @@
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
 				D5136C1A228591FB0002C095 /* LoginService.swift */,
+				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
 				D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */,
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
 				E197BD4522C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift */,
@@ -2371,6 +2385,7 @@
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
+				D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				E12DF61C223124DA006EC61F /* Onboarding.xib in Resources */,
 				79DD19EE20BD681A00505906 /* Login.storyboard in Resources */,
@@ -2725,6 +2740,7 @@
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				E16F562021F87201007BAB77 /* OnboardingViewController.swift in Sources */,
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
+				D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */,
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
@@ -2741,6 +2757,7 @@
 				42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
 				E1D187F12301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
+				D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */,
 				E1A9A67922BA3FE90073711B /* Alerts.swift in Sources */,
@@ -2837,6 +2854,7 @@
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
 				E169FC4D228B1D8700FDC933 /* PhoneCountryCodeViewModel.swift in Sources */,
 				D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */,
+				D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
 				E169FC44228B15E400FDC933 /* SmsCountryCodeViewController.swift in Sources */,
@@ -2894,6 +2912,7 @@
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D5110860246189F30018872A /* PlanInfoView.swift in Sources */,
+				D5924D8A250F853E00DCFF15 /* NetshieldSelectionViewModel.swift in Sources */,
 				E169FC4A228B167200FDC933 /* PhoneCountryCode.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				422395842446EF660089002F /* URLConstants.swift in Sources */,
@@ -2950,6 +2969,7 @@
 				D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */,
 				D5BF950D2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift in Sources */,
 				D5136C6B228592E80002C095 /* GradientSeparator.swift in Sources */,
+				D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
 				D5136C6D228592E80002C095 /* CountryAnnotation.swift in Sources */,
 				D5136C6E228592E80002C095 /* ConnectionView.swift in Sources */,

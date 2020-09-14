@@ -31,13 +31,7 @@ class StandardTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        backgroundColor = .protonGrey()
-        titleLabel.font = UIFont.systemFont(ofSize: 17)
-        titleLabel.textColor = .protonWhite()
-        
-        subtitleLabel.font = UIFont.systemFont(ofSize: 17)
-        subtitleLabel.textColor = .protonFontLightGrey()
+        setupViews()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -50,4 +44,22 @@ class StandardTableViewCell: UITableViewCell {
         completionHandler?()
     }
     
+    func invert() {
+        setupViews(inverted: true)
+    }
+    
+    private func setupViews(inverted: Bool = false) {
+        backgroundColor = .protonGrey()
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
+        subtitleLabel.font = UIFont.systemFont(ofSize: 17)
+        
+        if !inverted {
+            titleLabel.textColor = .protonWhite()
+            subtitleLabel.textColor = .protonFontLightGrey()
+        } else {
+            titleLabel.textColor = .protonFontLightGrey()
+            subtitleLabel.textColor = .protonWhite()
+        }
+        
+    }
 }
