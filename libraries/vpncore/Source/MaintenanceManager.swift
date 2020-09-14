@@ -79,7 +79,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         
         let failureCallback: ErrorCallback = { error in
             PMLog.D("Server check request failed with error: \(error)", level: .error)
-            self.vpnGateWay.disconnect { }
+            self.vpnGateWay.quickConnect()
             failure?(error)
         }
         
