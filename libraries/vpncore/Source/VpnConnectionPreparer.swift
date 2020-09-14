@@ -39,14 +39,14 @@ class VpnConnectionPreparer {
         self.vpnKeychain = vpnKeychain
     }
     
-    func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel) {
-        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server) {
+    func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, netShieldType: NetShieldType) {
+        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, netShieldType: netShieldType) {
             appStateManager.connect(withConfiguration: configuration)
         }
     }
     
     // MARK: - Private functions
-    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer serverModel: ServerModel?) -> ConnectionConfiguration? {
+    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer serverModel: ServerModel?, netShieldType: NetShieldType) -> ConnectionConfiguration? {
         guard let server = serverModel else { return nil }
         
         if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
@@ -62,6 +62,6 @@ class VpnConnectionPreparer {
         
         let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))]
         
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType)
     }
 }

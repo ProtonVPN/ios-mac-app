@@ -1,6 +1,6 @@
 //
-//  VpnProperties.swift
-//  vpncore - Created on 06/05/2020.
+//  ClientConfig.swift
+//  vpncore - Created on 2020-09-08.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,19 +20,16 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import Foundation
 
-public struct VpnProperties {
+public struct ClientConfig: Codable {
     
-    public let serverModels: [ServerModel]
-    public let vpnCredentials: VpnCredentials?
-    public let ip: String?
-    public let clientConfig: ClientConfig
+    public let openVPNConfig: OpenVpnConfig
+    public let featureFlags: FeatureFlags
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, appStateManager: AppStateManager?) {
-        self.serverModels = serverModels
-        self.vpnCredentials = vpnCredentials
-        self.ip = ip
-        self.clientConfig = clientConfig ?? ClientConfig.defaultConfig
-    }
+    public static let defaultConfig = ClientConfig(
+        openVPNConfig: OpenVpnConfig.defaultConfig,
+        featureFlags: FeatureFlags.defaultConfig
+    )
+
 }

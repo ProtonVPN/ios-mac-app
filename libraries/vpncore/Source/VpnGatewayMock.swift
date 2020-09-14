@@ -53,7 +53,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func quickConnectConnectionRequest() -> ConnectionRequest {
-        return ConnectionRequest(serverType: .standard, connectionType: .fastest, vpnProtocol: .ike)
+        return ConnectionRequest(serverType: .standard, connectionType: .fastest, vpnProtocol: .ike, netShieldType: .off)
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
@@ -88,5 +88,8 @@ public class VpnGatewayMock: VpnGatewayProtocol {
         connection = .disconnected
         completion()
     }
-
+    
+    public func reconnect(with netShieldType: NetShieldType) {
+        
+    }
 }

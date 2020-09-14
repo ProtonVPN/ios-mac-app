@@ -11,22 +11,21 @@ import Foundation
 
 public struct OpenVpnConfig: Codable {
     
-    let defaultTcpPorts: [Int]
-    let defaultUdpPorts: [Int]
+    let defaultPorts: [String: [Int]]
+    
+    var defaultTcpPorts: [Int] {
+        return defaultPorts["UDP"] ?? OpenVpnConfig.defaultConfig.defaultTcpPorts
+    }
+    var defaultUdpPorts: [Int] {
+        return defaultPorts["TCP"] ?? OpenVpnConfig.defaultConfig.defaultTcpPorts
+    }
     
     public static let defaultConfig = OpenVpnConfig(defaultTcpPorts: [443, 5995, 8443], defaultUdpPorts: [80, 443, 4569, 1194, 5060])
     
     public init(defaultTcpPorts: [Int], defaultUdpPorts: [Int]) {
-        self.defaultTcpPorts = defaultTcpPorts
-        self.defaultUdpPorts = defaultUdpPorts
-    }
-    
-    public init(dic: JSONDictionary) throws {
-        guard let defaultPorts = dic.jsonDictionary(key: "DefaultPorts") else {
-            PMLog.D("'DefaultPorts' field not present in clientconfig response", level: .error)
-            throw ParseError.clientConfigParse
-        }
-        defaultTcpPorts = try defaultPorts.intArrayOrThrow(key: "TCP")
-        defaultUdpPorts = try defaultPorts.intArrayOrThrow(key: "UDP")
+        defaultPorts = [
+            "UDP": defaultTcpPorts,
+            "TCP": defaultUdpPorts
+        ]
     }
 }

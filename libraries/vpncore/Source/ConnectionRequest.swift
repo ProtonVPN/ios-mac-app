@@ -26,6 +26,11 @@ public struct ConnectionRequest: Codable {
     public let serverType: ServerType
     public let connectionType: ConnectionRequestType
     public let vpnProtocol: VpnProtocol
+    public let netShieldType: NetShieldType
+    
+    public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType)
+    }
 }
 
 public enum ConnectionRequestType {

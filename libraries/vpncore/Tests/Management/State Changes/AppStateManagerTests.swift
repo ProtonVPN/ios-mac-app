@@ -233,6 +233,6 @@ class AppStateManagerTests: XCTestCase {
     lazy var connectionConfig: ConnectionConfiguration = {
         let server = ServerModel(id: "", name: "", domain: "", load: 0, entryCountryCode: "", exitCountryCode: "", tier: 1, feature: .zero, city: nil, ips: [ServerIp](), score: 0.0, status: 0, location: ServerLocation(lat: 0, long: 0))
         let serverIp = ServerIp(id: "", entryIp: "", exitIp: "", domain: "", status: 0)
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: .ike, netShieldType: .off)
     }()
 }

@@ -12,6 +12,8 @@ import Foundation
 public enum VpnManagerClientConfiguration: String {
     case iOSClient = "pi"
     case macClient = "pm"
+    case netShieldLevel1 = "f1"
+    case netShieldLevel2 = "f2"
 }
 
 public struct VpnManagerConfiguration {
@@ -65,7 +67,7 @@ public class VpnManagerConfigurationPreparer {
                                            serverId: connectionConfig.server.id,
                                            entryServerAddress: entryServer,
                                            exitServerAddress: exitServer,
-                                           username: vpnCredentials.name + self.extraConfiguration,
+                                           username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
                                            password: vpnCredentials.password,
                                            passwordReference: passwordRef,
                                            vpnProtocol: connectionConfig.vpnProtocol
@@ -79,13 +81,15 @@ public class VpnManagerConfigurationPreparer {
     
     // MARK: - Private
     
-    private var extraConfiguration: String {
+    private func extraConfiguration(with connectionConfig: ConnectionConfiguration) -> String {
         
         #if os(iOS)
-        let extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
+        var extraConfiguration: [VpnManagerClientConfiguration] = [.iOSClient]
         #else
-        let extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
+        var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
+        
+        extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         
         return extraConfiguration.reduce("") {
             $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.rawValue

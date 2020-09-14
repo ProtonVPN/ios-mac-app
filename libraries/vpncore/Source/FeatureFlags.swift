@@ -1,6 +1,6 @@
 //
-//  VpnProperties.swift
-//  vpncore - Created on 06/05/2020.
+//  FeatureFlags.swift
+//  vpncore - Created on 2020-09-08.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,19 +20,23 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import Foundation
 
-public struct VpnProperties {
+public struct FeatureFlags: Codable {
     
-    public let serverModels: [ServerModel]
-    public let vpnCredentials: VpnCredentials?
-    public let ip: String?
-    public let clientConfig: ClientConfig
+    public let netShield: Int
+    public let guestHoles: Int
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, appStateManager: AppStateManager?) {
-        self.serverModels = serverModels
-        self.vpnCredentials = vpnCredentials
-        self.ip = ip
-        self.clientConfig = clientConfig ?? ClientConfig.defaultConfig
+    public static let defaultConfig = FeatureFlags(netShield: 0, guestHoles: 0)
+    
+    // Some properties to get around dirty API
+    
+    public var isNetShield: Bool {
+        return netShield != 0
     }
+    
+    public var isGuestHoles: Bool {
+        return guestHoles != 0
+    }
+    
 }
