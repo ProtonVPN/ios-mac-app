@@ -183,7 +183,8 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.serverStorage.store(properties.serverModels)
             
             self.propertiesManager.userIp = properties.ip
-            self.propertiesManager.openVpnConfig = properties.openVpnConfig
+            self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+            self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
             
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)

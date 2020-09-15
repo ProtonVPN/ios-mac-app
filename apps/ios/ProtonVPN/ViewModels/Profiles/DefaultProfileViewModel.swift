@@ -27,7 +27,7 @@ class DefaultProfileViewModel {
     
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol?
-    private let propertiesManager: PropertiesManager
+    private let propertiesManager: PropertiesManagerProtocol
     private let loginService: LoginService
     
     private var profile: Profile {
@@ -40,7 +40,8 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.random,
-                           vpnProtocol: PropertiesManager().vpnProtocol)
+                           vpnProtocol: propertiesManager.vpnProtocol,
+                           netShieldType: nil)
         default:
             return Profile(id: "st_f", accessTier: 0,
                            profileIcon: .image("con-fastest"),
@@ -48,20 +49,21 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.fastest,
-                           vpnProtocol: PropertiesManager().vpnProtocol)
+                           vpnProtocol: propertiesManager.vpnProtocol,
+                           netShieldType: nil)
         }
     }
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType)
         }
         return false
     }
@@ -104,7 +106,7 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManager, loginService: LoginService) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, loginService: LoginService) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway

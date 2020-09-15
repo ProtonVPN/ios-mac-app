@@ -31,6 +31,7 @@ class ProfileItemViewModel {
     private let loginService: LoginService
     private let alertService: AlertService
     private let planService: PlanService
+    private let propertiesManager: PropertiesManagerProtocol
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -38,14 +39,14 @@ class ProfileItemViewModel {
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType)
         }
         return false
     }
@@ -102,13 +103,14 @@ class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.loginService = loginService
         self.alertService = alertService
         self.userTier = userTier
         self.planService = planService
+        self.propertiesManager = propertiesManager
                 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
