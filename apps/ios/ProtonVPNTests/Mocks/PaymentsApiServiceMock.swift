@@ -24,17 +24,15 @@ import Foundation
 import vpncore
 
 class PaymentsApiServiceMock: PaymentsApiService {
-    
-    
     public var callbackServicePlans: ((((ServicePlansProperties) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackApplyCredit: ((String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackCredit: ((Int, PaymentAction, (() -> Void), ((Error) -> Void)) -> Void)?
-    public var callbackPostReceipt: ((Int, String, String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackMethods: (((([PaymentMethod]?) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackSubscription: ((((Subscription?) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackCreatePaymentToken: ((Int, String, ((PaymentToken) -> Void), ((Error) -> Void)) -> Void)?
-    public var callbackGetPaymentTokenStatus: ((PaymentToken, ((PaymentTokenStatusResponse) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackBuyPlan: ((String, Int, PaymentAction, SubscriptionCallback, ErrorCallback) -> Void)?
+    public var callbackGetPaymentTokenStatus: ((PaymentToken, PaymentTokenStatusCallback, ErrorCallback) -> Void)?
+    public var callbackValidateSubscription: ((String, ValidateSubscriptionResponseCallback, ErrorCallback) -> Void)?
 
     // MARK: PaymentsApiService implementation
     
@@ -49,11 +47,7 @@ class PaymentsApiServiceMock: PaymentsApiService {
     func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {
         callbackCredit?(amount, receipt, success, failure)
     }
-    
-    func postReceipt(amount: Int, receipt: String, planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void)) {
-        callbackPostReceipt?(amount, receipt, planId, success, failure)
-    }
-    
+        
     func methods(success: @escaping (([PaymentMethod]?) -> Void), failure: @escaping ((Error) -> Void)) {
         callbackMethods?(success, failure)
     }
@@ -69,9 +63,13 @@ class PaymentsApiServiceMock: PaymentsApiService {
     func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback) {
         callbackGetPaymentTokenStatus?(token, success, failure)
     }
-    
+
     func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
         callbackBuyPlan?(planId, price, paymentToken, success, failure)
+    }
+    
+    func validateSubscription(id planId: String, success: @escaping ValidateSubscriptionResponseCallback, failure: @escaping ErrorCallback) {
+        callbackValidateSubscription?(planId, success, failure)
     }
     
 }

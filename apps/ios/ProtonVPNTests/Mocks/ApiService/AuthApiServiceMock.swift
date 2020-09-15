@@ -27,6 +27,7 @@ class AuthApiServiceMock: AuthApiService {
     
     var callbackauthenticate: ((String, String, ((AuthCredentials) -> Void), ((Error) -> Void)) -> Void)?
     var callbackmodulus: ((((ModulusResponse) -> Void), ((Error) -> Void)) -> Void)?
+    var callbackRefreshAccessToken: ((((AuthCredentials) -> Void), ((Error) -> Void)) -> Void)?
     
     // MARK: Implementation
     
@@ -36,6 +37,10 @@ class AuthApiServiceMock: AuthApiService {
     
     func modulus(success: @escaping ((ModulusResponse) -> Void), failure: @escaping ((Error) -> Void)) {
         callbackmodulus?(success, failure)
+    }
+    
+    func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
+        callbackRefreshAccessToken?(success, failure)
     }
     
 }

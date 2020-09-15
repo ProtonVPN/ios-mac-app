@@ -13,7 +13,6 @@ def sharedpods
   pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 
   # third party pods
-  pod 'Alamofire', '~> 5.1'
   pod 'GSMessages', '~> 1.0'
   pod 'KeychainAccess', '~> 3.0'
   pod 'ReachabilitySwift', '~> 4.0'

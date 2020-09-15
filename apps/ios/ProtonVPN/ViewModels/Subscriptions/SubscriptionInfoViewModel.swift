@@ -178,14 +178,16 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
         isLoading = true
 
         storeKitManager.subscribeToPaymentQueue()
-        storeKitManager.purchaseProduct(withId: productId, refreshHandler: { [weak self] in
-            self?.failed(withError: nil)
-
-        }, successCompletion: { [weak self] _ in
+        storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self] _ in
             PMLog.ET("IAP succeeded", level: .info)
             self?.reload()
             
         }, errorCompletion: { [weak self] (error) in
+            if case StoreKitManagerImplementation.Errors.cancelled = error {
+                PMLog.D("IAP cancelled")
+                self?.failed(withError: nil)
+                return
+            }
             PMLog.ET("IAP errored: \(error.localizedDescription)")
             self?.failed(withError: error)
 

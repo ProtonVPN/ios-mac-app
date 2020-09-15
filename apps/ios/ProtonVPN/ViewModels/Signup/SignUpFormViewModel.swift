@@ -204,26 +204,32 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         }
         
         storeKitManager.subscribeToPaymentQueue()
-        storeKitManager.purchaseProduct(withId: productId, refreshHandler: { [weak self] in
-            self?.failed(withError: nil)
-            
-        }, successCompletion: { [weak self] token in
+        storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self] token in
             PMLog.ET("IAP succeeded", level: .info)
             self?.paymentToken = token
             self?.step3modulus()
             
         }, errorCompletion: { [weak self] (error) in
+            if case StoreKitManagerImplementation.Errors.cancelled = error {
+                PMLog.D("IAP cancelled")
+                self?.failed(withError: nil)
+                return
+            }
+            
             PMLog.ET("IAP errored: \(error.localizedDescription)")
             if 22916 == (error as NSError).code && self?.paymentToken != nil { // 22916 - apple receipt already used
                 PMLog.D("Ignoring IAP error because we already have a token")
                 self?.step3modulus()
             } else {
-                self?.failed(withError: error)
+                self?.alertService.push(alert: PaymentFailedAlert(retryHandler: {
+                    self?.startRegistration()
+                }, freeHandler: {
+                    self?.step3modulus()
+                }))
             }
                 
         }, deferredCompletion: {
-            PMLog.ET("IAP deferred", level: .warn)
-            
+            PMLog.D("IAP deferred", level: .debug)
         })
     }
         
