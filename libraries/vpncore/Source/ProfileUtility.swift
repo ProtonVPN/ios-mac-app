@@ -101,7 +101,7 @@ public class ProfileUtility {
         let color = colors[Int(arc4random_uniform(UInt32(colors.count)))]
         
         let profile = Profile(accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
+                              serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol, netShieldType: nil)
         
         return .success(profiles + [profile])
     }

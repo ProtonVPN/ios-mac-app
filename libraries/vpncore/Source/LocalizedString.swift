@@ -639,4 +639,12 @@ public class LocalizedString {
     public static let batteryDescription = NSLocalizedString("_battery_descritption", comment: "Battery usages screen description")
     public static let batteryMore = NSLocalizedString("_battery_more", comment: "Battery usage More info button text")
 
+    // MARK: - Netshield
+    public static let netshieldTitle = NSLocalizedString("_netshield_title", comment: "Settings -> Netshield: name of field.")
+    public static let netshieldTitleTootltip = NSLocalizedString("_netshield_title_tooltip", comment: "Settings -> Netshield: description.")
+    public static let netshieldOff = NSLocalizedString("_netshield_off", comment: "Settings -> Netshield: Off")
+    public static let netshieldLevel1 = NSLocalizedString("_netshield_level1", comment: "Settings -> Netshield: Block malware")
+    public static let netshieldLevel2 = NSLocalizedString("_netshield_level2", comment: "Settings -> Netshield: Block malware, ads, trackers")
+    public static let netshieldAlertText = NSLocalizedString("_netshield_alert_description", comment: "Text in alert when user changes NetShield setting and VPN has to be reconnected")
+    
 }
