@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -12,6 +12,13 @@
                 <outlet property="earlyAccessInfoIcon" destination="neR-V8-lDC" id="Bc0-pd-t6C"/>
                 <outlet property="earlyAccessLabel" destination="nZj-KZ-IYu" id="XpS-vZ-Rt8"/>
                 <outlet property="earlyAccessSeparator" destination="Pfm-nt-HfH" id="VjI-9H-ccK"/>
+                <outlet property="netshieldBlockRadioBtn" destination="xWL-BX-aLH" id="cSr-OO-aj8"/>
+                <outlet property="netshieldButton" destination="vgU-dw-Mje" id="lBM-Rs-ikD"/>
+                <outlet property="netshieldInfoIcon" destination="WQL-2t-6pb" id="exs-x0-fwU"/>
+                <outlet property="netshieldLabel" destination="8y4-ZY-d1s" id="vOa-sR-iuN"/>
+                <outlet property="netshieldPremiumBlockRadioBtn" destination="yIJ-Aa-KdQ" id="vgS-UC-LKr"/>
+                <outlet property="netshieldSeparator" destination="lux-0T-eEb" id="EZN-Gx-XOH"/>
+                <outlet property="netshieldUpgradeLbl" destination="hnU-nZ-aHd" id="74t-HJ-AEF"/>
                 <outlet property="startMinimizedButton" destination="028-IW-VNS" id="81m-Hl-U5n"/>
                 <outlet property="startMinimizedLabel" destination="NRQ-fP-BcB" id="hC7-zO-N1G"/>
                 <outlet property="startMinimizedSeperator" destination="Myq-Cy-E2t" id="lth-RT-0v0"/>
@@ -31,18 +38,18 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
-            <rect key="frame" x="0.0" y="0.0" width="500" height="381"/>
+            <rect key="frame" x="0.0" y="0.0" width="500" height="404"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6z4-PQ-2PX">
-                    <rect key="frame" x="0.0" y="91" width="500" height="290"/>
+                    <rect key="frame" x="0.0" y="5" width="500" height="399"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="mbn-jP-w9U">
-                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="339" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eTP-6s-cjq" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="117" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start on boot label" id="CPH-1l-zKM">
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="label" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -77,12 +84,12 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Riq-vB-04F">
-                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="289" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-fP-BcB" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="132" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Start minimized label" id="OZW-pu-nWq">
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="label" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -115,12 +122,12 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="g5t-WD-1mz">
-                            <rect key="frame" x="0.0" y="130" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="239" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WrO-rw-f89" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="160" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="System notifications label" id="F8P-dG-nc2">
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="label" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -153,12 +160,12 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lb4-eN-ecD">
-                            <rect key="frame" x="0.0" y="80" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="189" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nZj-KZ-IYu" userLabel="Early Access Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="112" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Early access label" id="vmF-Xy-uWc">
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="label" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -201,12 +208,12 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ibl-5e-RGa">
-                            <rect key="frame" x="0.0" y="30" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="139" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udV-HL-cB0" userLabel="Unprotected Networks Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="178" height="16"/>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Notify unprotected networks" id="tE5-Kq-2V0">
-                                        <font key="font" metaFont="system"/>
+                                        <font key="font" metaFont="label" size="13"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
@@ -248,9 +255,118 @@
                                 <constraint firstItem="azN-gZ-XOI" firstAttribute="centerY" secondItem="Ibl-5e-RGa" secondAttribute="centerY" id="zId-0X-qBT"/>
                             </constraints>
                         </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="yKo-70-smL">
+                            <rect key="frame" x="0.0" y="30" width="500" height="109"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8y4-ZY-d1s" userLabel="Netshield Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="76" width="62" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Netshield" id="Ikb-Jb-LBU" userLabel="Netshield label">
+                                        <font key="font" metaFont="label" size="13"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="vgU-dw-Mje" userLabel="Unprotected Networks Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="423" y="74" width="35" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="3D0-uh-t1J"/>
+                                        <constraint firstAttribute="width" constant="35" id="QxL-k6-kF7"/>
+                                    </constraints>
+                                </customView>
+                                <box hidden="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="lux-0T-eEb" userLabel="Netshield Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="wwO-6o-FQg">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="KfS-RM-k8z"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WQL-2t-6pb" userLabel="Netshield Info Icon">
+                                    <rect key="frame" x="105" y="77" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="9T5-Av-gt9"/>
+                                        <constraint firstAttribute="height" constant="15" id="hLy-9I-JHE"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="146-pC-R1C"/>
+                                </imageView>
+                                <stackView distribution="fillEqually" orientation="vertical" alignment="leading" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gYh-Dt-t0d">
+                                    <rect key="frame" x="42" y="17" width="416" height="49"/>
+                                    <subviews>
+                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="PDT-jH-yYP">
+                                            <rect key="frame" x="0.0" y="29" width="416" height="20"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xWL-BX-aLH">
+                                                    <rect key="frame" x="-1" y="1" width="110" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Block malware" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="no7-yV-sE1">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="label" size="13"/>
+                                                    </buttonCell>
+                                                </button>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xWL-BX-aLH" firstAttribute="leading" secondItem="PDT-jH-yYP" secondAttribute="leading" id="IHw-2n-6Qi"/>
+                                                <constraint firstItem="xWL-BX-aLH" firstAttribute="centerY" secondItem="PDT-jH-yYP" secondAttribute="centerY" id="Xam-gl-Y9I"/>
+                                            </constraints>
+                                        </customView>
+                                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Y0x-nm-xFt">
+                                            <rect key="frame" x="0.0" y="0.0" width="416" height="21"/>
+                                            <subviews>
+                                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="yIJ-Aa-KdQ">
+                                                    <rect key="frame" x="-1" y="1" width="196" height="18"/>
+                                                    <buttonCell key="cell" type="radio" title="Block malware, ads, trackers" bezelStyle="regularSquare" imagePosition="left" alignment="left" inset="2" id="bNp-xb-ZkF">
+                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                        <font key="font" metaFont="label" size="13"/>
+                                                    </buttonCell>
+                                                </button>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hnU-nZ-aHd" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                                    <rect key="frame" x="352" y="2" width="66" height="16"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="UPGRADE" id="gko-PP-tMF">
+                                                        <font key="font" metaFont="label" size="13"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="yIJ-Aa-KdQ" firstAttribute="centerY" secondItem="Y0x-nm-xFt" secondAttribute="centerY" id="41B-Sz-8dT"/>
+                                                <constraint firstAttribute="trailing" secondItem="hnU-nZ-aHd" secondAttribute="trailing" id="Mhq-qR-vWw"/>
+                                                <constraint firstItem="hnU-nZ-aHd" firstAttribute="centerY" secondItem="Y0x-nm-xFt" secondAttribute="centerY" id="XSJ-8m-TBB"/>
+                                                <constraint firstItem="yIJ-Aa-KdQ" firstAttribute="leading" secondItem="Y0x-nm-xFt" secondAttribute="leading" id="gOL-Fv-onv"/>
+                                            </constraints>
+                                        </customView>
+                                    </subviews>
+                                    <visibilityPriorities>
+                                        <integer value="1000"/>
+                                        <integer value="1000"/>
+                                    </visibilityPriorities>
+                                    <customSpacing>
+                                        <real value="3.4028234663852886e+38"/>
+                                        <real value="3.4028234663852886e+38"/>
+                                    </customSpacing>
+                                </stackView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="vgU-dw-Mje" firstAttribute="centerY" secondItem="8y4-ZY-d1s" secondAttribute="centerY" id="1o0-i1-aSO"/>
+                                <constraint firstItem="gYh-Dt-t0d" firstAttribute="top" secondItem="vgU-dw-Mje" secondAttribute="bottom" constant="8" id="Bbw-WP-KGh"/>
+                                <constraint firstItem="8y4-ZY-d1s" firstAttribute="leading" secondItem="yKo-70-smL" secondAttribute="leading" constant="42" id="C6t-Fg-xnf"/>
+                                <constraint firstItem="8y4-ZY-d1s" firstAttribute="top" secondItem="yKo-70-smL" secondAttribute="top" constant="17" id="DP5-sb-yCH"/>
+                                <constraint firstAttribute="bottom" secondItem="lux-0T-eEb" secondAttribute="bottom" id="Lf4-uF-EjV"/>
+                                <constraint firstItem="WQL-2t-6pb" firstAttribute="leading" secondItem="8y4-ZY-d1s" secondAttribute="trailing" constant="5" id="TbJ-sU-GfD"/>
+                                <constraint firstItem="lux-0T-eEb" firstAttribute="trailing" secondItem="vgU-dw-Mje" secondAttribute="trailing" id="ZmF-w1-Raw"/>
+                                <constraint firstItem="lux-0T-eEb" firstAttribute="leading" secondItem="8y4-ZY-d1s" secondAttribute="leading" id="gGO-wz-46c"/>
+                                <constraint firstItem="lux-0T-eEb" firstAttribute="top" secondItem="gYh-Dt-t0d" secondAttribute="bottom" constant="16" id="miY-gV-fa4"/>
+                                <constraint firstItem="gYh-Dt-t0d" firstAttribute="trailing" secondItem="vgU-dw-Mje" secondAttribute="trailing" id="nmu-1b-5nK"/>
+                                <constraint firstItem="WQL-2t-6pb" firstAttribute="centerY" secondItem="8y4-ZY-d1s" secondAttribute="centerY" id="tqi-n6-Mrt"/>
+                                <constraint firstAttribute="height" constant="109" id="wN9-vM-sd3"/>
+                                <constraint firstItem="gYh-Dt-t0d" firstAttribute="leading" secondItem="8y4-ZY-d1s" secondAttribute="leading" id="xz4-TY-Ypr"/>
+                            </constraints>
+                        </customView>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
                     <constraints>
+                        <constraint firstItem="vgU-dw-Mje" firstAttribute="trailing" secondItem="n7S-eS-BLj" secondAttribute="trailing" id="705-ys-xk5"/>
                         <constraint firstItem="g5t-WD-1mz" firstAttribute="leading" secondItem="6z4-PQ-2PX" secondAttribute="leading" id="AuS-TX-4sn"/>
                         <constraint firstAttribute="trailing" secondItem="mbn-jP-w9U" secondAttribute="trailing" id="C94-Nj-phT"/>
                         <constraint firstAttribute="trailing" secondItem="g5t-WD-1mz" secondAttribute="trailing" id="FQF-UG-LV2"/>
@@ -259,6 +375,7 @@
                         <constraint firstAttribute="width" constant="500" id="LVn-Dj-wNx"/>
                         <constraint firstItem="NRQ-fP-BcB" firstAttribute="leading" secondItem="eTP-6s-cjq" secondAttribute="leading" id="Mun-Cl-x41"/>
                         <constraint firstItem="n7S-eS-BLj" firstAttribute="trailing" secondItem="0GM-Jd-J6y" secondAttribute="trailing" id="NX0-Gi-5cD"/>
+                        <constraint firstItem="8y4-ZY-d1s" firstAttribute="leading" secondItem="udV-HL-cB0" secondAttribute="leading" id="SGb-uK-G6P"/>
                         <constraint firstItem="nZj-KZ-IYu" firstAttribute="leading" secondItem="WrO-rw-f89" secondAttribute="leading" id="Z7n-DF-JRV"/>
                         <constraint firstItem="0GM-Jd-J6y" firstAttribute="trailing" secondItem="ovJ-iY-BrC" secondAttribute="trailing" id="c9Y-FW-PpN"/>
                         <constraint firstItem="028-IW-VNS" firstAttribute="trailing" secondItem="YCb-qR-3vO" secondAttribute="trailing" id="cRV-5y-28J"/>
@@ -271,8 +388,10 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
+                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
@@ -286,7 +405,7 @@
                 <constraint firstAttribute="trailing" secondItem="6z4-PQ-2PX" secondAttribute="trailing" id="jpD-Cy-6kQ"/>
                 <constraint firstItem="6z4-PQ-2PX" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="oSl-Cz-TeL"/>
             </constraints>
-            <point key="canvasLocation" x="121" y="355.5"/>
+            <point key="canvasLocation" x="121" y="367"/>
         </customView>
     </objects>
 </document>

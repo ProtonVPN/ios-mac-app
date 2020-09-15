@@ -54,7 +54,14 @@ class GeneralSettingsViewController: NSViewController {
     @IBOutlet weak var unprotectedNetworkInfoIcon: NSImageView!
     @IBOutlet weak var unprotectedNetworkSeparator: NSBox!
     @IBOutlet weak var unprotectedNetworkButton: SwitchButton!
-
+    
+    @IBOutlet weak var netshieldLabel: PVPNTextField!
+    @IBOutlet weak var netshieldInfoIcon: NSImageView!
+    @IBOutlet weak var netshieldSeparator: NSBox!
+    @IBOutlet weak var netshieldButton: SwitchButton!
+    @IBOutlet weak var netshieldBlockRadioBtn: NSButton!
+    @IBOutlet weak var netshieldPremiumBlockRadioBtn: NSButton!
+    @IBOutlet weak var netshieldUpgradeLbl: PVPNTextField!
     fileprivate var viewModel: GeneralViewModel
     
     required init?(coder: NSCoder) {
@@ -75,6 +82,7 @@ class GeneralSettingsViewController: NSViewController {
         setupSystemNotificationsItem()
         setupEarlyAccessItem()
         setupUnprotectedNetworkItem()
+        setupNetshieldItem()
     }
     
     private func setupView() {
@@ -136,6 +144,19 @@ class GeneralSettingsViewController: NSViewController {
         unprotectedNetworkInfoIcon.toolTip = LocalizedString.unprotectedNetworkTooltip
 
         unprotectedNetworkSeparator.fillColor = .protonLightGrey()
+    }
+    
+    private func setupNetshieldItem() {
+        netshieldLabel.attributedStringValue = LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        netshieldBlockRadioBtn.attributedTitle = LocalizedString.netshieldLevel1.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        netshieldPremiumBlockRadioBtn.attributedTitle = LocalizedString.netshieldLevel2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        netshieldUpgradeLbl.attributedStringValue = LocalizedString.upgrade.uppercased().attributed(withColor: .controlTextColor, font: .boldSystemFont(ofSize: 12))
+        netshieldButton.setState(.off)
+
+        netshieldButton.delegate = self
+        netshieldInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        netshieldInfoIcon.toolTip = LocalizedString.netshieldTitleTootltip
+        netshieldSeparator.fillColor = .protonLightGrey()
     }
 }
 
