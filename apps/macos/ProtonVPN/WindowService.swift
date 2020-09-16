@@ -53,7 +53,8 @@ protocol WindowService: class {
 //this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 class WindowServiceImplementation: WindowService {
     
-    typealias Factory = CreateNewProfileViewModelFactory & NavigationServiceFactory & CountriesSectionViewModelFactory & MapSectionViewModelFactory
+    typealias Factory = CreateNewProfileViewModelFactory & NavigationServiceFactory & CountriesSectionViewModelFactory & MapSectionViewModelFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory
+    
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
@@ -156,7 +157,7 @@ class WindowServiceImplementation: WindowService {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel)
+        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel, factory: self.factory)
         let windowController = SettingsWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.append(windowController)
