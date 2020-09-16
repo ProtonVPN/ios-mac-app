@@ -566,8 +566,8 @@ public class ReconnectOnNetshieldChangeAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void) {
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
