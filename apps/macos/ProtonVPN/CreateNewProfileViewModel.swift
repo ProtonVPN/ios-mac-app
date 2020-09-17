@@ -140,7 +140,7 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
+    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netshieldType: NetShieldType) {
         let serverType: ServerType
         switch typeIndex {
         case 0:
@@ -180,7 +180,9 @@ class CreateNewProfileViewModel {
             serverOffering = .custom(ServerWrapper(server: serverModel))
         }
         
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user, serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: PropertiesManager().vpnProtocol)
+        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
+                              profileType: .user, serverType: serverType, serverOffering: serverOffering,
+                              name: name, vpnProtocol: PropertiesManager().vpnProtocol, netShieldType: netshieldType)
         
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         

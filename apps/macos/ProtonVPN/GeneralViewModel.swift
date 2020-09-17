@@ -106,7 +106,7 @@ class GeneralViewModel {
         default:
             break
         }
-                
+        
         if !isConnected && ( [.off, .level1].contains(netShieldType) || [.visionary, .plus].contains(accountPlan) ) {
             propertiesManager.netShieldType = netShieldType
             viewController?.reloadView()
@@ -129,6 +129,13 @@ class GeneralViewModel {
                 self.alertService.push(alert: reconnectAlert)
                 return
             }
+            
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            })
+            
+            self.alertService.push(alert: upgradeAlert)
+            viewController?.reloadView()
         }
     }
 }

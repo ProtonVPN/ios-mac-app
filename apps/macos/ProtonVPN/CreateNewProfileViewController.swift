@@ -296,7 +296,8 @@ class CreateNewProfileViewController: NSViewController {
         let selectedColor = viewModel.colorPickerViewModel.color(atIndex: viewModel.colorPickerViewModel.selectedColorIndex)
         
         viewModel.createProfile(name: nameTextField.stringValue, color: selectedColor,
-                                typeIndex: selectedType, countryIndex: selectedCountry, serverIndex: selectedServer)
+                                typeIndex: selectedType, countryIndex: selectedCountry,
+                                serverIndex: selectedServer, netshieldType: .defaultValue)
     }
     
     private func appendedWithSeparator(string: String) -> String {

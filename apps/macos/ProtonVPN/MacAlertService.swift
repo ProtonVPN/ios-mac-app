@@ -147,6 +147,9 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
             
+        case is NetShieldRequiresUpgradeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
