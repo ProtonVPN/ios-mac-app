@@ -94,7 +94,7 @@ class GeneralViewModel {
     
     func setNetshield(_ netShieldType: NetShieldType) {
         
-        guard propertiesManager.netShieldType != netShieldType, let accountPlan = propertiesManager.lastUserAccountPlan else {
+        guard propertiesManager.netShieldType != netShieldType else {
             return
         }
         
@@ -107,7 +107,9 @@ class GeneralViewModel {
             break
         }
         
-        if !isConnected && ( [.off, .level1].contains(netShieldType) || [.visionary, .plus].contains(accountPlan) ) {
+        let userTier = (try? vpnGateway.userTier()) ?? 0
+        
+        if !isConnected && !netShieldType.isUserTierTooLow(userTier) {
             propertiesManager.netShieldType = netShieldType
             viewController?.reloadView()
             return
@@ -125,7 +127,7 @@ class GeneralViewModel {
         case .off, .level1:
             self.alertService.push(alert: reconnectAlert)
         case .level2:
-            if [.visionary, .plus].contains(accountPlan) {
+            guard netShieldType.isUserTierTooLow(userTier) else {
                 self.alertService.push(alert: reconnectAlert)
                 return
             }
