@@ -44,6 +44,7 @@ class CreateNewProfileViewController: NSViewController {
     @IBOutlet weak var serverListHorizontalLine: NSBox!
     @IBOutlet weak var netshieldLabel: PVPNTextField!
     @IBOutlet weak var netshieldList: HoverDetectionPopUpButton!
+    @IBOutlet weak var netshieldHorizontalLine: NSBox!
     @IBOutlet weak var warningLabel: PVPNTextField!
     @IBOutlet weak var warningLabelHorizontalLine: NSBox!
     @IBOutlet weak var footerView: NSView!
@@ -167,6 +168,7 @@ class CreateNewProfileViewController: NSViewController {
         netshieldList.menu?.delegate = self
         netshieldList.target = self
         netshieldList.action = #selector(selectedNetshieldType)
+        netshieldHorizontalLine.fillColor = .protonLightGrey()
     }
     
     private func setupWarningSection() {
@@ -247,6 +249,10 @@ class CreateNewProfileViewController: NSViewController {
     }
     
     private func refreshNetshieldList( _ index: Int) {
+        netshieldList.isHidden = !viewModel.isNetshieldEnabled
+        netshieldLabel.isHidden = !viewModel.isNetshieldEnabled
+        netshieldHorizontalLine.isHidden = !viewModel.isNetshieldEnabled
+        
         netshieldList.removeAllItems()
         [LocalizedString.disabled, LocalizedString.netshieldLevel1, LocalizedString.netshieldLevel2].forEach { option in
             let item = NSMenuItem()

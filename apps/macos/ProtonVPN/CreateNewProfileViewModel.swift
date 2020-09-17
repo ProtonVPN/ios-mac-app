@@ -61,7 +61,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -75,6 +75,7 @@ class CreateNewProfileViewModel {
     private let profileManager: ProfileManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
     
@@ -198,6 +199,10 @@ class CreateNewProfileViewModel {
     
     var typeCount: Int {
         return 4
+    }
+    
+    var isNetshieldEnabled: Bool {
+        return propertiesManager.featureFlags.isNetShield
     }
     
     func countryCount(for typeIndex: Int) -> Int {
