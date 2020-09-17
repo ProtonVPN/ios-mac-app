@@ -16,6 +16,7 @@
 "_upgrade_subscription" = "Upgrade Subscription";
 "_manage_subscription" = "Manage Subscription" ;
 "_upgrade_required" = "Upgrade Required";
+"_reconnection_required" = "Reconnection Required";
 "_maintenance" = "Maintenance";
 "_quit" = "Quit";
 "_quit_warning" = "Quitting the application will disconnect the active VPN connection. Do you want to continue?";
@@ -38,6 +39,7 @@
 "_learn_more" = "Learn more";
 "_ip" = "IP";
 "_close" = "Close";
+"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -696,3 +698,5 @@
 "_netshield_level1" = "Block malware";
 "_netshield_level2" = "Block malware, ads, trackers";
 "_netshield_alert_description" = "This will require you to reconnect";
+"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";

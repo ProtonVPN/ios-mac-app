@@ -41,6 +41,7 @@ public class LocalizedString {
     public static let upgradeSubscription = NSLocalizedString("_upgrade_subscription", comment: "iOS: Plan selection during plan upgarde, button insettings screen")
     public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
+      public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
     public static let quitWarning = NSLocalizedString("_quit_warning", comment: "MacOS: alert show before quitting app if VPN is connected")
@@ -105,6 +106,7 @@ public class LocalizedString {
     public static let countriesFree = NSLocalizedString("_countries_free", comment: "iOS: countries list section header")
     public static let countriesPremium = NSLocalizedString("_countries_premium", comment: "iOS: countries list section header")
     public static let close = NSLocalizedString("_close", comment: "Common word")
+    public static let getPlusForFeature = NSLocalizedString("_get_plus_for_feature", comment: "Suggest the user to upgrade account for new features")
     
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
@@ -646,5 +648,6 @@ public class LocalizedString {
     public static let netshieldLevel1 = NSLocalizedString("_netshield_level1", comment: "Settings -> Netshield: Block malware")
     public static let netshieldLevel2 = NSLocalizedString("_netshield_level2", comment: "Settings -> Netshield: Block malware, ads, trackers")
     public static let netshieldAlertText = NSLocalizedString("_netshield_alert_description", comment: "Text in alert when user changes NetShield setting and VPN has to be reconnected")
-    
+    public static let netshieldReconnectDescription = NSLocalizedString("_netshield_alert_reconnect_description", comment: "Netshield requires reconnect")
+    public static let netshieldUpgradeDescription = NSLocalizedString("_netshield_alert_upgrade_description", comment: "Netshield requires upgrade")
 }

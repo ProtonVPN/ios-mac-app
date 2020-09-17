@@ -560,14 +560,32 @@ public class VpnServerOnMaintenanceAlert: SystemAlert {
 }
 
 public class ReconnectOnNetshieldChangeAlert: SystemAlert {
+    #if os(OSX)
+    public var title: String? = LocalizedString.reconnectionRequired
+    public var message: String? = LocalizedString.netshieldReconnectDescription
+    #else
     public var title: String? = LocalizedString.vpnConnectionActive
     public var message: String? = LocalizedString.netshieldAlertText
+    #endif
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class NetShieldRequiresUpgradeAlert: SystemAlert {
+    public var title: String? = LocalizedString.upgradeRequired
+    public var message: String? = LocalizedString.netshieldUpgradeDescription + "\n\n" + LocalizedString.getPlusForFeature
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
