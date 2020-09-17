@@ -228,10 +228,10 @@ class SettingsViewModel {
                     if self.appStateManager.state.isSafeToEnd {
                         approve()
                     } else {
-                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert {
+                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
-                        })
+                        }))
                     }
                 }, { type in
                     self.propertiesManager.netShieldType = type
