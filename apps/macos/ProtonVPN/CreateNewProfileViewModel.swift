@@ -127,10 +127,10 @@ class CreateNewProfileViewModel {
             cIndex = ServerUtility.countryIndex(in: grouping, countryCode: sWrapper.server.countryCode) ?? 0
             sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
-        
+        let netshieldType = (profile.netShieldType ?? NetShieldType.defaultValue)
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
-                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex)
+                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex, netshieldType: netshieldType)
         
         prefillContent?(info)
     }
@@ -140,6 +140,7 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
+    // swiftlint:disable function_body_length
     func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netshieldType: NetShieldType) {
         let serverType: ServerType
         switch typeIndex {
@@ -241,5 +242,16 @@ class CreateNewProfileViewModel {
         
         let server = serverManager.grouping(for: type)[countryIndex].1[adjustedServerIndex]
         return serverDescriptor(for: server)
+    }
+    
+    func checkNetshieldOption( _ netshieldIndex: Int ) -> Bool {
+        guard let netshieldType = NetShieldType(rawValue: netshieldIndex), !netshieldType.isUserTierTooLow(userTier) else {
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            })
+            self.alertService.push(alert: upgradeAlert)
+            return false
+        }
+        return true
     }
 }
