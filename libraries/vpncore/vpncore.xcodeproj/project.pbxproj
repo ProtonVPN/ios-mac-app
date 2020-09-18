@@ -680,7 +680,6 @@
 		E1616C1521CBF64700F42D79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616C1321CBF5EE00F42D79 /* Storage.swift */; };
 		E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BC621C7D53D00F42D79 /* PropertiesManager.swift */; };
 		E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E1828571236C74D400E397A5 /* Intents.intentdefinition */; };
-		E1828574236C74D400E397A5 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E1828571236C74D400E397A5 /* Intents.intentdefinition */; };
 		E185A873237163AC0039E625 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E185A871237163AC0039E625 /* InfoPlist.strings */; };
 		E196BE4C23742116003E5832 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196BE4B23742116003E5832 /* Collection+Extension.swift */; };
 		E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196BE4B23742116003E5832 /* Collection+Extension.swift */; };
@@ -2698,7 +2697,6 @@
 				4242B0662465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127222F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BEA21C93ACA00F42D79 /* Profile.swift in Sources */,
-				E1828574236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				D503F71824FE820E0079D095 /* RefreshTimer.swift in Sources */,
 				4242B04A2465A4380042145A /* AuthInfoRequest.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
