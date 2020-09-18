@@ -141,7 +141,7 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
-    // swiftlint:disable function_body_length
+    // swiftlint:disable function_body_length function_parameter_count
     func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netshieldType: NetShieldType) {
         let serverType: ServerType
         switch typeIndex {
