@@ -197,6 +197,8 @@ class CreateNewProfileViewModel {
         }
     }
     
+    // swiftlint:enable function_body_length function_parameter_count
+
     var typeCount: Int {
         return 4
     }
