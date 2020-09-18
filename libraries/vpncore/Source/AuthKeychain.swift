@@ -44,7 +44,7 @@ public class AuthKeychain {
         return nil
     }
     
-    public static func store(_ credentials: AuthCredentials) throws {
+    public static func store(_ credentials: AuthCredentials) {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
@@ -54,7 +54,6 @@ public class AuthKeychain {
                 try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
             } catch {
                 PMLog.D("Keychain (auth) write error: \(error)", level: .error)
-                throw error
             }
         }
     }
