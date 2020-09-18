@@ -87,7 +87,6 @@
 		E170A92F2124313A0036326B /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170A92E2124313A0036326B /* UpsellGradientView.swift */; };
 		E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170A93521245DF70036326B /* TrialWelcomeViewController.swift */; };
 		E170A93821245DF70036326B /* TrialWelcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = E170A93621245DF70036326B /* TrialWelcome.xib */; };
-		E173304422C353F500050F79 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E173304322C353F500050F79 /* Intents.intentdefinition */; };
 		E173304622C3553700050F79 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = E173304522C3553700050F79 /* README.md */; };
 		E173304822C3555A00050F79 /* .gitlab-ci.yml in Resources */ = {isa = PBXBuildFile; fileRef = E173304722C3555A00050F79 /* .gitlab-ci.yml */; };
 		E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */; };
@@ -2383,7 +2382,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E173304422C353F500050F79 /* Intents.intentdefinition in Sources */,
 				EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */,
 				E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */,
 				EEBB82DE1F1DEB800041432A /* ProfilesContainerViewController.swift in Sources */,
