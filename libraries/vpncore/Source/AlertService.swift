@@ -560,13 +560,8 @@ public class VpnServerOnMaintenanceAlert: SystemAlert {
 }
 
 public class ReconnectOnNetshieldChangeAlert: SystemAlert {
-    #if os(OSX)
     public var title: String? = LocalizedString.reconnectionRequired
     public var message: String? = LocalizedString.netshieldReconnectDescription
-    #else
-    public var title: String? = LocalizedString.vpnConnectionActive
-    public var message: String? = LocalizedString.netshieldAlertText
-    #endif
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
