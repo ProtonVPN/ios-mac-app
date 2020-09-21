@@ -110,20 +110,14 @@ public class AuthApiServiceImplementation: AuthApiService {
         }
         
         let successWrapper: JSONCallback = { json in
-            let response: RefreshAccessTokenResponse
             do {
-                response = try RefreshAccessTokenResponse(dic: json)
+                let response = try RefreshAccessTokenResponse(dic: json)
+                let updatedCreds = authCreds.updatedWithAccessToken(response: response)
+                AuthKeychain.store(updatedCreds)
+                success(updatedCreds)
             } catch {
                 PMLog.D("Error occurred during refresh access token parsing", level: .error)
                 let error = ParseError.refreshTokenParse
-                failure(error)
-                return
-            }
-            do {
-                let updatedCreds = authCreds.updatedWithAccessToken(response: response)
-                try AuthKeychain.store(updatedCreds)
-                success(updatedCreds)
-            } catch {
                 failure(error)
             }
         }
