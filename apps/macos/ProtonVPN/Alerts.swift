@@ -38,7 +38,9 @@ public class ActiveFirewallAlert: SystemAlert {
 
 public class KillSwitchErrorAlert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchErrorTitle
-    public var message: String? = LocalizedString.killSwitchErrorBody
+    public var message: String? = LocalizedString.killSwitchErrorHead
+    public var hiddenInfo: String? = LocalizedString.killSwitchErrorInfo
+    public var footInfo: String? = LocalizedString.killSwitchErrorFoot
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?

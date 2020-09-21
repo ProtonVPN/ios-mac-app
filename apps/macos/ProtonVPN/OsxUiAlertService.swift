@@ -69,7 +69,16 @@ class OsxUiAlertService: UIAlertService {
             popUp.close()
         }
         
-        windowService.presentKeyModal(viewController: PopUpViewController(viewModel: popUp))
+        var modalVC: NSViewController!
+        
+        switch alert {
+        case is KillSwitchErrorAlert:
+            modalVC = ExpandableContentPopup()
+        default:
+            modalVC = PopUpViewController(viewModel: popUp)
+        }
+        
+        windowService.presentKeyModal(viewController: modalVC)
     }
     
     private func alertIsNew(_ alert: SystemAlert) -> Bool {
