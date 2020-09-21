@@ -113,7 +113,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             if self.appStateManager.state.isDisconnected {
                 self.propertiesManager.userIp = properties.ip
             }
-            
+            self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
