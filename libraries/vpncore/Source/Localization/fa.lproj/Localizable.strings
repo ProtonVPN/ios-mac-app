@@ -580,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "گرفتن طرح %@";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "ProtonVPN Plus بگیرید تا این و دیگر امکانات را باز کنید.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "گرفتن ایمیل فعال‌سازی";
 
@@ -853,6 +856,27 @@
 /* MacOS: button in login screen */
 "_need_help" = "نیاز به کمک دارید؟";
 
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description" = "اتصال شما به منظور تغییر تنظیمات Netshield نیاز به راه‌اندازی مجدد دارد.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "Netshield با مسدود کردن آگهی‌ها و ردیاب‌ها حریم خصوصی شما را افزایش می‌دهد.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "مسدود کردن بدافزار";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "مسدود کردن بدافزار، آگهی‌ها، ردیاب‌ها";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "خاموش";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "مسدود کردن آگهی‌ها، ردیاب‌ها و بدافزارها";
+
 /* iOS: quick connect widget */
 "_network_unreachable" = "شبکه در دسترس نیست";
 
@@ -1077,6 +1101,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "پیشنهاد شده";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "اتصال مجدد نیاز است";
 
 /* MacOS: About window */
 "_release_date" = "تاریخ انتشار:";

@@ -580,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Получить тариф %@";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Отправить проверочное письмо эл. почты";
 
@@ -853,6 +856,27 @@
 /* MacOS: button in login screen */
 "_need_help" = "Нужна помощь?";
 
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Блокировать вредоносные программы";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Блокировать вредоносные программы, рекламу, трекеры";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Выключено";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Блокировать рекламные объявления, трекеры и вредоносные программы";
+
 /* iOS: quick connect widget */
 "_network_unreachable" = "Сеть недоступна";
 
@@ -1077,6 +1101,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Рекомендуемые";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Reconnection Required";
 
 /* MacOS: About window */
 "_release_date" = "Дата выпуска:";

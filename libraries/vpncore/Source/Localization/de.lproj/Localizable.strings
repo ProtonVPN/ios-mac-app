@@ -580,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@‐Abonnement erhalten";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Holen Sie sich ProtonVPN Plus, um diese und weitere Funktionen freizuschalten.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Bestätigungs‐E‐Mail erhalten";
 
@@ -853,6 +856,27 @@
 /* MacOS: button in login screen */
 "_need_help" = "Benötigen Sie Hilfe?";
 
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description" = "Ihre Verbindung muss neu gestartet werden, um die Einstellung von Netshield ändern zu können.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "Netshield erhöht Ihre Privatsphäre, indem es Werbung und Tracker sperrt.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Schadsoftware sperren";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Schadsoftware, Werbung, Tracker sperren";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Aus";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Sperrt Werbung, Tracker und Schadsoftware";
+
 /* iOS: quick connect widget */
 "_network_unreachable" = "Netzwerk nicht erreichbar";
 
@@ -1077,6 +1101,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Empfohlen";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Verbindung muss neu aufgebaut werden";
 
 /* MacOS: About window */
 "_release_date" = "Veröffentlichungsdatum:";

@@ -83,13 +83,13 @@
 "_basic_servers" = "SERVIDORES BÁSICOS";
 
 /* Battery usages screen description */
-"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_descritption" = "Todo o tráfego em seu telefone será gerenciado através do OpenVPN, portanto o iOS alocará o uso da bateria de outros aplicativos para o ProtonVPN.";
 
 /* Battery usage More info button text */
-"_battery_more" = "Want to learn more?";
+"_battery_more" = "Deseja saber mais?";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Battery usage";
+"_battery_title" = "Uso da bateria";
 
 /* Common word */
 "_cancel" = "Cancelar";
@@ -580,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Obter plano %@";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Receber e-mail de verificação";
 
@@ -725,13 +728,13 @@
 "_maintenance" = "Manutenção";
 
 /* MacOS: We'll connect to a different server */
-"_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
+"_maintenance_on_server_detected_description" = "Reconectando você ao servidor mais rápido disponível.";
 
 /* MacOS: The current server has going to maintenance. */
-"_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
+"_maintenance_on_server_detected_subtitle" = "O servidor que você está conectado está em manutenção";
 
 /* MacOS: The current server has going to maintenance. */
-"_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
+"_maintenance_on_server_detected_title" = "O servidor da VPN está em manutenção";
 
 /* Profile create/change form */
 "_make_default_profile" = "Definir perfil como padrão";
@@ -852,6 +855,27 @@
 
 /* MacOS: button in login screen */
 "_need_help" = "Precisa de ajuda?";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Bloqueio de malware";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Bloqueio de malware, anúncios e rastreadores";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Off";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Bloquear anúncios, rastreadores e malware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Rede indisponível";
@@ -1077,6 +1101,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Recomendado";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Reconnection Required";
 
 /* MacOS: About window */
 "_release_date" = "Data de lançamento:";
