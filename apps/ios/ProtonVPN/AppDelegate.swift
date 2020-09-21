@@ -32,7 +32,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var storeKitManager: StoreKitManager = container.makeStoreKitManager()
-    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = container.makeMaintenanceManagerHelper()
     private lazy var servicePlanDataService: ServicePlanDataServiceImplementation = ServicePlanDataServiceImplementation.shared
     
     // MARK: - UIApplicationDelegate
@@ -61,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         navigationService.launched()
         
-        maintenanceManagerHelper.startMaintenanceManager()
+        container.makeMaintenanceManagerHelper().startMaintenanceManager()
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
         
         return true
