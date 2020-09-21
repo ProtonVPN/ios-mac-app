@@ -40,6 +40,8 @@
 "_ip" = "IP";
 "_close" = "Close";
 "_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_more_info" = "More info";
+"_less_info" = "Less info";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -450,7 +452,9 @@
 "_kill_switch_blocking_body" = "You have lost connection to the VPN server. Kill Switch is blocking all connections to avoid leaking your data. ProtonVPN will try to reconnect automatically. To dismiss this window, click OK.\n\nIf you would like to temporarily disable Kill Switch and reconnect to the Internet WITHOUT VPN protection, click DISABLE.\n\nTo turn off Kill Switch permanently, go to %@.";
 
 "_kill_switch_error_title" = "A Kill Switch error has been detected";
-"_kill_switch_error_body" = "Kill Switch is not functioning properly. If you would like to report this error to the ProtonVPN Support Team, click Report.\nIf you would like to ignore this error and continue browsing the Internet WITHOUT Kill Switch protection, click Ignore.";
+"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
+"_kill_switch_error_info" = "Kill Switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with ProtonVPN's Kill Switch. Terminating those apps can restore the Firewall rules set by Kill Switch.";
+"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without Kill Switch, click Continue.";
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_install_popup_body" = "To enable Kill Switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the ProtonVPN app receives updates.";

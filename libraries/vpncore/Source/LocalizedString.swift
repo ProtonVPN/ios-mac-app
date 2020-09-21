@@ -41,7 +41,7 @@ public class LocalizedString {
     public static let upgradeSubscription = NSLocalizedString("_upgrade_subscription", comment: "iOS: Plan selection during plan upgarde, button insettings screen")
     public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
-      public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
+    public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
     public static let quitWarning = NSLocalizedString("_quit_warning", comment: "MacOS: alert show before quitting app if VPN is connected")
@@ -107,7 +107,9 @@ public class LocalizedString {
     public static let countriesPremium = NSLocalizedString("_countries_premium", comment: "iOS: countries list section header")
     public static let close = NSLocalizedString("_close", comment: "Common word")
     public static let getPlusForFeature = NSLocalizedString("_get_plus_for_feature", comment: "Suggest the user to upgrade account for new features")
-    
+    public static let moreInfo = NSLocalizedString("_more_info", comment: "Display more information")
+    public static let lessInfo = NSLocalizedString("_less_info", comment: "Display less information")
+
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
     public static let alwaysOnWillReconnect = NSLocalizedString("_always_on_will_reconnect", comment: "Disconnect notification")
@@ -411,7 +413,9 @@ public class LocalizedString {
     public static let killSwitchBlockingBody = NSLocalizedString("_kill_switch_blocking_body", comment: "MacOS: killswitch blocking alert")
     
     public static let killSwitchErrorTitle = NSLocalizedString("_kill_switch_error_title", comment: "MacOS: killswitch error alert")
-    public static let killSwitchErrorBody = NSLocalizedString("_kill_switch_error_body", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorHead = NSLocalizedString("_kill_switch_error_head", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorInfo = NSLocalizedString("_kill_switch_error_info", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorFoot = NSLocalizedString("_kill_switch_error_foot", comment: "MacOS: killswitch error alert")
     
     public static let killSwitchHelperInstallPopupBody = NSLocalizedString("_kill_switch_helper_install_popup_body", comment: "MacOS: killswitch alert")
     public static let killSwitchHelperUpdatePopupBody = NSLocalizedString("_kill_switch_helper_update_popup_body", comment: "MacOS: updating helper alert")
