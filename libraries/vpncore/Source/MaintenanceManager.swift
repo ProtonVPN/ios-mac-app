@@ -28,6 +28,7 @@ public protocol MaintenanceManagerFactory {
 
 public protocol MaintenanceManagerProtocol {
     func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?)
+    func stopObserving()
 }
 
 public class MaintenanceManager: MaintenanceManagerProtocol {
@@ -42,6 +43,8 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     private lazy var serverStorage: ServerStorage = self.factory.makeServerStorage()
     
+    private var timer: Timer?
+    
     public init( factory: Factory) {
         self.factory = factory
     }
@@ -54,9 +57,24 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             return
         }
         
-        Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
+        if timer != nil {
+            guard timer?.timeInterval != timeInterval else {
+                return // Only restart timer if time interval has changed
+            }
+            timer?.invalidate()
+            timer = nil
+        }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: true) { timer in
             self.checkServer(completion, failure: failure)
         }
+    }
+    
+    public func stopObserving(){
+        if timer != nil {
+            timer?.invalidate()
+        }
+        timer = nil
     }
     
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {

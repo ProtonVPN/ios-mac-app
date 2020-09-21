@@ -57,6 +57,7 @@ public protocol PropertiesManagerProtocol: class {
     
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType { get set }
+    var maintenanceServerRefreshIntereval: Int { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -69,7 +70,7 @@ public protocol PropertiesManagerProtocol: class {
     
 }
 
-public class PropertiesManager: PropertiesManagerProtocol {    
+public class PropertiesManager: PropertiesManagerProtocol {
     
     private struct Keys {
       
@@ -116,10 +117,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         // Features
         static let featureFlags = "FeatureFlags"
         static let netshield = "NetShield"
+        static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
+    public static let featureFlagsNotification = Notification.Name("FeatureFlags")
 
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -416,7 +419,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             if let data = try? JSONEncoder().encode(newValue) {
                 Storage.setValue(data, forKey: Keys.featureFlags)
+                NotificationCenter.default.post(name: type(of: self).featureFlagsNotification, object: newValue)
             }
+        }
+    }
+    
+    public var maintenanceServerRefreshIntereval: Int {
+        get {
+            if Storage.contains(Keys.maintenanceServerRefreshIntereval) {
+                return Storage.userDefaults().integer(forKey: Keys.maintenanceServerRefreshIntereval)
+            } else {
+                return CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
+            }
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
         }
     }
     

@@ -53,4 +53,8 @@ public class Storage {
     public static func setValue(_ value: Any?, forKey key: String) {
         Storage.userDefaults().setValue(value, forKey: key)
     }
+    
+    public static func contains(_ key: String) -> Bool {
+        return Storage.userDefaults().object(forKey: key) != nil
+    }
 }

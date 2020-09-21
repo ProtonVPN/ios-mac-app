@@ -77,4 +77,8 @@ public class CoreAppConstants {
         public static let quickUpdateTime: Double = 3.0
         public static let quickReconnectTime: Double = 0.5
     }
+    
+    public struct Maintenance {
+        public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
+    }
 }
