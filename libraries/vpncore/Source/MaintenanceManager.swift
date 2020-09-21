@@ -70,7 +70,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         }
     }
     
-    public func stopObserving(){
+    public func stopObserving() {
         if timer != nil {
             timer?.invalidate()
         }

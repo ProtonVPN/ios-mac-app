@@ -35,7 +35,7 @@ public class MaintenanceManagerHelper {
     private lazy var maintenanceManager: MaintenanceManagerProtocol = factory.makeMaintenanceManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
-    public init(factory: Factory){
+    public init(factory: Factory) {
         self.factory = factory
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
     }
