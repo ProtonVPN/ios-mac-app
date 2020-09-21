@@ -57,6 +57,7 @@ class DependencyContainer {
     private var authApiService: AuthApiService!
     
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
@@ -330,5 +331,12 @@ extension DependencyContainer: AppSessionRefresherFactory {
 extension DependencyContainer: MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol {
         return maintenanceManager
+    }
+}
+
+// MARK: - MaintenanceManagerHelperFactory
+extension DependencyContainer: MaintenanceManagerHelperFactory {
+    func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
+        return maintenanceManagerHelper
     }
 }

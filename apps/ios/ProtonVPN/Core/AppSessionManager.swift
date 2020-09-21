@@ -184,6 +184,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             
             self.propertiesManager.userIp = properties.ip
             self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+            self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
             
             self.resolveActiveSession(success: { [weak self] in

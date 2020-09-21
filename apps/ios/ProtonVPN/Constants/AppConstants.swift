@@ -28,7 +28,6 @@ class AppConstants {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: Double = 3
         static let timeForForegroundStuck: Double = 30 * 60 // 30 minutes
-        static let serverMaintenanceCheckTime: Double = 10 * 60 //10 minutes
 
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours

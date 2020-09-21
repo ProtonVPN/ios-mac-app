@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
     private lazy var storeKitManager: StoreKitManager = container.makeStoreKitManager()
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = container.makeMaintenanceManagerHelper()
     private lazy var servicePlanDataService: ServicePlanDataServiceImplementation = ServicePlanDataServiceImplementation.shared
     
     // MARK: - UIApplicationDelegate
@@ -60,9 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
         navigationService.launched()
         
-        container.makeMaintenanceManager().observeCurrentServerState(every: AppConstants.Time.serverMaintenanceCheckTime, repeats: true, completion: nil, failure: nil)
-        
-        UIApplication.shared.setMinimumBackgroundFetchInterval(AppConstants.Time.serverMaintenanceCheckTime)
+        maintenanceManagerHelper.startMaintenanceManager()
+        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
         
         return true
     }
@@ -190,4 +190,14 @@ fileprivate extension AppDelegate {
             propertiesManager.lastTimeForeground = nil
         }
     }
+    
+    @objc func featureFlagsChanged() {
+        guard propertiesManager.featureFlags.isServerRefresh else {
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
+            return
+        }
+        let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(time)
+    }
+    
 }
