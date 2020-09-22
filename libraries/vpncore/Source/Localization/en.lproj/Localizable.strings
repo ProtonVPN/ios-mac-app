@@ -697,5 +697,5 @@
 "_netshield_off" = "Off";
 "_netshield_level1" = "Block malware";
 "_netshield_level2" = "Block malware, ads, trackers";
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify NetShield's setting.";
+"_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
