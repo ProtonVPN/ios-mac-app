@@ -8,8 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		21A0C56EE26846392D949E1E /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826C803B7C2C3A7B7C3178E6 /* Pods_ProtonVPNTests.framework */; };
-		42498A512518E96B00ACB7EC /* ExpandableContentPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopup.swift */; };
+		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
 		42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */; };
+		42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */; };
 		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
 		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
@@ -384,8 +385,9 @@
 		21BA0D02D9C47E419A9C0D53 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		27F7409F724A637E79F6FE80 /* Pods-ProtonVPN.debug beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug beta.xcconfig"; sourceTree = "<group>"; };
 		3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPNTests-metadata.plist"; path = "Pods/Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
-		42498A4F2518E96B00ACB7EC /* ExpandableContentPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopup.swift; sourceTree = "<group>"; };
+		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
 		42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpandableContentPopup.xib; sourceTree = "<group>"; };
+		42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePopupViewModel.swift; sourceTree = "<group>"; };
 		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
 		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
@@ -1209,6 +1211,7 @@
 				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
 				EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */,
 				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
+				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1237,7 +1240,7 @@
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
 				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
 				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
-				42498A4F2518E96B00ACB7EC /* ExpandableContentPopup.swift */,
+				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -2401,6 +2404,7 @@
 				E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
+				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
 				E1AEE615202E44D1003DDD84 /* CustomOverlayView.swift in Sources */,
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
@@ -2564,7 +2568,7 @@
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */,
-				42498A512518E96B00ACB7EC /* ExpandableContentPopup.swift in Sources */,
+				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,

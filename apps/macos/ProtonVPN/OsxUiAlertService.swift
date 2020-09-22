@@ -43,20 +43,19 @@ class OsxUiAlertService: UIAlertService {
     }
     
     func displayAlert(_ alert: SystemAlert) {
-        let viewModel = PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
-        present(viewModel, alert: alert)
+        present(alert)
     }
     
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
-        let viewModel = PopUpViewModel(alert: alert, attributedDescription: message, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
-        present(viewModel, alert: alert)
+        present(alert, message: message)
     }
     
     func displayNotificationStyleAlert(message: String, type: NotificationStyleAlertType, accessibilityIdentifier: String?) {
         fatalError("Notification syle alerts unsupported on macOS")
     }
     
-    private func present(_ popUp: PopUpViewModel, alert: SystemAlert) {
+    
+    private func present( _ alert: SystemAlert, message: NSAttributedString? = nil ) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
             return
@@ -64,17 +63,19 @@ class OsxUiAlertService: UIAlertService {
         
         currentAlerts.append(alert)
         
-        popUp.dismissCompletion = dismissCompletion(alert)
-        alert.dismiss = {
-            popUp.close()
-        }
-        
         var modalVC: NSViewController!
         
         switch alert {
-        case is KillSwitchErrorAlert:
-            modalVC = ExpandableContentPopup()
+        case is ExpandableSystemAlert:
+            let expandableViewModel = ExpandablePopupViewModel(alert as! ExpandableSystemAlert)
+            expandableViewModel.dismissViewController = dismissCompletion(alert)
+            alert.dismiss = { expandableViewModel.close() }
+            modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
+            let popUp = message == nil ? PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService)) :
+            PopUpViewModel(alert: alert, attributedDescription: message!, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+            popUp.dismissCompletion = dismissCompletion(alert)
+            alert.dismiss = { popUp.close() }
             modalVC = PopUpViewController(viewModel: popUp)
         }
         

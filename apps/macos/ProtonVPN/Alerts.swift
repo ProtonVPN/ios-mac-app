@@ -36,27 +36,23 @@ public class ActiveFirewallAlert: SystemAlert {
     }
 }
 
-public class KillSwitchErrorAlert: SystemAlert {
+public class KillSwitchErrorAlert: ExpandableSystemAlert {
     public var title: String? = LocalizedString.killSwitchErrorTitle
     public var message: String? = LocalizedString.killSwitchErrorHead
-    public var hiddenInfo: String? = LocalizedString.killSwitchErrorInfo
+    public var expandableInfo: String? = LocalizedString.killSwitchErrorInfo
     public var footInfo: String? = LocalizedString.killSwitchErrorFoot
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.report, style: .confirmative, handler: {
-            SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.supportForm)
-        }))
-        actions.append(AlertAction(title: LocalizedString.ignore, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .cancel, handler: nil))
     }
 }
 
 public class KillSwitchBlockingAlert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
-    public var message: String? = String(format: LocalizedString.killSwitchBlockingBody,
-    LocalizedString.preferences)
+    public var message: String? = String(format: LocalizedString.killSwitchBlockingBody, LocalizedString.preferences)
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
