@@ -39,7 +39,7 @@
 "_learn_more" = "Learn more";
 "_ip" = "IP";
 "_close" = "Close";
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
