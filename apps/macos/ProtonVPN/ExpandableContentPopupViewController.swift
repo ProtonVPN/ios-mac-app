@@ -35,8 +35,13 @@ class ExpandableContentPopupViewController: NSViewController {
     @IBOutlet weak var expandableLbl: NSTextField!
     @IBOutlet weak var footerLbl: NSTextField!
     @IBOutlet weak var displayMoreBtn: GreenActionButton!
+    @IBOutlet weak var hiddenContentHeightConstraint: NSLayoutConstraint!
     
-    private var enabler = true
+    private var expanded = false
+    private var animating = false
+    
+    private let closedHeight: CGFloat = 0
+    private lazy var expandedHeight: CGFloat = self.expandableLbl.realHeight(self.headerLbl.bounds.width)
     
     required init(viewModel: ExpandablePopupViewModel) {
         self.viewModel = viewModel
@@ -61,19 +66,19 @@ class ExpandableContentPopupViewController: NSViewController {
         actionBtn.action = #selector(didPressActionBtn)
         actionBtn.target = self
         popupImage.image = #imageLiteral(resourceName: "temp")
-        headerLbl.stringValue = viewModel.title
+        headerLbl.stringValue = viewModel.message
         footerLbl.stringValue = viewModel.extraInfo
         expandableLbl.stringValue = viewModel.hiddenInfo
-        expandableLbl.textColor = .protonLightGrey()
+        expandableLbl.textColor = .protonGreyUnselectedWhite()
         contentView.wantsLayer = true
         footerView.wantsLayer = true
         contentView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
-        
         displayMoreBtn.title = LocalizedString.moreInfo + "  "
         displayMoreBtn.target = self
         displayMoreBtn.action = #selector(expandBtnTap)
-        
+        hiddenContentHeightConstraint.constant = 0
+        expandableLbl.alphaValue = 0
     }
     
     override func viewDidAppear() {
@@ -82,21 +87,25 @@ class ExpandableContentPopupViewController: NSViewController {
     
     // MARK: - Private
     @objc private func didPressActionBtn() {
+        if animating { return }
         viewModel.action()
     }
     
     @objc private func expandBtnTap() {
-        enabler = !enabler
-        displayMoreBtn.title = (enabler ? LocalizedString.lessInfo : LocalizedString.moreInfo) + "  "
-        displayMoreBtn.image = enabler ? #imageLiteral(resourceName: "arrow-up") : #imageLiteral(resourceName: "arrow-down")
-    }
-    
-    fileprivate func displayMessage( _ hide: Bool ) {
-//        NSAnimationContext.runAnimationGroup({ context in
-//            context.duration = 1
-//            self.contentHeightConstraint.animator().constant = hide ? 120 : 250
-//        }) {
-//            self.contentHeightConstraint.animator().constant = hide ? 250 : 120
-//        }
+        if animating { return }
+        animating = true
+        expanded = !expanded
+        
+        displayMoreBtn.title = (expanded ? LocalizedString.lessInfo : LocalizedString.moreInfo) + "  "
+        displayMoreBtn.image = expanded ? #imageLiteral(resourceName: "arrow-up") : #imageLiteral(resourceName: "arrow-down")
+        self.hiddenContentHeightConstraint.constant = self.expanded ? self.closedHeight : self.expandedHeight
+        self.expandableLbl.alphaValue = self.expanded ? 0 : 1
+        NSAnimationContext.runAnimationGroup({ context in
+            context.duration = 0.15
+            self.hiddenContentHeightConstraint.animator().constant = self.expanded ? self.expandedHeight : self.closedHeight
+            self.expandableLbl.animator().alphaValue = self.expanded ? 1 : 0
+        }, completionHandler: {
+            self.animating = false
+        })
     }
 }

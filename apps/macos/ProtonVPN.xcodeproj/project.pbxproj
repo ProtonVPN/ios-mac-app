@@ -14,6 +14,7 @@
 		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
 		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
+		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7561512A1FD8B4A8009224E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7561512C1FD8B4A8009224E7 /* Localizable.strings */; };
@@ -392,6 +393,7 @@
 		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
 		4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-OpenVPN Extension-metadata.plist"; path = "Pods/Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
 		648B664D9C62F2876C096974 /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -1690,6 +1692,7 @@
 				EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */,
 				E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
+				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2521,6 +2524,7 @@
 				42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */,
 				E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
+				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
 				D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */,
 				E1B5F67F21B8295700B558B0 /* CocoaString+Extension.swift in Sources */,

@@ -42,6 +42,10 @@ class ExpandablePopupViewModel: NSObject {
         return alert.expandableInfo ?? ""
     }
     
+    var message: String {
+        return alert.message ?? ""
+    }
+    
     var extraInfo: String {
         return alert.footInfo ?? ""
     }
@@ -51,11 +55,6 @@ class ExpandablePopupViewModel: NSObject {
     }
     
     func action() {
-        onAction?()
-        dismissViewController?()
-    }
-    
-    func cancel() {
         onAction?()
         dismissViewController?()
     }

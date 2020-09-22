@@ -54,7 +54,6 @@ class OsxUiAlertService: UIAlertService {
         fatalError("Notification syle alerts unsupported on macOS")
     }
     
-    
     private func present( _ alert: SystemAlert, message: NSAttributedString? = nil ) {
         guard alertIsNew(alert) else {
             updateOldAlert(with: alert)
