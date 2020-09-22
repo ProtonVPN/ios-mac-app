@@ -78,6 +78,11 @@ public protocol SystemAlert: AnyObject {
     var dismiss: (() -> Void)? { get set }
 }
 
+public protocol ExpandableSystemAlert: SystemAlert {
+    var expandableInfo: String? { get set }
+    var footInfo: String? { get set }
+}
+
 extension SystemAlert {
     public static var className: String {
         return String(describing: self)
