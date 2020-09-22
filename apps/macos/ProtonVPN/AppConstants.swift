@@ -65,7 +65,6 @@ class AppConstants {
     }
     
     struct Time {
-        static let maintenanceCheckTimeInterval: Double = 60 * 10 //10 minutes
         static let maintenanceMessageTimeThreshold: Double = 3600 * 12 //12 hours
         
         // Servers list refresh

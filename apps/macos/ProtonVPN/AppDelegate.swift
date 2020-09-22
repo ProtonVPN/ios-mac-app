@@ -57,11 +57,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
             self.notificationManager = self.container.makeNotificationManager()
-            self.container.makeMaintenanceManager().observeCurrentServerState(
-                every: AppConstants.Time.maintenanceCheckTimeInterval,
-                repeats: true,
-                completion: nil,
-                failure: nil)
+            container.makeMaintenanceManagerHelper().startMaintenanceManager()
             
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)

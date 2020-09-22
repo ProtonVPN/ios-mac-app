@@ -57,6 +57,7 @@ class DependencyContainer {
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
     
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
@@ -276,5 +277,12 @@ extension DependencyContainer: RefreshTimerFactory {
 extension DependencyContainer: AppSessionRefresherFactory {
     func makeAppSessionRefresher() -> AppSessionRefresher {
         return appSessionManager
+    }
+}
+
+// MARK: - MaintenanceManagerHelperFactory
+extension DependencyContainer: MaintenanceManagerHelperFactory {
+    func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
+        return maintenanceManagerHelper
     }
 }

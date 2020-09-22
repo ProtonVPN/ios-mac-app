@@ -114,6 +114,7 @@ class AppSessionManagerImplementation: AppSessionManager {
                 self.propertiesManager.userIp = properties.ip
             }
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+            self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
