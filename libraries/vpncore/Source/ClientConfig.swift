@@ -26,10 +26,12 @@ public struct ClientConfig: Codable {
     
     public let openVPNConfig: OpenVpnConfig
     public let featureFlags: FeatureFlags
+    public let serverRefreshInterval: Int
     
     public static let defaultConfig = ClientConfig(
         openVPNConfig: OpenVpnConfig.defaultConfig,
-        featureFlags: FeatureFlags.defaultConfig
+        featureFlags: FeatureFlags.defaultConfig,
+        serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
     )
 
 }

@@ -228,6 +228,10 @@
 		D5B4712424DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */; };
 		D5B4712624DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
 		D5B4712724DD7F2F0041D122 /* ValidateSubscriptionResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */; };
+		D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
+		D5B53AD925188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
+		D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
+		D5B53ADB25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */; };
 		D5BBC81424332965001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
 		D5BBC81C24332BF8001DC783 /* Dictionary+Merge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BBC81324332965001DC783 /* Dictionary+Merge.swift */; };
 		D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */; };
@@ -680,7 +684,6 @@
 		E1616C1521CBF64700F42D79 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616C1321CBF5EE00F42D79 /* Storage.swift */; };
 		E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BC621C7D53D00F42D79 /* PropertiesManager.swift */; };
 		E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E1828571236C74D400E397A5 /* Intents.intentdefinition */; };
-		E1828574236C74D400E397A5 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E1828571236C74D400E397A5 /* Intents.intentdefinition */; };
 		E185A873237163AC0039E625 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E185A871237163AC0039E625 /* InfoPlist.strings */; };
 		E196BE4C23742116003E5832 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196BE4B23742116003E5832 /* Collection+Extension.swift */; };
 		E196BE4D23742116003E5832 /* Collection+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E196BE4B23742116003E5832 /* Collection+Extension.swift */; };
@@ -908,6 +911,7 @@
 		D5ADFBD323A0D50F00C28CFF /* ReportsApiServiceTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsApiServiceTests.swift; sourceTree = "<group>"; };
 		D5B4712224DD7C5F0041D122 /* ValidateSubscriptionRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSubscriptionRequest.swift; sourceTree = "<group>"; };
 		D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidateSubscriptionResponse.swift; sourceTree = "<group>"; };
+		D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceManagerHelper.swift; sourceTree = "<group>"; };
 		D5B694CF2449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5B694D02449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fa; path = fa.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D5B694D12449D94D009DCF36 /* fa */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = fa; path = fa.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -1268,6 +1272,7 @@
 			isa = PBXGroup;
 			children = (
 				42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */,
+				D5B53AD725188D7C00625CEC /* MaintenanceManagerHelper.swift */,
 			);
 			name = Maintenance;
 			sourceTree = "<group>";
@@ -2299,6 +2304,7 @@
 				42878E4024EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				4242B0602465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
+				D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616C0921C95E1800F42D79 /* ProfileConstants.swift in Sources */,
 				E1616C1421CBF5EE00F42D79 /* Storage.swift in Sources */,
@@ -2523,6 +2529,7 @@
 				D5C2054C2487A0CF004FB58B /* SessionModel.swift in Sources */,
 				D5C2054D2487A0CF004FB58B /* TrialService.swift in Sources */,
 				D5C2054E2487A0CF004FB58B /* ReportBugViewModel.swift in Sources */,
+				D5B53AD925188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,
 				D5C2054F2487A0CF004FB58B /* Arithmetic.swift in Sources */,
 				D5C205502487A0CF004FB58B /* HexColor.swift in Sources */,
@@ -2687,6 +2694,7 @@
 				4242B0242465A40F0042145A /* PaymentsCreditRequest.swift in Sources */,
 				E129C6C422A90E6600D8437E /* PropertiesManagerMock.swift in Sources */,
 				4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
+				D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				E1B5F67421B8241B00B558B0 /* MapConstants.swift in Sources */,
 				E13DEEAB22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
 				4257B21324EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
@@ -2698,7 +2706,6 @@
 				4242B0662465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127222F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BEA21C93ACA00F42D79 /* Profile.swift in Sources */,
-				E1828574236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				D503F71824FE820E0079D095 /* RefreshTimer.swift in Sources */,
 				4242B04A2465A4380042145A /* AuthInfoRequest.swift in Sources */,
 				E1616C1521CBF64700F42D79 /* Storage.swift in Sources */,
@@ -2956,6 +2963,7 @@
 				D5C2046E24866B0D004FB58B /* OpenVpnConfig.swift in Sources */,
 				D5C204542486693B004FB58B /* VpnState.swift in Sources */,
 				D5C204532486692C004FB58B /* ProfileType.swift in Sources */,
+				D5B53ADB25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

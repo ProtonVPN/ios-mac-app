@@ -39,7 +39,7 @@
 "_learn_more" = "Learn more";
 "_ip" = "IP";
 "_close" = "Close";
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
 "_more_info" = "More info";
 "_less_info" = "Less info";
 
@@ -701,5 +701,5 @@
 "_netshield_off" = "Off";
 "_netshield_level1" = "Block malware";
 "_netshield_level2" = "Block malware, ads, trackers";
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify NetShield's setting.";
+"_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
