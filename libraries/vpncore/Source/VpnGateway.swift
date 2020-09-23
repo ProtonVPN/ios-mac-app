@@ -203,19 +203,19 @@ public class VpnGateway: VpnGatewayProtocol {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
             return profile.connectionRequest(withDefaultNetshield: netShieldType)
         } else {
-            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol, netShieldType: netShieldType)
+            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         }
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
