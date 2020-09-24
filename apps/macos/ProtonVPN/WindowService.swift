@@ -47,7 +47,7 @@ protocol WindowService: class {
     func bringWindowsToForground() -> Bool
     func closeActiveWindows()
     
-    func  presentKeyModal(viewController: NSViewController)
+    func presentKeyModal(viewController: NSViewController)
 }
 
 //this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
