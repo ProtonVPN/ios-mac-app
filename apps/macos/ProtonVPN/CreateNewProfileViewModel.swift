@@ -61,7 +61,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -76,6 +76,8 @@ class CreateNewProfileViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
     
@@ -141,20 +143,52 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
-    // swiftlint:disable function_body_length function_parameter_count
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netshieldType: NetShieldType) {
-        let serverType: ServerType
-        switch typeIndex {
-        case 0:
-            serverType = .standard
-        case 1:
-            serverType = .secureCore
-        case 2:
-            serverType = .p2p
+    // swiftlint:disable function_parameter_count
+    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+        
+        var isConnected = false
+        
+        switch appStateManager.state {
+        case .connected, .connecting:
+            if let editProfile = state.editedProfile {
+                isConnected = propertiesManager.lastConnectionRequest?.profileId == editProfile.id
+            }
         default:
-            serverType = .tor
+            break
         }
         
+        guard isConnected && netShieldType != state.editedProfile?.netShieldType else {
+            finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
+            return
+        }
+        
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert( continueHandler: {
+            self.finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
+            self.vpnGateway.reconnect(with: netShieldType)
+            
+        }, cancelHandler: {
+            // Do nothing
+        }))
+    }
+    // swiftlint:enable function_parameter_count
+
+    private func serverTypeFrom(index: Int) -> ServerType {
+        switch index {
+        case 0:
+            return .standard
+        case 1:
+            return .secureCore
+        case 2:
+            return .p2p
+        default:
+            return .tor
+        }
+    }
+    
+    // swiftlint:disable function_parameter_count
+    private func finishCreatingProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+        
+        let serverType = serverTypeFrom(index: typeIndex)
         let grouping = serverManager.grouping(for: serverType)
         let countryModel = ServerUtility.country(in: grouping, index: countryIndex)!
         let countryCode = countryModel.countryCode
@@ -184,7 +218,7 @@ class CreateNewProfileViewModel {
         
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
                               profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, vpnProtocol: PropertiesManager().vpnProtocol, netShieldType: netshieldType)
+                              name: name, vpnProtocol: PropertiesManager().vpnProtocol, netShieldType: netShieldType)
         
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
@@ -196,9 +230,8 @@ class CreateNewProfileViewModel {
             contentWarning?(LocalizedString.profileNameUnique)
         }
     }
+    // swiftlint:enable function_parameter_count
     
-    // swiftlint:enable function_body_length function_parameter_count
-
     var typeCount: Int {
         return 4
     }

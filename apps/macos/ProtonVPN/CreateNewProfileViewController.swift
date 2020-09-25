@@ -336,7 +336,7 @@ class CreateNewProfileViewController: NSViewController {
         
         viewModel.createProfile(name: nameTextField.stringValue, color: selectedColor,
                                 typeIndex: selectedType, countryIndex: selectedCountry,
-                                serverIndex: selectedServer, netshieldType: selectedNetshield)
+                                serverIndex: selectedServer, netShieldType: selectedNetshield)
     }
     
     private func appendedWithSeparator(string: String) -> String {
