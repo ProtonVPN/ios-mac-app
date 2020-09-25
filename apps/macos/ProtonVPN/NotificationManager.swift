@@ -112,7 +112,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.entryIp ?? LocalizedString.unavailable)
+        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {
