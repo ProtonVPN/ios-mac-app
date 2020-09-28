@@ -566,12 +566,13 @@ public class VpnServerOnMaintenanceAlert: SystemAlert {
 
 public class ReconnectOnNetshieldChangeAlert: SystemAlert {
     public var title: String? = LocalizedString.reconnectionRequired
-    public var message: String? = LocalizedString.netshieldReconnectDescription
+    public var message: String? = LocalizedString.netshieldReconnectDescriptionOn
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+    public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        message = isOn ? LocalizedString.netshieldReconnectDescriptionOn : LocalizedString.netshieldReconnectDescriptionOff
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
