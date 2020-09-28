@@ -116,7 +116,7 @@ class GeneralViewModel {
             return
         }
         
-        let reconnectAlert = ReconnectOnNetshieldChangeAlert( continueHandler: {
+        let reconnectAlert = ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
             self.propertiesManager.netShieldType = netShieldType
             self.viewController?.reloadView()
             self.vpnGateway.reconnect(with: netShieldType)

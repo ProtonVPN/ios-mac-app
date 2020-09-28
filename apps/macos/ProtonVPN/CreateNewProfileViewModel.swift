@@ -162,7 +162,7 @@ class CreateNewProfileViewModel {
             return
         }
         
-        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert( continueHandler: {
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
             self.finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
             self.vpnGateway.reconnect(with: netShieldType)
             
