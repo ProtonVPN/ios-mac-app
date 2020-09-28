@@ -128,7 +128,6 @@ public class VpnManager: VpnManagerProtocol {
     public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
-            
             PMLog.D("About to start connection process")
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
@@ -274,6 +273,18 @@ public class VpnManager: VpnManagerProtocol {
         guard connectAllowed else { return }
         
         PMLog.D("Configuring connection")
+        
+        //MARK: - KillSwitch configuration
+        let killSwitchEnabled = true
+        #if os(OSX)
+        if #available(OSX 10.15, *) {
+            configuration.includeAllNetworks = killSwitchEnabled
+        }
+        #elseif os(iOS)
+        if #available(iOS 15, *) {
+            configuration.includeAllNetworks = killSwitchEnabled
+        }
+        #endif
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
         vpnManager.isOnDemandEnabled = hasConnected
