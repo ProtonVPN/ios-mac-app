@@ -41,6 +41,8 @@ class CreateOrEditProfileViewModel: NSObject {
     private let alertService: AlertService
     private let editedProfile: Profile?
     private let vpnKeychain: VpnKeychainProtocol
+    private let appStateManager: AppStateManager
+    private var vpnGateway: VpnGatewayProtocol
     
     private var state: ModelState = .standard {
         didSet {
@@ -77,7 +79,7 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, netshieldService: NetshieldService) {
+    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, netshieldService: NetshieldService, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
@@ -85,6 +87,8 @@ class CreateOrEditProfileViewModel: NSObject {
         self.vpnKeychain = vpnKeychain
         self.serverManager = serverManager
         self.netshieldService = netshieldService
+        self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
         
         self.profileManager = ProfileManager.shared
         self.propertiesManager = PropertiesManager()
@@ -126,20 +130,44 @@ class CreateOrEditProfileViewModel: NSObject {
         return [TableViewSection(title: LocalizedString.selectProfileColor.uppercased(), cells: cells)]
     }
     
-    func saveProfile() -> Bool {
+    func saveProfile(completion: @escaping (Bool) -> Void) {
         guard !name.isEmpty else {
             messageHandler?(LocalizedString.profileNameIsRequired, GSMessageType.warning, UIConstants.messageOptions)
-            return false
+            completion(false)
+            return
         }
         
         guard selectedCountryGroup != nil else {
             messageHandler?(LocalizedString.countrySelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
-            return false
+            completion(false)
+            return
         }
+        
+        // If not connected to current profile, just save it
+        guard !self.appStateManager.state.isSafeToEnd, let editedProfile = editedProfile, self.propertiesManager.lastConnectionRequest?.profileId == editedProfile.id else {
+            self.finishSaveProfile(completion: completion)
+            return
+        }
+        
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(continueHandler: {
+            self.finishSaveProfile { success in
+                if success {
+                    self.vpnGateway.reconnect(with: self.netShield)
+                }
+                completion(success)
+            }
+        }, cancelHandler: {
+            completion(false)
+        }))
+        
+    }
+    
+    private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
         
         guard let serverOffering = selectedServerOffering else {
             messageHandler?(LocalizedString.serverSelectionIsRequired, GSMessageType.warning, UIConstants.messageOptions)
-            return false
+            completion(false)
+            return
         }
         
         let serverType: ServerType = isSecureCore ? .secureCore : .standard
@@ -171,7 +199,8 @@ class CreateOrEditProfileViewModel: NSObject {
         
         guard result == .success else {
             messageHandler?(LocalizedString.profileNameUnique, GSMessageType.warning, UIConstants.messageOptions)
-            return false
+            completion(false)
+            return
         }
         
         state = .standard
@@ -181,7 +210,7 @@ class CreateOrEditProfileViewModel: NSObject {
             propertiesManager.quickConnect = nil
         }
         
-        return true
+        completion(true)
     }
     
     private var colorCell: TableViewCellModel {
