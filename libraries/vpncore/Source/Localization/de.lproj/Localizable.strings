@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch sperrt zurzeit alle IP‐Leaks";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch funktioniert nicht korrekt. Wenn Sie diesen Fehler an den ProtonVPN‐Kundendienst melden möchten, klicken Sie auf Melden.\nWenn Sie dieses Problem ignorieren und OHNE Kill Switch fortfahren wollen, klicken Sie auf Ignorieren.";
+"_kill_switch_error_foot" = "Beenden Sie diese Apps, um das Problem zu beheben.\nUm das Surfen ohne Kill Switch fortzusetzen, klicken Sie auf „Weiter”.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Einige Apps, wie Anti-Viren oder Firewalls, könnten mit dem Kill Switch in Konflikt geraten, so dass dieser nicht ordnungsgemäß funktioniert.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funktioniert mit der macOS-Firewall.\nWenn andere Anwendungen mit der Firewall verbunden sind, können diese den Kill Switch von ProtonVPN stören. Das Beenden dieser Anwendungen kann die von Kill Switch festgelegten Firewall-Regeln wiederherstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Ein Fehler im Kill Switch (Not‐Trennung) wurde erkannt";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Erfahren Sie mehr über Secure Core";
+
+/* Display less information */
+"_less_info" = "Weniger Informationen";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Auslastung";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 Tage Geld‐zurück‐Garantie";
 
+/* Display more information */
+"_more_info" = "Mehr Information";
+
 /* Label in Plan information */
 "_most_popular" = "Am beliebtesten";
 
@@ -857,10 +869,10 @@
 "_need_help" = "Benötigen Sie Hilfe?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Ihre Verbindung muss neu gestartet werden, um die Einstellung von Netshield ändern zu können.";
+"_netshield_alert_reconnect_description" = "Ihre Verbindung muss neu gestartet werden, um die Einstellung von NetShield ändern zu können.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield erhöht Ihre Privatsphäre, indem es Werbung und Tracker sperrt.";
+"_netshield_alert_upgrade_description" = "NetShield erhöht Ihre Privatsphäre, indem es Werbung und Tracker sperrt.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Schadsoftware sperren";

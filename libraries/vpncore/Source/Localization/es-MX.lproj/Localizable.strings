@@ -581,7 +581,7 @@
 "_get_plan" = "Obtener el plan %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Obtenga ProtonVPN Plus para desbloquear esta y otras características.";
+"_get_plus_for_feature" = "Obtenga ProtonVPN Plus para desbloquear esta y otras funciones.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Obtener correo de verificación";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch actualmente está bloqueando las filtraciones de IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch no funciona correctamente. Si desea informar este error al equipo de soporte de ProtonVPN, haga clic en Notificar.\nSi desea ignorar este error y continuar navegando en internet SIN la protección del Kill Switch, haga clic en Ignorar.";
+"_kill_switch_error_foot" = "Terminar esas apps para solucionar el problema.\nPara seguir navegando sin Kill Switch, haga clic en Continuar.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Algunas aplicaciones, como antivirus o firewalls, pueden interferir con Kill Switch.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funciona con el firewall de macOS.\nSi hay otras aplicaciones asociadas con el firewall, pueden interferir con Kill Switch de ProtonVPN. Terminar esas aplicaciones puede restaurar las reglas de firewall establecidas por Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Se ha detectado un error de Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Más información de Secure Core";
+
+/* Display less information */
+"_less_info" = "Menos información";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carga";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 días de garantía de devolución del dinero";
 
+/* Display more information */
+"_more_info" = "Más información";
+
 /* Label in Plan information */
 "_most_popular" = "Más popular";
 
@@ -857,10 +869,10 @@
 "_need_help" = "¿Necesita ayuda?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Es necesario reiniciar su conexión para modificar los ajustes de Netshield.";
+"_netshield_alert_reconnect_description" = "Es necesario reiniciar su conexión para modificar los ajustes de NetShield.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield aumenta su privacidad bloqueando anuncios y rastreadores.";
+"_netshield_alert_upgrade_description" = "NetShield aumenta su privacidad bloqueando anuncios y rastreadores.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Bloquear malware";

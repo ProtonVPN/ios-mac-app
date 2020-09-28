@@ -581,7 +581,7 @@
 "_get_plan" = "Получить тариф %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Подключите ProtonVPN Plus для получения этой и других функций.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Отправить проверочное письмо эл. почты";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch в настоящее время блокирует утечку IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch работает не корректно. Если вы хотите сообщить об этой ошибке в службу поддержки ProtonVPN, нажмите кнопку \"Отправить отчет\".\nЕсли вы хотите проигнорировать эту ошибку и продолжить работу в Интернете БЕЗ ЗАЩИТЫ Kill Switch, нажмите кнопку \"Игнорировать\".";
+"_kill_switch_error_foot" = "Завершите эти приложения, чтобы исправить проблему.\nЧтобы продолжить без Kill Switch, нажмите Продолжить.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Некоторые приложения, например антивирусы и брандмауэры, могут конфликтовать с Kill Switch, из-за чего он может работать неправильно.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch работает с macOS Firewall.\nЕсли есть другие приложения, связанные с брандмауэром, они могут помешать Kill Switch ProtonVPN'а. Завершение этих приложений может восстановить правила брандмауэра, настроенные Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Обнаружена ошибка Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Узнайте больше о Secure Core";
+
+/* Display less information */
+"_less_info" = "Меньше информации";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Нагрузка";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30-дневная гарантия возврата денег";
 
+/* Display more information */
+"_more_info" = "Больше информации";
+
 /* Label in Plan information */
 "_most_popular" = "Самый популярный";
 
@@ -857,10 +869,10 @@
 "_need_help" = "Нужна помощь?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+"_netshield_alert_reconnect_description" = "Для изменения настроек NetShield надо перезапустить соединение.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "NetShield увеличивает вашу конфиденциальность, блокируя рекламу и трекеры.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Блокировать вредоносные программы";
@@ -1103,7 +1115,7 @@
 "_recommended" = "Рекомендуемые";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconnection Required";
+"_reconnection_required" = "Требуется переподключение";
 
 /* MacOS: About window */
 "_release_date" = "Дата выпуска:";

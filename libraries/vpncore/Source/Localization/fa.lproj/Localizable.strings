@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "قابلیت Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "قابلیت Kill Switch به خوبی کار نمی‌کند. در صورتی که می‌خواهید این خطا را به تیم پشتیبانی ProtonVPN ارسال کنید، «گزارش» را انتخاب کنید.\nاگر می‌خواهید این خطا را نادیده گرفته و به مرور اینترنت «بدون» حفاظت با Kill Switch ادامه دهید، گزینه 'چشم‌پوشی' را انتخاب کنید.";
+"_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه Continue را بزنید.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "بعضی برنامه‌ها، مانند ضد-ویروسها یا دیوارهای آتشین، ممکن است با Kill Switch, تضاد ایجاد کنند، بطوریکه موجب عدم کار کردن درست آن بشوند.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch با دیوار آتشین macOS کار می‌کند. اگر برنامه‌های دیگری وجود دارند که با دیوار آتشین در ارتباط هستند، آنها ممکن است که با ProtonVPN’s Kill Switch تداخل کنند. پایان دادن به آن برنامه‌ها می‌تواند قوانین دیوار آتشین ایجاد شده توسط Kill Switch را دوباره برقرار کند.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "یک خطا در عملکرد Kill Switch شناسایی شد";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "در مورد Secure Core بیشتر بدانید";
+
+/* Display less information */
+"_less_info" = "داده کمتر";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "بار";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "۳۰ روز ضمانت بازگشت پول";
 
+/* Display more information */
+"_more_info" = "داده بیشتر";
+
 /* Label in Plan information */
 "_most_popular" = "محبوب‌ترین‌";
 
@@ -857,10 +869,10 @@
 "_need_help" = "نیاز به کمک دارید؟";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "اتصال شما به منظور تغییر تنظیمات Netshield نیاز به راه‌اندازی مجدد دارد.";
+"_netshield_alert_reconnect_description" = "اتصال شما به منظور تغییر تنظیمات NetShield نیاز به راه‌اندازی مجدد دارد.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield با مسدود کردن آگهی‌ها و ردیاب‌ها حریم خصوصی شما را افزایش می‌دهد.";
+"_netshield_alert_upgrade_description" = "NetShield با مسدود کردن آگهی‌ها و ردیاب‌ها حریم خصوصی شما را افزایش می‌دهد.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "مسدود کردن بدافزار";

@@ -581,7 +581,7 @@
 "_get_plan" = "Wybierz plan %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Ulepsz do planu ProtonVPN Plus, aby odblokować dodatkowe funkcje.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Wyślij e-mail weryfikacyjny";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Funkcja Kill Switch blokuje wycieki adresu IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Funkcja Kill Switch nie działa prawidłowo. Jeśli chcesz zgłosić ten błąd do zespołu wsparcia ProtonVPN, kliknij przycisk Zgłoś.\nJeśli chcesz zignorować ten błąd i kontynuować przeglądanie internetu BEZ ochrony Kill Switch, kliknij przycisk Ignoruj.";
+"_kill_switch_error_foot" = "Wyłącz te aplikacje, aby naprawić problem.\nAby kontynuować przeglądanie bez funkcji Kill Switch, kliknij przycisk Kontynuuj.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Niektóre aplikacje, jak antywirusy lub zapory sieciowe, mogą powodować konflikt z funkcją Kill Switch, co sprawia, że nie działa prawidłowo.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Funkcja Kill Switch działa z zaporą sieciową macOS.\nJeśli inne aplikacje są powiązane z zaporą sieciową, mogą powodować konflikt z funkcją Kill Switch. Wyłączenie tych aplikacji może przywrócić działanie zasad zapory sieciowej ustawionej przez funkcję Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Wykryto błąd funkcji Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Dowiedz się więcej o funkcji Secure Core";
+
+/* Display less information */
+"_less_info" = "Mniej informacji";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Obciążenie";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30-dniowa gwarancja zwrotu pieniędzy";
 
+/* Display more information */
+"_more_info" = "Więcej informacji";
+
 /* Label in Plan information */
 "_most_popular" = "Najpopularniejszy";
 
@@ -857,10 +869,10 @@
 "_need_help" = "Potrzebujesz pomocy?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+"_netshield_alert_reconnect_description" = "Aby zmienić ustawienia funkcji NetShield, musisz ponownie nawiązać połączenie.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "Funkcja NetShield zwiększa poziom prywatności poprzez blokowanie reklam i skryptów śledzących.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Zablokuj złośliwe oprogramowanie";
@@ -1064,7 +1076,7 @@
 "_protocol" = "Protokół";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "ProtonVPN na macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
 "_protonvpn_plus" = "ProtonVPN PLUS";
@@ -1103,7 +1115,7 @@
 "_recommended" = "Zalecane";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconnection Required";
+"_reconnection_required" = "Ponowne połączenie jest wymagane";
 
 /* MacOS: About window */
 "_release_date" = "Data publikacji:";

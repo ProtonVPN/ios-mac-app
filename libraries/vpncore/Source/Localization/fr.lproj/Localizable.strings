@@ -581,7 +581,7 @@
 "_get_plan" = "Obtenir l'abonnement %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Obtenez ProtonVPN Plus pour débloquer ceci et d'autres fonctionnalités.";
+"_get_plus_for_feature" = "Obtenez ProtonVPN PLUS pour débloquer ceci et d'autres fonctionnalités.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Recevoir l'e-mail de vérification";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch bloque actuellement les fuites d'IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch ne fonctionne pas correctement. Si vous souhaitez signaler cette erreur à l'équipe de support ProtonVPN, cliquez sur Rapport.\nSi vous souhaitez ignorer cette erreur et continuer à naviguer sur Internet SANS la protection Kill Switch, cliquez sur Ignorer.";
+"_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans Kill Switch, cliquez sur Continuer.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Certaines applications, comme les antivirus ou les pare-feu, peuvent entrer en conflit avec Kill Switch, ce qui l'empêche de fonctionner correctement.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch fonctionne avec le pare-feu de macOS.\nS'il y a d'autres applications associées au pare-feu, elles peuvent interférer avec la fonction Kill Switch de ProtonVPN. Fermez ces applications peut restaurer les règles du pare-feu définies par Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Une erreur du Kill Switch a été détectée";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "En apprendre plus sur Secure Core";
+
+/* Display less information */
+"_less_info" = "Moins d'infos";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Charge";
@@ -801,6 +810,9 @@
 
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Remboursement garanti pendant 30 jours";
+
+/* Display more information */
+"_more_info" = "Plus d'infos";
 
 /* Label in Plan information */
 "_most_popular" = "Le plus populaire";

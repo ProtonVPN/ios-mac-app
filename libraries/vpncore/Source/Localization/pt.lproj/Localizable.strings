@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch está actualmente a bloquear fugas de IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "O Kill Switch não está a funcionar correctamente. Se deseja reportar este erro à equipa do ProtonVPN, clique em Reportar.\nSe deseja ignorar este erro e continuar a navegar pela Internet SEM PROTECÇÃO DO Kill Switch, clique em Ignorar.";
+"_kill_switch_error_foot" = "Termine estas aplicações para corrigir o problema.\nPara continuar a navegar sem Kill Switch, clique em Continuar.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Algumas aplicações, como os anti-vírus ou as firewalls, podem ter conflitos com o Kill Switch, impedindo o seu funcionamento correcto.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "O Kill Switch funciona com a firewall do macOS.\nSe houver outras aplicações associadas à firewall, podem interferir com o Kill Switch do ProtonVPN. Terminar essas aplicações pode restaurar as regras da firewall definidas pelo Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Foi detectado um erro do Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Saiba mais acerca do Secure Core";
+
+/* Display less information */
+"_less_info" = "Menos informação";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carga";
@@ -801,6 +810,9 @@
 
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Reembolso garantido durante 30 dias";
+
+/* Display more information */
+"_more_info" = "Mais informação";
 
 /* Label in Plan information */
 "_most_popular" = "Mais popular";

@@ -83,7 +83,7 @@
 "_basic_servers" = "SERVER DI BASE";
 
 /* Battery usages screen description */
-"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_descritption" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a ProtonVPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Vuoi saperne di più?";
@@ -581,7 +581,7 @@
 "_get_plan" = "Ottieni il piano %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Ottieni ProtonVPN Plus per sbloccare questa e altre funzionalità.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Ricevi email di verifica";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch sta bloccando le perdite di IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch non funziona correttamente. Se vuoi segnalare questo errore al Team di supporto di ProtonVPN, clicca Segnala.\nSe desideri ignorare questo errore e continuare a navigare su Internet SENZA la protezione di Kill Switch, clicca Ignora.";
+"_kill_switch_error_foot" = "Termina quelle applicazioni per risolvere il problema.\nPer continuare a navigare senza Kill Switch, fai clic su Continua.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Alcune applicazioni, come anti-virus o firewall, potrebbero entrare in conflitto con Kill Switch, facendo si che non funzioni correttamente.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funziona con macOS Firewall.\nSe ci sono altre applicazioni associate al Firewall, potrebbero interferire con Kill Switch di ProtonVPN. Terminare queste app può ripristinare le regole Firewall impostate da Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "È stato rilevato un errore del Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Ulteriori informazioni su Secure Core";
+
+/* Display less information */
+"_less_info" = "Meno info";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carico";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Garanzia 30 giorni soddisfatti o rimborsati";
 
+/* Display more information */
+"_more_info" = "Più informazioni";
+
 /* Label in Plan information */
 "_most_popular" = "Più popolare";
 
@@ -857,25 +869,25 @@
 "_need_help" = "Hai bisogno di aiuto?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+"_netshield_alert_reconnect_description" = "La tua connessione deve essere riavviata per modificare l'impostazione di NetShield.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "NetShield aumenta la tua privacy bloccando pubblicità e tracker.";
 
 /* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Block malware";
+"_netshield_level1" = "Blocca malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, trackers";
+"_netshield_level2" = "Blocca malware, annunci, tracker";
 
 /* Settings -> Netshield: Off */
-"_netshield_off" = "Off";
+"_netshield_off" = "Disattivo";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
 /* Settings -> Netshield: description. */
-"_netshield_title_tooltip" = "Block advertisements, trackers and malware";
+"_netshield_title_tooltip" = "Blocca pubblicità, tracker e malware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Rete non raggiungibile";
@@ -1103,7 +1115,7 @@
 "_recommended" = "Raccomandato";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconnection Required";
+"_reconnection_required" = "Riconnessione Richiesta";
 
 /* MacOS: About window */
 "_release_date" = "Data di rilascio:";

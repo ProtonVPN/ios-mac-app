@@ -83,13 +83,13 @@
 "_basic_servers" = "SERVIDORES BASIC";
 
 /* Battery usages screen description */
-"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_descritption" = "Todo el tráfico en tu teléfono se administrará a través de OpenVPN, por lo tanto iOS asignará el uso de batería de otras aplicaciones a ProtonVPN.";
 
 /* Battery usage More info button text */
-"_battery_more" = "Want to learn more?";
+"_battery_more" = "¿Quieres saber más?";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Battery usage";
+"_battery_title" = "Uso de la batería";
 
 /* Common word */
 "_cancel" = "Cancelar";
@@ -581,7 +581,7 @@
 "_get_plan" = "Obtener el Plan %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtoVPN Plus to unlock this and another features.";
+"_get_plus_for_feature" = "Obtén ProtonVPN Plus para desbloquear esta y otras funciones.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Obtener email de verificación";
@@ -656,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch actualmente está bloqueando las fugas de IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch no funciona correctamente. Si deseas informar este error al equipo de soporte de ProtonVPN, haga clic en Informar.\nSi deseas ignorar este error y continuar navegando en Internet SIN la protección del Kill Switch, haz clic en Ignorar.";
+"_kill_switch_error_foot" = "Cerrar esas aplicaciones para solucionar el problema.\nPara seguir navegando sin Kill Switch, haz clic en Continuar.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Algunas aplicaciones, como antivirus o firewalls, pueden entrar en conflicto con Kill Switch, lo que hace que no funcione correctamente.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funciona con el Firewall de macOS.\nSi hay otras aplicaciones asociadas con el Firewall, pueden interferir con el Kill Switch de ProtonVPN. Cerrar estas aplicaciones puede restaurar las reglas del Firewall establecidas por Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Se ha detectado un error de Kill Switch";
@@ -690,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Obtén más información sobre Secure Core";
+
+/* Display less information */
+"_less_info" = "Menos info";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Ocupación";
@@ -802,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 días de garantía de devolución del dinero";
 
+/* Display more information */
+"_more_info" = "Más info";
+
 /* Label in Plan information */
 "_most_popular" = "Más popular";
 
@@ -857,16 +869,16 @@
 "_need_help" = "¿Necesitas ayuda?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify Netshield's setting.";
+"_netshield_alert_reconnect_description" = "Es necesario reiniciar tu conexión para desactivar NetShield.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "Netshield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "NetShield aumenta tu privacidad bloqueando anuncios y rastreadores.";
 
 /* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Block malware";
+"_netshield_level1" = "Bloquear malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, trackers";
+"_netshield_level2" = "Bloquear malware, anuncios, rastreadores";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
@@ -875,7 +887,7 @@
 "_netshield_title" = "NetShield";
 
 /* Settings -> Netshield: description. */
-"_netshield_title_tooltip" = "Block advertisements, trackers and malware";
+"_netshield_title_tooltip" = "Bloquear anuncios, rastreadores y malware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Red no disponible";
@@ -1103,7 +1115,7 @@
 "_recommended" = "Recomendado";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconnection Required";
+"_reconnection_required" = "Reconexión requerida";
 
 /* MacOS: About window */
 "_release_date" = "Fecha de Lanzamiento:";
