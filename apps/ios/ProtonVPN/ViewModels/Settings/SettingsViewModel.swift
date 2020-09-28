@@ -228,7 +228,7 @@ class SettingsViewModel {
                     if self.appStateManager.state.isSafeToEnd || self.propertiesManager.lastConnectionRequest?.profileId != nil {
                         approve()
                     } else {
-                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(continueHandler: {
+                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
                         }))

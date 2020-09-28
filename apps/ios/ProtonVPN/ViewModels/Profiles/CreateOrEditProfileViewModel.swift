@@ -149,7 +149,7 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(continueHandler: {
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: self.netShield != .off, continueHandler: {
             self.finishSaveProfile { success in
                 if success {
                     self.vpnGateway.reconnect(with: self.netShield)
