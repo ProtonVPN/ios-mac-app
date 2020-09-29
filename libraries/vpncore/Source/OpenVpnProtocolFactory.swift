@@ -74,7 +74,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
-    
+    private var openVPNConnectionOptions: [String : NSObject]?
     private var vpnManager: NETunnelProviderManager?
     
     private lazy var emptyTunnelConfiguration: OpenVPNTunnelProvider.Configuration = {
@@ -95,6 +95,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
+        openVPNConnectionOptions = [ configuration.username: configuration.password as NSString ]
         return try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, credentials: credentials)
     }
     
@@ -113,7 +114,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
                 completion(log)
                 return
             }
-            
             completion(log)
         }
     }
@@ -229,5 +229,9 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         } catch {
             completion(nil)
         }
+    }
+    
+    public var connectionOptions: [String : NSObject]? {
+        return openVPNConnectionOptions
     }
 }
