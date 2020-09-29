@@ -80,4 +80,6 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public func logFile(completion: @escaping (URL?) -> Void) {
         completion(nil)
     }
+    
+    public var connectionOptions: [String : NSObject]? = nil
 }

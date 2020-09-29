@@ -318,7 +318,7 @@ public class VpnManager: VpnManagerProtocol {
             
             do {
                 PMLog.D("Starting VPN tunnel")
-                try vpnManager.connection.startVPNTunnel()
+                try vpnManager.connection.startVPNTunnel(options: currentVpnProtocolFactory.connectionOptions)
                 completion()
             } catch {
                 self.setState(withError: error)
