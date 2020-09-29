@@ -67,6 +67,8 @@ public protocol PropertiesManagerProtocol: class {
     var lastAppVersion: MigrationVersion { get set }
     var lastTimeForeground: Date? { get set }
     
+    var killSwitchEnabled: Bool { get set }
+    
     func logoutCleanup()
     
 }
@@ -114,6 +116,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // AppState
         static let lastTimeForeground = "LastTimeForeground"
+        
+        // Kill Switch
+        static let killSwitchEnabled = "KillSwitchEnabled"
         
         // Features
         static let featureFlags = "FeatureFlags"
@@ -349,11 +354,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var vpnProtocol: VpnProtocol {
         get {
-            
-            #if os(OSX)
-                return DefaultConstants.vpnProtocol
-            #endif
-            
             guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
                 return DefaultConstants.vpnProtocol
             }
@@ -437,6 +437,19 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
+        }
+    }
+    
+    public var killSwitchEnabled: Bool {
+        get {
+            if Storage.contains(Keys.killSwitchEnabled) {
+                return Storage.userDefaults().bool(forKey: Keys.killSwitchEnabled)
+            } else {
+                return false
+            }
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.killSwitchEnabled)
         }
     }
     
