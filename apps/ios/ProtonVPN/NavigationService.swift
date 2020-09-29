@@ -138,6 +138,16 @@ protocol NetshieldService {
     func makeNetshieldSelectionViewController(selectedType: NetShieldType, approve: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) -> NetshieldSelectionViewController
 }
 
+protocol NetshieldServiceFactory {
+    func makeNetshieldService() -> NetshieldService
+}
+
+extension DependencyContainer: NetshieldServiceFactory {
+    func makeNetshieldService() -> NetshieldService {
+        return makeNavigationService()
+    }
+}
+
 // MARK: Connection status Service
 
 protocol ConnectionStatusService {
@@ -154,7 +164,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -642,7 +652,8 @@ extension NavigationService: ConnectionStatusService {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
-            statusViewController.viewModel = StatusViewModel(appSessionManager: appSessionManager, propertiesManager: propertiesManager, profileManager: profileManager, vpnGateway: vpnGateway, appStateManager: appStateManager, delegate: delegate)
+            statusViewController.viewModel = StatusViewModel(factory: factory, delegate: delegate)
+            statusViewController.netshieldServiceFactory = self.factory
             return statusViewController
         }
         return nil

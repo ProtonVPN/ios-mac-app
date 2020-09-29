@@ -29,6 +29,7 @@ enum TableViewCellModel {
     case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: (() -> Void) )
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
+    case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
     case toggle(title: String, on: Bool, enabled: Bool, handler: ((Bool) -> Void)? )
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
     case tooltip(text: String)
@@ -136,6 +137,15 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.viewModel = [key: value]
             
             return cell
+        case .staticPushKeyValue(key: let key, value: let value, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: KeyValueTableViewCell.identifier) as? KeyValueTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.viewModel = [key: value]
+            cell.completionHandler = handler
+            cell.showDisclosure(true)
+            
+            return cell
         case .toggle(title: let title, on: let on, enabled: let enabled, handler: let handler):
             guard let cell = tableView.dequeueReusableCell(withIdentifier: SwitchTableViewCell.identifier) as? SwitchTableViewCell else {
                 return UITableViewCell()
@@ -237,6 +247,10 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.select()
         case .checkmarkStandard:
             guard let cell = cell as? CheckmarkTableViewCell else { return }
+            
+            cell.select()
+        case .staticPushKeyValue:
+            guard let cell = cell as? KeyValueTableViewCell else { return }
             
             cell.select()
         default:

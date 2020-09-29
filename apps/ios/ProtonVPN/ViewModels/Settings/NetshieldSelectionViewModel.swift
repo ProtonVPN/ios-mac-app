@@ -43,7 +43,7 @@ class NetshieldSelectionViewModel {
     public let onTypeChange: TypeChangeCallback
     typealias TypeChangeCallback = ((NetShieldType) -> Void)
     
-    /// Used to approve selected tpe before setting it (for example when user has to be asked if she agrees to reconnect after change)
+    /// Used to approve selected type before setting it (for example when user has to be asked if she agrees to reconnect after change)
     public let shouldSelectNewValue: ApproveCallback
     public typealias ApproveCallback = ((NetShieldType, @escaping () -> Void) -> Void)
     

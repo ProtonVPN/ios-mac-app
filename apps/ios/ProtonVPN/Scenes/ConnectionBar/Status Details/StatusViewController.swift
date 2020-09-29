@@ -39,10 +39,20 @@ class StatusViewController: UIViewController {
             viewModel?.dismissStatusView = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
+            viewModel?.changeNetShieldType = { [weak self] currentType, approveCallback in
+                guard let netShieldService = self?.netshieldServiceFactory?.makeNetshieldService() else { return }
+                let controller = netShieldService.makeNetshieldSelectionViewController(selectedType: currentType, approve: approveCallback, onChange: { type in
+                    self?.updateTableView()
+                    self?.navigationController?.popToRootViewController(animated: true)
+                })
+                self?.navigationController?.pushViewController(controller, animated: true)
+            }
         }
     }
     
     private var genericDataSource: GenericTableViewDataSource?
+    
+    public var netshieldServiceFactory: NetshieldServiceFactory?
     
     override func viewDidLoad() {
         super.viewDidLoad()

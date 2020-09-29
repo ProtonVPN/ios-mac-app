@@ -25,6 +25,9 @@ import UIKit
 class KeyValueTableViewCell: UITableViewCell {
     @IBOutlet weak var keyLabel: UILabel!
     @IBOutlet weak var valueLabel: UILabel!
+    @IBOutlet weak var stackView: UIStackView!
+    
+    var completionHandler: (() -> Void)?
     
     var viewModel: [String: String]? {
         didSet {
@@ -46,6 +49,20 @@ class KeyValueTableViewCell: UITableViewCell {
         super.setSelected(selected, animated: animated)
         
         selectionStyle = .none
+    }
+    
+    func select() {
+        completionHandler?()
+    }
+    
+    public func showDisclosure(_ show: Bool) {
+        if show {
+            accessoryType = .disclosureIndicator
+            stackView.spacing = 30 // Makes right label start at the middle of the view
+        } else {
+            accessoryType = .none
+            stackView.spacing = 0
+        }
     }
     
 }

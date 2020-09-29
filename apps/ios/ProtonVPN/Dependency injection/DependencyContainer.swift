@@ -340,3 +340,10 @@ extension DependencyContainer: MaintenanceManagerHelperFactory {
         return maintenanceManagerHelper
     }
 }
+
+// MARK: - ProfileManagerFactory
+extension DependencyContainer: ProfileManagerFactory {
+    func makeProfileManager() -> ProfileManager {
+        return ProfileManager.shared
+    }
+}
