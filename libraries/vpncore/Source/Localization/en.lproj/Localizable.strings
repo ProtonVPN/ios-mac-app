@@ -84,6 +84,7 @@
 "_failed" = "failed";
 "_connection_failed" = "Connection Failed";
 "_timed_out" = "timed out";
+"_security" = "Security";
 "_status" = "Status";
 "_session_time" = "Session Time";
 "_location" = "Location";

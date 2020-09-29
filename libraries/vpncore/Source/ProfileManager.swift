@@ -36,6 +36,10 @@ public enum ProfileManagerOperationOutcome {
     }
 }
 
+public protocol ProfileManagerFactory {
+    func makeProfileManager() -> ProfileManager
+}
+
 public class ProfileManager {
     
     public static var shared = ProfileManager(serverStorage: ServerStorageConcrete())

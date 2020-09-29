@@ -90,6 +90,7 @@ public class LocalizedString {
     public static let connectionFailed = NSLocalizedString("_connection_failed", comment: "Connection error translation. iOS quick connect widget: text shown on error.")
     public static let timedOut = NSLocalizedString("_timed_out", comment: "MacOS: connecting overlay")
     public static let status = NSLocalizedString("_status", comment: "iOS status view")
+    public static let security = NSLocalizedString("_security", comment: "iOS status view")
     public static let sessionTime = NSLocalizedString("_session_time", comment: "iOS status view")
     public static let location = NSLocalizedString("_location", comment: "iOS status view")
     public static let city = NSLocalizedString("_city", comment: "iOS status view")
