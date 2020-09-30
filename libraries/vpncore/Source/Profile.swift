@@ -120,4 +120,16 @@ public class Profile: NSObject, NSCoding {
             netShieldType.encode(with: aCoder)
         }
     }
+    
+    public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
+        return Profile(id: self.id,
+                       accessTier: self.accessTier,
+                       profileIcon: self.profileIcon,
+                       profileType: self.profileType,
+                       serverType: self.serverType,
+                       serverOffering: self.serverOffering,
+                       name: self.name,
+                       vpnProtocol: self.vpnProtocol,
+                       netShieldType: type)
+    }
 }

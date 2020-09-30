@@ -99,7 +99,7 @@ public class ProfileManager {
         return ProfileManagerOperationOutcome(outcome: result)
     }
     
-    public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+    @discardableResult public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
