@@ -211,7 +211,7 @@ class StatusViewModel {
         }
         
         let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
-        _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol)
+        _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol, netShield: appStateManager.activeConnection()?.netShieldType)
         messageHandler?(LocalizedString.profileCreatedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
