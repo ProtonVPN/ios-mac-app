@@ -274,7 +274,8 @@ public class VpnManager: VpnManagerProtocol {
         
         PMLog.D("Configuring connection")
         
-        //MARK: - KillSwitch configuration
+        // MARK: - KillSwitch configuration
+        
         let killSwitchEnabled = true
         #if os(OSX)
         if #available(OSX 10.15, *) {
