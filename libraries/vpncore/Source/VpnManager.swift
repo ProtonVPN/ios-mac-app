@@ -275,17 +275,11 @@ public class VpnManager: VpnManagerProtocol {
         PMLog.D("Configuring connection")
         
         // MARK: - KillSwitch configuration
-        
-        let killSwitchEnabled = true
-        #if os(OSX)
+    
         if #available(OSX 10.15, *) {
-            configuration.includeAllNetworks = killSwitchEnabled
+            configuration.includeAllNetworks = propertiesManager.killSwitchEnabled
         }
-        #elseif os(iOS)
-        if #available(iOS 15, *) {
-            configuration.includeAllNetworks = killSwitchEnabled
-        }
-        #endif
+        
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
         vpnManager.isOnDemandEnabled = hasConnected

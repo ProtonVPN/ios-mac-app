@@ -14,7 +14,7 @@ abstract_target 'vpncore' do
     pod 'ReachabilitySwift', '~> 4.0'
     
     # OpenVPN support
-    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+    pod 'TunnelKit', :path => '../tunnelkit', :branch => 'keychain_avoid'
 
     # Checks code style and bad practices
     pod 'SwiftLint'
