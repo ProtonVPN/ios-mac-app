@@ -25,6 +25,7 @@ public typealias ClientConfigCallback = GenericCallback<ClientConfig>
 public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
 public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
 public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
+public typealias VpnProtocolCallback = GenericCallback<VpnProtocol>
 public typealias VpnServerStateCallback = GenericCallback<VpnServerState>
 public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
 public typealias OptionalStringCallback = GenericCallback<String?>

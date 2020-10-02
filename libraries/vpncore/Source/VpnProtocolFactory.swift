@@ -11,10 +11,8 @@ import Foundation
 import NetworkExtension
 
 public enum VpnProviderManagerRequirement {
-    
     case configuration
     case status
-    
 }
 
 public protocol VpnProtocolFactory {
@@ -24,5 +22,5 @@ public protocol VpnProtocolFactory {
     func logs(completion: @escaping (String?) -> Void)
     func logFile(completion: @escaping (URL?) -> Void)
     
-    var connectionOptions: [String : NSObject]? { get }
+    var providerMessage: Data? { get }
 }

@@ -315,10 +315,20 @@ public class VpnManager: VpnManagerProtocol {
             }
             guard let vpnManager = vpnManager else { return }
             guard self.connectAllowed else { return }
-            
             do {
                 PMLog.D("Starting VPN tunnel")
-                try vpnManager.connection.startVPNTunnel(options: currentVpnProtocolFactory.connectionOptions)
+                if let session = vpnManager.connection as? NETunnelProviderSession, let message = currentVpnProtocolFactory.providerMessage {
+                    try session.sendProviderMessage(message, responseHandler: { _ in
+                        do {
+                            try vpnManager.connection.startVPNTunnel()
+                            completion()
+                        } catch {
+                            self.setState(withError: error)
+                        }
+                    })
+                    return
+                }
+                try vpnManager.connection.startVPNTunnel()
                 completion()
             } catch {
                 self.setState(withError: error)
