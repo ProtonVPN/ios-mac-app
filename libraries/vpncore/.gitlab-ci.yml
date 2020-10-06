@@ -22,12 +22,18 @@ variables:
   LANG: "en_US.UTF-8"
   GEM_HOME: "$CI_PROJECT_DIR/gem"
   PUBLIC_REPO_URL: git@github.com:ProtonVPN/vpncore.git
+  
+.before_script_mac: &before_script_mac
+- rm -fr ../tunnelkit || true # ignore failure to delete
+- git clone -b keychain_avoid https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
 
 lint:
   stage: linting
   tags:
     - iOS
     - macOS
+  before_script:
+    - *before_script_mac
   script:
     - pod install
     - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
@@ -44,6 +50,8 @@ lint:
 unit_tests:
   dependencies: []
   stage: unit_tests
+  before_script:
+   - *before_script_mac
   script:
     - pod install
 
