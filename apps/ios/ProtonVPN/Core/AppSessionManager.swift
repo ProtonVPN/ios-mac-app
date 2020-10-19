@@ -54,7 +54,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & RefreshTimerFactory 
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -69,7 +69,8 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
-    private lazy var refreshTimer: RefreshTimer = factory.makeRefreshTimer()
+    private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
+    private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     var vpnGateway: VpnGatewayProtocol?
     
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -209,6 +210,11 @@ class AppSessionManagerImplementation: AppSessionManager {
             ProfileManager.shared.refreshProfiles()
             success()
         })
+        
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            announcementRefresher.refresh()
+        }
+        
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {

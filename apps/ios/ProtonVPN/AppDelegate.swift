@@ -106,6 +106,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Otherwise just  check directly  the connection
         let state = container.makeVpnManager().state
         self.checkStuckConnection(state)
+        
+        // Refresh API announcements
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            self.container.makeAnnouncementRefresher().refresh()
+        }
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -191,6 +196,12 @@ fileprivate extension AppDelegate {
     }
     
     @objc func featureFlagsChanged() {
+        // Refresh API announcements
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            self.container.makeAnnouncementRefresher().refresh()
+        }
+        
+        // Check servers in maintenance
         guard propertiesManager.featureFlags.isServerRefresh else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
             return

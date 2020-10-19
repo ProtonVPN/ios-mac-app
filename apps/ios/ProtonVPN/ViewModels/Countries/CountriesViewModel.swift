@@ -30,6 +30,7 @@ enum ServerItemModel {
 }
 
 class CountriesViewModel: SecureCoreToggleHandler {
+    
     // MARK: vars and init
     private enum ModelState {
         
@@ -55,39 +56,38 @@ class CountriesViewModel: SecureCoreToggleHandler {
         }
     }
     
-    private let appStateManager: AppStateManager
-    private let propertiesManager: PropertiesManagerProtocol
-    private let countryService: CountryService
-    private let loginService: LoginService
-    private let planService: PlanService
+    var contentChanged: (() -> Void)?
+    var connectionChanged: (() -> Void)?
     
     private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
     private var state: ModelState = .standard([])
     
-    internal let alertService: AlertService
-    
     var activeView: ServerType {
         return state.serverType
     }
     
-    var vpnGateway: VpnGatewayProtocol?
-    
-    var contentChanged: (() -> Void)?
-    var connectionChanged: (() -> Void)?
-    
     var secureCoreOn: Bool {
         return state.serverType == .secureCore
     }
+
+    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory
+    private let factory: Factory
     
-    init(appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, countryService: CountryService, alertService: AlertService, loginService: LoginService, planService: PlanService) {
-        self.appStateManager = appStateManager
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    internal lazy var alertService: AlertService = factory.makeCoreAlertService()
+    private lazy var loginService: LoginService = factory.makeLoginService()
+    private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    
+    private let countryService: CountryService
+    var vpnGateway: VpnGatewayProtocol?
+    
+    init(factory: Factory, vpnGateway: VpnGatewayProtocol?, countryService: CountryService, loginService: LoginService) {
+        self.factory = factory
         self.vpnGateway = vpnGateway
-        self.propertiesManager = propertiesManager
         self.countryService = countryService
-        self.alertService = alertService
-        self.loginService = loginService
-        self.planService = planService
         
         setTier()
         setStateOf(type: propertiesManager.serverTypeToggle) // if last showing SC, then launch into SC
@@ -154,6 +154,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return countryService.makeCountryViewController(country: viewModel)
     }
     
+    func announcementsViewController() -> AnnouncementsViewController {
+        return countryService.makeAnnouncementsViewController()
+    }
+    
     // MARK: - Private functions
     func setTier() {
         do {
@@ -217,4 +221,18 @@ class CountriesViewModel: SecureCoreToggleHandler {
     @objc private func connectionStateChanged() {
         connectionChanged?()
     }
+    
+    // MARK: - Announcements bell
+    
+    public var showAnnouncements: Bool {
+        guard propertiesManager.featureFlags.isAnnouncementOn else {
+            return false
+        }
+        return !announcementManager.fetchCurrentAnnouncements().isEmpty
+    }
+    
+    public var hasUnreadAnnouncements: Bool {
+        return announcementManager.hasUnreadAnnouncements
+    }
+    
 }

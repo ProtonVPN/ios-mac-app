@@ -94,6 +94,7 @@ protocol PlanService {
 protocol CountryService {
     func makeCountriesViewController() -> CountriesViewController
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
+    func makeAnnouncementsViewController() -> AnnouncementsViewController    
 }
 
 // MARK: Map Service
@@ -164,7 +165,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -536,7 +537,7 @@ extension NavigationService: TrialService {
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
-        countriesViewController.viewModel = CountriesViewModel(appStateManager: appStateManager, vpnGateway: vpnGateway, propertiesManager: propertiesManager, countryService: self, alertService: alertService, loginService: self, planService: self)
+        countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self, loginService: self)
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
         countriesViewController.planService = self
         
@@ -548,6 +549,11 @@ extension NavigationService: CountryService {
         countryViewController.viewModel = country
         countryViewController.connectionBarViewController = makeConnectionBarViewController()
         return countryViewController
+    }
+    
+    func makeAnnouncementsViewController() -> AnnouncementsViewController {
+        let controller = AnnouncementsViewController(factory.makeAnnouncementsViewModel())
+        return controller
     }
 }
 

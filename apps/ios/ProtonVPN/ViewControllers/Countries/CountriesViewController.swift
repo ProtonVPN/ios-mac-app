@@ -61,6 +61,14 @@ class CountriesViewController: UIViewController {
         setupConnectionBar()
         setupSecureCoreBar()
         setupTableView()
+        setupAnnouncements()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupAnnouncements()
     }
     
     @objc func switchValueDidChange(sender: UISwitch!) {
@@ -117,6 +125,29 @@ class CountriesViewController: UIViewController {
         
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
+    }
+    
+    @objc func setupAnnouncements() {
+        guard let viewModel = viewModel, viewModel.showAnnouncements else {
+            navigationItem.leftBarButtonItem = nil
+            return
+        }
+        
+        if navigationItem.leftBarButtonItem == nil {
+            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(announcementsButtonTapped))
+        }
+        
+        if viewModel.hasUnreadAnnouncements {
+            navigationItem.leftBarButtonItem?.addBadge(offset: CGPoint(x: -9, y: 10), color: .protonGreen())
+        } else {
+            navigationItem.leftBarButtonItem?.removeBadge()
+        }
+    }
+    
+    @IBAction func announcementsButtonTapped() {
+        if let controller = viewModel?.announcementsViewController() {
+            self.navigationController?.pushViewController(controller, animated: true)
+        }
     }
 }
 
