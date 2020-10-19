@@ -655,4 +655,7 @@ public class LocalizedString {
     public static let netshieldReconnectDescriptionOn = NSLocalizedString("_netshield_alert_reconnect_description_on", comment: "Netshield requires reconnect")
     public static let netshieldReconnectDescriptionOff = NSLocalizedString("_netshield_alert_reconnect_description_off", comment: "Netshield requires reconnect")
     public static let netshieldUpgradeDescription = NSLocalizedString("_netshield_alert_upgrade_description", comment: "Netshield requires upgrade")
+    
+    // MARK: - Nesw / Announcements / APINotifications
+    public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")
 }

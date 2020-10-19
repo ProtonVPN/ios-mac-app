@@ -1,6 +1,6 @@
 //
-//  String+Url.swift
-//  vpncore - Created on 2020-07-09.
+//  News.swift
+//  vpncore - Created on 2020-10-05.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,20 +22,25 @@
 
 import Foundation
 
-extension String {
+/// API calls this thing Notification
+public struct Announcement: Codable {
     
-    var domainWithoutPathAndProtocol: String {
-        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
-        let noPath = url.split(separator: "/").first
-        return noPath != nil ? String(noPath!) : url
+    public let notificationID: String
+    public let startTime: Date
+    public let endTime: Date
+    public let type: Int
+    public let offer: Offer?
+    
+    // Is set from the app, NOT api
+    public var isRead: Bool? = false
+    
+    // Wrapper param that returns false in case isRead is nil
+    public var wasRead: Bool {
+        return isRead == true
     }
     
-    public func urlWithAdded(utmSource: String) -> String? {
-        var url = URLComponents(string: self)
-        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
-        items.append(URLQueryItem(name: "utm_source", value: utmSource))
-        url?.queryItems = items
-        return url?.string
+    mutating func setAsRead(_ read: Bool) {
+        isRead = read
     }
     
 }

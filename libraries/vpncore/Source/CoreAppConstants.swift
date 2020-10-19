@@ -74,8 +74,11 @@ public class CoreAppConstants {
     }
     
     public struct UpdateTime {
-        public static let quickUpdateTime: Double = 3.0
-        public static let quickReconnectTime: Double = 0.5
+        public static let quickUpdateTime: TimeInterval = 3.0
+        public static let quickReconnectTime: TimeInterval = 0.5
+        
+        // Pull announcements from API
+        public static let announcementRefreshTime: TimeInterval = 12 * 60 * 60 // 12 h
     }
     
     public struct Maintenance {

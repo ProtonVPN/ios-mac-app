@@ -1,6 +1,6 @@
 //
-//  String+Url.swift
-//  vpncore - Created on 2020-07-09.
+//  SafariServiceMock.swift
+//  vpncore - Created on 2020-10-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,22 +20,16 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import vpncore
 
-extension String {
+class SafariServiceMock: SafariServiceProtocol {
     
-    var domainWithoutPathAndProtocol: String {
-        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
-        let noPath = url.split(separator: "/").first
-        return noPath != nil ? String(noPath!) : url
+    public var openCount = 0
+    public var lastUrl: String?
+    
+    func open(url: String) {
+        openCount += 1
+        lastUrl = url
     }
-    
-    public func urlWithAdded(utmSource: String) -> String? {
-        var url = URLComponents(string: self)
-        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
-        items.append(URLQueryItem(name: "utm_source", value: utmSource))
-        url?.queryItems = items
-        return url?.string
-    }
-    
+
 }

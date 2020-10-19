@@ -1,6 +1,6 @@
 //
-//  String+Url.swift
-//  vpncore - Created on 2020-07-09.
+//  AnnouncementManagerTests.swift
+//  vpncore - Created on 2020-10-19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,22 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import Cocoa
 
-extension String {
-    
-    var domainWithoutPathAndProtocol: String {
-        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
-        let noPath = url.split(separator: "/").first
-        return noPath != nil ? String(noPath!) : url
+class AnnouncementManagerImplementationTests: XCTestCase {
+
+    override func setUp() {
+        super.setUp()
     }
     
-    public func urlWithAdded(utmSource: String) -> String? {
-        var url = URLComponents(string: self)
-        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
-        items.append(URLQueryItem(name: "utm_source", value: utmSource))
-        url?.queryItems = items
-        return url?.string
-    }
+    
     
 }

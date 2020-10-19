@@ -1,5 +1,5 @@
 //
-//  RefreshTimer.swift
+//  AppSessionRefreshTimer.swift
 //  vpncore - Created on 2020-09-01.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,11 +22,11 @@
 
 import Foundation
 
-public protocol RefreshTimerFactory {
-    func makeRefreshTimer() -> RefreshTimer
+public protocol AppSessionRefreshTimerFactory {
+    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer
 }
 
-public class RefreshTimer {
+public class AppSessionRefreshTimer {
     private let fullServerRefreshTimeout: TimeInterval // Default: 3 hours
     private let serverLoadsRefreshTimeout: TimeInterval // Default: 15 minutes
     

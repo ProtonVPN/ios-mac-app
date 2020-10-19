@@ -1,6 +1,6 @@
 //
-//  String+Url.swift
-//  vpncore - Created on 2020-07-09.
+//  Offer.swift
+//  vpncore - Created on 2020-10-13.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,20 +22,17 @@
 
 import Foundation
 
-extension String {
+public struct Offer: Codable {
     
-    var domainWithoutPathAndProtocol: String {
-        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
-        let noPath = url.split(separator: "/").first
-        return noPath != nil ? String(noPath!) : url
-    }
+    public let label: String
+    public let url: String
+    public let icon: String
     
-    public func urlWithAdded(utmSource: String) -> String? {
-        var url = URLComponents(string: self)
-        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
-        items.append(URLQueryItem(name: "utm_source", value: utmSource))
-        url?.queryItems = items
-        return url?.string
-    }
+    // Our decoding strategy changes first letter to lowercase
+    enum CodingKeys: String, CodingKey {
+            case label = "label"
+            case url = "uRL"
+            case icon = "icon"
+        }
     
 }

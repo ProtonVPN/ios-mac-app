@@ -1,6 +1,6 @@
 //
-//  String+Url.swift
-//  vpncore - Created on 2020-07-09.
+//  CoreBaseRequest.swift
+//  vpncore - Created on 2020-10-05.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,20 +22,9 @@
 
 import Foundation
 
-extension String {
+class CoreBaseRequest: BaseRequest {
     
-    var domainWithoutPathAndProtocol: String {
-        let url = self.replacingOccurrences(of: "https://", with: "").replacingOccurrences(of: "http://", with: "")
-        let noPath = url.split(separator: "/").first
-        return noPath != nil ? String(noPath!) : url
+    override func path() -> String {
+        return super.path() + "/core/"
     }
-    
-    public func urlWithAdded(utmSource: String) -> String? {
-        var url = URLComponents(string: self)
-        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
-        items.append(URLQueryItem(name: "utm_source", value: utmSource))
-        url?.queryItems = items
-        return url?.string
-    }
-    
 }
