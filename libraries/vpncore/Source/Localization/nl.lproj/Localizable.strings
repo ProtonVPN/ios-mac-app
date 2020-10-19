@@ -581,7 +581,7 @@
 "_get_plan" = "Neem %@ abonnement";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
+"_get_plus_for_feature" = "Gebruik ProtonVPN Plus om deze en andere functies te ontgrendelen.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Krijg verificatie e-mail";
@@ -656,13 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch blokkeert alle IP lekken";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without Kill Switch, click Continue.";
+"_kill_switch_error_foot" = "Beëindig deze apps om het probleem te verhelpen.\nKlik op Doorgaan om te blijven surfen zonder Kill Switch.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
+"_kill_switch_error_head" = "Sommige apps, zoals antivirussen of firewalls, kunnen botsen met de Kill Switch, waardoor deze niet goed functioneert.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with ProtonVPN's Kill Switch. Terminating those apps can restore the Firewall rules set by Kill Switch.";
+"_kill_switch_error_info" = "Kill Switch werkt met de macOS Firewall.\nAls er andere apps zijn gekoppeld aan de Firewall, kunnen ze de Kill Switch van ProtonMail verstoren. Het beëindigen van deze apps kan de Firewall regels die door de Kill Switch zijn ingesteld herstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Er is een fout opgetreden bij de Kill Switch";
@@ -698,7 +698,7 @@
 "_learn_more_about_secure_core" = "Meer informatie over Secure Core";
 
 /* Display less information */
-"_less_info" = "Less info";
+"_less_info" = "Minder informatie";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Belasting";
@@ -812,7 +812,7 @@
 "_money_back_guarantee" = "30 dagen geld-terug-garantie";
 
 /* Display more information */
-"_more_info" = "More info";
+"_more_info" = "Meer informatie";
 
 /* Label in Plan information */
 "_most_popular" = "Meest populair";
@@ -869,25 +869,28 @@
 "_need_help" = "Hulp nodig?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify NetShield's setting.";
+"_netshield_alert_reconnect_description_off" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Uw verbinding zal opnieuw worden gestart om de NetShield modus te wijzigen.\nOpmerking: Als sommige sites niet laden, probeer NetShield uit te schakelen.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "NetShield verhoogt uw privacy door advertenties en trackers te blokkeren.";
 
 /* Settings -> Netshield: Block malware */
-"_netshield_level1" = "Block malware";
+"_netshield_level1" = "Blokkeer malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, trackers";
+"_netshield_level2" = "Malware, advertenties, trackers blokkeren";
 
 /* Settings -> Netshield: Off */
-"_netshield_off" = "Off";
+"_netshield_off" = "Uit";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
 /* Settings -> Netshield: description. */
-"_netshield_title_tooltip" = "Block advertisements, trackers and malware";
+"_netshield_title_tooltip" = "Blokkeer advertenties, trackers en malware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Netwerk onbereikbaar";
@@ -1115,7 +1118,7 @@
 "_recommended" = "Aanbevolen";
 
 /* iOS & MacOS: text that requires restart connection */
-"_reconnection_required" = "Reconnection Required";
+"_reconnection_required" = "Opnieuw verbinden vereist";
 
 /* MacOS: About window */
 "_release_date" = "Verschijningsdatum:";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Veilige Streaming";
+
+/* iOS status view */
+"_security" = "Beveiliging";
 
 /* iOS Settings: table section header */
 "_security_options" = "Beveiligingsopties";

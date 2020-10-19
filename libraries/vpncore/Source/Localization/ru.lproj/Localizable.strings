@@ -869,7 +869,10 @@
 "_need_help" = "Нужна помощь?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Для изменения настроек NetShield надо перезапустить соединение.";
+"_netshield_alert_reconnect_description_off" = "Ваше соединение будет перезапущено для изменения режима NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Ваше соединение будет перезапущено для изменения режима NetShield.\nЗаметьте: Если некоторые сайты не загружаются, попробуйте отключить NetShield.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "NetShield увеличивает вашу конфиденциальность, блокируя рекламу и трекеры.";
@@ -1240,6 +1243,9 @@
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Безопасный стриминг";
 
+/* iOS status view */
+"_security" = "Безопасность";
+
 /* iOS Settings: table section header */
 "_security_options" = "Параметры безопасности";
 
@@ -1441,7 +1447,7 @@
 "_troubleshoot_item_alt_description" = "В случае блокировки сайтов Proton эта настройка позволяет приложению попробовать альтернативную сетевую маршрутизацию, чтобы добраться до Proton, что может быть полезно для обхода брандмауэров или сетевых проблем. Для большей надежности мы рекомендуем оставить эту настройку включенной.\nПодробнее";
 
 /* Text that will become a Learn more link in _troubleshoot_item_alt_description */
-"_troubleshoot_item_alt_link1" = "Подробнее";
+"_troubleshoot_item_alt_link1" = "Узнать больше";
 
 /* Title of troubleshooting item */
 "_troubleshoot_item_alt_title" = "Разрешить альтернативную маршрутизацию";
@@ -1528,7 +1534,7 @@
 "_unsecure_wifi" = "Обнаружено небезопасное подключение к Wi-Fi";
 
 /* The link to this website https://protonvpn.com/blog/public-wifi-safety/ */
-"_unsecure_wifi_learn_more" = "Подробнее";
+"_unsecure_wifi_learn_more" = "Узнать больше";
 
 /* MacOS */
 "_unsecure_wifi_title" = "Обнаружен небезопасный Wi-Fi";

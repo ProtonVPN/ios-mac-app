@@ -869,7 +869,10 @@
 "_need_help" = "Hai bisogno di aiuto?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "La tua connessione deve essere riavviata per modificare l'impostazione di NetShield.";
+"_netshield_alert_reconnect_description_off" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.\nNota: se alcuni siti non vengono caricati, prova a disabilitare NetShield.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "NetShield aumenta la tua privacy bloccando pubblicità e tracker.";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Streaming sicuro";
+
+/* iOS status view */
+"_security" = "Sicurezza";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opzioni di sicurezza";

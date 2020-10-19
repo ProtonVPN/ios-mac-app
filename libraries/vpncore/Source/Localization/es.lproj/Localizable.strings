@@ -305,7 +305,7 @@
 "_error_apply_payment_failed_free" = "Continuar con la cuenta gratuita";
 
 /* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
-"_error_apply_payment_failed_message" = "Tu pago no ha sido procesado. Para intentarlo de nuevo, haz clic en Reintentar. Solo se te cobrará una vez.\nPara continuar con una cuenta gratuita, haga clic en Continuar con una cuenta gratuita. Puedes cambiarte a un plan de pago más en adelante.";
+"_error_apply_payment_failed_message" = "Tu pago no ha sido procesado. Para intentarlo de nuevo, haz clic en reintentar. Solo se te cobrará una vez.\nPara continuar con una cuenta gratuita, haga clic en Continuar con una cuenta gratuita. Puedes cambiarte a un plan de pago más en adelante.";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Se ha registrado con éxito pero tu pago no ha sido procesado. Para reenviar tu información de pago, haga clic en Reintentar. Sólo se te cobrará una vez. Si el problema persiste, ponte en contacto con el servicio de atención al cliente.";
@@ -317,10 +317,10 @@
 "_error_apply_payment_failed_on_registration_title" = "Pago fallido";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_message" = "Has pagado con éxito pero tu compra no ha sido procesada. Para reenviar tu información de pago, haz clic en Reintentar. Sólo se te cobrará una vez. Si el problema persiste, ponte en contacto con el servicio de atención al cliente.";
+"_error_apply_payment_failed_on_upgrade_message" = "Has pagado con éxito pero tu compra no ha sido procesada. Para reenviar tu información de pago, haz clic en reintentar. Sólo se te cobrará una vez. Si el problema persiste, ponte en contacto con el servicio de atención al cliente.";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_title" = "Fallo en el pago";
+"_error_apply_payment_failed_on_upgrade_title" = "Pago fallido";
 
 /* Error during payment alert - button */
 "_error_apply_payment_failed_retry" = "Reintentar";
@@ -482,7 +482,7 @@
 "_error_vpn_session_is_active" = "La sesión de ProtonVPN está activa";
 
 /* In App Purchase error */
-"_error_wrong_payment_token_status" = "Status incorrecto del token de pago. Por favor, vuelve a abrir la aplicación. Si el error persiste, ponte en contacto con atención al cliente.";
+"_error_wrong_payment_token_status" = "Estado incorrecto del token de pago. Por favor, vuelve a abrir la aplicación. Si el error persiste, ponte en contacto con atención al cliente.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN utiliza un firewall para implementar un Kill Switch. Al habilitar Kill Switch, sobrescribirás la configuración actual del firewall del dispositivo. Si confías en esta configuración de firewall, no debes usar Kill Switch.\n\nPara usar Kill Switch y sobrescribir la configuración actual del firewall, selecciona CONTINUAR.\n\nPara desactivar Kill Switch y continuar usando tu firewall actual, selecciona CANCELAR.";
@@ -698,7 +698,7 @@
 "_learn_more_about_secure_core" = "Obtén más información sobre Secure Core";
 
 /* Display less information */
-"_less_info" = "Menos info";
+"_less_info" = "Menos información";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Ocupación";
@@ -869,7 +869,10 @@
 "_need_help" = "¿Necesitas ayuda?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Es necesario reiniciar tu conexión para desactivar NetShield.";
+"_netshield_alert_reconnect_description_off" = "La conexión se reiniciará para cambiar el modo NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Tu conexión se reiniciará para cambiar el modo NetShield.\nNota: Si algunos sitios no se cargan, intenta deshabilitar NetShield.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "NetShield aumenta tu privacidad bloqueando anuncios y rastreadores.";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Transmisión segura";
+
+/* iOS status view */
+"_security" = "Seguridad";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opciones de seguridad";

@@ -233,7 +233,7 @@
 "_delete_profile_warning" = "Profil zostanie trwale usunięty. Czy chcesz kontynuować?";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Twoje konto ma obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
+"_delinquent_user_description" = "Twoje konto posiada obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Nieopłacona faktura";
@@ -662,7 +662,7 @@
 "_kill_switch_error_head" = "Niektóre aplikacje, jak antywirusy lub zapory sieciowe, mogą powodować konflikt z funkcją Kill Switch, co sprawia, że nie działa prawidłowo.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Funkcja Kill Switch działa z zaporą sieciową macOS.\nJeśli inne aplikacje są powiązane z zaporą sieciową, mogą powodować konflikt z funkcją Kill Switch. Wyłączenie tych aplikacji może przywrócić działanie zasad zapory sieciowej ustawionej przez funkcję Kill Switch.";
+"_kill_switch_error_info" = "Funkcja Kill Switch działa z zaporą sieciową macOS.\nJeśli inne aplikacje są powiązane z zaporą sieciową, mogą powodować konflikt z funkcją Kill Switch. Wyłączenie tych aplikacji może przywrócić działanie zasad zapory sieciowej ustawionych przez funkcję Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Wykryto błąd funkcji Kill Switch";
@@ -869,7 +869,10 @@
 "_need_help" = "Potrzebujesz pomocy?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Aby zmienić ustawienia funkcji NetShield, musisz ponownie nawiązać połączenie.";
+"_netshield_alert_reconnect_description_off" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.\nUwaga: Wyłącz funkcję, jeśli niektóre strony internetowe nie działają.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "Funkcja NetShield zwiększa poziom prywatności poprzez blokowanie reklam i skryptów śledzących.";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Bezpieczny streaming";
+
+/* iOS status view */
+"_security" = "Bezpieczeństwo";
 
 /* iOS Settings: table section header */
 "_security_options" = "Ustawienia bezpieczeństwa";

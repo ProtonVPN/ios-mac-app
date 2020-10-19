@@ -581,7 +581,7 @@
 "_get_plan" = "Obter plano %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
+"_get_plus_for_feature" = "Obtenha o ProtonVPN Plus para desbloquear este e outros recursos.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Receber e-mail de verificação";
@@ -656,13 +656,13 @@
 "_kill_switch_blocking_title" = "O Kill Switch está atualmente bloqueando os vazamentos de IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without Kill Switch, click Continue.";
+"_kill_switch_error_foot" = "Encerre os aplicativos para corrigir o problema.\nPara continuar navegando sem Kill Switch, clique em Continuar.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
+"_kill_switch_error_head" = "Alguns aplicativos, como antivírus ou firewalls podem entrar em conflito com o Kill Switch, tornando-o instável.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with ProtonVPN's Kill Switch. Terminating those apps can restore the Firewall rules set by Kill Switch.";
+"_kill_switch_error_info" = "O Kill Switch funciona com o Firewall do MacOS.\nSe houver outros aplicativos relacionados com o Firewall, eles podem interferir com o Kill Switch do ProtonVPN. A finalização desses aplicativos pode restaurar as regras do Firewall definidas pelo Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Foi detectado um erro no Kill Switch";
@@ -698,7 +698,7 @@
 "_learn_more_about_secure_core" = "Saiba mais sobre o Secure Core";
 
 /* Display less information */
-"_less_info" = "Less info";
+"_less_info" = "Menos informações";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carga";
@@ -812,7 +812,7 @@
 "_money_back_guarantee" = "Garantia de devolução do seu dinheiro por até 30 dias";
 
 /* Display more information */
-"_more_info" = "More info";
+"_more_info" = "Mais informações";
 
 /* Label in Plan information */
 "_most_popular" = "Mais popular";
@@ -869,10 +869,13 @@
 "_need_help" = "Precisa de ajuda?";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "Your connection needs to be restarted to modify NetShield's setting.";
+"_netshield_alert_reconnect_description_off" = "Sua conexão será reiniciada para alterar o modo NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Sua conexão será reiniciada para alterar o modo NetShield.\nObs.: Se alguns sites não carregarem, tente desativar o NetShield.";
 
 /* Netshield requires upgrade */
-"_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
+"_netshield_alert_upgrade_description" = "NetShield aumenta sua privacidade ao bloquear anúncios e rastreadores.";
 
 /* Settings -> Netshield: Block malware */
 "_netshield_level1" = "Bloqueio de malware";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Streaming seguro";
+
+/* iOS status view */
+"_security" = "Segurança";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opções de segurança";

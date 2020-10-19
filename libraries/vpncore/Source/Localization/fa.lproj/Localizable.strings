@@ -86,7 +86,7 @@
 "_battery_descritption" = "همه ترافیک موبایل شما از طریق OpenVPN مدیریت خواهد شد، بنابراین iOS مصرف باطری دیگر برنامه‌ها را به ProtonVPN اختصاص خواهد داد.";
 
 /* Battery usage More info button text */
-"_battery_more" = "میخواهید بیشتر بیاموزید?";
+"_battery_more" = "می‌خواهید بیشتر بدانید؟";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
 "_battery_title" = "مصرف باتری";
@@ -305,7 +305,7 @@
 "_error_apply_payment_failed_free" = "ادامه با حساب رایگان";
 
 /* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
-"_error_apply_payment_failed_message" = "پرداخت شما پردازش نشد. برای تلاش مجدد، Retry را کلیک کنید. از شما تنها یک بار کسر خواهد شد. برای ادامه با یک حساب رایگان، ادامه با حساب رایگان را کلیک کنید. شما می‌توانید در آینده به یک طرح پرداختی ارتقا دهید.";
+"_error_apply_payment_failed_message" = "پرداخت شما پردازش نشد. برای تلاش مجدد، مجدد را کلیک کنید. از شما تنها یک بار کسر خواهد شد. برای ادامه با یک حساب رایگان، ادامه با حساب رایگان را کلیک کنید. شما می‌توانید در آینده به یک طرح پرداختی ارتقا دهید.";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "شما با موفقیت ثبت نام کرده اید اما پرداخت شما انجام نشده است. برای ارسال دوباره اطلاعات پرداخت خود، سعی مجدد را کلیک کنید. شما فقط یکبار هزینه پرداخت خواهید کرد. اگر مشکل همچنان ادامه دارد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
@@ -317,7 +317,7 @@
 "_error_apply_payment_failed_on_registration_title" = "پرداخت ناموفق";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_message" = "شما با موفقیت پرداخته‌اید ولی خرید شما پردازش نشد. برای ارسال دوباره اطلاعات پرداخت شما، Retry را بزنید. از شما تنها یکبار کسر خواهد شد. اگر مشکل پافشاری کرد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
+"_error_apply_payment_failed_on_upgrade_message" = "شما با موفقیت پرداخته‌اید ولی خرید شما پردازش نشد. برای ارسال دوباره اطلاعات پرداخت شما، مجدد را بزنید. از شما تنها یکبار کسر خواهد شد. اگر مشکل پافشاری کرد، لطفاً با پشتیبانی مشتری تماس بگیرید.";
 
 /* Error applying credit after upgrade alert */
 "_error_apply_payment_failed_on_upgrade_title" = "پرداخت ناموفق بود";
@@ -581,7 +581,7 @@
 "_get_plan" = "گرفتن طرح %@";
 
 /* Suggest the user to upgrade account for new features */
-"_get_plus_for_feature" = "ProtonVPN Plus بگیرید تا این و دیگر امکانات را باز کنید.";
+"_get_plus_for_feature" = "طرح ProtonVPN Plus بگیرید تا این و دیگر امکانات را باز کنید.";
 
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "گرفتن ایمیل فعال‌سازی";
@@ -656,7 +656,7 @@
 "_kill_switch_blocking_title" = "قابلیت Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه Continue را بزنید.";
+"_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه ادامه را بزنید.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_head" = "بعضی برنامه‌ها، مانند ضد-ویروسها یا دیوارهای آتشین، ممکن است با Kill Switch, تضاد ایجاد کنند، بطوریکه موجب عدم کار کردن درست آن بشوند.";
@@ -698,7 +698,7 @@
 "_learn_more_about_secure_core" = "در مورد Secure Core بیشتر بدانید";
 
 /* Display less information */
-"_less_info" = "داده کمتر";
+"_less_info" = "اطلاعات کمتر";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "بار";
@@ -737,7 +737,7 @@
 "_maintenance" = "تعمیر و نگهداری";
 
 /* MacOS: We'll connect to a different server */
-"_maintenance_on_server_detected_description" = "اتّصال مجدد شما به سریعترین سرور موجود.";
+"_maintenance_on_server_detected_description" = "اتصال مجدد شما به سریعترین سرور موجود.";
 
 /* MacOS: The current server has going to maintenance. */
 "_maintenance_on_server_detected_subtitle" = "سروری که شما به آن متّصل بودید در حال تعمیر میباشد";
@@ -812,7 +812,7 @@
 "_money_back_guarantee" = "۳۰ روز ضمانت بازگشت پول";
 
 /* Display more information */
-"_more_info" = "داده بیشتر";
+"_more_info" = "اطلاعات بیشتر";
 
 /* Label in Plan information */
 "_most_popular" = "محبوب‌ترین‌";
@@ -869,7 +869,10 @@
 "_need_help" = "نیاز به کمک دارید؟";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description" = "اتصال شما به منظور تغییر تنظیمات NetShield نیاز به راه‌اندازی مجدد دارد.";
+"_netshield_alert_reconnect_description_off" = "اتصال شما راه‌اندازی مجدد خواهد شد تا حالت NetShield تغییر کند.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "اتصال شما راه‌اندازی مجدد خواهد شد تا حالت NetShield تغییر کند.\nتوجه: اگر بعضی سایتها بارگیری نمی‌شود، غیرفعال کردن NetShield را امتحان کنید.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "NetShield با مسدود کردن آگهی‌ها و ردیاب‌ها حریم خصوصی شما را افزایش می‌دهد.";
@@ -1239,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "استریم امن";
+
+/* iOS status view */
+"_security" = "امنیت";
 
 /* iOS Settings: table section header */
 "_security_options" = "تنظیمات امنیتی";
