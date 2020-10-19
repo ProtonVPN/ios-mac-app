@@ -108,8 +108,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         self.checkStuckConnection(state)
         
         // Refresh API announcements
+        let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
         if propertiesManager.featureFlags.isAnnouncementOn {
-            self.container.makeAnnouncementRefresher().refresh()
+            announcementRefresher.refresh()
         }
     }
     
@@ -196,11 +197,6 @@ fileprivate extension AppDelegate {
     }
     
     @objc func featureFlagsChanged() {
-        // Refresh API announcements
-        if propertiesManager.featureFlags.isAnnouncementOn {
-            self.container.makeAnnouncementRefresher().refresh()
-        }
-        
         // Check servers in maintenance
         guard propertiesManager.featureFlags.isServerRefresh else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)

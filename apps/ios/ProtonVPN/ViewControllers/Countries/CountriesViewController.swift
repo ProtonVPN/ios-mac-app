@@ -61,7 +61,6 @@ class CountriesViewController: UIViewController {
         setupConnectionBar()
         setupSecureCoreBar()
         setupTableView()
-        setupAnnouncements()
         
         NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
@@ -134,14 +133,17 @@ class CountriesViewController: UIViewController {
         }
         
         if navigationItem.leftBarButtonItem == nil {
-            navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(announcementsButtonTapped))
+            navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(announcementsButtonTapped)), animated: true)
         }
         
-        if viewModel.hasUnreadAnnouncements {
-            navigationItem.leftBarButtonItem?.addBadge(offset: CGPoint(x: -9, y: 10), color: .protonGreen())
-        } else {
-            navigationItem.leftBarButtonItem?.removeBadge()
-        }
+        // Button may not have been yet shown, so run this a little later
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
+            if viewModel.hasUnreadAnnouncements {
+                self?.navigationItem.leftBarButtonItem?.addBadge(offset: CGPoint(x: -9, y: 10), color: .protonGreen())
+            } else {
+                self?.navigationItem.leftBarButtonItem?.removeBadge()
+            }
+        })
     }
     
     @IBAction func announcementsButtonTapped() {
