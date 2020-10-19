@@ -45,6 +45,8 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     public init(factory: Factory, minRefreshTime: TimeInterval = CoreAppConstants.UpdateTime.announcementRefreshTime) {
         self.factory = factory
         self.minRefreshTime = minRefreshTime
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
     }
     
     public func refresh() {
@@ -58,6 +60,13 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         }, failure: {error in
             PMLog.ET("Error getting announcements")
         })
+    }
+    
+    @objc func featureFlagsChanged(_ notification: NSNotification) {
+        guard let featureFlags = notification.object as? FeatureFlags else { return }
+        if featureFlags.isAnnouncementOn {
+            refresh()
+        }
     }
     
 }
