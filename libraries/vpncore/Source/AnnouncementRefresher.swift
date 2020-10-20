@@ -62,10 +62,16 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         })
     }
     
+    private func clean() {
+        self.announcementStorage.store([])
+    }
+    
     @objc func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? FeatureFlags else { return }
         if featureFlags.isAnnouncementOn {
             refresh()
+        } else { // Hide announcements
+            clean()
         }
     }
     
