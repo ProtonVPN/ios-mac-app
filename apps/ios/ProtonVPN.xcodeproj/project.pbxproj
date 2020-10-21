@@ -329,6 +329,8 @@
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
 		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
 		D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */; };
+		D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
+		D5F3765E25402E0A008C7207 /* AnnouncementButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */; };
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
@@ -3011,6 +3013,7 @@
 				D5136C5E228592E80002C095 /* ProfileItemViewModel.swift in Sources */,
 				D5136C5F228592E80002C095 /* PrefillInformation.swift in Sources */,
 				D5136C60228592E80002C095 /* WidgetSettingsViewModel.swift in Sources */,
+				D5F3765E25402E0A008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
 				D5BF951023559AAF00C7D1E7 /* XCTestExpectation.swift in Sources */,
 				D5136C61228592E80002C095 /* SettingsViewModel.swift in Sources */,
 				D5136C62228592E80002C095 /* OnboardingContentViewModel.swift in Sources */,
@@ -3043,6 +3046,7 @@
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */,
+				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
 				D511085F246189DC0018872A /* SubscriptionInfoController.swift in Sources */,
 				42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
 				D5296779237D359C00D479F2 /* VerificationCaptchaViewModel.swift in Sources */,
