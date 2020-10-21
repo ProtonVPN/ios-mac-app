@@ -90,6 +90,20 @@ platform :ios do
         sentry_upload_dsym
 
         tear_down_keychain
+    end
+    
+    lane :internal_staging do |options|
+        if !options[:changelog]
+            abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
+        end
+
+        clear_derived_data
+
+        xcode_select("/Applications/Xcode.app")
+
+        sh("./sync_version_number.sh") # sync's the app target's version number with the other targets
+        sh("./increment_build_number.sh")
+
         set_up_keychain
 
         # Debug build
@@ -113,7 +127,8 @@ platform :ios do
 
         tear_down_keychain
     end
-        
+    
+    
     desc "Make screenshots for every language on every device"
     lane :screenshots do
     
