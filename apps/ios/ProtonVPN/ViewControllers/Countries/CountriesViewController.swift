@@ -126,31 +126,6 @@ class CountriesViewController: UIViewController {
         tableView.reloadData()
     }
     
-    @objc func setupAnnouncements() {
-        guard let viewModel = viewModel, viewModel.showAnnouncements else {
-            navigationItem.leftBarButtonItem = nil
-            return
-        }
-        
-        if navigationItem.leftBarButtonItem == nil {
-            navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(announcementsButtonTapped)), animated: true)
-        }
-        
-        // Button may not have been yet shown, so run this a little later
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
-            if viewModel.hasUnreadAnnouncements {
-                self?.navigationItem.leftBarButtonItem?.addBadge(offset: CGPoint(x: -9, y: 10), color: .protonGreen())
-            } else {
-                self?.navigationItem.leftBarButtonItem?.removeBadge()
-            }
-        })
-    }
-    
-    @IBAction func announcementsButtonTapped() {
-        if let controller = viewModel?.announcementsViewController() {
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
-    }
 }
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {

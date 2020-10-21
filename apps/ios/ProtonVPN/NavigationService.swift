@@ -94,7 +94,21 @@ protocol PlanService {
 protocol CountryService {
     func makeCountriesViewController() -> CountriesViewController
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
-    func makeAnnouncementsViewController() -> AnnouncementsViewController    
+}
+
+// MARK: Announcements Service
+
+protocol AnnouncementsServiceFactory {
+    func makeAnnouncementsService() -> AnnouncementsService
+}
+
+extension DependencyContainer: AnnouncementsServiceFactory {
+    func makeAnnouncementsService() -> AnnouncementsService {
+        return makeNavigationService()
+    }
+}
+protocol AnnouncementsService {
+    func makeAnnouncementsViewController() -> AnnouncementsViewController
 }
 
 // MARK: Map Service
@@ -269,8 +283,7 @@ class NavigationService {
         tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
         
         if let settingsViewController = makeSettingsViewController() {
-            let nvc = UINavigationController(rootViewController: settingsViewController)
-            tabViewControllers.append(nvc)
+            tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
         
         tabBarController.setViewControllers(tabViewControllers, animated: false)
@@ -550,7 +563,9 @@ extension NavigationService: CountryService {
         countryViewController.connectionBarViewController = makeConnectionBarViewController()
         return countryViewController
     }
-    
+}
+
+extension NavigationService: AnnouncementsService {
     func makeAnnouncementsViewController() -> AnnouncementsViewController {
         let controller = AnnouncementsViewController(factory.makeAnnouncementsViewModel())
         return controller

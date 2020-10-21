@@ -327,6 +327,8 @@
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
 		D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */; };
+		D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */; };
+		D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */; };
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */; };
@@ -776,6 +778,8 @@
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
 		D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerStorageArrayMock.swift; sourceTree = "<group>"; };
+		D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Announcements.swift"; sourceTree = "<group>"; };
+		D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementButtonViewModel.swift; sourceTree = "<group>"; };
 		D5F56898232620C600795953 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		D5F5689A23263C7D00795953 /* IosAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosAlertService.swift; sourceTree = "<group>"; };
 		D5F5689F23277EF000795953 /* SignUpCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinatorTests.swift; sourceTree = "<group>"; };
@@ -1826,9 +1830,11 @@
 		D5BCDC7B25303825004BAEE8 /* Announcements */ = {
 			isa = PBXGroup;
 			children = (
+				D5F37633254010C7008C7207 /* Extensions */,
 				D5BCDCF525304C83004BAEE8 /* Views */,
 				D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */,
 				D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */,
+				D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */,
 			);
 			path = Announcements;
 			sourceTree = "<group>";
@@ -1909,6 +1915,14 @@
 				E169FC372289A63D00FDC933 /* SmsCountryCodeViewModel.swift */,
 			);
 			path = "Human Verification";
+			sourceTree = "<group>";
+		};
+		D5F37633254010C7008C7207 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D5F56897232620B000795953 /* Dependency injection */ = {
@@ -2745,6 +2759,7 @@
 				E14EE2DD217F1EE8004AF568 /* ConnectionView.swift in Sources */,
 				D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */,
 				E18006ED218B12A4009E01E3 /* Compare+Extension.swift in Sources */,
+				D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
 				E17BE41522819B7F00D0F652 /* VerificationSmsViewController.swift in Sources */,
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
@@ -2803,6 +2818,7 @@
 				D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */,
+				D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */,
 				E1A9A67922BA3FE90073711B /* Alerts.swift in Sources */,
 				7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */,
 				796BD1D121144D49003D6B8D /* ServersHeaderView.swift in Sources */,

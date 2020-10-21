@@ -50,6 +50,8 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +59,7 @@ class SettingsViewController: UIViewController {
         
         setupTableView()
         tableView.reloadData()
+        setupAnnouncements()
     }
     
     private func setupView() {

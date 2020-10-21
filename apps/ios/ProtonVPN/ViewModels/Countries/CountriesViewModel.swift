@@ -71,7 +71,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -79,7 +79,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
-    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?
@@ -154,10 +153,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return countryService.makeCountryViewController(country: viewModel)
     }
     
-    func announcementsViewController() -> AnnouncementsViewController {
-        return countryService.makeAnnouncementsViewController()
-    }
-    
     // MARK: - Private functions
     func setTier() {
         do {
@@ -220,19 +215,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     @objc private func connectionStateChanged() {
         connectionChanged?()
-    }
-    
-    // MARK: - Announcements bell
-    
-    public var showAnnouncements: Bool {
-        guard propertiesManager.featureFlags.isAnnouncementOn else {
-            return false
-        }
-        return !announcementManager.fetchCurrentAnnouncements().isEmpty
-    }
-    
-    public var hasUnreadAnnouncements: Bool {
-        return announcementManager.hasUnreadAnnouncements
     }
     
 }
