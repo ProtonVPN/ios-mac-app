@@ -23,6 +23,7 @@ target 'ProtonVPN' do
     pod 'ReachabilitySwift', '~> 4.0'
     pod 'Sentry', '~> 4.0'
     pod 'Sparkle', '~> 1.0'
+    pod 'SDWebImage', '~> 5.0'
     
     # Checks code style and bad practices
     pod 'SwiftLint'

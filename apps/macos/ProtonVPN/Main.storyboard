@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="15702" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="15702"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -168,12 +168,21 @@
                                                     <constraint firstAttribute="height" constant="170" id="rEx-Kr-Uoo"/>
                                                 </constraints>
                                             </customView>
+                                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYr-4L-3gi">
+                                                <rect key="frame" x="20" y="355" width="300" height="200"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="QBO-Rh-LUb"/>
+                                                    <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="fZO-6i-sTC"/>
+                                                </constraints>
+                                            </customView>
                                         </subviews>
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="PUh-5c-b8S" secondAttribute="trailing" id="DdW-U6-dPN"/>
                                             <constraint firstItem="PUh-5c-b8S" firstAttribute="top" secondItem="0TS-Fg-7cD" secondAttribute="bottom" id="I68-VU-9Gh"/>
+                                            <constraint firstItem="NYr-4L-3gi" firstAttribute="top" secondItem="UQf-5v-cDa" secondAttribute="top" constant="45" id="Jwm-Bs-Uh7"/>
                                             <constraint firstAttribute="width" constant="340" id="Mgh-z8-rJG"/>
                                             <constraint firstItem="PUh-5c-b8S" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="VVV-e8-AcH"/>
+                                            <constraint firstAttribute="trailing" secondItem="NYr-4L-3gi" secondAttribute="trailing" constant="20" id="Vdy-cr-mcW"/>
                                             <constraint firstAttribute="bottom" secondItem="PUh-5c-b8S" secondAttribute="bottom" id="Zqp-vF-2LV"/>
                                             <constraint firstItem="0TS-Fg-7cD" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="bLs-8c-sbT"/>
                                             <constraint firstAttribute="trailing" secondItem="N6y-fY-SzI" secondAttribute="trailing" id="cLO-Ze-Pv5"/>
@@ -234,6 +243,7 @@
                     <connections>
                         <outlet property="activeControllerViewContainer" destination="PUh-5c-b8S" id="lTW-Bk-xYL"/>
                         <outlet property="allThings" destination="v3s-C7-hC3" id="mIk-aH-Sfj"/>
+                        <outlet property="announcementsControllerViewContainer" destination="NYr-4L-3gi" id="MiO-G9-L9Y"/>
                         <outlet property="connectionOverlay" destination="iAI-dX-ZPI" id="oWx-NJ-QB1"/>
                         <outlet property="expandButton" destination="DNd-Sp-llG" id="ahE-yj-xdi"/>
                         <outlet property="expandButtonLeading" destination="mvh-iE-K8h" id="nm0-qB-cph"/>
@@ -303,6 +313,19 @@
                 <customObject id="ttT-bd-6iJ" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1489" y="-19"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="C88-pR-bdp">
+            <objects>
+                <viewController id="m75-bO-tSa" sceneMemberID="viewController">
+                    <view key="view" id="Ggm-OA-fao">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </view>
+                </viewController>
+                <customObject id="bfg-Hi-1oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="386" y="-94"/>
         </scene>
     </scenes>
     <resources>

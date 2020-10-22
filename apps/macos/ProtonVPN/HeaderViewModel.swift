@@ -24,18 +24,26 @@ import Cocoa
 import vpncore
 
 protocol HeaderViewModelDelegate: class {
-    
     func bitrateUpdated(with attributedString: NSAttributedString)
+}
+
+protocol HeaderViewModelFactory {
+    func makeHeaderViewModel() -> HeaderViewModel
 }
 
 class HeaderViewModel {
     
-    private let vpnGateway: VpnGatewayProtocol
-    private let appStateManager: AppStateManager
-    private let propertiesManager = PropertiesManager()
+    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory
+    private let factory: Factory
+    
     private let serverStorage = ServerStorageConcrete()
-    private let profileManager: ProfileManager
-    private let navService: NavigationService
+    
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var navService: NavigationService = factory.makeNavigationService()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     
     var contentChanged: (() -> Void)?
     
@@ -48,11 +56,8 @@ class HeaderViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, navService: NavigationService) {
-        self.vpnGateway = vpnGateway
-        self.navService = navService
-        self.appStateManager = appStateManager
-        profileManager = ProfileManager.shared
+    init(factory: Factory, appStateManager: AppStateManager, navService: NavigationService) {
+        self.factory = factory
         startObserving()
     }
     
@@ -87,8 +92,22 @@ class HeaderViewModel {
     func quickConnectAction() {
         isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
     }
-
+    
+    // MARK: - Announcements bell
+    
+    public var showAnnouncements: Bool {
+        guard propertiesManager.featureFlags.isAnnouncementOn else {
+            return false
+        }
+        return !announcementManager.fetchCurrentAnnouncements().isEmpty
+    }
+    
+    public var hasUnreadAnnouncements: Bool {
+        return announcementManager.hasUnreadAnnouncements
+    }
+    
     // MARK: - Private functions
+    
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)

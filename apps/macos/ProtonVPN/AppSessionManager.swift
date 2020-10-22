@@ -48,7 +48,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & RefreshTimerFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -62,8 +62,9 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var propertiesManager = factory.makePropertiesManager()
     private lazy var serverStorage: ServerStorage = factory.makeServerStorage()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var refreshTimer: RefreshTimer = factory.makeRefreshTimer()
-    
+    private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
+    private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
+
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
     var loggedIn = false
@@ -137,6 +138,10 @@ class AppSessionManagerImplementation: AppSessionManager {
             ProfileManager.shared.refreshProfiles()
             success()
         })
+        
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            announcementRefresher.refresh()
+        }
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {

@@ -35,6 +35,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
+    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     
     private var notificationManager: NotificationManagerProtocol!
     
@@ -72,7 +73,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
-        container.makeRefreshTimer().start(now: true) // refresh data if time passed
+        container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
+        // Refresh API announcements
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            self.container.makeAnnouncementRefresher().refresh()
+        }
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

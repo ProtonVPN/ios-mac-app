@@ -63,7 +63,10 @@ class DependencyContainer {
     private var authApiService: AuthApiService!
     
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = RefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, canRefreshFull: { return true }, canRefreshLoads: { return NSApp.isActive })
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, canRefreshFull: { return true }, canRefreshLoads: { return NSApp.isActive })
+    
+    // Refreshes announements from API
+    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -267,8 +270,8 @@ extension DependencyContainer: MaintenanceManagerFactory {
 }
 
 // MARK: RefreshTimerFactory
-extension DependencyContainer: RefreshTimerFactory {
-    func makeRefreshTimer() -> RefreshTimer {
+extension DependencyContainer: AppSessionRefreshTimerFactory {
+    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
         return refreshTimer
     }
 }
@@ -284,5 +287,61 @@ extension DependencyContainer: AppSessionRefresherFactory {
 extension DependencyContainer: MaintenanceManagerHelperFactory {
     func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
         return maintenanceManagerHelper
+    }
+}
+
+// MARK: - AnnouncementRefresherFactory
+extension DependencyContainer: AnnouncementRefresherFactory {
+    func makeAnnouncementRefresher() -> AnnouncementRefresher {
+        return announcementRefresher
+    }
+}
+
+// MARK: - AnnouncementStorageFactory
+extension DependencyContainer: AnnouncementStorageFactory {
+    func makeAnnouncementStorage() -> AnnouncementStorage {
+        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults())
+    }
+}
+
+// MARK: - AnnouncementManagerFactory
+extension DependencyContainer: AnnouncementManagerFactory {
+    func makeAnnouncementManager() -> AnnouncementManager {
+        return AnnouncementManagerImplementation(factory: self)
+    }
+}
+
+// MARK: - CoreApiServiceFactory
+extension DependencyContainer: CoreApiServiceFactory {
+    func makeCoreApiService() -> CoreApiService {
+        return CoreApiServiceImplementation(alamofireWrapper: self.makeAlamofireWrapper())
+    }
+}
+
+// MARK: - ProfileManagerFactory
+extension DependencyContainer: ProfileManagerFactory {
+    func makeProfileManager() -> ProfileManager {
+        return ProfileManager.shared
+    }
+}
+
+// MARK: - HeaderViewModelFactory
+extension DependencyContainer: HeaderViewModelFactory {
+    func makeHeaderViewModel() -> HeaderViewModel {
+        return HeaderViewModel(factory: self, appStateManager: appStateManager, navService: navigationService)
+    }
+}
+
+// MARK: - AnnouncementsViewModelFactory
+extension DependencyContainer: AnnouncementsViewModelFactory {
+    func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
+        return AnnouncementsViewModel(factory: self)
+    }
+}
+
+// MARK: - SafariServiceFactory
+extension DependencyContainer: SafariServiceFactory {
+    func makeSafariService() -> SafariServiceProtocol {
+        return SafariService()
     }
 }
