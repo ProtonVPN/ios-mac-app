@@ -223,6 +223,8 @@
 		D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C912285A9190002C095 /* ServerUtilityTests.swift */; };
 		D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
 		D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */; };
+		D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */; };
+		D51DA69B2541B68500B4A421 /* BadgedBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */; };
 		D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
 		D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */; };
 		D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
@@ -308,8 +310,6 @@
 		D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
 		D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
 		D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
-		D5BCDDA6253448ED004BAEE8 /* UIBarButtonItem+Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDDA5253448EC004BAEE8 /* UIBarButtonItem+Badge.swift */; };
-		D5BCDDA7253448ED004BAEE8 /* UIBarButtonItem+Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDDA5253448EC004BAEE8 /* UIBarButtonItem+Badge.swift */; };
 		D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */; };
 		D5BF95042354823F00C7D1E7 /* PaymentsApiServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */; };
 		D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */; };
@@ -694,6 +694,7 @@
 		D5136C912285A9190002C095 /* ServerUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUtilityTests.swift; sourceTree = "<group>"; };
 		D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItemViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C9622895C3A0002C095 /* ExtensionAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionAlertService.swift; sourceTree = "<group>"; };
+		D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgedBarButtonItem.swift; sourceTree = "<group>"; };
 		D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewController.swift; sourceTree = "<group>"; };
 		D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetshieldSelectionViewController.xib; sourceTree = "<group>"; };
 		D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewModel.swift; sourceTree = "<group>"; };
@@ -758,7 +759,6 @@
 		D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
-		D5BCDDA5253448EC004BAEE8 /* UIBarButtonItem+Badge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIBarButtonItem+Badge.swift"; sourceTree = "<group>"; };
 		D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWrapperMock.swift; sourceTree = "<group>"; };
 		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
@@ -1053,7 +1053,7 @@
 				79DEE9082111A5E100C354EF /* TabBar.swift */,
 				D55131762319427900784ED0 /* RoundCheckboxView.swift */,
 				D55131722319425900784ED0 /* RoundCheckboxView.xib */,
-				D5BCDDA5253448EC004BAEE8 /* UIBarButtonItem+Badge.swift */,
+				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2851,6 +2851,7 @@
 				D511084524614D480018872A /* PlanCardView.swift in Sources */,
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */,
+				D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				E1FB547B230C000E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				E13EDF7521F1D07700030CE7 /* WidgetSettingsViewController.swift in Sources */,
 				E185A86523707D1A0039E625 /* TrackedAlertController.swift in Sources */,
@@ -2879,7 +2880,6 @@
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
 				79848BB420D201AC00EF6F9F /* ConnectionViewModel.swift in Sources */,
 				E134557F218764B300FEEECE /* VerificationCodeViewController.swift in Sources */,
-				D5BCDDA6253448ED004BAEE8 /* UIBarButtonItem+Badge.swift in Sources */,
 				D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */,
 				E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */,
 				D53E83D7232A5F4D0031CD49 /* String+Validation.swift in Sources */,
@@ -3011,6 +3011,7 @@
 				D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */,
 				D5136C5D228592E80002C095 /* ProfilesViewModel.swift in Sources */,
 				D5136C5E228592E80002C095 /* ProfileItemViewModel.swift in Sources */,
+				D51DA69B2541B68500B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				D5136C5F228592E80002C095 /* PrefillInformation.swift in Sources */,
 				D5136C60228592E80002C095 /* WidgetSettingsViewModel.swift in Sources */,
 				D5F3765E25402E0A008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
@@ -3026,7 +3027,6 @@
 				D5136C67228592E80002C095 /* ServerViewCell.swift in Sources */,
 				D5136C68228592E80002C095 /* ServerTypeHeader.swift in Sources */,
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
-				D5BCDDA7253448ED004BAEE8 /* UIBarButtonItem+Badge.swift in Sources */,
 				D511085B246189A60018872A /* PlanCardView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5136C6A228592E80002C095 /* LoginBoxView.swift in Sources */,

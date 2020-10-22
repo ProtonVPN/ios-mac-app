@@ -32,7 +32,11 @@ extension UIViewController {
         }
         
         if navigationItem.leftBarButtonItem == nil {
-            navigationItem.setLeftBarButton(UIBarButtonItem(image: UIImage(named: "bell"), style: .plain, target: self, action: #selector(announcementsButtonTapped)), animated: false)
+            let button = BadgedBarButtonItem(withImage: UIImage(named: "bell")?.withRenderingMode(.alwaysTemplate))
+            button.onTouchUpInside = { [weak self] in
+                self?.announcementsButtonTapped()
+            }
+            navigationItem.setLeftBarButton(button, animated: false)
         }
         
         renderAnnouncementsButtonBadge()
@@ -43,11 +47,8 @@ extension UIViewController {
     }
     
     func renderAnnouncementsButtonBadge() {
-        if AnnouncementButtonViewModel.shared.hasUnreadAnnouncements {
-            self.navigationItem.leftBarButtonItem?.addBadge(offset: CGPoint(x: -9, y: 10), color: .protonGreen())
-        } else {
-            self.navigationItem.leftBarButtonItem?.removeBadge()
-        }
+        let button = self.navigationItem.leftBarButtonItem as? BadgedBarButtonItem
+        button?.showBadge = AnnouncementButtonViewModel.shared.hasUnreadAnnouncements
     }
     
     @IBAction func announcementsButtonTapped() {
