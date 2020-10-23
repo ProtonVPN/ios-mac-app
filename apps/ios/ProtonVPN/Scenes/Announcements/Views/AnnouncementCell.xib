@@ -17,7 +17,7 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zpM-km-aNd">
-                        <rect key="frame" x="16" y="12" width="261" height="37"/>
+                        <rect key="frame" x="52" y="12" width="225" height="37"/>
                         <constraints>
                             <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="37" id="P0u-Ph-uXq"/>
                         </constraints>
@@ -25,20 +25,30 @@
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
+                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="255" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tdo-GP-nGf">
+                        <rect key="frame" x="16" y="20.5" width="20" height="20"/>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="20" id="d5e-aM-jq4"/>
+                            <constraint firstAttribute="width" constant="20" id="fSd-3O-YVd"/>
+                        </constraints>
+                    </imageView>
                 </subviews>
                 <constraints>
                     <constraint firstItem="zpM-km-aNd" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="Fgk-09-0Kt"/>
+                    <constraint firstItem="zpM-km-aNd" firstAttribute="leading" secondItem="tdo-GP-nGf" secondAttribute="trailing" constant="16" id="Rca-b4-Hob"/>
                     <constraint firstAttribute="bottom" secondItem="zpM-km-aNd" secondAttribute="bottom" constant="12" id="XMc-Ed-qUo"/>
                     <constraint firstItem="zpM-km-aNd" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" constant="12" id="bHJ-kL-8Z0"/>
-                    <constraint firstItem="zpM-km-aNd" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="gJk-Mg-lcF"/>
+                    <constraint firstItem="tdo-GP-nGf" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="16" id="cnN-Gf-3D5"/>
+                    <constraint firstItem="tdo-GP-nGf" firstAttribute="centerY" secondItem="H2p-sc-9uM" secondAttribute="centerY" id="x8G-TT-WfQ"/>
                     <constraint firstAttribute="trailing" secondItem="zpM-km-aNd" secondAttribute="trailing" constant="16" id="zbH-kT-qnv"/>
                 </constraints>
             </tableViewCellContentView>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
             <connections>
+                <outlet property="iconView" destination="tdo-GP-nGf" id="Lw0-CR-nrG"/>
                 <outlet property="titleLabel" destination="zpM-km-aNd" id="QWP-Ug-mDH"/>
             </connections>
-            <point key="canvasLocation" x="49" y="117"/>
+            <point key="canvasLocation" x="47.826086956521742" y="116.85267857142857"/>
         </tableViewCell>
     </objects>
 </document>

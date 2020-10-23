@@ -21,6 +21,7 @@
 //
 
 import UIKit
+import AlamofireImage
 
 class AnnouncementCell: UITableViewCell {
     
@@ -38,9 +39,8 @@ class AnnouncementCell: UITableViewCell {
     
     // Views
     @IBOutlet private weak var titleLabel: UILabel!
-    
-    public var style: Style = .read
-        
+    @IBOutlet private weak var iconView: UIImageView!
+            
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -56,6 +56,12 @@ class AnnouncementCell: UITableViewCell {
     }
     
     // MARK: - Public setters
+    
+    public var style: Style = .read {
+        didSet {
+            iconView.tintColor = style.textColor
+        }
+    }
     
     var title: String? {
         get {
@@ -74,4 +80,21 @@ class AnnouncementCell: UITableViewCell {
             }
         }
     }
+    
+    public var imageUrl: String? {
+        get {
+                return nil
+            }
+            set {
+                let placeholder = UIImage(named: "bullhorn")?.withRenderingMode(.alwaysTemplate)
+                if let stringUrl = newValue, let url = URL(string: stringUrl) {
+                    iconView.af.setImage(withURL: url, placeholderImage: placeholder, filter: DynamicImageFilter("TemplateImageFilter") { image in
+                        return image.withRenderingMode(.alwaysTemplate)
+                    })
+                } else {
+                    iconView.image = placeholder
+                }
+            }
+        }
+    
 }

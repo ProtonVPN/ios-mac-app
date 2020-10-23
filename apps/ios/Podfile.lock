@@ -1,5 +1,7 @@
 PODS:
   - Alamofire (5.2.1)
+  - AlamofireImage (4.1.0):
+    - Alamofire (~> 5.1)
   - GSMessages (1.7.3)
   - KeychainAccess (3.1.2)
   - OpenSSL-Apple (1.1.1g.6)
@@ -30,6 +32,7 @@ PODS:
     - TunnelKit
 
 DEPENDENCIES:
+  - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
@@ -41,6 +44,7 @@ DEPENDENCIES:
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
     - Alamofire
+    - AlamofireImage
     - GSMessages
     - KeychainAccess
     - OpenSSL-Apple
@@ -64,6 +68,7 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
+  AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   GSMessages: b9bcf210247426ae113ff22eac1d8f03ad5dee53
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
@@ -75,6 +80,6 @@ SPEC CHECKSUMS:
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
   vpncore: e49b0721747083ec9e54dda23dd482ed1f8d8818
 
-PODFILE CHECKSUM: d5fa0c5073e4d2e0e53e28e32e175ebc725fd931
+PODFILE CHECKSUM: 0901d154236c20fca082ec623b7a9cd33e53edaf
 
 COCOAPODS: 1.9.2

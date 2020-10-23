@@ -96,6 +96,7 @@ extension AnnouncementsViewController: UITableViewDataSource, UITableViewDelegat
         }
         cell.style = item.wasRead ? .read : .unread
         cell.title = item.offer?.label
+        cell.imageUrl = item.offer?.icon
         return cell
     }
     

@@ -17,6 +17,7 @@ def sharedpods
   pod 'KeychainAccess', '~> 3.0'
   pod 'ReachabilitySwift', '~> 4.0'
   pod 'Sentry', '~> 4.0'
+  pod 'AlamofireImage', '~> 4.1'
 
   # Checks code style and bad practices
   pod 'SwiftLint'
