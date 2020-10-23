@@ -83,18 +83,18 @@ class AnnouncementCell: UITableViewCell {
     
     public var imageUrl: String? {
         get {
-                return nil
-            }
-            set {
-                let placeholder = UIImage(named: "bullhorn")?.withRenderingMode(.alwaysTemplate)
-                if let stringUrl = newValue, let url = URL(string: stringUrl) {
-                    iconView.af.setImage(withURL: url, placeholderImage: placeholder, filter: DynamicImageFilter("TemplateImageFilter") { image in
-                        return image.withRenderingMode(.alwaysTemplate)
-                    })
-                } else {
-                    iconView.image = placeholder
-                }
+            return nil
+        }
+        set {
+            let placeholder = UIImage(named: "bullhorn")?.withRenderingMode(.alwaysTemplate)
+            if let stringUrl = newValue, let url = URL(string: stringUrl) {
+                iconView.af.setImage(withURL: url, placeholderImage: placeholder, filter: DynamicImageFilter("TemplateImageFilter") { image in
+                    return image.withRenderingMode(.alwaysTemplate)
+                })
+            } else {
+                iconView.image = placeholder
             }
         }
+    }
     
 }
