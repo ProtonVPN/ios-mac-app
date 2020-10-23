@@ -105,4 +105,8 @@ extension AnnouncementsViewController: UITableViewDataSource, UITableViewDelegat
         viewModel.open(announcement: item)
     }
     
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return CGFloat.leastNormalMagnitude // Hide last separator
+    }
+    
 }
