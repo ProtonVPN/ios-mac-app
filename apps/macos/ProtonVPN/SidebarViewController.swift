@@ -118,6 +118,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
                                                selector: #selector(occlusionStateChanged(_:)),
                                                name: NSApplication.didChangeOcclusionStateNotification,
                                                object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(checkAnnouncementsRendering),
+                                               name: AnnouncementStorageNotifications.contentChanged,
+                                               object: nil)
     }
     
     override func viewDidAppear() {
@@ -323,6 +327,13 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     
     private func announcementsButtonPressed() {
         announcementsControllerViewContainer.isHidden = !announcementsControllerViewContainer.isHidden
+    }
+    
+    @objc private func checkAnnouncementsRendering(notification: NSNotification) {
+        guard let array = notification.object as? [Any] else { return }
+        if array.isEmpty {
+            announcementsControllerViewContainer.isHidden = true
+        }
     }
     
     private func setupTabBar() {
