@@ -71,6 +71,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if featureFlags.isAnnouncementOn {
             refresh()
         } else { // Hide announcements
+            lastRefresh = nil
             clean()
         }
     }
