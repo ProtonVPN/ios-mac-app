@@ -34,7 +34,6 @@ public typealias ValidateSubscriptionResponseCallback = GenericCallback<Validate
 
 public protocol PaymentsApiService {
     func servicePlans(success: @escaping PlanPropsCallback, failure: @escaping ErrorCallback)
-    func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback)
     func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
     func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback)
     func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback)
@@ -173,22 +172,6 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         alamofireWrapper.request(PaymentsCreditRequest(amount, payment: receipt), success: success, failure: failure)
     }
     
-    public func applyCredit(forPlanId planId: String, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
-            do {
-                guard let `self` = self else { return }
-                guard let code = json["Code"] as? Int, code == 1000 else {
-                    throw ParseError.subscriptionsParse
-                }
-                let subscription = try self.subscriptionResponse(json)
-                success(subscription)
-            } catch let error {
-                failure(error)
-            }
-        }
-        alamofireWrapper.request(PaymentsApplyCreditRequest(planId), success: successWrapper, failure: failure)
-    }
-    
     public func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { json in
             do {
@@ -238,7 +221,17 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         }
         
         self.validateSubscription(id: planId, success: {response in
-            self.alamofireWrapper.request(BuyPlanRequest(planId, amount: response.amountDue, payment: paymentToken), success: successWrapper, failure: failure)
+            // Standard path
+            if response.amountDue == price {
+                self.alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
+                return
+            }
+            // User already has credits, so we will first add credits and then buy plan with credits
+            self.credit(amount: price, receipt: paymentToken, success: {
+                self.alamofireWrapper.request(BuyPlanRequest(planId, amount: 0, payment: .credits), success: successWrapper, failure: failure)
+                
+            }, failure: failure)
+            
         }, failure: {error in
             self.alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
         })

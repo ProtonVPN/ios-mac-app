@@ -44,15 +44,19 @@ class BuyPlanRequest: PaymentsBaseRequest {
     }
     
     override var parameters: [String: Any]? {
-        return [
+        var result: [String: Any] = [
             "Amount": amount,
             "Currency": "USD",
             "PlanIDs": [
                 planId: 1
             ],
-            "Cycle": 12,
-            "Payment": payment.postDictionary
+            "Cycle": 12
         ]
+        let paymentParam = payment.postDictionary
+        if !paymentParam.isEmpty {
+            result["Payment"] = paymentParam
+        }
+        return result
     }
     
 }

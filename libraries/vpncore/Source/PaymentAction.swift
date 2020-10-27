@@ -25,6 +25,7 @@ import Foundation
 public enum PaymentAction {
     @available(*, deprecated) case apple(token: String)
     case protonToken(token: String)
+    case credits
 }
 
 extension PaymentAction {
@@ -45,6 +46,8 @@ extension PaymentAction {
                     "Token": token
                 ]
             ]
+        case .credits:
+            return [:]
         }
     }
     
