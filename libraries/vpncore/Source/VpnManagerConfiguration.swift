@@ -91,11 +91,9 @@ public class VpnManagerConfigurationPreparer {
         var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
         
-        guard propertiesManager.featureFlags.isNetShield else {
-            return extraConfiguration.first!.rawValue
+        if propertiesManager.featureFlags.isNetShield {
+            extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
-        
-        extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         
         return extraConfiguration.reduce("") {
             $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.rawValue
