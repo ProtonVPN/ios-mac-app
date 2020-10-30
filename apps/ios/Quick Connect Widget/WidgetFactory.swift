@@ -70,7 +70,7 @@ class WidgetFactory {
                                timerFactory: TimerFactory(),
                                propertiesManager: self.propertiesManager,
                                vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService)
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager)
         )
     }
 }
