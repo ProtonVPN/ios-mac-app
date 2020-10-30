@@ -92,7 +92,7 @@ extension DependencyContainer: VpnManagerFactory {
 // MARK: VpnManagerConfigurationPreparer
 extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
     func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService())
+        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
     }
 }
 
