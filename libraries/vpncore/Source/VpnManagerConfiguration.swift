@@ -49,10 +49,12 @@ public class VpnManagerConfigurationPreparer {
     
     private let vpnKeychain: VpnKeychainProtocol
     private let alertService: CoreAlertService
+    private let propertiesManager: PropertiesManagerProtocol
     
-    public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService) {
+    public init(vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
+        self.propertiesManager = propertiesManager
     }
     
     public func prepareConfiguration(from connectionConfig: ConnectionConfiguration) -> VpnManagerConfiguration? {
@@ -88,6 +90,10 @@ public class VpnManagerConfigurationPreparer {
         #else
         var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
+        
+        guard propertiesManager.featureFlags.isNetShield else {
+            return extraConfiguration.first!.rawValue
+        }
         
         extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         
