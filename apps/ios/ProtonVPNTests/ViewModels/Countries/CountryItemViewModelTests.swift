@@ -62,7 +62,11 @@ class CountryItemViewModelTests: XCTestCase {
         let group: CountryGroup = (country, servers)
         let alamofireWrapper = AlamofireWrapperImplementation()
         let vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
-        let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+        let configurationPreparer = VpnManagerConfigurationPreparer(
+            vpnKeychain: VpnKeychainMock(),
+            alertService: AlertServiceEmptyStub(),
+            propertiesManager: PropertiesManager())
+        
         let appStateManager = AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
         
         let viewModel = CountryItemViewModel(

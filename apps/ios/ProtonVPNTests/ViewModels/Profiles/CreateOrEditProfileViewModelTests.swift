@@ -46,7 +46,12 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     var vpnApiService: VpnApiService {
         return VpnApiService(alamofireWrapper: alamofireWrapper)
     }
-    let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+    
+    let configurationPreparer = VpnManagerConfigurationPreparer(
+        vpnKeychain: VpnKeychainMock(),
+        alertService: AlertServiceEmptyStub(),
+        propertiesManager: PropertiesManager())
+    
     var appStateManager: AppStateManager {
         return AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
     }

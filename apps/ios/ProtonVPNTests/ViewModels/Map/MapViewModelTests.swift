@@ -33,7 +33,10 @@ class MapViewModelTests: XCTestCase {
     override func setUp() {
         ServerManagerImplementation.reset()
         let vpnApiService = VpnApiService(alamofireWrapper: alamofireWrapper)
-        let configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: VpnKeychainMock(), alertService: AlertServiceEmptyStub())
+        let configurationPreparer = VpnManagerConfigurationPreparer(
+            vpnKeychain: VpnKeychainMock(),
+            alertService: AlertServiceEmptyStub(),
+            propertiesManager: PropertiesManager())
         appStateManager = AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
     }
     
