@@ -182,7 +182,9 @@ class SignUpFormViewController: UIViewController {
     }
     
     private func renderMainButton() {
-        mainButton.isEnabled = viewModel.isEnoughData
+        DispatchQueue.main.async {
+            self.mainButton.isEnabled = self.viewModel.isEnoughData
+        }
     }
     
     private func validateFormFields() -> Bool {

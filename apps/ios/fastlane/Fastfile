@@ -43,9 +43,9 @@ platform :ios do
         scan(
             scheme: "ProtonVPN",
             clean: true,
-            xcargs: "-UseModernBuildSystem=NO",
             result_bundle: true,
-            skip_slack: true
+            skip_slack: true,
+            devices: ["iPhone 11"]
         )
     end
 

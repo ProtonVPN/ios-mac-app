@@ -69,15 +69,13 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func assertLoginScreenOpen() {
+        let confirmButton = app.buttons["Agree & Continue"]
+        if confirmButton.waitForExistence(timeout: 1) {
+            confirmButton.tap()
+        }
+        
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["Username"], handler: nil)
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["Password"], handler: nil)
         waitForExpectations(timeout: 2, handler: nil)
-                
-        if app.buttons["Agree & Continue"].exists {
-            app.buttons["Agree & Continue"].tap()
-        }
-        
-        XCTAssert(app.textFields["Username"].exists)
-        XCTAssert(app.secureTextFields["Password"].exists)
     }  
 }
