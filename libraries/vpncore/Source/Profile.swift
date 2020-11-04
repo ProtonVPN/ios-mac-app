@@ -33,7 +33,6 @@ public class Profile: NSObject, NSCoding {
     public let serverOffering: ServerOffering
     public let name: String
     public let vpnProtocol: VpnProtocol
-    public let netShieldType: NetShieldType?
     
     override public var description: String {
         return
@@ -44,12 +43,11 @@ public class Profile: NSObject, NSCoding {
             "Server type: \(serverType.description)\n" +
             "Server offering: \(serverOffering.description)\n" +
             "Name: \(name)\n" +
-            "Protocol: \(vpnProtocol)\n" +
-            "NetShieldType: \(String(describing: netShieldType))\n"
+            "Protocol: \(vpnProtocol)\n"
     }
     
     public func connectionRequest(withDefaultNetshield defaultNetshield: NetShieldType) -> ConnectionRequest {
-        let netShield = netShieldType ?? defaultNetshield
+        let netShield = defaultNetshield
         
         switch serverOffering {
         case .fastest(let cCode):
@@ -69,7 +67,7 @@ public class Profile: NSObject, NSCoding {
         }
     }
     
-    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?, netShieldType: NetShieldType?) {
+    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
         self.id = id
         self.accessTier = accessTier
         self.profileIcon = profileIcon
@@ -78,13 +76,12 @@ public class Profile: NSObject, NSCoding {
         self.serverOffering = serverOffering
         self.name = name
         self.vpnProtocol = vpnProtocol ?? .ike
-        self.netShieldType = netShieldType
     }
     
-    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?, netShieldType: NetShieldType?) {
+    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
         let id = String.randomString(length: Profile.idLength)
         self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType,
-                  serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol, netShieldType: netShieldType)
+                  serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
     }
     
     // MARK: - NSCoding
@@ -102,8 +99,7 @@ public class Profile: NSObject, NSCoding {
                   serverType: ServerType(coder: aDecoder),
                   serverOffering: ServerOffering(coder: aDecoder),
                   name: aDecoder.decodeObject(forKey: CoderKey.name) as! String,
-                  vpnProtocol: VpnProtocol(coder: aDecoder),
-                  netShieldType: NetShieldType.decodeIfPresent(coder: aDecoder)
+                  vpnProtocol: VpnProtocol(coder: aDecoder)
         )
     }
     
@@ -116,9 +112,6 @@ public class Profile: NSObject, NSCoding {
         serverOffering.encode(with: aCoder)
         aCoder.encode(name, forKey: CoderKey.name)
         vpnProtocol.encode(with: aCoder)
-        if let netShieldType = netShieldType {
-            netShieldType.encode(with: aCoder)
-        }
     }
     
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
@@ -129,7 +122,7 @@ public class Profile: NSObject, NSCoding {
                        serverType: self.serverType,
                        serverOffering: self.serverOffering,
                        name: self.name,
-                       vpnProtocol: self.vpnProtocol,
-                       netShieldType: type)
+                       vpnProtocol: self.vpnProtocol
+                       )
     }
 }
