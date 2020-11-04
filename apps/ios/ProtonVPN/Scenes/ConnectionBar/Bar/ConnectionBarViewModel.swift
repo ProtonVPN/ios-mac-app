@@ -88,10 +88,6 @@ class ConnectionBarViewModel {
             self?.updateConnected?()
         }
     }
-    
-    func allowTapping() -> Bool {
-        return appStateManager.activeConnection() != nil
-    }
 }
 
 extension ConnectionBarViewModel: ConnectionBarViewModelDelegate {
