@@ -591,7 +591,7 @@ extension NavigationService: ProfileService {
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()), netshieldService: self, appStateManager: appStateManager, vpnGateway: vpnGateway!)
+            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()), appStateManager: appStateManager, vpnGateway: vpnGateway!)
             return createProfileViewController
         }
         return nil

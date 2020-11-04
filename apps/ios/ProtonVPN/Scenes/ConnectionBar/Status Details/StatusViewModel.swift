@@ -124,14 +124,8 @@ class StatusViewModel {
                 guard let type = activeConnection?.netShieldType else { return }
                 self.changeNetShieldType?(type, { type, approve in
                     self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
-                        // Update profile
-                        if let profileId = self.propertiesManager.lastConnectionRequest?.profileId, let profile = self.profileManager.profile(withId: profileId) {
-                            let updatedProfile = profile.copyWith(newNetShieldType: type)
-                            self.profileManager.updateProfile(updatedProfile)
-                        } else {
-                            // Save to general settings
-                            self.propertiesManager.netShieldType = type
-                        }
+                        // Save to general settings
+                        self.propertiesManager.netShieldType = type
                         approve()
                         self.vpnGateway?.reconnect(with: type)
                     }))

@@ -225,7 +225,7 @@ class SettingsViewModel {
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: propertiesManager.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
                 pushNetshieldSelectionViewController(self.propertiesManager.netShieldType, { type, approve in
-                    if self.appStateManager.state.isSafeToEnd || self.propertiesManager.lastConnectionRequest?.profileId != nil {
+                    if self.appStateManager.state.isSafeToEnd {
                         approve()
                     } else {
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {

@@ -40,8 +40,7 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.random,
-                           vpnProtocol: propertiesManager.vpnProtocol,
-                           netShieldType: nil)
+                           vpnProtocol: propertiesManager.vpnProtocol)
         default:
             return Profile(id: "st_f", accessTier: 0,
                            profileIcon: .image("con-fastest"),
@@ -49,8 +48,7 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.fastest,
-                           vpnProtocol: propertiesManager.vpnProtocol,
-                           netShieldType: nil)
+                           vpnProtocol: propertiesManager.vpnProtocol)
         }
     }
     

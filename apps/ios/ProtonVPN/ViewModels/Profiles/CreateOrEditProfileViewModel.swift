@@ -34,7 +34,6 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private let profileService: ProfileService
     private let protocolService: ProtocolService
-    private let netshieldService: NetshieldService
     private let serverManager: ServerManager
     private let profileManager: ProfileManager
     private let propertiesManager: PropertiesManagerProtocol
@@ -61,8 +60,6 @@ class CreateOrEditProfileViewModel: NSObject {
     private var vpnProtocol: VpnProtocol
     private var isDefaultProfile = false
     
-    private var netShield: NetShieldType = NetShieldType.defaultValue
-    
     internal var userTier: Int = 0 // used by class extension
     
     var saveButtonEnabled = false {
@@ -79,14 +76,13 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, netshieldService: NetshieldService, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.serverManager = serverManager
-        self.netshieldService = netshieldService
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         
@@ -118,9 +114,6 @@ class CreateOrEditProfileViewModel: NSObject {
         cells.append(colorCell)
         cells.append(nameCell)
         cells.append(secureCoreCell)
-        if propertiesManager.featureFlags.isNetShield {
-            cells.append(netShieldCell)
-        }
         cells.append(countryCell)
         cells.append(serverCell)
         cells.append(protocolCell)
@@ -149,17 +142,9 @@ class CreateOrEditProfileViewModel: NSObject {
             return
         }
         
-        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: self.netShield != .off, continueHandler: {
-            self.finishSaveProfile { success in
-                if success {
-                    self.vpnGateway.reconnect(with: self.netShield)
-                }
-                completion(success)
-            }
-        }, cancelHandler: {
-            completion(false)
-        }))
+        // Here you can ask user if he wants to continue/reconnect/etc.
         
+        self.finishSaveProfile(completion: completion)
     }
     
     private func finishSaveProfile(completion: @escaping (Bool) -> Void) {
@@ -193,7 +178,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol, netShieldType: netShield)
+                              serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
         
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
@@ -231,12 +216,6 @@ class CreateOrEditProfileViewModel: NSObject {
             self?.toggleState(completion: { [weak self] on in
                 self?.contentChanged?()
             })
-        }
-    }
-    
-    private var netShieldCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShield.name) { [weak self] in
-            self?.pushNetshieldSelectionViewController()
         }
     }
     
@@ -303,7 +282,6 @@ class CreateOrEditProfileViewModel: NSObject {
         self.colorPickerViewModel = ColorPickerViewModel(with: UIColor(rgbHex: color))
         self.name = profile.name
         self.state = profile.serverType == .secureCore ? .secureCore : .standard
-        self.netShield = profile.netShieldType ?? NetShieldType.defaultValue
         
         selectedCountryGroup = countries.filter { $0.0.countryCode == profile.serverOffering.countryCode }.first
         selectedServerOffering = profile.serverOffering
@@ -390,15 +368,6 @@ class CreateOrEditProfileViewModel: NSObject {
             self.saveButtonEnabled = true
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
-    }
-    
-    private func pushNetshieldSelectionViewController() {
-        pushHandler?(netshieldService.makeNetshieldSelectionViewController(selectedType: netShield, approve: { type, approve in
-            approve()
-        }, onChange: { type in
-            self.netShield = type
-            self.saveButtonEnabled = true
-        }))
     }
     
 }
