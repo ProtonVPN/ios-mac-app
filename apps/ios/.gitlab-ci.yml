@@ -76,7 +76,7 @@ unit_tests:
      - cd ProtonVPN/ && ../../vpncore/Source/prepare_obfuscated_constants.sh && cd ..
      - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
      - fastlane test
-     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.test_result/3_Test/action.xccovreport
+     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
    tags:
      - iOS
    artifacts:

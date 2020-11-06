@@ -10,8 +10,6 @@
 #     https://docs.fastlane.tools/plugins/available-plugins
 #
 
-update_fastlane
-
 default_platform(:ios)
 
 def set_up_keychain
@@ -53,6 +51,8 @@ platform :ios do
         if !options[:changelog]
             abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
         end
+        
+        update_fastlane
 
         clear_derived_data
 
@@ -96,6 +96,8 @@ platform :ios do
         if !options[:changelog]
             abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
         end
+
+        update_fastlane
 
         clear_derived_data
 

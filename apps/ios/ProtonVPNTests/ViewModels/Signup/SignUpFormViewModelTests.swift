@@ -121,7 +121,7 @@ class SignUpFormViewModelTests: XCTestCase {
         }
         viewModel.startRegistration()
         
-        wait(for: [expectationError, expectationSuccess], timeout: 0.5)
+        wait(for: [expectationError, expectationSuccess], timeout: 1)
     }
     
     func testRegistrationShowsRetryMessageOnIAPError() {
