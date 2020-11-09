@@ -89,7 +89,7 @@
 "_battery_more" = "Хотите узнать больше?";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Расход батареи";
+"_battery_title" = "Использование батареи";
 
 /* Common word */
 "_cancel" = "Отмена";
@@ -833,7 +833,7 @@
 "_name" = "Название";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Мы не смогли подключиться к серверам Proton";
+"_ne_couldnt_reach_server" = "Не удалось подключиться к серверам Proton";
 
 /* Network error */
 "_ne_network_connection_lost" = "Потеряно подключение к сети";
@@ -894,6 +894,9 @@
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Сеть недоступна";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Новости";
 
 /* iOS onboarding next item button */
 "_next" = "Далее";

@@ -895,6 +895,9 @@
 /* iOS: quick connect widget */
 "_network_unreachable" = "Red no disponible";
 
+/* Title of the screen with news and offers. */
+"_news_title" = "Noticias";
+
 /* iOS onboarding next item button */
 "_next" = "Siguiente";
 

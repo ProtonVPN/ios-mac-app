@@ -323,7 +323,7 @@
 "_error_apply_payment_failed_on_upgrade_title" = "Płatność nie powiodła się";
 
 /* Error during payment alert - button */
-"_error_apply_payment_failed_retry" = "Ponów próbę";
+"_error_apply_payment_failed_retry" = "Spróbuj ponownie";
 
 /* Error during payment alert - title */
 "_error_apply_payment_failed_title" = "Płatność nie powiodła się";
@@ -872,7 +872,7 @@
 "_netshield_alert_reconnect_description_off" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.";
 
 /* Netshield requires reconnect */
-"_netshield_alert_reconnect_description_on" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.\nUwaga: Wyłącz funkcję, jeśli niektóre strony internetowe nie działają.";
+"_netshield_alert_reconnect_description_on" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.\nUwaga: Wyłącz tę funkcję, jeśli niektóre strony internetowe przestaną działać.";
 
 /* Netshield requires upgrade */
 "_netshield_alert_upgrade_description" = "Funkcja NetShield zwiększa poziom prywatności poprzez blokowanie reklam i skryptów śledzących.";
@@ -894,6 +894,9 @@
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Sieć jest nieosiągalna";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Aktualności";
 
 /* iOS onboarding next item button */
 "_next" = "Dalej";
@@ -1205,7 +1208,7 @@
 "_reset_password" = "Zresetuj hasło";
 
 /* Button in some alerts */
-"_retry" = "Ponów próbę";
+"_retry" = "Spróbuj ponownie";
 
 /* Common word */
 "_save" = "Zapisz";
