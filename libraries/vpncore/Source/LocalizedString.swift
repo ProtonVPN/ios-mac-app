@@ -660,4 +660,11 @@ public class LocalizedString {
     
     // MARK: - Nesw / Announcements / APINotifications
     public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")
+    
+    // MARK: - Quick Settings
+    public static let qsSCdescription = NSLocalizedString("_quick_settings_secureCore_description", comment: "Description for Secure Core on Quick Settings.")
+    public static let qsNSdescription = NSLocalizedString("_quick_settings_netShield_description", comment: "Description for NetShield on Quick Settings.")
+    public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
+    public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
+    public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
 }
