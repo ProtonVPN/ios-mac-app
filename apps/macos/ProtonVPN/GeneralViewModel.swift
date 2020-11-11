@@ -25,7 +25,18 @@ import vpncore
 
 class GeneralViewModel {
     
-    private let propertiesManager = PropertiesManager()
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
+
+    private let factory: Factory
+    private lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
+    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
+    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
+    private weak var viewController: ReloadableViewController?
+    
+    init( factory: Factory ) {
+        self.factory = factory
+    }
     
     var startOnBoot: Bool {
         return propertiesManager.startOnBoot
@@ -42,9 +53,23 @@ class GeneralViewModel {
     var earlyAccess: Bool {
         return propertiesManager.earlyAccess
     }
-
+    
     var unprotectedNetworkNotifications: Bool {
         return propertiesManager.unprotectedNetworkNotifications
+    }
+    
+    var netshieldState: NetShieldType {
+        return propertiesManager.netShieldType
+    }
+    
+    var netshieldAvailable: Bool {
+        return propertiesManager.featureFlags.isNetShield
+    }
+    
+    // MARK: - Setters
+    
+    func setViewController(_ vc: ReloadableViewController) {
+        self.viewController = vc
     }
     
     func setStartOnBoot(_ enabled: Bool) {
@@ -65,5 +90,55 @@ class GeneralViewModel {
 
     func setUnprotectedNetworkNotifications(_ enabled: Bool) {
         propertiesManager.unprotectedNetworkNotifications = enabled
+    }
+    
+    func setNetshield(_ netShieldType: NetShieldType) {
+        
+        guard propertiesManager.netShieldType != netShieldType else {
+            return
+        }
+        
+        var isConnected = false
+        
+        switch appStateManager.state {
+        case .connected, .connecting:
+            //If we are connected by a Profile we don't consider it connected for this validation
+            isConnected = propertiesManager.lastConnectionRequest?.profileId == nil
+        default:
+            break
+        }
+        
+        let userTier = (try? vpnGateway.userTier()) ?? 0
+        
+        if !isConnected && !netShieldType.isUserTierTooLow(userTier) {
+            propertiesManager.netShieldType = netShieldType
+            viewController?.reloadView()
+            return
+        }
+        
+        let reconnectAlert = ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
+            self.propertiesManager.netShieldType = netShieldType
+            self.viewController?.reloadView()
+            self.vpnGateway.reconnect(with: netShieldType)
+        }, cancelHandler: {
+            self.viewController?.reloadView()
+        })
+        
+        switch netShieldType {
+        case .off, .level1:
+            self.alertService.push(alert: reconnectAlert)
+        case .level2:
+            guard netShieldType.isUserTierTooLow(userTier) else {
+                self.alertService.push(alert: reconnectAlert)
+                return
+            }
+            
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            })
+            
+            self.alertService.push(alert: upgradeAlert)
+            viewController?.reloadView()
+        }
     }
 }

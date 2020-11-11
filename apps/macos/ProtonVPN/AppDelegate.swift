@@ -35,8 +35,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
+    private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     
-    private var notificationManager: NotificationManager!
+    private var notificationManager: NotificationManagerProtocol!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
@@ -56,11 +57,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.helpMenu.update(with: self.container.makeHelpMenuViewModel())
             self.statusMenu.update(with: self.container.makeStatusMenuWindowModel())
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
+            self.notificationManager = self.container.makeNotificationManager()
+            self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
+            
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-            
-            self.notificationManager = self.container.makeNotificationManager()
+        
             self.navigationService.launched()
         }
     }
@@ -69,12 +72,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return navigationService.handleApplicationReopen(hasVisibleWindows: flag)
     }
     
-    func applicationWillBecomeActive(_ notification: Notification) {
-        navigationService.appSessionManager.scheduleRefreshes(now: true)
-    }
-    
-    func applicationDidResignActive(_ notification: Notification) {
-        navigationService.appSessionManager.stopRefreshingIfInactive()
+    func applicationDidBecomeActive(_ notification: Notification) {
+        container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
+        // Refresh API announcements
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            self.container.makeAnnouncementRefresher().refresh()
+        }
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
@@ -134,7 +137,7 @@ extension AppDelegate {
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
             let appStateManager = self.container.makeAppStateManager()
-
+            
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {
                     appStateManager.onVpnStateChanged = nil

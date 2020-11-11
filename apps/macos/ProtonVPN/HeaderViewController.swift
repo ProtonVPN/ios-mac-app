@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 class HeaderViewController: NSViewController {
 
@@ -32,10 +33,13 @@ class HeaderViewController: NSViewController {
     @IBOutlet weak var loadIcon: LoadCircle!
     @IBOutlet weak var speedLabel: NSTextField!
     @IBOutlet weak var connectButton: LargeConnectButton!
+    @IBOutlet weak var announcementsButton: NSButton!
     @IBOutlet weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
     @IBOutlet weak var loadLineHorizontalConstraint2: NSLayoutConstraint!
     @IBOutlet weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
     @IBOutlet weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
+    
+    public var announcementsButtonPressed: (() -> Void)?
     
     private var loadLineHorizontalConstraints: [NSLayoutConstraint] {
         return [loadLineHorizontalConstraint1, loadLineHorizontalConstraint2, loadLineHorizontalConstraint3, loadLineHorizontalConstraint4]
@@ -59,6 +63,14 @@ class HeaderViewController: NSViewController {
         setupPersistentView()
         setupEphemeralView()
         viewModel.contentChanged = { [unowned self] in self.setupEphemeralView() }
+        
+        setupAnnouncements()
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        setupAnnouncements()
     }
     
     private func setupPersistentView() {
@@ -117,6 +129,27 @@ class HeaderViewController: NSViewController {
     
     @objc private func quickConnectButtonAction() {
         viewModel.quickConnectAction()
+    }
+    
+    // MARK: Announcements
+    
+    @objc func setupAnnouncements() {
+        guard let viewModel = viewModel, viewModel.showAnnouncements else {
+            announcementsButton.isHidden = true
+            return
+        }
+        
+        announcementsButton.isHidden = false
+        
+        if viewModel.hasUnreadAnnouncements {
+            announcementsButton.image = NSImage(named: "bell-badge")
+        } else {
+            announcementsButton.image = NSImage(named: "bell")
+        }
+    }
+    
+    @IBAction func announcementsButtonTapped(_ sender: Any) {
+        announcementsButtonPressed?()
     }
     
     // MARK: Load line

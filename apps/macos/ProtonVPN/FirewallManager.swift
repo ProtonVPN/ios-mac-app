@@ -513,7 +513,8 @@ extension FirewallManager {
         
         self.propertiesManager.killSwitch = false
         self.helperInstallInProgress = false
-        self.disableFirewall()
+        inactiveFirewallTimer?.invalidate()
+        inactiveFirewallTimer = nil
         
         let alert = KillSwitchRequiresSwift5Alert(self.timesSwift5AlertShown) {
             self.propertiesManager.killSwitch = true

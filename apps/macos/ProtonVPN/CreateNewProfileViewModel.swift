@@ -61,7 +61,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -75,6 +75,9 @@ class CreateNewProfileViewModel {
     private let profileManager: ProfileManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
     
@@ -127,10 +130,10 @@ class CreateNewProfileViewModel {
             cIndex = ServerUtility.countryIndex(in: grouping, countryCode: sWrapper.server.countryCode) ?? 0
             sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
-        
+        let netshieldType = (profile.netShieldType ?? NetShieldType.defaultValue)
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
-                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex)
+                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex, netshieldType: netshieldType)
         
         prefillContent?(info)
     }
@@ -140,19 +143,52 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
-        let serverType: ServerType
-        switch typeIndex {
-        case 0:
-            serverType = .standard
-        case 1:
-            serverType = .secureCore
-        case 2:
-            serverType = .p2p
+    // swiftlint:disable function_parameter_count
+    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+        
+        var isConnected = false
+        
+        switch appStateManager.state {
+        case .connected, .connecting:
+            if let editProfile = state.editedProfile {
+                isConnected = propertiesManager.lastConnectionRequest?.profileId == editProfile.id
+            }
         default:
-            serverType = .tor
+            break
         }
         
+        guard isConnected && netShieldType != state.editedProfile?.netShieldType else {
+            finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
+            return
+        }
+        
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
+            self.finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
+            self.vpnGateway.reconnect(with: netShieldType)
+            
+        }, cancelHandler: {
+            // Do nothing
+        }))
+    }
+    // swiftlint:enable function_parameter_count
+
+    private func serverTypeFrom(index: Int) -> ServerType {
+        switch index {
+        case 0:
+            return .standard
+        case 1:
+            return .secureCore
+        case 2:
+            return .p2p
+        default:
+            return .tor
+        }
+    }
+    
+    // swiftlint:disable function_parameter_count
+    private func finishCreatingProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+        
+        let serverType = serverTypeFrom(index: typeIndex)
         let grouping = serverManager.grouping(for: serverType)
         let countryModel = ServerUtility.country(in: grouping, index: countryIndex)!
         let countryCode = countryModel.countryCode
@@ -180,7 +216,9 @@ class CreateNewProfileViewModel {
             serverOffering = .custom(ServerWrapper(server: serverModel))
         }
         
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user, serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: PropertiesManager().vpnProtocol)
+        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
+                              profileType: .user, serverType: serverType, serverOffering: serverOffering,
+                              name: name, vpnProtocol: PropertiesManager().vpnProtocol, netShieldType: netShieldType)
         
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
@@ -192,9 +230,14 @@ class CreateNewProfileViewModel {
             contentWarning?(LocalizedString.profileNameUnique)
         }
     }
+    // swiftlint:enable function_parameter_count
     
     var typeCount: Int {
         return 4
+    }
+    
+    var isNetshieldEnabled: Bool {
+        return propertiesManager.featureFlags.isNetShield
     }
     
     func countryCount(for typeIndex: Int) -> Int {
@@ -239,5 +282,16 @@ class CreateNewProfileViewModel {
         
         let server = serverManager.grouping(for: type)[countryIndex].1[adjustedServerIndex]
         return serverDescriptor(for: server)
+    }
+    
+    func checkNetshieldOption( _ netshieldIndex: Int ) -> Bool {
+        guard let netshieldType = NetShieldType(rawValue: netshieldIndex), !netshieldType.isUserTierTooLow(userTier) else {
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            })
+            self.alertService.push(alert: upgradeAlert)
+            return false
+        }
+        return true
     }
 }

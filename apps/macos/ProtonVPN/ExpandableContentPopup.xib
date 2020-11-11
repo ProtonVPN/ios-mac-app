@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097.2"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ExpandableContentPopupViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="actionBtn" destination="gf8-Rg-u9Q" id="ZEr-Nz-490"/>
+                <outlet property="contentView" destination="tBP-Or-CGL" id="GJk-Mf-rch"/>
+                <outlet property="displayMoreBtn" destination="EJe-ZR-YMg" id="DjU-4N-Zyv"/>
+                <outlet property="expandableLbl" destination="p3a-Fq-hwT" id="8Jt-vp-SJr"/>
+                <outlet property="footerLbl" destination="Roh-Ay-6wJ" id="VE1-Q0-FPX"/>
+                <outlet property="footerView" destination="Fxo-oy-u32" id="tQA-ox-hr5"/>
+                <outlet property="headerLbl" destination="qeM-Wu-Mgq" id="fAw-E0-3wL"/>
+                <outlet property="hiddenContentHeightConstraint" destination="6v1-ME-Ela" id="kGh-x4-pRq"/>
+                <outlet property="popupImage" destination="8Gm-Yu-K1H" id="fKQ-Fc-h6c"/>
+                <outlet property="view" destination="AeZ-c0-1x5" id="0Fc-pu-i7p"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="AeZ-c0-1x5">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="175"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="tBP-Or-CGL">
+                    <rect key="frame" x="0.0" y="50" width="500" height="125"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Gm-Yu-K1H">
+                            <rect key="frame" x="15" y="15" width="100" height="95"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="100" id="aa5-G1-BSS"/>
+                                <constraint firstAttribute="width" secondItem="8Gm-Yu-K1H" secondAttribute="height" multiplier="20:19" id="hMj-tj-R3j"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ATK-2g-qt4"/>
+                        </imageView>
+                        <textField verticalHuggingPriority="749" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qeM-Wu-Mgq">
+                            <rect key="frame" x="128" y="93" width="354" height="16"/>
+                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="PopUp description here" id="aPC-kP-RtZ">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField verticalHuggingPriority="751" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="Roh-Ay-6wJ">
+                            <rect key="frame" x="128" y="0.0" width="354" height="16"/>
+                            <textFieldCell key="cell" controlSize="mini" sendsActionOnEndEditing="YES" title="PopUp description here" id="5xb-Qc-73L">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="p3a-Fq-hwT">
+                            <rect key="frame" x="128" y="53" width="354" height="32"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="32" id="6v1-ME-Ela"/>
+                            </constraints>
+                            <textFieldCell key="cell" title="Label" id="s0x-Ua-jUC">
+                                <font key="font" usesAppearanceFont="YES"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="EJe-ZR-YMg" customClass="GreenActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="130" y="24" width="60" height="21"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="21" id="oI9-fc-taH"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Button  " bezelStyle="rounded" image="arrow-down" imagePosition="trailing" alignment="left" imageScaling="proportionallyDown" inset="2" id="yxw-rw-7Qs">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <color key="contentTintColor" name="systemGreenColor" catalog="System" colorSpace="catalog"/>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="Roh-Ay-6wJ" firstAttribute="leading" secondItem="qeM-Wu-Mgq" secondAttribute="leading" id="3x4-rk-2Oy"/>
+                        <constraint firstItem="EJe-ZR-YMg" firstAttribute="top" secondItem="p3a-Fq-hwT" secondAttribute="bottom" constant="8" id="5Lc-mX-2gS"/>
+                        <constraint firstItem="p3a-Fq-hwT" firstAttribute="top" secondItem="qeM-Wu-Mgq" secondAttribute="bottom" constant="8" id="6cv-cR-bjr"/>
+                        <constraint firstItem="Roh-Ay-6wJ" firstAttribute="top" secondItem="EJe-ZR-YMg" secondAttribute="bottom" constant="8" id="AEe-L4-0QJ"/>
+                        <constraint firstItem="qeM-Wu-Mgq" firstAttribute="leading" secondItem="tBP-Or-CGL" secondAttribute="leading" constant="130" id="EgP-ra-a8r"/>
+                        <constraint firstItem="EJe-ZR-YMg" firstAttribute="leading" secondItem="Roh-Ay-6wJ" secondAttribute="leading" id="Hag-Fh-HAL"/>
+                        <constraint firstAttribute="trailing" secondItem="p3a-Fq-hwT" secondAttribute="trailing" constant="20" id="Hvb-C7-kSn"/>
+                        <constraint firstAttribute="trailing" secondItem="qeM-Wu-Mgq" secondAttribute="trailing" constant="20" id="YW5-gr-Njn"/>
+                        <constraint firstItem="EJe-ZR-YMg" firstAttribute="leading" secondItem="Roh-Ay-6wJ" secondAttribute="leading" id="ZIH-7P-WUd"/>
+                        <constraint firstItem="p3a-Fq-hwT" firstAttribute="leading" secondItem="Roh-Ay-6wJ" secondAttribute="leading" id="arZ-Ve-4uf"/>
+                        <constraint firstItem="8Gm-Yu-K1H" firstAttribute="leading" secondItem="tBP-Or-CGL" secondAttribute="leading" constant="15" id="e3h-pb-RDY"/>
+                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="8Gm-Yu-K1H" secondAttribute="bottom" constant="15" id="idp-P9-gf7"/>
+                        <constraint firstItem="8Gm-Yu-K1H" firstAttribute="top" secondItem="tBP-Or-CGL" secondAttribute="top" constant="15" id="l6e-yW-bVl"/>
+                        <constraint firstItem="qeM-Wu-Mgq" firstAttribute="top" secondItem="tBP-Or-CGL" secondAttribute="top" constant="16" id="n7h-xx-eXw"/>
+                        <constraint firstAttribute="bottom" secondItem="Roh-Ay-6wJ" secondAttribute="bottom" id="y8s-zN-I2q"/>
+                        <constraint firstAttribute="trailing" secondItem="Roh-Ay-6wJ" secondAttribute="trailing" constant="20" id="yKM-ys-sh1"/>
+                    </constraints>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Fxo-oy-u32">
+                    <rect key="frame" x="0.0" y="0.0" width="500" height="50"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="gf8-Rg-u9Q" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="390" y="8" width="90" height="35"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="35" id="OCg-Gy-BEY"/>
+                                <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Yi2-Aq-uAI"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" title="Confirm" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Py2-i2-CSf">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="30"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                        </button>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="gf8-Rg-u9Q" firstAttribute="centerY" secondItem="Fxo-oy-u32" secondAttribute="centerY" id="eqg-gc-bMP"/>
+                        <constraint firstAttribute="width" constant="500" id="kEb-q4-t3z"/>
+                        <constraint firstAttribute="height" constant="50" id="t6t-bX-xAm"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="tBP-Or-CGL" secondAttribute="trailing" id="2JP-fL-mek"/>
+                <constraint firstItem="tBP-Or-CGL" firstAttribute="leading" secondItem="AeZ-c0-1x5" secondAttribute="leading" id="P4K-Sg-gnk"/>
+                <constraint firstItem="Fxo-oy-u32" firstAttribute="leading" secondItem="AeZ-c0-1x5" secondAttribute="leading" id="SwO-rN-B8a"/>
+                <constraint firstAttribute="bottom" secondItem="Fxo-oy-u32" secondAttribute="bottom" id="bUC-n6-Gth"/>
+                <constraint firstItem="gf8-Rg-u9Q" firstAttribute="trailing" secondItem="qeM-Wu-Mgq" secondAttribute="trailing" id="eUz-q1-JgQ"/>
+                <constraint firstItem="tBP-Or-CGL" firstAttribute="top" secondItem="AeZ-c0-1x5" secondAttribute="top" id="mw9-AW-siT"/>
+                <constraint firstAttribute="trailing" secondItem="Fxo-oy-u32" secondAttribute="trailing" id="q6T-Xr-7rT"/>
+                <constraint firstItem="Fxo-oy-u32" firstAttribute="top" secondItem="tBP-Or-CGL" secondAttribute="bottom" id="q6Z-cM-fql"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="199"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="arrow-down" width="8" height="5"/>
+    </resources>
+</document>

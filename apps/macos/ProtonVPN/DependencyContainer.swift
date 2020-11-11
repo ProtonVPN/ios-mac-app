@@ -51,13 +51,22 @@ class DependencyContainer {
                                                                         vpnKeychain: vpnKeychain,
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var firewallManager: FirewallManager = FirewallManager(factory: self)
-    private lazy var appSessionManager: AppSessionManager = AppSessionManagerImplementation(factory: self)
+    private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
     
+    private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
+    private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
+    
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
+    
+    // Refreshes app data at predefined time intervals
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, canRefreshFull: { return true }, canRefreshLoads: { return NSApp.isActive })
+    
+    // Refreshes announements from API
+    private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -83,7 +92,7 @@ extension DependencyContainer: VpnManagerFactory {
 // MARK: VpnManagerConfigurationPreparer
 extension DependencyContainer: VpnManagerConfigurationPreparerFactory {
     func makeVpnManagerConfigurationPreparer() -> VpnManagerConfigurationPreparer {
-        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService())
+        return VpnManagerConfigurationPreparer(vpnKeychain: makeVpnKeychain(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
     }
 }
 
@@ -197,7 +206,7 @@ extension DependencyContainer: VpnGatewayFactory {
 
 // MARK: NotificationManagerFactory
 extension DependencyContainer: NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManager {
+    func makeNotificationManager() -> NotificationManagerProtocol {
         return NotificationManager(appStateManager: makeAppStateManager(),
                                    appSessionManager: makeAppSessionManager(),
                                    firewallManager: makeFirewallManager())
@@ -250,5 +259,89 @@ extension DependencyContainer: MigrationManagerFactory {
         let propertiesManager = makePropertiesManager()
         let currentVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "0"
         return MigrationManager(propertiesManager, currentAppVersion: currentVersion)
+    }
+}
+
+// MARK: - MaintenanceManagerFactory
+extension DependencyContainer: MaintenanceManagerFactory {
+    func makeMaintenanceManager() -> MaintenanceManagerProtocol {
+        return maintenanceManager
+    }
+}
+
+// MARK: RefreshTimerFactory
+extension DependencyContainer: AppSessionRefreshTimerFactory {
+    func makeAppSessionRefreshTimer() -> AppSessionRefreshTimer {
+        return refreshTimer
+    }
+}
+
+// MARK: - AppSessionRefresherFactory
+extension DependencyContainer: AppSessionRefresherFactory {
+    func makeAppSessionRefresher() -> AppSessionRefresher {
+        return appSessionManager
+    }
+}
+
+// MARK: - MaintenanceManagerHelperFactory
+extension DependencyContainer: MaintenanceManagerHelperFactory {
+    func makeMaintenanceManagerHelper() -> MaintenanceManagerHelper {
+        return maintenanceManagerHelper
+    }
+}
+
+// MARK: - AnnouncementRefresherFactory
+extension DependencyContainer: AnnouncementRefresherFactory {
+    func makeAnnouncementRefresher() -> AnnouncementRefresher {
+        return announcementRefresher
+    }
+}
+
+// MARK: - AnnouncementStorageFactory
+extension DependencyContainer: AnnouncementStorageFactory {
+    func makeAnnouncementStorage() -> AnnouncementStorage {
+        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults())
+    }
+}
+
+// MARK: - AnnouncementManagerFactory
+extension DependencyContainer: AnnouncementManagerFactory {
+    func makeAnnouncementManager() -> AnnouncementManager {
+        return AnnouncementManagerImplementation(factory: self)
+    }
+}
+
+// MARK: - CoreApiServiceFactory
+extension DependencyContainer: CoreApiServiceFactory {
+    func makeCoreApiService() -> CoreApiService {
+        return CoreApiServiceImplementation(alamofireWrapper: self.makeAlamofireWrapper())
+    }
+}
+
+// MARK: - ProfileManagerFactory
+extension DependencyContainer: ProfileManagerFactory {
+    func makeProfileManager() -> ProfileManager {
+        return ProfileManager.shared
+    }
+}
+
+// MARK: - HeaderViewModelFactory
+extension DependencyContainer: HeaderViewModelFactory {
+    func makeHeaderViewModel() -> HeaderViewModel {
+        return HeaderViewModel(factory: self, appStateManager: appStateManager, navService: navigationService)
+    }
+}
+
+// MARK: - AnnouncementsViewModelFactory
+extension DependencyContainer: AnnouncementsViewModelFactory {
+    func makeAnnouncementsViewModel() -> AnnouncementsViewModel {
+        return AnnouncementsViewModel(factory: self)
+    }
+}
+
+// MARK: - SafariServiceFactory
+extension DependencyContainer: SafariServiceFactory {
+    func makeSafariService() -> SafariServiceProtocol {
+        return SafariService()
     }
 }

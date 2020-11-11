@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import vpncore
 
 class PrefillInformation {
     
@@ -29,12 +30,14 @@ class PrefillInformation {
     let typeIndex: Int
     let countryIndex: Int
     let serverIndex: Int
+    let netshieldType: NetShieldType
     
-    init(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
+    init(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netshieldType: NetShieldType) {
         self.name = name
         self.color = color
         self.typeIndex = typeIndex
         self.countryIndex = countryIndex
         self.serverIndex = serverIndex
+        self.netshieldType = netshieldType
     }
 }

@@ -43,16 +43,12 @@ protocol AppSessionManager {
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool)
     func logOut()
-    
-    func scheduleRefreshes(now: Bool)
-    func stopRefreshingIfInactive()
-    
     func replyToApplicationShouldTerminate()
 }
 
 class AppSessionManagerImplementation: AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -66,16 +62,16 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var propertiesManager = factory.makePropertiesManager()
     private lazy var serverStorage: ServerStorage = factory.makeServerStorage()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    
-    let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
-    
-    let refreshRate: TimeInterval = 3 * 60
-    var lastRefresh = Date()
-    
-    var sessionStatus: SessionStatus = .notEstablished
+    private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
+    private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
 
-    var loginTimer: Timer?
+    let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
+    var sessionStatus: SessionStatus = .notEstablished
     var loggedIn = false
+    
+    // AppSessionRefresher
+    var lastDataRefresh: Date?
+    var lastServerLoadsRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
@@ -118,7 +114,8 @@ class AppSessionManagerImplementation: AppSessionManager {
             if self.appStateManager.state.isDisconnected {
                 self.propertiesManager.userIp = properties.ip
             }
-            
+            self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+            self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
@@ -141,6 +138,10 @@ class AppSessionManagerImplementation: AppSessionManager {
             ProfileManager.shared.refreshProfiles()
             success()
         })
+        
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            announcementRefresher.refresh()
+        }
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -241,8 +242,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     }
     
     private func logOutCleanup() {
-        loginTimer?.invalidate()
-        loginTimer = nil
+        refreshTimer.stop()
         loggedIn = false
         
         AuthKeychain.clear()
@@ -250,7 +250,8 @@ class AppSessionManagerImplementation: AppSessionManager {
         
         propertiesManager.logoutCleanup()
     }
-    // MARK: - End of the logout logic
+    // End of the logout logic
+    // MARK: -
     
     private func setAndNotify(for state: SessionStatus) {
         guard !loggedIn else { return }
@@ -273,42 +274,9 @@ class AppSessionManagerImplementation: AppSessionManager {
             NotificationCenter.default.post(name: self.sessionChanged, object: object)
         }
         
-        scheduleRefreshes(now: false)
+        refreshTimer.start()
     }
     
-    // MARK: - Refresh
-    func scheduleRefreshes(now: Bool) {
-        if loginTimer == nil || !loginTimer!.isValid {
-            loginTimer = Timer.scheduledTimer(timeInterval: refreshRate, target: self, selector: #selector(reistablishLogin), userInfo: nil, repeats: true)
-        }
-        
-        if now, lastRefresh.addingTimeInterval(refreshRate) < Date() {
-            reistablishLogin()
-        }
-    }
-    
-    func stopRefreshingIfInactive() {
-        if !NSApp.isActive {
-            loginTimer?.invalidate()
-            loginTimer = nil
-        }
-    }
-    
-    @objc private func reistablishLogin() {
-        lastRefresh = Date()
-        attemptRememberLogIn(success: {}, failure: { [unowned self] error in
-            PMLog.D("Failed to reistablish vpn credentials: \(error.localizedDescription)", level: .error)
-            
-            let error = error as NSError
-            switch error.code {
-            case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
-            default:
-                break // ignore failures
-            }
-        })
-    }
-
     // MARK: - AppDelegate quit behaviour
     
     func replyToApplicationShouldTerminate() {
@@ -338,4 +306,35 @@ class AppSessionManagerImplementation: AppSessionManager {
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
     }
+}
+
+extension AppSessionManagerImplementation: AppSessionRefresher {
+    
+    @objc func refreshData() {
+        lastDataRefresh = Date()
+        attemptRememberLogIn(success: {}, failure: { [unowned self] error in
+            PMLog.D("Failed to reistablish vpn credentials: \(error.localizedDescription)", level: .error)
+            
+            let error = error as NSError
+            switch error.code {
+            case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
+                self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
+            default:
+                break // ignore failures
+            }
+        })
+    }
+    
+    @objc func refreshServerLoads() {
+        guard loggedIn else { return }
+        lastServerLoadsRefresh = Date()
+        
+        vpnApiService.loads(lastKnownIp: propertiesManager.userIp, success: { properties in
+            self.serverStorage.update(continuousServerProperties: properties)
+            
+        }, failure: { error in
+            PMLog.D("Error received: \(error)", level: .error)
+        })
+    }
+    
 }
