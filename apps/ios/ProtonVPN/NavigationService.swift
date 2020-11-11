@@ -96,6 +96,21 @@ protocol CountryService {
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
 }
 
+// MARK: Announcements Service
+
+protocol AnnouncementsServiceFactory {
+    func makeAnnouncementsService() -> AnnouncementsService
+}
+
+extension DependencyContainer: AnnouncementsServiceFactory {
+    func makeAnnouncementsService() -> AnnouncementsService {
+        return makeNavigationService()
+    }
+}
+protocol AnnouncementsService {
+    func makeAnnouncementsViewController() -> AnnouncementsViewController
+}
+
 // MARK: Map Service
 
 protocol MapService {
@@ -116,6 +131,7 @@ protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
+    func makeBatteryUsageViewController() -> BatteryUsageViewController
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController
     func makeCustomServerViewController() -> CustomServersViewController
     func presentReportBug()
@@ -129,6 +145,22 @@ protocol SettingsServiceFactory {
 
 protocol ProtocolService {
     func makeVpnProtocolViewController(viewModel: VpnProtocolViewModel) -> VpnProtocolViewController
+}
+
+// MARK: Netshield Service
+
+protocol NetshieldService {
+    func makeNetshieldSelectionViewController(selectedType: NetShieldType, approve: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) -> NetshieldSelectionViewController
+}
+
+protocol NetshieldServiceFactory {
+    func makeNetshieldService() -> NetshieldService
+}
+
+extension DependencyContainer: NetshieldServiceFactory {
+    func makeNetshieldService() -> NetshieldService {
+        return makeNavigationService()
+    }
 }
 
 // MARK: Connection status Service
@@ -147,7 +179,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -185,7 +217,7 @@ class NavigationService {
         return makeConnectionBarViewController()
     }()
     private lazy var loginViewModel = { [unowned self] in
-        return LoginViewModel(appSessionManager: appSessionManager, loginService: self, alertService: alertService)
+        return LoginViewModel(appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
         }()
     
     private lazy var tabBarController = {
@@ -251,8 +283,7 @@ class NavigationService {
         tabViewControllers.append(UINavigationController(rootViewController: makeProfilesViewController()))
         
         if let settingsViewController = makeSettingsViewController() {
-            let nvc = UINavigationController(rootViewController: settingsViewController)
-            tabViewControllers.append(nvc)
+            tabViewControllers.append(UINavigationController(rootViewController: settingsViewController))
         }
         
         tabBarController.setViewControllers(tabViewControllers, animated: false)
@@ -282,7 +313,7 @@ extension NavigationService: LoginService {
     
     private func makeLoginViewController(dismissible: Bool, username: String? = nil, errorMessage: String? = nil) -> LoginViewController? {
         if let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, appSessionManager: appSessionManager, loginService: self, alertService: alertService)
+            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
             return loginViewController
         }
         return nil
@@ -519,7 +550,7 @@ extension NavigationService: TrialService {
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
-        countriesViewController.viewModel = CountriesViewModel(appStateManager: appStateManager, vpnGateway: vpnGateway, propertiesManager: propertiesManager, countryService: self, alertService: alertService, loginService: self, planService: self)
+        countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self, loginService: self)
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
         countriesViewController.planService = self
         
@@ -531,6 +562,13 @@ extension NavigationService: CountryService {
         countryViewController.viewModel = country
         countryViewController.connectionBarViewController = makeConnectionBarViewController()
         return countryViewController
+    }
+}
+
+extension NavigationService: AnnouncementsService {
+    func makeAnnouncementsViewController() -> AnnouncementsViewController {
+        let controller = AnnouncementsViewController(factory.makeAnnouncementsViewModel())
+        return controller
     }
 }
 
@@ -546,14 +584,14 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self)
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self, propertiesManager: propertiesManager)
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
     
     func makeCreateProfileViewController(for profile: Profile?) -> CreateProfileViewController? {
         if let createProfileViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: CreateProfileViewController.self)) as? CreateProfileViewController {
-            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()))
+            createProfileViewController.viewModel = CreateOrEditProfileViewModel(for: profile, profileService: self, protocolSelectionService: self, alertService: alertService, vpnKeychain: vpnKeychain, serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete()), netshieldService: self, appStateManager: appStateManager, vpnGateway: vpnGateway!)
             return createProfileViewController
         }
         return nil
@@ -570,7 +608,8 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self)
+            settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }
         
@@ -583,6 +622,10 @@ extension NavigationService: SettingsService {
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
         return LogSelectionViewController(viewModel: LogSelectionViewModel(vpnManager: vpnManager, settingsService: self))
+    }
+    
+    func makeBatteryUsageViewController() -> BatteryUsageViewController {
+        return BatteryUsageViewController()
     }
     
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
@@ -607,6 +650,12 @@ extension NavigationService: ProtocolService {
     }
 }
 
+extension NavigationService: NetshieldService {
+    func makeNetshieldSelectionViewController(selectedType: NetShieldType, approve: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) -> NetshieldSelectionViewController {
+        return NetshieldSelectionViewController(viewModel: NetshieldSelectionViewModel(selectedType: selectedType, factory: factory, shouldSelectNewValue: approve, onTypeChange: onChange))
+    }
+}
+
 extension NavigationService: ConnectionStatusService {
     func makeConnectionBarViewController() -> ConnectionBarViewController? {
         
@@ -625,7 +674,8 @@ extension NavigationService: ConnectionStatusService {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
-            statusViewController.viewModel = StatusViewModel(appSessionManager: appSessionManager, propertiesManager: propertiesManager, profileManager: profileManager, vpnGateway: vpnGateway, appStateManager: appStateManager, delegate: delegate)
+            statusViewController.viewModel = StatusViewModel(factory: factory, delegate: delegate)
+            statusViewController.netshieldServiceFactory = self.factory
             return statusViewController
         }
         return nil

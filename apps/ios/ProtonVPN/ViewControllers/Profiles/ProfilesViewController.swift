@@ -55,6 +55,8 @@ class ProfilesViewController: UIViewController {
         setupConnectionBar()
         setupTableView()
         addObservers()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -63,6 +65,7 @@ class ProfilesViewController: UIViewController {
         tableView.reloadData()
         renderEditButton()
         renderEditing(tableView.isEditing)
+        setupAnnouncements()
     }
 
     private func setupView() {

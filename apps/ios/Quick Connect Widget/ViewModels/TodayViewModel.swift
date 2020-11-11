@@ -35,11 +35,11 @@ class TodayViewModelImplementation: TodayViewModel {
     
     private let reachability = Reachability()
     private var timer: Timer?
-    private let propertiesManager: PropertiesManager
+    private let propertiesManager: PropertiesManagerProtocol
     private let vpnManager: VpnManagerProtocol
     private let appStateManager: AppStateManager
     
-    init( _ propertiesManager: PropertiesManager, vpnManager: VpnManagerProtocol, appStateManager: AppStateManager ){
+    init( _ propertiesManager: PropertiesManagerProtocol, vpnManager: VpnManagerProtocol, appStateManager: AppStateManager ){
         self.propertiesManager = propertiesManager
         self.vpnManager = vpnManager
         self.appStateManager = appStateManager

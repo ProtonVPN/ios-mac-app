@@ -100,18 +100,20 @@ class CreateProfileViewController: UITableViewController {
             return
         }
         
-        guard viewModel.saveProfile() else {
-            return
-        }
+        viewModel.saveProfile { success in
+            guard success else {
+                return
+            }
 
-        if viewModel.editingExistingProfile {
-            profilesViewControllerDelegate?.showProfileEditedSuccessMessage()
-        } else {
-            profilesViewControllerDelegate?.showProfileCreatedSuccessMessage()
-        }
+            if viewModel.editingExistingProfile {
+                self.profilesViewControllerDelegate?.showProfileEditedSuccessMessage()
+            } else {
+                self.profilesViewControllerDelegate?.showProfileCreatedSuccessMessage()
+            }
 
-        self.navigationController?.popViewController(animated: true)
-        profilesViewControllerDelegate?.reloadProfiles()
+            self.navigationController?.popViewController(animated: true)
+            self.profilesViewControllerDelegate?.reloadProfiles()
+        }
     }
 
     private func renderSaveButton() {

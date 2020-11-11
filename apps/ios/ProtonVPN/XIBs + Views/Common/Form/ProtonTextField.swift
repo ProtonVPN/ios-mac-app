@@ -35,7 +35,7 @@ class ProtonTextField: UIView {
     
     enum State {
         case normal
-        case error(String)
+        case error(String, String? = nil)
     }
     
     private static let fieldFontSize: CGFloat = 18
@@ -110,11 +110,13 @@ class ProtonTextField: UIView {
         case .normal:
             lineView.backgroundColor = .protonUnavailableGrey()
             errorLabel.text = ""
+            errorLabel.accessibilityIdentifier = nil
             
-        case .error(let errorText):
+        case .error(let errorText, let accessibilityIdentifier):
             lineView.backgroundColor = .protonRed()
             errorLabel.text = errorText
             errorLabel.textColor = .protonRed()
+            errorLabel.accessibilityIdentifier = accessibilityIdentifier
         }
     }
     

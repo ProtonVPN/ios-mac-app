@@ -60,7 +60,7 @@ class SiriHandlerViewModel {
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
-        self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService)
+        self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
         
         self.alertService.delegate = self
     }

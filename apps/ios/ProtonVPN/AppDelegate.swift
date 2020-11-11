@@ -57,7 +57,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
         storeKitManager.updateAvailableProductsList()
         _ = storeKitManager.readyToPurchaseProduct() //initial response is always true due to lazy load
+        
+        AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
+    
         navigationService.launched()
+        
+        container.makeMaintenanceManagerHelper().startMaintenanceManager()
+        NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
         
         return true
     }
@@ -102,6 +108,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Otherwise just  check directly  the connection
         let state = container.makeVpnManager().state
         self.checkStuckConnection(state)
+        
+        // Refresh API announcements
+        let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
+        if propertiesManager.featureFlags.isAnnouncementOn {
+            announcementRefresher.refresh()
+        }
+    }
+    
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        container.makeMaintenanceManager().observeCurrentServerState(every: 0, repeats: false, completion: { maintenance in
+            completionHandler( maintenance ? .newData : .noData)
+        }, failure: { _ in
+            completionHandler(.failed)
+        })
     }
 }
 
@@ -177,4 +197,15 @@ fileprivate extension AppDelegate {
             propertiesManager.lastTimeForeground = nil
         }
     }
+    
+    @objc func featureFlagsChanged() {
+        // Check servers in maintenance
+        guard propertiesManager.featureFlags.isServerRefresh else {
+            UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
+            return
+        }
+        let time = TimeInterval(propertiesManager.maintenanceServerRefreshIntereval * 60)
+        UIApplication.shared.setMinimumBackgroundFetchInterval(time)
+    }
+    
 }

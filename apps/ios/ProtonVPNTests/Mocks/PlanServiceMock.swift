@@ -25,7 +25,6 @@ import vpncore
 
 class PlanServiceMock: PlanService {
     
-    
     var callbackMakePurchaseCompleteViewController: (() -> PurchaseCompleteViewController?)?
     var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: ((AccountPlan) -> Void)?

@@ -37,21 +37,41 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv9", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
         ])
     
-    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
-    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
+    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil, netShieldType: .off)
+    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil, netShieldType: .off)
+    
+    let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
+    
+    let alamofireWrapper = AlamofireWrapperMock()
+    var vpnApiService: VpnApiService {
+        return VpnApiService(alamofireWrapper: alamofireWrapper)
+    }
+    
+    let configurationPreparer = VpnManagerConfigurationPreparer(
+        vpnKeychain: VpnKeychainMock(),
+        alertService: AlertServiceEmptyStub(),
+        propertiesManager: PropertiesManager())
+    
+    var appStateManager: AppStateManager {
+        return AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
+    }
     
     lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage))
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), netshieldService: NetshieldServiceMock(viewModel: netshieldViewModel),
+                                                              appStateManager: appStateManager,
+                                                              vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage))
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), netshieldService: NetshieldServiceMock(viewModel: netshieldViewModel),
+                                                              appStateManager: appStateManager,
+                                                              vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     
     var profileService: ProfileServiceMock!
     
@@ -146,4 +166,24 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             }
         }
     }
+}
+
+class NetshieldSelectionViewModelFactory: NetshieldSelectionViewModel.Factory {
+    
+    public var vpnKeychainProtocol: VpnKeychainProtocol
+    public var planService: PlanService
+
+    public init(vpnKeychainProtocol: VpnKeychainProtocol, planService: PlanService) {
+        self.vpnKeychainProtocol = vpnKeychainProtocol
+        self.planService = planService
+    }
+
+    func makeVpnKeychain() -> VpnKeychainProtocol {
+        return vpnKeychainProtocol
+    }
+
+    func makePlanService() -> PlanService {
+        return planService
+    }
+    
 }

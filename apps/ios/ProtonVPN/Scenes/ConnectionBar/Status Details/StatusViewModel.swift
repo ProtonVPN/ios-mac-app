@@ -26,11 +26,16 @@ import vpncore
 
 class StatusViewModel {
     
-    private let appSessionManager: AppSessionManager
-    private let propertiesManager: PropertiesManagerProtocol
-    private let profileManager: ProfileManager
-    private let appStateManager: AppStateManager
-    private let vpnGateway: VpnGatewayProtocol?
+    // Factory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory& CoreAlertServiceFactory
+    private let factory: Factory
+    
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var vpnGateway: VpnGatewayProtocol? = factory.makeVpnGateway()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
  
     weak var delegate: ConnectionBarViewModelDelegate?
     
@@ -38,6 +43,7 @@ class StatusViewModel {
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
     var contentChanged: (() -> Void)?
     var dismissStatusView: (() -> Void)?
+    var changeNetShieldType: ((NetShieldType, @escaping NetshieldSelectionViewModel.ApproveCallback) -> Void)?
     
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
@@ -52,17 +58,8 @@ class StatusViewModel {
         return delegate?.timeString() ?? ""
     }
     
-    init(appSessionManager: AppSessionManager,
-         propertiesManager: PropertiesManagerProtocol,
-         profileManager: ProfileManager,
-         vpnGateway: VpnGatewayProtocol?,
-         appStateManager: AppStateManager,
-         delegate: ConnectionBarViewModelDelegate) {
-        self.appSessionManager = appSessionManager
-        self.propertiesManager = propertiesManager
-        self.profileManager = profileManager
-        self.vpnGateway = vpnGateway
-        self.appStateManager = appStateManager
+    init(factory: Factory, delegate: ConnectionBarViewModelDelegate) {
+        self.factory = factory
         self.delegate = delegate
         
         startObserving()
@@ -75,12 +72,13 @@ class StatusViewModel {
     }
     
     var tableViewData: [TableViewSection] {
-        let sections: [TableViewSection] = [
-            locationSection,
-            technicalDetailsSection,
-            saveAsProfileSection
-        ]
-        
+        var sections = [TableViewSection]()
+        sections.append(locationSection)
+        sections.append(technicalDetailsSection)
+        if propertiesManager.featureFlags.isNetShield {
+            sections.append(securitySection)
+        }
+        sections.append(saveAsProfileSection)
         return sections
     }
     
@@ -116,6 +114,32 @@ class StatusViewModel {
         ]
         
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+    }
+    
+    private var securitySection: TableViewSection {
+        let activeConnection = appStateManager.activeConnection()
+        
+        let cells: [TableViewCellModel] = [
+            .staticPushKeyValue(key: LocalizedString.netshieldTitle, value: activeConnection?.netShieldType.name ?? "", handler: {
+                guard let type = activeConnection?.netShieldType else { return }
+                self.changeNetShieldType?(type, { type, approve in
+                    self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
+                        // Update profile
+                        if let profileId = self.propertiesManager.lastConnectionRequest?.profileId, let profile = self.profileManager.profile(withId: profileId) {
+                            let updatedProfile = profile.copyWith(newNetShieldType: type)
+                            self.profileManager.updateProfile(updatedProfile)
+                        } else {
+                            // Save to general settings
+                            self.propertiesManager.netShieldType = type
+                        }
+                        approve()
+                        self.vpnGateway?.reconnect(with: type)
+                    }))
+                })
+            })
+        ]
+        
+        return TableViewSection(title: LocalizedString.security.uppercased(), cells: cells)
     }
     
     private var saveAsProfileSection: TableViewSection {
@@ -187,7 +211,7 @@ class StatusViewModel {
         }
         
         let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol ?? propertiesManager.vpnProtocol
-        _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol)
+        _ = profileManager.createProfile(withServer: server, vpnProtocol: vpnProtocol, netShield: appStateManager.activeConnection()?.netShieldType)
         messageHandler?(LocalizedString.profileCreatedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)

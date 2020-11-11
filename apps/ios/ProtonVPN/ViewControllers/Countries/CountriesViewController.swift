@@ -61,6 +61,13 @@ class CountriesViewController: UIViewController {
         setupConnectionBar()
         setupSecureCoreBar()
         setupTableView()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        setupAnnouncements()
     }
     
     @objc func switchValueDidChange(sender: UISwitch!) {
@@ -118,6 +125,7 @@ class CountriesViewController: UIViewController {
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
+    
 }
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {

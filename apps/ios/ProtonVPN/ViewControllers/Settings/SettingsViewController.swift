@@ -26,6 +26,9 @@ import vpncore
 class SettingsViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    
+    @IBOutlet weak var connectionBarContainerView: UIView!
+    public var connectionBarViewController: ConnectionBarViewController?
 
     var genericDataSource: GenericTableViewDataSource?
     var viewModel: SettingsViewModel? {
@@ -50,6 +53,9 @@ class SettingsViewController: UIViewController {
         super.viewDidLoad()
 
         setupView()
+        setupConnectionBar()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +63,7 @@ class SettingsViewController: UIViewController {
         
         setupTableView()
         tableView.reloadData()
+        setupAnnouncements()
     }
     
     private func setupView() {
@@ -82,5 +89,11 @@ class SettingsViewController: UIViewController {
     
     private func pushViewController(_ viewController: UIViewController) {
         navigationController?.pushViewController(viewController, animated: true)
+    }
+    
+    private func setupConnectionBar() {
+        if let connectionBarViewController = connectionBarViewController {
+            connectionBarViewController.embed(in: self, with: connectionBarContainerView)
+        }
     }
 }

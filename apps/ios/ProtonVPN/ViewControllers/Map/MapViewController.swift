@@ -75,6 +75,8 @@ class MapViewController: UIViewController {
         setupSecureCoreBar()
         addAnnotations()
         setConnection()
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
     
     private func setupView() {
@@ -100,6 +102,8 @@ class MapViewController: UIViewController {
             scrollView.zoom(to: initialMoveAndZoomFrame, animated: false)
             initialMoveAndZoomDone = true
         }
+        
+        setupAnnouncements()
     }
     
     private func setupSecureCoreBar() {

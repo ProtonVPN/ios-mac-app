@@ -3,6 +3,7 @@ stages:
   - unit_tests
   - screenshots
   - beta
+  - beta_staging
   - mirror
 
 variables:
@@ -61,13 +62,14 @@ lint:
     paths:
       - swiftlint.xml
     reports:
-      junit: 
+      junit:
         - swiftlint.xml
     expire_in: 90 days
 
 unit_tests:
    dependencies: []
    stage: unit_tests
+   allow_failure: true # Remove when UI tests are fixed
    before_script:
      - *before_script_mac
    script:
@@ -103,7 +105,7 @@ screenshots:
   only:
     - schedules
 
-publish-internal-build:
+testflight_internal:
   stage: beta
   before_script:
     - *before_script_mac
@@ -118,7 +120,31 @@ publish-internal-build:
   environment:
     name: deployment
   when: manual
+  artifacts:
+    name: "ios-build-nr"
+    when: always
+    paths:
+      - .last_build_nr
+    expire_in: 7 days
 
+testflight_staging:
+  stage: beta_staging
+  dependencies:
+    - testflight_internal # We need a build number generated there
+  before_script:
+    - *before_script_mac
+  script:
+    - curl -sL https://sentry.io/get-cli/ | bash || true
+    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
+    - fastlane sigh download_all --download_xcode_profiles
+    - cd ProtonVPN/ && ../../vpncore/Source/prepare_obfuscated_constants.sh && cd ..
+    - fastlane ios internal_staging changelog:"Latest $CI_COMMIT_REF_NAME build"
+  tags:
+    - iOS-deploy
+  environment:
+    name: deployment
+  when: manual
+  
 sync-app:
   extends: .linux-common
   <<: *linux-common

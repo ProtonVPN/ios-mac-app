@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "img-battery-usage.pdf",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

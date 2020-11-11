@@ -32,6 +32,7 @@ class SettingsViewModel {
     private let alertService: AlertService
     private let planService: PlanService
     private let settingsService: SettingsService
+    private let netshieldService: NetshieldService
     private let protocolService: ProtocolService
     private let vpnKeychain: VpnKeychainProtocol
     
@@ -43,7 +44,7 @@ class SettingsViewModel {
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -52,21 +53,25 @@ class SettingsViewModel {
         self.settingsService = settingsService
         self.protocolService = protocolService
         self.vpnKeychain = vpnKeychain
+        self.netshieldService = netshieldService
         
         startObserving()
     }
     
     var tableViewData: [TableViewSection] {
-        var sections: [TableViewSection] = [
-            accountSection,
-            securitySection,
-            extensionsSection,
-            logSection,
-            bottomSection
-        ]
+        var sections: [TableViewSection] = []
+        
+        sections.append(accountSection)
+        sections.append(securitySection)
+        sections.append(extensionsSection)
+        if let batterySection = batterySection {
+            sections.append(batterySection)
+        }
+        sections.append(logSection)
+        sections.append(bottomSection)
         
         #if !RELEASE
-        sections.insert(developerSection, at: sections.count - 1)
+        sections.append(developerSection)
         #endif
         
         return sections
@@ -211,13 +216,32 @@ class SettingsViewModel {
     private var securitySection: TableViewSection {
         let vpnProtocol = propertiesManager.vpnProtocol
         
-        let cells: [TableViewCellModel] = [
-            .pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
-                protocolCellAction()
-            }),
-            .toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil),
-            .tooltip(text: LocalizedString.alwaysOnVpnTooltipIos)
-        ]
+        var cells: [TableViewCellModel] = []
+        cells.append(.pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
+            protocolCellAction()
+        }))
+        
+        let netShieldAvailable = propertiesManager.featureFlags.isNetShield
+        if netShieldAvailable {
+            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: propertiesManager.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
+                pushNetshieldSelectionViewController(self.propertiesManager.netShieldType, { type, approve in
+                    if self.appStateManager.state.isSafeToEnd || self.propertiesManager.lastConnectionRequest?.profileId != nil {
+                        approve()
+                    } else {
+                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
+                            approve()
+                            self.vpnGateway?.reconnect(with: type)
+                        }))
+                    }
+                }, { type in
+                    self.propertiesManager.netShieldType = type
+                })
+            }))
+            cells.append(.tooltip(text: LocalizedString.netshieldTitleTootltip))
+        }
+        
+        cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
+        cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
@@ -230,6 +254,21 @@ class SettingsViewModel {
         ]
         
         return TableViewSection(title: LocalizedString.extensions.uppercased(), cells: cells)
+    }
+    
+    private var batterySection: TableViewSection? {
+        let vpnProtocol = propertiesManager.vpnProtocol
+        guard case VpnProtocol.openVpn = vpnProtocol else {
+            return nil
+        }
+        
+        let cells: [TableViewCellModel] = [
+            .pushStandard(title: LocalizedString.batteryTitle, handler: { [pushBatteryViewController] in
+                pushBatteryViewController()
+            })
+        ]
+        
+        return TableViewSection(title: "", cells: cells)
     }
     
     private var logSection: TableViewSection {
@@ -303,12 +342,20 @@ class SettingsViewModel {
         pushHandler?(settingsService.makeExtensionsSettingsViewController())
     }
     
+    private func pushBatteryViewController() {
+        pushHandler?(settingsService.makeBatteryUsageViewController())
+    }
+    
     private func pushLogSelectionViewController() {
         pushHandler?(settingsService.makeLogSelectionViewController())
     }
     
     private func pushCustomServerViewController() {
         pushHandler?(settingsService.makeCustomServerViewController())
+    }
+    
+    private func pushNetshieldSelectionViewController(selectedType: NetShieldType, callback: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) {
+        pushHandler?(netshieldService.makeNetshieldSelectionViewController(selectedType: selectedType, approve: callback, onChange: onChange))
     }
 
     private func reportBug() {

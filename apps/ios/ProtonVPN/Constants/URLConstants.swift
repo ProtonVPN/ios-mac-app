@@ -41,4 +41,9 @@ struct URLConstants {
     static let deepLinkLoginAction = "login"
     
     static let deepLinkLoginUrl = URLConstants.deepLinkBaseUrl + URLConstants.deepLinkLoginAction
+    
+    // MARK: - Other
+    
+    static let utmSource = "app-ios"
+    
 }
