@@ -3,6 +3,9 @@ PODS:
   - KeychainAccess (3.1.2)
   - OpenSSL-Apple (1.1.1g.6)
   - ReachabilitySwift (4.3.0)
+  - SDWebImage (5.9.3):
+    - SDWebImage/Core (= 5.9.3)
+  - SDWebImage/Core (5.9.3)
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
@@ -33,6 +36,7 @@ DEPENDENCIES:
   - Alamofire (~> 5.1)
   - KeychainAccess (~> 3.0)
   - ReachabilitySwift (~> 4.0)
+  - SDWebImage (~> 5.0)
   - Sentry (~> 4.0)
   - Sparkle (~> 1.0)
   - SwiftLint
@@ -45,6 +49,7 @@ SPEC REPOS:
     - KeychainAccess
     - OpenSSL-Apple
     - ReachabilitySwift
+    - SDWebImage
     - Sentry
     - Sparkle
     - SwiftLint
@@ -68,6 +73,7 @@ SPEC CHECKSUMS:
   KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
+  SDWebImage: a31ee8e90a97303529e03fb0c333eae0eacb88e9
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   Sparkle: 3f75576db8b0265adef36c43249d747f22d0b708
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
@@ -76,6 +82,6 @@ SPEC CHECKSUMS:
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
   vpncore: e49b0721747083ec9e54dda23dd482ed1f8d8818
 
-PODFILE CHECKSUM: 35770ef71bd1704b5be3ecf347a3359f2401d3d4
+PODFILE CHECKSUM: eb288374902b9d4359bddc38804b93aac1aad5bc
 
 COCOAPODS: 1.9.2

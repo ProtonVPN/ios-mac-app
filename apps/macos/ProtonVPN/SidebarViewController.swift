@@ -33,6 +33,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var headerControllerViewContainer: NSView!
     @IBOutlet weak var tabBarControllerViewContainer: NSView!
     @IBOutlet weak var activeControllerViewContainer: NSView!
+    @IBOutlet weak var announcementsControllerViewContainer: NSView!
     @IBOutlet weak var connectionOverlay: ConnectionOverlay!
     @IBOutlet weak var sidebarContainerView: NSView!
     @IBOutlet weak var mapContainerView: NSView!
@@ -43,6 +44,8 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     private var activeController: NSViewController!
     private var viewToggle: NSNotification.Name!
     
+    private var announcementsViewController: AnnouncementsViewController!
+    
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var loading = false
@@ -52,7 +55,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     var vpnGateway: VpnGatewayProtocol!
     var navService: NavigationService!
     
-    typealias Factory = CountriesSectionViewModelFactory & MapSectionViewModelFactory
+    typealias Factory = CountriesSectionViewModelFactory & MapSectionViewModelFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
@@ -86,6 +89,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         
         setupMainView()
         setupHeader()
+        setupAnnouncements()
         setupTabBar()
         tabBarViewController.activeTab = .countries
         
@@ -113,6 +117,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(occlusionStateChanged(_:)),
                                                name: NSApplication.didChangeOcclusionStateNotification,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(checkAnnouncementsRendering),
+                                               name: AnnouncementStorageNotifications.contentChanged,
                                                object: nil)
     }
     
@@ -296,13 +304,36 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     private func setupHeader() {
-        let viewModel = HeaderViewModel(vpnGateway: vpnGateway, appStateManager: appStateManager, navService: navService)
-        headerViewController = HeaderViewController(viewModel: viewModel)
+        headerViewController = HeaderViewController(viewModel: factory.makeHeaderViewModel())
+        headerViewController.announcementsButtonPressed = { [weak self] in self?.announcementsButtonPressed() }
         headerControllerViewContainer.pin(viewController: headerViewController)
         
         expandButton.target = self
         expandButton.action = #selector(expandButtonAction(_:))
         expandButton.expandState = .compact
+    }
+    
+    private func setupAnnouncements() {
+        announcementsViewController = AnnouncementsViewController(viewModel: factory.makeAnnouncementsViewModel())
+        announcementsViewController.closeCallback = { [weak self] in
+            self?.announcementsControllerViewContainer.isHidden = true
+        }
+        announcementsControllerViewContainer.translatesAutoresizingMaskIntoConstraints = false
+        announcementsControllerViewContainer.pin(viewController: announcementsViewController)
+        announcementsControllerViewContainer.isHidden = true
+        announcementsControllerViewContainer.wantsLayer = true
+        announcementsControllerViewContainer.layer?.masksToBounds = false
+    }
+    
+    private func announcementsButtonPressed() {
+        announcementsControllerViewContainer.isHidden = !announcementsControllerViewContainer.isHidden
+    }
+    
+    @objc private func checkAnnouncementsRendering(notification: NSNotification) {
+        guard let array = notification.object as? [Any] else { return }
+        if array.isEmpty {
+            announcementsControllerViewContainer.isHidden = true
+        }
     }
     
     private func setupTabBar() {

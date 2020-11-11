@@ -21,20 +21,26 @@
 //
 
 import Cocoa
+import vpncore
 
 class SettingsContainerViewController: NSViewController {
 
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
+    
     @IBOutlet weak var tabBarControllerViewContainer: NSView!
     @IBOutlet weak var activeControllerViewContainer: NSView!
     
+    private let factory: Factory
     private let viewModel: SettingsContainerViewModel
     private var tabBarViewController: SettingsTabBarViewController!
     private var tabBarViewModel: SettingsTabBarViewModel
     private var activeViewController: NSViewController?
     
     lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        let viewModel = GeneralViewModel()
-        return GeneralSettingsViewController(viewModel: viewModel)
+        let viewModel = GeneralViewModel(factory: self.factory)
+        let vc = GeneralSettingsViewController(viewModel: viewModel)
+        viewModel.setViewController(vc)
+        return vc
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
@@ -50,9 +56,10 @@ class SettingsContainerViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
+    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, factory: Factory) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
+        self.factory = factory
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

@@ -142,6 +142,10 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
     func makeWindowService() -> WindowService {
         return windowService
     }
+    
+    func makeNotificationManager() -> NotificationManagerProtocol {
+        return NotificationManagerMock()
+    }
 }
 
 fileprivate class AppSessionManagerMock: AppSessionManager {
@@ -153,7 +157,9 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logOut(force: Bool) {}
     func logOut() {}
-    func scheduleRefreshes(now: Bool) {}
-    func stopRefreshingIfInactive() {}
     func replyToApplicationShouldTerminate() {}
+}
+
+fileprivate class NotificationManagerMock: NotificationManagerProtocol {
+    func displayServerGoingOnMaintenance() { }
 }

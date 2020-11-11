@@ -110,7 +110,7 @@ class ConnectionSettingsViewController: NSViewController {
     }
     
     private func setupQuickConnectItem() {
-        quickConnectLabel.attributedStringValue = LocalizedString.quickConnect.capitalized.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        quickConnectLabel.attributedStringValue = LocalizedString.quickConnect.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         
         quickConnectList.isBordered = false
         quickConnectList.target = self

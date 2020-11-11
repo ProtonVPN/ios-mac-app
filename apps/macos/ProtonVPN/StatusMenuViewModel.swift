@@ -331,7 +331,7 @@ class StatusMenuViewModel {
     
     private func getCurrentIp() -> String? {
         if isConnected {
-            return appStateManager.activeConnection()?.serverIp.entryIp
+            return appStateManager.activeConnection()?.serverIp.exitIp
         } else {
             return propertiesManager.userIp
         }

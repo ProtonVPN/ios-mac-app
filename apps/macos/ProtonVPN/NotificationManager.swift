@@ -21,14 +21,9 @@
 //
 
 import vpncore
-
 import Foundation
 
-protocol NotificationManagerFactory {
-    func makeNotificationManager() -> NotificationManager
-}
-
-class NotificationManager: NSObject {
+class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager
@@ -117,7 +112,7 @@ class NotificationManager: NSObject {
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.entryIp ?? LocalizedString.unavailable)
+        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {
@@ -129,8 +124,20 @@ class NotificationManager: NSObject {
 }
 
 extension NotificationManager: NSUserNotificationCenterDelegate {
-    
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
+    }
+}
+
+// MARK: - Public
+
+extension NotificationManager {
+    func displayServerGoingOnMaintenance() {
+        let notification = NSUserNotification()
+        notification.title = LocalizedString.onMaintenanceDetectedTitle
+        notification.subtitle = LocalizedString.onMaintenanceDetectedSubtitle
+        notification.informativeText = LocalizedString.onMaintenanceDetectedDescription
+        notification.hasActionButton = false
+        fire(notification)
     }
 }

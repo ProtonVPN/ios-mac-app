@@ -25,12 +25,15 @@ import vpncore
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
+    private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
+    
+    fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
     init(factory: Factory) {
         self.factory = factory
@@ -138,6 +141,15 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
+        case is VpnServerOnMaintenanceAlert:
+            show(alert as! VpnServerOnMaintenanceAlert)
+            
+        case is ReconnectOnNetshieldChangeAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is NetShieldRequiresUpgradeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -154,7 +166,6 @@ extension MacAlertService: CoreAlertService {
         if alert.actions.isEmpty {
             alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
         }
-        
         uiAlertService.displayAlert(alert)
     }
     
@@ -272,5 +283,13 @@ extension MacAlertService: CoreAlertService {
         let killSwitch5ViewController = KillSwitchSwift5Popup()
         killSwitch5ViewController.alert = alert
         windowService.presentKeyModal(viewController: killSwitch5ViewController)
+    }
+    
+    private func show( _ alert: VpnServerOnMaintenanceAlert) {
+        guard self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
+            return
+        }
+        self.notificationManager.displayServerGoingOnMaintenance()
+        self.lastTimeCheckMaintenance = Date()
     }
 }
