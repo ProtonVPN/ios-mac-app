@@ -30,4 +30,12 @@ extension String {
         return noPath != nil ? String(noPath!) : url
     }
     
+    public func urlWithAdded(utmSource: String) -> String? {
+        var url = URLComponents(string: self)
+        var items: [URLQueryItem] = url?.queryItems ?? [URLQueryItem]()
+        items.append(URLQueryItem(name: "utm_source", value: utmSource))
+        url?.queryItems = items
+        return url?.string
+    }
+    
 }

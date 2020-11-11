@@ -36,6 +36,10 @@ public enum ProfileManagerOperationOutcome {
     }
 }
 
+public protocol ProfileManagerFactory {
+    func makeProfileManager() -> ProfileManager
+}
+
 public class ProfileManager {
     
     public static var shared = ProfileManager(serverStorage: ServerStorageConcrete())
@@ -73,8 +77,8 @@ public class ProfileManager {
         return ProfileUtility.existsProfile(withServer: server, in: customProfiles)
     }
     
-    public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol) -> ProfileManagerOperationOutcome {
-        let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, in: customProfiles)
+    public func createProfile(withServer server: ServerModel, vpnProtocol: VpnProtocol, netShield: NetShieldType?) -> ProfileManagerOperationOutcome {
+        let result = ProfileUtility.createProfile(with: server, vpnProtocol: vpnProtocol, netShield: netShield, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):
             ProfileStorage.store(updatedProfiles)
@@ -95,7 +99,7 @@ public class ProfileManager {
         return ProfileManagerOperationOutcome(outcome: result)
     }
     
-    public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
+    @discardableResult public func updateProfile(_ profile: Profile) -> ProfileManagerOperationOutcome {
         let result = ProfileUtility.updateProfile(profile, in: customProfiles)
         switch result {
         case .success(let updatedProfiles):

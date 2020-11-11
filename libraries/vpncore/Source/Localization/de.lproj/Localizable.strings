@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "BASIC‐SERVER";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Der gesamte Datenverkehr Ihres Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Möchten Sie mehr erfahren?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Akkunutzung";
+
 /* Common word */
 "_cancel" = "Abbrechen";
 
@@ -571,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "%@‐Abonnement erhalten";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Holen Sie sich ProtonVPN Plus, um diese und weitere Funktionen freizuschalten.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Bestätigungs‐E‐Mail erhalten";
 
@@ -644,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch sperrt zurzeit alle IP‐Leaks";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch funktioniert nicht korrekt. Wenn Sie diesen Fehler an den ProtonVPN‐Kundendienst melden möchten, klicken Sie auf Melden.\nWenn Sie dieses Problem ignorieren und OHNE Kill Switch fortfahren wollen, klicken Sie auf Ignorieren.";
+"_kill_switch_error_foot" = "Beenden Sie diese Apps, um das Problem zu beheben.\nUm das Surfen ohne Kill Switch fortzusetzen, klicken Sie auf „Weiter”.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Einige Apps, wie Anti-Viren oder Firewalls, könnten mit dem Kill Switch in Konflikt geraten, so dass dieser nicht ordnungsgemäß funktioniert.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funktioniert mit der macOS-Firewall.\nWenn andere Anwendungen mit der Firewall verbunden sind, können diese den Kill Switch von ProtonVPN stören. Das Beenden dieser Anwendungen kann die von Kill Switch festgelegten Firewall-Regeln wiederherstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Ein Fehler im Kill Switch (Not‐Trennung) wurde erkannt";
@@ -678,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Erfahren Sie mehr über Secure Core";
+
+/* Display less information */
+"_less_info" = "Weniger Informationen";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Auslastung";
@@ -714,6 +735,15 @@
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Wartung";
+
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Sie werden erneut mit dem schnellsten verfügbaren Server verbunden.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Bei diesem Server, mit dem Sie verbunden waren, werden derzeit Wartungsarbeiten durchgeführt";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "Bei diesem VPN-Server werden derzeit Wartungsarbeiten durchgeführt";
 
 /* Profile create/change form */
 "_make_default_profile" = "Als Standard‐Profil setzen";
@@ -781,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30 Tage Geld‐zurück‐Garantie";
 
+/* Display more information */
+"_more_info" = "Mehr Information";
+
 /* Label in Plan information */
 "_most_popular" = "Am beliebtesten";
 
@@ -834,6 +867,30 @@
 
 /* MacOS: button in login screen */
 "_need_help" = "Benötigen Sie Hilfe?";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_off" = "Ihre Verbindung wird neu gestartet, um den NetShield-Modus zu ändern.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Ihre Verbindung wird neu gestartet, um den NetShield-Modus zu ändern.\nHinweis: Wenn einige Websites nicht geladen werden, versuchen Sie, NetShield zu deaktivieren.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "NetShield erhöht Ihre Privatsphäre, indem es Werbung und Tracker sperrt.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Schadsoftware sperren";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Schadsoftware, Werbung, Tracker sperren";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Aus";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Sperrt Werbung, Tracker und Schadsoftware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Netzwerk nicht erreichbar";
@@ -1060,6 +1117,9 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Empfohlen";
 
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Verbindung muss neu aufgebaut werden";
+
 /* MacOS: About window */
 "_release_date" = "Veröffentlichungsdatum:";
 
@@ -1182,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Sicheres Streaming";
+
+/* iOS status view */
+"_security" = "Sicherheit";
 
 /* iOS Settings: table section header */
 "_security_options" = "Sicherheitsoptionen";

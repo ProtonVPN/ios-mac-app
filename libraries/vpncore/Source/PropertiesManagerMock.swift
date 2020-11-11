@@ -51,6 +51,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var customServers: [ServerModel]?
     public var lastAppVersion = MigrationVersion("0")
     public var lastTimeForeground: Date?
+    public var featureFlags: FeatureFlags = FeatureFlags.defaultConfig
+    public var netShieldType: NetShieldType = .off
+    public var maintenanceServerRefreshIntereval: Int = 1
     
     public init() {}
     

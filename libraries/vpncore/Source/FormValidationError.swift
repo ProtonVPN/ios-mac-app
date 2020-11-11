@@ -33,11 +33,22 @@ extension FormValidationError: LocalizedError {
     public var errorDescription: String? {
         switch self {
         case .wrongEmail:
-            return LocalizedString.errorFielWrongdEmailFormat
+            return LocalizedString.errorFieldWrongEmailFormat
         case .emptyValue:
             return LocalizedString.errorFieldRequired
         case .passwordsDontMatch:
             return LocalizedString.errorFieldPasswordDontMatch
+        }
+    }
+    
+    public var identifier: String {
+        switch self {
+        case .wrongEmail:
+            return "wrongEmail"
+        case .emptyValue:
+            return "emptyValue"
+        case .passwordsDontMatch:
+            return "passwordsDontMatch"
         }
     }
     

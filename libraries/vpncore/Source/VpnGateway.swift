@@ -75,6 +75,7 @@ public protocol VpnGatewayProtocol: class {
     func connectTo(server: ServerModel)
     func connectTo(profile: Profile)
     func retryConnection()
+    func reconnect(with netShieldType: NetShieldType)
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
@@ -137,6 +138,10 @@ public class VpnGateway: VpnGatewayProtocol {
         return propertiesManager.lastConnectionRequest
     }
     
+    private var netShieldType: NetShieldType {
+        return propertiesManager.netShieldType
+    }
+    
     public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
@@ -196,31 +201,35 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func quickConnectConnectionRequest() -> ConnectionRequest {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
-            return profile.connectionRequest
+            return profile.connectionRequest(withDefaultNetshield: netShieldType)
         } else {
-            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol)
+            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         }
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(profile: Profile) {
-        connect(with: profile.connectionRequest)
+        connect(with: profile.connectionRequest(withDefaultNetshield: netShieldType))
     }
     
     public func retryConnection() {
         connect(with: lastConnectionRequest)
+    }
+    
+    public func reconnect(with netShieldType: NetShieldType) {
+        connect(with: lastConnectionRequest?.withChanged(netShieldType: netShieldType))
     }
     
     public func connect(with request: ConnectionRequest?) {
@@ -228,11 +237,11 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest = request
         
         guard let request = request else {
-            connect(with: globalVpnProtocol, server: appStateManager.activeConnection()?.server)
+            connect(with: globalVpnProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType)
             return
         }
         
-        connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request))
+        connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType)
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -300,7 +309,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
     
-    private func connect(with vpnProtocol: VpnProtocol, server: ServerModel?) {
+    private func connect(with vpnProtocol: VpnProtocol, server: ServerModel?, netShieldType: NetShieldType) {
         guard let server = server else {
             return
         }
@@ -308,7 +317,7 @@ public class VpnGateway: VpnGatewayProtocol {
         appStateManager.prepareToConnect()
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)
-        connectionPreparer?.connect(withProtocol: vpnProtocol, server: server)
+        connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
     }
     
     @objc private func appStateChanged() {

@@ -42,6 +42,8 @@ public protocol StoreKitManager: NSObjectProtocol {
 }
 
 public class StoreKitManagerImplementation: NSObject, StoreKitManager {
+    
+    public static var transactionFinishedNotification = Notification.Name("StoreKitManager.transactionFinished")
    
     public typealias Factory = CoreAlertServiceFactory & PaymentsApiServiceFactory & ServicePlanDataStorageFactory & PaymentTokenStorageFactory
     private let factory: Factory
@@ -550,6 +552,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     private func finish(transaction: SKPaymentTransaction) {
         SKPaymentQueue.default().finishTransaction(transaction)
         transactionsMadeBeforeSignup.removeAll(where: { $0 == transaction })
+        NotificationCenter.default.post(name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
     private func processUnauthenticated(transaction: SKPaymentTransaction, plan: AccountPlan) throws {

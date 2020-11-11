@@ -25,16 +25,33 @@ import UIKit
 import Cocoa
 #endif
 
-public class SafariService {
+public protocol SafariServiceProtocol {
+    func open(url: String)
+}
+
+public protocol SafariServiceFactory {
+    func makeSafariService() -> SafariServiceProtocol
+}
+
+public class SafariService: SafariServiceProtocol {
     
+    // Old
     public static func openLink(url: String) {
-        if let url = URL(string: url) {
-            
-            #if canImport(UIKit)
-            UIApplication.shared.open(url, options: [:], completionHandler: nil)
-            #elseif canImport(Cocoa)
-            NSWorkspace.shared.open(url)
-            #endif
+        guard let url = URL(string: url) else {
+            return
         }
+        #if canImport(UIKit)
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
+        #elseif canImport(Cocoa)
+        NSWorkspace.shared.open(url)
+        #endif
+    }
+    
+    // Use this one in new code
+    public func open(url: String) {
+        SafariService.openLink(url: url)
+    }
+    
+    public init() {
     }
 }

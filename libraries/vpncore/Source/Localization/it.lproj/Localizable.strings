@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "SERVER DI BASE";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Tutto il traffico sul tuo telefono sarà gestito tramite OpenVPN, quindi iOS assegnerà l'utilizzo della batteria di altre app a ProtonVPN.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Vuoi saperne di più?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Utilizzo batteria";
+
 /* Common word */
 "_cancel" = "Annulla";
 
@@ -296,7 +305,7 @@
 "_error_apply_payment_failed_free" = "Continua con l'account gratuito";
 
 /* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
-"_error_apply_payment_failed_message" = "Your payment was not processed. To try again, click Retry. You will only be charged once.\nTo continue with a free account, click Continue with free account. You can upgrade to a paid plan at a later date.";
+"_error_apply_payment_failed_message" = "Il tuo pagamento non è stato elaborato. Per riprovare, fai clic su Riprova. Ti verrà addebitato solo una volta.\nPer continuare con un account gratuito, fare clic su Continua con un account gratuito. È possibile eseguire l'aggiornamento a un piano a pagamento in un secondo momento.";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Ti sei registrato correttamente ma il tuo pagamento non è stato elaborato. Per inviare nuovamente i dati di pagamento, fai clic su Riprova. Ti verrà addebitato solo una volta. Se il problema persiste, contattare l'assistenza clienti.";
@@ -308,7 +317,7 @@
 "_error_apply_payment_failed_on_registration_title" = "Pagamento non riuscito";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_message" = "You have successfully paid but your purchase was not processed. To resend your payment information, click Retry. You will only be charged once. If the problem persists, please contact customer support.";
+"_error_apply_payment_failed_on_upgrade_message" = "Hai pagato correttamente ma il tuo acquisto non è stato elaborato. Per inviare nuovamente i dati di pagamento, fai clic su Riprova. Ti verrà addebitato solo una volta. Se il problema persiste, contattare l'assistenza clienti.";
 
 /* Error applying credit after upgrade alert */
 "_error_apply_payment_failed_on_upgrade_title" = "Pagamento fallito";
@@ -473,7 +482,7 @@
 "_error_vpn_session_is_active" = "La sessione di ProtonVPN è attiva";
 
 /* In App Purchase error */
-"_error_wrong_payment_token_status" = "Wrong payment token status. Please relaunch the app. If error persists, contact support.";
+"_error_wrong_payment_token_status" = "Stato del token di pagamento errato. Si prega di riaprire l'app. Se l'errore persiste, contatta l'assistenza.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_body" = "ProtonVPN utilizza un firewall col filtro pacchetti per implementare un Kill Switch. Abilitando il Kill Switch, sovrascriverai le attuali impostazioni del firewall del tuo dispositivo. Se ti affidi a questa configurazione di firewall, non dovresti utilizzare Kill Switch.\n\nPer utilizzare il Kill Switch e sovrascrivere le impostazioni attuali del firewall, scegli CONTINUA.\n\nPer disattivare il Kill Switch e continuare ad utilizzare il tuo attuale firewall, scegli ANNULLA.";
@@ -571,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Ottieni il piano %@";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Ottieni ProtonVPN Plus per sbloccare questa e altre funzionalità.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Ricevi email di verifica";
 
@@ -644,7 +656,13 @@
 "_kill_switch_blocking_title" = "Kill Switch sta bloccando le perdite di IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Kill Switch non funziona correttamente. Se vuoi segnalare questo errore al Team di supporto di ProtonVPN, clicca Segnala.\nSe desideri ignorare questo errore e continuare a navigare su Internet SENZA la protezione di Kill Switch, clicca Ignora.";
+"_kill_switch_error_foot" = "Termina quelle applicazioni per risolvere il problema.\nPer continuare a navigare senza Kill Switch, fai clic su Continua.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Alcune applicazioni, come anti-virus o firewall, potrebbero entrare in conflitto con Kill Switch, facendo si che non funzioni correttamente.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Kill Switch funziona con macOS Firewall.\nSe ci sono altre applicazioni associate al Firewall, potrebbero interferire con Kill Switch di ProtonVPN. Terminare queste app può ripristinare le regole Firewall impostate da Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "È stato rilevato un errore del Kill Switch";
@@ -678,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Ulteriori informazioni su Secure Core";
+
+/* Display less information */
+"_less_info" = "Meno info";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carico";
@@ -714,6 +735,15 @@
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Manutenzione";
+
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Riconnessione al server più veloce disponibile.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Il server a cui eri connesso è in manutenzione";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "Il server VPN è in manutenzione";
 
 /* Profile create/change form */
 "_make_default_profile" = "Rendi il profilo predefinito";
@@ -781,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "Garanzia 30 giorni soddisfatti o rimborsati";
 
+/* Display more information */
+"_more_info" = "Più informazioni";
+
 /* Label in Plan information */
 "_most_popular" = "Più popolare";
 
@@ -834,6 +867,30 @@
 
 /* MacOS: button in login screen */
 "_need_help" = "Hai bisogno di aiuto?";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_off" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "La tua connessione verrà riavviata per cambiare la modalità NetShield.\nNota: se alcuni siti non vengono caricati, prova a disabilitare NetShield.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "NetShield aumenta la tua privacy bloccando pubblicità e tracker.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Blocca malware";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Blocca malware, annunci, tracker";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Disattivo";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Blocca pubblicità, tracker e malware";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Rete non raggiungibile";
@@ -1060,6 +1117,9 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Raccomandato";
 
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Riconnessione Richiesta";
+
 /* MacOS: About window */
 "_release_date" = "Data di rilascio:";
 
@@ -1182,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Streaming sicuro";
+
+/* iOS status view */
+"_security" = "Sicurezza";
 
 /* iOS Settings: table section header */
 "_security_options" = "Opzioni di sicurezza";

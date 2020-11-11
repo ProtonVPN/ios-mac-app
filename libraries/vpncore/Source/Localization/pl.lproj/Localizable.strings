@@ -82,6 +82,15 @@
 /* iOS: section header in countries list */
 "_basic_servers" = "PODSTAWOWE SERWERY";
 
+/* Battery usages screen description */
+"_battery_descritption" = "Cały ruch sieciowy telefonu będzie zarządzany przez protokół OpenVPN, dlatego system iOS przydzieli użycie baterii innych aplikacji do aplikacji ProtonVPN.";
+
+/* Battery usage More info button text */
+"_battery_more" = "Chcesz dowiedzieć się więcej?";
+
+/* iOS settings -> Battery usage; Title of battery usage screen; */
+"_battery_title" = "Użycie baterii";
+
 /* Common word */
 "_cancel" = "Anuluj";
 
@@ -224,7 +233,7 @@
 "_delete_profile_warning" = "Profil zostanie trwale usunięty. Czy chcesz kontynuować?";
 
 /* Delinquent user alert */
-"_delinquent_user_description" = "Twoje konto ma obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
+"_delinquent_user_description" = "Twoje konto posiada obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
 
 /* Delinquent user alert */
 "_delinquent_user_title" = "Nieopłacona faktura";
@@ -353,7 +362,7 @@
 "_error_hash_password" = "Nie można przetworzyć hasła";
 
 /* Unknown error that has no better description */
-"_error_internal_error" = "Wewnętrzny błąd interfejsu API";
+"_error_internal_error" = "Wystąpił wewnętrzny błąd interfejsu API";
 
 /* Invalid human verification code alert */
 "_error_invalid_human_verification_code_message" = "Czy chcesz otrzymać nowy kod weryfikacyjny lub użyć innej metody weryfikacji?";
@@ -431,7 +440,7 @@
 "_error_unavailable_product" = "Nie udało się uzyskać listy dostępnych produktów ze sklepu App Store.";
 
 /* General title for several error alerts */
-"_error_unknown_title" = "Nieznany błąd";
+"_error_unknown_title" = "Wystąpił nieznany błąd";
 
 /* user cancelled human validation procedure */
 "_error_user_cancelled" = "Operacja została anulowana";
@@ -571,6 +580,9 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Wybierz plan %@";
 
+/* Suggest the user to upgrade account for new features */
+"_get_plus_for_feature" = "Ulepsz do planu ProtonVPN Plus, aby odblokować dodatkowe funkcje.";
+
 /* iOS: Button in email verification screen */
 "_get_verification_email" = "Wyślij e-mail weryfikacyjny";
 
@@ -644,7 +656,13 @@
 "_kill_switch_blocking_title" = "Funkcja Kill Switch blokuje wycieki adresu IP";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_body" = "Funkcja Kill Switch nie działa prawidłowo. Jeśli chcesz zgłosić ten błąd do zespołu wsparcia ProtonVPN, kliknij przycisk Zgłoś.\nJeśli chcesz zignorować ten błąd i kontynuować przeglądanie internetu BEZ ochrony Kill Switch, kliknij przycisk Ignoruj.";
+"_kill_switch_error_foot" = "Wyłącz te aplikacje, aby naprawić problem.\nAby kontynuować przeglądanie bez funkcji Kill Switch, kliknij przycisk Kontynuuj.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_head" = "Niektóre aplikacje, jak antywirusy lub zapory sieciowe, mogą powodować konflikt z funkcją Kill Switch, co sprawia, że nie działa prawidłowo.";
+
+/* MacOS: killswitch error alert */
+"_kill_switch_error_info" = "Funkcja Kill Switch działa z zaporą sieciową macOS.\nJeśli inne aplikacje są powiązane z zaporą sieciową, mogą powodować konflikt z funkcją Kill Switch. Wyłączenie tych aplikacji może przywrócić działanie zasad zapory sieciowej ustawionych przez funkcję Kill Switch.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Wykryto błąd funkcji Kill Switch";
@@ -678,6 +696,9 @@
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Dowiedz się więcej o funkcji Secure Core";
+
+/* Display less information */
+"_less_info" = "Mniej informacji";
 
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Obciążenie";
@@ -714,6 +735,15 @@
 
 /* Server status in many places in iOS and MacOS apps */
 "_maintenance" = "Przerwa techniczna";
+
+/* MacOS: We'll connect to a different server */
+"_maintenance_on_server_detected_description" = "Ponowne łączenie z najszybszym dostępnym serwerem.";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_subtitle" = "Serwer, z którym byłeś połączony, jest w trakcie przerwy technicznej";
+
+/* MacOS: The current server has going to maintenance. */
+"_maintenance_on_server_detected_title" = "Serwer VPN jest w trakcie przerwy technicznej";
 
 /* Profile create/change form */
 "_make_default_profile" = "Ustaw jako domyślny profil";
@@ -781,6 +811,9 @@
 /* Label in several trial screens on MacOS */
 "_money_back_guarantee" = "30-dniowa gwarancja zwrotu pieniędzy";
 
+/* Display more information */
+"_more_info" = "Więcej informacji";
+
 /* Label in Plan information */
 "_most_popular" = "Najpopularniejszy";
 
@@ -834,6 +867,30 @@
 
 /* MacOS: button in login screen */
 "_need_help" = "Potrzebujesz pomocy?";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_off" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.";
+
+/* Netshield requires reconnect */
+"_netshield_alert_reconnect_description_on" = "Twoje połączenie zostanie ponownie nawiązane, aby zmienić ustawienie funkcji NetShield.\nUwaga: Wyłącz funkcję, jeśli niektóre strony internetowe nie działają.";
+
+/* Netshield requires upgrade */
+"_netshield_alert_upgrade_description" = "Funkcja NetShield zwiększa poziom prywatności poprzez blokowanie reklam i skryptów śledzących.";
+
+/* Settings -> Netshield: Block malware */
+"_netshield_level1" = "Zablokuj złośliwe oprogramowanie";
+
+/* Settings -> Netshield: Block malware, ads, trackers */
+"_netshield_level2" = "Zablokuj złośliwe oprogramowanie, reklamy i skrypty śledzące";
+
+/* Settings -> Netshield: Off */
+"_netshield_off" = "Wyłącz";
+
+/* Settings -> Netshield: name of field. */
+"_netshield_title" = "NetShield";
+
+/* Settings -> Netshield: description. */
+"_netshield_title_tooltip" = "Zablokuj reklamy, skrypty śledzące i złośliwe oprogramowanie";
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Sieć jest nieosiągalna";
@@ -1022,7 +1079,7 @@
 "_protocol" = "Protokół";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "ProtonVPN na macOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
 "_protonvpn_plus" = "ProtonVPN PLUS";
@@ -1059,6 +1116,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Zalecane";
+
+/* iOS & MacOS: text that requires restart connection */
+"_reconnection_required" = "Ponowne połączenie jest wymagane";
 
 /* MacOS: About window */
 "_release_date" = "Data publikacji:";
@@ -1182,6 +1242,9 @@
 
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_title" = "Bezpieczny streaming";
+
+/* iOS status view */
+"_security" = "Bezpieczeństwo";
 
 /* iOS Settings: table section header */
 "_security_options" = "Ustawienia bezpieczeństwa";

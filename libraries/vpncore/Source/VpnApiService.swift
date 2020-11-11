@@ -21,10 +21,11 @@
 
 import Alamofire
 
-public typealias OpenVpnConfigCallback = GenericCallback<OpenVpnConfig>
+public typealias ClientConfigCallback = GenericCallback<ClientConfig>
 public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
 public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
 public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
+public typealias VpnServerStateCallback = GenericCallback<VpnServerState>
 public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
 public typealias OptionalStringCallback = GenericCallback<String?>
 public typealias ContinuousServerPropertiesCallback = GenericCallback<ContinuousServerPropertiesDictionary>
@@ -50,7 +51,7 @@ public class VpnApiService {
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
         var rUserIp: String?
-        var rOpenVpnConfig: OpenVpnConfig?
+        var rClientConfig: ClientConfig?
         var rError: Error?
         
         let failureClosure: ErrorCallback = { error in
@@ -90,14 +91,14 @@ public class VpnApiService {
         }, failure: silentFailureClosure)
                 
         dispatchGroup.enter()
-        clientConfig(success: { openVpnConfig in
-            rOpenVpnConfig = openVpnConfig
+        clientConfig(success: { client in
+            rClientConfig = client
             dispatchGroup.leave()
         }, failure: failureClosure)
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig != nil ? rOpenVpnConfig : OpenVpnConfig.defaultConfig {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
+            if let servers = rServerModels {
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -112,7 +113,7 @@ public class VpnApiService {
         
         var rServerModels: [ServerModel]?
         var rUserIp: String?
-        var rOpenVpnConfig: OpenVpnConfig?
+        var rClientConfig: ClientConfig?
         var rError: Error?
         
         let failureClosure: ErrorCallback = { error in
@@ -140,14 +141,14 @@ public class VpnApiService {
         userIp(success: ipResolvedClosure, failure: failureClosure)
         
         dispatchGroup.enter()
-        clientConfig(success: { openVpnConfig in
-            rOpenVpnConfig = openVpnConfig
+        clientConfig(success: { client in
+            rClientConfig = client
             dispatchGroup.leave()
         }, failure: failureClosure)
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
-            if let servers = rServerModels, let openVpnConfig = rOpenVpnConfig {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, openVpnConfig: openVpnConfig, appStateManager: self?.appStateManager))
+            if let servers = rServerModels {
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, appStateManager: self?.appStateManager))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -215,6 +216,20 @@ public class VpnApiService {
         alamofireWrapper.request(VPNLogicalServicesRequest(shortenedIp), success: successWrapper, failure: failure)
     }
     
+    public func serverState(serverId id: String, success: @escaping VpnServerStateCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
+            guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
+                let error = ParseError.serverParse
+                PMLog.D("'Server' field not present in server info request's response", level: .error)
+                PMLog.ET(error.localizedDescription)
+                failure(error)
+                return
+            }
+            success(serverState)
+        }
+        alamofireWrapper.request(VPNServerRequest(id), success: successWrapper, failure: failure)
+    }
+    
     public func userIp(success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { response in
             guard let ip = response.string("IP") else {
@@ -257,7 +272,7 @@ public class VpnApiService {
         alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)
     }
     
-    public func loads(success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
+    public func loads(lastKnownIp: String?, success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { response in
             guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
                 PMLog.D("'LogicalServers' field not present in loads response", level: .error)
@@ -281,27 +296,28 @@ public class VpnApiService {
             
             success(loads)
         }
-        
-        alamofireWrapper.request(VPNLoadsRequest(), success: successWrapper, failure: failure)
+        var shortenedIp: String?
+        if let ip = lastKnownIp {
+            shortenedIp = truncatedIp(ip)
+        }
+        alamofireWrapper.request(VPNLoadsRequest(shortenedIp), success: successWrapper, failure: failure)
     }
     
-    public func clientConfig(success: @escaping OpenVpnConfigCallback, failure: @escaping ErrorCallback) {
+    public func clientConfig(success: @escaping ClientConfigCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { response in
-            guard let openVpnConfigJson = response.jsonDictionary(key: "OpenVPNConfig") else {
-                PMLog.D("'OpenVPNConfig' field not present in clientconfig response", level: .error)
-                let error = ParseError.clientConfigParse
-                PMLog.ET(error.localizedDescription)
-                failure(error)
-                return
-            }
-            
             do {
-                let openVpnConfig = try OpenVpnConfig(dic: openVpnConfigJson)
-                success(openVpnConfig)
+                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                let decoder = JSONDecoder()
+                // this strategy is decapitalizing first letter of response's labels to get appropriate name
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let clientConfigResponse = try decoder.decode(ClientConfig.self, from: data)
+                success(clientConfigResponse)
+            
             } catch {
-                PMLog.D("Failed to parse load info for json: \(openVpnConfigJson)", level: .error)
+                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
                 let error = ParseError.loadsParse
                 PMLog.ET(error.localizedDescription)
+                failure(error)
             }
         }
         
@@ -319,5 +335,26 @@ public class VpnApiService {
         } else {
             return ip
         }
+    }
+    
+    private struct Key: CodingKey {
+        var stringValue: String
+        var intValue: Int?
+        
+        init?(stringValue: String) {
+            self.stringValue = stringValue
+            self.intValue = nil
+        }
+        
+        init?(intValue: Int) {
+            self.stringValue = "\(intValue)"
+            self.intValue = intValue
+        }
+    }
+    
+    private func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
+        let original: String = path.last!.stringValue
+        let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
+        return Key(stringValue: uncapitalized) ?? path.last!
     }
 }

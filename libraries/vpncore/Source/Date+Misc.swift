@@ -29,4 +29,8 @@ public extension Date {
         return self.timeIntervalSinceNow > 0
     }
     
+    /// Check if this date represnt time in future
+    var isPast: Bool {
+        return self.timeIntervalSinceNow < 0
+    }
 }

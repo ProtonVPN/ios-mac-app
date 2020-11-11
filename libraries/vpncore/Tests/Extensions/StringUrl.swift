@@ -38,4 +38,14 @@ class StringUrl: XCTestCase {
         XCTAssert("https://\(domain)/path/path2".domainWithoutPathAndProtocol.elementsEqual(domain))
     }
     
+    func testUrlWIthUtmSource() throws {
+        XCTAssertEqual("https://www.protonvpn.com/path".urlWithAdded(utmSource: "SOURCE"),
+                       "https://www.protonvpn.com/path?utm_source=SOURCE")
+        XCTAssertEqual("https://www.protonvpn.com/path?a=b".urlWithAdded(utmSource: "SOURCE"),
+                       "https://www.protonvpn.com/path?a=b&utm_source=SOURCE")
+        XCTAssertEqual("https://www.protonvpn.com/path?a=b&c=d".urlWithAdded(utmSource: "SOURCE"),
+                       "https://www.protonvpn.com/path?a=b&c=d&utm_source=SOURCE")
+        
+    }
+    
 }

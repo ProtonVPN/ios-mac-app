@@ -41,6 +41,7 @@ public class LocalizedString {
     public static let upgradeSubscription = NSLocalizedString("_upgrade_subscription", comment: "iOS: Plan selection during plan upgarde, button insettings screen")
     public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
+    public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
     public static let quitWarning = NSLocalizedString("_quit_warning", comment: "MacOS: alert show before quitting app if VPN is connected")
@@ -89,6 +90,7 @@ public class LocalizedString {
     public static let connectionFailed = NSLocalizedString("_connection_failed", comment: "Connection error translation. iOS quick connect widget: text shown on error.")
     public static let timedOut = NSLocalizedString("_timed_out", comment: "MacOS: connecting overlay")
     public static let status = NSLocalizedString("_status", comment: "iOS status view")
+    public static let security = NSLocalizedString("_security", comment: "iOS status view")
     public static let sessionTime = NSLocalizedString("_session_time", comment: "iOS status view")
     public static let location = NSLocalizedString("_location", comment: "iOS status view")
     public static let city = NSLocalizedString("_city", comment: "iOS status view")
@@ -105,7 +107,10 @@ public class LocalizedString {
     public static let countriesFree = NSLocalizedString("_countries_free", comment: "iOS: countries list section header")
     public static let countriesPremium = NSLocalizedString("_countries_premium", comment: "iOS: countries list section header")
     public static let close = NSLocalizedString("_close", comment: "Common word")
-    
+    public static let getPlusForFeature = NSLocalizedString("_get_plus_for_feature", comment: "Suggest the user to upgrade account for new features")
+    public static let moreInfo = NSLocalizedString("_more_info", comment: "Display more information")
+    public static let lessInfo = NSLocalizedString("_less_info", comment: "Display less information")
+
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
     public static let alwaysOnWillReconnect = NSLocalizedString("_always_on_will_reconnect", comment: "Disconnect notification")
@@ -263,7 +268,7 @@ public class LocalizedString {
     public static let errorEmailVerificationDisabled = NSLocalizedString("_error_email_verification_disabled", comment: "Internal application error")
     
     public static let errorFieldRequired = NSLocalizedString("_error_field_required", comment: "Form validation error")
-    public static let errorFielWrongdEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
+    public static let errorFieldWrongEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
     public static let errorFieldPasswordDontMatch = NSLocalizedString("_error_field_passwords_dont_match", comment: "Form validation error")
     public static let errorFieldUnknown = NSLocalizedString("_error_field_unknown", comment: "Form validation error")
     
@@ -409,7 +414,9 @@ public class LocalizedString {
     public static let killSwitchBlockingBody = NSLocalizedString("_kill_switch_blocking_body", comment: "MacOS: killswitch blocking alert")
     
     public static let killSwitchErrorTitle = NSLocalizedString("_kill_switch_error_title", comment: "MacOS: killswitch error alert")
-    public static let killSwitchErrorBody = NSLocalizedString("_kill_switch_error_body", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorHead = NSLocalizedString("_kill_switch_error_head", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorInfo = NSLocalizedString("_kill_switch_error_info", comment: "MacOS: killswitch error alert")
+    public static let killSwitchErrorFoot = NSLocalizedString("_kill_switch_error_foot", comment: "MacOS: killswitch error alert")
     
     public static let killSwitchHelperInstallPopupBody = NSLocalizedString("_kill_switch_helper_install_popup_body", comment: "MacOS: killswitch alert")
     public static let killSwitchHelperUpdatePopupBody = NSLocalizedString("_kill_switch_helper_update_popup_body", comment: "MacOS: updating helper alert")
@@ -425,7 +432,10 @@ public class LocalizedString {
     public static let killSwitchRequiresSwiftPopupMsg2 = NSLocalizedString("_ks_requires_swift5_popup_msg2", comment: "MacOS: Swift 5 required and user didn't install it")
     public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
     public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
-        
+    public static let onMaintenanceDetectedTitle = NSLocalizedString("_maintenance_on_server_detected_title", comment: "MacOS: The current server has going to maintenance.")
+    public static let onMaintenanceDetectedSubtitle = NSLocalizedString("_maintenance_on_server_detected_subtitle", comment: "MacOS: The current server has going to maintenance.")
+    public static let onMaintenanceDetectedDescription = NSLocalizedString("_maintenance_on_server_detected_description", comment: "MacOS: We'll connect to a different server")
+
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
     public static let settings = NSLocalizedString("_settings", comment: "iOS: Settings screen title and tab title")
@@ -631,4 +641,21 @@ public class LocalizedString {
     public static let troubleshootItemLinkOther2 = NSLocalizedString("_troubleshoot_item_other_link2", comment: "Text that will become a link to email in _troubleshoot_item_other_description")
     public static let troubleshootItemLinkOther3 = NSLocalizedString("_troubleshoot_item_other_link3", comment: "Text that will become a link to twitter in _troubleshoot_item_other_description")
     
+    // MARK: - Battery info
+    public static let batteryTitle = NSLocalizedString("_battery_title", comment: "iOS settings -> Battery usage; Title of battery usage screen;")
+    public static let batteryDescription = NSLocalizedString("_battery_descritption", comment: "Battery usages screen description")
+    public static let batteryMore = NSLocalizedString("_battery_more", comment: "Battery usage More info button text")
+
+    // MARK: - Netshield
+    public static let netshieldTitle = NSLocalizedString("_netshield_title", comment: "Settings -> Netshield: name of field.")
+    public static let netshieldTitleTootltip = NSLocalizedString("_netshield_title_tooltip", comment: "Settings -> Netshield: description.")
+    public static let netshieldOff = NSLocalizedString("_netshield_off", comment: "Settings -> Netshield: Off")
+    public static let netshieldLevel1 = NSLocalizedString("_netshield_level1", comment: "Settings -> Netshield: Block malware")
+    public static let netshieldLevel2 = NSLocalizedString("_netshield_level2", comment: "Settings -> Netshield: Block malware, ads, trackers")
+    public static let netshieldReconnectDescriptionOn = NSLocalizedString("_netshield_alert_reconnect_description_on", comment: "Netshield requires reconnect")
+    public static let netshieldReconnectDescriptionOff = NSLocalizedString("_netshield_alert_reconnect_description_off", comment: "Netshield requires reconnect")
+    public static let netshieldUpgradeDescription = NSLocalizedString("_netshield_alert_upgrade_description", comment: "Netshield requires upgrade")
+    
+    // MARK: - Nesw / Announcements / APINotifications
+    public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")
 }

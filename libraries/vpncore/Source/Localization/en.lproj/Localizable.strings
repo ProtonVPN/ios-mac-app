@@ -16,6 +16,7 @@
 "_upgrade_subscription" = "Upgrade Subscription";
 "_manage_subscription" = "Manage Subscription" ;
 "_upgrade_required" = "Upgrade Required";
+"_reconnection_required" = "Reconnection Required";
 "_maintenance" = "Maintenance";
 "_quit" = "Quit";
 "_quit_warning" = "Quitting the application will disconnect the active VPN connection. Do you want to continue?";
@@ -38,6 +39,9 @@
 "_learn_more" = "Learn more";
 "_ip" = "IP";
 "_close" = "Close";
+"_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
+"_more_info" = "More info";
+"_less_info" = "Less info";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -80,6 +84,7 @@
 "_failed" = "failed";
 "_connection_failed" = "Connection Failed";
 "_timed_out" = "timed out";
+"_security" = "Security";
 "_status" = "Status";
 "_session_time" = "Session Time";
 "_location" = "Location";
@@ -353,6 +358,9 @@
 "_ks_requires_swift5_popup_msg2" = "You still have not intalled Swift 5 Runtime Support. ProtonVPN cannot run Kill Switch without Swift 5. If you choose not to install Swift 5 on your device, you will not be able to use Kill Switch to protect your device. ";
 "_ks_enable_again" = "Enable Kill Switch again";
 "_ks_keep_disabled" = "Leave Kill Switch off";
+"_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
+"_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
+"_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
 
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
@@ -445,7 +453,9 @@
 "_kill_switch_blocking_body" = "You have lost connection to the VPN server. Kill Switch is blocking all connections to avoid leaking your data. ProtonVPN will try to reconnect automatically. To dismiss this window, click OK.\n\nIf you would like to temporarily disable Kill Switch and reconnect to the Internet WITHOUT VPN protection, click DISABLE.\n\nTo turn off Kill Switch permanently, go to %@.";
 
 "_kill_switch_error_title" = "A Kill Switch error has been detected";
-"_kill_switch_error_body" = "Kill Switch is not functioning properly. If you would like to report this error to the ProtonVPN Support Team, click Report.\nIf you would like to ignore this error and continue browsing the Internet WITHOUT Kill Switch protection, click Ignore.";
+"_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
+"_kill_switch_error_info" = "Kill Switch works with the macOS Firewall.\nIf there are other apps associated with the Firewall, they may interfere with ProtonVPN's Kill Switch. Terminating those apps can restore the Firewall rules set by Kill Switch.";
+"_kill_switch_error_foot" = "Terminate those apps to fix the problem.\nTo keep browsing without Kill Switch, click Continue.";
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_install_popup_body" = "To enable Kill Switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the ProtonVPN app receives updates.";
@@ -680,3 +690,21 @@
 "_troubleshoot_item_other_link1" = "support form";
 "_troubleshoot_item_other_link2" = "email";
 "_troubleshoot_item_other_link3" = "Twitter";
+
+// Battery usage
+"_battery_title" = "Battery usage";
+"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_more" = "Want to learn more?";
+
+// Netshield
+"_netshield_title" = "NetShield";
+"_netshield_title_tooltip" = "Block advertisements, trackers and malware";
+"_netshield_off" = "Off";
+"_netshield_level1" = "Block malware";
+"_netshield_level2" = "Block malware, ads, trackers";
+"_netshield_alert_reconnect_description_on" = "Your connection will be restarted to change the NetShield mode.\nNote: If some sites don't load, try disabling NetShield.";
+"_netshield_alert_reconnect_description_off" = "Your connection will be restarted to change the NetShield mode.";
+"_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
+
+// Announcements
+"_news_title" = "News";

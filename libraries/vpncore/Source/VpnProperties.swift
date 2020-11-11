@@ -27,12 +27,12 @@ public struct VpnProperties {
     public let serverModels: [ServerModel]
     public let vpnCredentials: VpnCredentials?
     public let ip: String?
-    public let openVpnConfig: OpenVpnConfig
+    public let clientConfig: ClientConfig
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, openVpnConfig: OpenVpnConfig, appStateManager: AppStateManager?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, appStateManager: AppStateManager?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.ip = ip
-        self.openVpnConfig = openVpnConfig
+        self.clientConfig = clientConfig ?? ClientConfig.defaultConfig
     }
 }

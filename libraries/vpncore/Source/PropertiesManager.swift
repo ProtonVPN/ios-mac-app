@@ -55,6 +55,10 @@ public protocol PropertiesManagerProtocol: class {
     var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
     
+    var featureFlags: FeatureFlags { get set }
+    var netShieldType: NetShieldType { get set }
+    var maintenanceServerRefreshIntereval: Int { get set }
+    
     // Development properties
     var apiEndpoint: String? { get set }
     var customServers: [ServerModel]? { get set }
@@ -66,7 +70,7 @@ public protocol PropertiesManagerProtocol: class {
     
 }
 
-public class PropertiesManager: PropertiesManagerProtocol {    
+public class PropertiesManager: PropertiesManagerProtocol {
     
     private struct Keys {
       
@@ -109,10 +113,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // AppState
         static let lastTimeForeground = "LastTimeForeground"
+        
+        // Features
+        static let featureFlags = "FeatureFlags"
+        static let netshield = "NetShield"
+        static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
+    public static let featureFlagsNotification = Notification.Name("FeatureFlags")
 
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -380,6 +390,50 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground)
+        }
+    }
+    
+    public var netShieldType: NetShieldType {
+        get {
+            guard featureFlags.isNetShield else {
+                return .off
+            }
+            guard let current = Storage.userDefaults().value(forKey: Keys.netshield) as? Int, let type = NetShieldType.init(rawValue: current) else {
+                return .level1
+            }
+            return type
+        }
+        set {
+            Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
+        }
+    }
+    
+    public var featureFlags: FeatureFlags {
+        get {
+            var current: FeatureFlags?
+            if let data = Storage.userDefaults().data(forKey: Keys.featureFlags) {
+                current = try? JSONDecoder().decode(FeatureFlags.self, from: data)
+            }
+            return current ?? FeatureFlags.defaultConfig
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                Storage.setValue(data, forKey: Keys.featureFlags)
+                NotificationCenter.default.post(name: type(of: self).featureFlagsNotification, object: newValue)
+            }
+        }
+    }
+    
+    public var maintenanceServerRefreshIntereval: Int {
+        get {
+            if Storage.contains(Keys.maintenanceServerRefreshIntereval) {
+                return Storage.userDefaults().integer(forKey: Keys.maintenanceServerRefreshIntereval)
+            } else {
+                return CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
+            }
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
         }
     }
     

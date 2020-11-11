@@ -50,8 +50,9 @@ public class CoreAppConstants {
         public static let forgotUsername = "https://account.protonvpn.com/forgot-username"
         public static let termsAndConditions = "https://protonvpn.com/terms-and-conditions"
         public static let privacyPolicy = "https://protonvpn.com/privacy-policy"
-        public static let appstoreIosUrl: String = "http://itunes.apple.com/app/id1437005085"
-        public static let unsecureWiFiUrl: String = "https://protonvpn.com/blog/public-wifi-safety/"
+        public static let appstoreIosUrl = "http://itunes.apple.com/app/id1437005085"
+        public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
+        public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
     }
     
     public struct AttributionLinks {
@@ -73,7 +74,14 @@ public class CoreAppConstants {
     }
     
     public struct UpdateTime {
-        public static let quickUpdateTime: Double = 3.0
-        public static let quickReconnectTime: Double = 0.5
+        public static let quickUpdateTime: TimeInterval = 3.0
+        public static let quickReconnectTime: TimeInterval = 0.5
+        
+        // Pull announcements from API
+        public static let announcementRefreshTime: TimeInterval = 12 * 60 * 60 // 12 h
+    }
+    
+    public struct Maintenance {
+        public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
     }
 }

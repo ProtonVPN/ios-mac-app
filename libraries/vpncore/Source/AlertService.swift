@@ -78,6 +78,11 @@ public protocol SystemAlert: AnyObject {
     var dismiss: (() -> Void)? { get set }
 }
 
+public protocol ExpandableSystemAlert: SystemAlert {
+    var expandableInfo: String? { get set }
+    var footInfo: String? { get set }
+}
+
 extension SystemAlert {
     public static var className: String {
         return String(describing: self)
@@ -546,5 +551,42 @@ public class PaymentFailedAlert: SystemAlert {
     public init(retryHandler: @escaping () -> Void, freeHandler: @escaping () -> Void) {
         actions.append(AlertAction(title: LocalizedString.errorApplyPaymentRetry, style: .confirmative, handler: retryHandler))
         actions.append(AlertAction(title: LocalizedString.errorApplyPaymentFree, style: .cancel, handler: freeHandler))
+    }
+}
+
+public class VpnServerOnMaintenanceAlert: SystemAlert {
+    public var title: String? = LocalizedString.onMaintenanceDetectedTitle
+    public var message: String? = LocalizedString.onMaintenanceDetectedDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init() { }
+}
+
+public class ReconnectOnNetshieldChangeAlert: SystemAlert {
+    public var title: String? = LocalizedString.reconnectionRequired
+    public var message: String? = LocalizedString.netshieldReconnectDescriptionOn
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        message = isOn ? LocalizedString.netshieldReconnectDescriptionOn : LocalizedString.netshieldReconnectDescriptionOff
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class NetShieldRequiresUpgradeAlert: SystemAlert {
+    public var title: String? = LocalizedString.upgradeRequired
+    public var message: String? = LocalizedString.netshieldUpgradeDescription + "\n\n" + LocalizedString.getPlusForFeature
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }

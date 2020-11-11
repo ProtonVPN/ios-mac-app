@@ -48,7 +48,13 @@ public class AuthKeychain {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
-            PMLog.D("Keychain (auth) write error: \(error)", level: .error)
+            PMLog.D("Keychain (auth) write error: \(error). Will clean and retry.", level: .error)
+            do { // In case of error try to clean keychain and retry with storing data
+                clear()
+                try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+            } catch {
+                PMLog.D("Keychain (auth) write error: \(error)", level: .error)
+            }
         }
     }
     
