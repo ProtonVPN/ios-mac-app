@@ -70,12 +70,12 @@ public class LocalizedString {
     public static let country = NSLocalizedString("_country", comment: "Profile create/edit menu")
     public static let showProtonVpn = NSLocalizedString("_show_protonvpn", comment: "MacOS: button in custom status menu")
     public static let preparingConnection = NSLocalizedString("_preparing_connection", comment: "MacOS: connecting overlay")
-    public static let connectingTo = NSLocalizedString("_connecting_to", comment: "MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1")
+    public static let connectingTo = NSLocalizedString("_connecting_to", comment: "MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore")
     public static let connectedTo = NSLocalizedString("_connected_to", comment: "iOS status view")
     public static let connecting = NSLocalizedString("_connecting", comment: "iOS: main button in tabbar during connecting to vpn phase")
     public static let connectingDotDotDot = NSLocalizedString("_connecting...", comment: "iOS: connection bar, iOS widget")
     public static let connectingVpn = NSLocalizedString("_connecting_vpn", comment: "MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed")
-    public static let vpnConnected = NSLocalizedString("_connected_to_vpn", comment: "MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1")
+    public static let vpnConnected = NSLocalizedString("_connected_to_vpn", comment: "MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore")
     public static let notConnected = NSLocalizedString("_not_connected", comment: "iOS: connection bar; Main mac app menu item;")
     public static let youAreNotConnected = NSLocalizedString("_you_are_not_connected", comment: "MacOS: text in main window")
     public static let tryAgain = NSLocalizedString("_try_agian", comment: "MacOS: button in connecting overlay")
@@ -655,6 +655,9 @@ public class LocalizedString {
     public static let netshieldReconnectDescriptionOn = NSLocalizedString("_netshield_alert_reconnect_description_on", comment: "Netshield requires reconnect")
     public static let netshieldReconnectDescriptionOff = NSLocalizedString("_netshield_alert_reconnect_description_off", comment: "Netshield requires reconnect")
     public static let netshieldUpgradeDescription = NSLocalizedString("_netshield_alert_upgrade_description", comment: "Netshield requires upgrade")
+    
+    public static let netshieldSectionTitle = NSLocalizedString("_netshield_section_title", comment: "Netshield section title in iOS connection screen")
+    public static let netshieldTooltip = NSLocalizedString("_netshield_tooltip", comment: "Short description of what NetSHield is. Shown in iOS connection status screen.")
     
     // MARK: - Nesw / Announcements / APINotifications
     public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")

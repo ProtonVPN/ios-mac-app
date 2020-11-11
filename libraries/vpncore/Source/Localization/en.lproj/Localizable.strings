@@ -706,5 +706,8 @@
 "_netshield_alert_reconnect_description_off" = "Your connection will be restarted to change the NetShield mode.";
 "_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
 
+"_netshield_section_title" = "MALWARE & ADS BLOCKER";
+"_netshield_tooltip" = "Prevents your browser from loading websites that host malicious software and the online trackers that advertisement companies use to target you.";
+
 // Announcements
 "_news_title" = "News";
