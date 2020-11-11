@@ -69,6 +69,7 @@ class NetshieldSelectionViewModel {
             }
             return .checkmarkStandard(title: type.name, checked: type == selectedType, handler: { [weak self] in
                 self?.userSelected(type: type)
+                return true
             })
         }
         return [TableViewSection(title: "", cells: cells)]

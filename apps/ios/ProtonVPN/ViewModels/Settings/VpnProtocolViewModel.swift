@@ -43,9 +43,11 @@ class VpnProtocolViewModel {
         return TableViewSection(title: "", cells: [
             .checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke, handler: { [switchVpnProtocol] in
                 switchVpnProtocol(.ike)
+                return true
             }),
             .checkmarkStandard(title: LocalizedString.openVpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
                 switchVpnProtocol(.openVpn(openVpnTransportProtocol))
+                return true
             })
         ])
     }
@@ -54,9 +56,11 @@ class VpnProtocolViewModel {
         return TableViewSection(title: "", cells: [
             .checkmarkStandard(title: LocalizedString.tcp, checked: openVpnTransportProtocol == .tcp || openVpnTransportProtocol == .undefined, handler: { [switchTransportProtocol] in
                 switchTransportProtocol(.tcp)
+                return true
             }),
             .checkmarkStandard(title: LocalizedString.udp, checked: openVpnTransportProtocol == .udp, handler: { [switchTransportProtocol] in
                 switchTransportProtocol(.udp)
+                return true
             })
         ])
     }
