@@ -275,8 +275,6 @@ class StatusViewModel {
             }
         }
         
-        cells.append(.tooltip(text: LocalizedString.netshieldTooltip))
-        
         return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
     }
     
