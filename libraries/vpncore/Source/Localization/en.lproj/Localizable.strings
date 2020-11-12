@@ -598,10 +598,12 @@
 "_profiles_tour_description" = "Save your preferred settings and servers for future use.";
 "_countries_tour_title" = "Countries";
 "_countries_tour_description" = "Choose which country and server you would like to use for your end IP address.";
-"_secure_core_tour_title" = "Secure Core";
-"_secure_core_tour_description" = "Turn on Secure Core to route your traffic through additional servers for another layer of network security. Available to Plus and Visionary members.";
-"_map_tour_title" = "Map";
-"_map_tour_description" = "See where VPN servers are located. Find the one nearest to your location.";
+"_quick_settings_tour_title" = "Quick Settings";
+"_quick_settings_tour_description" = "Increase your security with one click:";
+"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
+"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
+"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on Kill Switch.";
+
 "_next_tip" = "Next Tip";
 "_end_tour" = "End Tour";
 
