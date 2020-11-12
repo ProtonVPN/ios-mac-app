@@ -244,6 +244,7 @@
 		D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
 		D5439077236189FA0094451D /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
 		D5439079236191420094451D /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
+		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
 		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
@@ -3037,6 +3038,7 @@
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
 				D511085B246189A60018872A /* PlanCardView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
+				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
 				D5136C6A228592E80002C095 /* LoginBoxView.swift in Sources */,
 				E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */,
 				D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */,
