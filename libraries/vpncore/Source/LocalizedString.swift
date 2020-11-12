@@ -657,7 +657,6 @@ public class LocalizedString {
     public static let netshieldUpgradeDescription = NSLocalizedString("_netshield_alert_upgrade_description", comment: "Netshield requires upgrade")
     
     public static let netshieldSectionTitle = NSLocalizedString("_netshield_section_title", comment: "Netshield section title in iOS connection screen")
-    public static let netshieldTooltip = NSLocalizedString("_netshield_tooltip", comment: "Short description of what NetSHield is. Shown in iOS connection status screen.")
     
     // MARK: - Nesw / Announcements / APINotifications
     public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")
