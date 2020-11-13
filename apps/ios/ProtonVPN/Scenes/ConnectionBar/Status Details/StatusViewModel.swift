@@ -107,7 +107,7 @@ class StatusViewModel {
     
     private var connectionStatusSection: TableViewSection {
         guard let status = connectionSatus else {
-            return TableViewSection(title: "", cells: [
+            return TableViewSection(title: "", showHeader: false, cells: [
                 .textWithActivityCell(title: LocalizedString.unavailable, textColor: .protonWhite(), backgroundColor: .protonGrey(), showActivity: false)
             ])
         }
@@ -125,7 +125,7 @@ class StatusViewModel {
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         }
         
-        return TableViewSection(title: "", cells: [cell])
+        return TableViewSection(title: "", showHeader: false, cells: [cell])
     }
     
     private var connectionCountryString: String {

@@ -41,9 +41,20 @@ enum TableViewCellModel {
 }
 
 struct TableViewSection {
-    
     let title: String
     var cells: [TableViewCellModel]
+    let showHeader: Bool
+    
+    init(title: String, showHeader: Bool = true, cells: [TableViewCellModel]) {
+        self.title = title
+        self.cells = cells
+        self.showHeader = showHeader
+    }
+    
+    var headerHeight: CGFloat {
+        return showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
+    }
+    
 }
 
 // A generic data source for table views
@@ -238,7 +249,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UIConstants.headerHeight
+        return sections[section].headerHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
