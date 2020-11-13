@@ -284,6 +284,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     private func logOutCleanup() {
         refreshTimer.stop()
         loggedIn = false
+        announcementRefresher.resetTimer()
         
         AuthKeychain.clear()
         vpnKeychain.clear()
