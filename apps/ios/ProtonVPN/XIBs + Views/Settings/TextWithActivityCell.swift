@@ -1,6 +1,6 @@
 //
-//  TabBar.swift
-//  ProtonVPN - Created on 01.07.19.
+//  TextWithActivityCell.swift
+//  ProtonVPN - Created on 2020-11-09.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,18 +22,25 @@
 
 import UIKit
 
-class TabBar: UITabBar {
+class TextWithActivityCell: UITableViewCell {
+
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var activityIndicatorView: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        
-        isTranslucent = false
+        setupViews()
     }
-}
 
-extension TabBar {
-    
-    override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
+    override func setSelected(_ selected: Bool, animated: Bool) {
+        super.setSelected(selected, animated: animated)
+        
+        selectionStyle = .none
     }
+    
+    private func setupViews(inverted: Bool = false) {
+        backgroundColor = .protonGrey()
+        titleLabel.font = UIFont.systemFont(ofSize: 17)
+    }
+    
 }

@@ -27,32 +27,32 @@ import vpncore
 class StatusViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
+    public var planService: PlanService?
+    
     var viewModel: StatusViewModel? {
         didSet {
             viewModel?.messageHandler = { [weak self] text, type, options in
                 self?.showMessage(text, type: type, options: options)
             }
-            viewModel?.contentChanged = { [weak self] in
+            viewModel?.contentChanged = { [weak self]  in
                 self?.updateTableView()
                 self?.tableView.reloadData()
+            }
+            viewModel?.rowsUpdated = { [weak self] rows in
+                guard let genericDataSource = self?.genericDataSource else { return }
+                genericDataSource.update(rows: rows)
+                self?.tableView.reloadRows(at: Array(rows.keys), with: .none)
             }
             viewModel?.dismissStatusView = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
-            viewModel?.changeNetShieldType = { [weak self] currentType, approveCallback in
-                guard let netShieldService = self?.netshieldServiceFactory?.makeNetshieldService() else { return }
-                let controller = netShieldService.makeNetshieldSelectionViewController(selectedType: currentType, approve: approveCallback, onChange: { type in
-                    self?.updateTableView()
-                    self?.navigationController?.popToRootViewController(animated: true)
-                })
-                self?.navigationController?.pushViewController(controller, animated: true)
+            viewModel?.planUpgradeRequired = { [weak self] in
+                self?.planService?.presentPlanSelection()
             }
         }
     }
     
     private var genericDataSource: GenericTableViewDataSource?
-    
-    public var netshieldServiceFactory: NetshieldServiceFactory?
     
     override func viewDidLoad() {
         super.viewDidLoad()

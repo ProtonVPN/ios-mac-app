@@ -13,7 +13,7 @@ class CheckmarkTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
     
-    var completionHandler: (() -> Void)?
+    var completionHandler: (() -> Bool)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -34,8 +34,9 @@ class CheckmarkTableViewCell: UITableViewCell {
     }
     
     func select() {
-        accessoryType = .checkmark
-        completionHandler?()
+        if completionHandler?() ?? true {
+            accessoryType = .checkmark
+        }
     }
     
     func deselect() {

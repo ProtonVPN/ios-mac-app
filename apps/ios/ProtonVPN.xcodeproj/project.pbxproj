@@ -244,6 +244,7 @@
 		D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
 		D5439077236189FA0094451D /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
 		D5439079236191420094451D /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
+		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
 		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
@@ -282,6 +283,8 @@
 		D594A961227C3A460041D423 /* LogoWithMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A960227C3A460041D423 /* LogoWithMapView.swift */; };
 		D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D594A962227C3A500041D423 /* LogoWithMapView.xib */; };
 		D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
+		D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
+		D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */; };
 		D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */; };
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
@@ -739,6 +742,8 @@
 		D594A960227C3A460041D423 /* LogoWithMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoWithMapView.swift; sourceTree = "<group>"; };
 		D594A962227C3A500041D423 /* LogoWithMapView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LogoWithMapView.xib; sourceTree = "<group>"; };
 		D594A964227C466F0041D423 /* UIView+constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+constraints.swift"; sourceTree = "<group>"; };
+		D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithActivityCell.swift; sourceTree = "<group>"; };
+		D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TextWithActivityCell.xib; sourceTree = "<group>"; };
 		D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BatteryUsageViewController.swift; sourceTree = "<group>"; };
 		D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BatteryUsageViewController.xib; sourceTree = "<group>"; };
 		D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
@@ -1242,12 +1247,14 @@
 				E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */,
 				E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */,
 				E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */,
-				E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */,
-				E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */,
 				793ECF372148DCF900C186A7 /* KeyValueTableViewCell.swift */,
 				793ECF382148DCF900C186A7 /* KeyValueTableViewCell.xib */,
 				E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */,
 				E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */,
+				D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */,
+				D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */,
+				E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */,
+				E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */,
 				793ECF3B2148E84500C186A7 /* TooltipTableViewCell.swift */,
 				793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */,
 			);
@@ -2397,6 +2404,7 @@
 				D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */,
 				D5CD4B08236724400006AAF7 /* Localizable.strings in Resources */,
 				E169FC412289B87F00FDC933 /* PhoneCountryCodeTableViewCell.xib in Resources */,
+				D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */,
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
 				791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
@@ -2751,6 +2759,7 @@
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
 				D5BCDCF825304CA9004BAEE8 /* AnnouncementCell.swift in Sources */,
+				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
 				D5BF95132355A54300C7D1E7 /* UserPropertiesCreator.swift in Sources */,
 				79F88AFB20EC6DE0001ADEB3 /* LoginBoxView.swift in Sources */,
@@ -3029,6 +3038,7 @@
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
 				D511085B246189A60018872A /* PlanCardView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
+				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
 				D5136C6A228592E80002C095 /* LoginBoxView.swift in Sources */,
 				E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */,
 				D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */,

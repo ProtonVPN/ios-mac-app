@@ -674,8 +674,8 @@ extension NavigationService: ConnectionStatusService {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
+            statusViewController.planService = self
             statusViewController.viewModel = StatusViewModel(factory: factory, delegate: delegate)
-            statusViewController.netshieldServiceFactory = self.factory
             return statusViewController
         }
         return nil
