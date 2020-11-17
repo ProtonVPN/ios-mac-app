@@ -407,6 +407,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
+            NotificationCenter.default.post(name: PropertiesManager.netShieldNotification, object: newValue)
         }
     }
     
