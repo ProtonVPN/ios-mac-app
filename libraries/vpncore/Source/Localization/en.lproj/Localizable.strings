@@ -714,8 +714,9 @@
 "_news_title" = "News";
 
 // Quick Settings
-"_quick_settings_secureCore_description" = "Provides additional privacy by routing traffic through our Secure Core network.";
-"_quick_settings_netShield_description" = "Browse the Internet free of ads and malware.";
+"_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
+"_quick_settings_netShield_description" = "Browse the Internet without ads and malware.";
 "_quick_settings_killSwitch_description" = "Disables Internet if the VPN connection drops to prevent accidental IP leak.";
-"_quick_settings_secureCore_note" = "Note: Secure Core could reduce VPN speed.";
-"_quick_settings_netShield_note" = "Note: If some sites don't load, try disabling NetShield.";
+"_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
+"_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
+"_quick_settings_get_plus" = "GET PLUS";

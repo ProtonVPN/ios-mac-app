@@ -669,4 +669,5 @@ public class LocalizedString {
     public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
     public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
     public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
+    public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")    
 }
