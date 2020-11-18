@@ -31,6 +31,7 @@ class ConnectionBarViewController: UIViewController {
     
     var viewModel: ConnectionBarViewModel?
     var tap: UITapGestureRecognizer!
+    var connectionStatusService: ConnectionStatusService!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -104,8 +105,6 @@ class ConnectionBarViewController: UIViewController {
     }
     
     @objc private func handleTap() {
-        if let viewController = viewModel?.statusViewController {
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
+        connectionStatusService.presentStatusViewController()
     }
 }

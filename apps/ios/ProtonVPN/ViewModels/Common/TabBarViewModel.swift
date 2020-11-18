@@ -40,6 +40,7 @@ class TabBarViewModel {
     let sessionManager: AppSessionManager
     let appStateManager: AppStateManager
     let vpnGateway: VpnGatewayProtocol?
+    let connectionStatusService: ConnectionStatusService
     weak var delegate: TabBarViewModelDelegate?
     
     var showLoginAnimated: Bool {
@@ -52,6 +53,7 @@ class TabBarViewModel {
         self.sessionManager = sessionManager
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
+        self.connectionStatusService = navigationService
         
         startObserving()
     }
@@ -73,6 +75,7 @@ class TabBarViewModel {
         
         if vpnGateway.connection == .disconnected || vpnGateway.connection == .disconnecting {
             vpnGateway.quickConnect()
+            connectionStatusService.presentStatusViewController()
             
         } else if vpnGateway.connection == .connecting {
             vpnGateway.stopConnecting(userInitiated: true)

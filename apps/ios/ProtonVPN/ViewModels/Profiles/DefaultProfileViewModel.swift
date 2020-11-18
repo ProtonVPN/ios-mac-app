@@ -29,6 +29,7 @@ class DefaultProfileViewModel {
     private let vpnGateway: VpnGatewayProtocol?
     private let propertiesManager: PropertiesManagerProtocol
     private let loginService: LoginService
+    private let connectionStatusService: ConnectionStatusService
     
     private var profile: Profile {
         switch serverOffering {
@@ -104,11 +105,12 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, loginService: LoginService) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, loginService: LoginService, connectionStatusService: ConnectionStatusService) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.loginService = loginService
+        self.connectionStatusService = connectionStatusService
         
         startObserving()
     }
@@ -125,6 +127,7 @@ class DefaultProfileViewModel {
             vpnGateway.disconnect()
         } else {
             vpnGateway.connectTo(profile: profile)
+            connectionStatusService.presentStatusViewController()
         }
     }
     

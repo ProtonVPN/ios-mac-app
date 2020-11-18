@@ -71,7 +71,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory & ConnectionStatusServiceFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -79,6 +79,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var connectionStatusService = factory.makeConnectionStatusService()
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?
@@ -145,7 +146,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                     vpnGateway: vpnGateway,
                                     alertService: alertService,
                                     loginService: loginService,
-                                    planService: planService
+                                    planService: planService,
+                                    connectionStatusService: connectionStatusService
         )
     }
     

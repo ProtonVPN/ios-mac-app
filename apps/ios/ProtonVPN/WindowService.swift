@@ -31,7 +31,7 @@ protocol WindowServiceFactory {
 protocol WindowService: class {
 
     func show(viewController: UIViewController)
-    func addToStack(_ controller: UIViewController)
+    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)
     func popStackToRoot()
     var navigationStackAvailable: Bool { get }
     
@@ -97,9 +97,23 @@ class WindowServiceImplementation: WindowService {
         window.makeKeyAndVisible()
     }
     
-    func addToStack(_ controller: UIViewController) {
-        let navigationController = topMostNavigationController()
-        navigationController?.pushViewController(controller, animated: true)
+    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool = false) {
+        guard let navigationController = topMostNavigationController() else {
+            return
+        }
+        
+        guard checkForDuplicates else {
+            navigationController.pushViewController(controller, animated: true)
+            return
+        }
+        
+        for existingController in navigationController.viewControllers {
+            if object_getClassName(controller) == object_getClassName(existingController) {
+                return // Don't add two controllers of the same class
+            }
+        }
+        
+        navigationController.pushViewController(controller, animated: true)
     }
     
     func popStackToRoot() {
@@ -179,6 +193,8 @@ class WindowServiceImplementation: WindowService {
         guard let rootViewController = window.rootViewController else { return nil }
         var navigationController: UINavigationController?
         if let topViewController = rootViewController.presentedViewController as? UINavigationController {
+            navigationController = topViewController
+        } else if let tabBarController = rootViewController as? TabBarController, let topViewController = tabBarController.selectedViewController as? UINavigationController {
             navigationController = topViewController
         } else {
             navigationController = rootViewController as? UINavigationController

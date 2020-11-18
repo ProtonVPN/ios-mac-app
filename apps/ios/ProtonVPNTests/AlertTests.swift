@@ -93,7 +93,7 @@ fileprivate class WindowServiceMock: WindowService {
     var displayCount = 0
     
     func show(viewController: UIViewController) {}
-    func addToStack(_ controller: UIViewController) {}
+    func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
     func present(modal: UIViewController) {}
     func replace(with modal: UIViewController) {}
     func dismissModal() {}

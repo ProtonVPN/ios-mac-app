@@ -32,6 +32,7 @@ class ProfileItemViewModel {
     private let alertService: AlertService
     private let planService: PlanService
     private let propertiesManager: PropertiesManagerProtocol
+    private let connectionStatusService: ConnectionStatusService
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -103,7 +104,7 @@ class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, propertiesManager: PropertiesManagerProtocol) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.loginService = loginService
@@ -111,6 +112,7 @@ class ProfileItemViewModel {
         self.userTier = userTier
         self.planService = planService
         self.propertiesManager = propertiesManager
+        self.connectionStatusService = connectionStatusService
                 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
@@ -162,6 +164,7 @@ class ProfileItemViewModel {
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
             vpnGateway.connectTo(profile: profile)
+            connectionStatusService.presentStatusViewController()
         }
     }
     

@@ -40,7 +40,7 @@ extension UIViewController {
         }
         
         renderAnnouncementsButtonBadge()
-        // Button may not have been shown yet and thhis case bagde will not be added, so run this a little later
+        // Button may not have been shown yet and this case bagde will not be added, so run this a little later
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: { [weak self] in
             self?.renderAnnouncementsButtonBadge()
         })

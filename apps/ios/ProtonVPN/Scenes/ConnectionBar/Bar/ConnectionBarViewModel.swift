@@ -24,13 +24,8 @@ import Foundation
 import UIKit
 import vpncore
 
-protocol ConnectionBarViewModelDelegate: class {
-    func timeString() -> String
-}
-
 class ConnectionBarViewModel {
     
-    private let connectionStatusService: ConnectionStatusService
     private let appStateManager: AppStateManager
     
     private var timer = Timer()
@@ -41,12 +36,7 @@ class ConnectionBarViewModel {
     var updateConnected: (() -> Void)?
     var setDisconnected: (() -> Void)?
     
-    var statusViewController: StatusViewController? {
-        return connectionStatusService.makeStatusViewController(delegate: self)
-    }
-    
-    init(connectionStatusService: ConnectionStatusService, appStateManager: AppStateManager) {
-        self.connectionStatusService = connectionStatusService
+    init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateState), name: appStateManager.stateChange, object: nil)
@@ -88,9 +78,6 @@ class ConnectionBarViewModel {
             self?.updateConnected?()
         }
     }
-}
-
-extension ConnectionBarViewModel: ConnectionBarViewModelDelegate {
     
     func timeString() -> String {
         let time: TimeInterval
@@ -100,9 +87,6 @@ extension ConnectionBarViewModel: ConnectionBarViewModelDelegate {
             time = 0
         }
         
-        let hours = Int(time) / 3600
-        let minutes = Int(time) / 60 % 60
-        let seconds = Int(time) % 60
-        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
+        return time.asString
     }
 }

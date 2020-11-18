@@ -245,6 +245,10 @@
 		D5439077236189FA0094451D /* VerificationCaptchaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */; };
 		D5439079236191420094451D /* VerificationCaptchaViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5439078236191420094451D /* VerificationCaptchaViewController.swift */; };
 		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
+		D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
+		D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
+		D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */; };
+		D550A1B3256551F900FE2D54 /* ConnectionStatusServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */; };
 		D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D55131722319425900784ED0 /* RoundCheckboxView.xib */; };
 		D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55131762319427900784ED0 /* RoundCheckboxView.swift */; };
 		D55455422280280B006574F9 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55455412280280B006574F9 /* IntentHandler.swift */; };
@@ -711,6 +715,9 @@
 		D53E83E1232B710E0031CD49 /* AuthApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiServiceMock.swift; sourceTree = "<group>"; };
 		D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCaptchaViewModel.swift; sourceTree = "<group>"; };
 		D5439078236191420094451D /* VerificationCaptchaViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VerificationCaptchaViewController.swift; sourceTree = "<group>"; };
+		D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Render.swift"; sourceTree = "<group>"; };
+		D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTests.swift; sourceTree = "<group>"; };
+		D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionStatusServiceMock.swift; sourceTree = "<group>"; };
 		D55131722319425900784ED0 /* RoundCheckboxView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RoundCheckboxView.xib; sourceTree = "<group>"; };
 		D55131762319427900784ED0 /* RoundCheckboxView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundCheckboxView.swift; sourceTree = "<group>"; };
 		D554553F2280280B006574F9 /* Siri Shortcut Handler.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Siri Shortcut Handler.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1145,11 +1152,12 @@
 		791DE5F2208DDA3200A29EA5 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				D5BF950E23559A9D00C7D1E7 /* Extensions */,
+				D550A1A425651B5000FE2D54 /* Extensions */,
 				D5F5689E23277EC500795953 /* Coordinators */,
 				E129C6D122A9325D00D8437E /* JSON */,
 				D5136C17228591750002C095 /* Mocks */,
 				D5136C8F2285A8FB0002C095 /* Management */,
+				D5BF950E23559A9D00C7D1E7 /* TestExtensions */,
 				D5136C1022858CDD0002C095 /* ViewModels */,
 				791DE5F5208DDA3200A29EA5 /* Info.plist */,
 				E16A7E6F2374C150008A0DA0 /* AlertTests.swift */,
@@ -1297,6 +1305,7 @@
 				E1A9A67E22BA603C0073711B /* PlanUpgradeChecker.swift */,
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D53E83D6232A5F4D0031CD49 /* String+Validation.swift */,
+				D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1635,6 +1644,7 @@
 				D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */,
 				D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */,
 				D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */,
+				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -1713,6 +1723,14 @@
 				D53E83DF232B6F300031CD49 /* UserApiServiceMock.swift */,
 			);
 			path = ApiService;
+			sourceTree = "<group>";
+		};
+		D550A1A425651B5000FE2D54 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		D551316D2319400900784ED0 /* Subscriptions */ = {
@@ -1874,12 +1892,12 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		D5BF950E23559A9D00C7D1E7 /* Extensions */ = {
+		D5BF950E23559A9D00C7D1E7 /* TestExtensions */ = {
 			isa = PBXGroup;
 			children = (
 				D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */,
 			);
-			path = Extensions;
+			path = TestExtensions;
 			sourceTree = "<group>";
 		};
 		D5BF95112355A52700C7D1E7 /* Misc */ = {
@@ -2799,6 +2817,7 @@
 				7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
+				D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				E12DF61F22314995006EC61F /* OnboardingViewModel.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
 				D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */,
@@ -2941,6 +2960,7 @@
 				D5136C31228592E80002C095 /* ServerUtility.swift in Sources */,
 				E16C292A239EBA2D00E7B61D /* CustomServersViewController.swift in Sources */,
 				E16A7E702374C150008A0DA0 /* AlertTests.swift in Sources */,
+				D550A1B3256551F900FE2D54 /* ConnectionStatusServiceMock.swift in Sources */,
 				D5136C32228592E80002C095 /* ConnectionBarViewController.swift in Sources */,
 				D5136C33228592E80002C095 /* GenericTableViewDataSource.swift in Sources */,
 				D5296778237D358700D479F2 /* VerificationCaptchaViewController.swift in Sources */,
@@ -2950,6 +2970,7 @@
 				D5136C35228592E80002C095 /* TabBarController.swift in Sources */,
 				E169FC48228B165100FDC933 /* HumanVerificationOptionsViewModel.swift in Sources */,
 				D5136C36228592E80002C095 /* LaunchViewController.swift in Sources */,
+				D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				D5136C37228592E80002C095 /* OnboardingContentViewController.swift in Sources */,
 				D5136C38228592E80002C095 /* OnboardingPageViewController.swift in Sources */,
 				D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */,
@@ -3045,6 +3066,7 @@
 				D5BF950D2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift in Sources */,
 				D5136C6B228592E80002C095 /* GradientSeparator.swift in Sources */,
 				D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */,
+				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
 				D5136C6D228592E80002C095 /* CountryAnnotation.swift in Sources */,
 				D5136C6E228592E80002C095 /* ConnectionView.swift in Sources */,

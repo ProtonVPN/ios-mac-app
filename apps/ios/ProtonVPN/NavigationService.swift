@@ -165,9 +165,18 @@ extension DependencyContainer: NetshieldServiceFactory {
 
 // MARK: Connection status Service
 
+protocol ConnectionStatusServiceFactory {
+    func makeConnectionStatusService() -> ConnectionStatusService
+}
+
+extension DependencyContainer: ConnectionStatusServiceFactory {
+    func makeConnectionStatusService() -> ConnectionStatusService {
+        return makeNavigationService()
+    }
+}
+
 protocol ConnectionStatusService {
-    func makeStatusViewController(delegate: ConnectionBarViewModelDelegate) -> StatusViewController?
-    func makeConnectionBarViewController() -> ConnectionBarViewController?
+    func presentStatusViewController()
 }
 
 typealias AlertService = CoreAlertService
@@ -179,7 +188,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -381,7 +390,7 @@ extension NavigationService: LoginService {
             controller.viewModel = viewModel 
             
             if self.windowService.navigationStackAvailable {
-                self.windowService.addToStack(controller)
+                self.windowService.addToStack(controller, checkForDuplicates: false)
             } else {
                 let nc = UINavigationController(rootViewController: controller)
 
@@ -425,7 +434,7 @@ extension NavigationService: HumanVerificationService {
         DispatchQueue.main.async { [unowned self] in
             guard let verificationViewController = self.loginStoryboard.instantiateViewController(withIdentifier: "VerificationEmailViewController") as? VerificationEmailViewController else { return }
             verificationViewController.viewModel = viewModel
-            self.windowService.addToStack(verificationViewController)
+            self.windowService.addToStack(verificationViewController, checkForDuplicates: false)
         }
     }
     
@@ -435,7 +444,7 @@ extension NavigationService: HumanVerificationService {
                 return
             }
             verificationCodeViewController.viewModel = viewModel
-            self.windowService.addToStack(verificationCodeViewController)
+            self.windowService.addToStack(verificationCodeViewController, checkForDuplicates: false)
         }
     }
     
@@ -443,7 +452,7 @@ extension NavigationService: HumanVerificationService {
         DispatchQueue.main.async { [unowned self] in
             guard let verificationViewController = self.loginStoryboard.instantiateViewController(withIdentifier: "VerificationSmsViewController") as? VerificationSmsViewController else { return }
             verificationViewController.viewModel = viewModel
-            self.windowService.addToStack(verificationViewController)
+            self.windowService.addToStack(verificationViewController, checkForDuplicates: false)
         }
     }
     
@@ -460,7 +469,7 @@ extension NavigationService: HumanVerificationService {
         DispatchQueue.main.async { [unowned self] in
             guard let verificationViewController = self.loginStoryboard.instantiateViewController(withIdentifier: "VerificationCaptchaViewController") as? VerificationCaptchaViewController else { return }
             verificationViewController.viewModel = viewModel
-            self.windowService.addToStack(verificationViewController)
+            self.windowService.addToStack(verificationViewController, checkForDuplicates: false)
         }
     }
 }
@@ -575,7 +584,7 @@ extension NavigationService: AnnouncementsService {
 extension NavigationService: MapService {
     func makeMapViewController() -> MapViewController {
         let mapViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: MapViewController.self)) as! MapViewController
-        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, loginService: self, alertService: alertService, serverStorage: ServerStorageConcrete(), vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager)
+        mapViewController.viewModel = MapViewModel(appStateManager: appStateManager, loginService: self, alertService: alertService, serverStorage: ServerStorageConcrete(), vpnGateway: vpnGateway, vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, connectionStatusService: self)
         mapViewController.connectionBarViewController = makeConnectionBarViewController()
         return mapViewController
     }
@@ -584,7 +593,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self, propertiesManager: propertiesManager)
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self, propertiesManager: propertiesManager, connectionStatusService: self)
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
@@ -663,22 +672,30 @@ extension NavigationService: ConnectionStatusService {
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: ConnectionBarViewController.self)) as? ConnectionBarViewController {
             
-            connectionBarViewController.viewModel = ConnectionBarViewModel(connectionStatusService: self, appStateManager: appStateManager)
+            connectionBarViewController.viewModel = ConnectionBarViewModel(appStateManager: appStateManager)
+            connectionBarViewController.connectionStatusService = self
             return connectionBarViewController
         }
         
         return nil
     }
     
-    func makeStatusViewController(delegate: ConnectionBarViewModelDelegate) -> StatusViewController? {
+    func makeStatusViewController() -> StatusViewController? {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
             statusViewController.planService = self
-            statusViewController.viewModel = StatusViewModel(factory: factory, delegate: delegate)
+            statusViewController.viewModel = StatusViewModel(factory: factory)
             return statusViewController
         }
         return nil
     }
-        
+    
+    func presentStatusViewController() {
+        guard let viewController = makeStatusViewController() else {
+            return
+        }
+        self.windowService.addToStack(viewController, checkForDuplicates: true)
+    }
+    
 }

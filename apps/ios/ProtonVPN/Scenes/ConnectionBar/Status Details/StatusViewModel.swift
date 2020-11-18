@@ -37,8 +37,6 @@ class StatusViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol? = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
- 
-    weak var delegate: ConnectionBarViewModelDelegate?
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -66,15 +64,21 @@ class StatusViewModel {
     }
     
     private var timer: Timer?
+    private var connectedDate = Date()
     private var timeCellIndexPath: IndexPath?
     private var currentTime: String {
-        return delegate?.timeString() ?? ""
+        let time: TimeInterval
+        guard case AppState.connected = appStateManager.state else {
+            return TimeInterval(0).asString
+        }
+        time = Date().timeIntervalSince(connectedDate)
+        return time.asString
     }
     
-    init(factory: Factory, delegate: ConnectionBarViewModelDelegate) {
+    init(factory: Factory) {
         self.factory = factory
-        self.delegate = delegate
         
+        updateConnectionDate()
         startObserving()
         runTimer()
     }
@@ -228,6 +232,10 @@ class StatusViewModel {
     }
     
     @objc private func timerFired() {
+        updateTimeCell()
+    }
+    
+    private func updateTimeCell() {
         guard let timeCellIndexPath = timeCellIndexPath else { return } // No time cell in the view
         rowsUpdated?([timeCellIndexPath: timeCell])
     }
@@ -236,6 +244,7 @@ class StatusViewModel {
     
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: appStateManager.stateChange, object: nil)
     }
     
     private func stopObserving() {
@@ -244,6 +253,17 @@ class StatusViewModel {
     
     @objc private func connectionChanged() {
         contentChanged?()
+    }
+    
+    @objc private func stateChanged() {
+        updateConnectionDate()
+    }
+    
+    private func updateConnectionDate() {
+        appStateManager.connectedDate { [weak self] (date) in
+            self?.connectedDate = date ?? Date()
+            self?.updateTimeCell()
+        }
     }
     
     // MARK: - NetShield

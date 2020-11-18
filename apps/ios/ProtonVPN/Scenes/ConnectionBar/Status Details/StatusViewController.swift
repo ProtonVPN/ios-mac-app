@@ -25,7 +25,7 @@ import UIKit
 import vpncore
 
 class StatusViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableView: UITableView?
     
     public var planService: PlanService?
     
@@ -36,12 +36,12 @@ class StatusViewController: UIViewController {
             }
             viewModel?.contentChanged = { [weak self]  in
                 self?.updateTableView()
-                self?.tableView.reloadData()
+                self?.tableView?.reloadData()
             }
             viewModel?.rowsUpdated = { [weak self] rows in
                 guard let genericDataSource = self?.genericDataSource else { return }
                 genericDataSource.update(rows: rows)
-                self?.tableView.reloadRows(at: Array(rows.keys), with: .none)
+                self?.tableView?.reloadRows(at: Array(rows.keys), with: .none)
             }
             viewModel?.dismissStatusView = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
@@ -64,7 +64,7 @@ class StatusViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        tableView.reloadData()
+        tableView?.reloadData()
     }
     
     func setupView() {
@@ -77,13 +77,13 @@ class StatusViewController: UIViewController {
     private func setupTableView() {
         updateTableView()
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = UIColor.protonDarkGrey()
-        tableView.cellLayoutMarginsFollowReadableWidth = true
+        tableView?.separatorColor = .protonBlack()
+        tableView?.backgroundColor = UIColor.protonDarkGrey()
+        tableView?.cellLayoutMarginsFollowReadableWidth = true
     }
     
     private func updateTableView() {
-        guard let viewModel = viewModel else {
+        guard let viewModel = viewModel, let tableView = tableView else {
             return
         }
         

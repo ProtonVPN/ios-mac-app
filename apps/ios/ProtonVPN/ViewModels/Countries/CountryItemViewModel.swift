@@ -34,6 +34,7 @@ class CountryItemViewModel {
     
     private var vpnGateway: VpnGatewayProtocol?
     private var serverType: ServerType
+    private let connectionStatusService: ConnectionStatusService
     
     private var userTier: Int
     private var isUsersTierTooLow: Bool {
@@ -151,9 +152,9 @@ class CountryItemViewModel {
         return servers.map { (server) -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
-                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService)
+                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService)
             case .secureCore:
-                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService)
+                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService)
             }
         }
     }
@@ -182,7 +183,7 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
@@ -190,7 +191,8 @@ class CountryItemViewModel {
         self.alertService = alertService
         self.loginService = loginService
         self.serverType = serverType
-        self.planService = planService 
+        self.planService = planService
+        self.connectionStatusService = connectionStatusService
         
         do {
             if let vpnGateway = vpnGateway {
@@ -237,6 +239,7 @@ class CountryItemViewModel {
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
             vpnGateway.connectTo(country: countryCode, ofType: serverType)
+            connectionStatusService.presentStatusViewController()
         }
     }
     
