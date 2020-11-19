@@ -720,3 +720,10 @@
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
 "_quick_settings_get_plus" = "GET PLUS";
+"_applying_settings_" = "Applying settings";
+"_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
+"_ip_will_not_be_exposed" = "Your IP will not be exposed.";
+"_cancel_reconnection" = "This will cancel any re-connection attempt and leave you disconnected";
+"_quick_settings_netshield_option_off" = "Don't block";
+"_quick_settings_netshield_option_level1" = "Block malware only";
+"_quick_settings_netshield_option_level2" = "Block malware & ads trackers";

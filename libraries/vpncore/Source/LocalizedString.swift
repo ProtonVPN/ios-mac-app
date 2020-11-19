@@ -669,5 +669,12 @@ public class LocalizedString {
     public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
     public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
     public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
-    public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")    
+    public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")
+    public static let qsApplyingSettings = NSLocalizedString("_applying_settings_", comment: "Title on reconnection info")
+    public static let qsReestablishingConnection = NSLocalizedString("_reestablish_vpn_connection_", comment: "Title on reconnection view controller")
+    public static let qsYourIpWillNotBeExposed = NSLocalizedString("_ip_will_not_be_exposed", comment: "On reconnection inform the IP will not be informed")
+    public static let qsCancelReconnectionInfo = NSLocalizedString("_cancel_reconnection", comment: "On reconnection info about cancel reconnection")
+    public static let qsNetshieldOptionOff = NSLocalizedString("_quick_settings_netshield_option_off", comment: "QuickSettings Netshield option1")
+    public static let qsNetshieldOptionLevel1 = NSLocalizedString("_quick_settings_netshield_option_level1", comment: "QuickSettings Netshield option2")
+    public static let qsNetshieldOptionLevel2 = NSLocalizedString("_quick_settings_netshield_option_level2", comment: "QuickSettings Netshield option3")
 }
