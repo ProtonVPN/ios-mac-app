@@ -617,7 +617,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }

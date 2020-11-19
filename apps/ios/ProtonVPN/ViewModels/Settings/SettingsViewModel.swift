@@ -35,6 +35,7 @@ class SettingsViewModel {
     private let netshieldService: NetshieldService
     private let protocolService: ProtocolService
     private let vpnKeychain: VpnKeychainProtocol
+    private let connectionStatusService: ConnectionStatusService
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     
@@ -44,7 +45,7 @@ class SettingsViewModel {
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -54,6 +55,7 @@ class SettingsViewModel {
         self.protocolService = protocolService
         self.vpnKeychain = vpnKeychain
         self.netshieldService = netshieldService
+        self.connectionStatusService = connectionStatusService
         
         startObserving()
     }
@@ -231,6 +233,7 @@ class SettingsViewModel {
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
+                            self.connectionStatusService.presentStatusViewController()
                         }))
                     }
                 }, { type in
