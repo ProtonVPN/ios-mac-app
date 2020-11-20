@@ -34,7 +34,7 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
         userDefaults = UserDefaults(suiteName: #file)
         userDefaults.removePersistentDomain(forName: #file)
         
-        storage = AnnouncementStorageUserDefaults(userDefaults: userDefaults)
+        storage = AnnouncementStorageUserDefaults(userDefaults: userDefaults, keyNameProvider: StaticKeyNameProvider())
     }
     
     override func tearDown() {
@@ -81,4 +81,10 @@ class AnnouncementStorageUserDefaultsTests: XCTestCase {
         expectationNotificationFired.fulfill()
     }
     
+}
+
+fileprivate class StaticKeyNameProvider: KeyNameProvider {
+    public var storageKey: String {
+        return "announcements"
+    }
 }

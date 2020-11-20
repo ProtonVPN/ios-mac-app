@@ -53,21 +53,19 @@ public class AuthKeychain {
                 clear()
                 try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
             } catch let error2 {
-                
-                if #available(iOS 10.0, macOS 10.15, *) {
-                    PMLog.ET("Keychain (auth) write error: \(error2).", level: .error)
-                    throw error2
-                    
-                } else { // Locking keychain only needed (and available) on macOS
+                #if os(macOS)
                     PMLog.D("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", level: .error)
-                    do { // Last chance
+                    do { // Last chance. Locking/unlocking keychain sometimes helps.
                         SecKeychainLock(nil)
                         try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
                     } catch let error3 {
                         PMLog.ET("Keychain (auth) write error: \(error3). Giving up.", level: .error)
                         throw error3
                     }
-                }
+                #else
+                    PMLog.ET("Keychain (auth) write error: \(error2).", level: .error)
+                    throw error2
+                #endif
             }
         }
     }
