@@ -288,6 +288,8 @@
 "_error_decode" = "Failed to decode archived data in class: %@";
 "_error_email_verification_disabled" = "Email verification temporarily disabled";
 
+"_error_keychain_write" = "Can't write to system keychain. If this error persists open Keychain Access app (it can be found in Applications -> Utilities folder), right-click on the login keychain and try locking it and then unlocking it again.";
+
 // Password encoding errors
 "_error_modulus_signature" = "Modulus signature is empty";
 "_error_generate_srp" = "SRP generation failed";

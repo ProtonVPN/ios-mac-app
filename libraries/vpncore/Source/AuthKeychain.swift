@@ -44,7 +44,7 @@ public class AuthKeychain {
         return nil
     }
     
-    public static func store(_ credentials: AuthCredentials) {
+    public static func store(_ credentials: AuthCredentials) throws {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
@@ -52,8 +52,15 @@ public class AuthKeychain {
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
                 try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
-            } catch {
-                PMLog.D("Keychain (auth) write error: \(error)", level: .error)
+            } catch let error2 {
+                PMLog.D("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error." , level: .error)
+                do { // Last chance
+                    SecKeychainLock(nil)
+                    try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+                } catch let error3 {
+                    PMLog.ET("Keychain (auth) write error: \(error3). Giving up." , level: .error)
+                    throw error3
+                }
             }
         }
     }

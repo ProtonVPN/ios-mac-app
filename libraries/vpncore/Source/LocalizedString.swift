@@ -266,6 +266,7 @@ public class LocalizedString {
     public static let errorVpnCredentialsMissing = NSLocalizedString("_error_vpn_credentials_missing", comment: "VPN credentials can't be loaded error")
     public static let errorDecode = NSLocalizedString("_error_decode", comment: "Error decoding an object")
     public static let errorEmailVerificationDisabled = NSLocalizedString("_error_email_verification_disabled", comment: "Internal application error")
+    public static let errorKeychainWrite = NSLocalizedString("_error_keychain_write", comment: "Error writing to system keychain")
     
     public static let errorFieldRequired = NSLocalizedString("_error_field_required", comment: "Form validation error")
     public static let errorFieldWrongEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
