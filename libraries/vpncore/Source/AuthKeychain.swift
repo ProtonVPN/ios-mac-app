@@ -64,7 +64,7 @@ public class AuthKeychain {
                         SecKeychainLock(nil)
                         try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
                     } catch let error3 {
-                        PMLog.ET("Keychain (auth) write error: \(error3). Giving up." , level: .error)
+                        PMLog.ET("Keychain (auth) write error: \(error3). Giving up.", level: .error)
                         throw error3
                     }
                 }
