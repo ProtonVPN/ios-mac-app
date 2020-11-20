@@ -89,7 +89,7 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
 /// Generates key depending on currently logged in user.
 /// This is default KeyNameProvider that should be used in the app.
 /// In tests it's better to use another class that will not depend on the Keychain.
-fileprivate class AuthKeychainStorageKeyProvider: KeyNameProvider {
+private class AuthKeychainStorageKeyProvider: KeyNameProvider {
     public var storageKey: String {
         return "announcements_" + (AuthKeychain.fetch()?.username ?? "")
     }
