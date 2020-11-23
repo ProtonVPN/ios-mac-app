@@ -43,6 +43,8 @@ public class CoreAppConstants {
         public static let accountDashboard = "https://account.protonvpn.com/dashboard"
         public static let upgrade = "https://account.protonvpn.com/login"
         public static let learnMore = "https://protonvpn.com/support/secure-core-vpn"
+        public static let killSwitchSupport = "https://protonvpn.com/support/what-is-kill-switch"
+        public static let netshieldSupport = "https://protonvpn.com/support/netshield"
         public static let support = "https://protonvpn.com/support"
         public static let supportForm = "https://protonvpn.com/support-form"
         public static let supportCommonIssues = "https://protonvpn.com/support/common-macos-issues-protonvpn"
