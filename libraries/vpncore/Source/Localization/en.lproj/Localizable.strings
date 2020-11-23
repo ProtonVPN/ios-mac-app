@@ -708,6 +708,8 @@
 "_netshield_alert_reconnect_description_off" = "Your connection will be restarted to change the NetShield mode.";
 "_netshield_alert_upgrade_description" = "NetShield increases your privacy by blocking advertisements and trackers.";
 
+"_netshield_section_title" = "MALWARE & ADS BLOCKER";
+
 // Announcements
 "_news_title" = "News";
 

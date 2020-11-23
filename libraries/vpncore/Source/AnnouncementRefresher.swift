@@ -25,6 +25,7 @@ import Foundation
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
     func refresh()
+    func resetTimer()
 }
 
 public protocol AnnouncementRefresherFactory {
@@ -62,6 +63,10 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         })
     }
     
+    public func resetTimer() {
+        lastRefresh = nil
+    }
+    
     private func clean() {
         self.announcementStorage.store([])
     }
@@ -71,7 +76,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if featureFlags.isAnnouncementOn {
             refresh()
         } else { // Hide announcements
-            lastRefresh = nil
+            resetTimer()
             clean()
         }
     }

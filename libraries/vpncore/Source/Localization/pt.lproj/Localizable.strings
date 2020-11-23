@@ -127,13 +127,13 @@
 /* iOS status view */
 "_connected_to" = "Ligado a";
 
-/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connected_to_vpn" = "Ligado a %@";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "A ligar";
 
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "A ligar a %@";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
@@ -886,6 +886,9 @@
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
 
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "MALWARE & ANÚNCIOS BLOQUEADOS";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -894,6 +897,9 @@
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Rede inalcançável";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Novidades";
 
 /* iOS onboarding next item button */
 "_next" = "Seguinte";

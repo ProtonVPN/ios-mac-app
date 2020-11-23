@@ -89,7 +89,7 @@
 "_battery_more" = "Хотите узнать больше?";
 
 /* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Расход батареи";
+"_battery_title" = "Использование батареи";
 
 /* Common word */
 "_cancel" = "Отмена";
@@ -127,13 +127,13 @@
 /* iOS status view */
 "_connected_to" = "Подключен к";
 
-/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connected_to_vpn" = "Подключен к %@";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "Подключение";
 
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Подключение к %@";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
@@ -833,7 +833,7 @@
 "_name" = "Название";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Мы не смогли подключиться к серверам Proton";
+"_ne_couldnt_reach_server" = "Не удалось подключиться к серверам Proton";
 
 /* Network error */
 "_ne_network_connection_lost" = "Потеряно подключение к сети";
@@ -886,6 +886,9 @@
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Выключено";
 
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "Блокировка вредоносов & рекламы";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -894,6 +897,9 @@
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Сеть недоступна";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Новости";
 
 /* iOS onboarding next item button */
 "_next" = "Далее";

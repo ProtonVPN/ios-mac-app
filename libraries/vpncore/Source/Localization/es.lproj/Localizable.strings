@@ -127,13 +127,13 @@
 /* iOS status view */
 "_connected_to" = "Conectado a";
 
-/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
+/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connected_to_vpn" = "Conectado a %@";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "Conectando";
 
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Conectando a %@";
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
@@ -886,6 +886,9 @@
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
 
+/* Netshield section title in iOS connection screen */
+"_netshield_section_title" = "MALWARE & BLOCKER DE ADS";
+
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
 
@@ -894,6 +897,9 @@
 
 /* iOS: quick connect widget */
 "_network_unreachable" = "Red no disponible";
+
+/* Title of the screen with news and offers. */
+"_news_title" = "Novedades";
 
 /* iOS onboarding next item button */
 "_next" = "Siguiente";
@@ -1214,7 +1220,7 @@
 "_save_as_profile" = "Guardar cómo perfil";
 
 /* MacOS: placeholder for country search */
-"_search_for_country" = "Busqueda por país";
+"_search_for_country" = "Búsqueda por país";
 
 /* iOS: placeholder in phone country code selection screen */
 "_search_phone_country_code_placeholder" = "Buscar País";
