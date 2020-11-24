@@ -32,5 +32,8 @@ class AppConstants {
         // Servers list refresh
         static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours
         static let serverLoadsRefresh: TimeInterval = 60 * 15 // 15 minutes
+        
+        // Payments
+        static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
     }
 }

@@ -373,6 +373,7 @@ extension NavigationService: LoginService {
     }
     
     func presentOnboarding() {
+        self.storeKitManager.subscribeToPaymentQueue() // This ensures that storekit manager will know if there are unfinished transactions
         let onboardingViewModel = OnboardingViewModel(pageViewController: OnboardingPageViewController(), factory: factory)
         let onboardingViewController = OnboardingViewController(viewModel: onboardingViewModel)
         windowService.show(viewController: onboardingViewController)

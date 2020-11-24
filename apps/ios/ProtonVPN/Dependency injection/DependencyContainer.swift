@@ -62,7 +62,7 @@ class DependencyContainer {
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
     
-    private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly))
+    private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(keychain: Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly), lifetime: AppConstants.Time.paymentTokenLifetime)
     
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh)
