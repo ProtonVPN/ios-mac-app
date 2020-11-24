@@ -23,23 +23,36 @@
 import Foundation
 import KeychainAccess
 
-/// Class for storing payment token in the keychain
+/// Class for storing payment token in the keychain.
+/// Key is returned until its lifetime ends. After this period of time, if token is requested,
+/// keychain is cleaned and nil is returned.
 public class KeychainPaymentTokenStorage: PaymentTokenStorage {
     
     private var keychain: Keychain
     private var key = "unusedPaymentToken"
+    private var keyEnds = "unusedPaymentTokenEOL"
+    private var lifetime: TimeInterval
     
-    public init (_ keychain: Keychain) {
+    public init (keychain: Keychain, lifetime: TimeInterval) {
         self.keychain = keychain
-        PMLog.D(self.isEmpty ? "No payment token saved" : "Payment token found", level: .trace)
+        self.lifetime = lifetime
+        let empty = self.isEmpty
+        let token = self.get()
+        PMLog.D(empty ? "No payment token saved" : "Payment token found", level: .trace)
     }
     
     public func add(_ token: PaymentToken) {
         keychain[data: key] = try? JSONEncoder().encode(token)
+        keychain[data: keyEnds] = try? JSONEncoder().encode(Date() + lifetime)
     }
     
     public func get() -> PaymentToken? {
-        guard let data = keychain[data: key] else {
+        guard let data = keychain[data: key], let dataEnds = keychain[data: keyEnds] else {
+            return nil
+        }
+        guard let endsAt = try? JSONDecoder().decode(Date.self, from: dataEnds), endsAt.isFuture else {
+            PMLog.D("Payment token lifetime ended. Cleaning token.", level: .trace)
+            clear()
             return nil
         }
         return try? JSONDecoder().decode(PaymentToken.self, from: data)
@@ -47,6 +60,7 @@ public class KeychainPaymentTokenStorage: PaymentTokenStorage {
     
     public func clear() {
         keychain[data: key] = nil
+        keychain[data: keyEnds] = nil
     }
     
 }

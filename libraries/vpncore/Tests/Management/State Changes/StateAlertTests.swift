@@ -50,8 +50,8 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.connect(withConfiguration: connectionConfig)
         
-        assert(alertService.alerts.count == 1)
-        assert(alertService.alerts.first is VpnStuckAlert)
+        XCTAssertTrue(alertService.alerts.count == 1)
+        XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
     
     func testDisconnectingAlertPreviouslyConnected() {
@@ -61,13 +61,13 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.connect(withConfiguration: connectionConfig)
         
-        assert(alertService.alerts.count == 0)
+        XCTAssertTrue(alertService.alerts.count == 0)
         
         timerFactory.fireTimer()
         timerFactory.fireTimer() // Fire second time because appStateManager starts connecting for the second time after it deletes vpn profile
         
-        assert(alertService.alerts.count == 1)
-        assert(alertService.alerts.first is VpnStuckAlert)
+        XCTAssertTrue(alertService.alerts.count == 1)
+        XCTAssertTrue(alertService.alerts.first is VpnStuckAlert)
     }
 
     func testFirstTimeConnectingAlert() {
@@ -75,8 +75,8 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.connect(withConfiguration: connectionConfig)
         
-        assert(alertService.alerts.count == 1)
-        assert(alertService.alerts.first is FirstTimeConnectingAlert)
+        XCTAssertTrue(alertService.alerts.count == 1)
+        XCTAssertTrue(alertService.alerts.first is FirstTimeConnectingAlert)
     }
     
     func testNormalConnectingNoAlerts() {
@@ -84,7 +84,7 @@ class StateAlertTests: XCTestCase {
         appStateManager.prepareToConnect()
         appStateManager.connect(withConfiguration: connectionConfig)
         
-        assert(alertService.alerts.count == 0)
+        XCTAssertTrue(alertService.alerts.count == 0)
     }
     
     lazy var connectionConfig: ConnectionConfiguration = {
