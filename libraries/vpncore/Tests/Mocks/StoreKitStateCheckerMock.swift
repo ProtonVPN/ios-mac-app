@@ -1,6 +1,6 @@
 //
-//  PaymentTokenStorage.swift
-//  vpncore - Created on 2020-06-22.
+//  StoreKitStateChecker.swift
+//  vpncore - Created on 2020-11-23.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,18 +22,17 @@
 
 import Foundation
 
-/// Storage for current Payment Token that is not yet used.
-/// Can hold exactly one token as it is meant to be short lived and should be consumed at the first possibility.
-public protocol PaymentTokenStorage {
-    func add(_ token: PaymentToken)
-    func get() -> PaymentToken?
-    func clear()
-}
-
-extension PaymentTokenStorage {
-    var isEmpty: Bool { return self.get() == nil }
-}
-
-public protocol PaymentTokenStorageFactory {
-    func makePaymentTokenStorage() -> PaymentTokenStorage
+class StoreKitStateCheckerMock: StoreKitStateChecker {
+    
+    public var buyProcessRunning = false
+    public var accountPlanBuyStarted: AccountPlan? = nil
+    
+    func isBuyProcessRunning() -> Bool {
+        return buyProcessRunning
+    }
+    
+    func planBuyStarted() -> AccountPlan? {
+        return accountPlanBuyStarted
+    }
+    
 }

@@ -44,7 +44,7 @@ class TrialCheckerTests: XCTestCase {
     func testAlertIsShown() {
         vpnKeychain.setVpnCredentials(with: .trial)
         propertiesManager.lastUserAccountPlan = .trial
-        vpnGateway = VpnGatewayMock(activeServerType: .secureCore, connection: .connected)
+        vpnGateway = VpnGatewayMock(propertiesManager: makePropertiesManager(), activeServerType: .secureCore, connection: .connected)
         checker = TrialChecker(factory: self)
         
         XCTAssert(alertService.alerts.isEmpty)
@@ -61,7 +61,7 @@ class TrialCheckerTests: XCTestCase {
     
 }
 
-extension TrialCheckerTests: PropertiesManagerFactory, VpnGatewayFactory, CoreAlertServiceFactory, VpnKeychainFactory, TrialServiceFactory {
+extension TrialCheckerTests: PropertiesManagerFactory, VpnGatewayFactory, CoreAlertServiceFactory, VpnKeychainFactory, TrialServiceFactory, StoreKitStateCheckerFactory {
     
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManager
@@ -81,5 +81,9 @@ extension TrialCheckerTests: PropertiesManagerFactory, VpnGatewayFactory, CoreAl
     
     func makeTrialService() -> TrialService {
         return TrialServiceMock()
+    }
+    
+    func makeStoreKitStateChecker() -> StoreKitStateChecker {
+        return StoreKitStateCheckerMock()
     }
 }

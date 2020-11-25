@@ -25,6 +25,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     
     public init(propertiesManager: PropertiesManagerProtocol, activeServerType: ServerType, connection: ConnectionStatus) {
         self.connection = connection
+        self.activeServerType = activeServerType
         
         propertiesManager.secureCoreToggle = activeServerType == .secureCore
     }
@@ -33,6 +34,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public var activeIp: String?
     public var activeServer: ServerModel?
     public var lastConnectionRequest: ConnectionRequest?
+    public var activeServerType: ServerType
     
     private var _userTier: Int = 0
     
@@ -41,7 +43,7 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     }
     
     public func changeActiveServerType(_ serverType: ServerType) {
-        
+        self.activeServerType = serverType
     }
     
     public func autoConnect() {
