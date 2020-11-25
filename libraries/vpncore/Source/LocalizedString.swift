@@ -548,10 +548,12 @@ public class LocalizedString {
     public static let profilesTourDescription = NSLocalizedString("_profiles_tour_description", comment: "MacOS app tour: profiles description")
     public static let countriesTourTitle = NSLocalizedString("_countries_tour_title", comment: "MacOS app tour: countries list title")
     public static let countriesTourDescription = NSLocalizedString("_countries_tour_description", comment: "MacOS app tour: countries list description")
-    public static let secureCoreTourTitle = NSLocalizedString("_secure_core_tour_title", comment: "MacOS app tour: secure core title")
-    public static let secureCoreTourDescription = NSLocalizedString("_secure_core_tour_description", comment: "MacOS app tour: secure core description")
-    public static let mapTourTitle = NSLocalizedString("_map_tour_title", comment: "MacOS app tour: map title")
-    public static let mapTourDescription = NSLocalizedString("_map_tour_description", comment: "MacOS app tour: map description")
+    public static let quickSettingsTourTitle = NSLocalizedString("_quick_settings_tour_title", comment: "MacOS app tour: quick settings title")
+    public static let quickSettingsTourDescription = NSLocalizedString("_quick_settings_tour_description", comment: "MacOS app tour: quick settings description")
+    public static let quickSettingsTourFeature1 = NSLocalizedString("_quick_settings_tour_feature_1", comment: "MacOS app tour: quick settings secure core")
+    public static let quickSettingsTourFeature2 = NSLocalizedString("_quick_settings_tour_feature_2", comment: "MacOS app tour: quick settings net shield")
+    public static let quickSettingsTourFeature3 = NSLocalizedString("_quick_settings_tour_feature_3", comment: "MacOS app tour: quick settings kill switch")
+    
     public static let nextTip = NSLocalizedString("_next_tip", comment: "MacOS app tour: next tip button")
     public static let endTour = NSLocalizedString("_end_tour", comment: "MacOS app tour: end tour button")
     
@@ -660,4 +662,19 @@ public class LocalizedString {
     
     // MARK: - Nesw / Announcements / APINotifications
     public static let newsTitle = NSLocalizedString("_news_title", comment: "Title of the screen with news and offers.")
+    
+    // MARK: - Quick Settings
+    public static let qsSCdescription = NSLocalizedString("_quick_settings_secureCore_description", comment: "Description for Secure Core on Quick Settings.")
+    public static let qsNSdescription = NSLocalizedString("_quick_settings_netShield_description", comment: "Description for NetShield on Quick Settings.")
+    public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
+    public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
+    public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
+    public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")
+    public static let qsApplyingSettings = NSLocalizedString("_applying_settings_", comment: "Title on reconnection info")
+    public static let qsReestablishingConnection = NSLocalizedString("_reestablish_vpn_connection_", comment: "Title on reconnection view controller")
+    public static let qsYourIpWillNotBeExposed = NSLocalizedString("_ip_will_not_be_exposed", comment: "On reconnection inform the IP will not be informed")
+    public static let qsCancelReconnectionInfo = NSLocalizedString("_cancel_reconnection", comment: "On reconnection info about cancel reconnection")
+    public static let qsNetshieldOptionOff = NSLocalizedString("_quick_settings_netshield_option_off", comment: "QuickSettings Netshield option1")
+    public static let qsNetshieldOptionLevel1 = NSLocalizedString("_quick_settings_netshield_option_level1", comment: "QuickSettings Netshield option2")
+    public static let qsNetshieldOptionLevel2 = NSLocalizedString("_quick_settings_netshield_option_level2", comment: "QuickSettings Netshield option3")
 }

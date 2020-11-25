@@ -29,6 +29,7 @@ public protocol PropertiesManagerProtocol: class {
     
     static var hasConnectedNotification: Notification.Name { get }
     static var userIpNotification: Notification.Name { get }
+    static var netShieldNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -123,7 +124,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
-
+    public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
+    
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
             let autoConnectEnabled = Storage.userDefaults().bool(forKey: Keys.autoConnect)
@@ -405,6 +407,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
+            NotificationCenter.default.post(name: PropertiesManager.netShieldNotification, object: newValue)
         }
     }
     

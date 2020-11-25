@@ -598,10 +598,12 @@
 "_profiles_tour_description" = "Save your preferred settings and servers for future use.";
 "_countries_tour_title" = "Countries";
 "_countries_tour_description" = "Choose which country and server you would like to use for your end IP address.";
-"_secure_core_tour_title" = "Secure Core";
-"_secure_core_tour_description" = "Turn on Secure Core to route your traffic through additional servers for another layer of network security. Available to Plus and Visionary members.";
-"_map_tour_title" = "Map";
-"_map_tour_description" = "See where VPN servers are located. Find the one nearest to your location.";
+"_quick_settings_tour_title" = "Quick Settings";
+"_quick_settings_tour_description" = "Increase your security with one click:";
+"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
+"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
+"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on Kill Switch.";
+
 "_next_tip" = "Next Tip";
 "_end_tour" = "End Tour";
 
@@ -710,3 +712,18 @@
 
 // Announcements
 "_news_title" = "News";
+
+// Quick Settings
+"_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
+"_quick_settings_netShield_description" = "Browse the Internet without ads and malware.";
+"_quick_settings_killSwitch_description" = "Disables Internet if the VPN connection drops to prevent accidental IP leak.";
+"_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
+"_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
+"_quick_settings_get_plus" = "GET PLUS";
+"_applying_settings_" = "Applying settings";
+"_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
+"_ip_will_not_be_exposed" = "Your IP will not be exposed.";
+"_cancel_reconnection" = "This will cancel any re-connection attempt and leave you disconnected";
+"_quick_settings_netshield_option_off" = "Don't block";
+"_quick_settings_netshield_option_level1" = "Block malware only";
+"_quick_settings_netshield_option_level2" = "Block malware & ads trackers";
