@@ -8,13 +8,27 @@
 
 /* Begin PBXBuildFile section */
 		21A0C56EE26846392D949E1E /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826C803B7C2C3A7B7C3178E6 /* Pods_ProtonVPNTests.framework */; };
+		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
+		42082671256BC3B900A621EC /* BlockeableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockeableScrollView.swift */; };
+		42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */; };
 		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
 		42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */; };
 		42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */; };
+		424C14D125596E0F00E1D988 /* QuickSettingDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */; };
+		424C14D225596E0F00E1D988 /* QuickSettingDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */; };
 		42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */; };
 		42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */; };
 		427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */; };
+		428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428B63C325558B5F00C90D40 /* QuickSettingButton.swift */; };
 		42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */; };
+		42C1F2852552FEA800793A49 /* QuickSettingsDropdownOption.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42C1F2842552FEA800793A49 /* QuickSettingsDropdownOption.xib */; };
+		42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */; };
+		42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */; };
+		42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */; };
+		42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
+		42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
+		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
+		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7561512A1FD8B4A8009224E7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 7561512C1FD8B4A8009224E7 /* Localizable.strings */; };
@@ -391,14 +405,28 @@
 		21BA0D02D9C47E419A9C0D53 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		27F7409F724A637E79F6FE80 /* Pods-ProtonVPN.debug beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug beta.xcconfig"; sourceTree = "<group>"; };
 		3D48C52D0B646BF7E0527534 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPNTests-metadata.plist"; path = "Pods/Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
+		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
+		42082670256BC3B900A621EC /* BlockeableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockeableScrollView.swift; sourceTree = "<group>"; };
+		42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsDropdownOptionPresenter.swift; sourceTree = "<group>"; };
 		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
 		42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpandableContentPopup.xib; sourceTree = "<group>"; };
 		42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePopupViewModel.swift; sourceTree = "<group>"; };
+		424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDetailViewController.swift; sourceTree = "<group>"; };
+		424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickSettingDetailViewController.xib; sourceTree = "<group>"; };
 		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
 		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
 		4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+RealSizing.swift"; sourceTree = "<group>"; };
+		42C1F2842552FEA800793A49 /* QuickSettingsDropdownOption.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = QuickSettingsDropdownOption.xib; sourceTree = "<group>"; };
+		42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsDropdownOption.swift; sourceTree = "<group>"; };
+		42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingDropdownPresenter.swift; sourceTree = "<group>"; };
+		42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldDropdownPresenter.swift; sourceTree = "<group>"; };
+		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
+		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
+		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
+		42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-OpenVPN Extension-metadata.plist"; path = "Pods/Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
 		648B664D9C62F2876C096974 /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
@@ -807,6 +835,43 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		42C1F2752552BC5B00793A49 /* QuickSettings */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F2842552FEA800793A49 /* QuickSettingsDropdownOption.xib */,
+				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
+			);
+			name = QuickSettings;
+			sourceTree = "<group>";
+		};
+		42C1F2922553069900793A49 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F298255306C000793A49 /* SideBar */,
+			);
+			name = Presenters;
+			sourceTree = "<group>";
+		};
+		42C1F298255306C000793A49 /* SideBar */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F299255306C800793A49 /* QuickSettings */,
+			);
+			name = SideBar;
+			sourceTree = "<group>";
+		};
+		42C1F299255306C800793A49 /* QuickSettings */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */,
+				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
+				42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */,
+				42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */,
+				42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */,
+			);
+			name = QuickSettings;
+			sourceTree = "<group>";
+		};
 		7461E535C10E886FBC226611 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -1028,6 +1093,7 @@
 				EEA1C8DE1F27BB0900B2036E /* CountriesSection */,
 				EE068DC01F23E7CF0006C2D0 /* ProfilesSection */,
 				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
+				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
 			);
 			name = Sidebar;
@@ -1158,6 +1224,7 @@
 				EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */,
 				EE4FCF611F21FA2800B04EF8 /* TextFieldWithFocus.swift */,
 				EE01DD121F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift */,
+				42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */,
 			);
 			name = TextField;
 			sourceTree = "<group>";
@@ -1287,6 +1354,8 @@
 				E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */,
 				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
 				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
+				424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */,
+				424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */,
 			);
 			name = Sidebar;
 			sourceTree = "<group>";
@@ -1350,6 +1419,7 @@
 		EE876E1D1F13CD7100C9B9C2 /* Sidebar */ = {
 			isa = PBXGroup;
 			children = (
+				42C1F2752552BC5B00793A49 /* QuickSettings */,
 				D5966FCE253855850061A75F /* Announcements */,
 				EECEF3DC1F169B1600A16606 /* CountriesSection */,
 				EE24A3991F1BC9F200B70949 /* ProfilesSection */,
@@ -1403,6 +1473,7 @@
 				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
 				EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */,
 				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
+				428B63C325558B5F00C90D40 /* QuickSettingButton.swift */,
 			);
 			name = Button;
 			sourceTree = "<group>";
@@ -1559,6 +1630,7 @@
 			children = (
 				EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */,
 				E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */,
+				42082670256BC3B900A621EC /* BlockeableScrollView.swift */,
 			);
 			name = ScrollView;
 			sourceTree = "<group>";
@@ -1694,6 +1766,7 @@
 				EE876E0F1F13852300C9B9C2 /* Layouts */,
 				EEBB82FA1F1E2E2C0041432A /* Management */,
 				EE4FCF671F22264E00B04EF8 /* Models */,
+				42C1F2922553069900793A49 /* Presenters */,
 				E17DE11521FEF8C3008CCC13 /* Protocols */,
 				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
 				EE98CFD81F150639000D6688 /* Resources */,
@@ -1724,6 +1797,7 @@
 				E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
+				42082650256BB78600A621EC /* NSView+Children.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2064,6 +2138,7 @@
 				EE24A3A91F1BDD3300B70949 /* ProfilesSection.xib in Resources */,
 				EE35FC411F1CC6FC00CFE26F /* SidebarTabBar.xib in Resources */,
 				EED534891EEC112000013607 /* Assets.xcassets in Resources */,
+				424C14D225596E0F00E1D988 /* QuickSettingDetailViewController.xib in Resources */,
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
@@ -2083,6 +2158,7 @@
 				D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */,
 				EE24A3981F1BC7D000B70949 /* FooterItem.xib in Resources */,
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
+				42C1F2852552FEA800793A49 /* QuickSettingsDropdownOption.xib in Resources */,
 				E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */,
 				EEBB82EA1F1DF5B40041432A /* CreateNewProfile.xib in Resources */,
 				EE27DB491F47095300D2FF2B /* Account.xib in Resources */,
@@ -2430,12 +2506,14 @@
 			files = (
 				EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */,
 				E1B80FE5203E109E00F1D76C /* ConnectingWindowController.swift in Sources */,
+				428B63C425558B5F00C90D40 /* QuickSettingButton.swift in Sources */,
 				EEBB82DE1F1DEB800041432A /* ProfilesContainerViewController.swift in Sources */,
 				EE068DC41F23E8A90006C2D0 /* ProfileItemViewModel.swift in Sources */,
 				E1454CED206FC6A900E6D396 /* HelpPopoverViewController.swift in Sources */,
 				E17DE10921FB630C008CCC13 /* AppProtocol.swift in Sources */,
 				EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */,
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
+				42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
 				E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
@@ -2479,6 +2557,7 @@
 				EE35FC451F1CD70700CFE26F /* TabBarButton.swift in Sources */,
 				EEBB82F61F1E0F8C0041432A /* OverviewItemView.swift in Sources */,
 				E1B31817224D2D78004D8171 /* SettingsTabBarViewModel.swift in Sources */,
+				42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */,
 				E187021920E23815000521AC /* StatusMenuProfilesListController.swift in Sources */,
 				EE4943EE1F29C20200CF980F /* LoginViewController.swift in Sources */,
 				E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */,
@@ -2504,7 +2583,9 @@
 				E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */,
 				E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */,
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
+				42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */,
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
+				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
 				E17DE12421FF4426008CCC13 /* NetworkHelperAuthRight.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
@@ -2512,16 +2593,19 @@
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
 				E180D15521258EF500F4D1C7 /* TrialAboutToExpireViewController.swift in Sources */,
+				42082671256BC3B900A621EC /* BlockeableScrollView.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
 				EEFE81D01F3F36740052A7A6 /* MapHeaderBackground.swift in Sources */,
 				EE5CF7701F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift in Sources */,
 				EE24A3AB1F1BDDEF00B70949 /* ProfilesSectionViewController.swift in Sources */,
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
+				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
 				E180D15B2126A89900F4D1C7 /* TourViewController.swift in Sources */,
 				EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */,
 				D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */,
 				EE98CFDE1F150FEE000D6688 /* AboutViewController.swift in Sources */,
+				424C14D125596E0F00E1D988 /* QuickSettingDetailViewController.swift in Sources */,
 				EE9589E41F596DFC005E7495 /* PVPNTextField.swift in Sources */,
 				D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */,
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
@@ -2550,6 +2634,7 @@
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
 				EE9BFBCA1F30DD5200EDA295 /* GeneralViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
+				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
 				E1F2621921D68BDB003A4401 /* ProfileManager+Extension.swift in Sources */,
@@ -2624,6 +2709,7 @@
 				EEFE81CC1F3F361A0052A7A6 /* MapHeaderViewController.swift in Sources */,
 				EEF781431F1A4ED000E77B59 /* TextFieldFocusDelegate.swift in Sources */,
 				EE4E7DF51F6276C9000F7D5E /* WindowService.swift in Sources */,
+				42082651256BB78600A621EC /* NSView+Children.swift in Sources */,
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
@@ -2647,10 +2733,12 @@
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
 				D5686B1E24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift in Sources */,
+				42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
+				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
 				E180D1682126F6EE00F4D1C7 /* TourNumberRingView.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,

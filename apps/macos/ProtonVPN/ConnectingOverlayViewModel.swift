@@ -40,7 +40,7 @@ class ConnectingOverlayViewModel {
     
     let retryButtonTitle = LocalizedString.tryAgain
     
-    private var state: AppState
+    private(set) var state: AppState
     
     var timedOut = false
     

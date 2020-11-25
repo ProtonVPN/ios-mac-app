@@ -37,11 +37,13 @@ class SecureCoreServerItemView: NSView {
     
     var showServerInfo: (() -> Void)?
     
+    public var disabled: Bool = false
+    
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
         
         // Executed on row addition
-        if newSuperview != nil {
+        if newSuperview != nil && !disabled {
             trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
             addTrackingArea(trackingArea!)
         }
@@ -52,6 +54,7 @@ class SecureCoreServerItemView: NSView {
     }
     
     override func mouseEntered(with event: NSEvent) {
+        if disabled { return }
         if viewModel.isParentExpanded() {
             isHovered = true
             hideConnectButton(!viewModel.enabled)
@@ -76,8 +79,9 @@ class SecureCoreServerItemView: NSView {
         loadIcon.load = viewModel.load
         setupInfoView()
         setupConnectButton()
-        
         setupBackground()
+        
+        viewWillMove(toSuperview: superview)
         
         viewModel.connectionChanged = { [unowned self] connected in self.connectionChanged(connected) }
         self.setAccessibilityLabel(viewModel.fullDescription)
@@ -108,6 +112,9 @@ class SecureCoreServerItemView: NSView {
     }
     
     private func setupConnectButton() {
+        connectButton.isEnabled = !disabled
+        connectButton.updateTrackingAreas()
+        
         connectButton.isConnected = viewModel.isConnected
         connectButton.upgradeRequired = viewModel.requiresUpgrade
         hideConnectButton(!viewModel.isConnected)

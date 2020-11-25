@@ -62,6 +62,8 @@ class HoverDetectionButton: NSButton {
         if isEnabled {
             addCursorRect(bounds, cursor: .pointingHand)
             isHovered = true
+        } else {
+            removeCursorRect(bounds, cursor: .pointingHand)
         }
     }
     

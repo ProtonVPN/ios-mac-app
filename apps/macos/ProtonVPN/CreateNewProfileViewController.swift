@@ -42,9 +42,7 @@ class CreateNewProfileViewController: NSViewController {
     @IBOutlet weak var serverLabel: PVPNTextField!
     @IBOutlet weak var serverList: HoverDetectionPopUpButton!
     @IBOutlet weak var serverListHorizontalLine: NSBox!
-    @IBOutlet weak var netshieldLabel: PVPNTextField!
-    @IBOutlet weak var netshieldList: HoverDetectionPopUpButton!
-    @IBOutlet weak var netshieldHorizontalLine: NSBox!
+
     @IBOutlet weak var warningLabel: PVPNTextField!
     @IBOutlet weak var warningLabelHorizontalLine: NSBox!
     @IBOutlet weak var footerView: NSView!
@@ -80,7 +78,6 @@ class CreateNewProfileViewController: NSViewController {
         setupTypeSection()
         setupCountrySection()
         setupServerSection()
-        setupNetshieldSection()
         setupWarningSection()
         setupFooterView()
         
@@ -161,16 +158,7 @@ class CreateNewProfileViewController: NSViewController {
         
         serverListHorizontalLine.fillColor = .protonLightGrey()
     }
-    
-    private func setupNetshieldSection() {
-        netshieldLabel.attributedStringValue = LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        netshieldList.isBordered = false
-        netshieldList.menu?.delegate = self
-        netshieldList.target = self
-        netshieldList.action = #selector(selectedNetshieldType)
-        netshieldHorizontalLine.fillColor = .protonLightGrey()
-    }
-    
+        
     private func setupWarningSection() {
         warningLabel.isHidden = true
         
@@ -191,11 +179,10 @@ class CreateNewProfileViewController: NSViewController {
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
     }
     
-    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedNetshield: Int = 1) {
+    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0) {
         refreshTypeList(withSelectionAt: selectedType)
         refreshCountryList(for: selectedType, withSelectionAt: selectedCountry)
         refreshServerList(for: typeList.indexOfSelectedItem, and: selectedCountry, withSelectionAt: selectedServer)
-        refreshNetshieldList(selectedNetshield)
     }
     
     private func refreshTypeList(withSelectionAt selectedIndex: Int) {
@@ -248,20 +235,6 @@ class CreateNewProfileViewController: NSViewController {
         serverList.select(serverList.menu?.item(at: selectedIndex))
     }
     
-    private func refreshNetshieldList( _ index: Int) {
-        netshieldList.isHidden = !viewModel.isNetshieldEnabled
-        netshieldLabel.isHidden = !viewModel.isNetshieldEnabled
-        netshieldHorizontalLine.isHidden = !viewModel.isNetshieldEnabled
-        
-        netshieldList.removeAllItems()
-        [LocalizedString.disabled, LocalizedString.netshieldLevel1, LocalizedString.netshieldLevel2].forEach { option in
-            let item = NSMenuItem()
-            item.attributedTitle = option.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            netshieldList.menu?.addItem(item)
-        }
-        netshieldList.select(netshieldList.itemArray[index])
-    }
-    
     @objc private func typeSelected() {
         refreshTypeList(withSelectionAt: typeList.indexOfSelectedItem)
         refreshCountryList(for: typeList.indexOfSelectedItem, withSelectionAt: 0)
@@ -275,16 +248,6 @@ class CreateNewProfileViewController: NSViewController {
     
     @objc private func serverSelected() {
         refreshServerList(for: typeList.indexOfSelectedItem, and: countryList.indexOfSelectedItem, withSelectionAt: serverList.indexOfSelectedItem)
-    }
-    
-    @objc private func selectedNetshieldType() {
-        if netshieldList.indexOfSelectedItem != NetShieldType.level2.rawValue {
-            refreshNetshieldList(netshieldList.indexOfSelectedItem)
-            return
-        }
-        
-        let condition = viewModel.checkNetshieldOption(netshieldList.indexOfSelectedItem)
-        refreshNetshieldList( condition ? NetShieldType.level2.rawValue : NetShieldType.defaultValue.rawValue)
     }
     
     @objc private func cancelButtonAction() {
@@ -332,11 +295,10 @@ class CreateNewProfileViewController: NSViewController {
         let selectedCountry = selectedCountryItem - 1
         let selectedServer = selectedServerItem - 1
         let selectedColor = viewModel.colorPickerViewModel.color(atIndex: viewModel.colorPickerViewModel.selectedColorIndex)
-        let selectedNetshield = NetShieldType(rawValue: netshieldList.indexOfSelectedItem) ?? NetShieldType.defaultValue
         
         viewModel.createProfile(name: nameTextField.stringValue, color: selectedColor,
                                 typeIndex: selectedType, countryIndex: selectedCountry,
-                                serverIndex: selectedServer, netShieldType: selectedNetshield)
+                                serverIndex: selectedServer)
     }
     
     private func appendedWithSeparator(string: String) -> String {
@@ -374,8 +336,7 @@ class CreateNewProfileViewController: NSViewController {
         
         populateLists(selectedType: profileInformation.typeIndex,
                       selectedCountry: adjustedCountryIndex,
-                      selectedServer: adjustedServerIndex,
-                      selectedNetshield: profileInformation.netshieldType.rawValue
+                      selectedServer: adjustedServerIndex
         )
     }
     

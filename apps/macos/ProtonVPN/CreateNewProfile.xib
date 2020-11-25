@@ -19,9 +19,6 @@
                 <outlet property="nameLabel" destination="tyb-ge-VC6" id="g2v-Wm-Qmq"/>
                 <outlet property="nameTextField" destination="rVj-Ub-X2f" id="BWB-Bv-VaQ"/>
                 <outlet property="nameTextFieldHorizontalLine" destination="2Av-tx-fMt" id="iws-oq-KYJ"/>
-                <outlet property="netshieldHorizontalLine" destination="wGT-nb-CmZ" id="Ogk-Fo-KLr"/>
-                <outlet property="netshieldLabel" destination="IfZ-uz-o3w" id="JeY-hc-924"/>
-                <outlet property="netshieldList" destination="2KV-Y0-VxW" id="9uw-by-RW9"/>
                 <outlet property="profileSettingsLabel" destination="njs-1o-jnp" id="nXv-B6-Lcw"/>
                 <outlet property="saveButton" destination="2II-AM-dOz" id="M3J-QS-9Xe"/>
                 <outlet property="serverLabel" destination="Sk1-39-Mzh" id="bvK-kX-sS0"/>
@@ -83,14 +80,6 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-39-Mzh" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="469" y="211" width="86" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 3" id="b8Z-uC-rbR">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                </textField>
-                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="IfZ-uz-o3w" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="469" y="149" width="86" height="16"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 4" id="BOo-QM-MaX">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -216,23 +205,6 @@
                         </menu>
                     </popUpButtonCell>
                 </popUpButton>
-                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2KV-Y0-VxW" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="606" y="144" width="255" height="25"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="21" id="DZU-kw-hPg"/>
-                    </constraints>
-                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="bDH-vc-sPm" id="SjT-rG-PV2">
-                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                        <menu key="menu" id="sOS-xe-M9C">
-                            <items>
-                                <menuItem title="Item 1" state="on" id="bDH-vc-sPm"/>
-                                <menuItem title="Item 2" id="w3k-ed-Qyg"/>
-                                <menuItem title="Item 3" id="5eY-V9-Dl4"/>
-                            </items>
-                        </menu>
-                    </popUpButtonCell>
-                </popUpButton>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Fun-GM-J1J">
                     <rect key="frame" x="608" y="258" width="250" height="1"/>
                     <view key="contentView" id="OZc-i0-jRB">
@@ -253,16 +225,6 @@
                         <constraint firstAttribute="height" constant="1" id="Ioq-4N-Ab6"/>
                     </constraints>
                 </box>
-                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="wGT-nb-CmZ">
-                    <rect key="frame" x="608" y="134" width="250" height="1"/>
-                    <view key="contentView" id="u4Y-fp-pXj">
-                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                    </view>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="1" id="8ig-Pz-c1j"/>
-                    </constraints>
-                </box>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Q7F-4A-CvQ" userLabel="Type List Horizontal Line">
                     <rect key="frame" x="608" y="320" width="250" height="1"/>
                     <view key="contentView" id="r3x-zb-5zf">
@@ -274,7 +236,7 @@
                     </constraints>
                 </box>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="LR0-PJ-2rZ">
-                    <rect key="frame" x="430" y="83" width="40" height="1"/>
+                    <rect key="frame" x="430" y="145" width="40" height="1"/>
                     <view key="contentView" id="WtG-cN-LxG">
                         <rect key="frame" x="0.0" y="0.0" width="40" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -284,7 +246,7 @@
                     </constraints>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="meN-iu-7gi" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="428" y="84" width="44" height="19"/>
+                    <rect key="frame" x="428" y="146" width="44" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" usesSingleLineMode="YES" id="KA8-kx-scx">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -295,7 +257,6 @@
             <constraints>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="leading" secondItem="2ue-uR-ZZQ" secondAttribute="leading" id="2yv-yR-kep"/>
                 <constraint firstItem="nfq-Sc-kkp" firstAttribute="top" secondItem="tyb-ge-VC6" secondAttribute="bottom" constant="46" id="37i-Mw-aPI"/>
-                <constraint firstItem="2KV-Y0-VxW" firstAttribute="centerY" secondItem="IfZ-uz-o3w" secondAttribute="centerY" id="53A-ds-bCr"/>
                 <constraint firstItem="Ztl-fh-UeK" firstAttribute="centerY" secondItem="njs-1o-jnp" secondAttribute="centerY" id="5M9-Sm-W2n"/>
                 <constraint firstItem="rVj-Ub-X2f" firstAttribute="centerY" secondItem="tyb-ge-VC6" secondAttribute="centerY" id="5d1-fl-OeA"/>
                 <constraint firstItem="tyb-ge-VC6" firstAttribute="top" secondItem="njs-1o-jnp" secondAttribute="bottom" constant="36" id="6SJ-TW-ZBe"/>
@@ -303,7 +264,7 @@
                 <constraint firstItem="8uS-Rc-jdf" firstAttribute="centerY" secondItem="nfq-Sc-kkp" secondAttribute="centerY" id="9BK-fg-DTK"/>
                 <constraint firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" constant="42" id="Dil-vv-tpx"/>
                 <constraint firstItem="t9x-nT-TtE" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="DyX-Qw-pi0"/>
-                <constraint firstItem="meN-iu-7gi" firstAttribute="top" secondItem="IfZ-uz-o3w" secondAttribute="bottom" constant="46" id="EoC-bY-WHC"/>
+                <constraint firstItem="meN-iu-7gi" firstAttribute="top" secondItem="Sk1-39-Mzh" secondAttribute="bottom" constant="46" id="EoC-bY-WHC"/>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="trailing" secondItem="2ue-uR-ZZQ" secondAttribute="trailing" id="Kqu-f6-cbS"/>
                 <constraint firstItem="4hm-1b-MMH" firstAttribute="centerY" secondItem="nfq-Sc-kkp" secondAttribute="centerY" id="LUP-ub-tEU"/>
                 <constraint firstAttribute="bottom" secondItem="t9x-nT-TtE" secondAttribute="bottom" id="N6M-VJ-Cb7"/>
@@ -320,24 +281,17 @@
                 <constraint firstItem="Fun-GM-J1J" firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" id="cch-Ue-CUK"/>
                 <constraint firstItem="Sk1-39-Mzh" firstAttribute="top" secondItem="8uS-Rc-jdf" secondAttribute="bottom" constant="46" id="crY-Us-RT0"/>
                 <constraint firstItem="iwQ-wN-amU" firstAttribute="trailing" secondItem="P7g-i0-fdM" secondAttribute="trailing" id="dYu-Dl-rzM"/>
-                <constraint firstItem="wGT-nb-CmZ" firstAttribute="leading" secondItem="2KV-Y0-VxW" secondAttribute="leading" id="dab-aA-usM"/>
                 <constraint firstItem="iwQ-wN-amU" firstAttribute="leading" secondItem="P7g-i0-fdM" secondAttribute="leading" id="ecy-pO-x35"/>
                 <constraint firstItem="njs-1o-jnp" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="42" id="f8m-FY-plU"/>
-                <constraint firstItem="IfZ-uz-o3w" firstAttribute="leading" secondItem="Sk1-39-Mzh" secondAttribute="leading" id="fhs-lv-0iv"/>
                 <constraint firstItem="2ue-uR-ZZQ" firstAttribute="width" secondItem="pql-Bu-2na" secondAttribute="width" id="gpb-aF-Jik"/>
                 <constraint firstItem="7Fn-fT-TVd" firstAttribute="centerY" secondItem="tyb-ge-VC6" secondAttribute="centerY" id="gry-U3-zAa"/>
                 <constraint firstItem="LR0-PJ-2rZ" firstAttribute="top" secondItem="meN-iu-7gi" secondAttribute="bottom" id="hCU-0m-BMi"/>
                 <constraint firstItem="iwQ-wN-amU" firstAttribute="top" secondItem="P7g-i0-fdM" secondAttribute="bottom" constant="12" id="iHU-43-ENa"/>
                 <constraint firstItem="Ztl-fh-UeK" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="471" id="iIS-0l-kOX"/>
-                <constraint firstItem="IfZ-uz-o3w" firstAttribute="top" secondItem="Sk1-39-Mzh" secondAttribute="bottom" constant="46" id="jfz-Dn-AXa"/>
                 <constraint firstItem="2Av-tx-fMt" firstAttribute="top" secondItem="rVj-Ub-X2f" secondAttribute="bottom" constant="12" id="kSi-Ec-6yb"/>
                 <constraint firstItem="Fun-GM-J1J" firstAttribute="top" secondItem="pql-Bu-2na" secondAttribute="bottom" constant="12" id="lIR-pd-9Et"/>
                 <constraint firstItem="LR0-PJ-2rZ" firstAttribute="width" secondItem="meN-iu-7gi" secondAttribute="width" id="mk4-ip-GfB"/>
-                <constraint firstItem="wGT-nb-CmZ" firstAttribute="trailing" secondItem="2KV-Y0-VxW" secondAttribute="trailing" id="nsT-km-CRt"/>
                 <constraint firstItem="r3x-zb-5zf" firstAttribute="top" secondItem="2ue-uR-ZZQ" secondAttribute="bottom" constant="12" id="osL-vM-ceU"/>
-                <constraint firstItem="2KV-Y0-VxW" firstAttribute="trailing" secondItem="P7g-i0-fdM" secondAttribute="trailing" id="pGY-EU-kkF"/>
-                <constraint firstItem="2KV-Y0-VxW" firstAttribute="width" secondItem="2ue-uR-ZZQ" secondAttribute="width" id="pVI-T7-60v"/>
-                <constraint firstItem="wGT-nb-CmZ" firstAttribute="top" secondItem="2KV-Y0-VxW" secondAttribute="bottom" constant="12" id="r8h-F1-IvR"/>
                 <constraint firstItem="7Fn-fT-TVd" firstAttribute="leading" secondItem="Ztl-fh-UeK" secondAttribute="leading" id="rc8-zq-Waa"/>
                 <constraint firstItem="tyb-ge-VC6" firstAttribute="leading" secondItem="njs-1o-jnp" secondAttribute="leading" id="snn-Zw-Hcf"/>
                 <constraint firstItem="2ue-uR-ZZQ" firstAttribute="centerY" secondItem="7Fn-fT-TVd" secondAttribute="centerY" id="ta1-hI-Dz6"/>

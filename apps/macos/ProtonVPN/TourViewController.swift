@@ -31,8 +31,22 @@ class TourViewController: NSViewController {
     @IBOutlet weak var previousButton: TourPreviousButton!
     @IBOutlet weak var nextButton: TourNextButton!
     
-    private let titles = [LocalizedString.quickConnectTourTitle, LocalizedString.profilesTourTitle, LocalizedString.countriesTourTitle, LocalizedString.secureCoreTourTitle, LocalizedString.mapTourTitle]
-    private let descriptions = [LocalizedString.quickConnectTourDescription, LocalizedString.profilesTourDescription, LocalizedString.countriesTourDescription, LocalizedString.secureCoreTourDescription, LocalizedString.mapTourDescription]
+    private let titles = [
+        LocalizedString.quickConnectTourTitle,
+        LocalizedString.profilesTourTitle,
+        LocalizedString.countriesTourTitle,
+        LocalizedString.quickSettingsTourTitle
+    ]
+    
+    private let descriptions = [
+        LocalizedString.quickConnectTourDescription,
+        LocalizedString.profilesTourDescription,
+        LocalizedString.countriesTourDescription,
+        LocalizedString.quickSettingsTourDescription
+            + "\n•" + LocalizedString.quickSettingsTourFeature1
+            + "\n•" + LocalizedString.quickSettingsTourFeature2
+            + "\n•" + LocalizedString.quickSettingsTourFeature3
+    ]
     
     private let previous: (() -> Void)
     private let next: (() -> Void)
@@ -56,16 +70,25 @@ class TourViewController: NSViewController {
     }
     
     func display(page: Int) {
-        precondition(1...5 ~= page) // pages run 1-5 inclusive
+        precondition(1...titles.count ~= page)
         
         pageNumberLabel.attributedStringValue = "\(page)".attributed(withColor: .protonWhite(), fontSize: 14)
         
         previousButton.isHidden = page == 1 // hide back button on first page
-        nextButton.title = page == 5 ? LocalizedString.endTour : LocalizedString.nextTip
-        nextButton.showArrow = page != 5
+        nextButton.title = page == titles.count ? LocalizedString.endTour : LocalizedString.nextTip
+        nextButton.showArrow = page != titles.count
         
         titleLabel.attributedStringValue = titles[page - 1].attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left)
         descriptionLabel.attributedStringValue = descriptions[page - 1].attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
+        
+        let quickSettingStep = 4
+        
+        if page == quickSettingStep {
+            descriptionLabel.attributedStringValue = descriptionLabel.attributedStringValue.applyStyle(
+                for: [LocalizedString.secureCore, LocalizedString.netshieldTitle, LocalizedString.killSwitch],
+                attrs: [.font: NSFont.boldSystemFont(ofSize: 12)]
+            )
+        }
     }
     
     @IBAction func previous(_ sender: Any) {

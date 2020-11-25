@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="QuickSettingDetailViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="arrowHorizontalConstraint" destination="crk-PZ-PmL" id="bdR-ve-8xp"/>
+                <outlet property="arrowIV" destination="vHT-FC-Dgo" id="yQu-SN-ZDg"/>
+                <outlet property="buttonSpaceHeightConstraint" destination="KO3-Gg-ccE" id="RN6-4m-rTZ"/>
+                <outlet property="contentBox" destination="OF3-Mw-Sjv" id="zFz-6l-r9M"/>
+                <outlet property="dropdownDescription" destination="g7V-iK-cc1" id="oNs-RU-JW4"/>
+                <outlet property="dropdownLearnMore" destination="U0y-aY-rlv" id="Rhp-od-tos"/>
+                <outlet property="dropdownNote" destination="EW3-Fs-3UC" id="FYR-Yj-o9v"/>
+                <outlet property="dropdownOptionsView" destination="lCE-Jm-Yx9" id="x0F-dF-Psy"/>
+                <outlet property="dropdownTitle" destination="ZTu-7u-BXA" id="EQO-bg-48P"/>
+                <outlet property="dropdownUgradeButton" destination="1xP-QI-Slv" id="qQK-Pg-ohh"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="428" height="743"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Wg0-Ha-0wP" userLabel="Detail">
+                    <rect key="frame" x="0.0" y="12" width="428" height="731"/>
+                    <view key="contentView" id="EYL-6L-NcP">
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="731"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <box ambiguous="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="OF3-Mw-Sjv" userLabel="Content">
+                                <rect key="frame" x="69" y="108" width="291" height="367"/>
+                                <view key="contentView" ambiguous="YES" id="Fqw-F9-tj9">
+                                    <rect key="frame" x="0.0" y="0.0" width="291" height="367"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTu-7u-BXA">
+                                            <rect key="frame" x="22" y="321" width="247" height="19"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="NetShield" id="AM0-L5-Z9G">
+                                                <font key="font" metaFont="system" size="16"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7V-iK-cc1">
+                                            <rect key="frame" x="22" y="236" width="247" height="64"/>
+                                            <textFieldCell key="cell" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." id="JR4-4w-pB3">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lCE-Jm-Yx9">
+                                            <rect key="frame" x="22" y="100" width="245" height="96"/>
+                                        </customView>
+                                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EW3-Fs-3UC">
+                                            <rect key="frame" x="22" y="16" width="247" height="32"/>
+                                            <textFieldCell key="cell" lineBreakMode="charWrapping" enabled="NO" title="Note: If some sites don’t load, try disabling NetShield." id="Xh9-cq-lRr">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                            <rect key="frame" x="99" y="64" width="93" height="32"/>
+                                            <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                            <userDefinedRuntimeAttributes>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                                    <real key="value" value="64"/>
+                                                </userDefinedRuntimeAttribute>
+                                                <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
+                                                    <real key="value" value="16"/>
+                                                </userDefinedRuntimeAttribute>
+                                            </userDefinedRuntimeAttributes>
+                                        </button>
+                                        <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0y-aY-rlv" userLabel="learnMoreButton">
+                                            <rect key="frame" x="22" y="204" width="245" height="6"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="15" id="xW6-PM-ue2"/>
+                                            </constraints>
+                                            <buttonCell key="cell" type="bevel" title="Button" bezelStyle="regularSquare" alignment="left" imageScaling="proportionallyDown" inset="2" id="D9T-HZ-ROJ">
+                                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                        </button>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="lCE-Jm-Yx9" firstAttribute="top" secondItem="U0y-aY-rlv" secondAttribute="bottom" constant="12" id="38Y-ke-8oW"/>
+                                        <constraint firstItem="ZTu-7u-BXA" firstAttribute="leading" secondItem="Fqw-F9-tj9" secondAttribute="leading" constant="24" id="8me-Ha-uIe"/>
+                                        <constraint firstAttribute="bottom" secondItem="EW3-Fs-3UC" secondAttribute="bottom" constant="16" id="DaM-WA-9yw"/>
+                                        <constraint firstItem="1xP-QI-Slv" firstAttribute="top" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" constant="16" id="I51-01-Sf3"/>
+                                        <constraint firstItem="lCE-Jm-Yx9" firstAttribute="leading" secondItem="U0y-aY-rlv" secondAttribute="leading" id="Ihg-KN-Cg8"/>
+                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="top" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" constant="60" id="KO3-Gg-ccE"/>
+                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="leading" secondItem="ZTu-7u-BXA" secondAttribute="leading" id="LnF-Gi-udP"/>
+                                        <constraint firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" constant="24" id="MHf-mc-xfS"/>
+                                        <constraint firstItem="1xP-QI-Slv" firstAttribute="centerX" secondItem="Fqw-F9-tj9" secondAttribute="centerX" id="OUU-TO-32H"/>
+                                        <constraint firstItem="U0y-aY-rlv" firstAttribute="top" secondItem="g7V-iK-cc1" secondAttribute="bottom" constant="4" id="UhY-rb-UQX"/>
+                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="WRc-Se-VAP"/>
+                                        <constraint firstItem="U0y-aY-rlv" firstAttribute="leading" secondItem="Fqw-F9-tj9" secondAttribute="leading" constant="22" id="YCo-SX-Wuq"/>
+                                        <constraint firstItem="ZTu-7u-BXA" firstAttribute="top" secondItem="Fqw-F9-tj9" secondAttribute="top" constant="27" id="atm-yQ-lA7"/>
+                                        <constraint firstItem="g7V-iK-cc1" firstAttribute="top" secondItem="ZTu-7u-BXA" secondAttribute="bottom" constant="21" id="d1t-gE-FB2"/>
+                                        <constraint firstItem="g7V-iK-cc1" firstAttribute="leading" secondItem="ZTu-7u-BXA" secondAttribute="leading" id="jsv-Nn-nRR"/>
+                                        <constraint firstItem="lCE-Jm-Yx9" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="rC0-cj-GeM"/>
+                                        <constraint firstItem="g7V-iK-cc1" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="tmZ-GP-3GE"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="291" id="sQq-Dd-2s8"/>
+                                </constraints>
+                                <color key="borderColor" name="selectedControlTextColor" catalog="System" colorSpace="catalog"/>
+                                <color key="fillColor" red="0.2054606974" green="0.2053156793" blue="0.2322165668" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </box>
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo">
+                                <rect key="frame" x="182" y="709" width="65" height="22"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="65" id="Bkr-lG-bsr"/>
+                                    <constraint firstAttribute="width" secondItem="vHT-FC-Dgo" secondAttribute="height" multiplier="18:6" id="nt3-MM-u06"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="axesIndependently" image="qs_detail_triangle" id="zHa-8j-4Sv"/>
+                                <color key="contentTintColor" red="0.26274509800000001" green="0.2666666667" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </imageView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="OF3-Mw-Sjv" firstAttribute="top" secondItem="EYL-6L-NcP" secondAttribute="top" constant="15" id="ODS-SR-9KQ"/>
+                            <constraint firstItem="vHT-FC-Dgo" firstAttribute="top" secondItem="EYL-6L-NcP" secondAttribute="top" id="bK3-tT-VuK"/>
+                            <constraint firstItem="vHT-FC-Dgo" firstAttribute="centerX" secondItem="OF3-Mw-Sjv" secondAttribute="centerX" id="crk-PZ-PmL"/>
+                        </constraints>
+                    </view>
+                    <color key="fillColor" white="1" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Wg0-Ha-0wP" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="8RZ-7R-9MP"/>
+                <constraint firstItem="OF3-Mw-Sjv" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="AcN-xO-6el"/>
+                <constraint firstItem="Wg0-Ha-0wP" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="TXd-mS-CTI"/>
+                <constraint firstItem="Wg0-Ha-0wP" firstAttribute="height" secondItem="Hz6-mo-xeY" secondAttribute="height" multiplier="0.983806" id="qET-On-JXr"/>
+                <constraint firstItem="Wg0-Ha-0wP" firstAttribute="width" secondItem="Hz6-mo-xeY" secondAttribute="width" id="uPu-mH-VRc"/>
+            </constraints>
+            <point key="canvasLocation" x="-144" y="525.5"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="qs_detail_triangle" width="26" height="12"/>
+    </resources>
+</document>

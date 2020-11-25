@@ -130,10 +130,9 @@ class CreateNewProfileViewModel {
             cIndex = ServerUtility.countryIndex(in: grouping, countryCode: sWrapper.server.countryCode) ?? 0
             sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
-        let netshieldType = (profile.netShieldType ?? NetShieldType.defaultValue)
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
-                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex, netshieldType: netshieldType)
+                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex)
         
         prefillContent?(info)
     }
@@ -143,35 +142,17 @@ class CreateNewProfileViewModel {
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
     
-    // swiftlint:disable function_parameter_count
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
         
-        var isConnected = false
+        // Here you can ask user if he wants to continue/reconnect/etc.
         
-        switch appStateManager.state {
-        case .connected, .connecting:
-            if let editProfile = state.editedProfile {
-                isConnected = propertiesManager.lastConnectionRequest?.profileId == editProfile.id
-            }
-        default:
-            break
-        }
-        
-        guard isConnected && netShieldType != state.editedProfile?.netShieldType else {
-            finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
-            return
-        }
-        
-        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
-            self.finishCreatingProfile(name: name, color: color, typeIndex: typeIndex, countryIndex: countryIndex, serverIndex: serverIndex, netShieldType: netShieldType)
-            self.vpnGateway.reconnect(with: netShieldType)
-            
-        }, cancelHandler: {
-            // Do nothing
-        }))
+        finishCreatingProfile(name: name,
+                              color: color,
+                              typeIndex: typeIndex,
+                              countryIndex: countryIndex,
+                              serverIndex: serverIndex)
     }
-    // swiftlint:enable function_parameter_count
-
+    
     private func serverTypeFrom(index: Int) -> ServerType {
         switch index {
         case 0:
@@ -185,8 +166,7 @@ class CreateNewProfileViewModel {
         }
     }
     
-    // swiftlint:disable function_parameter_count
-    private func finishCreatingProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, netShieldType: NetShieldType) {
+    private func finishCreatingProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
         
         let serverType = serverTypeFrom(index: typeIndex)
         let grouping = serverManager.grouping(for: serverType)
@@ -218,7 +198,7 @@ class CreateNewProfileViewModel {
         
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
                               profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, vpnProtocol: PropertiesManager().vpnProtocol, netShieldType: netShieldType)
+                              name: name, vpnProtocol: PropertiesManager().vpnProtocol)
         
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         

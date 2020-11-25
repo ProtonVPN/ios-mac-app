@@ -26,7 +26,12 @@ class TourController {
     
     private let sidebarViewController: SidebarViewController
     private let mainWindow: NSWindow
-    private let numberPositions: [CGPoint]
+    private let numberPositions: [CGPoint] = [
+        CGPoint(x: 320, y: 134),
+        CGPoint(x: 300, y: 197),
+        CGPoint(x: 0, y: 197),
+        CGPoint(x: 320, y: 240)
+    ]
     
     private let cardWidth: CGFloat = 250
     private let cardHeight: CGFloat = 220
@@ -40,7 +45,6 @@ class TourController {
     init(mainWindow: NSWindow, sidebarViewController: SidebarViewController) {
         self.mainWindow = mainWindow
         self.sidebarViewController = sidebarViewController
-        self.numberPositions = [CGPoint(x: 320, y: 134), CGPoint(x: 300, y: 197), CGPoint(x: 0, y: 197), CGPoint(x: 230, y: 252), CGPoint(x: 400, y: 80)]
         
         mainWindow.styleMask.remove(.resizable)
         
@@ -90,11 +94,11 @@ class TourController {
     }
     
     private func next() {
-        if page == 5 { // close tour
+        if page == numberPositions.count { // close tour
             close()
         } else {
             let newPage = page + 1
-            guard newPage <= 5 else { return }
+            guard newPage <= numberPositions.count else { return }
         
             page = newPage
             configureNumber()
