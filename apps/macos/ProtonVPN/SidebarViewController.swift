@@ -24,7 +24,9 @@ import Cocoa
 import vpncore
 
 class SidebarViewController: NSViewController, NSWindowDelegate {
-    
+
+    static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
+
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
     
@@ -40,6 +42,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var expandButton: ExpandMapButton!
     @IBOutlet weak var expandButtonLeading: NSLayoutConstraint!
     
+    private var reconnecting = false
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
     private var viewToggle: NSNotification.Name!
@@ -121,6 +124,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(checkAnnouncementsRendering),
                                                name: AnnouncementStorageNotifications.contentChanged,
+                                               object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(reconnectionState(_:)),
+                                               name: SidebarViewController.reconnectionNotificationName,
                                                object: nil)
     }
     
@@ -217,15 +224,20 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         
         if show {
             removeConnectingOverlay()
-            
-            overlayViewModel = ConnectingOverlayViewModel(appStateManager: appStateManager, navService: navService, cancellation: { [weak self] in
+            let cancellation: (() -> Void) = { [weak self] in
                 guard let `self` = self else { return }
                 self.removeConnectingOverlay()
-            }, retry: { [weak self] in
+            }
+            
+            let retry: (() -> Void) = { [weak self] in
                 guard let `self` = self else { return }
                 self.vpnGateway.retryConnection()
-            })
+            }
             
+            overlayViewModel = reconnecting
+                ? ReconnectingOverlayViewModel(appStateManager: appStateManager, navService: navService, cancellation: cancellation, retry: retry)
+                : ConnectingOverlayViewModel(appStateManager: appStateManager, navService: navService, cancellation: cancellation, retry: retry)
+            reconnecting = false
             if window.isVisible && NSApp.occlusionState.contains(.visible) {
                 showLoadingOverlay(with: overlayViewModel!)
             }
@@ -286,6 +298,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
             // To deal with this, need to make sure all uses of layerUsesCoreImageFilters are set to false when app isn't visible.
             removeConnectingOverlay()
         }
+    }
+    
+    @objc private func reconnectionState(_ notification: Notification) {
+        reconnecting = true
     }
     
     private func resizeOverlayWindow() {

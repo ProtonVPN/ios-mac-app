@@ -38,16 +38,16 @@ extension NSImage {
     }
     
     func colored(_ color: NSColor) -> NSImage {
-        guard let colored = copy() as? NSImage else { return self }
+        guard let cgImage = self.cgImage(forProposedRect: nil, context: nil, hints: nil) else {
+            return self
+        }
         
-        colored.lockFocus()
-        color.set()
-        
-        let imageRect = NSRect(origin: NSPoint.zero, size: size)
-        imageRect.fill(using: .sourceAtop)
-        
-        colored.unlockFocus()
-        
-        return colored
+        return NSImage(size: size, flipped: false) { bounds in
+            guard let context = NSGraphicsContext.current?.cgContext else { return false }
+            color.set()
+            context.clip(to: bounds, mask: cgImage)
+            context.fill(bounds)
+            return true
+        }
     }
 }

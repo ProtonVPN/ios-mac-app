@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" userLabel="DropdownOption" customClass="QuickSettingsDropdownOption" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="326" height="24"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <box boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="2ov-qG-5KZ">
+                    <rect key="frame" x="0.0" y="10" width="326" height="14"/>
+                    <view key="contentView" id="nto-is-2is">
+                        <rect key="frame" x="0.0" y="0.0" width="326" height="14"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView translatesAutoresizingMaskIntoConstraints="NO" id="neY-sW-DMR">
+                                <rect key="frame" x="16" y="-1" width="16" height="16"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="neY-sW-DMR" secondAttribute="height" multiplier="1:1" id="4NQ-qa-Kzj"/>
+                                    <constraint firstAttribute="height" constant="16" id="Yxs-Ap-ogX"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="qs_securecore_off" id="QW2-rt-O85"/>
+                                <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                            </imageView>
+                            <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="bcR-74-19z" userLabel="titileLbl">
+                                <rect key="frame" x="46" y="-1" width="234" height="16"/>
+                                <textFieldCell key="cell" enabled="NO" title="Multiline Label" id="Z9L-xi-6hE">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                            <box hidden="YES" boxType="custom" cornerRadius="10" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Mym-Jk-Q0N" userLabel="Plus box">
+                                <rect key="frame" x="268" y="-3" width="42" height="20"/>
+                                <view key="contentView" id="FGM-t4-XnG">
+                                    <rect key="frame" x="1" y="1" width="40" height="18"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7oJ-BW-YdW">
+                                            <rect key="frame" x="6" y="4" width="28" height="10"/>
+                                            <textFieldCell key="cell" lineBreakMode="clipping" title="PLUS" id="cZF-gc-SKp">
+                                                <font key="font" metaFont="miniSystem"/>
+                                                <color key="textColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="7oJ-BW-YdW" firstAttribute="leading" secondItem="FGM-t4-XnG" secondAttribute="leading" constant="8" id="M6K-XU-3Ho"/>
+                                        <constraint firstAttribute="bottom" secondItem="7oJ-BW-YdW" secondAttribute="bottom" constant="4" id="Pgs-ld-yYk"/>
+                                        <constraint firstItem="7oJ-BW-YdW" firstAttribute="centerY" secondItem="FGM-t4-XnG" secondAttribute="centerY" id="VRn-uV-chP"/>
+                                        <constraint firstItem="7oJ-BW-YdW" firstAttribute="top" secondItem="FGM-t4-XnG" secondAttribute="top" constant="4" id="ZHa-cw-rag"/>
+                                        <constraint firstAttribute="trailing" secondItem="7oJ-BW-YdW" secondAttribute="trailing" constant="8" id="l3Y-vI-Tvy"/>
+                                    </constraints>
+                                </view>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="b7u-U9-Vvd"/>
+                                </constraints>
+                                <color key="borderColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="fillColor" red="0.4392156862745098" green="0.4392156862745098" blue="0.4392156862745098" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
+                            </box>
+                            <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qSN-hw-t8k">
+                                <rect key="frame" x="0.0" y="0.0" width="326" height="14"/>
+                                <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="P44-0Y-pSf">
+                                    <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                    <font key="font" size="16" name="HelveticaNeue-Thin"/>
+                                </buttonCell>
+                                <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                        <real key="value" value="32"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
+                                        <real key="value" value="32"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="didTapActionBtn:" target="c22-O7-iKe" id="rRZ-yJ-lGO"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="Mym-Jk-Q0N" firstAttribute="centerY" secondItem="bcR-74-19z" secondAttribute="centerY" id="6ip-gu-COv"/>
+                            <constraint firstItem="bcR-74-19z" firstAttribute="leading" secondItem="neY-sW-DMR" secondAttribute="trailing" constant="16" id="KEK-ie-foz"/>
+                            <constraint firstItem="qSN-hw-t8k" firstAttribute="top" secondItem="nto-is-2is" secondAttribute="top" id="QzD-Id-InZ"/>
+                            <constraint firstAttribute="trailing" secondItem="qSN-hw-t8k" secondAttribute="trailing" id="ZTS-RV-hFp"/>
+                            <constraint firstItem="qSN-hw-t8k" firstAttribute="leading" secondItem="nto-is-2is" secondAttribute="leading" id="avO-Fe-5XS"/>
+                            <constraint firstAttribute="trailing" secondItem="Mym-Jk-Q0N" secondAttribute="trailing" constant="16" id="cTh-Ad-YJd"/>
+                            <constraint firstAttribute="bottom" secondItem="qSN-hw-t8k" secondAttribute="bottom" id="nW5-IA-sOR"/>
+                            <constraint firstItem="neY-sW-DMR" firstAttribute="leading" secondItem="nto-is-2is" secondAttribute="leading" constant="16" id="wc4-s8-cdE"/>
+                        </constraints>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="bcR-74-19z" secondAttribute="trailing" constant="48" id="AMg-hw-AwM"/>
+                        <constraint firstItem="bcR-74-19z" firstAttribute="centerY" secondItem="2ov-qG-5KZ" secondAttribute="centerY" id="AaL-km-avt"/>
+                        <constraint firstItem="neY-sW-DMR" firstAttribute="centerY" secondItem="2ov-qG-5KZ" secondAttribute="centerY" id="T3O-cK-jEU"/>
+                    </constraints>
+                </box>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="2ov-qG-5KZ" secondAttribute="trailing" id="Ant-9K-OfT"/>
+                <constraint firstItem="2ov-qG-5KZ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="qPz-oB-mQI"/>
+                <constraint firstAttribute="bottom" secondItem="2ov-qG-5KZ" secondAttribute="bottom" constant="10" id="tIx-wZ-GzC"/>
+                <constraint firstItem="2ov-qG-5KZ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="uGB-e1-SsU"/>
+            </constraints>
+            <connections>
+                <outlet property="containerBox" destination="2ov-qG-5KZ" id="fid-0P-A4u"/>
+                <outlet property="getPlusWidthConstraint" destination="AMg-hw-AwM" id="aVT-xq-aag"/>
+                <outlet property="optionIconIV" destination="neY-sW-DMR" id="wPa-sG-Qqg"/>
+                <outlet property="plusBox" destination="Mym-Jk-Q0N" id="BsE-dF-ofa"/>
+                <outlet property="titleLabel" destination="bcR-74-19z" id="fzl-YF-1C1"/>
+            </connections>
+            <point key="canvasLocation" x="45" y="40"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="qs_securecore_off" width="20" height="20"/>
+    </resources>
+</document>

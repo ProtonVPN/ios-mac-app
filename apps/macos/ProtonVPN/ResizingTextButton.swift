@@ -23,11 +23,12 @@
 import Cocoa
 
 class ResizingTextButton: HoverDetectionButton {
-
+    
     override func updateTrackingAreas() {
         trackingAreas.forEach { (area) in
             removeTrackingArea(area)
         }
+        if !isEnabled { return }
         let trackingArea = NSTrackingArea(rect: bounds, options: [.mouseEnteredAndExited, .activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
     }

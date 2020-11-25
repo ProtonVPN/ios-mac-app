@@ -253,6 +253,19 @@ extension NSColor {
                        alpha: 0.15)
     }
     
+    class func protonDarkBlueButton() -> NSColor {
+        return NSColor(red: 32/255,
+                       green: 32/255,
+                       blue: 38/255,
+                       alpha: 1)
+    }
+    
+    class func protonQuickSettingButton() -> NSColor {
+        return NSColor(red: 60/255,
+                       green: 60/255,
+                       blue: 70/255,
+                       alpha: 1)
+    }
     class func protonBlack() -> NSColor {
         return .black
     }

@@ -36,11 +36,13 @@ class CountryItemView: NSView {
     private var trackingArea: NSTrackingArea?
     private var isHovered = false
     
+    public var disabled: Bool = false
+    
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
         
         // Executed on row addition
-        if newSuperview != nil {
+        if newSuperview != nil && !disabled {
             trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
             addTrackingArea(trackingArea!)
             setUpCallbacks()
@@ -52,6 +54,7 @@ class CountryItemView: NSView {
     }
     
     override open func mouseEntered(with event: NSEvent) {
+        if disabled { return }
         isHovered = true
         hideConnectButton(false)
     }
@@ -76,12 +79,13 @@ class CountryItemView: NSView {
         setupKeywordIcon()
         setupConnectButton()
         setupExpandCellButton()
-        
         setupBackground()
+        
+        viewWillMove(toSuperview: superview)
+        
         rowSeparator.fillColor = NSColor.protonLightGrey()
         
         setUpCallbacks()
-        
         setupAccessibility()
     }
     
@@ -117,6 +121,9 @@ class CountryItemView: NSView {
     }
     
     private func setupConnectButton() {
+        connectButton.isEnabled = !disabled
+        connectButton.updateTrackingAreas()
+        expandCellButton.isEnabled = !disabled
         connectButton.isConnected = viewModel.isConnected
         hideConnectButton(!viewModel.isConnected)
         connectButton.target = self

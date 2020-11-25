@@ -54,6 +54,10 @@ extension DependencyContainer: CountriesSectionViewModelFactory {
     }
 }
 
+protocol CountriesSettingsDelegate: class {
+    func updateQuickSettings( secureCore: Bool, netshield: NetShieldType, killSwitch: Bool )
+}
+
 class CountriesSectionViewModel {
     
     private enum ModelState {
@@ -108,6 +112,7 @@ class CountriesSectionViewModel {
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
     
+    weak var delegate: CountriesSettingsDelegate?
     var contentChanged: ((ContentChange) -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var secureCoreChange: ((Bool) -> Void)?
@@ -116,12 +121,28 @@ class CountriesSectionViewModel {
     var secureCoreState: ButtonState {
         return state.serverType == .standard ? .off : .on
     }
-
+    
+    var isNetShieldEnabled: Bool {
+        return propertiesManager.featureFlags.isNetShield
+    }
+    
+    // MARK: - QuickSettings presenters
+    
+    var secureCorePresenter: QuickSettingDropdownPresenter {
+        return SecureCoreDropdownPresenter(factory)
+    }
+    var netShieldPresenter: QuickSettingDropdownPresenter {
+        return NetshieldDropdownPresenter(factory)
+    }
+    var killSwitchPresenter: QuickSettingDropdownPresenter {
+        return KillSwitchDropdownPresenter(factory)
+    }
+    
     private var serverManager: ServerManager
     private var state: ModelState
     private var userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & FirewallManagerFactory
     private let factory: Factory
     
     init(factory: Factory) {
@@ -147,6 +168,11 @@ class CountriesSectionViewModel {
                                                name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings),
+                                               name: propertiesManager.killSwitchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings),
+                                               name: PropertiesManager.netShieldNotification, object: nil)
+        factory.makeFirewallManager().stateChanged()
     }
     
     func isCountryExpanded(_ countryCode: String) -> Bool {
@@ -287,6 +313,7 @@ class CountriesSectionViewModel {
         
         self.contentChanged?(contentChange)
         self.secureCoreChange?(self.state.serverType == .secureCore)
+        self.updateSettings()
         NotificationCenter.default.post(name: self.contentSwitch, object: self.state.serverType)
     }
     
@@ -305,7 +332,6 @@ class CountriesSectionViewModel {
     }
     
     @objc private func vpnConnectionChanged() {
-        
         if propertiesManager.serverTypeToggle != state.serverType {
             updateSecureCoreState()
         }
@@ -415,5 +441,13 @@ class CountriesSectionViewModel {
                                               description: LocalizedString.viewToggleWillCauseDisconnect,
                                               onConfirm: confirmationClosure)
         disconnectWarning?(viewModel)
+    }
+    
+    @objc func updateSettings() {
+        self.delegate?.updateQuickSettings(
+            secureCore: propertiesManager.secureCoreToggle,
+            netshield: propertiesManager.netShieldType,
+            killSwitch: propertiesManager.killSwitch
+        )
     }
 }

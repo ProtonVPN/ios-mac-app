@@ -49,4 +49,15 @@ extension NSAttributedString {
         attachment.attachmentCell = attachmentCell
         return NSAttributedString(attachment: attachment)
     }
+    
+    func applyStyle( for strings: [String], attrs: [NSAttributedString.Key: Any] ) -> NSAttributedString {
+        let mutableAttributedString = NSMutableAttributedString()
+        mutableAttributedString.append(self)
+        strings.forEach { str in
+            guard let range = self.string.range(of: str) else { return }
+            let nsRange = NSRange(range, in: self.string)
+            mutableAttributedString.addAttributes(attrs, range: nsRange)
+        }
+        return mutableAttributedString
+    }
 }

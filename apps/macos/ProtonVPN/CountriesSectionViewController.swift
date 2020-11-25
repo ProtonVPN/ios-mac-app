@@ -31,21 +31,40 @@ class CountriesSectionViewController: NSViewController {
         static let secureCoreServer = "SecureCoreServer"
     }
     
-    @IBOutlet weak var secureCoreSwitch: SwitchButton!
-    @IBOutlet weak var secureCoreLabel: NSTextField!
-    @IBOutlet weak var secureCoreInfoIcon: NSImageView!
-    @IBOutlet weak var topHorizontalLine: NSBox!
+    enum QuickSettingType {
+        case secureCoreDisplay
+        case netShieldDisplay
+        case killSwitchDisplay
+    }
+
     @IBOutlet weak var searchIcon: NSImageView!
     @IBOutlet weak var searchTextField: TextFieldWithFocus!
     @IBOutlet weak var bottomHorizontalLine: NSBox!
-    @IBOutlet weak var serverListScrollView: NSScrollView!
+    @IBOutlet weak var serverListScrollView: BlockeableScrollView!
     @IBOutlet weak var serverListTableView: NSTableView!
     @IBOutlet weak var shadowView: ShadowView!
+    @IBOutlet weak var clearSearchBtn: NSButton!
     
+    @IBOutlet weak var quickSettingsStack: NSStackView!
+    @IBOutlet weak var secureCoreSectionView: NSView!
+    @IBOutlet weak var netShieldSectionView: NSView!
+    @IBOutlet weak var killSwitchSectionView: NSView!
+    
+    @IBOutlet weak var netShieldBox: NSBox!
+    
+    @IBOutlet weak var secureCoreBtn: QuickSettingButton!
+    @IBOutlet weak var netShieldBtn: QuickSettingButton!
+    @IBOutlet weak var killSwitchBtn: QuickSettingButton!
+    
+    @IBOutlet weak var secureCoreContainer: NSBox!
+    @IBOutlet weak var netshieldContainer: NSBox!
+    @IBOutlet weak var killSwitchContainer: NSBox!
+        
     fileprivate let viewModel: CountriesSectionViewModel
     
     private var infoButtonRowSelected: Int?
     private var serverInfoViewController: ServerInfoViewController?
+    private var quickSettingDetailDisplayed = false
     
     weak var sidebarView: NSView?
     
@@ -56,42 +75,34 @@ class CountriesSectionViewController: NSViewController {
     required init(viewModel: CountriesSectionViewModel) {
         self.viewModel = viewModel
         super.init(nibName: NSNib.Name("CountriesSection"), bundle: nil)
+        viewModel.delegate = self
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupView()
-        setupHeaderSection()
         setupSearchSection()
         setupTableView()
+        setupQuickSettings()
+    }
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        didDisplayQuickSetting(.secureCoreDisplay, appear: false)
     }
     
     private func setupView() {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.protonGrey().cgColor
     }
-    
-    private func setupHeaderSection() {
-        secureCoreSwitch.drawsUnderOverlay = true
-        secureCoreSwitch.registerDelegate(self)
-        secureCoreSwitch.setState(viewModel.secureCoreState, animated: false)
-        secureCoreSwitch.setAccessibilityLabel(LocalizedString.secureCore)
-        secureCoreSwitch.setAccessibilityElement(true)
-        secureCoreSwitch.setAccessibilityRole(.button)
-        secureCoreSwitch.setAccessibilityHelp(LocalizedString.secureCoreInfo)
         
-        setSecureCoreLabel()
-        
-        secureCoreInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        secureCoreInfoIcon.toolTip = LocalizedString.secureCoreInfo
-    }
-    
     private func setupSearchSection() {
-        topHorizontalLine.fillColor = .protonLightGrey()
         bottomHorizontalLine.fillColor = .protonLightGrey()
         
         searchIcon.image = NSImage(named: NSImage.Name("search"))
+        
+        clearSearchBtn.target = self
+        clearSearchBtn.action = #selector(clearSearch)
         
         searchTextField.delegate = self
         searchTextField.usesSingleLineMode = true
@@ -120,15 +131,22 @@ class CountriesSectionViewController: NSViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [unowned self] change in self.contentChanged(change) }
-        viewModel.disconnectWarning = { [unowned self] viewModel in self.disconnectWarning(viewModel) }
-        viewModel.secureCoreChange = { [unowned self] enabled in self.secureCoreSwitchChanged(enabled) }
     }
     
-    private func setSecureCoreLabel() {
-        secureCoreLabel.attributedStringValue = LocalizedString.secureCore.attributed(withColor: secureCoreSwitch.currentButtonState == .on ? .protonWhite() : .protonGreyOutOfFocus(),
-                                                                                   fontSize: 16,
-                                                                                       bold: true,
-                                                                                  alignment: .left)
+    private func setupQuickSettings() {
+        [ (viewModel.secureCorePresenter, secureCoreContainer, secureCoreBtn, 0),
+          (viewModel.netShieldPresenter, netshieldContainer, netShieldBtn, 1),
+          (viewModel.killSwitchPresenter, killSwitchContainer, killSwitchBtn, 2) ].forEach { presenter, container, button, index in
+            let vc = QuickSettingDetailViewController( presenter )
+            vc.viewWillAppear()
+            container?.addSubview(vc.view)
+            vc.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: container?.frame.size.height ?? 0)
+            vc.view.frame.origin = .zero
+            button?.callback = { _ in self.didTapSettingButton(index) }
+            button?.detailOpened = false 
+        }
+        netShieldBox.isHidden = !viewModel.isNetShieldEnabled
+        viewModel.updateSettings()
     }
     
     private func showInfo(for row: Int, and view: NSView, with server: ServerModel) {
@@ -155,6 +173,51 @@ class CountriesSectionViewController: NSViewController {
     
     @objc private func scrolled(_ notification: Notification) {
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
+    }
+    
+    @objc private func clearSearch() {
+        if searchTextField.stringValue.isEmpty { return }
+        searchTextField.stringValue = ""
+        clearSearchBtn.isHidden = true
+        viewModel.filterContent(forQuery: "")
+    }
+    
+    private func didTapSettingButton( _ index: Int ) {
+        switch index {
+        case 0:
+            let finalValue = secureCoreContainer.isHidden
+            didDisplayQuickSetting(.secureCoreDisplay, appear: finalValue)
+        case 1:
+            let finalValue = netshieldContainer.isHidden
+            didDisplayQuickSetting(.netShieldDisplay, appear: finalValue)
+        default:
+            let finalValue = killSwitchContainer.isHidden
+            didDisplayQuickSetting(.killSwitchDisplay, appear: finalValue)
+        }
+    }
+    
+    private func didDisplayQuickSetting ( _ quickSettingItem: QuickSettingType, appear: Bool ) {
+        
+        let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
+        let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
+        let killSwitchDisplay = (quickSettingItem == .killSwitchDisplay) && appear
+        
+        searchTextField.isEnabled = !appear
+        
+        secureCoreBtn.detailOpened = secureCoreDisplay
+        secureCoreContainer.isHidden = !secureCoreDisplay
+        
+        netShieldBtn.detailOpened = netShieldDisplay
+        netshieldContainer.isHidden = !netShieldDisplay
+        
+        killSwitchBtn.detailOpened = killSwitchDisplay
+        killSwitchContainer.isHidden = !killSwitchDisplay
+        
+        serverListScrollView.block = appear
+        quickSettingDetailDisplayed = appear
+        serverListTableView.searchSubview(CountryItemView.self) { $0.disabled = appear }
+        serverListTableView.searchSubview(ServerItemView.self) { $0.disabled = appear }
+        serverListTableView.reloadData()
     }
     
     // swiftlint:disable cyclomatic_complexity
@@ -208,19 +271,9 @@ class CountriesSectionViewController: NSViewController {
             serverListTableView.scrollRowToVisible(0)
         }
     }
-    
-    private func disconnectWarning(_ viewModel: WarningPopupViewModel) {
-        secureCoreSwitch.setState(ButtonState(rawValue: 1 - secureCoreSwitch.currentButtonState.rawValue)!)
-        presentAsModalWindow(WarningPopupViewController(viewModel: viewModel))
-    }
-    
-    private func secureCoreSwitchChanged(_ enabled: Bool) {
-        secureCoreSwitch.setState(enabled ? .on : .off)
-    }
 }
 
 extension CountriesSectionViewController: NSTableViewDataSource {
-    
     func numberOfRows(in tableView: NSTableView) -> Int {
         return viewModel.cellCount
     }
@@ -241,11 +294,13 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         switch cellWrapper {
         case .country(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
+            cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.rowSeparator.isHidden = row == 0
             return cell
         case .server(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.server), owner: self) as! ServerItemView
+            cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.showServerInfo = { [weak self] in
                 guard let `self` = self else { return }
@@ -254,11 +309,13 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             return cell
         case .secureCoreCountry(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
+            cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.rowSeparator.isHidden = row == 0
             return cell
         case .secureCoreServer(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.secureCoreServer), owner: self) as! SecureCoreServerItemView
+            cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.showServerInfo = { [weak self] in
                 guard let `self` = self else { return }
@@ -269,17 +326,17 @@ extension CountriesSectionViewController: NSTableViewDelegate {
     }
 }
 
-extension CountriesSectionViewController: SwitchButtonDelegate {
-    
-    func switchButtonClicked(_ button: NSButton) {
-        viewModel.toggleStateAction()
-        setSecureCoreLabel()
+extension CountriesSectionViewController: NSTextFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        clearSearchBtn.isHidden = searchTextField.stringValue.isEmpty
+        viewModel.filterContent(forQuery: searchTextField.stringValue)
     }
 }
 
-extension CountriesSectionViewController: NSTextFieldDelegate {
-    
-    func controlTextDidChange(_ obj: Notification) {
-        viewModel.filterContent(forQuery: searchTextField.stringValue)
+extension CountriesSectionViewController: CountriesSettingsDelegate {
+    func updateQuickSettings(secureCore: Bool, netshield: NetShieldType, killSwitch: Bool) {
+        secureCoreBtn.switchState(secureCore ? #imageLiteral(resourceName: "qs_securecore_on") : #imageLiteral(resourceName: "qs_securecore_off"), enabled: secureCore)
+        killSwitchBtn.switchState(killSwitch ? #imageLiteral(resourceName: "qs_killswitch_on") : #imageLiteral(resourceName: "qs_killswitch_off"), enabled: killSwitch)
+        netShieldBtn.switchState(netshield == .off ? #imageLiteral(resourceName: "qs_netshield_off") : ( netshield == .level1 ? #imageLiteral(resourceName: "qs_netshield_level1") : #imageLiteral(resourceName: "qs_netshield_level2") ), enabled: netshield != .off)
     }
 }
