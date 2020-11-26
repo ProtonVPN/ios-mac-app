@@ -679,4 +679,5 @@ public class LocalizedString {
     public static let qsNetshieldOptionLevel2 = NSLocalizedString("_quick_settings_netshield_option_level2", comment: "QuickSettings Netshield option3")
     
     public static let upgradeSecureCore = NSLocalizedString("_upgrade_required_securecore_description", comment: "Description for enable secure core on free  plan")
+
 }
