@@ -404,7 +404,6 @@
 "_update_required_no_longer_supported" = "This version of ProtonVPN is no longer supported, please update the app to continue using it.";
 "_update_required_support" = "Contact support";
 "_update_required_update" = "Update";
-
 "_invalid_refresh_token" = "Session expired";
 "_invalid_refresh_token_please_login" = "It's been a while since you last used the ProtonVPN app. Please log back in.";
 
@@ -727,3 +726,5 @@
 "_quick_settings_netshield_option_off" = "Don't block";
 "_quick_settings_netshield_option_level1" = "Block malware only";
 "_quick_settings_netshield_option_level2" = "Block malware & ads trackers";
+
+"_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";

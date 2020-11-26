@@ -590,3 +590,16 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
+
+public class SecureCoreRequiresUpgradeAlert: SystemAlert {
+    public var title: String? = LocalizedString.upgradeRequired
+    public var message: String? = LocalizedString.upgradeSecureCore
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
+    }
+}
