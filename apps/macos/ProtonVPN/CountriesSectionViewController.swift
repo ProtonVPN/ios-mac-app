@@ -143,7 +143,8 @@ class CountriesSectionViewController: NSViewController {
             vc.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: container?.frame.size.height ?? 0)
             vc.view.frame.origin = .zero
             button?.callback = { _ in self.didTapSettingButton(index) }
-            button?.detailOpened = false 
+            button?.detailOpened = false
+            self.addChild(vc)
         }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
@@ -215,8 +216,7 @@ class CountriesSectionViewController: NSViewController {
         
         serverListScrollView.block = appear
         quickSettingDetailDisplayed = appear
-        serverListTableView.searchSubview(CountryItemView.self) { $0.disabled = appear }
-        serverListTableView.searchSubview(ServerItemView.self) { $0.disabled = appear }
+
         serverListTableView.reloadData()
     }
     
@@ -338,5 +338,10 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
         secureCoreBtn.switchState(secureCore ? #imageLiteral(resourceName: "qs_securecore_on") : #imageLiteral(resourceName: "qs_securecore_off"), enabled: secureCore)
         killSwitchBtn.switchState(killSwitch ? #imageLiteral(resourceName: "qs_killswitch_on") : #imageLiteral(resourceName: "qs_killswitch_off"), enabled: killSwitch)
         netShieldBtn.switchState(netshield == .off ? #imageLiteral(resourceName: "qs_netshield_off") : ( netshield == .level1 ? #imageLiteral(resourceName: "qs_netshield_level1") : #imageLiteral(resourceName: "qs_netshield_level2") ), enabled: netshield != .off)
+        children
+            .map { $0 as? QuickSettingsDetailViewControllerProtocol }
+            .filter { $0 != nil }
+            .map { $0! }
+            .forEach { $0.reloadOptions() }
     }
 }

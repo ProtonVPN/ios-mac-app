@@ -32,6 +32,8 @@ protocol QuickSettingsDetailViewControllerProtocol: class {
     var dropdownLearnMore: NSButton! { get }
     var dropdownUgradeButton: PrimaryActionButton! { get }
     var dropdownNote: NSTextField! { get }
+    
+    func reloadOptions()
 }
 
 class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailViewControllerProtocol {
@@ -69,7 +71,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         contentBox.wantsLayer = true
         contentBox.layer?.cornerRadius = 3
         contentBox.shadow = NSShadow()
-        contentBox.layer?.shadowOpacity = 0.4
+        contentBox.layer?.shadowOpacity = 1
         contentBox.layer?.shadowRadius = 5
         dropdownUgradeButton.attributedTitle = LocalizedString.qsGetPlus.attributed(withColor: .white, fontSize: 12)
         arrowIV.wantsLayer = true
@@ -84,9 +86,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         reloadOptions()
     }
         
-    // MARK: - Private
+    // MARK: - Utils
     
-    private func reloadOptions() {
+    func reloadOptions() {
         var needsUpgrade = false
         let views: [QuickSettingsDropdownOption] = presenter.options.enumerated().map { (index, presenter) in
             needsUpgrade = needsUpgrade || presenter.requiresUpdate
@@ -106,7 +108,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                     view?.action = {
                         presenter.selectCallback?()
                         self.presenter.displayReconnectionFeedback()
-                        self.reloadOptions()
                     }
                 }
             }

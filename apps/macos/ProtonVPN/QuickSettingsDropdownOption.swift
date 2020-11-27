@@ -40,6 +40,11 @@ class QuickSettingsDropdownOption: NSView {
         action?()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyTrackingArea()
+    }
+    
     // MARK: - Styles
     
     func selectedStyle() {
@@ -89,8 +94,28 @@ class QuickSettingsDropdownOption: NSView {
         containerBox.layer?.backgroundColor = NSColor.protonGrey().cgColor
         containerBox.layer?.cornerRadius = 3
         containerBox.shadow = NSShadow()
-        containerBox.layer?.shadowOpacity = 0.35
+        containerBox.layer?.shadowOpacity = 1
         containerBox.layer?.shadowOffset = CGSize(width: 0, height: -2)
         containerBox.layer?.shadowRadius = 3
+    }
+    
+    private func applyTrackingArea() {
+        let trackingArea = NSTrackingArea(rect: bounds, options: [
+                                        NSTrackingArea.Options.mouseEnteredAndExited,
+                                        NSTrackingArea.Options.mouseMoved,
+                                        NSTrackingArea.Options.activeInKeyWindow],
+                                          owner: self,
+                                          userInfo: nil)
+        addTrackingArea(trackingArea)
+    }
+    
+    // MARK: - Mouse
+    
+    override func mouseMoved(with event: NSEvent) {
+        addCursorRect(bounds, cursor: .pointingHand)
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        removeCursorRect(bounds, cursor: .pointingHand)
     }
 }

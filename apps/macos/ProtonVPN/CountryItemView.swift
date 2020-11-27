@@ -110,6 +110,7 @@ class CountryItemView: NSView {
     }
     
     private func setupCellSurfaceButton() {
+        cellSurfaceButton.isEnabled = !disabled
         cellSurfaceButton.target = self
         cellSurfaceButton.action = #selector(changeCellStateButtonAction)
     }
