@@ -31,6 +31,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
+    override var title: String! {
+        return LocalizedString.netshieldTitle
+    }
+    
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.netshieldSupport
     }
@@ -47,7 +51,6 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownUgradeButton.isHidden = true
-        viewController?.dropdownTitle.attributedStringValue = LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsNSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.qsNSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
     }

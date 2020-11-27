@@ -25,6 +25,8 @@ import vpncore
 
 protocol QuickSettingDropdownPresenterProtocol: class {
     
+    var title: String! { get }
+    
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
     var options: [QuickSettingsDropdownOptionPresenter] { get }
     
@@ -35,6 +37,10 @@ protocol QuickSettingDropdownPresenterProtocol: class {
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
 
     weak var viewController: QuickSettingsDetailViewControllerProtocol?
+    
+    var title: String! {
+        return ""
+    }
     
     var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.learnMore
@@ -54,6 +60,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     }
     
     func viewDidLoad() {
+        viewController?.dropdownTitle.attributedStringValue = title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         viewController?.dropdownUgradeButton.target = self
         viewController?.dropdownUgradeButton.action = #selector(openUpgradeLink)
         viewController?.dropdownLearnMore.target = self
