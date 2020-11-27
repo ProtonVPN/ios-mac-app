@@ -142,6 +142,7 @@ class CountriesSectionViewController: NSViewController {
             container?.addSubview(vc.view)
             vc.view.frame.size = NSSize(width: AppConstants.Windows.sidebarWidth, height: container?.frame.size.height ?? 0)
             vc.view.frame.origin = .zero
+            button?.toolTip = presenter.title
             button?.callback = { _ in self.didTapSettingButton(index) }
             button?.detailOpened = false
             self.addChild(vc)

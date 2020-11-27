@@ -36,6 +36,10 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
     }
     
+    override var title: String! {
+        return LocalizedString.killSwitch
+    }
+    
     init( _ factory: Factory ) {
         self.factory = factory
         super.init(factory.makeVpnGateway(), appStateManager: factory.makeAppStateManager())
@@ -47,7 +51,6 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownTitle.attributedStringValue = LocalizedString.killSwitch.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsKSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.stringValue = ""
         viewController?.dropdownUgradeButton.isHidden = true
