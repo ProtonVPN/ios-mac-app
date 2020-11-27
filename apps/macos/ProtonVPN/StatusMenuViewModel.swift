@@ -62,6 +62,8 @@ class StatusMenuViewModel {
     var standardCountries: [CountryGroup]?
     var secureCoreCountries: [CountryGroup]?
     
+    weak var viewController: StatusMenuViewControllerProtocol?
+    
     private var vpnGateway: VpnGatewayProtocol?
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
@@ -178,6 +180,13 @@ class StatusMenuViewModel {
     }
     
     func toggleSecureCore(_ state: ButtonState) {
+        if state == .on, let userTier = (try? vpnGateway?.userTier()) ?? CoreAppConstants.VpnTiers.free, userTier < CoreAppConstants.VpnTiers.visionary {
+            viewController?.secureCoreSwitch.setState(.off)
+            alertService.push(alert: SecureCoreRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade )
+            }))
+            return
+        }
         guard let vpnGateway = vpnGateway else { return }
         guard vpnGateway.connection != .connected else {
             presentDisconnectOnStateToggleWarning()

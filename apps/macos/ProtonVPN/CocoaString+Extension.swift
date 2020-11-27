@@ -27,10 +27,22 @@ extension String {
     func attributed(withColor color: NSColor,
                     fontSize: Double,
                     bold: Bool = false,
+                    italic: Bool = false,
                     alignment: NSTextAlignment = .center,
                     lineBreakMode: NSLineBreakMode? = nil) -> NSAttributedString {
         let size = CGFloat(fontSize)
-        return attributed(withColor: color, font: bold ? NSFont.boldSystemFont(ofSize: size) : NSFont.systemFont(ofSize: size), alignment: alignment, lineBreakMode: lineBreakMode)
+        
+        var font: NSFont!
+        
+        if bold {
+            font = NSFont.boldSystemFont(ofSize: size)
+        } else if italic {
+            font = NSFont.italicSystem(ofSize: size)
+        } else {
+            font = NSFont.systemFont(ofSize: size)
+        }
+        
+        return attributed(withColor: color, font: font, alignment: alignment, lineBreakMode: lineBreakMode)
     }
     
     func attributed(withColor color: NSColor,
@@ -42,6 +54,7 @@ extension String {
         newString.addAttribute(NSAttributedString.Key.foregroundColor, value: color, range: range)
         newString.addAttribute(NSAttributedString.Key.font, value: font, range: range)
         newString.addAttribute(NSAttributedString.Key.backgroundColor, value: NSColor.clear, range: range)
+        
         if let lineBreakMode = lineBreakMode {
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.lineBreakMode = lineBreakMode

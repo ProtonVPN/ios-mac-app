@@ -43,6 +43,11 @@ class QuickSettingButton: NSButton {
         shadow = NSShadow()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        applyTrackingArea()
+    }
+    
     override func mouseDown(with event: NSEvent) {
         
     }
@@ -53,6 +58,18 @@ class QuickSettingButton: NSButton {
     
     func switchState( _ image: NSImage, enabled: Bool ) {
         self.image = image.colored( enabled ? .protonGreen() : .protonWhite() )
+    }
+    
+    // MARK: - Private
+    
+    private func applyTrackingArea() {
+        let trackingArea = NSTrackingArea(rect: bounds, options: [
+                                        NSTrackingArea.Options.mouseEnteredAndExited,
+                                        NSTrackingArea.Options.mouseMoved,
+                                        NSTrackingArea.Options.activeInKeyWindow],
+                                          owner: self,
+                                          userInfo: nil)
+        addTrackingArea(trackingArea)
     }
     
     // MARK: - Styles
@@ -69,5 +86,15 @@ class QuickSettingButton: NSButton {
         layer?.shadowOffset = CGSize(width: 0, height: 2)
         layer?.shadowRadius = 3
         layer?.backgroundColor = NSColor.protonQuickSettingButton().cgColor
+    }
+        
+    // MARK: - Mouse
+    
+    override func mouseMoved(with event: NSEvent) {
+        addCursorRect(bounds, cursor: .pointingHand)
+    }
+    
+    override func mouseExited(with event: NSEvent) {
+        removeCursorRect(bounds, cursor: .pointingHand)
     }
 }

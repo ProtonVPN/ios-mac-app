@@ -34,7 +34,7 @@ protocol QuickSettingDropdownPresenterProtocol: class {
 
 class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProtocol {
 
-    var viewController: QuickSettingsDetailViewControllerProtocol?
+    weak var viewController: QuickSettingsDetailViewControllerProtocol?
     
     var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.learnMore
@@ -75,6 +75,10 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
             return
         }
         vpnGateway.connectTo(country: countryCode, ofType: .unspecified)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            guard self.vpnGateway.connection == .connected else { return }
+            self.vpnGateway.quickConnect()
+        }
     }
     
     // MARK: - Actions
