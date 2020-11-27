@@ -31,6 +31,10 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
+    override var title: String! {
+        return LocalizedString.secureCore
+    }
+    
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.learnMore
     }
@@ -46,7 +50,6 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownTitle.attributedStringValue = LocalizedString.secureCore.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsSCdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.qsSCNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
         if propertiesManager.featureFlags.isNetShield {
