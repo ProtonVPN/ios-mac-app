@@ -27,6 +27,7 @@
 		42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */; };
 		42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
 		42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
+		42CF073B256FD1F60042CD47 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
@@ -425,6 +426,7 @@
 		42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
+		42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-OpenVPN Extension-metadata.plist"; path = "Pods/Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -1795,6 +1797,7 @@
 				EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */,
 				EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */,
 				E1B5F67E21B8295600B558B0 /* CocoaString+Extension.swift */,
+				42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */,
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
@@ -2537,6 +2540,7 @@
 				EE3435691F2F620400DE0806 /* ProtonVpnMenuController.swift in Sources */,
 				EE8EF1ED1F1FB8800057CD94 /* HoverDetectionButton.swift in Sources */,
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
+				42CF073B256FD1F60042CD47 /* NSFont+Extension.swift in Sources */,
 				E1E0E3132059775200599F42 /* PVPNHyperlinkTextField.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,
 				E180D1462124689600F4D1C7 /* MapGradientView.swift in Sources */,

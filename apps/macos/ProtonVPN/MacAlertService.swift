@@ -150,6 +150,9 @@ extension MacAlertService: CoreAlertService {
         case is NetShieldRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
             
+        case is SecureCoreRequiresUpgradeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

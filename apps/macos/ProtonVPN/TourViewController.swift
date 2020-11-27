@@ -43,9 +43,9 @@ class TourViewController: NSViewController {
         LocalizedString.profilesTourDescription,
         LocalizedString.countriesTourDescription,
         LocalizedString.quickSettingsTourDescription
-            + "\n•" + LocalizedString.quickSettingsTourFeature1
-            + "\n•" + LocalizedString.quickSettingsTourFeature2
-            + "\n•" + LocalizedString.quickSettingsTourFeature3
+            + "\n• " + LocalizedString.quickSettingsTourFeature1
+            + "\n• " + LocalizedString.quickSettingsTourFeature2
+            + "\n• " + LocalizedString.quickSettingsTourFeature3
     ]
     
     private let previous: (() -> Void)

@@ -22,7 +22,11 @@
 
 import Cocoa
 
-class StatusMenuViewController: NSViewController {
+protocol StatusMenuViewControllerProtocol: class {
+    var secureCoreSwitch: SwitchButton! { get }
+}
+
+class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtocol {
     
     private static let countryCollectionItemIdentifier = NSUserInterfaceItemIdentifier("CountryItem")
     
@@ -59,7 +63,6 @@ class StatusMenuViewController: NSViewController {
     
     required init(with viewModel: StatusMenuViewModel) {
         self.viewModel = viewModel
-        
         super.init(nibName: NSNib.Name("StatusMenu"), bundle: nil)
         
         viewModel.contentChanged = { [weak self] in
@@ -74,6 +77,7 @@ class StatusMenuViewController: NSViewController {
             self.unsecureWarning(viewModel)
         }
         
+        viewModel.viewController = self
         initialViewSetup()
     }
     
