@@ -8,8 +8,7 @@
 import Foundation
 import Intents
 
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(QuickConnectIntent)
 public class QuickConnectIntent: INIntent {
     
@@ -19,8 +18,7 @@ public class QuickConnectIntent: INIntent {
  @abstract Protocol to declare support for handling a QuickConnectIntent. By implementing this protocol, a class can provide logic for resolving, confirming and handling the intent.
  @discussion The minimum requirement for an implementing class is that it should be able to handle the intent. The confirmation method is optional. The handling method is always called last, after confirming the intent.
  */
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(QuickConnectIntentHandling)
 public protocol QuickConnectIntentHandling: NSObjectProtocol {
     
@@ -52,7 +50,7 @@ public protocol QuickConnectIntentHandling: NSObjectProtocol {
 /*!
  @abstract Constants indicating the state of the response.
  */
-@available(iOS 12.0, watchOS 5.0, *)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc public enum QuickConnectIntentResponseCode: Int {
     case unspecified = 0
     case ready
@@ -63,8 +61,7 @@ public protocol QuickConnectIntentHandling: NSObjectProtocol {
     case failureRequiringAppLaunch
 }
 
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(QuickConnectIntentResponse)
 public class QuickConnectIntentResponse: INIntentResponse {
     

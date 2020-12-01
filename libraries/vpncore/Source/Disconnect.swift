@@ -8,8 +8,7 @@
 import Foundation
 import Intents
 
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(DisconnectIntent)
 public class DisconnectIntent: INIntent {
     
@@ -19,8 +18,7 @@ public class DisconnectIntent: INIntent {
  @abstract Protocol to declare support for handling a DisconnectIntent. By implementing this protocol, a class can provide logic for resolving, confirming and handling the intent.
  @discussion The minimum requirement for an implementing class is that it should be able to handle the intent. The confirmation method is optional. The handling method is always called last, after confirming the intent.
  */
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(DisconnectIntentHandling)
 public protocol DisconnectIntentHandling: NSObjectProtocol {
     
@@ -52,7 +50,7 @@ public protocol DisconnectIntentHandling: NSObjectProtocol {
 /*!
  @abstract Constants indicating the state of the response.
  */
-@available(iOS 12.0, watchOS 5.0, *)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc public enum DisconnectIntentResponseCode: Int {
     case unspecified = 0
     case ready
@@ -63,8 +61,7 @@ public protocol DisconnectIntentHandling: NSObjectProtocol {
     case failureRequiringAppLaunch
 }
 
-@available(iOS 12.0, watchOS 5.0, *)
-@available(OSX, unavailable)
+@available(iOS 12.0, watchOS 5.0, macOS 11, *)
 @objc(DisconnectIntentResponse)
 public class DisconnectIntentResponse: INIntentResponse {
     
