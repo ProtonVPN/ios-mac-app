@@ -430,8 +430,8 @@ public class LocalizedString {
     
     public static let killSwitchRequiresSwiftPopupMsg = NSLocalizedString("_ks_requires_swift5_popup_msg", comment: "MacOS: Swift 5 required to KillSwitch to work")
     public static let killSwitchRequiresSwiftPopupMsg2 = NSLocalizedString("_ks_requires_swift5_popup_msg2", comment: "MacOS: Swift 5 required and user didn't install it")
-    public static let killSwitchEnableAgain = NSLocalizedString("_ks_enable_again", comment: "MacOS: Try again to connect KillSwitch")
-    public static let killSwitchKeepDisabled = NSLocalizedString("_ks_keep_disabled", comment: "MacOS: Keep disabled the KillSwitch component")
+    public static let killSwitchSwift5LibraryName = NSLocalizedString("_ks_swift5_lib_name", comment: "MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it.")
+    public static let killSwitchDontAsk = NSLocalizedString("_ks_dont_ask", comment: "MacOS: Keep disabled the KillSwitch component")
     public static let onMaintenanceDetectedTitle = NSLocalizedString("_maintenance_on_server_detected_title", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedSubtitle = NSLocalizedString("_maintenance_on_server_detected_subtitle", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedDescription = NSLocalizedString("_maintenance_on_server_detected_description", comment: "MacOS: We'll connect to a different server")
