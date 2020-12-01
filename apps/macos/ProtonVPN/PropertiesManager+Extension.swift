@@ -39,13 +39,22 @@ extension PropertiesManagerProtocol {
             UpdateManager.shared.turnOnEarlyAccess(newValue)
         }
     }
-
+    
     var unprotectedNetworkNotifications: Bool {
         get {
             return (Storage.userDefaults().object(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications) as? Bool) ?? true
         }
         set {
             Storage.setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
+        }
+    }
+    
+    var dontAskAboutSwift5: Bool {
+        get {
+            return (Storage.userDefaults().object(forKey: AppConstants.UserDefaults.dontAskAboutSwift5) as? Bool) ?? false
+        }
+        set {
+            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.dontAskAboutSwift5)
         }
     }
     

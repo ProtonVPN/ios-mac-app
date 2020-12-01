@@ -46,7 +46,14 @@ class PVPNTextViewLink: NSTextView {
         attributedOriginalText.addAttribute(NSAttributedString.Key.foregroundColor, value: textViewTextColor, range: fullRange)
         attributedOriginalText.addAttribute(NSAttributedString.Key.link, value: urlString, range: linkRange)
         attributedOriginalText.addAttribute(NSAttributedString.Key.paragraphStyle, value: defaultStyle, range: fullRange)
-
+        
+        self.isAutomaticLinkDetectionEnabled = true
+        self.linkTextAttributes = [
+            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+            NSAttributedString.Key.cursor: NSCursor.pointingHand
+        ]
+        
         self.textStorage?.setAttributedString(attributedOriginalText)
     }
 

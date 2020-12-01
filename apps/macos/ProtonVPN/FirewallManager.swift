@@ -510,14 +510,16 @@ extension FirewallManager {
     
     fileprivate func handleHelperTimeout(trigger: HelperInstallTrigger = .silent) {
         if #available(OSX 10.14.4, *) { return } // This check is no longer necesary on new OSX versions
+        if self.propertiesManager.dontAskAboutSwift5 { return } // User seen this, and ask not to show this modal (and swift5 is actually present)
         
         self.propertiesManager.killSwitch = false
         self.helperInstallInProgress = false
         inactiveFirewallTimer?.invalidate()
         inactiveFirewallTimer = nil
         
-        let alert = KillSwitchRequiresSwift5Alert(self.timesSwift5AlertShown) {
+        let alert = KillSwitchRequiresSwift5Alert(self.timesSwift5AlertShown, swiftChecker: SwiftCheckerImplementation()) { dontAsk in
             self.propertiesManager.killSwitch = true
+            self.propertiesManager.dontAskAboutSwift5 = dontAsk
             self.installHelperIfNeeded(trigger: trigger)
         }
         self.alertService.push(alert: alert)
