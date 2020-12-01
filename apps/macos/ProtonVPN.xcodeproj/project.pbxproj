@@ -2928,6 +2928,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",
@@ -3367,6 +3368,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",
@@ -3407,6 +3409,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",
