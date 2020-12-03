@@ -93,13 +93,6 @@ class PopUpViewController: NSViewController {
         popUpDescription.attributedStringValue = viewModel.attributedDescription
         
         popUpDescriptionTextView.backgroundColor = .protonGreyShade()
-        
-        popUpDescriptionTextView.isAutomaticLinkDetectionEnabled = true
-        popUpDescriptionTextView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
-            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-            NSAttributedString.Key.cursor: NSCursor.pointingHand
-        ]
         popUpDescriptionTextView.delegate = viewModel
         
         popUpDescriptionTextView.textStorage?.setAttributedString(viewModel.attributedDescription)

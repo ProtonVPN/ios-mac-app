@@ -27,10 +27,8 @@ class QuickSettingsDropdownOption: NSView {
     
     var selectedColor: NSColor = .protonGreen()
     
-    @IBOutlet weak var getPlusWidthConstraint: NSLayoutConstraint!
-    
     @IBOutlet weak var titleLabel: NSTextField!
-    @IBOutlet weak var containerBox: NSBox!
+    @IBOutlet weak var containerView: NSView!
     @IBOutlet weak var optionIconIV: NSImageView!
     @IBOutlet weak var plusBox: NSBox!
     
@@ -43,17 +41,22 @@ class QuickSettingsDropdownOption: NSView {
     override func awakeFromNib() {
         super.awakeFromNib()
         applyTrackingArea()
+        
+        wantsLayer = true
+        layer?.masksToBounds = false
+        
+        containerView.wantsLayer = true
+        containerView.layer?.cornerRadius = 3
+        containerView.layer?.masksToBounds = false
+        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+    
     }
     
     // MARK: - Styles
     
     func selectedStyle() {
-        getPlusWidthConstraint.constant = 12
-        wantsLayer = true
-        containerBox.shadow = nil
-        containerBox.wantsLayer = true
-        containerBox.layer?.backgroundColor = NSColor.protonDarkBlueButton().cgColor
-        containerBox.layer?.cornerRadius = 3
+        containerView.shadow = nil
+        containerView.layer?.backgroundColor = NSColor.protonDarkBlueButton().cgColor
         optionIconIV.image = optionIconIV.image?.colored(selectedColor)
         titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
             withColor: selectedColor,
@@ -62,8 +65,8 @@ class QuickSettingsDropdownOption: NSView {
     }
     
     func disabledStyle() {
+        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         applyShadow()
-        getPlusWidthConstraint.constant = 12
         optionIconIV.image = optionIconIV.image?.colored(.protonWhite())
         titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
             withColor: .protonWhite(),
@@ -72,7 +75,7 @@ class QuickSettingsDropdownOption: NSView {
     }
     
     func blockedStyle() {
-        getPlusWidthConstraint.constant = 48
+        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
         applyShadow()
         
         plusBox.isHidden = false
@@ -86,17 +89,10 @@ class QuickSettingsDropdownOption: NSView {
     // MARK: - Private
     
     private func applyShadow() {
-        wantsLayer = true
-        layer?.masksToBounds = false
-        containerBox.wantsLayer = true
-        containerBox.cornerRadius = 3
-        containerBox.layer?.masksToBounds = false
-        containerBox.layer?.backgroundColor = NSColor.protonGrey().cgColor
-        containerBox.layer?.cornerRadius = 3
-        containerBox.shadow = NSShadow()
-        containerBox.layer?.shadowOpacity = 1
-        containerBox.layer?.shadowOffset = CGSize(width: 0, height: -2)
-        containerBox.layer?.shadowRadius = 3
+        let addShadow = NSShadow()
+        addShadow.shadowColor = .protonDarkGrey()
+        addShadow.shadowBlurRadius = 3
+        containerView.shadow = addShadow
     }
     
     private func applyTrackingArea() {

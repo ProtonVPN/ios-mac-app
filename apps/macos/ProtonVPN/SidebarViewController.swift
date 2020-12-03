@@ -38,7 +38,6 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     @IBOutlet weak var announcementsControllerViewContainer: NSView!
     @IBOutlet weak var connectionOverlay: ConnectionOverlay!
     @IBOutlet weak var sidebarContainerView: NSView!
-    @IBOutlet weak var mapContainerView: NSView!
     @IBOutlet weak var expandButton: ExpandMapButton!
     @IBOutlet weak var expandButtonLeading: NSLayoutConstraint!
     

@@ -27,25 +27,29 @@ class KillSwitchSwift5Popup: NSViewController {
 
     @IBOutlet weak var tryConnectButton: PrimaryActionButton!
     @IBOutlet weak var keepDisabledButton: WhiteCancelationButton!
-    @IBOutlet weak var popupMessageLabel: NSTextField!
-    @IBOutlet weak var popupURLLabel: NSTextField!
+    @IBOutlet weak var popupMessageLabel: PVPNTextViewLink!
     @IBOutlet weak var instructionIV: NSImageView!
-    
+    @IBOutlet weak var dontAskButton: NSButton!
+
     let utilUrl = "https://support.apple.com/kb/DL1998"
     
     var alert: KillSwitchRequiresSwift5Alert?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        tryConnectButton.title = LocalizedString.killSwitchEnableAgain
-        keepDisabledButton.title = LocalizedString.killSwitchKeepDisabled
         
-        let description = (alert?.message ?? "").attributed(withColor: .white, fontSize: 14, alignment: .natural)
-        popupMessageLabel.attributedStringValue = description
-        popupURLLabel.attributedStringValue = utilUrl.attributed(withColor: .protonGreen(), fontSize: 14, alignment: .natural)
-
-        let gestureURL = NSClickGestureRecognizer(target: self, action: #selector(didTapUrl))
-        popupURLLabel.addGestureRecognizer(gestureURL)
+        guard let alert = alert else { return }
+        
+        tryConnectButton.title = alert.actions[alert.doneActionIndex].title
+        keepDisabledButton.title = alert.actions[alert.cancelActionIndex].title
+        
+        dontAskButton.isHidden = !alert.dontShowCheckbox
+        dontAskButton.title = LocalizedString.killSwitchDontAsk
+        dontAskButton.state = .off
+        
+        let message = alert.message ?? ""
+        let description = String(format: message, LocalizedString.killSwitchSwift5LibraryName)
+        popupMessageLabel.hyperLink(originalText: description, hyperLink: LocalizedString.killSwitchSwift5LibraryName, urlString: utilUrl)
         
         let gestureIV = NSClickGestureRecognizer(target: self, action: #selector(didTapUrl))
         instructionIV.addGestureRecognizer(gestureIV)
@@ -66,9 +70,9 @@ class KillSwitchSwift5Popup: NSViewController {
     }
     
     @IBAction func didTapTryConnect(_ sender: Any) {
-        alert?.actions.forEach({ action in
-            action.handler?()
-        })
+        guard let alert = alert else { return }
+        
+        alert.confirmHandler(dontAskButton.state == .on)
         dismiss(nil)
     }
     

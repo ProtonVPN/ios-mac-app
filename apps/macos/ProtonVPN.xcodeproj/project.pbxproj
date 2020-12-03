@@ -65,6 +65,7 @@
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
+		D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE76AA257635F70077C610 /* SwiftChecker.swift */; };
 		E10FA80522C21AC100CD03B2 /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10FA80422C21AC100CD03B2 /* Srp.framework */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		E1248885220A18D2005B9A9E /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */; };
@@ -485,6 +486,7 @@
 		D5CC3E902359D8E300A9A75D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E912359D8F800A9A75D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
+		D5DE76AA257635F70077C610 /* SwiftChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftChecker.swift; sourceTree = "<group>"; };
 		DA50B7BD4F52596E52378D9D /* Pods-ProtonVPN.release beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release beta.xcconfig"; sourceTree = "<group>"; };
 		E10FA80422C21AC100CD03B2 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
@@ -1808,10 +1810,11 @@
 		EED534BC1EEC151600013607 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
-				E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */,
-				D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */,
-				E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */,
 				E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */,
+				E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */,
+				E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */,
+				D5DE76AA257635F70077C610 /* SwiftChecker.swift */,
+				D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */,
 			);
 			name = Utilities;
 			sourceTree = "<group>";
@@ -2717,6 +2720,7 @@
 				E156C19B20BDA5920054E935 /* StatusMenuViewController.swift in Sources */,
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
+				D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */,
 				E170A92921240F940036326B /* WelcomeViewController.swift in Sources */,
 				E180D1622126C4C500F4D1C7 /* TourController.swift in Sources */,
 				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
@@ -2924,6 +2928,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",
@@ -3363,6 +3368,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",
@@ -3403,6 +3409,7 @@
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
+				EXCLUDED_ARCHS = arm64;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/ProtonVPN/Frameworks",

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -168,11 +168,13 @@
                                                     <constraint firstAttribute="height" constant="170" id="rEx-Kr-Uoo"/>
                                                 </constraints>
                                             </customView>
-                                            <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NYr-4L-3gi">
+                                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="NYr-4L-3gi">
                                                 <rect key="frame" x="20" y="355" width="300" height="200"/>
                                                 <constraints>
+                                                    <constraint firstAttribute="height" priority="250" constant="200" id="Ovf-4M-E93"/>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="QBO-Rh-LUb"/>
                                                     <constraint firstAttribute="height" relation="lessThanOrEqual" constant="200" id="fZO-6i-sTC"/>
+                                                    <constraint firstAttribute="width" priority="250" constant="300" id="urc-JJ-FNu"/>
                                                 </constraints>
                                             </customView>
                                         </subviews>
@@ -180,7 +182,7 @@
                                             <constraint firstAttribute="trailing" secondItem="PUh-5c-b8S" secondAttribute="trailing" id="DdW-U6-dPN"/>
                                             <constraint firstItem="PUh-5c-b8S" firstAttribute="top" secondItem="0TS-Fg-7cD" secondAttribute="bottom" id="I68-VU-9Gh"/>
                                             <constraint firstItem="NYr-4L-3gi" firstAttribute="top" secondItem="UQf-5v-cDa" secondAttribute="top" constant="45" id="Jwm-Bs-Uh7"/>
-                                            <constraint firstAttribute="width" constant="340" id="Mgh-z8-rJG"/>
+                                            <constraint firstAttribute="width" priority="250" constant="340" id="Mgh-z8-rJG"/>
                                             <constraint firstItem="PUh-5c-b8S" firstAttribute="leading" secondItem="UQf-5v-cDa" secondAttribute="leading" id="VVV-e8-AcH"/>
                                             <constraint firstAttribute="trailing" secondItem="NYr-4L-3gi" secondAttribute="trailing" constant="20" id="Vdy-cr-mcW"/>
                                             <constraint firstAttribute="bottom" secondItem="PUh-5c-b8S" secondAttribute="bottom" id="Zqp-vF-2LV"/>
@@ -248,7 +250,6 @@
                         <outlet property="expandButton" destination="DNd-Sp-llG" id="ahE-yj-xdi"/>
                         <outlet property="expandButtonLeading" destination="mvh-iE-K8h" id="nm0-qB-cph"/>
                         <outlet property="headerControllerViewContainer" destination="N6y-fY-SzI" id="GJw-NB-zEb"/>
-                        <outlet property="mapContainerView" destination="DNd-Sp-llG" id="4gn-Da-can"/>
                         <outlet property="sidebarContainerView" destination="UQf-5v-cDa" id="YOS-DY-aPn"/>
                         <outlet property="tabBarControllerViewContainer" destination="0TS-Fg-7cD" id="eou-mY-vmQ"/>
                     </connections>

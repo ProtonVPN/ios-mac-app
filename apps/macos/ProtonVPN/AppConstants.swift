@@ -40,6 +40,7 @@ class AppConstants {
         static let systemNotifications = "SystemNotifications"
         static let earlyAccess = "EarlyAccess"
         static let unprotectedNetworkNotifications = "UnprotectedNetwork"
+        static let dontAskAboutSwift5 = "DontAskAboutSwift5"
         static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
         static let mapWidth = "MapWidth"
         static let welcomed = "Welcomed"
