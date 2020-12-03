@@ -113,6 +113,7 @@ class ReportBugViewController: NSViewController {
         fileSizeLabel.textColor = .protonLightGrey()
         feedbackPlaceholderLabel.textColor = .protonLightGrey()
         feedbackField.backgroundColor = NSColor.protonGrey()
+        feedbackField.textColor = NSColor.protonWhite()
         feedbackContainer.backgroundColor = NSColor.protonGrey()
         
         feedbackField.font = fieldFont
