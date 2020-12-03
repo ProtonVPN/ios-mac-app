@@ -68,15 +68,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     override func viewDidLoad() {
         super.viewDidLoad()
         presenter.viewDidLoad()
-        contentBox.wantsLayer = true
-        contentBox.layer?.cornerRadius = 3
-        contentBox.shadow = NSShadow()
-        contentBox.layer?.shadowOpacity = 1
-        contentBox.layer?.shadowRadius = 5
+        
+        view.wantsLayer = true
+        
+        let shadow = NSShadow()
+        shadow.shadowColor = .protonDarkGrey()
+        shadow.shadowBlurRadius = 8
+        view.shadow = shadow
+        view.layer?.masksToBounds = false
+        view.layer?.shadowRadius = 5
+        
         dropdownUgradeButton.attributedTitle = LocalizedString.qsGetPlus.attributed(withColor: .white, fontSize: 12)
-        arrowIV.wantsLayer = true
-        arrowIV.layer?.shadowOpacity = 0.4
-        arrowIV.layer?.shadowRadius = 5
         
         dropdownLearnMore.attributedTitle = LocalizedString.learnMore.attributed(
             withColor: .protonGreen(),

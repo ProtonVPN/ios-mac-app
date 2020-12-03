@@ -45,6 +45,13 @@ extension MacAlertService: CoreAlertService {
     
     // swiftlint:disable cyclomatic_complexity function_body_length
     func push(alert: SystemAlert) {
+        guard Thread.isMainThread else { // Protects from running UI code on background threads
+            DispatchQueue.main.async {
+                self.push(alert: alert)
+            }
+            return
+        }
+        
         switch alert {
         case is AppUpdateRequiredAlert:
             show(alert as! AppUpdateRequiredAlert)
