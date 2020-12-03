@@ -512,6 +512,13 @@ extension FirewallManager {
         if #available(OSX 10.14.4, *) { return } // This check is no longer necesary on new OSX versions
         if self.propertiesManager.dontAskAboutSwift5 { return } // User seen this, and ask not to show this modal (and swift5 is actually present)
         
+        guard Thread.isMainThread else { // Protects from running UI code on background threads
+            DispatchQueue.main.async {
+                self.handleHelperTimeout(trigger: trigger)
+            }
+            return
+        }
+        
         self.propertiesManager.killSwitch = false
         self.helperInstallInProgress = false
         inactiveFirewallTimer?.invalidate()

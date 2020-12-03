@@ -39,13 +39,25 @@ class QuickSettingButton: NSButton {
     required init?(coder: NSCoder) {
         super.init(coder: coder)
         wantsLayer = true
-        layer?.cornerRadius = 3
+        
         shadow = NSShadow()
+        shadow?.shadowColor = .protonDarkGrey()
+        shadow?.shadowBlurRadius = 8
+        
     }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         applyTrackingArea()
+    }
+    
+    override func updateLayer() {
+        layer?.shadowRadius = 3
+        layer?.cornerRadius = 3
+        layer?.masksToBounds = false
+        layer?.shadowOffset = CGSize(width: 0, height: 2)
+        layer?.shadowOpacity = currentStyle.shadow ? 1 : 0
+        layer?.backgroundColor = currentStyle.color
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -75,17 +87,34 @@ class QuickSettingButton: NSButton {
     // MARK: - Styles
     
     private func setEnabledStyle() {
-        layer?.shadowOpacity = 0
-        layer?.shadowOffset = .zero
-        layer?.shadowRadius = 0
-        layer?.backgroundColor = NSColor.protonDarkBlueButton().cgColor
+        currentStyle = .enabled
+        needsDisplay = true
     }
     
     private func setDisabledStyle() {
-        layer?.shadowOpacity = 1
-        layer?.shadowOffset = CGSize(width: 0, height: 2)
-        layer?.shadowRadius = 3
-        layer?.backgroundColor = NSColor.protonQuickSettingButton().cgColor
+        currentStyle = .disabled
+        needsDisplay = true
+    }
+    
+    private var currentStyle: Style = .disabled
+    
+    private enum Style {
+        case enabled
+        case disabled
+        
+        var color: CGColor {
+            switch self {
+            case .enabled: return NSColor.protonDarkBlueButton().cgColor
+            case .disabled: return NSColor.protonQuickSettingButton().cgColor
+            }
+        }
+        
+        var shadow: Bool {
+            switch self {
+            case .enabled: return false
+            case .disabled: return true
+            }
+        }
     }
         
     // MARK: - Mouse
