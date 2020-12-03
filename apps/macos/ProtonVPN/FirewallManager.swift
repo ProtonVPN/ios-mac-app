@@ -511,6 +511,13 @@ extension FirewallManager {
     fileprivate func handleHelperTimeout(trigger: HelperInstallTrigger = .silent) {
         if #available(OSX 10.14.4, *) { return } // This check is no longer necesary on new OSX versions
         
+        guard Thread.isMainThread else { // Protects from running UI code on background threads
+            DispatchQueue.main.async {
+                self.handleHelperTimeout(trigger: trigger)
+            }
+            return
+        }
+        
         self.propertiesManager.killSwitch = false
         self.helperInstallInProgress = false
         inactiveFirewallTimer?.invalidate()
