@@ -28,6 +28,10 @@
 		42C1F2A92553084900793A49 /* SecureCoreDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */; };
 		42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */; };
 		42CF073B256FD1F60042CD47 /* NSFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */; };
+		42EF09DC257A713F00E2EDCA /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE182C551F617C0000F3BA4C /* NetworkExtension.framework */; };
+		42EF09DF257A713F00E2EDCA /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09DE257A713F00E2EDCA /* PacketTunnelProvider.swift */; };
+		42EF09E1257A713F00E2EDCA /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42EF09E0257A713F00E2EDCA /* main.swift */; };
+		42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */ = {isa = PBXBuildFile; fileRef = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
 		44FF364F6AD18BD64E053010 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFA101C7FE04A63446D142E4 /* Pods_ProtonVPN.framework */; };
@@ -345,6 +349,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		42EF09E4257A713F00E2EDCA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EED534791EEC112000013607 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 42EF09DA257A713F00E2EDCA;
+			remoteInfo = "ProtonVPN OpenVPN";
+		};
 		D591170B229F9574005829DA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EED534791EEC112000013607 /* Project object */;
@@ -369,6 +380,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		42EF09E7257A713F00E2EDCA /* Embed System Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(SYSTEM_EXTENSIONS_FOLDER_PATH)";
+			dstSubfolderSpec = 16;
+			files = (
+				42EF09E6257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension in Embed System Extensions */,
+			);
+			name = "Embed System Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		E17DE0F921FB4DF3008CCC13 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -428,6 +450,11 @@
 		42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureCoreDropdownPresenter.swift; sourceTree = "<group>"; };
 		42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchDropdownPresenter.swift; sourceTree = "<group>"; };
 		42CF073A256FD1F60042CD47 /* NSFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSFont+Extension.swift"; sourceTree = "<group>"; };
+		42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */ = {isa = PBXFileReference; explicitFileType = "wrapper.system-extension"; includeInIndex = 0; path = "ch.protonvpn.mac.OpenVPN-Extension.systemextension"; sourceTree = BUILT_PRODUCTS_DIR; };
+		42EF09DE257A713F00E2EDCA /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
+		42EF09E0257A713F00E2EDCA /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		42EF09E2257A713F00E2EDCA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		42EF09E3257A713F00E2EDCA /* ProtonVPN_OpenVPN.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPN_OpenVPN.entitlements; sourceTree = "<group>"; };
 		42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReconnectingOverlayViewModel.swift; sourceTree = "<group>"; };
 		42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		4FD8619AD78D3516645E6DEC /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-OpenVPN Extension-metadata.plist"; path = "Pods/Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -773,6 +800,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		42EF09D8257A713F00E2EDCA /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42EF09DC257A713F00E2EDCA /* NetworkExtension.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911703229F9574005829DA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -874,6 +909,17 @@
 				42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */,
 			);
 			name = QuickSettings;
+			sourceTree = "<group>";
+		};
+		42EF09DD257A713F00E2EDCA /* ProtonVPN OpenVPN */ = {
+			isa = PBXGroup;
+			children = (
+				42EF09DE257A713F00E2EDCA /* PacketTunnelProvider.swift */,
+				42EF09E0257A713F00E2EDCA /* main.swift */,
+				42EF09E2257A713F00E2EDCA /* Info.plist */,
+				42EF09E3257A713F00E2EDCA /* ProtonVPN_OpenVPN.entitlements */,
+			);
+			path = "ProtonVPN OpenVPN";
 			sourceTree = "<group>";
 		};
 		7461E535C10E886FBC226611 /* Frameworks */ = {
@@ -1739,6 +1785,7 @@
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
+				42EF09DD257A713F00E2EDCA /* ProtonVPN OpenVPN */,
 				EED534821EEC112000013607 /* Products */,
 				D5911710229F9917005829DA /* fastlane */,
 				7461E535C10E886FBC226611 /* Frameworks */,
@@ -1756,6 +1803,7 @@
 				E15B754D20FA83CB0022C406 /* ProtonVPNTests.xctest */,
 				E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */,
 				D5911706229F9574005829DA /* ProtonVPNUITests.xctest */,
+				42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1887,6 +1935,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 42EF09EB257A713F00E2EDCA /* Build configuration list for PBXNativeTarget "ProtonVPN OpenVPN" */;
+			buildPhases = (
+				42EF09D7257A713F00E2EDCA /* Sources */,
+				42EF09D8257A713F00E2EDCA /* Frameworks */,
+				42EF09D9257A713F00E2EDCA /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "ProtonVPN OpenVPN";
+			productName = "ProtonVPN OpenVPN";
+			productReference = 42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */;
+			productType = "com.apple.product-type.system-extension";
+		};
 		D5911705229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */;
@@ -1981,11 +2046,13 @@
 				E148AE5521C2628A007AB65A /* Sentry dSYM upload */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
 				E19CE84A22C7B702002595D0 /* Revert Plist */,
+				42EF09E7257A713F00E2EDCA /* Embed System Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 				E125DD2C221B1E0100027272 /* PBXTargetDependency */,
+				42EF09E5257A713F00E2EDCA /* PBXTargetDependency */,
 			);
 			name = ProtonVPN;
 			productName = ProtonVPN;
@@ -1998,10 +2065,13 @@
 		EED534791EEC112000013607 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1140;
+				LastSwiftUpdateCheck = 1220;
 				LastUpgradeCheck = 1000;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
+					42EF09DA257A713F00E2EDCA = {
+						CreatedOnToolsVersion = 12.2;
+					};
 					D5911705229F9574005829DA = {
 						CreatedOnToolsVersion = 10.2.1;
 						TestTargetID = EED534801EEC112000013607;
@@ -2088,11 +2158,19 @@
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911705229F9574005829DA /* ProtonVPNUITests */,
+				42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		42EF09D9257A713F00E2EDCA /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911704229F9574005829DA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2460,6 +2538,15 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		42EF09D7257A713F00E2EDCA /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				42EF09E1257A713F00E2EDCA /* main.swift in Sources */,
+				42EF09DF257A713F00E2EDCA /* PacketTunnelProvider.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D5911702229F9574005829DA /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -2757,6 +2844,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		42EF09E5257A713F00E2EDCA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */;
+			targetProxy = 42EF09E4257A713F00E2EDCA /* PBXContainerItemProxy */;
+		};
 		D591170C229F9574005829DA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = EED534801EEC112000013607 /* ProtonVPN */;
@@ -2805,6 +2897,94 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		42EF09E8257A713F00E2EDCA /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "ProtonVPN OpenVPN/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
+				PRODUCT_NAME = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Development PP";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		42EF09E9257A713F00E2EDCA /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "ProtonVPN OpenVPN/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
+				PRODUCT_NAME = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Development PP";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		42EF09EA257A713F00E2EDCA /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
+				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_STYLE = Manual;
+				DEVELOPMENT_TEAM = J6S6Q257EK;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = "ProtonVPN OpenVPN/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
+				PRODUCT_NAME = "$(inherited)";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Development PP";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+			};
+			name = Staging;
+		};
 		D591170D229F9574005829DA /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3437,6 +3617,16 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		42EF09EB257A713F00E2EDCA /* Build configuration list for PBXNativeTarget "ProtonVPN OpenVPN" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				42EF09E8257A713F00E2EDCA /* Debug */,
+				42EF09E9257A713F00E2EDCA /* Release */,
+				42EF09EA257A713F00E2EDCA /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D591170F229F9574005829DA /* Build configuration list for PBXNativeTarget "ProtonVPNUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
