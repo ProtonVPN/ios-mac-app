@@ -6,7 +6,7 @@ PODS:
   - Sentry (4.1.1):
     - Sentry/Core (= 4.1.1)
   - Sentry/Core (4.1.1)
-  - SwiftLint (0.32.0)
+  - SwiftLint (0.41.0)
   - SwiftyBeaver (1.9.1)
   - TrustKit (1.6.1)
   - TunnelKit (2.2.4):
@@ -57,11 +57,11 @@ SPEC CHECKSUMS:
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
-  SwiftLint: 009a898ef2a1c851f45e1b59349bf6ff2ddc990d
+  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
 PODFILE CHECKSUM: b3264c3d573a0560fa147097486b7ae79bae13ff
 
-COCOAPODS: 1.9.2
+COCOAPODS: 1.10.0
