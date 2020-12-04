@@ -7,16 +7,18 @@ use_frameworks!
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
+def tunnelkit_pod
+  pod 'TunnelKit', :path => '../tunnelkit', :branch => 'keychain_avoid'
+end
+
 def common_pods
     # development pods
-    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+    tunnelkit_pod
     pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 end
 
 target 'ProtonVPN' do
-    
     common_pods
-    
     # third party pods
     pod 'Alamofire', '~> 5.1'
     pod 'KeychainAccess', '~> 3.0'
@@ -27,12 +29,14 @@ target 'ProtonVPN' do
     
     # Checks code style and bad practices
     pod 'SwiftLint'
-        
+end
+
+target 'ProtonVPN OpenVPN' do
+  tunnelkit_pod
 end
 
 target 'ProtonVPNTests' do
     inherit! :search_paths
-
     common_pods
 end
 
