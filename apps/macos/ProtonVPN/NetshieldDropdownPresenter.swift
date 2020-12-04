@@ -63,7 +63,9 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_netshield_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, selectCallback: {
             self.propertiesManager.netShieldType = .off
-            self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            if self.vpnGateway.connection == .connected {
+                self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            }
         })
     }
     
