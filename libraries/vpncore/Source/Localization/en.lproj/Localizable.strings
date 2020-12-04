@@ -355,7 +355,7 @@
 "_unsecure_wifi_learn_more" = "Learn More";
 "_unsecure_wifi_title" = "Insecure WiFi Detected";
 "_ks_requires_swift5_popup_msg" = "To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.";
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Swicth, please install software first.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Switch, please install software first.";
 "_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
 "_ks_dont_ask" = "Don't ask me again";
 "_maintenance_on_server_detected_title" = "The VPN server is on maintenance";
