@@ -42,4 +42,11 @@ post_install do | installer |
 
     require 'fileutils'
     FileUtils.cp_r('Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN-acknowledgements.markdown', 'ACKNOWLEDGEMENTS.md')
+    
+    # Reset deployment targets to use the one we have on the main project
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        config.build_settings.delete 'MACOSX_DEPLOYMENT_TARGET'
+      end
+    end
 end
