@@ -73,7 +73,9 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_netshield_level1")
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
             self.propertiesManager.netShieldType = .level1
-            self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            if self.vpnGateway.connection == .connected {
+                self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            }
         })
     }
     
@@ -83,7 +85,9 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_netshield_level2")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: self.requiresUpdate, selectCallback: {
             self.propertiesManager.netShieldType = .level2
-            self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            if self.vpnGateway.connection == .connected {
+                self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
+            }
         })
     }
 }
