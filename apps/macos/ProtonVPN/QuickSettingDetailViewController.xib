@@ -10,7 +10,6 @@
             <connections>
                 <outlet property="arrowHorizontalConstraint" destination="crk-PZ-PmL" id="bdR-ve-8xp"/>
                 <outlet property="arrowIV" destination="vHT-FC-Dgo" id="yQu-SN-ZDg"/>
-                <outlet property="buttonSpaceHeightConstraint" destination="KO3-Gg-ccE" id="RN6-4m-rTZ"/>
                 <outlet property="contentBox" destination="OF3-Mw-Sjv" id="zFz-6l-r9M"/>
                 <outlet property="dropdownDescription" destination="g7V-iK-cc1" id="oNs-RU-JW4"/>
                 <outlet property="dropdownLearnMore" destination="U0y-aY-rlv" id="Rhp-od-tos"/>
@@ -18,23 +17,26 @@
                 <outlet property="dropdownOptionsView" destination="lCE-Jm-Yx9" id="x0F-dF-Psy"/>
                 <outlet property="dropdownTitle" destination="ZTu-7u-BXA" id="EQO-bg-48P"/>
                 <outlet property="dropdownUgradeButton" destination="1xP-QI-Slv" id="qQK-Pg-ohh"/>
+                <outlet property="noteTopConstraint" destination="KO3-Gg-ccE" id="UIJ-yq-AOP"/>
+                <outlet property="upgradeBottomConstraint" destination="dHD-VN-BLm" id="tdh-zo-VeD"/>
+                <outlet property="upgradeTopConstraint" destination="I51-01-Sf3" id="hiu-72-rnl"/>
                 <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
             </connections>
         </customObject>
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="428" height="433"/>
+            <rect key="frame" x="0.0" y="0.0" width="428" height="414"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <box boxType="custom" borderType="none" cornerRadius="4" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Wg0-Ha-0wP" userLabel="Detail">
-                    <rect key="frame" x="0.0" y="7" width="428" height="426"/>
+                    <rect key="frame" x="0.0" y="7" width="428" height="407"/>
                     <view key="contentView" id="EYL-6L-NcP">
-                        <rect key="frame" x="0.0" y="0.0" width="428" height="426"/>
+                        <rect key="frame" x="0.0" y="0.0" width="428" height="407"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView translatesAutoresizingMaskIntoConstraints="NO" id="vHT-FC-Dgo">
-                                <rect key="frame" x="199" y="412" width="30" height="10"/>
+                                <rect key="frame" x="199" y="393" width="30" height="10"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="30" id="Bkr-lG-bsr"/>
                                     <constraint firstAttribute="width" secondItem="vHT-FC-Dgo" secondAttribute="height" multiplier="18:6" id="nt3-MM-u06"/>
@@ -43,13 +45,13 @@
                                 <color key="contentTintColor" red="0.26274509800000001" green="0.2666666667" blue="0.30196078430000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                             </imageView>
                             <box ambiguous="YES" boxType="custom" borderType="none" cornerRadius="4" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="OF3-Mw-Sjv" userLabel="Content">
-                                <rect key="frame" x="20" y="28" width="388" height="384"/>
+                                <rect key="frame" x="20" y="23" width="388" height="367"/>
                                 <view key="contentView" ambiguous="YES" id="Fqw-F9-tj9">
-                                    <rect key="frame" x="0.0" y="0.0" width="388" height="384"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="388" height="367"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZTu-7u-BXA">
-                                            <rect key="frame" x="22" y="338" width="344" height="19"/>
+                                            <rect key="frame" x="22" y="321" width="344" height="19"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="NetShield" id="AM0-L5-Z9G">
                                                 <font key="font" metaFont="system" size="16"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -57,7 +59,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="g7V-iK-cc1">
-                                            <rect key="frame" x="22" y="253" width="344" height="64"/>
+                                            <rect key="frame" x="22" y="236" width="344" height="64"/>
                                             <textFieldCell key="cell" title="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua." id="JR4-4w-pB3">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -65,7 +67,7 @@
                                             </textFieldCell>
                                         </textField>
                                         <customView ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="lCE-Jm-Yx9">
-                                            <rect key="frame" x="22" y="117" width="342" height="96"/>
+                                            <rect key="frame" x="22" y="100" width="342" height="96"/>
                                         </customView>
                                         <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="EW3-Fs-3UC">
                                             <rect key="frame" x="22" y="16" width="344" height="16"/>
@@ -75,8 +77,8 @@
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="148" y="48" width="93" height="32"/>
+                                        <button verticalHuggingPriority="750" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="1xP-QI-Slv" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                            <rect key="frame" x="148" y="45" width="93" height="32"/>
                                             <buttonCell key="cell" type="push" title="Upgrade" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="du1-Nc-Ubv">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -92,7 +94,7 @@
                                             </userDefinedRuntimeAttributes>
                                         </button>
                                         <button verticalHuggingPriority="750" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="U0y-aY-rlv" userLabel="learnMoreButton">
-                                            <rect key="frame" x="22" y="221" width="45" height="6"/>
+                                            <rect key="frame" x="22" y="204" width="45" height="6"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="15" id="xW6-PM-ue2"/>
                                             </constraints>
@@ -108,7 +110,7 @@
                                         <constraint firstAttribute="bottom" secondItem="EW3-Fs-3UC" secondAttribute="bottom" constant="16" id="DaM-WA-9yw"/>
                                         <constraint firstItem="1xP-QI-Slv" firstAttribute="top" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" constant="16" id="I51-01-Sf3"/>
                                         <constraint firstItem="lCE-Jm-Yx9" firstAttribute="leading" secondItem="U0y-aY-rlv" secondAttribute="leading" id="Ihg-KN-Cg8"/>
-                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="top" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" constant="60" id="KO3-Gg-ccE"/>
+                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="top" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" priority="750" constant="16" id="KO3-Gg-ccE"/>
                                         <constraint firstItem="EW3-Fs-3UC" firstAttribute="leading" secondItem="ZTu-7u-BXA" secondAttribute="leading" id="LnF-Gi-udP"/>
                                         <constraint firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" constant="24" id="MHf-mc-xfS"/>
                                         <constraint firstItem="1xP-QI-Slv" firstAttribute="centerX" secondItem="Fqw-F9-tj9" secondAttribute="centerX" id="OUU-TO-32H"/>
@@ -117,6 +119,8 @@
                                         <constraint firstItem="U0y-aY-rlv" firstAttribute="leading" secondItem="Fqw-F9-tj9" secondAttribute="leading" constant="22" id="YCo-SX-Wuq"/>
                                         <constraint firstItem="ZTu-7u-BXA" firstAttribute="top" secondItem="Fqw-F9-tj9" secondAttribute="top" constant="27" id="atm-yQ-lA7"/>
                                         <constraint firstItem="g7V-iK-cc1" firstAttribute="top" secondItem="ZTu-7u-BXA" secondAttribute="bottom" constant="21" id="d1t-gE-FB2"/>
+                                        <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="lCE-Jm-Yx9" secondAttribute="bottom" constant="16" id="dBk-WL-l4B"/>
+                                        <constraint firstItem="EW3-Fs-3UC" firstAttribute="top" secondItem="1xP-QI-Slv" secondAttribute="bottom" constant="20" id="dHD-VN-BLm"/>
                                         <constraint firstItem="g7V-iK-cc1" firstAttribute="leading" secondItem="ZTu-7u-BXA" secondAttribute="leading" id="jsv-Nn-nRR"/>
                                         <constraint firstItem="lCE-Jm-Yx9" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="rC0-cj-GeM"/>
                                         <constraint firstItem="g7V-iK-cc1" firstAttribute="trailing" secondItem="ZTu-7u-BXA" secondAttribute="trailing" id="tmZ-GP-3GE"/>
@@ -144,7 +148,7 @@
                 <constraint firstItem="Wg0-Ha-0wP" firstAttribute="height" secondItem="Hz6-mo-xeY" secondAttribute="height" multiplier="0.983806" id="qET-On-JXr"/>
                 <constraint firstItem="Wg0-Ha-0wP" firstAttribute="width" secondItem="Hz6-mo-xeY" secondAttribute="width" id="uPu-mH-VRc"/>
             </constraints>
-            <point key="canvasLocation" x="-144" y="370.5"/>
+            <point key="canvasLocation" x="-144" y="361"/>
         </customView>
     </objects>
     <resources>

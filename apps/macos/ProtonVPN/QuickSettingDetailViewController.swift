@@ -51,7 +51,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
     
     @IBOutlet weak var dropdownOptionsView: NSView!
     
-    @IBOutlet weak var buttonSpaceHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var noteTopConstraint: NSLayoutConstraint!
+    @IBOutlet var upgradeTopConstraint: NSLayoutConstraint!
+    @IBOutlet var upgradeBottomConstraint: NSLayoutConstraint!
     
     let presenter: QuickSettingDropdownPresenterProtocol
     
@@ -109,14 +111,17 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                     view?.disabledStyle()
                     view?.action = {
                         presenter.selectCallback?()
-                        self.presenter.displayReconnectionFeedback()
                     }
                 }
             }
             return view!
         }
         
-        self.buttonSpaceHeightConstraint.constant = needsUpgrade ? 60 : 0
+        self.upgradeTopConstraint.isActive = needsUpgrade
+        self.upgradeBottomConstraint.isActive = needsUpgrade
+        
+        self.noteTopConstraint.isActive = self.dropdownNote.attributedStringValue.length > 0
+        
         self.dropdownUgradeButton.isHidden = !needsUpgrade
         self.dropdownOptionsView.subviews.forEach { $0.removeFromSuperview() }
         self.dropdownOptionsView.fillVertically(withViews: views)
