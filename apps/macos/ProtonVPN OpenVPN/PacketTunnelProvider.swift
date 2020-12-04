@@ -20,32 +20,16 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import NetworkExtension
+import TunnelKit
 
-class PacketTunnelProvider: NEPacketTunnelProvider {
-
-    override func startTunnel(options: [String : NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        // Add code here to start the process of connecting the tunnel.
-    }
+class PacketTunnelProvider: OpenVPNTunnelProvider {
     
-    override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        // Add code here to start the process of stopping the tunnel.
-        completionHandler()
-    }
-    
-    override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)?) {
-        // Add code here to handle the message.
-        if let handler = completionHandler {
-            handler(messageData)
+    override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
+        if let credentials = try? JSONDecoder().decode(OpenVPN.Credentials.self, from: messageData) {
+            self.setCredentials(credentials)
+            completionHandler?(nil)
+            return
         }
-    }
-    
-    override func sleep(completionHandler: @escaping () -> Void) {
-        // Add code here to get ready to sleep.
-        completionHandler()
-    }
-    
-    override func wake() {
-        // Add code here to wake up.
+        super.handleAppMessage(messageData, completionHandler: completionHandler)
     }
 }
