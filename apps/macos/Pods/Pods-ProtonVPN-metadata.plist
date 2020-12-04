@@ -553,7 +553,7 @@ POSSIBILITY OF SUCH DAMAGE.
 			<key>summary</key>
 			<string>A software update framework for macOS</string>
 			<key>version</key>
-			<string>1.21.3</string>
+			<string>1.24.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -597,7 +597,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>A tool to enforce Swift style and conventions.</string>
 			<key>version</key>
-			<string>0.39.2</string>
+			<string>0.41.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
