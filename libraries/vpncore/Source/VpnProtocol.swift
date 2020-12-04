@@ -61,9 +61,9 @@ public enum VpnProtocol {
             string = LocalizedString.openVpn
             switch transportProtocol {
             case .tcp:
-                string +=  " / " + LocalizedString.tcp
+                string += " / " + LocalizedString.tcp
             case .udp:
-                string +=  " / " + LocalizedString.udp
+                string += " / " + LocalizedString.udp
             case .undefined:
                 break
             }
