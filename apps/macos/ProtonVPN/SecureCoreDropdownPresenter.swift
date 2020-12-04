@@ -45,7 +45,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [self.secureCoreOff, self.secureCoreOn ]
+        return [self.secureCoreOff, self.secureCoreOn]
     }
     
     override func viewDidLoad() {
@@ -67,6 +67,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_securecore_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, selectCallback: {
             self.vpnGateway.changeActiveServerType(.standard)
+            self.displayReconnectionFeedback()
         })
     }
     
@@ -76,6 +77,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_securecore_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: self.requiresUpdate, selectCallback: {
             self.vpnGateway.changeActiveServerType(.secureCore)
+            self.displayReconnectionFeedback()
         })
     }
 }
