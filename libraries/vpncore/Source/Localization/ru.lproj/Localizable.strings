@@ -4,7 +4,7 @@
 /* MacOS: \"Trial about to expire\" screen */
 "_5_connections_description" = "Подключение до 5 устройств\nодновременно";
 
-/* MacOS: About window title */
+/* About */
 "_about" = "О программе";
 
 /* Account tab button in settings window (MacOS) and in several modals (both MacOS and iOS) */
@@ -40,7 +40,7 @@
 /* API error */
 "_ae_vpn_info_not_received" = "Не удается получить сведения о VPN";
 
-/* API error */
+/* API errors */
 "_ae_wrong_login_credentials" = "Неправильное имя пользователя или пароль";
 
 /* Account plan description */
@@ -70,6 +70,9 @@
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы приложения";
 
+/* Title on reconnection info */
+"_applying_settings_" = "Применение настроек";
+
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Назначается автоматически";
 
@@ -88,11 +91,14 @@
 /* Battery usage More info button text */
 "_battery_more" = "Хотите узнать больше?";
 
-/* iOS settings -> Battery usage; Title of battery usage screen; */
-"_battery_title" = "Использование батареи";
+/* Battery usage */
+"_battery_title" = "Использование аккумулятора";
 
-/* Common word */
+/* General */
 "_cancel" = "Отмена";
+
+/* On reconnection info about cancel reconnection */
+"_cancel_reconnection" = "Это отменит любую попытку повторного подключения и оставит вас отключенным";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Изменение протоколов завершит вашу текущую сессию VPN.";
@@ -127,16 +133,16 @@
 /* iOS status view */
 "_connected_to" = "Подключен к";
 
-/* MacOS: connecting overlay.  %@ is a country followed by a server e.g. Connected to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+/* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
 "_connected_to_vpn" = "Подключен к %@";
 
 /* iOS: main button in tabbar during connecting to vpn phase */
 "_connecting" = "Подключение";
 
-/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
+/* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
 "_connecting_to" = "Подключение к %@";
 
-/* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
+/* %@ is a failure or timeout e.g. Connecting failed */
 "_connecting_vpn" = "Подключение %@";
 
 /* iOS: connection bar, iOS widget */
@@ -181,7 +187,7 @@
 /* Error when user hasn't selected profile country */
 "_country_selection_is_required" = "Пожалуйста, выберите страну";
 
-/* Under maintenance alert */
+/* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "Серверы страны %@ на техобслуживании";
 
 /* MacOS: button in login screen */
@@ -202,7 +208,8 @@
 /* iOS: data disclaimen screen */
 "_data_disclaimer_device_details" = "Модель вашего устройства и версия ОС";
 
-/* iOS: data disclaimen screen */
+/* %@1 is a bold 'Username, email address'
+ %@2 is a bold 'Your device model and OS version' */
 "_data_disclaimer_text" = "ProtonVPN считает своим долгом защищать и уважать вашу конфиденциальность. Мы используем политику, определяющую сбор как можно меньшего количества данных пользователя, чтобы обеспечивать негласное и анонимное использование нашего приложения, в частности:\n\n%@ – чтобы войти в систему, помочь восстановить потерянный пароль и отправить важные обновления сервиса.\n\n%@ – только для отчетов об ошибках и ошибок.\n\nПриложение ProtonVPN не обрабатывает никакой информации о пользователе помимо этих данных. Мы не храним записи о вашей деятельности в сети или ваши персональные данные. Все данные, перечисленные выше, хранятся и обрабатываются на собственной системе ProtonVPN, и третья сторона не имеет доступа к нему.";
 
 /* iOS: data disclaimen screen */
@@ -235,7 +242,7 @@
 /* Delinquent user alert */
 "_delinquent_user_description" = "У вашей учётной записи есть неоплаченный счёт. Пожалуйста, оплатите все неоплаченные счета на account.protonvpn.com";
 
-/* Delinquent user alert */
+/* Alerts */
 "_delinquent_user_title" = "Неоплаченный счет";
 
 /* Profile create/change form */
@@ -331,7 +338,7 @@
 /* In App Purchase error */
 "_error_credit_applied" = "Для завершения покупки свяжитесь с нами по адресу support@protonvpn.com.";
 
-/* Error decoding an object */
+/* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
 "_error_decode" = "Не удалось декодировать архивные данные в классе: %@";
 
 /* Internal application error */
@@ -361,7 +368,7 @@
 /* Error when try to hash password */
 "_error_hash_password" = "Не удалось хэшировать пароль пользователя";
 
-/* Unknown error that has no better description */
+/* Errors */
 "_error_internal_error" = "Внутренняя ошибка API";
 
 /* Invalid human verification code alert */
@@ -391,7 +398,7 @@
 /* Man In The Middle attack alert (VPN) */
 "_error_mitm_vpn_description" = "Сбой проверки сертификата TLS при попытке подключения к VPN серверу. Ваше текущее подключение к Интернету, возможно, прослушивается. Чтобы защитить ваши данные, мы не позволяем приложению получить доступ к этому VPN серверу.\nПожалуйста, выберите другой сервер.";
 
-/* Error when try to parse modulus signature */
+/* Password encoding errors */
 "_error_modulus_signature" = "Пустая сигнатура остатка";
 
 /* In App Purchase error */
@@ -400,7 +407,7 @@
 /* In App Purchase error */
 "_error_no_new_subscription_in_successfull_response" = "Повышение вашей подписки успешно. Пожалуйста, перезапустите приложение, чтобы воспользоваться вашим новым тарифным планом.";
 
-/* In App Purchase error alert */
+/* IAP errors */
 "_error_occured" = "Произошла ошибка";
 
 /* In App Purchase error */
@@ -439,7 +446,7 @@
 /* In App Purchase error */
 "_error_unavailable_product" = "Не удалось получить список доступных продуктов из AppStore.";
 
-/* General title for several error alerts */
+/* Unknown error */
 "_error_unknown_title" = "Неизвестная ошибка";
 
 /* user cancelled human validation procedure */
@@ -499,7 +506,7 @@
 /* MAC: is inserted into _free_trial_expired_title insteadof %@ */
 "_expired" = "ИСТЕКЛА";
 
-/* iOS: Table header in settings screen */
+/* Extensions */
 "_extensions" = "Расширения";
 
 /* MacOS: connecting overlay */
@@ -538,7 +545,7 @@
 /* iOS plan feature */
 "_feature_secure_streaming" = "Безопасный стриминг";
 
-/* iOS plan feature */
+/* Plan selection: advances features; Manage subscription */
 "_feature_server_count" = "Подключение к серверам в";
 
 /* iOS plan feature */
@@ -562,13 +569,17 @@
 /* iOS: section header in countries list */
 "_free_servers" = "БЕСПЛАТНЫЕ СЕРВЕРЫ";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
+/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features:
+ 
+ I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Улучшите до %@ и продолжайте пользоваться этими возможностями:";
 
 /* MacOS: \"Trial about to expire\" screen title */
 "_free_trial_about_to_expire_title" = "Пробная версия скоро истекает!";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
+/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
+ 
+ A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "Ваш аккаунт был переведен на ProtonVPN FREE. Вот о чем Вы будете скучать из %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
@@ -620,10 +631,10 @@
 "_invalid_refresh_token_please_login" = "Прошло много времени с тех пор, как вы в последний раз использовали приложение ProtonVPN. Пожалуйста, войдите в систему.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Создавшие ProtonMail учёные и инженеры приглашают вас в более безопасный и неподцензурный интернет.";
+"_ios_onboarding_page1_description" = "Учёные и инженеры, создавшие ProtonMail, приглашают вас в более безопасный Интернет без цензуры.";
 
-/* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Добро пожаловать в лучший интернет";
+/* Upsell & Onboard - iOS */
+"_ios_onboarding_page1_title" = "Добро пожаловать в лучший Интернет";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Победите цензуру и региональные ограничения. У нас нет рекламы, нет ограничений пропускной способности и мы не продаём ваши данные.";
@@ -643,13 +654,16 @@
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
 
+/* On reconnection inform the IP will not be informed */
+"_ip_will_not_be_exposed" = "Ваш IP-адрес не будет раскрыт.";
+
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* MacOS: killswitch blocking alert */
+/* %@ is a link to the app's Preferences */
 "_kill_switch_blocking_body" = "Вы потеряли соединение с VPN-сервером. Kill Switch блокирует все соединения, чтобы избежать утечки ваших данных. ProtonVPN будет пытаться автоматически восстановить соединение. Чтобы закрыть это окно, нажмите кнопку ОК. \n\nЕсли вы хотите временно отключить Kill Switch и повторно подключиться к Интернету БЕЗ ЗАЩИТЫ VPN, нажмите кнопку ОТКЛЮЧИТЬ. \n\nЧтобы окончательно отключить Kill Switch, перейдите в %@.";
 
-/* Disconnect notification */
+/* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
 
 /* MacOS: killswitch blocking alert */
@@ -670,26 +684,26 @@
 /* MacOS: killswicth install error alert */
 "_kill_switch_helper_install_issue_popup_body" = "При установке или обновлении Kill Switch возникла проблема.\n\nЧтобы повторить попытку, нажмите кнопку ПОВТОРИТЬ.\n\nЧтобы продолжить без Kill Switch, нажмите кнопку ОТКЛЮЧИТЬ.";
 
-/* MacOS: killswitch alert */
+/* %@ is 'Mac password' */
 "_kill_switch_helper_install_popup_body" = "Чтобы включить Kill Switch, вам может быть предложено ввести пароль учетной записи пользователя. Если появится запрос, введите свой %@ и подтвердите.\n\nВы можете иногда получать этот запрос и в будущем, когда приложение ProtonVPN обновляется.";
 
-/* MacOS: updating helper alert */
+/* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "Для последнего загруженного обновления требуется ввести пароль учетной записи пользователя. Когда появится запрос, введите свой %@ и подтвердите.\n\nЕсли вы не введете пароль, Kill Switch будет выключен.";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
 
-/* MacOS: Try again to connect KillSwitch */
-"_ks_enable_again" = "Включить Kill Switch снова";
-
 /* MacOS: Keep disabled the KillSwitch component */
-"_ks_keep_disabled" = "Оставить Kill Switch выключенным";
+"_ks_dont_ask" = "Не спрашивать меня снова";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "Вы не можете включить Kill Switch, потому что поддержка среды исполнения Swift 5 не установлена на вашем устройстве. Чтобы использовать Kill Switch, сначала загрузите и установите Swift 5.";
+"_ks_requires_swift5_popup_msg" = "To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "У вас по-прежнему не установлена поддержка среды исполнения Swift. ProtonVPN не может запускать Kill Switch без Swift 5. Если вы решите не устанавливать Swift 5 на устройстве, вы не сможете использовать Kill Switch для защиты вашего устройства. ";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Switch, please install software first.";
+
+/* MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it. */
+"_ks_swift5_lib_name" = "Поддержка библиотеки Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Узнать больше";
@@ -757,7 +771,7 @@
 /* MacOS: Settings -> Account. Button leading to web interface. */
 "_manage_subscription_on_web" = "Управляйте своей подпиской в личном кабинете";
 
-/* iOS: Map screen title and tabbar item */
+/* Map */
 "_map" = "Карта";
 
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
@@ -766,19 +780,13 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Показать карту";
 
-/* MacOS app tour: map description */
-"_map_tour_description" = "Посмотрите, где расположены VPN-серверы. Найдите тот, который ближе всего к вашему местоположению.";
-
-/* MacOS app tour: map title */
-"_map_tour_title" = "Карта";
-
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Может, позже";
 
 /* Value of speed in _speed */
 "_medium" = "Средняя";
 
-/* Main mac app menu item */
+/* Mac main menu */
 "_menu_about" = "О ProtonVPN";
 
 /* Main mac app menu item */
@@ -815,7 +823,7 @@
 "_more_info" = "Больше информации";
 
 /* Label in Plan information */
-"_most_popular" = "Самый популярный";
+"_most_popular" = "Популярный";
 
 /* Mac: Used in several Trial screens */
 "_multiple_countries" = "Множество стран";
@@ -841,10 +849,10 @@
 /* Network error */
 "_ne_not_connected_to_the_internet" = "Нет подключения к Интернету";
 
-/* Network error */
+/* Network errors */
 "_ne_request_timed_out" = "Истекло время ожидания запроса";
 
-/* Button on alert after a problem with internet connection */
+/* Internet connection troubleshoting */
 "_ne_troubleshoot" = "Устранение неполадок";
 
 /* Network error */
@@ -853,7 +861,13 @@
 /* Mac: neagent help screen */
 "_neagent_always_allow" = "Всегда разрешать";
 
-/* Mac: neagent help screen */
+/* Final string with filled in variables looks like this:
+ 
+ You may be asked to provide your computer account password
+ to connect to the ProtonVPN service. If this request appears,
+ enter your Mac password (1) and click ‘Always Allow’ (2).
+ 
+ The numbers refer to a text field and button in an image displayed above this text. */
 "_neagent_description" = "Вам может быть предложено ввести свой %@,\nчтобы подключиться к службе ProtonVPN. Если этот запрос появится,\nвведите свой %@ %@ и нажмите ‘%@’ %@.";
 
 /* Mac: neagent help screen */
@@ -881,15 +895,15 @@
 "_netshield_level1" = "Блокировать вредоносные программы";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Блокировать вредоносные программы, рекламу, трекеры";
+"_netshield_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Выключено";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "Блокировка вредоносов & рекламы";
+"_netshield_section_title" = "БЛОКИРОВКА ВРЕДОНОСНОГО ПО И РЕКЛАМЫ";
 
-/* Settings -> Netshield: name of field. */
+/* Netshield */
 "_netshield_title" = "NetShield";
 
 /* Settings -> Netshield: description. */
@@ -898,7 +912,7 @@
 /* iOS: quick connect widget */
 "_network_unreachable" = "Сеть недоступна";
 
-/* Title of the screen with news and offers. */
+/* Announcements */
 "_news_title" = "Новости";
 
 /* iOS onboarding next item button */
@@ -1024,7 +1038,7 @@
 /* MacOS: Upgrade screen title */
 "_plus_upgrade_title" = "Наслаждаетесь ProtonVPN?\nПолучите Plus всего за 8 долларов в месяц";
 
-/* MacOS: Settings screen title */
+/* Settings */
 "_preferences" = "Настройки";
 
 /* Description shown together with server info icon */
@@ -1039,7 +1053,7 @@
 /* iOS: link inside text under sign-up form */
 "_privacy_policy" = "Политикой конфиденциальности";
 
-/* MacOS Profiles Overview: Table column header */
+/* Profiles */
 "_profile" = "Профиль";
 
 /* iOS: success message after profile is saved */
@@ -1105,6 +1119,48 @@
 /* MacOS app tour: quick connect title */
 "_quick_connect_tour_title" = "Быстрое подключение";
 
+/* Get Plus button, for premium functionalities */
+"_quick_settings_get_plus" = "ПОЛУЧИТЬ PLUS";
+
+/* Description for Kill Switch on Quick Settings. */
+"_quick_settings_killSwitch_description" = "Отключает Интернет для предотвращения случайной утечки IP, если VPN-соединение разрывается.";
+
+/* Description for NetShield on Quick Settings. */
+"_quick_settings_netShield_description" = "Просматривайте страницы в Интернете без рекламы и вредоносных программ.";
+
+/* Note for NetShield on Quick Settings. */
+"_quick_settings_netShield_note" = "Если веб-сайты не загружаются, попробуйте отключить NetShield";
+
+/* QuickSettings Netshield option2 */
+"_quick_settings_netshield_option_level1" = "Блокировать только вредоносные программы";
+
+/* QuickSettings Netshield option3 */
+"_quick_settings_netshield_option_level2" = "Блокировать вредоносные программы, рекламу и трекеры";
+
+/* QuickSettings Netshield option1 */
+"_quick_settings_netshield_option_off" = "Не блокировать";
+
+/* Quick Settings */
+"_quick_settings_secureCore_description" = "Направляйте свои самые чувствительные данные через наши самые безопасные серверы в дружелюбных по отношению к конфиденциальности странах.";
+
+/* Note for Secure Core on Quick Settings. */
+"_quick_settings_secureCore_note" = "Secure Core может снизить скорость VPN";
+
+/* MacOS app tour: quick settings description */
+"_quick_settings_tour_description" = "Повысьте свою безопасность одним щелчком мыши:";
+
+/* MacOS app tour: quick settings secure core */
+"_quick_settings_tour_feature_1" = "Добавьте дополнительный уровень безопасности с Secure Core.";
+
+/* MacOS app tour: quick settings net shield */
+"_quick_settings_tour_feature_2" = "Путешествуйте по сети, свободной от вредоносного ПО и рекламы, при помощи NetShield.";
+
+/* MacOS app tour: quick settings kill switch */
+"_quick_settings_tour_feature_3" = "Чтобы предотвратить раскрытие своего IP-адреса, включите Kill Switch.";
+
+/* MacOS app tour: quick settings title */
+"_quick_settings_tour_title" = "Быстрые настройки";
+
 /* MacOS: quit application button in custom status menu */
 "_quit" = "Выход";
 
@@ -1126,6 +1182,9 @@
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Требуется переподключение";
 
+/* Title on reconnection view controller */
+"_reestablish_vpn_connection_" = "Восстановление VPN-соединения.";
+
 /* MacOS: About window */
 "_release_date" = "Дата выпуска:";
 
@@ -1141,7 +1200,7 @@
 /* Main mac app menu item */
 "_report_an_issue" = "Сообщить о проблеме...";
 
-/* Bug report attachments */
+/* Report bug */
 "_report_attachments" = "Вложения";
 
 /* Report bug screen title; iOS settings screen: item; */
@@ -1237,12 +1296,6 @@
 /* MacOS: secure core tooltip */
 "_secure_core_info" = "Предоставляет дополнительную защиту от компрометации VPN-сервера, перенаправляя трафик через нашу сеть Secure Core";
 
-/* MacOS app tour: secure core description */
-"_secure_core_tour_description" = "Включите Secure Core, чтобы направить трафик через дополнительные серверы для еще одного уровня безопасности сети. Доступно для пользователей Plus и Visionary.";
-
-/* MacOS app tour: secure core title */
-"_secure_core_tour_title" = "Secure Core";
-
 /* MacOS: \"Trial about to expire\" screen */
 "_secure_streaming_description" = "Безопасный стриминг вашего \nлюбимого контента";
 
@@ -1279,10 +1332,10 @@
 /* Profile create/change form */
 "_server" = "Сервер";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+/* IP address follows e.g. Server IP: 123.45.67.890 */
 "_server_ip" = "IP-адрес сервера:";
 
-/* MacOS: label in server info view (shown after click on Info icon in countries list) */
+/* Load follows e.g. Server Load: 24% */
 "_server_load" = "Нагрузка сервера:";
 
 /* Error when user hasn't selected profile server */
@@ -1357,7 +1410,7 @@
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "План подписки";
 
-/* Subscription expiration text with a date inserted instead of %@ */
+/* Manage subscription */
 "_subscription_will_expire" = "Текущий тариф истекает %@.";
 
 /* Subscription expiration text for users whose plan will be renewed automatically on a date inserted instead of %@ */
@@ -1387,7 +1440,8 @@
 /* iOS: link inside text under sign-up form */
 "_terms_and_conditions" = "Условиями и положениями";
 
-/* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
+/* %@1 is a link with a title of 'Terms and Conditions'
+ %@2 is a link with a title of 'Privacy Policy' */
 "_terms_and_conditions_disclaimer" = "Используя ProtonVPN, вы соглашаетесь с нашими\n%@ и %@";
 
 /* iOS: section header in countries list */
@@ -1399,7 +1453,7 @@
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
 
-/* Description shown together with server info icon */
+/* Servers */
 "_tor_description" = "Подключает к сети TOR";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
@@ -1584,6 +1638,9 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Требуется обновление";
 
+/* Description for enable secure core on free  plan */
+"_upgrade_required_securecore_description" = "Secure Core доступен с тарифом Plus. Улучшите тариф прямо сейчас, чтобы маршрутизировать трафик через наши самые безопасные серверы в дружелюбных по отношению к конфиденциальности странах.";
+
 /* iOS: Plan selection during plan upgarde, button insettings screen */
 "_upgrade_subscription" = "Улучшить подписку";
 
@@ -1593,7 +1650,7 @@
 /* Plan upgrade unavailable alert */
 "_upgrade_unavailable_body" = "Ваша подписка ProtonVPN не может быть улучшена из приложения. Пожалуйста, посетите account.protonvpn.com для улучшения.";
 
-/* Plan upgrade unavailable alert */
+/* If the app cannot upgrade the user's plan and they must go to the website to uprade it */
 "_upgrade_unavailable_title" = "Улучшение недоступно в приложении";
 
 /* iOS: human verification option select button */
@@ -1608,7 +1665,7 @@
 /* iOS: human verification option select button */
 "_use_sms_verification" = "Подтвердить с помощью СМС";
 
-/* Used in sign-in, sign-up and in settings */
+/* Login & Signup */
 "_username" = "Имя пользователя";
 
 /* iOS: text in human verification code form */
@@ -1623,7 +1680,7 @@
 /* Used in several places in iOS to make SecureCore server description, similar to 'viaCountry' translation */
 "_via" = "через";
 
-/* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
+/* %@ is a country e.g. via Switzerland */
 "_via_country" = "через %@";
 
 /* MacOS menu item; iOS setting screen item */
@@ -1656,10 +1713,12 @@
 /* MacOS welcome screen: description */
 "_welcome_description" = "Спасибо за использование ProtonVPN. Взгляните \nна основные возможности приложения.";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
+/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
+ 
+ A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "В качестве приветственного подарка вам предоставляется 7-дневный доступ к\nподписке %@, которая дает вам:";
 
-/* MacOS welcome screen: title */
+/* Upsell & Onboard */
 "_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
