@@ -412,6 +412,7 @@ public class LocalizedString {
     
     public static let killSwitchBlockingTitle = NSLocalizedString("_kill_switch_blocking_title", comment: "MacOS: killswitch blocking alert")
     public static let killSwitchBlockingBody = NSLocalizedString("_kill_switch_blocking_body", comment: "MacOS: killswitch blocking alert")
+    public static let killSwitchDisable = NSLocalizedString("_kill_switch_disable", comment: "MacOS: killswitch blocking alert button")
     
     public static let killSwitchErrorTitle = NSLocalizedString("_kill_switch_error_title", comment: "MacOS: killswitch error alert")
     public static let killSwitchErrorHead = NSLocalizedString("_kill_switch_error_head", comment: "MacOS: killswitch error alert")
