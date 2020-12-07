@@ -30,13 +30,16 @@ class ConnectionSettingsViewModel {
     private let profileManager = ProfileManager.shared
     private let vpnGateway: VpnGatewayProtocol
     private let firewallManager: FirewallManager
-    
+    private let systemExtensionManager: SystemExtensionManager
+    private weak var viewController: ReloadableViewController?
+
     var killSwitchWarning: ((WarningPopupViewModel) -> Void)?
     let killSwitchChanged = Notification.Name("SettingsViewModelKillSwitchChanged") // two observers
     
-    init(vpnGateway: VpnGatewayProtocol, firewallManager: FirewallManager) {
+    init(vpnGateway: VpnGatewayProtocol, firewallManager: FirewallManager, systemExtensionManager: SystemExtensionManager) {
         self.vpnGateway = vpnGateway
         self.firewallManager = firewallManager
+        self.systemExtensionManager = systemExtensionManager
     }
     
     // MARK: - Current Index
@@ -71,17 +74,8 @@ class ConnectionSettingsViewModel {
     
     var protocolProfileIndex: Int {
         switch vpnProtocol {
-        case .ike:
-            return 0
-        default:
-            return 1
-        }
-    }
-    
-    var openVPNProfileIndex: Int {
-        switch vpnProtocol {
-        case .openVpn(.udp):
-            return 1
+        case .openVpn(let transport):
+            return transport == .tcp ? 1 : 2
         default:
             return 0
         }
@@ -97,11 +91,13 @@ class ConnectionSettingsViewModel {
         return profileManager.allProfiles.count
     }
     
-    var protocolItemCount: Int { return 2 }
-    
-    var openVPNItemCount: Int { return 2 }
+    var protocolItemCount: Int { return 3 }
         
     // MARK: - Setters
+    
+    func setViewController(_ vc: ReloadableViewController) {
+        self.viewController = vc
+    }
     
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
@@ -126,19 +122,21 @@ class ConnectionSettingsViewModel {
     }
     
     func setProtocol(_ index: Int) {
-        if index == 0 {
+        
+        var transportProtocol: VpnProtocol.TransportProtocol = .tcp
+        
+        switch index {
+        case 1: transportProtocol = .tcp
+        case 2: transportProtocol = .udp
+        default:
             propertiesManager.vpnProtocol = .ike
-        } else {
-            propertiesManager.vpnProtocol = .openVpn(.tcp)
+            return
         }
-    }
-    
-    func setOpenVPN(_ index: Int) {
-        if index == 0 {
-            propertiesManager.vpnProtocol = .openVpn(.tcp)
-        } else {
-            propertiesManager.vpnProtocol = .openVpn(.udp)
-        }
+        
+        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+        systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
+            self.viewController?.reloadView()
+        })
     }
     
     // MARK: - Item
@@ -157,21 +155,17 @@ class ConnectionSettingsViewModel {
     }
         
     func protocolItem(for index: Int) -> NSAttributedString {
-        switch index {
-        case 0:
-            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        default:
-            return LocalizedString.openVpn.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        }
-    }
+        var transport = ""
         
-    func openVPNItem(for index: Int) -> NSAttributedString {
         switch index {
-        case 0:
-            return LocalizedString.tcp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        case 1:
+            transport = " (" + LocalizedString.tcp + ")"
+        case 2:
+            transport = " (" + LocalizedString.udp + ")"
         default:
-            return LocalizedString.udp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         }
+        return (LocalizedString.openVpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
     // MARK: - Values
@@ -186,16 +180,12 @@ class ConnectionSettingsViewModel {
     
     func setKillSwitch(_ enabled: Bool) {
         propertiesManager.killSwitch = enabled
-        
-        if enabled {
-            enableKillSwitch()
-        } else {
-            firewallManager.disableFirewall()
-        }
-    }
     
-    private func enableKillSwitch() {
-        firewallManager.installHelperIfNeeded(trigger: .userInitiated)
+        if enabled {
+            firewallManager.installHelperIfNeeded(trigger: .userInitiated)
+        } else {
+            firewallManager.disableFirewall(completion: nil)
+        }
     }
     
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {

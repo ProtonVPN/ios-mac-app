@@ -25,7 +25,7 @@ import vpncore
 
 class SettingsContainerViewController: NSViewController {
 
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory & SystemExtensionManagerFactory
     
     @IBOutlet weak var tabBarControllerViewContainer: NSView!
     @IBOutlet weak var activeControllerViewContainer: NSView!
@@ -44,7 +44,7 @@ class SettingsContainerViewController: NSViewController {
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway, firewallManager: self.viewModel.firewallManager)
+        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway, firewallManager: self.viewModel.firewallManager, systemExtensionManager: self.factory.makeSystemExtensionManager())
         return ConnectionSettingsViewController(viewModel: viewModel)
     }()
     

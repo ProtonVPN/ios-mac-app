@@ -345,3 +345,10 @@ extension DependencyContainer: SafariServiceFactory {
         return SafariService()
     }
 }
+
+// MARK: - SystemExtensionManagerFactory
+extension DependencyContainer: SystemExtensionManagerFactory {
+    func makeSystemExtensionManager() -> SystemExtensionManager {
+        return SystemExtensionManager(factory: self)
+    }
+}
