@@ -21,3 +21,101 @@
 //
 
 import Foundation
+import SystemExtensions
+import os.log
+import vpncore
+
+protocol SystemExtensionManagerFactory {
+    func makeSystemExtensionManager() -> SystemExtensionManager
+}
+
+class SystemExtensionManager: NSObject {
+    
+    typealias Factory = PropertiesManagerFactory
+    
+    fileprivate let factory: Factory
+    fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
+    fileprivate let log = OSLog(subsystem: "ProtonVPN", category: "ProtonTechnologies-SystemExtensionManager")
+    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
+    
+    private var transportProtocol: VpnProtocol.TransportProtocol = .tcp
+    
+    private var completionCallback: VpnProtocolCallback?
+    
+    init( factory: Factory ) {
+        self.factory = factory
+        super.init()
+    }
+    
+    func checkSystemExtensionState() {
+        guard #available(OSX 10.15, *) else { return }
+        os_log(.debug, log: self.log, "checkSystemExtensionState ")
+        switch propertiesManager.vpnProtocol {
+        case .openVpn(let transport):
+            requestExtensionInstall(transport, completion: { vpnProtocol in
+                self.propertiesManager.vpnProtocol = vpnProtocol
+            })
+        default:
+            return
+        }
+    }
+    
+    func requestExtensionInstall( _ transportProtocol: VpnProtocol.TransportProtocol, completion: @escaping VpnProtocolCallback ) {
+        guard #available(OSX 10.15, *) else { return }
+        os_log(.debug, log: self.log, "requestExtensionInstall ")
+        self.completionCallback = completion
+        self.transportProtocol = transportProtocol
+        self.propertiesManager.vpnProtocol = .ike
+        completion(.ike)
+        
+        let request = OSSystemExtensionRequest.activationRequest(
+            forExtensionWithIdentifier: extensionIdentifier,
+            queue: .main
+        )
+        request.delegate = self
+        OSSystemExtensionManager.shared.submitRequest(request)
+    }
+}
+
+@available(OSX 10.15, *)
+
+extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
+    func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+        os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion)", "\(ext.bundleShortVersion)")
+        
+        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+        
+        if existing.bundleShortVersion < ext.bundleShortVersion { return .replace }
+        
+        self.completionCallback?(propertiesManager.vpnProtocol)
+        self.completionCallback = nil
+        return .cancel
+    }
+    
+    func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
+        //Requires user action
+        os_log(.debug, log: self.log, "requestNeedsUserApproval")
+    }
+    
+    func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
+        //User gave access
+        os_log(.debug, log: self.log, "request result: %{public}@", "\(result)")
+        switch result {
+        case .completed:
+            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+        case .willCompleteAfterReboot:
+            //Display reconnect popup
+            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+        }
+        self.completionCallback?(propertiesManager.vpnProtocol)
+        self.completionCallback = nil
+    }
+    
+    func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
+        os_log(.debug, log: self.log, "request error: %{public}@", "\(error)")
+        //Display error popup
+        propertiesManager.vpnProtocol = .ike
+        self.completionCallback?(propertiesManager.vpnProtocol)
+        self.completionCallback = nil
+    }
+}
