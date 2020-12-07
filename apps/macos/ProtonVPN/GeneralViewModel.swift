@@ -102,8 +102,7 @@ class GeneralViewModel {
         
         switch appStateManager.state {
         case .connected, .connecting:
-            //If we are connected by a Profile we don't consider it connected for this validation
-            isConnected = propertiesManager.lastConnectionRequest?.profileId == nil
+            isConnected = true
         default:
             break
         }
