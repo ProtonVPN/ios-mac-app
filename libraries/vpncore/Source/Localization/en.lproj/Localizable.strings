@@ -67,6 +67,7 @@
 
 /* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
 "_connecting_to" = "Connecting to %@";
+"_reconnecting_to" = "Reconnecting to %@";
 "_connected_to" = "Connected to";
 
 /* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
@@ -730,3 +731,9 @@
 "_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
 
 "_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";
+
+"_kill_switch_reconnection_header" = "KillSwitch is protecting your IP";
+"_kill_switch_reconnection" = "In case of troubles, cancel the VPN connection.\nThis will disable Kill Switch and leave you unprotected.";
+"_kill_switch_reconnection_bold1" = "disable Kill Switch";
+"_kill_switch_reconnection_bold2" = "unprotected";
+"_kill_switch_reconnection_cancel" = "Cancel reconnection";
