@@ -65,6 +65,27 @@ class StatusMenuWindowModel {
         return StatusMenuViewController(with: viewModel)
     }
     
+    var statusIcon: StatusIcon {
+        guard let connectionStatus = vpnGateway?.connection else {
+            return .unknown
+        }
+        switch connectionStatus {
+        case .connected:
+            return .connected
+        case .connecting:
+            return .connecting
+        case .disconnected, .disconnecting:
+            return .disconnected
+        }
+    }
+    
+    var isStatusIconBlinking: Bool {
+        guard let connectionStatus = vpnGateway?.connection else {
+            return false
+        }
+        return connectionStatus == .connecting
+    }
+    
     func requiresRefreshes(_ required: Bool) {
         if required {
             factory.makeAppSessionRefreshTimer().start(now: true)
@@ -108,4 +129,12 @@ class StatusMenuWindowModel {
     @objc private func handleChange() {
         contentChanged?()
     }
+}
+
+/// All possible status menu icons
+enum StatusIcon {
+    case connected
+    case disconnected
+    case connecting
+    case unknown
 }

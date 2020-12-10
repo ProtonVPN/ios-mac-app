@@ -59,6 +59,9 @@ class FirewallManager {
     private var helperInstallInProgress = false
     fileprivate var timesSwift5AlertShown = 0
     
+    /// Used to get firewall status when asynchronous check is impossible
+    public var killSwitchProbablyEnabled: Bool = false
+    
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
             self?.disableFirewall()
@@ -139,7 +142,9 @@ class FirewallManager {
     func enableFirewall(ipAddress: String) {
         do {
             try attemptEnablingFirewall(ipAddress: ipAddress, interfaces: networkProxyInterfaces())
+            killSwitchProbablyEnabled = true
         } catch {
+            killSwitchProbablyEnabled = false
             PMLog.ET(error)
             firewallIssueAlert()
         }
@@ -153,6 +158,8 @@ class FirewallManager {
         
         inactiveFirewallTimer?.invalidate()
         inactiveFirewallTimer = nil
+        
+        killSwitchProbablyEnabled = false
         
         guard let helper = self.helper({ success in completion?() }) else {
             PMLog.ET("Can not retrieve network helper")
@@ -169,18 +176,21 @@ class FirewallManager {
     func isProtonFirewallEnabled(completion: @escaping (Bool) -> Void) {
         guard let helper = self.helper() else {
             PMLog.ET("Can not retrieve network helper", level: .debug)
+            killSwitchProbablyEnabled = false
             completion(false)
             return
         }
         
         guard let activeEntryIp = propertiesManager.lastIkeConnection?.serverIp.entryIp
             ?? propertiesManager.lastOpenVpnConnection?.serverIp.entryIp else {
+            killSwitchProbablyEnabled = false
             completion(false)
             return
         }
         
         helper.firewallEnabled(forServer: activeEntryIp) { (exitCode) in
             PMLog.D("firewallEnabled result: \(exitCode)")
+            self.killSwitchProbablyEnabled = exitCode.intValue == 0
             completion(exitCode.intValue == 0)
         }
     }
@@ -342,7 +352,9 @@ class FirewallManager {
         
         do {
             try attemptEnablingFirewall(ipAddress: ipAddress, interfaces: interfaces)
+            killSwitchProbablyEnabled = true
         } catch {
+            killSwitchProbablyEnabled = false
             PMLog.ET(error)
             firewallIssueAlert()
         }

@@ -30,6 +30,12 @@ class ConnectingOverlayButton: HoverDetectionButton {
         }
     }
     
+    public var color: NSColor = .protonWhite() {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         
@@ -46,16 +52,16 @@ class ConnectingOverlayButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = bounds.height / 2
-        layer?.borderColor = NSColor.protonWhite().cgColor
+        layer?.borderColor = color.cgColor
         
         let textColor: NSColor
         
         if isHovered {
-            layer?.backgroundColor = NSColor.protonWhite().cgColor
+            layer?.backgroundColor = color.cgColor
             textColor = .protonBlack()
         } else {
             layer?.backgroundColor = NSColor.clear.cgColor
-            textColor = .protonWhite()
+            textColor = color
         }
         
         attributedTitle = title.attributed(withColor: textColor, fontSize: 16)

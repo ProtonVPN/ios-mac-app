@@ -53,7 +53,7 @@ protocol WindowService: class {
 //this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 class WindowServiceImplementation: WindowService {
     
-    typealias Factory = CreateNewProfileViewModelFactory & NavigationServiceFactory & CountriesSectionViewModelFactory & MapSectionViewModelFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory
+    typealias Factory = CreateNewProfileViewModelFactory & NavigationServiceFactory & CountriesSectionViewModelFactory & MapSectionViewModelFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory & ConnectingOverlayViewModelFactory
     
     private let factory: Factory
     
