@@ -34,7 +34,6 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     @IBOutlet weak var contentView: NSStackView!
     @IBOutlet weak var dynamicContentView: NSStackView!
-    @IBOutlet weak var loadingView: LoadingAnimationView!
     @IBOutlet weak var loginLabel: NSTextField!
     @IBOutlet weak var upgradeView: NSStackView!
     @IBOutlet weak var upgradeLabel: NSTextField!
@@ -54,6 +53,11 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     @IBOutlet weak var quitButton: NSButton!
     @IBOutlet weak var showProtonVPNButton: NSButton!
+    
+    @IBOutlet weak var loadingViewContainer: NSView!
+    @IBOutlet weak var loadingView: LoadingAnimationView!
+    @IBOutlet weak var loadingLabel: NSTextField!
+    @IBOutlet weak var cancelConnectionButton: ConnectingOverlayButton!
     
     private var profilesWindowController: StatusMenuProfilesListController?
     
@@ -197,15 +201,25 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     }
     
     private func updateViewLayout() {
+        
         if viewModel.isSessionEstablished {
             dynamicContentView.isHidden = viewModel.isConnecting
-            loadingView.isHidden = !viewModel.isConnecting
+            
+            loadingViewContainer.isHidden = !viewModel.isConnecting
             loadingView.animate(viewModel.isConnecting)
+            loadingLabel.attributedStringValue = viewModel.connectingText
+            if !viewModel.cancelButtonTitle.isEmpty {
+                cancelConnectionButton.title = viewModel.cancelButtonTitle
+                cancelConnectionButton.isHidden = false
+            } else {
+                cancelConnectionButton.isHidden = true
+            }
+            
             if viewModel.isConnecting {
                 hideProfilesList()
             }
             loginLabel.isHidden = true
-            
+
             if !viewModel.isConnecting && viewModel.serverType == .secureCore && viewModel.countryCount() == 0 {
                 upgradeView.isHidden = false
             } else {
@@ -213,7 +227,7 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             }
         } else {
             dynamicContentView.isHidden = true
-            loadingView.isHidden = true
+            loadingViewContainer.isHidden = true
             loadingView.animate(false)
             hideProfilesList()
             loginLabel.isHidden = false
@@ -262,6 +276,10 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
     
     @IBAction func connect(_ sender: Any) {
         viewModel.quickConnectAction()
+    }
+    
+    @IBAction func cancelConnection(_ sender: Any) {
+        viewModel.disconnectAction()
     }
     
     @IBAction func toggleProfilesList(_ sender: Any) {

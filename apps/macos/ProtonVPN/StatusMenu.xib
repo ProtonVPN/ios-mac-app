@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="StatusMenuViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="cancelConnectionButton" destination="kBn-HF-fRD" id="Yzd-9c-Far"/>
                 <outlet property="connectButton" destination="V73-4C-3dg" id="X7H-2U-fSe"/>
                 <outlet property="connectionLabel" destination="w1C-eT-cdk" id="9w5-Jn-Ezq"/>
                 <outlet property="contentView" destination="cHq-1N-vjY" id="Bsi-xL-UV7"/>
@@ -17,7 +18,9 @@
                 <outlet property="dynamicContentView" destination="WYk-pE-9Vu" id="jj4-da-T7Q"/>
                 <outlet property="headerView" destination="ntN-xc-0F9" id="GIm-ly-saB"/>
                 <outlet property="ipLabel" destination="csD-Jk-NjT" id="i9a-Og-qLm"/>
+                <outlet property="loadingLabel" destination="vby-nz-cfv" id="8oZ-Fd-Hhr"/>
                 <outlet property="loadingView" destination="Kfe-uV-qlN" id="sJW-p0-HqK"/>
+                <outlet property="loadingViewContainer" destination="3jG-Pa-qhh" id="fmT-s9-wyK"/>
                 <outlet property="loginLabel" destination="TGe-8v-bdJ" id="krQ-4R-YnG"/>
                 <outlet property="profileDropDown" destination="d7S-0B-OtT" id="Yh1-Hm-2Bh"/>
                 <outlet property="quitButton" destination="Za5-sz-xDc" id="R84-1Y-hoe"/>
@@ -43,11 +46,56 @@
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
-                <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kfe-uV-qlN" customClass="LoadingAnimationView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="90" y="205" width="120" height="120"/>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="3jG-Pa-qhh">
+                    <rect key="frame" x="10" y="147" width="280" height="236"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vby-nz-cfv">
+                            <rect key="frame" x="18" y="80" width="244" height="16"/>
+                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="KNW-HJ-lLg">
+                                <font key="font" metaFont="system"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kBn-HF-fRD" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="103" y="13" width="75" height="51"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="40" id="9ob-Lx-15i"/>
+                            </constraints>
+                            <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="4M5-cY-ldz">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system" size="11"/>
+                            </buttonCell>
+                            <userDefinedRuntimeAttributes>
+                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                    <real key="value" value="15"/>
+                                </userDefinedRuntimeAttribute>
+                            </userDefinedRuntimeAttributes>
+                            <connections>
+                                <action selector="cancelConnection:" target="-2" id="n9o-Ck-g4N"/>
+                            </connections>
+                        </button>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Kfe-uV-qlN" customClass="LoadingAnimationView" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="80" y="116" width="120" height="120"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="Kfe-uV-qlN" secondAttribute="height" multiplier="1:1" id="agB-7b-AN5"/>
+                                <constraint firstAttribute="width" constant="120" id="rei-DT-603"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
                     <constraints>
-                        <constraint firstAttribute="width" secondItem="Kfe-uV-qlN" secondAttribute="height" multiplier="1:1" id="agB-7b-AN5"/>
-                        <constraint firstAttribute="width" constant="120" id="rei-DT-603"/>
+                        <constraint firstItem="vby-nz-cfv" firstAttribute="leading" secondItem="3jG-Pa-qhh" secondAttribute="leading" constant="20" id="0DN-Mu-8hQ"/>
+                        <constraint firstItem="Kfe-uV-qlN" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3jG-Pa-qhh" secondAttribute="leading" id="3gy-1E-BvG"/>
+                        <constraint firstItem="kBn-HF-fRD" firstAttribute="centerX" secondItem="3jG-Pa-qhh" secondAttribute="centerX" id="6rC-Bs-I3Q"/>
+                        <constraint firstItem="Kfe-uV-qlN" firstAttribute="top" secondItem="3jG-Pa-qhh" secondAttribute="top" id="7hT-X8-ghd"/>
+                        <constraint firstAttribute="trailing" secondItem="vby-nz-cfv" secondAttribute="trailing" constant="20" id="Cry-5R-Fpk"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Kfe-uV-qlN" secondAttribute="trailing" id="LHC-8p-wNQ"/>
+                        <constraint firstItem="vby-nz-cfv" firstAttribute="top" secondItem="Kfe-uV-qlN" secondAttribute="bottom" constant="20" id="NYN-2w-RUF"/>
+                        <constraint firstItem="kBn-HF-fRD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="3jG-Pa-qhh" secondAttribute="leading" id="ONW-Qz-nv1"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kBn-HF-fRD" secondAttribute="trailing" id="X4W-Nc-Pxc"/>
+                        <constraint firstItem="Kfe-uV-qlN" firstAttribute="centerX" secondItem="3jG-Pa-qhh" secondAttribute="centerX" id="ZuH-lV-jZ8"/>
+                        <constraint firstAttribute="bottom" secondItem="kBn-HF-fRD" secondAttribute="bottom" constant="20" id="cfa-RV-HcD"/>
+                        <constraint firstItem="kBn-HF-fRD" firstAttribute="top" secondItem="vby-nz-cfv" secondAttribute="bottom" constant="20" id="uEK-vM-lsP"/>
                     </constraints>
                 </customView>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" translatesAutoresizingMaskIntoConstraints="NO" id="cHq-1N-vjY">
@@ -274,17 +322,19 @@
             </subviews>
             <constraints>
                 <constraint firstItem="TGe-8v-bdJ" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="2Qs-mQ-eps"/>
-                <constraint firstItem="Kfe-uV-qlN" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="8HZ-Yj-lMD"/>
+                <constraint firstItem="3jG-Pa-qhh" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="2w8-xi-4c0"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="10" id="8oB-7W-94X"/>
-                <constraint firstItem="Kfe-uV-qlN" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="DRH-PP-uFI"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="qCN-hu-XJV" secondAttribute="trailing" constant="10" id="JCx-A6-9oy"/>
                 <constraint firstAttribute="bottom" secondItem="cHq-1N-vjY" secondAttribute="bottom" id="MQw-Kr-rfj"/>
                 <constraint firstItem="cHq-1N-vjY" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="OZc-wh-bJd"/>
                 <constraint firstItem="TGe-8v-bdJ" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="XGG-Gx-vj3"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="centerY" secondItem="gAI-kn-mXB" secondAttribute="centerY" id="akF-bj-W8q"/>
+                <constraint firstItem="3jG-Pa-qhh" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="bWb-xn-7ir"/>
                 <constraint firstAttribute="trailing" secondItem="cHq-1N-vjY" secondAttribute="trailing" id="eOb-uy-DbT"/>
                 <constraint firstItem="cHq-1N-vjY" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="gdr-0k-VyF"/>
+                <constraint firstAttribute="trailing" secondItem="3jG-Pa-qhh" secondAttribute="trailing" constant="10" id="mUS-i3-ahF"/>
                 <constraint firstItem="qCN-hu-XJV" firstAttribute="centerX" secondItem="gAI-kn-mXB" secondAttribute="centerX" id="uT9-ue-bud"/>
+                <constraint firstItem="3jG-Pa-qhh" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="wlY-6p-gpf"/>
             </constraints>
             <point key="canvasLocation" x="245" y="31"/>
         </customView>

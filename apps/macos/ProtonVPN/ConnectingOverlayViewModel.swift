@@ -128,7 +128,7 @@ class ConnectingOverlayViewModel {
         return attributedString
     }
     
-    var reconnectingKillSwitchMessage: NSAttributedString {
+    private var reconnectingKillSwitchMessage: NSAttributedString {
         let color: NSColor = .protonWhite()
         let fontSize: Double = 12
         let fontSizeHeader: Double = 20
