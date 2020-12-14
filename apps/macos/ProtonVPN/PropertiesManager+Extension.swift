@@ -101,7 +101,9 @@ extension PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: AppConstants.UserDefaults.killSwitch)
-            NotificationCenter.default.post(name: killSwitchNotification, object: nil)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
+            }
         }
     }
     
