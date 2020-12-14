@@ -71,7 +71,7 @@
 "_application_logs" = "Registro de la aplicación";
 
 /* Title on reconnection info */
-"_applying_settings_" = "Applying settings";
+"_applying_settings_" = "Aplicando ajustes";
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list) */
 "_auto_assigned" = "Asignado automáticamente";
@@ -98,7 +98,7 @@
 "_cancel" = "Cancelar";
 
 /* On reconnection info about cancel reconnection */
-"_cancel_reconnection" = "This will cancel any re-connection attempt and leave you disconnected";
+"_cancel_reconnection" = "Esto cancelará cualquier intento de reconexión y lo dejará desconectado";
 
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Error de cadena de claves.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton no pudo comunicarse con su dispositivo. Por favor, inténtelo de nuevo más tarde.";
+
 /* Parsing error */
 "_error_loads" = "No se pueden actualizar las cargas del servidor";
 
@@ -655,19 +658,22 @@
 "_ip_value" = "IP: %@";
 
 /* On reconnection inform the IP will not be informed */
-"_ip_will_not_be_exposed" = "Your IP will not be exposed.";
+"_ip_will_not_be_exposed" = "Su IP no estará expuesta.";
 
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Has perdido la conexión con el servidor VPN. Kill Switch está bloqueando todas las conexiones para evitar filtrar tus datos. ProtonVPN intentará reconectarse automáticamente. Para cerrar esta ventana, haz clic en Aceptar.\n\nSi deseas deshabilitar temporalmente Kill Switch y volver a conectarte a Internet SIN protección VPN, haz clic en DESACTIVAR.\n\nPara desactivar Kill Switch permanentemente, ve a %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch protege tu IP bloqueando todas las conexiones.\n\nProtonVPN se volverá a conectar automáticamente pronto. Haga clic en Aceptar para cerrar esta ventana.\n\nEn caso de problemas, puede hacer clic en desactivar Kill Switch";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch bloquea todas las conexiones";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch actualmente está bloqueando las fugas de IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Deshabilitar Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Cerrar esas aplicaciones para solucionar el problema.\nPara seguir navegando sin Kill Switch, haz clic en Continuar.";
@@ -694,16 +700,16 @@
 "_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Ten en cuenta que tu conexión VPN finalizará cuando cambies las cuenta de Mac.";
 
 /* MacOS: Keep disabled the KillSwitch component */
-"_ks_dont_ask" = "Don't ask me again";
+"_ks_dont_ask" = "No volver a preguntar";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Para habilitar Kill Switch, debe descargar e instalar%@.\nInstálelo antes de habilitar Kill Switch.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Switch, please install software first.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN no pudo detectar el %@. Para habilitar Kill Switch, primero instale el software.";
 
 /* MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it. */
-"_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
+"_ks_swift5_lib_name" = "Librería de Soporte para Ejecución de 5 Swift";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Más información";
@@ -895,13 +901,13 @@
 "_netshield_level1" = "Bloquear malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, & trackers";
+"_netshield_level2" = "Bloquear malware, anuncios & rastreadores";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "MALWARE & BLOCKER DE ADS";
+"_netshield_section_title" = "MALWARE & BLOQUEADOR DE ANUNCIOS";
 
 /* Netshield */
 "_netshield_title" = "NetShield";
@@ -1120,46 +1126,46 @@
 "_quick_connect_tour_title" = "Conexión rápida";
 
 /* Get Plus button, for premium functionalities */
-"_quick_settings_get_plus" = "GET PLUS";
+"_quick_settings_get_plus" = "OBTÉN PLUS";
 
 /* Description for Kill Switch on Quick Settings. */
-"_quick_settings_killSwitch_description" = "Disables Internet if the VPN connection drops to prevent accidental IP leak.";
+"_quick_settings_killSwitch_description" = "Desactiva Internet si la conexión VPN se cae para evitar una fuga accidental de IP.";
 
 /* Description for NetShield on Quick Settings. */
-"_quick_settings_netShield_description" = "Browse the Internet without ads and malware.";
+"_quick_settings_netShield_description" = "Navegue por Internet sin anuncios ni malware.";
 
 /* Note for NetShield on Quick Settings. */
-"_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
+"_quick_settings_netShield_note" = "Si los sitios web no se cargan, intente deshabilitar NetShield";
 
 /* QuickSettings Netshield option2 */
-"_quick_settings_netshield_option_level1" = "Block malware only";
+"_quick_settings_netshield_option_level1" = "Bloquear solo malware";
 
 /* QuickSettings Netshield option3 */
-"_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
+"_quick_settings_netshield_option_level2" = "Bloquear malware, anuncios & rastreadores";
 
 /* QuickSettings Netshield option1 */
-"_quick_settings_netshield_option_off" = "Don't block";
+"_quick_settings_netshield_option_off" = "No bloquear";
 
 /* Quick Settings */
-"_quick_settings_secureCore_description" = "Route your most sensitive data through our safest servers in privacy-friendly countries.";
+"_quick_settings_secureCore_description" = "Dirija sus datos más sensibles a través de nuestros servidores más seguros en países que respetan la privacidad.";
 
 /* Note for Secure Core on Quick Settings. */
-"_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
+"_quick_settings_secureCore_note" = "Secure Core puede reducir la velocidad de la VPN";
 
 /* MacOS app tour: quick settings description */
-"_quick_settings_tour_description" = "Increase your security with one click:";
+"_quick_settings_tour_description" = "Aumenta tu seguridad con un solo clic:";
 
 /* MacOS app tour: quick settings secure core */
-"_quick_settings_tour_feature_1" = "Add one extra layer of security with Secure Core.";
+"_quick_settings_tour_feature_1" = "Añadir una capa extra de seguridad con Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Surf the web freely from malware and ads with NetShield.";
+"_quick_settings_tour_feature_2" = "Navegue por la web libre de malware y anuncios con NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Prevent your IP to be exposed by turning on Kill Switch.";
+"_quick_settings_tour_feature_3" = "Evita que tu IP quede expuesta activando Kill Switch.";
 
 /* MacOS app tour: quick settings title */
-"_quick_settings_tour_title" = "Quick Settings";
+"_quick_settings_tour_title" = "Configuración rápida";
 
 /* MacOS: quit application button in custom status menu */
 "_quit" = "Salir";
@@ -1183,7 +1189,7 @@
 "_reconnection_required" = "Reconexión requerida";
 
 /* Title on reconnection view controller */
-"_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
+"_reestablish_vpn_connection_" = "Restablecimiento de la conexión VPN.";
 
 /* MacOS: About window */
 "_release_date" = "Fecha de Lanzamiento:";
@@ -1639,7 +1645,7 @@
 "_upgrade_required" = "Se requiere actualización";
 
 /* Description for enable secure core on free  plan */
-"_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";
+"_upgrade_required_securecore_description" = "Secure Core está disponible con un plan Plus. Actualice ahora para enrutar el tráfico a través de nuestros servidores más seguros en países que respetan la privacidad.";
 
 /* iOS: Plan selection during plan upgarde, button insettings screen */
 "_upgrade_subscription" = "Mejorar suscripción";

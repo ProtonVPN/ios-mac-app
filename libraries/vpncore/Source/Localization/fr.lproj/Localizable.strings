@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Erreur du trousseau.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton n'a pas pu communiquer avec votre appareil. Veuillez réessayer plus tard.";
+
 /* Parsing error */
 "_error_loads" = "Impossible de mettre à jour les charges du serveur";
 
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Vous avez perdu la connexion au serveur VPN. Kill Switch bloque toutes les connexions pour éviter la fuite de vos données. ProtonVPN essaiera de se reconnecter automatiquement. Pour fermer cette fenêtre, cliquez sur OK.\n\nSi vous souhaitez temporairement désactiver le Kill Switch et vous reconnecter à Internet SANS protection VPN, cliquez sur DÉSACTIVER.\n\nPour désactiver le Kill Switch de façon permanente, allez dans %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch protège votre IP en bloquant toutes les connexions.\n\nProtonVPN se reconnectera automatiquement. Cliquez sur OK pour fermer cette fenêtre.\n\nEn cas de problème, vous pouvez cliquer sur désactiver Kill Switch";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch bloque toutes les connexions";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch bloque actuellement les fuites d'IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Désactiver Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Fermez ces applications pour résoudre le problème.\nPour continuer à naviguer sans Kill Switch, cliquez sur Continuer.";

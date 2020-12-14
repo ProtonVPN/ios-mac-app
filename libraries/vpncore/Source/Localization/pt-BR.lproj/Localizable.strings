@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Erro de cadeia de chaves.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton couldn't communicate with your device. Please try again later.";
+
 /* Parsing error */
 "_error_loads" = "Não é possível atualizar as cargas do servidor";
 
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Você perdeu a conexão com o servidor VPN. O Kill Switch está bloqueando todas as conexões para evitar o vazamento dos seus dados. O ProtonVPN tentará reconectar-se automaticamente. Para descartar esta janela, clique em OK.\n\nSe quiser desativar temporariamente o Kill Switch e reconectar-se à Internet SEM a proteção da VPN, clique em DESATIVAR.\n\nPara desligar o Kill Switch permanentemente, vá para %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch is protecting your IP by blocking all connections.\n\nProtonVPN will automatically reconnect soon. Click OK to close this window.\n\nIn case of troubles you can click disable Kill Switch";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "O Kill Switch está bloqueando todas as conexões";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "O Kill Switch está atualmente bloqueando os vazamentos de IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Desativar Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Encerre os aplicativos para corrigir o problema.\nPara continuar navegando sem Kill Switch, clique em Continuar.";
@@ -694,16 +700,16 @@
 "_kill_switch_tooltip" = "Bloqueia o tráfego da rede quando o túnel VPN é perdido. Observe que sua conexão VPN será encerrada quando você alternar entre contas do Mac.";
 
 /* MacOS: Keep disabled the KillSwitch component */
-"_ks_dont_ask" = "Don't ask me again";
+"_ks_dont_ask" = "Não perguntar novamente";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Para ativar o Kill Switch, você precisa baixar e instalar o %@.\nPor favor, instale antes de ativar o Kill Switch.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Switch, please install software first.";
+"_ks_requires_swift5_popup_msg2" = "O ProtonVPN não conseguiu detectar o %@. Para ativar o Kill Switch, instale o programa primeiro.";
 
 /* MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it. */
-"_ks_swift5_lib_name" = "Swift 5 Runtime Support library";
+"_ks_swift5_lib_name" = "Biblioteca de Suporte Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Saiba mais";
@@ -895,7 +901,7 @@
 "_netshield_level1" = "Bloqueio de malware";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Block malware, ads, & trackers";
+"_netshield_level2" = "Bloqueio de malware, anúncios e rastreadores";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Off";
@@ -1135,7 +1141,7 @@
 "_quick_settings_netshield_option_level1" = "Bloquear apenas malware";
 
 /* QuickSettings Netshield option3 */
-"_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
+"_quick_settings_netshield_option_level2" = "Bloqueio de malware, anúncios e rastreadores";
 
 /* QuickSettings Netshield option1 */
 "_quick_settings_netshield_option_off" = "Não bloquear";
