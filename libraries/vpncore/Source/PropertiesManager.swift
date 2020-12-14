@@ -153,7 +153,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.connectOnDemand)
-            NotificationCenter.default.post(name: type(of: self).hasConnectedNotification, object: newValue)
+            postNotificationOnUIThread(type(of: self).hasConnectedNotification, object: newValue)
         }
     }
     
@@ -272,7 +272,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.userIp)
-            NotificationCenter.default.post(name: type(of: self).userIpNotification, object: userIp)
+            postNotificationOnUIThread(type(of: self).userIpNotification, object: userIp)
         }
     }
     
@@ -407,7 +407,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
-            NotificationCenter.default.post(name: PropertiesManager.netShieldNotification, object: newValue)
+            postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
         }
     }
     
@@ -422,7 +422,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             if let data = try? JSONEncoder().encode(newValue) {
                 Storage.setValue(data, forKey: Keys.featureFlags)
-                NotificationCenter.default.post(name: type(of: self).featureFlagsNotification, object: newValue)
+                postNotificationOnUIThread(type(of: self).featureFlagsNotification, object: newValue)
             }
         }
     }
@@ -458,6 +458,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         #endif
     }
     
+    func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable : Any]? = nil) {
+        guard Thread.isMainThread else { // Protects from running UI code on background threads
+            DispatchQueue.main.async {
+                self.postNotificationOnUIThread(name, object: object, userInfo: userInfo)
+            }
+            return
+        }
+        NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
+    }
 }
 
 #if !APP_EXTENSION
