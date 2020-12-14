@@ -458,7 +458,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         #endif
     }
     
-    func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable : Any]? = nil) {
+    func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
         guard Thread.isMainThread else { // Protects from running UI code on background threads
             DispatchQueue.main.async {
                 self.postNotificationOnUIThread(name, object: object, userInfo: userInfo)
