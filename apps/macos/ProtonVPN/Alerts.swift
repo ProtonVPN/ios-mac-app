@@ -58,8 +58,8 @@ public class KillSwitchBlockingAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.disable, style: .destructive, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.killSwitchDisable, style: .confirmative, handler: confirmHandler))
     }
 }
 

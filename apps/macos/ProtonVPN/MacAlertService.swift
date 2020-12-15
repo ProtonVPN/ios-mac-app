@@ -279,12 +279,12 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: KillSwitchBlockingAlert) {
-        let fontSize: Double = 14
-        let descriptionText = LocalizedString.killSwitchBlockingBody
-        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: fontSize, alignment: .natural))
+        let descriptionText = String(format: LocalizedString.killSwitchBlockingBody,
+                                             LocalizedString.preferences)
+        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .natural))
         
-        let boldRange = (descriptionText as NSString).range(of: "^.+\n", options: .regularExpression)
-        description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 14), range: boldRange)
+        let settingsRange = (descriptionText as NSString).range(of: LocalizedString.preferences, options: .backwards)
+        description.addAttribute(.link, value: "protonvpn://settings/connection", range: settingsRange)
         
         uiAlertService.displayAlert(alert, message: description)
     }
