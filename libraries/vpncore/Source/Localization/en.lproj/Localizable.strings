@@ -449,9 +449,9 @@
 "_delete_application_data_popup_body" = "All ProtonVPN data will be deleted and the application will quit. Do you wish to continue?";
 
 "_kill_switch_blocking_title" = "Kill Switch is currently blocking IP leaks";
-"_kill_switch_blocking_body" = "Kill Switch is protecting your IP by blocking all connections.\n\nProtonVPN will automatically reconnect soon. Click OK to close this window.\n\nIn case of troubles you can click disable Kill Switch";
-"_kill_switch_disable" = "Disable Kill Switch";
 
+/* %@ is a link to the app's Preferences */
+"_kill_switch_blocking_body" = "You have lost connection to the VPN server. Kill Switch is blocking all connections to avoid leaking your data. ProtonVPN will try to reconnect automatically. To dismiss this window, click OK.\n\nIf you would like to temporarily disable Kill Switch and reconnect to the Internet WITHOUT VPN protection, click DISABLE.\n\nTo turn off Kill Switch permanently, go to %@.";
 
 "_kill_switch_error_title" = "A Kill Switch error has been detected";
 "_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
