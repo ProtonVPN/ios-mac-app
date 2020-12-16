@@ -35,6 +35,17 @@ class HoverDetectionButton: NSButton {
         return size
     }
     
+    private var trackingArea: NSTrackingArea? {
+        willSet {
+            if trackingArea != nil {
+                removeTrackingArea(trackingArea!)
+            }
+            if newValue != nil {
+                addTrackingArea(newValue!)
+            }
+        }
+    }
+    
     var isHovered: Bool = false {
         didSet {
             needsDisplay = true
@@ -49,8 +60,17 @@ class HoverDetectionButton: NSButton {
         isBordered = false
         setButtonType(.momentaryChange)
         
-        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
-        addTrackingArea(trackingArea)
+        addMouseTracking()
+    }
+    
+    private func addMouseTracking() {
+        trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
+    }
+    
+    override func updateTrackingAreas() {
+        super.updateTrackingAreas()
+        
+        addMouseTracking()
     }
     
     override func viewWillDraw() {
