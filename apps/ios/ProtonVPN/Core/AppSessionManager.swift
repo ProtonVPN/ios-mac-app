@@ -105,7 +105,12 @@ class AppSessionManagerImplementation: AppSessionManager {
     
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         authApiService.authenticate(username: username, password: password, success: { [weak self] authCredentials in
-            AuthKeychain.store(authCredentials)
+            do {
+                try AuthKeychain.store(authCredentials)
+            } catch {
+                DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
+                return
+            }
             self?.storeKitManager.processAllTransactions { // this should run after every login
                 self?.retrievePropertiesAndLogIn(success: success, failure: failure)
             }
