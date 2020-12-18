@@ -24,6 +24,8 @@ import KeychainAccess
 
 public class AuthKeychain {
     
+    public static let clearNotification = Notification.Name("AuthKeychain.clear")
+    
     private struct StorageKey {
         static let authCredentials = "authCredentials"
     }
@@ -72,5 +74,8 @@ public class AuthKeychain {
     
     public static func clear() {
         appKeychain[data: StorageKey.authCredentials] = nil
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: clearNotification, object: nil, userInfo: nil)
+        }
     }
 }
