@@ -39,7 +39,7 @@
   },
   "dependencies": {
     "Alamofire": [
-      "~> 5.2"
+      "5.3.0"
     ],
     "KeychainAccess": [
       "~> 3.0"
