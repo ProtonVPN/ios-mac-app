@@ -50,7 +50,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
      kCWSecurityUnknown              = NSIntegerMax
      */
 
-    private let reachability = Reachability()
+    private var reachability: Reachability?
     private let wifiClient: CWWiFiClient = CWWiFiClient()
 
     public private(set) var wifiName: String?
@@ -58,6 +58,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
     weak var delegate: WiFiSecurityMonitorDelegate?
 
     func startMonitoring() {
+        reachability = try? Reachability()
         guard let reachability = reachability else { return }
         NotificationCenter.default.addObserver(self, selector: #selector(reachabilityChanged(note:)), name: .reachabilityChanged, object: reachability)
         do {
@@ -86,7 +87,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
             }
         case .cellular:
             PMLog.D("Reachable via Cellular")
-        case .none:
+        case .unavailable, .none:
             PMLog.D("Network not reachable")
         }
     }
