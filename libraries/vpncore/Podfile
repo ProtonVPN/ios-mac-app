@@ -10,7 +10,7 @@ abstract_target 'vpncore' do
     # third party pods
     pod 'Alamofire', '5.3.0'
     pod 'KeychainAccess', '3.2.1'
-    pod 'Sentry', '4.1.1'
+    pod 'Sentry', '4.5.0'
     pod 'ReachabilitySwift', '4.3.0'
     
     # OpenVPN support
