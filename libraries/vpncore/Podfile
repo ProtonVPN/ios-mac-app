@@ -11,7 +11,7 @@ abstract_target 'vpncore' do
     pod 'Alamofire', '5.3.0'
     pod 'KeychainAccess', '3.2.1'
     pod 'Sentry', '4.5.0'
-    pod 'ReachabilitySwift', '4.3.0'
+    pod 'ReachabilitySwift', '5.0.0'
     
     # OpenVPN support
     pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
