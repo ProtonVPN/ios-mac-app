@@ -44,6 +44,9 @@ class PopUpViewModel: NSObject {
     var cancelButtonTitle: String? {
         return action(1)?.title
     }
+    var cancelType: PrimaryActionType {
+        return action(1)?.style ?? .cancel
+    }
     
     var attributedDescription: NSAttributedString
     var showIcon = true

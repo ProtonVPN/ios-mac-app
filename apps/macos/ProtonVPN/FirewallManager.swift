@@ -65,6 +65,7 @@ class FirewallManager {
     private lazy var killSwitchBlockingAlert = {
         KillSwitchBlockingAlert(confirmHandler: { [weak self] in
             self?.disableFirewall()
+            self?.propertiesManager.killSwitch = false
         })
     }()
     

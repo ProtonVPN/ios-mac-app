@@ -12,9 +12,9 @@ import Foundation
 open class SwiftyBeaver {
 
     /// version string of framework
-    public static let version = "1.9.1"  // UPDATE ON RELEASE!
+    public static let version = "1.9.3"  // UPDATE ON RELEASE!
     /// build number of framework
-    public static let build = 1910 // version 1.6.2 -> 1620, UPDATE ON RELEASE!
+    public static let build = 1930 // version 1.6.2 -> 1620, UPDATE ON RELEASE!
 
     public enum Level: Int {
         case verbose = 0
@@ -130,7 +130,7 @@ open class SwiftyBeaver {
     }
 
     /// custom logging to manually adjust values, should just be used by other frameworks
-    public class func custom(level: SwiftyBeaver.Level, message: @autoclosure () -> Any,
+    open class func custom(level: SwiftyBeaver.Level, message: @autoclosure () -> Any,
                              file: String = #file, function: String = #function, line: Int = #line, context: Any? = nil) {
         #if swift(>=5)
         dispatch_send(level: level, message: message(), thread: threadName(),

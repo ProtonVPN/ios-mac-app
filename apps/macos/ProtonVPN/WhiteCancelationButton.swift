@@ -24,6 +24,13 @@ import Cocoa
 
 class WhiteCancelationButton: HoverDetectionButton {
     
+    enum Style {
+        case `default`
+        case hoveredRed
+    }
+    
+    public var style: Style = .default
+    
     override var title: String {
         didSet {
             configureTitle()
@@ -36,15 +43,46 @@ class WhiteCancelationButton: HoverDetectionButton {
         }
     }
     
+    var textColor: NSColor {
+        switch style {
+        case .hoveredRed:
+            return .protonWhite()
+        default:
+            return isHovered ? .protonGreyShade() : .protonWhite()
+        }
+    }
+    
+    var borderColor: CGColor {
+        switch style {
+        case .hoveredRed:
+            return isHovered ? NSColor.protonRed().cgColor : NSColor.protonWhite().cgColor
+        default:
+            return NSColor.protonWhite().cgColor
+        }
+    }
+    
+    var backgroundColor: CGColor {
+        switch style {
+        case .hoveredRed:
+            return isHovered ? NSColor.protonRed().cgColor : NSColor.protonGreyShade().cgColor
+        default:
+            return isHovered ? NSColor.protonWhite().cgColor : NSColor.protonGreyShade().cgColor
+        }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+    }
+    
     override func viewWillDraw() {
         super.viewWillDraw()
         
         wantsLayer = true
         layer?.borderWidth = 2
-        layer?.borderColor = NSColor.protonWhite().cgColor
+        layer?.borderColor = borderColor
         layer?.cornerRadius = bounds.height / 2
-        layer?.backgroundColor = isHovered ? NSColor.protonWhite().cgColor : NSColor.protonGreyShade().cgColor
-        attributedTitle = title.attributed(withColor: isHovered ? .protonGreyShade() : .protonWhite(), fontSize: fontSize)
+        layer?.backgroundColor = backgroundColor
+        attributedTitle = title.attributed(withColor: textColor, fontSize: fontSize)
     }
     
     private func configureTitle() {

@@ -10,9 +10,10 @@
 #endif
 #endif
 
-#import "NSData+Compression.h"
-#import "NSDate+Extras.h"
-#import "NSDictionary+Sanitize.h"
+#import "NSData+SentryCompression.h"
+#import "NSDate+SentryExtras.h"
+#import "NSDictionary+SentrySanitize.h"
+#import "NSString+SentryNSUIntegerValue.h"
 #import "Sentry.h"
 #import "SentryAsynchronousOperation.h"
 #import "SentryBreadcrumb.h"
@@ -37,6 +38,7 @@
 #import "SentryLog.h"
 #import "SentryMechanism.h"
 #import "SentryNSURLRequest.h"
+#import "SentryOptions.h"
 #import "SentryQueueableRequestManager.h"
 #import "SentryRequestOperation.h"
 #import "SentrySerializable.h"
@@ -69,7 +71,7 @@
 #import "SentryCrashReportVersion.h"
 #import "SentryCrashReportWriter.h"
 #import "SentryCrashSystemCapabilities.h"
-#import "NSError+SimpleConstructor.h"
+#import "NSError+SentrySimpleConstructor.h"
 #import "SentryCrashCPU.h"
 #import "SentryCrashCPU_Apple.h"
 #import "SentryCrashDate.h"
@@ -97,7 +99,7 @@
 #import "SentryCrashThread.h"
 #import "SentryCrashReportFilter.h"
 #import "SentryCrashReportFilterBasic.h"
-#import "Container+DeepSearch.h"
+#import "Container+SentryDeepSearch.h"
 #import "SentryCrashVarArgs.h"
 #import "SentryCrashCString.h"
 

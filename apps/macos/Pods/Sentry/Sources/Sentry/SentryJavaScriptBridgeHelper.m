@@ -68,7 +68,7 @@ NS_ASSUME_NONNULL_BEGIN
         if (ravenFrame[@"lineno"] != NSNull.null) {
             [frame addEntriesFromDictionary:@{@"column": [formatter numberFromString:[NSString stringWithFormat:@"%@", ravenFrame[@"colno"]]],
                                               @"lineNumber": [formatter numberFromString:[NSString stringWithFormat:@"%@", ravenFrame[@"lineno"]]]}];
-            
+
         }
         [frames addObject:frame];
     }
@@ -108,7 +108,7 @@ NS_ASSUME_NONNULL_BEGIN
     } else {
         breadcrumb.timestamp = [NSDate date];
     }
-    
+
     breadcrumb.type = jsonBreadcrumb[@"type"];
     breadcrumb.data = jsonBreadcrumb[@"data"];
     return breadcrumb;
@@ -127,7 +127,10 @@ NS_ASSUME_NONNULL_BEGIN
         event.logger = jsonEvent[@"logger"];
     }
     if (jsonEvent[@"fingerprint"]) {
-        event.logger = jsonEvent[@"fingerprint"];
+        event.fingerprint = jsonEvent[@"fingerprint"];
+    }
+    if (jsonEvent[@"environment"]) {
+        event.environment = jsonEvent[@"environment"];
     }
     event.tags = [self.class sanitizeDictionary:jsonEvent[@"tags"]];
     if (jsonEvent[@"extra"]) {
