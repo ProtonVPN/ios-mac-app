@@ -101,7 +101,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and OS X.</string>
 			<key>version</key>
-			<string>3.1.2</string>
+			<string>3.2.1</string>
 		</dict>
 		<dict>
 			<key>authors</key>
