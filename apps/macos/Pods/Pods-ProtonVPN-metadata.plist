@@ -44,7 +44,7 @@ THE SOFTWARE.
 			<key>summary</key>
 			<string>Elegant HTTP Networking in Swift</string>
 			<key>version</key>
-			<string>5.2.0</string>
+			<string>5.3.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -101,7 +101,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>KeychainAccess is a simple Swift wrapper for Keychain that works on iOS and OS X.</string>
 			<key>version</key>
-			<string>3.1.2</string>
+			<string>3.2.1</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -371,7 +371,7 @@ THE SOFTWARE.
 			<key>summary</key>
 			<string>Replacement for Apple's Reachability re-written in Swift with callbacks.</string>
 			<key>version</key>
-			<string>4.3.0</string>
+			<string>5.0.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -415,7 +415,7 @@ THE SOFTWARE.
 			<key>summary</key>
 			<string>Asynchronous image downloader with cache support with an UIImageView category.</string>
 			<key>version</key>
-			<string>5.9.3</string>
+			<string>5.10.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -460,7 +460,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>Sentry client for cocoa</string>
 			<key>version</key>
-			<string>4.1.1</string>
+			<string>4.5.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -643,7 +643,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>Convenient logging during development &amp; release in Swift 4 &amp; 5.</string>
 			<key>version</key>
-			<string>1.9.1</string>
+			<string>1.9.3</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -691,7 +691,7 @@ THE SOFTWARE.
 			<key>summary</key>
 			<string>TrustKit is an open source framework that makes it easy to deploy SSL pinning in any iOS, macOS, tvOS or watchOS App.</string>
 			<key>version</key>
-			<string>1.6.3</string>
+			<string>1.6.5</string>
 		</dict>
 		<dict>
 			<key>authors</key>

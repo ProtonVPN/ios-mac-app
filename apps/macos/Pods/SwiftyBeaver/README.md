@@ -149,7 +149,7 @@ let log = SwiftyBeaver.self
 
 ```
 
-At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com//article/20-custom-format) and then you can already do the following log level calls globally:
+At the the beginning of your `AppDelegate:didFinishLaunchingWithOptions()` add the SwiftyBeaver log destinations (console, file, etc.), optionally adjust the [log format](http://docs.swiftybeaver.com/article/20-custom-format) and then you can already do the following log level calls globally:
 
 ``` Swift
 // add log destinations. at least one is needed!
@@ -196,7 +196,7 @@ We ❤️ server-side Swift 4 & 5 and SwiftyBeaver supports it **out-of-the-box*
 
 ```shell
 # create docker image, build SwiftyBeaver and run unit tests
-swift build --clean && docker build --rm -t swiftybeaver .
+docker run --rm -it -v $PWD:/app swiftybeaver /bin/bash -c "cd /app ; swift build ; swift test"
 
 # optionally log into container to run Swift CLI and do more stuff
 docker run --rm -it --privileged=true -v $PWD:/app swiftybeaver
@@ -230,7 +230,7 @@ Best: for the popular server-side Swift web framework [Vapor](https://github.com
 
 **Stay Informed:**
 
-- [Official Website](https://swiftybeaver.com))
+- [Official Website](https://swiftybeaver.com)
 - [On Twitter](https://twitter.com/SwiftyBeaver)
 
 <br/>

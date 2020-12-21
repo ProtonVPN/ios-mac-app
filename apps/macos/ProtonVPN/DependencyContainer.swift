@@ -300,7 +300,7 @@ extension DependencyContainer: AnnouncementRefresherFactory {
 // MARK: - AnnouncementStorageFactory
 extension DependencyContainer: AnnouncementStorageFactory {
     func makeAnnouncementStorage() -> AnnouncementStorage {
-        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults())
+        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(), keyNameProvider: nil)
     }
 }
 

@@ -19,13 +19,13 @@ end
 
 target 'ProtonVPN' do
     common_pods
-    # third party pods
-    pod 'Alamofire', '~> 5.1'
-    pod 'KeychainAccess', '~> 3.0'
-    pod 'ReachabilitySwift', '~> 4.0'
-    pod 'Sentry', '~> 4.0'
-    pod 'Sparkle', '~> 1.0'
-    pod 'SDWebImage', '~> 5.0'
+    
+    # Third party pods
+    pod 'KeychainAccess', '3.2.1'
+    pod 'ReachabilitySwift', '5.0.0'
+    pod 'Sentry', '4.5.0'
+    pod 'Sparkle', '1.24.0'
+    pod 'SDWebImage', '5.10.0'
     
     # Checks code style and bad practices
     pod 'SwiftLint'
@@ -46,4 +46,14 @@ post_install do | installer |
 
     require 'fileutils'
     FileUtils.cp_r('Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN-acknowledgements.markdown', 'ACKNOWLEDGEMENTS.md')
+    
+    installer.pods_project.targets.each do |target|
+      target.build_configurations.each do |config|
+        # Reset deployment targets to use the one we have on the main project
+        config.build_settings.delete 'MACOSX_DEPLOYMENT_TARGET'
+        
+        # Exclude arm64 architecture until we support it
+        config.build_settings["EXCLUDED_ARCHS"] = "arm64"
+      end
+    end
 end

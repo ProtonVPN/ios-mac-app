@@ -76,7 +76,6 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     func displayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
-        NotificationCenter.default.post(name: SidebarViewController.reconnectionNotificationName, object: nil)
         guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {
             vpnGateway.quickConnect()
             return
