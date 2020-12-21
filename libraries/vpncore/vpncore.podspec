@@ -26,7 +26,7 @@ Pod::Spec.new do |s|
     s.dependency 'KeychainAccess', '3.1.2'
     s.dependency 'ReachabilitySwift', '4.3.0'
     s.dependency 'Sentry', '4.1.1'
-    s.dependency 'TrustKit', '1.6.1'
+    s.dependency 'TrustKit', '1.6.5'
     # s.dependency 'TunnelKit', '~> 2.0.5'
     s.dependency 'TunnelKit'
     

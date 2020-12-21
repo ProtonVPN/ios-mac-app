@@ -8,7 +8,7 @@ PODS:
   - Sentry/Core (4.1.1)
   - SwiftLint (0.41.0)
   - SwiftyBeaver (1.9.1)
-  - TrustKit (1.6.1)
+  - TrustKit (1.6.5)
   - TunnelKit (2.2.4):
     - TunnelKit/Protocols/OpenVPN (= 2.2.4)
   - TunnelKit/AppExtension (2.2.4):
@@ -27,7 +27,7 @@ DEPENDENCIES:
   - ReachabilitySwift (= 4.3.0)
   - Sentry (= 4.1.1)
   - SwiftLint
-  - TrustKit
+  - TrustKit (= 1.6.5)
   - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
 
 SPEC REPOS:
@@ -59,9 +59,9 @@ SPEC CHECKSUMS:
   Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
-  TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
+  TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
-PODFILE CHECKSUM: d94ffdabae7cb73a7430cc9a565d0e8dc5391eb6
+PODFILE CHECKSUM: 81df63edd6fe4c50eb9a8dde59907cc92580204f
 
 COCOAPODS: 1.10.0

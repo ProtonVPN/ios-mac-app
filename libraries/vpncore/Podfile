@@ -20,7 +20,7 @@ abstract_target 'vpncore' do
     pod 'SwiftLint'
 
     # Certificates pinning
-    pod 'TrustKit', '1.6.1'
+    pod 'TrustKit', '1.6.5'
     
     target 'vpncore-ios' do
         platform :ios, '11.0'
