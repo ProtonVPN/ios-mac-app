@@ -6,9 +6,9 @@ PODS:
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
-  - Sentry (4.1.1):
-    - Sentry/Core (= 4.1.1)
-  - Sentry/Core (4.1.1)
+  - Sentry (4.5.0):
+    - Sentry/Core (= 4.5.0)
+  - Sentry/Core (4.5.0)
   - Sparkle (1.24.0)
   - SwiftLint (0.41.0)
   - SwiftyBeaver (1.9.3)
@@ -28,7 +28,7 @@ PODS:
     - Alamofire (= 5.3.0)
     - KeychainAccess (= 3.2.1)
     - ReachabilitySwift (= 4.3.0)
-    - Sentry (= 4.1.1)
+    - Sentry (= 4.5.0)
     - TrustKit (= 1.6.5)
     - TunnelKit
 
@@ -36,7 +36,7 @@ DEPENDENCIES:
   - KeychainAccess (= 3.2.1)
   - ReachabilitySwift (= 4.3.0)
   - SDWebImage (= 5.10.0)
-  - Sentry (= 4.1.1)
+  - Sentry (= 4.5.0)
   - Sparkle (= 1.24.0)
   - SwiftLint
   - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
@@ -73,14 +73,14 @@ SPEC CHECKSUMS:
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
   ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
-  Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
+  Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   Sparkle: 270cd27377bf04e9c128af06e3a22d0f572d6ee3
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
-  vpncore: 8e413c8bf886356c8131d7ad6bce34081723d6d6
+  vpncore: dbd4a5626968e44f7c4e4b0e3c86eb23bab1692a
 
-PODFILE CHECKSUM: f854acb721e3ab7ed45e408aa035229225c63c82
+PODFILE CHECKSUM: f7f88836eea5aee44a20849dcb4361e2163106e6
 
 COCOAPODS: 1.10.0

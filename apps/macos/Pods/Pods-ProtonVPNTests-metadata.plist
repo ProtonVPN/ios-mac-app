@@ -416,7 +416,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>Sentry client for cocoa</string>
 			<key>version</key>
-			<string>4.1.1</string>
+			<string>4.5.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>

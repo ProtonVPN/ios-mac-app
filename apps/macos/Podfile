@@ -20,7 +20,7 @@ target 'ProtonVPN' do
     # Third party pods
     pod 'KeychainAccess', '3.2.1'
     pod 'ReachabilitySwift', '4.3.0'
-    pod 'Sentry', '4.1.1'
+    pod 'Sentry', '4.5.0'
     pod 'Sparkle', '1.24.0'
     pod 'SDWebImage', '5.10.0'
     
