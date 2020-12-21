@@ -23,10 +23,10 @@ Pod::Spec.new do |s|
     s.osx.vendored_frameworks = 'Frameworks-mac/*'
     
     s.dependency 'Alamofire', '5.3.0'
-    s.dependency 'KeychainAccess', '~> 3.0'
-    s.dependency 'ReachabilitySwift', '~> 4.0'
-    s.dependency 'Sentry', '~> 4.0'
-    s.dependency 'TrustKit', '~> 1.0'
+    s.dependency 'KeychainAccess', '3.1.2'
+    s.dependency 'ReachabilitySwift', '4.3.0'
+    s.dependency 'Sentry', '4.1.1'
+    s.dependency 'TrustKit', '1.6.1'
     # s.dependency 'TunnelKit', '~> 2.0.5'
     s.dependency 'TunnelKit'
     

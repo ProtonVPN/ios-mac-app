@@ -23,9 +23,9 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (= 5.3.0)
-  - KeychainAccess (~> 3.0)
-  - ReachabilitySwift (~> 4.0)
-  - Sentry (~> 4.0)
+  - KeychainAccess (= 3.1.2)
+  - ReachabilitySwift (= 4.3.0)
+  - Sentry (= 4.1.1)
   - SwiftLint
   - TrustKit
   - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
@@ -62,6 +62,6 @@ SPEC CHECKSUMS:
   TrustKit: 0660dd1ce827ae7c8f553f35502a8542e248188f
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
-PODFILE CHECKSUM: 27b04cc3a4db3a488d26e970fc777baa13c1944f
+PODFILE CHECKSUM: d94ffdabae7cb73a7430cc9a565d0e8dc5391eb6
 
 COCOAPODS: 1.10.0

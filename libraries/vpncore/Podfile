@@ -9,9 +9,9 @@ inhibit_all_warnings!
 abstract_target 'vpncore' do
     # third party pods
     pod 'Alamofire', '5.3.0'
-    pod 'KeychainAccess', '~> 3.0'
-    pod 'Sentry', '~> 4.0'
-    pod 'ReachabilitySwift', '~> 4.0'
+    pod 'KeychainAccess', '3.1.2'
+    pod 'Sentry', '4.1.1'
+    pod 'ReachabilitySwift', '4.3.0'
     
     # OpenVPN support
     pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
@@ -20,7 +20,7 @@ abstract_target 'vpncore' do
     pod 'SwiftLint'
 
     # Certificates pinning
-    pod 'TrustKit'
+    pod 'TrustKit', '1.6.1'
     
     target 'vpncore-ios' do
         platform :ios, '11.0'
