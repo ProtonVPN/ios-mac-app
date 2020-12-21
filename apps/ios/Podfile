@@ -14,9 +14,9 @@ def sharedpods
 
   # third party pods
   pod 'GSMessages', '~> 1.0'
-  pod 'KeychainAccess', '~> 3.0'
-  pod 'ReachabilitySwift', '~> 4.0'
-  pod 'Sentry', '~> 4.0'
+  pod 'KeychainAccess', '3.2.1'
+  pod 'ReachabilitySwift', '5.0.0'
+  pod 'Sentry', '4.5.0'
   pod 'AlamofireImage', '~> 4.1'
 
   # Checks code style and bad practices
