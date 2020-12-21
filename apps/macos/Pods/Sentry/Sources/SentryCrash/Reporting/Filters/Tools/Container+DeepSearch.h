@@ -60,7 +60,7 @@
 /**
  * Deep key search methods for NSDictionary.
  */
-@interface NSDictionary (SentryDeepSearch)
+@interface NSDictionary (DeepSearch)
 
 #pragma mark - Lookups
 

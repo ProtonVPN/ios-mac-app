@@ -59,10 +59,7 @@ NS_ASSUME_NONNULL_BEGIN
     
     NSMutableArray *crumbs = [NSMutableArray new];
     for (NSDictionary<NSString *, id> *crumb in breadCrumbs) {
-        id serializedCrumb = [NSJSONSerialization JSONObjectWithData:crumb[@"data"] options:0 error:nil];
-        if (serializedCrumb != nil) {
-            [crumbs addObject:serializedCrumb];
-        }
+        [crumbs addObject:[NSJSONSerialization JSONObjectWithData:crumb[@"data"] options:0 error:nil]];
     }
     if (crumbs.count > 0) {
         [serializedData setValue:crumbs forKey:@"breadcrumbs"];

@@ -1,5 +1,5 @@
 //
-//  NSDate+SentryExtras.m
+//  NSDate+Extras.m
 //  Sentry
 //
 //  Created by Daniel Griesser on 19/05/2017.
@@ -9,16 +9,17 @@
 
 #if __has_include(<Sentry/Sentry.h>)
 
-#import <Sentry/NSDate+SentryExtras.h>
+#import <Sentry/NSData+Compression.h>
+#import <Sentry/NSDate+Extras.h>
 
 #else
-#import "NSDate+SentryExtras.h"
+#import "NSDate+Extras.h"
 #endif
 
 
 NS_ASSUME_NONNULL_BEGIN
 
-@implementation NSDate (SentryExtras)
+@implementation NSDate (Extras)
 
 + (NSDateFormatter *)getIso8601Formatter {
     static NSDateFormatter *isoFormatter = nil;
@@ -29,7 +30,7 @@ NS_ASSUME_NONNULL_BEGIN
         isoFormatter.timeZone = [NSTimeZone timeZoneWithAbbreviation:@"UTC"];
         [isoFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     });
-
+    
     return isoFormatter;
 }
 

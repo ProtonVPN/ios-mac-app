@@ -26,8 +26,8 @@
 
 
 #import "SentryCrashReportFilterBasic.h"
-#import "NSError+SentrySimpleConstructor.h"
-#import "Container+SentryDeepSearch.h"
+#import "NSError+SimpleConstructor.h"
+#import "Container+DeepSearch.h"
 #import "SentryCrashVarArgs.h"
 
 //#define SentryCrashLogger_LocalLevel TRACE

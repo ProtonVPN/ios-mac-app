@@ -128,11 +128,6 @@ static const char* stringSysctl(const char* name)
     }
 
     char* value = malloc((size_t)size);
-    if(value == NULL)
-    {
-        return NULL;
-    }
-
     if(sentrycrashsysctl_stringForName(name, value, size) <= 0)
     {
         free(value);
@@ -145,10 +140,7 @@ static const char* stringSysctl(const char* name)
 static const char* dateString(time_t date)
 {
     char* buffer = malloc(21);
-    if(buffer != NULL)
-    {
-        sentrycrashdate_utcStringFromTimestamp(date, buffer);
-    }
+    sentrycrashdate_utcStringFromTimestamp(date, buffer);
     return buffer;
 }
 

@@ -42,16 +42,16 @@
       "5.3.0"
     ],
     "KeychainAccess": [
-      "~> 3.0"
+      "3.1.2"
     ],
     "ReachabilitySwift": [
-      "~> 4.0"
+      "4.3.0"
     ],
     "Sentry": [
-      "~> 4.0"
+      "4.1.1"
     ],
     "TrustKit": [
-      "~> 1.0"
+      "1.6.5"
     ],
     "TunnelKit": [
 

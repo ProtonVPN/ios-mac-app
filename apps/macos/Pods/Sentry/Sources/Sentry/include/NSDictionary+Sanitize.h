@@ -1,5 +1,5 @@
 //
-//  NSDictionary+SentrySanitize.h
+//  NSDictionary+Sanitize.h
 //  Sentry
 //
 //  Created by Daniel Griesser on 16/06/2017.
@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface NSDictionary (SentrySanitize)
+@interface NSDictionary (Sanitize)
 
 - (NSDictionary *)sentry_sanitize;
 

@@ -24,7 +24,6 @@
 
 
 #include "SentryCrashStackCursor_Backtrace.h"
-#include "SentryCrashCPU.h"
 
 //#define SentryCrashLogger_LocalLevel TRACE
 #include "SentryCrashLogger.h"
@@ -40,7 +39,7 @@ static bool advanceCursor(SentryCrashStackCursor *cursor)
         // Bug: The system sometimes gives a backtrace with an extra 0x00000001 at the end.
         if(nextAddress > 1)
         {
-            cursor->stackEntry.address = sentrycrashcpu_normaliseInstructionPointer(nextAddress);
+            cursor->stackEntry.address = context->backtrace[currentIndex];
             cursor->state.currentDepth++;
             return true;
         }

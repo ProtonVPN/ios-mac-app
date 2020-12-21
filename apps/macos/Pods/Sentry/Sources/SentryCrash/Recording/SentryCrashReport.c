@@ -649,8 +649,7 @@ static bool isRestrictedClass(const char* name)
     {
         for(int i = 0; i < g_introspectionRules.restrictedClassesCount; i++)
         {
-            const char* className = g_introspectionRules.restrictedClasses[i];
-            if(className != NULL && strcmp(name, className) == 0)
+            if(strcmp(name, g_introspectionRules.restrictedClasses[i]) == 0)
             {
                 return true;
             }
@@ -1843,10 +1842,7 @@ void sentrycrashreport_setDoNotIntrospectClasses(const char** doNotIntrospectCla
     {
         for(int i = 0; i < oldClassesLength; i++)
         {
-            if(oldClasses[i] != NULL)
-            {
-                free((void*)oldClasses[i]);
-            }
+            free((void*)oldClasses[i]);
         }
         free(oldClasses);
     }

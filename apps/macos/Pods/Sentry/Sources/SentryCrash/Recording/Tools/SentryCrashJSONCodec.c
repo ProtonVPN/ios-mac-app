@@ -346,8 +346,8 @@ int sentrycrashjson_addFloatingPointElement(SentryCrashJSONEncodeContext* const 
     {
         return result;
     }
-    char buff[50];
-    snprintf(buff, sizeof(buff), "%lg", value);
+    char buff[30];
+    sprintf(buff, "%lg", value);
     return addJSONData(context, buff, (int)strlen(buff));
 }
 
@@ -361,7 +361,7 @@ int sentrycrashjson_addIntegerElement(SentryCrashJSONEncodeContext* const contex
         return result;
     }
     char buff[30];
-    snprintf(buff, sizeof(buff), "%" PRId64, value);
+    sprintf(buff, "%" PRId64, value);
     return addJSONData(context, buff, (int)strlen(buff));
 }
 

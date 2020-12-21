@@ -1,14 +1,14 @@
 PODS:
   - Alamofire (5.3.0)
-  - KeychainAccess (3.2.1)
+  - KeychainAccess (3.1.2)
   - OpenSSL-Apple (1.1.1g.6)
-  - ReachabilitySwift (4.3.1)
+  - ReachabilitySwift (4.3.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
   - SDWebImage/Core (5.10.0)
-  - Sentry (4.5.0):
-    - Sentry/Core (= 4.5.0)
-  - Sentry/Core (4.5.0)
+  - Sentry (4.1.1):
+    - Sentry/Core (= 4.1.1)
+  - Sentry/Core (4.1.1)
   - Sparkle (1.24.0)
   - SwiftLint (0.41.0)
   - SwiftyBeaver (1.9.3)
@@ -26,18 +26,18 @@ PODS:
     - TunnelKit/Core
   - vpncore (1.0.0):
     - Alamofire (= 5.3.0)
-    - KeychainAccess (~> 3.0)
-    - ReachabilitySwift (~> 4.0)
-    - Sentry (~> 4.0)
-    - TrustKit (~> 1.0)
+    - KeychainAccess (= 3.1.2)
+    - ReachabilitySwift (= 4.3.0)
+    - Sentry (= 4.1.1)
+    - TrustKit (= 1.6.5)
     - TunnelKit
 
 DEPENDENCIES:
-  - KeychainAccess (~> 3.0)
-  - ReachabilitySwift (~> 4.0)
-  - SDWebImage (~> 5.0)
-  - Sentry (~> 4.0)
-  - Sparkle (~> 1.0)
+  - KeychainAccess (= 3.1.2)
+  - ReachabilitySwift (= 4.3.0)
+  - SDWebImage (= 5.10.0)
+  - Sentry (= 4.1.1)
+  - Sparkle (= 1.24.0)
   - SwiftLint
   - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
   - vpncore (from `../vpncore`)
@@ -69,18 +69,18 @@ CHECKOUT OPTIONS:
 
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
-  KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  KeychainAccess: b3816fddcf28aa29d94b10ec305cd52be14c472b
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
-  ReachabilitySwift: 4032e2f59586e11e3b0ebe15b167abdd587a388b
+  ReachabilitySwift: 408477d1b6ed9779dba301953171e017c31241f3
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
-  Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
+  Sentry: c9d0543c7223ddec036027f4c7391ea057ba9856
   Sparkle: 270cd27377bf04e9c128af06e3a22d0f572d6ee3
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
-  vpncore: 850cbfe7b350d6041bc0c55fc8df240d426b958f
+  vpncore: 074e69da42c9798d9fce5e20d3024db056e5052f
 
-PODFILE CHECKSUM: 738e4beef30c50d10b77beb4baf79402105f70bd
+PODFILE CHECKSUM: 76249071604945c3176df434d2ed7d84816a5ebb
 
 COCOAPODS: 1.10.0

@@ -1,5 +1,5 @@
 //
-//  NSDate+SentryExtras.h
+//  NSDate+Extras.h
 //  Sentry
 //
 //  Created by Daniel Griesser on 19/05/2017.
@@ -10,7 +10,7 @@
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface NSDate (SentryExtras)
+@interface NSDate (Extras)
 
 + (NSDate *)sentry_fromIso8601String:(NSString *)string;
 

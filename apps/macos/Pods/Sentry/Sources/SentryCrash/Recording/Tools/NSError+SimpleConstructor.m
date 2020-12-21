@@ -24,10 +24,10 @@
 // THE SOFTWARE.
 //
 
-#import "NSError+SentrySimpleConstructor.h"
+#import "NSError+SimpleConstructor.h"
 
 
-@implementation NSError (SentrySimpleConstructor)
+@implementation NSError (SimpleConstructor)
 
 + (NSError*) errorWithDomain:(NSString*) domain code:(NSInteger) code description:(NSString*) fmt, ...
 {

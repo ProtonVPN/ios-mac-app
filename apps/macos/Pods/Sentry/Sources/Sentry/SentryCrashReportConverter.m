@@ -18,7 +18,7 @@
 #import <Sentry/SentryContext.h>
 #import <Sentry/SentryUser.h>
 #import <Sentry/SentryMechanism.h>
-#import <Sentry/NSDate+SentryExtras.h>
+#import <Sentry/NSDate+Extras.h>
 
 #else
 #import "SentryCrashReportConverter.h"
@@ -31,7 +31,7 @@
 #import "SentryContext.h"
 #import "SentryUser.h"
 #import "SentryMechanism.h"
-#import "NSDate+SentryExtras.h"
+#import "NSDate+Extras.h"
 #endif
 
 @interface SentryCrashReportConverter ()
@@ -92,18 +92,11 @@ static inline NSString *hexAddress(NSNumber *value) {
     event.threads = [self convertThreads];
     event.exceptions = [self convertExceptions];
     event.context = [self convertContext];
-    
-    event.releaseName = self.userContext[@"releaseName"];
-    event.dist = self.userContext[@"dist"];
-    event.environment = self.userContext[@"environment"];
-    
     // We want to set the release and dist to the version from the crash report itself
     // otherwise it can happend that we have two different version when the app crashes
     // right before an app update #218 #219
-    if (nil == event.releaseName && event.context.appContext[@"app_identifier"] && event.context.appContext[@"app_version"]) {
+    if (event.context.appContext[@"app_identifier"] && event.context.appContext[@"app_version"] && event.context.appContext[@"app_build"]) {
         event.releaseName = [NSString stringWithFormat:@"%@-%@", event.context.appContext[@"app_identifier"], event.context.appContext[@"app_version"]];
-    }
-    if (nil == event.dist && event.context.appContext[@"app_build"]) {
         event.dist = event.context.appContext[@"app_build"];
     }
     event.extra = [self convertExtra];
@@ -300,10 +293,11 @@ static inline NSString *hexAddress(NSNumber *value) {
     if (nil == self.exceptionContext) {
         return nil;
     }
-    NSString *const exceptionType = self.exceptionContext[@"type"] ?: @"Unknown Exception";
-    SentryException *exception = nil;
+    NSString *exceptionType = self.exceptionContext[@"type"];
+    SentryException *exception = [[SentryException alloc] initWithValue:@"Unknown Exception" type:@"Unknown Exception"];
     if ([exceptionType isEqualToString:@"nsexception"]) {
-        exception = [self parseNSException];
+        exception = [[SentryException alloc] initWithValue:self.exceptionContext[@"nsexception"][@"reason"]
+                                                      type:self.exceptionContext[@"nsexception"][@"name"]];
     } else if ([exceptionType isEqualToString:@"cpp_exception"]) {
         exception = [[SentryException alloc] initWithValue:self.exceptionContext[@"cpp_exception"][@"name"]
                                                       type:@"C++ Exception"];
@@ -328,37 +322,15 @@ static inline NSString *hexAddress(NSNumber *value) {
             exception = [[SentryException alloc] initWithValue:[[exceptionReason substringWithRange:NSMakeRange(match.location + match.length, (exceptionReason.length - match.location) - match.length)] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]]
                                                           type:[exceptionReason substringWithRange:NSMakeRange(0, match.location)]];
         }
-    } else {
-        exception = [[SentryException alloc] initWithValue:@"Unknown Exception" type:exceptionType];
     }
 
     [self enhanceValueFromNotableAddresses:exception];
-    exception.mechanism = [self extractMechanismOfType:exceptionType];
+    exception.mechanism = [self extractMechanism];
     exception.thread = [self crashedThread];
-    if (nil != self.diagnosis && self.diagnosis.length > 0 && ![self.diagnosis containsString:exception.value]) {
+    if (nil != self.diagnosis && self.diagnosis.length > 0) {
         exception.value = [exception.value stringByAppendingString:[NSString stringWithFormat:@" >\n%@", self.diagnosis]];
     }
     return @[exception];
-}
-
-- (SentryException *)parseNSException {
-//    if ([self.exceptionContext[@"nsexception"][@"name"] containsString:@"NativeScript encountered a fatal error:"]) {
-//        // TODO parsing here
-//        SentryException *exception = [[SentryException alloc] initWithValue:self.exceptionContext[@"nsexception"][@"reason"]
-//                                                                       type:self.exceptionContext[@"nsexception"][@"name"]];
-//        // exception.thread set here with parsed js stacktrace
-//
-//        return exception;
-//    }
-    NSString *reason = @"";
-    if (nil != self.exceptionContext[@"nsexception"][@"reason"]) {
-        reason = self.exceptionContext[@"nsexception"][@"reason"];
-    } else if (nil != self.exceptionContext[@"reason"]) {
-        reason = self.exceptionContext[@"reason"];
-    }
-    
-    return [[SentryException alloc] initWithValue:[NSString stringWithFormat:@"%@", reason]
-                                             type:self.exceptionContext[@"nsexception"][@"name"]];
 }
 
 - (void)enhanceValueFromNotableAddresses:(SentryException *)exception {
@@ -385,8 +357,8 @@ static inline NSString *hexAddress(NSNumber *value) {
     }
 }
 
-- (SentryMechanism *_Nullable)extractMechanismOfType:(nonnull NSString *)type {
-    SentryMechanism *mechanism = [[SentryMechanism alloc] initWithType:type];
+- (SentryMechanism *_Nullable)extractMechanism {
+    SentryMechanism *mechanism = [[SentryMechanism alloc] initWithType:[self.exceptionContext objectForKey:@"type"]];
     if (nil != [self.exceptionContext objectForKey:@"mach"]) {
         mechanism.handled = @(NO);
 

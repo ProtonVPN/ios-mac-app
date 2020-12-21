@@ -14,7 +14,7 @@
 #import <Sentry/SentryEvent.h>
 #import <Sentry/SentryError.h>
 #import <Sentry/SentryLog.h>
-#import <Sentry/NSData+SentryCompression.h>
+#import <Sentry/NSData+Compression.h>
 
 #else
 #import "SentryDsn.h"
@@ -23,7 +23,7 @@
 #import "SentryEvent.h"
 #import "SentryError.h"
 #import "SentryLog.h"
-#import "NSData+SentryCompression.h"
+#import "NSData+Compression.h"
 
 #endif
 
@@ -43,24 +43,17 @@ NSTimeInterval const SentryRequestTimeout = 15;
 - (_Nullable instancetype)initStoreRequestWithDsn:(SentryDsn *)dsn
                                          andEvent:(SentryEvent *)event
                                  didFailWithError:(NSError *_Nullable *_Nullable)error {
-    NSData *jsonData;
-    if (nil != event.json) {
-        // If we have event.json, this has been set from JS and should be sent directly
-        jsonData = event.json;
-        [SentryLog logWithMessage:@"Using event->json attribute instead of serializing event" andLevel:kSentryLogLevelVerbose];
-    } else {
-        NSDictionary *serialized = [event serialize];
-        if (![NSJSONSerialization isValidJSONObject:serialized]) {
-            if (error) {
-                *error = NSErrorFromSentryError(kSentryErrorJsonConversionError, @"Event cannot be converted to JSON");
-            }
-            return nil;
+    NSDictionary *serialized = [event serialize];
+    if (![NSJSONSerialization isValidJSONObject:serialized]) {
+        if (error) {
+            *error = NSErrorFromSentryError(kSentryErrorJsonConversionError, @"Event cannot be converted to JSON");
         }
-        
-        jsonData = [NSJSONSerialization dataWithJSONObject:serialized
-                                                           options:SentryClient.logLevel == kSentryLogLevelVerbose ? NSJSONWritingPrettyPrinted : 0
-                                                             error:error];
+        return nil;
     }
+
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:serialized
+                                                       options:SentryClient.logLevel == kSentryLogLevelVerbose ? NSJSONWritingPrettyPrinted : 0
+                                                         error:error];
     
     if (SentryClient.logLevel == kSentryLogLevelVerbose) {
         [SentryLog logWithMessage:@"Sending JSON -------------------------------" andLevel:kSentryLogLevelVerbose];
