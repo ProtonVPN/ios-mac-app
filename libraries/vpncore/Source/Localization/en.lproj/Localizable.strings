@@ -449,8 +449,8 @@
 "_delete_application_data_popup_title" = "Clear application data";
 "_delete_application_data_popup_body" = "All ProtonVPN data will be deleted and the application will quit. Do you wish to continue?";
 
-"_kill_switch_blocking_title" = "Kill Switch is currently blocking IP leaks";
-"_kill_switch_blocking_body" = "Kill Switch is protecting your IP by blocking all connections.\n\nProtonVPN will automatically reconnect soon. Click OK to close this window.\n\nIn case of troubles you can click disable Kill Switch";
+"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_body" = "Kill Switch is protecting your IP\n\nYour internet connection will resume as soon as ProtonVPN reconnects to a server. To resume without VPN protection, disable Kill Switch.";
 "_kill_switch_disable" = "Disable Kill Switch";
 
 
