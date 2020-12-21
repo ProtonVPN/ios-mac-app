@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
         storeKitManager.updateAvailableProductsList()
-        _ = storeKitManager.readyToPurchaseProduct() //initial response is always true due to lazy load
+        _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
     
@@ -165,7 +165,7 @@ fileprivate extension AppDelegate {
                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             }
         case .connecting, .preparingConnection:
-            //wait
+            // wait
             return
         default:
             NotificationCenter.default.removeObserver(self)
