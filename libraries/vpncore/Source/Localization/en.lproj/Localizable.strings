@@ -733,7 +733,7 @@
 "_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";
 
 "_kill_switch_reconnection_header" = "Kill Switch is protecting your IP";
-"_kill_switch_reconnection" = "Your internet connection will resume as soon as ProtonVPN reconnects to a server.\nTo resume without protection, disable Kill Switch.";
-"_kill_switch_reconnection_bold1" = "disable Kill Switch";
-"_kill_switch_reconnection_bold2" = "without protection";
+"_kill_switch_reconnection" = "Your internet connection will resume as soon as ProtonVPN reconnects to a server.\nTo use the internet without VPN and Kill Switch protection, cancel the reconnection to the server.";
+"_kill_switch_reconnection_bold1" = "without";
+"_kill_switch_reconnection_bold2" = "Kill Switch protection";
 "_kill_switch_reconnection_cancel" = "Cancel reconnection";
