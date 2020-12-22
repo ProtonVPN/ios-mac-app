@@ -113,7 +113,12 @@ public class AuthApiServiceImplementation: AuthApiService {
             do {
                 let response = try RefreshAccessTokenResponse(dic: json)
                 let updatedCreds = authCreds.updatedWithAccessToken(response: response)
-                AuthKeychain.store(updatedCreds)
+                do {
+                    try AuthKeychain.store(updatedCreds)
+                } catch let error {
+                    PMLog.ET("Error while storing refreshed API token: \(error)")
+                    failure(error)
+                }
                 success(updatedCreds)
             } catch {
                 PMLog.D("Error occurred during refresh access token parsing", level: .error)

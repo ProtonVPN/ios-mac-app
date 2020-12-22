@@ -42,7 +42,7 @@ public class AppStateManager {
     
     public weak var alertService: CoreAlertService?
     
-    private var reachability = Reachability()
+    private var reachability: Reachability?
     public private(set) var state: AppState = .disconnected
     private var vpnState: VpnState = .invalid {
         didSet {
@@ -75,6 +75,7 @@ public class AppStateManager {
         self.configurationPreparer = configurationPreparer
         
         handleVpnStateChange(vpnManager.state)
+        reachability = try? Reachability()
         setupReachability()
         startObserving()
     }
@@ -137,7 +138,7 @@ public class AppStateManager {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
         
-        if reachability.connection == .none {
+        if reachability.connection == .unavailable {
             notifyNetworkUnreachable()
             return
         }

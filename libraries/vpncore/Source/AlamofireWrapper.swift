@@ -95,6 +95,8 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             interceptor: interceptor,
             eventMonitors: [APILogger()]
         )
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(authKeychainCleared), name: AuthKeychain.clearNotification, object: nil)
     }
     
     private var authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
@@ -107,14 +109,12 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         guard let factory = factory else {
             return nil
         }
-        guard let authCredentials = AuthKeychain.fetch() else {
-            authInterceptor = nil
-            return nil
+        if authInterceptor == nil {
+            guard let authCredentials = AuthKeychain.fetch() else {
+                return nil
+            }
+            authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
         }
-        if authInterceptor?.credential?.accessToken == authCredentials.accessToken {
-            return authInterceptor
-        }
-        authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
         return authInterceptor
     }
     
@@ -258,6 +258,10 @@ extension AlamofireWrapperImplementation {
             PMLog.D("Network request failed with error: \(apiError)", level: .error)
             failure(apiError)
         }
+    }
+    
+    @objc func authKeychainCleared() {
+        authInterceptor = nil
     }
     
 }

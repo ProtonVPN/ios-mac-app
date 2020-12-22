@@ -67,6 +67,7 @@
 
 /* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
 "_connecting_to" = "Connecting to %@";
+"_reconnecting_to" = "Reconnecting to %@";
 "_connected_to" = "Connected to";
 
 /* %@ is a country followed by a server e.g. Connected to Switzerland CH#1 */
@@ -288,6 +289,8 @@
 "_error_decode" = "Failed to decode archived data in class: %@";
 "_error_email_verification_disabled" = "Email verification temporarily disabled";
 
+"_error_keychain_write" = "Proton couldn't communicate with your device. Please try again later.";
+
 // Password encoding errors
 "_error_modulus_signature" = "Modulus signature is empty";
 "_error_generate_srp" = "SRP generation failed";
@@ -446,10 +449,10 @@
 "_delete_application_data_popup_title" = "Clear application data";
 "_delete_application_data_popup_body" = "All ProtonVPN data will be deleted and the application will quit. Do you wish to continue?";
 
-"_kill_switch_blocking_title" = "Kill Switch is currently blocking IP leaks";
+"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_body" = "Kill Switch is protecting your IP\n\nYour internet connection will resume as soon as ProtonVPN reconnects to a server. To resume without VPN protection, disable Kill Switch.";
+"_kill_switch_disable" = "Disable Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "You have lost connection to the VPN server. Kill Switch is blocking all connections to avoid leaking your data. ProtonVPN will try to reconnect automatically. To dismiss this window, click OK.\n\nIf you would like to temporarily disable Kill Switch and reconnect to the Internet WITHOUT VPN protection, click DISABLE.\n\nTo turn off Kill Switch permanently, go to %@.";
 
 "_kill_switch_error_title" = "A Kill Switch error has been detected";
 "_kill_switch_error_head" = "Some apps, like anti-viruses or firewalls, might conflict with Kill Switch, making it not functioning properly.";
@@ -728,3 +731,9 @@
 "_quick_settings_netshield_option_level2" = "Block malware, ads, & trackers";
 
 "_upgrade_required_securecore_description" = "Secure Core is available with a Plus plan. Upgrade now to route traffic through our safest servers in privacy-friendly countries.";
+
+"_kill_switch_reconnection_header" = "Kill Switch is protecting your IP";
+"_kill_switch_reconnection" = "Your internet connection will resume as soon as ProtonVPN reconnects to a server.\nTo resume without protection, disable Kill Switch.";
+"_kill_switch_reconnection_bold1" = "disable Kill Switch";
+"_kill_switch_reconnection_bold2" = "without protection";
+"_kill_switch_reconnection_cancel" = "Cancel reconnection";

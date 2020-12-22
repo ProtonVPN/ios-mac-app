@@ -27,6 +27,10 @@ public protocol AnnouncementStorage {
     func store(_ objects: [Announcement])
 }
 
+public protocol KeyNameProvider {
+    var storageKey: String { get }
+}
+
 public protocol AnnouncementStorageFactory {
     func makeAnnouncementStorage() -> AnnouncementStorage
 }
@@ -38,9 +42,11 @@ public struct AnnouncementStorageNotifications {
 public class AnnouncementStorageUserDefaults: AnnouncementStorage {
     
     let userDefaults: UserDefaults
+    private let keyNameProvider: KeyNameProvider
     
-    public init(userDefaults: UserDefaults) {
+    public init(userDefaults: UserDefaults, keyNameProvider: KeyNameProvider?) {
         self.userDefaults = userDefaults
+        self.keyNameProvider = keyNameProvider ?? AuthKeychainStorageKeyProvider()
     }
     
     public func fetch() -> [Announcement] {
@@ -74,8 +80,17 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
  
     // MARK: - Private
     
-    var storageKey: String {
-        return "announcements_" + (AuthKeychain.fetch()?.username ?? "")
+    private var storageKey: String {
+        return keyNameProvider.storageKey
     }
     
+}
+
+/// Generates key depending on currently logged in user.
+/// This is default KeyNameProvider that should be used in the app.
+/// In tests it's better to use another class that will not depend on the Keychain.
+private class AuthKeychainStorageKeyProvider: KeyNameProvider {
+    public var storageKey: String {
+        return "announcements_" + (AuthKeychain.fetch()?.username ?? "")
+    }
 }

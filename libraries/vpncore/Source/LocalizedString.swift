@@ -71,6 +71,7 @@ public class LocalizedString {
     public static let showProtonVpn = NSLocalizedString("_show_protonvpn", comment: "MacOS: button in custom status menu")
     public static let preparingConnection = NSLocalizedString("_preparing_connection", comment: "MacOS: connecting overlay")
     public static let connectingTo = NSLocalizedString("_connecting_to", comment: "MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore")
+    public static let reConnectingTo = NSLocalizedString("_reconnecting_to", comment: "MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. ")
     public static let connectedTo = NSLocalizedString("_connected_to", comment: "iOS status view")
     public static let connecting = NSLocalizedString("_connecting", comment: "iOS: main button in tabbar during connecting to vpn phase")
     public static let connectingDotDotDot = NSLocalizedString("_connecting...", comment: "iOS: connection bar, iOS widget")
@@ -266,6 +267,7 @@ public class LocalizedString {
     public static let errorVpnCredentialsMissing = NSLocalizedString("_error_vpn_credentials_missing", comment: "VPN credentials can't be loaded error")
     public static let errorDecode = NSLocalizedString("_error_decode", comment: "Error decoding an object")
     public static let errorEmailVerificationDisabled = NSLocalizedString("_error_email_verification_disabled", comment: "Internal application error")
+    public static let errorKeychainWrite = NSLocalizedString("_error_keychain_write", comment: "Error writing to system keychain")
     
     public static let errorFieldRequired = NSLocalizedString("_error_field_required", comment: "Form validation error")
     public static let errorFieldWrongEmailFormat = NSLocalizedString("_error_field_email_wrong_format", comment: "Form validation error")
@@ -412,6 +414,7 @@ public class LocalizedString {
     
     public static let killSwitchBlockingTitle = NSLocalizedString("_kill_switch_blocking_title", comment: "MacOS: killswitch blocking alert")
     public static let killSwitchBlockingBody = NSLocalizedString("_kill_switch_blocking_body", comment: "MacOS: killswitch blocking alert")
+    public static let killSwitchDisable = NSLocalizedString("_kill_switch_disable", comment: "MacOS: killswitch blocking alert button")
     
     public static let killSwitchErrorTitle = NSLocalizedString("_kill_switch_error_title", comment: "MacOS: killswitch error alert")
     public static let killSwitchErrorHead = NSLocalizedString("_kill_switch_error_head", comment: "MacOS: killswitch error alert")
@@ -421,6 +424,12 @@ public class LocalizedString {
     public static let killSwitchHelperInstallPopupBody = NSLocalizedString("_kill_switch_helper_install_popup_body", comment: "MacOS: killswitch alert")
     public static let killSwitchHelperUpdatePopupBody = NSLocalizedString("_kill_switch_helper_update_popup_body", comment: "MacOS: updating helper alert")
     public static let killSwitchHelperInstallIssuePopupBody = NSLocalizedString("_kill_switch_helper_install_issue_popup_body", comment: "MacOS: killswicth install error alert")
+    
+    public static let killSwitchReconnectionHeader = NSLocalizedString("_kill_switch_reconnection_header", comment: "MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect")
+    public static let killSwitchReconnection = NSLocalizedString("_kill_switch_reconnection", comment: "MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect")
+    public static let killSwitchReconnectionBold1 = NSLocalizedString("_kill_switch_reconnection_bold1", comment: "MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded")
+    public static let killSwitchReconnectionBold2 = NSLocalizedString("_kill_switch_reconnection_bold2", comment: "MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded")
+    public static let killSwitchReconnectionCancel = NSLocalizedString("_kill_switch_reconnection_cancel", comment: "MacOS: connection screen - cancel button")
     
     public static let existingFirewallPopupTitle = NSLocalizedString("_existing_firewall_popup_title", comment: "MacOS: Existing firewall alert")
     public static let existingFirewallPopupBody = NSLocalizedString("_existing_firewall_popup_body", comment: "MacOS: Existing firewall alert")

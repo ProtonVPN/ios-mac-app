@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "خطای keychain.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton نتوانست با دستگاه شما ارتباط برقرار کند. لطفاً بعداً دوباره امتحان کنید.";
+
 /* Parsing error */
 "_error_loads" = "وضعیت بار بر روی سرور به‌روز نشد";
 
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "شما اتصال با سرور VPN را از دست دادید. Kill Switch همه ارتباطات را برای پیشگیری از نشت اطلاعات شما مسدود کرده است. ProtonVPN تلاش می‌کند دوباره به صورت خودکار اتصال را برقرار کند. کلید OK را برای بستن این اخطار ببندید.\n\nاگر قصد خاموش کردن موقت Kill Switch را دارید، برای اتصال دوباره به اینترنت 'بدون' حفاظ VPN، کلید 'غیرفعال‌سازی' را انتخاب کنید.\n\nبرای خاموش کردن دائمی Kill Switch به %@ بروید.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch با مسدود کردن همه اتصالات از IP شما محافظت می‌کند.\nProtonVPN بطور خودکار به زودی دوباره متصل خواهد شد. OK را بزنید تا این پنجره بسته شود.\nدر صورت مشکل شما می‌توانید غیرفعّال کردن Kill Switch را بزنید";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "قابلیت Kill Switch همه ارتباطات را مسدود کرده است";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "قابلیت Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "غیرفعّال کردن Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه ادامه را بزنید.";

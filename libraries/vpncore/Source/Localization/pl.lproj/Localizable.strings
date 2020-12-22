@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Błąd łańcucha klucza.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Aplikacja Proton nie mogła połączyć się z Twoim urządzeniem. Spróbuj ponownie później.";
+
 /* Parsing error */
 "_error_loads" = "Nie można zaktualizować obciążenia serwera";
 
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Utraciłeś połączenie z serwerem VPN. Funkcja Kill Switch blokuje wszystkie połączenia, aby zapobiec wyciekowi Twoich danych. ProtonVPN automatycznie podejmie próbę ponownego połączenia. Aby zamknąć to okno, kliknij OK.\n\nJeśli chcesz tymczasowo wyłączyć funkcję Kill Switch i połączyć się z siecią BEZ ochrony VPN, kliknij WYŁĄCZ.\n\nAby trwale wyłączyć tę funkcję, przejdź do %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Funkcja Kill Switch chroni Twój adres IP poprzez blokowanie wszystkich połączeń.\n\nAplikacja ProtonVPN automatycznie przywróci połączenie. Kliknij przycisk OK, aby zamknąć okno.\n\nW razie problemów możesz wyłączyć funkcję Kill Switch";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Funkcja Kill Switch blokuje wszystkie połączenia";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Funkcja Kill Switch blokuje wycieki adresu IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Wyłącz Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Wyłącz te aplikacje, aby naprawić problem.\nAby kontynuować przeglądanie bez funkcji Kill Switch, kliknij przycisk Kontynuuj.";

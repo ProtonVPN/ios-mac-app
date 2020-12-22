@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Ошибка \"Связки Ключей\".";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "Proton не смог связаться с вашим устройством. Пожалуйста, повторите попытку позже.";
+
 /* Parsing error */
 "_error_loads" = "Не могу обновить данные о нагрузке на сервер";
 
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Вы потеряли соединение с VPN-сервером. Kill Switch блокирует все соединения, чтобы избежать утечки ваших данных. ProtonVPN будет пытаться автоматически восстановить соединение. Чтобы закрыть это окно, нажмите кнопку ОК. \n\nЕсли вы хотите временно отключить Kill Switch и повторно подключиться к Интернету БЕЗ ЗАЩИТЫ VPN, нажмите кнопку ОТКЛЮЧИТЬ. \n\nЧтобы окончательно отключить Kill Switch, перейдите в %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "Kill Switch защищает ваш IP-адрес, блокируя все подключения.\n\nСкоро ProtonVPN автоматически переподключится. Нажмите кнопку ОК, чтобы закрыть это окно.\n\nВ случае проблем вы можете нажать \"отключить Kill Switch\"";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch в настоящее время блокирует утечку IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Отключить Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Завершите эти приложения, чтобы исправить проблему.\nЧтобы продолжить без Kill Switch, нажмите Продолжить.";
@@ -697,10 +703,10 @@
 "_ks_dont_ask" = "Не спрашивать меня снова";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "To enable Kill Switch, you need to download and install the %@.\nPlease install it before enabling Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Чтобы пользоваться Kill Switch, вам необходимо скачать и установить %@.\nПожалуйста, установите это до того, как включите Kill Switch.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN couldn't detect the %@. To enable Kill Switch, please install software first.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN не смог обнаружить %@. Чтобы включить Kill switch, пожалуйста, установите программное обеспечение.";
 
 /* MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it. */
 "_ks_swift5_lib_name" = "Поддержка библиотеки Swift 5 Runtime";

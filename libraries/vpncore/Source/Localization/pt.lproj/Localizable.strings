@@ -386,6 +386,9 @@
 /* Keychain error */
 "_error_keychain_fetch" = "Erro do chaveiro.";
 
+/* Error writing to system keychain */
+"_error_keychain_write" = "O Proton não conseguiu comunicar com o seu dispositivo. Por favor, tente mais tarde.";
+
 /* Parsing error */
 "_error_loads" = "Impossível actualizar cargas do servidor";
 
@@ -631,10 +634,10 @@
 "_invalid_refresh_token_please_login" = "Já há muito tempo que não utilizava o ProtonVPN, Por favor, reinicie a sessão.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Dos cientistas e engenheiros que criaram o ProtonMail, boas vindas a uma Internet mais segura e privada.";
+"_ios_onboarding_page1_description" = "Dos cientistas e engenheiros que criaram o ProtonMail, boas-vindas a uma Internet mais segura e privada.";
 
 /* Upsell & Onboard - iOS */
-"_ios_onboarding_page1_title" = "Boas vindas a uma Internet melhor";
+"_ios_onboarding_page1_title" = "Boas-vindas a uma Internet melhor";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Contorne a censura e as restrições regionais. Não temos anúncios nem limites de banda larga e não vendemos os seus dados.";
@@ -660,14 +663,17 @@
 /* MacOS: Settings -> Connection: name of field. */
 "_kill_switch" = "Kill Switch";
 
-/* %@ is a link to the app's Preferences */
-"_kill_switch_blocking_body" = "Perdeu a ligação ao servidor. O Kill Switch está a bloquear todas as ligações para evitar a perda de dados. O ProtonVPN tentará religar automaticamente. Para descartar esta janela, clique em Aceitar.\n\nSe deseja desactivar temporariamente o Kill Switch e ligar à Internet SEM PROTECÇÃO VPN, clique em DESACTIVAR.\n\nPara desligar o Kill Switch permanentemente, vá às %@.";
+/* MacOS: killswitch blocking alert */
+"_kill_switch_blocking_body" = "O Kill Switch está a proteger o seu IP, bloqueando todas as ligações.\n\nO ProtonVPN ligar-se-á automaticamente em breve. Clique em Aceitar para fechar esta janela.\n\nEm caso de problemas, pode desactivar o Kill Switch";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch a bloquear todas as ligações";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_title" = "Kill Switch está actualmente a bloquear fugas de IP";
+
+/* MacOS: killswitch blocking alert button */
+"_kill_switch_disable" = "Desactivar Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Termine estas aplicações para corrigir o problema.\nPara continuar a navegar sem Kill Switch, clique em Continuar.";
@@ -1475,7 +1481,7 @@
  
  As a welcome gift, you have access to a full ProtonVPN subscription, including advanced features for the first few days! Your welcome trial ends in
  1 day, 2 hours, 30 minutes */
-"_trial_popup_explanation" = "Como presente de boas vindas, tem acesso a %@, incluindo funcionalidades avançadas para os primeiros dias! O seu período de teste acaba em";
+"_trial_popup_explanation" = "Como presente de boas-vindas, tem acesso a %@, incluindo funcionalidades avançadas para os primeiros dias! O seu período de teste acaba em";
 
 /* (No Comment) */
 "_trial_popup_free_upgrade" = "actualização gratuita para ProtonVPN Plus";
@@ -1495,13 +1501,13 @@
 "_trial_popup_title" = "Teste do ProtonVPN";
 
 /* iOS trial welcome screen */
-"_trial_welcome_description_iOS" = "Como presente de boas vindas, tem acesso completo à subscrição do ProtonVPN, incluindo funcionalidades avançadas nos primeiros dias!";
+"_trial_welcome_description_iOS" = "Como presente de boas-vindas, tem acesso completo à subscrição do ProtonVPN, incluindo funcionalidades avançadas nos primeiros dias!";
 
 /* iOS trial welcome screen */
 "_trial_welcome_ends_in_iOS" = "O seu teste termina em";
 
 /* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Boas vindas a bordo";
+"_trial_welcome_heading_iOS" = "Boas-vindas a bordo";
 
 /* Description of troubleshooting item */
 "_troubleshoot_item_alt_description" = "Caso as páginas do Proton estejam bloqueadas, esta definição permite à aplicação tentar redireccionar o tráfego para ligar ao Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos que mantenha esta definição para maior confiança. [Saiba mais]";
@@ -1716,10 +1722,10 @@
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
  
  A list of Plus plan-only features follows this text */
-"_welcome_gift_description" = "Como presente de boas vindas, tem acesso por 7 dias à\nsubscrição %@ que lhe dá:";
+"_welcome_gift_description" = "Como presente de boasvindas, tem acesso por 7 dias à\nsubscrição %@ que lhe dá:";
 
 /* Upsell & Onboard */
-"_welcome_title" = "BOAS VINDAS A BORDO!";
+"_welcome_title" = "BOAS-VINDAS A BORDO!";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

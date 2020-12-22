@@ -55,6 +55,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         
     public init(factory: Factory) {
         self.factory = factory
+        reachability = try? Reachability()
         super.init()
         
         try? reachability?.startNotifier()
@@ -65,7 +66,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
         reachability?.stopNotifier()
     }
     
-    private let reachability = Reachability()
+    private let reachability: Reachability?
     
     private var productIds = Set([AccountPlan.basic.storeKitProductId!, AccountPlan.plus.storeKitProductId!])
     private var availableProducts: [SKProduct] = []

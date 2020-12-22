@@ -24,6 +24,8 @@ import KeychainAccess
 
 public class AuthKeychain {
     
+    public static let clearNotification = Notification.Name("AuthKeychain.clear")
+    
     private struct StorageKey {
         static let authCredentials = "authCredentials"
     }
@@ -44,7 +46,7 @@ public class AuthKeychain {
         return nil
     }
     
-    public static func store(_ credentials: AuthCredentials) {
+    public static func store(_ credentials: AuthCredentials) throws {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
@@ -52,13 +54,28 @@ public class AuthKeychain {
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
                 try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
-            } catch {
-                PMLog.D("Keychain (auth) write error: \(error)", level: .error)
+            } catch let error2 {
+                #if os(macOS)
+                    PMLog.D("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", level: .error)
+                    do { // Last chance. Locking/unlocking keychain sometimes helps.
+                        SecKeychainLock(nil)
+                        try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
+                    } catch let error3 {
+                        PMLog.ET("Keychain (auth) write error: \(error3). Giving up.", level: .error)
+                        throw error3
+                    }
+                #else
+                    PMLog.ET("Keychain (auth) write error: \(error2).", level: .error)
+                    throw error2
+                #endif
             }
         }
     }
     
     public static func clear() {
         appKeychain[data: StorageKey.authCredentials] = nil
+        DispatchQueue.main.async {
+            NotificationCenter.default.post(name: clearNotification, object: nil, userInfo: nil)
+        }
     }
 }

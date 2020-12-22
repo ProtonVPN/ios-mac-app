@@ -23,26 +23,31 @@ import Foundation
 
 //The errors happend locally
 public enum ProtonVpnError: LocalizedError {
-    //hash pwd part
+    
+    // Hash pwd part
     case modulusSignature
     case generateSrp
     case hashPassword
     case fetchSession
     
-    //vpn properties
+    // VPN properties
     case vpnProperties
     
-    //decode
+    // Decode
     case decode(location: String)
     
-    //connections
+    // Connections
     case connectionFailed
     case vpnManagerUnavailable
     case removeVpnProfileFailed
     case tlsInitialisation
     case tlsServerVerification
     
-    //case other(error: String)
+    // Keychain
+    case keychainWriteFailed
+    
+    // MARK: -
+    
     public var errorDescription: String? {
         switch self {
         case .modulusSignature:
@@ -67,6 +72,8 @@ public enum ProtonVpnError: LocalizedError {
             return LocalizedString.errorTlsInitialisation
         case .tlsServerVerification:
             return LocalizedString.errorTlsServerVerification
+        case .keychainWriteFailed:
+            return LocalizedString.errorKeychainWrite
         }
     }
 }
