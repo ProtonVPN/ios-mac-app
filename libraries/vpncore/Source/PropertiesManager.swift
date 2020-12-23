@@ -59,6 +59,7 @@ public protocol PropertiesManagerProtocol: class {
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
+    var killSwitch: Bool { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -66,8 +67,6 @@ public protocol PropertiesManagerProtocol: class {
     
     var lastAppVersion: MigrationVersion { get set }
     var lastTimeForeground: Date? { get set }
-    
-    var killSwitchEnabled: Bool { get set }
     
     func logoutCleanup()
     
@@ -118,7 +117,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let lastTimeForeground = "LastTimeForeground"
         
         // Kill Switch
-        static let killSwitchEnabled = "KillSwitchEnabled"
+        static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
         
         // Features
         static let featureFlags = "FeatureFlags"
@@ -440,16 +439,19 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var killSwitchEnabled: Bool {
+    var killSwitchNotification: Notification.Name {
+        return Notification.Name("KillSwitchChanged")
+    }
+    
+    public var killSwitch: Bool {
         get {
-            if Storage.contains(Keys.killSwitchEnabled) {
-                return Storage.userDefaults().bool(forKey: Keys.killSwitchEnabled)
-            } else {
-                return false
-            }
+            return Storage.userDefaults().bool(forKey: Keys.killSwitch)
         }
         set {
-            Storage.setValue(newValue, forKey: Keys.killSwitchEnabled)
+            Storage.setValue(newValue, forKey: Keys.killSwitch)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
+            }
         }
     }
     

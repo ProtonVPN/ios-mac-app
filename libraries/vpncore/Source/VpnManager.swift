@@ -277,7 +277,7 @@ public class VpnManager: VpnManagerProtocol {
         // MARK: - KillSwitch configuration
         #if os(OSX)
         if #available(OSX 10.15, *) {
-            configuration.includeAllNetworks = propertiesManager.killSwitchEnabled
+            configuration.includeAllNetworks = propertiesManager.killSwitch
         }
         #endif
         vpnManager.protocolConfiguration = configuration
