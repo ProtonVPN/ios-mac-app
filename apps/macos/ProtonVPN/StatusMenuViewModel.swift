@@ -42,7 +42,6 @@ class StatusMenuViewModel {
         & CoreAlertServiceFactory
         & AppStateManagerFactory
         & WiFiSecurityMonitorFactory
-        & FirewallManagerFactory
 
     private let factory: Factory
     
@@ -54,7 +53,6 @@ class StatusMenuViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
-    private lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
 
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -143,7 +141,7 @@ class StatusMenuViewModel {
     }
     
     private var isKillSwitchOn: Bool {
-        return firewallManager.killSwitchProbablyEnabled
+        return propertiesManager.killSwitch
     }
     
     func disconnectAction() {

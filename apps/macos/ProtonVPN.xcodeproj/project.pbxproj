@@ -52,8 +52,10 @@
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
 		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
-		D5686B1E24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
+		D584957725923BD900CFAFDE /* openssl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D584957625923BD900CFAFDE /* openssl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D58496982593489900CFAFDE /* SwiftyBeaver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58496972593489900CFAFDE /* SwiftyBeaver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D584969A2593489D00CFAFDE /* TunnelKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58496992593489D00CFAFDE /* TunnelKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
 		D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5906F1722D379C9001BC074 /* AttachedFileView.xib */; };
@@ -76,10 +78,6 @@
 		E10FA80522C21AC100CD03B2 /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10FA80422C21AC100CD03B2 /* Srp.framework */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		E1248885220A18D2005B9A9E /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */; };
-		E1248886220A18D2005B9A9E /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */; };
-		E125DCE0221ADA5300027272 /* CommandLineToolRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125DCDF221ADA5300027272 /* CommandLineToolRunner.swift */; };
-		E125DCE1221ADBE100027272 /* CommandLineToolRunner.swift in Sources */ = {isa = PBXBuildFile; fileRef = E125DCDF221ADA5300027272 /* CommandLineToolRunner.swift */; };
-		E125DCE2221ADBED00027272 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10321FB5043008CCC13 /* NetworkHelper.swift */; };
 		E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */; };
 		E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */; };
 		E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13464AA2033780300C0DB7D /* LoadCircle.swift */; };
@@ -127,20 +125,7 @@
 		E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE220EA18CD00DCC687 /* StatusMenuItemBackground.swift */; };
 		E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */; };
 		E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */; };
-		E17DE0FE21FB4DF3008CCC13 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE0FD21FB4DF3008CCC13 /* main.swift */; };
-		E17DE10421FB5043008CCC13 /* NetworkHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10321FB5043008CCC13 /* NetworkHelper.swift */; };
 		E17DE10921FB630C008CCC13 /* AppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10821FB630C008CCC13 /* AppProtocol.swift */; };
-		E17DE10A21FB630C008CCC13 /* AppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10821FB630C008CCC13 /* AppProtocol.swift */; };
-		E17DE10C21FB66BC008CCC13 /* FirewallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10B21FB66BC008CCC13 /* FirewallManager.swift */; };
-		E17DE11021FB6FDF008CCC13 /* NetworkHelperConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10F21FB6FDF008CCC13 /* NetworkHelperConstants.swift */; };
-		E17DE11121FB6FDF008CCC13 /* NetworkHelperConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10F21FB6FDF008CCC13 /* NetworkHelperConstants.swift */; };
-		E17DE11321FB71D3008CCC13 /* NetworkHelperAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE11221FB71D3008CCC13 /* NetworkHelperAuth.swift */; };
-		E17DE11421FB71D3008CCC13 /* NetworkHelperAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE11221FB71D3008CCC13 /* NetworkHelperAuth.swift */; };
-		E17DE11721FEF8F8008CCC13 /* NetworkHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE11621FEF8F8008CCC13 /* NetworkHelperProtocol.swift */; };
-		E17DE11821FEF8F8008CCC13 /* NetworkHelperProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE11621FEF8F8008CCC13 /* NetworkHelperProtocol.swift */; };
-		E17DE11F21FF38B2008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper in Copy Network Helper */ = {isa = PBXBuildFile; fileRef = E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		E17DE12421FF4426008CCC13 /* NetworkHelperAuthRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE12321FF4426008CCC13 /* NetworkHelperAuthRight.swift */; };
-		E17DE12521FF4426008CCC13 /* NetworkHelperAuthRight.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE12321FF4426008CCC13 /* NetworkHelperAuthRight.swift */; };
 		E180D1462124689600F4D1C7 /* MapGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1452124689600F4D1C7 /* MapGradientView.swift */; };
 		E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */; };
 		E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */; };
@@ -366,13 +351,6 @@
 			remoteGlobalIDString = EED534801EEC112000013607;
 			remoteInfo = ProtonVPN;
 		};
-		E125DD2B221B1E0100027272 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = EED534791EEC112000013607 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E17DE0FA21FB4DF3008CCC13;
-			remoteInfo = ch.protonvpn.ProtonVPNNetworkHelper;
-		};
 		E15B755220FA83CB0022C406 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EED534791EEC112000013607 /* Project object */;
@@ -394,14 +372,17 @@
 			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E17DE0F921FB4DF3008CCC13 /* CopyFiles */ = {
+		D584957125923B6800CFAFDE /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
-			dstPath = /usr/share/man/man1/;
-			dstSubfolderSpec = 0;
+			dstPath = "";
+			dstSubfolderSpec = 7;
 			files = (
+				D584957725923BD900CFAFDE /* openssl.framework in CopyFiles */,
+				D58496982593489900CFAFDE /* SwiftyBeaver.framework in CopyFiles */,
+				D584969A2593489D00CFAFDE /* TunnelKit.framework in CopyFiles */,
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 		};
 		E17DE11E21FF387D008CCC13 /* Copy Network Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -409,7 +390,6 @@
 			dstPath = Contents/Library/LaunchServices;
 			dstSubfolderSpec = 1;
 			files = (
-				E17DE11F21FF38B2008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper in Copy Network Helper */,
 			);
 			name = "Copy Network Helper";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -485,8 +465,10 @@
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractProfileViewModel.swift; sourceTree = "<group>"; };
-		D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperTimeoutWrapper.swift; sourceTree = "<group>"; };
 		D57597C023B10C2E002D6631 /* WindowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenuController.swift; sourceTree = "<group>"; };
+		D584957625923BD900CFAFDE /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "Pods/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"; sourceTree = "<group>"; };
+		D58496972593489900CFAFDE /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/SwiftyBeaver/SwiftyBeaver.framework"; sourceTree = "<group>"; };
+		D58496992593489D00CFAFDE /* TunnelKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TunnelKit.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/TunnelKit/TunnelKit.framework"; sourceTree = "<group>"; };
 		D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlan+Extension.swift"; sourceTree = "<group>"; };
 		D5906F1422D3795C001BC074 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
 		D5906F1722D379C9001BC074 /* AttachedFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachedFileView.xib; sourceTree = "<group>"; };
@@ -528,7 +510,6 @@
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSignatureComparitor.swift; sourceTree = "<group>"; };
-		E125DCDF221ADA5300027272 /* CommandLineToolRunner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommandLineToolRunner.swift; sourceTree = "<group>"; };
 		E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColoredLoadButton.swift; sourceTree = "<group>"; };
 		E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GreenHighlightButton.swift; sourceTree = "<group>"; };
 		E13464AA2033780300C0DB7D /* LoadCircle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadCircle.swift; sourceTree = "<group>"; };
@@ -578,17 +559,7 @@
 		E17C1CE220EA18CD00DCC687 /* StatusMenuItemBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuItemBackground.swift; sourceTree = "<group>"; };
 		E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryItemViewModel.swift; sourceTree = "<group>"; };
 		E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverDetectionButtonAdvanced.swift; sourceTree = "<group>"; };
-		E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = ch.protonvpn.ProtonVPNNetworkHelper; sourceTree = BUILT_PRODUCTS_DIR; };
-		E17DE0FD21FB4DF3008CCC13 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
-		E17DE10221FB4E7A008CCC13 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		E17DE10321FB5043008CCC13 /* NetworkHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelper.swift; sourceTree = "<group>"; };
-		E17DE10521FB5071008CCC13 /* NetworkHelper-Launchd.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "NetworkHelper-Launchd.plist"; sourceTree = "<group>"; };
 		E17DE10821FB630C008CCC13 /* AppProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProtocol.swift; sourceTree = "<group>"; };
-		E17DE10B21FB66BC008CCC13 /* FirewallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirewallManager.swift; sourceTree = "<group>"; };
-		E17DE10F21FB6FDF008CCC13 /* NetworkHelperConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperConstants.swift; sourceTree = "<group>"; };
-		E17DE11221FB71D3008CCC13 /* NetworkHelperAuth.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperAuth.swift; sourceTree = "<group>"; };
-		E17DE11621FEF8F8008CCC13 /* NetworkHelperProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperProtocol.swift; sourceTree = "<group>"; };
-		E17DE12321FF4426008CCC13 /* NetworkHelperAuthRight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHelperAuthRight.swift; sourceTree = "<group>"; };
 		E180D1452124689600F4D1C7 /* MapGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGradientView.swift; sourceTree = "<group>"; };
 		E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellPrimaryActionButton.swift; sourceTree = "<group>"; };
 		E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearCancellationButton.swift; sourceTree = "<group>"; };
@@ -830,13 +801,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				21A0C56EE26846392D949E1E /* Pods_ProtonVPNTests.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E17DE0F821FB4DF3008CCC13 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1126,22 +1090,6 @@
 				E170A92E2124313A0036326B /* UpsellGradientView.swift */,
 			);
 			name = "Upsell & Onboarding";
-			sourceTree = "<group>";
-		};
-		E17DE0FC21FB4DF3008CCC13 /* ProtonVPNNetworkHelper */ = {
-			isa = PBXGroup;
-			children = (
-				E17DE0FD21FB4DF3008CCC13 /* main.swift */,
-				E125DCDF221ADA5300027272 /* CommandLineToolRunner.swift */,
-				E17DE10321FB5043008CCC13 /* NetworkHelper.swift */,
-				E17DE11221FB71D3008CCC13 /* NetworkHelperAuth.swift */,
-				E17DE12321FF4426008CCC13 /* NetworkHelperAuthRight.swift */,
-				E17DE10F21FB6FDF008CCC13 /* NetworkHelperConstants.swift */,
-				E17DE11621FEF8F8008CCC13 /* NetworkHelperProtocol.swift */,
-				E17DE10221FB4E7A008CCC13 /* Info.plist */,
-				E17DE10521FB5071008CCC13 /* NetworkHelper-Launchd.plist */,
-			);
-			path = ProtonVPNNetworkHelper;
 			sourceTree = "<group>";
 		};
 		E17DE11521FEF8C3008CCC13 /* Protocols */ = {
@@ -1741,10 +1689,8 @@
 			children = (
 				EE68DD4B1F49D59B00F218B8 /* Server */,
 				EED534841EEC112000013607 /* AppDelegate.swift */,
-				E17DE10B21FB66BC008CCC13 /* FirewallManager.swift */,
 				EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */,
 				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
-				D5686B1D24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift */,
 				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
 				427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */,
 				E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */,
@@ -1793,11 +1739,13 @@
 		EED534781EEC112000013607 = {
 			isa = PBXGroup;
 			children = (
+				D58496992593489D00CFAFDE /* TunnelKit.framework */,
+				D58496972593489900CFAFDE /* SwiftyBeaver.framework */,
+				D584957625923BD900CFAFDE /* openssl.framework */,
 				E173304322C353F500050F79 /* Intents.intentdefinition */,
 				E173304522C3553700050F79 /* README.md */,
 				E1ECB29A235DB0FB00AB745F /* LICENSE */,
 				EED534831EEC112000013607 /* ProtonVPN */,
-				E17DE0FC21FB4DF3008CCC13 /* ProtonVPNNetworkHelper */,
 				EEB404C81F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754E20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911707229F9574005829DA /* ProtonVPNUITests */,
@@ -1817,7 +1765,6 @@
 				EED534811EEC112000013607 /* ProtonVPN.app */,
 				EEB404C71F77F639006CF513 /* ProtonVPNStarter.app */,
 				E15B754D20FA83CB0022C406 /* ProtonVPNTests.xctest */,
-				E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */,
 				D5911706229F9574005829DA /* ProtonVPNUITests.xctest */,
 				42EF09DB257A713F00E2EDCA /* ch.protonvpn.mac.OpenVPN-Extension.systemextension */,
 			);
@@ -1959,6 +1906,7 @@
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
 				42EF09D9257A713F00E2EDCA /* Resources */,
+				D584957125923B6800CFAFDE /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -2007,26 +1955,6 @@
 			productReference = E15B754D20FA83CB0022C406 /* ProtonVPNTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		E17DE0FA21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = E17DE0FF21FB4DF3008CCC13 /* Build configuration list for PBXNativeTarget "ch.protonvpn.ProtonVPNNetworkHelper" */;
-			buildPhases = (
-				E17DE11921FF3711008CCC13 /* Code Sign Update */,
-				E1034B4122EB1A460022A43B /* Increment Build Number */,
-				E17DE0F721FB4DF3008CCC13 /* Sources */,
-				E17DE0F821FB4DF3008CCC13 /* Frameworks */,
-				E17DE0F921FB4DF3008CCC13 /* CopyFiles */,
-				E19CE84B22C7B734002595D0 /* Revert Plist */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = ch.protonvpn.ProtonVPNNetworkHelper;
-			productName = ProtonVPNNetworkHelper;
-			productReference = E17DE0FB21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */;
-			productType = "com.apple.product-type.tool";
-		};
 		EEB404C61F77F639006CF513 /* ProtonVPNStarter */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEB404D61F77F639006CF513 /* Build configuration list for PBXNativeTarget "ProtonVPNStarter" */;
@@ -2051,7 +1979,6 @@
 			buildPhases = (
 				2E538B992EB2C59B6DE22E5D /* [CP] Check Pods Manifest.lock */,
 				E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */,
-				E17DE11C21FF380B008CCC13 /* Helper Code Sign Update */,
 				75482B261F7EF2E900B0BFFB /* Increment Build Number Script */,
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
@@ -2062,13 +1989,11 @@
 				E17DE11E21FF387D008CCC13 /* Copy Network Helper */,
 				E148AE5521C2628A007AB65A /* Sentry dSYM upload */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
-				E19CE84A22C7B702002595D0 /* Revert Plist */,
 				42EF09E7257A713F00E2EDCA /* Embed System Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				E125DD2C221B1E0100027272 /* PBXTargetDependency */,
 				42EF09E5257A713F00E2EDCA /* PBXTargetDependency */,
 			);
 			name = ProtonVPN;
@@ -2098,9 +2023,6 @@
 						DevelopmentTeam = J6S6Q257EK;
 						ProvisioningStyle = Automatic;
 						TestTargetID = EED534801EEC112000013607;
-					};
-					E17DE0FA21FB4DF3008CCC13 = {
-						CreatedOnToolsVersion = 10.1;
 					};
 					EEB404C61F77F639006CF513 = {
 						CreatedOnToolsVersion = 9.0;
@@ -2171,7 +2093,6 @@
 			projectRoot = "";
 			targets = (
 				EED534801EEC112000013607 /* ProtonVPN */,
-				E17DE0FA21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */,
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNTests */,
 				D5911705229F9574005829DA /* ProtonVPNUITests */,
@@ -2429,25 +2350,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
 		};
-		E1034B4122EB1A460022A43B /* Increment Build Number */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\n    buildNumber=${BUILD_NUMBER:-1234}\n    /usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
-			showEnvVarsInLog = 0;
-		};
 		E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -2503,78 +2405,6 @@
 			shellPath = /bin/sh;
 			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\necho \"sentry-cli: dSYM upload starting\"\nif which sentry-cli >/dev/null; then\nexport SENTRY_URL='https://sentry.protontech.ch/'\nexport SENTRY_ORG='sentry'\nexport SENTRY_PROJECT='macos-vpn-prod'\n# Add auth token to your env vars:\n# export SENTRY_AUTH_TOKEN=YOU_AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\necho \"sentry-cli: dSYM upload complete\"\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\nfi\n";
 		};
-		E17DE11921FF3711008CCC13 /* Code Sign Update */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Code Sign Update";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/CodeSignUpdate.sh\n";
-		};
-		E17DE11C21FF380B008CCC13 /* Helper Code Sign Update */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Helper Code Sign Update";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/CodeSignUpdate.sh\n";
-		};
-		E19CE84A22C7B702002595D0 /* Revert Plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Revert Plist";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/RevertPlistChanges.sh\n";
-		};
-		E19CE84B22C7B734002595D0 /* Revert Plist */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Revert Plist";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}\"/Scripts/RevertPlistChanges.sh\n";
-		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -2606,22 +2436,6 @@
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E17DE0F721FB4DF3008CCC13 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				E1248886220A18D2005B9A9E /* CodeSignatureComparitor.swift in Sources */,
-				E17DE11821FEF8F8008CCC13 /* NetworkHelperProtocol.swift in Sources */,
-				E17DE12521FF4426008CCC13 /* NetworkHelperAuthRight.swift in Sources */,
-				E125DCE0221ADA5300027272 /* CommandLineToolRunner.swift in Sources */,
-				E17DE10A21FB630C008CCC13 /* AppProtocol.swift in Sources */,
-				E17DE11421FB71D3008CCC13 /* NetworkHelperAuth.swift in Sources */,
-				E17DE0FE21FB4DF3008CCC13 /* main.swift in Sources */,
-				E17DE11121FB6FDF008CCC13 /* NetworkHelperConstants.swift in Sources */,
-				E17DE10421FB5043008CCC13 /* NetworkHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2657,7 +2471,6 @@
 				EE4E7E031F62B197000F7D5E /* SettingsContainerViewModel.swift in Sources */,
 				EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */,
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
-				E17DE11321FB71D3008CCC13 /* NetworkHelperAuth.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
@@ -2721,7 +2534,6 @@
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
 				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,
-				E17DE12421FF4426008CCC13 /* NetworkHelperAuthRight.swift in Sources */,
 				EE7874A51F3B6569001E261E /* WarningPopupViewController.swift in Sources */,
 				D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
@@ -2747,12 +2559,10 @@
 				D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
 				EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */,
-				E17DE11021FB6FDF008CCC13 /* NetworkHelperConstants.swift in Sources */,
 				EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */,
 				EE74FCAE1F5DD6E200E266BC /* PopUpViewController.swift in Sources */,
 				EEA556401F1F777A0061F43F /* ColorPickerViewModel.swift in Sources */,
 				EE491A541F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift in Sources */,
-				E17DE11721FEF8F8008CCC13 /* NetworkHelperProtocol.swift in Sources */,
 				EED534851EEC112000013607 /* AppDelegate.swift in Sources */,
 				E1C1399C2114399700B88658 /* SwitchButton.swift in Sources */,
 				EEE3B5F31F53F44100E86CFA /* CountryAnnotationViewModel.swift in Sources */,
@@ -2790,7 +2600,6 @@
 				E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */,
 				EE2FE5931F5ECD6B00ABA7DE /* ConnectionOverlay.swift in Sources */,
 				EE3FDC2B1F44853300E5C1CE /* ServerUtility.swift in Sources */,
-				E17DE10C21FB66BC008CCC13 /* FirewallManager.swift in Sources */,
 				EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */,
 				E180D1512125621300F4D1C7 /* UpsellViewController.swift in Sources */,
 				EE01DD131F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift in Sources */,
@@ -2831,7 +2640,6 @@
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,
-				E125DCE2221ADBED00027272 /* NetworkHelper.swift in Sources */,
 				EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */,
 				E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */,
 				427A1F1024F5398900E95912 /* NotificationManagerProtocol.swift in Sources */,
@@ -2863,12 +2671,10 @@
 				E15DE7D22029EA6F00BFA78D /* PassThroughView.swift in Sources */,
 				E1454CF2206FE2C300E6D396 /* HelpPopoverBackgroundView.swift in Sources */,
 				EE52EA271F1E9693009DFF1D /* ColorPickerViewController.swift in Sources */,
-				E125DCE1221ADBE100027272 /* CommandLineToolRunner.swift in Sources */,
 				EE6E61CC1F4C179400638F9B /* SecureCoreServerItemView.swift in Sources */,
 				EEBB82E41F1DEF1B0041432A /* ProfilesTabBarView.swift in Sources */,
 				D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */,
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
-				D5686B1E24E56B1100CC8836 /* NetworkHelperTimeoutWrapper.swift in Sources */,
 				42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
@@ -2894,11 +2700,6 @@
 			isa = PBXTargetDependency;
 			target = EED534801EEC112000013607 /* ProtonVPN */;
 			targetProxy = D591170B229F9574005829DA /* PBXContainerItemProxy */;
-		};
-		E125DD2C221B1E0100027272 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = E17DE0FA21FB4DF3008CCC13 /* ch.protonvpn.ProtonVPNNetworkHelper */;
-			targetProxy = E125DD2B221B1E0100027272 /* PBXContainerItemProxy */;
 		};
 		E15B755320FA83CB0022C406 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
@@ -3086,6 +2887,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3117,6 +2919,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = "DEBUG=1";
@@ -3174,35 +2977,6 @@
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "TLS_PIN_DISABLE DEBUG";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
-				SWIFT_VERSION = 4.2;
-			};
-			name = Staging;
-		};
-		E1034B3D22EB18E40022A43B /* Staging */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ProtonVPNNetworkHelper/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/Info.plist\"",
-					"-sectcreate",
-					__TEXT,
-					__launchd_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/NetworkHelper-Launchd.plist\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNNetworkHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 4.2;
 			};
 			name = Staging;
@@ -3346,65 +3120,6 @@
 			};
 			name = Release;
 		};
-		E17DE10021FB4DF3008CCC13 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ProtonVPNNetworkHelper/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/Info.plist\"",
-					"-sectcreate",
-					__TEXT,
-					__launchd_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/NetworkHelper-Launchd.plist\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNNetworkHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-			};
-			name = Debug;
-		};
-		E17DE10121FB4DF3008CCC13 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = J6S6Q257EK;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				INFOPLIST_FILE = ProtonVPNNetworkHelper/Info.plist;
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
-				MTL_FAST_MATH = YES;
-				OTHER_LDFLAGS = (
-					"-sectcreate",
-					__TEXT,
-					__info_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/Info.plist\"",
-					"-sectcreate",
-					__TEXT,
-					__launchd_plist,
-					"\"$(SRCROOT)/ProtonVPNNetworkHelper/NetworkHelper-Launchd.plist\"",
-				);
-				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNNetworkHelper;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.2;
-			};
-			name = Release;
-		};
 		EEB404D41F77F639006CF513 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -3467,6 +3182,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3498,6 +3214,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -3527,6 +3244,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD)";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
@@ -3558,6 +3276,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				EXCLUDED_ARCHS = arm64;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -3687,16 +3406,6 @@
 				E15B755420FA83CB0022C406 /* Debug */,
 				E15B755620FA83CB0022C406 /* Release */,
 				E1034B3F22EB18E40022A43B /* Staging */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		E17DE0FF21FB4DF3008CCC13 /* Build configuration list for PBXNativeTarget "ch.protonvpn.ProtonVPNNetworkHelper" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				E17DE10021FB4DF3008CCC13 /* Debug */,
-				E17DE10121FB4DF3008CCC13 /* Release */,
-				E1034B3D22EB18E40022A43B /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

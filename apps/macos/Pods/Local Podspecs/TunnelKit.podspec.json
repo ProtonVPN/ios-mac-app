@@ -1,6 +1,6 @@
 {
   "name": "TunnelKit",
-  "version": "2.2.4",
+  "version": "2.3.0",
   "summary": "Non-official OpenVPN client for Apple platforms.",
   "homepage": "https://github.com/passepartoutvpn/tunnelkit",
   "license": {
@@ -8,11 +8,11 @@
     "file": "LICENSE"
   },
   "authors": {
-    "Davide De Rosa": "keeshux@gmail.com"
+    "Davide De Rosa": "me@davidederosa.com"
   },
   "source": {
     "git": "https://github.com/passepartoutvpn/tunnelkit.git",
-    "tag": "v2.2.4"
+    "tag": "v2.3.0"
   },
   "swift_versions": "5.0",
   "platforms": {
@@ -49,6 +49,16 @@
 
         ],
         "TunnelKit/Core": [
+
+        ]
+      }
+    },
+    {
+      "name": "Manager",
+      "source_files": "TunnelKit/Sources/Manager/**/*.swift",
+      "frameworks": "NetworkExtension",
+      "dependencies": {
+        "SwiftyBeaver": [
 
         ]
       }

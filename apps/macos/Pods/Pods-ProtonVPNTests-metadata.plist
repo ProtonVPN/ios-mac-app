@@ -516,7 +516,7 @@ THE SOFTWARE.
 			<key>authors</key>
 			<dict>
 				<key>Davide De Rosa</key>
-				<string>keeshux@gmail.com</string>
+				<string>me@davidederosa.com</string>
 			</dict>
 			<key>description</key>
 			<string></string>
@@ -1211,7 +1211,7 @@ Public License instead of this License.  But first, please read
 			<key>summary</key>
 			<string>Non-official OpenVPN client for Apple platforms.</string>
 			<key>version</key>
-			<string>2.2.4</string>
+			<string>2.3.0</string>
 		</dict>
 	</array>
 </dict>

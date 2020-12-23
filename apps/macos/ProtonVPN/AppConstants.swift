@@ -41,7 +41,6 @@ class AppConstants {
         static let earlyAccess = "EarlyAccess"
         static let unprotectedNetworkNotifications = "UnprotectedNetwork"
         static let dontAskAboutSwift5 = "DontAskAboutSwift5"
-        static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
         static let mapWidth = "MapWidth"
         static let welcomed = "Welcomed"
         static let trialWelcomed = "TrialWelcomed"
@@ -53,16 +52,6 @@ class AppConstants {
         static let sandbox = ("~/Library/Containers/ch.protonvpn.mac/Data/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
         static let starterSandbox = ("~/Library/Containers/ch.protonvpn.ProtonVPNStarter/" as NSString).expandingTildeInPath
         static let userDefaults = ("~/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
-        
-        static func firewallConfigDir() throws -> URL {
-            guard let directory = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask).first else { throw FirewallManagerError.fileSystem }
-            
-            return directory.appendingPathComponent("ProtonVPN")
-        }
-        
-        static func firewallConfigFile() throws -> URL {
-            return try firewallConfigDir().appendingPathComponent("protonvpn.pf.conf")
-        }
     }
     
     struct Time {

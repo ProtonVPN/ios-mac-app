@@ -40,7 +40,6 @@ class UpdateManager: NSObject {
     }
     
     private var appSessionManager: AppSessionManager?
-    private var firewallManager: FirewallManager?
     private let propertiesManager = PropertiesManager()
     
     private var updater: SUUpdater
@@ -93,13 +92,12 @@ class UpdateManager: NSObject {
         updater.feedURL = earlyAccess ? earlyAccessFeedURL : standardFeedURL
         
         if earlyAccess {
-            checkForUpdates(nil, firewallManager: firewallManager, silently: false)
+            checkForUpdates(nil, silently: false)
         }
     }
     
-    func checkForUpdates(_ appSessionManager: AppSessionManager?, firewallManager: FirewallManager?, silently: Bool) {
+    func checkForUpdates(_ appSessionManager: AppSessionManager?, silently: Bool) {
         self.appSessionManager = appSessionManager
-        self.firewallManager = firewallManager
         
         propertiesManager.rememberLoginAfterUpdate = false
         
@@ -138,10 +136,6 @@ class UpdateManager: NSObject {
 extension UpdateManager: SUUpdaterDelegate {
 
     func updaterWillRelaunchApplication(_ updater: SUUpdater) {
-        if propertiesManager.killSwitch {
-            firewallManager?.disableFirewall()
-        }
-        
         if let sessionManager = appSessionManager, sessionManager.loggedIn {
             propertiesManager.rememberLoginAfterUpdate = true
         }

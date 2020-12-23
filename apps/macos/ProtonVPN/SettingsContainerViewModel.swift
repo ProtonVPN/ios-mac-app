@@ -26,10 +26,8 @@ import vpncore
 class SettingsContainerViewModel {
     
     let vpnGateway: VpnGatewayProtocol
-    let firewallManager: FirewallManager
     
-    init(vpnGateway: VpnGatewayProtocol, firewallManager: FirewallManager) {
+    init(vpnGateway: VpnGatewayProtocol) {
         self.vpnGateway = vpnGateway
-        self.firewallManager = firewallManager
     }
 }

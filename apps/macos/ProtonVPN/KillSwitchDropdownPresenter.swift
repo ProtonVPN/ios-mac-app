@@ -25,12 +25,11 @@ import vpncore
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & FirewallManagerFactory & AppStateManagerFactory
+    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory
     
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
@@ -69,7 +68,6 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_killswitch_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
-            self.firewallManager.disableFirewall()
         })
     }
     
@@ -79,7 +77,6 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_killswitch_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
             self.propertiesManager.killSwitch = true
-            self.firewallManager.installHelperIfNeeded(trigger: .userInitiated)
         })
     }
 }

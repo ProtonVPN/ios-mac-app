@@ -48,13 +48,12 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
-    private lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
@@ -293,10 +292,8 @@ class AppSessionManagerImplementation: AppSessionManager {
         
         let confirmationClosure: () -> Void = { [weak self] in
             self?.appStateManager.disconnect {
-                self?.firewallManager.disableFirewall {
-                    DispatchQueue.main.async {
-                        NSApp.reply(toApplicationShouldTerminate: true)
-                    }
+                DispatchQueue.main.async {
+                    NSApp.reply(toApplicationShouldTerminate: true)
                 }
             }
         }

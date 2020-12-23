@@ -95,18 +95,6 @@ extension PropertiesManagerProtocol {
         }
     }
     
-    var killSwitch: Bool {
-        get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.killSwitch)
-        }
-        set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.killSwitch)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
-            }
-        }
-    }
-    
     func restoreStartOnBootStatus() {
         let enabled = self.startOnBoot
         self.setLoginItem(enabled: enabled)

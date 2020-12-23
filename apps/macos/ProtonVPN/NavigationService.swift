@@ -30,7 +30,7 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory
+    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -39,7 +39,6 @@ class NavigationService {
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
@@ -78,7 +77,6 @@ class NavigationService {
             showLogIn()
         }
         
-        firewallManager.log("Start up firewall manager")
     }
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
@@ -175,7 +173,7 @@ extension NavigationService {
     }
     
     func checkForUpdates() {
-        UpdateManager.shared.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: false)
+        UpdateManager.shared.checkForUpdates(appSessionManager, silently: false)
     }
     
     func openLogsFolder() {
@@ -190,7 +188,7 @@ extension NavigationService {
         
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(vpnGateway: vpnGateway, firewallManager: firewallManager),
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(vpnGateway: vpnGateway),
                                          tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
     }
     
@@ -262,11 +260,9 @@ extension NavigationService {
         }
         
         vpnGateway.disconnect {
-            self.firewallManager.disableFirewall {
-                DispatchQueue.main.async {
-                    self.isSystemLoggingOff = false
-                    NSApp.reply(toApplicationShouldTerminate: true)
-                }
+            DispatchQueue.main.async {
+                self.isSystemLoggingOff = false
+                NSApp.reply(toApplicationShouldTerminate: true)
             }
         }
         

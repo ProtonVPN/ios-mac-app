@@ -142,7 +142,7 @@ class CountriesSectionViewModel {
     private var state: ModelState
     private var userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & FirewallManagerFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory
     private let factory: Factory
     
     init(factory: Factory) {
@@ -172,7 +172,6 @@ class CountriesSectionViewModel {
                                                name: propertiesManager.killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings),
                                                name: PropertiesManager.netShieldNotification, object: nil)
-        factory.makeFirewallManager().stateChanged()
     }
     
     func isCountryExpanded(_ countryCode: String) -> Bool {

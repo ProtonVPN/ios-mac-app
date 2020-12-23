@@ -35,14 +35,13 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 
 class HelpMenuViewModel {
     
-    typealias Factory = VpnManagerFactory & NavigationServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory & FirewallManagerFactory
+    typealias Factory = VpnManagerFactory & NavigationServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private var firewallManager: FirewallManager { return factory.makeFirewallManager() }
     
     init(factory: Factory) {
         self.factory = factory
@@ -65,11 +64,6 @@ class HelpMenuViewModel {
     }
     
     private func clearAllDataAndTerminate() {
-        // firewall
-        do {
-            try FileManager.default.removeItem(at: AppConstants.FilePaths.firewallConfigDir())
-        } catch {}
-
         // keychain
         self.vpnKeychain.clear()
         AuthKeychain.clear()

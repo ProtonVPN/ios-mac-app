@@ -29,16 +29,14 @@ class ConnectionSettingsViewModel {
     
     private let profileManager = ProfileManager.shared
     private let vpnGateway: VpnGatewayProtocol
-    private let firewallManager: FirewallManager
     private let systemExtensionManager: SystemExtensionManager
     private weak var viewController: ReloadableViewController?
 
     var killSwitchWarning: ((WarningPopupViewModel) -> Void)?
     let killSwitchChanged = Notification.Name("SettingsViewModelKillSwitchChanged") // two observers
     
-    init(vpnGateway: VpnGatewayProtocol, firewallManager: FirewallManager, systemExtensionManager: SystemExtensionManager) {
+    init(vpnGateway: VpnGatewayProtocol, systemExtensionManager: SystemExtensionManager) {
         self.vpnGateway = vpnGateway
-        self.firewallManager = firewallManager
         self.systemExtensionManager = systemExtensionManager
     }
     
@@ -180,12 +178,6 @@ class ConnectionSettingsViewModel {
     
     func setKillSwitch(_ enabled: Bool) {
         propertiesManager.killSwitch = enabled
-    
-        if enabled {
-            firewallManager.installHelperIfNeeded(trigger: .userInitiated)
-        } else {
-            firewallManager.disableFirewall(completion: nil)
-        }
     }
     
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {

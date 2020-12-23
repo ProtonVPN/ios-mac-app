@@ -10,17 +10,17 @@ PODS:
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
   - Sparkle (1.24.0)
-  - SwiftLint (0.41.0)
+  - SwiftLint (0.42.0)
   - SwiftyBeaver (1.9.3)
   - TrustKit (1.6.5)
-  - TunnelKit (2.2.4):
-    - TunnelKit/Protocols/OpenVPN (= 2.2.4)
-  - TunnelKit/AppExtension (2.2.4):
+  - TunnelKit (2.3.0):
+    - TunnelKit/Protocols/OpenVPN (= 2.3.0)
+  - TunnelKit/AppExtension (2.3.0):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.2.4):
+  - TunnelKit/Core (2.3.0):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.2.4):
+  - TunnelKit/Protocols/OpenVPN (2.3.0):
     - OpenSSL-Apple (~> 1.1.1g.6)
     - TunnelKit/AppExtension
     - TunnelKit/Core
@@ -39,7 +39,7 @@ DEPENDENCIES:
   - Sentry (= 4.5.0)
   - Sparkle (= 1.24.0)
   - SwiftLint
-  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
+  - TunnelKit (from `../tunnelkit`)
   - vpncore (from `../vpncore`)
 
 SPEC REPOS:
@@ -57,15 +57,10 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
+    :branch: keychain_avoid
+    :path: "../tunnelkit"
   vpncore:
     :path: "../vpncore"
-
-CHECKOUT OPTIONS:
-  TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
@@ -75,12 +70,12 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   Sparkle: 270cd27377bf04e9c128af06e3a22d0f572d6ee3
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
-  TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
+  TunnelKit: a4fa4ecc6fc2b9fa74c38609c0e8fc4441d9672e
   vpncore: e90f94374f94034b0ec8a78aa2d193fdf27569e0
 
-PODFILE CHECKSUM: c3734b0de9d285a342e75152b5d966b5cd9ea3e4
+PODFILE CHECKSUM: d571d9f3ad6ed2572165fc8130b359deddd52872
 
 COCOAPODS: 1.10.0

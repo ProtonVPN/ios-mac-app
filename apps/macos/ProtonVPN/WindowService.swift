@@ -64,7 +64,6 @@ class WindowServiceImplementation: WindowService {
         & HeaderViewModelFactory
         & AnnouncementsViewModelFactory
         & SystemExtensionManagerFactory
-        & FirewallManagerFactory
         & ConnectingOverlayViewModelFactory
 
     private let factory: Factory
