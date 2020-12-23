@@ -469,6 +469,8 @@
 		D584957625923BD900CFAFDE /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "Pods/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"; sourceTree = "<group>"; };
 		D58496972593489900CFAFDE /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/SwiftyBeaver/SwiftyBeaver.framework"; sourceTree = "<group>"; };
 		D58496992593489D00CFAFDE /* TunnelKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TunnelKit.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/TunnelKit/TunnelKit.framework"; sourceTree = "<group>"; };
+		D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-release.entitlements"; sourceTree = "<group>"; };
+		D58496A125935FCB00CFAFDE /* ProtonVPN_OpenVPN-release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN_OpenVPN-release.entitlements"; sourceTree = "<group>"; };
 		D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlan+Extension.swift"; sourceTree = "<group>"; };
 		D5906F1422D3795C001BC074 /* AttachedFileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachedFileView.swift; sourceTree = "<group>"; };
 		D5906F1722D379C9001BC074 /* AttachedFileView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AttachedFileView.xib; sourceTree = "<group>"; };
@@ -896,6 +898,7 @@
 				42EF09E0257A713F00E2EDCA /* main.swift */,
 				42EF09E2257A713F00E2EDCA /* Info.plist */,
 				42EF09E3257A713F00E2EDCA /* ProtonVPN_OpenVPN.entitlements */,
+				D58496A125935FCB00CFAFDE /* ProtonVPN_OpenVPN-release.entitlements */,
 			);
 			path = "ProtonVPN OpenVPN";
 			sourceTree = "<group>";
@@ -1784,6 +1787,7 @@
 				42C1F2922553069900793A49 /* Presenters */,
 				E17DE11521FEF8C3008CCC13 /* Protocols */,
 				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
+				D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */,
 				EE98CFD81F150639000D6688 /* Resources */,
 				EED534EE1EEC18C500013607 /* SupportingFiles */,
 				EED534BC1EEC151600013607 /* Utilities */,
@@ -2778,8 +2782,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN-release.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2794,7 +2798,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Development PP";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Extension Developer ID PP";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2808,8 +2812,8 @@
 				CLANG_ENABLE_OBJC_WEAK = YES;
 				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN-release.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -2824,7 +2828,7 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Development PP";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN OpenVPN Extension Developer ID PP";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 			};
@@ -2948,8 +2952,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDebug;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN/ProtonVPN-release.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -2973,7 +2977,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Mac Development PP";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "TLS_PIN_DISABLE DEBUG";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
@@ -2987,8 +2991,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3003,7 +3007,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Starter Developer ID PP";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
@@ -3155,8 +3159,8 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -3171,7 +3175,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Starter Developer ID PP";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
@@ -3345,8 +3349,8 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
-				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
-				CODE_SIGN_IDENTITY = "Mac Developer";
+				CODE_SIGN_ENTITLEMENTS = "ProtonVPN/ProtonVPN-release.entitlements";
+				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
@@ -3370,7 +3374,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Mac Development PP";
+				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Application Developer ID PP";
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/ProtonVPN-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Off;
 				SWIFT_VERSION = 4.2;
