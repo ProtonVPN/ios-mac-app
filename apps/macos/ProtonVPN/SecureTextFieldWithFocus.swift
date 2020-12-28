@@ -79,8 +79,5 @@ class SecureTextFieldWithFocus: NSSecureTextField {
         isBordered = false
         focusRingType = .none
         drawsBackground = false
-        //drawsBackground = true
-        //wantsLayer = true
-        //layer?.backgroundColor = NSColor.clear.cgColor
     }
 }

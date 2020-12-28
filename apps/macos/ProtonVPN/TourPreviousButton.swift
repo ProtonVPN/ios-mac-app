@@ -35,7 +35,7 @@ class TourPreviousButton: HoverDetectionButton {
         
         guard let context = NSGraphicsContext.current?.cgContext else { return }
         
-        let ah: CGFloat = 4.5 //arrowHeight
+        let ah: CGFloat = 4.5 // arrowHeight
         let midX = bounds.midX + 0.5
         let midY = bounds.midY
         let arrow = CGMutablePath()

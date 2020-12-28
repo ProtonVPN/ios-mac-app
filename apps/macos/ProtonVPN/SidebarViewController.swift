@@ -161,12 +161,12 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }
     
     func windowWillEnterFullScreen(_ notification: Notification) {
-        //hide expend button
+        // Hide expand button
         self.expandButton.isHidden = true
     }
     
     func windowWillExitFullScreen(_ notification: Notification) {
-        //show expend button
+        // Show expand button
         self.expandButton.isHidden = false
     }
     

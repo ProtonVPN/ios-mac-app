@@ -93,18 +93,18 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-        //Requires user action
+        // Requires user action
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        //User gave access
+        // User gave access
         os_log(.debug, log: self.log, "request result: %{public}@", "\(result)")
         switch result {
         case .completed:
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
         case .willCompleteAfterReboot:
-            //Display reconnect popup
+            // Display reconnect popup
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
         }
         self.completionCallback?(propertiesManager.vpnProtocol)
@@ -113,7 +113,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         os_log(.debug, log: self.log, "request error: %{public}@", "\(error)")
-        //Display error popup
+        // Display error popup
         propertiesManager.vpnProtocol = .ike
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil

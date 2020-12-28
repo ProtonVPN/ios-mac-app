@@ -153,7 +153,7 @@ extension AppDelegate {
             }
             completion(nil)
         }.migrate { _ in
-            //Migration complete
+            // Migration complete
         }
     }
 }
