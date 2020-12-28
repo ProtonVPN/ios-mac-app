@@ -53,9 +53,6 @@
 		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
-		D584957725923BD900CFAFDE /* openssl.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D584957625923BD900CFAFDE /* openssl.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D58496982593489900CFAFDE /* SwiftyBeaver.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58496972593489900CFAFDE /* SwiftyBeaver.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		D584969A2593489D00CFAFDE /* TunnelKit.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = D58496992593489D00CFAFDE /* TunnelKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
 		D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5906F1722D379C9001BC074 /* AttachedFileView.xib */; };
@@ -378,9 +375,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 7;
 			files = (
-				D584957725923BD900CFAFDE /* openssl.framework in CopyFiles */,
-				D58496982593489900CFAFDE /* SwiftyBeaver.framework in CopyFiles */,
-				D584969A2593489D00CFAFDE /* TunnelKit.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -466,9 +460,6 @@
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractProfileViewModel.swift; sourceTree = "<group>"; };
 		D57597C023B10C2E002D6631 /* WindowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenuController.swift; sourceTree = "<group>"; };
-		D584957625923BD900CFAFDE /* openssl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = openssl.framework; path = "Pods/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"; sourceTree = "<group>"; };
-		D58496972593489900CFAFDE /* SwiftyBeaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyBeaver.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/SwiftyBeaver/SwiftyBeaver.framework"; sourceTree = "<group>"; };
-		D58496992593489D00CFAFDE /* TunnelKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = TunnelKit.framework; path = "../../Library/Developer/Xcode/DerivedData/ProtonVPN-cgcfulywgmclddfokdasgmwijzix/Build/Products/Debug/TunnelKit/TunnelKit.framework"; sourceTree = "<group>"; };
 		D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-release.entitlements"; sourceTree = "<group>"; };
 		D58496A125935FCB00CFAFDE /* ProtonVPN_OpenVPN-release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN_OpenVPN-release.entitlements"; sourceTree = "<group>"; };
 		D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AccountPlan+Extension.swift"; sourceTree = "<group>"; };
@@ -1742,9 +1733,6 @@
 		EED534781EEC112000013607 = {
 			isa = PBXGroup;
 			children = (
-				D58496992593489D00CFAFDE /* TunnelKit.framework */,
-				D58496972593489900CFAFDE /* SwiftyBeaver.framework */,
-				D584957625923BD900CFAFDE /* openssl.framework */,
 				E173304322C353F500050F79 /* Intents.intentdefinition */,
 				E173304522C3553700050F79 /* README.md */,
 				E1ECB29A235DB0FB00AB745F /* LICENSE */,
