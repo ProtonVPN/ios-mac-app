@@ -55,6 +55,13 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownNote.attributedStringValue = LocalizedString.qsNSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
     }
 
+    // MARK: - Override
+    
+    override var requiresUpdate: Bool {
+        let userTier = (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+        return NetShieldType.level2.isUserTierTooLow(userTier)
+    }
+    
     // MARK: - Private
     
     private var netshieldOff: QuickSettingGenericOption {
