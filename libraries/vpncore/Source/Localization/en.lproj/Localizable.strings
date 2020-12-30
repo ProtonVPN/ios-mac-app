@@ -749,3 +749,9 @@
 
 "_openvpn_settings_enabled_title" = "You're now using OpenVPN";
 "_openvpn_settings_enabled_description" = "You have successfully enabled OpenVPN protocol on your device.";
+
+"_openvpn_enable_below_catalina_title" = "OpenVPN Cannot be enabled";
+"_openvpn_enable_below_catalina_description" = "OpenVPN can only be enabled on OSX 10.15 or greater, please update your system to enable OpenVPN";
+
+"_openvpn_error_title" = "Error enabling OpenVPN";
+"_openvpn_error_description" = "There was an error installing OpenVPN extension, please make sure your ProtonVPN application is located in the App’s folder.";

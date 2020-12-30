@@ -628,3 +628,27 @@ public class OpenVPNEnabledAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
     }
 }
+
+public class OpenVPNInstallingErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNErrorTitle
+    public var message: String? = LocalizedString.openVPNErrorDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    }
+}
+
+public class OpenVPNEnableErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNBelowCatalinaTitle
+    public var message: String? = LocalizedString.openVPNBelowCatalinaDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    }
+}

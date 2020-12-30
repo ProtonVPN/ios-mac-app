@@ -700,4 +700,10 @@ public class LocalizedString {
 
     public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
     public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
+    
+    public static let openVPNBelowCatalinaTitle = NSLocalizedString("_openvpn_enable_below_catalina_title", comment: "Popup title after enabling OpenVPN on a OSX below Catalina")
+    public static let openVPNBelowCatalinaDescription = NSLocalizedString("_openvpn_enable_below_catalina_description", comment: "Popup description after enabling OpenVPN on a OSX below Catalina")
+    
+    public static let openVPNErrorTitle = NSLocalizedString("_openvpn_error_title", comment: "Popup title on error installing OpenVPN")
+    public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
 }
