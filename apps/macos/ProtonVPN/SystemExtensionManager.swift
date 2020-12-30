@@ -131,6 +131,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         os_log(.debug, log: self.log, "request error: %{public}@", "\(error)")
+        if completionCallback == nil { return }
         propertiesManager.vpnProtocol = .ike
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil
