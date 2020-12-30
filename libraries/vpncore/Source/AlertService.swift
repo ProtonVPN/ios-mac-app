@@ -611,8 +611,8 @@ public class OpenVPNInstallationRequiredAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
+    public init(continueHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: nil))
         actions.append(AlertAction(title: LocalizedString.showInstructions, style: .confirmative, handler: continueHandler))
     }
 }
@@ -624,8 +624,8 @@ public class OpenVPNEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
 
@@ -636,8 +636,8 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
 
@@ -648,7 +648,7 @@ public class OpenVPNEnableErrorAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
