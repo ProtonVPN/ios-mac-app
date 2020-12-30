@@ -51,6 +51,7 @@ public class LocalizedString {
     public static let report = NSLocalizedString("_report", comment: "Button in Kill switch error alert")
     public static let ignore = NSLocalizedString("_ignore", comment: "Button in Kill switch error alert")
     public static let `continue` = NSLocalizedString("_continue", comment: "Button in some alerts")
+    public static let showInstructions = NSLocalizedString("_show_instructions", comment: "Button in some alerts")
     public static let networkUnreachable = NSLocalizedString("_network_unreachable", comment: "iOS: quick connect widget")
     public static let notConnectedToTheInternet = NSLocalizedString("_not_connected_to_the_internet", comment: "Title in no internet alert")
     public static let vpnConnectionActive = NSLocalizedString("_vpn_connection_active", comment: "MacOS: alert before disconnection on SecureCore state change")
@@ -689,4 +690,14 @@ public class LocalizedString {
     
     public static let upgradeSecureCore = NSLocalizedString("_upgrade_required_securecore_description", comment: "Description for enable secure core on free  plan")
 
+    // Quick Settings
+    
+    public static let openVPNSettingsTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
+    public static let openVPNSettingsDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
+    public static let openVPNSettingsStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
+    public static let openVPNSettingsStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
+    public static let openVPNSettingsStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
+
+    public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
+    public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
 }

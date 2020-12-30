@@ -26,6 +26,7 @@
 "_report" = "Report";
 "_ignore" = "Ignore";
 "_continue" = "Continue";
+"_show_instructions" = "Show instructions";
 "_network_unreachable" = "Network Unreachable";
 "_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the Internet.";
 "_vpn_connection_active" = "VPN Connection Active";
@@ -737,3 +738,14 @@
 "_kill_switch_reconnection_bold1" = "disable Kill Switch";
 "_kill_switch_reconnection_bold2" = "without protection";
 "_kill_switch_reconnection_cancel" = "Cancel reconnection";
+
+// OpenVPN
+
+"_openvpn_settings_title" = "Change settings to use OpenVPN";
+"_openvpn_settings_description" = "To use OpenVPN, you need to give ProtonVPN permission to load a system extension in 3 easy steps. Do you want to see the instructions?";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+"_openvpn_settings_step2" = "Make the necesary changes by clicking on the lock";
+"_openvpn_settings_step3" = "Allow the system software to load";
+
+"_openvpn_settings_enabled_title" = "You're now using OpenVPN";
+"_openvpn_settings_enabled_description" = "You have successfully enabled OpenVPN protocol on your device.";
