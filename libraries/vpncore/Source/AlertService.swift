@@ -603,3 +603,28 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
     }
 }
+
+public class OpenVPNInstallationRequiredAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNSettingsTitle
+    public var message: String? = LocalizedString.openVPNSettingsDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
+        actions.append(AlertAction(title: LocalizedString.showInstructions, style: .confirmative, handler: continueHandler))
+    }
+}
+
+public class OpenVPNEnabledAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNEnabledTitle
+    public var message: String? = LocalizedString.openVPNEnabledDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+    }
+}
