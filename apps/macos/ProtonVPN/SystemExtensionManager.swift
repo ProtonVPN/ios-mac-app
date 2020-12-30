@@ -31,12 +31,14 @@ protocol SystemExtensionManagerFactory {
 
 class SystemExtensionManager: NSObject {
     
-    typealias Factory = PropertiesManagerFactory
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory
     
     fileprivate let factory: Factory
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
     fileprivate let log = OSLog(subsystem: "ProtonVPN", category: "ProtonTechnologies-SystemExtensionManager")
+    fileprivate var silent: Bool = false
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
+    fileprivate lazy var alertCore: CoreAlertService = self.factory.makeCoreAlertService()
     
     private var transportProtocol: VpnProtocol.TransportProtocol = .tcp
     
@@ -47,8 +49,12 @@ class SystemExtensionManager: NSObject {
         super.init()
     }
     
-    func checkSystemExtensionState() {
-        guard #available(OSX 10.15, *) else { return }
+    func checkSystemExtensionState(silent: Bool = false) {
+        self.silent = silent
+        guard #available(OSX 10.15, *) else {
+            self.propertiesManager.vpnProtocol = .ike
+            return
+        }
         os_log(.debug, log: self.log, "checkSystemExtensionState ")
         switch propertiesManager.vpnProtocol {
         case .openVpn(let transport):
@@ -61,7 +67,10 @@ class SystemExtensionManager: NSObject {
     }
     
     func requestExtensionInstall( _ transportProtocol: VpnProtocol.TransportProtocol, completion: @escaping VpnProtocolCallback ) {
-        guard #available(OSX 10.15, *) else { return }
+        guard #available(OSX 10.15, *) else {
+            self.propertiesManager.vpnProtocol = .ike
+            return
+        }
         os_log(.debug, log: self.log, "requestExtensionInstall ")
         self.completionCallback = completion
         self.transportProtocol = transportProtocol
@@ -95,6 +104,11 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
+        if silent { return }
+        let alert = OpenVPNInstallationRequiredAlert(continueHandler: {
+            //Display Installation guide
+        })
+        alertCore.push(alert: alert)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
@@ -103,6 +117,10 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         switch result {
         case .completed:
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            if !silent {
+                alertCore.push(alert: OpenVPNEnabledAlert())
+            }
+                
         case .willCompleteAfterReboot:
             // Display reconnect popup
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
@@ -113,9 +131,10 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         os_log(.debug, log: self.log, "request error: %{public}@", "\(error)")
-        // Display error popup
         propertiesManager.vpnProtocol = .ike
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil
+        if silent { return }
+        alertCore.push(alert: OpenVPNInstallingErrorAlert())
     }
 }

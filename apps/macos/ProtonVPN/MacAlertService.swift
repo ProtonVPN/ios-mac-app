@@ -160,6 +160,18 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
             
+        case is OpenVPNInstallationRequiredAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is OpenVPNEnabledAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is OpenVPNEnableErrorAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is OpenVPNInstallingErrorAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
