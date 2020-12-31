@@ -115,7 +115,6 @@ public class LocalizedString {
 
     public static let contactOurSupport = NSLocalizedString("_contact_our_support", comment: "Text addressing to contact costumer support on several sites of the app")
     
-    
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
     public static let alwaysOnWillReconnect = NSLocalizedString("_always_on_will_reconnect", comment: "Disconnect notification")
