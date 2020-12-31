@@ -113,6 +113,9 @@ public class LocalizedString {
     public static let moreInfo = NSLocalizedString("_more_info", comment: "Display more information")
     public static let lessInfo = NSLocalizedString("_less_info", comment: "Display less information")
 
+    public static let contactOurSupport = NSLocalizedString("_contact_our_support", comment: "Text addressing to contact costumer support on several sites of the app")
+    
+    
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
     public static let alwaysOnWillReconnect = NSLocalizedString("_always_on_will_reconnect", comment: "Disconnect notification")
@@ -701,9 +704,7 @@ public class LocalizedString {
     public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
     public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
     
-    public static let openVPNBelowCatalinaTitle = NSLocalizedString("_openvpn_enable_below_catalina_title", comment: "Popup title after enabling OpenVPN on a OSX below Catalina")
+    public static let openVPNCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
     public static let openVPNBelowCatalinaDescription = NSLocalizedString("_openvpn_enable_below_catalina_description", comment: "Popup description after enabling OpenVPN on a OSX below Catalina")
-    
-    public static let openVPNErrorTitle = NSLocalizedString("_openvpn_error_title", comment: "Popup title on error installing OpenVPN")
     public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
 }

@@ -630,7 +630,7 @@ public class OpenVPNEnabledAlert: SystemAlert {
 }
 
 public class OpenVPNInstallingErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNErrorTitle
+    public var title: String? = LocalizedString.openVPNCannotEnable
     public var message: String? = LocalizedString.openVPNErrorDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
@@ -642,7 +642,7 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
 }
 
 public class OpenVPNEnableErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNBelowCatalinaTitle
+    public var title: String? = LocalizedString.openVPNCannotEnable
     public var message: String? = LocalizedString.openVPNBelowCatalinaDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
@@ -651,4 +651,12 @@ public class OpenVPNEnableErrorAlert: SystemAlert {
     public init() {
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
+}
+
+public class OpenVPNExtensionTourAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
 }
