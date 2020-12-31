@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0663E3B9259DCB960059E88D /* SystemExtensionGuideViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */; };
+		0663E3BA259DCB960059E88D /* SystemExtensionGuideViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */; };
 		198842F5EE733688692FAF24 /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5249AD0C821C84B18F189441 /* Pods-ProtonVPN OpenVPN-metadata.plist */; };
 		21A0C56EE26846392D949E1E /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 826C803B7C2C3A7B7C3178E6 /* Pods_ProtonVPNTests.framework */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
@@ -402,6 +404,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
+		0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemExtensionGuideViewController.xib; sourceTree = "<group>"; };
 		1E3110675CE43A09700E1BA1 /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		21BA0D02D9C47E419A9C0D53 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		27F7409F724A637E79F6FE80 /* Pods-ProtonVPN.debug beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug beta.xcconfig"; sourceTree = "<group>"; };
@@ -820,6 +824,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0663E3B6259DCA570059E88D /* System Extension */ = {
+			isa = PBXGroup;
+			children = (
+				0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */,
+				0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */,
+			);
+			name = "System Extension";
+			sourceTree = "<group>";
+		};
 		31F23820696BA6450B77DEE9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1833,6 +1846,7 @@
 		EEE36ED71F1379FC00E8F859 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				0663E3B6259DCA570059E88D /* System Extension */,
 				EE98CFDC1F150F32000D6688 /* About */,
 				EE7874A31F3B654D001E261E /* Elements */,
 				EE98CFEB1F1523BD000D6688 /* Login */,
@@ -1898,7 +1912,7 @@
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
 				42EF09D9257A713F00E2EDCA /* Resources */,
-				D584957125923B6800CFAFDE /* CopyFiles */,
+				D584957125923B6800CFAFDE /* Embed frameworks */,
 			);
 			buildRules = (
 			);
@@ -2141,6 +2155,7 @@
 				EECEF3DB1F169A0500A16606 /* ServerItem.xib in Resources */,
 				42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
+				0663E3BA259DCB960059E88D /* SystemExtensionGuideViewController.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
 				E180D15C2126A89900F4D1C7 /* Tour.xib in Resources */,
@@ -2488,6 +2503,7 @@
 				E187022020E268FE000521AC /* StatusMenuProfileItemViewModel.swift in Sources */,
 				EE5CF76E1F4DDB750002BBF3 /* ProfilesMenuController.swift in Sources */,
 				E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */,
+				0663E3B9259DCB960059E88D /* SystemExtensionGuideViewController.swift in Sources */,
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
 				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,

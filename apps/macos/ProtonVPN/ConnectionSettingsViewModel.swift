@@ -124,7 +124,7 @@ class ConnectionSettingsViewModel {
     func setProtocol(_ index: Int) {
         
         var transportProtocol: VpnProtocol.TransportProtocol = .tcp
-        
+        alertService.push(alert: OpenVPNExtensionTourAlert())
         switch index {
         case 1: transportProtocol = .tcp
         case 2: transportProtocol = .udp

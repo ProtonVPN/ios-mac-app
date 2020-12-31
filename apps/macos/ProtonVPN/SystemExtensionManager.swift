@@ -106,7 +106,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
         if silent { return }
         let alert = OpenVPNInstallationRequiredAlert(continueHandler: {
-            //Display Installation guide
+            // Display Installation guide
         })
         alertCore.push(alert: alert)
     }

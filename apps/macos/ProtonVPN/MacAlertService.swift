@@ -172,6 +172,9 @@ extension MacAlertService: CoreAlertService {
         case is OpenVPNInstallingErrorAlert:
             showDefaultSystemAlert(alert)
             
+        case is OpenVPNExtensionTourAlert:
+            show(alert as! OpenVPNExtensionTourAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -220,6 +223,11 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: neagentViewController)
     }
 
+    private func show(_ alert: OpenVPNExtensionTourAlert) {
+        let extensionInstallerViewController = SystemExtensionGuideViewController()
+        windowService.presentKeyModal(viewController: extensionInstallerViewController)
+    }
+    
     private func show(_ alert: P2pForwardedAlert) {
         guard let p2pIcon = NSAttributedString.imageAttachment(named: "p2p-white", width: 15, height: 12) else { return }
         
