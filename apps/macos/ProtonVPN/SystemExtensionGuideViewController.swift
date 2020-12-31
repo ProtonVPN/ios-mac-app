@@ -47,6 +47,10 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     @IBOutlet weak var nextBtn: NSButton!
     @IBOutlet weak var previousBtn: NSButton!
     
+    @IBOutlet weak var indicator1Lbl: NSTextField!
+    @IBOutlet weak var indicator2Lbl: NSTextField!
+    @IBOutlet weak var indicator3Lbl: NSTextField!
+    
     var viewModel: SystemExtensionGuideViewModelProtocol?
     
     override func viewDidLoad() {
@@ -64,6 +68,12 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     private func setupBody() {
         bodyView.wantsLayer = true
         bodyView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        [indicator1Lbl, indicator2Lbl, indicator3Lbl].forEach { indicator in
+            indicator?.wantsLayer = true
+            indicator?.layer?.borderWidth = 1
+            indicator?.layer?.borderColor = .white
+            indicator?.layer?.cornerRadius = 12
+        }
     }
     
     private func setupFooter() {
@@ -113,6 +123,14 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
         step1View.isHidden = !step1
         step2View.isHidden = !step2
         step3View.isHidden = !step3
+        
+        indicator1Lbl.layer?.borderColor = step1 ? NSColor.protonGreen().cgColor : .white
+        indicator1Lbl.textColor = step1 ? .protonGreen() : .white
+        indicator2Lbl.layer?.borderColor = step2 ? NSColor.protonGreen().cgColor : .white
+        indicator2Lbl.textColor = step2 ? .protonGreen() : .white
+        indicator3Lbl.layer?.borderColor = step3 ? NSColor.protonGreen().cgColor : .white
+        indicator3Lbl.textColor = step3 ? .protonGreen() : .white
+        
         previousBtn.isHidden = step1
         nextBtn.isHidden = step3
         confirmationButton.isHidden = !step3

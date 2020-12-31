@@ -38,7 +38,7 @@ class SystemExtensionManager: NSObject {
     fileprivate let log = OSLog(subsystem: "ProtonVPN", category: "ProtonTechnologies-SystemExtensionManager")
     fileprivate var silent: Bool = false
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
-    fileprivate lazy var alertCore: CoreAlertService = self.factory.makeCoreAlertService()
+    fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     
     private var transportProtocol: VpnProtocol.TransportProtocol = .tcp
     
@@ -105,10 +105,10 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         // Requires user action
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
         if silent { return }
-        let alert = OpenVPNInstallationRequiredAlert(continueHandler: {
-            // Display Installation guide
+        let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
+            self.alertService.push(alert: OpenVPNExtensionTourAlert())
         })
-        alertCore.push(alert: alert)
+        alertService.push(alert: alert)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
@@ -118,7 +118,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         case .completed:
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
             if !silent {
-                alertCore.push(alert: OpenVPNEnabledAlert())
+                alertService.push(alert: OpenVPNEnabledAlert())
             }
                 
         case .willCompleteAfterReboot:
@@ -136,6 +136,6 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil
         if silent { return }
-        alertCore.push(alert: OpenVPNInstallingErrorAlert())
+        alertService.push(alert: OpenVPNInstallingErrorAlert())
     }
 }
