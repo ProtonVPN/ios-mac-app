@@ -224,8 +224,11 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: OpenVPNExtensionTourAlert) {
-        let extensionInstallerViewController = SystemExtensionGuideViewController()
-        windowService.presentKeyModal(viewController: extensionInstallerViewController)
+        let viewController = SystemExtensionGuideViewController()
+        let viewModel = SystemExtensionGuideViewModel()
+        viewController.viewModel = viewModel
+        viewModel.viewController = viewController
+        windowService.presentKeyModal(viewController: viewController)
     }
     
     private func show(_ alert: P2pForwardedAlert) {

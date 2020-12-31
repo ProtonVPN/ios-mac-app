@@ -23,17 +23,31 @@
 import Cocoa
 import vpncore
 
-public protocol SystemExtensionGuideVCProtocol {
+public protocol SystemExtensionGuideVCProtocol: NSViewController {
+    
+    var descriptionText: String? { get set }
+    
     func displayStep1()
     func displayStep2()
     func displayStep3()
 }
 
 class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuideVCProtocol {
-    
+        
     @IBOutlet weak var bodyView: NSView!
     @IBOutlet weak var footerView: NSView!
     @IBOutlet weak var confirmationButton: PrimaryActionButton!
+    
+    @IBOutlet weak var step1View: NSView!
+    @IBOutlet weak var step2View: NSView!
+    @IBOutlet weak var step3View: NSView!
+    
+    @IBOutlet weak var descriptionTF: NSTextField!
+    
+    @IBOutlet weak var nextBtn: NSButton!
+    @IBOutlet weak var previousBtn: NSButton!
+    
+    var viewModel: SystemExtensionGuideViewModelProtocol?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,6 +58,7 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     override func viewWillAppear() {
         super.viewWillAppear()
         view.window?.applyModalAppearance(withTitle: LocalizedString.openVPNSettingsTitle)
+        viewModel?.viewDidAppear()
     }
     
     private func setupBody() {
@@ -54,7 +69,7 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     private func setupFooter() {
         footerView.wantsLayer = true
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
-        confirmationButton.title = LocalizedString.gotIt
+        confirmationButton.title = LocalizedString.done
         confirmationButton.fontSize = 14
     }
     
@@ -62,17 +77,44 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
         dismiss(nil)
     }
     
+    // MARK: - Actions
+    
+    @IBAction func nextAction(_ sender: Any) {
+        viewModel?.didTapNext()
+    }
+    
+    @IBAction func previousAction(_ sender: Any) {
+        viewModel?.didTapPrevious()
+    }
+    
     // MARK: - SystemExtensionGuideVCProtocol
     
+    var descriptionText: String? {
+        didSet {
+            guard let descriptionText = descriptionText else { return }
+            descriptionTF.attributedStringValue = descriptionText
+                .attributed(withColor: .white, fontSize: 20)
+        }
+    }
+    
     func displayStep1() {
-        
+        setVisible(true, false, false)
     }
     
     func displayStep2() {
-        
+        setVisible(false, true, false)
     }
     
     func displayStep3() {
-        
+        setVisible(false, false, true)
+    }
+    
+    fileprivate func setVisible( _ step1: Bool, _ step2: Bool, _ step3: Bool) {
+        step1View.isHidden = !step1
+        step2View.isHidden = !step2
+        step3View.isHidden = !step3
+        previousBtn.isHidden = step1
+        nextBtn.isHidden = step3
+        confirmationButton.isHidden = !step3
     }
 }

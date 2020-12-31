@@ -5,12 +5,12 @@
       "idiom" : "universal",
       "resizing" : {
         "cap-insets" : {
-          "left" : 10,
-          "right" : 64
+          "left" : 12,
+          "right" : 66
         },
         "center" : {
-          "mode" : "tile",
-          "width" : 209
+          "mode" : "stretch",
+          "width" : 206
         },
         "mode" : "3-part-horizontal"
       },
