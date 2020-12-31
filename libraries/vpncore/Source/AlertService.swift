@@ -612,8 +612,8 @@ public class OpenVPNInstallationRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: nil))
         actions.append(AlertAction(title: LocalizedString.showInstructions, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: nil))
     }
 }
 
@@ -637,7 +637,7 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
     }
 }
 
@@ -649,7 +649,7 @@ public class OpenVPNEnableErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
     }
 }
 
