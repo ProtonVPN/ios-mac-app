@@ -745,8 +745,8 @@
 "_openvpn_settings_title" = "Change settings to use OpenVPN";
 "_openvpn_settings_description" = "To use OpenVPN, you need to give ProtonVPN permission to load a system extension in 3 easy steps. Do you want to see the instructions?";
 "_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
-"_openvpn_settings_step2" = "Make the necesary changes by clicking on the lock";
-"_openvpn_settings_step3" = "Allow the system software to load";
+"_openvpn_settings_step2" = "Make the necesary changes by clicking on the lock.";
+"_openvpn_settings_step3" = "Allow the system software to load.";
 
 "_openvpn_settings_enabled_title" = "You're now using OpenVPN";
 "_openvpn_settings_enabled_description" = "You have successfully enabled OpenVPN protocol on your device.";

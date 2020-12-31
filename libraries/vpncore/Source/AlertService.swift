@@ -659,4 +659,6 @@ public class OpenVPNExtensionTourAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
+    
+    public init() { }
 }
