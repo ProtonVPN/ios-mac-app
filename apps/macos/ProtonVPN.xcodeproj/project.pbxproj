@@ -369,15 +369,6 @@
 			name = "Embed System Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D584957125923B6800CFAFDE /* CopyFiles */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 7;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		E17DE11E21FF387D008CCC13 /* Copy Network Helper */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -1898,7 +1889,7 @@
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
 				42EF09D9257A713F00E2EDCA /* Resources */,
-				D584957125923B6800CFAFDE /* CopyFiles */,
+				D584998F25A3124B00CFAFDE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2341,6 +2332,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
+		};
+		D584998F25A3124B00CFAFDE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN-frameworks.sh\"\n\n";
 		};
 		E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */ = {
 			isa = PBXShellScriptBuildPhase;
