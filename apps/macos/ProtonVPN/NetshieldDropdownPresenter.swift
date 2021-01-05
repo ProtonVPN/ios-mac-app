@@ -54,13 +54,6 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsNSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.qsNSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
     }
-
-    // MARK: - Override
-    
-    override var requiresUpdate: Bool {
-        let userTier = (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
-        return NetShieldType.level2.isUserTierTooLow(userTier)
-    }
     
     // MARK: - Private
     
@@ -77,10 +70,11 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     private var netshieldLevel1: QuickSettingGenericOption {
-        let active = propertiesManager.netShieldType == .level1
+        let level = NetShieldType.level1
+        let active = propertiesManager.netShieldType == level
         let text = LocalizedString.qsNetshieldOptionLevel1
         let icon = #imageLiteral(resourceName: "qs_netshield_level1")
-        return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
             self.propertiesManager.netShieldType = .level1
             if self.vpnGateway.connection == .connected {
                 self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
@@ -89,14 +83,20 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     private var netshieldLevel2: QuickSettingGenericOption {
-        let active = propertiesManager.netShieldType == .level2
+        let level = NetShieldType.level2
+        let active = propertiesManager.netShieldType == level
         let text = LocalizedString.qsNetshieldOptionLevel2
         let icon = #imageLiteral(resourceName: "qs_netshield_level2")
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: self.requiresUpdate, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
             self.propertiesManager.netShieldType = .level2
             if self.vpnGateway.connection == .connected {
                 self.vpnGateway.reconnect(with: self.propertiesManager.netShieldType)
             }
         })
     }
+    
+    private var currentUserTier: Int {
+        return(try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+    }
+    
 }
