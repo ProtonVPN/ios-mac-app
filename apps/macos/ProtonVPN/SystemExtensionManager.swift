@@ -81,11 +81,13 @@ class SystemExtensionManager: NSObject {
 
 extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
-        os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion)", "\(ext.bundleShortVersion)")
+        os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion) (\(existing.bundleVersion))", "\(ext.bundleShortVersion) (\(ext.bundleVersion))")
         
         propertiesManager.vpnProtocol = .openVpn(transportProtocol)
         
-        if existing.bundleShortVersion < ext.bundleShortVersion { return .replace }
+        if existing.bundleShortVersion.compareVersion(to: ext.bundleShortVersion) == ComparisonResult.orderedAscending {
+            return .replace
+        }
         
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil
@@ -112,7 +114,15 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        os_log(.debug, log: self.log, "request error: %{public}@", "\(error)")
+        if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestCanceled {
+            // Actually a success, there was no need in reinstalling extension
+            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            self.completionCallback?(propertiesManager.vpnProtocol)
+            self.completionCallback = nil
+            return
+        }
+        
+        os_log(.debug, log: self.log, "request error: %{public}@", "\(error.localizedDescription)")
         // Display error popup
         propertiesManager.vpnProtocol = .ike
         self.completionCallback?(propertiesManager.vpnProtocol)
