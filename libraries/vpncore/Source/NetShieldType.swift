@@ -46,7 +46,7 @@ public enum NetShieldType: Int, CaseIterable, Codable {
         case .off:
             return CoreAppConstants.VpnTiers.free
         case .level1:
-            return CoreAppConstants.VpnTiers.free
+            return CoreAppConstants.VpnTiers.basic
         case .level2:
             return CoreAppConstants.VpnTiers.basic
         }
