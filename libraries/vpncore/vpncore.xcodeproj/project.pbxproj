@@ -562,6 +562,16 @@
 		D5CC008F256C0C5F003FA161 /* StoreKitStateCheckerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */; };
 		D5CC0090256C0C5F003FA161 /* StoreKitStateCheckerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */; };
 		D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
+		D5D2944F25A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
+		D5D2945025A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
+		D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
+		D5D2945225A45B4D000FBD74 /* SemanticVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */; };
+		D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */; };
+		D5D2946325A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */; };
+		D5D2948725A46B8D000FBD74 /* String+SemVer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2948625A46B8D000FBD74 /* String+SemVer.swift */; };
+		D5D2948825A46B8D000FBD74 /* String+SemVer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2948625A46B8D000FBD74 /* String+SemVer.swift */; };
+		D5D2948925A46B8D000FBD74 /* String+SemVer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2948625A46B8D000FBD74 /* String+SemVer.swift */; };
+		D5D2948A25A46B8D000FBD74 /* String+SemVer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2948625A46B8D000FBD74 /* String+SemVer.swift */; };
 		D5D606A32292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
 		D5D606A42292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
 		D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DC52C2252DD9F000889B5A /* AnnouncementStorage.swift */; };
@@ -1005,6 +1015,9 @@
 		D5CD4B0F2367250A0006AAF7 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "Localization/pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D5CD4B112367252A0006AAF7 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = Localization/es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CD4B13236725580006AAF7 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "Localization/es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersion.swift; sourceTree = "<group>"; };
+		D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SemanticVersionTests.swift; sourceTree = "<group>"; };
+		D5D2948625A46B8D000FBD74 /* String+SemVer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+SemVer.swift"; sourceTree = "<group>"; };
 		D5D606A22292DA6E00394CF9 /* TrialChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrialChecker.swift; sourceTree = "<group>"; };
 		D5DC52C2252DD9F000889B5A /* AnnouncementStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementStorage.swift; sourceTree = "<group>"; };
 		D5DC543A252EF7AB00889B5A /* AnnouncementRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementRefresher.swift; sourceTree = "<group>"; };
@@ -1529,6 +1542,23 @@
 			path = Mocks;
 			sourceTree = "<group>";
 		};
+		D5D2944D25A45B2E000FBD74 /* Versioning */ = {
+			isa = PBXGroup;
+			children = (
+				D5D2944E25A45B4D000FBD74 /* SemanticVersion.swift */,
+				D5D2948625A46B8D000FBD74 /* String+SemVer.swift */,
+			);
+			name = Versioning;
+			sourceTree = "<group>";
+		};
+		D5D2946025A45B8F000FBD74 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				D5D2946125A45BB1000FBD74 /* SemanticVersionTests.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		D5D606A52292DC5B00394CF9 /* Management */ = {
 			isa = PBXGroup;
 			children = (
@@ -1880,6 +1910,7 @@
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
+				D5D2946025A45B8F000FBD74 /* Utilities */,
 				D5A8811F22CDD560009B63D1 /* ViewModel */,
 				E1B5F5FA21B68E7200B558B0 /* Info.plist */,
 				E1E892B52369EDBE001A436E /* InfoPlist.strings */,
@@ -1937,6 +1968,7 @@
 		E1B5F65221B81E2100B558B0 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				D5D2944D25A45B2E000FBD74 /* Versioning */,
 				E1B5F67821B824A500B558B0 /* Arithmetic.swift */,
 				E1616BEE21C951DB00F42D79 /* HexColor.swift */,
 				E1B5F65C21B81E5800B558B0 /* LocalizationUtility.swift */,
@@ -2431,6 +2463,7 @@
 				E1616BCB21C7D89C00F42D79 /* TimerFactory.swift in Sources */,
 				4242B08C2465A4D80042145A /* AlamofireWrapper.swift in Sources */,
 				E1616B9721C7AE1F00F42D79 /* Subscription.swift in Sources */,
+				D5D2948725A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				4242B05A2465A43E0042145A /* UserBaseRequest.swift in Sources */,
 				E1B5F67C21B8253500B558B0 /* String+Extension.swift in Sources */,
 				E1616B8E21C7AD2300F42D79 /* ServicePlanDetails.swift in Sources */,
@@ -2524,6 +2557,7 @@
 				4242B0192465A40F0042145A /* PaymentsDefaultPlanRequest.swift in Sources */,
 				E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */,
 				4242B0762465A48B0042145A /* ReportsApiService.swift in Sources */,
+				D5D2944F25A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				4242B0382465A41A0042145A /* VPNClientConfigRequest.swift in Sources */,
 				4242B05C2465A43E0042145A /* UserCheckRequest.swift in Sources */,
 				E1616BF221C95BBE00F42D79 /* ProfileType.swift in Sources */,
@@ -2574,6 +2608,7 @@
 			files = (
 				D5C204E62487A0CE004FB58B /* ServiceChecker.swift in Sources */,
 				D5C204E72487A0CE004FB58B /* AuthInfoResponse.swift in Sources */,
+				D5D2948825A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				D5C204E82487A0CE004FB58B /* Responses.swift in Sources */,
 				4257B21824EC1C1200C4E4AC /* VpnServerState.swift in Sources */,
 				D5C204E92487A0CE004FB58B /* PaymentsApplyCreditRequest.swift in Sources */,
@@ -2698,6 +2733,7 @@
 				D5C205472487A0CF004FB58B /* PaymentToken.swift in Sources */,
 				D5DC52C4252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				D5C205482487A0CF004FB58B /* AuthCredentials.swift in Sources */,
+				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
 				D5C205492487A0CF004FB58B /* AuthKeychain.swift in Sources */,
 				D5C2054A2487A0CF004FB58B /* VpnCredentials.swift in Sources */,
 				D5C2054B2487A0CF004FB58B /* VpnKeychain.swift in Sources */,
@@ -2710,6 +2746,7 @@
 				D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,
 				D5C2054F2487A0CF004FB58B /* Arithmetic.swift in Sources */,
 				D5C205502487A0CF004FB58B /* HexColor.swift in Sources */,
+				D5D2945025A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				D5C205512487A0CF004FB58B /* LocationUtility.swift in Sources */,
 				D5C205522487A0CF004FB58B /* SafariService.swift in Sources */,
 				D5C205532487A0CF004FB58B /* Disconnect.swift in Sources */,
@@ -2793,6 +2830,7 @@
 				D5BCDC9725303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				E1616BD221C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5ADFBCB23A0CF2E00C28CFF /* URL+Extension.swift in Sources */,
+				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				4242B0A82465A7F60042145A /* DataRequest+Validation.swift in Sources */,
 				4242B0522465A4380042145A /* AuthBaseRequest.swift in Sources */,
 				E151126F22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
@@ -2959,6 +2997,7 @@
 				E148AE6321C29818007AB65A /* ErrorCodes.swift in Sources */,
 				D5DCCADE252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				E1B5F64221B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
+				D5D2948925A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				E129C6C822A9101B00D8437E /* ServerStorageMock.swift in Sources */,
 				E1616BA121C7B69E00F42D79 /* SessionModel.swift in Sources */,
 				E116D77322C22B0000D14A51 /* SrpClientExtension.swift in Sources */,
@@ -3051,6 +3090,7 @@
 				D5C204A224866B81004FB58B /* CoreAppConstants.swift in Sources */,
 				D5DCCACD252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5C204A324866B81004FB58B /* MapConstants.swift in Sources */,
+				D5D2946325A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
 				D5C204A424866B81004FB58B /* ProfileConstants.swift in Sources */,
 				4241A8DE24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */,
 				D5C204A524866B81004FB58B /* IkeProtocolFactory.swift in Sources */,
@@ -3061,6 +3101,7 @@
 				D5C204A924866B81004FB58B /* LocalizedString.swift in Sources */,
 				424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */,
 				D5C204AA24866B81004FB58B /* ServerTierChecker.swift in Sources */,
+				D5D2945225A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				D5C204AB24866B81004FB58B /* VpnConnectionPreparer.swift in Sources */,
 				D523F11724B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5967245253D8CBE0061A75F /* SafariServiceMock.swift in Sources */,
@@ -3072,6 +3113,7 @@
 				D5C204AF24866B81004FB58B /* ErrorCodes.swift in Sources */,
 				D5C204B024866B81004FB58B /* FormValidationError.swift in Sources */,
 				D5C204B124866B81004FB58B /* KeychainError.swift in Sources */,
+				D5D2948A25A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				D5C204B224866B81004FB58B /* NetworkError.swift in Sources */,
 				D5C204B324866B81004FB58B /* ProtonApiError.swift in Sources */,
 				D5C204B424866B81004FB58B /* ProtonVpnError.swift in Sources */,
