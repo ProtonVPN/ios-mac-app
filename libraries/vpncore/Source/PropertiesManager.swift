@@ -57,7 +57,7 @@ public protocol PropertiesManagerProtocol: class {
     var currentSubscription: Subscription? { get set }
     
     var featureFlags: FeatureFlags { get set }
-    var netShieldType: NetShieldType { get set }
+    var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     
     // Development properties
@@ -395,18 +395,17 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var netShieldType: NetShieldType {
+    public var netShieldType: NetShieldType? {
         get {
-            guard featureFlags.isNetShield else {
-                return .off
-            }
-            guard let current = Storage.userDefaults().value(forKey: Keys.netshield) as? Int, let type = NetShieldType.init(rawValue: current) else {
-                return .level1
+            guard let authCredentials = AuthKeychain.fetch() else { return nil }
+            guard let current = Storage.userDefaults().value(forKey: Keys.netshield + authCredentials.username) as? Int, let type = NetShieldType.init(rawValue: current) else {
+                return nil
             }
             return type
         }
         set {
-            Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
+            guard let authCredentials = AuthKeychain.fetch() else { return }
+            Storage.setValue(newValue?.rawValue, forKey: Keys.netshield + authCredentials.username)
             postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
         }
     }
