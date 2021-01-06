@@ -69,11 +69,6 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     // MARK: - Utils
     
-    var requiresUpdate: Bool {
-        let userTier = (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
-        return userTier < CoreAppConstants.VpnTiers.visionary
-    }
-    
     func displayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
         guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {

@@ -80,7 +80,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
         view.layer?.masksToBounds = false
         view.layer?.shadowRadius = 5
         
-        dropdownUgradeButton.attributedTitle = LocalizedString.qsGetPlus.attributed(withColor: .white, fontSize: 12)
+        dropdownUgradeButton.attributedTitle = LocalizedString.upgrade.uppercased().attributed(withColor: .white, fontSize: 12)
         
         dropdownLearnMore.attributedTitle = LocalizedString.learnMore.attributed(
             withColor: .protonGreen(),
@@ -100,7 +100,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
             view?.selectedColor = presenter.selectedColor
-            view?.setHeightConstraint( presenter.title.count > 20 ? 75 : 50)
             if presenter.requiresUpdate {
                 view?.blockedStyle()
                 view?.action = nil

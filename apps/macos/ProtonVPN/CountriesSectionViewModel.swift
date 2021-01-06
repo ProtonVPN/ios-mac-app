@@ -142,8 +142,10 @@ class CountriesSectionViewModel {
     private var state: ModelState
     private var userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & FirewallManagerFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & FirewallManagerFactory & NetShieldPropertyProviderFactory
     private let factory: Factory
+    
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     
     init(factory: Factory) {
         self.factory = factory
@@ -446,7 +448,7 @@ class CountriesSectionViewModel {
     @objc func updateSettings() {
         self.delegate?.updateQuickSettings(
             secureCore: propertiesManager.secureCoreToggle,
-            netshield: propertiesManager.netShieldType,
+            netshield: netShieldPropertyProvider.netShieldType,
             killSwitch: propertiesManager.killSwitch
         )
     }
