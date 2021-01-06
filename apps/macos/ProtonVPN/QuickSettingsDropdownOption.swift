@@ -31,6 +31,8 @@ class QuickSettingsDropdownOption: NSView {
     @IBOutlet weak var containerView: NSView!
     @IBOutlet weak var optionIconIV: NSImageView!
     @IBOutlet weak var plusBox: NSBox!
+    @IBOutlet weak var plusText: NSTextField!
+    @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
     
     var action: SuccessCallback?
     
@@ -50,6 +52,8 @@ class QuickSettingsDropdownOption: NSView {
         containerView.layer?.masksToBounds = false
         containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
     
+        plusText.stringValue = LocalizedString.upgrade.uppercased()
+        plusAndTitleConstraint.isActive = false
     }
     
     // MARK: - Styles
@@ -79,6 +83,7 @@ class QuickSettingsDropdownOption: NSView {
         applyShadow()
         
         plusBox.isHidden = false
+        plusAndTitleConstraint.isActive = true
         optionIconIV.image = optionIconIV.image?.colored(.protonGreyUnselectedWhite())
         titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
             withColor: .protonGreyUnselectedWhite(),

@@ -129,10 +129,6 @@ extension NSView {
         }
     }
     
-    func  setHeightConstraint( _ height: CGFloat ) {
-        NSLayoutConstraint(item: self, attribute: .height, relatedBy: .equal, toItem: nil, attribute: .height, multiplier: 1, constant: height).isActive = true
-    }
-    
     static var identifierString: String {
         return String(describing: self)
     }
