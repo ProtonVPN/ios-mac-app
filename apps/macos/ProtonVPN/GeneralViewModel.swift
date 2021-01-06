@@ -25,13 +25,14 @@ import vpncore
 
 class GeneralViewModel {
     
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory & NetShieldPropertyProviderFactory
 
     private let factory: Factory
     private lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private weak var viewController: ReloadableViewController?
     
     init( factory: Factory ) {
@@ -59,7 +60,7 @@ class GeneralViewModel {
     }
     
     var netshieldState: NetShieldType {
-        return propertiesManager.netShieldType
+        return netShieldPropertyProvider.netShieldType
     }
     
     var netshieldAvailable: Bool {
@@ -94,7 +95,7 @@ class GeneralViewModel {
     
     func setNetshield(_ netShieldType: NetShieldType) {
         
-        guard propertiesManager.netShieldType != netShieldType else {
+        guard netShieldPropertyProvider.netShieldType != netShieldType else {
             return
         }
         
@@ -110,13 +111,13 @@ class GeneralViewModel {
         let userTier = (try? vpnGateway.userTier()) ?? 0
         
         if !isConnected && !netShieldType.isUserTierTooLow(userTier) {
-            propertiesManager.netShieldType = netShieldType
+            netShieldPropertyProvider.netShieldType = netShieldType
             viewController?.reloadView()
             return
         }
         
         let reconnectAlert = ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
-            self.propertiesManager.netShieldType = netShieldType
+            self.netShieldPropertyProvider.netShieldType = netShieldType
             self.viewController?.reloadView()
             self.vpnGateway.reconnect(with: netShieldType)
         }, cancelHandler: {

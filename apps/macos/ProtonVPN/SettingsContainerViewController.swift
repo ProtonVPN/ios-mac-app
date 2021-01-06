@@ -25,7 +25,7 @@ import vpncore
 
 class SettingsContainerViewController: NSViewController {
 
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory & NetShieldPropertyProviderFactory
     
     @IBOutlet weak var tabBarControllerViewContainer: NSView!
     @IBOutlet weak var activeControllerViewContainer: NSView!
