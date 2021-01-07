@@ -306,7 +306,7 @@ class StatusViewModel {
     private var netshieldUnavailableSection: TableViewSection {
         var cells = [TableViewCellModel]()
         
-        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 16)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 16)), handler: { [weak self] in
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
             self?.planUpgradeRequired?()
         }))
         
