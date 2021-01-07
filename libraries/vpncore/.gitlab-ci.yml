@@ -52,7 +52,7 @@ unit_tests:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - fastlane mac ci_test
 
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
+    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult
   tags:
     - iOS
     - macOS

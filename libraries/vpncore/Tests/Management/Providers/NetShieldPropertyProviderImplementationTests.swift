@@ -67,6 +67,16 @@ class NetShieldPropertyProviderImplementationTests: XCTestCase {
         }
     }
     
+    func testFreeUserCantTurnNetShieldOn() throws {
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.free)).isUserEligibleForNetShield == false)
+    }
+    
+    func testPaidUserCanTurnNetShieldOn() throws {
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)).isUserEligibleForNetShield == true)
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)).isUserEligibleForNetShield == true)
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.max)).isUserEligibleForNetShield == true)
+    }
+    
     // MARK: -
     
     private func getFactory(netShieldType: NetShieldType?, tier: Int) -> MocksFactory {
