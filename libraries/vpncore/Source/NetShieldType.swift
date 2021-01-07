@@ -28,8 +28,6 @@ public enum NetShieldType: Int, CaseIterable, Codable {
     case level1
     case level2
     
-    public static var defaultValue: NetShieldType = .level1
-    
     public var name: String {
         switch self {
         case .off:

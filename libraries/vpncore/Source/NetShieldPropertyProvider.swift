@@ -23,7 +23,10 @@
 import Foundation
 
 public protocol NetShieldPropertyProvider {
+    /// Current NetShield type
     var netShieldType: NetShieldType { get set }
+    /// Check if current user can use NetShield
+    var isUserEligibleForNetShield: Bool { get }
 }
 
 public protocol NetShieldPropertyProviderFactory {
@@ -55,6 +58,18 @@ public class NetShieldPropertyProviderImplementation: NetShieldPropertyProvider 
         set {
             propertiesManager.netShieldType = newValue
         }
+    }
+    
+    public var isUserEligibleForNetShield: Bool {
+        var types = NetShieldType.allCases
+        types.removeAll { $0 == .off }
+        
+        for type in types {
+            if !type.isUserTierTooLow(currentUserTier) {
+                return true
+            }
+        }
+        return false
     }
     
     private var currentUserTier: Int {
