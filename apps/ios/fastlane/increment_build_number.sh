@@ -10,7 +10,7 @@
 cd ..
 
 FILE=.last_build_nr
-BUILD_NUMBER=$(date +"%m%d%H%M")
+BUILD_NUMBER=$(date +"%y%m%d%H%M")
 
 if test -f "$FILE"; then
     BUILD_NUMBER=$(cat $FILE)
