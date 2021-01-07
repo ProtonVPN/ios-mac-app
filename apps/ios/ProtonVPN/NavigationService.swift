@@ -188,7 +188,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -594,7 +594,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self, propertiesManager: propertiesManager, connectionStatusService: self)
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, loginService: self, alertService: alertService, planService: self, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider())
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
@@ -618,7 +618,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider())
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }

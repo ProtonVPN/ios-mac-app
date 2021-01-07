@@ -27,7 +27,7 @@ import vpncore
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -37,6 +37,7 @@ class StatusViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol? = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -269,9 +270,13 @@ class StatusViewModel {
     // MARK: - NetShield
     
     private var netshieldSection: TableViewSection {
+        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
+            return netshieldUnavailableSection
+        }
+        
         let isConnected = connectionSatus == .connected
         let activeConnection = appStateManager.activeConnection()
-        let currentNetshieldType = isConnected ? activeConnection?.netShieldType : propertiesManager.netShieldType // perziuret
+        let currentNetshieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
         let isNetshieldOn = currentNetshieldType != .off
         
         var cells = [TableViewCellModel]()
@@ -298,18 +303,34 @@ class StatusViewModel {
         return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
     }
     
+    private var netshieldUnavailableSection: TableViewSection {
+        var cells = [TableViewCellModel]()
+        
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 16)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 16)), handler: { [weak self] in
+            self?.planUpgradeRequired?()
+        }))
+        
+        [NetShieldType.level1, NetShieldType.level2].forEach { type in
+            cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
+                self?.planUpgradeRequired?()
+            }))
+        }
+        
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
+    }
+    
     private func changeNetshield(to newValue: NetShieldType) {
         let isConnected = connectionSatus == .connected
         
         guard isConnected else { // Not connected, just save to settings
-            self.propertiesManager.netShieldType = newValue
+            self.netShieldPropertyProvider.netShieldType = newValue
             self.contentChanged?()
             return
         }
         
         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
             // Save to general settings
-            self.propertiesManager.netShieldType = newValue
+            self.netShieldPropertyProvider.netShieldType = newValue
             self.vpnGateway?.reconnect(with: newValue)
             
         }, cancelHandler: {

@@ -37,6 +37,7 @@ enum TableViewCellModel {
     case checkmarkStandard(title: String, checked: Bool, handler: (() -> Bool))
     case colorPicker(viewModel: ColorPickerViewModel)
     case invertedKeyValue(key: String, value: String, handler: (() -> Void) )
+    case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: (() -> Void) )
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
 }
 
@@ -106,6 +107,17 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.subtitleLabel.text = value
             cell.completionHandler = handler
             cell.invert()
+                
+            return cell
+        case .attributedKeyValue(key: let key, value: let value, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
+                return UITableViewCell()
+            }
+                
+            cell.accessoryType = .none
+            cell.titleLabel.attributedText = key
+            cell.subtitleLabel.attributedText = value
+            cell.completionHandler = handler
                 
             return cell
         case .pushStandard(title: let title, handler: let handler):
@@ -278,7 +290,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue:
+        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()

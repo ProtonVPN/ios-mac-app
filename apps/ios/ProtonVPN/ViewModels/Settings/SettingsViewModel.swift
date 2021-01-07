@@ -36,6 +36,7 @@ class SettingsViewModel {
     private let protocolService: ProtocolService
     private let vpnKeychain: VpnKeychainProtocol
     private let connectionStatusService: ConnectionStatusService
+    private var netShieldPropertyProvider: NetShieldPropertyProvider
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     
@@ -45,7 +46,8 @@ class SettingsViewModel {
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService) {
+    // FUTUREDO: Use Factory
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -56,6 +58,7 @@ class SettingsViewModel {
         self.vpnKeychain = vpnKeychain
         self.netshieldService = netshieldService
         self.connectionStatusService = connectionStatusService
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         
         startObserving()
     }
@@ -225,8 +228,8 @@ class SettingsViewModel {
         
         let netShieldAvailable = propertiesManager.featureFlags.isNetShield
         if netShieldAvailable {
-            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: propertiesManager.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
-                pushNetshieldSelectionViewController(self.propertiesManager.netShieldType, { type, approve in
+            cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
+                pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in
                     if self.appStateManager.state.isSafeToEnd {
                         approve()
                     } else {
@@ -237,7 +240,7 @@ class SettingsViewModel {
                         }))
                     }
                 }, { type in
-                    self.propertiesManager.netShieldType = type
+                    self.netShieldPropertyProvider.netShieldType = type
                 })
             }))
             cells.append(.tooltip(text: LocalizedString.netshieldTitleTootltip))

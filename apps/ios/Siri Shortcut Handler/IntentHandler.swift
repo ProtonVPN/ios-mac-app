@@ -32,7 +32,12 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let alamofireWrapper = AlamofireWrapperImplementation()
         let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
         let appGroup = "group.ch.protonmail.vpn"
-        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: PropertiesManager()), appGroup: appGroup), vpnKeychain: VpnKeychain(), propertiesManager: PropertiesManager())
+        let propertiesManager = PropertiesManager()
+        let vpnKeychain = VpnKeychain()
+        let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(NetShieldPropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
+        
+        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup), vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, netShieldPropertyProvider: netShieldPropertyProvider)
         
         super.init()
     }
@@ -56,4 +61,37 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         return self
     }
     
+}
+
+fileprivate class NetShieldPropertyProviderFactory: NetShieldPropertyProviderImplementation.Factory {
+    
+    private let propertiesManager: PropertiesManagerProtocol
+    private let userTierProvider: UserTierProvider
+    
+    init(propertiesManager: PropertiesManagerProtocol, userTierProvider: UserTierProvider) {
+        self.propertiesManager = propertiesManager
+        self.userTierProvider = userTierProvider
+    }
+    
+    func makePropertiesManager() -> PropertiesManagerProtocol {
+        return propertiesManager
+    }
+    
+    func makeUserTierProvider() -> UserTierProvider {
+        return userTierProvider
+    }
+    
+}
+
+fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factory {
+    
+    private let vpnKeychainProtocol: VpnKeychainProtocol
+    
+    public init(vpnKeychainProtocol: VpnKeychainProtocol) {
+        self.vpnKeychainProtocol = vpnKeychainProtocol
+    }
+    
+    func makeVpnKeychain() -> VpnKeychainProtocol {
+        return vpnKeychainProtocol
+    }
 }

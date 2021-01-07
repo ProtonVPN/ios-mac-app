@@ -32,6 +32,7 @@ class SiriHandlerViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
     
     private let alertService = ExtensionAlertService()
     
@@ -46,12 +47,12 @@ class SiriHandlerViewModel {
             return nil
         }
         if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper())
+            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider)
         }
         return _vpnGateway
     }
     
-    init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol) {
+    init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
         
@@ -60,6 +61,7 @@ class SiriHandlerViewModel {
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         self.configurationPreparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
         
         self.alertService.delegate = self
