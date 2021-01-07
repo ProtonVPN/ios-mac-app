@@ -76,6 +76,10 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let text = LocalizedString.secureCore + " " + LocalizedString.on.capitalized
         let icon = #imageLiteral(resourceName: "qs_securecore_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
+            guard !self.requiresUpdate(secureCore: true) else {
+                self.openUpgradeLink()
+                return
+            }
             self.vpnGateway.changeActiveServerType(.secureCore)
             self.displayReconnectionFeedback()
         })

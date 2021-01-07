@@ -88,9 +88,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
         SafariService.openLink(url: learnLink )
     }
     
-    // MARK: - Private
-    
-    @objc private func openUpgradeLink() {
+    @objc func openUpgradeLink() {
         SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade )
     }
 }

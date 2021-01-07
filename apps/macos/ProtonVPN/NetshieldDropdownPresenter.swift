@@ -75,6 +75,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         let text = LocalizedString.qsNetshieldOptionLevel1
         let icon = #imageLiteral(resourceName: "qs_netshield_level1")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
+            guard !level.isUserTierTooLow(self.currentUserTier) else {
+                self.openUpgradeLink()
+                return
+            }
             self.netShieldPropertyProvider.netShieldType = .level1
             if self.vpnGateway.connection == .connected {
                 self.vpnGateway.reconnect(with: self.netShieldPropertyProvider.netShieldType)
@@ -88,6 +92,10 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
         let text = LocalizedString.qsNetshieldOptionLevel2
         let icon = #imageLiteral(resourceName: "qs_netshield_level2")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
+            guard !level.isUserTierTooLow(self.currentUserTier) else {
+                self.openUpgradeLink()
+                return
+            }
             self.netShieldPropertyProvider.netShieldType = .level2
             if self.vpnGateway.connection == .connected {
                 self.vpnGateway.reconnect(with: self.netShieldPropertyProvider.netShieldType)

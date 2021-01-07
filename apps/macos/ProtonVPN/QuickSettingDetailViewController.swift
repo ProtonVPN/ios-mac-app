@@ -102,7 +102,9 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             view?.selectedColor = presenter.selectedColor
             if presenter.requiresUpdate {
                 view?.blockedStyle()
-                view?.action = nil
+                view?.action = {
+                    presenter.selectCallback?()
+                }
             } else {
                 if presenter.active {
                     view?.selectedStyle()
