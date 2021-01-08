@@ -68,14 +68,6 @@
                                 <font key="font" size="16" name="HelveticaNeue-Thin"/>
                             </buttonCell>
                             <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                            <userDefinedRuntimeAttributes>
-                                <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                    <real key="value" value="32"/>
-                                </userDefinedRuntimeAttribute>
-                                <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
-                                    <real key="value" value="32"/>
-                                </userDefinedRuntimeAttribute>
-                            </userDefinedRuntimeAttributes>
                             <connections>
                                 <action selector="didTapActionBtn:" target="c22-O7-iKe" id="pJO-UI-Xjl"/>
                             </connections>

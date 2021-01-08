@@ -96,8 +96,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         authApiService.authenticate(username: username, password: password, success: { [weak self] authCredentials in
             do {
                 try AuthKeychain.store(authCredentials)
-            } catch let error {
-                
+            } catch {
                 DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
                 return
             }

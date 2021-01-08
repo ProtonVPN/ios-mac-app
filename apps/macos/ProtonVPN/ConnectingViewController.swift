@@ -92,6 +92,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         phaseLabel.attributedStringValue = viewModel.phaseString
         connectionLabel.attributedStringValue = viewModel.connectingString
         cancelButton.title = viewModel.cancelButtonTitle
+        cancelButton.color = viewModel.cancelButtonColor
         retryButton.isHidden = viewModel.hideRetryButton
         retryButton.title = viewModel.retryButtonTitle
     }

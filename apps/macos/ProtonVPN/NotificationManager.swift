@@ -32,8 +32,6 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     private var nonTransientState: AppState = .disconnected
     
-    private var firstTimeConnection = false
-    
     private var shouldShowNotification: Bool {
         return appSessionManager.sessionStatus == .established && Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
@@ -53,14 +51,8 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     
     @objc private func appStateChanged(_ notification: Notification) {
         if let newState = notification.object as? AppState {
-            if case AppState.connecting(_) = newState {
-                firstTimeConnection = !PropertiesManager().hasConnected // prevents disconnected notification showing on first connection
-            } else if case AppState.connected(_) = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
+            if case AppState.connected(_) = newState, let server = appStateManager.activeConnection()?.server, shouldShowNotification {
                 fire(connectedNotification(for: server))
-            } else if case AppState.disconnected = newState, case AppState.connected(_) = nonTransientState, shouldShowNotification, !firstTimeConnection {
-                disconnectedNotification { [weak self] (notification) in
-                    self?.fire(notification)
-                }
             }
             
             setNonTransientState(state: newState)
@@ -83,24 +75,6 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         notification.informativeText = connectInformativeText(forServer: server)
         notification.hasActionButton = false
         return notification
-    }
-    
-    private func disconnectedNotification(completion: @escaping (NSUserNotification) -> Void) {
-        let notification = NSUserNotification()
-        notification.hasActionButton = false
-        notification.title = "ProtonVPN " + LocalizedString.disconnected
-        appStateManager.isOnDemandEnabled { [weak self] enabled in
-            guard enabled else { return completion(notification) }
-            if PropertiesManager().killSwitch {
-                self?.firewallManager.isProtonFirewallEnabled { (enabled) in
-                    notification.subtitle = enabled ? LocalizedString.killSwitchBlockingConnection : LocalizedString.alwaysOnWillReconnect
-                    completion(notification)
-                }
-            } else {
-                notification.subtitle = LocalizedString.alwaysOnWillReconnect
-                completion(notification)
-            }
-        }
     }
     
     private func connectSubtitle(forServer server: ServerModel) -> String {

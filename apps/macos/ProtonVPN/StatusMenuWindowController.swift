@@ -37,6 +37,8 @@ class StatusMenuWindowController: WindowController {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
     private let statusMenu = NSMenu()
     
+    private let iconManager: StatusBarIconBlinker
+    
     var lastOpenApplication: NSRunningApplication?
     
     var localMouseDownEventMonitor: Any?
@@ -55,6 +57,8 @@ class StatusMenuWindowController: WindowController {
     }
     
     override init(window: NSWindow?) {
+        iconManager = StatusBarIconBlinker(statusItem: statusItem, statusIcon: .unknown)
+        
         super.init(window: window)
         
         monitorsKeyEvents = true
@@ -89,20 +93,8 @@ class StatusMenuWindowController: WindowController {
     }
     
     private func setupIcon() {
-        let icon: NSImage?
-        
-        if let viewModel = windowModel, viewModel.isSessionEstablished {
-            if viewModel.isConnected {
-                icon = NSImage(named: NSImage.Name("connected"))
-            } else {
-                icon = NSImage(named: NSImage.Name("disconnected"))
-            }
-        } else {
-            icon = NSImage(named: NSImage.Name("idle"))
-        }
-        
-        icon?.isTemplate = true
-        statusItem.image = icon
+        iconManager.setImage(windowModel?.statusIcon ?? .unknown)
+        iconManager.isBlinking = windowModel?.isStatusIconBlinking ?? false
     }
     
     private func togglePopover() {
@@ -199,4 +191,71 @@ extension NSEvent {
         guard event.eventNumber != 1337 else { return nil } // Bartender app event (avoid Bartender events from being misinterpreted as clicks on our app icon)
         return window.value(forKey: "statusItem") as? NSStatusItem
     }
+}
+
+extension StatusIcon {
+    var image: NSImage {
+        switch self {
+        case .connected: return NSImage(named: NSImage.Name("connected"))!
+        case .disconnected: return NSImage(named: NSImage.Name("disconnected"))!
+        case .connecting: return NSImage(named: NSImage.Name("idle"))!
+        case .unknown: return NSImage(named: NSImage.Name("empty_icon"))!
+        }
+    }
+}
+
+class StatusBarIconBlinker {
+    
+    private var statusItem: NSStatusItem
+    private var statusIcon: StatusIcon
+    
+    private var emptyImage: NSImage = NSImage(named: "empty_icon")!
+    private var interval: TimeInterval = AppConstants.Time.statusIconBlink
+    private var timer: Timer?
+    
+    public var isBlinking: Bool = false {
+        didSet {
+            if isBlinking && timer == nil {
+                start()
+                return
+            }
+            if !isBlinking && timer != nil {
+                stop()
+                return
+            }
+        }
+    }
+    
+    public init(statusItem: NSStatusItem, statusIcon: StatusIcon) {
+        self.statusItem = statusItem
+        self.statusIcon = statusIcon
+    }
+    
+    public func setImage(_ statusIcon: StatusIcon) {
+        if statusIcon != self.statusIcon {
+            self.statusIcon = statusIcon
+            if statusItem.image != emptyImage {
+                statusItem.image = statusIcon.image
+            }
+        }
+    }
+    
+    private func start() {
+        timer = Timer.scheduledTimer(timeInterval: interval, target: self, selector: #selector(fireTimer), userInfo: nil, repeats: true)
+    }
+    
+    private func stop() {
+        timer?.invalidate()
+        timer = nil
+        statusItem.image = statusIcon.image
+    }
+    
+    @objc func fireTimer() {
+        if statusItem.image == emptyImage {
+            statusItem.image = statusIcon.image
+        } else {
+            statusItem.image = emptyImage
+        }
+    }
+    
 }

@@ -17,13 +17,12 @@ target 'ProtonVPN' do
     
     common_pods
     
-    # third party pods
-    pod 'Alamofire', '~> 5.1'
-    pod 'KeychainAccess', '~> 3.0'
-    pod 'ReachabilitySwift', '~> 4.0'
-    pod 'Sentry', '~> 4.0'
-    pod 'Sparkle', '~> 1.0'
-    pod 'SDWebImage', '~> 5.0'
+    # Third party pods
+    pod 'KeychainAccess', '3.2.1'
+    pod 'ReachabilitySwift', '5.0.0'
+    pod 'Sentry', '4.5.0'
+    pod 'Sparkle', '1.24.0'
+    pod 'SDWebImage', '5.10.0'
     
     # Checks code style and bad practices
     pod 'SwiftLint'
