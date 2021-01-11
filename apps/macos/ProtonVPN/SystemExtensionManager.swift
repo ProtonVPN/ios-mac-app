@@ -144,7 +144,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
             return
         }
         
-        //Display error group
+        // Display error group
         propertiesManager.vpnProtocol = .ike
         self.completionCallback?(propertiesManager.vpnProtocol)
         self.completionCallback = nil
