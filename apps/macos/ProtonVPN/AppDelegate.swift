@@ -63,7 +63,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-        
+            self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true)
             self.navigationService.launched()
         }
     }

@@ -44,7 +44,9 @@ class SettingsContainerViewController: NSViewController {
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway, systemExtensionManager: self.factory.makeSystemExtensionManager())
+        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway,
+                                                    systemExtensionManager: self.factory.makeSystemExtensionManager(),
+                                                    alertService: self.factory.makeCoreAlertService())
         return ConnectionSettingsViewController(viewModel: viewModel)
     }()
     

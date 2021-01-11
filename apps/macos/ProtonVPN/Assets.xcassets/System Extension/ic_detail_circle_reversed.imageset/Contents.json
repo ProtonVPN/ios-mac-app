@@ -1,0 +1,32 @@
+{
+  "images" : [
+    {
+      "filename" : "ic_detail_circle_reversed.png",
+      "idiom" : "universal",
+      "resizing" : {
+        "cap-insets" : {
+          "left" : 12,
+          "right" : 66
+        },
+        "center" : {
+          "mode" : "stretch",
+          "width" : 206
+        },
+        "mode" : "3-part-horizontal"
+      },
+      "scale" : "1x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "2x"
+    },
+    {
+      "idiom" : "universal",
+      "scale" : "3x"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

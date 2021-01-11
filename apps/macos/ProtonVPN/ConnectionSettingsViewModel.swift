@@ -30,14 +30,16 @@ class ConnectionSettingsViewModel {
     private let profileManager = ProfileManager.shared
     private let vpnGateway: VpnGatewayProtocol
     private let systemExtensionManager: SystemExtensionManager
+    private let alertService: CoreAlertService
     private weak var viewController: ReloadableViewController?
 
     var killSwitchWarning: ((WarningPopupViewModel) -> Void)?
     let killSwitchChanged = Notification.Name("SettingsViewModelKillSwitchChanged") // two observers
     
-    init(vpnGateway: VpnGatewayProtocol, systemExtensionManager: SystemExtensionManager) {
+    init(vpnGateway: VpnGatewayProtocol, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
         self.systemExtensionManager = systemExtensionManager
+        self.alertService = alertService
     }
     
     // MARK: - Current Index
@@ -128,6 +130,13 @@ class ConnectionSettingsViewModel {
         case 2: transportProtocol = .udp
         default:
             propertiesManager.vpnProtocol = .ike
+            return
+        }
+        
+        guard #available(OSX 10.15, *) else {
+            propertiesManager.vpnProtocol = .ike
+            alertService.push(alert: OpenVPNEnableErrorAlert())
+            viewController?.reloadView()
             return
         }
         
