@@ -108,9 +108,17 @@ class GeneralViewModel {
             break
         }
         
-        let userTier = (try? vpnGateway.userTier()) ?? 0
+        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
+            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
+                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
+            })
+            
+            self.alertService.push(alert: upgradeAlert)
+            viewController?.reloadView()
+            return
+        }
         
-        if !isConnected && !netShieldType.isUserTierTooLow(userTier) {
+        guard isConnected else {
             netShieldPropertyProvider.netShieldType = netShieldType
             viewController?.reloadView()
             return
@@ -124,21 +132,6 @@ class GeneralViewModel {
             self.viewController?.reloadView()
         })
         
-        switch netShieldType {
-        case .off, .level1:
-            self.alertService.push(alert: reconnectAlert)
-        case .level2:
-            guard netShieldType.isUserTierTooLow(userTier) else {
-                self.alertService.push(alert: reconnectAlert)
-                return
-            }
-            
-            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
-                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-            })
-            
-            self.alertService.push(alert: upgradeAlert)
-            viewController?.reloadView()
-        }
+        self.alertService.push(alert: reconnectAlert)
     }
 }
