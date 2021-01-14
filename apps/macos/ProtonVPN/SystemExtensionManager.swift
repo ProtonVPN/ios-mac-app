@@ -40,8 +40,8 @@ class SystemExtensionManager: NSObject {
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     
+    private var shouldNotifyInstall = false
     private var transportProtocol: VpnProtocol.TransportProtocol = .tcp
-    
     private var completionCallback: VpnProtocolCallback?
     
     init( factory: Factory ) {
@@ -67,6 +67,7 @@ class SystemExtensionManager: NSObject {
     }
     
     func requestExtensionInstall( _ transportProtocol: VpnProtocol.TransportProtocol, completion: @escaping VpnProtocolCallback ) {
+        shouldNotifyInstall = false
         guard #available(OSX 10.15, *) else {
             self.propertiesManager.vpnProtocol = .ike
             return
@@ -105,6 +106,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
+        shouldNotifyInstall = true
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
         if silent { return }
         let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
@@ -119,7 +121,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         switch result {
         case .completed:
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
-            if !silent {
+            if !silent && shouldNotifyInstall {
                 alertService.push(alert: OpenVPNEnabledAlert())
             }
             
