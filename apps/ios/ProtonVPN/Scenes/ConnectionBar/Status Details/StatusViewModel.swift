@@ -27,7 +27,7 @@ import vpncore
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory& CoreAlertServiceFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -36,32 +36,50 @@ class StatusViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol? = factory.makeVpnGateway()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
- 
-    weak var delegate: ConnectionBarViewModelDelegate?
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
     var contentChanged: (() -> Void)?
+    var rowsUpdated: (([IndexPath: TableViewCellModel]) -> Void)?
     var dismissStatusView: (() -> Void)?
-    var changeNetShieldType: ((NetShieldType, @escaping NetshieldSelectionViewModel.ApproveCallback) -> Void)?
+    var planUpgradeRequired: (() -> Void)?
     
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
     }
     
-    var ipAddress: String {
-        return formIpAddress()
+    var connectionSatus: ConnectionStatus? {
+        return vpnGateway?.connection
+    }
+    
+    private var userTier: Int {
+        let tier: Int
+        do {
+            tier = try vpnKeychain.fetch().maxTier
+        } catch {
+            tier = CoreAppConstants.VpnTiers.free
+        }
+        return tier
     }
     
     private var timer: Timer?
+    private var connectedDate = Date()
+    private var timeCellIndexPath: IndexPath?
     private var currentTime: String {
-        return delegate?.timeString() ?? ""
+        let time: TimeInterval
+        guard case AppState.connected = appStateManager.state else {
+            return TimeInterval(0).asString
+        }
+        time = Date().timeIntervalSince(connectedDate)
+        return time.asString
     }
     
-    init(factory: Factory, delegate: ConnectionBarViewModelDelegate) {
+    init(factory: Factory) {
         self.factory = factory
-        self.delegate = delegate
         
+        updateConnectionDate()
         startObserving()
         runTimer()
     }
@@ -73,74 +91,88 @@ class StatusViewModel {
     
     var tableViewData: [TableViewSection] {
         var sections = [TableViewSection]()
-        sections.append(locationSection)
-        sections.append(technicalDetailsSection)
+        
+        sections.append(connectionStatusSection)
+        
         if propertiesManager.featureFlags.isNetShield {
-            sections.append(securitySection)
+            sections.append(netshieldSection)
         }
-        sections.append(saveAsProfileSection)
+        
+        if connectionSatus == .connected {
+            sections.append(technicalDetailsSectionConnected)
+            timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
+            sections.append(saveAsProfileSection)
+        } else {
+            sections.append(technicalDetailsSectionDisconnected)
+            timeCellIndexPath = nil
+        }
+        
         return sections
     }
     
-    private var locationSection: TableViewSection {
-        let cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.connectedTo, value: appStateManager.activeConnection()?.server.country ?? ""),
-            secondaryLocationCell
-        ]
+    private var connectionStatusSection: TableViewSection {
+        guard let status = connectionSatus else {
+            return TableViewSection(title: "", showHeader: false, cells: [
+                .textWithActivityCell(title: LocalizedString.unavailable, textColor: .protonWhite(), backgroundColor: .protonGrey(), showActivity: false)
+            ])
+        }
         
-        return TableViewSection(title: LocalizedString.location.uppercased(), cells: cells)
+        let cell: TableViewCellModel
+        
+        switch status {
+        case .connected:
+            cell = .textWithActivityCell(title: String(format: LocalizedString.vpnConnected, connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
+        case .disconnected:
+            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
+        case .connecting:
+            cell = .textWithActivityCell(title: String(format: LocalizedString.connectingTo, connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+        case .disconnecting:
+            cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+        }
+        
+        return TableViewSection(title: "", showHeader: false, cells: [cell])
     }
     
-    private var secondaryLocationCell: TableViewCellModel {
+    private var connectionCountryString: String {
+        guard let activeConnection = appStateManager.activeConnection() else {
+            return ""
+        }
+
         if propertiesManager.serverTypeToggle == .secureCore {
-            if let entryCountryCode = appStateManager.activeConnection()?.server.entryCountryCode {
-                return .staticKeyValue(key: LocalizedString.via, value: LocalizationUtility.default.countryName(forCode: entryCountryCode) ?? "")
-            } else {
-                return .staticKeyValue(key: "", value: "")
-            }
+            return "\(activeConnection.server.entryCountry) >> \(activeConnection.server.exitCountry)"
         } else {
-            return .staticKeyValue(key: LocalizedString.city, value: appStateManager.activeConnection()?.server.city ?? "")
+            return activeConnection.server.exitCountry
         }
     }
     
-    private var technicalDetailsSection: TableViewSection {
+    private var technicalDetailsSectionConnected: TableViewSection {
         let activeConnection = appStateManager.activeConnection()
+        let city = appStateManager.activeConnection()?.server.city != nil ? " - \(appStateManager.activeConnection()?.server.city ?? "")" : ""
         
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: LocalizedString.ip, value: activeConnection?.serverIp.exitIp ?? ""),
-            .staticKeyValue(key: LocalizedString.server, value: activeConnection?.server.name ?? ""),
+            .staticKeyValue(key: LocalizedString.server, value: (activeConnection?.server.name ?? "") + city),
             .staticKeyValue(key: LocalizedString.protocolLabel, value: activeConnection?.vpnProtocol.localizedString ?? ""),
-            .staticKeyValue(key: LocalizedString.sessionTime, value: currentTime)
+            timeCell
         ]
         
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
     }
     
-    private var securitySection: TableViewSection {
-        let activeConnection = appStateManager.activeConnection()
-        
+    private var timeCell: TableViewCellModel {
+        .staticKeyValue(key: LocalizedString.sessionTime, value: currentTime)
+    }
+    
+    private var technicalDetailsSectionDisconnected: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .staticPushKeyValue(key: LocalizedString.netshieldTitle, value: activeConnection?.netShieldType.name ?? "", handler: {
-                guard let type = activeConnection?.netShieldType else { return }
-                self.changeNetShieldType?(type, { type, approve in
-                    self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
-                        // Update profile
-                        if let profileId = self.propertiesManager.lastConnectionRequest?.profileId, let profile = self.profileManager.profile(withId: profileId) {
-                            let updatedProfile = profile.copyWith(newNetShieldType: type)
-                            self.profileManager.updateProfile(updatedProfile)
-                        } else {
-                            // Save to general settings
-                            self.propertiesManager.netShieldType = type
-                        }
-                        approve()
-                        self.vpnGateway?.reconnect(with: type)
-                    }))
-                })
-            })
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.notConnected),
         ]
         
-        return TableViewSection(title: LocalizedString.security.uppercased(), cells: cells)
+        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
     }
+    
+    // MARK: - Save as Profile
     
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
@@ -157,48 +189,6 @@ class StatusViewModel {
         return TableViewSection(title: "", cells: [cell])
     }
     
-    private func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    private func stopObserving() {
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    private func formIpAddress() -> String {
-        let description: String
-        
-        if isSessionEstablished {
-            guard let vpnGateway = vpnGateway else {
-                return LocalizedString.unavailable
-            }
-            
-            switch vpnGateway.connection {
-            case .connected, .disconnecting:
-                description = String(format: LocalizedString.ip, appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
-            default:
-                if let userIp = propertiesManager.userIp {
-                    description = String(format: LocalizedString.publicIp, userIp)
-                } else {
-                    description = String(format: LocalizedString.publicIp, LocalizedString.unavailable)
-                }
-            }
-        } else {
-            description = String(format: LocalizedString.publicIp, LocalizedString.unavailable)
-        }
-        
-        return description
-    }
-    
-    @objc private func connectionChanged() {
-        guard let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected else { return }
-        
-        DispatchQueue.main.async { [weak self] in
-            self?.dismissStatusView?()
-        }
-    }
-    
-    // MARK: Save as Profile
     private func saveAsProfile() {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
@@ -206,7 +196,7 @@ class StatusViewModel {
             messageHandler?(LocalizedString.profileCreationFailed,
                             GSMessageType.error,
                             UIConstants.messageOptions)
-            contentChanged?()
+            DispatchQueue.main.async { self.contentChanged?() }
             return
         }
         
@@ -215,7 +205,7 @@ class StatusViewModel {
         messageHandler?(LocalizedString.profileCreatedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
-        contentChanged?()
+        DispatchQueue.main.async { self.contentChanged?() }
     }
     
     private func deleteProfile() {
@@ -225,7 +215,7 @@ class StatusViewModel {
             messageHandler?(LocalizedString.profileDeletionFailed,
                             GSMessageType.error,
                             UIConstants.messageOptions)
-            contentChanged?()
+            DispatchQueue.main.async { self.contentChanged?() }
             return
         }
         
@@ -233,14 +223,119 @@ class StatusViewModel {
         messageHandler?(LocalizedString.profileDeletedSuccessfully,
                         GSMessageType.success,
                         UIConstants.messageOptions)
-        contentChanged?()
+        DispatchQueue.main.async { self.contentChanged?() }
     }
+    
+    // MARK: - Timer
     
     private func runTimer() {
         timer = Timer.scheduledTimer(timeInterval: 1, target: self, selector: (#selector(self.timerFired)), userInfo: nil, repeats: true)
     }
     
     @objc private func timerFired() {
+        updateTimeCell()
+    }
+    
+    private func updateTimeCell() {
+        guard let timeCellIndexPath = timeCellIndexPath else { return } // No time cell in the view
+        rowsUpdated?([timeCellIndexPath: timeCell])
+    }
+    
+    // MARK: - Connection status changes
+    
+    private func startObserving() {
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: appStateManager.stateChange, object: nil)
+    }
+    
+    private func stopObserving() {
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc private func connectionChanged() {
         contentChanged?()
     }
+    
+    @objc private func stateChanged() {
+        updateConnectionDate()
+    }
+    
+    private func updateConnectionDate() {
+        appStateManager.connectedDate { [weak self] (date) in
+            self?.connectedDate = date ?? Date()
+            self?.updateTimeCell()
+        }
+    }
+    
+    // MARK: - NetShield
+    
+    private var netshieldSection: TableViewSection {
+        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
+            return netshieldUnavailableSection
+        }
+        
+        let isConnected = connectionSatus == .connected
+        let activeConnection = appStateManager.activeConnection()
+        let currentNetshieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
+        let isNetshieldOn = currentNetshieldType != .off
+        
+        var cells = [TableViewCellModel]()
+        
+        cells.append(.toggle(title: LocalizedString.netshieldTitle, on: isNetshieldOn, enabled: true, handler: { toggleOn in
+            self.changeNetshield(to: toggleOn ? .level1 : .off)
+        }))
+        
+        if isNetshieldOn {
+            [NetShieldType.level1, NetShieldType.level2].forEach { type in
+                guard !type.isUserTierTooLow(userTier) else {
+                    cells.append(.invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
+                        self?.planUpgradeRequired?()
+                    }))
+                    return
+                }
+                cells.append(.checkmarkStandard(title: type.name, checked: currentNetshieldType == type, handler: { [weak self] in
+                    self?.changeNetshield(to: type)
+                    return false
+                }))
+            }
+        }
+        
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
+    }
+    
+    private var netshieldUnavailableSection: TableViewSection {
+        var cells = [TableViewCellModel]()
+        
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+            self?.planUpgradeRequired?()
+        }))
+        
+        [NetShieldType.level1, NetShieldType.level2].forEach { type in
+            cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
+                self?.planUpgradeRequired?()
+            }))
+        }
+        
+        return TableViewSection(title: LocalizedString.netshieldSectionTitle.uppercased(), cells: cells)
+    }
+    
+    private func changeNetshield(to newValue: NetShieldType) {
+        let isConnected = connectionSatus == .connected
+        
+        guard isConnected else { // Not connected, just save to settings
+            self.netShieldPropertyProvider.netShieldType = newValue
+            self.contentChanged?()
+            return
+        }
+        
+        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
+            // Save to general settings
+            self.netShieldPropertyProvider.netShieldType = newValue
+            self.vpnGateway?.reconnect(with: newValue)
+            
+        }, cancelHandler: {
+            self.contentChanged?()
+        }))
+    }
+    
 }

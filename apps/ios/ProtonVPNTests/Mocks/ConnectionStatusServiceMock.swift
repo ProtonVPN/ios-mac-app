@@ -1,6 +1,6 @@
 //
-//  TabBar.swift
-//  ProtonVPN - Created on 01.07.19.
+//  ConnectionStatusServiceMock.swift
+//  ProtonVPN - Created on 2020-11-18.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,20 +20,8 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Foundation
 
-class TabBar: UITabBar {
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        isTranslucent = false
-    }
-}
-
-extension TabBar {
-    
-    override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
-    }
+class ConnectionStatusServiceMock: ConnectionStatusService {
+    func presentStatusViewController() {}
 }

@@ -1,6 +1,6 @@
 //
-//  TabBar.swift
-//  ProtonVPN - Created on 01.07.19.
+//  TimeInterval+Render.swift
+//  ProtonVPN - Created on 2020-11-18.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,20 +20,15 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import UIKit
+import Foundation
 
-class TabBar: UITabBar {
+extension TimeInterval {
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        
-        isTranslucent = false
+    public var asString: String {
+        let hours = Int(self) / 3600
+        let minutes = Int(self) / 60 % 60
+        let seconds = Int(self) % 60
+        return String(format: "%02i:%02i:%02i", hours, minutes, seconds)
     }
-}
-
-extension TabBar {
     
-    override var traitCollection: UITraitCollection {
-        return UITraitCollection(traitsFrom: [super.traitCollection] + [UITraitCollection(horizontalSizeClass: .compact)])
-    }
 }

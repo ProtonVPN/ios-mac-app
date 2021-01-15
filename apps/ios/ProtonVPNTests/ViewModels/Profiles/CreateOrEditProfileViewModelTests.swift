@@ -37,8 +37,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv9", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
         ])
     
-    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil, netShieldType: .off)
-    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil, netShieldType: .off)
+    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
+    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
     
     let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
     
@@ -61,7 +61,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), netshieldService: NetshieldServiceMock(viewModel: netshieldViewModel),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
@@ -69,7 +69,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), netshieldService: NetshieldServiceMock(viewModel: netshieldViewModel),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), 
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     

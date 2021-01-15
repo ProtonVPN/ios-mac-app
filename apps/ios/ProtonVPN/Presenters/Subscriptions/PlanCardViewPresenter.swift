@@ -107,12 +107,12 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
     
     private func organizeLayout() {
         
-        //because of the stackview at this point we don't have a real size
-        //a new label has to be created with the same configuration to get a real size
+        // Because of the stackview at this point we don't have a real size
+        // a new label has to be created with the same configuration to get a real size
         
         let featuresSize = view.featuresLabel.realSize
 
-        //if the size exceds a 30% of the screen it should be splited in two rows
+        // If the size exceds a 30% of the screen it should be splited in two rows
         
         let featuresThreshold = UIScreen.main.bounds.width * 0.3
         

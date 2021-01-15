@@ -25,7 +25,6 @@ import vpncore
 
 class PaymentsApiServiceMock: PaymentsApiService {
     public var callbackServicePlans: ((((ServicePlansProperties) -> Void), ((Error) -> Void)) -> Void)?
-    public var callbackApplyCredit: ((String, ((Subscription) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackCredit: ((Int, PaymentAction, (() -> Void), ((Error) -> Void)) -> Void)?
     public var callbackMethods: (((([PaymentMethod]?) -> Void), ((Error) -> Void)) -> Void)?
     public var callbackSubscription: ((((Subscription?) -> Void), ((Error) -> Void)) -> Void)?
@@ -38,10 +37,6 @@ class PaymentsApiServiceMock: PaymentsApiService {
     
     func servicePlans(success: @escaping ((ServicePlansProperties) -> Void), failure: @escaping ((Error) -> Void)) {
         callbackServicePlans?(success, failure)
-    }
-    
-    func applyCredit(forPlanId planId: String, success: @escaping ((Subscription) -> Void), failure: @escaping ((Error) -> Void)) {
-        callbackApplyCredit?(planId, success, failure)
     }
     
     func credit(amount: Int, receipt: PaymentAction, success: @escaping (() -> Void), failure: @escaping ((Error) -> Void)) {

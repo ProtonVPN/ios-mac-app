@@ -34,21 +34,34 @@ enum TableViewCellModel {
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
-    case checkmarkStandard(title: String, checked: Bool, handler: (() -> Void) )
+    case checkmarkStandard(title: String, checked: Bool, handler: (() -> Bool))
     case colorPicker(viewModel: ColorPickerViewModel)
     case invertedKeyValue(key: String, value: String, handler: (() -> Void) )
+    case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: (() -> Void) )
+    case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
 }
 
 struct TableViewSection {
-    
     let title: String
-    let cells: [TableViewCellModel]
+    var cells: [TableViewCellModel]
+    let showHeader: Bool
+    
+    init(title: String, showHeader: Bool = true, cells: [TableViewCellModel]) {
+        self.title = title
+        self.cells = cells
+        self.showHeader = showHeader
+    }
+    
+    var headerHeight: CGFloat {
+        return showHeader ? UIConstants.headerHeight : CGFloat.leastNormalMagnitude
+    }
+    
 }
 
 // A generic data source for table views
 class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDelegate {
     
-    let sections: [TableViewSection]
+    var sections: [TableViewSection]
     
     init(for tableView: UITableView, with sections: [TableViewSection]) {
         self.sections = sections
@@ -62,6 +75,13 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(InstructionStepTableViewCell.nib, forCellReuseIdentifier: InstructionStepTableViewCell.identifier)
         tableView.register(CheckmarkTableViewCell.nib, forCellReuseIdentifier: CheckmarkTableViewCell.identifier)
         tableView.register(ColorPickerTableViewCell.nib, forCellReuseIdentifier: ColorPickerTableViewCell.identifier)
+        tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
+    }
+    
+    public func update(rows: [IndexPath: TableViewCellModel]) {
+        for (index, row) in rows {
+            sections[index.section].cells[index.row] = row
+        }
     }
     
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -87,6 +107,17 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.subtitleLabel.text = value
             cell.completionHandler = handler
             cell.invert()
+                
+            return cell
+        case .attributedKeyValue(key: let key, value: let value, handler: let handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: StandardTableViewCell.identifier) as? StandardTableViewCell else {
+                return UITableViewCell()
+            }
+                
+            cell.accessoryType = .none
+            cell.titleLabel.attributedText = key
+            cell.subtitleLabel.attributedText = value
+            cell.completionHandler = handler
                 
             return cell
         case .pushStandard(title: let title, handler: let handler):
@@ -209,12 +240,28 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.collectionView.selectItem(at: selectedIndex, animated: false, scrollPosition: .top)
             
             return cell
+        case .textWithActivityCell(title: let title, textColor: let textColor, backgroundColor: let backgroundColor, showActivity: let showActivity):
+            
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TextWithActivityCell.identifier) as? TextWithActivityCell else {
+                return UITableViewCell()
+            }
+            
+            cell.titleLabel.text = title
+            cell.titleLabel.textColor = textColor
+            cell.backgroundColor = backgroundColor
+            if showActivity {
+                cell.activityIndicatorView.startAnimating()
+            } else {
+                cell.activityIndicatorView.stopAnimating()
+            }
+            
+            return cell
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return UIConstants.headerHeight
+        return sections[section].headerHeight
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -231,6 +278,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return -1 // allows for self sizing
         case .colorPicker(viewModel: let viewModel):
             return viewModel.height
+        case .textWithActivityCell:
+            return -1 // allows for self sizing
         default:
             return UIConstants.cellHeight
         }
@@ -241,7 +290,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         let cell = tableView.cellForRow(at: indexPath)
         
         switch cellModel {
-        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue:
+        case .pushStandard, .pushKeyValue, .pushKeyValueAttributed, .invertedKeyValue, .attributedKeyValue:
             guard let cell = cell as? StandardTableViewCell else { return }
             
             cell.select()

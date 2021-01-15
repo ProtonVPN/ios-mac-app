@@ -56,7 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
         storeKitManager.updateAvailableProductsList()
-        _ = storeKitManager.readyToPurchaseProduct() //initial response is always true due to lazy load
+        _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
     
@@ -141,6 +141,7 @@ fileprivate extension AppDelegate {
             // Extensions requesting a connection should set a connection request first
             navigationService.vpnGateway?.quickConnect()
             NotificationCenter.default.addObserver(self, selector: #selector(stateDidUpdate), name: VpnGateway.connectionChanged, object: nil)
+            navigationService.presentStatusViewController()
             
         case URLConstants.deepLinkDisconnectAction:
             navigationService.vpnGateway?.disconnect {
@@ -164,7 +165,7 @@ fileprivate extension AppDelegate {
                 UIControl().sendAction(#selector(URLSessionTask.suspend), to: UIApplication.shared, for: nil)
             }
         case .connecting, .preparingConnection:
-            //wait
+            // wait
             return
         default:
             NotificationCenter.default.removeObserver(self)

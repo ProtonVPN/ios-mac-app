@@ -177,7 +177,7 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         isLoading = false
         
         if let userError = error as? UserError, userError == .cancelled {
-            //the user cancelled the validation do not display error message
+            // The user cancelled the validation do not display error message
             return
         }
         

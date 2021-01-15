@@ -62,7 +62,7 @@ class DependencyContainer {
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
     
-    private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly))
+    private lazy var paymentTokenStorage = KeychainPaymentTokenStorage(keychain: Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly), lifetime: AppConstants.Time.paymentTokenLifetime)
     
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh)
@@ -211,7 +211,8 @@ extension DependencyContainer: VpnGatewayFactory {
                           appStateManager: makeAppStateManager(),
                           alertService: makeCoreAlertService(),
                           vpnKeychain: makeVpnKeychain(),
-                          siriHelper: SiriHelper())
+                          siriHelper: SiriHelper(),
+                          netShieldPropertyProvider: makeNetShieldPropertyProvider())
     }
 }
 
@@ -363,7 +364,7 @@ extension DependencyContainer: AnnouncementRefresherFactory {
 // MARK: - AnnouncementStorageFactory
 extension DependencyContainer: AnnouncementStorageFactory {
     func makeAnnouncementStorage() -> AnnouncementStorage {
-        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults())
+        return AnnouncementStorageUserDefaults(userDefaults: Storage.userDefaults(), keyNameProvider: nil)
     }
 }
 
@@ -392,5 +393,19 @@ extension DependencyContainer: AnnouncementsViewModelFactory {
 extension DependencyContainer: SafariServiceFactory {
     func makeSafariService() -> SafariServiceProtocol {
         return SafariService()
+    }
+}
+
+// MARK: - UserTierProviderFactory
+extension DependencyContainer: UserTierProviderFactory {
+    func makeUserTierProvider() -> UserTierProvider {
+        return UserTierProviderImplementation(self)
+    }
+}
+
+// MARK: - NetShieldPropertyProviderFactory
+extension DependencyContainer: NetShieldPropertyProviderFactory {
+    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
+        return NetShieldPropertyProviderImplementation(self)
     }
 }

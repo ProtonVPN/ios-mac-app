@@ -63,12 +63,13 @@ class NetshieldSelectionViewModel {
     var tableViewData: [TableViewSection] {
         let cells: [TableViewCellModel] = NetShieldType.allCases.map { type in
             if type.isUserTierTooLow(userTier) {
-                return .invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
+                return .attributedKeyValue(key: type.name.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
                     self?.planService.presentPlanSelection()
                 })
             }
             return .checkmarkStandard(title: type.name, checked: type == selectedType, handler: { [weak self] in
                 self?.userSelected(type: type)
+                return true
             })
         }
         return [TableViewSection(title: "", cells: cells)]

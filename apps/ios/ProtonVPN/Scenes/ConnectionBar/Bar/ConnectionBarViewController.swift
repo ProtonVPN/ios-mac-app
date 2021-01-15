@@ -30,12 +30,14 @@ class ConnectionBarViewController: UIViewController {
     @IBOutlet weak var arrowImage: UIImageView!
     
     var viewModel: ConnectionBarViewModel?
-    var tap: UITapGestureRecognizer?
+    var tap: UITapGestureRecognizer!
+    var connectionStatusService: ConnectionStatusService!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.view.addGestureRecognizer(tap)
         
         view.backgroundColor = .protonBlack()
         connectedLabel.textColor = .protonWhite()
@@ -71,12 +73,6 @@ class ConnectionBarViewController: UIViewController {
         self.notConnectedLabel.isHidden = false
         self.notConnectedLabel.text = LocalizedString.connectingDotDotDot
         self.notConnectedLabel.textColor = .protonYellow()
-        self.arrowImage.isHidden = true
-        
-        if let tap = self.tap {
-            self.view.removeGestureRecognizer(tap)
-        }
-        
         self.view.setNeedsDisplay()
     }
     
@@ -85,17 +81,6 @@ class ConnectionBarViewController: UIViewController {
         self.connectedLabel.isHidden = false
         self.timerLabel.isHidden = false
         self.notConnectedLabel.isHidden = true
-        
-        guard let viewModel = viewModel else { return }
-        
-        self.arrowImage.isHidden = !viewModel.allowTapping()
-        if let tap = self.tap {
-            if viewModel.allowTapping() {
-                self.view.addGestureRecognizer(tap)
-            } else {
-                self.view.removeGestureRecognizer(tap)
-            }
-        }
         
         self.view.setNeedsDisplay()
         self.view.setNeedsLayout()
@@ -114,18 +99,12 @@ class ConnectionBarViewController: UIViewController {
         self.notConnectedLabel.isHidden = false
         self.notConnectedLabel.text = LocalizedString.notConnected
         self.notConnectedLabel.textColor = .protonRed()
-        self.arrowImage.isHidden = true
-        
-        if let tap = self.tap {
-            self.view.removeGestureRecognizer(tap)
-        }
+        self.arrowImage.isHidden = false
         
         self.view.setNeedsDisplay()
     }
     
     @objc private func handleTap() {
-        if let viewController = viewModel?.statusViewController {
-            self.navigationController?.pushViewController(viewController, animated: true)
-        }
+        connectionStatusService.presentStatusViewController()
     }
 }

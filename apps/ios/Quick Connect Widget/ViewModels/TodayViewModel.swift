@@ -33,7 +33,7 @@ class TodayViewModelImplementation: TodayViewModel {
     
     weak var viewController: TodayViewControllerProtocol?
     
-    private let reachability = Reachability()
+    private var reachability: Reachability?
     private var timer: Timer?
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnManager: VpnManagerProtocol
@@ -46,6 +46,7 @@ class TodayViewModelImplementation: TodayViewModel {
     }
     
     func viewDidLoad() {
+        reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.viewController?.displayUnreachable() }
         try? reachability?.startNotifier()
@@ -77,7 +78,7 @@ class TodayViewModelImplementation: TodayViewModel {
     
     @objc private func connectionChanged() {
         
-        if let reachability = reachability, reachability.connection == .none {
+        if let reachability = reachability, reachability.connection == .unavailable {
             viewController?.displayUnreachable()
             return
         }

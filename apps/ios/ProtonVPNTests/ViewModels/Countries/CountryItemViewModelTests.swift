@@ -76,7 +76,8 @@ class CountryItemViewModelTests: XCTestCase {
             vpnGateway: nil,
             alertService: AlertServiceEmptyStub(),
             loginService: LoginServiceMock(),
-            planService: PlanServiceMock()
+            planService: PlanServiceMock(),
+            connectionStatusService: ConnectionStatusServiceMock()
             )
 
         return viewModel

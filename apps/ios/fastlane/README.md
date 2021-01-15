@@ -26,6 +26,11 @@ Run all the tests
 fastlane ios internal_beta
 ```
 
+### ios internal_staging
+```
+fastlane ios internal_staging
+```
+
 ### ios screenshots
 ```
 fastlane ios screenshots
