@@ -1,6 +1,6 @@
 //
-//  KeychainPaymentTokenStorageTests.swift
-//  vpncore - Created on 2020-11-23.
+//  MemoryPaymentTokenStorageTests.swift
+//  vpncore - Created on 2021-01-18.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -21,19 +21,10 @@
 //
 
 import XCTest
-import KeychainAccess
 
-// Added only to mac target, because these tests fail when run on simulator.
-// Almost no info about the error on the internet: https://developer.apple.com/forums/thread/655607
+class MemoryPaymentTokenStorageTests: XCTestCase {
 
-class KeychainPaymentTokenStorageTests: XCTestCase {
-
-    private var keychain: Keychain!
-    private var storage: KeychainPaymentTokenStorage!
-    
-    override func setUpWithError() throws {
-        keychain = Keychain(service: "protonvpn.tests")
-    }
+    private var storage: MemoryPaymentTokenStorage!
 
     override func tearDownWithError() throws {
         guard storage != nil else { return }
@@ -41,7 +32,7 @@ class KeychainPaymentTokenStorageTests: XCTestCase {
     }
 
     func testStoragesSavesAndClearsToken() throws {
-        storage = KeychainPaymentTokenStorage(keychain: keychain, lifetime: 3600)
+        storage = MemoryPaymentTokenStorage(lifetime: 3600)
         storage.clear()
         XCTAssertTrue(storage.isEmpty)
         
@@ -57,7 +48,7 @@ class KeychainPaymentTokenStorageTests: XCTestCase {
     }
     
     func testStoragesDoesntReturnOldToken() throws {
-        storage = KeychainPaymentTokenStorage(keychain: keychain, lifetime: 0)
+        storage = MemoryPaymentTokenStorage(lifetime: 0)
         storage.clear()
         XCTAssertTrue(storage.isEmpty)
         

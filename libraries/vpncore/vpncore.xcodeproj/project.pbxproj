@@ -556,7 +556,6 @@
 		D5C205522487A0CF004FB58B /* SafariService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E160845821DE1E9100E34D04 /* SafariService.swift */; };
 		D5C205532487A0CF004FB58B /* Disconnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1828592236C7F8A00E397A5 /* Disconnect.swift */; };
 		D5C205542487A0CF004FB58B /* QuickConnect.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1828593236C7F8A00E397A5 /* QuickConnect.swift */; };
-		D5CC0019256BEF6C003FA161 /* KeychainPaymentTokenStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC0007256BEF44003FA161 /* KeychainPaymentTokenStorageTests.swift */; };
 		D5CC0022256BEF6F003FA161 /* TrialCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC000D256BEF60003FA161 /* TrialCheckerTests.swift */; };
 		D5CC0023256BEF70003FA161 /* TrialCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC000D256BEF60003FA161 /* TrialCheckerTests.swift */; };
 		D5CC008F256C0C5F003FA161 /* StoreKitStateCheckerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */; };
@@ -576,6 +575,8 @@
 		D5D2958225A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2958025A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift */; };
 		D5D2958825A5DEB6000FBD74 /* UserTierProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */; };
 		D5D2958925A5DEB6000FBD74 /* UserTierProviderMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */; };
+		D5D2985C25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2985B25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift */; };
+		D5D2985D25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D2985B25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift */; };
 		D5D606A32292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
 		D5D606A42292DA6E00394CF9 /* TrialChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D606A22292DA6E00394CF9 /* TrialChecker.swift */; };
 		D5DC52C3252DD9F000889B5A /* AnnouncementStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DC52C2252DD9F000889B5A /* AnnouncementStorage.swift */; };
@@ -620,10 +621,6 @@
 		D5FFE6E024A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */; };
 		D5FFE6E124A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */; };
 		D5FFE6E224A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */; };
-		D5FFE6E424A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */; };
-		D5FFE6E524A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */; };
-		D5FFE6E624A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */; };
-		D5FFE6E724A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */; };
 		D5FFE6E924A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E824A1E28100F0F4A1 /* StoreKitStateChecker.swift */; };
 		D5FFE6EA24A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E824A1E28100F0F4A1 /* StoreKitStateChecker.swift */; };
 		D5FFE6EB24A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6E824A1E28100F0F4A1 /* StoreKitStateChecker.swift */; };
@@ -1009,7 +1006,6 @@
 		D5BCDC9425303E56004BAEE8 /* AnnouncementManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementManager.swift; sourceTree = "<group>"; };
 		D5BCDEA925359F68004BAEE8 /* Offer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Offer.swift; sourceTree = "<group>"; };
 		D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerSelectorTests.swift; sourceTree = "<group>"; };
-		D5CC0007256BEF44003FA161 /* KeychainPaymentTokenStorageTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainPaymentTokenStorageTests.swift; sourceTree = "<group>"; };
 		D5CC000D256BEF60003FA161 /* TrialCheckerTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrialCheckerTests.swift; sourceTree = "<group>"; };
 		D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStateCheckerMock.swift; sourceTree = "<group>"; };
 		D5CD4B03236709820006AAF7 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = pl; path = Localization/pl.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -1024,6 +1020,7 @@
 		D5D2957525A5D979000FBD74 /* UserTierProviderImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTierProviderImplementationTests.swift; sourceTree = "<group>"; };
 		D5D2958025A5DE61000FBD74 /* NetShieldPropertyProviderImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetShieldPropertyProviderImplementationTests.swift; sourceTree = "<group>"; };
 		D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserTierProviderMock.swift; sourceTree = "<group>"; };
+		D5D2985B25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryPaymentTokenStorageTests.swift; sourceTree = "<group>"; };
 		D5D606A22292DA6E00394CF9 /* TrialChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrialChecker.swift; sourceTree = "<group>"; };
 		D5DC52C2252DD9F000889B5A /* AnnouncementStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementStorage.swift; sourceTree = "<group>"; };
 		D5DC543A252EF7AB00889B5A /* AnnouncementRefresher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementRefresher.swift; sourceTree = "<group>"; };
@@ -1040,7 +1037,6 @@
 		D5EF8F9D2293D59100B713BD /* PropertiesManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesManagerMock.swift; sourceTree = "<group>"; };
 		D5EF8FA02293DEED00B713BD /* VpnGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnGatewayMock.swift; sourceTree = "<group>"; };
 		D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTokenStorage.swift; sourceTree = "<group>"; };
-		D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainPaymentTokenStorage.swift; sourceTree = "<group>"; };
 		D5FFE6E824A1E28100F0F4A1 /* StoreKitStateChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitStateChecker.swift; sourceTree = "<group>"; };
 		D5FFE6ED24A5D39B00F0F4A1 /* UserBaseV4Request.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserBaseV4Request.swift; sourceTree = "<group>"; };
 		DEB91A40AE80CC6279C8A0B9 /* Pods-vpncore-vpncore-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-ios.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-ios/Pods-vpncore-vpncore-ios.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1581,8 +1577,8 @@
 		D5D606A62292DC6600394CF9 /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
-				D5CC0007256BEF44003FA161 /* KeychainPaymentTokenStorageTests.swift */,
 				D5CC000D256BEF60003FA161 /* TrialCheckerTests.swift */,
+				D5D2985B25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift */,
 			);
 			path = Subscriptions;
 			sourceTree = "<group>";
@@ -1767,7 +1763,6 @@
 		E1616B9121C7ADAA00F42D79 /* Subscriptions */ = {
 			isa = PBXGroup;
 			children = (
-				D5FFE6E324A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift */,
 				D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */,
 				E1616B9221C7ADBF00F42D79 /* ServicePlanDataService.swift */,
 				E1616BD921C80D3D00F42D79 /* StoreKitManager.swift */,
@@ -2481,7 +2476,6 @@
 				E129C6C222A90E6500D8437E /* VpnGatewayMock.swift in Sources */,
 				D58874B524FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E1616BD721C7DF8800F42D79 /* VpnKeychain.swift in Sources */,
-				D5FFE6E424A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
 				4242B04D2465A4380042145A /* AuthRefreshRequest.swift in Sources */,
 				E15367E022662E65009BB1D2 /* VpnConnectionPreparer.swift in Sources */,
 				4242B0702465A48B0042145A /* PaymentsApiService.swift in Sources */,
@@ -2654,6 +2648,7 @@
 				D5C205062487A0CE004FB58B /* UserCheckUsernameRequest.swift in Sources */,
 				D59671FD253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
+				D5D2985C25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */,
 				D5C205072487A0CE004FB58B /* UserCreateRequest.swift in Sources */,
 				D5C205082487A0CE004FB58B /* BaseRequest.swift in Sources */,
 				D5C205092487A0CE004FB58B /* VpnProperties.swift in Sources */,
@@ -2779,7 +2774,6 @@
 				D5C2045F248669D5004FB58B /* AlamofireWrapper.swift in Sources */,
 				D5A8812622CDDAD1009B63D1 /* AlamofireWrapperMock.swift in Sources */,
 				D5C2046324866AC3004FB58B /* HumanVerificationAdapter.swift in Sources */,
-				D5FFE6E524A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
 				D5BCDC9625303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				D585B5142447075D00E901F3 /* Dictionary+Merge.swift in Sources */,
 				D5C2046B24866B02004FB58B /* HumanVerificationHelper.swift in Sources */,
@@ -2892,7 +2886,6 @@
 				E129C6C522A90E6600D8437E /* VpnGatewayMock.swift in Sources */,
 				D58874B624FE69260022E438 /* AppSessionRefresher.swift in Sources */,
 				E1616B8F21C7AD2300F42D79 /* ServicePlanDetails.swift in Sources */,
-				D5FFE6E624A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
 				4242B04E2465A4380042145A /* AuthRefreshRequest.swift in Sources */,
 				E15367E122662E65009BB1D2 /* VpnConnectionPreparer.swift in Sources */,
 				4242B0712465A48B0042145A /* PaymentsApiService.swift in Sources */,
@@ -3037,6 +3030,7 @@
 				D5D2957725A5D979000FBD74 /* UserTierProviderImplementationTests.swift in Sources */,
 				D5C204DC24866BB6004FB58B /* AFDataResponse+Filter.swift in Sources */,
 				D5C204DD24866BB6004FB58B /* Data+JSONDictionary.swift in Sources */,
+				D5D2985D25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */,
 				D5C204DE24866BB6004FB58B /* DataRequest+Validation.swift in Sources */,
 				D5C204DF24866BB6004FB58B /* Arithmetic.swift in Sources */,
 				D5C204E024866BB6004FB58B /* HexColor.swift in Sources */,
@@ -3153,7 +3147,6 @@
 				D5686B1C24E3D2D700CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D55D790D24978996009669E0 /* APILogger.swift in Sources */,
 				D5C204C724866B81004FB58B /* PaymentAction.swift in Sources */,
-				D5FFE6E724A0E06400F0F4A1 /* KeychainPaymentTokenStorage.swift in Sources */,
 				D5C204C824866B81004FB58B /* PaymentToken.swift in Sources */,
 				D5FFE6EC24A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */,
 				D5C204C924866B81004FB58B /* AuthCredentials.swift in Sources */,
@@ -3209,7 +3202,6 @@
 				D5ADFBD523A0D50F00C28CFF /* ReportsApiServiceTests.swift in Sources */,
 				D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */,
-				D5CC0019256BEF6C003FA161 /* KeychainPaymentTokenStorageTests.swift in Sources */,
 				D5C2045824866953004FB58B /* VpnProtocol.swift in Sources */,
 				D5C2044124866720004FB58B /* ServerStorage.swift in Sources */,
 				D5C204292486664E004FB58B /* ServerType.swift in Sources */,
