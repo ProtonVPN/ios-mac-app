@@ -128,7 +128,7 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
         protocolList.target = self
         protocolList.action = #selector(protocolItemSelected)
         protocolInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        protocolInfoIcon.toolTip = LocalizedString.openVPNSettingsDescription
+        protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
     }
