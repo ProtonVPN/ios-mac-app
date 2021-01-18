@@ -142,7 +142,9 @@ class ConnectionSettingsViewModel {
         
         propertiesManager.vpnProtocol = .openVpn(transportProtocol)
         systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
-            self.viewController?.reloadView()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                self?.viewController?.reloadView()
+            }
         })
     }
     
