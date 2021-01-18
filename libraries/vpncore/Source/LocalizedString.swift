@@ -462,6 +462,7 @@ public class LocalizedString {
     public static let alwaysOnVpnTooltipIos = NSLocalizedString("_always_on_vpn_tooltip_ios", comment: "iOS Settinsg screen: always-on description under the switch")
     public static let autoConnect = NSLocalizedString("_auto_connect", comment: "MacOS: Settings -> Connection: name of field.")
     public static let autoConnectTooltip = NSLocalizedString("_auto_connect_tooltip", comment: "MacOS: Settings -> Connection: description.")
+    public static let protocolTooltip = NSLocalizedString("_protocol_tooltip", comment: "MacOS: Settings -> Protocol: description.")
     public static let quickConnectTooltip = NSLocalizedString("_quick_connect_tooltip", comment: "MacOS: Settings -> Connection: description.")
     public static let startMinimized = NSLocalizedString("_start_minimized", comment: "MacOS: Settings -> General: name of field.")
     public static let systemNotifications = NSLocalizedString("_system_notifications", comment: "MacOS: Settings -> General: name of field.")

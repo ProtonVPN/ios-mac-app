@@ -485,6 +485,7 @@
 "_always_on_vpn_tooltip_ios" = "Kill Switch is not supported on iOS. Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.";
 "_auto_connect" = "Auto Connect";
 "_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
+"_protocol_tooltip" = "Change the protocol of your VPN connection";
 "_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
 "_start_minimized" = "Start Minimized";
 "_system_notifications" = "System Notifications";
