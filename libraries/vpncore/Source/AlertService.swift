@@ -611,9 +611,9 @@ public class OpenVPNInstallationRequiredAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void) {
+    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
         actions.append(AlertAction(title: LocalizedString.showInstructions, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancel))
     }
 }
 
