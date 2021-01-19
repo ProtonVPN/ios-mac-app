@@ -37,7 +37,7 @@ extension PropertiesManagerProtocol {
         set {
             Storage.setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
             DispatchQueue.main.async {
-                NotificationCenter.default.post(name: PropertiesManager.earlyAccessNotification, object: nil)
+                NotificationCenter.default.post(name: PropertiesManager.earlyAccessNotification, object: newValue)
             }
         }
     }

@@ -131,6 +131,7 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    
     func makeAppSessionManager() -> AppSessionManager {
         return AppSessionManagerMock()
     }
@@ -145,6 +146,16 @@ fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
     
     func makeNotificationManager() -> NotificationManagerProtocol {
         return NotificationManagerMock()
+    }
+    
+    func makeUpdateManager() -> UpdateManager {
+        return UpdateManager(UpdateFileSelectorFactoryMock())
+    }
+}
+
+fileprivate class UpdateFileSelectorFactoryMock: UpdateFileSelectorFactory {
+    func makeUpdateFileSelector() -> UpdateFileSelector {
+        return UpdateFileSelectorMock()
     }
 }
 

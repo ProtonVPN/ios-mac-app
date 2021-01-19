@@ -23,6 +23,8 @@
 import XCTest
 import vpncore
 
+@testable import ProtonVPN
+
 class UpdateFileSelectorImplementationTests: XCTestCase {
 
     func testDefaultFile() throws {

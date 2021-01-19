@@ -67,21 +67,21 @@ class UpdateManager: NSObject {
         return items.map { ($0 as SUAppcastItem).itemDescription ?? "" }
     }
     
-    public init(_ factory: UpdateFileSelectorFactory) {
+    public init(_ factory: Factory) {
         self.factory = factory
         updater = SUUpdater.shared()
 
         super.init()
         
         setupUrl()
-        NotificationCenter.default.addObserver(self, selector: #selector(setupUrl), name: PropertiesManager.earlyAccessNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(earlyAccessChanged), name: PropertiesManager.earlyAccessNotification, object: nil)
         
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
         
         updater.delegate = self
     }
     
-    @objc private func setupUrl() {
+    private func setupUrl() {
         let url = URL(string: updateFileSelector.updateFileUrl)
         guard updater.feedURL != url else {
             return
@@ -90,7 +90,11 @@ class UpdateManager: NSObject {
         PMLog.D("Updated feedURL to \(updater.feedURL.absoluteString)")
     }
     
-    func turnOnEarlyAccess(_ earlyAccess: Bool) {
+    @objc private func earlyAccessChanged(_ notification: NSNotification) {
+        turnOnEarlyAccess((notification.object as? Bool) ?? false)
+    }
+    
+    private func turnOnEarlyAccess(_ earlyAccess: Bool) {
         setupUrl()
         
         if earlyAccess {
