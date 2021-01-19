@@ -95,6 +95,15 @@ extension PropertiesManagerProtocol {
         }
     }
     
+    var openVPNExtensionTourDisplayed: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.openVPNExtensionTourDisplayed)
+        }
+        set {
+            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.openVPNExtensionTourDisplayed)
+        }
+    }
+    
     func restoreStartOnBootStatus() {
         let enabled = self.startOnBoot
         self.setLoginItem(enabled: enabled)

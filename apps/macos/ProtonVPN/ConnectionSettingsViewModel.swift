@@ -140,12 +140,25 @@ class ConnectionSettingsViewModel {
             return
         }
         
-        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
-        systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                self?.viewController?.reloadView()
-            }
-        })
+        let requestExtensionCallback: (() -> Void) = {
+            self.propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            self.systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                    self?.viewController?.reloadView()
+                }
+            })
+        }
+        
+        if propertiesManager.openVPNExtensionTourDisplayed {
+            requestExtensionCallback()
+        } else {
+            let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
+                requestExtensionCallback()
+                self.alertService.push(alert: OpenVPNExtensionTourAlert())
+            }, cancel: requestExtensionCallback,
+            dismiss: requestExtensionCallback)
+            alertService.push(alert: alert)
+        }
     }
     
     // MARK: - Item

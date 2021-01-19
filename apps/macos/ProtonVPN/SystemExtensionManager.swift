@@ -94,6 +94,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion) (\(existing.bundleVersion))", "\(ext.bundleShortVersion) (\(ext.bundleVersion))")
         
         propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+        propertiesManager.openVPNExtensionTourDisplayed = true
         
         if existing.bundleShortVersion.compareVersion(to: ext.bundleShortVersion) == ComparisonResult.orderedAscending {
             return .replace
@@ -107,12 +108,8 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
         shouldNotifyInstall = true
+        propertiesManager.openVPNExtensionTourDisplayed = true
         os_log(.debug, log: self.log, "requestNeedsUserApproval")
-        if silent { return }
-        let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
-            self.alertService.push(alert: OpenVPNExtensionTourAlert())
-        })
-        alertService.push(alert: alert)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
