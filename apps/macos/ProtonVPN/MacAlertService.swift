@@ -25,13 +25,14 @@ import vpncore
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     
     fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -186,7 +187,7 @@ extension MacAlertService: CoreAlertService {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.supportForm)
         }
         let updateAction = AlertAction(title: LocalizedString.updateUpdate, style: .confirmative) {
-            UpdateManager.shared.startUpdate()
+            self.updateManager.startUpdate()
         }
         
         alert.actions.append(supportAction)

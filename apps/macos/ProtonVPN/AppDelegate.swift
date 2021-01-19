@@ -59,6 +59,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.container.makeWindowService().setStatusMenuWindowController(self.statusMenu)
             self.notificationManager = self.container.makeNotificationManager()
             self.container.makeMaintenanceManagerHelper().startMaintenanceManager()
+            _ = self.container.makeUpdateManager() // Load update manager so it has a chance to update xml url
             
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)

@@ -30,7 +30,7 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory
+    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory & UpdateManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -42,6 +42,7 @@ class NavigationService {
     lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     
     private var trialChecker: TrialChecker?
 
@@ -175,7 +176,7 @@ extension NavigationService {
     }
     
     func checkForUpdates() {
-        UpdateManager.shared.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: false)
+        updateManager.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: false)
     }
     
     func openLogsFolder() {

@@ -73,6 +73,10 @@ class DependencyContainer {
     #else
     private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper(factory: self)
     #endif
+    
+    // Manages app updates
+    private lazy var updateManager = UpdateManager(self)
+    
 }
 
 // MARK: NavigationServiceFactory
@@ -357,5 +361,19 @@ extension DependencyContainer: UserTierProviderFactory {
 extension DependencyContainer: NetShieldPropertyProviderFactory {
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
         return NetShieldPropertyProviderImplementation(self)
+    }
+}
+
+// MARK: - UpdateFileSelectorFactory
+extension DependencyContainer: UpdateFileSelectorFactory {
+    func makeUpdateFileSelector() -> UpdateFileSelector {
+        return UpdateFileSelectorImplementation(self)
+    }
+}
+
+// MARK: - UpdateManagerFactory
+extension DependencyContainer: UpdateManagerFactory {
+    func makeUpdateManager() -> UpdateManager {
+        return updateManager
     }
 }
