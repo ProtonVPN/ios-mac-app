@@ -73,7 +73,7 @@ unit_tests:
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
     - pod install
     - fastlane ci_test
-    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.test_result/3_Test/action.xccovreport
+    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
   tags:
     - macOS
   artifacts:
