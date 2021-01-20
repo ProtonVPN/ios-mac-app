@@ -22,7 +22,7 @@
 
 import Foundation
 
-struct SemanticVersion {
+public struct SemanticVersion {
     
     public let metadataComponents: [String]
     public let releaseComponents: [String]
