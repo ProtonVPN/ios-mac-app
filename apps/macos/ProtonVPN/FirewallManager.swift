@@ -174,6 +174,21 @@ class FirewallManager {
         }
     }
     
+    func uninstallFirewall(completion: (() -> Void)? = nil) {
+        disableFirewall {
+            guard let helper = self.helper({ success in completion?() }) else {
+                PMLog.ET("Can not retrieve network helper")
+                completion?()
+                return
+            }
+            
+            helper.uninstall { (exitCode) in
+                PMLog.D("uninstallFirewall exit code: \(exitCode)", level: .debug)
+                completion?()
+            }
+        }
+    }
+    
     func isProtonFirewallEnabled(completion: @escaping (Bool) -> Void) {
         guard let helper = self.helper() else {
             PMLog.ET("Can not retrieve network helper", level: .debug)

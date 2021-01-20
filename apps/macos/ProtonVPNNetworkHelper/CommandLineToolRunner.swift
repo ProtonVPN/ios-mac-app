@@ -35,6 +35,9 @@ struct CommandLineToolRunner {
     private static let launchctl = "/bin/launchctl"
     private static let unloadArguments = ["unload", "/Library/LaunchDaemons/ch.protonvpn.ProtonVPNNetworkHelper.plist"]
     
+    private static let rm = "/bin/rm"
+    private static let rmArguments = ["/Library/PrivilegedHelperTools/ch.protonvpn.ProtonVPNNetworkHelper", "/Library/LaunchDaemons/ch.protonvpn.ProtonVPNNetworkHelper.plist"]
+    
     /// Used to run commands in serial
     private static let runnerQueue = DispatchQueue(label: "ch.protonvpn.networkhelper")
     
@@ -121,6 +124,22 @@ struct CommandLineToolRunner {
             
             process.terminationHandler = { task in
                 completion(NSNumber(value: task.terminationStatus))
+            }
+            
+            process.launch()
+        }
+    }
+    
+    static func uninstall(completion: @escaping (NSNumber) -> ()) {
+        runnerQueue.async {
+            let process = Process()
+            process.launchPath = rm
+            process.arguments = rmArguments
+            
+            process.terminationHandler = { task in
+                unloadFromLaunchd(completion: { result in
+                    completion(NSNumber(value: task.terminationStatus))
+                })
             }
             
             process.launch()

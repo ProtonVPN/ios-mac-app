@@ -75,6 +75,10 @@ class NetworkHelperTimeoutWrapper: NetworkHelperProtocol {
         helper.unload(completion: completion)
     }
     
+    func uninstall(completion: @escaping (NSNumber) -> Void) {
+        helper.uninstall(completion: completion)
+    }
+    
     func anyFirewallEnabled(completion: @escaping (NSNumber) -> Void) {
         helper.anyFirewallEnabled(completion: completion)
     }

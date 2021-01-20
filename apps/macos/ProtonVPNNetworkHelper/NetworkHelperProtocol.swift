@@ -31,6 +31,7 @@ import Foundation
 protocol NetworkHelperProtocol {
     func getVersion(completion: @escaping (String) -> ())
     func unload(completion: @escaping (NSNumber) -> ())
+    func uninstall(completion: @escaping (NSNumber) -> ())
     func anyFirewallEnabled(completion: @escaping (NSNumber) -> Void)
     func firewallEnabled(forServer address: String, completion: @escaping (NSNumber) -> ())
     func enableFirewall(with file: URL, completion: @escaping (NSNumber) -> ())

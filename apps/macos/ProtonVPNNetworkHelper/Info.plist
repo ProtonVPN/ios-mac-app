@@ -9,7 +9,7 @@
 	<key>CFBundleName</key>
 	<string>ch.protonvpn.ProtonVPNNetworkHelper</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0.101</string>
+	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>1234</string>
 </dict>

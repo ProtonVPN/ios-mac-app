@@ -76,6 +76,10 @@ extension NetworkHelper: NetworkHelperProtocol {
         CommandLineToolRunner.unloadFromLaunchd(completion: completion)
     }
     
+    func uninstall(completion: @escaping (NSNumber) -> ()) {
+        CommandLineToolRunner.uninstall(completion: completion)
+    }
+    
     func anyFirewallEnabled(completion: @escaping (NSNumber) -> Void) {
         guard let logger = remoteObject() else {
             completion(-1)
