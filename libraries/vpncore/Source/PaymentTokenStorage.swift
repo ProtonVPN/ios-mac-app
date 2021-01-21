@@ -37,3 +37,35 @@ extension PaymentTokenStorage {
 public protocol PaymentTokenStorageFactory {
     func makePaymentTokenStorage() -> PaymentTokenStorage
 }
+
+public class MemoryPaymentTokenStorage: PaymentTokenStorage {
+    
+    var token: PaymentToken?
+    var validUntil: Date?
+    
+    private var lifetime: TimeInterval
+    
+    public init(lifetime: TimeInterval) {
+        self.lifetime = lifetime
+    }
+    
+    public func add(_ token: PaymentToken) {
+        self.token = token
+        self.validUntil = Date() + lifetime
+        PMLog.D("MemoryPaymentTokenStorage new token set. Valid until \(String(describing: self.validUntil)).")
+    }
+    
+    public func get() -> PaymentToken? {
+        guard let until = validUntil, until.isFuture else {
+            return nil
+        }
+        return token
+    }
+    
+    public func clear() {
+        token = nil
+        validUntil = nil
+        PMLog.D("MemoryPaymentTokenStorage cleared")
+    }
+    
+}

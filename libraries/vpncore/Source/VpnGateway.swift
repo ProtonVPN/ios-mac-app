@@ -138,16 +138,19 @@ public class VpnGateway: VpnGatewayProtocol {
         return propertiesManager.lastConnectionRequest
     }
     
+    private let netShieldPropertyProvider: NetShieldPropertyProvider
     private var netShieldType: NetShieldType {
-        return propertiesManager.netShieldType
+        return netShieldPropertyProvider.netShieldType
     }
     
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil) {
+    // FUTUREDO: Use factory
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
+        self.netShieldPropertyProvider = netShieldPropertyProvider
         do {
             tier = try vpnKeychain.fetch().maxTier
         } catch {

@@ -30,6 +30,7 @@ public protocol PropertiesManagerProtocol: class {
     static var hasConnectedNotification: Notification.Name { get }
     static var userIpNotification: Notification.Name { get }
     static var netShieldNotification: Notification.Name { get }
+    static var earlyAccessNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -57,7 +58,7 @@ public protocol PropertiesManagerProtocol: class {
     var currentSubscription: Subscription? { get set }
     
     var featureFlags: FeatureFlags { get set }
-    var netShieldType: NetShieldType { get set }
+    var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
     
@@ -129,6 +130,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
+    public static var earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -394,18 +396,17 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var netShieldType: NetShieldType {
+    public var netShieldType: NetShieldType? {
         get {
-            guard featureFlags.isNetShield else {
-                return .off
-            }
-            guard let current = Storage.userDefaults().value(forKey: Keys.netshield) as? Int, let type = NetShieldType.init(rawValue: current) else {
-                return .level1
+            guard let authCredentials = AuthKeychain.fetch() else { return nil }
+            guard let current = Storage.userDefaults().value(forKey: Keys.netshield + authCredentials.username) as? Int, let type = NetShieldType.init(rawValue: current) else {
+                return nil
             }
             return type
         }
         set {
-            Storage.setValue(newValue.rawValue, forKey: Keys.netshield)
+            guard let authCredentials = AuthKeychain.fetch() else { return }
+            Storage.setValue(newValue?.rawValue, forKey: Keys.netshield + authCredentials.username)
             postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
         }
     }

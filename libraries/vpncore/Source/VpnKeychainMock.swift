@@ -23,6 +23,8 @@ import Foundation
 
 public class VpnKeychainMock: VpnKeychainProtocol {
     
+    public var throwsOnFetch: Bool = false
+    
     public static var vpnCredentialsChanged = Notification.Name("")
     
     private var credentials: VpnCredentials
@@ -32,6 +34,9 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     }
     
     public func fetch() throws -> VpnCredentials {
+        if throwsOnFetch {
+            throw NSError(domain: "error", code: 11, userInfo: nil)
+        }
         return credentials
     }
     

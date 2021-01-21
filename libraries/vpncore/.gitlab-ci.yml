@@ -60,7 +60,7 @@ unit_tests:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - fastlane mac ci_test
 
-    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.test_result/2_Test/action.xccovreport
+    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult
   tags:
     - iOS
     - macOS

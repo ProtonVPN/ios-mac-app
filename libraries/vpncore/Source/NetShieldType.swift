@@ -28,8 +28,6 @@ public enum NetShieldType: Int, CaseIterable, Codable {
     case level1
     case level2
     
-    public static var defaultValue: NetShieldType = .level1
-    
     public var name: String {
         switch self {
         case .off:
@@ -46,9 +44,9 @@ public enum NetShieldType: Int, CaseIterable, Codable {
         case .off:
             return CoreAppConstants.VpnTiers.free
         case .level1:
-            return CoreAppConstants.VpnTiers.free
+            return CoreAppConstants.VpnTiers.basic
         case .level2:
-            return CoreAppConstants.VpnTiers.visionary
+            return CoreAppConstants.VpnTiers.basic
         }
     }
     
