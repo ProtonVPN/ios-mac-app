@@ -30,13 +30,15 @@ extension PropertiesManagerProtocol {
         return Notification.Name("KillSwitchChanged")
     }
     
-    var earlyAccess: Bool {
+    public var earlyAccess: Bool {
         get {
             return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.earlyAccess)
         }
         set {
             Storage.setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
-            UpdateManager.shared.turnOnEarlyAccess(newValue)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: PropertiesManager.earlyAccessNotification, object: newValue)
+            }
         }
     }
     

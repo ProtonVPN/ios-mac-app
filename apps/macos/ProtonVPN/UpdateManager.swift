@@ -24,20 +24,19 @@ import Foundation
 import Sparkle
 import vpncore
 
+protocol UpdateManagerFactory {
+    func makeUpdateManager() -> UpdateManager
+}
+
 class UpdateManager: NSObject {
     
-    // Static constants
-    static let shared = UpdateManager()
+    public typealias Factory = UpdateFileSelectorFactory
+    private let factory: Factory
+    
+    private lazy var updateFileSelector: UpdateFileSelector = factory.makeUpdateFileSelector()
     
     // Callback for UI
     public var stateUpdated: (() -> Void)?
-    
-    private let standardFeedURL: URL! = URL(string: "https://protonvpn.com/download/macos-update2.xml")
-    
-    private let earlyAccessString = "early-access"
-    private var earlyAccessFeedURL: URL! {
-        return URL(string: "https://protonvpn.com/download/macos-" + earlyAccessString + "-update2.xml")
-    }
     
     private var appSessionManager: AppSessionManager?
     private let propertiesManager = PropertiesManager()
@@ -67,29 +66,35 @@ class UpdateManager: NSObject {
         return items.map { ($0 as SUAppcastItem).itemDescription ?? "" }
     }
     
-    override private init() {
+    public init(_ factory: Factory) {
+        self.factory = factory
         updater = SUUpdater.shared()
 
         super.init()
         
-        // Update feedURL if it is set to anything other than the currently available feedURLs
-        if !(updater.feedURL == standardFeedURL || updater.feedURL == earlyAccessFeedURL) {
-            if updater.feedURL.absoluteString.contains(earlyAccessString) {
-                updater.feedURL = earlyAccessFeedURL
-                PMLog.D("Updated feedURL to \(earlyAccessFeedURL.absoluteString)")
-            } else {
-                updater.feedURL = standardFeedURL
-                PMLog.D("Updated feedURL to \(standardFeedURL.absoluteString)")
-            }
-        }
+        setupUrl()
+        NotificationCenter.default.addObserver(self, selector: #selector(earlyAccessChanged), name: PropertiesManager.earlyAccessNotification, object: nil)
         
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
         
         updater.delegate = self
     }
     
-    func turnOnEarlyAccess(_ earlyAccess: Bool) {
-        updater.feedURL = earlyAccess ? earlyAccessFeedURL : standardFeedURL
+    private func setupUrl() {
+        let url = URL(string: updateFileSelector.updateFileUrl)
+        guard updater.feedURL != url else {
+            return
+        }
+        updater.feedURL = url
+        PMLog.D("Updated feedURL to \(updater.feedURL.absoluteString)")
+    }
+    
+    @objc private func earlyAccessChanged(_ notification: NSNotification) {
+        turnOnEarlyAccess((notification.object as? Bool) ?? false)
+    }
+    
+    private func turnOnEarlyAccess(_ earlyAccess: Bool) {
+        setupUrl()
         
         if earlyAccess {
             checkForUpdates(nil, silently: false)
@@ -144,6 +149,28 @@ extension UpdateManager: SUUpdaterDelegate {
     func updater(_ updater: SUUpdater, didFinishLoading appcast: SUAppcast) {
         self.appcast = appcast
         stateUpdated?()
+    }
+    
+    func updater(_ updater: SUUpdater, shouldPostponeRelaunchForUpdate item: SUAppcastItem) -> Bool {
+        guard let currentVersionString = self.currentVersion else {
+            return false
+        }
+        let versionNext: SemanticVersion
+        let versionCurrent: SemanticVersion
+        do {
+            versionNext = try SemanticVersion(item.displayVersionString)
+            versionCurrent = try SemanticVersion(currentVersionString)
+        } catch {
+            return false
+        }
+        
+        if versionCurrent.major == 1 && versionNext.major >= 2 {
+            firewallManager?.uninstallFirewall(completion: {
+                PMLog.D("Uninstalled network helper")
+            })
+        }
+        
+        return false
     }
     
 }

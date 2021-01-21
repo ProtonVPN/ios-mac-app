@@ -49,6 +49,7 @@
 		D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
 		D26CBA3B24696A89005E51B8 /* WiFiSecurityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */; };
 		D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
+		D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
 		D5204E6822A116C100FFAB99 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6722A116C100FFAB99 /* LoginTests.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
@@ -73,6 +74,8 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
+		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
+		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
 		D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5DE76AA257635F70077C610 /* SwiftChecker.swift */; };
 		E10FA80522C21AC100CD03B2 /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E10FA80422C21AC100CD03B2 /* Srp.framework */; };
@@ -450,6 +453,7 @@
 		D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrenchIcon.swift; sourceTree = "<group>"; };
 		D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WiFiSecurityMonitor.swift; sourceTree = "<group>"; };
 		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
+		D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorMock.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
 		D5204E6722A116C100FFAB99 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
@@ -492,6 +496,8 @@
 		D5CC3E8F2359D8D400A9A75D /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D5CC3E902359D8E300A9A75D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D5CC3E912359D8F800A9A75D /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorImplementationTests.swift; sourceTree = "<group>"; };
+		D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelector.swift; sourceTree = "<group>"; };
 		D5D6A949230D296400A432D1 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		D5DE76AA257635F70077C610 /* SwiftChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftChecker.swift; sourceTree = "<group>"; };
 		DA50B7BD4F52596E52378D9D /* Pods-ProtonVPN.release beta.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release beta.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release beta.xcconfig"; sourceTree = "<group>"; };
@@ -948,6 +954,30 @@
 			path = "Other classes";
 			sourceTree = "<group>";
 		};
+		D5421EA725B6DAF300280C29 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				D5421EA825B6DAFB00280C29 /* Management */,
+			);
+			path = Mocks;
+			sourceTree = "<group>";
+		};
+		D5421EA825B6DAFB00280C29 /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				D5421EA925B6DB0200280C29 /* Updates */,
+			);
+			path = Management;
+			sourceTree = "<group>";
+		};
+		D5421EA925B6DB0200280C29 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */,
+			);
+			path = Updates;
+			sourceTree = "<group>";
+		};
 		D5906F1322D3792E001BC074 /* ReportBug */ = {
 			isa = PBXGroup;
 			children = (
@@ -1003,6 +1033,31 @@
 			name = ReportBug;
 			sourceTree = "<group>";
 		};
+		D5D298A825B5BA8D000FBD74 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				E142F24C20A9B45800029163 /* UpdateManager.swift */,
+				D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */,
+			);
+			name = Updates;
+			sourceTree = "<group>";
+		};
+		D5D298A925B5BBFE000FBD74 /* Management */ = {
+			isa = PBXGroup;
+			children = (
+				D5D298AA25B5BC06000FBD74 /* Updates */,
+			);
+			path = Management;
+			sourceTree = "<group>";
+		};
+		D5D298AA25B5BC06000FBD74 /* Updates */ = {
+			isa = PBXGroup;
+			children = (
+				D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */,
+			);
+			path = Updates;
+			sourceTree = "<group>";
+		};
 		D5D6A948230D294C00A432D1 /* Dependecy injection */ = {
 			isa = PBXGroup;
 			children = (
@@ -1043,6 +1098,8 @@
 		E15B754E20FA83CB0022C406 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
+				D5421EA725B6DAF300280C29 /* Mocks */,
+				D5D298A925B5BBFE000FBD74 /* Management */,
 				E13F4D0020FCD6E100D985C2 /* JSON */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				E15B755120FA83CB0022C406 /* Info.plist */,
@@ -1696,6 +1753,7 @@
 			isa = PBXGroup;
 			children = (
 				EE68DD4B1F49D59B00F218B8 /* Server */,
+				D5D298A825B5BA8D000FBD74 /* Updates */,
 				EED534841EEC112000013607 /* AppDelegate.swift */,
 				EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */,
 				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
@@ -2460,8 +2518,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
+				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
+				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2642,6 +2702,7 @@
 				EE69C8CF1F5D7FBD00C3065C /* SettingsWindowController.swift in Sources */,
 				D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */,
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
+				D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */,
 				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */,

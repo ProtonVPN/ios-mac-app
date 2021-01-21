@@ -65,6 +65,7 @@ class WindowServiceImplementation: WindowService {
         & AnnouncementsViewModelFactory
         & SystemExtensionManagerFactory
         & ConnectingOverlayViewModelFactory
+        & NetShieldPropertyProviderFactory
 
     private let factory: Factory
     

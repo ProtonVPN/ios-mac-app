@@ -27,13 +27,14 @@ import vpncore
 
 class LoginViewModel {
     
-    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory
+    typealias Factory = NavigationServiceFactory & PropertiesManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & UpdateManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     
     var logInInProgress: (() -> Void)?
     var logInFailure: ((String?) -> Void)?
@@ -100,7 +101,7 @@ class LoginViewModel {
     }
     
     private func silantlyCheckForUpdates() {
-        UpdateManager.shared.checkForUpdates(appSessionManager, silently: true)
+        updateManager.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: true)
     }
     
     func keychainHelpAction() {

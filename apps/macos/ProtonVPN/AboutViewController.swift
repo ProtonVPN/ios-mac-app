@@ -26,7 +26,7 @@ import WebKit
 
 class AboutViewController: NSViewController {
     
-    typealias Factory = NavigationServiceFactory
+    typealias Factory = NavigationServiceFactory & UpdateManagerFactory
     public var factory: Factory!
     
     @IBOutlet weak var backgroundView: NSView!
@@ -38,7 +38,7 @@ class AboutViewController: NSViewController {
     @IBOutlet weak var changelogLabel: PVPNTextField!
     @IBOutlet weak var webView: WKWebView!
     
-    private lazy var updateManager: UpdateManager = UpdateManager.shared
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     private lazy var bundle: Bundle = Bundle.main
     private lazy var navigationService = factory.makeNavigationService()
     

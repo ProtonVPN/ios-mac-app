@@ -100,10 +100,11 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
             view?.selectedColor = presenter.selectedColor
-            view?.setHeightConstraint( presenter.title.count > 20 ? 75 : 50)
             if presenter.requiresUpdate {
                 view?.blockedStyle()
-                view?.action = nil
+                view?.action = {
+                    presenter.selectCallback?()
+                }
             } else {
                 if presenter.active {
                     view?.selectedStyle()

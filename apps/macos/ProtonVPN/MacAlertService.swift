@@ -25,13 +25,14 @@ import vpncore
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
     
     fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -201,7 +202,7 @@ extension MacAlertService: CoreAlertService {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.supportForm)
         }
         let updateAction = AlertAction(title: LocalizedString.updateUpdate, style: .confirmative) {
-            UpdateManager.shared.startUpdate()
+            self.updateManager.startUpdate()
         }
         
         alert.actions.append(supportAction)
@@ -302,12 +303,12 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: KillSwitchBlockingAlert) {
-        let fontSize: Double = 14
-        let descriptionText = LocalizedString.killSwitchBlockingBody
-        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: fontSize, alignment: .natural))
+        let descriptionText = String(format: LocalizedString.killSwitchBlockingBody,
+                                             LocalizedString.preferences)
+        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .natural))
         
-        let boldRange = (descriptionText as NSString).range(of: "^.+\n", options: .regularExpression)
-        description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 14), range: boldRange)
+        let settingsRange = (descriptionText as NSString).range(of: LocalizedString.preferences, options: .backwards)
+        description.addAttribute(.link, value: "protonvpn://settings/connection", range: settingsRange)
         
         uiAlertService.displayAlert(alert, message: description)
     }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,29 +10,22 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe" userLabel="DropdownOption" customClass="QuickSettingsDropdownOption" customModule="ProtonVPN" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="326" height="24"/>
+            <rect key="frame" x="0.0" y="0.0" width="326" height="50"/>
             <subviews>
                 <view translatesAutoresizingMaskIntoConstraints="NO" id="lDj-YD-AU5">
-                    <rect key="frame" x="0.0" y="10" width="326" height="14"/>
+                    <rect key="frame" x="0.0" y="10" width="326" height="40"/>
                     <subviews>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ylM-sw-0G8">
-                            <rect key="frame" x="143" y="2" width="40" height="10"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="10" id="PiU-vp-Te8"/>
-                                <constraint firstAttribute="width" constant="40" id="mmF-ny-Jj2"/>
-                            </constraints>
-                        </customView>
                         <imageView translatesAutoresizingMaskIntoConstraints="NO" id="4HN-TR-4Fn">
-                            <rect key="frame" x="16" y="-1" width="16" height="16"/>
+                            <rect key="frame" x="16" y="12" width="16" height="16"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="16" id="J7S-RE-fIO"/>
                                 <constraint firstAttribute="width" secondItem="4HN-TR-4Fn" secondAttribute="height" multiplier="1:1" id="znp-eC-XNO"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="qs_securecore_off" id="7Dp-Ju-czb"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="qs_netshield_level1" id="7Dp-Ju-czb"/>
                             <color key="contentTintColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                         </imageView>
-                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="UMw-zQ-QKK" userLabel="titileLbl">
-                            <rect key="frame" x="46" y="-1" width="234" height="16"/>
+                        <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="755" translatesAutoresizingMaskIntoConstraints="NO" id="UMw-zQ-QKK" userLabel="titileLbl">
+                            <rect key="frame" x="46" y="12" width="207" height="16"/>
                             <textFieldCell key="cell" enabled="NO" title="Multiline Label" id="L4T-u6-hAz">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -40,14 +33,14 @@
                             </textFieldCell>
                         </textField>
                         <box hidden="YES" boxType="custom" cornerRadius="10" title="Box" translatesAutoresizingMaskIntoConstraints="NO" id="Cnq-b9-LeX" userLabel="Plus box">
-                            <rect key="frame" x="268" y="-3" width="42" height="20"/>
+                            <rect key="frame" x="259" y="10" width="51" height="20"/>
                             <view key="contentView" id="Ygm-Ae-lfQ">
-                                <rect key="frame" x="1" y="1" width="40" height="18"/>
+                                <rect key="frame" x="1" y="1" width="49" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
                                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4QC-AD-7aA">
-                                        <rect key="frame" x="6" y="4" width="28" height="10"/>
-                                        <textFieldCell key="cell" lineBreakMode="clipping" title="PLUS" id="U2C-T8-JhV">
+                                        <rect key="frame" x="6" y="4" width="37" height="10"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="_PLUS_" id="U2C-T8-JhV">
                                             <font key="font" metaFont="miniSystem"/>
                                             <color key="textColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="1" colorSpace="custom" customColorSpace="calibratedRGB"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -69,7 +62,7 @@
                             <color key="fillColor" red="0.43921568630000002" green="0.43921568630000002" blue="0.43921568630000002" alpha="0.0" colorSpace="custom" customColorSpace="calibratedRGB"/>
                         </box>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eIF-3X-p9M">
-                            <rect key="frame" x="0.0" y="0.0" width="326" height="14"/>
+                            <rect key="frame" x="0.0" y="0.0" width="326" height="40"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" alignment="left" imageScaling="proportionallyDown" inset="2" id="Slf-lx-tuB">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" size="16" name="HelveticaNeue-Thin"/>
@@ -82,18 +75,19 @@
                     </subviews>
                     <constraints>
                         <constraint firstItem="eIF-3X-p9M" firstAttribute="leading" secondItem="lDj-YD-AU5" secondAttribute="leading" id="9KB-Bu-Q9h"/>
-                        <constraint firstItem="ylM-sw-0G8" firstAttribute="centerY" secondItem="lDj-YD-AU5" secondAttribute="centerY" id="9QT-Es-tDq"/>
                         <constraint firstItem="4HN-TR-4Fn" firstAttribute="leading" secondItem="lDj-YD-AU5" secondAttribute="leading" constant="16" id="Ahi-ce-Nvf"/>
                         <constraint firstAttribute="bottom" secondItem="eIF-3X-p9M" secondAttribute="bottom" id="HD8-RQ-kjL"/>
                         <constraint firstItem="UMw-zQ-QKK" firstAttribute="centerY" secondItem="lDj-YD-AU5" secondAttribute="centerY" id="Rnn-re-Y6P"/>
-                        <constraint firstAttribute="trailing" secondItem="UMw-zQ-QKK" secondAttribute="trailing" constant="48" id="SG1-wW-yrl"/>
+                        <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="UMw-zQ-QKK" secondAttribute="trailing" constant="20" id="SG1-wW-yrl"/>
+                        <constraint firstAttribute="bottom" secondItem="UMw-zQ-QKK" secondAttribute="bottom" constant="12" id="UAc-3g-Rgy"/>
                         <constraint firstAttribute="trailing" secondItem="eIF-3X-p9M" secondAttribute="trailing" id="aoc-mq-BDh"/>
                         <constraint firstItem="4HN-TR-4Fn" firstAttribute="centerY" secondItem="lDj-YD-AU5" secondAttribute="centerY" id="cdY-ce-I0f"/>
                         <constraint firstAttribute="trailing" secondItem="Cnq-b9-LeX" secondAttribute="trailing" constant="16" id="hc8-at-Plf"/>
-                        <constraint firstItem="ylM-sw-0G8" firstAttribute="centerX" secondItem="lDj-YD-AU5" secondAttribute="centerX" id="qK3-Bt-i78"/>
+                        <constraint firstItem="Cnq-b9-LeX" firstAttribute="leading" secondItem="UMw-zQ-QKK" secondAttribute="trailing" constant="8" id="nI4-uW-sr0"/>
                         <constraint firstItem="eIF-3X-p9M" firstAttribute="top" secondItem="lDj-YD-AU5" secondAttribute="top" id="uuX-74-bO0"/>
                         <constraint firstItem="UMw-zQ-QKK" firstAttribute="leading" secondItem="4HN-TR-4Fn" secondAttribute="trailing" constant="16" id="w9f-Ev-79c"/>
                         <constraint firstItem="Cnq-b9-LeX" firstAttribute="centerY" secondItem="UMw-zQ-QKK" secondAttribute="centerY" id="wcj-lD-iuZ"/>
+                        <constraint firstItem="UMw-zQ-QKK" firstAttribute="top" secondItem="lDj-YD-AU5" secondAttribute="top" constant="12" id="y0b-Pl-737"/>
                     </constraints>
                 </view>
             </subviews>
@@ -106,13 +100,15 @@
             <connections>
                 <outlet property="containerView" destination="lDj-YD-AU5" id="2uF-WN-WWW"/>
                 <outlet property="optionIconIV" destination="4HN-TR-4Fn" id="dCV-1k-RBq"/>
+                <outlet property="plusAndTitleConstraint" destination="nI4-uW-sr0" id="5Sn-aW-A1h"/>
                 <outlet property="plusBox" destination="Cnq-b9-LeX" id="AU2-4x-GKN"/>
+                <outlet property="plusText" destination="4QC-AD-7aA" id="d12-Zr-vIa"/>
                 <outlet property="titleLabel" destination="UMw-zQ-QKK" id="dbl-UF-4u4"/>
             </connections>
-            <point key="canvasLocation" x="45" y="205.5"/>
+            <point key="canvasLocation" x="45" y="227"/>
         </customView>
     </objects>
     <resources>
-        <image name="qs_securecore_off" width="20" height="20"/>
+        <image name="qs_netshield_level1" width="20" height="20"/>
     </resources>
 </document>

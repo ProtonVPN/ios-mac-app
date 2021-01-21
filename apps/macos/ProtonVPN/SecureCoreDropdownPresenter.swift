@@ -65,7 +65,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let active = !propertiesManager.secureCoreToggle
         let text = LocalizedString.secureCore + " " + LocalizedString.off.capitalized
         let icon = #imageLiteral(resourceName: "qs_securecore_off")
-        return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, requiresUpdate: requiresUpdate(secureCore: false), selectCallback: {
             self.vpnGateway.changeActiveServerType(.standard)
             self.displayReconnectionFeedback()
         })
@@ -75,9 +75,23 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         let active = propertiesManager.secureCoreToggle
         let text = LocalizedString.secureCore + " " + LocalizedString.on.capitalized
         let icon = #imageLiteral(resourceName: "qs_securecore_on")
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: self.requiresUpdate, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
+            guard !self.requiresUpdate(secureCore: true) else {
+                self.openUpgradeLink()
+                return
+            }
             self.vpnGateway.changeActiveServerType(.secureCore)
             self.displayReconnectionFeedback()
         })
+    }
+    
+    private func requiresUpdate(secureCore isOn: Bool) -> Bool {
+        return isOn
+            ? currentUserTier < CoreAppConstants.VpnTiers.visionary
+            : false
+    }
+    
+    private var currentUserTier: Int {
+        return(try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
     }
 }

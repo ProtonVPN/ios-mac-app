@@ -72,6 +72,10 @@ class DependencyContainer {
     #else
     private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper(factory: self)
     #endif
+    
+    // Manages app updates
+    private lazy var updateManager = UpdateManager(self)
+    
 }
 
 // MARK: NavigationServiceFactory
@@ -192,7 +196,7 @@ extension DependencyContainer: TrialCheckerFactory {
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
-        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper())
+        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider())
     }
 }
 
@@ -334,6 +338,34 @@ extension DependencyContainer: AnnouncementsViewModelFactory {
 extension DependencyContainer: SafariServiceFactory {
     func makeSafariService() -> SafariServiceProtocol {
         return SafariService()
+    }
+}
+
+// MARK: - UserTierProviderFactory
+extension DependencyContainer: UserTierProviderFactory {
+    func makeUserTierProvider() -> UserTierProvider {
+        return UserTierProviderImplementation(self)
+    }
+}
+
+// MARK: - NetShieldPropertyProviderFactory
+extension DependencyContainer: NetShieldPropertyProviderFactory {
+    func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
+        return NetShieldPropertyProviderImplementation(self)
+    }
+}
+
+// MARK: - UpdateFileSelectorFactory
+extension DependencyContainer: UpdateFileSelectorFactory {
+    func makeUpdateFileSelector() -> UpdateFileSelector {
+        return UpdateFileSelectorImplementation(self)
+    }
+}
+
+// MARK: - UpdateManagerFactory
+extension DependencyContainer: UpdateManagerFactory {
+    func makeUpdateManager() -> UpdateManager {
+        return updateManager
     }
 }
 
