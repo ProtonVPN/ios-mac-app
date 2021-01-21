@@ -174,7 +174,7 @@ extension NavigationService {
     }
     
     func checkForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: false)
+        updateManager.checkForUpdates(appSessionManager, silently: false)
     }
     
     func openLogsFolder() {

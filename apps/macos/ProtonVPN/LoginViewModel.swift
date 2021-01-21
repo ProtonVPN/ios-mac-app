@@ -101,7 +101,7 @@ class LoginViewModel {
     }
     
     private func silantlyCheckForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: true)
+        updateManager.checkForUpdates(appSessionManager, silently: true)
     }
     
     func keychainHelpAction() {

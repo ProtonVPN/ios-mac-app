@@ -151,26 +151,4 @@ extension UpdateManager: SUUpdaterDelegate {
         stateUpdated?()
     }
     
-    func updater(_ updater: SUUpdater, shouldPostponeRelaunchForUpdate item: SUAppcastItem) -> Bool {
-        guard let currentVersionString = self.currentVersion else {
-            return false
-        }
-        let versionNext: SemanticVersion
-        let versionCurrent: SemanticVersion
-        do {
-            versionNext = try SemanticVersion(item.displayVersionString)
-            versionCurrent = try SemanticVersion(currentVersionString)
-        } catch {
-            return false
-        }
-        
-        if versionCurrent.major == 1 && versionNext.major >= 2 {
-            firewallManager?.uninstallFirewall(completion: {
-                PMLog.D("Uninstalled network helper")
-            })
-        }
-        
-        return false
-    }
-    
 }
