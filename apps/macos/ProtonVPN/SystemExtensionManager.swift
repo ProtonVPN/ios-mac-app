@@ -90,6 +90,7 @@ class SystemExtensionManager: NSObject {
 @available(OSX 10.15, *)
 
 extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
+    
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion) (\(existing.bundleVersion))", "\(ext.bundleShortVersion) (\(ext.bundleVersion))")
         
@@ -114,15 +115,16 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         // User gave access
-        os_log(.debug, log: self.log, "request result: %{public}@", "\(result)")
         switch result {
         case .completed:
+            os_log(.debug, log: self.log, "request result: .completed")
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
             if !silent && shouldNotifyInstall {
                 alertService.push(alert: OpenVPNEnabledAlert())
             }
             
         case .willCompleteAfterReboot:
+            os_log(.debug, log: self.log, "request result: .willCompleteAfterReboot")
             // Display reconnect popup
             propertiesManager.vpnProtocol = .openVpn(transportProtocol)
         }
