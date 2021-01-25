@@ -110,38 +110,11 @@ class StatusMenuViewModel {
     }
     
     var connectingText: NSAttributedString {
-        if !isReconnecting || !isKillSwitchOn {
-            return NSAttributedString()
-        }
-        return reconnectingKillSwitchMessage
-    }
-    
-    private var reconnectingKillSwitchMessage: NSAttributedString {
-        let color: NSColor = .protonWhite()
-        let fontSize: Double = 10
-        let fontSizeHeader: Double = 14
-        
-        let result = NSMutableAttributedString()
-        result.append("\n\n".attributed(withColor: color, fontSize: fontSize))
-        result.append(LocalizedString.killSwitchReconnectionHeader.attributed(withColor: .protonWhite(), fontSize: fontSizeHeader, bold: true, italic: false, alignment: .center, lineBreakMode: nil))
-        result.append("\n\n".attributed(withColor: color, fontSize: fontSize / 2))
-        
-        let body = LocalizedString.killSwitchReconnection.attributed(withColor: .protonWhite(), fontSize: fontSize, bold: false, italic: false, alignment: .center, lineBreakMode: nil)
-        result.append(body.applyStyle(for: [LocalizedString.killSwitchReconnectionBold1, LocalizedString.killSwitchReconnectionBold2], attrs: [.font: NSFont.boldSystemFont(ofSize: CGFloat(fontSize))]))
-        
-        return result
+        return NSAttributedString()
     }
     
     var cancelButtonTitle: String {
-        if isReconnecting && isKillSwitchOn {
-            return LocalizedString.killSwitchReconnectionCancel
-        } else {
-            return LocalizedString.cancel
-        }
-    }
-    
-    private var isKillSwitchOn: Bool {
-        return propertiesManager.killSwitch
+        return LocalizedString.cancel
     }
     
     func disconnectAction() {
