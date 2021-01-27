@@ -261,27 +261,42 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         case .failed:
             proceed(withFailed: transaction)
         case .purchased:
+            // Flatten async calls inside `proceed()`
+            let group = DispatchGroup()
+            group.enter()
+            
             do {
-                try self.proceed(withPurchased: transaction, shouldVerifyPurchaseWasForSameAccount: shouldVerify)
+                try self.proceed(withPurchased: transaction, shouldVerifyPurchaseWasForSameAccount: shouldVerify, completion: {
+                    group.leave()
+                })
+                
             } catch Errors.haveTransactionOfAnotherUser { // user login error
                 confirmUserValidationBypass(Errors.haveTransactionOfAnotherUser) {
                     self.addOperation { self.process(transaction, shouldVerifyPurchaseWasForSameAccount: false) }
                 }
+                group.leave()
             } catch Errors.sandboxReceipt {  // receipt error
                 self.errorCompletion(Errors.sandboxReceipt)
                 SKPaymentQueue.default().finishTransaction(transaction)
+                group.leave()
                 
             } catch Errors.receiptLost { // receipt error
                 self.errorCompletion(Errors.receiptLost)
                 SKPaymentQueue.default().finishTransaction(transaction)
+                group.leave()
                 
             } catch Errors.noNewSubscriptionInSuccessfullResponse { // error on BE
                 self.errorCompletion(Errors.noNewSubscriptionInSuccessfullResponse)
                 SKPaymentQueue.default().finishTransaction(transaction)
+                group.leave()
                 
             } catch let error { // other errors
                 self.errorCompletion(error)
+                group.leave()
             }
+            
+            group.wait()
+            
         case .deferred, .purchasing:
             self.deferredCompletion?()
             
@@ -304,7 +319,8 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     }
     
     private func proceed(withPurchased transaction: SKPaymentTransaction,
-                         shouldVerifyPurchaseWasForSameAccount: Bool = true) throws {
+                         shouldVerifyPurchaseWasForSameAccount: Bool = true,
+                         completion: @escaping () -> Void) throws {
         
         if shouldVerifyPurchaseWasForSameAccount, let transactionHashedUserId = transaction.payment.applicationUsername {
             try self.verifyCurrentCredentialsMatch(usernameFromTransaction: transactionHashedUserId)
@@ -320,20 +336,20 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         switch processingType {
         case .existingUserNewSubscription:
             if transactionsMadeBeforeSignup.contains(transaction) {
-                processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
             } else {
-                try processAuthenticated(transaction: transaction, plan: plan, planId: planId)
+                try processAuthenticated(transaction: transaction, plan: plan, planId: planId, completion: completion)
             }
         case .existingUserAddCredits:
-            try processAuthenticatedAddCredits(transaction: transaction, plan: plan)
+            try processAuthenticatedAddCredits(transaction: transaction, plan: plan, completion: completion)
         case .registration:
-            try processUnauthenticated(transaction: transaction, plan: plan)
+            try processUnauthenticated(transaction: transaction, plan: plan, completion: completion)
         }
         
     }
     
     // swiftlint:disable cyclomatic_complexity function_body_length
-    private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String) throws {
+    private func processAuthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, planId: String, completion: @escaping () -> Void) throws {
         let receipt = try self.readReceipt()
         
         // Create token
@@ -341,7 +357,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             PMLog.ET("StoreKit: No proton token found")
             paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
                 self?.tokenStorage.add(token)
-                try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId, completion: completion) // Exception would've been thrown on the first call
                 
             }, failure: { [weak self] error in
                 PMLog.D("StoreKit: payment token was not created")
@@ -358,6 +374,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 default:
                     self?.errorCompletion(error)
                 }
+                completion()
             })
             return
         }
@@ -370,7 +387,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 let retryIn: Double = 30
                 PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
                 DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
-                    try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId) // Exception would've been thrown on the first call
+                    try? self?.processAuthenticated(transaction: transaction, plan: plan, planId: planId, completion: completion) // Exception would've been thrown on the first call
                 }
                 return
                 
@@ -381,6 +398,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                     SKPaymentQueue.default().finishTransaction(transaction)
                     self?.tokenStorage.clear()
                     self?.successCompletion?(nil)
+                    completion()
                     
                 }, failure: { error in
                     PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
@@ -394,6 +412,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                             SKPaymentQueue.default().finishTransaction(transaction)
                             self.tokenStorage.clear()
                             self.errorCompletion(Errors.creditsApplied)
+                            completion()
                         }, failure: { [weak self] (error) in
                             if (error as NSError).code == 22916 { // Apple payment already registered
                                 PMLog.D("StoreKit: apple payment already registered")
@@ -403,9 +422,11 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                             } else {
                                 self?.errorCompletion(error)
                             }
+                            completion()
                         })
                     default:
                         self.errorCompletion(error)
+                        completion()
                     }
                     
                 })
@@ -414,30 +435,35 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 PMLog.D("StoreKit: token failed")
                 self?.tokenStorage.clear()
                 self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
+                completion()
                 
             case .consumed: // throw away token and receipt
                 PMLog.D("StoreKit: token already consumed")
                 SKPaymentQueue.default().finishTransaction(transaction)
                 self?.tokenStorage.clear()
                 self?.successCompletion?(nil)
+                completion()
                 
             case .notSupported: // throw away token and retry
                 PMLog.D("StoreKit: token not supported")
                 self?.tokenStorage.clear()
                 self?.errorCompletion(Errors.wrongTokenStatus(tokenStatus.status))
+                completion()
             }
                         
         }, failure: { error in
             PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
             self.errorCompletion(error)
+            completion()
         })
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     // swiftlint:disable function_body_length
-    private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan) {
+    private func processAuthenticatedBeforeSignup(transaction: SKPaymentTransaction, plan: AccountPlan, completion: @escaping () -> Void) {
         guard let details = plan.fetchDetails(), let planId = details.iD else {
             PMLog.ET("StoreKit: Can't fetch plan details")
+            completion()
             return
         }
                 
@@ -445,11 +471,12 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         let retryOnError = { [weak self] in
             self?.alertService.push(alert: ApplyCreditAfterRegistrationFailedAlert(type: .registration,
                 retryHandler: {
-                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
                 },
                 supportHandler: {
                     self?.finish(transaction: transaction)
                     self?.alertService.push(alert: ReportBugAlert())
+                    completion()
                 })
             )
         }
@@ -458,13 +485,14 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             // Try to recover by recreating the token from our receipt
             guard let receipt = try? self.readReceipt() else {
                 PMLog.ET("StoreKit: Proton token not found! Apple receipt not found!")
+                completion()
                 return
             }
             PMLog.D("StoreKit: No proton token found")
             paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
                 PMLog.D("StoreKit: payment token (re)created")
                 self?.tokenStorage.add(token)
-                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
                 
             }, failure: { error in
                 PMLog.D("StoreKit: payment token was not (re)created")
@@ -480,7 +508,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 let retryIn: Double = 30
                 PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
                 DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
-                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                    self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
                 }
                 return
                 
@@ -489,6 +517,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                     PMLog.D("StoreKit: success (2)")
                     self?.finish(transaction: transaction)
                     self?.tokenStorage.clear()
+                    completion()
                     
                 }, failure: { error in
                     PMLog.ET("StoreKit: Buy plan failed: \(error.localizedDescription)")
@@ -498,12 +527,13 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             case .failed: // throw away token and retry with the new one
                 PMLog.D("StoreKit: token failed")
                 self?.tokenStorage.clear()
-                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                self?.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
                 
             case .consumed: // throw away token and receipt
                 PMLog.D("StoreKit: token already consumed")
                 self?.finish(transaction: transaction)
                 self?.tokenStorage.clear()
+                completion()
                 
             case .notSupported: // throw away token and retry
                 self?.tokenStorage.clear()
@@ -522,7 +552,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             PMLog.D("StoreKit: will cleanup old token and restart procedure in \(retryIn) seconds")
             self.tokenStorage.clear()
             DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
-                self.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan)
+                self.processAuthenticatedBeforeSignup(transaction: transaction, plan: plan, completion: completion)
             }
         })
         
@@ -530,13 +560,15 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
     // swiftlint:enable function_body_length
     
     /// Add credits to user account 
-    private func processAuthenticatedAddCredits(transaction: SKPaymentTransaction, plan: AccountPlan) throws {
+    private func processAuthenticatedAddCredits(transaction: SKPaymentTransaction, plan: AccountPlan, completion: @escaping () -> Void) throws {
         let receipt = try self.readReceipt()
         paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
             self?.paymentsService.credit(amount: plan.yearlyCost, receipt: .protonToken(token: token.token), success: {
                 PMLog.D("StoreKit: credits added")
                 self?.successCompletion?(nil)
                 SKPaymentQueue.default().finishTransaction(transaction)
+                completion()
+                
             }, failure: { (error) in
                 if (error as NSError).code == 22916 { // Apple payment already registered
                     PMLog.D("StoreKit: apple payment already registered (3)")
@@ -544,9 +576,11 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 } else {
                     self?.errorCompletion(error)
                 }
+                completion()
             })
         }, failure: { [weak self] error in
             self?.errorCompletion(error)
+            completion()
         })
     }
     
@@ -556,25 +590,26 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
         NotificationCenter.default.post(name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
-    private func processUnauthenticated(transaction: SKPaymentTransaction, plan: AccountPlan) throws {
+    private func processUnauthenticated(transaction: SKPaymentTransaction, plan: AccountPlan, completion: @escaping () -> Void) throws {
         let receipt = try self.readReceipt()
                 
         paymentsService.createPaymentToken(amount: plan.yearlyCost, receipt: receipt, success: { [weak self] token in
             PMLog.D("StoreKit: payment token created for signup")
             self?.tokenStorage.add(token)
             
-            self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
+            self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan, completion: completion)
             
         }, failure: { [weak self] error in
             PMLog.ET("StoreKit: Create token failed: \(error.localizedDescription)")
             self?.tokenStorage.clear()
             self?.successCompletion?(nil)
+            completion()
             // Transaction will be finished after login
         })
-                
+        
     }
     
-    private func processUnauthenticated(withToken token: PaymentToken, transaction: SKPaymentTransaction, plan: AccountPlan) {
+    private func processUnauthenticated(withToken token: PaymentToken, transaction: SKPaymentTransaction, plan: AccountPlan, completion: @escaping () -> Void) {
         // In App Payment already succeeded at this point
         paymentsService.getPaymentTokenStatus(token: token, success: { [weak self] tokenStatus in
             switch tokenStatus.status {
@@ -582,19 +617,21 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
                 let retryIn: Double = 30
                 PMLog.D("StoreKit: token not ready yet. Scheduling retry in \(retryIn) seconds")
                 DispatchQueue.main.asyncAfter(deadline: .now() + retryIn) {
-                    self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan)
+                    self?.processUnauthenticated(withToken: token, transaction: transaction, plan: plan, completion: completion)
                 }
                 return
                 
             case .chargeable: // Gr8 success
                 self?.transactionsMadeBeforeSignup.append(transaction)
                 self?.successCompletion?(token)
+                completion()
                 // Transaction will be finished after login
                 
             default:
                 PMLog.D("StoreKit: token status: \(tokenStatus.status)")
                 self?.tokenStorage.clear()
                 self?.successCompletion?(nil)
+                completion()
                 // Transaction will be finished after login
             }
                         
@@ -602,6 +639,7 @@ extension StoreKitManagerImplementation: SKPaymentTransactionObserver {
             PMLog.ET("StoreKit: Get token info failed: \(error.localizedDescription)")
             self?.tokenStorage.clear()
             self?.successCompletion?(nil)
+            completion()
             // Transaction will be finished after login
         })
     }
