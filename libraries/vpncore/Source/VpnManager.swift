@@ -137,6 +137,11 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     public func disconnect(completion: @escaping () -> Void) {
+        logsContent(for: .openVpn(.undefined)) { logs in
+            guard let logs = logs else { return }
+            PMLog.D(logs, override: true, url: "OpenVPN.log")
+        }
+        
         executeDisconnectionRequestWhenReady { [weak self] in
             self?.connectAllowed = false
             self?.connectionQueue.async { [weak self] in
