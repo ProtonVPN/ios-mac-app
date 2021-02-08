@@ -149,7 +149,7 @@ public enum AccountPlan: String {
         case .free:
             return LocalizedString.countriesCount(3)
         case .basic, .plus, .visionary, .trial:
-            return LocalizedString.countriesCountPlus(40)
+            return LocalizedString.countriesCountPlus(50)
         }
     }
     
