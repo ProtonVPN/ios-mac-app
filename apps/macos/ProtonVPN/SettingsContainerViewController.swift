@@ -40,7 +40,7 @@ final class SettingsContainerViewController: NSViewController {
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway, firewallManager: self.viewModel.firewallManager)
+        let viewModel = ConnectionSettingsViewModel(propertiesManager: self.viewModel.propertiesManager, profileManager: self.viewModel.profileManager)
         return ConnectionSettingsViewController(viewModel: viewModel)
     }()
     
