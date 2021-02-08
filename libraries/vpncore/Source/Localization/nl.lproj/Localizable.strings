@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "Verkeerde gebruikersnaam of wachtwoord";
 
 /* Account plan description */
-"_all_countries" = "40+ landen";
+"_all_countries" = "50+ landen";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Alle servers in dit land zijn in onderhoud. Verbind met een ander land.";

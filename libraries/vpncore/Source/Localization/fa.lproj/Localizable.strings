@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "نام کاربری یا رمزعبور اشتباه است";
 
 /* Account plan description */
-"_all_countries" = "۴۰+ کشور";
+"_all_countries" = "۵۰+ کشور";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "همه‌ی سرورها در این کشور در حال تعمیر هستند. لطفا به یک کشور دیگر متصل شوید.";

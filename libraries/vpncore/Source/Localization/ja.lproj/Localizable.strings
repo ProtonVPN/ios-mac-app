@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "ユーザー名またはパスワードが間違っています";
 
 /* Account plan description */
-"_all_countries" = "40か国以上の国";
+"_all_countries" = "50か国以上の国";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "この国の全てのサーバーはメンテナンス中です。別の国をお試しください。";

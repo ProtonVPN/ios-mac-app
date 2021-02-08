@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "Nome utente o password sbagliati";
 
 /* Account plan description */
-"_all_countries" = "40+ paesi";
+"_all_countries" = "50+ paesi";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Tutti i server in questo paese sono in manutenzione. Per favore connettiti ad un altro paese.";

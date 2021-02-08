@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "Неправильное имя пользователя или пароль";
 
 /* Account plan description */
-"_all_countries" = "40+ стран";
+"_all_countries" = "50+ стран";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Все серверы в этой стране находятся на техническом обслуживании. Пожалуйста, подключитесь к другой стране.";

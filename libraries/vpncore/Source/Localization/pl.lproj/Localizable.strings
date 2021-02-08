@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "Nieprawidłowa nazwa użytkownika lub hasło";
 
 /* Account plan description */
-"_all_countries" = "Ponad 40 krajów";
+"_all_countries" = "Ponad 50 krajów";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Wszystkie serwery w tym kraju są w trakcie przerwy technicznej. Połącz się z innym krajem.";
