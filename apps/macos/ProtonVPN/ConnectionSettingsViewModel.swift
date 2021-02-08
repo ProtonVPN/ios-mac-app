@@ -23,16 +23,13 @@
 import Cocoa
 import vpncore
 
-class ConnectionSettingsViewModel {
+final class ConnectionSettingsViewModel {
     
     let propertiesManager = PropertiesManager()
     
     private let profileManager = ProfileManager.shared
     private let vpnGateway: VpnGatewayProtocol
     private let firewallManager: FirewallManager
-    
-    var killSwitchWarning: ((WarningPopupViewModel) -> Void)?
-    let killSwitchChanged = Notification.Name("SettingsViewModelKillSwitchChanged") // two observers
     
     init(vpnGateway: VpnGatewayProtocol, firewallManager: FirewallManager) {
         self.vpnGateway = vpnGateway
@@ -175,27 +172,9 @@ class ConnectionSettingsViewModel {
     }
     
     // MARK: - Values
-    
-    var killSwitch: Bool {
-        return propertiesManager.killSwitch
-    }
-    
+
     var vpnProtocol: VpnProtocol {
         return propertiesManager.vpnProtocol
-    }
-    
-    func setKillSwitch(_ enabled: Bool) {
-        propertiesManager.killSwitch = enabled
-        
-        if enabled {
-            enableKillSwitch()
-        } else {
-            firewallManager.disableFirewall()
-        }
-    }
-    
-    private func enableKillSwitch() {
-        firewallManager.installHelperIfNeeded(trigger: .userInitiated)
     }
     
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {

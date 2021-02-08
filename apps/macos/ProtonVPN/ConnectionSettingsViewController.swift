@@ -39,11 +39,6 @@ class ConnectionSettingsViewController: NSViewController {
     @IBOutlet weak var quickConnectSeparator: NSBox!
     @IBOutlet weak var quickConnectInfoIcon: NSImageView!
     
-    @IBOutlet weak var killSwitchLabel: PVPNTextField!
-    @IBOutlet weak var killSwitchButton: SwitchButton!
-    @IBOutlet weak var killSwitchSeparator: NSBox!
-    @IBOutlet weak var killSwitchInfoIcon: NSImageView!
-    
     @IBOutlet weak var protocolView: NSView!
     @IBOutlet weak var protocolLabel: PVPNTextField!
     @IBOutlet weak var protocolList: HoverDetectionPopUpButton!
@@ -74,13 +69,10 @@ class ConnectionSettingsViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged(_:)), name: viewModel.propertiesManager.killSwitchNotification, object: nil)
-        
+
         setupView()
         setupAutoConnectItem()
         setupQuickConnectItem()
-        setupKillSwitchItem()
         //These two views will remain disabled until we can stablish openVPN connection
         protocolView.isHidden = true
         openVPNView.isHidden = true
@@ -124,19 +116,6 @@ class ConnectionSettingsViewController: NSViewController {
         quickConnectSeparator.fillColor = .protonLightGrey()
     }
     
-    private func setupKillSwitchItem() {
-        killSwitchLabel.attributedStringValue = LocalizedString.killSwitch.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-
-        killSwitchButton.setState(viewModel.killSwitch ? .on : .off)
-        killSwitchButton.buttonView?.tag = SwitchButtonOption.killSwitch.rawValue
-        killSwitchButton.delegate = self
-        
-        killSwitchInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        killSwitchInfoIcon.toolTip = LocalizedString.killSwitchTooltip
-        
-        killSwitchSeparator.fillColor = .protonLightGrey()
-    }
-    
     private func setupProtocolItem() {
         protocolLabel.attributedStringValue = LocalizedString
             .protocolLabel
@@ -159,13 +138,6 @@ class ConnectionSettingsViewController: NSViewController {
         openVPNInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         openVPNSeparator.fillColor = .protonLightGrey()
         refreshOpenVPNProtocol()
-    }
-    
-    @objc private func killSwitchChanged(_ notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.killSwitchButton.setState(self.viewModel.killSwitch ? .on : .off)
-        }
     }
     
     private func setupDnsLeakProtectionItem() {
@@ -263,17 +235,5 @@ class ConnectionSettingsViewController: NSViewController {
     
     @objc private func openVPNItemSelected() {
         viewModel.setOpenVPN(openVPNList.indexOfSelectedItem)
-    }
-}
-
-extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.tag {
-        case SwitchButtonOption.killSwitch.rawValue:
-            viewModel.setKillSwitch(killSwitchButton.currentButtonState == .on)
-        default:
-            break
-        }
     }
 }
