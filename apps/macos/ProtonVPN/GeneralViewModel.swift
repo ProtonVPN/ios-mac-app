@@ -23,19 +23,18 @@
 import Foundation
 import vpncore
 
-class GeneralViewModel {
+final class GeneralViewModel {
     
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory & NetShieldPropertyProviderFactory
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
 
     private let factory: Factory
     private lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
-    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private weak var viewController: ReloadableViewController?
     
-    init( factory: Factory ) {
+    init(factory: Factory ) {
         self.factory = factory
     }
     
@@ -57,14 +56,6 @@ class GeneralViewModel {
     
     var unprotectedNetworkNotifications: Bool {
         return propertiesManager.unprotectedNetworkNotifications
-    }
-    
-    var netshieldState: NetShieldType {
-        return netShieldPropertyProvider.netShieldType
-    }
-    
-    var netshieldAvailable: Bool {
-        return propertiesManager.featureFlags.isNetShield
     }
     
     // MARK: - Setters
@@ -91,47 +82,5 @@ class GeneralViewModel {
 
     func setUnprotectedNetworkNotifications(_ enabled: Bool) {
         propertiesManager.unprotectedNetworkNotifications = enabled
-    }
-    
-    func setNetshield(_ netShieldType: NetShieldType) {
-        
-        guard netShieldPropertyProvider.netShieldType != netShieldType else {
-            return
-        }
-        
-        var isConnected = false
-        
-        switch appStateManager.state {
-        case .connected, .connecting:
-            isConnected = true
-        default:
-            break
-        }
-        
-        guard netShieldPropertyProvider.isUserEligibleForNetShield else {
-            let upgradeAlert = NetShieldRequiresUpgradeAlert(continueHandler: {
-                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-            })
-            
-            self.alertService.push(alert: upgradeAlert)
-            viewController?.reloadView()
-            return
-        }
-        
-        guard isConnected else {
-            netShieldPropertyProvider.netShieldType = netShieldType
-            viewController?.reloadView()
-            return
-        }
-        
-        let reconnectAlert = ReconnectOnNetshieldChangeAlert(isOn: netShieldType != .off, continueHandler: {
-            self.netShieldPropertyProvider.netShieldType = netShieldType
-            self.viewController?.reloadView()
-            self.vpnGateway.reconnect(with: netShieldType)
-        }, cancelHandler: {
-            self.viewController?.reloadView()
-        })
-        
-        self.alertService.push(alert: reconnectAlert)
     }
 }

@@ -27,9 +27,9 @@ public protocol ReloadableViewController: class {
     func reloadView()
 }
 
-class GeneralSettingsViewController: NSViewController, ReloadableViewController {
+final class GeneralSettingsViewController: NSViewController, ReloadableViewController {
     
-    fileprivate enum SwitchButtonOption: Int {
+    private enum SwitchButtonOption: Int {
         case startOnBoot
         case startMinimized
         case systemNotifications
@@ -58,13 +58,8 @@ class GeneralSettingsViewController: NSViewController, ReloadableViewController 
     @IBOutlet weak var unprotectedNetworkInfoIcon: NSImageView!
     @IBOutlet weak var unprotectedNetworkSeparator: NSBox!
     @IBOutlet weak var unprotectedNetworkButton: SwitchButton!
-    
-    @IBOutlet weak var netshieldContainerView: NSView!
-    @IBOutlet weak var netshieldLabel: PVPNTextField!
-    @IBOutlet weak var netshieldInfoIcon: NSImageView!
-    @IBOutlet weak var netshieldSeparator: NSBox!
-    @IBOutlet weak var netshieldDropdown: HoverDetectionPopUpButton!
-    fileprivate var viewModel: GeneralViewModel
+
+    private var viewModel: GeneralViewModel
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
@@ -138,33 +133,6 @@ class GeneralSettingsViewController: NSViewController, ReloadableViewController 
         unprotectedNetworkSeparator.fillColor = .protonLightGrey()
     }
     
-    private func setupNetshieldItem() {
-        
-        guard viewModel.netshieldAvailable else {
-            netshieldContainerView.isHidden = true
-            return
-        }
-        netshieldLabel.attributedStringValue = LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        netshieldDropdown.isBordered = false
-        netshieldInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        netshieldInfoIcon.toolTip = LocalizedString.netshieldTitleTootltip
-        netshieldSeparator.fillColor = .protonLightGrey()
-        netshieldDropdown.target = self
-        netshieldDropdown.action = #selector(netshieldOptionUpdated)
-        netshieldDropdown.removeAllItems()
-        [LocalizedString.disabled, LocalizedString.netshieldLevel1, LocalizedString.netshieldLevel2].forEach { option in
-            let item = NSMenuItem()
-            item.attributedTitle = option.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            netshieldDropdown.menu?.addItem(item)
-        }
-        netshieldDropdown.select(netshieldDropdown.itemArray[viewModel.netshieldState.rawValue])
-    }
-    
-    @objc private func netshieldOptionUpdated() {
-        guard let netshieldType = NetShieldType(rawValue: netshieldDropdown.indexOfSelectedItem) else { return }
-        viewModel.setNetshield(netshieldType)
-    }
-    
     // MARK: - ReloadableView
     
     func reloadView() {
@@ -174,12 +142,10 @@ class GeneralSettingsViewController: NSViewController, ReloadableViewController 
         setupSystemNotificationsItem()
         setupEarlyAccessItem()
         setupUnprotectedNetworkItem()
-        setupNetshieldItem()
     }
 }
 
 extension GeneralSettingsViewController: SwitchButtonDelegate {
-        
     func switchButtonClicked(_ button: NSButton) {
         switch button.tag {
         case SwitchButtonOption.startOnBoot.rawValue:
