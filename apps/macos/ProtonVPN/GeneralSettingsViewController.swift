@@ -59,15 +59,15 @@ final class GeneralSettingsViewController: NSViewController, ReloadableViewContr
     @IBOutlet weak var unprotectedNetworkSeparator: NSBox!
     @IBOutlet weak var unprotectedNetworkButton: SwitchButton!
 
-    private var viewModel: GeneralViewModel
+    private var viewModel: GeneralSettingsViewModel
     
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: GeneralViewModel) {
+    required init(viewModel: GeneralSettingsViewModel) {
         self.viewModel = viewModel
-        super.init(nibName: NSNib.Name("General"), bundle: nil)
+        super.init(nibName: NSNib.Name("GeneralSettings"), bundle: nil)
     }
     
     override func viewDidLoad() {

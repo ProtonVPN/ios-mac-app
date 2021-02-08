@@ -191,8 +191,7 @@ extension NavigationService {
         
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(vpnGateway: vpnGateway, firewallManager: firewallManager),
-                                         tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(vpnGateway: vpnGateway, firewallManager: firewallManager, propertiesManager: propertiesManager), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
     }
     
     func logOutRequested() {

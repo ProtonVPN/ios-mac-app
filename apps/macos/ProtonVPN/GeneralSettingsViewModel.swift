@@ -1,5 +1,5 @@
 //
-//  GeneralViewModel.swift
+//  GeneralSettingsViewModel.swift
 //  ProtonVPN - Created on 27.06.19.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -23,19 +23,11 @@
 import Foundation
 import vpncore
 
-final class GeneralViewModel {
+final class GeneralSettingsViewModel {
+    private let propertiesManager: PropertiesManagerProtocol
     
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory
-
-    private let factory: Factory
-    private lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
-    private lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
-    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
-    private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
-    private weak var viewController: ReloadableViewController?
-    
-    init(factory: Factory ) {
-        self.factory = factory
+    init(propertiesManager: PropertiesManagerProtocol) {
+        self.propertiesManager = propertiesManager
     }
     
     var startOnBoot: Bool {
@@ -59,10 +51,6 @@ final class GeneralViewModel {
     }
     
     // MARK: - Setters
-    
-    func setViewController(_ vc: ReloadableViewController) {
-        self.viewController = vc
-    }
     
     func setStartOnBoot(_ enabled: Bool) {
         propertiesManager.startOnBoot = enabled

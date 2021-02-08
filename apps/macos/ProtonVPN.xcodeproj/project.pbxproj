@@ -285,14 +285,14 @@
 		EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */; };
 		EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */; };
 		EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFCE1F14E096000D6688 /* AppConstants.swift */; };
-		EE98CFD21F14E247000D6688 /* General.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE98CFD11F14E247000D6688 /* General.xib */; };
+		EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE98CFD11F14E247000D6688 /* GeneralSettings.xib */; };
 		EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */; };
 		EE98CFDE1F150FEE000D6688 /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */; };
 		EE98CFE11F15100F000D6688 /* About.xib in Resources */ = {isa = PBXBuildFile; fileRef = EE98CFE01F15100F000D6688 /* About.xib */; };
 		EE98CFE31F15167D000D6688 /* NSWindow+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */; };
 		EE98CFE51F15199C000D6688 /* WhiteHoverLinkButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */; };
 		EE98CFE71F1519D4000D6688 /* NSImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE98CFE61F1519D4000D6688 /* NSImage+Extension.swift */; };
-		EE9BFBCA1F30DD5200EDA295 /* GeneralViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBC91F30DD5200EDA295 /* GeneralViewModel.swift */; };
+		EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */; };
 		EE9BFBCC1F30F9CA00EDA295 /* HelpMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */; };
 		EEA1C8DD1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */; };
 		EEA1C8E01F27BD7200B2036E /* CountriesSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */; };
@@ -709,14 +709,14 @@
 		EE98CFC81F14D62F000D6688 /* NSView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSView+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFCA1F14D697000D6688 /* NSColor+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSColor+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFCE1F14E096000D6688 /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
-		EE98CFD11F14E247000D6688 /* General.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = General.xib; sourceTree = "<group>"; };
+		EE98CFD11F14E247000D6688 /* GeneralSettings.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GeneralSettings.xib; sourceTree = "<group>"; };
 		EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewController.swift; sourceTree = "<group>"; };
 		EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		EE98CFE01F15100F000D6688 /* About.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = About.xib; sourceTree = "<group>"; };
 		EE98CFE21F15167D000D6688 /* NSWindow+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSWindow+Extension.swift"; sourceTree = "<group>"; };
 		EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WhiteHoverLinkButton.swift; sourceTree = "<group>"; };
 		EE98CFE61F1519D4000D6688 /* NSImage+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSImage+Extension.swift"; sourceTree = "<group>"; };
-		EE9BFBC91F30DD5200EDA295 /* GeneralViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralViewModel.swift; sourceTree = "<group>"; };
+		EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GeneralSettingsViewModel.swift; sourceTree = "<group>"; };
 		EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HelpMenuController.swift; sourceTree = "<group>"; };
 		EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CreateNewProfileViewModel+Descriptors.swift"; sourceTree = "<group>"; };
 		EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesSectionViewModel.swift; sourceTree = "<group>"; };
@@ -1544,7 +1544,7 @@
 			children = (
 				EE27DB471F47095300D2FF2B /* Account.xib */,
 				E1420A72209B57B100697461 /* ConnectionSettings.xib */,
-				EE98CFD11F14E247000D6688 /* General.xib */,
+				EE98CFD11F14E247000D6688 /* GeneralSettings.xib */,
 				EE27DB3B1F4706E400D2FF2B /* SettingsContainer.xib */,
 				EE27DB4D1F47187600D2FF2B /* SettingsTabBar.xib */,
 			);
@@ -1614,7 +1614,7 @@
 			isa = PBXGroup;
 			children = (
 				EE27DB4A1F470EF700D2FF2B /* AccountViewModel.swift */,
-				EE9BFBC91F30DD5200EDA295 /* GeneralViewModel.swift */,
+				EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */,
 				E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */,
 				EE4E7E021F62B197000F7D5E /* SettingsContainerViewModel.swift */,
 				E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */,
@@ -2230,7 +2230,7 @@
 				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
 				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */,
-				EE98CFD21F14E247000D6688 /* General.xib in Resources */,
+				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
 				E173304822C3555A00050F79 /* .gitlab-ci.yml in Resources */,
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
@@ -2698,7 +2698,7 @@
 				EE4E7DF91F629195000F7D5E /* WindowController.swift in Sources */,
 				E180D1582125CB8300F4D1C7 /* TourWindowController.swift in Sources */,
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
-				EE9BFBCA1F30DD5200EDA295 /* GeneralViewModel.swift in Sources */,
+				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
 				42C1F29B255306EE00793A49 /* QuickSettingDropdownPresenter.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
