@@ -68,6 +68,9 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_killswitch_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
+            if self.vpnGateway.connection == .connected {
+                self.vpnGateway.retryConnection()
+            }
         })
     }
     
@@ -77,6 +80,9 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let icon = #imageLiteral(resourceName: "qs_killswitch_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
             self.propertiesManager.killSwitch = true
+            if self.vpnGateway.connection == .connected {
+                self.vpnGateway.retryConnection()
+            }
         })
     }
 }
