@@ -32,8 +32,8 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jNA-mD-boC" userLabel="Body">
                     <rect key="frame" x="0.0" y="50" width="874" height="324"/>
                     <subviews>
-                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTT-Tx-j2q" userLabel="Step1">
-                            <rect key="frame" x="0.0" y="0.0" width="874" height="324"/>
+                        <customView hidden="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTT-Tx-j2q" userLabel="Step1">
+                            <rect key="frame" x="0.0" y="1000" width="874" height="324"/>
                             <subviews>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="TWI-8E-ZFe">
                                     <rect key="frame" x="226" y="101" width="422" height="159"/>
@@ -72,8 +72,8 @@
                                 <constraint firstItem="TWI-8E-ZFe" firstAttribute="top" secondItem="aTT-Tx-j2q" secondAttribute="top" constant="64" id="pfj-ab-ABN"/>
                             </constraints>
                         </customView>
-                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k5c-rp-8Oq" userLabel="Step2">
-                            <rect key="frame" x="0.0" y="0.0" width="874" height="324"/>
+                        <customView hidden="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="k5c-rp-8Oq" userLabel="Step2">
+                            <rect key="frame" x="0.0" y="1000" width="874" height="324"/>
                             <subviews>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="531-EQ-pbC">
                                     <rect key="frame" x="187" y="140" width="500" height="56"/>
@@ -116,7 +116,7 @@
                             <rect key="frame" x="0.0" y="0.0" width="874" height="324"/>
                             <subviews>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="Msq-X0-Hkc">
-                                    <rect key="frame" x="187" y="158" width="500" height="66"/>
+                                    <rect key="frame" x="187" y="129" width="500" height="66"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="Msq-X0-Hkc" secondAttribute="height" multiplier="211:28" id="nT4-KZ-HP7"/>
                                         <constraint firstAttribute="width" constant="500" id="rKO-ah-fK6"/>
@@ -124,15 +124,15 @@
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="open_extension_install_step3" id="kqR-x4-fUA"/>
                                 </imageView>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="8mF-6y-Wtv">
-                                    <rect key="frame" x="653" y="162" width="160" height="64"/>
+                                    <rect key="frame" x="621" y="131" width="192" height="64"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="64" id="9cx-Q8-MCn"/>
-                                        <constraint firstAttribute="width" constant="160" id="Fxi-5l-9IB"/>
+                                        <constraint firstAttribute="width" constant="192" id="Fxi-5l-9IB"/>
                                     </constraints>
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageAlignment="right" imageScaling="axesIndependently" image="ic_detail_circle_reversed" id="egv-Sr-Iqj"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zRB-vN-6X8" userLabel="3">
-                                    <rect key="frame" x="747" y="174" width="68" height="40"/>
+                                    <rect key="frame" x="747" y="143" width="68" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="64" id="VIg-o4-buZ"/>
                                     </constraints>
@@ -144,11 +144,10 @@
                                 </textField>
                             </subviews>
                             <constraints>
+                                <constraint firstItem="8mF-6y-Wtv" firstAttribute="top" secondItem="Msq-X0-Hkc" secondAttribute="top" id="28C-4N-YgP"/>
                                 <constraint firstItem="Msq-X0-Hkc" firstAttribute="trailing" secondItem="8mF-6y-Wtv" secondAttribute="trailing" constant="-126" id="7uC-X5-3tY"/>
                                 <constraint firstItem="zRB-vN-6X8" firstAttribute="centerY" secondItem="8mF-6y-Wtv" secondAttribute="centerY" id="JVi-lo-5bY"/>
-                                <constraint firstItem="8mF-6y-Wtv" firstAttribute="top" secondItem="Msq-X0-Hkc" secondAttribute="bottom" constant="-68" id="YnT-q6-da5"/>
                                 <constraint firstItem="Msq-X0-Hkc" firstAttribute="centerX" secondItem="o27-Aq-KPK" secondAttribute="centerX" id="amW-9k-ca9"/>
-                                <constraint firstItem="Msq-X0-Hkc" firstAttribute="top" secondItem="o27-Aq-KPK" secondAttribute="top" constant="100" id="lO2-2l-zXM"/>
                                 <constraint firstItem="zRB-vN-6X8" firstAttribute="trailing" secondItem="8mF-6y-Wtv" secondAttribute="trailing" id="liq-Fk-f1y"/>
                             </constraints>
                         </customView>
@@ -243,6 +242,7 @@
                         <constraint firstItem="EG8-ZZ-JDk" firstAttribute="top" secondItem="2nW-1d-Frp" secondAttribute="bottom" constant="16" id="Qka-cB-6s7"/>
                         <constraint firstItem="EG8-ZZ-JDk" firstAttribute="centerX" secondItem="o27-Aq-KPK" secondAttribute="centerX" id="Qt5-cK-xLE"/>
                         <constraint firstItem="BmS-xB-RiE" firstAttribute="centerY" secondItem="jNA-mD-boC" secondAttribute="centerY" id="W4I-et-jdj"/>
+                        <constraint firstItem="Msq-X0-Hkc" firstAttribute="centerY" secondItem="XrH-oq-zLg" secondAttribute="centerY" id="azD-qD-9q7"/>
                         <constraint firstItem="vSI-q2-JgD" firstAttribute="centerX" secondItem="2nW-1d-Frp" secondAttribute="centerX" constant="-32" id="dEs-xN-HBx"/>
                         <constraint firstItem="o27-Aq-KPK" firstAttribute="top" secondItem="jNA-mD-boC" secondAttribute="top" id="fAw-X5-f1F"/>
                         <constraint firstItem="k5c-rp-8Oq" firstAttribute="leading" secondItem="jNA-mD-boC" secondAttribute="leading" id="fzS-1Y-gGE"/>
@@ -299,8 +299,8 @@
     <resources>
         <image name="ic_bold_arrow" width="92" height="137"/>
         <image name="ic_bold_arrow_reversed" width="92" height="137"/>
-        <image name="ic_detail_circle" width="161" height="64"/>
-        <image name="ic_detail_circle_reversed" width="284" height="64"/>
+        <image name="ic_detail_circle" width="192" height="64"/>
+        <image name="ic_detail_circle_reversed" width="192" height="64"/>
         <image name="open_extension_install_step1" width="422" height="159"/>
         <image name="open_extension_install_step2" width="250" height="59"/>
         <image name="open_extension_install_step3" width="571" height="75"/>
