@@ -92,18 +92,21 @@ class SystemExtensionManager: NSObject {
 extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
-        os_log(.debug, log: self.log, "Action for replacing %@ -> %@", "\(existing.bundleShortVersion) (\(existing.bundleVersion))", "\(ext.bundleShortVersion) (\(ext.bundleVersion))")
         
-        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
-        propertiesManager.openVPNExtensionTourDisplayed = true
+        return .replace // Have to always replace extension to make system ask for permission to install sysex even after failed first attempt.
         
-        if existing.bundleShortVersion.compareVersion(to: ext.bundleShortVersion) == ComparisonResult.orderedAscending {
-            return .replace
-        }
+        // Change to the following code, when/if Apple responds to bug report FB8978342.
         
-        self.completionCallback?(propertiesManager.vpnProtocol)
-        self.completionCallback = nil
-        return .cancel
+//        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+//        propertiesManager.openVPNExtensionTourDisplayed = true
+//
+//        if existing.bundleShortVersion.compareVersion(to: ext.bundleShortVersion) == ComparisonResult.orderedAscending {
+//            return .replace
+//        }
+//
+//        self.completionCallback?(propertiesManager.vpnProtocol)
+//        self.completionCallback = nil
+//        return .cancel
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
