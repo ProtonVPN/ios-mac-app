@@ -38,11 +38,6 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
     @IBOutlet weak var quickConnectSeparator: NSBox!
     @IBOutlet weak var quickConnectInfoIcon: NSImageView!
     
-    @IBOutlet weak var killSwitchLabel: PVPNTextField!
-    @IBOutlet weak var killSwitchButton: SwitchButton!
-    @IBOutlet weak var killSwitchSeparator: NSBox!
-    @IBOutlet weak var killSwitchInfoIcon: NSImageView!
-    
     @IBOutlet weak var protocolView: NSView!
     @IBOutlet weak var protocolLabel: PVPNTextField!
     @IBOutlet weak var protocolList: HoverDetectionPopUpButton!
@@ -67,7 +62,6 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged(_:)), name: viewModel.propertiesManager.killSwitchNotification, object: nil)
         viewModel.setViewController(self)
         reloadView()
     }
@@ -107,19 +101,6 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
         quickConnectSeparator.fillColor = .protonLightGrey()
     }
     
-    private func setupKillSwitchItem() {
-        killSwitchLabel.attributedStringValue = LocalizedString.killSwitch.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-
-        killSwitchButton.setState(viewModel.killSwitch ? .on : .off)
-        killSwitchButton.buttonView?.tag = SwitchButtonOption.killSwitch.rawValue
-        killSwitchButton.delegate = self
-        
-        killSwitchInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        killSwitchInfoIcon.toolTip = LocalizedString.killSwitchTooltip
-        
-        killSwitchSeparator.fillColor = .protonLightGrey()
-    }
-    
     private func setupProtocolItem() {
         protocolLabel.attributedStringValue = LocalizedString
             .protocolLabel
@@ -131,14 +112,7 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
         protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
-    }
-    
-    @objc private func killSwitchChanged(_ notification: Notification) {
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            self.killSwitchButton.setState(self.viewModel.killSwitch ? .on : .off)
-        }
-    }
+    }    
     
     private func setupDnsLeakProtectionItem() {
         dnsLeakProtectionLabel.attributedStringValue = LocalizedString.dnsLeakProtection.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
@@ -195,7 +169,6 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
         setupView()
         setupAutoConnectItem()
         setupQuickConnectItem()
-        setupKillSwitchItem()
         setupProtocolItem()
         setupDnsLeakProtectionItem()
     }
@@ -220,17 +193,5 @@ class ConnectionSettingsViewController: NSViewController, ReloadableViewControll
     
     @objc private func protocolItemSelected() {
         viewModel.setProtocol(protocolList.indexOfSelectedItem)
-    }
-}
-
-extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    
-    func switchButtonClicked(_ button: NSButton) {
-        switch button.tag {
-        case SwitchButtonOption.killSwitch.rawValue:
-            viewModel.setKillSwitch(killSwitchButton.currentButtonState == .on)
-        default:
-            break
-        }
     }
 }

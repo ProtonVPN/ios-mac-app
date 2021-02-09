@@ -30,7 +30,7 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory & UpdateManagerFactory
+    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory & UpdateManagerFactory & ProfileManagerFactory & SystemExtensionManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -182,15 +182,10 @@ extension NavigationService {
         NSWorkspace.shared.activateFileViewerSelecting([logUrl])
     }
     
-    func openSettings(to tab: SettingsTab) {
-        guard let vpnGateway = vpnGateway else {
-            return
-        }
-        
+    func openSettings(to tab: SettingsTab) {        
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(vpnGateway: vpnGateway),
-                                         tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(profileManager: factory.makeProfileManager(), propertiesManager: propertiesManager, systemExtensionManager: factory.makeSystemExtensionManager(), alertService: factory.makeCoreAlertService()), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
     }
     
     func logOutRequested() {

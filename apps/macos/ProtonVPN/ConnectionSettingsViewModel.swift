@@ -23,21 +23,18 @@
 import Cocoa
 import vpncore
 
-class ConnectionSettingsViewModel {
+final class ConnectionSettingsViewModel {
     
-    let propertiesManager = PropertiesManager()
-    
-    private let profileManager = ProfileManager.shared
-    private let vpnGateway: VpnGatewayProtocol
+    private let propertiesManager: PropertiesManagerProtocol
+    private let profileManager: ProfileManager
     private let systemExtensionManager: SystemExtensionManager
     private let alertService: CoreAlertService
-    private weak var viewController: ReloadableViewController?
 
-    var killSwitchWarning: ((WarningPopupViewModel) -> Void)?
-    let killSwitchChanged = Notification.Name("SettingsViewModelKillSwitchChanged") // two observers
+    private weak var viewController: ReloadableViewController?
     
-    init(vpnGateway: VpnGatewayProtocol, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
-        self.vpnGateway = vpnGateway
+    init(propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
+        self.propertiesManager = propertiesManager
+        self.profileManager = profileManager
         self.systemExtensionManager = systemExtensionManager
         self.alertService = alertService
     }
@@ -191,19 +188,11 @@ class ConnectionSettingsViewModel {
     }
     
     // MARK: - Values
-    
-    var killSwitch: Bool {
-        return propertiesManager.killSwitch
-    }
-    
+
     var vpnProtocol: VpnProtocol {
         return propertiesManager.vpnProtocol
     }
-    
-    func setKillSwitch(_ enabled: Bool) {
-        propertiesManager.killSwitch = enabled
-    }
-    
+
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {
         let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
         profileCircle.profileColor = color

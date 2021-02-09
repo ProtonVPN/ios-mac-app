@@ -12,11 +12,6 @@
                 <outlet property="earlyAccessInfoIcon" destination="neR-V8-lDC" id="Bc0-pd-t6C"/>
                 <outlet property="earlyAccessLabel" destination="nZj-KZ-IYu" id="XpS-vZ-Rt8"/>
                 <outlet property="earlyAccessSeparator" destination="Pfm-nt-HfH" id="VjI-9H-ccK"/>
-                <outlet property="netshieldContainerView" destination="yKo-70-smL" id="64b-eA-4Cu"/>
-                <outlet property="netshieldDropdown" destination="hEA-wt-j8b" id="sbR-k4-U3C"/>
-                <outlet property="netshieldInfoIcon" destination="WQL-2t-6pb" id="exs-x0-fwU"/>
-                <outlet property="netshieldLabel" destination="8y4-ZY-d1s" id="vOa-sR-iuN"/>
-                <outlet property="netshieldSeparator" destination="lux-0T-eEb" id="EZN-Gx-XOH"/>
                 <outlet property="startMinimizedButton" destination="028-IW-VNS" id="81m-Hl-U5n"/>
                 <outlet property="startMinimizedLabel" destination="NRQ-fP-BcB" id="hC7-zO-N1G"/>
                 <outlet property="startMinimizedSeperator" destination="Myq-Cy-E2t" id="lth-RT-0v0"/>
@@ -39,10 +34,10 @@
             <rect key="frame" x="0.0" y="0.0" width="500" height="404"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6z4-PQ-2PX">
-                    <rect key="frame" x="0.0" y="5" width="500" height="399"/>
+                    <rect key="frame" x="0.0" y="114" width="500" height="290"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="mbn-jP-w9U">
-                            <rect key="frame" x="0.0" y="339" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="eTP-6s-cjq" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="117" height="16"/>
@@ -82,7 +77,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Riq-vB-04F">
-                            <rect key="frame" x="0.0" y="289" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="NRQ-fP-BcB" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="132" height="16"/>
@@ -120,7 +115,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="g5t-WD-1mz">
-                            <rect key="frame" x="0.0" y="239" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="130" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="WrO-rw-f89" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="160" height="16"/>
@@ -158,7 +153,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Lb4-eN-ecD">
-                            <rect key="frame" x="0.0" y="189" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="80" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nZj-KZ-IYu" userLabel="Early Access Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="112" height="16"/>
@@ -206,7 +201,7 @@
                             </constraints>
                         </customView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="Ibl-5e-RGa">
-                            <rect key="frame" x="0.0" y="139" width="500" height="50"/>
+                            <rect key="frame" x="0.0" y="30" width="500" height="50"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="udV-HL-cB0" userLabel="Unprotected Networks Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="40" y="17" width="178" height="16"/>
@@ -253,65 +248,6 @@
                                 <constraint firstItem="azN-gZ-XOI" firstAttribute="centerY" secondItem="Ibl-5e-RGa" secondAttribute="centerY" id="zId-0X-qBT"/>
                             </constraints>
                         </customView>
-                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="yKo-70-smL">
-                            <rect key="frame" x="0.0" y="30" width="500" height="109"/>
-                            <subviews>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8y4-ZY-d1s" userLabel="Netshield Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="40" y="76" width="62" height="16"/>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Netshield" id="Ikb-Jb-LBU" userLabel="Netshield label">
-                                        <font key="font" metaFont="label" size="13"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                                <box hidden="YES" ambiguous="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="lux-0T-eEb" userLabel="Netshield Separator">
-                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
-                                    <view key="contentView" ambiguous="YES" id="wwO-6o-FQg">
-                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
-                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                    </view>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="1" id="KfS-RM-k8z"/>
-                                    </constraints>
-                                </box>
-                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="WQL-2t-6pb" userLabel="Netshield Info Icon">
-                                    <rect key="frame" x="105" y="77" width="15" height="15"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="15" id="9T5-Av-gt9"/>
-                                        <constraint firstAttribute="height" constant="15" id="hLy-9I-JHE"/>
-                                    </constraints>
-                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="146-pC-R1C"/>
-                                </imageView>
-                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="hEA-wt-j8b" userLabel="Quick Connect List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="384" y="71" width="77" height="25"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="Ca5-D7-ImS"/>
-                                    </constraints>
-                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="right" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="6Hu-9Q-Hwc" id="FCa-u0-yuu">
-                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="label" size="13"/>
-                                        <menu key="menu" id="g21-Ib-rIA">
-                                            <items>
-                                                <menuItem title="Item 1" state="on" id="6Hu-9Q-Hwc"/>
-                                                <menuItem title="Item 2" id="RCf-fM-qde"/>
-                                                <menuItem title="Item 3" id="bkk-43-qJV"/>
-                                            </items>
-                                        </menu>
-                                    </popUpButtonCell>
-                                </popUpButton>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="hEA-wt-j8b" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WQL-2t-6pb" secondAttribute="trailing" constant="16" id="0Fg-m4-oJ3"/>
-                                <constraint firstItem="8y4-ZY-d1s" firstAttribute="leading" secondItem="yKo-70-smL" secondAttribute="leading" constant="42" id="C6t-Fg-xnf"/>
-                                <constraint firstItem="8y4-ZY-d1s" firstAttribute="top" secondItem="yKo-70-smL" secondAttribute="top" constant="17" id="DP5-sb-yCH"/>
-                                <constraint firstAttribute="bottom" secondItem="lux-0T-eEb" secondAttribute="bottom" id="Lf4-uF-EjV"/>
-                                <constraint firstItem="WQL-2t-6pb" firstAttribute="leading" secondItem="8y4-ZY-d1s" secondAttribute="trailing" constant="5" id="TbJ-sU-GfD"/>
-                                <constraint firstItem="hEA-wt-j8b" firstAttribute="centerY" secondItem="8y4-ZY-d1s" secondAttribute="centerY" id="Z28-as-Czj"/>
-                                <constraint firstItem="lux-0T-eEb" firstAttribute="leading" secondItem="8y4-ZY-d1s" secondAttribute="leading" id="gGO-wz-46c"/>
-                                <constraint firstItem="WQL-2t-6pb" firstAttribute="centerY" secondItem="8y4-ZY-d1s" secondAttribute="centerY" id="tqi-n6-Mrt"/>
-                                <constraint firstAttribute="height" constant="109" id="wN9-vM-sd3"/>
-                            </constraints>
-                        </customView>
                     </subviews>
                     <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
                     <constraints>
@@ -323,8 +259,6 @@
                         <constraint firstAttribute="width" constant="500" id="LVn-Dj-wNx"/>
                         <constraint firstItem="NRQ-fP-BcB" firstAttribute="leading" secondItem="eTP-6s-cjq" secondAttribute="leading" id="Mun-Cl-x41"/>
                         <constraint firstItem="n7S-eS-BLj" firstAttribute="trailing" secondItem="0GM-Jd-J6y" secondAttribute="trailing" id="NX0-Gi-5cD"/>
-                        <constraint firstItem="8y4-ZY-d1s" firstAttribute="leading" secondItem="udV-HL-cB0" secondAttribute="leading" id="SGb-uK-G6P"/>
-                        <constraint firstItem="hEA-wt-j8b" firstAttribute="trailing" secondItem="n7S-eS-BLj" secondAttribute="trailing" id="TDC-0B-HrV"/>
                         <constraint firstItem="nZj-KZ-IYu" firstAttribute="leading" secondItem="WrO-rw-f89" secondAttribute="leading" id="Z7n-DF-JRV"/>
                         <constraint firstItem="0GM-Jd-J6y" firstAttribute="trailing" secondItem="ovJ-iY-BrC" secondAttribute="trailing" id="c9Y-FW-PpN"/>
                         <constraint firstItem="028-IW-VNS" firstAttribute="trailing" secondItem="YCb-qR-3vO" secondAttribute="trailing" id="cRV-5y-28J"/>
@@ -337,10 +271,8 @@
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
-                        <integer value="1000"/>
                     </visibilityPriorities>
                     <customSpacing>
-                        <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>

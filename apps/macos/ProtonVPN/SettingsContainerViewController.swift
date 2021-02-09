@@ -23,30 +23,24 @@
 import Cocoa
 import vpncore
 
-class SettingsContainerViewController: NSViewController {
+final class SettingsContainerViewController: NSViewController {
 
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & AppStateManagerFactory & VpnGatewayFactory & NetShieldPropertyProviderFactory & SystemExtensionManagerFactory
-    
-    @IBOutlet weak var tabBarControllerViewContainer: NSView!
-    @IBOutlet weak var activeControllerViewContainer: NSView!
-    
-    private let factory: Factory
+    @IBOutlet private weak var tabBarControllerViewContainer: NSView!
+    @IBOutlet private weak var activeControllerViewContainer: NSView!
+
     private let viewModel: SettingsContainerViewModel
     private var tabBarViewController: SettingsTabBarViewController!
     private var tabBarViewModel: SettingsTabBarViewModel
     private var activeViewController: NSViewController?
     
     lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        let viewModel = GeneralViewModel(factory: self.factory)
+        let viewModel = GeneralSettingsViewModel(propertiesManager: self.viewModel.propertiesManager)
         let vc = GeneralSettingsViewController(viewModel: viewModel)
-        viewModel.setViewController(vc)
         return vc
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(vpnGateway: self.viewModel.vpnGateway,
-                                                    systemExtensionManager: self.factory.makeSystemExtensionManager(),
-                                                    alertService: self.factory.makeCoreAlertService())
+        let viewModel = ConnectionSettingsViewModel(propertiesManager: self.viewModel.propertiesManager, profileManager: self.viewModel.profileManager, systemExtensionManager: self.viewModel.systemExtensionManager, alertService: self.viewModel.alertService)
         return ConnectionSettingsViewController(viewModel: viewModel)
     }()
     
@@ -58,10 +52,9 @@ class SettingsContainerViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, factory: Factory) {
+    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
-        self.factory = factory
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

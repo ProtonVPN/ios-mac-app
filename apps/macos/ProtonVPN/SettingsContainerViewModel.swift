@@ -23,11 +23,17 @@
 import Foundation
 import vpncore
 
-class SettingsContainerViewModel {
+final class SettingsContainerViewModel {
     
-    let vpnGateway: VpnGatewayProtocol
+    let profileManager: ProfileManager
+    let propertiesManager: PropertiesManagerProtocol
+    let systemExtensionManager: SystemExtensionManager
+    let alertService: CoreAlertService
     
-    init(vpnGateway: VpnGatewayProtocol) {
-        self.vpnGateway = vpnGateway
+    init(profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
+        self.profileManager = profileManager
+        self.propertiesManager = propertiesManager
+        self.systemExtensionManager = systemExtensionManager
+        self.alertService = alertService
     }
 }
