@@ -45,13 +45,13 @@ class VerificationCodeViewModel {
     var resendButtonStateChanged: (() -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private let address: String
     private let tokenType: HumanVerificationToken.TokenType
     private var code: String?
@@ -86,7 +86,7 @@ class VerificationCodeViewModel {
             self.tokenReceived?(token)
             
         }, failure: { (error) in
-            
+            self.propertiesManager.humanValidationFailed = true
             if let apiError = error as? ApiError {
                 switch apiError.code {
                 case ApiErrorCode.invalidHumanVerificationCode:

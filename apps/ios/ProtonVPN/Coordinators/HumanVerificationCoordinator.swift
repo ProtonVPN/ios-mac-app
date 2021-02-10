@@ -43,11 +43,12 @@ class HumanVerificationCoordinatorImplementation: HumanVerificationCoordinator {
     let failure: ((Error) -> Void)                  // Used by AlamofireWrapper.
     var finished: (() -> Void)?                     // Used by AlertService. Closes modal view.
     
-    typealias Factory = HumanVerificationServiceFactory & VerificationEmailViewModelFactory & VerificationCodeViewModelFactory & VerificationSmsViewModelFactory & SmsCountryCodeViewModelFactory & LoginServiceFactory & VerificationCaptchaViewModelFactory
+    typealias Factory = HumanVerificationServiceFactory & VerificationEmailViewModelFactory & VerificationCodeViewModelFactory & VerificationSmsViewModelFactory & SmsCountryCodeViewModelFactory & LoginServiceFactory & VerificationCaptchaViewModelFactory & PropertiesManagerFactory
+    
     private let factory: Factory
     private lazy var humanVerificationService: HumanVerificationService = factory.makeHumanVerificationService()
     private lazy var loginService: LoginService = factory.makeLoginService()
-    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private let verificationMethods: VerificationMethods?
     private let startingErrorMessage: String?
     
@@ -60,13 +61,14 @@ class HumanVerificationCoordinatorImplementation: HumanVerificationCoordinator {
     }
     
     func start() {                
-        let viewModel = HumanVerificationOptionsViewModel(verificationMethods: verificationMethods, errorMessage: startingErrorMessage)
+        let viewModel = HumanVerificationOptionsViewModel(verificationMethods: verificationMethods, propertiesManager: propertiesManager, errorMessage: startingErrorMessage)
         viewModel.typeSelected = { type in
             self.selectedToken(type: type)
         }
         viewModel.cancelled = {
             self.cancel()            
         }
+        propertiesManager.humanValidationFailed = false
         humanVerificationService.presentHumanVerificationOptionsViewController(viewModel: viewModel)
     }
     
@@ -172,6 +174,7 @@ class HumanVerificationCoordinatorImplementation: HumanVerificationCoordinator {
             self.success(token)
             self.finished?()
         }
+        
         humanVerificationService.presentVerificationCaptcha(viewModel: viewModel)
     }
     

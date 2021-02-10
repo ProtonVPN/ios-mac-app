@@ -43,9 +43,9 @@ class VerificationEmailViewModel {
     var verificationButtonEnabled: ((Bool) -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & SigninInfoContainerFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & SigninInfoContainerFactory & PropertiesManagerFactory
     private let factory: Factory
-    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
@@ -68,6 +68,7 @@ class VerificationEmailViewModel {
             
         }, failure: { [weak self] (error) in
             self?.verificationButtonEnabled?(true)
+            self?.propertiesManager.humanValidationFailed = true
             
             guard let apiError = error as? ApiError else {
                 self?.codeSendFailed(error: error)

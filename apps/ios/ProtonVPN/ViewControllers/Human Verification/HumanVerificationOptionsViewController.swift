@@ -47,6 +47,10 @@ class HumanVerificationOptionsViewController: UIViewController {
         
         setupView()
         setUpInstructions()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         setUpActionButtons()
     }
     

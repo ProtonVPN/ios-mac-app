@@ -29,10 +29,11 @@ class HumanVerificationOptionsViewModel {
     var typeSelected: ((HumanVerificationToken.TokenType) -> Void)?
     
     private let verificationMethods: VerificationMethods?
-        
+    private let propertiesManager: PropertiesManagerProtocol
     private var openingError: String?
     
-    init(verificationMethods: VerificationMethods?, errorMessage: String?) {
+    init(verificationMethods: VerificationMethods?, propertiesManager: PropertiesManagerProtocol, errorMessage: String?) {
+        self.propertiesManager = propertiesManager
         self.verificationMethods = verificationMethods
         self.openingError = errorMessage
     }
@@ -53,7 +54,10 @@ class HumanVerificationOptionsViewModel {
     }
     
     func showInviteOption() -> Bool {
-        return verificationMethods?.invite ?? false
+        let option = verificationMethods?.invite ?? false
+        guard option else { return false }
+        if !propertiesManager.humanValidationFailed { return false }
+        return option
     }
     
     func showCaptchaOption() -> Bool {
