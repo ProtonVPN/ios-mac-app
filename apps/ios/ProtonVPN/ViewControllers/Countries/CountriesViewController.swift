@@ -30,6 +30,7 @@ class CountriesViewController: UIViewController {
     @IBOutlet weak var secureCoreLabel: UILabel!
     @IBOutlet weak var secureCoreSwitch: UISwitch!
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var secureCoreButton: UIButton!
     
     public var viewModel: CountriesViewModel?
     public var connectionBarViewController: ConnectionBarViewController?
@@ -70,14 +71,17 @@ class CountriesViewController: UIViewController {
         setupAnnouncements()
     }
     
-    @objc func switchValueDidChange(sender: UISwitch!) {
+    @objc private func switchTapped(sender: UIButton) {
         viewModel?.toggleState { [weak self] succeeded in
             DispatchQueue.main.async {
-                guard let `self` = self else { return }
+                guard let self = self else {
+                    return
+                }
+
+                self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
+
                 if succeeded {
                     self.tableView.reloadData()
-                } else {
-                    self.secureCoreSwitch.setOn(self.viewModel?.activeView == .secureCore, animated: true)
                 }
             }
         }
@@ -100,10 +104,10 @@ class CountriesViewController: UIViewController {
         secureCoreLabel.text = LocalizedString.useSecureCore
         secureCoreSwitch.onTintColor = .protonConnectGreen()
         if let viewModel = viewModel {
-            secureCoreSwitch.isEnabled = viewModel.enableViewToggle
+            secureCoreButton.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
-        secureCoreSwitch.addTarget(self, action: #selector(self.switchValueDidChange), for: .valueChanged)
+        secureCoreButton.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
     }
     
     private func setupTableView() {

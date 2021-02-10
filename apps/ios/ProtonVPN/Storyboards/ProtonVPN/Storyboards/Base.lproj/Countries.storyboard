@@ -31,9 +31,12 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch">
+                                    <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch">
                                         <rect key="frame" x="345" y="9.5" width="51" height="31"/>
                                     </switch>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBs-cv-B5t">
+                                        <rect key="frame" x="345" y="9.5" width="49" height="31"/>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -41,6 +44,10 @@
                                     <constraint firstItem="58o-15-DXK" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="3RX-JQ-Ami"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leading" constant="20" id="Cwo-f4-HqL"/>
                                     <constraint firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="trailing" constant="20" id="Ecw-nJ-l46"/>
+                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="trailing" id="IVH-wJ-6Rr"/>
+                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="leading" secondItem="58o-15-DXK" secondAttribute="leading" id="JsO-eg-ThB"/>
+                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="top" secondItem="58o-15-DXK" secondAttribute="top" id="LZL-Np-jOB"/>
+                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="bottom" secondItem="58o-15-DXK" secondAttribute="bottom" id="TmU-iO-zJ1"/>
                                     <constraint firstAttribute="height" constant="50" id="iOL-ne-wUB"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="leading" id="k0U-a6-4iF"/>
                                 </constraints>
@@ -50,6 +57,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="PQr-Ze-W5v" firstAttribute="trailing" secondItem="rsR-MM-FR6" secondAttribute="trailing" id="1gt-oQ-2bR"/>
@@ -63,11 +71,11 @@
                             <constraint firstItem="vAO-KT-Zmj" firstAttribute="top" secondItem="PQr-Ze-W5v" secondAttribute="top" id="fwv-0G-1zT"/>
                             <constraint firstItem="rsR-MM-FR6" firstAttribute="leading" secondItem="PQr-Ze-W5v" secondAttribute="leading" id="j7C-HT-MVK"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="PQr-Ze-W5v"/>
                     </view>
                     <connections>
                         <outlet property="connectionBarContainerView" destination="vAO-KT-Zmj" id="I13-ag-Lal"/>
                         <outlet property="secureCoreBar" destination="8wW-ah-fu1" id="qh2-Ad-gHF"/>
+                        <outlet property="secureCoreButton" destination="bBs-cv-B5t" id="aJW-VU-8dY"/>
                         <outlet property="secureCoreLabel" destination="1Ij-zT-2wB" id="owi-QH-F0o"/>
                         <outlet property="secureCoreSwitch" destination="58o-15-DXK" id="4g3-Hf-Wju"/>
                         <outlet property="tableView" destination="rsR-MM-FR6" id="PgS-gZ-5qh"/>
@@ -97,6 +105,7 @@
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="M8a-03-5Od"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="8PN-8J-WxJ" firstAttribute="top" secondItem="M8a-03-5Od" secondAttribute="top" id="4M5-ng-1EP"/>
@@ -107,7 +116,6 @@
                             <constraint firstItem="a3X-jc-XLX" firstAttribute="top" secondItem="8PN-8J-WxJ" secondAttribute="bottom" id="btp-Om-r79"/>
                             <constraint firstItem="8PN-8J-WxJ" firstAttribute="leading" secondItem="M8a-03-5Od" secondAttribute="leading" id="o6l-Uu-YV8"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="M8a-03-5Od"/>
                     </view>
                     <connections>
                         <outlet property="connectionBarContainerView" destination="8PN-8J-WxJ" id="bPD-yM-zpb"/>
