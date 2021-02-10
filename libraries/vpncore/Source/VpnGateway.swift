@@ -76,6 +76,7 @@ public protocol VpnGatewayProtocol: class {
     func connectTo(profile: Profile)
     func retryConnection()
     func reconnect(with netShieldType: NetShieldType)
+    func reconnect(with vpnProtocol: VpnProtocol)
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
@@ -233,6 +234,10 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func reconnect(with netShieldType: NetShieldType) {
         connect(with: lastConnectionRequest?.withChanged(netShieldType: netShieldType))
+    }
+    
+    public func reconnect(with vpnProtocol: VpnProtocol) {
+        connect(with: lastConnectionRequest?.withChanged(vpnProtocol: vpnProtocol))
     }
     
     public func connect(with request: ConnectionRequest?) {

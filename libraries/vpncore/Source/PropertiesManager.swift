@@ -31,6 +31,7 @@ public protocol PropertiesManagerProtocol: class {
     static var userIpNotification: Notification.Name { get }
     static var netShieldNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
+    static var vpnProtocolNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -131,6 +132,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
     public static var earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
+    public static var vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -369,6 +371,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.vpnProtocol)
+            postNotificationOnUIThread(PropertiesManager.vpnProtocolNotification, object: newValue)
         }
     }
     

@@ -447,7 +447,10 @@ public class LocalizedString {
     public static let onMaintenanceDetectedTitle = NSLocalizedString("_maintenance_on_server_detected_title", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedSubtitle = NSLocalizedString("_maintenance_on_server_detected_subtitle", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedDescription = NSLocalizedString("_maintenance_on_server_detected_description", comment: "MacOS: We'll connect to a different server")
-
+    
+    public static let reconnectOnProtocolChangeTitle = NSLocalizedString("_reconnect_on_protocol_change_title", comment: "MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established")
+    public static let reconnectOnSettingsChangeBody = NSLocalizedString("_reconnect_on_settings_change_body", comment: "MacOS: Body of alert shown when user changed some settings and connection has to be re-established")
+    
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
     public static let settings = NSLocalizedString("_settings", comment: "iOS: Settings screen title and tab title")

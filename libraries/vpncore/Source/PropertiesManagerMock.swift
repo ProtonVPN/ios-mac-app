@@ -27,6 +27,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var userIpNotification: Notification.Name = Notification.Name("")
     public static var netShieldNotification: Notification.Name = Notification.Name("")
     public static var earlyAccessNotification: Notification.Name = Notification.Name("")
+    public static var vpnProtocolNotification: Notification.Name = Notification.Name("")
     public var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
     public var hasConnected: Bool = false
     public var lastIkeConnection: ConnectionConfiguration?

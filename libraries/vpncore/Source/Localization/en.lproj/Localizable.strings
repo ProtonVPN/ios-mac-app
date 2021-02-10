@@ -367,6 +367,9 @@
 "_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
 "_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
 
+"_reconnect_on_protocol_change_title" = "Change protocol";
+"_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
+
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
 "_all_servers_in_profile_under_maintenance" = "Profile server(s) under maintenance";

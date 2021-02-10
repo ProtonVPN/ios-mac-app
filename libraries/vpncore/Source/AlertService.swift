@@ -320,6 +320,19 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     }
 }
 
+public class ReconnectOnSettingsChangeAlert: SystemAlert {
+    public var title: String? = LocalizedString.reconnectOnProtocolChangeTitle
+    public var message: String? = LocalizedString.reconnectOnSettingsChangeBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+    }
+}
+
 public class LogoutWarningAlert: SystemAlert {
     public var title: String? = LocalizedString.vpnConnectionActive
     public var message: String? = LocalizedString.logOutWarning
