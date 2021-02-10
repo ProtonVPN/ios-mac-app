@@ -176,6 +176,9 @@ extension MacAlertService: CoreAlertService {
         case is OpenVPNExtensionTourAlert:
             show(alert as! OpenVPNExtensionTourAlert)
             
+        case is ReconnectOnSettingsChangeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

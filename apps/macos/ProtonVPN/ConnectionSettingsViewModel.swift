@@ -121,6 +121,27 @@ final class ConnectionSettingsViewModel {
     
     func setProtocol(_ index: Int) {
         
+        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+            self.set(protocolAtIndex: index)
+            return
+        }
+        
+        alertService.push(alert: ReconnectOnSettingsChangeAlert {
+            var token: NSObjectProtocol?
+            token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
+                if let newProtocol = notification.object as? VpnProtocol {
+                    PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
+                    self?.vpnGateway.reconnect(with: newProtocol)
+                }
+                
+                NotificationCenter.default.removeObserver(token!)
+            }
+            self.set(protocolAtIndex: index)
+        })
+    }
+    
+    private func set(protocolAtIndex index: Int) {
+        
         var transportProtocol: VpnProtocol.TransportProtocol = .tcp
         
         switch index {
