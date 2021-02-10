@@ -108,11 +108,9 @@ class ServerItemViewModel {
     
     var connectIcon: UIImage? {
         if underMaintenance {
-            return UIImage(named: "wrench")
+            return UIImage(named: "con-maintenance")
         } else if isUsersTierTooLow {
             return UIImage(named: "con-locked")
-        } else if underMaintenance {
-            return UIImage(named: "con-unavailable")
         } else if connectedUiState {
             return UIImage(named: "con-connected")
         } else {
