@@ -24,6 +24,9 @@ import Cocoa
 import vpncore
 
 final class SettingsContainerViewController: NSViewController {
+    
+    typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ProfileManagerFactory & SystemExtensionManagerFactory
+    private let factory: Factory
 
     @IBOutlet private weak var tabBarControllerViewContainer: NSView!
     @IBOutlet private weak var activeControllerViewContainer: NSView!
@@ -34,13 +37,13 @@ final class SettingsContainerViewController: NSViewController {
     private var activeViewController: NSViewController?
     
     lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        let viewModel = GeneralSettingsViewModel(propertiesManager: self.viewModel.propertiesManager)
+        let viewModel = GeneralSettingsViewModel(propertiesManager: self.factory.makePropertiesManager())
         let vc = GeneralSettingsViewController(viewModel: viewModel)
         return vc
     }()
     
     lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(propertiesManager: self.viewModel.propertiesManager, profileManager: self.viewModel.profileManager, systemExtensionManager: self.viewModel.systemExtensionManager, alertService: self.viewModel.alertService)
+        let viewModel = ConnectionSettingsViewModel(factory: factory)
         return ConnectionSettingsViewController(viewModel: viewModel)
     }()
     
@@ -52,9 +55,10 @@ final class SettingsContainerViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
+    required init(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel, factory: Factory) {
         self.viewModel = viewModel
         self.tabBarViewModel = tabBarViewModel
+        self.factory = factory
         super.init(nibName: NSNib.Name("SettingsContainer"), bundle: nil)
     }
     

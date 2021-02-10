@@ -25,18 +25,19 @@ import vpncore
 
 final class ConnectionSettingsViewModel {
     
-    private let propertiesManager: PropertiesManagerProtocol
-    private let profileManager: ProfileManager
-    private let systemExtensionManager: SystemExtensionManager
-    private let alertService: CoreAlertService
+    typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ProfileManagerFactory & SystemExtensionManagerFactory
+    private let factory: Factory
+    
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
 
     private weak var viewController: ReloadableViewController?
     
-    init(propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
-        self.propertiesManager = propertiesManager
-        self.profileManager = profileManager
-        self.systemExtensionManager = systemExtensionManager
-        self.alertService = alertService
+    init(factory: Factory) {
+        self.factory = factory
     }
     
     // MARK: - Current Index

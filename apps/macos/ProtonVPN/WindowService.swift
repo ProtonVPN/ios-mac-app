@@ -66,6 +66,7 @@ class WindowServiceImplementation: WindowService {
         & SystemExtensionManagerFactory
         & ConnectingOverlayViewModelFactory
         & NetShieldPropertyProviderFactory
+        & ProfileManagerFactory
 
     private let factory: Factory
     
@@ -169,7 +170,7 @@ class WindowServiceImplementation: WindowService {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel)
+        let viewController = SettingsContainerViewController(viewModel: viewModel, tabBarViewModel: tabBarViewModel, factory: factory)
         let windowController = SettingsWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.append(windowController)
