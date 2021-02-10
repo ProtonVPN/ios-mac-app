@@ -23,15 +23,16 @@
 import UIKit
 import vpncore
 
-class ServerViewCell: UITableViewCell {
+final class ServerViewCell: UITableViewCell {
 
-    @IBOutlet weak var serverNameLabel: UILabel!
-    @IBOutlet weak var cityNameLabel: UILabel!
-    @IBOutlet weak var loadLabel: UILabel!
-    @IBOutlet weak var loadValueLabel: UILabel!
-    @IBOutlet weak var connectionPropertiesLabel: UILabel!
-    
-    @IBOutlet weak var connectButton: UIButton!
+    @IBOutlet private weak var serverNameLabel: UILabel!
+    @IBOutlet private weak var cityNameLabel: UILabel!
+    @IBOutlet private weak var loadLabel: UILabel!
+    @IBOutlet private weak var loadValueLabel: UILabel!
+    @IBOutlet private weak var loadStackView: UIStackView!
+    @IBOutlet private weak var connectionPropertiesLabel: UILabel!
+    @IBOutlet private weak var maintenanceLabel: UILabel!
+    @IBOutlet private weak var connectButton: UIButton!
     
     var viewModel: ServerItemViewModel? {
         didSet {
@@ -45,8 +46,11 @@ class ServerViewCell: UITableViewCell {
             cityNameLabel.attributedText = viewModel.city
             loadLabel.attributedText = viewModel.loadLabel
             loadValueLabel.attributedText = viewModel.loadValue
+            loadStackView.isHidden = viewModel.underMaintenance
+            maintenanceLabel.attributedText = viewModel.maintenanceLabel
+            maintenanceLabel.isHidden = !viewModel.underMaintenance
             connectionPropertiesLabel.attributedText = viewModel.connectionProperties
-            [serverNameLabel, cityNameLabel, loadLabel, loadValueLabel, connectionPropertiesLabel].forEach { view in
+            [serverNameLabel, cityNameLabel, loadLabel, loadValueLabel, connectionPropertiesLabel, maintenanceLabel].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
             
@@ -54,10 +58,6 @@ class ServerViewCell: UITableViewCell {
                 self?.stateChanged()
             }
         }
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
     }
     
     func connect() {

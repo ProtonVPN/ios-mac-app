@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="14868" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14824"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -18,13 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mPb-AW-nQr">
-                        <rect key="frame" x="15" y="14" width="246" height="33"/>
+                        <rect key="frame" x="16" y="4.5" width="244" height="52.5"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="nGp-eu-RXd" userLabel="labels-stack">
-                                <rect key="frame" x="0.0" y="0.0" width="192.5" height="33"/>
+                                <rect key="frame" x="0.0" y="0.0" width="110.5" height="52.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="eg7-4E-0CR" userLabel="names-stack">
-                                        <rect key="frame" x="0.0" y="0.0" width="192.5" height="14.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="110.5" height="14.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Name" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Emp-q6-ALw" userLabel="server-name">
                                                 <rect key="frame" x="0.0" y="0.0" width="33" height="14.5"/>
@@ -33,7 +33,7 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kzj-up-hCK" userLabel="city-name">
-                                                <rect key="frame" x="35" y="0.0" width="157.5" height="14.5"/>
+                                                <rect key="frame" x="35" y="0.0" width="75.5" height="14.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -41,7 +41,7 @@
                                         </subviews>
                                     </stackView>
                                     <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="46F-2w-QVB" userLabel="load-stack">
-                                        <rect key="frame" x="0.0" y="19.5" width="192.5" height="13.5"/>
+                                        <rect key="frame" x="0.0" y="19.5" width="110.5" height="13.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Load:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v2Z-YN-WO2">
                                                 <rect key="frame" x="0.0" y="0.0" width="29" height="13.5"/>
@@ -50,20 +50,26 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" verticalHuggingPriority="251" text="0%" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="dX0-03-MWY">
-                                                <rect key="frame" x="31" y="0.0" width="161.5" height="13.5"/>
+                                                <rect key="frame" x="31" y="0.0" width="79.5" height="13.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                         </subviews>
                                     </stackView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Under maintenance" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="k5c-Vl-IDW">
+                                        <rect key="frame" x="0.0" y="38" width="110.5" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="iWX-Sn-uPu" userLabel="props-stack">
-                                <rect key="frame" x="192.5" y="0.0" width="53.5" height="33"/>
+                                <rect key="frame" x="110.5" y="0.0" width="133.5" height="52.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TOR | P2P" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="PYA-eI-uCD" userLabel="con-properties-label">
-                                        <rect key="frame" x="0.0" y="0.0" width="53.5" height="33"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="133.5" height="52.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -79,7 +85,7 @@
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vk-vj-5zc" userLabel="connect-button">
-                        <rect key="frame" x="271" y="0.0" width="50" height="61"/>
+                        <rect key="frame" x="270" y="0.0" width="50" height="61"/>
                         <inset key="contentEdgeInsets" minX="14" minY="0.0" maxX="14" maxY="0.0"/>
                         <state key="normal" image="con-available"/>
                         <connections>
@@ -100,14 +106,16 @@
                     <constraint firstItem="8b2-dP-uUu" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" id="t2U-cc-4w7"/>
                 </constraints>
             </tableViewCellContentView>
-            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <connections>
                 <outlet property="cityNameLabel" destination="Kzj-up-hCK" id="B56-jS-DXr"/>
                 <outlet property="connectButton" destination="2Vk-vj-5zc" id="5ft-kl-oIo"/>
                 <outlet property="connectionPropertiesLabel" destination="PYA-eI-uCD" id="SdY-Z6-LEJ"/>
                 <outlet property="loadLabel" destination="v2Z-YN-WO2" id="ZcY-Rh-wdH"/>
+                <outlet property="loadStackView" destination="46F-2w-QVB" id="ghA-qt-9e5"/>
                 <outlet property="loadValueLabel" destination="dX0-03-MWY" id="8tb-AY-SHO"/>
+                <outlet property="maintenanceLabel" destination="k5c-Vl-IDW" id="JBt-Y6-dCt"/>
                 <outlet property="serverNameLabel" destination="Emp-q6-ALw" id="3yh-wb-7o7"/>
             </connections>
             <point key="canvasLocation" x="131" y="153"/>

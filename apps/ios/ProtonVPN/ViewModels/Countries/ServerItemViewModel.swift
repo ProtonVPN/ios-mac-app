@@ -38,7 +38,7 @@ class ServerItemViewModel {
         return userTier < serverModel.tier
     }
     
-    fileprivate let underMaintenance: Bool
+    let underMaintenance: Bool
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeServer = appStateManager.activeConnection()?.server {
@@ -86,6 +86,10 @@ class ServerItemViewModel {
     
     var loadValue: NSAttributedString {
         return "\(serverModel.load)%".attributed(withColor: .protonFontLightGrey(), fontSize: 14.5, alignment: .left)
+    }
+
+    var maintenanceLabel: NSAttributedString {
+        return LocalizedString.serverUnderMaintenance.attributed(withColor: .protonFontLightGrey(), fontSize: 14.5, alignment: .left)
     }
     
     var connectionProperties: NSAttributedString {
