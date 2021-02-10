@@ -24,15 +24,15 @@ import CoreLocation
 import UIKit
 import vpncore
 
-class MapViewController: UIViewController {
+final class MapViewController: UIViewController {
 
     private let mapFrame = CGRect(x: 80, y: 104, width: 2600, height: 2206) // correct ratio of Mercator projection map
     
-    @IBOutlet weak var secureCoreBar: UIView!
-    @IBOutlet weak var secureCoreLabel: UILabel!
-    @IBOutlet weak var secureCoreSwitch: UISwitch!
-    @IBOutlet weak var mapView: UIImageView!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var secureCoreBar: UIView!
+    @IBOutlet private weak var secureCoreLabel: UILabel!
+    @IBOutlet private weak var secureCoreSwitch: UISwitch!
+    @IBOutlet private weak var mapView: UIImageView!
+    @IBOutlet private weak var scrollView: UIScrollView!
     @IBOutlet private weak var secureCoreButton: UIButton!
     
     var viewModel: MapViewModel?

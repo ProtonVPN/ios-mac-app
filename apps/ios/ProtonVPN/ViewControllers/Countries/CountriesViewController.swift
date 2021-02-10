@@ -23,20 +23,20 @@
 import UIKit
 import vpncore
 
-class CountriesViewController: UIViewController {
+final class CountriesViewController: UIViewController {
     
-    @IBOutlet weak var connectionBarContainerView: UIView!
-    @IBOutlet weak var secureCoreBar: UIView!
-    @IBOutlet weak var secureCoreLabel: UILabel!
-    @IBOutlet weak var secureCoreSwitch: UISwitch!
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var connectionBarContainerView: UIView!
+    @IBOutlet private weak var secureCoreBar: UIView!
+    @IBOutlet private weak var secureCoreLabel: UILabel!
+    @IBOutlet private weak var secureCoreSwitch: UISwitch!
+    @IBOutlet private weak var tableView: UITableView!
     @IBOutlet private weak var secureCoreButton: UIButton!
     
-    public var viewModel: CountriesViewModel?
-    public var connectionBarViewController: ConnectionBarViewController?
-    public var planService: PlanService!
+    var viewModel: CountriesViewModel?
+    var connectionBarViewController: ConnectionBarViewController?
+    var planService: PlanService!
     
-    public var countryControllers: [Weak<CountryViewController>] = []
+    var countryControllers: [Weak<CountryViewController>] = []
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -133,7 +133,6 @@ class CountriesViewController: UIViewController {
 }
 
 extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return viewModel?.numberOfSections() ?? 1
     }
@@ -155,14 +154,12 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section) {
-            if let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryViewCell.identifier) as? CountryViewCell {
-                countryCell.viewModel = cellModel
-                return countryCell
-            }
+        guard let cellModel = viewModel?.cellModel(for: indexPath.row, in: indexPath.section), let countryCell = tableView.dequeueReusableCell(withIdentifier: CountryViewCell.identifier) as? CountryViewCell else {
+            return UITableViewCell()
         }
-        
-        return UITableViewCell()
+
+        countryCell.viewModel = cellModel
+        return countryCell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -179,7 +176,6 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             countryControllers.append(Weak(value: countryViewController))
             self.navigationController?.pushViewController(countryViewController, animated: true)
         }
-        
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
