@@ -56,6 +56,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var featureFlags: FeatureFlags = FeatureFlags.defaultConfig
     public var netShieldType: NetShieldType? = .off
     public var maintenanceServerRefreshIntereval: Int = 1
+    public var humanValidationFailed: Bool = false
     
     var earlyAccess: Bool = false
     

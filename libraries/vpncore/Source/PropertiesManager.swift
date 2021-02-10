@@ -68,6 +68,8 @@ public protocol PropertiesManagerProtocol: class {
     var lastAppVersion: MigrationVersion { get set }
     var lastTimeForeground: Date? { get set }
     
+    var humanValidationFailed: Bool { get set }
+    
     func logoutCleanup()
     
 }
@@ -120,6 +122,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let featureFlags = "FeatureFlags"
         static let netshield = "NetShield"
         static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
+        
+        static let humanValidationFailed: String = "humanValidationFailed"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -438,6 +442,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
+        }
+    }
+    
+    public var humanValidationFailed: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: Keys.humanValidationFailed)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.humanValidationFailed)
         }
     }
     
