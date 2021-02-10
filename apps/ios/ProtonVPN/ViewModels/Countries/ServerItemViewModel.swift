@@ -182,11 +182,11 @@ class ServerItemViewModel {
             loginService.presentSignup()
             return
         }
-        
-        if isUsersTierTooLow {
-            planService.presentPlanSelection()
-        } else if underMaintenance {
+
+        if underMaintenance {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
+        } else if isUsersTierTooLow {
+            planService.presentPlanSelection()
         } else if isConnected {
             vpnGateway.disconnect()
         } else if isConnecting {
