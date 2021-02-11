@@ -24,16 +24,21 @@ import Foundation
 import vpncore
 
 final class SettingsContainerViewModel {
+
+    typealias Factory = PropertiesManagerFactory
+        & ConnectionSettingsViewModel.Factory
+    private let factory: Factory
     
-    let profileManager: ProfileManager
-    let propertiesManager: PropertiesManagerProtocol
-    let systemExtensionManager: SystemExtensionManager
-    let alertService: CoreAlertService
-    
-    init(profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol, systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
-        self.profileManager = profileManager
-        self.propertiesManager = propertiesManager
-        self.systemExtensionManager = systemExtensionManager
-        self.alertService = alertService
+    init(factory: Factory) {
+        self.factory = factory
     }
+    
+    var generalSettingsViewModel: GeneralSettingsViewModel {
+        return GeneralSettingsViewModel(propertiesManager: factory.makePropertiesManager())
+    }
+    
+    var connectionSettingsViewModel: ConnectionSettingsViewModel {
+        return ConnectionSettingsViewModel(factory: factory)
+    }
+    
 }
