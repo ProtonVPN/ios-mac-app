@@ -28,9 +28,8 @@ final class CountriesViewController: UIViewController {
     @IBOutlet private weak var connectionBarContainerView: UIView!
     @IBOutlet private weak var secureCoreBar: UIView!
     @IBOutlet private weak var secureCoreLabel: UILabel!
-    @IBOutlet private weak var secureCoreSwitch: UISwitch!
+    @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
     @IBOutlet private weak var tableView: UITableView!
-    @IBOutlet private weak var secureCoreButton: UIButton!
     
     var viewModel: CountriesViewModel?
     var connectionBarViewController: ConnectionBarViewController?
@@ -71,22 +70,6 @@ final class CountriesViewController: UIViewController {
         setupAnnouncements()
     }
     
-    @objc private func switchTapped(sender: UIButton) {
-        viewModel?.toggleState { [weak self] succeeded in
-            DispatchQueue.main.async {
-                guard let self = self else {
-                    return
-                }
-
-                self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
-
-                if succeeded {
-                    self.tableView.reloadData()
-                }
-            }
-        }
-    }
-    
     private func setupView() {
         navigationItem.title = LocalizedString.countries
         view.layer.backgroundColor = UIColor.protonGrey().cgColor
@@ -104,10 +87,24 @@ final class CountriesViewController: UIViewController {
         secureCoreLabel.text = LocalizedString.useSecureCore
         secureCoreSwitch.onTintColor = .protonConnectGreen()
         if let viewModel = viewModel {
-            secureCoreButton.isEnabled = viewModel.enableViewToggle
+            secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
-        secureCoreButton.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
+        secureCoreSwitch.tapped = { [weak self] in
+            self?.viewModel?.toggleState { [weak self] succeeded in
+                DispatchQueue.main.async {
+                    guard let self = self else {
+                        return
+                    }
+
+                    self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
+
+                    if succeeded {
+                        self.tableView.reloadData()
+                    }
+                }
+            }
+        }
     }
     
     private func setupTableView() {

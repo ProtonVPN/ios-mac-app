@@ -30,10 +30,9 @@ final class MapViewController: UIViewController {
     
     @IBOutlet private weak var secureCoreBar: UIView!
     @IBOutlet private weak var secureCoreLabel: UILabel!
-    @IBOutlet private weak var secureCoreSwitch: UISwitch!
+    @IBOutlet private weak var secureCoreSwitch: ConfirmationToggleSwitch!
     @IBOutlet private weak var mapView: UIImageView!
     @IBOutlet private weak var scrollView: UIScrollView!
-    @IBOutlet private weak var secureCoreButton: UIButton!
     
     var viewModel: MapViewModel?
     
@@ -61,7 +60,7 @@ final class MapViewController: UIViewController {
         viewModel?.contentChanged = { [weak self] in self?.contentChanged() }
         viewModel?.connectionStateChanged = { [weak self] in
             DispatchQueue.main.async {
-                self?.secureCoreButton?.isEnabled = self?.viewModel?.enableViewToggle ?? false
+                self?.secureCoreSwitch?.isEnabled = self?.viewModel?.enableViewToggle ?? false
                 self?.setConnection()
             }
         }
@@ -113,10 +112,25 @@ final class MapViewController: UIViewController {
         secureCoreLabel.text = LocalizedString.useSecureCore
         secureCoreSwitch.onTintColor = .protonConnectGreen()
         if let viewModel = viewModel {
-            secureCoreButton.isEnabled = viewModel.enableViewToggle
+            secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
         }
-        secureCoreButton.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
+        secureCoreSwitch.tapped = { [weak self] in
+            self?.viewModel?.toggleState { [weak self] succeeded in
+                DispatchQueue.main.async {
+                    guard let self = self else {
+                        return
+                    }
+
+                    self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
+
+                    if succeeded {
+                        self.removeAnnotations()
+                        self.addAnnotations()
+                    }
+                }
+            }
+        }
     }
     
     private func setupConnectionBar() {
@@ -285,24 +299,6 @@ final class MapViewController: UIViewController {
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         removeAnnotations()
         addAnnotations()
-    }
-    
-    // MARK: - User actions
-    @objc private func switchTapped(sender: UIButton) {
-        viewModel?.toggleState { [weak self] succeeded in
-            DispatchQueue.main.async {
-                guard let self = self else {
-                    return
-                }
-
-                self.secureCoreSwitch.setOn(self.viewModel?.secureCoreOn == true, animated: true)
-
-                if succeeded {
-                    self.removeAnnotations()
-                    self.addAnnotations()
-                }
-            }
-        }
     }
 }
 

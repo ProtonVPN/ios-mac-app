@@ -31,12 +31,9 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="58o-15-DXK" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
                                         <rect key="frame" x="345" y="9.5" width="51" height="31"/>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bBs-cv-B5t">
-                                        <rect key="frame" x="345" y="9.5" width="49" height="31"/>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
@@ -44,10 +41,6 @@
                                     <constraint firstItem="58o-15-DXK" firstAttribute="centerY" secondItem="8wW-ah-fu1" secondAttribute="centerY" id="3RX-JQ-Ami"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="leading" secondItem="8wW-ah-fu1" secondAttribute="leading" constant="20" id="Cwo-f4-HqL"/>
                                     <constraint firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="trailing" constant="20" id="Ecw-nJ-l46"/>
-                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="trailing" id="IVH-wJ-6Rr"/>
-                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="leading" secondItem="58o-15-DXK" secondAttribute="leading" id="JsO-eg-ThB"/>
-                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="top" secondItem="58o-15-DXK" secondAttribute="top" id="LZL-Np-jOB"/>
-                                    <constraint firstItem="bBs-cv-B5t" firstAttribute="bottom" secondItem="58o-15-DXK" secondAttribute="bottom" id="TmU-iO-zJ1"/>
                                     <constraint firstAttribute="height" constant="50" id="iOL-ne-wUB"/>
                                     <constraint firstItem="1Ij-zT-2wB" firstAttribute="trailing" secondItem="58o-15-DXK" secondAttribute="leading" id="k0U-a6-4iF"/>
                                 </constraints>
@@ -75,7 +68,6 @@
                     <connections>
                         <outlet property="connectionBarContainerView" destination="vAO-KT-Zmj" id="I13-ag-Lal"/>
                         <outlet property="secureCoreBar" destination="8wW-ah-fu1" id="qh2-Ad-gHF"/>
-                        <outlet property="secureCoreButton" destination="bBs-cv-B5t" id="aJW-VU-8dY"/>
                         <outlet property="secureCoreLabel" destination="1Ij-zT-2wB" id="owi-QH-F0o"/>
                         <outlet property="secureCoreSwitch" destination="58o-15-DXK" id="4g3-Hf-Wju"/>
                         <outlet property="tableView" destination="rsR-MM-FR6" id="PgS-gZ-5qh"/>

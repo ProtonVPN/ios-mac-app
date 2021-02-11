@@ -31,26 +31,19 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <switch opaque="NO" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XoH-ug-OBD" userLabel="SecureCoreSwitch">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="XoH-ug-OBD" userLabel="SecureCoreSwitch" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
                                         <rect key="frame" x="306" y="9.5" width="51" height="31"/>
                                     </switch>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zfd-C0-oYN">
-                                        <rect key="frame" x="306" y="9.5" width="49" height="31"/>
-                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="zfd-C0-oYN" firstAttribute="bottom" secondItem="XoH-ug-OBD" secondAttribute="bottom" id="Ncl-1P-DEz"/>
-                                    <constraint firstItem="zfd-C0-oYN" firstAttribute="trailing" secondItem="XoH-ug-OBD" secondAttribute="trailing" id="Pqx-kc-vYu"/>
                                     <constraint firstAttribute="height" constant="50" id="QYR-yC-iZj"/>
                                     <constraint firstItem="UZF-8E-T8i" firstAttribute="trailing" secondItem="XoH-ug-OBD" secondAttribute="leading" id="Rbx-42-YxD"/>
                                     <constraint firstItem="UZF-8E-T8i" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="Vbb-53-8TS"/>
                                     <constraint firstItem="XoH-ug-OBD" firstAttribute="centerY" secondItem="4av-1p-I8Y" secondAttribute="centerY" id="WLp-7K-hGD"/>
-                                    <constraint firstItem="zfd-C0-oYN" firstAttribute="top" secondItem="XoH-ug-OBD" secondAttribute="top" id="YrH-KQ-IZS"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="40" id="aYm-7d-0Gk"/>
                                     <constraint firstItem="UZF-8E-T8i" firstAttribute="leading" secondItem="4av-1p-I8Y" secondAttribute="leading" constant="20" id="fcF-A7-dOu"/>
                                     <constraint firstAttribute="trailing" secondItem="XoH-ug-OBD" secondAttribute="trailing" constant="20" id="glo-SA-HMn"/>
-                                    <constraint firstItem="zfd-C0-oYN" firstAttribute="leading" secondItem="XoH-ug-OBD" secondAttribute="leading" id="ua3-si-l75"/>
                                 </constraints>
                             </view>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hDE-H6-rIy">
@@ -88,7 +81,6 @@
                         <outlet property="mapView" destination="aOk-eC-8ZX" id="Skr-Cm-Naf"/>
                         <outlet property="scrollView" destination="hDE-H6-rIy" id="xlg-Cv-K34"/>
                         <outlet property="secureCoreBar" destination="4av-1p-I8Y" id="KWK-Ml-N5h"/>
-                        <outlet property="secureCoreButton" destination="zfd-C0-oYN" id="KY2-Ei-Mrc"/>
                         <outlet property="secureCoreLabel" destination="UZF-8E-T8i" id="Lob-70-WPW"/>
                         <outlet property="secureCoreSwitch" destination="XoH-ug-OBD" id="GWL-Ma-lYf"/>
                     </connections>
