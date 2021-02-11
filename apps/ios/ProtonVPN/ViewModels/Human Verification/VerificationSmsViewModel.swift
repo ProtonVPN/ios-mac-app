@@ -44,12 +44,13 @@ class VerificationSmsViewModel {
     var codeChanged: (() -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
               
     var code = "+1" {
         didSet {
@@ -90,6 +91,7 @@ class VerificationSmsViewModel {
             
         }, failure: { [weak self] (error) in
             self?.verificationButtonEnabled?(true)
+            self?.propertiesManager.humanValidationFailed = true
             self?.codeSendFailed(error: error)
         })
     }
