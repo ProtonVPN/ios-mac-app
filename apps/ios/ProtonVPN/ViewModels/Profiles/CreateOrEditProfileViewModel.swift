@@ -254,6 +254,7 @@ class CreateOrEditProfileViewModel: NSObject {
     private var quickConnectCell: TableViewCellModel {
         return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: isDefaultProfile, enabled: true) { [weak self] on in
             self?.toggleDefault()
+            self?.contentChanged?()
         }
     }
     

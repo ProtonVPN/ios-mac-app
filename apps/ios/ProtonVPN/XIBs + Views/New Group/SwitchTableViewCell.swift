@@ -22,10 +22,10 @@
 
 import UIKit
 
-class SwitchTableViewCell: UITableViewCell {
+final class SwitchTableViewCell: UITableViewCell {
 
     @IBOutlet weak var label: UILabel!
-    @IBOutlet weak var switchControl: UISwitch!
+    @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
     
     var toggled: ((Bool) -> Void)?
     
@@ -37,10 +37,6 @@ class SwitchTableViewCell: UITableViewCell {
         toggled?(switchControl.isOn)
     }
     
-    @IBAction func toggle(_ sender: Any) {
-        toggled?(switchControl.isOn)
-    }
-    
     override func awakeFromNib() {
         super.awakeFromNib()
         
@@ -49,6 +45,10 @@ class SwitchTableViewCell: UITableViewCell {
         backgroundColor = .protonGrey()
         label.textColor = .white 
         selectionStyle = .none
+
+        switchControl.tapped = { [unowned self] in
+            self.toggled?(!self.switchControl.isOn)
+        }
     }
     
 }

@@ -484,6 +484,7 @@
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E5A03540860EA9AA187B8EFC /* Pods-ProtonVPN-settings-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB58D1A671E132A3AC40A112 /* Pods-ProtonVPN-settings-metadata.plist */; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
+		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3037,6 +3038,7 @@
 				D5136C59228592E80002C095 /* CreateOrEditProfileViewModel.swift in Sources */,
 				D5136C5A228592E80002C095 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				E169FC47228B163800FDC933 /* VerificationSmsViewModel.swift in Sources */,
+				F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
 				D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */,
 				D5BCDCF925304CA9004BAEE8 /* AnnouncementCell.swift in Sources */,
 				D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */,

@@ -18,16 +18,13 @@
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" horizontalCompressionResistancePriority="745" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3Hw-MF-Lhm">
-                        <rect key="frame" x="15" y="12" width="231" height="20.5"/>
+                        <rect key="frame" x="16" y="12" width="229" height="20.5"/>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <nil key="textColor"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9fe-bP-Ana">
-                        <rect key="frame" x="256" y="6.5" width="51" height="31"/>
-                        <connections>
-                            <action selector="toggle:" destination="KGk-i7-Jjw" eventType="valueChanged" id="sjs-HL-w5w"/>
-                        </connections>
+                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="9fe-bP-Ana" customClass="ConfirmationToggleSwitch" customModule="ProtonVPN" customModuleProvider="target">
+                        <rect key="frame" x="255" y="6.5" width="51" height="31"/>
                     </switch>
                 </subviews>
                 <constraints>
