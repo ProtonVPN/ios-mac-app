@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13771" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13771"/>
-        <capability name="box content view" minToolsVersion="7.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -26,7 +25,7 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="3nF-YE-fHp"/>
                         </imageView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="RtH-Pc-szY">
-                            <rect key="frame" x="49" y="17" width="90" height="17"/>
+                            <rect key="frame" x="49" y="17" width="90" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Country name" id="8bO-l6-lWL">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -78,6 +77,9 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                 </button>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="3fu-k2-6JS" customClass="WrenchIcon" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="290" y="10" width="30" height="30"/>
+                </customView>
                 <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xTu-Cv-u42" customClass="FeatureIcon" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="255" y="15" width="20" height="20"/>
                     <constraints>
@@ -103,7 +105,11 @@
                 <constraint firstItem="dqe-zy-5OE" firstAttribute="leading" secondItem="p1k-2r-T6k" secondAttribute="trailing" constant="5" id="A2D-7y-JxP"/>
                 <constraint firstAttribute="bottom" secondItem="nqZ-Q3-j1Z" secondAttribute="bottom" id="GbF-uK-spD"/>
                 <constraint firstItem="nqZ-Q3-j1Z" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="JWQ-pa-oqz"/>
+                <constraint firstItem="3fu-k2-6JS" firstAttribute="top" secondItem="dqe-zy-5OE" secondAttribute="top" id="JbR-hB-2ZR"/>
                 <constraint firstItem="dqe-zy-5OE" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="KKL-2o-hmN"/>
+                <constraint firstItem="3fu-k2-6JS" firstAttribute="bottom" secondItem="dqe-zy-5OE" secondAttribute="bottom" id="NY7-W6-64L"/>
+                <constraint firstItem="3fu-k2-6JS" firstAttribute="leading" secondItem="dqe-zy-5OE" secondAttribute="leading" id="OpN-hG-MGd"/>
+                <constraint firstItem="3fu-k2-6JS" firstAttribute="trailing" secondItem="dqe-zy-5OE" secondAttribute="trailing" id="TKD-M6-gEZ"/>
                 <constraint firstAttribute="trailing" secondItem="nqZ-Q3-j1Z" secondAttribute="trailing" id="b37-70-3Hi"/>
                 <constraint firstAttribute="trailing" secondItem="dqe-zy-5OE" secondAttribute="trailing" constant="20" id="fTb-0A-Z1A"/>
                 <constraint firstItem="p1k-2r-T6k" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="juQ-Fb-mYY"/>
@@ -117,6 +123,7 @@
                 <outlet property="countryNameLabel" destination="RtH-Pc-szY" id="mL0-UT-IZ5"/>
                 <outlet property="expandCellButton" destination="dqe-zy-5OE" id="E1z-bT-9YZ"/>
                 <outlet property="keywordIcon" destination="xTu-Cv-u42" id="KOc-VU-u6i"/>
+                <outlet property="maintenanceIcon" destination="3fu-k2-6JS" id="bfu-PD-rAp"/>
                 <outlet property="rowSeparator" destination="TtF-kS-etc" id="suL-1u-als"/>
             </connections>
             <point key="canvasLocation" x="179" y="187"/>

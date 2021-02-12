@@ -30,6 +30,7 @@ final class CountryItemView: NSView {
     @IBOutlet private weak var keywordIcon: FeatureIcon!
     @IBOutlet private weak var connectButton: ConnectButton!
     @IBOutlet private weak var expandCellButton: ExpandCellButton!
+    @IBOutlet private weak var maintenanceIcon: WrenchIcon!
     @IBOutlet private weak var rowSeparator: NSBox!
     
     private var viewModel: CountryItemViewModel!
@@ -80,6 +81,8 @@ final class CountryItemView: NSView {
         setupCountryFlagIcon()
         
         countryNameLabel.attributedStringValue = viewModel.description
+
+        maintenanceIcon.isHidden = !viewModel.underMaintenance
         
         setupKeywordIcon()
         setupConnectButton()
