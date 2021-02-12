@@ -132,7 +132,7 @@ class CountryItemViewModel {
     
     fileprivate func formDescription() -> NSAttributedString {
         let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        return country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return country.attributed(withColor: underMaintenance ? NSColor.protonGreyOutOfFocus() : NSColor.protonWhite(), fontSize: 16, alignment: .left)
     }
     
     @objc fileprivate func stateChanged() {
