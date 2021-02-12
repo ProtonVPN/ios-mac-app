@@ -90,6 +90,10 @@ class CountryItemViewModel {
             return NSColor.protonGrey()
         }
     }
+
+    var underMaintenance: Bool {
+        return countriesSectionViewModel.isCountryUnderMaintenance(countryModel.countryCode)
+    }
     
     init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
