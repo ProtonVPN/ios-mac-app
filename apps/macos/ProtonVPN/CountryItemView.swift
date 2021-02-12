@@ -124,7 +124,8 @@ final class CountryItemView: NSView {
     }
     
     private func setupCountryFlagIcon() {
-        countryFlagIcon.image = NSImage(named: NSImage.Name(viewModel.countryCode.lowercased() + "-plain"))
+        let flagImage = NSImage(named: NSImage.Name(viewModel.countryCode.lowercased() + "-plain"))
+        countryFlagIcon.image = viewModel.underMaintenance ? flagImage?.grayOut() : flagImage
         countryFlagIcon.wantsLayer = true
         countryFlagIcon.layer?.cornerRadius = 2
     }

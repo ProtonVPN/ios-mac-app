@@ -51,12 +51,12 @@ extension NSImage {
         }
     }
 
-    func greyOut() -> NSImage? {
+    func grayOut() -> NSImage? {
         guard let image = cgImage else {
             return nil
         }
 
-        let bitmap = NSBitmapImageRep.init(cgImage: image)
+        let bitmap = NSBitmapImageRep(cgImage: image)
 
         guard let greyScale = bitmap.converting(to: .genericGray, renderingIntent: .default) else {
             return nil
