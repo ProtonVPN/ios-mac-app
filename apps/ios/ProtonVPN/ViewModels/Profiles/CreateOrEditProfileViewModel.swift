@@ -212,9 +212,9 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var secureCoreCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: isSecureCore, enabled: true) { [weak self] on in
-            self?.toggleState(completion: { [weak self] on in
-                self?.contentChanged?()
+        return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: isSecureCore, enabled: true) { [weak self] (_, callback) in
+            self?.toggleState(completion: { on in
+                callback(on)
             })
         }
     }
@@ -252,9 +252,9 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var quickConnectCell: TableViewCellModel {
-        return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: isDefaultProfile, enabled: true) { [weak self] on in
+        return TableViewCellModel.toggle(title: LocalizedString.makeDefaultProfile, on: isDefaultProfile, enabled: true) { [weak self] (_, callback) in
             self?.toggleDefault()
-            self?.contentChanged?()
+            callback(self?.isDefaultProfile == true)
         }
     }
     
@@ -306,7 +306,7 @@ class CreateOrEditProfileViewModel: NSObject {
         selectedCountryGroup = nil
         selectedServerOffering = nil
         
-        completion(true)
+        completion(state == ModelState.secureCore)
     }
     
     private func toggleDefault() {

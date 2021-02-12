@@ -30,7 +30,7 @@ enum TableViewCellModel {
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
-    case toggle(title: String, on: Bool, enabled: Bool, handler: ((Bool) -> Void)? )
+    case toggle(title: String, on: Bool, enabled: Bool, handler: ((Bool, @escaping (Bool) -> Void) -> Void)?)
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)

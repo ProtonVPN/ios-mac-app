@@ -27,15 +27,7 @@ final class SwitchTableViewCell: UITableViewCell {
     @IBOutlet weak var label: UILabel!
     @IBOutlet weak var switchControl: ConfirmationToggleSwitch!
     
-    var toggled: ((Bool) -> Void)?
-    
-    func toggleSelection() {
-        let oldValue = switchControl.isOn
-        switchControl.setOn(!oldValue, animated: true)
-        switchControl.sendActions(for: .valueChanged)
-        
-        toggled?(switchControl.isOn)
-    }
+    var toggled: ((Bool, @escaping (Bool) -> Void) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -46,8 +38,12 @@ final class SwitchTableViewCell: UITableViewCell {
         label.textColor = .white 
         selectionStyle = .none
 
+        let update = { (on: Bool) -> Void in
+            self.switchControl.setOn(on, animated: true)
+        }
+
         switchControl.tapped = { [unowned self] in
-            self.toggled?(!self.switchControl.isOn)
+            self.toggled?(!self.switchControl.isOn, update)
         }
     }
     
