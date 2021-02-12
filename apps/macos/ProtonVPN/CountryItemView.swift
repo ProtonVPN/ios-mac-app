@@ -132,6 +132,7 @@ class CountryItemView: NSView {
     }
     
     private func setupExpandCellButton() {
+        expandCellButton.isHidden = viewModel.underMaintenance
         expandCellButton.cellState = viewModel.state
         expandCellButton.target = self
         expandCellButton.action = #selector(changeCellStateButtonAction)
@@ -142,12 +143,12 @@ class CountryItemView: NSView {
     }
     
     private func hideConnectButton(_ shouldHide: Bool) {
-        connectButton.isHidden = shouldHide
+        connectButton.isHidden = shouldHide || viewModel.underMaintenance
         
         if viewModel.feature.rawValue <= 1 {
             keywordIcon.isHidden = true
         } else {
-            keywordIcon.isHidden = !shouldHide
+            keywordIcon.isHidden = !(shouldHide || viewModel.underMaintenance)
         }
     }
     
