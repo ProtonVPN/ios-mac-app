@@ -39,14 +39,8 @@ final class ConfirmationToggleSwitch: UISwitch {
     }
 
     private func setup() {
-        addSubview(button)
         button.translatesAutoresizingMaskIntoConstraints = false
-        NSLayoutConstraint.activate([
-            button.leadingAnchor.constraint(equalTo: leadingAnchor),
-            button.trailingAnchor.constraint(equalTo: trailingAnchor),
-            button.topAnchor.constraint(equalTo: topAnchor),
-            button.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
+        addFillingSubview(button)
 
         button.addTarget(self, action: #selector(switchTapped(sender:)), for: .touchUpInside)
     }
