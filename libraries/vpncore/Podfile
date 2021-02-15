@@ -26,13 +26,13 @@ abstract_target 'vpncore' do
         platform :ios, '11.0'
     end
     target 'vpncore-macos' do
-        platform :osx, '10.12'
+        platform :osx, '10.15'
     end
     target 'vpncore-iosTests' do
         platform :ios, '11.0'
     end
     target 'vpncore-macosTests' do
-        platform :osx, '10.12'
+        platform :osx, '10.15'
     end
 end
 
