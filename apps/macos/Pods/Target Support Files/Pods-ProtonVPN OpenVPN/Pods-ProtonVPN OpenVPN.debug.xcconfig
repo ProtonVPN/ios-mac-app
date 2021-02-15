@@ -1,10 +1,10 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit" "${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit" "${PODS_ROOT}/OpenSSL-Apple/frameworks" "${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
 HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit/TunnelKit.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/../Frameworks' '@loader_path/Frameworks'
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit/TunnelKit.framework/Headers" -iframework "${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver/SwiftyBeaver.framework/Headers" -isystem "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit/TunnelKit.framework/Headers" -iframework "${PODS_ROOT}/OpenSSL-Apple/frameworks" -iframework "${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/SwiftyBeaver" -iframework "${PODS_CONFIGURATION_BUILD_DIR}/TunnelKit"
 OTHER_LDFLAGS = $(inherited) -l"resolv" -framework "NetworkExtension" -framework "SwiftyBeaver" -framework "TunnelKit" -framework "openssl"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}

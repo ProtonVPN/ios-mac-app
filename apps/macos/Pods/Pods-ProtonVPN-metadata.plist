@@ -329,7 +329,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>A script for compiling OpenSSL for Apple Devices</string>
 			<key>version</key>
-			<string>1.1.1g.6</string>
+			<string>1.1.1h.10</string>
 		</dict>
 		<dict>
 			<key>authors</key>
@@ -1392,7 +1392,7 @@ Public License instead of this License.  But first, please read
 			<key>summary</key>
 			<string>Non-official OpenVPN client for Apple platforms.</string>
 			<key>version</key>
-			<string>2.3.0</string>
+			<string>3.3.1</string>
 		</dict>
 	</array>
 </dict>

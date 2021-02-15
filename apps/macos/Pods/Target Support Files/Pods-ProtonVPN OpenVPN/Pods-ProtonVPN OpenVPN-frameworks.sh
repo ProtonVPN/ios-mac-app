@@ -175,17 +175,14 @@ code_sign_if_enabled() {
 }
 
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_framework "${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_framework "${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
 fi
 if [[ "$CONFIGURATION" == "Staging" ]]; then
-  install_framework "${PODS_ROOT}/OpenSSL-Apple/frameworks/MacOSX/openssl.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
 fi
