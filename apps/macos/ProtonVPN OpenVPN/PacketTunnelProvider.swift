@@ -24,12 +24,14 @@ import TunnelKit
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
     
-    override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
-        if let credentials = try? JSONDecoder().decode(OpenVPN.Credentials.self, from: messageData) {
-            self.setCredentials(credentials)
-            completionHandler?(nil)
-            return
+    open override func startTunnel(options: [String : NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
+        let credentialsFull = protocolConfiguration.username
+        
+        if let crentialsExploded = credentialsFull?.components(separatedBy: "±"), crentialsExploded.count > 1 {
+            self.credentials = OpenVPN.Credentials(crentialsExploded[0], crentialsExploded[1])
         }
-        super.handleAppMessage(messageData, completionHandler: completionHandler)
+        
+        super.startTunnel(options: options, completionHandler: completionHandler)
     }
+    
 }
