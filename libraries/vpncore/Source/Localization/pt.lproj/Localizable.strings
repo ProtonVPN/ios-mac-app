@@ -583,7 +583,7 @@
 /* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
  
  A list of Plus plan-only features follows this text */
-"_free_trial_expired_description" = "A sua conta reverteu para ProtonVPN FREE.\nEis o que vai perder do %@:";
+"_free_trial_expired_description" = "A sua conta reverteu para Proton VPN FREE.\nEis o que vai perder do %@:";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "O SEU TESTE GRÁTIS %@";
@@ -664,13 +664,13 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "O Kill Switch está a proteger o seu IP, bloqueando todas as ligações.\n\nO ProtonVPN ligar-se-á automaticamente em breve. Clique em Aceitar para fechar esta janela.\n\nEm caso de problemas, pode desactivar o Kill Switch";
+"_kill_switch_blocking_body" = "O Kill Switch está a proteger o seu IP\n\nA sua ligação à internet será retomada assim que o ProtonVPN se ligar a um servidor. Para retomar sem a protecção da VPN, desactive o Kill Switch.";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch a bloquear todas as ligações";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch está actualmente a bloquear fugas de IP";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Desactivar Kill Switch";
@@ -695,6 +695,21 @@
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "A actualização mais recente que transferiu requer que forneça a senha da conta do computador. Quando o pedido aparecer, por favor insira a sua %@ e aceite.\n\nSe não inserir a sua senha Mac, o Kill Switch será desligado.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "A sua ligação à Internet será reposta assim que o ProtonVPN se ligue a um servidor.\nPara utilizar a Internet sem protecção da VPN e do Kill Switch, cancele a ligação ao servidor.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "sem";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Protecção Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Cancelar ligação";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "O Kill Switch está a proteger o seu IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloqueia todo o tráfego de rede quando o túnel VPN se perde. Note que a ligação VPN é terminada quando troca de conta Mac.";
@@ -874,7 +889,7 @@
  enter your Mac password (1) and click ‘Always Allow’ (2).
  
  The numbers refer to a text field and button in an image displayed above this text. */
-"_neagent_description" = "Poderá ser-lhe pedida a sua %@\npara ligar ao serviço ProtonVPN. Se o pedido aparecer,\ninsira a sua %@ %@ e clique ‘%@’ %@.";
+"_neagent_description" = "Poderá ser-lhe pedida a sua %@\npara ligar ao serviço Proton VPN. Se o pedido aparecer,\ninsira a sua %@ %@ e clique em ‘%@’ %@.";
 
 /* Mac: neagent help screen */
 "_neagent_first_step" = "(1)";
@@ -1105,10 +1120,10 @@
 "_protocol" = "Protocolo";
 
 /* Mac: neagent help screen */
-"_protonvpn_macos" = "ProtonVPN macOS";
+"_protonvpn_macos" = "Proton VPN MacOS";
 
 /* Plan mame that is inserted into other translations: freeTrialAboutToExpireDescription, freeTrialExpiredDescription and welcomeGiftDescription */
-"_protonvpn_plus" = "ProtonVPN PLUS";
+"_protonvpn_plus" = "Proton VPN PLUS";
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "IP público: %@";
@@ -1184,6 +1199,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Recomendado";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "A ligar a %@";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Requerida nova ligação";
@@ -1378,7 +1396,7 @@
 "_show" = "MOSTRAR";
 
 /* MacOS: button in custom status menu */
-"_show_protonvpn" = "Mostrar o ProtonVPN";
+"_show_protonvpn" = "Mostrar o Proton VPN";
 
 /* iOS: button in login and onboarding screens */
 "_sign_up" = "Registar";

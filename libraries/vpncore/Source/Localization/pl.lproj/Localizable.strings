@@ -664,13 +664,13 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Funkcja Kill Switch chroni Twój adres IP poprzez blokowanie wszystkich połączeń.\n\nAplikacja ProtonVPN automatycznie przywróci połączenie. Kliknij przycisk OK, aby zamknąć okno.\n\nW razie problemów możesz wyłączyć funkcję Kill Switch";
+"_kill_switch_blocking_body" = "Funkcja Kill Switch chroni Twój adres IP\n\nPołączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem. Aby wznowić połączenie bez ochrony VPN, wyłącz funkcję Kill Switch.";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Funkcja Kill Switch blokuje wszystkie połączenia";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Funkcja Kill Switch blokuje wycieki adresu IP";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Wyłącz Kill Switch";
@@ -695,6 +695,21 @@
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "Najnowsza aktualizacja wymaga wpisania hasła do konta użytkownika. Po pojawieniu się komunikatu, wpisz swoje %@ i zatwierdź.\n\nJeśli nie wpiszesz swojego hasła Mac, funkcja Kill Switch zostanie wyłączona.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Połączenie internetowe zostanie wznowione po przywróceniu łączności z serwerem.\nAby korzystać z Internetu bez ochrony VPN i funkcji Kill Switch, anuluj ponowne łączenie z serwerem.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "bez";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "ochrony Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Anuluj ponowne łączenie";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Funkcja Kill Switch chroni Twój adres IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Blokuje cały ruch sieciowy, kiedy tunel VPN zostanie przerwany. Pamiętaj, że połączenie VPN zostanie zakończone przy zmianie konta Mac.";
@@ -1184,6 +1199,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Zalecane";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "Ponowne łączenie z %@";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Ponowne połączenie jest wymagane";

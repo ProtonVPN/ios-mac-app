@@ -664,13 +664,13 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch защищает ваш IP-адрес, блокируя все подключения.\n\nСкоро ProtonVPN автоматически переподключится. Нажмите кнопку ОК, чтобы закрыть это окно.\n\nВ случае проблем вы можете нажать \"отключить Kill Switch\"";
+"_kill_switch_blocking_body" = "Kill Switch защищает ваш IP\n\nВаше подключение к Интернету возобновится, как только ProtonVPN переподключится к серверу. Чтобы возобновить его без VPN, отключите Kill Switch.";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch в настоящее время блокирует утечку IP";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Отключить Kill Switch";
@@ -696,6 +696,21 @@
 /* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "Для последнего загруженного обновления требуется ввести пароль учетной записи пользователя. Когда появится запрос, введите свой %@ и подтвердите.\n\nЕсли вы не введете пароль, Kill Switch будет выключен.";
 
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Ваше подключение к Интернету возобновится, как только ProtonVPN переподключится к серверу.\nЧтобы использовать Интернет без VPN и защиты Kill Switch, отмените переподключение к серверу.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "без";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Защита Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Отменить переподключение";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
+
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
 
@@ -703,13 +718,13 @@
 "_ks_dont_ask" = "Не спрашивать меня снова";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "Чтобы пользоваться Kill Switch, вам необходимо скачать и установить %@.\nПожалуйста, установите это до того, как включите Kill Switch.";
+"_ks_requires_swift5_popup_msg" = "Чтобы пользоваться Kill Switch, вам необходимо скачать и установить %@.\nПожалуйста, установите его до включения Kill Switch.";
 
 /* MacOS: Swift 5 required and user didn't install it */
-"_ks_requires_swift5_popup_msg2" = "ProtonVPN не смог обнаружить %@. Чтобы включить Kill switch, пожалуйста, установите программное обеспечение.";
+"_ks_requires_swift5_popup_msg2" = "ProtonVPN не обнаружил %@. Чтобы можно было включить Kill switch, надо установить это программное обеспечение.";
 
 /* MacOS: Name of Swift 5 Runtime Libarry, that will have an active link on it. */
-"_ks_swift5_lib_name" = "Поддержка библиотеки Swift 5 Runtime";
+"_ks_swift5_lib_name" = "Поддержку библиотеки Swift 5 Runtime";
 
 /* MacOS: link in login screen */
 "_learn_more" = "Узнать больше";
@@ -1184,6 +1199,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Рекомендуемые";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "Переподключение к %@";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Требуется переподключение";

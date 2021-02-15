@@ -495,7 +495,7 @@
 "_error_wrong_payment_token_status" = "Ungültiger Status der Zahlungs-Token. Bitte starten Sie die App neu. Sollte der Fehler weiterhin bestehen, kontaktieren Sie bitte den Support.";
 
 /* MacOS: Existing firewall alert */
-"_existing_firewall_popup_body" = "ProtonVPN verwendet eine Paketfilter‐Firewall, um einen Kill Switch zu implementieren. Durch das Aktivieren des Kill Switchs überschreiben Sie Ihre Geräte‐Firewall‐Einstellungen. Wenn Sie auf diese Konfiguration vertrauen, sollten Sie den Kill Switch nicht benutzen.\n\nUm den Kill Switch zu verwenden und die Geräte‐Firewall zu überschreiben, wählen Sie FORTFAHREN.\n\nUm den Kill Switch auszuschalten und mit der jetzigen Firewall fortzufahren, wählen Sie ABBRECHEN.";
+"_existing_firewall_popup_body" = "ProtonVPN verwendet eine Paketfilter‐Firewall, um Kill Switch (Not‐Trennung) zu implementieren. Durch das Aktivieren des Kill Switch überschreiben Sie Ihre Geräte‐Firewall‐Einstellungen. Wenn Sie auf diese Konfiguration vertrauen, sollten Sie Kill Switch nicht verwenden.\n\nUm Kill Switch zu verwenden und die Geräte‐Firewall zu überschreiben, wählen Sie „Weiter”.\n\nUm Kill Switch zu deaktivieren und mit der bisherigen Firewall fortzufahren, wählen Sie „Abbrechen”.";
 
 /* MacOS: Existing firewall alert */
 "_existing_firewall_popup_title" = "Firewall erkannt";
@@ -664,46 +664,61 @@
 "_kill_switch" = "Kill Switch (Not‐Trennung)";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch schützt Ihr IP, indem es alle Verbindungen unterbindet.\n\nProtonVPN wird in Kürze automatisch wieder eine Verbindung herstellen. Klicken Sie auf OK, um dieses Fenster zu schließen.\n\nIm Falle von Problemen können Sie Kill Switch deaktivieren.";
+"_kill_switch_blocking_body" = "Kill Switch schützt Ihre IP\n\nIhre Internetverbindung wird wieder aufgenommen, sobald ProtonVPN sich wieder mit einem Server verbunden hat. Um ohne VPN-Schutz fortzufahren, deaktivieren Sie Kill Switch.";
 
 /* Notifications */
-"_kill_switch_blocking_connection" = "Kill Switch sperrt alle Ihre Verbindungen";
+"_kill_switch_blocking_connection" = "Kill Switch (Not‐Trennung) sperrt alle Ihre Verbindungen";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch sperrt zurzeit alle IP‐Leaks";
+"_kill_switch_blocking_title" = "Kill Switch (Not‐Trennung)";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Kill Switch (Not‐Trennung) deaktivieren";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_foot" = "Beenden Sie diese Apps, um das Problem zu beheben.\nUm das Surfen ohne Kill Switch fortzusetzen, klicken Sie auf „Weiter”.";
+"_kill_switch_error_foot" = "Beenden Sie diese Apps, um das Problem zu beheben.\nUm das Surfen ohne Kill Switch (Not‐Trennung) fortzusetzen, klicken Sie auf „Weiter”.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_head" = "Einige Apps, wie Anti-Viren oder Firewalls, könnten mit dem Kill Switch in Konflikt geraten, so dass dieser nicht ordnungsgemäß funktioniert.";
+"_kill_switch_error_head" = "Einige Apps, wie Anti-Viren oder Firewalls, könnten mit Kill Switch (Not‐Trennung) in Konflikt geraten, so dass dieser nicht ordnungsgemäß funktioniert.";
 
 /* MacOS: killswitch error alert */
-"_kill_switch_error_info" = "Kill Switch funktioniert mit der macOS-Firewall.\nWenn andere Anwendungen mit der Firewall verbunden sind, können diese den Kill Switch von ProtonVPN stören. Das Beenden dieser Anwendungen kann die von Kill Switch festgelegten Firewall-Regeln wiederherstellen.";
+"_kill_switch_error_info" = "Kill Switch (Not‐Trennung) kann mit der macOS-Firewall genutzt werden.\nWenn andere Anwendungen mit der Firewall verbunden sind, können diese Kill Switch von ProtonVPN stören. Das Beenden dieser Anwendungen kann die von Kill Switch festgelegten Firewall-Regeln wiederherstellen.";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_title" = "Ein Fehler im Kill Switch (Not‐Trennung) wurde erkannt";
 
 /* MacOS: killswicth install error alert */
-"_kill_switch_helper_install_issue_popup_body" = "Es gab ein Problem bei der Installation oder Aktualisierung des Kill Switch.\n\nUm es erneut zu versuchen, klicken Sie auf „Wiederholen”.\n\nUm ohne Kill Switch fortzufahren, klicken Sie auf „Deaktivieren”.";
+"_kill_switch_helper_install_issue_popup_body" = "Es gab ein Problem bei der Installation oder Aktualisierung von Kill Switch (Not‐Trennung).\n\nUm es erneut zu versuchen, klicken Sie auf „Wiederholen”.\n\nUm ohne Kill Switch fortzufahren, klicken Sie auf „Deaktivieren”.";
 
 /* %@ is 'Mac password' */
-"_kill_switch_helper_install_popup_body" = "Um den Kill Switch zu aktivieren, werden Sie möglicherweise aufgefordert, das Passwort Ihres Computer‐Kontos anzugeben. Wenn eine Anfrage angezeigt wird, geben Sie Ihr %@ ein und bestätigen Sie es.\n\nSie sehen diese Anfrage möglicherweise gelegentlich erneut, wenn die ProtonVPN‐Anwendung Updates erhält.";
+"_kill_switch_helper_install_popup_body" = "Um den Kill Switch (Not‐Trennung) zu aktivieren, werden Sie möglicherweise aufgefordert, das Passwort Ihres Computer‐Kontos anzugeben. Wenn eine Anfrage angezeigt wird, geben Sie Ihr %@ ein und bestätigen Sie es.\n\nSie sehen diese Anfrage möglicherweise gelegentlich erneut, wenn die ProtonVPN‐App Updates abruft.";
 
 /* %@ is 'Mac password' */
-"_kill_switch_helper_update_popup_body" = "Für die letzte heruntergeladene Aktualisierung, müssen Sie Ihr Computerkonten‐Passwort eingeben. Wenn die Anfrage angezeigt wird, geben Sie bitte Ihr %@ ein und bestätigen Sie es.\n\nWenn Sie Ihr Mac‐Passwort nicht eingeben, wird der Kill Switch deaktiviert.";
+"_kill_switch_helper_update_popup_body" = "Für die letzte heruntergeladene Aktualisierung, müssen Sie Ihr Computerkonten‐Passwort eingeben. Wenn die Anfrage angezeigt wird, geben Sie bitte Ihr %@ ein und bestätigen Sie es.\n\nWenn Sie Ihr Mac‐Passwort nicht eingeben, wird Kill Switch (Not‐Trennung) deaktiviert.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Ihre Internetverbindung wird wieder aufgenommen, sobald ProtonVPN die Verbindung zu einem Server wiederherstellen konnte.\nUm das Internet ohne VPN und ohne „Kill Switch”-Schutz (Not‐Trennung) zu nutzen, brechen Sie das erneute Verbinden mit dem Server ab.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "ohne";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "„Kill Switch”-Schutz (Not‐Trennung)";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Wiederverbinden abbrechen";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch (Not‐Trennung) schützt Ihre IP-Adresse";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blockiert den Netzwerkverkehr, wenn der VPN‐Tunnel verloren geht. Beachten Sie, dass beim Wechseln der Mac‐Konten die aktive Verbindung abgebrochen wird.";
+"_kill_switch_tooltip" = "Sperrt den Netzwerkverkehr, wenn der VPN‐Tunnel verloren geht. Beachten Sie, dass beim Wechseln der Mac‐Konten die aktive Verbindung abgebrochen wird.";
 
 /* MacOS: Keep disabled the KillSwitch component */
 "_ks_dont_ask" = "Nicht erneut nachfragen";
 
 /* MacOS: Swift 5 required to KillSwitch to work */
-"_ks_requires_swift5_popup_msg" = "Um Kill Switch zu aktivieren, müssen Sie die %@ herunterladen und installieren.\nBitte installieren Sie ihn, bevor Sie Kill Switch aktivieren.";
+"_ks_requires_swift5_popup_msg" = "Um Kill Switch (Not‐Trennung) zu aktivieren, müssen Sie die %@ herunterladen und installieren.\nBitte dies zuerst installieren, bevor Sie Kill Switch aktivieren.";
 
 /* MacOS: Swift 5 required and user didn't install it */
 "_ks_requires_swift5_popup_msg2" = "ProtonVPN konnte %@ nicht ermittelt. Um Kill Switch aktivieren zu können, installieren Sie bitte zuerst die Anwendung.";
@@ -1184,6 +1199,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Empfohlen";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "Verbindung zu %@ wiederherstellen";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Verbindung muss neu aufgebaut werden";
