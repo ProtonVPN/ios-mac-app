@@ -81,5 +81,4 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         completion(nil)
     }
     
-    public var providerMessage: Data?
 }

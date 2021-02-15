@@ -76,8 +76,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     private let propertiesManager: PropertiesManagerProtocol
     private var vpnManager: NETunnelProviderManager?
     
-    private var encodedCredentials: Data?
-    
     private lazy var emptyTunnelConfiguration: OpenVPNTunnelProvider.Configuration = {
         let emptyOpenVpnConfiguration = OpenVPN.ConfigurationBuilder().build()
         var emptyTunnelBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: emptyOpenVpnConfiguration)
@@ -96,8 +94,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
-        encodedCredentials = try? JSONEncoder().encode(credentials)
-        return try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, credentials: credentials)
+        return try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: "", username: credentials.username)
     }
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
@@ -164,6 +161,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         configurationBuilder.checksEKU = true
         configurationBuilder.checksSANHost = true
         configurationBuilder.sanHost = connectionConfiguration.hostname
+        configurationBuilder.mtu = 1250
         
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
         
@@ -200,7 +198,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     
     private func tunnelProviderGenerator(for openVpnConfiguration: OpenVPN.Configuration) -> OpenVPNTunnelProvider.Configuration {
         var configurationBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: openVpnConfiguration)
-        configurationBuilder.mtu = 1250
         configurationBuilder.shouldDebug = true // FUTURETODO: set based on the user's preference
         configurationBuilder.masksPrivateData = true
         
@@ -232,7 +229,4 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
-    public var providerMessage: Data? {
-        return encodedCredentials
-    }
 }

@@ -22,5 +22,4 @@ public protocol VpnProtocolFactory {
     func logs(completion: @escaping (String?) -> Void)
     func logFile(completion: @escaping (URL?) -> Void)
     
-    var providerMessage: Data? { get }
 }
