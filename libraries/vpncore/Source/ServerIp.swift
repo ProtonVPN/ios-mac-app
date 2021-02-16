@@ -39,7 +39,7 @@ public  class ServerIp: NSObject, NSCoding, Codable {
             "Label = \(label ?? "")\n"
     }
     
-    public init(id: String, entryIp: String, exitIp: String, domain: String, status: Int, label: String?) {
+    public init(id: String, entryIp: String, exitIp: String, domain: String, status: Int, label: String? = nil) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
