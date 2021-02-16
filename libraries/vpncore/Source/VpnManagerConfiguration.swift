@@ -9,11 +9,27 @@
 
 import Foundation
 
-public enum VpnManagerClientConfiguration: String {
-    case iOSClient = "pi"
-    case macClient = "pm"
-    case netShieldLevel1 = "f1"
-    case netShieldLevel2 = "f2"
+public enum VpnManagerClientConfiguration {
+    case iOSClient
+    case macClient
+    case netShieldLevel1
+    case netShieldLevel2
+    case label(String)
+
+    var usernameSuffix: String {
+        switch self {
+        case .iOSClient:
+            return "pi"
+        case .macClient:
+            return "pm"
+        case .netShieldLevel1:
+            return "f1"
+        case .netShieldLevel2:
+            return "f2"
+        case let .label(label):
+            return "b:\(label)"
+        }
+    }
 }
 
 public struct VpnManagerConfiguration {
@@ -94,9 +110,13 @@ public class VpnManagerConfigurationPreparer {
         if propertiesManager.featureFlags.isNetShield {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
+
+        if let label = connectionConfig.serverIp.label, !label.isEmpty {
+            extraConfiguration += [.label(label)]
+        }
         
         return extraConfiguration.reduce("") {
-            $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.rawValue
+            $0 + "\(VpnManagerConfiguration.configConcatChar )" + $1.usernameSuffix
         }
     }
 }
