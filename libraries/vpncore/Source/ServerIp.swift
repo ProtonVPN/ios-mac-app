@@ -27,22 +27,25 @@ public  class ServerIp: NSObject, NSCoding, Codable {
     public let exitIp: String //"ExitIP": "95.215.61.164"
     public let domain: String  //"Domain": "es-04.protonvpn.com"
     public let status: Int //"Status": 1  (1 - OK, 0 - under maintenance)
+    public let label: String?
     
     override public var description: String {
         return
             "ID      = \(id)\n" +
-                "EntryIP = \(entryIp)\n" +
-                "ExitIP  = \(exitIp)\n" +
-                "Domain  = \(domain)\n" +
-        "Status  = \(status)\n"
+            "EntryIP = \(entryIp)\n" +
+            "ExitIP  = \(exitIp)\n" +
+            "Domain  = \(domain)\n" +
+            "Status  = \(status)\n" +
+            "Label = \(label ?? "")\n"
     }
     
-    public init(id: String, entryIp: String, exitIp: String, domain: String, status: Int) {
+    public init(id: String, entryIp: String, exitIp: String, domain: String, status: Int, label: String?) {
         self.id = id
         self.entryIp = entryIp
         self.exitIp = exitIp
         self.domain = domain
         self.status = status
+        self.label = label
         super.init()
     }
     
@@ -52,6 +55,7 @@ public  class ServerIp: NSObject, NSCoding, Codable {
         self.exitIp = try dic.stringOrThrow(key: "ExitIP")
         self.domain = try dic.stringOrThrow(key: "Domain")
         self.status = try dic.intOrThrow(key: "Status")
+        self.label = dic["Label"] as? String
         super.init()
     }
     
@@ -62,6 +66,7 @@ public  class ServerIp: NSObject, NSCoding, Codable {
         case exitIp = "exitIpKey"
         case domain = "domainKey"
         case status = "statusKey"
+        case label = "labelKey"
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
@@ -72,7 +77,8 @@ public  class ServerIp: NSObject, NSCoding, Codable {
                 return nil
         }
         let status = aDecoder.decodeInteger(forKey: CoderKey.status.rawValue)
-        self.init(id: id, entryIp: entryIp, exitIp: exitIp, domain: domain, status: status)
+        let label = aDecoder.decodeObject(forKey: CoderKey.label.rawValue) as? String
+        self.init(id: id, entryIp: entryIp, exitIp: exitIp, domain: domain, status: status, label: label)
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -81,6 +87,7 @@ public  class ServerIp: NSObject, NSCoding, Codable {
         aCoder.encode(exitIp, forKey: CoderKey.exitIp.rawValue)
         aCoder.encode(domain, forKey: CoderKey.domain.rawValue)
         aCoder.encode(status, forKey: CoderKey.status.rawValue)
+        aCoder.encode(label, forKey: CoderKey.label.rawValue)
     }
     
     public var underMaintenance: Bool {
@@ -104,8 +111,9 @@ public  class ServerIp: NSObject, NSCoding, Codable {
         let exitIp = try container.decode(String.self, forKey: .exitIp)
         let domain = try container.decode(String.self, forKey: .domain)
         let status = try container.decode(Int.self, forKey: .status)
+        let label = try container.decodeIfPresent(String.self, forKey: .label)
         
-        self.init(id: id, entryIp: entryIp, exitIp: exitIp, domain: domain, status: status)
+        self.init(id: id, entryIp: entryIp, exitIp: exitIp, domain: domain, status: status, label: label)
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -116,5 +124,6 @@ public  class ServerIp: NSObject, NSCoding, Codable {
         try container.encode(exitIp, forKey: .exitIp)
         try container.encode(domain, forKey: .domain)
         try container.encode(status, forKey: .status)
+        try container.encode(label, forKey: .label)
     }
 }
