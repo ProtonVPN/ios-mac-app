@@ -1,25 +1,28 @@
 PODS:
   - Alamofire (5.3.0)
   - KeychainAccess (3.2.1)
-  - OpenSSL-Apple (1.1.1g.6)
+  - OpenSSL-Apple (1.1.1h.10)
   - ReachabilitySwift (5.0.0)
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
-  - SwiftLint (0.41.0)
-  - SwiftyBeaver (1.9.1)
+  - SwiftLint (0.42.0)
+  - SwiftyBeaver (1.9.3)
   - TrustKit (1.6.5)
-  - TunnelKit (2.2.4):
-    - TunnelKit/Protocols/OpenVPN (= 2.2.4)
-  - TunnelKit/AppExtension (2.2.4):
+  - TunnelKit (3.3.1):
+    - TunnelKit/Protocols/OpenVPN (= 3.3.1)
+  - TunnelKit/AppExtension (3.3.1):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.2.4):
+  - TunnelKit/Core (3.3.1):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.2.4):
-    - OpenSSL-Apple (~> 1.1.1g.6)
+  - TunnelKit/Manager (3.3.1):
+    - SwiftyBeaver
+  - TunnelKit/Protocols/OpenVPN (3.3.1):
+    - OpenSSL-Apple (~> 1.1.1h.10)
     - TunnelKit/AppExtension
     - TunnelKit/Core
+    - TunnelKit/Manager
 
 DEPENDENCIES:
   - Alamofire (= 5.3.0)
@@ -28,7 +31,7 @@ DEPENDENCIES:
   - Sentry (= 4.5.0)
   - SwiftLint
   - TrustKit (= 1.6.5)
-  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
+  - TunnelKit (from `../tunnelkit`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -43,25 +46,19 @@ SPEC REPOS:
 
 EXTERNAL SOURCES:
   TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
-
-CHECKOUT OPTIONS:
-  TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
+    :path: "../tunnelkit"
 
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
+  OpenSSL-Apple: 8a8fcb06fb66f9c2f7aed45ce363668493b8e5f6
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
-  SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
-  TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
+  TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 622f4f414843ba8da6c4fe4263b3153d354e5029
+PODFILE CHECKSUM: 685b03d99d2d6e57666be7650f0bce80ba0c5d83
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

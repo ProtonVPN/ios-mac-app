@@ -23,13 +23,13 @@ abstract_target 'vpncore' do
     pod 'TrustKit', '1.6.5'
     
     target 'vpncore-ios' do
-        platform :ios, '11.0'
+        platform :ios, '12.0'
     end
     target 'vpncore-macos' do
         platform :osx, '10.15'
     end
     target 'vpncore-iosTests' do
-        platform :ios, '11.0'
+        platform :ios, '12.0'
     end
     target 'vpncore-macosTests' do
         platform :osx, '10.15'
