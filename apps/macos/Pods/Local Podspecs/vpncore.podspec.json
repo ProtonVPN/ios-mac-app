@@ -17,7 +17,7 @@
   },
   "swift_versions": "4.2",
   "platforms": {
-    "ios": "11.0",
+    "ios": "12.0",
     "osx": "10.15"
   },
   "source_files": [
