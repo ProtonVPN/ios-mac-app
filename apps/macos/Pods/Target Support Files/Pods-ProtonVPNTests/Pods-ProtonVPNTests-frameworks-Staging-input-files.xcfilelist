@@ -7,3 +7,4 @@ ${BUILT_PRODUCTS_DIR}/SwiftyBeaver/SwiftyBeaver.framework
 ${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework
 ${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework
 ${BUILT_PRODUCTS_DIR}/vpncore/vpncore.framework
+${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl/openssl.framework/openssl

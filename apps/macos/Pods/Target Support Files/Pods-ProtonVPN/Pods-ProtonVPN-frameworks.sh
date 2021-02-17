@@ -185,6 +185,7 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/vpncore/vpncore.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl/openssl.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
@@ -197,6 +198,7 @@ if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/vpncore/vpncore.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl/openssl.framework"
 fi
 if [[ "$CONFIGURATION" == "Staging" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework"
@@ -209,6 +211,7 @@ if [[ "$CONFIGURATION" == "Staging" ]]; then
   install_framework "${BUILT_PRODUCTS_DIR}/TrustKit/TrustKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/TunnelKit/TunnelKit.framework"
   install_framework "${BUILT_PRODUCTS_DIR}/vpncore/vpncore.framework"
+  install_framework "${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl/openssl.framework"
 fi
 if [ "${COCOAPODS_PARALLEL_CODE_SIGN}" == "true" ]; then
   wait
