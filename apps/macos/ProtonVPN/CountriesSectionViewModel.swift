@@ -182,9 +182,9 @@ class CountriesSectionViewModel {
     }
 
     func isCountryUnderMaintenance(_ countryCode: String) -> Bool {
-        let allServersUnserMaintenance = { (groups: [CountryGroup]) -> Bool in
+        let allServersUnderMaintenance = { (groups: [CountryGroup]) -> Bool in
             guard let group = groups.first(where: { $0.0.countryCode == countryCode }) else {
-                assertionFailure("Invalid country code")
+                PMLog.ET("Checking for country with invalid code")
                 return false
             }
 
@@ -193,9 +193,9 @@ class CountriesSectionViewModel {
 
         switch state {
         case let .standard(groups, _):
-            return allServersUnserMaintenance(groups)
+            return allServersUnderMaintenance(groups)
         case let .secureCore(groups, _):
-            return allServersUnserMaintenance(groups)
+            return allServersUnderMaintenance(groups)
         }
     }
     
