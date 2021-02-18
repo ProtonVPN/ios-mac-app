@@ -254,7 +254,7 @@ public class AppStateManager {
         }
         
         vpnManager.connect(configuration: vpnManagerConfiguration, completion: {
-            //COMPLETION
+            // COMPLETION
         })
     }
     

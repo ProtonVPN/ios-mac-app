@@ -41,9 +41,9 @@ public class AuthCredentials: NSObject, NSCoding {
         }
     }
     
-    private let VERSION: Int = 0 //Current build version.
+    private let VERSION: Int = 0 // Current build version.
     
-    public let cacheVersion: Int //Cached version default is 0
+    public let cacheVersion: Int // Cached version default is 0
     public let username: String
     public let accessToken: String
     public let refreshToken: String

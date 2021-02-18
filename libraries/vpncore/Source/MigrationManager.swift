@@ -56,16 +56,14 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
         super.init()
     }
     
-    ///Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
-    ///Usually when adding a new check will be added specifying the new version to update
-    
+    /// Add a migration step where the version specified has to be GREATER than the previous version in order to be executed
+    /// Usually when adding a new check will be added specifying the new version to update
     public func addCheck(_ version: String, block: @escaping MigrationBlock) -> MigrationManagerProtocol {
         self.migrationBlocks.append( ( version, block ) )
         return self
     }
     
-    ///Perform all the checks in the migration process and give a callback response once it's finished which can contain an error
-    
+    /// Perform all the checks in the migration process and give a callback response once it's finished which can contain an error
     public func migrate(_ completion: @escaping OptionalErrorBlock) {
         migrate(completion, step: 0)
     }

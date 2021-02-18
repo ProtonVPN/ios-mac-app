@@ -24,7 +24,7 @@ import Alamofire
 
 extension DataRequest {
     
-    //Custom validation for our future requests
+    // Custom validation for our future requests
     
     var validated: DataRequest {
         let validation: Validation = { request, response, data in

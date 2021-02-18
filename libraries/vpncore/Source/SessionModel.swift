@@ -48,9 +48,9 @@ public class SessionModel: NSObject, NSCoding {
     }
     
     internal init(dic: JSONDictionary) throws {
-        sessionId = try dic.stringOrThrow(key: "SessionID") //"SessionID": "ABC"
-        exitIp = try dic.stringOrThrow(key: "ExitIP") //"ExitIP": "192.2.3.4"
-        vpnProtocol = VpnProtocol(rawValue: try dic.stringOrThrow(key: "Protocol")) ?? .other //"Protocol": "ikev2"
+        sessionId = try dic.stringOrThrow(key: "SessionID") // "SessionID": "ABC"
+        exitIp = try dic.stringOrThrow(key: "ExitIP") // "ExitIP": "192.2.3.4"
+        vpnProtocol = VpnProtocol(rawValue: try dic.stringOrThrow(key: "Protocol")) ?? .other // "Protocol": "ikev2"
         super.init()
     }
     
