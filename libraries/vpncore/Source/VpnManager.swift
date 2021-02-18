@@ -257,10 +257,12 @@ public class VpnManager: VpnManagerProtocol {
             guard let vpnManager = vpnManager else { return }
             
             do {
-                let protocolConfiguration = try currentVpnProtocolFactory.create(configuration)
-                self.configureConnection(forProtocol: protocolConfiguration,
-                                         vpnManager: vpnManager,
-                                         completion: completion)
+                try currentVpnProtocolFactory.create(configuration) { protocolConfiguration in
+                    self.configureConnection(forProtocol: protocolConfiguration,
+                                             vpnManager: vpnManager,
+                                             completion: completion)
+                }
+                
             } catch {
                 PMLog.ET(error)
             }
