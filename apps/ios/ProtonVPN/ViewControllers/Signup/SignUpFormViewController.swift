@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 import GSMessages
 
-class SignUpFormViewController: UIViewController {
+final class SignUpFormViewController: UIViewController {
 
     // Properties
     private var visibleConstraintConstant: CGFloat = 171
@@ -37,20 +37,21 @@ class SignUpFormViewController: UIViewController {
     }
     
     // Views
-    @IBOutlet weak var textFieldStackView: UIStackView!
-    var emailField: ProtonTextField = ProtonTextField.textField(contentType: .email, placeholder: LocalizedString.enterEmailAddress, icon: "email", returnKeyType: .next)
-    var usernameField: ProtonTextField = ProtonTextField.textField(contentType: .username, placeholder: LocalizedString.username, icon: "username", returnKeyType: .next)
-    var password1Field: ProtonTextField = ProtonTextField.textField(contentType: .password, placeholder: LocalizedString.password, icon: "password", returnKeyType: .next)
-    var password2Field: ProtonTextField = ProtonTextField.textField(contentType: .password, placeholder: LocalizedString.passwordConfirm, icon: "password", returnKeyType: .join)
-    @IBOutlet weak var mainButton: ProtonButton!
-    @IBOutlet weak var minVisibleConstraint: NSLayoutConstraint!
-    @IBOutlet weak var formHeightConstraint: NSLayoutConstraint!
-    @IBOutlet weak var topPaddingConstraint: NSLayoutConstraint!
-    @IBOutlet weak var loginButton: UIButton!
-    @IBOutlet weak var termsAndConditionsTextView: UITextView!
-    @IBOutlet weak var footerStackView: UIStackView!
-    @IBOutlet weak var underLogoLabel: UILabel!
-    @IBOutlet weak var dismissButton: UIButton!
+    @IBOutlet private weak var textFieldStackView: UIStackView!
+    @IBOutlet private weak var mainButton: ProtonButton!
+    @IBOutlet private weak var minVisibleConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var formHeightConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var topPaddingConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var loginButton: UIButton!
+    @IBOutlet private weak var termsAndConditionsTextView: UITextView!
+    @IBOutlet private weak var footerStackView: UIStackView!
+    @IBOutlet private weak var underLogoLabel: UILabel!
+    @IBOutlet private weak var dismissButton: UIButton!
+
+    private let emailField = ProtonTextField.textField(contentType: .email, placeholder: LocalizedString.enterEmailAddress, icon: "email", returnKeyType: .next)
+    private let usernameField = ProtonTextField.textField(contentType: .username, placeholder: LocalizedString.username, icon: "username", returnKeyType: .next)
+    private let password1Field = ProtonTextField.textField(contentType: .password, placeholder: LocalizedString.password, icon: "password", returnKeyType: .next)
+    private let password2Field = ProtonTextField.textField(contentType: .password, placeholder: LocalizedString.passwordConfirm, icon: "password", returnKeyType: .join)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -127,12 +128,19 @@ class SignUpFormViewController: UIViewController {
         view.setNeedsLayout()
         
         emailField.returnPressed = { [weak self] _ in self?.usernameField.focus() }
+        viewModel.observeTextField(textField: emailField, type: .recoveryEmail)
+
         usernameField.returnPressed = { [weak self] _ in self?.password1Field.focus() }
+        viewModel.observeTextField(textField: usernameField, type: .username)
+
         password1Field.returnPressed = { [weak self] _ in self?.password2Field.focus() }
+        viewModel.observeTextField(textField: password1Field, type: .password)
+
         password2Field.returnPressed = { [weak self] _ in
             self?.view.endEditing(true)
             self?.mainButtonTapped(self as Any)
         }
+        viewModel.observeTextField(textField: password2Field, type: .passwordConfirmation)
 
         emailField.textChanged = { [weak self] textField in self?.viewModel.email = textField.text.trimmingCharacters(in: .whitespacesAndNewlines) }
         usernameField.textChanged = { [weak self] textField in self?.viewModel.username = textField.text }

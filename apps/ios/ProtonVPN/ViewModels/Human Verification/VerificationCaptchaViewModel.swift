@@ -33,23 +33,31 @@ extension DependencyContainer: VerificationCaptchaViewModelFactory {
     }
 }
 
-class VerificationCaptchaViewModel {
+final class VerificationCaptchaViewModel {
     
     // Callbacks for coordinator
     var tokenReceived: ((HumanVerificationToken) -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory
+    typealias Factory = ChallengeFactory
+
     private let factory: Factory
+    private lazy var challenge: Challenge = factory.makeChallenge()
     
-    public let captchaToken: String
+    let captchaToken: String
     
     init(factory: Factory, token: String) {
         self.factory = factory
         self.captchaToken = token
     }
+
+    func captchaLoadingStarted() {
+        challenge.userDidStartVerification()
+    }
     
-    public func setCaptchaToken(_ token: String) {
+    func setCaptchaToken(_ token: String) {
+        challenge.userDidFinishVerification()
+
         let humanVerificationToken = HumanVerificationToken(type: .captcha, token: token, input: captchaToken)
         tokenReceived?(humanVerificationToken)
     }

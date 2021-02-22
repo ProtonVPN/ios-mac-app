@@ -43,13 +43,14 @@ class VerificationEmailViewModel {
     var verificationButtonEnabled: ((Bool) -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & SigninInfoContainerFactory & PropertiesManagerFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & SigninInfoContainerFactory & PropertiesManagerFactory & ChallengeFactory
     private let factory: Factory
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var signinInfoContainer: SigninInfoContainer = factory.makeSigninInfoContainer()
+    private lazy var challenge: Challenge = factory.makeChallenge()
     
     private var email: String?
         
@@ -58,6 +59,8 @@ class VerificationEmailViewModel {
     }
     
     func verify(email: String) {
+        challenge.userDidStartVerification()
+
         verificationButtonEnabled?(false)
         let cleanedEmailAddress = clean(emailAddress: email)
         self.email = cleanedEmailAddress

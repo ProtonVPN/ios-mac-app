@@ -61,9 +61,11 @@ protocol SignUpFormViewModel {
     func startRegistration()
     func switchToLogin()
     func cancel()
+
+    func observeTextField(textField: ProtonTextField, type: ChallengeTextFieldType)
 }
 
-class SignUpFormViewModelImplementation: SignUpFormViewModel {
+final class SignUpFormViewModelImplementation: SignUpFormViewModel {
     
     // Callbacks
     var formDataChanged: (() -> Void)?
@@ -93,9 +95,10 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var userPropertiesCreator: UserPropertiesCreator = factory.makeUserPropertiesCreator()
     private lazy var signinInfoContainer: SigninInfoContainer = factory.makeSigninInfoContainer()
+    private lazy var challenge: Challenge = factory.makeChallenge()
     
     // Factory
-    typealias Factory = UserApiServiceFactory & AuthApiServiceFactory & AppSessionManagerFactory & StoreKitManagerFactory & PaymentsApiServiceFactory & CoreAlertServiceFactory & AlamofireWrapperFactory & UserPropertiesCreatorFactory & SigninInfoContainerFactory
+    typealias Factory = UserApiServiceFactory & AuthApiServiceFactory & AppSessionManagerFactory & StoreKitManagerFactory & PaymentsApiServiceFactory & CoreAlertServiceFactory & AlamofireWrapperFactory & UserPropertiesCreatorFactory & SigninInfoContainerFactory & ChallengeFactory
     private let factory: Factory
     
     private let plan: AccountPlan
@@ -114,6 +117,8 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     init(factory: Factory, plan: AccountPlan) {
         self.factory = factory
         self.plan = plan
+
+        challenge.start()
     }
     
     deinit {
@@ -164,6 +169,10 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
     func startRegistration() {
         isLoading = true
         step1checkUsername()
+    }
+
+    func observeTextField(textField: ProtonTextField, type: ChallengeTextFieldType) {
+        challenge.observeTextField(textField: textField.textField, type: type)
     }
     
     // MARK: Private
@@ -242,12 +251,7 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         })
     }
     
-    private func step4getDeviceToken(modulusResponse: ModulusResponse) {
-        guard #available(iOS 11.0, *) else {
-            step5CreateUser(modulusResponse: modulusResponse, deviceToken: nil)
-            return
-        }
-        
+    private func step4getDeviceToken(modulusResponse: ModulusResponse) {        
         let curDevice = DCDevice.current
         guard curDevice.isSupported else {
             step5CreateUser(modulusResponse: modulusResponse, deviceToken: nil)
@@ -262,7 +266,7 @@ class SignUpFormViewModelImplementation: SignUpFormViewModel {
         guard let password = self.password1, let username = self.username, let email = email else { return }
         
         do {
-            let userProperties = try userPropertiesCreator.createUserProperties(email: email, username: username, password: password, modulusResponse: modulusResponse, deviceToken: deviceToken)
+            let userProperties = try userPropertiesCreator.createUserProperties(email: email, username: username, password: password, modulusResponse: modulusResponse, deviceToken: deviceToken, challenge: try? challenge.export())
             
             self.userApiService.createUser(userProperties: userProperties, success: { [weak self] in
                 self?.step6login()

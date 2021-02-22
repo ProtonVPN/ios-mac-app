@@ -68,6 +68,8 @@ class DependencyContainer {
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh)
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
+
+    private lazy var challenge = CoreChallenge()
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -407,5 +409,12 @@ extension DependencyContainer: UserTierProviderFactory {
 extension DependencyContainer: NetShieldPropertyProviderFactory {
     func makeNetShieldPropertyProvider() -> NetShieldPropertyProvider {
         return NetShieldPropertyProviderImplementation(self)
+    }
+}
+
+// MARK: ChallengeFactory
+extension DependencyContainer: ChallengeFactory {
+    func makeChallenge() -> Challenge {
+        return challenge
     }
 }

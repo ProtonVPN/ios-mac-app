@@ -72,4 +72,7 @@ class SignUpFormViewModelMock: SignUpFormViewModel {
     
     func cancel(){
     }
+
+    func observeTextField(textField: ProtonTextField, type: ChallengeTextFieldType) {        
+    }
 }

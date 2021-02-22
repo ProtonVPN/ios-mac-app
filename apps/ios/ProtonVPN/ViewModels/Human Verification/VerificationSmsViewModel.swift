@@ -44,13 +44,14 @@ class VerificationSmsViewModel {
     var codeChanged: (() -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory & ChallengeFactory
     private let factory: Factory
     
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var challenge: Challenge = factory.makeChallenge()
               
     var code = "+1" {
         didSet {
@@ -82,6 +83,8 @@ class VerificationSmsViewModel {
     }
     
     func verify() {
+        challenge.userDidStartVerification()
+
         verificationButtonEnabled?(false)
                 
         userApiService.verificationCodeRequest(tokenType: tokenType, receiverAddress: tokenAddress, success: { [weak self] in

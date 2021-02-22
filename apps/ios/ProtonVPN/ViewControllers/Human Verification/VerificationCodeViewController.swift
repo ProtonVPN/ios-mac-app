@@ -104,6 +104,8 @@ class VerificationCodeViewController: UIViewController {
         codeField.attributedPlaceholder = LocalizedString.enterVerificationCode.attributed(withColor: .protonUnavailableGrey(), fontSize: fieldFontSize)
         codeField.textColor = .protonWhite()
         codeField.minimumFontSize = fieldFontSize
+
+        viewModel?.observeTextField(textField: codeField)
     }
     
     private func setupButtons() {

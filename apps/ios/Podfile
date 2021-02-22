@@ -11,6 +11,7 @@ def sharedpods
   # development pods
   pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
   pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
+  pod 'PMChallenge', :path => '../pmchallenge' # run `pod update PMChallenge` after changing source
 
   # third party pods
   pod 'GSMessages', '~> 1.0'

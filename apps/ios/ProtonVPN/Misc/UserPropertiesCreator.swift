@@ -19,12 +19,13 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
+// swiftlint:disable function_parameter_count
 
 import vpncore
 
 /// Creates user properties request object
 protocol UserPropertiesCreator {
-    func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?) throws -> UserProperties
+    func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?, challenge: [String: Any]?) throws -> UserProperties
 }
 
 protocol UserPropertiesCreatorFactory {
@@ -37,9 +38,8 @@ extension DependencyContainer: UserPropertiesCreatorFactory {
     }
 }
 
-class UserPropertiesCreatorImplementation: UserPropertiesCreator {
-
-    func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?) throws -> UserProperties {
+final class UserPropertiesCreatorImplementation: UserPropertiesCreator {
+    func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?, challenge: [String: Any]?) throws -> UserProperties {
         guard let salt: Data = try SrpRandomBits(80) else { // needs to be set to 80 bits for login password
             throw ApplicationError.userCreation
         }
@@ -49,8 +49,7 @@ class UserPropertiesCreatorImplementation: UserPropertiesCreator {
         }
         let verifier = try auth.generateVerifier(2048)
                     
-        let userProperties = UserProperties(email: email, username: username, modulusID: modulusResponse.modulusId, salt: salt.encodeBase64(), verifier: verifier.encodeBase64(), appleToken: deviceToken)
-        
+        let userProperties = UserProperties(email: email, username: username, modulusID: modulusResponse.modulusId, salt: salt.encodeBase64(), verifier: verifier.encodeBase64(), appleToken: deviceToken, challenge: challenge)
         return userProperties
     }
     

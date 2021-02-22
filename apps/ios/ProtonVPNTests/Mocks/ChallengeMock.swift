@@ -1,6 +1,6 @@
 //
-//  UserPropertiesCreatorMock.swift
-//  ProtonVPN - Created on 15/10/2019.
+//  ChallengeMock.swift
+//  ProtonVPN - Created on 17.02.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -21,12 +21,26 @@
 //
 
 import Foundation
-import vpncore
+import UIKit
 
-class UserPropertiesCreatorMock: UserPropertiesCreator {
-        
-    func createUserProperties(email: String, username: String, password: String, modulusResponse: ModulusResponse, deviceToken: Data?, challenge: [String: Any]?) throws -> UserProperties {
-        return UserProperties(email: email, username: username, modulusID: modulusResponse.modulusId, salt: "salt", verifier: "verifier", appleToken: deviceToken, challenge: challenge)
+final class ChallengeMock: Challenge {
+    func start() {
+
     }
-    
+
+    func userDidStartVerification() {
+
+    }
+
+    func userDidFinishVerification() {
+
+    }
+
+    func observeTextField(textField: UITextField, type: ChallengeTextFieldType) {
+
+    }
+
+    func export() throws -> [String: Any] {
+        return [:]
+    }
 }

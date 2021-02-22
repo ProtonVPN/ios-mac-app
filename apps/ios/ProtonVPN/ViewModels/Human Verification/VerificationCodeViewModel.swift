@@ -45,13 +45,14 @@ class VerificationCodeViewModel {
     var resendButtonStateChanged: (() -> Void)?
     
     // Factory
-    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory
+    typealias Factory = LoginServiceFactory & UserApiServiceFactory & CoreAlertServiceFactory & PropertiesManagerFactory & ChallengeFactory
     private let factory: Factory
     
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var userApiService: UserApiService = factory.makeUserApiService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var challenge: Challenge = factory.makeChallenge()
     private let address: String
     private let tokenType: HumanVerificationToken.TokenType
     private var code: String?
@@ -78,6 +79,8 @@ class VerificationCodeViewModel {
     }
     
     func verify(code: String) {
+        challenge.userDidFinishVerification()
+
         verificationButtonEnabled?(false)
         self.code = code
         let token = HumanVerificationToken(type: tokenType, token: code, input: address)
@@ -134,6 +137,10 @@ class VerificationCodeViewModel {
     
     func noCodeReceived() {
         resendState = .noCode
+    }
+
+    func observeTextField(textField: UITextField) {
+        challenge.observeTextField(textField: textField, type: .verificationCode)
     }
     
     private func show(error: Error) {

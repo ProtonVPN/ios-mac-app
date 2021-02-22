@@ -485,6 +485,9 @@
 		E5A03540860EA9AA187B8EFC /* Pods-ProtonVPN-settings-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB58D1A671E132A3AC40A112 /* Pods-ProtonVPN-settings-metadata.plist */; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
+		F3BBB87A25DD56A300E700B5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB87925DD56A300E700B5 /* Challenge.swift */; };
+		F3BBB8AE25DD6DBE00E700B5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB87925DD56A300E700B5 /* Challenge.swift */; };
+		F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -915,6 +918,8 @@
 		ED741DA236AF3C7A3709C6E8 /* Pods_Siri_Shortuct_Handler_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortuct_Handler_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F378E296FEC07B9B460E3AE8 /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
+		F3BBB87925DD56A300E700B5 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
+		F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMock.swift; sourceTree = "<group>"; };
 		F6C8521424D97F81125A7364 /* Pods-ProtonVPN Debug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN Debug.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN Debug/Pods-ProtonVPN Debug.release.xcconfig"; sourceTree = "<group>"; };
 		FB58D1A671E132A3AC40A112 /* Pods-ProtonVPN-settings-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPN-settings-metadata.plist"; path = "ProtonVPN/Resources/Settings.bundle/Pods-ProtonVPN-settings-metadata.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -1639,6 +1644,7 @@
 				D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */,
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
+				F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */,
 				D5136C1A228591FB0002C095 /* LoginService.swift */,
 				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
 				D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */,
@@ -1910,6 +1916,7 @@
 			children = (
 				D5BF95122355A54200C7D1E7 /* UserPropertiesCreator.swift */,
 				D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */,
+				F3BBB87925DD56A300E700B5 /* Challenge.swift */,
 			);
 			path = Misc;
 			sourceTree = "<group>";
@@ -2842,6 +2849,7 @@
 				E154A0C922E0A9A000283CF9 /* ObfuscatedConstants.swift in Sources */,
 				D53E83D02329048C0031CD49 /* SignUpFormViewModel.swift in Sources */,
 				7950441B21183FBD0022ED35 /* ProfilesTableViewCell.swift in Sources */,
+				F3BBB87A25DD56A300E700B5 /* Challenge.swift in Sources */,
 				791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */,
 				E1C8705C22BA06C3009CF4CE /* TrialWelcomeViewModel.swift in Sources */,
 				7995FCFC2090A4820030E1EB /* UIKitString+Extension.swift in Sources */,
@@ -2957,6 +2965,7 @@
 				E169FC44228B15E400FDC933 /* SmsCountryCodeViewController.swift in Sources */,
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
 				E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */,
+				F3BBB8AE25DD6DBE00E700B5 /* Challenge.swift in Sources */,
 				D5BF95072354A03C00C7D1E7 /* HumanVerificationCoordinator.swift in Sources */,
 				D563319C23211D9A00CE2EE3 /* RoundCheckboxView.swift in Sources */,
 				D5BF95142355A54300C7D1E7 /* UserPropertiesCreator.swift in Sources */,
@@ -2998,6 +3007,7 @@
 				D53E83E5232B76790031CD49 /* SignUpFormViewController.swift in Sources */,
 				D55B20E323851F3300AEB7FE /* SigninInfoContainer.swift in Sources */,
 				E169FC46228B161A00FDC933 /* HumanVerificationOptionsViewController.swift in Sources */,
+				F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */,
 				D5136C46228592E80002C095 /* WidgetSettingsViewController.swift in Sources */,
 				D5136C47228592E80002C095 /* PlanSelectionViewController.swift in Sources */,
 				060D071725D34599002B98B8 /* AppSessionManager.swift in Sources */,

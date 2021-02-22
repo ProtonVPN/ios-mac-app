@@ -44,7 +44,7 @@ class SignUpFormViewModelTests: XCTestCase {
         alamofireWrapper = AlamofireWrapperMock()
         storeKitManagerMock = StoreKitManagerMock()
         
-        factory = Factory(appSessionManager: appSessionManager, userApiService: userApiService, authApiService: authApiService, storeKitManager: storeKitManagerMock, paymentsApiService: paymentApiService, coreAlertService: alertService, alamofireWrapper: alamofireWrapper, userPropertiesCreator: UserPropertiesCreatorMock(), signinInfoContainer: SigninInfoContainer())
+        factory = Factory(appSessionManager: appSessionManager, userApiService: userApiService, authApiService: authApiService, storeKitManager: storeKitManagerMock, paymentsApiService: paymentApiService, coreAlertService: alertService, alamofireWrapper: alamofireWrapper, userPropertiesCreator: UserPropertiesCreatorMock(), signinInfoContainer: SigninInfoContainer(), challenge: ChallengeMock())
         viewModel = SignUpFormViewModelImplementation(factory: factory, plan: AccountPlan.free)
     }
 
@@ -260,8 +260,9 @@ fileprivate class Factory: SignUpFormViewModelImplementation.Factory {
     var alamofireWrapper: AlamofireWrapper
     var userPropertiesCreator: UserPropertiesCreator
     var signinInfoContainer: SigninInfoContainer
+    var challenge: Challenge
     
-    init(appSessionManager: AppSessionManager, userApiService: UserApiService, authApiService: AuthApiService, storeKitManager: StoreKitManager, paymentsApiService: PaymentsApiService, coreAlertService: CoreAlertService, alamofireWrapper: AlamofireWrapper, userPropertiesCreator: UserPropertiesCreator, signinInfoContainer: SigninInfoContainer) {
+    init(appSessionManager: AppSessionManager, userApiService: UserApiService, authApiService: AuthApiService, storeKitManager: StoreKitManager, paymentsApiService: PaymentsApiService, coreAlertService: CoreAlertService, alamofireWrapper: AlamofireWrapper, userPropertiesCreator: UserPropertiesCreator, signinInfoContainer: SigninInfoContainer, challenge: Challenge) {
         self.appSessionManager = appSessionManager
         self.userApiService = userApiService
         self.authApiService = authApiService
@@ -271,6 +272,7 @@ fileprivate class Factory: SignUpFormViewModelImplementation.Factory {
         self.alamofireWrapper = alamofireWrapper
         self.userPropertiesCreator = userPropertiesCreator
         self.signinInfoContainer = signinInfoContainer
+        self.challenge = challenge
     }
     
     func makeAppSessionManager() -> AppSessionManager {
@@ -307,6 +309,10 @@ fileprivate class Factory: SignUpFormViewModelImplementation.Factory {
     
     func makeSigninInfoContainer() -> SigninInfoContainer {
         return signinInfoContainer
+    }
+
+    func makeChallenge() -> Challenge {
+        return challenge
     }
 }
 

@@ -54,6 +54,7 @@ class VerificationCaptchaViewController: UIViewController {
         webView.scrollView.isScrollEnabled = UIDevice.current.isSmallIphone
         let recaptcha = URL(string: captchaUrl)!
         let requestObj = URLRequest(url: recaptcha)
+        viewModel.captchaLoadingStarted()
         webView.loadRequest(requestObj)
     }
     
