@@ -26,7 +26,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     
     public init() {}
     
-    public func create(_ configuration: VpnManagerConfiguration, completion: (NEVPNProtocol) -> Void) throws {
+    public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
         
         config.username = configuration.username
@@ -59,7 +59,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         config.childSecurityAssociationParameters.diffieHellmanGroup = .group20
         config.childSecurityAssociationParameters.lifetimeMinutes = 60
         
-        completion(config)
+        return config
     }
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
@@ -71,6 +71,11 @@ public class IkeProtocolFactory: VpnProtocolFactory {
             
             completion(NEVPNManager.shared(), nil)
         }
+    }
+    
+    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        // Nothing to do in IKEv2
+        completion()
     }
     
     public func logs(completion: @escaping (String?) -> Void) {

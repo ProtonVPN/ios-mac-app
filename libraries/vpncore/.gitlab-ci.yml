@@ -25,7 +25,7 @@ variables:
   
 .before_script_mac: &before_script_mac
 - rm -fr ../tunnelkit || true # ignore failure to delete
-- git clone -b keychain_avoid https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
+- git clone -b protonvpn2/keychain https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
 
 lint:
   stage: linting

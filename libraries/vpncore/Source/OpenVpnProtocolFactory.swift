@@ -90,26 +90,12 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         self.propertiesManager = propertiesManager
     }
     
-    public func create(_ configuration: VpnManagerConfiguration, completion: @escaping (NEVPNProtocol) -> Void) throws {
+    public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
         let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: "", username: credentials.username)
-        
-        #if !os(macOS)
-        completion(neProtocol)
-        
-        #else
-        guard let vpnManager = vpnManager, let session = vpnManager.connection as? NETunnelProviderSession, let message = try? JSONEncoder().encode(credentials) else {
-            PMLog.ET("No vpnManager or connection found")
-            completion(neProtocol)
-            return
-        }
-        try session.sendProviderMessage(message, responseHandler: { result in
-            neProtocol.passwordReference = result
-            completion(neProtocol)
-        })
-        #endif
+        return neProtocol
     }
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
@@ -118,6 +104,32 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         } else {
             loadManager(completion: completion)
         }
+    }
+    
+    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        #if !os(macOS)
+        // Nothing to do on iOS
+        completion()
+        
+        #else
+        
+        let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
+        
+        guard let vpnManager = vpnManager,
+              let session = vpnManager.connection as? NETunnelProviderSession,
+              let message = try? JSONEncoder().encode(credentials) else {
+            completion()
+            return
+        }
+        do {
+            try session.sendProviderMessage(message, responseHandler: { result in
+                completion()
+            })
+        } catch {
+            completion()
+        }
+        
+        #endif
     }
     
     public func logs(completion: @escaping (String?) -> Void) {

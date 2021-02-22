@@ -257,12 +257,15 @@ public class VpnManager: VpnManagerProtocol {
             guard let vpnManager = vpnManager else { return }
             
             do {
-                try currentVpnProtocolFactory.create(configuration) { protocolConfiguration in
-                    self.configureConnection(forProtocol: protocolConfiguration,
-                                             vpnManager: vpnManager,
-                                             completion: completion)
+                let protocolConfiguration = try currentVpnProtocolFactory.create(configuration)
+                self.configureConnection(forProtocol: protocolConfiguration, vpnManager: vpnManager) {
+                    self.startConnection(completion: completion)
+                    
+                    // OVPN first connection fix. Pushes creds after extension is already running. Fix this to something better when solution will be available.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                        currentVpnProtocolFactory.connectionStarted(configuration: configuration) { }
+                    })
                 }
-                
             } catch {
                 PMLog.ET(error)
             }
@@ -294,7 +297,7 @@ public class VpnManager: VpnManagerProtocol {
                 return
             }
             
-            self.startConnection(completion: completion)
+            completion()
         }
     }
     
