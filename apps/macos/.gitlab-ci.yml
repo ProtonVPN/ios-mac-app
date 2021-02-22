@@ -43,7 +43,7 @@ variables:
   - rm -fr ../vpncore || true # ignore failure to delete
   - git clone -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore
   - rm -fr ../tunnelkit || true # ignore failure to delete
-  - git clone -b keychain_avoid https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
+  - git clone -b protonvpn2/keychain https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
   - cd ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ..
   - cd ProtonVPN/ && ../../vpncore/Source/prepare_obfuscated_constants.sh && cd -
 

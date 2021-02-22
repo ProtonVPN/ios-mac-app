@@ -30,13 +30,29 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
             
             let keychain = Keychain(group: nil)
             do {
+                let currentPassword = try? keychain.password(for: credentials.username)
+                guard currentPassword != credentials.password else {
+                    completionHandler?(nil)
+                    return
+                }
+                
                 try keychain.set(password: credentials.password, for: credentials.username)
+                NSLog("PacketTunnelProvider new password saved")
                 let ref = try keychain.passwordReference(for: credentials.username)
+                
+                self.credentials = credentials
+                self.session?.credentials = credentials
+                
+                self.startTunnel(completionHandler: {error in
+                    NSLog("PacketTunnelProvider tunnel start finished \(String(describing: error))")
+                })
+                
                 completionHandler?(ref)
-                return
+                
             } catch {
                 NSLog("PacketTunnelProvider can't write password to keychain: \(error)")
             }
+            return
         }
         super.handleAppMessage(messageData, completionHandler: completionHandler)
     }
@@ -44,14 +60,13 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     open override func startTunnel(options: [String : NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
         let keychain = Keychain(group: nil)
         do {
-            if let user = protocolConfiguration.username, let passRef = protocolConfiguration.passwordReference {
-                let pass = try keychain.password(for: user, reference: passRef)
+            if let user = protocolConfiguration.username {
+                let pass = try keychain.password(for: user)
                 self.credentials = OpenVPN.Credentials(user, pass)
-            } else {
-                NSLog("PacketTunnelProvider No password reference found")
+                NSLog("PacketTunnelProvider Credentials found")
             }
         } catch {
-            NSLog("PacketTunnelProvider Can't read password from keychain \(error)")
+            NSLog("PacketTunnelProvider can't read password from keychain \(error)")
         }
         
         super.startTunnel(options: options, completionHandler: completionHandler)
