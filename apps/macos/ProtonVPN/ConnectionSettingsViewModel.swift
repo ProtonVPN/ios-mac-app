@@ -126,6 +126,7 @@ final class ConnectionSettingsViewModel {
             return
         }
         
+        viewController?.reloadView()
         alertService.push(alert: ReconnectOnSettingsChangeAlert {
             var token: NSObjectProtocol?
             token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
