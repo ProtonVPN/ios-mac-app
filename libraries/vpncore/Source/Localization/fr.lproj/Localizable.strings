@@ -916,7 +916,7 @@
 "_netshield_level1" = "Bloquer les programmes malveillants";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloquer seulement les malwares";
+"_netshield_level2" = "Bloquer malwares, trackers et pubs";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Désactivé";
