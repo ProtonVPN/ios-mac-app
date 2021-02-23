@@ -51,6 +51,10 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     @IBOutlet weak var indicator2Lbl: NSTextField!
     @IBOutlet weak var indicator3Lbl: NSTextField!
     
+    @IBOutlet weak var step1ScreenshotVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var step1NumberVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet weak var step1ScreenshotImageView: NSImageView!
+    
     var viewModel: SystemExtensionGuideViewModelProtocol?
     
     override func viewDidLoad() {
@@ -108,6 +112,17 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
     }
     
     func displayStep1() {
+        if #available(macOS 11.0, *) {
+            step1ScreenshotVerticalConstraint.constant = -30
+            step1NumberVerticalConstraint.constant = -141
+            step1ScreenshotImageView.image = NSImage(named: "open_extension_install_step1-11")
+
+        } else { // macOS 10.15
+            step1ScreenshotVerticalConstraint.constant = 0
+            step1ScreenshotImageView.image = NSImage(named: "open_extension_install_step1")
+            step1NumberVerticalConstraint.constant = -184
+        }
+        
         setVisible(true, false, false)
     }
     
@@ -119,7 +134,7 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
         setVisible(false, false, true)
     }
     
-    fileprivate func setVisible( _ step1: Bool, _ step2: Bool, _ step3: Bool) {
+    private func setVisible( _ step1: Bool, _ step2: Bool, _ step3: Bool) {
         step1View.isHidden = !step1
         step2View.isHidden = !step2
         step3View.isHidden = !step3
@@ -135,4 +150,5 @@ class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuide
         nextBtn.isHidden = step3
         confirmationButton.isHidden = !step3
     }
+    
 }

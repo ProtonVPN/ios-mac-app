@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "sysex-light-10.png",
+      "filename" : "sysex-light-11.png",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "sysex-dark-10.png",
+      "filename" : "sysex-dark-11.png",
       "idiom" : "universal"
     }
   ],
