@@ -32,28 +32,28 @@ public protocol SystemExtensionGuideVCProtocol: NSViewController {
     func displayStep3()
 }
 
-class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuideVCProtocol {
+final class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuideVCProtocol {
         
-    @IBOutlet weak var bodyView: NSView!
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var confirmationButton: PrimaryActionButton!
+    @IBOutlet private weak var bodyView: NSView!
+    @IBOutlet private weak var footerView: NSView!
+    @IBOutlet private weak var confirmationButton: PrimaryActionButton!
     
-    @IBOutlet weak var step1View: NSView!
-    @IBOutlet weak var step2View: NSView!
-    @IBOutlet weak var step3View: NSView!
+    @IBOutlet private weak var step1View: NSView!
+    @IBOutlet private weak var step2View: NSView!
+    @IBOutlet private weak var step3View: NSView!
     
-    @IBOutlet weak var descriptionTF: NSTextField!
+    @IBOutlet private weak var descriptionTF: NSTextField!
     
-    @IBOutlet weak var nextBtn: NSButton!
-    @IBOutlet weak var previousBtn: NSButton!
+    @IBOutlet private weak var nextBtn: NSButton!
+    @IBOutlet private weak var previousBtn: NSButton!
     
-    @IBOutlet weak var indicator1Lbl: NSTextField!
-    @IBOutlet weak var indicator2Lbl: NSTextField!
-    @IBOutlet weak var indicator3Lbl: NSTextField!
+    @IBOutlet private weak var indicator1Lbl: NSTextField!
+    @IBOutlet private weak var indicator2Lbl: NSTextField!
+    @IBOutlet private weak var indicator3Lbl: NSTextField!
     
-    @IBOutlet weak var step1ScreenshotVerticalConstraint: NSLayoutConstraint!
-    @IBOutlet weak var step1NumberVerticalConstraint: NSLayoutConstraint!
-    @IBOutlet weak var step1ScreenshotImageView: NSImageView!
+    @IBOutlet private weak var step1ScreenshotVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var step1NumberVerticalConstraint: NSLayoutConstraint!
+    @IBOutlet private weak var step1ScreenshotImageView: NSImageView!
     
     var viewModel: SystemExtensionGuideViewModelProtocol?
     
