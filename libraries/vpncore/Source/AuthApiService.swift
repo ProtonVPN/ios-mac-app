@@ -163,6 +163,5 @@ public class AuthApiServiceImplementation: AuthApiService {
         let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
         alamofireWrapper.request(AuthRefreshRequest(refreshProperties), success: successWrapper, failure: errorWrapper)
         
-        
     }
 }
