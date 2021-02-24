@@ -72,6 +72,11 @@ class LoginTests: ProtonVPNUITests {
         fieldPassword.typeText(credentials.password)
         buttonLogin.tap()
         
+        let trialButton = app.buttons["Maybe Later"]
+        if trialButton.waitForExistence(timeout: 5) {
+            trialButton.tap()
+        }
+        
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         

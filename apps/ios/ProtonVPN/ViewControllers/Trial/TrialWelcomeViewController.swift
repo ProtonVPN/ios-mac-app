@@ -95,6 +95,7 @@ class TrialWelcomeViewController: UIViewController {
     private func setUpExitButton() {
         exitButton.customState = .secondary
         exitButton.setTitle(viewModel.cancelButtonTitle().capitalized, for: .normal)
+        exitButton.accessibilityIdentifier = "Maybe Later"
     }
     
     @IBAction private func upgradeAction(_ sender: Any) {
