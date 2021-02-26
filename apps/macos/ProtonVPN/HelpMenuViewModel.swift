@@ -52,6 +52,16 @@ class HelpMenuViewModel {
         navService.openLogsFolder()
     }
     
+    func openOpenVpnLogsFolderAction() {
+        // Save log to file
+        vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
+            let content = logs ?? ""
+            PMLog.D(content, override: true, url: AppConstants.Filenames.openVpnLogFilename)
+        }
+                
+        navService.openLogsFolder(AppConstants.Filenames.openVpnLogFilename)
+    }
+    
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
             self.vpnManager.disconnect { [self] in

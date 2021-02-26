@@ -192,8 +192,8 @@ extension NavigationService {
         updateManager.checkForUpdates(appSessionManager, silently: false)
     }
     
-    func openLogsFolder() {
-        guard let logUrl = PMLog.logFile() else { return }
+    func openLogsFolder(filename: String?) {
+        guard let logUrl = PMLog.logFile(filename) else { return }
         NSWorkspace.shared.activateFileViewerSelecting([logUrl])
     }
     

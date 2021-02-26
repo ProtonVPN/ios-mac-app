@@ -55,6 +55,10 @@ class AppConstants {
         static let userDefaults = ("~/Library/Preferences/ch.protonvpn.mac.plist" as NSString).expandingTildeInPath
     }
     
+    struct Filenames {
+        static let openVpnLogFilename = "OpenVPN.log"
+    }
+    
     struct Time {
         static let maintenanceMessageTimeThreshold: Double = 3600 * 12 // 12 hours
         
