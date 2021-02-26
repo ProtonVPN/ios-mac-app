@@ -114,7 +114,7 @@ class StatusMenuViewModel {
     }
     
     var cancelButtonTitle: String {
-        return ""
+        return LocalizedString.cancel
     }
     
     func disconnectAction() {
