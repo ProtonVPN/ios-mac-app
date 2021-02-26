@@ -193,7 +193,7 @@ extension NavigationService {
     }
     
     func openLogsFolder(filename: String? = nil) {
-        guard let logUrl = filename != nil ? PMLog.logFile(filename!) : PMLog.logFile() else {
+        guard let logUrl = filename.flatMap({ PMLog.logFile($0) }) ?? PMLog.logFile() else {
             return
         }
         NSWorkspace.shared.activateFileViewerSelecting([logUrl])
