@@ -107,7 +107,7 @@ public class PMLog {
         }
     }
     
-    public static func D(_ message: String, level: LogLevel = .info, override: Bool = false, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+    public static func D(_ message: String, level: LogLevel = .info, overwrite: Bool = false, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
         printToConsole(log)
         
@@ -117,7 +117,7 @@ public class PMLog {
         
         do {
             let fileHandle = try FileHandle(forWritingTo: logPath)
-            if !override {
+            if !overwrite {
                 fileHandle.seekToEndOfFile()
             }
             fileHandle.write("\(log)\n".data(using: .utf8)!)
