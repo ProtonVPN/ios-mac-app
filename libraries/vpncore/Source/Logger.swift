@@ -80,12 +80,12 @@ public class PMLog {
         }
     }
     
-    public static func logFile( url: String = "ProtonVPN.log") -> URL? {
+    public static func logFile(_ filename: String = "ProtonVPN.log") -> URL? {
         do {
             _ = try FileManager.default.createDirectory(at: logsDirectory, withIntermediateDirectories: false, attributes: nil)
         } catch {}
         
-        let file = logsDirectory.appendingPathComponent(url, isDirectory: false)
+        let file = logsDirectory.appendingPathComponent(filename, isDirectory: false)
         
         #if !os(OSX)
         do {
@@ -107,11 +107,11 @@ public class PMLog {
         }
     }
     
-    public static func D(_ message: String, level: LogLevel = .info, override: Bool = false, url: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+    public static func D(_ message: String, level: LogLevel = .info, override: Bool = false, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
         printToConsole(log)
         
-        guard let logPath = logFile(url: url) else { return }
+        guard let logPath = logFile(filename) else { return }
         
         pruneLogs()
         
