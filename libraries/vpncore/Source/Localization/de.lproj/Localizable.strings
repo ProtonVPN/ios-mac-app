@@ -862,7 +862,7 @@
 "_name" = "Name";
 
 /* Network error */
-"_ne_couldnt_reach_server" = "Die Proton-Server konnten nicht erreicht werden";
+"_ne_couldnt_reach_server" = "Proton-Server konnten nicht erreicht werden";
 
 /* Network error */
 "_ne_network_connection_lost" = "Netzwerkverbindung verloren";
