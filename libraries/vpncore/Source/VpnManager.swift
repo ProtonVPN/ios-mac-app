@@ -290,15 +290,31 @@ public class VpnManager: VpnManagerProtocol {
         vpnManager.isOnDemandEnabled = hasConnected
         vpnManager.isEnabled = true
         
-        vpnManager.saveToPreferences { [weak self] saveError in
-            guard let `self` = self else { return }
-            if let saveError = saveError {
-                self.setState(withError: saveError)
-                return
+        let saveToPreferences = {
+            vpnManager.saveToPreferences { [weak self] saveError in
+                guard let `self` = self else { return }
+                if let saveError = saveError {
+                    self.setState(withError: saveError)
+                    return
+                }
+                
+                completion()
             }
-            
-            completion()
         }
+        
+        #if os(OSX)
+        // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
+        if #available(OSX 10.15, *), configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+            self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
+                saveToPreferences()
+            })
+        }else {
+            saveToPreferences()
+        }
+        #else
+            saveToPreferences()
+        #endif
+        
     }
     
     private func startConnection(completion: @escaping () -> Void) {
