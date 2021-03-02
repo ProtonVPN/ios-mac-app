@@ -90,6 +90,10 @@ class CountryItemViewModel {
             return NSColor.protonGrey()
         }
     }
+
+    var underMaintenance: Bool {
+        return countriesSectionViewModel.isCountryUnderMaintenance(countryModel.countryCode)
+    }
     
     init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
          countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
@@ -128,7 +132,7 @@ class CountryItemViewModel {
     
     fileprivate func formDescription() -> NSAttributedString {
         let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        return country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return country.attributed(withColor: underMaintenance ? NSColor.protonGreyOutOfFocus() : NSColor.protonWhite(), fontSize: 16, alignment: .left)
     }
     
     @objc fileprivate func stateChanged() {
@@ -158,7 +162,7 @@ class SecureCoreCountryItemViewModel: CountryItemViewModel {
     }
     
     override fileprivate func formDescription() -> NSAttributedString {
-        let arrows = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 10, height: 10)!
+        let arrows = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 10, height: 10, colored: underMaintenance ? NSColor.protonGreyOutOfFocus() : nil)!
         let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
         let attributedCountry = ("  " + country).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         return NSAttributedString.concatenate(arrows, attributedCountry)

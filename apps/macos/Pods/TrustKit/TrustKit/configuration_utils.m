@@ -17,6 +17,13 @@
 
 static NSUInteger isSubdomain(NSString *domain, NSString *subdomain)
 {
+    // Corner case: the supplied subdomain is actually a parent domain
+    // Should never happen but https://github.com/datatheorem/TrustKit/issues/210
+    if ([subdomain length] <= [domain length])
+    {
+        return 0;
+    }
+
     // Ensure that the TLDs are the same; this can get tricky with TLDs like .co.uk so we take a cautious approach
     size_t domainRegistryLength = GetRegistryLength([domain UTF8String]);
     size_t subdomainRegistryLength = GetRegistryLength([subdomain UTF8String]);
@@ -64,6 +71,16 @@ NSString * _Nullable getPinningConfigurationKeyForDomain(NSString * _Nonnull hos
             {
                 // Is the server a subdomain of this pinned server?
                 TSKLog(@"Checking includeSubdomains configuration for %@", pinnedServerName);
+                if ([domainPinningPolicies[pinnedServerName][kForceSubdomains] boolValue])
+                {
+                    TSKLog(@"Checking includeSubdomains by forced configuration for %@", pinnedServerName);
+                    if( [hostname hasSuffix:pinnedServerName] )
+                    {
+                        notedHostname = pinnedServerName;
+                        break;
+                    }
+                }
+                
                 NSUInteger currentMatch = isSubdomain(pinnedServerName, hostname);
                 if (currentMatch > 0 && currentMatch > bestMatch)
                 {

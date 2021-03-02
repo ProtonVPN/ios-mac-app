@@ -297,7 +297,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
-            cell.rowSeparator.isHidden = row == 0
+            cell.hideSeparator = row == 0
             return cell
         case .server(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.server), owner: self) as! ServerItemView
@@ -312,7 +312,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
-            cell.rowSeparator.isHidden = row == 0
+            cell.hideSeparator = row == 0
             return cell
         case .secureCoreServer(let model):
             let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.secureCoreServer), owner: self) as! SecureCoreServerItemView

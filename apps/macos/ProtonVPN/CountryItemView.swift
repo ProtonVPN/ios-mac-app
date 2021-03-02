@@ -22,21 +22,27 @@
 
 import Cocoa
 
-class CountryItemView: NSView {
+final class CountryItemView: NSView {
     
-    @IBOutlet weak var cellSurfaceButton: CellSurfaceButton!
-    @IBOutlet weak var countryFlagIcon: NSImageView!
-    @IBOutlet weak var countryNameLabel: NSTextField!
-    @IBOutlet weak var keywordIcon: FeatureIcon!
-    @IBOutlet weak var connectButton: ConnectButton!
-    @IBOutlet weak var expandCellButton: ExpandCellButton!
-    @IBOutlet weak var rowSeparator: NSBox!
+    @IBOutlet private weak var cellSurfaceButton: CellSurfaceButton!
+    @IBOutlet private weak var countryFlagIcon: NSImageView!
+    @IBOutlet private weak var countryNameLabel: NSTextField!
+    @IBOutlet private weak var keywordIcon: FeatureIcon!
+    @IBOutlet private weak var connectButton: ConnectButton!
+    @IBOutlet private weak var expandCellButton: ExpandCellButton!
+    @IBOutlet private weak var maintenanceIcon: WrenchIcon!
+    @IBOutlet private weak var rowSeparator: NSBox!
     
     private var viewModel: CountryItemViewModel!
     private var trackingArea: NSTrackingArea?
     private var isHovered = false
     
-    public var disabled: Bool = false
+    var disabled: Bool = false
+    var hideSeparator: Bool = false {
+        didSet {
+            rowSeparator.isHidden = hideSeparator
+        }
+    }
     
     override func viewWillMove(toSuperview newSuperview: NSView?) {
         super.viewWillMove(toSuperview: newSuperview)
@@ -53,13 +59,13 @@ class CountryItemView: NSView {
         }
     }
     
-    override open func mouseEntered(with event: NSEvent) {
+    override func mouseEntered(with event: NSEvent) {
         if disabled { return }
         isHovered = true
         hideConnectButton(false)
     }
     
-    override open func mouseExited(with event: NSEvent) {
+    override func mouseExited(with event: NSEvent) {
         isHovered = false
         hideConnectButton(!viewModel.isConnected)
     }
@@ -75,6 +81,8 @@ class CountryItemView: NSView {
         setupCountryFlagIcon()
         
         countryNameLabel.attributedStringValue = viewModel.description
+
+        maintenanceIcon.isHidden = !viewModel.underMaintenance
         
         setupKeywordIcon()
         setupConnectButton()
@@ -116,7 +124,8 @@ class CountryItemView: NSView {
     }
     
     private func setupCountryFlagIcon() {
-        countryFlagIcon.image = NSImage(named: NSImage.Name(viewModel.countryCode.lowercased() + "-plain"))
+        let flagImage = NSImage(named: NSImage.Name(viewModel.countryCode.lowercased() + "-plain"))
+        countryFlagIcon.image = viewModel.underMaintenance ? flagImage?.grayOut() : flagImage
         countryFlagIcon.wantsLayer = true
         countryFlagIcon.layer?.cornerRadius = 2
     }
@@ -132,6 +141,7 @@ class CountryItemView: NSView {
     }
     
     private func setupExpandCellButton() {
+        expandCellButton.isHidden = viewModel.underMaintenance
         expandCellButton.cellState = viewModel.state
         expandCellButton.target = self
         expandCellButton.action = #selector(changeCellStateButtonAction)
@@ -142,12 +152,12 @@ class CountryItemView: NSView {
     }
     
     private func hideConnectButton(_ shouldHide: Bool) {
-        connectButton.isHidden = shouldHide
+        connectButton.isHidden = shouldHide || viewModel.underMaintenance
         
         if viewModel.feature.rawValue <= 1 {
             keywordIcon.isHidden = true
         } else {
-            keywordIcon.isHidden = !shouldHide
+            keywordIcon.isHidden = !(shouldHide || viewModel.underMaintenance)
         }
     }
     

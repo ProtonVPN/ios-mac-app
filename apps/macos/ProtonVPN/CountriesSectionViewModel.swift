@@ -179,6 +179,24 @@ class CountriesSectionViewModel {
     func isCountryExpanded(_ countryCode: String) -> Bool {
         return state.currentlyExpanded.contains(countryCode)
     }
+
+    func isCountryUnderMaintenance(_ countryCode: String) -> Bool {
+        let allServersUnderMaintenance = { (groups: [CountryGroup]) -> Bool in
+            guard let group = groups.first(where: { $0.0.countryCode == countryCode }) else {
+                PMLog.ET("Checking for country with invalid code")
+                return false
+            }
+
+            return group.1.allSatisfy({ $0.underMaintenance })
+        }
+
+        switch state {
+        case let .standard(groups, _):
+            return allServersUnderMaintenance(groups)
+        case let .secureCore(groups, _):
+            return allServersUnderMaintenance(groups)
+        }
+    }
     
     func toggleCell(forCountryCode countryCode: String) {
         let content = state.currentContent

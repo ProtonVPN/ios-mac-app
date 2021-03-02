@@ -52,7 +52,7 @@ class QuickSettingsDropdownOption: NSView {
         containerView.layer?.masksToBounds = false
         containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
     
-        plusText.stringValue = LocalizedString.plus
+        plusText.stringValue = LocalizedString.upgrade.uppercased()
         plusAndTitleConstraint.isActive = false
     }
     

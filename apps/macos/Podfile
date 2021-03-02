@@ -15,6 +15,12 @@ def common_pods
     # development pods
     tunnelkit_pod
     pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
+
+    # Core
+    pod 'PMNetworking', :path => '../pmnetworking' # run `pod update PMNetworking` after changing source
+
+    # Certificates pinning
+    pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
 end
 
 target 'ProtonVPN' do

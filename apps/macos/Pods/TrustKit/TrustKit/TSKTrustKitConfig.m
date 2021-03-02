@@ -11,7 +11,7 @@
 
 #import "TSKTrustKitConfig.h"
 
-NSString * const TrustKitVersion = @"1.6.5";
+NSString * const TrustKitVersion = @"1.7.0";
 
 // General keys
 const TSKGlobalConfigurationKey kTSKSwizzleNetworkDelegates = @"TSKSwizzleNetworkDelegates";
@@ -25,6 +25,7 @@ const TSKDomainConfigurationKey kTSKEnforcePinning = @"TSKEnforcePinning";
 const TSKDomainConfigurationKey kTSKExcludeSubdomainFromParentPolicy = @"kSKExcludeSubdomainFromParentPolicy";
 
 const TSKDomainConfigurationKey kTSKIncludeSubdomains = @"TSKIncludeSubdomains";
+const TSKDomainConfigurationKey kForceSubdomains = @"TSKForceSubdomains";
 const TSKDomainConfigurationKey kTSKPublicKeyAlgorithms = @"TSKPublicKeyAlgorithms";
 const TSKDomainConfigurationKey kTSKReportUris = @"TSKReportUris";
 const TSKDomainConfigurationKey kTSKDisableDefaultReportUri = @"TSKDisableDefaultReportUri";
