@@ -114,7 +114,7 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
     func displayStep1() {
         if #available(macOS 11.0, *) {
             step1ScreenshotVerticalConstraint.constant = -30
-            step1NumberVerticalConstraint.constant = -141
+            step1NumberVerticalConstraint.constant = -107
             step1ScreenshotImageView.image = NSImage(named: "open_extension_install_step1-11")
 
         } else { // macOS 10.15

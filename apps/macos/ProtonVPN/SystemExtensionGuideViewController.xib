@@ -35,8 +35,8 @@
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="jNA-mD-boC" userLabel="Body">
                     <rect key="frame" x="0.0" y="50" width="874" height="450"/>
                     <subviews>
-                        <customView hidden="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTT-Tx-j2q" userLabel="Step1">
-                            <rect key="frame" x="0.0" y="1000" width="874" height="450"/>
+                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aTT-Tx-j2q" userLabel="Step1">
+                            <rect key="frame" x="0.0" y="0.0" width="874" height="450"/>
                             <subviews>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="TWI-8E-ZFe" userLabel="Screenshot">
                                     <rect key="frame" x="170" y="40" width="534" height="370"/>
@@ -47,7 +47,7 @@
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageScaling="proportionallyDown" image="open_extension_install_step1-11" id="ZWl-I7-kgk"/>
                                 </imageView>
                                 <imageView translatesAutoresizingMaskIntoConstraints="NO" id="W4n-Hn-8Mc" userLabel="Nr 1">
-                                    <rect key="frame" x="145" y="117" width="192" height="64"/>
+                                    <rect key="frame" x="145" y="83" width="192" height="64"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="192" id="PMC-wi-bcZ"/>
                                         <constraint firstAttribute="height" constant="64" id="cRh-0K-rkQ"/>
@@ -55,7 +55,7 @@
                                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" animates="YES" imageAlignment="left" imageScaling="axesIndependently" image="ic_detail_circle" id="MzY-vV-X0r"/>
                                 </imageView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xdt-bL-wLh">
-                                    <rect key="frame" x="143" y="129" width="68" height="40"/>
+                                    <rect key="frame" x="143" y="95" width="68" height="40"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="64" id="snO-sz-h2e"/>
                                     </constraints>
@@ -70,7 +70,7 @@
                                 <constraint firstItem="xdt-bL-wLh" firstAttribute="centerY" secondItem="W4n-Hn-8Mc" secondAttribute="centerY" id="2ET-wG-RMm"/>
                                 <constraint firstItem="TWI-8E-ZFe" firstAttribute="leading" secondItem="W4n-Hn-8Mc" secondAttribute="trailing" constant="-167" id="9zb-E1-FOD"/>
                                 <constraint firstItem="TWI-8E-ZFe" firstAttribute="centerX" secondItem="aTT-Tx-j2q" secondAttribute="centerX" id="AYR-BP-p4r"/>
-                                <constraint firstItem="W4n-Hn-8Mc" firstAttribute="top" secondItem="TWI-8E-ZFe" secondAttribute="bottom" constant="-141" id="GQe-wS-e90"/>
+                                <constraint firstItem="W4n-Hn-8Mc" firstAttribute="top" secondItem="TWI-8E-ZFe" secondAttribute="bottom" constant="-107" id="GQe-wS-e90"/>
                                 <constraint firstItem="TWI-8E-ZFe" firstAttribute="centerY" secondItem="aTT-Tx-j2q" secondAttribute="centerY" id="Mz1-9Z-Muu"/>
                                 <constraint firstItem="xdt-bL-wLh" firstAttribute="leading" secondItem="W4n-Hn-8Mc" secondAttribute="leading" id="aYr-nO-KQV"/>
                             </constraints>
