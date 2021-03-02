@@ -308,7 +308,7 @@ public class VpnManager: VpnManagerProtocol {
             self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
                 saveToPreferences()
             })
-        }else {
+        } else {
             saveToPreferences()
         }
         #else
