@@ -80,6 +80,10 @@ final class ConnectionSettingsViewModel {
             return 0
         }
     }
+
+    var alternativeRouting: Bool {
+        return propertiesManager.alternativeRouting
+    }
     
     // MARK: - Item counts
     
@@ -133,6 +137,10 @@ final class ConnectionSettingsViewModel {
         } else {
             propertiesManager.vpnProtocol = .openVpn(.udp)
         }
+    }
+
+    func setAlternatveRouting(_ enabled: Bool) {
+        propertiesManager.alternativeRouting = enabled
     }
     
     // MARK: - Item

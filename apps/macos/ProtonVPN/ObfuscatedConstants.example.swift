@@ -30,5 +30,6 @@ import Foundation
 class ObfuscatedConstants {
     
     static let sentryDsn: String = ""
-    
+
+    static let apiHost: String = ""
 }

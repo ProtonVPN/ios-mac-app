@@ -50,6 +50,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             #endif
             
             AppLaunchRoutine.execute()
+
+            ApiConstants.apiHost = ObfuscatedConstants.apiHost
             
             _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
             self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())

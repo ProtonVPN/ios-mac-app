@@ -23,39 +23,44 @@
 import Cocoa
 import vpncore
 
-class ConnectionSettingsViewController: NSViewController {
+final class ConnectionSettingsViewController: NSViewController {
     
     fileprivate enum SwitchButtonOption: Int {
         case killSwitch
     }
     
-    @IBOutlet weak var autoConnectLabel: PVPNTextField!
-    @IBOutlet weak var autoConnectList: HoverDetectionPopUpButton!
-    @IBOutlet weak var autoConnectSeparator: NSBox!
-    @IBOutlet weak var autoConnectInfoIcon: NSImageView!
+    @IBOutlet private weak var autoConnectLabel: PVPNTextField!
+    @IBOutlet private weak var autoConnectList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var autoConnectSeparator: NSBox!
+    @IBOutlet private weak var autoConnectInfoIcon: NSImageView!
     
-    @IBOutlet weak var quickConnectLabel: PVPNTextField!
-    @IBOutlet weak var quickConnectList: HoverDetectionPopUpButton!
-    @IBOutlet weak var quickConnectSeparator: NSBox!
-    @IBOutlet weak var quickConnectInfoIcon: NSImageView!
+    @IBOutlet private weak var quickConnectLabel: PVPNTextField!
+    @IBOutlet private weak var quickConnectList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var quickConnectSeparator: NSBox!
+    @IBOutlet private weak var quickConnectInfoIcon: NSImageView!
     
-    @IBOutlet weak var protocolView: NSView!
-    @IBOutlet weak var protocolLabel: PVPNTextField!
-    @IBOutlet weak var protocolList: HoverDetectionPopUpButton!
-    @IBOutlet weak var protocolSeparator: NSBox!
-    @IBOutlet weak var protocolInfoIcon: NSImageView!
+    @IBOutlet private weak var protocolView: NSView!
+    @IBOutlet private weak var protocolLabel: PVPNTextField!
+    @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var protocolSeparator: NSBox!
+    @IBOutlet private weak var protocolInfoIcon: NSImageView!
     
-    @IBOutlet weak var openVPNView: NSView!
-    @IBOutlet weak var openVPNLabel: PVPNTextField!
-    @IBOutlet weak var openVPNList: HoverDetectionPopUpButton!
-    @IBOutlet weak var openVPNSeparator: NSBox!
-    @IBOutlet weak var openVPNInfoIcon: NSImageView!
+    @IBOutlet private weak var openVPNView: NSView!
+    @IBOutlet private weak var openVPNLabel: PVPNTextField!
+    @IBOutlet private weak var openVPNList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var openVPNSeparator: NSBox!
+    @IBOutlet private weak var openVPNInfoIcon: NSImageView!
 
-    @IBOutlet weak var dnsLeakProtectionLabel: PVPNTextField!
-    @IBOutlet weak var dnsLeakProtectionButton: SwitchButton!
-    @IBOutlet weak var dnsLeakProtectionSeparator: NSBox!
-    @IBOutlet weak var dnsLeakProtectionInfoIcon: NSImageView!
+    @IBOutlet private weak var dnsLeakProtectionLabel: PVPNTextField!
+    @IBOutlet private weak var dnsLeakProtectionButton: SwitchButton!
+    @IBOutlet private weak var dnsLeakProtectionSeparator: NSBox!
+    @IBOutlet private weak var dnsLeakProtectionInfoIcon: NSImageView!
     
+    @IBOutlet private weak var alternativeRoutingLabel: PVPNTextField!
+    @IBOutlet private weak var alternativeRoutingButton: SwitchButton!
+    @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
+    @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
+
     private var viewModel: ConnectionSettingsViewModel
     
     required init?(coder: NSCoder) {
@@ -79,6 +84,7 @@ class ConnectionSettingsViewController: NSViewController {
 //        setupProtocolItem()
 //        setupOpenVPNProtocolItem()
         setupDnsLeakProtectionItem()
+        setupAlternativeRoutingItem()
     }
     
     private func setupView() {
@@ -150,6 +156,18 @@ class ConnectionSettingsViewController: NSViewController {
         dnsLeakProtectionButton.enabled = false
         
         dnsLeakProtectionSeparator.fillColor = .protonLightGrey()
+    }
+
+    private func setupAlternativeRoutingItem() {
+        alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemTitleAlternative.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        alternativeRoutingInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        alternativeRoutingInfoIcon.toolTip = LocalizedString.troubleshootItemDescriptionAlternative.replacingOccurrences(of: LocalizedString.troubleshootItemLinkAlternative1, with: "")
+
+        alternativeRoutingButton.setState(viewModel.alternativeRouting ? .on : .off)
+        alternativeRoutingButton.delegate = self
+
+        alternativeRoutingSeparator.fillColor = .protonLightGrey()
     }
     
     private func refreshAutoConnect() {
@@ -235,5 +253,15 @@ class ConnectionSettingsViewController: NSViewController {
     
     @objc private func openVPNItemSelected() {
         viewModel.setOpenVPN(openVPNList.indexOfSelectedItem)
+    }
+}
+
+extension ConnectionSettingsViewController: SwitchButtonDelegate {
+    func switchButtonClicked(_ button: NSButton) {
+        guard button.superview == alternativeRoutingButton else {
+            return
+        }
+
+        viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
     }
 }
