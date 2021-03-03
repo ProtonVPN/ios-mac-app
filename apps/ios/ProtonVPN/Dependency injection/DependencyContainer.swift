@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Alamofire
 import Foundation
 import vpncore
 import KeychainAccess
@@ -423,5 +424,12 @@ extension DependencyContainer: ChallengeFactory {
 extension DependencyContainer: TroubleshootViewModelFactory {
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
         return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+}
+
+// MARK: AppSpecificRequestAdapterFatory
+extension DependencyContainer: AppSpecificRequestAdapterFatory {
+    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
+        return ChallengeAppSpecificRequestAdapter(challenge: challenge)
     }
 }
