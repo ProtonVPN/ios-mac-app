@@ -198,7 +198,12 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
     }
     
     private func step1checkUsername() {
-        guard let username = username else { return }
+        guard let username = username else {
+            return
+        }
+
+        challenge.appendCheckedUsername(username)
+
         userApiService.checkAvailability(username: username, success: { [weak self] in
             self?.step2Pay()
         }, failure: { [weak self] error in
