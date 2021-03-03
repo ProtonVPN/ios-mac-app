@@ -418,3 +418,10 @@ extension DependencyContainer: ChallengeFactory {
         return challenge
     }
 }
+
+// MARK: TroubleshootViewModelFactory
+extension DependencyContainer: TroubleshootViewModelFactory {
+    func makeTroubleshootViewModel() -> TroubleshootViewModel {
+        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+}

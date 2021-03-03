@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import vpncore
 
 protocol TroubleshootCoordinatorFactory {
     func makeTroubleshootCoordinator() -> TroubleshootCoordinator

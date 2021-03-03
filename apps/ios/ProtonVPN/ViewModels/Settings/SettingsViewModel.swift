@@ -248,6 +248,12 @@ class SettingsViewModel {
         
         cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
+
+        cells.append(.toggle(title: LocalizedString.troubleshootItemTitleAlternative, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
+            self.propertiesManager.alternativeRouting.toggle()
+            callback(self.propertiesManager.alternativeRouting)
+        })
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemDescriptionAlternative.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemLinkAlternative1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
