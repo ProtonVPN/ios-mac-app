@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Alamofire
 import Foundation
 import vpncore
 import PMChallenge
@@ -97,5 +98,34 @@ final class CoreChallenge: Challenge {
     func export() throws -> [String: Any] {
         let data = challenge.export()
         return try data.asDictionary()
+    }
+}
+
+/**
+ Modifies every request that contains challenge data with the latest challenge data.
+
+ A request with challenge data might trigger human verification. When the user completes human verification the request is automatically retried. The problem is that human verification affects the challenge data in that retried request. As a result it cannot be just retried, it needs to be modified with the latest challenge data before retrying.
+ */
+final class ChallengeAppSpecificRequestAdapter: RequestAdapter {
+    private let challenge: Challenge
+
+    init(challenge: Challenge) {
+        self.challenge = challenge
+    }
+
+    func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
+        guard let data = urlRequest.httpBody, var json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], var payload = json["Payload"] as? [String: Any] else {
+            completion(.success(urlRequest))
+            return
+        }
+
+        PMLog.D("Modifying request with latest challenge data")
+
+        var urlRequest = urlRequest
+        payload["vpn-ios-challenge"] = try? challenge.export()
+        json["Payload"] = payload
+        urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: json, options: [])
+
+        completion(.success(urlRequest))
     }
 }
