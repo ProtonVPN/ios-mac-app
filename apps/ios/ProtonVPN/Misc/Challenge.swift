@@ -45,6 +45,8 @@ protocol Challenge {
 
     func observeTextField(textField: UITextField, type: ChallengeTextFieldType)
 
+    func appendCheckedUsername(_ username: String)
+
     func export() throws -> [String: Any]
 }
 
@@ -65,6 +67,10 @@ final class CoreChallenge: Challenge {
         } catch {
             PMLog.ET("Finishing challenge verification failed: \(error.localizedDescription)")
         }
+    }
+
+    func appendCheckedUsername(_ username: String) {
+        challenge.appendCheckedUsername(username)
     }
 
     func observeTextField(textField: UITextField, type: ChallengeTextFieldType) {

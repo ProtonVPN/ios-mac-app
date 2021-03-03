@@ -24,6 +24,10 @@ import Foundation
 import UIKit
 
 final class ChallengeMock: Challenge {
+    func appendCheckedUsername(_ username: String) {
+        
+    }
+
     func start() {
 
     }
