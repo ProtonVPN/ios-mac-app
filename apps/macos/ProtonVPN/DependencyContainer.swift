@@ -20,12 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Alamofire
 import Foundation
 import vpncore
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
-class DependencyContainer {
+final class DependencyContainer {
     
     private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
     private let appGroup = "J6S6Q257EK.group.ch.protonvpn.mac"
@@ -382,5 +383,12 @@ extension DependencyContainer: UpdateManagerFactory {
 extension DependencyContainer: TroubleshootViewModelFactory {
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
         return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+}
+
+// MARK: AppSpecificRequestAdapterFatory
+extension DependencyContainer: AppSpecificRequestAdapterFatory {
+    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
+        return nil
     }
 }
