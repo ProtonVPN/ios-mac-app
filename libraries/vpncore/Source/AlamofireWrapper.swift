@@ -70,7 +70,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         
     public init(factory: Factory? = nil) {
         super.init()
-        
+
         self.factory = factory
         
         var adapters: [RequestAdapter] = []
@@ -91,7 +91,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         )
         
         self.session = Session(
-            delegate: self.trustKitHelper ?? SessionDelegate(),
+            delegate: self.trustKitHelper ?? AlamofireSessionDelegate(),
             interceptor: interceptor,
             eventMonitors: [APILogger()]
         )
@@ -100,22 +100,27 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     }
     
     private var authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
+    private let alternativeRoutingInterceptor = AlternativeRoutingInterceptor()
     
-    private func authInterceptor(for request: URLRequestConvertible) -> AuthenticationInterceptor<ProtonAPIAuthenticator>? {
+    private func interceptor(for request: URLRequestConvertible) -> Interceptor? {
+        let altInterceptor: AlternativeRoutingInterceptor? = propertiesManager?.alternativeRouting == true ? alternativeRoutingInterceptor : nil
+
         // No need 
         guard !(request is AuthRefreshRequest) else {
-            return nil
+            return altInterceptor.flatMap({ Interceptor(interceptors: [$0]) })
         }
         guard let factory = factory else {
-            return nil
+            return altInterceptor.flatMap({ Interceptor(interceptors: [$0]) })
         }
         if authInterceptor == nil {
             guard let authCredentials = AuthKeychain.fetch() else {
-                return nil
+                return altInterceptor.flatMap({ Interceptor(interceptors: [$0]) })
             }
             authInterceptor = AuthenticationInterceptor(authenticator: factory.makeProtonAPIAuthenticator(), credential: authCredentials)
         }
-        return authInterceptor
+
+        let interceptors: [RequestInterceptor?] = [altInterceptor, authInterceptor]
+        return Interceptor(interceptors: interceptors.compactMap({ $0 }))
     }
     
     // MARK: - Request
@@ -128,9 +133,9 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     public func request(_ request: URLRequestConvertible, success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
                 
-        session.request(request, interceptor: self.authInterceptor(for: request)).validated.responseJSON(queue: requestQueue) { [weak self] response in
+        session.request(request, interceptor: self.interceptor(for: request)).validated.responseJSON(queue: requestQueue) { [weak self] response in
             response.debugLog()
-            
+
             if let error = self?.failsTLS(request) {
                 failure(error)
                 return
@@ -147,7 +152,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
     public func request(_ request: URLRequestConvertible, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
-        session.request(request, interceptor: self.authInterceptor(for: request)).validated.responseString(queue: requestQueue) { response in
+        session.request(request, interceptor: self.interceptor(for: request)).validated.responseString(queue: requestQueue) { response in
             if let result = try? response.result.get() {
                 success(result)
             }
@@ -157,7 +162,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     // MARK: - Upload
     
     public func upload(_ request: URLRequestConvertible, parameters: [String: String], files: [String: URL], success: @escaping JSONCallback, failure: @escaping ErrorCallback) {
-        
+
         session.upload(multipartFormData: { multipartFormData in
             for (key, value) in parameters {
                 multipartFormData.append(value.data(using: .utf8)!, withName: key)
@@ -165,8 +170,8 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             files.forEach({ (name, file) in
                 multipartFormData.append(file, withName: name)
             })
-        }, with: request, interceptor: self.authInterceptor(for: request)).validated.responseJSON {[weak self] response in
-            
+        }, with: request, interceptor: self.interceptor(for: request)).validated.responseJSON { [weak self] response in
+
             if let error = self?.failsTLS(request) {
                 failure(error)
                 return

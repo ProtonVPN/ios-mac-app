@@ -23,13 +23,19 @@ variables:
   GEM_HOME: "$CI_PROJECT_DIR/gem"
   PUBLIC_REPO_URL: git@github.com:ProtonVPN/vpncore.git
 
+.before_script_mac: &before_script_mac
+  - rm -fr ../pmnetworking || true # ignore failure to delete
+  - git clone --depth 1 -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365)
+  - pod install  
+
 lint:
   stage: linting
   tags:
     - iOS
     - macOS
-  script:
-    - pod install
+  before_script:
+    - *before_script_mac
+  script:    
     - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:
@@ -44,9 +50,9 @@ lint:
 unit_tests:
   dependencies: []
   stage: unit_tests
+  before_script:
+    - *before_script_mac
   script:
-    - pod install
-
     - fastlane ios test
 
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE

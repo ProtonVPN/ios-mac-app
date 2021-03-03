@@ -676,7 +676,7 @@ extension StoreKitManagerImplementation {
         guard let receiptUrl = Bundle.main.appStoreReceiptURL else {
             throw Errors.sandboxReceipt
         }
-        guard !receiptUrl.lastPathComponent.contains("sandbox") || ApiConstants.baseURL != ApiConstants.liveURL else { // don't allow sandbox receipts on live
+        guard !receiptUrl.lastPathComponent.contains("sandbox") || ApiConstants.doh.defaultHost != ApiConstants.liveURL else { // don't allow sandbox receipts on live
             throw Errors.sandboxReceipt
         }
 

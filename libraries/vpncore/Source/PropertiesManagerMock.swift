@@ -57,6 +57,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var netShieldType: NetShieldType? = .off
     public var maintenanceServerRefreshIntereval: Int = 1
     public var humanValidationFailed: Bool = false
+    public var alternativeRouting: Bool = false
     
     var earlyAccess: Bool = false
     

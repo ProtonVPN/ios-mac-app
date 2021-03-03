@@ -1,14 +1,44 @@
 PODS:
+  - AFNetworking (4.0.1):
+    - AFNetworking/NSURLSession (= 4.0.1)
+    - AFNetworking/Reachability (= 4.0.1)
+    - AFNetworking/Security (= 4.0.1)
+    - AFNetworking/Serialization (= 4.0.1)
+    - AFNetworking/UIKit (= 4.0.1)
+  - AFNetworking/NSURLSession (4.0.1):
+    - AFNetworking/Reachability
+    - AFNetworking/Security
+    - AFNetworking/Serialization
+  - AFNetworking/Reachability (4.0.1)
+  - AFNetworking/Security (4.0.1)
+  - AFNetworking/Serialization (4.0.1)
+  - AFNetworking/UIKit (4.0.1):
+    - AFNetworking/NSURLSession
   - Alamofire (5.3.0)
+  - AwaitKit (5.0.1):
+    - PromiseKit (~> 6)
   - KeychainAccess (3.2.1)
   - OpenSSL-Apple (1.1.1g.6)
+  - PMNetworking (1.0.0):
+    - AFNetworking (~> 4.0)
+    - AwaitKit (~> 5.0.0)
+    - PromiseKit (~> 6.0)
+  - PromiseKit (6.13.1):
+    - PromiseKit/CorePromise (= 6.13.1)
+    - PromiseKit/Foundation (= 6.13.1)
+    - PromiseKit/UIKit (= 6.13.1)
+  - PromiseKit/CorePromise (6.13.1)
+  - PromiseKit/Foundation (6.13.1):
+    - PromiseKit/CorePromise
+  - PromiseKit/UIKit (6.13.1):
+    - PromiseKit/CorePromise
   - ReachabilitySwift (5.0.0)
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
   - SwiftLint (0.41.0)
   - SwiftyBeaver (1.9.1)
-  - TrustKit (1.6.5)
+  - TrustKit (1.7.0)
   - TunnelKit (2.2.4):
     - TunnelKit/Protocols/OpenVPN (= 2.2.4)
   - TunnelKit/AppExtension (2.2.4):
@@ -24,44 +54,59 @@ PODS:
 DEPENDENCIES:
   - Alamofire (= 5.3.0)
   - KeychainAccess (= 3.2.1)
+  - PMNetworking (from `../pmnetworking`)
   - ReachabilitySwift (= 5.0.0)
   - Sentry (= 4.5.0)
   - SwiftLint
-  - TrustKit (= 1.6.5)
+  - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
   - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - AFNetworking
     - Alamofire
+    - AwaitKit
     - KeychainAccess
     - OpenSSL-Apple
+    - PromiseKit
     - ReachabilitySwift
     - Sentry
     - SwiftLint
     - SwiftyBeaver
-    - TrustKit
 
 EXTERNAL SOURCES:
+  PMNetworking:
+    :path: "../pmnetworking"
+  TrustKit:
+    :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
+    :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
     :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 CHECKOUT OPTIONS:
+  TrustKit:
+    :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
+    :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
     :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
     :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
+  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
+  AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
+  PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
+  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
   SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
-  TrustKit: 073855e3adecd317417bda4ac9e9ac54a2e3b9f2
+  TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
 
-PODFILE CHECKSUM: 622f4f414843ba8da6c4fe4263b3153d354e5029
+PODFILE CHECKSUM: c83101d21a38ec01b5ec3949689446a14dcaa3e2
 
 COCOAPODS: 1.10.0

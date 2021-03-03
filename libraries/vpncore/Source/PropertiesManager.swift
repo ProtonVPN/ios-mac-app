@@ -69,6 +69,7 @@ public protocol PropertiesManagerProtocol: class {
     var lastTimeForeground: Date? { get set }
     
     var humanValidationFailed: Bool { get set }
+    var alternativeRouting: Bool { get set }
     
     func logoutCleanup()
     
@@ -124,6 +125,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
         
         static let humanValidationFailed: String = "humanValidationFailed"
+        static let alternativeRouting: String = "alternativeRouting"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -324,6 +326,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.apiEndpoint)
+
+            //swiftlint:disable force_try
+            // DoH needs to be recreated to take the new endpoint into effect
+            ApiConstants.doh = try! DoHVPN(apiHost: ApiConstants.apiHost)
+            //swiftlint:enable force_try
         }
     }
     
@@ -453,8 +460,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(newValue, forKey: Keys.humanValidationFailed)
         }
     }
+
+    public var alternativeRouting: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: Keys.alternativeRouting)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.alternativeRouting)
+        }
+    }
     
-    public init() {} // makes the class accessable publicly
+    public init() {
+        Storage.userDefaults().register(defaults: [
+            Keys.alternativeRouting: true
+        ])
+    }
     
     public func logoutCleanup() {
         hasConnected = false
@@ -466,6 +486,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpiring = false
         warnedTrialExpired = false
         reportBugEmail = nil
+        alternativeRouting = true
         
         #if !APP_EXTENSION
         currentSubscription = nil
