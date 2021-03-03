@@ -32,6 +32,10 @@ public protocol AlamofireWrapperFactory {
     func makeAlamofireWrapper() -> AlamofireWrapper
 }
 
+public protocol AppSpecificRequestAdapterFatory {
+    func makeAppSpecificRequestAdapter() -> RequestAdapter?
+}
+
 public protocol AlamofireWrapper: class {
     
     func getHumanVerificationToken() -> HumanVerificationToken?
@@ -49,7 +53,7 @@ public protocol AlamofireWrapper: class {
 
 public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
-    public typealias Factory = CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory
+    public typealias Factory = CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AppSpecificRequestAdapterFatory
     private var factory: Factory?
     
     private var alertService: CoreAlertService?
@@ -83,6 +87,10 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             self.trustKitHelper = factory.makeTrustKitHelper()
             self.propertiesManager = factory.makePropertiesManager()
             adapters.append(humanVerificationAdapter)
+
+            if let appSpecificRequestAdapter = factory.makeAppSpecificRequestAdapter() {
+                adapters.append(appSpecificRequestAdapter)
+            }
         }
         
         let interceptor = Interceptor(

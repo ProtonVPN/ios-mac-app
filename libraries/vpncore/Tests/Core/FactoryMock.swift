@@ -20,9 +20,10 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import Alamofire
 import Foundation
 
-final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory {
+final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory & AppSpecificRequestAdapterFatory {
 
     private lazy var alamofireWrapper: AlamofireWrapper = {
         return AlamofireWrapperImplementation(factory: self)
@@ -56,5 +57,9 @@ final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFacto
 
     func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
         return ProtonAPIAuthenticator(self)
+    }
+
+    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
+        return nil
     }
 }
