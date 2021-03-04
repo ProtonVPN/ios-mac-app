@@ -25,7 +25,7 @@ import vpncore
 
 class MacAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & NotificationManagerFactory & UpdateManagerFactory & PropertiesManagerFactory & TroubleshootViewModelFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -33,6 +33,7 @@ class MacAlertService {
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var notificationManager: NotificationManagerProtocol = factory.makeNotificationManager()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     fileprivate var lastTimeCheckMaintenance = Date(timeIntervalSince1970: 0)
     
@@ -54,34 +55,34 @@ extension MacAlertService: CoreAlertService {
         }
         
         switch alert {
-        case is AppUpdateRequiredAlert:
-            show(alert as! AppUpdateRequiredAlert)
+        case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
+            show(appUpdateRequiredAlert)
             
-        case is CannotAccessVpnCredentialsAlert:
-            show(alert as! CannotAccessVpnCredentialsAlert)
+        case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
+            show(cannotAccessVpnCredentialsAlert)
             
         case is ExistingConnectionAlert:
             showDefaultSystemAlert(alert)
             
-        case is FirstTimeConnectingAlert:
+        case let firstTimeConnectingAlert as FirstTimeConnectingAlert:
             // Neagent popup is no longer an issue in macOS 10.15+, so we don't need to show the help anymore
             if #available(OSX 10.15, *) {
                 // do nothing
             } else {
-                show(alert as! FirstTimeConnectingAlert)
+                show(firstTimeConnectingAlert)
             }
             
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
             
-        case is P2pForwardedAlert:
-            show(alert as! P2pForwardedAlert)
+        case let p2pForwardedAlert as P2pForwardedAlert:
+            show(p2pForwardedAlert)
             
-        case is RefreshTokenExpiredAlert:
-            show(alert as! RefreshTokenExpiredAlert)
+        case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
+            show(refreshTokenExpiredAlert)
             
-        case is UpgradeRequiredAlert:
-            show(alert as! UpgradeRequiredAlert)
+        case let upgradeRequiredAlert as UpgradeRequiredAlert:
+            show(upgradeRequiredAlert)
             
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
@@ -110,11 +111,11 @@ extension MacAlertService: CoreAlertService {
         case is ActiveFirewallAlert:
             showDefaultSystemAlert(alert)
             
-        case is InstallingHelperAlert:
-            show(alert as! InstallingHelperAlert)
+        case let installingHelperAlert as InstallingHelperAlert:
+            show(installingHelperAlert)
             
-        case is UpdatingHelperAlert:
-            show(alert as! UpdatingHelperAlert)
+        case let updatingHelperAlert as UpdatingHelperAlert:
+            show(updatingHelperAlert)
             
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
@@ -128,11 +129,11 @@ extension MacAlertService: CoreAlertService {
         case is KillSwitchErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case is KillSwitchBlockingAlert:
-            show(alert as! KillSwitchBlockingAlert)
+        case let killSwitchBlockingAlert as KillSwitchBlockingAlert:
+            show(killSwitchBlockingAlert)
             
-        case is KillSwitchRequiresSwift5Alert:
-            show(alert as! KillSwitchRequiresSwift5Alert)
+        case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
+            show(killSwitchRequiresSwift5Alert)
            
         case is HelperInstallFailedAlert:
             showDefaultSystemAlert(alert)
@@ -149,8 +150,8 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
-        case is VpnServerOnMaintenanceAlert:
-            show(alert as! VpnServerOnMaintenanceAlert)
+        case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
+            show(vpnServerOnMaintenanceAlert)
             
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
@@ -159,6 +160,12 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is SecureCoreRequiresUpgradeAlert:
+            showDefaultSystemAlert(alert)
+
+        case let connectionTroubleshootingAlert as ConnectionTroubleshootingAlert:
+            show(connectionTroubleshootingAlert)
+
+        case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
             
         case is OpenVPNInstallationRequiredAlert:
@@ -322,11 +329,17 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: killSwitch5ViewController)
     }
     
-    private func show( _ alert: VpnServerOnMaintenanceAlert) {
+    private func show(_ alert: VpnServerOnMaintenanceAlert) {
         guard self.lastTimeCheckMaintenance.timeIntervalSinceNow < -AppConstants.Time.maintenanceMessageTimeThreshold else {
             return
         }
         self.notificationManager.displayServerGoingOnMaintenance()
         self.lastTimeCheckMaintenance = Date()
+    }
+
+    private func show(_ alert: ConnectionTroubleshootingAlert) {
+        let connectionTroubleshootingAlert = TroubleshootingPopup()
+        connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
+        windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)
     }
 }

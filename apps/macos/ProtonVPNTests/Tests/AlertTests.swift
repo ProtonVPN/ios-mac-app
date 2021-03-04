@@ -131,6 +131,14 @@ fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {
 }
 
 fileprivate class MacAlertServiceFactoryMock: MacAlertService.Factory {
+    func makePropertiesManager() -> PropertiesManagerProtocol {
+        return PropertiesManagerMock()
+    }
+
+    func makeTroubleshootViewModel() -> TroubleshootViewModel {
+        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+
     
     func makeAppSessionManager() -> AppSessionManager {
         return AppSessionManagerMock()

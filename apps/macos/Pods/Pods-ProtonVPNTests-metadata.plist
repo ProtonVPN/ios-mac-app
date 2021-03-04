@@ -414,7 +414,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>A script for compiling OpenSSL for Apple Devices</string>
 			<key>version</key>
-			<string>1.1.1h.10</string>
+			<string>1.1.1j.11</string>
 		</dict>
 		<dict>
 			<key>authors</key>

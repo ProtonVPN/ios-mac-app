@@ -82,8 +82,13 @@ class LoginViewModel {
         }, failure: { [weak self] error in
             guard let `self` = self else { return }
             self.specialErrorCaseNotification(error)
-            if (error as NSError).code == NetworkErrorCode.tls {
-                self.alertService.push(alert: MITMAlert())
+
+            let nsError = error as NSError
+            if nsError.isTlsError || nsError.isNetworkError {
+                let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                })
+                self.alertService.push(alert: alert)
                 self.logInFailure?(nil)
             } else {
                 self.logInFailure?(error.localizedDescription)

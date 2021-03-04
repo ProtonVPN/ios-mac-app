@@ -78,6 +78,10 @@ final class ConnectionSettingsViewModel {
             return 0
         }
     }
+
+    var alternativeRouting: Bool {
+        return propertiesManager.alternativeRouting
+    }
     
     // MARK: - Item counts
     
@@ -179,6 +183,10 @@ final class ConnectionSettingsViewModel {
             dismiss: requestExtensionCallback)
             alertService.push(alert: alert)
         }
+    }
+
+    func setAlternatveRouting(_ enabled: Bool) {
+        propertiesManager.alternativeRouting = enabled
     }
     
     // MARK: - Item

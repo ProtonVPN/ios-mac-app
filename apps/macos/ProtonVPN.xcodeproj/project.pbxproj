@@ -337,6 +337,10 @@
 		EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */; };
 		EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */; };
 		EEFE81DD1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */; };
+		F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */; };
+		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
+		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
+		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -772,6 +776,10 @@
 		EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationService.swift; sourceTree = "<group>"; };
 		EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVpnMenuViewModel.swift; sourceTree = "<group>"; };
 		F2512E5840AF33FACD10D5CA /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
+		F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingPopup.xib; sourceTree = "<group>"; };
+		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
+		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
+		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
 		F7DA896C8234001F756586C5 /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1288,6 +1296,7 @@
 				EE68DD501F49F4BE00F218B8 /* TabBarView.swift */,
 				EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */,
 				EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */,
+				F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1399,6 +1408,8 @@
 				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
 				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
 				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
+				F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */,
+				F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */,
 			);
 			name = Elements;
 			sourceTree = "<group>";
@@ -1413,6 +1424,7 @@
 				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
 				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
 				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
+				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
 				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
 			);
 			name = Elements;
@@ -2241,7 +2253,9 @@
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
+				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				EECEF3D91F1699F500A16606 /* CountryItem.xib in Resources */,
+				F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
 				D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */,
@@ -2414,7 +2428,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nfi\n";
 		};
 		D584998F25A3124B00CFAFDE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2559,6 +2573,7 @@
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
+				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
 				EE74FCB41F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
@@ -2705,6 +2720,7 @@
 				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */,
+				F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */,
 				EE85D4F61F1A287F0060FDBF /* LoadIcon.swift in Sources */,
 				EE98CFCF1F14E096000D6688 /* AppConstants.swift in Sources */,
 				EE8EF1E71F1FB37C0057CD94 /* PrimaryActionButton.swift in Sources */,
