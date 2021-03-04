@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "نام کاربری یا رمزعبور اشتباه است";
 
 /* Account plan description */
-"_all_countries" = "۴۰+ کشور";
+"_all_countries" = "+۵۰ کشور";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "همه‌ی سرورها در این کشور در حال تعمیر هستند. لطفا به یک کشور دیگر متصل شوید.";
@@ -664,16 +664,16 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch با مسدود کردن همه اتصالات از IP شما محافظت می‌کند.\nProtonVPN بطور خودکار به زودی دوباره متصل خواهد شد. OK را بزنید تا این پنجره بسته شود.\nدر صورت مشکل شما می‌توانید غیرفعّال کردن Kill Switch را بزنید";
+"_kill_switch_blocking_body" = "Kill Switch از IP شما حفاظت می‌کند\n\nاتصال اینترنت شما به محض اتصال مجدد ProtonVPN به یک سرور ادامه خواهد یافت. برای اینکه بدون حفاظت VPN ادامه دهید، Kill Switch را غیرفعّال کنید.";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "قابلیت Kill Switch همه ارتباطات را مسدود کرده است";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "قابلیت Kill Switch جلوی فاش شدن IP شما در شبکه را گرفته است";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "غیرفعّال کردن Kill Switch";
+"_kill_switch_disable" = "غیرفعال کردن Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "آن برنامه‌ها را پایان دهید تا مشکل حل شود. برای مرورگری بدون Kill Switch, دکمه ادامه را بزنید.";
@@ -695,6 +695,21 @@
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "رمزعبور کامپیوتر شده برای نصب تازه‌ترین به‌روزرسانی‌ای که دانلود کرده‌اید مورد نیاز است. زمانی که درخواست رمزعبور ظاهر شد، لطفا %@ را وارد کرده و شرایط را قبول کنید.\n\nاگر شما رمز عبور مک خود را وارد نکنید، Kill Switch خاموش خواهد شد.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "اتصال اینترنت شما به محض اتصال مجدد ProtonVPN به یک سرور دوباره از سر گرفته خواهد شد.\nبرای استفاده از اینترنت بدون محافظت VPN و Kill Switch, اتصال دوباره به سرور را لغو کنید.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "بدون";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "حفاظت Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "لغو اتصال دوباره";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch از IP شما حفاظت می‌کند";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "کل ترافیک شبکه در زمانی که اتصال VPN قطع شود مسدود خواهد شد. به یاد داشته باشید که اتصال VPN شما به هنگام تعویض کاربر در مک قطع خواهد شد.";
@@ -901,7 +916,7 @@
 "_netshield_level1" = "مسدود کردن بدافزار";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "مسدود کردن بدافزار، آگهی، & ردیابها";
+"_netshield_level2" = "مسدود کردن بدافزار، آگهی، & ردیاب‌ها";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "خاموش";
@@ -1141,7 +1156,7 @@
 "_quick_settings_netshield_option_level1" = "تنها مسدود کردن بدافزار";
 
 /* QuickSettings Netshield option3 */
-"_quick_settings_netshield_option_level2" = "مسدود کردن بدافزار، آگهی، & ردیابها";
+"_quick_settings_netshield_option_level2" = "مسدود کردن بدافزار، آگهی، & ردیاب‌ها";
 
 /* QuickSettings Netshield option1 */
 "_quick_settings_netshield_option_off" = "مسدود نکن";
@@ -1184,6 +1199,9 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "پیشنهاد شده";
+
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "اتصال دوباره به %@";
 
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "اتصال مجدد نیاز است";

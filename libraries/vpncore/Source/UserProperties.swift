@@ -30,6 +30,7 @@ public struct UserProperties {
     public let salt: String
     public let verifier: String
     public let appleToken: Data?
+    public let challenge: [String: Any]?
     
     public var description: String {
         return
@@ -40,12 +41,13 @@ public struct UserProperties {
         "HasAppleToken: \(appleToken == nil ? "No" : "Yes")\n"
     }
     
-    public init(email: String, username: String, modulusID: String, salt: String, verifier: String, appleToken: Data?) {
+    public init(email: String, username: String, modulusID: String, salt: String, verifier: String, appleToken: Data?, challenge: [String: Any]?) {
         self.email = email
         self.username = username
         self.modulusID = modulusID
         self.salt = salt
         self.verifier = verifier
         self.appleToken = appleToken
+        self.challenge = challenge
     }
 }

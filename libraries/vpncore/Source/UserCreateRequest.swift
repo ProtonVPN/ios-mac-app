@@ -22,9 +22,9 @@
 
 import Alamofire
 
-class UserCreateRequest: UserBaseV4Request {
+final class UserCreateRequest: UserBaseV4Request {
     
-    let userProperties: UserProperties
+    private let userProperties: UserProperties
     
     init( _ userProperties: UserProperties ) {
         self.userProperties = userProperties
@@ -49,11 +49,14 @@ class UserCreateRequest: UserBaseV4Request {
                 "Verifier": userProperties.verifier
             ]
         ]
-        if let token = userProperties.appleToken {
-            params["Payload"] = [
-                "higgs-boson": token.base64EncodedString()
-            ]
-        }
+
+        #if os(iOS)
+        params["Payload"] = [
+            "vpn-ios-payload": userProperties.appleToken?.base64EncodedString(),
+            "vpn-ios-challenge": userProperties.challenge
+        ]
+        #endif
+
         return params
     }
 }

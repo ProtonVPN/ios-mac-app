@@ -44,7 +44,7 @@
 "_ae_wrong_login_credentials" = "Nom d’utilisateur ou mot de passe incorrect";
 
 /* Account plan description */
-"_all_countries" = "Plus de 40 pays";
+"_all_countries" = "Plus de 50 pays";
 
 /* Under maintenance alert */
 "_all_servers_in_country_under_maintenance" = "Tous les serveurs de ce pays sont en maintenance. Veuillez vous connecter à un autre pays.";
@@ -216,7 +216,7 @@
 "_data_disclaimer_title" = "Protégez-vous en ligne";
 
 /* iOS: data disclaimen screen */
-"_data_disclaimer_user_details" = "Nom d'utilisateur, adresse e-mail";
+"_data_disclaimer_user_details" = "Nom d'utilisateur, adresse électronique";
 
 /* Profile create/change form */
 "_default_profile_tooltip" = "Le bouton \"Connexion rapide\" utilise le profil par défaut.\n";
@@ -297,7 +297,7 @@
 "_enjoy_for_free" = "PROFITEZ DU FORFAIT %@ GRATUITEMENT !";
 
 /* iOS: placeholder for email field in signup and email verification screens */
-"_enter_email_address" = "Entrez votre adresse e-mail";
+"_enter_email_address" = "Entrez votre adresse électronique";
 
 /* Profile create/change form */
 "_enter_profile_name" = "Entrez le nom du profil";
@@ -342,7 +342,7 @@
 "_error_decode" = "Impossible de décoder les données archivées en classe : %@";
 
 /* Internal application error */
-"_error_email_verification_disabled" = "Vérification d'adresse e-mail temporairement désactivée";
+"_error_email_verification_disabled" = "Vérification d'adresse électronique temporairement désactivée";
 
 /* Application error */
 "_error_existing_session_to_server" = "Impossible de se connecter au serveur car il y a déjà une session active de l'utilisateur";
@@ -351,7 +351,7 @@
 "_error_fetch_session" = "Impossible de trouver l'utilisateur de la session";
 
 /* Form validation error */
-"_error_field_email_wrong_format" = "L'adresse e-mail n'est pas dans le bon format";
+"_error_field_email_wrong_format" = "L'adresse électronique n'est pas dans le bon format";
 
 /* Form validation error */
 "_error_field_passwords_dont_match" = "Les mots de passe ne correspondent pas";
@@ -598,7 +598,7 @@
 "_get_plus_for_feature" = "Obtenez ProtonVPN PLUS pour débloquer ceci et d'autres fonctionnalités.";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "Recevoir l'e-mail de vérification";
+"_get_verification_email" = "Recevoir le courriel de vérification";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "Recevoir le SMS de vérification";
@@ -664,13 +664,13 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_body" = "Kill Switch protège votre IP en bloquant toutes les connexions.\n\nProtonVPN se reconnectera automatiquement. Cliquez sur OK pour fermer cette fenêtre.\n\nEn cas de problème, vous pouvez cliquer sur désactiver Kill Switch";
+"_kill_switch_blocking_body" = "Kill Switch protège votre adresse IP\n\nVotre connexion Internet reprendra dès que ProtonVPN se reconnectera à un serveur. Pour reprendre sans protection VPN, désactivez Kill Switch.";
 
 /* Notifications */
 "_kill_switch_blocking_connection" = "Kill Switch bloque toutes les connexions";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch bloque actuellement les fuites d'IP";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Désactiver Kill Switch";
@@ -695,6 +695,21 @@
 
 /* %@ is 'Mac password' */
 "_kill_switch_helper_update_popup_body" = "La mise à jour la plus récente que vous avez téléchargée nécessite que vous fournissiez le mot de passe de votre compte d'ordinateur. Lorsque la requête apparaît, veuillez entrer votre %@ et accepter.\n\nSi vous ne saisissez pas votre mot de passe Mac, Kill Switch sera désactivé.";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection" = "Votre connexion Internet reprendra dès que ProtonVPN se reconnectera à un serveur.\nPour utiliser Internet sans VPN et sans la protection Kill Switch, annulez la reconnexion au serveur.";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold1" = "sans";
+
+/* MacOS: connection screen - thes part of _kill_switch_reconnection_header is bolded */
+"_kill_switch_reconnection_bold2" = "Protection Kill Switch";
+
+/* MacOS: connection screen - cancel button */
+"_kill_switch_reconnection_cancel" = "Annuler la reconnexion";
+
+/* MacOS: connection screen - this text is appended (together with _kill_switch_reconnection) in case killswitch is enabled and app tries to reconnect */
+"_kill_switch_reconnection_header" = "Kill Switch protège votre adresse IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
 "_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu. Notez que votre connexion VPN sera interrompue lorsque vous changerez de compte Mac.";
@@ -901,7 +916,7 @@
 "_netshield_level1" = "Bloquer les programmes malveillants";
 
 /* Settings -> Netshield: Block malware, ads, trackers */
-"_netshield_level2" = "Bloquer les programmes malveillants, les publicités, & les trackers";
+"_netshield_level2" = "Bloquer malwares, trackers et pubs";
 
 /* Settings -> Netshield: Off */
 "_netshield_off" = "Désactivé";
@@ -1141,7 +1156,7 @@
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
 
 /* QuickSettings Netshield option3 */
-"_quick_settings_netshield_option_level2" = "Bloquer les programmes malveillants, les publicités, & les trackers";
+"_quick_settings_netshield_option_level2" = "Bloquer seulement les malwares";
 
 /* QuickSettings Netshield option1 */
 "_quick_settings_netshield_option_off" = "Ne pas bloquer";
@@ -1185,6 +1200,9 @@
 /* iOS: table header section in profiles screen */
 "_recommended" = "Recommandé";
 
+/* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
+"_reconnecting_to" = "Reconnexion à %@";
+
 /* iOS & MacOS: text that requires restart connection */
 "_reconnection_required" = "Reconnexion nécessaire";
 
@@ -1222,7 +1240,7 @@
 "_report_field_country" = "Pays :";
 
 /* Mac bug report: email field label */
-"_report_field_email" = "E-mail :";
+"_report_field_email" = "Adresse courriel :";
 
 /* Mac bug report: message field label */
 "_report_field_feedback" = "Commentaires";
@@ -1246,7 +1264,7 @@
 "_report_max_file_size" = "Poids maximal du fichier : 488 Ko";
 
 /* iOS bug report: Placeholder for email form field */
-"_report_placeholder_email" = "E-mail du contact";
+"_report_placeholder_email" = "Adresse électronique de contact";
 
 /* Bug report: Placeholder for text form field */
 "_report_placeholder_message" = "Votre message...";
@@ -1549,13 +1567,13 @@
 "_troubleshoot_item_nointernet_title" = "Aucune connexion Internet";
 
 /* Description of troubleshooting item */
-"_troubleshoot_item_other_description" = "Contactez-nous directement via notre formulaire d'assistance, par e-mail (%@) ou via Twitter.";
+"_troubleshoot_item_other_description" = "Contactez-nous directement via notre formulaire d'assistance, par courriel (%@) ou via Twitter.";
 
 /* Text that will become a link to supporyt form in _troubleshoot_item_other_description */
 "_troubleshoot_item_other_link1" = "formulaire d’assistance";
 
 /* Text that will become a link to email in _troubleshoot_item_other_description */
-"_troubleshoot_item_other_link2" = "e-mail";
+"_troubleshoot_item_other_link2" = "adresse courriel";
 
 /* Text that will become a link to twitter in _troubleshoot_item_other_description */
 "_troubleshoot_item_other_link3" = "Twitter";
@@ -1663,7 +1681,7 @@
 "_use_captcha_verification" = "Vérifier avec CAPTCHA";
 
 /* iOS: human verification option select button */
-"_use_other_email_address" = "Vérifier par e-mail";
+"_use_other_email_address" = "Vérifier par courriel";
 
 /* Profile create/change form */
 "_use_secure_core" = "Utiliser Secure Core";

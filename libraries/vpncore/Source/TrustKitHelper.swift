@@ -17,7 +17,8 @@ public protocol TrustKitHelperFactory {
 public final class TrustKitHelper: SessionDelegate {
     
     typealias Configuration = [String: Any]
-    
+
+    // swiftlint:disable function_body_length
     private static func configuration(hardfail: Bool = true) -> Configuration {
         var config: Configuration = [
             kTSKSwizzleNetworkDelegates: false,
@@ -49,6 +50,21 @@ public final class TrustKitHelper: SessionDelegate {
                         "YRGlaY0jyJ4Jw2/4M8FIftwbDIQfh8Sdro96CeEel54=",
                         "AfMENBVvOS8MnISprtvyPsjKlPooqh8nMB/pvCrpJpw="
                     ]
+                ],
+                ".compute.amazonaws.com": [ // <- cert pinning for alternative routes, needs to be addeed to `NSExceptionDomains` in `Info.plist`
+                    kTSKEnforcePinning: true,
+                    kTSKIncludeSubdomains: true,
+                    kForceSubdomains: true,
+                    kTSKDisableDefaultReportUri: true,
+                    kTSKReportUris: [
+                        "https://api.protonvpn.ch/reports/tls"
+                    ],
+                    kTSKPublicKeyHashes: [
+                        "EU6TS9MO0L/GsDHvVc9D5fChYLNy5JdGYpJw0ccgetM=",
+                        "iKPIHPnDNqdkvOnTClQ8zQAIKG0XavaPkcEo0LBAABA=",
+                        "MSlVrBCdL0hKyczvgYVSRNm88RicyY04Q2y5qrBt0xA=",
+                        "C2UxW0T1Ckl9s+8cXfjXxlEqwAfPM4HiW2y3UdtBeCw="
+                    ]
                 ]
             ]
         ]
@@ -59,6 +75,7 @@ public final class TrustKitHelper: SessionDelegate {
         
         return config
     }
+    // swiftlint:enable function_body_length
     
     public typealias Factory = AlamofireWrapperFactory
     private var factory: Factory

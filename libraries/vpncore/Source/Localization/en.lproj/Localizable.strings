@@ -522,7 +522,7 @@
 /* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Get %@ Plan";
 "_free_countries" = "3 Countries";
-"_all_countries" = "40+ countries";
+"_all_countries" = "50+ countries";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ speed";

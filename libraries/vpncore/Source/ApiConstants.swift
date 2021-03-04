@@ -20,29 +20,44 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import PMNetworking
 #if os(iOS)
 import UIKit
 #endif
 
 public struct ApiConstants {
-    
-    public static let liveURL = "https://api.protonvpn.ch" // do not change to development url due to IAP restriction
-    
-    private static var propertiesManager = PropertiesManager()
+    // swiftlint:disable force_try
+    internal static var doh = try! DoHVPN(apiHost: "")
+    // swiftlint:enable force_try
+
+    public static var apiHost: String = "" {
+        didSet {
+            // swiftlint:disable force_try
+            doh = try! DoHVPN(apiHost: apiHost)
+            // swiftlint:enable force_try
+        }
+    }
+
     public static var baseURL: String {
-        #if RELEASE
-        return liveURL
-        #endif
-        
-        return propertiesManager.apiEndpoint ?? liveURL
+        return doh.defaultHost
+    }
+    
+    public static var liveURL: String {
+        return doh.liveURL
+    }
+
+    public static var captchaHost: String {
+        return doh.captchaHost
+    }
+
+    internal static var statusURL: String {
+        return doh.statusHost
     }
     
     public static var baseHost: String {
-        return baseURL.domainWithoutPathAndProtocol
+        return doh.defaultHost.domainWithoutPathAndProtocol
     }
-    public static let captchaHost = "secure.protonmail.com"
-    
-    internal static let statusURL = "http://protonstatus.com"
+
     internal static let contentType = "application/json;charset=utf-8"
     internal static let mediaType = "application/vnd.protonmail.v1+json"
     public static let defaultRequestTimeout: TimeInterval = 30

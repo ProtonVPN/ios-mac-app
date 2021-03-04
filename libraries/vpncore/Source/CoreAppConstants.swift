@@ -55,6 +55,7 @@ public class CoreAppConstants {
         public static let appstoreIosUrl = "http://itunes.apple.com/app/id1437005085"
         public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
         public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
+        public static let alternativeRouting = "http://protonmail.com/blog/anti-censorship-alternative-routing"
     }
     
     public struct AttributionLinks {

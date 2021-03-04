@@ -12,6 +12,9 @@ abstract_target 'vpncore' do
     pod 'KeychainAccess', '3.2.1'
     pod 'Sentry', '4.5.0'
     pod 'ReachabilitySwift', '5.0.0'
+
+    # Core
+    pod 'PMNetworking', :path => '../pmnetworking' # run `pod update PMNetworking` after changing source
     
     # OpenVPN support
     pod 'TunnelKit', :path => '../tunnelkit'
@@ -20,7 +23,7 @@ abstract_target 'vpncore' do
     pod 'SwiftLint'
 
     # Certificates pinning
-    pod 'TrustKit', '1.6.5'
+    pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
     
     target 'vpncore-ios' do
         platform :ios, '12.0'
