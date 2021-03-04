@@ -237,7 +237,11 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func reconnect(with vpnProtocol: VpnProtocol) {
-        connect(with: lastConnectionRequest?.withChanged(vpnProtocol: vpnProtocol))
+        disconnect {
+            DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(CoreAppConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
+                self.connect(with: self.lastConnectionRequest?.withChanged(vpnProtocol: vpnProtocol))
+            })
+        }
     }
     
     public func connect(with request: ConnectionRequest?) {
