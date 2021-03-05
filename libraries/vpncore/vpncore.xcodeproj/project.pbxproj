@@ -858,6 +858,8 @@
 		F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */; };
 		F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
 		F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
+		F3AF162225F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
+		F3AF162325F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1206,6 +1208,7 @@
 		F32055A925E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlamofireWrapper+AlternativeRouting.swift"; sourceTree = "<group>"; };
 		F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeRoutingTests.swift; sourceTree = "<group>"; };
 		F320563225E7D7CB00566DB7 /* FactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMock.swift; sourceTree = "<group>"; };
+		F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolAvailabilityChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1731,6 +1734,7 @@
 		E148AE5721C2891D007AB65A /* Services */ = {
 			isa = PBXGroup;
 			children = (
+				F3AF161825F27A630025CDEE /* SmartProtocols */,
 				4242B0782465A4C60042145A /* Utils */,
 				4242B0672465A4520042145A /* Common */,
 				4242B0682465A4700042145A /* Network helpers */,
@@ -2120,6 +2124,15 @@
 				F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		F3AF161825F27A630025CDEE /* SmartProtocols */ = {
+			isa = PBXGroup;
+			children = (
+				F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */,
+				F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */,
+			);
+			name = SmartProtocols;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -2748,6 +2761,7 @@
 				D5C205082487A0CE004FB58B /* BaseRequest.swift in Sources */,
 				D5C205092487A0CE004FB58B /* VpnProperties.swift in Sources */,
 				D5C2050A2487A0CE004FB58B /* UserProperties.swift in Sources */,
+				F3AF162225F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */,
 				D5C2050B2487A0CE004FB58B /* ReportBug.swift in Sources */,
 				D5C2050C2487A0CE004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2050D2487A0CE004FB58B /* RequestItem.swift in Sources */,
@@ -3319,6 +3333,7 @@
 				D5ADFBD523A0D50F00C28CFF /* ReportsApiServiceTests.swift in Sources */,
 				D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */,
+				F3AF162325F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */,
 				D5C2045824866953004FB58B /* VpnProtocol.swift in Sources */,
 				D5C2044124866720004FB58B /* ServerStorage.swift in Sources */,
 				D5C204292486664E004FB58B /* ServerType.swift in Sources */,
