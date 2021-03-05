@@ -1424,7 +1424,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>A tool to enforce Swift style and conventions.</string>
 			<key>version</key>
-			<string>0.43.0</string>
+			<string>0.42.0</string>
 		</dict>
 		<dict>
 			<key>authors</key>

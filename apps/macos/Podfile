@@ -34,7 +34,7 @@ target 'ProtonVPN' do
     pod 'SDWebImage', '5.10.0'
     
     # Checks code style and bad practices
-    pod 'SwiftLint'
+    pod 'SwiftLint', '0.42.0'
 end
 
 target 'ProtonVPN OpenVPN' do

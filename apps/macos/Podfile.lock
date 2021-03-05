@@ -36,7 +36,7 @@ PODS:
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
   - Sparkle (1.24.0)
-  - SwiftLint (0.43.0)
+  - SwiftLint (0.42.0)
   - SwiftyBeaver (1.9.3)
   - TrustKit (1.7.0)
   - TunnelKit (3.3.1):
@@ -69,7 +69,7 @@ DEPENDENCIES:
   - SDWebImage (= 5.10.0)
   - Sentry (= 4.5.0)
   - Sparkle (= 1.24.0)
-  - SwiftLint
+  - SwiftLint (= 0.42.0)
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
   - TunnelKit (from `../tunnelkit`)
   - vpncore (from `../vpncore`)
@@ -118,12 +118,12 @@ SPEC CHECKSUMS:
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
   Sparkle: 270cd27377bf04e9c128af06e3a22d0f572d6ee3
-  SwiftLint: 0c645fdc6feed3e390c1701ab3cc669f88b42752
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
   vpncore: 8d9e923386fea7609bef812661803f7ce3bdb8b6
 
-PODFILE CHECKSUM: e6e0f42f69626d06687f628dba3ad725ae079fd6
+PODFILE CHECKSUM: 8d57039d35fade577cc7e5151edfb32f0dc100af
 
 COCOAPODS: 1.10.1
