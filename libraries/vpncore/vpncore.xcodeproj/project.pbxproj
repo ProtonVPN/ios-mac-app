@@ -858,6 +858,8 @@
 		F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */; };
 		F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
 		F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
+		F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3AF162225F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
 		F3AF162325F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
 /* End PBXBuildFile section */
@@ -1208,6 +1210,7 @@
 		F32055A925E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlamofireWrapper+AlternativeRouting.swift"; sourceTree = "<group>"; };
 		F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeRoutingTests.swift; sourceTree = "<group>"; };
 		F320563225E7D7CB00566DB7 /* FactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMock.swift; sourceTree = "<group>"; };
+		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolAvailabilityChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2854,6 +2857,7 @@
 				D5C2054A2487A0CF004FB58B /* VpnCredentials.swift in Sources */,
 				D5C2054B2487A0CF004FB58B /* VpnKeychain.swift in Sources */,
 				4257B21B24EC1C2B00C4E4AC /* VPNServerRequest.swift in Sources */,
+				F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */,
 				D5C2054C2487A0CF004FB58B /* SessionModel.swift in Sources */,
 				D5C2054D2487A0CF004FB58B /* TrialService.swift in Sources */,
 				D5C2054E2487A0CF004FB58B /* ReportBugViewModel.swift in Sources */,
@@ -3639,7 +3643,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3676,7 +3680,7 @@
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Source/Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3705,7 +3709,7 @@
 					"$(PROJECT_DIR)/Frameworks-ios",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -3732,7 +3736,7 @@
 					"$(PROJECT_DIR)/Frameworks-ios",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
