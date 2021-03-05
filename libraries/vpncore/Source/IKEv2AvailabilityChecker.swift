@@ -23,25 +23,29 @@
 import Foundation
 import Network
 
-final class IKEv2AvailabilityChecker: ProtocolAvailabilityChecker {
+final class IKEv2AvailabilityChecker {
     private var connection: NWConnection?
     private let queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", qos: .utility)
     private let timeout: TimeInterval = 3
 
-    func checkAvailability(server: ServerIp, completion: @escaping ProtocolAvailabilityCheckerCompletion) {
+    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
         let host = NWEndpoint.Host(server.domain)
         let port = NWEndpoint.Port("500")!
 
         let task = DispatchWorkItem {
+            PMLog.D("IKEv2 NOT available for \(server.domain)")
             completion(false)
         }
 
         let complete = { [weak self] (result: Bool) in
+            PMLog.D("IKEv2\(result ? "" : " NOT") available for \(server.domain)")
             completion(result)
             task.cancel()
             self?.connection?.cancel()
             self?.connection = nil
         }
+
+        PMLog.D("Checking IKEv2 availability for \(server.domain)")
 
         connection = NWConnection(host: host, port: port, using: .udp)
         connection?.stateUpdateHandler = { [weak self] (state: NWConnection.State) in
@@ -60,9 +64,9 @@ final class IKEv2AvailabilityChecker: ProtocolAvailabilityChecker {
                         complete(false)
                     }
                 })))
-            case .failed, .cancelled:
+            case .failed:
                 complete(false)
-            case .preparing, .setup, .waiting:
+            case .preparing, .setup, .waiting, .cancelled:
                 break
             }
         }

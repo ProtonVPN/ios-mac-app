@@ -858,10 +858,10 @@
 		F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */; };
 		F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
 		F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
+		F3AF15D925F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
+		F3AF15DA25F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
 		F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
-		F3AF162225F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
-		F3AF162325F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1210,8 +1210,8 @@
 		F32055A925E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlamofireWrapper+AlternativeRouting.swift"; sourceTree = "<group>"; };
 		F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeRoutingTests.swift; sourceTree = "<group>"; };
 		F320563225E7D7CB00566DB7 /* FactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMock.swift; sourceTree = "<group>"; };
+		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
-		F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtocolAvailabilityChecker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2125,6 +2125,7 @@
 			isa = PBXGroup;
 			children = (
 				F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */,
+				F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2133,7 +2134,6 @@
 			isa = PBXGroup;
 			children = (
 				F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */,
-				F3AF162125F27A770025CDEE /* ProtocolAvailabilityChecker.swift */,
 			);
 			name = SmartProtocols;
 			sourceTree = "<group>";
@@ -2764,7 +2764,6 @@
 				D5C205082487A0CE004FB58B /* BaseRequest.swift in Sources */,
 				D5C205092487A0CE004FB58B /* VpnProperties.swift in Sources */,
 				D5C2050A2487A0CE004FB58B /* UserProperties.swift in Sources */,
-				F3AF162225F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */,
 				D5C2050B2487A0CE004FB58B /* ReportBug.swift in Sources */,
 				D5C2050C2487A0CE004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2050D2487A0CE004FB58B /* RequestItem.swift in Sources */,
@@ -2874,6 +2873,7 @@
 				D5C205532487A0CF004FB58B /* Disconnect.swift in Sources */,
 				D5C205542487A0CF004FB58B /* QuickConnect.swift in Sources */,
 				D5C2043A248666EB004FB58B /* ServerLocation.swift in Sources */,
+				F3AF15D925F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */,
 				D5C20434248666B8004FB58B /* ServerModel.swift in Sources */,
 				D5C2044C248668F5004FB58B /* ContinuousServerProperties.swift in Sources */,
 				D5FFE6E024A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */,
@@ -3284,6 +3284,7 @@
 				D5C204C724866B81004FB58B /* PaymentAction.swift in Sources */,
 				D5C204C824866B81004FB58B /* PaymentToken.swift in Sources */,
 				D5FFE6EC24A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */,
+				F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */,
 				D5C204C924866B81004FB58B /* AuthCredentials.swift in Sources */,
 				D5DCCAAD252B4A8E004CB353 /* CoreBaseRequest.swift in Sources */,
 				D5C204CA24866B81004FB58B /* AuthKeychain.swift in Sources */,
@@ -3337,7 +3338,6 @@
 				D5ADFBD523A0D50F00C28CFF /* ReportsApiServiceTests.swift in Sources */,
 				D5967210253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				D5ADFBD223A0D09600C28CFF /* URLArrayTests.swift in Sources */,
-				F3AF162325F27A770025CDEE /* ProtocolAvailabilityChecker.swift in Sources */,
 				D5C2045824866953004FB58B /* VpnProtocol.swift in Sources */,
 				D5C2044124866720004FB58B /* ServerStorage.swift in Sources */,
 				D5C204292486664E004FB58B /* ServerType.swift in Sources */,
@@ -3358,6 +3358,7 @@
 				D5C2046E24866B0D004FB58B /* OpenVpnConfig.swift in Sources */,
 				F3021D6C25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				D5C204542486693B004FB58B /* VpnState.swift in Sources */,
+				F3AF15DA25F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */,
 				D5C204532486692C004FB58B /* ProfileType.swift in Sources */,
 				D5B53ADB25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 			);
