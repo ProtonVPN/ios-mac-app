@@ -23,59 +23,18 @@
 import Foundation
 import Network
 
-final class IKEv2AvailabilityChecker {
-    private var connection: NWConnection?
-    private let queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", qos: .utility)
-    private let timeout: TimeInterval = 3
-
-    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
-        let host = NWEndpoint.Host(server.domain)
-        let port = NWEndpoint.Port("500")!
-
-        let task = DispatchWorkItem {
-            PMLog.D("IKEv2 NOT available for \(server.domain)")
-            completion(false)
-        }
-
-        let complete = { [weak self] (result: Bool) in
-            PMLog.D("IKEv2\(result ? "" : " NOT") available for \(server.domain)")
-            completion(result)
-            task.cancel()
-            self?.connection?.cancel()
-            self?.connection = nil
-        }
-
-        PMLog.D("Checking IKEv2 availability for \(server.domain)")
-
-        connection = NWConnection(host: host, port: port, using: .udp)
-        connection?.stateUpdateHandler = { [weak self] (state: NWConnection.State) in
-            guard let self = self else {
-                return
-            }
-
-            switch state {
-            case .ready:
-                let packet = self.createTestPacket()
-                self.connection?.receiveMessage { (data, context, isComplete, error) in
-                    complete(data != nil)
-                }
-                self.connection?.send(content: packet, completion: NWConnection.SendCompletion.contentProcessed(({ (error) in
-                    if error != nil {
-                        complete(false)
-                    }
-                })))
-            case .failed:
-                complete(false)
-            case .preparing, .setup, .waiting, .cancelled:
-                break
-            }
-        }
-
-        queue.asyncAfter(deadline: .now() + timeout, execute: task)
-        connection?.start(queue: queue)
+final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
+    var connections: [String: NWConnection] = [:]
+    let queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", qos: .utility)
+    var protocolName: String {
+        return "IKEv2"
     }
 
-    private func createTestPacket() -> Data {
+    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
+        checkAvailability(server: server, port: 500, parameters: .udp, completion: completion)
+    }
+
+    func createTestPacket() -> Data {
         var bytes: [UInt8] = []
         for _ in 0 ..< 8 {
             bytes.append(UInt8.random(in: 0..<255))

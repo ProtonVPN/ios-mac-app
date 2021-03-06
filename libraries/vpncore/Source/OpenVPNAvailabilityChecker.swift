@@ -24,81 +24,33 @@ import CommonCrypto
 import Foundation
 import Network
 
-final class OpenVPNAvailabilityChecker {
+final class OpenVPNAvailabilityChecker: SmartProtocolAvailabilityChecker {
     enum OpenVPNProtocol {
         case udp
         case tcp
     }
 
-    private var connections: [String: NWConnection] = [:]
-    private let queue = DispatchQueue(label: "OpenVPNAvailabilityCheckerQueue", qos: .utility)
-    private let timeout: TimeInterval = 3
-
-    func checkAvailability(server: ServerModel, procotocol: OpenVPNProtocol, completion: @escaping  (Bool) -> Void) {
-        let ports = procotocol == .udp ? CoreAppConstants.SmartProtocols.defaultOpenVpnUdpPorts : CoreAppConstants.SmartProtocols.defaultOpenVpnTcpPorts
-        let group = DispatchGroup()
-        var results: [Bool] = []
-
-        PMLog.D("Checking OpenVPN \(procotocol) availability for \(server.domain)")
-
-        for port in ports {
-            group.enter()
-            checkAvailability(server: server, port: port, procotocol: procotocol) { result in
-                results.append(result)
-                group.leave()
-            }
-        }
-
-        group.notify(queue: queue) {
-            completion(!results.allSatisfy({ $0 == false }))
-        }
+    var connections: [String: NWConnection] = [:]
+    let queue = DispatchQueue(label: "OpenVPNAvailabilityCheckerQueue", qos: .utility)
+    let openVPNProtocol: OpenVPNProtocol
+    var protocolName: String {
+        return "OpenVPN \(openVPNProtocol)"
     }
 
-    private func checkAvailability(server: ServerModel, port: Int, procotocol: OpenVPNProtocol, completion: @escaping  (Bool) -> Void) {
-        let host = NWEndpoint.Host(server.domain)
-        let port = NWEndpoint.Port("\(port)")!
+    init(openVPNProtocol: OpenVPNProtocol) {
+        self.openVPNProtocol = openVPNProtocol
+    }
 
-        let task = DispatchWorkItem {
-            PMLog.D("OpenVPN \(procotocol) NOT available for \(server.domain) on port \(port)")
-            completion(false)
-        }
+    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
+        let ports = openVPNProtocol == .udp ? CoreAppConstants.SmartProtocols.defaultOpenVpnUdpPorts : CoreAppConstants.SmartProtocols.defaultOpenVpnTcpPorts
+        let parameters: NWParameters = openVPNProtocol == .udp ? .udp : .tcp
+        checkAvailability(server: server, ports: ports, parameters: parameters, completion: completion)
+    }
 
-        let connectionId = UUID().uuidString
-
-        let complete = { [weak self] (result: Bool) in
-            PMLog.D("OpenVPN \(procotocol)\(result ? "" : " NOT") available for \(server.domain) on port \(port)")
-            task.cancel()
-            self?.connections[connectionId]?.cancel()
-            self?.connections.removeValue(forKey: connectionId)
-            completion(result)
-        }
-
-        PMLog.D("Checking OpenVPN \(procotocol) availability for \(server.domain) on port \(port)")
-
-        let connection = NWConnection(host: host, port: port, using: procotocol == .udp ? .udp : .tcp)
-        connection.stateUpdateHandler = { (state: NWConnection.State) in
-            switch state {
-            case .ready:
-                let handshake = OpenVPNHandshake(key: CoreAppConstants.SmartProtocols.openVpnStaticKey)
-                let packet = Data(handshake.getBytes(includeLength: procotocol == .tcp))
-                connection.receiveMessage { (data, context, isComplete, error) in
-                    complete(data != nil)
-                }
-                connection.send(content: packet, completion: NWConnection.SendCompletion.contentProcessed(({ (error) in
-                    if error != nil {
-                        complete(false)
-                    }
-                })))
-            case .failed:
-                complete(false)
-            case .preparing, .setup, .waiting, .cancelled:
-                break
-            }
-        }
-
-        queue.asyncAfter(deadline: .now() + timeout, execute: task)
-        connections[connectionId] = connection
-        connection.start(queue: queue)
+    func createTestPacket() -> Data {
+        let handshake = OpenVPNHandshake(key: CoreAppConstants.SmartProtocols.openVpnStaticKey)
+        let bytes = handshake.getBytes(includeLength: openVPNProtocol == .tcp)
+        return Data(bytes)
     }
 }
 
