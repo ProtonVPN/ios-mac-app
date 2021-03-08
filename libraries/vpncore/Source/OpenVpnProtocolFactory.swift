@@ -207,8 +207,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     }
     
     private func portsConfig() -> OpenVpnConfig {
-        return propertiesManager.openVpnConfig ?? OpenVpnConfig(defaultTcpPorts: [443, 3389, 8080, 8443],
-                                                                defaultUdpPorts: [443, 1194, 4569, 5060, 80])
+        return propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig
     }
     
     private func logData(completion: @escaping (Data?) -> Void) {
