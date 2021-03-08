@@ -28,7 +28,12 @@ final class IKEv2AvailabilityTests: XCTestCase {
         let expectation = XCTestExpectation(description: "IKEv2 available")
         let sp = IKEv2AvailabilityChecker()
         sp.checkAvailability(server: ServerModel(domain: "ch-05.protonvpn.com")) { result in
-            XCTAssertTrue(result)
+            switch result {
+            case let .available(ports: ports):
+                XCTAssertEqual(ports, [500])
+            case .unavailable:
+                XCTFail()
+            }
             expectation.fulfill()
         }
 
@@ -39,7 +44,12 @@ final class IKEv2AvailabilityTests: XCTestCase {
         let expectation = XCTestExpectation(description: "IKEv2 unavailable")
         let sp = IKEv2AvailabilityChecker()
         sp.checkAvailability(server: ServerModel(domain: "uk-12.protonvpn.com")) { result in
-            XCTAssertFalse(result)
+            switch result {
+            case let .available:
+                XCTFail()
+            case .unavailable:
+                break
+            }
             expectation.fulfill()
         }
 
@@ -50,7 +60,12 @@ final class IKEv2AvailabilityTests: XCTestCase {
         let expectation = XCTestExpectation(description: "IKEv2 unavailable")
         let sp = IKEv2AvailabilityChecker()
         sp.checkAvailability(server: ServerModel(domain: "random.example.com")) { result in
-            XCTAssertFalse(result)
+            switch result {
+            case let .available:
+                XCTFail()
+            case .unavailable:
+                break
+            }
             expectation.fulfill()
         }
 

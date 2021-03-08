@@ -36,7 +36,7 @@ final class OpenVPNTCPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProt
         self.config = config
     }
 
-    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
+    func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         checkAvailability(server: server, ports: config.defaultTcpPorts, parameters: .tcp, completion: completion)
     }
 
@@ -57,7 +57,7 @@ final class OpenVPNUDPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProt
         self.config = config
     }
 
-    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
+    func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         checkAvailability(server: server, ports: config.defaultUdpPorts, parameters: .udp, completion: completion)
     }
 

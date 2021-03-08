@@ -29,7 +29,12 @@ final class OpenVPNAvailabilityCheckerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "UDP available")
         let sp = OpenVPNUDPAvailabilityChecker(config: OpenVpnConfig.defaultConfig)
         sp.checkAvailability(server: ServerModel(domain: "nl-134.protonvpn.com")) { result in
-            XCTAssertTrue(result)
+            switch result {
+            case let .available(ports: ports):
+                XCTAssertFalse(ports.isEmpty)
+            case .unavailable:
+                XCTFail()
+            }
             expectation.fulfill()
         }
 
@@ -40,7 +45,12 @@ final class OpenVPNAvailabilityCheckerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "TCP available")
         let sp = OpenVPNTCPAvailabilityChecker(config: OpenVpnConfig.defaultConfig)
         sp.checkAvailability(server: ServerModel(domain: "nl-134.protonvpn.com")) { result in
-            XCTAssertTrue(result)
+            switch result {
+            case let .available(ports: ports):
+                XCTAssertFalse(ports.isEmpty)
+            case .unavailable:
+                XCTFail()
+            }
             expectation.fulfill()
         }
 

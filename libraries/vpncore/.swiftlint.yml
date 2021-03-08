@@ -34,6 +34,9 @@ opt_in_rules: # some rules are only opt-in
 
 # More rules can be found here: https://github.com/realm/SwiftLint/blob/master/Rules.md
 
+type_name:
+    min_length: 3
+    max_length: 44
 
 included: # paths to include during linting. `--path` is ignored if present.
   - Source

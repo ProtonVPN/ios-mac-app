@@ -23,6 +23,13 @@
 import Foundation
 import Network
 
+enum SmartProtocolAvailabilityCheckerResult {
+    case unavailable
+    case available(ports: [Int])
+}
+
+typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvailabilityCheckerResult) -> Void
+
 protocol SmartProtocolAvailabilityChecker: AnyObject {
     var connections: [String: NWConnection] { get set }
     var queue: DispatchQueue { get }
@@ -30,7 +37,7 @@ protocol SmartProtocolAvailabilityChecker: AnyObject {
     var protocolName: String { get }
 
     func createTestPacket() -> Data
-    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) 
+    func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion)
 }
 
 extension SmartProtocolAvailabilityChecker {
@@ -38,22 +45,24 @@ extension SmartProtocolAvailabilityChecker {
         return 3
     }
 
-    func checkAvailability(server: ServerModel, ports: [Int], parameters: NWParameters, completion: @escaping (Bool) -> Void) {
+    func checkAvailability(server: ServerModel, ports: [Int], parameters: NWParameters, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         let group = DispatchGroup()
-        var results: [Bool] = []
+        var availablePorts: [Int] = []
 
         PMLog.D("Checking \(protocolName) availability for \(server.domain)")
 
         for port in ports {
             group.enter()
             checkAvailability(server: server, port: port, parameters: parameters) { result in
-                results.append(result)
+                if result {
+                    availablePorts.append(port)
+                }
                 group.leave()
             }
         }
 
         group.notify(queue: queue) {
-            completion(!results.allSatisfy({ $0 == false }))
+            completion(availablePorts.isEmpty ? .unavailable : .available(ports: availablePorts))
         }
     }
 
