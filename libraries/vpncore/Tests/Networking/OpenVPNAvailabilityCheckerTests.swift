@@ -27,7 +27,7 @@ import XCTest
 final class OpenVPNAvailabilityCheckerTests: XCTestCase {
     func testUDPCapableServer() {
         let expectation = XCTestExpectation(description: "UDP available")
-        let sp = OpenVPNAvailabilityChecker(openVPNProtocol: .udp)
+        let sp = OpenVPNUDPAvailabilityChecker(config: OpenVpnConfig.defaultConfig)
         sp.checkAvailability(server: ServerModel(domain: "nl-134.protonvpn.com")) { result in
             XCTAssertTrue(result)
             expectation.fulfill()
@@ -38,7 +38,7 @@ final class OpenVPNAvailabilityCheckerTests: XCTestCase {
 
     func testTCPCapableServer() {
         let expectation = XCTestExpectation(description: "TCP available")
-        let sp = OpenVPNAvailabilityChecker(openVPNProtocol: .tcp)
+        let sp = OpenVPNTCPAvailabilityChecker(config: OpenVpnConfig.defaultConfig)
         sp.checkAvailability(server: ServerModel(domain: "nl-134.protonvpn.com")) { result in
             XCTAssertTrue(result)
             expectation.fulfill()

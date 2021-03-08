@@ -24,64 +24,80 @@ import CommonCrypto
 import Foundation
 import Network
 
-final class OpenVPNAvailabilityChecker: SmartProtocolAvailabilityChecker {
-    enum OpenVPNProtocol {
-        case udp
-        case tcp
-    }
-
+final class OpenVPNTCPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProtocolAvailabilityChecker {
     var connections: [String: NWConnection] = [:]
-    let queue = DispatchQueue(label: "OpenVPNAvailabilityCheckerQueue", qos: .utility)
-    let openVPNProtocol: OpenVPNProtocol
+    let queue = DispatchQueue(label: "OpenVPNTCPAvailabilityCheckerQueue", qos: .utility)
     var protocolName: String {
-        return "OpenVPN \(openVPNProtocol)"
+        return "OpenVPN TCP"
     }
+    let config: OpenVpnConfig
 
-    init(openVPNProtocol: OpenVPNProtocol) {
-        self.openVPNProtocol = openVPNProtocol
+    init(config: OpenVpnConfig) {
+        self.config = config
     }
 
     func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
-        let ports = openVPNProtocol == .udp ? CoreAppConstants.SmartProtocols.defaultOpenVpnUdpPorts : CoreAppConstants.SmartProtocols.defaultOpenVpnTcpPorts
-        let parameters: NWParameters = openVPNProtocol == .udp ? .udp : .tcp
-        checkAvailability(server: server, ports: ports, parameters: parameters, completion: completion)
+        checkAvailability(server: server, ports: config.defaultTcpPorts, parameters: .tcp, completion: completion)
     }
 
     func createTestPacket() -> Data {
-        let handshake = OpenVPNHandshake(key: CoreAppConstants.SmartProtocols.openVpnStaticKey)
-        let bytes = handshake.getBytes(includeLength: openVPNProtocol == .tcp)
-        return Data(bytes)
+        return createOpenVPNHandshake(config: config, includeLength: true)
     }
 }
 
-final class OpenVPNHandshake {
-    let key: [UInt8]
+final class OpenVPNUDPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProtocolAvailabilityChecker {
+    var connections: [String: NWConnection] = [:]
+    let queue = DispatchQueue(label: "OpenVPNUDPAvailabilityCheckerQueue", qos: .utility)
+    var protocolName: String {
+        return "OpenVPN UDP"
+    }
+    let config: OpenVpnConfig
 
-    init(key: String) {
-        let stringToBytes = { (string: String) -> [UInt8]  in
-            let length = string.count
-            if length & 1 != 0 {
-                return []
-            }
-            var bytes = [UInt8]()
-            bytes.reserveCapacity(length / 2)
-            var index = string.startIndex
-            for _ in 0..<length / 2 {
-                let nextIndex = string.index(index, offsetBy: 2)
-                if let b = UInt8(string[index..<nextIndex], radix: 16) {
-                    bytes.append(b)
-                } else {
-                    return []
-                }
-                index = nextIndex
-            }
-            return bytes
-        }
-
-        self.key = Array(stringToBytes(key).suffix(64))
+    init(config: OpenVpnConfig) {
+        self.config = config
     }
 
-    func getBytes(includeLength: Bool) -> [UInt8] {
+    func checkAvailability(server: ServerModel, completion: @escaping (Bool) -> Void) {
+        checkAvailability(server: server, ports: config.defaultUdpPorts, parameters: .udp, completion: completion)
+    }
+
+    func createTestPacket() -> Data {
+        return createOpenVPNHandshake(config: config, includeLength: false)
+    }
+}
+
+protocol OpenVPNAvailabilityChecker {
+    func createOpenVPNHandshake(config: OpenVpnConfig, includeLength: Bool) -> Data
+}
+
+extension OpenVPNAvailabilityChecker {
+    func createOpenVPNHandshake(config: OpenVpnConfig, includeLength: Bool) -> Data {
+        let key = stringToBytes(string: config.staticKey)
+        let bytes = getBytes(key: key, includeLength: includeLength)
+        return Data(bytes)
+    }
+
+    private func stringToBytes(string: String) -> [UInt8] {
+        let length = string.count
+        if length & 1 != 0 {
+            return []
+        }
+        var bytes = [UInt8]()
+        bytes.reserveCapacity(length / 2)
+        var index = string.startIndex
+        for _ in 0..<length / 2 {
+            let nextIndex = string.index(index, offsetBy: 2)
+            if let b = UInt8(string[index..<nextIndex], radix: 16) {
+                bytes.append(b)
+            } else {
+                return []
+            }
+            index = nextIndex
+        }
+        return Array(bytes.suffix(64))
+    }
+
+    private func getBytes(key: [UInt8], includeLength: Bool) -> [UInt8] {
         let sid = randomBytes(length: 8)
         let ts = Int(Date().timeIntervalSince1970)
 
