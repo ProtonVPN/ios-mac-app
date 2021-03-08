@@ -23,7 +23,6 @@
 import vpncore
 import XCTest
 
-
 final class OpenVPNAvailabilityCheckerTests: XCTestCase {
     func testUDPCapableServer() {
         let expectation = XCTestExpectation(description: "UDP available")
