@@ -36,6 +36,10 @@ class SettingsViewController: UIViewController {
             viewModel?.pushHandler = { [pushViewController] viewController in
                 pushViewController(viewController)
             }
+            viewModel?.reloadNeeded = { [weak self] in
+                self?.setupTableView()
+                self?.tableView.reloadData()
+            }
         }
     }
     

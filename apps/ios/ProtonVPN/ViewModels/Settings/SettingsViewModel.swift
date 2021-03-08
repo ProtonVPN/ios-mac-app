@@ -39,6 +39,7 @@ class SettingsViewModel {
     private var netShieldPropertyProvider: NetShieldPropertyProvider
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
+    var reloadNeeded: (() -> Void)?
     
     private var vpnGateway: VpnGatewayProtocol?
     private var profileManager: ProfileManager?
@@ -222,9 +223,19 @@ class SettingsViewModel {
         let vpnProtocol = propertiesManager.vpnProtocol
         
         var cells: [TableViewCellModel] = []
-        cells.append(.pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
-            protocolCellAction()
-        }))
+
+        cells.append(.toggle(title: LocalizedString.smartProtocolTitle, on: propertiesManager.smartProtocol, enabled: true) { [unowned self] (toggleOn, callback) in
+            self.propertiesManager.smartProtocol.toggle()
+            callback(self.propertiesManager.smartProtocol)
+            self.reloadNeeded?()
+        })
+        cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
+
+        if !propertiesManager.smartProtocol {
+            cells.append(.pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
+                protocolCellAction()
+            }))
+        }
         
         let netShieldAvailable = propertiesManager.featureFlags.isNetShield
         if netShieldAvailable {
