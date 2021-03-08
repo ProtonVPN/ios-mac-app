@@ -1156,7 +1156,7 @@
 "_quick_settings_netshield_option_level1" = "Bloquer uniquement les logiciels malveillants";
 
 /* QuickSettings Netshield option3 */
-"_quick_settings_netshield_option_level2" = "Bloquer seulement les malwares";
+"_quick_settings_netshield_option_level2" = "Bloquer malwares, trackers et pubs";
 
 /* QuickSettings Netshield option1 */
 "_quick_settings_netshield_option_off" = "Ne pas bloquer";
