@@ -70,6 +70,7 @@ public protocol PropertiesManagerProtocol: class {
     
     var humanValidationFailed: Bool { get set }
     var alternativeRouting: Bool { get set }
+    var smartProtocol: Bool { get set }
     
     func logoutCleanup()
     
@@ -126,6 +127,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         static let humanValidationFailed: String = "humanValidationFailed"
         static let alternativeRouting: String = "alternativeRouting"
+        static let smartProtocol: String = "smartProtocol"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -471,10 +473,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(newValue, forKey: Keys.alternativeRouting)
         }
     }
+
+    public var smartProtocol: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: Keys.smartProtocol)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.smartProtocol)
+        }
+    }
     
     public init() {
         Storage.userDefaults().register(defaults: [
-            Keys.alternativeRouting: true
+            Keys.alternativeRouting: true,
+            Keys.smartProtocol: true
         ])
     }
     
@@ -489,6 +501,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpired = false
         reportBugEmail = nil
         alternativeRouting = true
+        smartProtocol = true
         
         #if !APP_EXTENSION
         currentSubscription = nil

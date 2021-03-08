@@ -58,6 +58,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var maintenanceServerRefreshIntereval: Int = 1
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false
+    public var smartProtocol: Bool = false
     
     var earlyAccess: Bool = false
     
