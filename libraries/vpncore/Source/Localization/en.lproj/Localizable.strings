@@ -737,3 +737,7 @@
 "_kill_switch_reconnection_bold1" = "without";
 "_kill_switch_reconnection_bold2" = "Kill Switch protection";
 "_kill_switch_reconnection_cancel" = "Cancel reconnection";
+
+// Smart Protocol
+"_smart_protocol_title" = "Smart Protocol";
+"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";

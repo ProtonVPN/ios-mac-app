@@ -689,4 +689,7 @@ public class LocalizedString {
     
     public static let upgradeSecureCore = NSLocalizedString("_upgrade_required_securecore_description", comment: "Description for enable secure core on free  plan")
 
+    // MARK: - Smart Protocol
+    public static let smartProtocolTitle = NSLocalizedString("_smart_protocol_title", comment: "Title for Smart Protocol in Settings")
+    public static let smartProtocolDescription = NSLocalizedString("_smart_protocol_description", comment: "Description for Smart Protocol in Settings")
 }
