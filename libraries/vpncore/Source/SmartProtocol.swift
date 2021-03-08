@@ -45,13 +45,17 @@ final class SmartProtocolImplementation: SmartProtocol {
     }
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
+    private let queue: DispatchQueue
 
     init(config: OpenVpnConfig) {
+        let queue = DispatchQueue(label: "SmartProtocolQueue", qos: .utility)
+
         checkers = [
-            .ikev2: IKEv2AvailabilityChecker(),
-            .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
-            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
+            .ikev2: IKEv2AvailabilityChecker(queue: queue),
+            .openVpnUdp: OpenVPNUDPAvailabilityChecker(queue: queue, config: config),
+            .openVpnTcp: OpenVPNTCPAvailabilityChecker(queue: queue, config: config)
         ]
+        self.queue = queue
     }
 
     func determineBestProtocol(server: ServerModel, completion: @escaping (VpnProtocol) -> Void) {
@@ -74,7 +78,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: .global(qos: .utility)) {
+        group.notify(queue: queue) {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.rawValue < rhs.rawValue })
             let best = sorted.first ?? .openVpnUdp
 

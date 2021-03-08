@@ -26,13 +26,14 @@ import Network
 
 final class OpenVPNTCPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProtocolAvailabilityChecker {
     var connections: [String: NWConnection] = [:]
-    let queue = DispatchQueue(label: "OpenVPNTCPAvailabilityCheckerQueue", qos: .utility)
+    let queue: DispatchQueue
     var protocolName: String {
         return "OpenVPN TCP"
     }
     let config: OpenVpnConfig
 
-    init(config: OpenVpnConfig) {
+    init(queue: DispatchQueue, config: OpenVpnConfig) {
+        self.queue = queue
         self.config = config
     }
 
@@ -47,13 +48,14 @@ final class OpenVPNTCPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProt
 
 final class OpenVPNUDPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProtocolAvailabilityChecker {
     var connections: [String: NWConnection] = [:]
-    let queue = DispatchQueue(label: "OpenVPNUDPAvailabilityCheckerQueue", qos: .utility)
+    let queue: DispatchQueue
     var protocolName: String {
         return "OpenVPN UDP"
     }
     let config: OpenVpnConfig
 
-    init(config: OpenVpnConfig) {
+    init(queue: DispatchQueue, config: OpenVpnConfig) {
+        self.queue = queue
         self.config = config
     }
 

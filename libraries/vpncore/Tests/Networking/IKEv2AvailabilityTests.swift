@@ -26,7 +26,7 @@ import XCTest
 final class IKEv2AvailabilityTests: XCTestCase {
     func testIKEv2CapableServer() {
         let expectation = XCTestExpectation(description: "IKEv2 available")
-        let sp = IKEv2AvailabilityChecker()
+        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
         sp.checkAvailability(server: ServerModel(domain: "ch-05.protonvpn.com")) { result in
             switch result {
             case let .available(ports: ports):
@@ -42,7 +42,7 @@ final class IKEv2AvailabilityTests: XCTestCase {
 
     func testIKEv2IncapableServer() {
         let expectation = XCTestExpectation(description: "IKEv2 unavailable")
-        let sp = IKEv2AvailabilityChecker()
+        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
         sp.checkAvailability(server: ServerModel(domain: "uk-12.protonvpn.com")) { result in
             switch result {
             case let .available:
@@ -58,7 +58,7 @@ final class IKEv2AvailabilityTests: XCTestCase {
 
     func testIKEv2NonExistentServer() {
         let expectation = XCTestExpectation(description: "IKEv2 unavailable")
-        let sp = IKEv2AvailabilityChecker()
+        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
         sp.checkAvailability(server: ServerModel(domain: "random.example.com")) { result in
             switch result {
             case let .available:

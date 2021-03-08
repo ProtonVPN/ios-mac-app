@@ -25,9 +25,13 @@ import Network
 
 final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
     var connections: [String: NWConnection] = [:]
-    let queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", qos: .utility)
+    let queue: DispatchQueue
     var protocolName: String {
         return "IKEv2"
+    }
+
+    init(queue: DispatchQueue) {
+        self.queue = queue
     }
 
     func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
