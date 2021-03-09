@@ -132,9 +132,9 @@ final class ServerConnection {
                     self.send(data: data)
                 }
             }
-            if isComplete {
+            /*if isComplete {
                 self.connectionDidEnd()
-            } else if let error = error {
+            } else*/ if let error = error {
                 self.connectionDidFail(error: error)
             } else {
                 self.setupReceive()

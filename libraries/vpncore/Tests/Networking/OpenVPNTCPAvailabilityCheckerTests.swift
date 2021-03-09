@@ -24,7 +24,6 @@ import vpncore
 import XCTest
 
 final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
-    private let delay: UInt32 = 1
     private var servers: [NetworkServer] = []
     private let config = OpenVpnConfig(defaultTcpPorts: [10001, 10002, 10003], defaultUdpPorts: [])
 
@@ -51,7 +50,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "testTCPOnAllPorts")
 
         group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+            let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
@@ -82,7 +81,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         let expectation = XCTestExpectation(description: "testTCPOnSomePorts")
 
         group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+            let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
@@ -99,7 +98,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
     func testTCPNotListening() {
         let expectation = XCTestExpectation(description: "testTCPNotListening")
-        let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: config)
+        let sp = OpenVPNTCPAvailabilityChecker(config: config)
         sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
             switch result {
             case .available:
@@ -125,12 +124,11 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             }
             try! $0.start()
         }
-        sleep(delay)
 
         let expectation = XCTestExpectation(description: "testTCPListeningButNotResponding")
 
         group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+            let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case .available:

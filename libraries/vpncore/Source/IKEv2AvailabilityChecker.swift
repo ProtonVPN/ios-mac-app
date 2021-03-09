@@ -31,8 +31,8 @@ final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
     }
     let port: Int
 
-    init(queue: DispatchQueue, port: Int = 500) {
-        self.queue = queue
+    init(port: Int = 500) {
+        self.queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", attributes: .concurrent)
         self.port = port
     }
 

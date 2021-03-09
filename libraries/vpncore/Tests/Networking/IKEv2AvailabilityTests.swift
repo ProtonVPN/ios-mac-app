@@ -26,13 +26,18 @@ import XCTest
 final class IKEv2AvailabilityTests: XCTestCase {
     var server: NetworkServer?
 
+    override func tearDown() {
+        server?.stop()
+        server = nil
+    }
+
     func testIKEv2CapableServer() {
         let port = 55555
         server = NetworkServer(port: UInt16(port), parameters: .udp, responseCondition: { _ in true })
         try! server?.start()
 
         let expectation = XCTestExpectation(description: "IKEv2 available")
-        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility), port: port)
+        let sp = IKEv2AvailabilityChecker(port: port)
 
         server?.ready = {
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
@@ -51,7 +56,7 @@ final class IKEv2AvailabilityTests: XCTestCase {
 
     func testIKEv2NotListening() {
         let expectation = XCTestExpectation(description: "IKEv2 not listening")
-        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
+        let sp = IKEv2AvailabilityChecker()
         sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
             switch result {
             case .available:

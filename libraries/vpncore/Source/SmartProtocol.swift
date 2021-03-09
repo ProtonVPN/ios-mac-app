@@ -48,12 +48,12 @@ final class SmartProtocolImplementation: SmartProtocol {
     private let queue: DispatchQueue
 
     init(config: OpenVpnConfig) {
-        let queue = DispatchQueue(label: "SmartProtocolQueue", qos: .utility)
+        let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
 
         checkers = [
-            .ikev2: IKEv2AvailabilityChecker(queue: queue),
-            .openVpnUdp: OpenVPNUDPAvailabilityChecker(queue: queue, config: config),
-            .openVpnTcp: OpenVPNTCPAvailabilityChecker(queue: queue, config: config)
+            .ikev2: IKEv2AvailabilityChecker(),
+            .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
+            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
         ]
         self.queue = queue
     }

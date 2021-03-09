@@ -24,14 +24,94 @@ import vpncore
 import XCTest
 
 final class SmartProtocolImplementationTests: XCTestCase {
-    func testSmartProtocol() {
-        let expectation = XCTestExpectation(description: "Smart protocol")
-        let sp = SmartProtocolImplementation(config: OpenVpnConfig.defaultConfig)
-        sp.determineBestProtocol(server: ServerModel(domain: "nl-134.protonvpn.com")) { result in
-            XCTAssertEqual(result, VpnProtocol.openVpn(.udp))
-            expectation.fulfill()
+    private var servers: [NetworkServer] = []
+    private let config = OpenVpnConfig(defaultTcpPorts: [10001], defaultUdpPorts: [10023])
+
+    override func tearDown() {
+        servers.forEach {
+            $0.stop()
+        }
+        servers.removeAll()
+    }
+
+    func testSmartProtocolWhenOnlyOpenVPNTCPAvailable() {
+        let group = DispatchGroup()
+        servers = config.defaultUdpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in false })
+        } + config.defaultTcpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { _ in true })
+        }
+        servers.forEach {
+            group.enter()
+            $0.ready = {
+                group.leave()
+            }
+            try! $0.start()
         }
 
-        wait(for: [expectation], timeout: 5)
+        let expectation = XCTestExpectation(description: "Smart protocol")
+        let sp = SmartProtocolImplementation(config: config)
+        group.notify(queue: .main) {
+            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { result in
+                XCTAssertEqual(result, VpnProtocol.openVpn(.tcp))
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testSmartProtocolWhenOnlyOpenVPNTCPAndUDPAvailable() {
+        let group = DispatchGroup()
+        servers = config.defaultUdpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in true })
+        } + config.defaultTcpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { _ in true })
+        }
+        servers.forEach {
+            group.enter()
+            $0.ready = {
+                group.leave()
+            }
+            try! $0.start()
+        }
+
+        let expectation = XCTestExpectation(description: "Smart protocol")
+        let sp = SmartProtocolImplementation(config: config)
+        group.notify(queue: .main) {
+            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { result in
+                XCTAssertEqual(result, VpnProtocol.openVpn(.udp))
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testSmartProtocolWhenOnlyOpenVPNNothingAvailable() {
+        let group = DispatchGroup()
+        servers = config.defaultUdpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in false })
+        } + config.defaultTcpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { _ in false })
+        }
+        servers.forEach {
+            group.enter()
+            $0.ready = {
+                group.leave()
+            }
+            try! $0.start()
+        }
+
+        let expectation = XCTestExpectation(description: "Smart protocol")
+        let sp = SmartProtocolImplementation(config: config)
+        group.notify(queue: .main) {
+            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { result in
+                XCTAssertEqual(result, VpnProtocol.openVpn(.udp))
+                expectation.fulfill()
+            }
+        }
+
+        wait(for: [expectation], timeout: 10)
     }
 }

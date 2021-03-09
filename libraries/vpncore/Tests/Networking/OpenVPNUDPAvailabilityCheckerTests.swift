@@ -24,10 +24,9 @@ import vpncore
 import XCTest
 import Network
 
-final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
-    private let delay: UInt32 = 2
+final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {    
     private var servers: [NetworkServer] = []
-    private let config = OpenVpnConfig(defaultTcpPorts: [], defaultUdpPorts: [10011])
+    private let config = OpenVpnConfig(defaultTcpPorts: [], defaultUdpPorts: [10011, 10012])
 
     override func tearDown() {
         servers.forEach {
@@ -50,7 +49,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
         }
 
         let expectation = XCTestExpectation(description: "testUDPOnAllPorts")
-        let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+        let sp = OpenVPNUDPAvailabilityChecker(config: config)
 
         group.notify(queue: .main) {
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
@@ -69,7 +68,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
 
     func testUDPNotListening() {
         let expectation = XCTestExpectation(description: "testUDPNotListening")
-        let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: config)
+        let sp = OpenVPNUDPAvailabilityChecker(config: config)
         sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
             switch result {
             case .available:
@@ -95,12 +94,11 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
             }
             try! $0.start()
         }
-        sleep(delay)
 
         let expectation = XCTestExpectation(description: "testUDPListeningButNotResponding")
 
         group.notify(queue: .main) {
-            let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+            let sp = OpenVPNUDPAvailabilityChecker(config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case .available:

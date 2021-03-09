@@ -32,8 +32,8 @@ final class OpenVPNTCPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProt
     }
     let config: OpenVpnConfig
 
-    init(queue: DispatchQueue, config: OpenVpnConfig) {
-        self.queue = queue
+    init(config: OpenVpnConfig) {
+        self.queue = DispatchQueue(label: "OpenVPNTCPAvailabilityCheckerQueue", attributes: .concurrent)
         self.config = config
     }
 
@@ -54,8 +54,8 @@ final class OpenVPNUDPAvailabilityChecker: OpenVPNAvailabilityChecker, SmartProt
     }
     let config: OpenVpnConfig
 
-    init(queue: DispatchQueue, config: OpenVpnConfig) {
-        self.queue = queue
+    init(config: OpenVpnConfig) {
+        self.queue = DispatchQueue(label: "OpenVPNUDPAvailabilityCheckerQueue", attributes: .concurrent)
         self.config = config
     }
 
