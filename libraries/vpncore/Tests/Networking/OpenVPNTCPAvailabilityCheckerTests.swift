@@ -34,6 +34,19 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         servers.removeAll()
     }
 
+    func testTestPacket() {
+        let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
+        let packet = sp.createTestPacket()
+        let bytes = packet.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: packet.count))
+        }
+
+        // always 88 bytes
+        XCTAssertEqual(bytes.count, 88)
+        XCTAssertEqual(bytes[2], 56)
+        XCTAssertEqual(bytes.suffix(5), [0,0,0,0,0])
+    }
+
     func testTCPOnAllPorts() {
         let group = DispatchGroup()
         servers = config.defaultTcpPorts.map {

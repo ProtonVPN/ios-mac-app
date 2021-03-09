@@ -35,6 +35,19 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
         servers.removeAll()
     }
 
+    func testTestPacket() {
+        let sp = OpenVPNUDPAvailabilityChecker(config: self.config)
+        let packet = sp.createTestPacket()
+        let bytes = packet.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: packet.count))
+        }
+
+        // always 86 bytes
+        XCTAssertEqual(bytes.count, 86)
+        XCTAssertEqual(bytes[0], 56)
+        XCTAssertEqual(bytes.suffix(5), [0,0,0,0,0])
+    }
+
     func testUDPOnAllPorts() {
         let group = DispatchGroup()
         servers = config.defaultUdpPorts.map {

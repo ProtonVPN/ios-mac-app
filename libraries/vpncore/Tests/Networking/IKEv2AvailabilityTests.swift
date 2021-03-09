@@ -31,6 +31,24 @@ final class IKEv2AvailabilityTests: XCTestCase {
         server = nil
     }
 
+    func testTestPacket() {
+        let sp = IKEv2AvailabilityChecker()
+        let packet = sp.createTestPacket()
+        let bytes = packet.withUnsafeBytes {
+            [UInt8](UnsafeBufferPointer(start: $0, count: packet.count))
+        }
+
+        // always 28 bytes
+        XCTAssertEqual(bytes.count, 28)
+        // first 8 bytes are random, no way to assert
+        // 8 zeros next
+        XCTAssertEqual(bytes.suffix(from: 8).prefix(8), [0,0,0,0,0,0,0,0])
+        // 4 specific bytes
+        XCTAssertEqual(bytes.suffix(from: 16).prefix(4), [0x21,0x20,0x22,0x08])
+        // finish with 8 zeros
+        XCTAssertEqual(bytes.suffix(8), [0,0,0,0,0,0,0,0])
+    }
+
     func testIKEv2CapableServer() {
         let port = 55555
         server = NetworkServer(port: UInt16(port), parameters: .udp, responseCondition: { _ in true })
