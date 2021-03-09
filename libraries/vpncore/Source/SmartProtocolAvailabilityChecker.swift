@@ -91,7 +91,7 @@ extension SmartProtocolAvailabilityChecker {
             }
 
             completed = true
-            PMLog.D("\(protocolName) NOT available for \(server.domain) on port \(port)")
+            PMLog.D("\(protocolName) NOT available for \(server.domain) on port \(port) (timeout)")
             completion(false)
             cleanup()
         }

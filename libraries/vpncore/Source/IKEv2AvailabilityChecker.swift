@@ -29,13 +29,15 @@ final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
     var protocolName: String {
         return "IKEv2"
     }
+    let port: Int
 
-    init(queue: DispatchQueue) {
+    init(queue: DispatchQueue, port: Int = 500) {
         self.queue = queue
+        self.port = port
     }
 
     func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        checkAvailability(server: server, ports: [500], parameters: .udp, completion: completion)
+        checkAvailability(server: server, ports: [port], parameters: .udp, completion: completion)
     }
 
     func createTestPacket() -> Data {

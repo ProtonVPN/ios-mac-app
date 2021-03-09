@@ -24,44 +24,37 @@ import vpncore
 import XCTest
 
 final class IKEv2AvailabilityTests: XCTestCase {
+    var server: NetworkServer?
+
     func testIKEv2CapableServer() {
+        let port = 55555
+        server = NetworkServer(port: UInt16(port), parameters: .udp, responseCondition: { _ in true })
+        try! server?.start()
+
         let expectation = XCTestExpectation(description: "IKEv2 available")
-        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
-        sp.checkAvailability(server: ServerModel(domain: "ch-05.protonvpn.com")) { result in
-            switch result {
-            case let .available(ports: ports):
-                XCTAssertEqual(ports, [500])
-            case .unavailable:
-                XCTFail()
+        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility), port: port)
+
+        server?.ready = {
+            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+                switch result {
+                case let .available(ports: ports):
+                    XCTAssertEqual(ports, [port])
+                case .unavailable:
+                    XCTFail()
+                }
+                expectation.fulfill()
             }
-            expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
-    func testIKEv2IncapableServer() {
-        let expectation = XCTestExpectation(description: "IKEv2 unavailable")
+    func testIKEv2NotListening() {
+        let expectation = XCTestExpectation(description: "IKEv2 not listening")
         let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
-        sp.checkAvailability(server: ServerModel(domain: "uk-12.protonvpn.com")) { result in
+        sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
             switch result {
-            case let .available:
-                XCTFail()
-            case .unavailable:
-                break
-            }
-            expectation.fulfill()
-        }
-
-        wait(for: [expectation], timeout: 4)
-    }
-
-    func testIKEv2NonExistentServer() {
-        let expectation = XCTestExpectation(description: "IKEv2 unavailable")
-        let sp = IKEv2AvailabilityChecker(queue: .global(qos: .utility))
-        sp.checkAvailability(server: ServerModel(domain: "random.example.com")) { result in
-            switch result {
-            case let .available:
+            case .available:
                 XCTFail()
             case .unavailable:
                 break

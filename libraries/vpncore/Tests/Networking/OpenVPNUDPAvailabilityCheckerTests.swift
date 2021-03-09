@@ -1,6 +1,6 @@
 //
-//  OpenVPNTCPAvailabilityCheckerTests.swift
-//  vpncore - Created on 06.03.2021.
+//  OpenVPNUDPAvailabilityCheckerTests.swift
+//  vpncore - Created on 09.03.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,11 +22,12 @@
 
 import vpncore
 import XCTest
+import Network
 
-final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
-    private let delay: UInt32 = 1
+final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
+    private let delay: UInt32 = 2
     private var servers: [NetworkServer] = []
-    private let config = OpenVpnConfig(defaultTcpPorts: [10001, 10002, 10003], defaultUdpPorts: [])
+    private let config = OpenVpnConfig(defaultTcpPorts: [], defaultUdpPorts: [10011])
 
     override func tearDown() {
         servers.forEach {
@@ -35,10 +36,10 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         servers.removeAll()
     }
 
-    func testTCPOnAllPorts() {
+    func testUDPOnAllPorts() {
         let group = DispatchGroup()
-        servers = config.defaultTcpPorts.map {
-            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { $0.count == 88 })
+        servers = config.defaultUdpPorts.map {
+            NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in true })
         }
         servers.forEach {
             group.enter()
@@ -48,14 +49,14 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             try! $0.start()
         }
 
-        let expectation = XCTestExpectation(description: "testTCPOnAllPorts")
+        let expectation = XCTestExpectation(description: "testUDPOnAllPorts")
+        let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
 
         group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
-                    XCTAssertEqual(ports.sorted(), self.config.defaultTcpPorts)
+                    XCTAssertEqual(ports.sorted(), self.config.defaultUdpPorts)
                 case .unavailable:
                     XCTFail()
                 }
@@ -63,43 +64,12 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
-    func testTCPOnSomePorts() {
-        let group = DispatchGroup()
-        servers = [10001, 10002].map {
-            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { $0.count == 88 })
-        }
-        servers.forEach {
-            group.enter()
-            $0.ready = {
-                group.leave()
-            }
-            try! $0.start()
-        }
-
-        let expectation = XCTestExpectation(description: "testTCPOnSomePorts")
-
-        group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
-                switch result {
-                case let .available(ports: ports):
-                    XCTAssertEqual(ports.sorted(), [10001, 10002])
-                case .unavailable:
-                    XCTFail()
-                }
-                expectation.fulfill()
-            }
-        }
-
-        wait(for: [expectation], timeout: 4)
-    }
-
-    func testTCPNotListening() {
-        let expectation = XCTestExpectation(description: "testTCPNotListening")
-        let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: config)
+    func testUDPNotListening() {
+        let expectation = XCTestExpectation(description: "testUDPNotListening")
+        let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: config)
         sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
             switch result {
             case .available:
@@ -113,10 +83,10 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         wait(for: [expectation], timeout: 4)
     }
 
-    func testTCPListeningButNotResponding() {
+    func testUDPListeningButNotResponding() {
         let group = DispatchGroup()
         servers = [10001].map {
-            NetworkServer(port: UInt16($0), parameters: .tcp, responseCondition: { _ in false })
+            NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in false })
         }
         servers.forEach {
             group.enter()
@@ -127,10 +97,10 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
         }
         sleep(delay)
 
-        let expectation = XCTestExpectation(description: "testTCPListeningButNotResponding")
+        let expectation = XCTestExpectation(description: "testUDPListeningButNotResponding")
 
         group.notify(queue: .main) {
-            let sp = OpenVPNTCPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
+            let sp = OpenVPNUDPAvailabilityChecker(queue: .global(qos: .utility), config: self.config)
             sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
                 switch result {
                 case .available:

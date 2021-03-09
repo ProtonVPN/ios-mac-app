@@ -23,39 +23,41 @@
 import Foundation
 import Network
 
-final class TCPServer {
+final class NetworkServer {
     let port: NWEndpoint.Port
     let listener: NWListener
 
     let responseCondition: ((Data) -> Bool)
+    var ready: (() -> Void)?
 
     private var connectionsByID: [Int: ServerConnection] = [:]
 
-    init(port: UInt16, responseCondition: @escaping ((Data) -> Bool)) {
+    init(port: UInt16, parameters: NWParameters, responseCondition: @escaping ((Data) -> Bool)) {
         self.port = NWEndpoint.Port(rawValue: port)!
         self.responseCondition = responseCondition
-        listener = try! NWListener(using: .tcp, on: self.port)
+        listener = try! NWListener(using: parameters, on: self.port)
     }
 
     func start() throws {
         listener.stateUpdateHandler = self.stateDidChange(to:)
         listener.newConnectionHandler = self.didAccept(nwConnection:)
-        listener.start(queue: .main)
+        listener.start(queue: .global(qos: .utility))
     }
 
     func stateDidChange(to newState: NWListener.State) {
         switch newState {
         case .ready:
             print("Server ready on port \(port).")
+            ready?()
         case .failed(let error):
             print("Server failure on port \(port), error: \(error.localizedDescription)")
         default:
-            break
+            print(newState)
         }
     }
 
     private func didAccept(nwConnection: NWConnection) {
-        let connection = ServerConnection(nwConnection: nwConnection)
+        let connection = ServerConnection(nwConnection: nwConnection, port: Int(port.rawValue))
         connection.responseCondition = responseCondition
         print("Accepted connection \(connection.id) on port \(port)")
         self.connectionsByID[connection.id] = connection
@@ -89,8 +91,10 @@ final class ServerConnection {
     private static var nextID: Int = 0
     let  connection: NWConnection
     let id: Int
+    let port: Int
 
-    init(nwConnection: NWConnection) {
+    init(nwConnection: NWConnection, port: Int) {
+        self.port = port
         connection = nwConnection
         id = ServerConnection.nextID
         ServerConnection.nextID += 1
@@ -100,7 +104,7 @@ final class ServerConnection {
     var responseCondition: ((Data) -> Bool)? = nil
 
     func start() {
-        print("Connection \(id) will start")
+        print("Connection \(id) on port \(port) will start")
         connection.stateUpdateHandler = self.stateDidChange(to:)
         setupReceive()
         connection.start(queue: .main)
@@ -111,7 +115,7 @@ final class ServerConnection {
         case .waiting(let error):
             connectionDidFail(error: error)
         case .ready:
-            print("Connection \(id) ready")
+            print("Connection \(id) on port \(port) ready")
         case .failed(let error):
             connectionDidFail(error: error)
         default:
@@ -122,8 +126,9 @@ final class ServerConnection {
     private func setupReceive() {
         connection.receive(minimumIncompleteLength: 1, maximumLength: MTU) { (data, _, isComplete, error) in
             if let data = data, !data.isEmpty {
-                print("Connection \(self.id) did receive, data: \(data as NSData)")
+                print("Connection \(self.id) on port \(self.port) did receive, data: \(data as NSData)")
                 if let condition = self.responseCondition, condition(data) {
+                    print("Replying to connection \(self.id) on port \(self.port)")
                     self.send(data: data)
                 }
             }
@@ -158,7 +163,7 @@ final class ServerConnection {
     }
 
     private func connectionDidEnd() {
-        print("Connection \(id) did end")
+        print("Connection \(id) on port \(port) did end")
         stop(error: nil)
     }
 
