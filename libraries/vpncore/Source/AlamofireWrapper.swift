@@ -160,9 +160,14 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     
     public func request(_ request: URLRequestConvertible, success: @escaping StringCallback, failure: @escaping ErrorCallback) {
         guard check(request, failure: failure) else { return }
-        session.request(request, interceptor: self.interceptor(for: request)).validated.responseString(queue: requestQueue) { response in
-            if let result = try? response.result.get() {
-                success(result)
+
+        // do not call `.validated` on this request because it is intended to return plaintext and the `.validated` method checks for error code in JSON
+        session.request(request, interceptor: self.interceptor(for: request)).responseString(queue: requestQueue) { response in
+            switch response.result {
+            case let .success(value):
+                success(value)
+            case let .failure(error):
+                failure(error)
             }
         }
     }
