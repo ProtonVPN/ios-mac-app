@@ -50,6 +50,12 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
             return
         }
 
+        // If the request is being made to the status URL, never modify it
+       if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrlHost {
+            completion(.success(urlRequest))
+            return
+        }
+
         // If the request is being made to a different base URL, switch to the new base URL changed by alternative routing
         // This is needed for the case when the `AlamofireWrapper` is used with a generic `URLRequestConvertible` instead of a `BaseRequest` subclass
         // Every `BaseRequest` subclass handles this automatically because it calls `DoH.getHostUrl()` when forming the URL
