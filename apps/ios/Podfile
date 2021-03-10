@@ -54,8 +54,7 @@ target 'ProtonVPN' do
   end
 end
 
-# Temporarily disabled while we have problems with CD
-#plugin 'cocoapods-acknowledgements', :settings_bundle => true, :exclude => ['vpncore']
+plugin 'cocoapods-acknowledgements', :settings_bundle => true, :exclude => ['vpncore']
 
 post_install do |installer|
   installer.pods_project.targets.each do |target|
