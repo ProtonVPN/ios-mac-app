@@ -167,11 +167,15 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
         
         let ports: [Int]
-        switch socketType {
-        case .tcp, .tcp4, .tcp6:
-            ports = portsConfig().defaultTcpPorts.shuffled()
-        case .udp, .udp4, .udp6:
-            ports = portsConfig().defaultUdpPorts.shuffled()
+        if let preferredPorts = connectionConfiguration.preferredPorts {
+            ports = preferredPorts
+        } else {
+            switch socketType {
+            case .tcp, .tcp4, .tcp6:
+                ports = portsConfig().defaultTcpPorts.shuffled()
+            case .udp, .udp4, .udp6:
+                ports = portsConfig().defaultUdpPorts.shuffled()
+            }
         }
         
         configurationBuilder.endpointProtocols = ports.map({ (port) -> EndpointProtocol in

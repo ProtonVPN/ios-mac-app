@@ -18,11 +18,13 @@ public struct ConnectionConfiguration: Codable {
     public let serverIp: ServerIp
     public let vpnProtocol: VpnProtocol
     public let netShieldType: NetShieldType
+    public let preferredPorts: [Int]?
     
-    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType) {
+    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, preferredPorts: [Int]?) {
         self.server = server
         self.serverIp = serverIp
         self.vpnProtocol = vpnProtocol
         self.netShieldType = netShieldType
+        self.preferredPorts = preferredPorts
     }
 }

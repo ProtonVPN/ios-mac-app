@@ -328,8 +328,8 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         smartProtocol = SmartProtocolImplementation(config: propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig)
-        smartProtocol?.determineBestProtocol(server: server) { [weak self] vpnProtocol in
-            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
+        smartProtocol?.determineBestProtocol(server: server) { [weak self] (vpnProtocol, ports) in
+            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType, preferredPorts: ports)
         }
     }
     

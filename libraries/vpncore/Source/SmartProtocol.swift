@@ -22,8 +22,10 @@
 
 import Foundation
 
+typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
+
 protocol SmartProtocol {
-    func determineBestProtocol(server: ServerModel, completion: @escaping (VpnProtocol) -> Void)
+    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion)
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
@@ -46,6 +48,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let queue: DispatchQueue
+    private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {
         let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
@@ -56,9 +59,10 @@ final class SmartProtocolImplementation: SmartProtocol {
             .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
         ]
         self.queue = queue
+        self.config = config
     }
 
-    func determineBestProtocol(server: ServerModel, completion: @escaping (VpnProtocol) -> Void) {
+    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
         let group = DispatchGroup()
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
 
@@ -78,12 +82,17 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: queue) {
+        group.notify(queue: queue) { [config] in
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.rawValue < rhs.rawValue })
-            let best = sorted.first ?? .openVpnUdp
 
-            PMLog.D("Best protocol for \(server.domain) is \(best.vpnProtocol)")
-            completion(best.vpnProtocol)
+            guard let best = sorted.first, let ports = availablePorts[best] else {
+                PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
+                completion(VpnProtocol.openVpn(.udp), config.defaultUdpPorts)
+                return
+            }
+
+            PMLog.D("Best protocol for \(server.domain) is \(best.vpnProtocol) with ports \(ports)")
+            completion(best.vpnProtocol, ports)
         }
     }
 }

@@ -44,8 +44,9 @@ public struct VpnManagerConfiguration {
     public let password: String
     public let passwordReference: Data
     public let vpnProtocol: VpnProtocol
+    public let preferredPorts: [Int]?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, preferredPorts: [Int]?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -54,6 +55,7 @@ public struct VpnManagerConfiguration {
         self.password = password
         self.passwordReference = passwordReference
         self.vpnProtocol = vpnProtocol
+        self.preferredPorts = preferredPorts
     }
 }
 
@@ -88,7 +90,8 @@ public class VpnManagerConfigurationPreparer {
                                            username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
                                            password: vpnCredentials.password,
                                            passwordReference: passwordRef,
-                                           vpnProtocol: connectionConfig.vpnProtocol
+                                           vpnProtocol: connectionConfig.vpnProtocol,
+                                           preferredPorts: connectionConfig.preferredPorts
             )
         } catch {
             // issues retrieving vpn keychain item
