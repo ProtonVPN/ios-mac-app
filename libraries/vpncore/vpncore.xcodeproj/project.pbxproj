@@ -3834,7 +3834,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpncore;
 				PRODUCT_NAME = vpncore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -3869,7 +3869,7 @@
 					"@executable_path/../Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACOSX_DEPLOYMENT_TARGET = 10.12;
+				MACOSX_DEPLOYMENT_TARGET = 10.14;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpncore;
 				PRODUCT_NAME = vpncore;
 				PROVISIONING_PROFILE_SPECIFIER = "";
