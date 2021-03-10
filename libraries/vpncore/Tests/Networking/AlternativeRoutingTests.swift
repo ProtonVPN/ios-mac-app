@@ -86,6 +86,24 @@ final class AlternativeRoutingTests: XCTestCase {
 
         wait(for: [expectation], timeout: 10)
     }
+
+    func testStatusURLNotBeingAffected() {
+        factory.propertiesManagerMock.alternativeRouting = true
+        let alamofireWrapper = factory.makeAlamofireWrapper()
+
+        let expectation = XCTestExpectation(description: "Status request working")
+
+        let request = CheckStatusRequest()
+        alamofireWrapper.request(request, success: { (data: String) -> Void in
+            XCTAssertFalse(data.isEmpty)
+            expectation.fulfill()
+        }, failure: { (error: Error) -> Void in
+            XCTFail("Request should succeed")
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 10)
+    }
 }
 
 final class TestRequest: BaseRequest {
