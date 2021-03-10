@@ -120,6 +120,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     private var connectionPreparer: VpnConnectionPreparer?
+    private var smartProtocol: SmartProtocol?
     
     public static let connectionChanged = Notification.Name("VpnGatewayConnectionChanged")
     public static let activeServerTypeChanged = Notification.Name("VpnGatewayActiveServerTypeChanged")
@@ -320,7 +321,16 @@ public class VpnGateway: VpnGatewayProtocol {
         appStateManager.prepareToConnect()
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)
-        connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
+
+        guard propertiesManager.smartProtocol else {
+            connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
+            return
+        }
+
+        smartProtocol = SmartProtocolImplementation(config: propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig)
+        smartProtocol?.determineBestProtocol(server: server) { [weak self] vpnProtocol in
+            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
+        }
     }
     
     @objc private func appStateChanged() {
