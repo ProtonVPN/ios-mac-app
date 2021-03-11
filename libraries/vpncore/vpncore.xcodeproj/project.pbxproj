@@ -876,6 +876,8 @@
 		F3AF15DA25F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
 		F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3AFC0CC25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F3AFC0CD25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
 		F3EB357D25F7DC7900ACA169 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		F3EB357E25F7DC7900ACA169 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3EB357F25F7DC7900ACA169 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -1241,6 +1243,7 @@
 		F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNUDPAvailabilityCheckerTests.swift; sourceTree = "<group>"; };
 		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
+		F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2159,6 +2162,7 @@
 				F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */,
 				F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */,
 				F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */,
+				F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2779,6 +2783,7 @@
 				D5DCCAAB252B4A8E004CB353 /* CoreBaseRequest.swift in Sources */,
 				D5E1514824AC7C030087ACFF /* GetPaymentsTokenRequest.swift in Sources */,
 				D5C204F62487A0CE004FB58B /* VPNClientCredentialsRequest.swift in Sources */,
+				F3AFC0CC25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204F72487A0CE004FB58B /* VPNLoadsRequest.swift in Sources */,
 				D55D790B24978996009669E0 /* APILogger.swift in Sources */,
 				D5C204F82487A0CE004FB58B /* VPNLocationRequest.swift in Sources */,
@@ -3348,6 +3353,7 @@
 				D5C204CC24866B82004FB58B /* VpnKeychain.swift in Sources */,
 				D5C204CD24866B82004FB58B /* SessionModel.swift in Sources */,
 				D5C204CE24866B82004FB58B /* TrialService.swift in Sources */,
+				F3AFC0CD25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204CF24866B82004FB58B /* ReportBugViewModel.swift in Sources */,
 				D5C204D024866B82004FB58B /* AttachmentRowViewModel.swift in Sources */,
 				D5C204E424866BC2004FB58B /* SiriHelperProtocol.swift in Sources */,
