@@ -110,7 +110,7 @@ final class SmartProtocolImplementationTests: XCTestCase {
         group.notify(queue: .main) {
             sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { (proto, ports) in
                 XCTAssertEqual(proto, VpnProtocol.openVpn(.udp))
-                XCTAssertNil(ports)
+                XCTAssertEqual(ports, self.config.defaultUdpPorts)
                 expectation.fulfill()
             }
         }
