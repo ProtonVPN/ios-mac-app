@@ -64,7 +64,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports.sorted(), self.config.defaultTcpPorts)
@@ -75,7 +75,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
     func testTCPOnSomePorts() {
@@ -95,7 +95,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports.sorted(), [10001, 10002])
@@ -106,13 +106,13 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
     func testTCPNotListening() {
         let expectation = XCTestExpectation(description: "testTCPNotListening")
         let sp = OpenVPNTCPAvailabilityChecker(config: config)
-        sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+        sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
             switch result {
             case .available:
                 XCTFail()
@@ -122,7 +122,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
     func testTCPListeningButNotResponding() {
@@ -142,7 +142,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
                 switch result {
                 case .available:
                     XCTFail()
@@ -153,6 +153,6 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 }

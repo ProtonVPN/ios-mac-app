@@ -878,6 +878,8 @@
 		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3AFC0CC25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
 		F3AFC0CD25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F3AFC0E625FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
+		F3AFC0E725FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
 		F3EB357D25F7DC7900ACA169 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		F3EB357E25F7DC7900ACA169 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3EB357F25F7DC7900ACA169 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -1244,6 +1246,7 @@
 		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
+		F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModelMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1626,6 +1629,7 @@
 			children = (
 				D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */,
 				D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */,
+				F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -2796,6 +2800,7 @@
 				D5C204FE2487A0CE004FB58B /* AuthenticateRequest.swift in Sources */,
 				D5C204FF2487A0CE004FB58B /* AuthBaseRequest.swift in Sources */,
 				D5C205002487A0CE004FB58B /* AuthInfoRequest.swift in Sources */,
+				F3AFC0E625FA0E90005FF4D7 /* ServerModelMock.swift in Sources */,
 				D5C205012487A0CE004FB58B /* AuthModulusRequest.swift in Sources */,
 				D5C205022487A0CE004FB58B /* AuthRefreshRequest.swift in Sources */,
 				D5C205032487A0CE004FB58B /* UserBaseRequest.swift in Sources */,
@@ -3228,6 +3233,7 @@
 				D5C2047624866B81004FB58B /* PaymentsApplyCreditRequest.swift in Sources */,
 				D5C2047724866B81004FB58B /* PaymentsBaseRequest.swift in Sources */,
 				D5C2047824866B81004FB58B /* PaymentsCreditRequest.swift in Sources */,
+				F3AFC0E725FA0E90005FF4D7 /* ServerModelMock.swift in Sources */,
 				D5C2047924866B81004FB58B /* PaymentsDefaultPlanRequest.swift in Sources */,
 				D5C2047A24866B81004FB58B /* PaymentsMethodsRequest.swift in Sources */,
 				D51D950A249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,

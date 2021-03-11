@@ -52,7 +52,7 @@ final class SmartProtocolImplementationTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Smart protocol")
         let sp = SmartProtocolImplementation(config: config)
         group.notify(queue: .main) {
-            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { (proto, ports) in
+            sp.determineBestProtocol(server: ServerModelMock(domain: "localhost")) { (proto, ports) in
                 XCTAssertEqual(proto, VpnProtocol.openVpn(.tcp))
                 XCTAssertEqual(ports.sorted(), self.config.defaultTcpPorts.sorted())
                 expectation.fulfill()
@@ -80,7 +80,7 @@ final class SmartProtocolImplementationTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Smart protocol")
         let sp = SmartProtocolImplementation(config: config)
         group.notify(queue: .main) {
-            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { (proto, ports) in
+            sp.determineBestProtocol(server: ServerModelMock(domain: "localhost")) { (proto, ports) in
                 XCTAssertEqual(proto, VpnProtocol.openVpn(.udp))
                 XCTAssertEqual(ports.sorted(), self.config.defaultUdpPorts.sorted())
                 expectation.fulfill()
@@ -108,7 +108,7 @@ final class SmartProtocolImplementationTests: XCTestCase {
         let expectation = XCTestExpectation(description: "Smart protocol")
         let sp = SmartProtocolImplementation(config: config)
         group.notify(queue: .main) {
-            sp.determineBestProtocol(server: ServerModel(domain: "localhost")) { (proto, ports) in
+            sp.determineBestProtocol(server: ServerModelMock(domain: "localhost")) { (proto, ports) in
                 XCTAssertEqual(proto, VpnProtocol.openVpn(.udp))
                 XCTAssertEqual(ports, self.config.defaultUdpPorts)
                 expectation.fulfill()

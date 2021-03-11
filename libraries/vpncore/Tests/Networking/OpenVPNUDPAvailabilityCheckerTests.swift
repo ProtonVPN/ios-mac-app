@@ -65,7 +65,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
         let sp = OpenVPNUDPAvailabilityChecker(config: config)
 
         group.notify(queue: .main) {
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports.sorted(), self.config.defaultUdpPorts)
@@ -82,7 +82,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
     func testUDPNotListening() {
         let expectation = XCTestExpectation(description: "testUDPNotListening")
         let sp = OpenVPNUDPAvailabilityChecker(config: config)
-        sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+        sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
             switch result {
             case .available:
                 XCTFail()
@@ -92,7 +92,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
             expectation.fulfill()
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 
     func testUDPListeningButNotResponding() {
@@ -112,7 +112,7 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNUDPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModel(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
                 switch result {
                 case .available:
                     XCTFail()
@@ -123,6 +123,6 @@ final class OpenVPNUDPAvailabilityCheckerTests: XCTestCase {
             }
         }
 
-        wait(for: [expectation], timeout: 4)
+        wait(for: [expectation], timeout: 10)
     }
 }
