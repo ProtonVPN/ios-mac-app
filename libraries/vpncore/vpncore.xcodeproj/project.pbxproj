@@ -876,10 +876,10 @@
 		F3AF15DA25F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
 		F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
-		F3AFC0CC25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
-		F3AFC0CD25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */; };
 		F3AFC0E625FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
 		F3AFC0E725FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
+		F3AFC1DB25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F3AFC1DC25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
 		F3EB357D25F7DC7900ACA169 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		F3EB357E25F7DC7900ACA169 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		F3EB357F25F7DC7900ACA169 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -1245,8 +1245,8 @@
 		F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNUDPAvailabilityCheckerTests.swift; sourceTree = "<group>"; };
 		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
-		F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModelMock.swift; sourceTree = "<group>"; };
+		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2161,12 +2161,12 @@
 		F320561825E7A23100566DB7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */,
 				F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */,
 				F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */,
 				F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */,
 				F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */,
 				F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */,
-				F3AFC0CB25FA0355005FF4D7 /* OpenVpnConfigTests.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -2787,12 +2787,12 @@
 				D5DCCAAB252B4A8E004CB353 /* CoreBaseRequest.swift in Sources */,
 				D5E1514824AC7C030087ACFF /* GetPaymentsTokenRequest.swift in Sources */,
 				D5C204F62487A0CE004FB58B /* VPNClientCredentialsRequest.swift in Sources */,
-				F3AFC0CC25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204F72487A0CE004FB58B /* VPNLoadsRequest.swift in Sources */,
 				D55D790B24978996009669E0 /* APILogger.swift in Sources */,
 				D5C204F82487A0CE004FB58B /* VPNLocationRequest.swift in Sources */,
 				D5C204F92487A0CE004FB58B /* VPNLogicalServicesRequest.swift in Sources */,
 				D5C204FA2487A0CE004FB58B /* VPNSessionsRequest.swift in Sources */,
+				F3AFC1DB25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				F32055AB25E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift in Sources */,
 				D5C204FB2487A0CE004FB58B /* ReportsBaseRequest.swift in Sources */,
 				D5C204FC2487A0CE004FB58B /* ReportsBugRequest.swift in Sources */,
@@ -3359,7 +3359,6 @@
 				D5C204CC24866B82004FB58B /* VpnKeychain.swift in Sources */,
 				D5C204CD24866B82004FB58B /* SessionModel.swift in Sources */,
 				D5C204CE24866B82004FB58B /* TrialService.swift in Sources */,
-				F3AFC0CD25FA0355005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204CF24866B82004FB58B /* ReportBugViewModel.swift in Sources */,
 				D5C204D024866B82004FB58B /* AttachmentRowViewModel.swift in Sources */,
 				D5C204E424866BC2004FB58B /* SiriHelperProtocol.swift in Sources */,
@@ -3376,6 +3375,7 @@
 				D5C204562486694E004FB58B /* ServerOffering.swift in Sources */,
 				D5DC543E252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				D5C2043D248666FF004FB58B /* Dictionary+Extension.swift in Sources */,
+				F3AFC1DC25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */,
 				D5A8812722CDDAD1009B63D1 /* AlamofireWrapperMock.swift in Sources */,
 				D5C2044D248668F7004FB58B /* ContinuousServerProperties.swift in Sources */,
 				D5C20460248669D6004FB58B /* AlamofireWrapper.swift in Sources */,

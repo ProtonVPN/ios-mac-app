@@ -21,7 +21,8 @@ This repository is used as a pod by the ProtonVPN iOS and macOS apps, but is not
 ## Setup
 
 - Clone into folder named `vpncore`
-- Run `pod install` to make sure all pods are up to date and installed
+- Clone the `PMNetworking` framework at the same directory level as this repo
+- Run `pod install` first in PMNetworking and then this repository
 - Run tests for macOS scheme and iOS scheme independently
 
 ## License
