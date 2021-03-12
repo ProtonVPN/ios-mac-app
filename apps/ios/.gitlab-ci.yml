@@ -43,6 +43,8 @@ variables:
       EOF
 
 .before_script_mac: &before_script_mac
+  - rm -fr ../tunnelkit || true # ignore failure to delete
+  - git clone -b protonvpn2/keychain https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit 
   - rm -fr ../vpncore || true # ignore failure to delete
   - git clone --depth 1 -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone --depth 1 -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch
   - rm -fr ../pmchallenge || true # ignore failure to delete
