@@ -54,6 +54,11 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
     @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
 
+    @IBOutlet private weak var smartProtocolLabel: PVPNTextField!
+    @IBOutlet private weak var smartProtocolButton: SwitchButton!
+    @IBOutlet private weak var smartProtocolSeparator: NSBox!
+    @IBOutlet private weak var smartProtocolInfoIncon: NSImageView!
+
     private var viewModel: ConnectionSettingsViewModel
     
     required init?(coder: NSCoder) {
@@ -142,6 +147,20 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         alternativeRoutingSeparator.fillColor = .protonLightGrey()
     }
+
+    private func setupSmartProtocolItem() {
+        smartProtocolLabel.attributedStringValue = LocalizedString.smartProtocolTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        smartProtocolInfoIncon.image = NSImage(named: NSImage.Name("info_green"))
+        smartProtocolInfoIncon.toolTip = LocalizedString.smartProtocolDescription
+
+        smartProtocolButton.setState(viewModel.smartProtocol ? .on : .off)
+        smartProtocolButton.delegate = self
+
+        smartProtocolSeparator.fillColor = .protonLightGrey()
+
+        protocolView.isHidden = viewModel.smartProtocol
+    }
     
     private func refreshAutoConnect() {
         autoConnectList.removeAllItems()
@@ -189,6 +208,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
+        setupSmartProtocolItem()
     }
     
     // MARK: - Actions
@@ -216,10 +236,13 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
     func switchButtonClicked(_ button: NSButton) {
-        guard button.superview == alternativeRoutingButton else {
-            return
+        if button.superview == alternativeRoutingButton {
+            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
         }
 
-        viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+        if button.superview == smartProtocolButton {
+            viewModel.setSmartProtocol(smartProtocolButton.currentButtonState == .on)
+            reloadView()
+        }
     }
 }

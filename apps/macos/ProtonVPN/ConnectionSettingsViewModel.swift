@@ -82,6 +82,10 @@ final class ConnectionSettingsViewModel {
     var alternativeRouting: Bool {
         return propertiesManager.alternativeRouting
     }
+
+    var smartProtocol: Bool {
+        return propertiesManager.smartProtocol
+    }
     
     // MARK: - Item counts
     
@@ -187,6 +191,10 @@ final class ConnectionSettingsViewModel {
 
     func setAlternatveRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
+    }
+
+    func setSmartProtocol(_ enabled: Bool) {
+        propertiesManager.smartProtocol = enabled
     }
     
     // MARK: - Item
