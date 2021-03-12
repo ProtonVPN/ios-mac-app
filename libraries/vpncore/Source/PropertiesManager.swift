@@ -31,6 +31,7 @@ public protocol PropertiesManagerProtocol: class {
     static var userIpNotification: Notification.Name { get }
     static var netShieldNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
+    static var vpnProtocolNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -60,6 +61,7 @@ public protocol PropertiesManagerProtocol: class {
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
+    var killSwitch: Bool { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -120,6 +122,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         // AppState
         static let lastTimeForeground = "LastTimeForeground"
         
+        // Kill Switch
+        static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
+        
         // Features
         static let featureFlags = "FeatureFlags"
         static let netshield = "NetShield"
@@ -135,6 +140,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
     public static var earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
+    public static var vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -332,9 +338,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
             // only use the real api host (set by the app) on live endpoint
             let apiHost = newValue == ApiConstants.liveURL ? ApiConstants.apiHost : ""
             // DoH needs to be recreated to take the new endpoint into effect
-            //swiftlint:disable force_try
+            // swiftlint:disable force_try
             ApiConstants.doh = try! DoHVPN(apiHost: apiHost)
-            //swiftlint:enable force_try
+            // swiftlint:enable force_try
         }
     }
     
@@ -366,11 +372,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var vpnProtocol: VpnProtocol {
         get {
-            
-            #if os(OSX)
-                return DefaultConstants.vpnProtocol
-            #endif
-            
             guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
                 return DefaultConstants.vpnProtocol
             }
@@ -385,6 +386,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.vpnProtocol)
+            postNotificationOnUIThread(PropertiesManager.vpnProtocolNotification, object: newValue)
         }
     }
     
@@ -456,6 +458,22 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
+    var killSwitchNotification: Notification.Name {
+        return Notification.Name("KillSwitchChanged")
+    }
+    
+    public var killSwitch: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: Keys.killSwitch)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.killSwitch)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
+            }
+        }
+    }
+        
     public var humanValidationFailed: Bool {
         get {
             return Storage.userDefaults().bool(forKey: Keys.humanValidationFailed)

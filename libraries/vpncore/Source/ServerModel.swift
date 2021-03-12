@@ -120,18 +120,18 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public init(dic: JSONDictionary) throws {
-        id = try dic.stringOrThrow(key: "ID") //"ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
-        name = try dic.stringOrThrow(key: "Name") //"Name": "ES#1"
-        domain = try dic.stringOrThrow(key: "Domain") //"Domain": "es-05.protonvpn.com"
-        load = try dic.intOrThrow(key: "Load") //"Load": 13
-        entryCountryCode = try dic.stringOrThrow(key: "EntryCountry") //"EntryCountry": "ES"
-        exitCountryCode = try dic.stringOrThrow(key: "ExitCountry") //"ExitCountry": "ES" //this replace old countryCode
-        tier = try dic.intOrThrow(key: "Tier") //"Tier": 2
-        score = try dic.doubleOrThrow(key: "Score")  //"Score": 1
-        status = try dic.intOrThrow(key: "Status") //"Status": 1,
-        self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) //"Features": 12
-        city = dic.string("City") //"City": "Zurich"
-        self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) //"Location"
+        id = try dic.stringOrThrow(key: "ID") // "ID": "-Bpgivr5H2qQ4-7gm3GtQPF9xwx9-VUA=="
+        name = try dic.stringOrThrow(key: "Name") // "Name": "ES#1"
+        domain = try dic.stringOrThrow(key: "Domain") // "Domain": "es-05.protonvpn.com"
+        load = try dic.intOrThrow(key: "Load") // "Load": 13
+        entryCountryCode = try dic.stringOrThrow(key: "EntryCountry") // "EntryCountry": "ES"
+        exitCountryCode = try dic.stringOrThrow(key: "ExitCountry") // "ExitCountry": "ES" //this replace old countryCode
+        tier = try dic.intOrThrow(key: "Tier") // "Tier": 2
+        score = try dic.doubleOrThrow(key: "Score")  // "Score": 1
+        status = try dic.intOrThrow(key: "Status") // "Status": 1,
+        self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
+        city = dic.string("City") // "City": "Zurich"
+        self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
         super.init()
         try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }

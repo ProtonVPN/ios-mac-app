@@ -241,22 +241,21 @@ public class AppStateManager {
     }
     
     private func makeConnection(_ connectionConfiguration: ConnectionConfiguration) {
-        let completion: () -> Void = { [weak self] in
-            // assign proper
-            switch connectionConfiguration.vpnProtocol {
-            case .ike:
-                self?.propertiesManager.lastIkeConnection = connectionConfiguration
-            case .openVpn:
-                self?.propertiesManager.lastOpenVpnConnection = connectionConfiguration
-            }
-        }
-        
         guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration) else {
             cancelConnectionAttempt()
             return
         }
         
-        vpnManager.connect(configuration: vpnManagerConfiguration, completion: completion)
+        switch connectionConfiguration.vpnProtocol {
+        case .ike:
+            self.propertiesManager.lastIkeConnection = connectionConfiguration
+        case .openVpn:
+            self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
+        }
+        
+        vpnManager.connect(configuration: vpnManagerConfiguration, completion: {
+            // COMPLETION
+        })
     }
     
     private func setupReachability() {

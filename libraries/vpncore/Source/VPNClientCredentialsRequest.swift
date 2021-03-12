@@ -23,5 +23,5 @@
 import Alamofire
 
 class VPNClientCredentialsRequest: VPNBaseRequest {
-    //For now this request does not need any override
+    // For now this request does not need any override
 }

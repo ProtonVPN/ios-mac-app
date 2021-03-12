@@ -80,12 +80,12 @@ public class PMLog {
         }
     }
     
-    public static func logFile() -> URL? {
+    public static func logFile(_ filename: String = "ProtonVPN.log") -> URL? {
         do {
             _ = try FileManager.default.createDirectory(at: logsDirectory, withIntermediateDirectories: false, attributes: nil)
         } catch {}
         
-        let file = logsDirectory.appendingPathComponent("ProtonVPN.log", isDirectory: false)
+        let file = logsDirectory.appendingPathComponent(filename, isDirectory: false)
         
         #if !os(OSX)
         do {
@@ -107,17 +107,19 @@ public class PMLog {
         }
     }
     
-    public static func D(_ message: String, level: LogLevel = .info, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+    public static func D(_ message: String, level: LogLevel = .info, overwrite: Bool = false, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
         printToConsole(log)
         
-        guard let logPath = logFile() else { return }
+        guard let logPath = logFile(filename) else { return }
         
         pruneLogs()
         
         do {
             let fileHandle = try FileHandle(forWritingTo: logPath)
-            fileHandle.seekToEndOfFile()
+            if !overwrite {
+                fileHandle.seekToEndOfFile()
+            }
             fileHandle.write("\(log)\n".data(using: .utf8)!)
             fileHandle.closeFile()
         } catch {

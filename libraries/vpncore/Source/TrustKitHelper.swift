@@ -18,7 +18,7 @@ public final class TrustKitHelper: SessionDelegate {
     
     typealias Configuration = [String: Any]
 
-    //swiftlint:disable function_body_length
+    // swiftlint:disable function_body_length
     private static func configuration(hardfail: Bool = true) -> Configuration {
         var config: Configuration = [
             kTSKSwizzleNetworkDelegates: false,
@@ -75,7 +75,7 @@ public final class TrustKitHelper: SessionDelegate {
         
         return config
     }
-    //swiftlint:enable function_body_length
+    // swiftlint:enable function_body_length
     
     public typealias Factory = AlamofireWrapperFactory
     private var factory: Factory

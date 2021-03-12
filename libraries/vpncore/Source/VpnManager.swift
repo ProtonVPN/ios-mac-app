@@ -128,7 +128,6 @@ public class VpnManager: VpnManagerProtocol {
     public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
-            
             PMLog.D("About to start connection process")
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
@@ -259,9 +258,14 @@ public class VpnManager: VpnManagerProtocol {
             
             do {
                 let protocolConfiguration = try currentVpnProtocolFactory.create(configuration)
-                self.configureConnection(forProtocol: protocolConfiguration,
-                                         vpnManager: vpnManager,
-                                         completion: completion)
+                self.configureConnection(forProtocol: protocolConfiguration, vpnManager: vpnManager) {
+                    self.startConnection(completion: completion)
+                    
+                    // OVPN first connection fix. Pushes creds after extension is already running. Fix this to something better when solution will be available.
+                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
+                        currentVpnProtocolFactory.connectionStarted(configuration: configuration) { }
+                    })
+                }
             } catch {
                 PMLog.ET(error)
             }
@@ -274,20 +278,43 @@ public class VpnManager: VpnManagerProtocol {
         guard connectAllowed else { return }
         
         PMLog.D("Configuring connection")
+        
+        // MARK: - KillSwitch configuration
+        #if os(OSX)
+        if #available(OSX 10.15, *) {
+            configuration.includeAllNetworks = propertiesManager.killSwitch
+        }
+        #endif
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
         vpnManager.isOnDemandEnabled = hasConnected
         vpnManager.isEnabled = true
         
-        vpnManager.saveToPreferences { [weak self] saveError in
-            guard let `self` = self else { return }
-            if let saveError = saveError {
-                self.setState(withError: saveError)
-                return
+        let saveToPreferences = {
+            vpnManager.saveToPreferences { [weak self] saveError in
+                guard let `self` = self else { return }
+                if let saveError = saveError {
+                    self.setState(withError: saveError)
+                    return
+                }
+                
+                completion()
             }
-            
-            self.startConnection(completion: completion)
         }
+        
+        #if os(OSX)
+        // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
+        if #available(OSX 10.15, *), configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+            self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
+                saveToPreferences()
+            })
+        } else {
+            saveToPreferences()
+        }
+        #else
+            saveToPreferences()
+        #endif
+        
     }
     
     private func startConnection(completion: @escaping () -> Void) {
@@ -304,7 +331,6 @@ public class VpnManager: VpnManagerProtocol {
             }
             guard let vpnManager = vpnManager else { return }
             guard self.connectAllowed else { return }
-            
             do {
                 PMLog.D("Starting VPN tunnel")
                 try vpnManager.connection.startVPNTunnel()

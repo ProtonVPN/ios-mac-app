@@ -26,7 +26,7 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     
     public init() {}
     
-    public func create(_ configuration: VpnManagerConfiguration) -> NEVPNProtocol {
+    public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
         
         config.username = configuration.username
@@ -73,6 +73,11 @@ public class IkeProtocolFactory: VpnProtocolFactory {
         }
     }
     
+    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        // Nothing to do in IKEv2
+        completion()
+    }
+    
     public func logs(completion: @escaping (String?) -> Void) {
         completion(nil)
     }
@@ -80,4 +85,5 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public func logFile(completion: @escaping (URL?) -> Void) {
         completion(nil)
     }
+    
 }

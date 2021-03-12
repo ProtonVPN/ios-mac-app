@@ -17,7 +17,7 @@ abstract_target 'vpncore' do
     pod 'PMNetworking', :path => '../pmnetworking' # run `pod update PMNetworking` after changing source
     
     # OpenVPN support
-    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+    pod 'TunnelKit', :path => '../tunnelkit'
 
     # Checks code style and bad practices
     pod 'SwiftLint'
@@ -26,16 +26,16 @@ abstract_target 'vpncore' do
     pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
     
     target 'vpncore-ios' do
-        platform :ios, '11.0'
+        platform :ios, '12.0'
     end
     target 'vpncore-macos' do
-        platform :osx, '10.12'
+        platform :osx, '10.15'
     end
     target 'vpncore-iosTests' do
-        platform :ios, '11.0'
+        platform :ios, '12.0'
     end
     target 'vpncore-macosTests' do
-        platform :osx, '10.12'
+        platform :osx, '10.15'
     end
 end
 

@@ -26,7 +26,7 @@ public class CountryModel: Comparable, Hashable {
     
     public let countryCode: String
     public var lowestTier: Int
-    public var feature: ServerFeature = ServerFeature.zero //this is signel keyword feature
+    public var feature: ServerFeature = ServerFeature.zero // This is signal keyword feature
     
     public func hash(into hasher: inout Hasher) {
         hasher.combine(countryCode)

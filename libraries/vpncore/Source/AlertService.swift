@@ -320,6 +320,19 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     }
 }
 
+public class ReconnectOnSettingsChangeAlert: SystemAlert {
+    public var title: String? = LocalizedString.reconnectOnProtocolChangeTitle
+    public var message: String? = LocalizedString.reconnectOnSettingsChangeBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+    }
+}
+
 public class LogoutWarningAlert: SystemAlert {
     public var title: String? = LocalizedString.vpnConnectionActive
     public var message: String? = LocalizedString.logOutWarning
@@ -602,4 +615,63 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
     }
+}
+
+public class OpenVPNInstallationRequiredAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNSettingsTitle
+    public var message: String? = LocalizedString.openVPNSettingsDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
+    }
+}
+
+public class OpenVPNEnabledAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNEnabledTitle
+    public var message: String? = LocalizedString.openVPNEnabledDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+    }
+}
+
+public class OpenVPNInstallingErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNCannotEnable
+    public var message: String? = LocalizedString.openVPNErrorDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
+    }
+}
+
+public class OpenVPNEnableErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.openVPNCannotEnable
+    public var message: String? = LocalizedString.openVPNBelowCatalinaDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
+    }
+}
+
+public class OpenVPNExtensionTourAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init() { }
 }
