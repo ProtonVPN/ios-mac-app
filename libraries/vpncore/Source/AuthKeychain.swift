@@ -33,6 +33,8 @@ public class AuthKeychain {
     private static let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static func fetch() -> AuthCredentials? {
+        NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")
+
         do {
             if let data = try appKeychain.getData(StorageKey.authCredentials) {
                 if let authCredentials = NSKeyedUnarchiver.unarchiveObject(with: data) as? AuthCredentials {
@@ -47,6 +49,8 @@ public class AuthKeychain {
     }
     
     public static func store(_ credentials: AuthCredentials) throws {
+        NSKeyedArchiver.setClassName("ProtonVPN.AuthCredentials", for: AuthCredentials.self)
+
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
