@@ -130,7 +130,6 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
 
     public func request(_ request: URLRequestConvertible, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { _ in
-            self.setHumanVerification(token: nil) // reset token to prepare for the next request
             success()
         }
         self.request(request, success: successWrapper, failure: failure)
@@ -149,7 +148,6 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             
             switch response.mapApiResponse {
             case .success(let json):
-                self?.setHumanVerification(token: nil) // reset token to prepare for the next request
                 success(json)
             case .failure(let error):
                 self?.didReceiveError(request, error: error, success: success, failure: failure)
@@ -161,7 +159,6 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
         guard check(request, failure: failure) else { return }
         session.request(request, interceptor: self.authInterceptor(for: request)).validated.responseString(queue: requestQueue) { response in
             if let result = try? response.result.get() {
-                self.setHumanVerification(token: nil) // reset token to prepare for the next request
                 success(result)
             }
         }
