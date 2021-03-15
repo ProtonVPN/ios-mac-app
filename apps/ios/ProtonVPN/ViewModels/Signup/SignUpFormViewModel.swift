@@ -290,6 +290,7 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
         // login
         appSessionManager.logIn(username: username, password: password, success: { [weak self] in
             self?.finishedSuccessfully(loggedIn: true)
+            self?.alamofireWrapper.setHumanVerification(token: nil)
         }, failure: { [weak self] (_) in
             self?.finishedSuccessfully(loggedIn: false)
         })
