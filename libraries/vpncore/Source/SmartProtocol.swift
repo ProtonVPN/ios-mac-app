@@ -71,14 +71,14 @@ final class SmartProtocolImplementation: SmartProtocol {
         for (proto, checker) in checkers {
             group.enter()
             checker.checkAvailability(server: server) { result in
-                group.leave()
-
                 switch result {
                 case .unavailable:
                     break
                 case let .available(ports: ports):
                     availablePorts[proto] = ports
                 }
+
+                group.leave()
             }
         }
 
