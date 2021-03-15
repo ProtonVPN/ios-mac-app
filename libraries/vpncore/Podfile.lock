@@ -18,7 +18,7 @@ PODS:
   - AwaitKit (5.0.1):
     - PromiseKit (~> 6)
   - KeychainAccess (3.2.1)
-  - OpenSSL-Apple (1.1.1h.10)
+  - OpenSSL-Apple (1.1.1j.11)
   - PMNetworking (1.0.0):
     - AFNetworking (~> 4.0)
     - AwaitKit (~> 5.0.0)
@@ -96,7 +96,7 @@ SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  OpenSSL-Apple: 8a8fcb06fb66f9c2f7aed45ce363668493b8e5f6
+  OpenSSL-Apple: bb7c9715a259404de040f5359ed3b3170cedf8d6
   PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
