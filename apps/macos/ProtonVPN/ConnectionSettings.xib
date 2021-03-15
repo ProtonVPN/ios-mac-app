@@ -235,9 +235,9 @@
                                         <constraint firstAttribute="width" constant="35" id="zrx-W6-gwp"/>
                                     </constraints>
                                 </customView>
-                                <box ambiguous="YES" boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="M35-Jw-Qju" userLabel="Dns Leak Protection Separator">
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="M35-Jw-Qju" userLabel="Dns Leak Protection Separator">
                                     <rect key="frame" x="42" y="0.0" width="416" height="1"/>
-                                    <view key="contentView" ambiguous="YES" id="bbW-Gt-abH">
+                                    <view key="contentView" id="bbW-Gt-abH">
                                         <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     </view>
@@ -256,7 +256,9 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="Zmq-AW-D49" firstAttribute="leading" secondItem="QNa-CH-077" secondAttribute="trailing" constant="5" id="AnZ-5E-oM0"/>
+                                <constraint firstItem="M35-Jw-Qju" firstAttribute="leading" secondItem="QNa-CH-077" secondAttribute="leading" id="GZV-9H-rvV"/>
                                 <constraint firstAttribute="bottom" secondItem="M35-Jw-Qju" secondAttribute="bottom" id="Lbz-Ni-2GI"/>
+                                <constraint firstItem="M35-Jw-Qju" firstAttribute="trailing" secondItem="KlO-7n-dB1" secondAttribute="trailing" id="Prw-Sz-1zm"/>
                                 <constraint firstItem="Zmq-AW-D49" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="fdw-XS-h0O"/>
                                 <constraint firstAttribute="height" constant="50" id="r4i-2V-H9b"/>
                                 <constraint firstItem="QNa-CH-077" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="uJq-U2-IOE"/>
