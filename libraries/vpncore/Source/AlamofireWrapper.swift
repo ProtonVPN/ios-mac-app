@@ -134,7 +134,9 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     // MARK: - Request
 
     public func request(_ request: URLRequestConvertible, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { _ in success() }
+        let successWrapper: JSONCallback = { _ in
+            success()
+        }
         self.request(request, success: successWrapper, failure: failure)
     }
     
