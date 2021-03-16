@@ -226,7 +226,7 @@ class NavigationService {
         return makeConnectionBarViewController()
     }()
     private lazy var loginViewModel = { [unowned self] in
-        return LoginViewModel(appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
+        return LoginViewModel(factory: factory)
         }()
     
     private lazy var tabBarController = {
@@ -322,7 +322,7 @@ extension NavigationService: LoginService {
     
     private func makeLoginViewController(dismissible: Bool, username: String? = nil, errorMessage: String? = nil) -> LoginViewController? {
         if let loginViewController = loginStoryboard.instantiateViewController(withIdentifier: "LoginViewController") as? LoginViewController {
-            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, appSessionManager: appSessionManager, loginService: self, alertService: alertService, appSessionRefresher: factory.makeAppSessionRefresher())
+            loginViewController.viewModel = LoginViewModel(dismissible: dismissible, username: username, errorMessage: errorMessage, factory: factory)
             return loginViewController
         }
         return nil

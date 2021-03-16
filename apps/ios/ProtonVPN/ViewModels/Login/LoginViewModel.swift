@@ -31,12 +31,22 @@ protocol LoginViewModelDelegate: class {
 }
 
 class LoginViewModel {
-
-    private let propertiesManager = PropertiesManager()
-    private let appSessionManager: AppSessionManager
-    private let appSessionRefresher: AppSessionRefresher
-    private let loginService: LoginService
-    var alertService: AlertService
+    
+    typealias Factory = AlamofireWrapperFactory
+    & PropertiesManagerFactory
+    & AppSessionManagerFactory
+    & AppSessionRefresherFactory
+    & LoginServiceFactory
+    & CoreAlertServiceFactory
+    
+    private let factory: Factory
+    
+    private lazy var propertiesManager = factory.makePropertiesManager()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var appSessionRefresher: AppSessionRefresher = factory.makeAppSessionRefresher()
+    private lazy var loginService: LoginService = factory.makeLoginService()
+    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
+    public lazy var alertService: AlertService = factory.makeCoreAlertService()
     
     let dismissible: Bool
     
@@ -51,14 +61,11 @@ class LoginViewModel {
     weak var delegate: LoginViewModelDelegate?
     weak var tabBarDelegate: TabBarViewModelModelDelegate?
     
-    init(dismissible: Bool = true, username: String? = nil, errorMessage: String? = nil, appSessionManager: AppSessionManager, loginService: LoginService, alertService: AlertService, appSessionRefresher: AppSessionRefresher) {
+    init(dismissible: Bool = true, username: String? = nil, errorMessage: String? = nil, factory: Factory) {
         self.dismissible = dismissible
         self.username = username
         self.openingError = errorMessage
-        self.appSessionManager = appSessionManager
-        self.loginService = loginService
-        self.alertService = alertService
-        self.appSessionRefresher = appSessionRefresher
+        self.factory = factory
     }
     
     func logIn(username: String, password: String) {
@@ -66,6 +73,7 @@ class LoginViewModel {
             self?.loginService.presentMainInterface()
             self?.delegate?.dismissLogin()
             self?.tabBarDelegate?.removeLoginBox()
+            self?.alamofireWrapper.setHumanVerification(token: nil)
         }, failure: { [weak self] error in
             self?.delegate?.showError(error)
             guard let `self` = self else { return }

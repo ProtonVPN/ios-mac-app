@@ -200,6 +200,15 @@ class WindowServiceImplementation: WindowService {
             navigationController = rootViewController as? UINavigationController
         }
         
+        // Search for modally presented controllers
+        if navigationController == nil {
+            var controller = rootViewController
+            while let modal = controller.presentedViewController {
+                controller = modal
+            }
+            navigationController = controller as? UINavigationController
+        }
+        
         while let modal = navigationController?.presentedViewController as? UINavigationController {
             navigationController = modal
         }
