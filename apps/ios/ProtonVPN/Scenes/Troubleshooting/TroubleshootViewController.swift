@@ -86,11 +86,15 @@ extension TroubleshootViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let item = viewModel.items[indexPath.row]
-        
+
         var cell: TroubleshootingCell
-        if item.hasSwitch {
+        if let actionable = item as? ActionableTroubleshootItem {
             guard let tempCell = tableView.dequeueReusableCell(withIdentifier: TroubleshootingSwitchCell.identifier) as? TroubleshootingSwitchCell else {
                 return UITableViewCell()
+            }
+            tempCell.isOn = actionable.isOn
+            tempCell.isOnChanged = { isOn in
+                actionable.set(isOn: isOn)
             }
             cell = tempCell
         } else {

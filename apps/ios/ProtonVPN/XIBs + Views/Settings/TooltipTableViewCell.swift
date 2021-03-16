@@ -24,13 +24,18 @@ import UIKit
 
 class TooltipTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var tooltipLabel: UILabel!
+    @IBOutlet weak var tooltipLabel: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
         
         backgroundColor = .protonDarkGrey()
         tooltipLabel.textColor = UIColor.protonFontHeader()
+        tooltipLabel.tintColor = .protonGreen()
+        tooltipLabel.linkTextAttributes = [
+            .foregroundColor: UIColor.protonGreen(),
+            .underlineStyle: NSUnderlineStyle.single.rawValue,
+        ]
         
     }
     

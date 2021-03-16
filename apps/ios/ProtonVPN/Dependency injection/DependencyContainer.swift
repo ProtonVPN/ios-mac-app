@@ -420,6 +420,13 @@ extension DependencyContainer: ChallengeFactory {
     }
 }
 
+// MARK: TroubleshootViewModelFactory
+extension DependencyContainer: TroubleshootViewModelFactory {
+    func makeTroubleshootViewModel() -> TroubleshootViewModel {
+        return TroubleshootViewModel(propertiesManager: makePropertiesManager())
+    }
+}
+
 // MARK: AppSpecificRequestAdapterFatory
 extension DependencyContainer: AppSpecificRequestAdapterFatory {
     func makeAppSpecificRequestAdapter() -> RequestAdapter? {

@@ -18,6 +18,7 @@ This app uses CocoaPods for most dependencies, including our vpncore framework (
 
 - Clone this repository
 - Clone the vpncore framework at the same directory level as this repo
+- Run `gem install cocoapods-acknowledgements`
 - Run `pod install` first in vpncore and then this repository
 - Open `ProtonVPN.xcworkspace` in Xcode
 - Configure code signing for all targets with a paid Apple developer account (required due to VPN entitlements) and change the bundle identifiers to something unique

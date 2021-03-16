@@ -262,7 +262,6 @@
 		D55B20E223840CD000AEB7FE /* SigninInfoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */; };
 		D55B20E323851F3300AEB7FE /* SigninInfoContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */; };
 		D55B36C82457FDF500D8B0B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
-		D55B36C92457FE1700D8B0B9 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */; };
 		D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
 		D55B36CB2457FF0600D8B0B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
 		D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8CD762456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift */; };
@@ -273,7 +272,6 @@
 		D56B68DB250617F000796E0C /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D580AB8224518567003C34B9 /* TroubleshootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8024518567003C34B9 /* TroubleshootViewController.swift */; };
 		D580AB8324518567003C34B9 /* TroubleshootViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8124518567003C34B9 /* TroubleshootViewController.xib */; };
-		D580AB8524518766003C34B9 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */; };
 		D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */; };
 		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
@@ -739,7 +737,6 @@
 		D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinator.swift; sourceTree = "<group>"; };
 		D580AB8024518567003C34B9 /* TroubleshootViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewController.swift; sourceTree = "<group>"; };
 		D580AB8124518567003C34B9 /* TroubleshootViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootViewController.xib; sourceTree = "<group>"; };
-		D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
 		D580AB8B2452C798003C34B9 /* TroubleshootingCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingCell.swift; sourceTree = "<group>"; };
 		D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingCell.xib; sourceTree = "<group>"; };
 		D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootCoordinator.swift; sourceTree = "<group>"; };
@@ -1790,7 +1787,6 @@
 				D5A8CD7A24570AC700F9B0C9 /* Views */,
 				D580AB8024518567003C34B9 /* TroubleshootViewController.swift */,
 				D580AB8124518567003C34B9 /* TroubleshootViewController.xib */,
-				D580AB8424518766003C34B9 /* TroubleshootViewModel.swift */,
 			);
 			path = Troubleshooting;
 			sourceTree = "<group>";
@@ -2818,7 +2814,6 @@
 				E11DA6B12188C07900CDF310 /* PlanSelectionViewController.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
 				E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */,
-				D580AB8524518766003C34B9 /* TroubleshootViewModel.swift in Sources */,
 				422EAB1B243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */,
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
@@ -2949,7 +2944,6 @@
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
-				D55B36C92457FE1700D8B0B9 /* TroubleshootViewModel.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
@@ -3463,7 +3457,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3503,7 +3497,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3584,7 +3578,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
@@ -3610,7 +3604,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3764,7 +3758,7 @@
 					"@executable_path/Frameworks",
 				);
 				LIBRARY_SEARCH_PATHS = "$(PROJECT_DIR)/Frameworks";
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug;
 				PRODUCT_NAME = "$(TARGET_NAME) Test";
@@ -3795,7 +3789,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug.widget;
@@ -3823,7 +3817,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
@@ -3906,7 +3900,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
@@ -3933,7 +3927,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3960,7 +3954,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3988,7 +3982,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.widget;
@@ -4015,7 +4009,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.3.7;
+				MARKETING_VERSION = 2.4.0;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";

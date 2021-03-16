@@ -170,6 +170,9 @@ class OnboardingViewController: UIViewController {
     }
     
     @objc private func dismissPicker() {
+        endpointPicker.delegate = nil
+        endpointPicker.dataSource = nil
+
         endpointLabel.text = viewModel.endpoint
         
         endpointPickerToolbar.removeFromSuperview()

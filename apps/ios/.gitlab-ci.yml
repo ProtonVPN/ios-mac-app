@@ -1,3 +1,8 @@
+include:
+  - project: 'agarroux/publish-github'
+    ref: master
+    file: '/jobs/release.gitlab-ci.yml'
+
 stages:
   - linting
   - unit_tests
@@ -12,41 +17,13 @@ variables:
   GEM_HOME: "$CI_PROJECT_DIR/gem"
   PUBLIC_REPO_URL: git@github.com:ProtonVPN/ios-app.git
 
-.linux-common: &linux-common
-  image: ubuntu:latest
-  cache: {}
-  stage: mirror
-  before_script:
-    - apt-get -y update
-    - apt-get install -y connect-proxy git
-    - 'which ssh-agent || apt-get -y install openssh-client'
-    - eval $(ssh-agent -s)
-    - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - git config --global user.email $GIT_CI_EMAIL
-    - git config --global user.name $GIT_CI_USERNAME
-    - git config --global url."https://".insteadOf git://
-    - mkdir ~/.ssh 2> /dev/null
-    - |
-      cat <<EOF > ~/.ssh/config
-      Host github.com
-          Hostname ssh.github.com
-          User git
-          Port 443
-          ProxyCommand connect-proxy -H $http_proxy %h %p
-      EOF
-    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
-    ## ssh-keyscan doesn't support proxies so we can't fetch the fingerprint online
-    - |
-      cat <<EOF >> ~/.ssh/known_hosts
-      # ssh.github.com:443 SSH-2.0-babeld-2e9d163d
-      [ssh.github.com]:443 ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==
-      EOF
-
 .before_script_mac: &before_script_mac
   - rm -fr ../vpncore || true # ignore failure to delete
   - git clone --depth 1 -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone --depth 1 -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch
   - rm -fr ../pmchallenge || true # ignore failure to delete
   - git clone --depth 1 -b 0.0.2 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmchallenge.git ../pmchallenge
+  - rm -fr ../pmnetworking || true # ignore failure to delete
+  - git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365) 
   - cd ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ..
   - pod install
 
@@ -90,7 +67,7 @@ unit_tests:
      reports:
        junit:
          - fastlane/test_output/report.junit
-        
+
 screenshots:
   stage: screenshots
   before_script:
@@ -147,31 +124,23 @@ testflight_staging:
   environment:
     name: deployment
   when: manual
-  
-sync-app:
-  extends: .linux-common
-  <<: *linux-common
-  only:
-      refs:
-        - master
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - log.txt
-  script:
-    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-    - ./publish-github/sync commit --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
-  
-publish-github-release:
-  extends: .linux-common
-  <<: *linux-common
+
+
+# --- Sync to github ---
+release-publish-github:
+  stage: mirror
+  variables:
+    RELEASE_SYNC_PUBLIC_URL: "$PUBLIC_REPO_URL"
+    RELEASE_SYNC_FROM_BRANCH: 'master'
+  extends: .release-sync-commit-shared
+
+release-publish-github-tags:
+  stage: mirror
   only:
     refs:
       - tags
-  artifacts:
-    expire_in: 1 day
-    paths:
-      - log.txt
-  script:
-    - git clone git@gitlab.protontech.ch:agarroux/publish-github.git
-    - ./publish-github/sync tag --private-url $CI_REPOSITORY_URL --public-url "$PUBLIC_REPO_URL"
+    variables:
+      - $CI_COMMIT_TAG =~ /^(ios|release-mac)-[\d]+\.[\d]+\.[\d]+$/
+  variables:
+    RELEASE_SYNC_PUBLIC_URL: "$PUBLIC_REPO_URL"
+  extends: .release-sync-tags-shared

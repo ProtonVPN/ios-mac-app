@@ -42,7 +42,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
-        
+
+        ApiConstants.apiHost = ObfuscatedConstants.apiHost
         Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
         
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development

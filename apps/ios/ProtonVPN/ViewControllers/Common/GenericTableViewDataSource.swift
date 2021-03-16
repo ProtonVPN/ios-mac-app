@@ -39,6 +39,7 @@ enum TableViewCellModel {
     case invertedKeyValue(key: String, value: String, handler: (() -> Void) )
     case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: (() -> Void) )
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
+    case attributedTooltip(text: NSAttributedString)
 }
 
 struct TableViewSection {
@@ -256,6 +257,13 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             }
             
             return cell
+        case let .attributedTooltip(text: attributedText):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: TooltipTableViewCell.identifier) as? TooltipTableViewCell else {
+                return UITableViewCell()
+            }
+            cell.tooltipLabel.attributedText = attributedText
+
+            return cell
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
@@ -272,7 +280,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch sections[indexPath.section].cells[indexPath.row] {
-        case .tooltip:
+        case .tooltip, .attributedTooltip:
             return -1 // allows for self sizing
         case .instructionStep:
             return -1 // allows for self sizing

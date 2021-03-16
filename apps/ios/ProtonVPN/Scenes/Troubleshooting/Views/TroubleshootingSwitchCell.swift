@@ -26,10 +26,25 @@ class TroubleshootingSwitchCell: TroubleshootingCell {
     
     // Views
     @IBOutlet private weak var toggleSwitch: UISwitch!
+
+    var isOn: Bool {
+        get {
+            return toggleSwitch.isOn
+        }
+        set {
+            toggleSwitch.isOn = newValue
+        }
+    }
+
+    var isOnChanged: ((Bool) -> Void)?
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+
+        toggleSwitch.addTarget(self, action: #selector(switchChanged), for: UIControl.Event.valueChanged)
     }
-    
+
+    @objc private func switchChanged() {
+        isOnChanged?(toggleSwitch.isOn)
+    }
 }

@@ -11,6 +11,9 @@ def sharedpods
   # development pods
   pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
   pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
+
+  # Core
+  pod 'PMNetworking', :path => '../pmnetworking' # run `pod update PMNetworking` after changing source
   pod 'PMChallenge', :path => '../pmchallenge' # run `pod update PMChallenge` after changing source
 
   # third party pods
@@ -25,6 +28,9 @@ def sharedpods
 
   # OpenVPN support
   pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+
+  # Certificates pinning
+  pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
   
 end
 
