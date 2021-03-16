@@ -21,7 +21,7 @@ variables:
   - rm -fr ../vpncore || true # ignore failure to delete
   - git clone --depth 1 -b ${CI_COMMIT_REF_NAME} https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore || git clone --depth 1 -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/vpncore.git ../vpncore # checkout the same named branch, or default to develop branch
   - rm -fr ../pmchallenge || true # ignore failure to delete
-  - git clone --depth 1 -b 0.0.2 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmchallenge.git ../pmchallenge
+  - git clone --depth 1 -b 0.0.4 https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmchallenge.git ../pmchallenge
   - rm -fr ../pmnetworking || true # ignore failure to delete
   - git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365) 
   - cd ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ..
