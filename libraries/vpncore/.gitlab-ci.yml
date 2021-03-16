@@ -29,7 +29,7 @@ variables:
 
 .before_script_mac: &before_script_mac
   - rm -fr ../pmnetworking || true # ignore failure to delete
-  - git clone --depth 1 -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365)
+  - git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365)
   - pod install  
 
 lint:
