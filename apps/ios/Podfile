@@ -29,7 +29,7 @@ def sharedpods
   # Certificates pinning
   pod 'TrustKit', :git => 'https://github.com/ProtonMail/TrustKit', :commit => '838fba789e01c9cabff77acea3fb7135f71a220f'
   
-  pod 'OpenSSL-Apple', '1.1.1h.10'
+  pod 'OpenSSL-Apple', '1.1.1j.11'
   
 end
 
