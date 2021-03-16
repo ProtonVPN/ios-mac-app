@@ -21,8 +21,8 @@ PODS:
     - PromiseKit (~> 6)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
-  - OpenSSL-Apple (1.1.1h.10)
-  - PMChallenge (0.0.2)
+  - OpenSSL-Apple (1.1.1j.11)
+  - PMChallenge (0.0.4)
   - PMNetworking (1.0.0):
     - AFNetworking (~> 4.0)
     - AwaitKit (~> 5.0.0)
@@ -70,7 +70,6 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
-  - OpenSSL-Apple (= 1.1.1h.10)
   - PMChallenge (from `../pmchallenge`)
   - PMNetworking (from `../pmnetworking`)
   - ReachabilitySwift (= 5.0.0)
@@ -120,8 +119,8 @@ SPEC CHECKSUMS:
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  OpenSSL-Apple: 8a8fcb06fb66f9c2f7aed45ce363668493b8e5f6
-  PMChallenge: e1545bb99e3b668f7b4af62aea193d11f1039d3b
+  OpenSSL-Apple: bb7c9715a259404de040f5359ed3b3170cedf8d6
+  PMChallenge: efd562984cf2c0db28e39c2d06e8336025a26633
   PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -132,6 +131,6 @@ SPEC CHECKSUMS:
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
   vpncore: 8d9e923386fea7609bef812661803f7ce3bdb8b6
 
-PODFILE CHECKSUM: 521cbde91968f30afad6de8c64fe0dbd9598ed4e
+PODFILE CHECKSUM: c9dbdf59bdc3d790a8f398a7061d60fea3be17ee
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1
