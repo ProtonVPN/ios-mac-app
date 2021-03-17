@@ -28,7 +28,7 @@ protocol SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager
 }
 
-class SystemExtensionManager: NSObject {
+final class SystemExtensionManager: NSObject {
     
     typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory
     
@@ -40,44 +40,42 @@ class SystemExtensionManager: NSObject {
     fileprivate var silent: Bool = false
     
     private var shouldNotifyInstall = false
-    private var transportProtocol: VpnProtocol.TransportProtocol = .tcp
-    private var completionCallback: VpnProtocolCallback?
+    private var completionCallback: ((Bool) -> Void)?
     
     private var sysExUninstallRequestResultHandler = SystemExtensionUninstallRequestDelegate()
     
-    init( factory: Factory ) {
+    init(factory: Factory) {
         self.factory = factory
         super.init()
     }
     
-    func checkSystemExtensionState(silent: Bool = false) {
+    func checkSystemExtensionState(silent: Bool, requestInstall: Bool, completion: @escaping (Bool) -> Void) {
         self.silent = silent
+
         guard #available(OSX 10.15, *) else {
-            self.propertiesManager.vpnProtocol = .ike
+            completion(false)
             return
         }
+
         PMLog.D("checkSystemExtensionState")
-        switch propertiesManager.vpnProtocol {
-        case .openVpn(let transport):
-            requestExtensionInstall(transport, completion: { vpnProtocol in
-                self.propertiesManager.vpnProtocol = vpnProtocol
-            })
-        default:
+        guard requestInstall else {
+            completion(false)
             return
         }
+
+        requestExtensionInstall(completion: completion)
     }
     
-    func requestExtensionInstall( _ transportProtocol: VpnProtocol.TransportProtocol, completion: @escaping VpnProtocolCallback ) {
+    func requestExtensionInstall(completion: @escaping (Bool) -> Void) {
         shouldNotifyInstall = false
+
         guard #available(OSX 10.15, *) else {
-            self.propertiesManager.vpnProtocol = .ike
+            completion(false)
             return
         }
+
         PMLog.D("requestExtensionInstall")
         self.completionCallback = completion
-        self.transportProtocol = transportProtocol
-        self.propertiesManager.vpnProtocol = .ike
-        completion(.ike)
         
         let request = OSSystemExtensionRequest.activationRequest(
             forExtensionWithIdentifier: extensionIdentifier,
@@ -133,42 +131,43 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         // User gave access
         switch result {
         case .completed:
-            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            completionCallback?(true)
             if !silent && shouldNotifyInstall {
                 alertService.push(alert: OpenVPNEnabledAlert())
             }
             
         case .willCompleteAfterReboot:
             // Display reconnect popup
-            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            completionCallback?(true)
         }
-        self.completionCallback?(propertiesManager.vpnProtocol)
+        self.completionCallback?(true)
         self.completionCallback = nil
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         PMLog.D("SysEx install request failed with error: \(error)")
-        if completionCallback == nil { return }
         
         if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestCanceled {
             // Actually a success, there was no need in reinstalling extension
-            propertiesManager.vpnProtocol = .openVpn(transportProtocol)
-            self.completionCallback?(propertiesManager.vpnProtocol)
+            self.completionCallback?(true)
             self.completionCallback = nil
             return
         }
         
         // Display error group
-        propertiesManager.vpnProtocol = .ike
-        self.completionCallback?(propertiesManager.vpnProtocol)
+        self.completionCallback?(false)
         self.completionCallback = nil
-        if silent { return }
+
+        guard !silent else {
+            return
+        }
+
         alertService.push(alert: OpenVPNInstallingErrorAlert())
     }
 }
 
 @available(OSX 10.15, *)
-class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionRequestDelegate {
+final class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionRequestDelegate {
     
     var completion: ((Error?) -> Void)?
     

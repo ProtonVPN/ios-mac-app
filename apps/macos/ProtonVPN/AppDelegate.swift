@@ -66,7 +66,22 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-            self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true)
+
+            // only install the extension if OpenVPN is selected or Smart Protocol is enabled
+            let needsInstallExtension: Bool
+            switch propertiesManager.vpnProtocol {
+            case .ike:
+                needsInstallExtension = propertiesManager.smartProtocol
+            case .openVpn:
+                needsInstallExtension = true
+            }
+            self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true, requestInstall: needsInstallExtension) { installed in
+                // if instalaltion of the extension fails disable smart protocol and switch to IKEv2
+                if !installed {
+                    self.propertiesManager.vpnProtocol = .ike
+                    self.propertiesManager.smartProtocol = false
+                }
+            }
             self.navigationService.launched()
         }
     }
