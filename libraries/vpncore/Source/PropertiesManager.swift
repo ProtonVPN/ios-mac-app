@@ -500,11 +500,17 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(newValue, forKey: Keys.smartProtocol)
         }
     }
+
+    #if os(iOS)
+    private let defaultSmartProtocol = true
+    #else
+    private let defaultSmartProtocol = false
+    #endif
     
     public init() {
         Storage.userDefaults().register(defaults: [
             Keys.alternativeRouting: true,
-            Keys.smartProtocol: true
+            Keys.smartProtocol: defaultSmartProtocol
         ])
     }
     
@@ -519,7 +525,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpired = false
         reportBugEmail = nil
         alternativeRouting = true
-        smartProtocol = true
+        smartProtocol = defaultSmartProtocol
         
         #if !APP_EXTENSION
         currentSubscription = nil
