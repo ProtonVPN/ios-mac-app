@@ -92,8 +92,8 @@ extension SmartProtocolAvailabilityChecker {
 
             completed = true
             PMLog.D("\(protocolName) NOT available for \(server.domain) on port \(port) (timeout)")
-            completion(false)
             cleanup()
+            completion(false)
         }
 
         let complete = { (result: Bool) in
@@ -104,6 +104,7 @@ extension SmartProtocolAvailabilityChecker {
             completed = true
             PMLog.D("\(protocolName)\(result ? "" : " NOT") available for \(server.domain) on port \(port)")
             task.cancel()
+            cleanup()
             completion(result)
         }
 
