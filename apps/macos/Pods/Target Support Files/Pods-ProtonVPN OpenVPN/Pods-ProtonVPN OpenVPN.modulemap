@@ -1,0 +1,6 @@
+framework module Pods_ProtonVPN_OpenVPN {
+  umbrella header "Pods-ProtonVPN OpenVPN-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -51,7 +51,6 @@ final class DependencyContainer {
                                                                         propertiesManager: PropertiesManager(),
                                                                         vpnKeychain: vpnKeychain,
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer())
-    private lazy var firewallManager: FirewallManager = FirewallManager(factory: self)
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
@@ -167,13 +166,6 @@ extension DependencyContainer: AppStateManagerFactory {
     }
 }
 
-// MARK: FirewallManagerFactory
-extension DependencyContainer: FirewallManagerFactory {
-    func makeFirewallManager() -> FirewallManager {
-        return firewallManager
-    }
-}
-
 // MARK: AppSessionManagerFactory
 extension DependencyContainer: AppSessionManagerFactory {
     func makeAppSessionManager() -> AppSessionManager {
@@ -213,8 +205,7 @@ extension DependencyContainer: VpnGatewayFactory {
 extension DependencyContainer: NotificationManagerFactory {
     func makeNotificationManager() -> NotificationManagerProtocol {
         return NotificationManager(appStateManager: makeAppStateManager(),
-                                   appSessionManager: makeAppSessionManager(),
-                                   firewallManager: makeFirewallManager())
+                                   appSessionManager: makeAppSessionManager())
     }
 }
 
@@ -376,6 +367,13 @@ extension DependencyContainer: UpdateFileSelectorFactory {
 extension DependencyContainer: UpdateManagerFactory {
     func makeUpdateManager() -> UpdateManager {
         return updateManager
+    }
+}
+
+// MARK: - SystemExtensionManagerFactory
+extension DependencyContainer: SystemExtensionManagerFactory {
+    func makeSystemExtensionManager() -> SystemExtensionManager {
+        return SystemExtensionManager(factory: self)
     }
 }
 

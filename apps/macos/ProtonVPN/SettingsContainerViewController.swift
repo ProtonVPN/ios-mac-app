@@ -24,7 +24,7 @@ import Cocoa
 import vpncore
 
 final class SettingsContainerViewController: NSViewController {
-
+    
     @IBOutlet private weak var tabBarControllerViewContainer: NSView!
     @IBOutlet private weak var activeControllerViewContainer: NSView!
 
@@ -34,14 +34,11 @@ final class SettingsContainerViewController: NSViewController {
     private var activeViewController: NSViewController?
     
     lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
-        let viewModel = GeneralSettingsViewModel(propertiesManager: self.viewModel.propertiesManager)
-        let vc = GeneralSettingsViewController(viewModel: viewModel)
-        return vc
+        return GeneralSettingsViewController(viewModel: self.viewModel.generalSettingsViewModel)
     }()
     
-    lazy var connectionViewController: ConnectionSettingsViewController = {
-        let viewModel = ConnectionSettingsViewModel(propertiesManager: self.viewModel.propertiesManager, profileManager: self.viewModel.profileManager)
-        return ConnectionSettingsViewController(viewModel: viewModel)
+    lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
+        return ConnectionSettingsViewController(viewModel: viewModel.connectionSettingsViewModel)
     }()
     
     lazy var accountViewController: AccountViewController = {

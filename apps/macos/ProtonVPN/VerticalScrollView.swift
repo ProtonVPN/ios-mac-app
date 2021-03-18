@@ -28,9 +28,6 @@ class VerticalScrollView: NSScrollView {
         super.awakeFromNib()
         
         hasHorizontalScroller = false
-    
-        //let scroll = CGRect(origin: bounds.origin, size: CGSize(width: frame.size.width, height: bounds.height))
-        //documentView?.frame = scroll
     }
     
     override func scrollWheel(with event: NSEvent) {

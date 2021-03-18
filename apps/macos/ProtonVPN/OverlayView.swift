@@ -28,6 +28,5 @@ class OverlayView: NSView {
         super.draw(dirtyRect)
         
         wantsLayer = true
-        //layer?.backgroundColor = NSColor.black.withAlphaComponent(0.5).cgColor
     }
 }

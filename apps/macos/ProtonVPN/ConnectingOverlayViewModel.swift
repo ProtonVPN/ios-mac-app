@@ -39,13 +39,12 @@ extension DependencyContainer: ConnectingOverlayViewModelFactory {
 
 class ConnectingOverlayViewModel {
     
-    typealias Factory = AppStateManagerFactory & NavigationServiceFactory & PropertiesManagerFactory & FirewallManagerFactory
+    typealias Factory = AppStateManagerFactory & NavigationServiceFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     
     private let cancellation: () -> Void
     private let retry: () -> Void
@@ -121,27 +120,7 @@ class ConnectingOverlayViewModel {
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: 20), range: range)
         }
         
-        if isReconnecting && isKillSwitchOn {
-            attributedString.append(reconnectingKillSwitchMessage)
-        }
-        
         return attributedString
-    }
-    
-    private var reconnectingKillSwitchMessage: NSAttributedString {
-        let color: NSColor = .protonWhite()
-        let fontSize: Double = 12
-        let fontSizeHeader: Double = 20
-        
-        let result = NSMutableAttributedString()
-        result.append("\n\n".attributed(withColor: color, fontSize: fontSize))
-        result.append(LocalizedString.killSwitchReconnectionHeader.attributed(withColor: .protonWhite(), fontSize: fontSizeHeader, bold: true, italic: false, alignment: .center, lineBreakMode: nil))
-        result.append("\n\n".attributed(withColor: color, fontSize: fontSize / 2))
-        
-        let body = LocalizedString.killSwitchReconnection.attributed(withColor: .protonWhite(), fontSize: fontSize, bold: false, italic: false, alignment: .center, lineBreakMode: nil)
-        result.append(body.applyStyle(for: [LocalizedString.killSwitchReconnectionBold1, LocalizedString.killSwitchReconnectionBold2], attrs: [.font: NSFont.boldSystemFont(ofSize: CGFloat(fontSize))]))
-        
-        return result
     }
     
     var cancelButtonTitle: String {
@@ -149,25 +128,12 @@ class ConnectingOverlayViewModel {
         case .connected:
             return LocalizedString.done
         default:
-            if isReconnecting && isKillSwitchOn {
-                return LocalizedString.killSwitchReconnectionCancel
-            } else {
-                return LocalizedString.cancel
-            }
+            return LocalizedString.cancel
         }
     }
     
     var cancelButtonColor: NSColor {
-        switch state {
-        case .connected:
-            return .protonWhite()
-        default:
-            if isReconnecting && isKillSwitchOn {
-                return .protonRed()
-            } else {
-                return .protonWhite()
-            }
-        }
+        return .protonWhite()
     }
     
     var hideRetryButton: Bool {
@@ -190,10 +156,6 @@ class ConnectingOverlayViewModel {
         default:
             return false
         }
-    }
-    
-    private var isKillSwitchOn: Bool {
-        return firewallManager.killSwitchProbablyEnabled
     }
     
     init(factory: Factory, cancellation: @escaping () -> Void, retry: @escaping () -> Void) {

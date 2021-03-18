@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17506"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -77,6 +77,9 @@
                                         <menuItem title="View Logs" id="Td7-XY-QFc" userLabel="Logs Item">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
+                                        <menuItem title="View OpeVPN Logs" id="Uqb-NT-4a9" userLabel="Logs Item">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                        </menuItem>
                                         <menuItem title="Clear All Data" id="OOQ-ac-X8f">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                         </menuItem>
@@ -126,6 +129,7 @@
                         <outlet property="helpItem" destination="OK2-4f-4vJ" id="IBe-qE-jlf"/>
                         <outlet property="helpMenu" destination="wED-7F-VQJ" id="dyB-Ri-iNg"/>
                         <outlet property="logsItem" destination="Td7-XY-QFc" id="nHY-1C-tGF"/>
+                        <outlet property="logsOvpnItem" destination="Uqb-NT-4a9" id="ddG-5m-jkS"/>
                         <outlet property="reportAnIssueItem" destination="a5J-cy-nfO" id="4BY-VB-g72"/>
                     </connections>
                 </customObject>
@@ -201,7 +205,7 @@
                                         </connections>
                                     </containerView>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="DNd-Sp-llG" customClass="ExpandMapButton" customModule="ProtonVPN" customModuleProvider="target">
-                                        <rect key="frame" x="306" y="547" width="40" height="37"/>
+                                        <rect key="frame" x="305" y="547" width="42" height="38"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="28" id="Abd-dc-FK4"/>
                                             <constraint firstAttribute="height" constant="26" id="hlL-wT-KyG"/>

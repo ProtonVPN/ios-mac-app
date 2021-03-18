@@ -25,12 +25,19 @@ import vpncore
 
 final class ConnectionSettingsViewModel {
     
-    private let propertiesManager: PropertiesManagerProtocol
-    private let profileManager: ProfileManager
+    typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ProfileManagerFactory & SystemExtensionManagerFactory
+    private let factory: Factory
     
-    init(propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager) {
-        self.propertiesManager = propertiesManager
-        self.profileManager = profileManager
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+
+    private weak var viewController: ReloadableViewController?
+    
+    init(factory: Factory) {
+        self.factory = factory
     }
     
     // MARK: - Current Index
@@ -65,17 +72,8 @@ final class ConnectionSettingsViewModel {
     
     var protocolProfileIndex: Int {
         switch vpnProtocol {
-        case .ike:
-            return 0
-        default:
-            return 1
-        }
-    }
-    
-    var openVPNProfileIndex: Int {
-        switch vpnProtocol {
-        case .openVpn(.udp):
-            return 1
+        case .openVpn(let transport):
+            return transport == .tcp ? 1 : 2
         default:
             return 0
         }
@@ -95,11 +93,13 @@ final class ConnectionSettingsViewModel {
         return profileManager.allProfiles.count
     }
     
-    var protocolItemCount: Int { return 2 }
-    
-    var openVPNItemCount: Int { return 2 }
+    var protocolItemCount: Int { return 3 }
         
     // MARK: - Setters
+    
+    func setViewController(_ vc: ReloadableViewController) {
+        self.viewController = vc
+    }
     
     func setAutoConnect(_ index: Int) throws {
         guard index < autoConnectItemCount else {
@@ -124,18 +124,64 @@ final class ConnectionSettingsViewModel {
     }
     
     func setProtocol(_ index: Int) {
-        if index == 0 {
-            propertiesManager.vpnProtocol = .ike
-        } else {
-            propertiesManager.vpnProtocol = .openVpn(.tcp)
+        
+        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+            self.set(protocolAtIndex: index)
+            return
         }
+        
+        viewController?.reloadView()
+        alertService.push(alert: ReconnectOnSettingsChangeAlert {
+            var token: NSObjectProtocol?
+            token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
+                if let newProtocol = notification.object as? VpnProtocol {
+                    PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
+                    self?.vpnGateway.reconnect(with: newProtocol)
+                }
+                
+                NotificationCenter.default.removeObserver(token!)
+            }
+            self.set(protocolAtIndex: index)
+        })
     }
     
-    func setOpenVPN(_ index: Int) {
-        if index == 0 {
-            propertiesManager.vpnProtocol = .openVpn(.tcp)
+    private func set(protocolAtIndex index: Int) {
+        
+        var transportProtocol: VpnProtocol.TransportProtocol = .tcp
+        
+        switch index {
+        case 1: transportProtocol = .tcp
+        case 2: transportProtocol = .udp
+        default:
+            propertiesManager.vpnProtocol = .ike
+            return
+        }
+        
+        guard #available(OSX 10.15, *) else {
+            propertiesManager.vpnProtocol = .ike
+            alertService.push(alert: OpenVPNEnableErrorAlert())
+            viewController?.reloadView()
+            return
+        }
+        
+        let requestExtensionCallback: (() -> Void) = {
+            self.propertiesManager.vpnProtocol = .openVpn(transportProtocol)
+            self.systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                    self?.viewController?.reloadView()
+                }
+            })
+        }
+        
+        if propertiesManager.openVPNExtensionTourDisplayed {
+            requestExtensionCallback()
         } else {
-            propertiesManager.vpnProtocol = .openVpn(.udp)
+            let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
+                requestExtensionCallback()
+                self.alertService.push(alert: OpenVPNExtensionTourAlert())
+            }, cancel: requestExtensionCallback,
+            dismiss: requestExtensionCallback)
+            alertService.push(alert: alert)
         }
     }
 
@@ -159,21 +205,17 @@ final class ConnectionSettingsViewModel {
     }
         
     func protocolItem(for index: Int) -> NSAttributedString {
-        switch index {
-        case 0:
-            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        default:
-            return LocalizedString.openVpn.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        }
-    }
+        var transport = ""
         
-    func openVPNItem(for index: Int) -> NSAttributedString {
         switch index {
-        case 0:
-            return LocalizedString.tcp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        case 1:
+            transport = " (" + LocalizedString.tcp + ")"
+        case 2:
+            transport = " (" + LocalizedString.udp + ")"
         default:
-            return LocalizedString.udp.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         }
+        return (LocalizedString.openVpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
     // MARK: - Values
@@ -181,7 +223,7 @@ final class ConnectionSettingsViewModel {
     var vpnProtocol: VpnProtocol {
         return propertiesManager.vpnProtocol
     }
-    
+
     private func attributedAttachment(for color: NSColor, width: CGFloat = 12) -> NSAttributedString {
         let profileCircle = ProfileCircle(frame: CGRect(x: 0, y: 0, width: width, height: width))
         profileCircle.profileColor = color

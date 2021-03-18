@@ -97,15 +97,12 @@ extension PropertiesManagerProtocol {
         }
     }
     
-    var killSwitch: Bool {
+    var openVPNExtensionTourDisplayed: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.killSwitch)
+            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.openVPNExtensionTourDisplayed)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.killSwitch)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
-            }
+            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.openVPNExtensionTourDisplayed)
         }
     }
     

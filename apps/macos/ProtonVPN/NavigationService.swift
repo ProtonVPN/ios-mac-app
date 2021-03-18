@@ -30,7 +30,22 @@ protocol NavigationServiceFactory {
 
 class NavigationService {
     
-    typealias Factory = HelpMenuViewModelFactory & PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & FirewallManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & NavigationServiceFactory & UpdateManagerFactory & ProfileManagerFactory
+    typealias Factory = HelpMenuViewModelFactory
+        & PropertiesManagerFactory
+        & WindowServiceFactory
+        & VpnKeychainFactory
+        & AlamofireWrapperFactory
+        & VpnApiServiceFactory
+        & AppStateManagerFactory
+        & AppSessionManagerFactory
+        & TrialCheckerFactory
+        & CoreAlertServiceFactory
+        & ReportBugViewModelFactory
+        & NavigationServiceFactory
+        & UpdateManagerFactory
+        & ProfileManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnGatewayFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -39,7 +54,6 @@ class NavigationService {
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    lazy var firewallManager: FirewallManager = factory.makeFirewallManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
@@ -79,7 +93,6 @@ class NavigationService {
             showLogIn()
         }
         
-        firewallManager.log("Start up firewall manager")
     }
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
@@ -176,18 +189,20 @@ extension NavigationService {
     }
     
     func checkForUpdates() {
-        updateManager.checkForUpdates(appSessionManager, firewallManager: firewallManager, silently: false)
+        updateManager.checkForUpdates(appSessionManager, silently: false)
     }
     
-    func openLogsFolder() {
-        guard let logUrl = PMLog.logFile() else { return }
+    func openLogsFolder(filename: String? = nil) {
+        guard let logUrl = filename.flatMap({ PMLog.logFile($0) }) ?? PMLog.logFile() else {
+            return
+        }
         NSWorkspace.shared.activateFileViewerSelecting([logUrl])
     }
     
     func openSettings(to tab: SettingsTab) {        
         windowService.closeIfPresent(windowController: SettingsWindowController.self)
         
-        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(profileManager: factory.makeProfileManager(), propertiesManager: propertiesManager), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
+        windowService.openSettingsWindow(viewModel: SettingsContainerViewModel(factory: factory), tabBarViewModel: SettingsTabBarViewModel(initialTab: tab))
     }
     
     func logOutRequested() {
@@ -258,11 +273,9 @@ extension NavigationService {
         }
         
         vpnGateway.disconnect {
-            self.firewallManager.disableFirewall {
-                DispatchQueue.main.async {
-                    self.isSystemLoggingOff = false
-                    NSApp.reply(toApplicationShouldTerminate: true)
-                }
+            DispatchQueue.main.async {
+                self.isSystemLoggingOff = false
+                NSApp.reply(toApplicationShouldTerminate: true)
             }
         }
         

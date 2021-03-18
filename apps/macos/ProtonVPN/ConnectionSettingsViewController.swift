@@ -19,11 +19,10 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
-
 import Cocoa
 import vpncore
 
-final class ConnectionSettingsViewController: NSViewController {
+final class ConnectionSettingsViewController: NSViewController, ReloadableViewController {
     
     fileprivate enum SwitchButtonOption: Int {
         case killSwitch
@@ -44,12 +43,6 @@ final class ConnectionSettingsViewController: NSViewController {
     @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet private weak var protocolSeparator: NSBox!
     @IBOutlet private weak var protocolInfoIcon: NSImageView!
-    
-    @IBOutlet private weak var openVPNView: NSView!
-    @IBOutlet private weak var openVPNLabel: PVPNTextField!
-    @IBOutlet private weak var openVPNList: HoverDetectionPopUpButton!
-    @IBOutlet private weak var openVPNSeparator: NSBox!
-    @IBOutlet private weak var openVPNInfoIcon: NSImageView!
 
     @IBOutlet private weak var dnsLeakProtectionLabel: PVPNTextField!
     @IBOutlet private weak var dnsLeakProtectionButton: SwitchButton!
@@ -73,18 +66,9 @@ final class ConnectionSettingsViewController: NSViewController {
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupView()
-        setupAutoConnectItem()
-        setupQuickConnectItem()
-        //These two views will remain disabled until we can stablish openVPN connection
-        protocolView.isHidden = true
-        openVPNView.isHidden = true
-//        setupProtocolItem()
-//        setupOpenVPNProtocolItem()
-        setupDnsLeakProtectionItem()
-        setupAlternativeRoutingItem()
+        super.viewDidLoad()        
+        viewModel.setViewController(self)
+        reloadView()
     }
     
     private func setupView() {
@@ -130,21 +114,10 @@ final class ConnectionSettingsViewController: NSViewController {
         protocolList.target = self
         protocolList.action = #selector(protocolItemSelected)
         protocolInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
-    }
-    
-    private func setupOpenVPNProtocolItem() {
-        openVPNLabel.attributedStringValue = LocalizedString
-            .openVpn
-            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        openVPNList.isBordered = false
-        openVPNList.target = self
-        openVPNList.action = #selector(openVPNItemSelected)
-        openVPNInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        openVPNSeparator.fillColor = .protonLightGrey()
-        refreshOpenVPNProtocol()
-    }
+    }    
     
     private func setupDnsLeakProtectionItem() {
         dnsLeakProtectionLabel.attributedStringValue = LocalizedString.dnsLeakProtection.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
@@ -207,25 +180,15 @@ final class ConnectionSettingsViewController: NSViewController {
         protocolList.selectItem(at: viewModel.protocolProfileIndex)
     }
     
-    private func refreshOpenVPNProtocol() {
-        openVPNList.removeAllItems()
-        let count = viewModel.openVPNItemCount
-        (0..<count).forEach { index in
-            let menuItem = NSMenuItem()
-            menuItem.attributedTitle = viewModel.openVPNItem(for: index)
-            openVPNList.menu?.addItem(menuItem)
-        }
-        openVPNList.selectItem(at: viewModel.openVPNProfileIndex)
-        displayOpenVPNView()
-    }
+    // MARK: - ReloadableViewController
     
-    private func displayOpenVPNView() {
-        switch viewModel.vpnProtocol {
-        case .ike:
-            openVPNView.isHidden = true
-        default:
-            openVPNView.isHidden = false
-        }
+    func reloadView() {
+        setupView()
+        setupAutoConnectItem()
+        setupQuickConnectItem()
+        setupProtocolItem()
+        setupDnsLeakProtectionItem()
+        setupAlternativeRoutingItem()
     }
     
     // MARK: - Actions
@@ -248,11 +211,6 @@ final class ConnectionSettingsViewController: NSViewController {
     
     @objc private func protocolItemSelected() {
         viewModel.setProtocol(protocolList.indexOfSelectedItem)
-        displayOpenVPNView()
-    }
-    
-    @objc private func openVPNItemSelected() {
-        viewModel.setOpenVPN(openVPNList.indexOfSelectedItem)
     }
 }
 

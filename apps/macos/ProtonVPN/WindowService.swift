@@ -50,11 +50,24 @@ protocol WindowService: class {
     func presentKeyModal(viewController: NSViewController)
 }
 
-//this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
+// this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
 class WindowServiceImplementation: WindowService {
     
-    typealias Factory = CreateNewProfileViewModelFactory & NavigationServiceFactory & CountriesSectionViewModelFactory & MapSectionViewModelFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory & ConnectingOverlayViewModelFactory & NetShieldPropertyProviderFactory
-    
+    typealias Factory = CreateNewProfileViewModelFactory
+        & NavigationServiceFactory
+        & CountriesSectionViewModelFactory
+        & MapSectionViewModelFactory
+        & CoreAlertServiceFactory
+        & PropertiesManagerFactory
+        & AppStateManagerFactory
+        & VpnGatewayFactory
+        & HeaderViewModelFactory
+        & AnnouncementsViewModelFactory
+        & SystemExtensionManagerFactory
+        & ConnectingOverlayViewModelFactory
+        & NetShieldPropertyProviderFactory
+        & ProfileManagerFactory
+
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()

@@ -28,7 +28,6 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     private let delayBeforeDismissing: TimeInterval = 5
     private let appStateManager: AppStateManager
     private let appSessionManager: AppSessionManager
-    private let firewallManager: FirewallManager
     
     private var nonTransientState: AppState = .disconnected
     
@@ -36,10 +35,9 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
         return appSessionManager.sessionStatus == .established && Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
     }
     
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, firewallManager: FirewallManager) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
-        self.firewallManager = firewallManager
         
         super.init()
         

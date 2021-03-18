@@ -35,14 +35,14 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 
 class HelpMenuViewModel {
     
-    typealias Factory = VpnManagerFactory & NavigationServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory & FirewallManagerFactory
+    typealias Factory = VpnManagerFactory & NavigationServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory & SystemExtensionManagerFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private var firewallManager: FirewallManager { return factory.makeFirewallManager() }
+    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     
     init(factory: Factory) {
         self.factory = factory
@@ -50,6 +50,16 @@ class HelpMenuViewModel {
     
     func openLogsFolderAction() {
         navService.openLogsFolder()
+    }
+    
+    func openOpenVpnLogsFolderAction() {
+        // Save log to file
+        vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
+            let content = logs ?? ""
+            PMLog.D(content, overwrite: true, filename: AppConstants.Filenames.openVpnLogFilename)
+        }
+                
+        navService.openLogsFolder(filename: AppConstants.Filenames.openVpnLogFilename)
     }
     
     func selectClearApplicationData() {
@@ -65,34 +75,35 @@ class HelpMenuViewModel {
     }
     
     private func clearAllDataAndTerminate() {
-        // firewall
-        do {
-            try FileManager.default.removeItem(at: AppConstants.FilePaths.firewallConfigDir())
-        } catch {}
-
-        // keychain
-        self.vpnKeychain.clear()
-        AuthKeychain.clear()
-
-        // app data
-        if let bundleIdentifier = Bundle.main.bundleIdentifier {
-            Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
-            Storage.userDefaults().synchronize()
-        }
-
-        do {
-            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-        } catch {}
-        do {
-            try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-        } catch {}
-
-        // vpn profile
-        self.vpnManager.removeConfigurations(completionHandler: nil)
         
-        // quit
-        DispatchQueue.main.async {
-            NSApplication.shared.terminate(self)
+        // System Extension
+        systemExtensionManager.requestExtensionUninstall { error in
+            
+            // keychain
+            self.vpnKeychain.clear()
+            AuthKeychain.clear()
+
+            // app data
+            if let bundleIdentifier = Bundle.main.bundleIdentifier {
+                Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
+                Storage.userDefaults().synchronize()
+            }
+
+            do {
+                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
+            } catch {}
+            do {
+                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
+            } catch {}
+
+            // vpn profile
+            self.vpnManager.removeConfigurations(completionHandler: nil)
+
+            // quit
+            DispatchQueue.main.async {
+                NSApplication.shared.terminate(self)
+            }
+            
         }
     }
 }

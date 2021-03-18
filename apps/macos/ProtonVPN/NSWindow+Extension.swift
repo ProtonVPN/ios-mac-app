@@ -52,20 +52,13 @@ extension NSWindow {
     }
     
     func applyLoginAppearance() {
-        //styleMask.remove(.resizable)
         titlebarAppearsTransparent = true
         title = "ProtonVPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         backgroundColor = .protonGreyShade()
-        
-        //let size = NSSize(width: AppConstants.Windows.loginWidth, height: AppConstants.Windows.loginHeight)
-        //minSize = size
-        //maxSize = size
-        //setFrame(NSRect(origin: frame.origin, size: size), display: true, animate: true)
     }
 
     func applySidebarAppearance() {
-        //styleMask = [ .resizable, .miniaturizable, .titled, .closable ]
         titlebarAppearsTransparent = true
         title = "ProtonVPN"
         appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)

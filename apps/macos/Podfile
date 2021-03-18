@@ -1,15 +1,19 @@
 source 'https://github.com/CocoaPods/Specs.git'
 
-platform :osx, '10.12'
+platform :osx, '10.15'
 
 use_frameworks!
 
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
+def tunnelkit_pod
+  pod 'TunnelKit', :path => '../tunnelkit', :branch => 'keychain_avoid'
+end
+
 def common_pods
     # development pods
-    pod 'TunnelKit', :git => 'https://github.com/passepartoutvpn/tunnelkit', :commit => 'fe697c2c564b5a5339545a1fc5aa737bf3124b24'
+    tunnelkit_pod
     pod 'vpncore', :path => '../vpncore' # run `pod update vpncore` after changing source
 
     # Core
@@ -20,7 +24,6 @@ def common_pods
 end
 
 target 'ProtonVPN' do
-    
     common_pods
     
     # Third party pods
@@ -31,13 +34,15 @@ target 'ProtonVPN' do
     pod 'SDWebImage', '5.10.0'
     
     # Checks code style and bad practices
-    pod 'SwiftLint'
-        
+    pod 'SwiftLint', '0.42.0'
+end
+
+target 'ProtonVPN OpenVPN' do
+  tunnelkit_pod
 end
 
 target 'ProtonVPNTests' do
     inherit! :search_paths
-
     common_pods
 end
 

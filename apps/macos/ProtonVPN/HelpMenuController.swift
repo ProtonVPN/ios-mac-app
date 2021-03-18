@@ -28,6 +28,7 @@ class HelpMenuController: NSObject {
     @IBOutlet weak var helpMenu: NSMenu!
     @IBOutlet weak var reportAnIssueItem: NSMenuItem!
     @IBOutlet weak var logsItem: NSMenuItem!
+    @IBOutlet weak var logsOvpnItem: NSMenuItem!
     @IBOutlet weak var helpItem: NSMenuItem!
     @IBOutlet weak var clearApplicationDataItem: NSMenuItem!
     
@@ -56,6 +57,11 @@ class HelpMenuController: NSObject {
         logsItem.target = self
         logsItem.action = #selector(logsAction)
         
+        logsOvpnItem.title = LocalizedString.openVpnLogs
+        logsOvpnItem.isEnabled = true
+        logsOvpnItem.target = self
+        logsOvpnItem.action = #selector(openVpnLogsAction)
+        
         clearApplicationDataItem.title = LocalizedString.clearApplicationData
         clearApplicationDataItem.isEnabled = true
         clearApplicationDataItem.target = self
@@ -73,6 +79,10 @@ class HelpMenuController: NSObject {
     
     @objc private func logsAction() {
         viewModel.openLogsFolderAction()
+    }
+    
+    @objc private func openVpnLogsAction() {
+        viewModel.openOpenVpnLogsFolderAction()
     }
     
     @objc private func helpItemAction() {

@@ -66,7 +66,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             if self.startedAtLogin() {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
-        
+            self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true)
             self.navigationService.launched()
         }
     }
@@ -181,7 +181,7 @@ extension AppDelegate {
             }
             completion(nil)
         }.migrate { _ in
-            //Migration complete
+            // Migration complete
         }
     }
 }
