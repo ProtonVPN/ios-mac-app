@@ -52,11 +52,6 @@ final class SystemExtensionManager: NSObject {
     func checkSystemExtensionState(silent: Bool, requestInstall: Bool, completion: @escaping (Bool) -> Void) {
         self.silent = silent
 
-        guard #available(OSX 10.15, *) else {
-            completion(false)
-            return
-        }
-
         PMLog.D("checkSystemExtensionState")
         guard requestInstall else {
             completion(false)
@@ -68,11 +63,6 @@ final class SystemExtensionManager: NSObject {
     
     func requestExtensionInstall(completion: @escaping (Bool) -> Void) {
         shouldNotifyInstall = false
-
-        guard #available(OSX 10.15, *) else {
-            completion(false)
-            return
-        }
 
         PMLog.D("requestExtensionInstall")
         self.completionCallback = completion
