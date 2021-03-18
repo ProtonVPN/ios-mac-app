@@ -90,7 +90,7 @@ final class SmartProtocolImplementationTests: XCTestCase {
         wait(for: [expectation], timeout: 10)
     }
 
-    func testSmartProtocolWhenOnlyOpenVPNNothingAvailable() {
+    func testSmartProtocolWhenNothingAvailable() {
         let group = DispatchGroup()
         servers = config.defaultUdpPorts.map {
             NetworkServer(port: UInt16($0), parameters: .udp, responseCondition: { _ in false })
@@ -109,8 +109,8 @@ final class SmartProtocolImplementationTests: XCTestCase {
         let sp = SmartProtocolImplementation(config: config)
         group.notify(queue: .main) {
             sp.determineBestProtocol(server: ServerModelMock(domain: "localhost")) { (proto, ports) in
-                XCTAssertEqual(proto, VpnProtocol.openVpn(.udp))
-                XCTAssertEqual(ports, self.config.defaultUdpPorts)
+                XCTAssertEqual(proto, VpnProtocol.ike)
+                XCTAssertEqual(ports, [])
                 expectation.fulfill()
             }
         }

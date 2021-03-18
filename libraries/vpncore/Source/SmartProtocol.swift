@@ -30,9 +30,9 @@ protocol SmartProtocol {
 
 final class SmartProtocolImplementation: SmartProtocol {
     private enum SmartProtocolProtocol: Int {
+        case ikev2
         case openVpnUdp
         case openVpnTcp
-        case ikev2
 
         var vpnProtocol: VpnProtocol {
             switch self {
@@ -48,7 +48,6 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let queue: DispatchQueue
-    private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {
         let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
@@ -59,7 +58,6 @@ final class SmartProtocolImplementation: SmartProtocol {
             .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
         ]
         self.queue = queue
-        self.config = config
     }
 
     func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
@@ -82,12 +80,12 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: queue) { [config] in
+        group.notify(queue: queue) {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.rawValue < rhs.rawValue })
 
             guard let best = sorted.first, let ports = availablePorts[best] else {
-                PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
-                completion(VpnProtocol.openVpn(.udp), config.defaultUdpPorts)
+                PMLog.D("No best protocol determined, fallback to IKEv2")
+                completion(VpnProtocol.ike, [])
                 return
             }
 
