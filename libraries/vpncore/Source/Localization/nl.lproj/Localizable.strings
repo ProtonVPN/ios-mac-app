@@ -315,16 +315,16 @@
 "_error_apply_payment_failed_message" = "Uw betaling is niet verwerkt. Om het opnieuw te proberen, klik op Opnieuw. Er wordt slechts één keer in rekening gebracht.\nOm door te gaan met een gratis account, klik op Doorgaan met gratis account. U kunt op een later tijdstip upgraden naar een betaald abonnement.";
 
 /* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_message" = "U heeft succesvol geregistreerd maar uw betaling is niet verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenservice.";
+"_error_apply_payment_failed_on_registration_message" = "U heeft succesvol geregistreerd maar uw betaling is niet verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenondersteuning.";
 
 /* Error applying credit after registration alert */
-"_error_apply_payment_failed_on_registration_support" = "Neem contact op met de klantenservice";
+"_error_apply_payment_failed_on_registration_support" = "Neem contact op met de klantondersteuning";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_title" = "Betaling mislukt";
 
 /* Error applying credit after upgrade alert */
-"_error_apply_payment_failed_on_upgrade_message" = "U heeft succesvol betaald maar uw betaling is niet correct verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenservice.";
+"_error_apply_payment_failed_on_upgrade_message" = "U heeft succesvol betaald maar uw betaling is niet correct verwerkt. Om de betalingsinformatie opnieuw te verzenden, klikt u op Opnieuw. Het bedrag wordt slechts één keer in rekening gebracht. \n\nAls dit probleem zich blijft voortdoen kunt u contact opnemen met onze klantenondersteuning.";
 
 /* Error applying credit after upgrade alert */
 "_error_apply_payment_failed_on_upgrade_title" = "Betaling mislukt";

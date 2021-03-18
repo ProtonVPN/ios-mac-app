@@ -10,22 +10,26 @@
 import Foundation
 
 public struct OpenVpnConfig: Codable {
+    enum PortType {
+        static let UDP = "UDP"
+        static let TCP = "TCP"
+    }
     
     let defaultPorts: [String: [Int]]
     
     var defaultTcpPorts: [Int] {
-        return defaultPorts["UDP"] ?? OpenVpnConfig.defaultConfig.defaultTcpPorts
+        return defaultPorts[PortType.TCP] ?? OpenVpnConfig.defaultConfig.defaultTcpPorts
     }
     var defaultUdpPorts: [Int] {
-        return defaultPorts["TCP"] ?? OpenVpnConfig.defaultConfig.defaultTcpPorts
+        return defaultPorts[PortType.UDP] ?? OpenVpnConfig.defaultConfig.defaultUdpPorts
     }
     
     public static let defaultConfig = OpenVpnConfig(defaultTcpPorts: [443, 5995, 8443], defaultUdpPorts: [80, 443, 4569, 1194, 5060])
     
     public init(defaultTcpPorts: [Int], defaultUdpPorts: [Int]) {
         defaultPorts = [
-            "UDP": defaultTcpPorts,
-            "TCP": defaultUdpPorts
+            PortType.TCP: defaultTcpPorts,
+            PortType.UDP: defaultUdpPorts
         ]
     }
 }
