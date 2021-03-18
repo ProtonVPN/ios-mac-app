@@ -70,6 +70,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
+  - OpenSSL-Apple (= 1.1.1j.11)
   - PMChallenge (from `../pmchallenge`)
   - PMNetworking (from `../pmnetworking`)
   - ReachabilitySwift (= 5.0.0)
@@ -131,6 +132,6 @@ SPEC CHECKSUMS:
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
   vpncore: 8d9e923386fea7609bef812661803f7ce3bdb8b6
 
-PODFILE CHECKSUM: 657b63405e4e7f1bd931a2bbbec29e3a6e19c8a8
+PODFILE CHECKSUM: f79c9c07c77da07f40fbbcdce908993da9c2d5cc
 
 COCOAPODS: 1.10.1
