@@ -114,6 +114,7 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
         shouldNotifyInstall = true
         propertiesManager.openVPNExtensionTourDisplayed = true
         PMLog.D("SysEx install requestNeedsUserApproval")
+        completionCallback?(false)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
@@ -130,7 +131,6 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
             // Display reconnect popup
             completionCallback?(true)
         }
-        self.completionCallback?(true)
         self.completionCallback = nil
     }
     
