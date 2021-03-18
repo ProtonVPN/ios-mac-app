@@ -30,7 +30,11 @@ public struct ConnectionRequest: Codable {
     public let profileId: String?
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType, profileId: profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType, profileId: self.profileId)
+    }
+    
+    public func withChanged(vpnProtocol: VpnProtocol) -> ConnectionRequest {
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: vpnProtocol, netShieldType: self.netShieldType, profileId: self.profileId)
     }
 }
 

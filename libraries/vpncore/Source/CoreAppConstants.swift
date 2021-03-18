@@ -87,4 +87,8 @@ public class CoreAppConstants {
     public struct Maintenance {
         public static let defaultMaintenanceCheckTime: Int = 10 // Minutes
     }
+        
+    // Pause between reconnection with another protocol
+    static let protocolChangeDelay: Int = 1 // seconds
+    
 }

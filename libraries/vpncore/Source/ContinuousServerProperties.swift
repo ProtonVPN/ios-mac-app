@@ -44,9 +44,9 @@ public class ContinuousServerProperties: NSObject {
     }
     
     public init(dic: JSONDictionary) throws {
-        serverId = try dic.stringOrThrow(key: "ID") //"ID": "ABC"
-        load = try dic.intOrThrow(key: "Load") //"Load": "15"
-        score = try dic.doubleOrThrow(key: "Score") //"Score": "1.4454542"
+        serverId = try dic.stringOrThrow(key: "ID") // "ID": "ABC"
+        load = try dic.intOrThrow(key: "Load") // "Load": "15"
+        score = try dic.doubleOrThrow(key: "Score") // "Score": "1.4454542"
         super.init()
     }
 }

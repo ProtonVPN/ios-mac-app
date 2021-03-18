@@ -18,7 +18,7 @@ PODS:
   - AwaitKit (5.0.1):
     - PromiseKit (~> 6)
   - KeychainAccess (3.2.1)
-  - OpenSSL-Apple (1.1.1g.6)
+  - OpenSSL-Apple (1.1.1j.11)
   - PMNetworking (1.0.0):
     - AFNetworking (~> 4.0)
     - AwaitKit (~> 5.0.0)
@@ -36,20 +36,23 @@ PODS:
   - Sentry (4.5.0):
     - Sentry/Core (= 4.5.0)
   - Sentry/Core (4.5.0)
-  - SwiftLint (0.41.0)
-  - SwiftyBeaver (1.9.1)
+  - SwiftLint (0.42.0)
+  - SwiftyBeaver (1.9.3)
   - TrustKit (1.7.0)
-  - TunnelKit (2.2.4):
-    - TunnelKit/Protocols/OpenVPN (= 2.2.4)
-  - TunnelKit/AppExtension (2.2.4):
+  - TunnelKit (3.3.1):
+    - TunnelKit/Protocols/OpenVPN (= 3.3.1)
+  - TunnelKit/AppExtension (3.3.1):
     - SwiftyBeaver
     - TunnelKit/Core
-  - TunnelKit/Core (2.2.4):
+  - TunnelKit/Core (3.3.1):
     - SwiftyBeaver
-  - TunnelKit/Protocols/OpenVPN (2.2.4):
-    - OpenSSL-Apple (~> 1.1.1g.6)
+  - TunnelKit/Manager (3.3.1):
+    - SwiftyBeaver
+  - TunnelKit/Protocols/OpenVPN (3.3.1):
+    - OpenSSL-Apple (~> 1.1.1h.10)
     - TunnelKit/AppExtension
     - TunnelKit/Core
+    - TunnelKit/Manager
 
 DEPENDENCIES:
   - Alamofire (= 5.3.0)
@@ -59,7 +62,7 @@ DEPENDENCIES:
   - Sentry (= 4.5.0)
   - SwiftLint
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
-  - TunnelKit (from `https://github.com/passepartoutvpn/tunnelkit`, commit `fe697c2c564b5a5339545a1fc5aa737bf3124b24`)
+  - TunnelKit (from `../tunnelkit`)
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
@@ -81,32 +84,28 @@ EXTERNAL SOURCES:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
+    :path: "../tunnelkit"
 
 CHECKOUT OPTIONS:
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
-  TunnelKit:
-    :commit: fe697c2c564b5a5339545a1fc5aa737bf3124b24
-    :git: https://github.com/passepartoutvpn/tunnelkit
 
 SPEC CHECKSUMS:
   AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  OpenSSL-Apple: c9c1b9c5b2b1fc4e1758fc5f0836b58ae7fd8183
+  OpenSSL-Apple: bb7c9715a259404de040f5359ed3b3170cedf8d6
   PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
-  SwiftyBeaver: a1f5691458561414bcfab51874b2b7445451602b
+  SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
+  SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
-  TunnelKit: 37bfe4df2f089d8f729d7a32dd0a74e0d48af5f0
+  TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: c83101d21a38ec01b5ec3949689446a14dcaa3e2
+PODFILE CHECKSUM: 308d0eaa01a68df665f57344b5651251053a62a1
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.10.1

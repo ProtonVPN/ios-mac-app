@@ -74,7 +74,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
-    
     private var vpnManager: NETunnelProviderManager?
     
     private lazy var emptyTunnelConfiguration: OpenVPNTunnelProvider.Configuration = {
@@ -95,7 +94,8 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
-        return try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, credentials: credentials)
+        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: "", username: credentials.username)
+        return neProtocol
     }
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
@@ -106,6 +106,32 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
+    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        #if !os(macOS)
+        // Nothing to do on iOS
+        completion()
+        
+        #else
+        
+        let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
+        
+        guard let vpnManager = vpnManager,
+              let session = vpnManager.connection as? NETunnelProviderSession,
+              let message = try? JSONEncoder().encode(credentials) else {
+            completion()
+            return
+        }
+        do {
+            try session.sendProviderMessage(message, responseHandler: { result in
+                completion()
+            })
+        } catch {
+            completion()
+        }
+        
+        #endif
+    }
+    
     public func logs(completion: @escaping (String?) -> Void) {
         logData { [appGroup, emptyTunnelConfiguration] (data) in
             guard let data = data, let log = String(data: data, encoding: .utf8) else {
@@ -113,7 +139,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
                 completion(log)
                 return
             }
-            
             completion(log)
         }
     }
@@ -146,7 +171,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
             self.vpnManager = managers.first(where: { [unowned self] (manager) -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == self.bundleId
             }) ?? NETunnelProviderManager()
-            
+
             completion(self.vpnManager, nil)
         }
     }
@@ -163,6 +188,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         configurationBuilder.checksEKU = true
         configurationBuilder.checksSANHost = true
         configurationBuilder.sanHost = connectionConfiguration.hostname
+        configurationBuilder.mtu = 1250
         
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
         
@@ -199,7 +225,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     
     private func tunnelProviderGenerator(for openVpnConfiguration: OpenVPN.Configuration) -> OpenVPNTunnelProvider.Configuration {
         var configurationBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: openVpnConfiguration)
-        configurationBuilder.mtu = 1250
         configurationBuilder.shouldDebug = true // FUTURETODO: set based on the user's preference
         configurationBuilder.masksPrivateData = true
         
@@ -230,4 +255,5 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
             completion(nil)
         }
     }
+    
 }

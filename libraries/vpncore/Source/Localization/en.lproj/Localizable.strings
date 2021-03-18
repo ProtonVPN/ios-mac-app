@@ -26,6 +26,7 @@
 "_report" = "Report";
 "_ignore" = "Ignore";
 "_continue" = "Continue";
+"_show_instructions" = "Show instructions";
 "_network_unreachable" = "Network Unreachable";
 "_not_connected_to_the_internet" = "Unable to establish VPN connection. You are not connected to the Internet.";
 "_vpn_connection_active" = "VPN Connection Active";
@@ -42,6 +43,7 @@
 "_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
 "_more_info" = "More info";
 "_less_info" = "Less info";
+"_contact_our_support" = "Contact our support";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -365,6 +367,9 @@
 "_maintenance_on_server_detected_subtitle" = "The server you were connected to is on maintenance";
 "_maintenance_on_server_detected_description" = "Reconnecting you to the fastest available server.";
 
+"_reconnect_on_protocol_change_title" = "Change protocol";
+"_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
+
 /* %@ is a country name, e.g. Switzerland servers under maintenance */
 "_country_servers_under_maintenance" = "%@ servers under maintenance";
 "_all_servers_in_profile_under_maintenance" = "Profile server(s) under maintenance";
@@ -483,6 +488,7 @@
 "_always_on_vpn_tooltip_ios" = "Kill Switch is not supported on iOS. Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.";
 "_auto_connect" = "Auto Connect";
 "_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
+"_protocol_tooltip" = "Change the protocol of your VPN connection";
 "_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
 "_start_minimized" = "Start Minimized";
 "_system_notifications" = "System Notifications";
@@ -737,3 +743,18 @@
 "_kill_switch_reconnection_bold1" = "without";
 "_kill_switch_reconnection_bold2" = "Kill Switch protection";
 "_kill_switch_reconnection_cancel" = "Cancel reconnection";
+
+// OpenVPN
+
+"_openvpn_settings_title" = "Change settings to use OpenVPN";
+"_openvpn_settings_description" = "To use OpenVPN, you need to give ProtonVPN permission to load a system extension.";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+"_openvpn_settings_step2" = "Make the necesary changes by clicking on the lock.";
+"_openvpn_settings_step3" = "Allow the system software to load.";
+
+"_openvpn_settings_enabled_title" = "You're now using OpenVPN";
+"_openvpn_settings_enabled_description" = "You have successfully enabled OpenVPN protocol on your device.";
+
+"_openvpn_cannot_enable" = "Cannot enable OpenVPN";
+"_openvpn_enable_below_catalina_description" = "OpenVPN requires OSX 10.15 or higher. Please, update your operating system to enable the OpenVPN protocol.";
+"_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";

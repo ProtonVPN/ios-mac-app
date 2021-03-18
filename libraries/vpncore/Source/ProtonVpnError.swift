@@ -21,7 +21,7 @@
 
 import Foundation
 
-//The errors happend locally
+// The errors happend locally
 public enum ProtonVpnError: LocalizedError {
     
     // Hash pwd part

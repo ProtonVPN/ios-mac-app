@@ -26,15 +26,15 @@ import UIKit
 #endif
 
 public struct ApiConstants {
-    //swiftlint:disable force_try
+    // swiftlint:disable force_try
     internal static var doh = try! DoHVPN(apiHost: "")
-    //swiftlint:enable force_try
+    // swiftlint:enable force_try
 
     public static var apiHost: String = "" {
         didSet {
-            //swiftlint:disable force_try
+            // swiftlint:disable force_try
             doh = try! DoHVPN(apiHost: apiHost)
-            //swiftlint:enable force_try
+            // swiftlint:enable force_try
         }
     }
 

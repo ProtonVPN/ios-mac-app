@@ -51,6 +51,7 @@ public class LocalizedString {
     public static let report = NSLocalizedString("_report", comment: "Button in Kill switch error alert")
     public static let ignore = NSLocalizedString("_ignore", comment: "Button in Kill switch error alert")
     public static let `continue` = NSLocalizedString("_continue", comment: "Button in some alerts")
+    public static let showInstructions = NSLocalizedString("_show_instructions", comment: "Button in some alerts")
     public static let networkUnreachable = NSLocalizedString("_network_unreachable", comment: "iOS: quick connect widget")
     public static let notConnectedToTheInternet = NSLocalizedString("_not_connected_to_the_internet", comment: "Title in no internet alert")
     public static let vpnConnectionActive = NSLocalizedString("_vpn_connection_active", comment: "MacOS: alert before disconnection on SecureCore state change")
@@ -112,6 +113,8 @@ public class LocalizedString {
     public static let moreInfo = NSLocalizedString("_more_info", comment: "Display more information")
     public static let lessInfo = NSLocalizedString("_less_info", comment: "Display less information")
 
+    public static let contactOurSupport = NSLocalizedString("_contact_our_support", comment: "Text addressing to contact costumer support on several sites of the app")
+    
     // MARK: - Notifications
     public static let killSwitchBlockingConnection = NSLocalizedString("_kill_switch_blocking_connection", comment: "Disconnect notification")
     public static let alwaysOnWillReconnect = NSLocalizedString("_always_on_will_reconnect", comment: "Disconnect notification")
@@ -444,7 +447,10 @@ public class LocalizedString {
     public static let onMaintenanceDetectedTitle = NSLocalizedString("_maintenance_on_server_detected_title", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedSubtitle = NSLocalizedString("_maintenance_on_server_detected_subtitle", comment: "MacOS: The current server has going to maintenance.")
     public static let onMaintenanceDetectedDescription = NSLocalizedString("_maintenance_on_server_detected_description", comment: "MacOS: We'll connect to a different server")
-
+    
+    public static let reconnectOnProtocolChangeTitle = NSLocalizedString("_reconnect_on_protocol_change_title", comment: "MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established")
+    public static let reconnectOnSettingsChangeBody = NSLocalizedString("_reconnect_on_settings_change_body", comment: "MacOS: Body of alert shown when user changed some settings and connection has to be re-established")
+    
     // MARK: - Settings
     public static let preferences = NSLocalizedString("_preferences", comment: "MacOS: Settings screen title")
     public static let settings = NSLocalizedString("_settings", comment: "iOS: Settings screen title and tab title")
@@ -459,6 +465,7 @@ public class LocalizedString {
     public static let alwaysOnVpnTooltipIos = NSLocalizedString("_always_on_vpn_tooltip_ios", comment: "iOS Settinsg screen: always-on description under the switch")
     public static let autoConnect = NSLocalizedString("_auto_connect", comment: "MacOS: Settings -> Connection: name of field.")
     public static let autoConnectTooltip = NSLocalizedString("_auto_connect_tooltip", comment: "MacOS: Settings -> Connection: description.")
+    public static let protocolTooltip = NSLocalizedString("_protocol_tooltip", comment: "MacOS: Settings -> Protocol: description.")
     public static let quickConnectTooltip = NSLocalizedString("_quick_connect_tooltip", comment: "MacOS: Settings -> Connection: description.")
     public static let startMinimized = NSLocalizedString("_start_minimized", comment: "MacOS: Settings -> General: name of field.")
     public static let systemNotifications = NSLocalizedString("_system_notifications", comment: "MacOS: Settings -> General: name of field.")
@@ -689,4 +696,18 @@ public class LocalizedString {
     
     public static let upgradeSecureCore = NSLocalizedString("_upgrade_required_securecore_description", comment: "Description for enable secure core on free  plan")
 
+    // Quick Settings
+    
+    public static let openVPNSettingsTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
+    public static let openVPNSettingsDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
+    public static let openVPNSettingsStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
+    public static let openVPNSettingsStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
+    public static let openVPNSettingsStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
+
+    public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
+    public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
+    
+    public static let openVPNCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
+    public static let openVPNBelowCatalinaDescription = NSLocalizedString("_openvpn_enable_below_catalina_description", comment: "Popup description after enabling OpenVPN on a OSX below Catalina")
+    public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
 }
