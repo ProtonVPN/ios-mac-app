@@ -38,8 +38,8 @@ lint:
     - iOS
     - macOS
   before_script:
-    - *before_script_mac
-  script:
+    - *before_script_mac  
+  script:    
     - Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
   allow_failure: false
   artifacts:

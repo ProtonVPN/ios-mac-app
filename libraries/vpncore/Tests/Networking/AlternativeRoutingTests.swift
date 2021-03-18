@@ -27,6 +27,7 @@ final class AlternativeRoutingTests: XCTestCase {
     private let factory = FactoryMock()
 
     override func setUp() {
+        setUpNSCoding(withModuleName: "ProtonVPN")
         ApiConstants.doh = try! BrokenHostDoH(apiHost: ProcessInfo.processInfo.environment["apiHost"] ?? "")
     }
 
