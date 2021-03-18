@@ -161,6 +161,9 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
             
+        case is UserVerificationAlert:
+            show(alert as! UserVerificationAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -302,5 +305,12 @@ extension MacAlertService: CoreAlertService {
         }
         self.notificationManager.displayServerGoingOnMaintenance()
         self.lastTimeCheckMaintenance = Date()
+    }
+    
+    private func show( _ alert: UserVerificationAlert) {
+        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: {
+            alert.failure(alert.error)
+        }))
+        showDefaultSystemAlert(alert)
     }
 }

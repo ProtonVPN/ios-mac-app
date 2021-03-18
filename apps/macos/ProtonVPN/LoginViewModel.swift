@@ -86,6 +86,8 @@ class LoginViewModel {
             if (error as NSError).code == NetworkErrorCode.tls {
                 self.alertService.push(alert: MITMAlert())
                 self.logInFailure?(nil)
+            } else if error as? UserError == UserError.failedHumanValidation {
+                self.logInFailure?(nil)
             } else {
                 self.logInFailure?(error.localizedDescription)
             }
