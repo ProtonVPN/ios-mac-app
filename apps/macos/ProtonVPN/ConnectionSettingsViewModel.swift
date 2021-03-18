@@ -150,7 +150,6 @@ final class ConnectionSettingsViewModel {
     }
     
     private func set(protocolAtIndex index: Int) {
-        
         var transportProtocol: VpnProtocol.TransportProtocol = .tcp
         
         switch index {
@@ -161,35 +160,13 @@ final class ConnectionSettingsViewModel {
             return
         }
 
-        let reloadUI = { [weak self] in
+        systemExtensionManager.requestExtensionInstall { installed in
+            self.propertiesManager.vpnProtocol = installed ? .openVpn(transportProtocol) : .ike
+
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                 self?.viewController?.reloadView()
             }
         }
-        
-        let requestExtensionCallback: (() -> Void) = {
-            self.systemExtensionManager.requestExtensionInstall { installed in
-                self.propertiesManager.vpnProtocol = installed ? .openVpn(transportProtocol) : .ike
-                reloadUI()
-            }
-        }
-
-        guard !propertiesManager.openVPNExtensionTourDisplayed else {
-            requestExtensionCallback()
-            return
-        }
-
-        let cancel = {
-            self.propertiesManager.vpnProtocol = .ike
-            reloadUI()
-        }
-        
-        let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
-            requestExtensionCallback()
-            self.alertService.push(alert: OpenVPNExtensionTourAlert())
-        }, cancel: cancel,
-        dismiss: cancel)
-        alertService.push(alert: alert)
     }
 
     func setAlternatveRouting(_ enabled: Bool) {
