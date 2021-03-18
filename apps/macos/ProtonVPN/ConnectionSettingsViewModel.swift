@@ -160,13 +160,6 @@ final class ConnectionSettingsViewModel {
             propertiesManager.vpnProtocol = .ike
             return
         }
-        
-        guard #available(OSX 10.15, *) else {
-            propertiesManager.vpnProtocol = .ike
-            alertService.push(alert: OpenVPNEnableErrorAlert())
-            viewController?.reloadView()
-            return
-        }
 
         let reloadUI = { [weak self] in
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in

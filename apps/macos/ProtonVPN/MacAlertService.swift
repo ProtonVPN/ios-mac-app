@@ -174,9 +174,6 @@ extension MacAlertService: CoreAlertService {
         case is OpenVPNEnabledAlert:
             showDefaultSystemAlert(alert)
             
-        case is OpenVPNEnableErrorAlert:
-            showDefaultSystemAlert(alert)
-            
         case is OpenVPNInstallingErrorAlert:
             showDefaultSystemAlert(alert)
             
