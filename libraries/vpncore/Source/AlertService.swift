@@ -422,11 +422,14 @@ public class UserVerificationAlert: SystemAlert {
     public let verificationMethods: VerificationMethods
     public let success: ((HumanVerificationToken) -> Void)
     public let failure: ((Error) -> Void)
+    public let error: Error
     
-    public init(verificationMethods: VerificationMethods, message: String?, success: @escaping ((HumanVerificationToken) -> Void), failure: @escaping ((Error) -> Void)) {
+    public init(verificationMethods: VerificationMethods, error: Error, success: @escaping ((HumanVerificationToken) -> Void), failure: @escaping ((Error) -> Void)) {
         self.verificationMethods = verificationMethods
         self.success = success
         self.failure = failure
+        self.error = error
+        self.message = error.localizedDescription
     }
 }
 
