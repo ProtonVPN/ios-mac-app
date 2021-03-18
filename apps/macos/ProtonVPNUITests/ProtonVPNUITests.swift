@@ -48,8 +48,11 @@ class ProtonVPNUITests: XCTestCase {
     
     func logoutIfNeeded() {
         _ = waitForElementToDisappear(app.otherElements["loader"])
+
+        // give the main window time to load and show OpenVPN alert if needed
+        sleep(2)
         
-        dismissUpgradePopup()
+        dismissPopups()
         
         let logoutButton = app.menuBars.menuItems["Log Out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
@@ -68,9 +71,18 @@ class ProtonVPNUITests: XCTestCase {
         return result == .completed
     }
     
-    func dismissUpgradePopup() {
-        if app.buttons["Maybe Later"].exists {
-            app.buttons["Maybe Later"].click()
+    func dismissPopups() {
+        let dismissButtons = ["Maybe Later", "Cancel"]
+
+        for button in dismissButtons {
+            if app.buttons[button].exists {
+                app.buttons[button].click()
+
+                // repeat in case another alert is is queued
+                sleep(1)
+                dismissPopups()
+                return
+            }
         }
     }
     

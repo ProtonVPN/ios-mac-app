@@ -103,7 +103,7 @@ class LoginTests: ProtonVPNUITests {
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         
-        dismissUpgradePopup()
+        dismissPopups()
         
         window.typeKey(",", modifierFlags:.command)
 
