@@ -30,10 +30,9 @@ protocol SystemExtensionManagerFactory {
 
 final class SystemExtensionManager: NSObject {
     
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory
     
     fileprivate let factory: Factory
-    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
@@ -112,7 +111,6 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
         shouldNotifyInstall = true
-        propertiesManager.openVPNExtensionTourDisplayed = true
         PMLog.D("SysEx install requestNeedsUserApproval")
         completionCallback?(false)
     }

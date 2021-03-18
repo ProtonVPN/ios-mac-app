@@ -56,11 +56,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     var vpnGateway: VpnGatewayProtocol!
     var navService: NavigationService!
     
-    typealias Factory = CountriesSectionViewModelFactory
-        & MapSectionViewModelFactory
-        & HeaderViewModelFactory
-        & AnnouncementsViewModelFactory
-        & ConnectingOverlayViewModelFactory
+    typealias Factory = CountriesSectionViewModelFactory & MapSectionViewModelFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory & ConnectingOverlayViewModelFactory & PropertiesManagerFactory & CoreAlertServiceFactory & SystemExtensionManagerFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
@@ -86,6 +82,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     
     private lazy var mapSectionViewModel: MapSectionViewModel = {
         return factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
+    }()
+
+    private lazy var viewModel: SidebarViewModel = {
+        SidebarViewModel(factory: factory)
     }()
     
     // MARK: Functions
@@ -127,6 +127,10 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
                                                selector: #selector(checkAnnouncementsRendering),
                                                name: AnnouncementStorageNotifications.contentChanged,
                                                object: nil)
+
+        DispatchQueue.main.async { // bit of a delay
+            self.viewModel.showOpenVPNAlert()
+        }
     }
     
     override func viewDidAppear() {
