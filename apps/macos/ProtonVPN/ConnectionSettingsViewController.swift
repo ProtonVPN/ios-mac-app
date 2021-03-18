@@ -242,7 +242,6 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
 
         if button.superview == smartProtocolButton {
             viewModel.setSmartProtocol(smartProtocolButton.currentButtonState == .on)
-            reloadView()
         }
     }
 }

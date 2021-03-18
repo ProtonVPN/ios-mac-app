@@ -174,7 +174,18 @@ final class ConnectionSettingsViewModel {
     }
 
     func setSmartProtocol(_ enabled: Bool) {
-        propertiesManager.smartProtocol = enabled
+        guard enabled else {
+            propertiesManager.smartProtocol = false
+            return
+        }
+
+        systemExtensionManager.requestExtensionInstall { installed in
+            self.propertiesManager.smartProtocol = installed
+
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                self?.viewController?.reloadView()
+            }
+        }
     }
     
     // MARK: - Item
