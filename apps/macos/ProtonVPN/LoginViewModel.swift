@@ -90,6 +90,8 @@ class LoginViewModel {
                 })
                 self.alertService.push(alert: alert)
                 self.logInFailure?(nil)
+            } else if error as? UserError == UserError.failedHumanValidation {
+                self.logInFailure?(nil)
             } else {
                 self.logInFailure?(error.localizedDescription)
             }
