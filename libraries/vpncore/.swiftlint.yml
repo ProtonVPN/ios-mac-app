@@ -36,7 +36,7 @@ opt_in_rules: # some rules are only opt-in
 
 type_name:
     min_length: 3
-    max_length: 44
+    max_length: 42
 
 included: # paths to include during linting. `--path` is ignored if present.
   - Source
