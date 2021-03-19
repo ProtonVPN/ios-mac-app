@@ -756,8 +756,8 @@
 "_openvpn_settings_step2" = "Make the necesary changes by clicking on the lock.";
 "_openvpn_settings_step3" = "Allow the system software to load.";
 
-"_openvpn_settings_enabled_title" = "You're now using OpenVPN";
-"_openvpn_settings_enabled_description" = "You have successfully enabled OpenVPN protocol on your device.";
+"_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN";
 
 "_openvpn_cannot_enable" = "Cannot enable OpenVPN";
 "_openvpn_enable_below_catalina_description" = "OpenVPN requires OSX 10.15 or higher. Please, update your operating system to enable the OpenVPN protocol.";
