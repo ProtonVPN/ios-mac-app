@@ -39,7 +39,7 @@ final class HumanVerificationHelper {
             return
         }
         
-        let alert = UserVerificationAlert(verificationMethods: verificationMethods, message: apiError.localizedDescription, success: { token in
+        let alert = UserVerificationAlert(verificationMethods: verificationMethods, error: apiError, success: { token in
             self.alamofireWrapper.setHumanVerification(token: token)
             self.alamofireWrapper.request(request, success: success, failure: failure)
         }, failure: { error in
