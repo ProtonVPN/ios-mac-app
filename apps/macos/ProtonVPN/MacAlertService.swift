@@ -54,34 +54,34 @@ extension MacAlertService: CoreAlertService {
         }
         
         switch alert {
-        case is AppUpdateRequiredAlert:
-            show(alert as! AppUpdateRequiredAlert)
+        case let appUpdateAlert as AppUpdateRequiredAlert:
+            show(appUpdateAlert)
             
-        case is CannotAccessVpnCredentialsAlert:
-            show(alert as! CannotAccessVpnCredentialsAlert)
+        case let vpnCredsAlert as CannotAccessVpnCredentialsAlert:
+            show(vpnCredsAlert)
             
         case is ExistingConnectionAlert:
             showDefaultSystemAlert(alert)
             
-        case is FirstTimeConnectingAlert:
+        case let firstTimeAlert as FirstTimeConnectingAlert:
             // Neagent popup is no longer an issue in macOS 10.15+, so we don't need to show the help anymore
             if #available(OSX 10.15, *) {
                 // do nothing
             } else {
-                show(alert as! FirstTimeConnectingAlert)
+                show(firstTimeAlert)
             }
             
         case is P2pBlockedAlert:
             showDefaultSystemAlert(alert)
             
-        case is P2pForwardedAlert:
-            show(alert as! P2pForwardedAlert)
+        case let p2pAlert as P2pForwardedAlert:
+            show(p2pAlert)
             
-        case is RefreshTokenExpiredAlert:
-            show(alert as! RefreshTokenExpiredAlert)
+        case let tokenAlert as RefreshTokenExpiredAlert:
+            show(tokenAlert)
             
-        case is UpgradeRequiredAlert:
-            show(alert as! UpgradeRequiredAlert)
+        case let upgradeAlert as UpgradeRequiredAlert:
+            show(upgradeAlert)
             
         case is DelinquentUserAlert:
             showDefaultSystemAlert(alert)
@@ -110,11 +110,11 @@ extension MacAlertService: CoreAlertService {
         case is ActiveFirewallAlert:
             showDefaultSystemAlert(alert)
             
-        case is InstallingHelperAlert:
-            show(alert as! InstallingHelperAlert)
+        case let installingHelperAlert as InstallingHelperAlert:
+            show(installingHelperAlert)
             
-        case is UpdatingHelperAlert:
-            show(alert as! UpdatingHelperAlert)
+        case let updatingAlert as UpdatingHelperAlert:
+            show(updatingAlert)
             
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
@@ -128,11 +128,11 @@ extension MacAlertService: CoreAlertService {
         case is KillSwitchErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case is KillSwitchBlockingAlert:
-            show(alert as! KillSwitchBlockingAlert)
+        case let ksAlert as KillSwitchBlockingAlert:
+            show(ksAlert)
             
-        case is KillSwitchRequiresSwift5Alert:
-            show(alert as! KillSwitchRequiresSwift5Alert)
+        case let ksAlert as KillSwitchRequiresSwift5Alert:
+            show(ksAlert)
            
         case is HelperInstallFailedAlert:
             showDefaultSystemAlert(alert)
@@ -149,8 +149,8 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreToggleDisconnectAlert:
             showDefaultSystemAlert(alert)
             
-        case is VpnServerOnMaintenanceAlert:
-            show(alert as! VpnServerOnMaintenanceAlert)
+        case let maintenanceAlert as VpnServerOnMaintenanceAlert:
+            show(maintenanceAlert)
             
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
@@ -161,8 +161,8 @@ extension MacAlertService: CoreAlertService {
         case is SecureCoreRequiresUpgradeAlert:
             showDefaultSystemAlert(alert)
             
-        case is UserVerificationAlert:
-            show(alert as! UserVerificationAlert)
+        case let verificationAlert as UserVerificationAlert:
+            show(verificationAlert)
             
         default:
             #if DEBUG
