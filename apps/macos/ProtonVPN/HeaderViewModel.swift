@@ -31,7 +31,7 @@ protocol HeaderViewModelFactory {
     func makeHeaderViewModel() -> HeaderViewModel
 }
 
-class HeaderViewModel {
+final class HeaderViewModel {
     
     public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory
     private let factory: Factory
@@ -87,6 +87,29 @@ class HeaderViewModel {
     
     var loadPercentage: Int? {
         return appStateManager.activeConnection()?.server.load
+    }
+
+    var vpnProtocol: NSAttributedString? {
+        guard let vpnProtocol = appStateManager.activeConnection()?.vpnProtocol else {
+            return nil
+        }
+
+        let name: String
+        switch vpnProtocol {
+        case .ike:
+            name = "IKEv2"
+        case let .openVpn(transport):
+            switch transport {
+            case .tcp:
+                name = "OpenVPN (TCP)"
+            case .udp:
+                name = "OpenVPN (UDP)"
+            case .undefined:
+                name = "OpenVPN"
+            }
+        }
+
+        return name.attributed(withColor: NSColor.protonWhite(), fontSize: 12)
     }
     
     func quickConnectAction() {

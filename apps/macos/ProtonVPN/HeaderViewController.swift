@@ -23,23 +23,24 @@
 import Cocoa
 import vpncore
 
-class HeaderViewController: NSViewController {
+final class HeaderViewController: NSViewController {
 
-    @IBOutlet weak var backgroundView: NSView!
-    @IBOutlet weak var flagView: FlagView!
-    @IBOutlet weak var headerLabel: NSTextField!
-    @IBOutlet weak var ipLabel: NSTextField!
-    @IBOutlet weak var loadLabel: NSTextField!
-    @IBOutlet weak var loadIcon: LoadCircle!
-    @IBOutlet weak var speedLabel: NSTextField!
-    @IBOutlet weak var connectButton: LargeConnectButton!
-    @IBOutlet weak var announcementsButton: NSButton!
-    @IBOutlet weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
-    @IBOutlet weak var loadLineHorizontalConstraint2: NSLayoutConstraint!
-    @IBOutlet weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
-    @IBOutlet weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
-    
-    public var announcementsButtonPressed: (() -> Void)?
+    @IBOutlet private weak var backgroundView: NSView!
+    @IBOutlet private weak var flagView: FlagView!
+    @IBOutlet private weak var headerLabel: NSTextField!
+    @IBOutlet private weak var ipLabel: NSTextField!
+    @IBOutlet private weak var loadLabel: NSTextField!
+    @IBOutlet private weak var loadIcon: LoadCircle!
+    @IBOutlet private weak var speedLabel: NSTextField!
+    @IBOutlet private weak var connectButton: LargeConnectButton!
+    @IBOutlet private weak var announcementsButton: NSButton!
+    @IBOutlet private weak var loadLineHorizontalConstraint1: NSLayoutConstraint!
+    @IBOutlet private weak var loadLineHorizontalConstraint2: NSLayoutConstraint!
+    @IBOutlet private weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
+    @IBOutlet private weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
+    @IBOutlet private weak var protocolLabel: NSTextField!
+
+    var announcementsButtonPressed: (() -> Void)?
     
     private var loadLineHorizontalConstraints: [NSLayoutConstraint] {
         return [loadLineHorizontalConstraint1, loadLineHorizontalConstraint2, loadLineHorizontalConstraint3, loadLineHorizontalConstraint4]
@@ -88,6 +89,7 @@ class HeaderViewController: NSViewController {
         ipLabel.attributedStringValue = viewModel.ipLabel
         
         setupLoad()
+        setupProtocol()
         setupBitrate()
         
         connectButton.isConnected = viewModel.isConnected
@@ -117,6 +119,16 @@ class HeaderViewController: NSViewController {
             loadLabel.isHidden = true
             loadIcon.isHidden = true
         }
+    }
+
+    private func setupProtocol() {
+        guard viewModel.isConnected, let vpnProcol = viewModel.vpnProtocol else {
+            protocolLabel.isHidden = true
+            return
+        }
+
+        protocolLabel.isHidden = false
+        protocolLabel.attributedStringValue = vpnProcol
     }
     
     private func setupBitrate() {
@@ -148,7 +160,7 @@ class HeaderViewController: NSViewController {
         }
     }
     
-    @IBAction func announcementsButtonTapped(_ sender: Any) {
+    @IBAction private func announcementsButtonTapped(_ sender: Any) {
         announcementsButtonPressed?()
     }
     
@@ -173,7 +185,6 @@ class HeaderViewController: NSViewController {
 }
 
 extension HeaderViewController: HeaderViewModelDelegate {
-    
     func bitrateUpdated(with attributedString: NSAttributedString) {
         speedLabel.attributedStringValue = attributedString
     }
