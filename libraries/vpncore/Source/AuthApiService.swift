@@ -22,10 +22,6 @@
 import Alamofire
 import Foundation
 
-#if os(iOS)
-import UIKit
-#endif
-
 public typealias AuthCredentialsCallback = GenericCallback<AuthCredentials>
 public typealias ModulusResponseCallback = GenericCallback<ModulusResponse>
 
@@ -106,18 +102,6 @@ public class AuthApiServiceImplementation: AuthApiService {
         alamofireWrapper.request(AuthModulusRequest(), success: successWrapper, failure: failure)
     }
 
-    #if os(iOS)
-    private var bgTaskId: UIBackgroundTaskIdentifier? {
-        willSet {
-            if bgTaskId != nil {
-                // It's important to end background task because otherwise watchdog will kill the whole app.
-                UIApplication.shared.endBackgroundTask(bgTaskId!)
-                PMLog.D("Background token refresh task finished")
-            }
-        }
-    }
-    #endif
-    
     public func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
         guard let authCreds = AuthKeychain.fetch() else {
             let error = KeychainError.fetchFailure
@@ -141,27 +125,9 @@ public class AuthApiServiceImplementation: AuthApiService {
                 let error = ParseError.refreshTokenParse
                 failure(error)
             }
-            #if os(iOS)
-            self.bgTaskId = nil
-            #endif
         }
         
-        let errorWrapper: ErrorCallback = { error in
-            failure(error)
-            #if os(iOS)
-            self.bgTaskId = nil
-            #endif
-        }
-        
-        #if os(iOS)
-        bgTaskId = UIApplication.shared.beginBackgroundTask(withName: "bg-task-token-refresh", expirationHandler: {
-            PMLog.D("Token refresh background task expired")
-            self.bgTaskId = nil
-        })
-        #endif
-                
         let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
-        alamofireWrapper.request(AuthRefreshRequest(refreshProperties), success: successWrapper, failure: errorWrapper)
-        
+        alamofireWrapper.request(AuthRefreshRequest(refreshProperties), success: successWrapper, failure: failure)
     }
 }
