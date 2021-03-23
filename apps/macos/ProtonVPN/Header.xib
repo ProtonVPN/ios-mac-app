@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,6 +20,7 @@
                 <outlet property="loadLineHorizontalConstraint2" destination="eHN-FP-7sk" id="YNI-ck-46k"/>
                 <outlet property="loadLineHorizontalConstraint3" destination="VW3-Je-f0W" id="Nsy-FS-ofv"/>
                 <outlet property="loadLineHorizontalConstraint4" destination="Msp-Lg-Nn9" id="PZ9-db-PIk"/>
+                <outlet property="protocolLabel" destination="7kf-gM-FN1" id="A4p-HK-Vs0"/>
                 <outlet property="speedLabel" destination="fcs-WH-EAh" id="qjT-Ap-JeE"/>
                 <outlet property="view" destination="c22-O7-iKe" id="zXf-hO-kwe"/>
             </connections>
@@ -39,7 +40,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="340" height="170"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
-                                            <rect key="frame" x="38" y="134" width="203" height="16"/>
+                                            <rect key="frame" x="38" y="134" width="211" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -69,6 +70,14 @@
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" horizontalCompressionResistancePriority="751" translatesAutoresizingMaskIntoConstraints="NO" id="7kf-gM-FN1" userLabel="Protocol label">
+                                            <rect key="frame" x="38" y="75" width="88" height="16"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol label" id="SYX-Qg-gCB" userLabel="Protocol label">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OVs-pX-cwh">
                                             <rect key="frame" x="216" y="103" width="66" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Load label" id="jml-MJ-Fs6">
@@ -88,7 +97,7 @@
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="253" y="125" width="51" height="32"/>
+                                            <rect key="frame" x="260" y="125" width="45" height="32"/>
                                             <buttonCell key="cell" type="push" bezelStyle="rounded" image="bell" imagePosition="only" alignment="center" state="on" borderStyle="border" transparent="YES" inset="2" id="ghW-7A-Ie1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
@@ -102,6 +111,8 @@
                                         <constraint firstItem="SOe-d7-1zi" firstAttribute="centerX" secondItem="lCW-hX-bS7" secondAttribute="centerX" id="197-NE-qNj"/>
                                         <constraint firstItem="OVs-pX-cwh" firstAttribute="centerY" secondItem="6Yt-JV-yHv" secondAttribute="centerY" id="3zp-b3-6YK"/>
                                         <constraint firstItem="fcs-WH-EAh" firstAttribute="top" secondItem="OVs-pX-cwh" secondAttribute="bottom" constant="12" id="6N3-m3-ac2"/>
+                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="centerY" secondItem="fcs-WH-EAh" secondAttribute="centerY" id="6j3-n3-g09"/>
+                                        <constraint firstItem="7kf-gM-FN1" firstAttribute="leading" secondItem="pHx-RQ-OMh" secondAttribute="leading" id="HE9-sf-HP4"/>
                                         <constraint firstItem="fAR-4v-fna" firstAttribute="leading" secondItem="8Rp-H8-tLg" secondAttribute="trailing" constant="20" id="Hfz-CV-4u0"/>
                                         <constraint firstItem="fAR-4v-fna" firstAttribute="centerY" secondItem="8Rp-H8-tLg" secondAttribute="centerY" id="Ig1-au-MQr"/>
                                         <constraint firstItem="8Rp-H8-tLg" firstAttribute="leading" secondItem="lCW-hX-bS7" secondAttribute="leading" constant="40" id="LHV-JP-8bX"/>
