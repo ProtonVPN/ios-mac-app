@@ -137,6 +137,7 @@ final class ConnectionSettingsViewModel {
                 if let newProtocol = notification.object as? VpnProtocol {
                     PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
                     self?.vpnGateway.reconnect(with: newProtocol)
+                    self?.viewController?.reloadView()
                 }
                 
                 NotificationCenter.default.removeObserver(token!)
