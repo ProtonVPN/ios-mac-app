@@ -25,6 +25,7 @@ import XCTest
 
 final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
     private var servers: [NetworkServer] = []
+    // Hard coded ports work when tests are run one by one. If tests are run in parallel they will conflict with each other and randomized ports for each test would be better to use.
     private let config = OpenVpnConfig(defaultTcpPorts: [10001, 10002, 10003], defaultUdpPorts: [])
 
     override func tearDown() {
