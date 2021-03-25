@@ -158,13 +158,6 @@ final class ConnectionSettingsViewModel {
             return
         }
         
-        guard #available(OSX 10.15, *) else {
-            propertiesManager.vpnProtocol = .ike
-            alertService.push(alert: OpenVPNEnableErrorAlert())
-            viewController?.reloadView()
-            return
-        }
-        
         let requestExtensionCallback: (() -> Void) = {
             self.propertiesManager.vpnProtocol = .openVpn(transportProtocol)
             self.systemExtensionManager.requestExtensionInstall(transportProtocol, completion: { _ in
