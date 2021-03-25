@@ -657,18 +657,6 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
     }
 }
 
-public class OpenVPNEnableErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNCannotEnable
-    public var message: String? = LocalizedString.openVPNBelowCatalinaDescription
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
-    }
-}
-
 public class OpenVPNExtensionTourAlert: SystemAlert {
     public var title: String?
     public var message: String?
