@@ -71,6 +71,17 @@
                BlueprintName = "vpncore-iosTests"
                ReferencedContainer = "container:vpncore.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "OpenVPNTCPAvailabilityCheckerTests">
+               </Test>
+               <Test
+                  Identifier = "OpenVPNUDPAvailabilityCheckerTests">
+               </Test>
+               <Test
+                  Identifier = "SmartProtocolImplementationTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
