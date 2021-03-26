@@ -76,7 +76,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 needsInstallExtension = true
             }
             self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true, requestInstall: needsInstallExtension) { installed in
-                // if instalaltion of the extension fails disable smart protocol and switch to IKEv2
+                // if installation of the extension fails then disable smart protocol and switch to IKEv2
                 if !installed {
                     self.propertiesManager.vpnProtocol = .ike
                     self.propertiesManager.smartProtocol = false
