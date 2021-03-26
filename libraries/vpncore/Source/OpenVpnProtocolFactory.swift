@@ -94,7 +94,11 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
         let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
-        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: "", username: credentials.username)
+        #if !os(macOS) // On mac sysex sets the password itself. Doing it here, prevents it from connecting.
+        let keychain = TunnelKit.Keychain(group: appGroup)
+        try? keychain.set(password: credentials.password, for: credentials.username, context: bundleId)
+        #endif
+        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: bundleId, username: credentials.username)
         return neProtocol
     }
     
