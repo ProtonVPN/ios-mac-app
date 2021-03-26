@@ -22,7 +22,7 @@
 
 import XCTest
 
-class PMLogtests: XCTestCase {
+class PMLogTests: XCTestCase {
 
     func testDumpWritesAndOverwritesFileContents() throws {
         
