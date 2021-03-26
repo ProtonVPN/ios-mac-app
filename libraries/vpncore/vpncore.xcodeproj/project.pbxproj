@@ -834,6 +834,8 @@
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E56E9B6444FA157F26BBF679 /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */; };
+		E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
+		E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6A25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -1229,6 +1231,7 @@
 		E1E892B82369EDF7001A436E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1E892B92369EEB9001A436E /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
+		E98763DE260DCE78002E06E1 /* PMLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogTests.swift; sourceTree = "<group>"; };
 		F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
 		F3021D7225E93E2A00EF73A1 /* TroubleshootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootItem.swift; sourceTree = "<group>"; };
 		F3021D7F25E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -1620,6 +1623,7 @@
 				D59671E8253D70C50061A75F /* Data refresh */,
 				D5C204232486646F004FB58B /* VpnServerSelectorTests.swift */,
 				F320563225E7D7CB00566DB7 /* FactoryMock.swift */,
+				E98763DE260DCE78002E06E1 /* PMLogTests.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2828,6 +2832,7 @@
 				D5C205172487A0CE004FB58B /* ProfileConstants.swift in Sources */,
 				D5C205182487A0CE004FB58B /* IkeProtocolFactory.swift in Sources */,
 				D5C205192487A0CE004FB58B /* OpenVpnProtocolFactory.swift in Sources */,
+				E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */,
 				D5C2051A2487A0CE004FB58B /* VpnProtocolFactory.swift in Sources */,
 				D5C2051B2487A0CE004FB58B /* AppStateManager.swift in Sources */,
 				D5C2051C2487A0CE004FB58B /* LocalizedString.swift in Sources */,
@@ -3364,6 +3369,7 @@
 				D5C204E424866BC2004FB58B /* SiriHelperProtocol.swift in Sources */,
 				D5C2047324866B37004FB58B /* ServiceChecker.swift in Sources */,
 				D5C2043B248666EC004FB58B /* ServerLocation.swift in Sources */,
+				E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */,
 				D5C20435248666B9004FB58B /* ServerModel.swift in Sources */,
 				D5C20439248666E3004FB58B /* ServerIp.swift in Sources */,
 				D5C204452486672B004FB58B /* Weak.swift in Sources */,
