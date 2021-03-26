@@ -107,7 +107,7 @@ public class PMLog {
         }
     }
     
-    public static func D(_ message: String, level: LogLevel = .info, overwrite: Bool = false, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+    public static func D(_ message: String, level: LogLevel = .info, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
         printToConsole(log)
         
@@ -117,17 +117,11 @@ public class PMLog {
         
         do {
             let fileHandle = try FileHandle(forWritingTo: logPath)
-            if !overwrite {
-                fileHandle.seekToEndOfFile()
-            }
+            fileHandle.seekToEndOfFile()
             fileHandle.write("\(log)\n".data(using: .utf8)!)
             fileHandle.closeFile()
         } catch {
-            do {
-                try "\(log)\n".data(using: .utf8)?.write(to: logPath)
-            } catch {
-                printToConsole(error.localizedDescription)
-            }
+            dump(logs: log, toFile: filename)
         }
     }
     
@@ -145,6 +139,17 @@ public class PMLog {
     
     public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         ET(error.localizedDescription, level: level)
+    }
+    
+    /// Dumps given string into a log file.
+    /// Will overwrite the file if it's present.
+    public static func dump(logs: String, toFile filename: String) {
+        guard let logPath = logFile(filename) else { return }
+        do {
+            try "\(logs)".data(using: .utf8)?.write(to: logPath)
+        } catch {
+            printToConsole(error.localizedDescription)
+        }
     }
     
     private static func pruneLogs() {
