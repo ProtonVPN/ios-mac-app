@@ -85,11 +85,9 @@ final class NetworkServer {
 }
 
 final class ServerConnection {
-    //The TCP maximum package size is 64K 65536
-    let MTU = 65536
-
+    private let MTU = 65536
     private static var nextID: Int = 0
-    let  connection: NWConnection
+    private let connection: NWConnection
     let id: Int
     let port: Int
 
@@ -132,9 +130,8 @@ final class ServerConnection {
                     self.send(data: data)
                 }
             }
-            /*if isComplete {
-                self.connectionDidEnd()
-            } else*/ if let error = error {
+
+            if let error = error {
                 self.connectionDidFail(error: error)
             } else {
                 self.setupReceive()
