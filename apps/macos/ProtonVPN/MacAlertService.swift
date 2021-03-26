@@ -183,6 +183,9 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
             
+        case let verificationAlert as UserVerificationAlert:
+            show(verificationAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -338,5 +341,12 @@ extension MacAlertService: CoreAlertService {
         let connectionTroubleshootingAlert = TroubleshootingPopup()
         connectionTroubleshootingAlert.viewModel = factory.makeTroubleshootViewModel()
         windowService.presentKeyModal(viewController: connectionTroubleshootingAlert)
+    }
+    
+    private func show( _ alert: UserVerificationAlert) {
+        alert.actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: {
+            alert.failure(alert.error)
+        }))
+        showDefaultSystemAlert(alert)
     }
 }
