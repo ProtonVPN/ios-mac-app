@@ -56,7 +56,14 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     var vpnGateway: VpnGatewayProtocol!
     var navService: NavigationService!
     
-    typealias Factory = CountriesSectionViewModelFactory & MapSectionViewModelFactory & HeaderViewModelFactory & AnnouncementsViewModelFactory & ConnectingOverlayViewModelFactory & PropertiesManagerFactory & CoreAlertServiceFactory & SystemExtensionManagerFactory
+    typealias Factory = CountriesSectionViewModelFactory
+        & MapSectionViewModelFactory
+        & HeaderViewModelFactory
+        & AnnouncementsViewModelFactory
+        & ConnectingOverlayViewModelFactory
+        & PropertiesManagerFactory
+        & CoreAlertServiceFactory
+        & SystemExtensionManagerFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
