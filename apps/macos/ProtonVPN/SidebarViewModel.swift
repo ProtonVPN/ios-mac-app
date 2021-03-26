@@ -11,7 +11,9 @@ import Foundation
 import vpncore
 
 final class SidebarViewModel {
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory & SystemExtensionManagerFactory
+    typealias Factory = PropertiesManagerFactory
+        & CoreAlertServiceFactory
+        & SystemExtensionManagerFactory
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
