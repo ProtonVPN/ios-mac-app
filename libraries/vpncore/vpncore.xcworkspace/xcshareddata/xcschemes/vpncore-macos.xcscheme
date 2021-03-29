@@ -64,6 +64,11 @@
                BlueprintName = "vpncore-macosTests"
                ReferencedContainer = "container:vpncore.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "SmartProtocolImplementationTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
