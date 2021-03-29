@@ -157,6 +157,9 @@
 /* Profile create/change form */
 "_connection_settings" = "Ajustes de conexión";
 
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Contacte con nuestro soporte";
+
 /* Button in some alerts */
 "_continue" = "Continuar";
 
@@ -969,6 +972,33 @@
 /* iOS Settings -> Protocol: OpenVPN option */
 "_openvpn" = "OpenVPN";
 
+/* Popup title after enabling OpenVPN */
+"_openvpn_cannot_enable" = "No se puede activar OpenVPN";
+
+/* Popup description on error installing OpenVPN */
+"_openvpn_error_description" = "Se produjo un error al instalar OpenVPN.\nReinstale ProtonVPN, asegurándose de que se encuentra en la carpeta Aplicaciones, para solucionar este problema. Alternativamente, contacte con nuestro soporte.";
+
+/* Enabling OpenVPN Description */
+"_openvpn_settings_description" = "ProtonVPN requiere cargar una extensión del sistema para aprovechar el Protocolo Inteligente y OpenVPN.";
+
+/* Popup description after enabling OpenVPN */
+"_openvpn_settings_enabled_description" = "Ha habilitado con éxito la extensión del sistema en su dispositivo. Ahora puede utilizar el Protocolo Inteligente y OpenVPN";
+
+/* Popup title after enabling OpenVPN */
+"_openvpn_settings_enabled_title" = "Ahora puede utilizar el Protocolo Inteligente y OpenVPN";
+
+/* Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1" = "En el cuadro de diálogo que se abre al activar OpenVPN, seleccione Abrir Preferencias de Seguridad.";
+
+/* Step 2 for enabling OpenVPN Extension */
+"_openvpn_settings_step2" = "Haga los cambios necesarios haciendo clic en el candado.";
+
+/* Step 3 for enabling OpenVPN Extension */
+"_openvpn_settings_step3" = "Permitir la carga del software del sistema.";
+
+/* OpenVPN */
+"_openvpn_settings_title" = "Extensión del sistema requerida";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Vista general";
 
@@ -1119,6 +1149,9 @@
 /* iOS Settings: VPN protocol label. */
 "_protocol" = "Protocolo";
 
+/* MacOS: Settings -> Protocol: description. */
+"_protocol_tooltip" = "Cambiar el protocolo de su conexión VPN";
+
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN macOS";
 
@@ -1199,6 +1232,12 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "Recomendado";
+
+/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
+"_reconnect_on_protocol_change_title" = "Cambiar el protocolo";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Debe reiniciar su conexión para aplicar este cambio.";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Reconectando a %@";
@@ -1395,6 +1434,9 @@
 /* Show/hide password switch */
 "_show" = "MOSTRAR";
 
+/* Button in some alerts */
+"_show_instructions" = "Mostrar instrucciones";
+
 /* MacOS: button in custom status menu */
 "_show_protonvpn" = "Mostrar ProtonVPN";
 
@@ -1403,6 +1445,12 @@
 
 /* MacOS welcome screen: skip button */
 "_skip" = "Omitir";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Utiliza automáticamente el protocolo y el puerto que ofrecen la mejor conectividad.";
+
+/* Smart Protocol */
+"_smart_protocol_title" = "Protocolo Inteligente";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ velocidad";

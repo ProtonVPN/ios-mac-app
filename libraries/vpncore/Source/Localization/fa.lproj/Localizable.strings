@@ -157,6 +157,9 @@
 /* Profile create/change form */
 "_connection_settings" = "تنظیمات اتصال";
 
+/* Text addressing to contact costumer support on several sites of the app */
+"_contact_our_support" = "Contact our support";
+
 /* Button in some alerts */
 "_continue" = "ادامه";
 
@@ -969,6 +972,33 @@
 /* iOS Settings -> Protocol: OpenVPN option */
 "_openvpn" = "OpenVPN";
 
+/* Popup title after enabling OpenVPN */
+"_openvpn_cannot_enable" = "Cannot enable OpenVPN";
+
+/* Popup description on error installing OpenVPN */
+"_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+
+/* Enabling OpenVPN Description */
+"_openvpn_settings_description" = "ProtonVPN برای استفاده از پروتکل هوشمند و OpenVPN به یک Extension System نیاز دارد.";
+
+/* Popup description after enabling OpenVPN */
+"_openvpn_settings_enabled_description" = "شما با موفقیت System Extension را در دستگاه خود فعال کرده اید. اکنون می توانید از Smart Protocol و OpenVPN استفاده کنید";
+
+/* Popup title after enabling OpenVPN */
+"_openvpn_settings_enabled_title" = "اکنون می توانید از Smart Protocol و OpenVPN استفاده کنید";
+
+/* Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+
+/* Step 2 for enabling OpenVPN Extension */
+"_openvpn_settings_step2" = "Make the necessary changes by clicking on the lock.";
+
+/* Step 3 for enabling OpenVPN Extension */
+"_openvpn_settings_step3" = "Allow the system software to load.";
+
+/* OpenVPN */
+"_openvpn_settings_title" = "System Extension required";
+
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "نمای کلی";
 
@@ -1119,6 +1149,9 @@
 /* iOS Settings: VPN protocol label. */
 "_protocol" = "پروتکل";
 
+/* MacOS: Settings -> Protocol: description. */
+"_protocol_tooltip" = "Change the protocol of your VPN connection";
+
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN برای macOS";
 
@@ -1199,6 +1232,12 @@
 
 /* iOS: table header section in profiles screen */
 "_recommended" = "پیشنهاد شده";
+
+/* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
+"_reconnect_on_protocol_change_title" = "Change protocol";
+
+/* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
+"_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "اتصال دوباره به %@";
@@ -1395,6 +1434,9 @@
 /* Show/hide password switch */
 "_show" = "نمایش";
 
+/* Button in some alerts */
+"_show_instructions" = "Show instructions";
+
 /* MacOS: button in custom status menu */
 "_show_protonvpn" = "نمایش ProtonVPN";
 
@@ -1403,6 +1445,12 @@
 
 /* MacOS welcome screen: skip button */
 "_skip" = "رد کردن";
+
+/* Description for Smart Protocol in Settings */
+"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+
+/* Smart Protocol */
+"_smart_protocol_title" = "پروتکل هوشمند";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "سرعت %@";
