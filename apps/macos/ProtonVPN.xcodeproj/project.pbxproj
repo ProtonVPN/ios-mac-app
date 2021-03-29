@@ -833,23 +833,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		0663E3B6259DCA570059E88D /* System Extension Tour */ = {
-			isa = PBXGroup;
-			children = (
-				0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */,
-				0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */,
-			);
-			name = "System Extension Tour";
-			sourceTree = "<group>";
-		};
-		0663E44B259E22B60059E88D /* System Extension Tour */ = {
-			isa = PBXGroup;
-			children = (
-				0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */,
-			);
-			name = "System Extension Tour";
-			sourceTree = "<group>";
-		};
 		31F23820696BA6450B77DEE9 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -873,43 +856,6 @@
 				5249AD0C821C84B18F189441 /* Pods-ProtonVPN OpenVPN-metadata.plist */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		42C1F2752552BC5B00793A49 /* QuickSettings */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F2842552FEA800793A49 /* QuickSettingsDropdownOption.xib */,
-				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
-			);
-			name = QuickSettings;
-			sourceTree = "<group>";
-		};
-		42C1F2922553069900793A49 /* Presenters */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F298255306C000793A49 /* SideBar */,
-			);
-			name = Presenters;
-			sourceTree = "<group>";
-		};
-		42C1F298255306C000793A49 /* SideBar */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F299255306C800793A49 /* QuickSettings */,
-			);
-			name = SideBar;
-			sourceTree = "<group>";
-		};
-		42C1F299255306C800793A49 /* QuickSettings */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */,
-				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
-				42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */,
-				42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */,
-				42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */,
-			);
-			name = QuickSettings;
 			sourceTree = "<group>";
 		};
 		42EF09DD257A713F00E2EDCA /* ProtonVPN OpenVPN */ = {
@@ -938,14 +884,6 @@
 				C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		D202EF18246C02C300617BD2 /* TextView */ = {
-			isa = PBXGroup;
-			children = (
-				D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */,
-			);
-			name = TextView;
 			sourceTree = "<group>";
 		};
 		D5204E6622A1169800FFAB99 /* Login */ = {
@@ -988,22 +926,6 @@
 			path = Updates;
 			sourceTree = "<group>";
 		};
-		D5906F1322D3792E001BC074 /* ReportBug */ = {
-			isa = PBXGroup;
-			children = (
-				D5906F1422D3795C001BC074 /* AttachedFileView.swift */,
-			);
-			name = ReportBug;
-			sourceTree = "<group>";
-		};
-		D5906F1622D37989001BC074 /* ReportBug */ = {
-			isa = PBXGroup;
-			children = (
-				D5906F1722D379C9001BC074 /* AttachedFileView.xib */,
-			);
-			name = ReportBug;
-			sourceTree = "<group>";
-		};
 		D5911707229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1015,40 +937,6 @@
 				D5204E6E22A1397F00FFAB99 /* credentials.plist */,
 			);
 			path = ProtonVPNUITests;
-			sourceTree = "<group>";
-		};
-		D5966FCE253855850061A75F /* Announcements */ = {
-			isa = PBXGroup;
-			children = (
-				D5966FCF253855B30061A75F /* AnnouncementItemView.swift */,
-				D5966FE3253885B00061A75F /* TriangleView.swift */,
-			);
-			name = Announcements;
-			sourceTree = "<group>";
-		};
-		D5966FD625385B6E0061A75F /* Announcements */ = {
-			isa = PBXGroup;
-			children = (
-				D5966FD725385B890061A75F /* AnnouncementItemView.xib */,
-			);
-			name = Announcements;
-			sourceTree = "<group>";
-		};
-		D5A8813922CF28C5009B63D1 /* ReportBug */ = {
-			isa = PBXGroup;
-			children = (
-				D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */,
-				D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */,
-			);
-			name = ReportBug;
-			sourceTree = "<group>";
-		};
-		D5D298A825B5BA8D000FBD74 /* Updates */ = {
-			isa = PBXGroup;
-			children = (
-				D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */,
-			);
-			name = Updates;
 			sourceTree = "<group>";
 		};
 		D5D298A925B5BBFE000FBD74 /* Management */ = {
@@ -1065,14 +953,6 @@
 				D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */,
 			);
 			path = Updates;
-			sourceTree = "<group>";
-		};
-		D5D6A948230D294C00A432D1 /* Dependecy injection */ = {
-			isa = PBXGroup;
-			children = (
-				D5D6A949230D296400A432D1 /* DependencyContainer.swift */,
-			);
-			name = "Dependecy injection";
 			sourceTree = "<group>";
 		};
 		E13F4CFF20FCD6CF00D985C2 /* Tests */ = {
@@ -1093,17 +973,6 @@
 			path = JSON;
 			sourceTree = "<group>";
 		};
-		E156C19D20BDA5EB0054E935 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				E156C19A20BDA5920054E935 /* StatusMenu.xib */,
-				E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */,
-				E187021820E23815000521AC /* StatusMenuProfilesList.xib */,
-				E187021D20E26201000521AC /* StatusMenuProfileViewItem.xib */,
-			);
-			name = Menu;
-			sourceTree = "<group>";
-		};
 		E15B754E20FA83CB0022C406 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1116,153 +985,6 @@
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
-		E1616BDE21C91B7900F42D79 /* Core Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */,
-				E1616BDF21C91B9700F42D79 /* PropertiesManager+Extension.swift */,
-				D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */,
-			);
-			name = "Core Extensions";
-			sourceTree = "<group>";
-		};
-		E170A92B21240F9D0036326B /* Upsell & Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E180D15321258EF500F4D1C7 /* TrialAboutToExpireViewController.swift */,
-				E180D14B2125457200F4D1C7 /* TrialExpiredViewController.swift */,
-				E170A93521245DF70036326B /* TrialWelcomeViewController.swift */,
-				E180D1632126C9D300F4D1C7 /* TourNumberViewController.swift */,
-				E180D1592126A89900F4D1C7 /* TourViewController.swift */,
-				E180D14F2125621300F4D1C7 /* UpsellViewController.swift */,
-				E170A92721240F940036326B /* WelcomeViewController.swift */,
-			);
-			name = "Upsell & Onboarding";
-			sourceTree = "<group>";
-		};
-		E170A92C21240FDA0036326B /* Upsell & Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E180D15421258EF500F4D1C7 /* TrialAboutToExpire.xib */,
-				E180D14C2125457200F4D1C7 /* TrialExpired.xib */,
-				E170A93621245DF70036326B /* TrialWelcome.xib */,
-				E180D15A2126A89900F4D1C7 /* Tour.xib */,
-				E180D1642126C9D300F4D1C7 /* TourNumber.xib */,
-				E180D1502125621300F4D1C7 /* Upsell.xib */,
-				E170A92821240F940036326B /* Welcome.xib */,
-			);
-			name = "Upsell & Onboarding";
-			sourceTree = "<group>";
-		};
-		E170A92D212430F30036326B /* Upsell & Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E180D1452124689600F4D1C7 /* MapGradientView.swift */,
-				E180D15D2126AD5400F4D1C7 /* TourDescriptionView.swift */,
-				E180D15F2126B55F00F4D1C7 /* TourNumberView.swift */,
-				E180D1672126F6EE00F4D1C7 /* TourNumberRingView.swift */,
-				E170A92E2124313A0036326B /* UpsellGradientView.swift */,
-			);
-			name = "Upsell & Onboarding";
-			sourceTree = "<group>";
-		};
-		E17DE11521FEF8C3008CCC13 /* Protocols */ = {
-			isa = PBXGroup;
-			children = (
-				E17DE10821FB630C008CCC13 /* AppProtocol.swift */,
-			);
-			name = Protocols;
-			sourceTree = "<group>";
-		};
-		EE068DBF1F23E7C10006C2D0 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				EEA1C8DE1F27BB0900B2036E /* CountriesSection */,
-				EE068DC01F23E7CF0006C2D0 /* ProfilesSection */,
-				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
-				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
-				F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */,
-				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
-			);
-			name = Sidebar;
-			sourceTree = "<group>";
-		};
-		EE068DC01F23E7CF0006C2D0 /* ProfilesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EE068DC31F23E8A90006C2D0 /* ProfileItemViewModel.swift */,
-				EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */,
-				D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */,
-			);
-			name = ProfilesSection;
-			sourceTree = "<group>";
-		};
-		EE1D93831F1D1F8900929F24 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				EEA556301F1F484D0061F43F /* CreateProfile */,
-				EEBB82F41F1E0E410041432A /* Overview */,
-				EEBB82E31F1DEF1B0041432A /* ProfilesTabBarView.swift */,
-			);
-			name = Profiles;
-			sourceTree = "<group>";
-		};
-		EE24A3911F1BC76B00B70949 /* ProfilesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EE24A3931F1BC7A700B70949 /* ProfileItem.xib */,
-				EE24A3A81F1BDD3300B70949 /* ProfilesSection.xib */,
-				EE24A3971F1BC7D000B70949 /* FooterItem.xib */,
-			);
-			name = ProfilesSection;
-			sourceTree = "<group>";
-		};
-		EE24A3991F1BC9F200B70949 /* ProfilesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */,
-				EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */,
-			);
-			name = ProfilesSection;
-			sourceTree = "<group>";
-		};
-		EE3435651F2F60C500DE0806 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */,
-				EE5CF76D1F4DDB750002BBF3 /* ProfilesMenuController.swift */,
-				EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */,
-				E156C19920BDA5920054E935 /* StatusMenuViewController.swift */,
-				E187021720E23815000521AC /* StatusMenuProfilesListController.swift */,
-				E156C19E20BE901A0054E935 /* StatusMenuWindowController.swift */,
-				D57597C023B10C2E002D6631 /* WindowMenuController.swift */,
-			);
-			name = Menu;
-			sourceTree = "<group>";
-		};
-		EE3435671F2F60DF00DE0806 /* Menu */ = {
-			isa = PBXGroup;
-			children = (
-				E148457F20CAB64900DFDAA4 /* HelpMenuViewModel.swift */,
-				EE5CF76F1F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift */,
-				EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */,
-				E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */,
-				E187021F20E268FE000521AC /* StatusMenuProfileItemViewModel.swift */,
-				E187022120E27801000521AC /* StatusMenuProfilesListViewModel.swift */,
-				EE46A08D1F2E1BD5008B435C /* StatusMenuViewModel.swift */,
-				E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */,
-			);
-			name = Menu;
-			sourceTree = "<group>";
-		};
-		EE36B0C91F4B62D6005DB349 /* Constants */ = {
-			isa = PBXGroup;
-			children = (
-				EE98CFCE1F14E096000D6688 /* AppConstants.swift */,
-			);
-			name = Constants;
-			sourceTree = "<group>";
-		};
 		EE46A0671F2DE2F2008B435C /* Properties */ = {
 			isa = PBXGroup;
 			children = (
@@ -1272,326 +994,12 @@
 			name = Properties;
 			sourceTree = "<group>";
 		};
-		EE46A0691F2DE49F008B435C /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				EE27DB571F4759A600D2FF2B /* AppSessionManager.swift */,
-			);
-			name = Core;
-			sourceTree = "<group>";
-		};
-		EE4943E91F29BE1600CF980F /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				EE4943EB1F29BE3600CF980F /* Login.xib */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
-		EE4FCF5D1F21F82600B04EF8 /* Elements */ = {
-			isa = PBXGroup;
-			children = (
-				EE8EF1E41F1FB3020057CD94 /* Button */,
-				EEA1C8D91F2797C200B2036E /* Custom */,
-				EEB493CC1F20EA1500A979DC /* ScrollView */,
-				EE4FCF5E1F21F87100B04EF8 /* TextField */,
-				D202EF18246C02C300617BD2 /* TextView */,
-				EE68DD501F49F4BE00F218B8 /* TabBarView.swift */,
-				EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */,
-				EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */,
-				F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */,
-			);
-			name = Elements;
-			sourceTree = "<group>";
-		};
-		EE4FCF5E1F21F87100B04EF8 /* TextField */ = {
-			isa = PBXGroup;
-			children = (
-				EE9589E31F596DFC005E7495 /* PVPNTextField.swift */,
-				E1E0E3122059775200599F42 /* PVPNHyperlinkTextField.swift */,
-				EE4FCF631F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift */,
-				EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */,
-				EE4FCF611F21FA2800B04EF8 /* TextFieldWithFocus.swift */,
-				EE01DD121F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift */,
-				42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */,
-			);
-			name = TextField;
-			sourceTree = "<group>";
-		};
-		EE4FCF671F22264E00B04EF8 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				E1EA77FA2294366A007B9C2F /* Alerts.swift */,
-			);
-			name = Models;
-			sourceTree = "<group>";
-		};
 		EE5CF75F1F4D8C7E0002BBF3 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
 				EED534881EEC112000013607 /* Assets.xcassets */,
 			);
 			name = Assets;
-			sourceTree = "<group>";
-		};
-		EE68DD4B1F49D59B00F218B8 /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */,
-			);
-			name = Server;
-			sourceTree = "<group>";
-		};
-		EE69C8CB1F5D5D0700C3065C /* AnnotationElements */ = {
-			isa = PBXGroup;
-			children = (
-				EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */,
-			);
-			name = AnnotationElements;
-			sourceTree = "<group>";
-		};
-		EE69C8CC1F5D5D3F00C3065C /* AnnotationViews */ = {
-			isa = PBXGroup;
-			children = (
-				EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */,
-				EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */,
-				EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */,
-			);
-			name = AnnotationViews;
-			sourceTree = "<group>";
-		};
-		EE69C8CD1F5D7F9E00C3065C /* Windows */ = {
-			isa = PBXGroup;
-			children = (
-				EE69C8D21F5D89FF00C3065C /* AboutWindowController.swift */,
-				D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */,
-				EE69C8D81F5D9EB300C3065C /* LoginWindowController.swift */,
-				D516EB9C2315775E0095B735 /* MacAlertService.swift */,
-				EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */,
-				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
-				EE4E7DF61F62909A000F7D5E /* ProfilesWindowController.swift */,
-				D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */,
-				EE69C8CE1F5D7FBD00C3065C /* SettingsWindowController.swift */,
-				EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */,
-				E180D1612126C4C500F4D1C7 /* TourController.swift */,
-				E180D1572125CB8300F4D1C7 /* TourWindowController.swift */,
-				EE4E7DF81F629195000F7D5E /* WindowController.swift */,
-				EE4E7DF41F6276C9000F7D5E /* WindowService.swift */,
-			);
-			name = Windows;
-			sourceTree = "<group>";
-		};
-		EE72754E1F29E7C7002748C6 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
-		EE771B311F40F2DC00B9E0DD /* Elements */ = {
-			isa = PBXGroup;
-			children = (
-				E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */,
-				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
-				EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */,
-				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
-				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
-			);
-			name = Elements;
-			sourceTree = "<group>";
-		};
-		EE7874A01F3B639C001E261E /* Elements */ = {
-			isa = PBXGroup;
-			children = (
-				E1454CEC206FC6A900E6D396 /* HelpPopover.xib */,
-				E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */,
-				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
-				EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */,
-				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
-				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
-				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
-				F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */,
-				F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */,
-			);
-			name = Elements;
-			sourceTree = "<group>";
-		};
-		EE7874A31F3B654D001E261E /* Elements */ = {
-			isa = PBXGroup;
-			children = (
-				E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */,
-				E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */,
-				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
-				EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */,
-				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
-				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
-				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
-				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
-				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
-			);
-			name = Elements;
-			sourceTree = "<group>";
-		};
-		EE876E0A1F137CF900C9B9C2 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */,
-				D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */,
-				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
-				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
-				EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */,
-				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
-				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
-				E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */,
-				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
-				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
-				424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */,
-				424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */,
-			);
-			name = Sidebar;
-			sourceTree = "<group>";
-		};
-		EE876E0F1F13852300C9B9C2 /* Layouts */ = {
-			isa = PBXGroup;
-			children = (
-				EE98CFDF1F151003000D6688 /* About */,
-				EE7874A01F3B639C001E261E /* Elements */,
-				EE4943E91F29BE1600CF980F /* Login */,
-				EE876E101F13857D00C9B9C2 /* Main */,
-				EEFE81C01F3F35140052A7A6 /* Map */,
-				E156C19D20BDA5EB0054E935 /* Menu */,
-				EEBB82D81F1DE86E0041432A /* Profiles */,
-				D5906F1622D37989001BC074 /* ReportBug */,
-				EE98CFD01F14E231000D6688 /* Settings */,
-				EE876E151F13CA4800C9B9C2 /* Sidebar */,
-				E170A92C21240FDA0036326B /* Upsell & Onboarding */,
-			);
-			name = Layouts;
-			sourceTree = "<group>";
-		};
-		EE876E101F13857D00C9B9C2 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				EE876E0D1F1381C100C9B9C2 /* Main.storyboard */,
-			);
-			name = Main;
-			sourceTree = "<group>";
-		};
-		EE876E151F13CA4800C9B9C2 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				D5966FD625385B6E0061A75F /* Announcements */,
-				EECEF3D71F1699B600A16606 /* CountriesSection */,
-				EE24A3911F1BC76B00B70949 /* ProfilesSection */,
-				E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */,
-				EE11F9241F39B3E6006C389C /* Header.xib */,
-				E1FFCF80202DAF17001B8108 /* ServerInfo.xib */,
-				EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */,
-			);
-			name = Sidebar;
-			sourceTree = "<group>";
-		};
-		EE876E1C1F13CD6500C9B9C2 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				EE4FCF5D1F21F82600B04EF8 /* Elements */,
-				EE876E221F13CEA900C9B9C2 /* Main */,
-				EEFE81CE1F3F36640052A7A6 /* Map */,
-				EE1D93831F1D1F8900929F24 /* Profiles */,
-				D5906F1322D3792E001BC074 /* ReportBug */,
-				EE876E1D1F13CD7100C9B9C2 /* Sidebar */,
-				E170A92D212430F30036326B /* Upsell & Onboarding */,
-				E1AEE614202E44D1003DDD84 /* CustomOverlayView.swift */,
-				E15DE7D12029EA6F00BFA78D /* PassThroughView.swift */,
-			);
-			name = Views;
-			sourceTree = "<group>";
-		};
-		EE876E1D1F13CD7100C9B9C2 /* Sidebar */ = {
-			isa = PBXGroup;
-			children = (
-				42C1F2752552BC5B00793A49 /* QuickSettings */,
-				D5966FCE253855850061A75F /* Announcements */,
-				EECEF3DC1F169B1600A16606 /* CountriesSection */,
-				EE24A3991F1BC9F200B70949 /* ProfilesSection */,
-				EE7874A61F3B8F6F001E261E /* FlagView.swift */,
-				EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */,
-				E1C1399B2114399700B88658 /* SwitchButton.swift */,
-				E195C0D8204301900002021B /* ButtonMask.swift */,
-			);
-			name = Sidebar;
-			sourceTree = "<group>";
-		};
-		EE876E221F13CEA900C9B9C2 /* Main */ = {
-			isa = PBXGroup;
-			children = (
-				EE876E111F13859600C9B9C2 /* OverlayView.swift */,
-				EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */,
-			);
-			name = Main;
-			sourceTree = "<group>";
-		};
-		EE8EF1E41F1FB3020057CD94 /* Button */ = {
-			isa = PBXGroup;
-			children = (
-				E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */,
-				EE2C46311F5570A700BA34B8 /* CellSurfaceButton.swift */,
-				E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */,
-				E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */,
-				EE24A39E1F1BCF6000B70949 /* ConnectButton.swift */,
-				E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */,
-				EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */,
-				E13C63F92038A08400D9E40C /* ExpandMapButton.swift */,
-				EE8EF1EA1F1FB8380057CD94 /* GreenActionButton.swift */,
-				E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */,
-				EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */,
-				E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */,
-				EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */,
-				EE5B174E1F39E4E100879BE0 /* LargeConnectButton.swift */,
-				EECEF3C91F164AEC00A16606 /* LoginButton.swift */,
-				EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */,
-				E17C1CDE20E61D7F00DCC687 /* QuitApplicationButton.swift */,
-				E15DE7D7202B4FF700BFA78D /* ResizingTextButton.swift */,
-				E17C1CE020E6217E00DCC687 /* ShowApplicationButton.swift */,
-				E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */,
-				E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */,
-				E17C1CE220EA18CD00DCC687 /* StatusMenuItemBackground.swift */,
-				E187021B20E2616C000521AC /* StatusMenuProfileViewItem.swift */,
-				E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */,
-				EE35FC441F1CD70700CFE26F /* TabBarButton.swift */,
-				E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */,
-				E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */,
-				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
-				EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */,
-				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
-				428B63C325558B5F00C90D40 /* QuickSettingButton.swift */,
-			);
-			name = Button;
-			sourceTree = "<group>";
-		};
-		EE98CFD01F14E231000D6688 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				EE27DB471F47095300D2FF2B /* Account.xib */,
-				E1420A72209B57B100697461 /* ConnectionSettings.xib */,
-				EE98CFD11F14E247000D6688 /* GeneralSettings.xib */,
-				EE27DB3B1F4706E400D2FF2B /* SettingsContainer.xib */,
-				EE27DB4D1F47187600D2FF2B /* SettingsTabBar.xib */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
-		EE98CFD71F1501AF000D6688 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				EE27DB461F47095300D2FF2B /* AccountViewController.swift */,
-				E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */,
-				EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */,
-				EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */,
-				EE27DB4C1F47187600D2FF2B /* SettingsTabBarViewController.swift */,
-			);
-			name = Settings;
 			sourceTree = "<group>";
 		};
 		EE98CFD81F150639000D6688 /* Resources */ = {
@@ -1615,96 +1023,6 @@
 			name = Localization;
 			sourceTree = "<group>";
 		};
-		EE98CFDC1F150F32000D6688 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */,
-				D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */,
-			);
-			name = About;
-			sourceTree = "<group>";
-		};
-		EE98CFDF1F151003000D6688 /* About */ = {
-			isa = PBXGroup;
-			children = (
-				EE98CFE01F15100F000D6688 /* About.xib */,
-				D5AC137F23796B8800244066 /* Acknowledgements.xib */,
-			);
-			name = About;
-			sourceTree = "<group>";
-		};
-		EE98CFEB1F1523BD000D6688 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				EE4943ED1F29C20200CF980F /* LoginViewController.swift */,
-			);
-			name = Login;
-			sourceTree = "<group>";
-		};
-		EE9BFBC01F30DD4300EDA295 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				EE27DB4A1F470EF700D2FF2B /* AccountViewModel.swift */,
-				EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */,
-				E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */,
-				EE4E7E021F62B197000F7D5E /* SettingsContainerViewModel.swift */,
-				E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */,
-			);
-			name = Settings;
-			sourceTree = "<group>";
-		};
-		EEA1C8D91F2797C200B2036E /* Custom */ = {
-			isa = PBXGroup;
-			children = (
-				E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */,
-				E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */,
-				D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */,
-				E1454CF1206FE2C300E6D396 /* HelpPopoverBackgroundView.swift */,
-				E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */,
-				EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */,
-				E13464AA2033780300C0DB7D /* LoadCircle.swift */,
-				EE24A3A01F1BD75900B70949 /* ProfileCircle.swift */,
-				E13464D22035774200C0DB7D /* ShadowView.swift */,
-			);
-			name = Custom;
-			sourceTree = "<group>";
-		};
-		EEA1C8DE1F27BB0900B2036E /* CountriesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
-				EECF306A1F179A54006F819F /* CountryItemViewModel.swift */,
-				E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */,
-				EECF30701F17A188006F819F /* ServerItemViewModel.swift */,
-			);
-			name = CountriesSection;
-			sourceTree = "<group>";
-		};
-		EEA556301F1F484D0061F43F /* CreateProfile */ = {
-			isa = PBXGroup;
-			children = (
-				EEA556311F1F48780061F43F /* ColorPickerCircle.swift */,
-				EEA556331F1F48F20061F43F /* ColorPickerItemView.swift */,
-				EEA556391F1F59690061F43F /* DisabledScrollView.swift */,
-			);
-			name = CreateProfile;
-			sourceTree = "<group>";
-		};
-		EEA5563D1F1F774C0061F43F /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				EEA5563F1F1F777A0061F43F /* ColorPickerViewModel.swift */,
-				EEB493D21F2145CE00A979DC /* CreateNewProfileViewModel.swift */,
-				EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */,
-				EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */,
-				EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */,
-				EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */,
-				EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */,
-				EE4E7E041F62B27A000F7D5E /* ProfilesContainerViewModel.swift */,
-			);
-			name = Profiles;
-			sourceTree = "<group>";
-		};
 		EEB404C81F77F639006CF513 /* ProtonVPNStarter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1715,106 +1033,6 @@
 				EEB404D31F77F639006CF513 /* ProtonVPNStarter.entitlements */,
 			);
 			path = ProtonVPNStarter;
-			sourceTree = "<group>";
-		};
-		EEB493CC1F20EA1500A979DC /* ScrollView */ = {
-			isa = PBXGroup;
-			children = (
-				EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */,
-				E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */,
-				42082670256BC3B900A621EC /* BlockeableScrollView.swift */,
-			);
-			name = ScrollView;
-			sourceTree = "<group>";
-		};
-		EEBB82D81F1DE86E0041432A /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				EEA556361F1F4E100061F43F /* ColorPicker.xib */,
-				EEA5562E1F1F48020061F43F /* ColorPickerItem.xib */,
-				EEBB82E91F1DF5B40041432A /* CreateNewProfile.xib */,
-				EEBB82F21F1E0BCF0041432A /* OverviewItem.xib */,
-				EEBB82E71F1DF5A60041432A /* Overview.xib */,
-				EEBB82DA1F1DE8890041432A /* ProfilesContainer.xib */,
-				EE3B37FF1F436E14008DF9E7 /* ProfilesTabBar.xib */,
-				EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */,
-			);
-			name = Profiles;
-			sourceTree = "<group>";
-		};
-		EEBB82DC1F1DEB680041432A /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				EE52EA261F1E9693009DFF1D /* ColorPickerViewController.swift */,
-				EEBB82ED1F1DF6230041432A /* CreateNewProfileViewController.swift */,
-				EEBB82EB1F1DF6120041432A /* OverviewViewController.swift */,
-				EEBB82DD1F1DEB800041432A /* ProfilesContainerViewController.swift */,
-				EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */,
-				EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */,
-			);
-			name = Profiles;
-			sourceTree = "<group>";
-		};
-		EEBB82F41F1E0E410041432A /* Overview */ = {
-			isa = PBXGroup;
-			children = (
-				EEBB82F51F1E0F8C0041432A /* OverviewItemView.swift */,
-			);
-			name = Overview;
-			sourceTree = "<group>";
-		};
-		EEBB82FA1F1E2E2C0041432A /* Management */ = {
-			isa = PBXGroup;
-			children = (
-				EE68DD4B1F49D59B00F218B8 /* Server */,
-				D5D298A825B5BA8D000FBD74 /* Updates */,
-				EED534841EEC112000013607 /* AppDelegate.swift */,
-				EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */,
-				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
-				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
-				427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */,
-				E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */,
-				E142F24C20A9B45800029163 /* UpdateManager.swift */,
-				42F256EC257E36270033633B /* SystemExtensionManager.swift */,
-			);
-			name = Management;
-			sourceTree = "<group>";
-		};
-		EECEF3D71F1699B600A16606 /* CountriesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EECEF3D81F1699F500A16606 /* CountryItem.xib */,
-				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
-				EE6E61C91F4C16EF00638F9B /* SecureCoreServerItem.xib */,
-				EECEF3DA1F169A0500A16606 /* ServerItem.xib */,
-			);
-			name = CountriesSection;
-			sourceTree = "<group>";
-		};
-		EECEF3DC1F169B1600A16606 /* CountriesSection */ = {
-			isa = PBXGroup;
-			children = (
-				EECEF3DD1F169B4800A16606 /* CountryItemView.swift */,
-				E1FFCF75202D942E001B8108 /* ServerInfoView.swift */,
-				EE6E61CB1F4C179400638F9B /* SecureCoreServerItemView.swift */,
-				EECEF3DF1F169EC300A16606 /* ServerItemView.swift */,
-			);
-			name = CountriesSection;
-			sourceTree = "<group>";
-		};
-		EECF30661F179A06006F819F /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				0663E44B259E22B60059E88D /* System Extension Tour */,
-				EE771B311F40F2DC00B9E0DD /* Elements */,
-				EE72754E1F29E7C7002748C6 /* Login */,
-				EEFE81D51F3F41A00052A7A6 /* Map */,
-				EE3435671F2F60DF00DE0806 /* Menu */,
-				EEA5563D1F1F774C0061F43F /* Profiles */,
-				EE9BFBC01F30DD4300EDA295 /* Settings */,
-				EE068DBF1F23E7C10006C2D0 /* Sidebar */,
-			);
-			name = ViewModels;
 			sourceTree = "<group>";
 		};
 		EED534781EEC112000013607 = {
@@ -1852,34 +1070,609 @@
 		EED534831EEC112000013607 /* ProtonVPN */ = {
 			isa = PBXGroup;
 			children = (
-				EE36B0C91F4B62D6005DB349 /* Constants */,
-				EE46A0691F2DE49F008B435C /* Core */,
-				D5D6A948230D294C00A432D1 /* Dependecy injection */,
-				EED534B71EEC14D000013607 /* Extensions */,
-				EE876E0F1F13852300C9B9C2 /* Layouts */,
-				EEBB82FA1F1E2E2C0041432A /* Management */,
-				EE4FCF671F22264E00B04EF8 /* Models */,
-				42C1F2922553069900793A49 /* Presenters */,
-				E17DE11521FEF8C3008CCC13 /* Protocols */,
-				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
-				D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */,
+				F36ECE312611E0530089B898 /* Extensions */,
+				F36ECDF62611D9B10089B898 /* Scenes */,
 				EE98CFD81F150639000D6688 /* Resources */,
 				EED534EE1EEC18C500013607 /* SupportingFiles */,
-				EED534BC1EEC151600013607 /* Utilities */,
-				EEE36ED71F1379FC00E8F859 /* ViewControllers */,
-				EECF30661F179A06006F819F /* ViewModels */,
-				EE876E1C1F13CD6500C9B9C2 /* Views */,
-				EE69C8CD1F5D7F9E00C3065C /* Windows */,
+				EED534841EEC112000013607 /* AppDelegate.swift */,
 				E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */,
 				E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */,
+				D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */,
+				EECCBA751F070FA1007829E0 /* ProtonVPN.entitlements */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
 		};
-		EED534B71EEC14D000013607 /* Extensions */ = {
+		EED534EE1EEC18C500013607 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				E1616BDE21C91B7900F42D79 /* Core Extensions */,
+				E1E7462622C5201B00BFDC90 /* ProtonVPN-Bridging-Header.h */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		F36ECDF62611D9B10089B898 /* Scenes */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECDF72611D9BD0089B898 /* About */,
+				F36ECDFE2611D9EC0089B898 /* Common */,
+				F36ECE032611DBAC0089B898 /* Login */,
+				F36ECE062611DC2E0089B898 /* Map */,
+				F36ECE182611DE4B0089B898 /* Menu */,
+				F36ECE112611DD150089B898 /* Profiles */,
+				F36ECE292611DFD70089B898 /* ReportBug */,
+				F36ECE0A2611DC6F0089B898 /* Settings */,
+				F36ECE1B2611DE940089B898 /* Sidebar */,
+				F36ECE142611DD900089B898 /* SystemExtension */,
+				F36ECE2C2611E0090089B898 /* Upsell & Onboarding */,
+			);
+			path = Scenes;
+			sourceTree = "<group>";
+		};
+		F36ECDF72611D9BD0089B898 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECDF82611D9C50089B898 /* ViewControllers */,
+				F36ECE012611DAD20089B898 /* Views */,
+				F36ECE362611E12F0089B898 /* Windows */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		F36ECDF82611D9C50089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE98CFDD1F150FEE000D6688 /* AboutViewController.swift */,
+				D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECDFE2611D9EC0089B898 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE002611D9FD0089B898 /* Constants */,
+				F36ECE352611E1130089B898 /* Models */,
+				F36ECDFF2611D9F30089B898 /* Services */,
+				F36ECE022611DAFA0089B898 /* Supporting Files */,
+				F36ECE532611E3590089B898 /* Utilities */,
+				F36ECE422611E2020089B898 /* ViewControllers */,
+				F36ECE482611E2440089B898 /* ViewModels */,
+				F36ECE492611E2550089B898 /* Views */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		F36ECDFF2611D9F30089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EE27DB571F4759A600D2FF2B /* AppSessionManager.swift */,
+				EE5CF7711F4DE7E80002BBF3 /* FirstLaunchRoutine.swift */,
+				E1B31814224D23A6004D8171 /* InAppLinkManager.swift */,
+				D516EB9C2315775E0095B735 /* MacAlertService.swift */,
+				EEFE81DA1F3F6D150052A7A6 /* NavigationService.swift */,
+				EE5B175C1F3A0BDA00879BE0 /* NotificationManager.swift */,
+				427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */,
+				D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */,
+				D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */,
+				E142F24C20A9B45800029163 /* UpdateManager.swift */,
+				EE4E7DF41F6276C9000F7D5E /* WindowService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F36ECE002611D9FD0089B898 /* Constants */ = {
+			isa = PBXGroup;
+			children = (
+				EE98CFCE1F14E096000D6688 /* AppConstants.swift */,
+			);
+			path = Constants;
+			sourceTree = "<group>";
+		};
+		F36ECE012611DAD20089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EE98CFE01F15100F000D6688 /* About.xib */,
+				D5AC137F23796B8800244066 /* Acknowledgements.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE022611DAFA0089B898 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				E17DE10821FB630C008CCC13 /* AppProtocol.swift */,
+				D5D6A949230D296400A432D1 /* DependencyContainer.swift */,
+				EE4E7DF81F629195000F7D5E /* WindowController.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F36ECE032611DBAC0089B898 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE042611DBB30089B898 /* ViewControllers */,
+				F36ECE052611DBDF0089B898 /* ViewModels */,
+				F36ECE372611E1420089B898 /* Windows */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		F36ECE042611DBB30089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE4943ED1F29C20200CF980F /* LoginViewController.swift */,
+				EE4943EB1F29BE3600CF980F /* Login.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE052611DBDF0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EE72754F1F29E7D4002748C6 /* LoginViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE062611DC2E0089B898 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE102611DCE10089B898 /* Utilities */,
+				F36ECE082611DC3F0089B898 /* ViewControllers */,
+				F36ECE092611DC590089B898 /* ViewModels */,
+				F36ECE072611DC330089B898 /* Views */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		F36ECE072611DC330089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE0F2611DCCB0089B898 /* AnnotationViews */,
+				F36ECE0E2611DCC40089B898 /* AnnotationElements */,
+				EEFE81CF1F3F36740052A7A6 /* MapHeaderBackground.swift */,
+				E1C203292027191100F4D375 /* ZoomView.swift */,
+				EE2FE5961F5EF41E00ABA7DE /* MapView.swift */,
+				EEFE81CB1F3F361A0052A7A6 /* MapHeader.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE082611DC3F0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EEFE81CA1F3F361A0052A7A6 /* MapHeaderViewController.swift */,
+				EEFE81D11F3F3AE30052A7A6 /* MapSectionViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE092611DC590089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EEE3B5F21F53F44100E86CFA /* CountryAnnotationViewModel.swift */,
+				E18AF44A20223DD10067799A /* ConnectionViewModel.swift */,
+				EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */,
+				EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE0A2611DC6F0089B898 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE0B2611DC740089B898 /* ViewControllers */,
+				F36ECE0C2611DC8A0089B898 /* ViewModels */,
+				F36ECE342611E0880089B898 /* Views */,
+				F36ECE392611E16F0089B898 /* Windows */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F36ECE0B2611DC740089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE27DB461F47095300D2FF2B /* AccountViewController.swift */,
+				E1420A70209B56A600697461 /* ConnectionSettingsViewController.swift */,
+				EE98CFD41F14F7C1000D6688 /* GeneralSettingsViewController.swift */,
+				EE27DB3A1F4706E400D2FF2B /* SettingsContainerViewController.swift */,
+				EE27DB4C1F47187600D2FF2B /* SettingsTabBarViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE0C2611DC8A0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EE27DB4A1F470EF700D2FF2B /* AccountViewModel.swift */,
+				EE9BFBC91F30DD5200EDA295 /* GeneralSettingsViewModel.swift */,
+				E1420A76209C78CE00697461 /* ConnectionSettingsViewModel.swift */,
+				EE4E7E021F62B197000F7D5E /* SettingsContainerViewModel.swift */,
+				E1B31816224D2D77004D8171 /* SettingsTabBarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE0E2611DCC40089B898 /* AnnotationElements */ = {
+			isa = PBXGroup;
+			children = (
+				EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */,
+			);
+			path = AnnotationElements;
+			sourceTree = "<group>";
+		};
+		F36ECE0F2611DCCB0089B898 /* AnnotationViews */ = {
+			isa = PBXGroup;
+			children = (
+				EEE3B5F41F53F8EC00E86CFA /* CountryAnnotationView.swift */,
+				EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */,
+				EE9589DD1F5938B2005E7495 /* SCExitCountryAnnotationView.swift */,
+			);
+			path = AnnotationViews;
+			sourceTree = "<group>";
+		};
+		F36ECE102611DCE10089B898 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F36ECE112611DD150089B898 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE502611E3090089B898 /* Services */,
+				F36ECE122611DD1B0089B898 /* ViewControllers */,
+				F36ECE132611DD280089B898 /* ViewModels */,
+				F36ECE172611DDC00089B898 /* Views */,
+				F36ECE382611E1630089B898 /* Windows */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		F36ECE122611DD1B0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE52EA261F1E9693009DFF1D /* ColorPickerViewController.swift */,
+				EEBB82ED1F1DF6230041432A /* CreateNewProfileViewController.swift */,
+				EEBB82EB1F1DF6120041432A /* OverviewViewController.swift */,
+				EEBB82DD1F1DEB800041432A /* ProfilesContainerViewController.swift */,
+				EE3B37FE1F436E14008DF9E7 /* ProfilesTabBarViewController.swift */,
+				EE343B7A1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE132611DD280089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				EEA5563F1F1F777A0061F43F /* ColorPickerViewModel.swift */,
+				EEB493D21F2145CE00A979DC /* CreateNewProfileViewModel.swift */,
+				EEA1C8DC1F27B13B00B2036E /* CreateNewProfileViewModel+Descriptors.swift */,
+				EE8EF1F11F1FC71F0057CD94 /* OverviewItemViewModel.swift */,
+				EE78749E1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift */,
+				EE8EF1EF1F1FC4D00057CD94 /* OverviewViewModel.swift */,
+				EE70416F1F239DB4008BC5AD /* PrefillInformation.swift */,
+				EE4E7E041F62B27A000F7D5E /* ProfilesContainerViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE142611DD900089B898 /* SystemExtension */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE4F2611E2FA0089B898 /* Services */,
+				F36ECE152611DD9E0089B898 /* ViewContollers */,
+				F36ECE162611DDAB0089B898 /* ViewModels */,
+			);
+			path = SystemExtension;
+			sourceTree = "<group>";
+		};
+		F36ECE152611DD9E0089B898 /* ViewContollers */ = {
+			isa = PBXGroup;
+			children = (
+				0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */,
+				0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */,
+			);
+			path = ViewContollers;
+			sourceTree = "<group>";
+		};
+		F36ECE162611DDAB0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE172611DDC00089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EEA556361F1F4E100061F43F /* ColorPicker.xib */,
+				EEA556311F1F48780061F43F /* ColorPickerCircle.swift */,
+				EEA5562E1F1F48020061F43F /* ColorPickerItem.xib */,
+				EEA556331F1F48F20061F43F /* ColorPickerItemView.swift */,
+				EEBB82E91F1DF5B40041432A /* CreateNewProfile.xib */,
+				EEA556391F1F59690061F43F /* DisabledScrollView.swift */,
+				EEBB82E71F1DF5A60041432A /* Overview.xib */,
+				EEBB82F21F1E0BCF0041432A /* OverviewItem.xib */,
+				EEBB82F51F1E0F8C0041432A /* OverviewItemView.swift */,
+				EEBB82DA1F1DE8890041432A /* ProfilesContainer.xib */,
+				EE3B37FF1F436E14008DF9E7 /* ProfilesTabBar.xib */,
+				EEBB82E31F1DEF1B0041432A /* ProfilesTabBarView.swift */,
+				EE343B781F33AF080052C6C4 /* SecureCoreWarning.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE182611DE4B0089B898 /* Menu */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE192611DE530089B898 /* ViewControllers */,
+				F36ECE1A2611DE660089B898 /* ViewModels */,
+				F36ECE332611E0750089B898 /* Views */,
+			);
+			path = Menu;
+			sourceTree = "<group>";
+		};
+		F36ECE192611DE530089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				EE9BFBCB1F30F9CA00EDA295 /* HelpMenuController.swift */,
+				EE5CF76D1F4DDB750002BBF3 /* ProfilesMenuController.swift */,
+				EE3435681F2F620400DE0806 /* ProtonVpnMenuController.swift */,
+				E156C19920BDA5920054E935 /* StatusMenuViewController.swift */,
+				E187021720E23815000521AC /* StatusMenuProfilesListController.swift */,
+				E156C19E20BE901A0054E935 /* StatusMenuWindowController.swift */,
+				D57597C023B10C2E002D6631 /* WindowMenuController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE1A2611DE660089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E148457F20CAB64900DFDAA4 /* HelpMenuViewModel.swift */,
+				EE5CF76F1F4DDCDF0002BBF3 /* ProfilesMenuViewModel.swift */,
+				EEFE81DC1F3F785A0052A7A6 /* ProtonVpnMenuViewModel.swift */,
+				E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */,
+				E187021F20E268FE000521AC /* StatusMenuProfileItemViewModel.swift */,
+				E187022120E27801000521AC /* StatusMenuProfilesListViewModel.swift */,
+				EE46A08D1F2E1BD5008B435C /* StatusMenuViewModel.swift */,
+				E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE1B2611DE940089B898 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE522611E3390089B898 /* Models */,
+				F36ECE212611DEED0089B898 /* Presenters */,
+				F36ECE512611E3220089B898 /* Services */,
+				F36ECE1C2611DE9B0089B898 /* ViewControllers */,
+				F36ECE1D2611DEAC0089B898 /* ViewModels */,
+				F36ECE202611DEE00089B898 /* Views */,
+				F36ECE3B2611E18D0089B898 /* Windows */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		F36ECE1C2611DE9B0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */,
+				D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */,
+				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
+				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
+				EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */,
+				EE11F92B1F39B7D8006C389C /* HeaderViewController.swift */,
+				EE24A3AA1F1BDDEF00B70949 /* ProfilesSectionViewController.swift */,
+				E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */,
+				EE876E0B1F137D0C00C9B9C2 /* SidebarViewController.swift */,
+				EE35FC321F1CB82B00CFE26F /* SidebarTabBarViewController.swift */,
+				424C14CF25596E0F00E1D988 /* QuickSettingDetailViewController.swift */,
+				424C14D025596E0F00E1D988 /* QuickSettingDetailViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE1D2611DEAC0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE1F2611DECF0089B898 /* ProfilesSection */,
+				F36ECE1E2611DEC30089B898 /* CountriesSection */,
+				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
+				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
+				F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */,
+				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE1E2611DEC30089B898 /* CountriesSection */ = {
+			isa = PBXGroup;
+			children = (
+				EEA1C8DF1F27BD7200B2036E /* CountriesSectionViewModel.swift */,
+				EECF306A1F179A54006F819F /* CountryItemViewModel.swift */,
+				E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */,
+				EECF30701F17A188006F819F /* ServerItemViewModel.swift */,
+			);
+			path = CountriesSection;
+			sourceTree = "<group>";
+		};
+		F36ECE1F2611DECF0089B898 /* ProfilesSection */ = {
+			isa = PBXGroup;
+			children = (
+				EE068DC31F23E8A90006C2D0 /* ProfileItemViewModel.swift */,
+				EE068DC11F23E7E30006C2D0 /* ProfilesSectionViewModel.swift */,
+				D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */,
+			);
+			path = ProfilesSection;
+			sourceTree = "<group>";
+		};
+		F36ECE202611DEE00089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE252611DF260089B898 /* Announcements */,
+				F36ECE242611DF190089B898 /* CountriesSection */,
+				F36ECE262611DF330089B898 /* ProfilesSection */,
+				F36ECE232611DF080089B898 /* QuickSettings */,
+				EE7874A61F3B8F6F001E261E /* FlagView.swift */,
+				EE35FC421F1CD2DA00CFE26F /* SidebarTabBarView.swift */,
+				E1C1399B2114399700B88658 /* SwitchButton.swift */,
+				E1B80FE2203E003D00F1D76C /* ConnectingOverlay.xib */,
+				EE11F9241F39B3E6006C389C /* Header.xib */,
+				E1FFCF80202DAF17001B8108 /* ServerInfo.xib */,
+				EE35FC401F1CC6FC00CFE26F /* SidebarTabBar.xib */,
+				E195C0D8204301900002021B /* ButtonMask.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE212611DEED0089B898 /* Presenters */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE222611DEF60089B898 /* QuickSettings */,
+			);
+			path = Presenters;
+			sourceTree = "<group>";
+		};
+		F36ECE222611DEF60089B898 /* QuickSettings */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F29A255306EE00793A49 /* QuickSettingDropdownPresenter.swift */,
+				42C1F2A12553083300793A49 /* NetshieldDropdownPresenter.swift */,
+				42C1F2A82553084900793A49 /* SecureCoreDropdownPresenter.swift */,
+				42C1F2AF2553086000793A49 /* KillSwitchDropdownPresenter.swift */,
+				42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */,
+			);
+			path = QuickSettings;
+			sourceTree = "<group>";
+		};
+		F36ECE232611DF080089B898 /* QuickSettings */ = {
+			isa = PBXGroup;
+			children = (
+				42C1F2842552FEA800793A49 /* QuickSettingsDropdownOption.xib */,
+				42C1F28B2553017D00793A49 /* QuickSettingsDropdownOption.swift */,
+			);
+			path = QuickSettings;
+			sourceTree = "<group>";
+		};
+		F36ECE242611DF190089B898 /* CountriesSection */ = {
+			isa = PBXGroup;
+			children = (
+				EEF7814A1F1A701900E77B59 /* CountriesSection.xib */,
+				EECEF3D81F1699F500A16606 /* CountryItem.xib */,
+				EECEF3DD1F169B4800A16606 /* CountryItemView.swift */,
+				EE6E61C91F4C16EF00638F9B /* SecureCoreServerItem.xib */,
+				EE6E61CB1F4C179400638F9B /* SecureCoreServerItemView.swift */,
+				E1FFCF75202D942E001B8108 /* ServerInfoView.swift */,
+				EECEF3DA1F169A0500A16606 /* ServerItem.xib */,
+				EECEF3DF1F169EC300A16606 /* ServerItemView.swift */,
+			);
+			path = CountriesSection;
+			sourceTree = "<group>";
+		};
+		F36ECE252611DF260089B898 /* Announcements */ = {
+			isa = PBXGroup;
+			children = (
+				D5966FCF253855B30061A75F /* AnnouncementItemView.swift */,
+				D5966FD725385B890061A75F /* AnnouncementItemView.xib */,
+				D5966FE3253885B00061A75F /* TriangleView.swift */,
+			);
+			path = Announcements;
+			sourceTree = "<group>";
+		};
+		F36ECE262611DF330089B898 /* ProfilesSection */ = {
+			isa = PBXGroup;
+			children = (
+				EE24A3971F1BC7D000B70949 /* FooterItem.xib */,
+				EE24A39C1F1BCA1A00B70949 /* FooterItemView.swift */,
+				EE24A3931F1BC7A700B70949 /* ProfileItem.xib */,
+				EE24A39A1F1BCA0D00B70949 /* ProfileItemView.swift */,
+				EE24A3A81F1BDD3300B70949 /* ProfilesSection.xib */,
+			);
+			path = ProfilesSection;
+			sourceTree = "<group>";
+		};
+		F36ECE292611DFD70089B898 /* ReportBug */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE2A2611DFDE0089B898 /* ViewControllers */,
+				F36ECE2B2611DFEE0089B898 /* Views */,
+				F36ECE3A2611E17B0089B898 /* Windows */,
+			);
+			path = ReportBug;
+			sourceTree = "<group>";
+		};
+		F36ECE2A2611DFDE0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */,
+				D5A8813B22CF28F5009B63D1 /* ReportBugViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE2B2611DFEE0089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5906F1722D379C9001BC074 /* AttachedFileView.xib */,
+				D5906F1422D3795C001BC074 /* AttachedFileView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE2C2611E0090089B898 /* Upsell & Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE2E2611E01D0089B898 /* ViewControllers */,
+				F36ECE2D2611E00E0089B898 /* Views */,
+				F36ECE3C2611E1CA0089B898 /* Windows */,
+			);
+			path = "Upsell & Onboarding";
+			sourceTree = "<group>";
+		};
+		F36ECE2D2611E00E0089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E180D1452124689600F4D1C7 /* MapGradientView.swift */,
+				E180D15A2126A89900F4D1C7 /* Tour.xib */,
+				E180D15D2126AD5400F4D1C7 /* TourDescriptionView.swift */,
+				E180D1642126C9D300F4D1C7 /* TourNumber.xib */,
+				E180D1672126F6EE00F4D1C7 /* TourNumberRingView.swift */,
+				E180D15F2126B55F00F4D1C7 /* TourNumberView.swift */,
+				E180D15421258EF500F4D1C7 /* TrialAboutToExpire.xib */,
+				E180D14C2125457200F4D1C7 /* TrialExpired.xib */,
+				E170A93621245DF70036326B /* TrialWelcome.xib */,
+				E180D1502125621300F4D1C7 /* Upsell.xib */,
+				E170A92E2124313A0036326B /* UpsellGradientView.swift */,
+				E170A92821240F940036326B /* Welcome.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE2E2611E01D0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E180D15321258EF500F4D1C7 /* TrialAboutToExpireViewController.swift */,
+				E180D14B2125457200F4D1C7 /* TrialExpiredViewController.swift */,
+				E170A93521245DF70036326B /* TrialWelcomeViewController.swift */,
+				E180D1632126C9D300F4D1C7 /* TourNumberViewController.swift */,
+				E180D1592126A89900F4D1C7 /* TourViewController.swift */,
+				E180D14F2125621300F4D1C7 /* UpsellViewController.swift */,
+				E170A92721240F940036326B /* WelcomeViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE312611E0530089B898 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECE322611E0580089B898 /* Core */,
 				EEDC30B51EFB18DC00279A3A /* Bundle+Extension.swift */,
 				EEAF7FF01EF30169006771DA /* Dictionary+Extension.swift */,
 				EE4FCF651F22102200B04EF8 /* NSAttributedString+Extension.swift */,
@@ -1894,85 +1687,292 @@
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
 			);
-			name = Extensions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
-		EED534BC1EEC151600013607 /* Utilities */ = {
+		F36ECE322611E0580089B898 /* Core */ = {
+			isa = PBXGroup;
+			children = (
+				E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */,
+				E1616BDF21C91B9700F42D79 /* PropertiesManager+Extension.swift */,
+				D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */,
+			);
+			path = Core;
+			sourceTree = "<group>";
+		};
+		F36ECE332611E0750089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E156C19A20BDA5920054E935 /* StatusMenu.xib */,
+				E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */,
+				E187021820E23815000521AC /* StatusMenuProfilesList.xib */,
+				E187021D20E26201000521AC /* StatusMenuProfileViewItem.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE342611E0880089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EE27DB471F47095300D2FF2B /* Account.xib */,
+				E1420A72209B57B100697461 /* ConnectionSettings.xib */,
+				EE98CFD11F14E247000D6688 /* GeneralSettings.xib */,
+				EE27DB3B1F4706E400D2FF2B /* SettingsContainer.xib */,
+				EE27DB4D1F47187600D2FF2B /* SettingsTabBar.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE352611E1130089B898 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E1EA77FA2294366A007B9C2F /* Alerts.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F36ECE362611E12F0089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				D5AC137B23795B8100244066 /* AcknowledgementsWindowController.swift */,
+				EE69C8D21F5D89FF00C3065C /* AboutWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE372611E1420089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				EE69C8D81F5D9EB300C3065C /* LoginWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE382611E1630089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				EE4E7DF61F62909A000F7D5E /* ProfilesWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE392611E16F0089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				EE69C8CE1F5D7FBD00C3065C /* SettingsWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE3A2611E17B0089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE3B2611E18D0089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE3C2611E1CA0089B898 /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				E180D1612126C4C500F4D1C7 /* TourController.swift */,
+				E180D1572125CB8300F4D1C7 /* TourWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F36ECE422611E2020089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */,
+				42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */,
+				E1454CEC206FC6A900E6D396 /* HelpPopover.xib */,
+				E1454CEB206FC6A900E6D396 /* HelpPopoverViewController.swift */,
+				42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */,
+				42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */,
+				E144752F2093A10700F4C641 /* NeagentHelpPopUp.xib */,
+				E14475312093A52A00F4C641 /* NeagentHelpPopUpViewController.swift */,
+				EE74FCB11F5DD9E500E266BC /* PopUp.xib */,
+				EE74FCAD1F5DD6E200E266BC /* PopUpViewController.swift */,
+				EE74FCA91F5DD23400E266BC /* SCUpgradePopup.xib */,
+				EE74FCAB1F5DD4E900E266BC /* SCUpgradePopupViewController.swift */,
+				F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */,
+				F3021D5A25E932FA00EF73A1 /* TroubleshootingPopup.xib */,
+				F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */,
+				EE7874A11F3B63C7001E261E /* WarningPopup.xib */,
+				EE7874A41F3B6569001E261E /* WarningPopupViewController.swift */,
+				D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECE482611E2440089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E1454CEF206FD37300E6D396 /* HelpPopoverViewModel.swift */,
+				EE74FCAF1F5DD71400E266BC /* PopUpViewModel.swift */,
+				EE74FCB31F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift */,
+				EEEB93251F4893CC003814BB /* WarningPopupViewModel.swift */,
+				42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECE492611E2550089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				EE876E0D1F1381C100C9B9C2 /* Main.storyboard */,
+				F36ECE4A2611E26A0089B898 /* Button */,
+				F36ECE4B2611E2830089B898 /* Custom */,
+				F36ECE4E2611E2A20089B898 /* TextView */,
+				F36ECE4D2611E29C0089B898 /* TextField */,
+				F36ECE4C2611E2960089B898 /* ScrollView */,
+				EE2FE5921F5ECD6B00ABA7DE /* ConnectionOverlay.swift */,
+				E1AEE614202E44D1003DDD84 /* CustomOverlayView.swift */,
+				EE2FE5941F5ED5BF00ABA7DE /* DisablingView.swift */,
+				E15DE7D12029EA6F00BFA78D /* PassThroughView.swift */,
+				EE68DD501F49F4BE00F218B8 /* TabBarView.swift */,
+				F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */,
+				EE876E111F13859600C9B9C2 /* OverlayView.swift */,
+				EE98CFE41F15199C000D6688 /* WhiteHoverLinkButton.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECE4A2611E26A0089B898 /* Button */ = {
+			isa = PBXGroup;
+			children = (
+				E1B3B63F2024FEF00093A8FF /* ButtonImageView.swift */,
+				EE2C46311F5570A700BA34B8 /* CellSurfaceButton.swift */,
+				E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */,
+				E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */,
+				EE24A39E1F1BCF6000B70949 /* ConnectButton.swift */,
+				E1B9A7CF203EBD30009677BC /* ConnectingOverlayButton.swift */,
+				EE6E61D71F4C4F5300638F9B /* ExpandCellButton.swift */,
+				E13C63F92038A08400D9E40C /* ExpandMapButton.swift */,
+				EE8EF1EA1F1FB8380057CD94 /* GreenActionButton.swift */,
+				E12657A120ED01E6004A21C4 /* GreenHighlightButton.swift */,
+				EE8EF1EC1F1FB8800057CD94 /* HoverDetectionButton.swift */,
+				E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */,
+				EE491A531F5B25FB0008C1DC /* HoverDetectionPopUpButton.swift */,
+				EE5B174E1F39E4E100879BE0 /* LargeConnectButton.swift */,
+				EECEF3C91F164AEC00A16606 /* LoginButton.swift */,
+				EE8EF1E61F1FB37C0057CD94 /* PrimaryActionButton.swift */,
+				428B63C325558B5F00C90D40 /* QuickSettingButton.swift */,
+				E17C1CDE20E61D7F00DCC687 /* QuitApplicationButton.swift */,
+				E15DE7D7202B4FF700BFA78D /* ResizingTextButton.swift */,
+				E17C1CE020E6217E00DCC687 /* ShowApplicationButton.swift */,
+				E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */,
+				E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */,
+				E17C1CE220EA18CD00DCC687 /* StatusMenuItemBackground.swift */,
+				E187021B20E2616C000521AC /* StatusMenuProfileViewItem.swift */,
+				E187022520E3A567000521AC /* StatusMenuSurfaceButton.swift */,
+				EE35FC441F1CD70700CFE26F /* TabBarButton.swift */,
+				E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */,
+				E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */,
+				E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */,
+				EE8EF1E81F1FB3BC0057CD94 /* WhiteCancelationButton.swift */,
+				E15A8690202738A1009B9C83 /* ZoomButton.swift */,
+			);
+			path = Button;
+			sourceTree = "<group>";
+		};
+		F36ECE4B2611E2830089B898 /* Custom */ = {
+			isa = PBXGroup;
+			children = (
+				E192239E20EBABA0007ED5B0 /* ClickDetectingVisualEffectView.swift */,
+				E13464AC20342D2A00C0DB7D /* FeatureIcon.swift */,
+				D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */,
+				E1454CF1206FE2C300E6D396 /* HelpPopoverBackgroundView.swift */,
+				E1346F7C203B16B800F511FD /* LoadingAnimationView.swift */,
+				EE85D4F51F1A287F0060FDBF /* LoadIcon.swift */,
+				E13464AA2033780300C0DB7D /* LoadCircle.swift */,
+				EE24A3A01F1BD75900B70949 /* ProfileCircle.swift */,
+				E13464D22035774200C0DB7D /* ShadowView.swift */,
+			);
+			path = Custom;
+			sourceTree = "<group>";
+		};
+		F36ECE4C2611E2960089B898 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				EEB493CE1F20EA3400A979DC /* VerticalScrollView.swift */,
+				E13BDF482062912300CF5383 /* TransparentBackedScroller.swift */,
+				42082670256BC3B900A621EC /* BlockeableScrollView.swift */,
+			);
+			path = ScrollView;
+			sourceTree = "<group>";
+		};
+		F36ECE4D2611E29C0089B898 /* TextField */ = {
+			isa = PBXGroup;
+			children = (
+				EE9589E31F596DFC005E7495 /* PVPNTextField.swift */,
+				E1E0E3122059775200599F42 /* PVPNHyperlinkTextField.swift */,
+				EE4FCF631F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift */,
+				EEF781421F1A4ED000E77B59 /* TextFieldFocusDelegate.swift */,
+				EE4FCF611F21FA2800B04EF8 /* TextFieldWithFocus.swift */,
+				EE01DD121F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift */,
+				42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */,
+			);
+			path = TextField;
+			sourceTree = "<group>";
+		};
+		F36ECE4E2611E2A20089B898 /* TextView */ = {
+			isa = PBXGroup;
+			children = (
+				D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */,
+			);
+			path = TextView;
+			sourceTree = "<group>";
+		};
+		F36ECE4F2611E2FA0089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				42F256EC257E36270033633B /* SystemExtensionManager.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F36ECE502611E3090089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F36ECE512611E3220089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				EE3FDC2A1F44853300E5C1CE /* ServerUtility.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F36ECE522611E3390089B898 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F36ECE532611E3590089B898 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
 				E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */,
-				E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */,
-				E13464DB2035BA5C00C0DB7D /* NetworkStatistics.swift */,
 				D5DE76AA257635F70077C610 /* SwiftChecker.swift */,
 				D26CBA3A24696A89005E51B8 /* WiFiSecurityMonitor.swift */,
 			);
-			name = Utilities;
-			sourceTree = "<group>";
-		};
-		EED534EE1EEC18C500013607 /* SupportingFiles */ = {
-			isa = PBXGroup;
-			children = (
-				E1E7462622C5201B00BFDC90 /* ProtonVPN-Bridging-Header.h */,
-			);
-			name = SupportingFiles;
-			sourceTree = "<group>";
-		};
-		EEE36ED71F1379FC00E8F859 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				0663E3B6259DCA570059E88D /* System Extension Tour */,
-				EE98CFDC1F150F32000D6688 /* About */,
-				EE7874A31F3B654D001E261E /* Elements */,
-				EE98CFEB1F1523BD000D6688 /* Login */,
-				EEFE81C91F3F35E80052A7A6 /* Map */,
-				EE3435651F2F60C500DE0806 /* Menu */,
-				EEBB82DC1F1DEB680041432A /* Profiles */,
-				D5A8813922CF28C5009B63D1 /* ReportBug */,
-				EE98CFD71F1501AF000D6688 /* Settings */,
-				EE876E0A1F137CF900C9B9C2 /* Sidebar */,
-				E170A92B21240F9D0036326B /* Upsell & Onboarding */,
-			);
-			name = ViewControllers;
-			sourceTree = "<group>";
-		};
-		EEFE81C01F3F35140052A7A6 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				EEFE81CB1F3F361A0052A7A6 /* MapHeader.xib */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
-		EEFE81C91F3F35E80052A7A6 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				EEFE81CA1F3F361A0052A7A6 /* MapHeaderViewController.swift */,
-				EEFE81D11F3F3AE30052A7A6 /* MapSectionViewController.swift */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
-		EEFE81CE1F3F36640052A7A6 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				EE69C8CB1F5D5D0700C3065C /* AnnotationElements */,
-				EE69C8CC1F5D5D3F00C3065C /* AnnotationViews */,
-				EEFE81CF1F3F36740052A7A6 /* MapHeaderBackground.swift */,
-				E1C203292027191100F4D375 /* ZoomView.swift */,
-				EE2FE5961F5EF41E00ABA7DE /* MapView.swift */,
-			);
-			name = Map;
-			sourceTree = "<group>";
-		};
-		EEFE81D51F3F41A00052A7A6 /* Map */ = {
-			isa = PBXGroup;
-			children = (
-				EEE3B5F21F53F44100E86CFA /* CountryAnnotationViewModel.swift */,
-				E18AF44A20223DD10067799A /* ConnectionViewModel.swift */,
-				EEFE81D61F3F41B10052A7A6 /* MapHeaderViewModel.swift */,
-				EE13E4361F543F4000E50B06 /* MapSectionViewModel.swift */,
-			);
-			name = Map;
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
