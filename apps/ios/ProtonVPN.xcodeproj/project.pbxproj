@@ -555,7 +555,7 @@
 /* Begin PBXFileReference section */
 		01D0F264DFBFEEF5277A994B /* Pods_Quick_Connect_Widget_Debug.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quick_Connect_Widget_Debug.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		051EAEBDE97B0CEC48A61EA1 /* Pods-OpenVPN Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.debug.xcconfig"; path = "Pods/Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.debug.xcconfig"; sourceTree = "<group>"; };
-		060D071525D34599002B98B8 /* AppSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSessionManager.swift; path = ProtonVPN/Core/AppSessionManager.swift; sourceTree = SOURCE_ROOT; };
+		060D071525D34599002B98B8 /* AppSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSessionManager.swift; path = ProtonVPN/Scenes/Common/Services/AppSessionManager.swift; sourceTree = SOURCE_ROOT; };
 		09EA0CF94273BCBF8B1C8035 /* Pods-ProtonVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; name = "Pods-ProtonVPN-metadata.plist"; path = "Pods/Pods-ProtonVPN-metadata.plist"; sourceTree = "<group>"; };
 		125A0B79AE0587E6AB4911A7 /* Pods-Siri Shortcut Handler Debug.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.release.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.release.xcconfig"; sourceTree = "<group>"; };
 		27DC9BC0C1E48172BB2D32C6 /* Pods-Quick Connect Widget.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.test.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.test.xcconfig"; sourceTree = "<group>"; };
@@ -1040,49 +1040,43 @@
 		42C37AF92434E52500366B79 /* Presenters */ = {
 			isa = PBXGroup;
 			children = (
-				42C37AFA2434E52E00366B79 /* Subscriptions */,
+				42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */,
 			);
 			path = Presenters;
 			sourceTree = "<group>";
 		};
-		42C37AFA2434E52E00366B79 /* Subscriptions */ = {
-			isa = PBXGroup;
-			children = (
-				42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */,
-			);
-			path = Subscriptions;
-			sourceTree = "<group>";
-		};
-		791C54EF214A759900C6F337 /* Common */ = {
+		791C54EF214A759900C6F337 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E178078021AB4C6F00C2B506 /* GenericTableViewDataSource.swift */,
+				791DE611208E098300A29EA5 /* ProtonQCViewController.swift */,
 				791DE616208E0E5500A29EA5 /* TabBarController.swift */,
 				E185A86423707D1A0039E625 /* TrackedAlertController.swift */,
 			);
-			path = Common;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		791C54F0214A75B600C6F337 /* Common */ = {
+		791C54F0214A75B600C6F337 /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				D53E83D1232A110E0031CD49 /* Form */,
-				79DEE9082111A5E100C354EF /* TabBar.swift */,
+				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
+				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
 				D55131762319427900784ED0 /* RoundCheckboxView.swift */,
 				D55131722319425900784ED0 /* RoundCheckboxView.xib */,
-				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
+				79DEE9082111A5E100C354EF /* TabBar.swift */,
 			);
-			path = Common;
+			path = Views;
 			sourceTree = "<group>";
 		};
-		791C54F3214A775900C6F337 /* Common */ = {
+		791C54F3214A775900C6F337 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				7980ECD520F70C0800D5432B /* TabBarViewModel.swift */,
 				E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */,
 				422EAB1A243F20D800C7A16C /* GenericViewModel.swift */,
 			);
-			path = Common;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		791DE5D0208DDA3000A29EA5 = {
@@ -1126,31 +1120,13 @@
 			children = (
 				79FCFB7020D4A34D00C829D4 /* ProtonVPN.entitlements */,
 				791DE5EA208DDA3200A29EA5 /* Info.plist */,
-				79F17EFB20A55753004D2696 /* Core */,
-				7995FCD620908E1E0030E1EB /* Constants */,
-				D563319F23228EC800CE2EE3 /* Coordinators */,
-				D5F56897232620B000795953 /* Dependency injection */,
 				7995FCE1209092F30030E1EB /* Extensions */,
-				7995FD112090AD050030E1EB /* Management */,
-				D5BF95112355A52700C7D1E7 /* Misc */,
-				E169FC392289ABD000FDC933 /* Models */,
-				E11DA6B82189AFCA00CDF310 /* Layouts */,
-				42C37AF92434E52500366B79 /* Presenters */,
 				79C5598120AAC51100E6D3F6 /* Resources */,
 				D580AB8F2452CA08003C34B9 /* Scenes */,
-				791DE618208E2D4300A29EA5 /* Storyboards */,
 				79F17EBB20A30AB2004D2696 /* SupportingFiles */,
-				791DE613208E0AE300A29EA5 /* ViewControllers */,
-				79F17EF820A556FB004D2696 /* ViewModels */,
-				79C5599320AEC6A500E6D3F6 /* XIBs + Views */,
 				791DE5DC208DDA3000A29EA5 /* AppDelegate.swift */,
-				79C5598520AB181000E6D3F6 /* NavigationService.swift */,
 				E154A0C822E0A9A000283CF9 /* ObfuscatedConstants.swift */,
 				E10DFB6C22E1D0040026CAE5 /* ObfuscatedConstants.example.swift */,
-				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
-				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
-				D5F5689A23263C7D00795953 /* IosAlertService.swift */,
-				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
 			);
 			path = ProtonVPN;
 			sourceTree = "<group>";
@@ -1171,33 +1147,15 @@
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
 		};
-		791DE60D208E088400A29EA5 /* Map */ = {
+		791DE60D208E088400A29EA5 /* ViewContollers */ = {
 			isa = PBXGroup;
 			children = (
 				791DE5E0208DDA3000A29EA5 /* MapViewController.swift */,
 			);
-			path = Map;
+			path = ViewContollers;
 			sourceTree = "<group>";
 		};
-		791DE60E208E08BE00A29EA5 /* QuickConnect */ = {
-			isa = PBXGroup;
-			children = (
-				791DE611208E098300A29EA5 /* ProtonQCViewController.swift */,
-			);
-			path = QuickConnect;
-			sourceTree = "<group>";
-		};
-		791DE60F208E08E000A29EA5 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */,
-				7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */,
-				79312B822119924400E79D09 /* SelectionViewController.swift */,
-			);
-			path = Profiles;
-			sourceTree = "<group>";
-		};
-		791DE610208E08E600A29EA5 /* Settings */ = {
+		791DE610208E08E600A29EA5 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */,
@@ -1211,71 +1169,10 @@
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
 			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		791DE613208E0AE300A29EA5 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				D5BCDD2625307681004BAEE8 /* Countries */,
-				791C54EF214A759900C6F337 /* Common */,
-				D5C1376D2334FBBB00D20514 /* Human Verification */,
-				79FD80E321108030003B16E2 /* Launch */,
-				79DD19EF20BD6B0C00505906 /* Login */,
-				791DE60D208E088400A29EA5 /* Map */,
-				791DE60E208E08BE00A29EA5 /* QuickConnect */,
-				791DE60F208E08E000A29EA5 /* Profiles */,
-				791DE610208E08E600A29EA5 /* Settings */,
-				D53E83CD2328C4080031CD49 /* Signup */,
-				E19F5B3F218AF05400109216 /* Subscriptions */,
-				E19D11AA22B9797100D41C23 /* Trial */,
-			);
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		791DE618208E2D4300A29EA5 /* Storyboards */ = {
-			isa = PBXGroup;
-			children = (
-				7995FAAA209080E70030E1EB /* Countries.storyboard */,
-				791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */,
-				79DD19ED20BD681A00505906 /* Login.storyboard */,
-				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
-				796BD1D421146B68003D6B8D /* Profiles.storyboard */,
-				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
-			);
-			path = Storyboards;
-			sourceTree = "<group>";
-		};
-		793ECF362148DCCA00C186A7 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				793ECF452149045400C186A7 /* AppVersionView.swift */,
-				793ECF432149041A00C186A7 /* AppVersionView.xib */,
-				793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */,
-				793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */,
-				E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */,
-				E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */,
-				E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */,
-				E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */,
-				E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */,
-				E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */,
-				E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */,
-				E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */,
-				793ECF372148DCF900C186A7 /* KeyValueTableViewCell.swift */,
-				793ECF382148DCF900C186A7 /* KeyValueTableViewCell.xib */,
-				E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */,
-				E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */,
-				D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */,
-				D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */,
-				E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */,
-				E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */,
-				793ECF3B2148E84500C186A7 /* TooltipTableViewCell.swift */,
-				793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		79848BAE20D200E500EF6F9F /* Map */ = {
+		79848BAE20D200E500EF6F9F /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				E1D21AB221831DA2000C389B /* AnnotationViewModel.swift */,
@@ -1284,7 +1181,7 @@
 				79848BB120D2012B00EF6F9F /* MapViewModel.swift */,
 				E1D21AAC21830E72000C389B /* SecureCoreEntryCountryModel.swift */,
 			);
-			path = Map;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		7995FCD620908E1E0030E1EB /* Constants */ = {
@@ -1339,49 +1236,6 @@
 			path = Frameworks;
 			sourceTree = "<group>";
 		};
-		7995FD112090AD050030E1EB /* Management */ = {
-			isa = PBXGroup;
-			children = (
-				79F17F0820A5584E004D2696 /* Server */,
-			);
-			path = Management;
-			sourceTree = "<group>";
-		};
-		79AFDA8F20DB1659002F8751 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				7950441621183E6E0022ED35 /* ColorPickerItem.swift */,
-				7950441C211850710022ED35 /* ColorPickerItem.xib */,
-				7950441A21183FBC0022ED35 /* ProfilesTableViewCell.swift */,
-				79312B762118823B00E79D09 /* SwitchTableViewCell.swift */,
-				79312B772118823B00E79D09 /* SwitchTableViewCell.xib */,
-				79312B7A2118852D00E79D09 /* DrillInTableViewCell.swift */,
-				79312B7B2118852D00E79D09 /* DrillInTableViewCell.xib */,
-				79312B7E2119905D00E79D09 /* SelectionTableViewCell.swift */,
-				79312B7F2119905D00E79D09 /* SelectionTableViewCell.xib */,
-				79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */,
-				7905995A212AB3A800C0E401 /* CreateProfileTableViewCell.xib */,
-				7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */,
-				7905995E212AE0A400C0E401 /* DefaultProfileTableViewCell.xib */,
-			);
-			name = Profiles;
-			path = "New Group";
-			sourceTree = "<group>";
-		};
-		79AFDA9020DB16BD002F8751 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */,
-				799BD7092165071700A84933 /* CreateProfileViewModel+Descriptors.swift */,
-				7904DA4820E6BA3D008A4FCB /* ColorPickerViewModel.swift */,
-				E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */,
-				79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */,
-				79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */,
-				7904DA4620E58292008A4FCB /* PrefillInformation.swift */,
-			);
-			path = Profiles;
-			sourceTree = "<group>";
-		};
 		79C5598120AAC51100E6D3F6 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -1401,44 +1255,14 @@
 			path = Properties;
 			sourceTree = "<group>";
 		};
-		79C5598A20AC309C00E6D3F6 /* Countries */ = {
+		79C5598A20AC309C00E6D3F6 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				79848BAB20D1B9DC00EF6F9F /* CountriesViewModel.swift */,
 				79F17EF920A5570C004D2696 /* CountryItemViewModel.swift */,
 				79C5599020AC30CE00E6D3F6 /* ServerItemViewModel.swift */,
 			);
-			path = Countries;
-			sourceTree = "<group>";
-		};
-		79C5599320AEC6A500E6D3F6 /* XIBs + Views */ = {
-			isa = PBXGroup;
-			children = (
-				D594A95F227C3A2F0041D423 /* Logo with map */,
-				791C54F0214A75B600C6F337 /* Common */,
-				79C5599420AEC6BB00E6D3F6 /* Countries */,
-				79DD19EC20BD680200505906 /* Login */,
-				E119AF712170B88100255F7E /* Map */,
-				79AFDA8F20DB1659002F8751 /* Profiles */,
-				793ECF362148DCCA00C186A7 /* Settings */,
-				D551316D2319400900784ED0 /* Subscriptions */,
-			);
-			path = "XIBs + Views";
-			sourceTree = "<group>";
-		};
-		79C5599420AEC6BB00E6D3F6 /* Countries */ = {
-			isa = PBXGroup;
-			children = (
-				79C5599F20AEC73A00E6D3F6 /* CountryViewCell.swift */,
-				79C559A020AEC73A00E6D3F6 /* CountryViewCell.xib */,
-				79C559A620B3B93100E6D3F6 /* ServerViewCell.swift */,
-				79C559A720B3B93100E6D3F6 /* ServerViewCell.xib */,
-				79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */,
-				79DEE90C2111E5EA00C354EF /* ServerTypeHeader.xib */,
-				796BD1D021144D49003D6B8D /* ServersHeaderView.swift */,
-				796BD1D221144D63003D6B8D /* ServersHeaderView.xib */,
-			);
-			path = Countries;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		79C559A520B2C17B00E6D3F6 /* Assets */ = {
@@ -1449,35 +1273,6 @@
 			path = Assets;
 			sourceTree = "<group>";
 		};
-		79DD19EC20BD680200505906 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				79F88AFA20EC6DE0001ADEB3 /* LoginBoxView.swift */,
-				79F88AF820EC68DD001ADEB3 /* LoginBoxView.xib */,
-				E1A15A9A215905A90068A5EF /* GradientSeparator.swift */,
-				E169FC3E2289B87F00FDC933 /* PhoneCountryCodeTableViewCell.swift */,
-				E169FC3F2289B87F00FDC933 /* PhoneCountryCodeTableViewCell.xib */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		79DD19EF20BD6B0C00505906 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				E101CB9A21936401001D7A76 /* DataDisclaimerViewController.swift */,
-				79DD19F020BD6B2200505906 /* LoginViewController.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
-		79DD19F220BD6F0200505906 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				79DD19F320BD6F0B00505906 /* LoginViewModel.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		79F17EBB20A30AB2004D2696 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
@@ -1486,64 +1281,12 @@
 			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
-		79F17EF820A556FB004D2696 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				791C54F3214A775900C6F337 /* Common */,
-				79C5598A20AC309C00E6D3F6 /* Countries */,
-				D5C1376E2334FBD000D20514 /* Human Verification */,
-				79DD19F220BD6F0200505906 /* Login */,
-				79848BAE20D200E500EF6F9F /* Map */,
-				E12DF61D2231497C006EC61F /* Onboarding */,
-				79AFDA9020DB16BD002F8751 /* Profiles */,
-				79F986F120D838C30064C1C7 /* Settings */,
-				D53E83CE2329043D0031CD49 /* Signup */,
-				D511084B246150090018872A /* Subscriptions */,
-				E1C8705A22BA0690009CF4CE /* Trial */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		79F17EFB20A55753004D2696 /* Core */ = {
-			isa = PBXGroup;
-			children = (
-				060D071525D34599002B98B8 /* AppSessionManager.swift */,
-			);
-			name = Core;
-			path = Extensions/Core;
-			sourceTree = "<group>";
-		};
-		79F17F0820A5584E004D2696 /* Server */ = {
-			isa = PBXGroup;
-			children = (
-				7904DA4420E57BA3008A4FCB /* ServerUtility.swift */,
-			);
-			path = Server;
-			sourceTree = "<group>";
-		};
-		79F986F120D838C30064C1C7 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
-				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
-				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
-				D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */,
-				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
-				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
-				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		79FD80E321108030003B16E2 /* Launch */ = {
+		79FD80E321108030003B16E2 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				79FD80E421108049003B16E2 /* LaunchViewController.swift */,
-				E16F562121F89CC2007BAB77 /* OnboardingContentViewController.swift */,
-				E1007A5121F631960019B901 /* OnboardingPageViewController.swift */,
-				E16F561F21F87201007BAB77 /* OnboardingViewController.swift */,
 			);
-			path = Launch;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
@@ -1601,13 +1344,13 @@
 			path = PlanInfo;
 			sourceTree = "<group>";
 		};
-		D511084B246150090018872A /* Subscriptions */ = {
+		D511084B246150090018872A /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				D511084C246150090018872A /* PlanSelectionViewModel.swift */,
 				D511084D246150090018872A /* SubscriptionInfoViewModel.swift */,
 			);
-			path = Subscriptions;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		D5136C1022858CDD0002C095 /* ViewModels */ = {
@@ -1690,23 +1433,6 @@
 			path = Countries;
 			sourceTree = "<group>";
 		};
-		D53E83CD2328C4080031CD49 /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				E1404BC4228EBD9600E41D6C /* SignupNavigationController.swift */,
-				D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */,
-			);
-			path = Signup;
-			sourceTree = "<group>";
-		};
-		D53E83CE2329043D0031CD49 /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */,
-			);
-			path = Signup;
-			sourceTree = "<group>";
-		};
 		D53E83D1232A110E0031CD49 /* Form */ = {
 			isa = PBXGroup;
 			children = (
@@ -1741,14 +1467,16 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D551316D2319400900784ED0 /* Subscriptions */ = {
+		D551316D2319400900784ED0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E11DA6B92189AFEF00CDF310 /* PlanSelection.xib */,
+				D5110855246153500018872A /* SubscriptionInfoController.xib */,
 				D511083F24614D480018872A /* PlanAdvancedFeaturesView */,
 				D511083C24614D480018872A /* PlanCardView */,
 				D511084224614D480018872A /* PlanInfo */,
 			);
-			path = Subscriptions;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		D55455402280280B006574F9 /* Siri Shortcut Handler */ = {
@@ -1770,23 +1498,12 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
-		D563319F23228EC800CE2EE3 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				D5C137692334A54D00D20514 /* Coordinator.swift */,
-				D5C1376B2334A57600D20514 /* HumanVerificationCoordinator.swift */,
-				D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */,
-				D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */,
-			);
-			path = Coordinators;
-			sourceTree = "<group>";
-		};
 		D580AB862452C70D003C34B9 /* Troubleshooting */ = {
 			isa = PBXGroup;
 			children = (
+				F36ECCC42611C7A60089B898 /* Coordinators */,
+				F36ECCC52611C7BE0089B898 /* ViewContollers */,
 				D5A8CD7A24570AC700F9B0C9 /* Views */,
-				D580AB8024518567003C34B9 /* TroubleshootViewController.swift */,
-				D580AB8124518567003C34B9 /* TroubleshootViewController.xib */,
 			);
 			path = Troubleshooting;
 			sourceTree = "<group>";
@@ -1794,8 +1511,19 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
 				D5BCDC7B25303825004BAEE8 /* Announcements */,
+				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
+				F36ECC842611C4D60089B898 /* Countries */,
+				F36ECCC62611C7F10089B898 /* Launch */,
+				F36ECC872611C5420089B898 /* Login */,
+				F36ECD3B2611C9A40089B898 /* Map */,
+				F36ECCD12611C8260089B898 /* Onboarding */,
+				F36ECCAA2611C6CD0089B898 /* Profiles */,
+				F36ECCAE2611C73B0089B898 /* Settings */,
+				F36ECCD52611C8730089B898 /* Subscriptions */,
+				F36ECD4B2611C9F20089B898 /* Trial */,
 				D580AB862452C70D003C34B9 /* Troubleshooting */,
 			);
 			path = Scenes;
@@ -1823,15 +1551,6 @@
 				D58874A924F92F640022E438 /* SignUpTests.swift */,
 			);
 			path = "Unlogged user";
-			sourceTree = "<group>";
-		};
-		D594A95F227C3A2F0041D423 /* Logo with map */ = {
-			isa = PBXGroup;
-			children = (
-				D594A960227C3A460041D423 /* LogoWithMapView.swift */,
-				D594A962227C3A500041D423 /* LogoWithMapView.xib */,
-			);
-			path = "Logo with map";
 			sourceTree = "<group>";
 		};
 		D5A8CD7A24570AC700F9B0C9 /* Views */ = {
@@ -1882,15 +1601,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		D5BCDD2625307681004BAEE8 /* Countries */ = {
-			isa = PBXGroup;
-			children = (
-				D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */,
-				D5BCDD2825307681004BAEE8 /* CountryViewController.swift */,
-			);
-			path = Countries;
-			sourceTree = "<group>";
-		};
 		D5BF950B2354AD7000C7D1E7 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
@@ -1907,49 +1617,12 @@
 			path = TestExtensions;
 			sourceTree = "<group>";
 		};
-		D5BF95112355A52700C7D1E7 /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				D5BF95122355A54200C7D1E7 /* UserPropertiesCreator.swift */,
-				D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */,
-				F3BBB87925DD56A300E700B5 /* Challenge.swift */,
-			);
-			path = Misc;
-			sourceTree = "<group>";
-		};
 		D5BF95152355A58600C7D1E7 /* Misc */ = {
 			isa = PBXGroup;
 			children = (
 				D5BF95162355A59100C7D1E7 /* UserPropertiesCreatorMock.swift */,
 			);
 			path = Misc;
-			sourceTree = "<group>";
-		};
-		D5C1376D2334FBBB00D20514 /* Human Verification */ = {
-			isa = PBXGroup;
-			children = (
-				E1C2261822720E21001B208C /* HumanVerificationOptionsViewController.swift */,
-				D5439078236191420094451D /* VerificationCaptchaViewController.swift */,
-				79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */,
-				E134557E218764B300FEEECE /* VerificationCodeViewController.swift */,
-				E17BE41422819B7F00D0F652 /* VerificationSmsViewController.swift */,
-				E169FC3522898B8E00FDC933 /* SmsCountryCodeViewController.swift */,
-			);
-			path = "Human Verification";
-			sourceTree = "<group>";
-		};
-		D5C1376E2334FBD000D20514 /* Human Verification */ = {
-			isa = PBXGroup;
-			children = (
-				E1C2261A22720EFF001B208C /* HumanVerificationOptionsViewModel.swift */,
-				79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */,
-				D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */,
-				E134558021876A3100FEEECE /* VerificationCodeViewModel.swift */,
-				E1F6B5012282F99F00AFE783 /* VerificationSmsViewModel.swift */,
-				E169FC422289BBDF00FDC933 /* PhoneCountryCodeViewModel.swift */,
-				E169FC372289A63D00FDC933 /* SmsCountryCodeViewModel.swift */,
-			);
-			path = "Human Verification";
 			sourceTree = "<group>";
 		};
 		D5F37633254010C7008C7207 /* Extensions */ = {
@@ -1960,14 +1633,6 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
-		D5F56897232620B000795953 /* Dependency injection */ = {
-			isa = PBXGroup;
-			children = (
-				D5F56898232620C600795953 /* DependencyContainer.swift */,
-			);
-			path = "Dependency injection";
-			sourceTree = "<group>";
-		};
 		D5F5689E23277EC500795953 /* Coordinators */ = {
 			isa = PBXGroup;
 			children = (
@@ -1976,27 +1641,17 @@
 			path = Coordinators;
 			sourceTree = "<group>";
 		};
-		E119AF712170B88100255F7E /* Map */ = {
+		E119AF712170B88100255F7E /* Views */ = {
 			isa = PBXGroup;
 			children = (
 				E1D21AB021831039000C389B /* AnnotationView.swift */,
-				E119AF722170B8E800255F7E /* CountryAnnotation.swift */,
 				E14EE2DC217F1EE8004AF568 /* ConnectionView.swift */,
+				E119AF722170B8E800255F7E /* CountryAnnotation.swift */,
+				D594A960227C3A460041D423 /* LogoWithMapView.swift */,
+				D594A962227C3A500041D423 /* LogoWithMapView.xib */,
 				E14EE2DA217E18E2004AF568 /* SecureCoreEntryAnnotation.swift */,
 			);
-			path = Map;
-			sourceTree = "<group>";
-		};
-		E11DA6B82189AFCA00CDF310 /* Layouts */ = {
-			isa = PBXGroup;
-			children = (
-				E101CB98219363CD001D7A76 /* DataDisclaimer.xib */,
-				E12DF61A2231240F006EC61F /* Onboarding */,
-				E19F5B3C2189DCAA00109216 /* Subscriptions */,
-				E13EDF6921F0A27600030CE7 /* Settings */,
-				E19D11AB22B979A500D41C23 /* Trial */,
-			);
-			path = Layouts;
+			path = Views;
 			sourceTree = "<group>";
 		};
 		E129C6D122A9325D00D8437E /* JSON */ = {
@@ -2013,37 +1668,6 @@
 				E129C6D322A933F200D8437E /* LiveServers.json */,
 			);
 			path = Logicals;
-			sourceTree = "<group>";
-		};
-		E12DF61A2231240F006EC61F /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E16F562321F89F72007BAB77 /* OnboardingContent.xib */,
-				E12DF61B223124DA006EC61F /* Onboarding.xib */,
-			);
-			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		E12DF61D2231497C006EC61F /* Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				E16F562521F8A09E007BAB77 /* OnboardingContentViewModel.swift */,
-				E12DF61E22314995006EC61F /* OnboardingViewModel.swift */,
-			);
-			name = Onboarding;
-			sourceTree = "<group>";
-		};
-		E13EDF6921F0A27600030CE7 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
-				E16C2925239E673500E7B61D /* CustomServers.xib */,
-				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
-				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
-				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
-				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
-			);
-			name = Settings;
 			sourceTree = "<group>";
 		};
 		E14414F822EF38ED00894DD0 /* OpenVPN Extension */ = {
@@ -2088,53 +1712,35 @@
 		E169FC392289ABD000FDC933 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				E169FC3A2289ABF700FDC933 /* PhoneCountryCode.swift */,
 				E1A9A67822BA3FE90073711B /* Alerts.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
 		};
-		E19D11AA22B9797100D41C23 /* Trial */ = {
+		E19D11AA22B9797100D41C23 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E19D11AC22B97C8100D41C23 /* TrialWelcomeViewController.swift */,
 			);
-			path = Trial;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		E19D11AB22B979A500D41C23 /* Trial */ = {
-			isa = PBXGroup;
-			children = (
-				E19D11AD22B97C8100D41C23 /* TrialWelcome.xib */,
-			);
-			name = Trial;
-			sourceTree = "<group>";
-		};
-		E19F5B3C2189DCAA00109216 /* Subscriptions */ = {
-			isa = PBXGroup;
-			children = (
-				E11DA6B92189AFEF00CDF310 /* PlanSelection.xib */,
-				D5110855246153500018872A /* SubscriptionInfoController.xib */,
-			);
-			path = Subscriptions;
-			sourceTree = "<group>";
-		};
-		E19F5B3F218AF05400109216 /* Subscriptions */ = {
+		E19F5B3F218AF05400109216 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
 				E11DA6B02188C07900CDF310 /* PlanSelectionViewController.swift */,
 				E11DA6B62188C3E400CDF310 /* PurchaseCompleteViewController.swift */,
 				D5110853246151330018872A /* SubscriptionInfoController.swift */,
 			);
-			path = Subscriptions;
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		E1C8705A22BA0690009CF4CE /* Trial */ = {
+		E1C8705A22BA0690009CF4CE /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
 				E1C8705B22BA06C3009CF4CE /* TrialWelcomeViewModel.swift */,
 			);
-			path = Trial;
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		E1C8705E22BA0A87009CF4CE /* Trial */ = {
@@ -2175,6 +1781,390 @@
 				E14C2AA421E4E71200E8578E /* Views */,
 			);
 			path = Shared;
+			sourceTree = "<group>";
+		};
+		F36ECC842611C4D60089B898 /* Countries */ = {
+			isa = PBXGroup;
+			children = (
+				7995FAAA209080E70030E1EB /* Countries.storyboard */,
+				F36ECCFE2611C8F80089B898 /* Utilities */,
+				F36ECC852611C4E20089B898 /* ViewControllers */,
+				79C5598A20AC309C00E6D3F6 /* ViewModels */,
+				F36ECC862611C5050089B898 /* Views */,
+			);
+			path = Countries;
+			sourceTree = "<group>";
+		};
+		F36ECC852611C4E20089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */,
+				D5BCDD2825307681004BAEE8 /* CountryViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECC862611C5050089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				79C5599F20AEC73A00E6D3F6 /* CountryViewCell.swift */,
+				79C559A020AEC73A00E6D3F6 /* CountryViewCell.xib */,
+				796BD1D021144D49003D6B8D /* ServersHeaderView.swift */,
+				796BD1D221144D63003D6B8D /* ServersHeaderView.xib */,
+				79DEE90A2111E5C600C354EF /* ServerTypeHeader.swift */,
+				79DEE90C2111E5EA00C354EF /* ServerTypeHeader.xib */,
+				79C559A620B3B93100E6D3F6 /* ServerViewCell.swift */,
+				79C559A720B3B93100E6D3F6 /* ServerViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECC872611C5420089B898 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECC982611C6400089B898 /* Coordinators */,
+				79DD19ED20BD681A00505906 /* Login.storyboard */,
+				F36ECCA92611C6A50089B898 /* Models */,
+				F36ECD622611CA980089B898 /* Services */,
+				F36ECC882611C5510089B898 /* ViewControllers */,
+				F36ECC8A2611C5A20089B898 /* ViewModels */,
+				F36ECC892611C5830089B898 /* Views */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		F36ECC882611C5510089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E101CB9A21936401001D7A76 /* DataDisclaimerViewController.swift */,
+				E1C2261822720E21001B208C /* HumanVerificationOptionsViewController.swift */,
+				79DD19F020BD6B2200505906 /* LoginViewController.swift */,
+				D53E83CB2328C3FC0031CD49 /* SignUpFormViewController.swift */,
+				E1404BC4228EBD9600E41D6C /* SignupNavigationController.swift */,
+				E169FC3522898B8E00FDC933 /* SmsCountryCodeViewController.swift */,
+				D5439078236191420094451D /* VerificationCaptchaViewController.swift */,
+				E134557E218764B300FEEECE /* VerificationCodeViewController.swift */,
+				79C2423F20FE86D300E0D410 /* VerificationEmailViewController.swift */,
+				E17BE41422819B7F00D0F652 /* VerificationSmsViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECC892611C5830089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E101CB98219363CD001D7A76 /* DataDisclaimer.xib */,
+				E1A15A9A215905A90068A5EF /* GradientSeparator.swift */,
+				79F88AFA20EC6DE0001ADEB3 /* LoginBoxView.swift */,
+				79F88AF820EC68DD001ADEB3 /* LoginBoxView.xib */,
+				E169FC3E2289B87F00FDC933 /* PhoneCountryCodeTableViewCell.swift */,
+				E169FC3F2289B87F00FDC933 /* PhoneCountryCodeTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECC8A2611C5A20089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E1C2261A22720EFF001B208C /* HumanVerificationOptionsViewModel.swift */,
+				79DD19F320BD6F0B00505906 /* LoginViewModel.swift */,
+				E169FC422289BBDF00FDC933 /* PhoneCountryCodeViewModel.swift */,
+				D53E83CF2329048C0031CD49 /* SignUpFormViewModel.swift */,
+				E169FC372289A63D00FDC933 /* SmsCountryCodeViewModel.swift */,
+				D5439076236189FA0094451D /* VerificationCaptchaViewModel.swift */,
+				E134558021876A3100FEEECE /* VerificationCodeViewModel.swift */,
+				79C2424320FE90DA00E0D410 /* VerificationEmailViewModel.swift */,
+				E1F6B5012282F99F00AFE783 /* VerificationSmsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECC8B2611C5DF0089B898 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				791C54F0214A75B600C6F337 /* Views */,
+				7995FCD620908E1E0030E1EB /* Constants */,
+				E169FC392289ABD000FDC933 /* Models */,
+				F36ECC8C2611C5E40089B898 /* Services */,
+				F36ECC992611C65D0089B898 /* Supporting Files */,
+				791C54EF214A759900C6F337 /* ViewControllers */,
+				791C54F3214A775900C6F337 /* ViewModels */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		F36ECC8C2611C5E40089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				060D071525D34599002B98B8 /* AppSessionManager.swift */,
+				D5F5689A23263C7D00795953 /* IosAlertService.swift */,
+				79C5598520AB181000E6D3F6 /* NavigationService.swift */,
+				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
+				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F36ECC982611C6400089B898 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				D5C1376B2334A57600D20514 /* HumanVerificationCoordinator.swift */,
+				D56331A023228EEA00CE2EE3 /* SignUpCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		F36ECC992611C65D0089B898 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				D5C137692334A54D00D20514 /* Coordinator.swift */,
+				D5F56898232620C600795953 /* DependencyContainer.swift */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		F36ECCA92611C6A50089B898 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E169FC3A2289ABF700FDC933 /* PhoneCountryCode.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F36ECCAA2611C6CD0089B898 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				796BD1D421146B68003D6B8D /* Profiles.storyboard */,
+				F36ECCAB2611C6DA0089B898 /* ViewControllers */,
+				F36ECCAC2611C6EC0089B898 /* ViewModels */,
+				F36ECCAD2611C7050089B898 /* Views */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		F36ECCAB2611C6DA0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */,
+				79FF145220C41ECE00BA3623 /* ProfilesViewController.swift */,
+				79312B822119924400E79D09 /* SelectionViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECCAC2611C6EC0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				7904DA4820E6BA3D008A4FCB /* ColorPickerViewModel.swift */,
+				7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */,
+				799BD7092165071700A84933 /* CreateProfileViewModel+Descriptors.swift */,
+				E14FE84E215D2DC60062E624 /* DefaultProfileViewModel.swift */,
+				7904DA4620E58292008A4FCB /* PrefillInformation.swift */,
+				79AFDA9320DB3809002F8751 /* ProfileItemViewModel.swift */,
+				79AFDA9120DB370E002F8751 /* ProfilesViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECCAD2611C7050089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				7950441621183E6E0022ED35 /* ColorPickerItem.swift */,
+				7950441C211850710022ED35 /* ColorPickerItem.xib */,
+				79059959212AB3A800C0E401 /* CreateProfileTableViewCell.swift */,
+				7905995A212AB3A800C0E401 /* CreateProfileTableViewCell.xib */,
+				7905995D212AE0A400C0E401 /* DefaultProfileTableViewCell.swift */,
+				7905995E212AE0A400C0E401 /* DefaultProfileTableViewCell.xib */,
+				79312B7A2118852D00E79D09 /* DrillInTableViewCell.swift */,
+				79312B7B2118852D00E79D09 /* DrillInTableViewCell.xib */,
+				7950441A21183FBC0022ED35 /* ProfilesTableViewCell.swift */,
+				79312B7E2119905D00E79D09 /* SelectionTableViewCell.swift */,
+				79312B7F2119905D00E79D09 /* SelectionTableViewCell.xib */,
+				79312B762118823B00E79D09 /* SwitchTableViewCell.swift */,
+				79312B772118823B00E79D09 /* SwitchTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECCAE2611C73B0089B898 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
+				F36ECCD42611C8530089B898 /* Views */,
+				791DE610208E08E600A29EA5 /* ViewControllers */,
+				F36ECCAF2611C75E0089B898 /* ViewModels */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F36ECCAF2611C75E0089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
+				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
+				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
+				D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */,
+				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
+				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
+				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECCC42611C7A60089B898 /* Coordinators */ = {
+			isa = PBXGroup;
+			children = (
+				D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */,
+			);
+			path = Coordinators;
+			sourceTree = "<group>";
+		};
+		F36ECCC52611C7BE0089B898 /* ViewContollers */ = {
+			isa = PBXGroup;
+			children = (
+				D580AB8024518567003C34B9 /* TroubleshootViewController.swift */,
+				D580AB8124518567003C34B9 /* TroubleshootViewController.xib */,
+			);
+			path = ViewContollers;
+			sourceTree = "<group>";
+		};
+		F36ECCC62611C7F10089B898 /* Launch */ = {
+			isa = PBXGroup;
+			children = (
+				79FD80E321108030003B16E2 /* ViewControllers */,
+				791DE5E7208DDA3200A29EA5 /* LaunchScreen.storyboard */,
+			);
+			path = Launch;
+			sourceTree = "<group>";
+		};
+		F36ECCD12611C8260089B898 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F36ECCD22611C82F0089B898 /* ViewControllers */,
+				F36ECCD32611C8410089B898 /* ViewModels */,
+				F36ECD612611CA620089B898 /* Views */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		F36ECCD22611C82F0089B898 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				E16F562121F89CC2007BAB77 /* OnboardingContentViewController.swift */,
+				E1007A5121F631960019B901 /* OnboardingPageViewController.swift */,
+				E16F561F21F87201007BAB77 /* OnboardingViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F36ECCD32611C8410089B898 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E16F562521F8A09E007BAB77 /* OnboardingContentViewModel.swift */,
+				E12DF61E22314995006EC61F /* OnboardingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		F36ECCD42611C8530089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */,
+				E16C2925239E673500E7B61D /* CustomServers.xib */,
+				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
+				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
+				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
+				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
+				793ECF452149045400C186A7 /* AppVersionView.swift */,
+				793ECF432149041A00C186A7 /* AppVersionView.xib */,
+				793ECF3F2148EA0B00C186A7 /* ButtonTableViewCell.swift */,
+				793ECF402148EA0B00C186A7 /* ButtonTableViewCell.xib */,
+				E1D187EF2301AB2E00C5F492 /* CheckmarkTableViewCell.swift */,
+				E1D187F02301AB2E00C5F492 /* CheckmarkTableViewCell.xib */,
+				E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */,
+				E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */,
+				E13EDF6C21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift */,
+				E13EDF6D21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib */,
+				E13EDF7021F0C53F00030CE7 /* InstructionStepView.swift */,
+				E13EDF7221F0C79A00030CE7 /* InstructionStepView.xib */,
+				793ECF372148DCF900C186A7 /* KeyValueTableViewCell.swift */,
+				793ECF382148DCF900C186A7 /* KeyValueTableViewCell.xib */,
+				E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */,
+				E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */,
+				D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */,
+				D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */,
+				E1FB5479230C000E00153F4D /* TitleTextFieldTableViewCell.swift */,
+				E1FB547A230C000E00153F4D /* TitleTextFieldTableViewCell.xib */,
+				793ECF3B2148E84500C186A7 /* TooltipTableViewCell.swift */,
+				793ECF3C2148E84500C186A7 /* TooltipTableViewCell.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECCD52611C8730089B898 /* Subscriptions */ = {
+			isa = PBXGroup;
+			children = (
+				42C37AF92434E52500366B79 /* Presenters */,
+				E19F5B3F218AF05400109216 /* ViewControllers */,
+				D511084B246150090018872A /* ViewModels */,
+				D551316D2319400900784ED0 /* Views */,
+			);
+			path = Subscriptions;
+			sourceTree = "<group>";
+		};
+		F36ECCFE2611C8F80089B898 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				7904DA4420E57BA3008A4FCB /* ServerUtility.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		F36ECD3B2611C9A40089B898 /* Map */ = {
+			isa = PBXGroup;
+			children = (
+				791DE60D208E088400A29EA5 /* ViewContollers */,
+				79848BAE20D200E500EF6F9F /* ViewModels */,
+				E119AF712170B88100255F7E /* Views */,
+			);
+			path = Map;
+			sourceTree = "<group>";
+		};
+		F36ECD4B2611C9F20089B898 /* Trial */ = {
+			isa = PBXGroup;
+			children = (
+				E19D11AA22B9797100D41C23 /* ViewControllers */,
+				E1C8705A22BA0690009CF4CE /* ViewModels */,
+				F36ECD602611CA330089B898 /* Views */,
+			);
+			path = Trial;
+			sourceTree = "<group>";
+		};
+		F36ECD602611CA330089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E19D11AD22B97C8100D41C23 /* TrialWelcome.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECD612611CA620089B898 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E16F562321F89F72007BAB77 /* OnboardingContent.xib */,
+				E12DF61B223124DA006EC61F /* Onboarding.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F36ECD622611CA980089B898 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				D5BF95122355A54200C7D1E7 /* UserPropertiesCreator.swift */,
+				D55B20E123840CD000AEB7FE /* SigninInfoContainer.swift */,
+				F3BBB87925DD56A300E700B5 /* Challenge.swift */,
+			);
+			path = Services;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
