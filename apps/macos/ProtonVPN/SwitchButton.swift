@@ -36,8 +36,17 @@ enum ButtonState: Int {
 
 protocol SwitchButtonDelegate: class {
     
-    // Called when the connect button is clicked
+    /// Asks delegate if button state should be switched. If completion if returned with false, button should not switch.
+    func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void)
+    
+    /// Called when the switch button is clicked
     func switchButtonClicked(_ button: NSButton)
+}
+
+extension SwitchButtonDelegate {
+    public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: (Bool) -> Void) {
+        completion(true)
+    }
 }
 
 class SwitchButton: NSView, CAAnimationDelegate {
@@ -159,8 +168,14 @@ class SwitchButton: NSView, CAAnimationDelegate {
             return
         }
         
-        setState(ButtonState.toggle(currentButtonState)(), animated: true)
-        delegate.switchButtonClicked(button)
+        let newState = ButtonState.toggle(currentButtonState)()
+        delegate.shouldToggle(button, to: newState) { shouldToggle in
+            guard shouldToggle else {
+                return
+            }
+            self.setState(newState, animated: true)
+            self.delegate?.switchButtonClicked(button)
+        }
     }
     
     // MARK: - Private

@@ -53,6 +53,11 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var alternativeRoutingButton: SwitchButton!
     @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
     @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
+    
+    @IBOutlet private weak var allowLANLabel: PVPNTextField!
+    @IBOutlet private weak var allowLANButton: SwitchButton!
+    @IBOutlet private weak var allowLANSeparator: NSBox!
+    @IBOutlet private weak var allowLANIcon: NSImageView!
 
     private var viewModel: ConnectionSettingsViewModel
     
@@ -130,7 +135,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         
         dnsLeakProtectionSeparator.fillColor = .protonLightGrey()
     }
-
+    
     private func setupAlternativeRoutingItem() {
         alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemTitleAlternative.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
 
@@ -141,6 +146,18 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         alternativeRoutingButton.delegate = self
 
         alternativeRoutingSeparator.fillColor = .protonLightGrey()
+    }
+    
+    private func setupAllowLANItem() {
+        allowLANLabel.attributedStringValue = LocalizedString.allowLANTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        allowLANIcon.image = NSImage(named: NSImage.Name("info_green"))
+        allowLANIcon.toolTip = LocalizedString.allowLANInfo
+
+        allowLANButton.setState(viewModel.allowLAN ? .on : .off)
+        allowLANButton.delegate = self
+
+        allowLANSeparator.fillColor = .protonLightGrey()
     }
     
     private func refreshAutoConnect() {
@@ -189,6 +206,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
+        setupAllowLANItem()
     }
     
     // MARK: - Actions
@@ -215,11 +233,24 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 }
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
-        guard button.superview == alternativeRoutingButton else {
-            return
+    
+    public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+        switch button.superview {
+        case allowLANButton:
+            viewModel.setAllowLANAccess(value == .on, completion: { result in completion(result) })
+            
+        default:
+            completion(true)
         }
-
-        viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+    }
+    
+    func switchButtonClicked(_ button: NSButton) {
+        switch button.superview {
+        case alternativeRoutingButton:
+            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+                    
+        default:
+            break // Do nothing
+        }
     }
 }
