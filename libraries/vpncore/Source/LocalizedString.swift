@@ -494,6 +494,9 @@ public class LocalizedString {
     public static let activateWidgetStep3 = NSLocalizedString("_activate_widget_step_3", comment: "iOS widget help screen: text")
     public static let reportBug = NSLocalizedString("_report_bug", comment: "Report bug screen title; iOS settings screen: item;")
     
+    public static let allowLANTitle = NSLocalizedString("_allow_lan_title", comment: "Settings: Allow LAN label.")
+    public static let allowLANInfo = NSLocalizedString("_allow_lan_info", comment: "Settings: Allow LAN information text.")
+    
     // MARK: - Plans
     public static let getPlan = NSLocalizedString("_get_plan", comment: "%@ is a plan name e.g. Get Plus Plan")
     public static let freeCountries = NSLocalizedString("_free_countries", comment: "Account plan description")

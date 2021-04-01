@@ -60,6 +60,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var killSwitch: Bool = false
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false
+    public var excludeLocalNetworks: Bool = true
     
     var earlyAccess: Bool = false
     

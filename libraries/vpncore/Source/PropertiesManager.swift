@@ -62,6 +62,7 @@ public protocol PropertiesManagerProtocol: class {
     var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
+    var excludeLocalNetworks: Bool { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -123,6 +124,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         
         // Kill Switch
         static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
+        static let excludeLocalNetworks = "excludeLocalNetworks"
         
         // Features
         static let featureFlags = "FeatureFlags"
@@ -471,6 +473,22 @@ public class PropertiesManager: PropertiesManagerProtocol {
             }
         }
     }
+    
+    var excludeLocalNetworksNotification: Notification.Name {
+        return Notification.Name("ExcludeLocalNetworksChanged")
+    }
+    
+    public var excludeLocalNetworks: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: Keys.excludeLocalNetworks)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.excludeLocalNetworks)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: self.excludeLocalNetworksNotification, object: nil)
+            }
+        }
+    }
         
     public var humanValidationFailed: Bool {
         get {
@@ -492,7 +510,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public init() {
         Storage.userDefaults().register(defaults: [
-            Keys.alternativeRouting: true
+            Keys.alternativeRouting: true,
+            Keys.excludeLocalNetworks: true,
         ])
     }
     
@@ -507,6 +526,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         warnedTrialExpired = false
         reportBugEmail = nil
         alternativeRouting = true
+        excludeLocalNetworks = true
         
         #if !APP_EXTENSION
         currentSubscription = nil
