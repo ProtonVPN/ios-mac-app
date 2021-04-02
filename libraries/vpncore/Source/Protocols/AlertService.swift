@@ -442,7 +442,9 @@ public class UserVerificationAlert: SystemAlert {
         self.success = success
         self.failure = failure
         self.error = error
+        #if os(macOS)
         self.message = error.localizedDescription
+        #endif
     }
 }
 

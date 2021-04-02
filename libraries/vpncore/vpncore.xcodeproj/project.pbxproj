@@ -834,6 +834,8 @@
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E56E9B6444FA157F26BBF679 /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */; };
+		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
+		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -1230,6 +1232,7 @@
 		E1E892B82369EDF7001A436E /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1E892B92369EEB9001A436E /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
+		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
 		E98763DE260DCE78002E06E1 /* PMLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogTests.swift; sourceTree = "<group>"; };
 		F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
 		F3021D7225E93E2A00EF73A1 /* TroubleshootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootItem.swift; sourceTree = "<group>"; };
@@ -1541,18 +1544,19 @@
 		E1B5F5E521B68ABD00B558B0 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F320561825E7A23100566DB7 /* Networking */,
 				D5A8812322CDDAB5009B63D1 /* API */,
 				D5C2042224866456004FB58B /* Core */,
 				D5ADFBCD23A0D07C00C28CFF /* Extensions */,
+				E1B5F5FA21B68E7200B558B0 /* Info.plist */,
+				E1E892B52369EDBE001A436E /* InfoPlist.strings */,
 				D5D606A52292DC5B00394CF9 /* Management */,
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
+				F320561825E7A23100566DB7 /* Networking */,
+				E935183D2617535600AB4C7C /* Protocols */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
 				D5D2946025A45B8F000FBD74 /* Utilities */,
 				D5A8811F22CDD560009B63D1 /* ViewModel */,
-				E1B5F5FA21B68E7200B558B0 /* Info.plist */,
-				E1E892B52369EDBE001A436E /* InfoPlist.strings */,
 			);
 			path = Tests;
 			sourceTree = "<group>";
@@ -1566,6 +1570,22 @@
 				E1B5F62F21B6B18C00B558B0 /* vpncore.h */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E935183D2617535600AB4C7C /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E935183E2617536E00AB4C7C /* Alerts */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E935183E2617536E00AB4C7C /* Alerts */ = {
+			isa = PBXGroup;
+			children = (
+				E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */,
+			);
+			path = Alerts;
 			sourceTree = "<group>";
 		};
 		F320561825E7A23100566DB7 /* Networking */ = {
@@ -2864,6 +2884,7 @@
 				F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */,
 				D5C205312487A0CF004FB58B /* AFDataResponse+Debugging.swift in Sources */,
 				D5C205322487A0CF004FB58B /* AFDataResponse+Filter.swift in Sources */,
+				E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D5924D88250F823200DCFF15 /* FeatureFlags.swift in Sources */,
 				D5966F3C2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D5C205332487A0CF004FB58B /* Data+JSONDictionary.swift in Sources */,
@@ -3394,6 +3415,7 @@
 				E1B5F62721B6A24D00B558B0 /* AppStateTests.swift in Sources */,
 				D55D791C2498F65B009669E0 /* StringCleanup.swift in Sources */,
 				D5C2046624866ACA004FB58B /* TrustKitHelper.swift in Sources */,
+				E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */,
 				D5C2047224866B1E004FB58B /* PaymentMethod.swift in Sources */,
 				D5C2042F24866685004FB58B /* AppState.swift in Sources */,
 				E19CE84F22C9FCA8002595D0 /* StateAlertTests.swift in Sources */,
