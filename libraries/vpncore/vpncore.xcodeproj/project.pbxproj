@@ -835,6 +835,10 @@
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
+		E9ECF999261C8B81004501AE /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECF998261C8B81004501AE /* openssl.xcframework */; };
+		E9ECF9BE261C8BBC004501AE /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECF998261C8B81004501AE /* openssl.xcframework */; };
+		E9ECF9C2261C8BC5004501AE /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECF998261C8B81004501AE /* openssl.xcframework */; };
+		E9ECF9C6261C8BCD004501AE /* openssl.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9ECF998261C8B81004501AE /* openssl.xcframework */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6A25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -1242,6 +1246,7 @@
 		E1E892B92369EEB9001A436E /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
 		E98763DE260DCE78002E06E1 /* PMLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogTests.swift; sourceTree = "<group>"; };
+		E9ECF998261C8B81004501AE /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = "Pods/OpenSSL-Apple/frameworks/openssl.xcframework"; sourceTree = "<group>"; };
 		F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
 		F3021D7225E93E2A00EF73A1 /* TroubleshootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootItem.swift; sourceTree = "<group>"; };
 		F3021D7F25E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSMutableAttributedString+Extensions.swift"; sourceTree = "<group>"; };
@@ -1257,6 +1262,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9ECF9BE261C8BBC004501AE /* openssl.xcframework in Frameworks */,
 				D515C25F26089D9D00940195 /* SRP.xcframework in Frameworks */,
 				B04DFD94024F58A67AF2FC8E /* Pods_vpncore_vpncore_ios.framework in Frameworks */,
 			);
@@ -1266,6 +1272,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9ECF999261C8B81004501AE /* openssl.xcframework in Frameworks */,
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
 				D515C26026089D9D00940195 /* SRP.xcframework in Frameworks */,
 				B16019709F7CFD1A3CCCB20F /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */,
@@ -1276,6 +1283,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9ECF9C2261C8BC5004501AE /* openssl.xcframework in Frameworks */,
 				D515C2C02608A71700940195 /* SRP.xcframework in Frameworks */,
 				A2521C9B72D98BF8D15E11E4 /* Pods_vpncore_vpncore_macos.framework in Frameworks */,
 			);
@@ -1285,6 +1293,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9ECF9C6261C8BCD004501AE /* openssl.xcframework in Frameworks */,
 				E1B5F64621B6C65200B558B0 /* vpncore.framework in Frameworks */,
 				D515C2C42608A71800940195 /* SRP.xcframework in Frameworks */,
 				F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */,
@@ -1297,6 +1306,7 @@
 		1424DAA14443FC92F0DE44D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E9ECF998261C8B81004501AE /* openssl.xcframework */,
 				D515C25E26089D9D00940195 /* SRP.xcframework */,
 				49E08E8F26F88C8ADEA6CC66 /* Pods_vpncore_vpncore_ios.framework */,
 				447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */,
