@@ -3,12 +3,10 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1EF48C10ADF53C56CCF9D10E /* Pods_vpncore_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */; };
-		384FCC46E272DE21E4736436 /* Pods_vpncore_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */; };
 		4241A8D824C9EEA1005412FB /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4241A8D924C9EEA2005412FB /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4241A8DA24C9EEA9005412FB /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
@@ -135,9 +133,15 @@
 		4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
 		4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
-		C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */; };
+		A2521C9B72D98BF8D15E11E4 /* Pods_vpncore_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 693DB6C019217ADCC791C1C0 /* Pods_vpncore_vpncore_macos.framework */; };
+		B04DFD94024F58A67AF2FC8E /* Pods_vpncore_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 49E08E8F26F88C8ADEA6CC66 /* Pods_vpncore_vpncore_ios.framework */; };
+		B16019709F7CFD1A3CCCB20F /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */; };
 		D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
 		D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
+		D515C25F26089D9D00940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
+		D515C26026089D9D00940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
+		D515C2C02608A71700940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
+		D515C2C42608A71800940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
 		D51D9507249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9509249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
@@ -146,10 +150,6 @@
 		D51FBDCF23E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
 		D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
 		D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D51FBDD323E81E9C0056DC09 /* Localizable.stringsdict */; };
-		D52193EB247E912F004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193EA247E912F004089CB /* Srp.framework */; };
-		D52193EC247E912F004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193EA247E912F004089CB /* Srp.framework */; };
-		D52193EE247E918C004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193ED247E918C004089CB /* Srp.framework */; };
-		D52193EF247E918C004089CB /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D52193ED247E918C004089CB /* Srp.framework */; };
 		D523F11124B7543C007DB086 /* String+Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11024B7543C007DB086 /* String+Url.swift */; };
 		D523F11224B7543C007DB086 /* String+Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11024B7543C007DB086 /* String+Url.swift */; };
 		D523F11324B7543C007DB086 /* String+Url.swift in Sources */ = {isa = PBXBuildFile; fileRef = D523F11024B7543C007DB086 /* String+Url.swift */; };
@@ -833,7 +833,6 @@
 		E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E892B52369EDBE001A436E /* InfoPlist.strings */; };
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
-		E56E9B6444FA157F26BBF679 /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */; };
 		E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -860,8 +859,35 @@
 		F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */; };
 		F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
 		F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
-		F3AFC0DB25FA078D005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0DA25FA078D005FF4D7 /* OpenVpnConfigTests.swift */; };
-		F3AFC0DC25FA078D005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0DA25FA078D005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F352FDA725F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
+		F352FDA825F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
+		F3657A8425F66B1D00497451 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
+		F3657A8525F66B1D00497451 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
+		F3657A8F25F670E400497451 /* SmartProtocolImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */; };
+		F3657A9025F670E400497451 /* SmartProtocolImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */; };
+		F3657A9A25F688F500497451 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
+		F3657A9B25F688F500497451 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
+		F3657AA125F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */; };
+		F3657AA225F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */; };
+		F3657AA825F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */; };
+		F3657AA925F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA725F76B9700497451 /* OpenVPNUDPAvailabilityCheckerTests.swift */; };
+		F3AF15D925F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
+		F3AF15DA25F26EEF0025CDEE /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
+		F3AF15E025F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3AF15E125F26F250025CDEE /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3AFC0E625FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
+		F3AFC0E725FA0E90005FF4D7 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
+		F3AFC1DB25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F3AFC1DC25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F3EB357D25F7DC7900ACA169 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
+		F3EB357E25F7DC7900ACA169 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3EB357F25F7DC7900ACA169 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
+		F3EB358025F7DC7900ACA169 /* SmartProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30BC74A25F3D4830050CDC7 /* SmartProtocolAvailabilityChecker.swift */; };
+		F3EB358525F7DC7A00ACA169 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
+		F3EB358625F7DC7A00ACA169 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
+		F3EB358725F7DC7A00ACA169 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
+		F3EB358825F7DC7A00ACA169 /* SmartProtocolAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30BC74A25F3D4830050CDC7 /* SmartProtocolAvailabilityChecker.swift */; };
+		F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A916DAED88E80FD9324A73 /* Pods_vpncore_vpncore_macosTests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -880,6 +906,19 @@
 			remoteInfo = "vpncore-macos";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		D515C23926089D6100940195 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		30B89A401594E44945FC295E /* Pods-vpncore-vpncore-macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macos.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macos/Pods-vpncore-vpncore-macos.release.xcconfig"; sourceTree = "<group>"; };
@@ -940,7 +979,9 @@
 		42878E3F24EE6B09001B35BE /* MaintenanceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaintenanceManager.swift; sourceTree = "<group>"; };
 		4295DFF824C9D65600EF1A92 /* MigrationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationManager.swift; sourceTree = "<group>"; };
 		4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MigrationVersion.swift; sourceTree = "<group>"; };
+		447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		478276B7416570BEC6FC8B85 /* Pods-vpncore-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
+		49E08E8F26F88C8ADEA6CC66 /* Pods_vpncore_vpncore_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4E8BE95F0BCA7D9C97EE85C0 /* Pods-vpncore-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5A1D4DCE67493ADC788AF98B /* Pods-vpncore-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macos/Pods-vpncore-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
 		6608F5592446D076005E4A2C /* el */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = el; path = el.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -976,21 +1017,18 @@
 		66E61904240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		66E61905240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
 		66E61906240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		693DB6C019217ADCC791C1C0 /* Pods_vpncore_vpncore_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7E53FE08745AA7E51ADC0504 /* Pods-vpncore-vpncore-macosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-macosTests.debug.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-macosTests/Pods-vpncore-vpncore-macosTests.debug.xcconfig"; sourceTree = "<group>"; };
-		7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		91A916DAED88E80FD9324A73 /* Pods_vpncore_vpncore_macosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_macosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A2AC0C816EB5D50939F3AB9B /* Pods-vpncore-vpncore-ios.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-ios.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-ios/Pods-vpncore-vpncore-ios.release.xcconfig"; sourceTree = "<group>"; };
-		B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_ios.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_vpncore_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		B9DB9D1719D98EC41F005D62 /* Pods-vpncore-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-vpncore-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-vpncore-vpncore-iosTests/Pods-vpncore-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimer.swift; sourceTree = "<group>"; };
 		D5063A6F247FB09E008DBEF9 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D5063A70247FB09E008DBEF9 /* .gitlab-ci.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = ".gitlab-ci.yml"; sourceTree = "<group>"; };
+		D515C25E26089D9D00940195 /* SRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SRP.xcframework; path = Frameworks/SRP.xcframework; sourceTree = "<group>"; };
 		D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPlanRequest.swift; sourceTree = "<group>"; };
 		D51FBDD223E81E9C0056DC09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
-		D52193EA247E912F004089CB /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = "Frameworks-ios/Srp.framework"; sourceTree = "<group>"; };
-		D52193ED247E918C004089CB /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = "Frameworks-mac/Srp.framework"; sourceTree = "<group>"; };
 		D523F11024B7543C007DB086 /* String+Url.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Url.swift"; sourceTree = "<group>"; };
 		D523F11524B759A5007DB086 /* StringUrl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StringUrl.swift; sourceTree = "<group>"; };
 		D523F11824BC52BC007DB086 /* ProtonAPIAuthenticator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonAPIAuthenticator.swift; sourceTree = "<group>"; };
@@ -1219,8 +1257,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D52193EB247E912F004089CB /* Srp.framework in Frameworks */,
-				1EF48C10ADF53C56CCF9D10E /* Pods_vpncore_vpncore_ios.framework in Frameworks */,
+				D515C25F26089D9D00940195 /* SRP.xcframework in Frameworks */,
+				B04DFD94024F58A67AF2FC8E /* Pods_vpncore_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1229,8 +1267,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
-				E56E9B6444FA157F26BBF679 /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */,
-				D52193EC247E912F004089CB /* Srp.framework in Frameworks */,
+				D515C26026089D9D00940195 /* SRP.xcframework in Frameworks */,
+				B16019709F7CFD1A3CCCB20F /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1238,8 +1276,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D52193EE247E918C004089CB /* Srp.framework in Frameworks */,
-				384FCC46E272DE21E4736436 /* Pods_vpncore_vpncore_macos.framework in Frameworks */,
+				D515C2C02608A71700940195 /* SRP.xcframework in Frameworks */,
+				A2521C9B72D98BF8D15E11E4 /* Pods_vpncore_vpncore_macos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1248,8 +1286,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E1B5F64621B6C65200B558B0 /* vpncore.framework in Frameworks */,
-				C848028BCF4A33924D9228FA /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */,
-				D52193EF247E918C004089CB /* Srp.framework in Frameworks */,
+				D515C2C42608A71800940195 /* SRP.xcframework in Frameworks */,
+				F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1259,12 +1297,11 @@
 		1424DAA14443FC92F0DE44D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D52193EA247E912F004089CB /* Srp.framework */,
-				B429025C6C242FF5FB921533 /* Pods_vpncore_vpncore_ios.framework */,
-				D52193ED247E918C004089CB /* Srp.framework */,
-				7FF7AE48F0D99A412AAB782A /* Pods_vpncore_vpncore_macos.framework */,
-				B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */,
-				8C70997A5DBF2D86DDEF8DB5 /* Pods_vpncore_vpncore_macosTests.framework */,
+				D515C25E26089D9D00940195 /* SRP.xcframework */,
+				49E08E8F26F88C8ADEA6CC66 /* Pods_vpncore_vpncore_ios.framework */,
+				447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */,
+				693DB6C019217ADCC791C1C0 /* Pods_vpncore_vpncore_macos.framework */,
+				91A916DAED88E80FD9324A73 /* Pods_vpncore_vpncore_macosTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -2162,6 +2199,7 @@
 				E1B5F5D521B68ABD00B558B0 /* Frameworks */,
 				E1B5F5D621B68ABD00B558B0 /* Resources */,
 				D5479536228EC7E700639216 /* Swiftlint */,
+				D515C23926089D6100940195 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -3700,6 +3738,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks-ios",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -3728,6 +3767,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Frameworks-ios",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				INFOPLIST_FILE = Tests/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
