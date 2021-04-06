@@ -44,7 +44,7 @@ public class PMLog {
             }
         }
         
-        fileprivate var sentryLevel: SentrySeverity {
+        fileprivate var sentryLevel: SentryLevel {
             switch self {
             case .fatal:
                 return .fatal
@@ -65,19 +65,12 @@ public class PMLog {
     private static let maxLogLines = 2000
     
     public static func setupSentry(dsn: String) {
-        // Create a Sentry client and start crash handler
-        do {
-            Client.shared = try Client(dsn: dsn)
-            try Client.shared?.startCrashHandler()
-            
-            Client.shared?.beforeSerializeEvent = { event in
-                guard let debugMeta = event.debugMeta else { return }
-                event.debugMeta = Array(debugMeta.prefix(50)) // prevents hitting 16KB cap on Sentry gzip requests
-            }
-        } catch let error {
-            printToConsole("\(error)")
-            // Wrong DSN or KSCrash not installed
-        }
+        SentrySDK.start { (options) in
+            options.dsn = dsn
+            #if DEBUG
+            options.debug = true
+            #endif
+        }        
     }
     
     public static func logFile(_ filename: String = "ProtonVPN.log") -> URL? {
@@ -128,13 +121,16 @@ public class PMLog {
     public static func ET(_ message: String, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         PMLog.D(message, level: .error, file: file, function: function, line: line, column: column)
         
-        // Send to Sentry along with stacktrace
-        Client.shared?.snapshotStacktrace {
-            let event = Event(level: level.sentryLevel)
-            event.message = message
-            Client.shared?.appendStacktrace(to: event)
-            Client.shared?.send(event: event)
-        }
+        let event = Event(level: level.sentryLevel)
+        event.message = message
+        event.extra = [
+            "file": file,
+            "function": function,
+            "line": line,
+            "column": column,
+        ]
+        SentrySDK.capture(event: event)
+        
     }
     
     public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
