@@ -51,6 +51,7 @@ unit_tests:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
+    - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< DEVELOPMENT_PROFILE_OVPN
     - pod install
     - fastlane ci_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
