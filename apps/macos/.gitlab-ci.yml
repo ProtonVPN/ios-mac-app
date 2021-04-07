@@ -55,6 +55,9 @@ unit_tests:
     - pod install
     - fastlane ci_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
+  after_script: # Cleanup
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
+    - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
   tags:
     - macOS_ARM
   artifacts:
