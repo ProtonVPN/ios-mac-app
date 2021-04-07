@@ -24,19 +24,17 @@ variables:
   PUBLIC_REPO_URL: git@github.com:ProtonVPN/vpncore.git
   
 .before_script_mac: &before_script_mac
-- rm -fr ../tunnelkit || true # ignore failure to delete
-- git clone -b protonvpn2/keychain https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
-
-.before_script_mac: &before_script_mac
+  - rm -fr ../tunnelkit || true # ignore failure to delete
+  - git clone -b protonvpn2/keychain https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/vpn/tunnelkit.git ../tunnelkit # checkout the keychain_avoid branch
   - rm -fr ../pmnetworking || true # ignore failure to delete
   - git clone -b develop https://gitlab-ci-token:${CI_JOB_TOKEN}@gitlab.protontech.ch/apple/shared/pmnetworking.git ../pmnetworking && (cd ../pmnetworking; git checkout 35b8e110bb15082073be8cf6d95440da954c9365)
-  - pod install  
+  - pod install
 
 lint:
   stage: linting
   tags:
-    - iOS
-    - macOS
+    - iOS_ARM
+    - macOS_ARM
   before_script:
     - *before_script_mac  
   script:    
@@ -64,8 +62,8 @@ unit_tests:
 
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult
   tags:
-    - iOS
-    - macOS
+    - iOS_ARM
+    - macOS_ARM
   artifacts:
     reports:
       junit:

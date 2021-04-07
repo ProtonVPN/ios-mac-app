@@ -516,6 +516,8 @@
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
 "_activate_widget_step_3" = "Add the ProtonVPN widget to the list of active widgets.";
 "_report_bug" = "Report Bug";
+"_allow_lan_title" = "Allow LAN connections";
+"_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
 
 // Plans
 

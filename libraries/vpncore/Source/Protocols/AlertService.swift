@@ -327,9 +327,9 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void) {
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
 

@@ -19,13 +19,13 @@ Pod::Spec.new do |s|
         'Source/*.der'
         ] }
 
-    s.ios.vendored_frameworks = 'Frameworks-ios/*'
-    s.osx.vendored_frameworks = 'Frameworks-mac/*'
+    s.ios.vendored_frameworks = 'Frameworks/*'
+    s.osx.vendored_frameworks = 'Frameworks/*'
     
     s.dependency 'Alamofire', '5.3.0'
     s.dependency 'KeychainAccess', '3.2.1'
     s.dependency 'ReachabilitySwift', '5.0.0'
-    s.dependency 'Sentry', '4.5.0'
+    s.dependency 'Sentry', '5.2.2'
     s.dependency 'TrustKit'
     # s.dependency 'TunnelKit', '~> 2.0.5'
     s.dependency 'TunnelKit'

@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Srp
+import SRP
 
 // swiftlint:disable function_parameter_count
 public func SrpAuth(_ hashVersion: Int, _ userName: String, _ password: String,

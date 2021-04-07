@@ -1,0 +1,8 @@
+framework module "SRP" {
+	header "ref.h"
+    header "Srp.objc.h"
+    header "Universe.objc.h"
+    header "SRP.h"
+
+    export *
+}
