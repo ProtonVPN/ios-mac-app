@@ -35,8 +35,8 @@ variables:
 lint:
   stage: linting
   tags:
-    - iOS
-    - macOS
+    - iOS_ARM
+    - macOS_ARM
   before_script:
     - *before_script_mac  
   script:    
@@ -64,8 +64,8 @@ unit_tests:
 
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult
   tags:
-    - iOS
-    - macOS
+    - iOS_ARM
+    - macOS_ARM
   artifacts:
     reports:
       junit:
