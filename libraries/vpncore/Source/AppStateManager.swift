@@ -223,6 +223,7 @@ public class AppStateManager {
         attemptingConnection = false
         cancelTimout()
         stopAttemptingConnection()
+        notifyObservers()
     }
     
     private func stopAttemptingConnection() {
