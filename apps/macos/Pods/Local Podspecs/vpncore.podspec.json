@@ -32,10 +32,10 @@
     ]
   },
   "ios": {
-    "vendored_frameworks": "Frameworks-ios/*"
+    "vendored_frameworks": "Frameworks/*"
   },
   "osx": {
-    "vendored_frameworks": "Frameworks-mac/*"
+    "vendored_frameworks": "Frameworks/*"
   },
   "dependencies": {
     "Alamofire": [
@@ -48,7 +48,7 @@
       "5.0.0"
     ],
     "Sentry": [
-      "4.5.0"
+      "5.2.2"
     ],
     "TrustKit": [
 

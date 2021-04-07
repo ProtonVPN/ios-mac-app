@@ -1243,7 +1243,7 @@ SOFTWARE.
 			<key>summary</key>
 			<string>Sentry client for cocoa</string>
 			<key>version</key>
-			<string>4.5.0</string>
+			<string>5.2.2</string>
 		</dict>
 		<dict>
 			<key>authors</key>
