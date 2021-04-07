@@ -28,7 +28,7 @@ variables:
 lint:
   stage: linting
   tags:
-    - macOS
+    - macOS_ARM
   before_script:
     - *before_script_mac
   script: Pods/SwiftLint/swiftlint --strict --reporter junit > swiftlint.xml
@@ -55,7 +55,7 @@ unit_tests:
     - fastlane ci_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN.xcresult
   tags:
-    - macOS
+    - macOS_ARM
   artifacts:
     name: "macos-tests-$CI_COMMIT_TAG"
     when: always
