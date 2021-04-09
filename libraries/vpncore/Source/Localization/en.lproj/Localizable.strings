@@ -763,3 +763,8 @@
 
 "_openvpn_cannot_enable" = "Cannot enable OpenVPN";
 "_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+
+// Cert based auth
+
+"_vpnauth_certfail_title" = "Authentication error";
+"_vpnauth_certfail_description" = "Failed to refresh VPN certificate. Please check your connection";

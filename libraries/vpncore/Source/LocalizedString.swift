@@ -716,4 +716,8 @@ public class LocalizedString {
     
     public static let openVPNCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
     public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
+
+    // MARK: - Cert based auth
+    public static let vpnAuthCertificateFailTitle = NSLocalizedString("_vpnauth_certfail_title", comment: "Failed to get VPN certificate Title")
+    public static let vpnAuthCertificateFailDescription = NSLocalizedString("_vpnauth_certfail_description", comment: "Failed to get VPN certificate Description")
 }

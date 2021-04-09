@@ -668,3 +668,13 @@ public class OpenVPNExtensionTourAlert: SystemAlert {
     
     public init() { }
 }
+
+public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.vpnAuthCertificateFailTitle
+    public var message: String? = LocalizedString.vpnAuthCertificateFailDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}
