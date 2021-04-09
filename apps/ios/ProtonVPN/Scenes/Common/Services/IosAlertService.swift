@@ -44,11 +44,11 @@ extension IosAlertService: CoreAlertService {
     // swiftlint:disable cyclomatic_complexity function_body_length
     func push(alert: SystemAlert) {
         switch alert {
-        case is AppUpdateRequiredAlert:
-            show(alert as! AppUpdateRequiredAlert)
+        case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
+            show(appUpdateRequiredAlert)
             
-        case is CannotAccessVpnCredentialsAlert:
-            show(alert as! CannotAccessVpnCredentialsAlert)
+        case let cannotAccessVpnCredentialsAlert as CannotAccessVpnCredentialsAlert:
+            show(cannotAccessVpnCredentialsAlert)
             
         case is ExistingConnectionAlert:
             showDefaultSystemAlert(alert)
@@ -62,8 +62,8 @@ extension IosAlertService: CoreAlertService {
         case is P2pForwardedAlert:
             showDefaultSystemAlert(alert)
             
-        case is RefreshTokenExpiredAlert:
-            show(alert as! RefreshTokenExpiredAlert)
+        case let refreshTokenExpiredAlert as RefreshTokenExpiredAlert:
+            show(refreshTokenExpiredAlert)
             
         case is UpgradeRequiredAlert:
             showDefaultSystemAlert(alert)
@@ -116,8 +116,8 @@ extension IosAlertService: CoreAlertService {
             } else {
                 showNotificationStyleAlert(message: alert.message ?? "")
             }
-        case is UserVerificationAlert:
-            show(alert as! UserVerificationAlert)
+        case let userVerificationAlert as UserVerificationAlert:
+            show(userVerificationAlert)
             
         case is ErrorNotificationAlert:
             showNotificationStyleAlert(message: alert.message ?? "", type: .error, accessibilityIdentifier: (alert as! ErrorNotificationAlert).accessibilityIdentifier)
@@ -128,8 +128,8 @@ extension IosAlertService: CoreAlertService {
         case is ApplyCreditAfterRegistrationFailedAlert:
             showDefaultSystemAlert(alert)
             
-        case is ReportBugAlert:
-            show(alert as! ReportBugAlert)
+        case let reportBugAlert as ReportBugAlert:
+            show(reportBugAlert)
 
         case is MITMAlert:
             showDefaultSystemAlert(alert)
@@ -152,8 +152,8 @@ extension IosAlertService: CoreAlertService {
         case is ReconnectOnNetshieldChangeAlert:
             showDefaultSystemAlert(alert)
 
-        case is VpnServerOnMaintenanceAlert:
-            show(alert as! VpnServerOnMaintenanceAlert)
+        case let vpnServerOnMaintenanceAlert as VpnServerOnMaintenanceAlert:
+            show(vpnServerOnMaintenanceAlert)
 
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
