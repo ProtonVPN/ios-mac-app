@@ -82,7 +82,6 @@ extension SmartProtocolAvailabilityChecker {
 
         let cleanup = { [weak self] in
             self?.connections[connectionId]?.cancel()
-            self?.connections.removeValue(forKey: connectionId)
         }
 
         let task = DispatchWorkItem {
