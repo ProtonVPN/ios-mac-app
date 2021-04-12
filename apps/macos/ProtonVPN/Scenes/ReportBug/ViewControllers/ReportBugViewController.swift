@@ -75,14 +75,27 @@ class ReportBugViewController: NSViewController {
         fatalError("Unsupported initializer")
     }
     
-    init(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
+    init(viewModel: ReportBugViewModel, alertService: CoreAlertService, vpnManager: VpnManagerProtocol) {
         self.viewModel = viewModel
         self.alertService = alertService
         super.init(nibName: NSNib.Name("ReportBugViewController"), bundle: nil)
         
+        // Add app log file
         if let url = logFileUrl {
             viewModel.add(files: [url])
         }
+        // Add ovpn log file
+        vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
+            let filename = AppConstants.Filenames.openVpnLogFilename
+            if let content = logs {
+                PMLog.dump(logs: content, toFile: filename)
+            }
+            // This is NOT inside the last `if`, because there may already be a log file
+            if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
+                viewModel.add(files: [url])
+            }
+        }
+        
     }
     
     deinit {

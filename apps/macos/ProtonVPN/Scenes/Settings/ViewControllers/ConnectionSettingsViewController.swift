@@ -53,6 +53,11 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var alternativeRoutingButton: SwitchButton!
     @IBOutlet private weak var alternativeRoutingSeparator: NSBox!
     @IBOutlet private weak var alternativeRoutingInfoIcon: NSImageView!
+    
+    @IBOutlet private weak var allowLANLabel: PVPNTextField!
+    @IBOutlet private weak var allowLANButton: SwitchButton!
+    @IBOutlet private weak var allowLANSeparator: NSBox!
+    @IBOutlet private weak var allowLANIcon: NSImageView!
 
     @IBOutlet private weak var smartProtocolLabel: PVPNTextField!
     @IBOutlet private weak var smartProtocolButton: SwitchButton!
@@ -71,7 +76,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     override func viewDidLoad() {
-        super.viewDidLoad()        
+        super.viewDidLoad()
         viewModel.setViewController(self)
         reloadView()
     }
@@ -122,7 +127,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
-    }    
+    }
     
     private func setupDnsLeakProtectionItem() {
         dnsLeakProtectionLabel.attributedStringValue = LocalizedString.dnsLeakProtection.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
@@ -135,7 +140,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         
         dnsLeakProtectionSeparator.fillColor = .protonLightGrey()
     }
-
+    
     private func setupAlternativeRoutingItem() {
         alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemTitleAlternative.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
 
@@ -160,6 +165,18 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         smartProtocolSeparator.fillColor = .protonLightGrey()
 
         protocolView.isHidden = viewModel.smartProtocol
+    }
+    
+    private func setupAllowLANItem() {
+        allowLANLabel.attributedStringValue = LocalizedString.allowLANTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        allowLANIcon.image = NSImage(named: NSImage.Name("info_green"))
+        allowLANIcon.toolTip = LocalizedString.allowLANInfo
+
+        allowLANButton.setState(viewModel.allowLAN ? .on : .off)
+        allowLANButton.delegate = self
+
+        allowLANSeparator.fillColor = .protonLightGrey()
     }
     
     private func refreshAutoConnect() {
@@ -209,6 +226,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
         setupSmartProtocolItem()
+        setupAllowLANItem()
     }
     
     // MARK: - Actions
@@ -235,13 +253,27 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 }
 
 extension ConnectionSettingsViewController: SwitchButtonDelegate {
-    func switchButtonClicked(_ button: NSButton) {
-        if button.superview == alternativeRoutingButton {
-            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+    
+    public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
+        switch button.superview {
+        case allowLANButton:
+            viewModel.setAllowLANAccess(value == .on, completion: { result in completion(result) })
+            
+        default:
+            completion(true)
         }
-
-        if button.superview == smartProtocolButton {
+    }
+    
+    func switchButtonClicked(_ button: NSButton) {
+        switch button.superview {
+        case alternativeRoutingButton:
+            viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
+             
+        case smartProtocolButton:
             viewModel.setSmartProtocol(smartProtocolButton.currentButtonState == .on)
+            
+        default:
+            break // Do nothing
         }
     }
 }

@@ -78,13 +78,17 @@ final class ConnectionSettingsViewModel {
             return 0
         }
     }
-
+    
     var alternativeRouting: Bool {
         return propertiesManager.alternativeRouting
     }
 
     var smartProtocol: Bool {
         return propertiesManager.smartProtocol
+    }
+    
+    var allowLAN: Bool {
+        return propertiesManager.excludeLocalNetworks
     }
     
     // MARK: - Item counts
@@ -169,7 +173,7 @@ final class ConnectionSettingsViewModel {
             }
         }
     }
-
+    
     func setAlternatveRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
     }
@@ -187,6 +191,22 @@ final class ConnectionSettingsViewModel {
                 self?.viewController?.reloadView()
             }
         }
+    }
+    
+    func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+            propertiesManager.excludeLocalNetworks = enabled
+            completion(true)
+            return
+        }
+        
+        alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
+            self.propertiesManager.excludeLocalNetworks = enabled
+            self.vpnGateway.retryConnection()
+            completion(true)
+        }, cancelHandler: {
+            completion(false)
+        }))
     }
     
     // MARK: - Item
