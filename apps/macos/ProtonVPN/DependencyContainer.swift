@@ -373,7 +373,7 @@ extension DependencyContainer: UpdateManagerFactory {
 // MARK: - SystemExtensionManagerFactory
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
-        return SystemExtensionManager(factory: self)
+        return SystemExtensionManagerImplementation(factory: self)
     }
 }
 
