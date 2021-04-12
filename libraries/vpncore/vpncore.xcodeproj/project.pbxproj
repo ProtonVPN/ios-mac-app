@@ -833,7 +833,6 @@
 		E1E892B72369EDBE001A436E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1E892B52369EDBE001A436E /* InfoPlist.strings */; };
 		E1EA2A0522F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
 		E1EA2A0622F4582100A747B1 /* OpenVpnConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */; };
-		E56E9B6444FA157F26BBF679 /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B5F6AB00647DDE7CC665D6B7 /* Pods_vpncore_vpncore_iosTests.framework */; };
 		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E98763DF260DCE78002E06E1 /* PMLogTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E98763DE260DCE78002E06E1 /* PMLogTests.swift */; };

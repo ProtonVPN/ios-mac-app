@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Alle servers zijn in onderhoud. Dit betekent meestal dat er technische problemen zijn aan de kant van ProtonVPN, of dat uw netwerkverbinding beperkt is.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Maakt het mogelijk om de VPN te omzeilen en verbinding te maken met apparaten op uw lokale netwerk, zoals uw printer.";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "LAN-verbindingen toestaan";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Ik heb al een account";
 
@@ -979,13 +985,13 @@
 "_openvpn_error_description" = "Er is een fout opgetreden tijdens het installeren van OpenVPN.\nInstalleer ProtonVPN opnieuw en zorg ervoor dat het zich in de map Applicaties bevindt om dit probleem op te lossen. Als alternatief neem contact op met onze ondersteuning.";
 
 /* Enabling OpenVPN Description */
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
+"_openvpn_settings_description" = "ProtonVPN vereist het laden van een systeemextensie om Smart Protocol en OpenVPN te activeren.";
 
 /* Popup description after enabling OpenVPN */
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "U hebt de Systeemextensie ingeschakeld op uw apparaat. U kunt nu Smart Protocol en OpenVPN gebruiken";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_title" = "U kunt nu Smart Protocol en OpenVPN gebruiken";
 
 /* Step 1 for enabling OpenVPN Extension */
 "_openvpn_settings_step1" = "Selecteer in het dialoogvenster dat opent wanneer u OpenVPN inschakelt, Open Beveiligingsvoorkeuren.";
@@ -997,7 +1003,7 @@
 "_openvpn_settings_step3" = "Laat de systeemsoftware laden.";
 
 /* OpenVPN */
-"_openvpn_settings_title" = "System Extension required";
+"_openvpn_settings_title" = "Systeemextensie vereist";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Overzicht";
@@ -1447,7 +1453,7 @@
 "_skip" = "Overslaan";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Gebruik automatisch het protocol en poort die de beste verbinding biedt.";
 
 /* Smart Protocol */
 "_smart_protocol_title" = "Smart Protocol";

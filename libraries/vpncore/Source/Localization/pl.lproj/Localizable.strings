@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Wszystkie serwery są w trakcie przerwy technicznej. Zwykle oznacza to, że występują problemy techniczne po stronie ProtonVPNa lub łączność z siecią jest ograniczona.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Pozwala na ominięcie ruchu VPN i połączenie się z urządzeniami w sieci lokalnej, takimi jak drukarka.";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "Zezwalaj na połączenia LAN";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Posiadam już konto";
 
@@ -979,13 +985,13 @@
 "_openvpn_error_description" = "Wystąpił błąd podczas instalacji protokołu OpenVPN.\nAby rozwiązać problem, zainstaluj ponownie aplikację ProtonVPN, upewniając się, że znajduje się w folderze Aplikacje. Alternatywnie, skontaktuj się z naszym wsparciem technicznym.";
 
 /* Enabling OpenVPN Description */
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
+"_openvpn_settings_description" = "Aplikacja ProtonVPN musi załadować rozszerzenie systemowe, aby korzystać z funkcji Smart Protocol i OpenVPN.";
 
 /* Popup description after enabling OpenVPN */
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "Włączyłeś rozszerzenie systemowe. Możesz korzystać z funkcji Smart Protocol i OpenVPN";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_settings_enabled_title" = "Możesz używać inteligentnego protokołu lub OpenVPN";
+"_openvpn_settings_enabled_title" = "Możesz korzystać funkcji Smart Protocol i OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
 "_openvpn_settings_step1" = "W oknie, które otworzy się po wyłączeniu protokołu OpenVPN, wybierz \"Otwórz ustawienia bezpieczeństwa\".";
@@ -1447,10 +1453,10 @@
 "_skip" = "Pomiń";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Skorzystaj z inteligentnego protokołu i portu, który oferują najlepsze połączenie.";
+"_smart_protocol_description" = "Skorzystaj z inteligentnego protokołu i portu, które oferują najlepsze połączenie.";
 
 /* Smart Protocol */
-"_smart_protocol_title" = "Inteligentny protokół";
+"_smart_protocol_title" = "Smart Protocol";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ prędkość";
@@ -1541,7 +1547,7 @@
 "_trial_popup_call_to_upgrade" = "Ulepsz swój plan, aby uzyskać stały dostęp do funkcji planu ProtonVPN Plus.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Ciesz się wszystkimi zaletami bezpiecznego internetu w każdym miejscu z ProtonVPN";
+"_trial_popup_enjoy" = "Dzięki usłudze ProtonVPN, ciesz się wszystkimi zaletami bezpiecznego Internetu w każdym miejscu";
 
 /* Final text:
  

@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Todos os servidores estão em manutenção. Isto geralmente significa que há dificuldades técnicas do ProtonVPN ou que a sua rede está limitada.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Permite contornar a VPN e ligar a dispositivos na sua rede local, como a impressora.";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "Permitir ligações LAN";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Já tenho uma conta";
 

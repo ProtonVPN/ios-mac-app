@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Все серверы на техобслуживании. Это обычно означает, что на стороне ProtonVPN есть технические трудности, или ваша сеть ограничена.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "Allow LAN connections";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "У меня уже есть аккаунт";
 
@@ -979,13 +985,13 @@
 "_openvpn_error_description" = "Произошла ошибка при установке OpenVPN.\nПереустановите ProtonVPN, убедитесь, что он расположен в папке Приложения, чтобы исправить эту проблему. Или свяжитесь с нашей поддержкой.";
 
 /* Enabling OpenVPN Description */
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
+"_openvpn_settings_description" = "ProtonVPN требует загрузки системного расширения для использования Smart Protocol и OpenVPN.";
 
 /* Popup description after enabling OpenVPN */
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "Вы успешно включили системное расширение на вашем устройстве. Теперь вы можете использовать Smart Protocol и OpenVPN";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_title" = "Теперь вы можете использовать Smart Protocol и OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
 "_openvpn_settings_step1" = "В диалоговом окне, открывающемся при включении OpenVPN, выберите Открыть параметры безопасности.";
@@ -997,7 +1003,7 @@
 "_openvpn_settings_step3" = "Позвольте системному программному обеспечению загрузиться.";
 
 /* OpenVPN */
-"_openvpn_settings_title" = "System Extension required";
+"_openvpn_settings_title" = "Требуется расширение системы";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Обзор";
@@ -1447,7 +1453,7 @@
 "_skip" = "Пропустить";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Автоматически использовать протокол и порт, которые обеспечивают наилучшее соединение.";
 
 /* Smart Protocol */
 "_smart_protocol_title" = "Smart Protocol";

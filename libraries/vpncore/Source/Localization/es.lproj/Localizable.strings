@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Todos los servidores están en mantenimiento. Esto generalmente significa que hay dificultades técnicas por parte de ProtonVPN o que su red es limitada.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Permite omitir la VPN y conectarse a dispositivos de su red local, como la impresora.";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "Permitir conexiones LAN";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Ya tengo una cuenta";
 
@@ -976,7 +982,7 @@
 "_openvpn_cannot_enable" = "No se puede activar OpenVPN";
 
 /* Popup description on error installing OpenVPN */
-"_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+"_openvpn_error_description" = "Se ha producido un error al instalar OpenVPN.\nReinstala ProtonVPN, asegurándose de que se encuentra en la carpeta Aplicaciones, para solucionar este problema. Alternativamente, ponte en contacto con nuestro soporte técnico.";
 
 /* Enabling OpenVPN Description */
 "_openvpn_settings_description" = "ProtonVPN requiere cargar una extensión del sistema para aprovechar el Protocolo Inteligente y OpenVPN.";

@@ -55,6 +55,12 @@
 /* Under maintenance alert */
 "_all_servers_under_maintenance" = "Alle Server werden zurzeit gewartet. Dies bedeutet normalerweise, dass es zurzeit technische Schwierigkeiten auf unserer Seite gibt oder Ihr Netzwerk beschränkt ist.";
 
+/* Settings: Allow LAN information text. */
+"_allow_lan_info" = "Ermöglicht die Umgehung des VPN, um eine Verbindung zu Geräten in Ihrem lokalen Netzwerk herzustellen (z. B. zu Ihrem Drucker).";
+
+/* Settings: Allow LAN label. */
+"_allow_lan_title" = "LAN‐Verbindungen zulassen";
+
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Ich besitze bereits ein Konto";
 
