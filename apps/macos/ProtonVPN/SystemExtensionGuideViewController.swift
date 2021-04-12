@@ -30,6 +30,8 @@ public protocol SystemExtensionGuideVCProtocol: NSViewController {
     func displayStep1()
     func displayStep2()
     func displayStep3()
+    
+    func closeSelf()
 }
 
 final class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuideVCProtocol {
@@ -88,6 +90,10 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
     }
     
     @IBAction func confirmButtonAction(_ sender: Any) {
+        dismiss(nil)
+    }
+    
+    @objc func closeSelf() {
         dismiss(nil)
     }
     

@@ -38,6 +38,10 @@ class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProt
     func viewDidAppear() {
         currentView = 0
         updateView()
+        
+        // Autoclose this window after installation finishes
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationError, object: nil)
     }
     
     func didTapNext() {
@@ -64,5 +68,9 @@ class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProt
             viewController?.displayStep3()
             viewController?.descriptionText = "3. " + LocalizedString.openVPNSettingsStep3
         }
+    }
+    
+    @objc private func closeSelf() {
+        viewController?.closeSelf()
     }
 }
