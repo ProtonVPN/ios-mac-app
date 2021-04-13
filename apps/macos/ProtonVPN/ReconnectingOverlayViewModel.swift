@@ -23,18 +23,18 @@
 import vpncore
 
 class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
-    override var connectingString: NSAttributedString {
-        if timedOut { return super.connectingString }
+    override var secondString: NSAttributedString {
+        if timedOut { return super.secondString }
         switch state {
         case .connected, .error, .disconnected:
-            return super.connectingString
+            return super.secondString
         default:
             return (LocalizedString.qsReestablishingConnection + "\n\n" + LocalizedString.qsYourIpWillNotBeExposed)
             .attributed(withColor: .protonWhite(), fontSize: 20)
         }
     }
     
-    override var phaseString: NSAttributedString {
+    override var firstString: NSAttributedString {
         switch state {
         case .connected:
             return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: 12)

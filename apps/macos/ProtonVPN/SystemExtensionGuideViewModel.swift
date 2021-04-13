@@ -35,6 +35,9 @@ class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProt
     
     private var currentView = 0
     
+    private let descriptionFontSize = 20.0
+    private let descriptionTextColor = NSColor.protonWhite()
+    
     func viewDidAppear() {
         currentView = 0
         updateView()
@@ -60,13 +63,16 @@ class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProt
         switch currentView {
         case 0:
             viewController?.displayStep1()
-            viewController?.descriptionText = "1. " + LocalizedString.openVPNSettingsStep1
+            viewController?.descriptionText = NSMutableAttributedString(attributedString: ("1. " + LocalizedString.openVPNSettingsStep1)
+                .attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize))
+                .add(link: LocalizedString.openVPNSettingsStep1Link, withUrl: "x-apple.systempreferences:com.apple.preference.security?General")
+            
         case 1:
             viewController?.displayStep2()
-            viewController?.descriptionText = "2. " + LocalizedString.openVPNSettingsStep2
+            viewController?.descriptionText = ("2. " + LocalizedString.openVPNSettingsStep2).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
         default:
             viewController?.displayStep3()
-            viewController?.descriptionText = "3. " + LocalizedString.openVPNSettingsStep3
+            viewController?.descriptionText = ("3. " + LocalizedString.openVPNSettingsStep3).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
         }
     }
     

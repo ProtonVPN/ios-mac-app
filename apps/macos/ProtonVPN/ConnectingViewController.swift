@@ -27,8 +27,16 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     @IBOutlet weak var graphicContainer: NSView!
     @IBOutlet weak var phaseLabel: NSTextField!
     @IBOutlet weak var connectionLabel: NSTextField!
-    @IBOutlet weak var cancelButton: ConnectingOverlayButton!
-    @IBOutlet weak var retryButton: ConnectingOverlayButton!
+    @IBOutlet var cancelButton: ConnectingOverlayButton!
+    @IBOutlet var retryButton: ConnectingOverlayButton!
+    
+    @IBOutlet weak var mainStackView: NSStackView!
+    @IBOutlet weak var buttonsStackView: NSStackView!
+    
+    @IBOutlet weak var connectionLabelContainer: NSView!
+    private let textView = NSTextView()
+    private var heightConstraint: NSLayoutConstraint?
+    private var trailingConstraint: NSLayoutConstraint?
     
     let viewModel: ConnectingOverlayViewModel
     
@@ -89,12 +97,39 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
             graphicContainer.addSubview(graphic)
         }
         phaseLabel.isHidden = viewModel.hidePhase
-        phaseLabel.attributedStringValue = viewModel.phaseString
-        connectionLabel.attributedStringValue = viewModel.connectingString
+        phaseLabel.attributedStringValue = viewModel.firstString
+        
+        setupTextView()
+        textView.textStorage?.setAttributedString(viewModel.secondString)
+        
+        connectionLabel.attributedStringValue = viewModel.secondString
+        connectionLabel.allowsEditingTextAttributes = true
+        connectionLabel.isSelectable = true
+        
         cancelButton.title = viewModel.cancelButtonTitle
-        cancelButton.color = viewModel.cancelButtonColor
+        cancelButton.style = viewModel.cancelButtonStyle
+        
         retryButton.isHidden = viewModel.hideRetryButton
         retryButton.title = viewModel.retryButtonTitle
+        retryButton.style = viewModel.retryButtonStyle
+        
+        if retryButton.title.count > 10 { // "Try againg".count == 9
+            buttonsStackView.orientation = .vertical
+            buttonsStackView.alignment = .centerX
+            buttonsStackView.arrangedSubviews.forEach {
+                buttonsStackView.removeArrangedSubview( $0 )
+            }
+            buttonsStackView.addArrangedSubview(retryButton)
+            buttonsStackView.addArrangedSubview(cancelButton)
+        } else {
+            buttonsStackView.orientation = .horizontal
+            buttonsStackView.arrangedSubviews.forEach {
+                buttonsStackView.removeArrangedSubview( $0 )
+            }
+            buttonsStackView.addArrangedSubview(cancelButton)
+            buttonsStackView.addArrangedSubview(retryButton)
+        }
+        
     }
     
     @IBAction private func cancelConnecting(_ sender: Any) {
@@ -109,4 +144,45 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     func stateChanged() {
         update()
     }
+    
+    private func setupTextView() {
+        guard !textView.isDescendant(of: connectionLabelContainer) else {
+            return
+        }
+        
+        textView.linkTextAttributes = [
+            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+        ]
+
+        textView.isEditable = false
+        textView.isHorizontallyResizable = false
+        textView.isVerticallyResizable = false
+        textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.delegate = self
+        
+        connectionLabelContainer.addSubview(textView)
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: connectionLabel.topAnchor, constant: 0),
+            textView.bottomAnchor.constraint(equalTo: connectionLabel.bottomAnchor, constant: 0),
+            textView.leadingAnchor.constraint(equalTo: connectionLabel.leadingAnchor, constant: -4), // This is magic padding that puts NSTextView's text at the same place as in connectionLabel.
+            textView.trailingAnchor.constraint(equalTo: connectionLabel.trailingAnchor, constant: 4), // See above ^.
+        ])
+        
+        connectionLabel.alphaValue = 0.0
+    }
+    
+}
+
+extension ConnectingViewController: NSTextViewDelegate {
+    
+    func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
+        guard let url = link as? URL else {
+            return false
+        }
+        viewModel.open(link: url)
+        return true
+    }
+    
 }

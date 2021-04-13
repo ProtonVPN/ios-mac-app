@@ -226,13 +226,8 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
                 guard let `self` = self else { return }
                 self.removeConnectingOverlay()
             }
-            
-            let retry: (() -> Void) = { [weak self] in
-                guard let `self` = self else { return }
-                self.vpnGateway.retryConnection()
-            }
-            
-            overlayViewModel = factory.makeConnectingOverlayViewModel(cancellation: cancellation, retry: retry)
+                        
+            overlayViewModel = factory.makeConnectingOverlayViewModel(cancellation: cancellation)
             
             if window.isVisible && NSApp.occlusionState.contains(.visible) {
                 showLoadingOverlay(with: overlayViewModel!)

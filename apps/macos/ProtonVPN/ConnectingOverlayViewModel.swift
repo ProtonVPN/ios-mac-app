@@ -28,36 +28,48 @@ protocol OverlayViewModelDelegate: class {
 }
 
 protocol ConnectingOverlayViewModelFactory {
-    func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void, retry: @escaping () -> Void) -> ConnectingOverlayViewModel
+    func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void) -> ConnectingOverlayViewModel
 }
 
 extension DependencyContainer: ConnectingOverlayViewModelFactory {
-    func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void, retry: @escaping () -> Void) -> ConnectingOverlayViewModel {
-        return ConnectingOverlayViewModel(factory: self, cancellation: cancellation, retry: retry)
+    func makeConnectingOverlayViewModel(cancellation: @escaping () -> Void) -> ConnectingOverlayViewModel {
+        return ConnectingOverlayViewModel(factory: self, cancellation: cancellation)
     }
 }
 
 class ConnectingOverlayViewModel {
     
-    typealias Factory = AppStateManagerFactory & NavigationServiceFactory & PropertiesManagerFactory
+    typealias Factory = AppStateManagerFactory
+        & NavigationServiceFactory
+        & PropertiesManagerFactory
+        & VpnGatewayFactory
+        & VpnProtocolChangeManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     
     private let cancellation: () -> Void
-    private let retry: () -> Void
     
     private let loadingView: LoadingAnimationView
-    
-    let retryButtonTitle = LocalizedString.tryAgain
-    
+        
     private(set) var state: AppState
     
     var timedOut = false
+    var timeOutIkeKs: Bool {
+        return propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
+    }
     
     weak var delegate: OverlayViewModelDelegate?
+    
+    private let fontSizeTitle = 20.0
+    private let fontSizeDescription = 12.0
+    private let fontSizeFirst = 12.0
+    
+    private let reconnectWithOvpnLink = "pvpn://reconnect-with-ovpn"
     
     var hidePhase: Bool {
         if timedOut {
@@ -72,53 +84,86 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    var phaseString: NSAttributedString {
+    var firstString: NSAttributedString {
         switch state {
         case .connected:
-            return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: 12)
+            return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: fontSizeFirst)
         default:
-            return LocalizedString.initializingConnection.attributed(withColor: .protonWhite(), fontSize: 12)
+            return LocalizedString.initializingConnection.attributed(withColor: .protonWhite(), fontSize: fontSizeFirst)
         }
     }
     
-    var connectingString: NSAttributedString {
+    var secondString: NSAttributedString {
+        return timedOut
+            ? timedOutSecondString
+            : defaultSecondString
+    }
+    
+    private var defaultSecondString: NSAttributedString {
         var boldString: String
         var string: String
         
-        if timedOut {
-            boldString = LocalizedString.timedOut
-            string = String(format: LocalizedString.connectingVpn, boldString)
+        if let server = appStateManager.activeConnection()?.server {
+            boldString = (server.country + " " + server.name)
+            boldString = boldString.preg_replace_none_regex(" ", replaceto: "\u{a0}")
+            boldString = boldString.preg_replace_none_regex("-", replaceto: "\u{2011}")
         } else {
-            if let server = appStateManager.activeConnection()?.server {
-                boldString = (server.country + " " + server.name)
-                boldString = boldString.preg_replace_none_regex(" ", replaceto: "\u{a0}")
-                boldString = boldString.preg_replace_none_regex("-", replaceto: "\u{2011}")
+            boldString = ""
+        }
+        
+        switch state {
+        case .preparingConnection:
+            string = LocalizedString.preparingConnection
+        case .connected:
+            string = String(format: LocalizedString.vpnConnected, boldString)
+        case .error, .disconnected:
+            boldString = LocalizedString.failed
+            string = String(format: LocalizedString.connectingVpn, boldString)
+        default:
+            if isReconnecting {
+                string = String(format: LocalizedString.reConnectingTo + "\n", boldString)
             } else {
-                boldString = ""
-            }
-            
-            switch state {
-            case .preparingConnection:
-                string = LocalizedString.preparingConnection
-            case .connected:
-                string = String(format: LocalizedString.vpnConnected, boldString)
-            case .error, .disconnected:
-                boldString = LocalizedString.failed
-                string = String(format: LocalizedString.connectingVpn, boldString)
-            default:
-                if isReconnecting {
-                    string = String(format: LocalizedString.reConnectingTo + "\n", boldString)
-                } else {
-                    string = String(format: LocalizedString.connectingTo, boldString)
-                }
+                string = String(format: LocalizedString.connectingTo, boldString)
             }
         }
         
-        let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: 20))
+        let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
-            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: 20), range: range)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
         }
+        
+        return attributedString
+    }
+    
+    private var timedOutSecondString: NSAttributedString {
+        if !timeOutIkeKs {
+            let boldString = LocalizedString.timedOut
+            let string = String(format: LocalizedString.connectingVpn, boldString)
+            let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+            
+            if let stringRange = string.range(of: boldString) {
+                let range = NSRange(stringRange, in: string)
+                attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
+            }
+            return attributedString
+        }
+        
+        let boldString = LocalizedString.timedOut
+        let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
+        let string = String(format: LocalizedString.connectingVpn, boldString) + decription
+                
+        var attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+        if let stringRange = string.range(of: boldString) {
+            let range = NSRange(stringRange, in: string)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
+        }
+        if let descriptionRange = string.range(of: decription) {
+            let range = NSRange(descriptionRange, in: string)
+            attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.systemFont(ofSize: CGFloat(fontSizeDescription)), range: range)
+        }
+        
+        attributedString = attributedString.add(link: LocalizedString.timeoutKsIkeLink, withUrl: reconnectWithOvpnLink)
         
         return attributedString
     }
@@ -132,8 +177,20 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    var cancelButtonColor: NSColor {
-        return .protonWhite()
+    var cancelButtonStyle: ConnectingOverlayButton.Style {
+        return .main
+    }
+    
+    var retryButtonTitle: String {
+        return timeOutIkeKs
+            ? LocalizedString.tryAgainWithoutKS
+            : LocalizedString.tryAgain
+    }
+    
+    var retryButtonStyle: ConnectingOverlayButton.Style {
+        return timedOut && timeOutIkeKs
+            ? .colorGreen
+            : .main
     }
     
     var hideRetryButton: Bool {
@@ -158,11 +215,10 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    init(factory: Factory, cancellation: @escaping () -> Void, retry: @escaping () -> Void) {
+    init(factory: Factory, cancellation: @escaping () -> Void) {
         self.factory = factory
         self.state = factory.makeAppStateManager().state
         self.cancellation = cancellation
-        self.retry = retry
         
         loadingView = LoadingAnimationView(frame: CGRect.zero)
         
@@ -212,9 +268,44 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    func retryConnection() {
+    public func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
         timedOut = false
-        retry()
+        if let vpnProtocol = vpnProtocol {
+            vpnGateway.reconnect(with: vpnProtocol)
+        } else {
+            
+            if timeOutIkeKs {
+                self.propertiesManager.killSwitch = false
+            }
+            self.vpnGateway.retryConnection()
+        }
+    }
+    
+    func open(link url: URL) {
+        switch url.absoluteString {
+        case reconnectWithOvpnLink:
+            reconnectWithOvpn()
+            
+        default:
+            break // Do nothing
+        }
+    }
+    
+    private func reconnectWithOvpn() {
+        let transportProtocol: VpnProtocol = .openVpn(.udp)
+        
+        // This will trigger reconnect after protocol is changed
+        var token: NSObjectProtocol?
+        token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
+            NotificationCenter.default.removeObserver(token!)
+            guard let newProtocol = notification.object as? VpnProtocol else {
+                return
+            }
+            PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
+            self?.retryConnection(withProtocol: newProtocol)
+        }
+        
+        vpnProtocolChangeManager.change(toProcol: transportProtocol)
     }
     
     @objc private func appStateChanged(_ notification: Notification) {

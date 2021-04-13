@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConnectingViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="buttonsStackView" destination="J79-kU-gHb" id="Lct-Hw-4Jx"/>
                 <outlet property="cancelButton" destination="SN9-pH-DJE" id="rge-1W-dCg"/>
                 <outlet property="connectionLabel" destination="rdD-jv-0P2" id="6Rx-6e-9gb"/>
+                <outlet property="connectionLabelContainer" destination="tpq-ZR-Wum" id="H5C-g7-q1v"/>
                 <outlet property="graphicContainer" destination="hHD-0g-p4p" id="6M9-pH-dau"/>
+                <outlet property="mainStackView" destination="Rml-XC-dUB" id="7p2-pe-LTQ"/>
                 <outlet property="phaseLabel" destination="lcw-K7-AD9" id="TOK-3W-EyI"/>
                 <outlet property="retryButton" destination="PDj-1Z-iD3" id="1uQ-oa-XbG"/>
                 <outlet property="view" destination="XJd-M3-dH1" id="mia-MA-7pk"/>
@@ -23,36 +26,47 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="vertical" alignment="centerX" spacing="30" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rml-XC-dUB">
-                    <rect key="frame" x="52" y="140" width="340" height="282"/>
+                    <rect key="frame" x="52" y="136" width="340" height="290"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="hHD-0g-p4p">
-                            <rect key="frame" x="110" y="162" width="120" height="120"/>
+                            <rect key="frame" x="110" y="170" width="120" height="120"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="hHD-0g-p4p" secondAttribute="height" multiplier="1:1" id="bWP-oc-l5I"/>
                                 <constraint firstAttribute="width" constant="120" id="eqw-hN-oUg"/>
                             </constraints>
                         </customView>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="lcw-K7-AD9">
-                            <rect key="frame" x="150" y="116" width="41" height="16"/>
+                            <rect key="frame" x="150" y="124" width="41" height="16"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="pGO-4V-Bfl">
                                 <font key="font" metaFont="system"/>
                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdD-jv-0P2">
-                            <rect key="frame" x="150" y="70" width="41" height="16"/>
-                            <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="e3b-42-zU3">
-                                <font key="font" metaFont="system"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                            </textFieldCell>
-                        </textField>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="tpq-ZR-Wum">
+                            <rect key="frame" x="89" y="70" width="163" height="24"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rdD-jv-0P2">
+                                    <rect key="frame" x="-2" y="8" width="167" height="16"/>
+                                    <textFieldCell key="cell" sendsActionOnEndEditing="YES" alignment="center" title="Label" id="e3b-42-zU3">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="trailing" secondItem="rdD-jv-0P2" secondAttribute="trailing" id="ADb-PL-MSO"/>
+                                <constraint firstItem="rdD-jv-0P2" firstAttribute="top" secondItem="tpq-ZR-Wum" secondAttribute="top" id="ZIv-t3-QJI"/>
+                                <constraint firstAttribute="bottom" secondItem="rdD-jv-0P2" secondAttribute="bottom" constant="8" id="qdB-W7-cvm"/>
+                                <constraint firstItem="rdD-jv-0P2" firstAttribute="leading" secondItem="tpq-ZR-Wum" secondAttribute="leading" id="vBT-Ma-NPp"/>
+                            </constraints>
+                        </customView>
                         <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J79-kU-gHb">
                             <rect key="frame" x="43" y="0.0" width="255" height="40"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-pH-DJE" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="-6" y="-7" width="132" height="51"/>
+                                    <rect key="frame" x="-7" y="-7" width="134" height="52"/>
                                     <constraints>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="fJO-eu-zIY"/>
                                         <constraint firstAttribute="height" constant="40" id="nP6-oy-arY"/>
@@ -71,7 +85,7 @@
                                     </connections>
                                 </button>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDj-1Z-iD3" userLabel="Retry Button" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="129" y="-7" width="132" height="51"/>
+                                    <rect key="frame" x="128" y="-7" width="134" height="52"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="40" id="2hU-AV-b0C"/>
                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="EFt-Sq-Ona"/>
