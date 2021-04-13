@@ -344,12 +344,6 @@ extension AppSessionManagerImplementation: AppSessionRefresher {
         if loggedIn {
             attemptDataRefreshWithoutLogin(success: {}, failure: { error in
                 PMLog.D("Failed to reestablish vpn credentials: \(error.localizedDescription)", level: .error)
-                
-                let error = error as NSError
-                switch error.code {
-                default:
-                    break // ignore most failures, allowing the user to continue using the app
-                }
             })
         } else {
             loadDataWithoutLogin(success: {}, failure: { _ in })
