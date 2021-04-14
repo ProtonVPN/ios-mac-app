@@ -22,9 +22,15 @@
 import Foundation
 import KeychainAccess
 
+public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
+public typealias VpnReconnectInfo = (from: ServerModel, to: ServerModel)
+
 public protocol VpnKeychainProtocol {
     
     static var vpnCredentialsChanged: Notification.Name { get }
+    static var vpnPlanDowngraded: Notification.Name { get }
+    static var vpnMaxDevicesReached: Notification.Name { get }
+    static var vpnUserDelinquent: Notification.Name { get }
     
     func fetch() throws -> VpnCredentials
     func fetchOpenVpnPassword() throws -> Data
@@ -55,6 +61,11 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
+    public static let vpnPlanDowngraded = Notification.Name("VpnKeychainPlanDowngraded")
+    public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
+    public static let vpnMaxDevicesReached = Notification.Name("VpnMaxDevicesReached")
+    
+    private typealias Factory = PropertiesManagerFactory
     
     public init() {}
     
@@ -86,6 +97,18 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func store(vpnCredentials: VpnCredentials) {
+        
+        if let currentCredentials = try? fetch() {
+            DispatchQueue.main.async {
+                let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
+                if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
+                    NotificationCenter.default.post(name: VpnKeychain.vpnUserDelinquent, object: downgradeInfo)
+                } else if currentCredentials.maxTier < vpnCredentials.maxTier {
+                    NotificationCenter.default.post(name: VpnKeychain.vpnPlanDowngraded, object: downgradeInfo)
+                }
+            }
+        }
+        
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
         } catch let error {
@@ -97,6 +120,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         } catch let error {
             PMLog.ET("Error occurred during OpenVPN password storage: \(error.localizedDescription)")
         }
+        
         DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: vpnCredentials) }
     }
     

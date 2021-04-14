@@ -763,3 +763,32 @@
 
 "_openvpn_cannot_enable" = "Cannot enable OpenVPN";
 "_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+
+// Downgrade
+
+"_from_server_title" = "From %@ Server:";
+"_to_server_title" = "To %@ Server:";
+
+"_update_billing" = "UPDATE MY BILLING";
+"_upgrade_again" = "UPGRADE AGAIN";
+
+"_delinquent_title" = "Your VPN account has pending invoices";
+"_delinquent_description" = "You will be able to access premium features again after these are paid.";
+"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest FREE plan server available.";
+
+"_maximum_device_title" = "You have reached your maximum device limit";
+"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to PLUS to get up to %@ devices connected at the same time.";
+"_reconnect_title" = "We are reconnecting to the fastest server available.";
+"_subscription_expired_title" = "Your VPN subscription plan has expired";
+"_subscription_expired_description" = "Your subscription has been downgraded.";
+"_subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+
+"_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
+"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
+"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+"_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+
+"_tier_free" = "FREE";
+"_tier_basic" = "BASIC";
+"_tier_plus" = "PLUS";
+"_tier_visionary" = "VISIONARY";
