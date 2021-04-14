@@ -10,6 +10,10 @@
 import Foundation
 
 public enum VpnProtocol {
+    public enum AuthenticationType {
+        case credentials
+        case certificate
+    }
     
     // swiftlint:disable nesting
     public enum TransportProtocol: String, Codable {
@@ -86,6 +90,11 @@ public enum VpnProtocol {
         } else {
             return false
         }
+    }
+
+    public var authenticationType: AuthenticationType {
+        // add condition for Wireguard when implemented
+        return .credentials
     }
 }
 
