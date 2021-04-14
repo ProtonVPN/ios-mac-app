@@ -44,7 +44,7 @@ class AppStateManagerTests: XCTestCase {
         vpnManager = VpnManagerMock()
         
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
-        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer)
+        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock())
         
         if case AppState.disconnected = appStateManager.state {} else { XCTAssert(false) }
         XCTAssertFalse(appStateManager.state.isConnected)
