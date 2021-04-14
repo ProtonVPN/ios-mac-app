@@ -154,7 +154,10 @@ extension IosAlertService: CoreAlertService {
 
         case is VpnServerOnMaintenanceAlert:
             show(alert as! VpnServerOnMaintenanceAlert)
-
+            
+        case is UserAccountUpdateAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

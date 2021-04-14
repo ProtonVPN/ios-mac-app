@@ -48,7 +48,7 @@ class DependencyContainer {
                                                                         vpnKeychain: makeVpnKeychain(),
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService())
+    private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), navigationService: navigationService)
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()

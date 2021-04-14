@@ -26,5 +26,4 @@ import vpncore
 class AlertServiceEmptyStub: AlertService {
     
     func push(alert: SystemAlert) {}
-    
 }
