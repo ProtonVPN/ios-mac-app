@@ -36,6 +36,7 @@ public class AppStateManager {
     private let timerFactory: TimerFactoryProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
+    private let vpnAuthentication: VpnAuthentication
     
     public let stateChange = Notification.Name("AppStateManagerStateChange")
     public let wake = Notification.Name("AppStateManagerWake")
@@ -64,7 +65,7 @@ public class AppStateManager {
     private var timeoutTimer: Timer?
     private var serviceChecker: ServiceChecker?
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.alamofireWrapper = alamofireWrapper
@@ -73,6 +74,7 @@ public class AppStateManager {
         self.propertiesManager = propertiesManager
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
+        self.vpnAuthentication = vpnAuthentication
         
         handleVpnStateChange(vpnManager.state)
         reachability = try? Reachability()
@@ -163,11 +165,27 @@ public class AppStateManager {
             // if this is too common, then we should pick a random server instead of using really old score values
             PMLog.ET("Connecting with scores older than 2 hours", level: .warn)
         }
-        
-        PMLog.D("Connect started")
-        makeConnection(configuration)
+
+        switch configuration.vpnProtocol.authenticationType {
+        case .credentials:
+            PMLog.D("Connect started")
+            makeConnection(configuration)
+        case .certificate:
+            PMLog.D("Checking vpn auth keys and certificates")
+            vpnAuthentication.loadAuthenticationData { result in
+                switch result {
+                case let .success(data):
+                    PMLog.D("Connect started")
+                    self.makeConnection(configuration, authData: data)
+                case .failure:
+                    PMLog.ET("Failed to load vpn auth data")
+                    self.connectionFailed()
+                    self.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                }
+            }
+        }
     }
-    
+
     public func disconnect() {
         disconnect {}
     }
@@ -241,7 +259,7 @@ public class AppStateManager {
         }
     }
     
-    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration) {
+    private func makeConnection(_ connectionConfiguration: ConnectionConfiguration, authData: VpnAuthenticationData? = nil) {
         guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration) else {
             cancelConnectionAttempt()
             return
@@ -252,6 +270,7 @@ public class AppStateManager {
             self.propertiesManager.lastIkeConnection = connectionConfiguration
         case .openVpn:
             self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
+        #warning("Use authData for Wireguard when it is implemented")
         }
         
         vpnManager.connect(configuration: vpnManagerConfiguration, completion: {

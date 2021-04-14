@@ -93,7 +93,7 @@ public enum VpnProtocol {
     }
 
     public var authenticationType: AuthenticationType {
-        // add condition for Wireguard when implemented
+        #warning("Add condition for Wireguard when implemented")
         return .credentials
     }
 }

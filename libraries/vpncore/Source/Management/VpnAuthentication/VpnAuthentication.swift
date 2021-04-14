@@ -33,7 +33,26 @@ public protocol VpnAuthenticationFactory {
 }
 
 public protocol VpnAuthentication {
+    /**
+     Refreshes the client certificate
+     */
+    func refreshCertificates(completion: @escaping (Result<(VpnAuthenticationData), Error>) -> Void)
+
+    /**
+     Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
+
+     Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
+     */
     func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void)
+
+    /**
+     Invalidates the certificate, if one is stored. Should be called on user plan upgrade, downgrade, delinquent
+     */
+    func invalidateCertificate()
+
+    /**
+     Deletes all the generated and stored data, so keys and certificate
+     */
     func clear()
 }
 
@@ -83,7 +102,7 @@ public final class VpnAuthenticationManager {
         // return VpnKeys(privateKey: "wLLM5GvLbBtdE2pCC1qMGXHFDM5j3SoU1WIIUtAxNW8=", publicKey: "8XmYqdauprZKZyv+8JJE7hpvjWEAvvx4G/1LYAA+hEw=")
     }
 
-    private func getCertificate() -> VpnCertificate? {
+    private func getStoredCertificate() -> VpnCertificate? {
        do {
             guard let json = try appKeychain.getData(StorageKey.vpnCertificate) else {
                 return nil
@@ -97,7 +116,7 @@ public final class VpnAuthenticationManager {
         }
     }
 
-    private func getKeys() -> VpnKeys? {
+    private func getStoredKeys() -> VpnKeys? {
         do {
             guard let json = try appKeychain.getData(StorageKey.vpnKeys) else {
                 return nil
@@ -212,6 +231,20 @@ public final class VpnAuthenticationManager {
             completion(.success(certificate))
         }
     }
+
+    private func getKeys() -> VpnKeys {
+        // get or generate the keys first
+        let keys: VpnKeys
+        if let existingKeys = self.getStoredKeys() {
+            keys = existingKeys
+        } else {
+            PMLog.D("No vpn auth keys, generating and storing")
+            keys = self.generateKeys()
+            self.store(keys: keys)
+        }
+
+        return keys
+    }
 }
 
 extension VpnAuthenticationManager: VpnAuthentication {
@@ -220,63 +253,57 @@ extension VpnAuthenticationManager: VpnAuthentication {
         deleteCertificate()
     }
 
-    public func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void) {
+    public func invalidateCertificate() {
+        deleteCertificate()
+    }
+
+    public func refreshCertificates(completion: @escaping (Result<(VpnAuthenticationData), Error>) -> Void) {
         // simple synchornization to make sure this method is not call multiple times in parallel
         objc_sync_enter(self)
 
-        // get or generate the keys first
-        let keys: VpnKeys
-        if let existingKeys = self.getKeys() {
-            keys = existingKeys
+        let keys = getKeys()
+        let existingCertificate = self.getStoredCertificate()
+
+        let needsRefresh: Bool
+        if let certificate = existingCertificate {
+            // refresh is needed if the certificate expired before a safe interval
+            needsRefresh = certificate.validUntil < Date().addingTimeInterval(certificateRefreshDeadline)
         } else {
-            PMLog.D("No vpn auth keys, generating and storing")
-            keys = self.generateKeys()
-            self.store(keys: keys)
+            // no certificate exists, refresh is definitelly needed
+            needsRefresh = true
         }
 
-        let existingCertificate = self.getCertificate()
-
-        // certificate is missing or no longer valid
-        guard let certificate = existingCertificate, certificate.validUntil > Date() else {
-            // fetch new certificate from backend
-            self.getCertificate(keys: keys) { result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case let .success(certificate):
-                    // store and return it
-                    self.store(certificate: certificate)
-                    completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
-                }
-                objc_sync_exit(self)
-            }
-            return
-        }
-
-        // certificate is valid and expires in more time than the threshold for "just in case" refresh, use it
-        if certificate.validUntil > Date().addingTimeInterval(self.certificateRefreshDeadline) {
-            PMLog.D("Vpn auth certificate found and still valid, using it")
-            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
+        guard needsRefresh else {
+            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate!.certificate)))
             objc_sync_exit(self)
             return
         }
 
-        PMLog.D("Trying to refresh the backend certificate before expiration date")
-
         // fetch new certificate from backend
         self.getCertificate(keys: keys) { result in
             switch result {
-            case .failure:
-                // getting new certificate failed but the current one is still valid, use it
-                PMLog.D("Getting new vpn auth certificate failed but the current one is still valid, using it")
-                completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
+            case let .failure(error):
+                completion(.failure(error))
             case let .success(certificate):
-                // store and return it
-                PMLog.D("Storing and using new vpn auth certificate")
+                // store it
                 self.store(certificate: certificate)
                 completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
             objc_sync_exit(self)
         }
+        return
+    }
+
+    public func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void) {
+        let keys = getKeys()
+
+        // if certificate is still valid use it
+        if let existingCertificate = self.getStoredCertificate(), existingCertificate.validUntil < Date() {
+            completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
+            return
+        }
+
+        // certificate is missing or no longer valid, refresh it and use
+        refreshCertificates(completion: completion)
     }
 }
