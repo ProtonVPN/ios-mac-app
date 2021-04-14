@@ -27,7 +27,7 @@ import vpncore
 @testable import ProtonVPN
 
 fileprivate let windowService = WindowServiceMock()
-fileprivate let uiAlertService = IosUiAlertService(windowService: windowService)
+fileprivate let uiAlertService = IosUiAlertService(windowService: windowService, navigationService: nil)
 
 class AlertTests: XCTestCase {
 

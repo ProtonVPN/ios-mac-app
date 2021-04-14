@@ -26,11 +26,13 @@ import vpncore
 
 class IosUiAlertService: UIAlertService {
     
+    private let navigationService: NavigationService?
     private let windowService: WindowService
     private var currentAlerts = [SystemAlert]()
     
-    public init(windowService: WindowService) {
+    public init(windowService: WindowService, navigationService: NavigationService?) {
         self.windowService = windowService
+        self.navigationService = navigationService
     }
     
     func displayAlert(_ alert: SystemAlert) {
@@ -44,19 +46,11 @@ class IosUiAlertService: UIAlertService {
         
         currentAlerts.append(alert)
         
-        let alertController = TrackedAlertController(title: alert.title, message: alert.message, preferredStyle: .alert)
-        alert.actions.forEach { action in
-            alertController.addAction(UIAlertAction(title: action.title, style: action.style.alertButtonStyle, handler: { _ in
-                action.handler?()
-            }))
+        if let accountAlert = alert as? UserAccountUpdateAlert {
+            displayUserUpdateAlert(alert: accountAlert)
+        } else {
+            displayTrackedAlert(alert: alert)
         }
-        
-        alertController.dismissCompletion = self.dismissCompletion(alert)
-        alert.dismiss = {
-            alertController.dismiss(animated: true, completion: nil)
-        }
-        
-        self.windowService.present(alert: alertController)
     }
     
     func displayAlert(_ alert: SystemAlert, message: NSAttributedString) {
@@ -94,6 +88,31 @@ class IosUiAlertService: UIAlertService {
         }
     }
     
+    private func displayTrackedAlert( alert: SystemAlert ) {
+        let alertController = TrackedAlertController(title: alert.title, message: alert.message, preferredStyle: .alert)
+        alert.actions.forEach { action in
+            alertController.addAction(UIAlertAction(title: action.title, style: action.style.alertButtonStyle, handler: { _ in
+                action.handler?()
+            }))
+        }
+        
+        alertController.dismissCompletion = self.dismissCompletion(alert)
+        alert.dismiss = {
+            alertController.dismiss(animated: true, completion: nil)
+        }
+        
+        self.windowService.present(alert: alertController)
+    }
+    
+    private func displayUserUpdateAlert( alert: UserAccountUpdateAlert ) {
+        let viewController = UserAccountUpdateViewController(alert: alert, navigationService: navigationService)
+        viewController.modalPresentationStyle = .overFullScreen
+        viewController.dismissCompletion = self.dismissCompletion(alert)
+        alert.dismiss = {
+            viewController.dismiss(animated: true, completion: nil)
+        }
+        self.windowService.present(modal: viewController)
+    }
 }
 
 extension PrimaryActionType {

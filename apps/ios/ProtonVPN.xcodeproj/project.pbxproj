@@ -12,6 +12,8 @@
 		0EFF42E4DD19397A4AA28559 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6DB679EE574B8A710446C434 /* Pods_OpenVPN_Extension.framework */; };
 		1D533E7ACCBB4672CD678E98 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CFAD1643F4839BBB183EBC12 /* Pods_Quick_Connect_Widget.framework */; };
 		333BD905132E44B71647B9E9 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D87BFF86F618D31D6568A4FC /* Pods_Siri_Shortcut_Handler.framework */; };
+		421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
+		421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */; };
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
@@ -19,6 +21,7 @@
 		422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
+		4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
 		42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */; };
 		42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */; };
 		42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
@@ -563,6 +566,8 @@
 		3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.release.xcconfig"; path = "Pods/Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.release.xcconfig"; sourceTree = "<group>"; };
 		3BE3927C9DA731FD8E313B91 /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		3F338F475F96CA85D904FF56 /* Pods-Siri Shortcut Handler Debug.test.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler Debug.test.xcconfig"; path = "Pods/Target Support Files/Pods-Siri Shortcut Handler Debug/Pods-Siri Shortcut Handler Debug.test.xcconfig"; sourceTree = "<group>"; };
+		421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
+		421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
 		422EAB1A243F20D800C7A16C /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
 		42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
@@ -1019,6 +1024,23 @@
 				FB58D1A671E132A3AC40A112 /* Pods-ProtonVPN-settings-metadata.plist */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		421B3BD4261B2B7A00670A7C /* Downgrade */ = {
+			isa = PBXGroup;
+			children = (
+				421B3BD5261B2BDA00670A7C /* ViewControllers */,
+			);
+			path = Downgrade;
+			sourceTree = "<group>";
+		};
+		421B3BD5261B2BDA00670A7C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */,
+				421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		42BB5E5A247FFD7F0002DA8A /* ViewModels */ = {
@@ -1516,6 +1538,7 @@
 				F36ECC8B2611C5DF0089B898 /* Common */,
 				D50342602472C82A005F6B90 /* ConnectionBar */,
 				F36ECC842611C4D60089B898 /* Countries */,
+				421B3BD4261B2B7A00670A7C /* Downgrade */,
 				F36ECCC62611C7F10089B898 /* Launch */,
 				F36ECC872611C5420089B898 /* Login */,
 				F36ECD3B2611C9A40089B898 /* Map */,
@@ -2433,6 +2456,7 @@
 				79C559A220AEC73A00E6D3F6 /* CountryViewCell.xib in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
 				793ECF442149041A00C186A7 /* AppVersionView.xib in Resources */,
+				421B3BD9261B2C2200670A7C /* UserAccountUpdateViewController.xib in Resources */,
 				E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */,
 				793ECF3E2148E84500C186A7 /* TooltipTableViewCell.xib in Resources */,
 				E169FC3D2289AE9900FDC933 /* phone_country_code.geojson in Resources */,
@@ -2893,6 +2917,7 @@
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
+				421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */,
 				D511084A24614D480018872A /* PlanInfoView.swift in Sources */,
 				D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
@@ -3097,6 +3122,7 @@
 				D5136C79228592E80002C095 /* InstructionStepTableViewCell.swift in Sources */,
 				D5136C7A228592E80002C095 /* KeyValueTableViewCell.swift in Sources */,
 				D5136C7B228592E80002C095 /* StandardTableViewCell.swift in Sources */,
+				4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */,
 				D5136C7C228592E80002C095 /* TooltipTableViewCell.swift in Sources */,
 				D5136C7D228592E80002C095 /* InstructionStepView.swift in Sources */,
 				D5136C7E228592E80002C095 /* AppDelegate.swift in Sources */,

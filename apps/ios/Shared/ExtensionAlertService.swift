@@ -36,5 +36,4 @@ class ExtensionAlertService: CoreAlertService {
             delegate?.actionErrorReceived()
         }
     }
-    
 }
