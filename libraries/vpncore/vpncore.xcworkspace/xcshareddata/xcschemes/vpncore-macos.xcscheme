@@ -66,6 +66,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "AlternativeRoutingTests">
+               </Test>
+               <Test
                   Identifier = "SmartProtocolImplementationTests">
                </Test>
             </SkippedTests>
