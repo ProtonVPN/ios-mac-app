@@ -37,9 +37,9 @@ PODS:
   - PromiseKit/UIKit (6.13.1):
     - PromiseKit/CorePromise
   - ReachabilitySwift (5.0.0)
-  - Sentry (4.5.0):
-    - Sentry/Core (= 4.5.0)
-  - Sentry/Core (4.5.0)
+  - Sentry (5.2.2):
+    - Sentry/Core (= 5.2.2)
+  - Sentry/Core (5.2.2)
   - SwiftLint (0.42.0)
   - SwiftyBeaver (1.9.3)
   - TrustKit (1.7.0)
@@ -62,7 +62,7 @@ PODS:
     - KeychainAccess (= 3.2.1)
     - PMNetworking
     - ReachabilitySwift (= 5.0.0)
-    - Sentry (= 4.5.0)
+    - Sentry (= 5.2.2)
     - TrustKit
     - TunnelKit
 
@@ -74,7 +74,7 @@ DEPENDENCIES:
   - PMChallenge (from `../pmchallenge`)
   - PMNetworking (from `../pmnetworking`)
   - ReachabilitySwift (= 5.0.0)
-  - Sentry (= 4.5.0)
+  - Sentry (= 5.2.2)
   - SwiftLint (= 0.42.0)
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
   - TunnelKit (from `../tunnelkit`)
@@ -125,13 +125,13 @@ SPEC CHECKSUMS:
   PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
   PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  Sentry: ab6c209f23700d1460691dbc90e19ed0a05d496b
+  Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
-  vpncore: 2b025c8baa5678b04af6db1dd3e3242fb0f69b5a
+  vpncore: 987786fc70ef7560dcf6fdc4ae5d25ddf85fed66
 
-PODFILE CHECKSUM: f79c9c07c77da07f40fbbcdce908993da9c2d5cc
+PODFILE CHECKSUM: ae2a2256336af05f588a4b1a2fcbeb094ac013c3
 
 COCOAPODS: 1.10.1
