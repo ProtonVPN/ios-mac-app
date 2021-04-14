@@ -59,7 +59,7 @@ class ConnectingOverlayViewModel {
     private(set) var state: AppState
     
     var timedOut = false
-    var timeOutIkeKs: Bool {
+    private var isIkeWithKsEnabled: Bool {
         return propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
     }
     
@@ -137,7 +137,7 @@ class ConnectingOverlayViewModel {
     }
     
     private var timedOutSecondString: NSAttributedString {
-        if !timeOutIkeKs {
+        if !isIkeWithKsEnabled {
             let boldString = LocalizedString.timedOut
             let string = String(format: LocalizedString.connectingVpn, boldString)
             let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
@@ -182,13 +182,13 @@ class ConnectingOverlayViewModel {
     }
     
     var retryButtonTitle: String {
-        return timeOutIkeKs
+        return isIkeWithKsEnabled
             ? LocalizedString.tryAgainWithoutKS
             : LocalizedString.tryAgain
     }
     
     var retryButtonStyle: ConnectingOverlayButton.Style {
-        return timedOut && timeOutIkeKs
+        return timedOut && isIkeWithKsEnabled
             ? .colorGreen
             : .main
     }
@@ -274,7 +274,7 @@ class ConnectingOverlayViewModel {
             vpnGateway.reconnect(with: vpnProtocol)
         } else {
             
-            if timeOutIkeKs {
+            if isIkeWithKsEnabled {
                 self.propertiesManager.killSwitch = false
             }
             self.vpnGateway.retryConnection()

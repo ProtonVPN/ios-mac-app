@@ -41,10 +41,7 @@ struct SystemExtensionManagerNotification {
     static let installationError = Notification.Name("OpenVPNExtensionInstallError")
 }
 
-enum SystemExtensionManagerResult {
-    case success
-    case failure(Error)
-}
+typealias SystemExtensionManagerResult = Result<Void, Error>
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
@@ -126,7 +123,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx install request result: \(result.rawValue)")
 
-        self.completionCallback?(.success)
+        self.completionCallback?(.success(()))
         self.completionCallback = nil
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
@@ -164,7 +161,7 @@ class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionReques
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx request finished with result: \(result.rawValue)")
-        completion?(.success)
+        completion?(.success(()))
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
