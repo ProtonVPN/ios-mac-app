@@ -37,7 +37,7 @@ class SiriHandlerViewModel {
     private let alertService = ExtensionAlertService()
     
     lazy var appStateManager = { [unowned self] in
-        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer)
+        return AppStateManager(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper))
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?

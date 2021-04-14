@@ -70,7 +70,6 @@ class WidgetFactory {
                                timerFactory: TimerFactory(),
                                propertiesManager: self.propertiesManager,
                                vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager)
-        )
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager), vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper))
     }
 }

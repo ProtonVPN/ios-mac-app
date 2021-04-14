@@ -46,7 +46,8 @@ class DependencyContainer {
                                                                         timerFactory: TimerFactory(),
                                                                         propertiesManager: makePropertiesManager(),
                                                                         vpnKeychain: makeVpnKeychain(),
-                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer())
+                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer(),
+                                                                        vpnAuthentication: makeVpnAuthentication())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
@@ -71,6 +72,8 @@ class DependencyContainer {
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
     private lazy var challenge = CoreChallenge()
+
+    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper())
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -431,5 +434,12 @@ extension DependencyContainer: TroubleshootViewModelFactory {
 extension DependencyContainer: AppSpecificRequestAdapterFatory {
     func makeAppSpecificRequestAdapter() -> RequestAdapter? {
         return ChallengeAppSpecificRequestAdapter(challenge: challenge)
+    }
+}
+
+// MARK: VpnAuthenticationManagerFactory
+extension DependencyContainer: VpnAuthenticationFactory {
+    func makeVpnAuthentication() -> VpnAuthentication {
+        return vpnAuthentication
     }
 }

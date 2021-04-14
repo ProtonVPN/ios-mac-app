@@ -54,7 +54,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -71,6 +71,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
+    private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     var vpnGateway: VpnGatewayProtocol?
     
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
