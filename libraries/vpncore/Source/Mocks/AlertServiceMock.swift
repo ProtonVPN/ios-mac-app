@@ -32,5 +32,4 @@ public class CoreAlertServiceMock: CoreAlertService {
         alerts.append(alert)
         alertAdded?(alert)
     }
-    
 }

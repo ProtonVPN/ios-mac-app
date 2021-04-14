@@ -22,7 +22,6 @@
 import Foundation
 
 public enum PrimaryActionType {
-    
     case confirmative
     case destructive
     case cancel
@@ -76,6 +75,12 @@ public protocol SystemAlert: AnyObject {
     var actions: [AlertAction] { get set }
     var isError: Bool { get }
     var dismiss: (() -> Void)? { get set }
+}
+
+public protocol UserAccountUpdateAlert: SystemAlert {
+    var imageName: String? { get }
+    var reconnectionInfo: VpnReconnectInfo? { get }
+    var displayFeatures: Bool { get }
 }
 
 public protocol ExpandableSystemAlert: SystemAlert {
@@ -677,4 +682,59 @@ public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init() { }
+}
+
+public class MaxSessionsAlert: UserAccountUpdateAlert {
+    public var imageName: String? = "sessions_limit"
+    public var displayFeatures: Bool = false
+    public var reconnectionInfo: VpnReconnectInfo?
+    public var title: String? = LocalizedString.maximumDeviceTitle
+    public var message: String?
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init( userCurrentCredentials: VpnCredentials ) {
+        message = String(format: LocalizedString.maximumDeviceDescription, 5)
+        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+    }
+}
+
+public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
+    public var imageName: String?
+    public var displayFeatures: Bool = true
+    public var reconnectionInfo: VpnReconnectInfo?
+    public var title: String? = LocalizedString.subscriptionExpiredTitle
+    public var message: String? = LocalizedString.subscriptionExpiredDescription
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init( accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo? ) {
+        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        if reconnectionInfo?.to != nil {
+            message = LocalizedString.subscriptionExpiredReconnectionDescription
+        }
+    }
+}
+
+public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
+    public var imageName: String?
+    public var displayFeatures: Bool = false
+    public var reconnectionInfo: VpnReconnectInfo?
+    public var title: String? = LocalizedString.delinquentPlanTitle
+    public var message: String? = LocalizedString.delinquentPlanDescription
+    public var actions: [AlertAction] = []
+    public var isError: Bool = false
+    public var dismiss: (() -> Void)?
+    
+    public init( reconnectionInfo: VpnReconnectInfo? ) {
+        actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
+        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        if reconnectionInfo?.to != nil {
+            message = LocalizedString.delinquentPlanReconnectionDescription
+        }
+    }
 }

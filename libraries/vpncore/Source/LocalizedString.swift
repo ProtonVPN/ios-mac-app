@@ -720,4 +720,29 @@ public class LocalizedString {
     // MARK: - Cert based auth
     public static let vpnAuthCertificateFailTitle = NSLocalizedString("_vpnauth_certfail_title", comment: "Failed to get VPN certificate Title")
     public static let vpnAuthCertificateFailDescription = NSLocalizedString("_vpnauth_certfail_description", comment: "Failed to get VPN certificate Description")
+    
+    // Downgrade
+
+    public static let fromServerTitle = NSLocalizedString("_from_server_title", comment: "")
+    public static let toServerTitle = NSLocalizedString("_to_server_title", comment: "")
+    public static let updateBilling = NSLocalizedString("_update_billing", comment: "")
+    public static let upgradeAgain = NSLocalizedString("_upgrade_again", comment: "")
+    public static let delinquentPlanTitle = NSLocalizedString("_delinquent_title", comment: "")
+    public static let delinquentPlanDescription = NSLocalizedString("_delinquent_description", comment: "")
+    public static let delinquentPlanReconnectionDescription = NSLocalizedString("_delinquent_reconnection_description", comment: "")
+    public static let maximumDeviceTitle = NSLocalizedString("_maximum_device_title", comment: "")
+    public static let maximumDeviceDescription = NSLocalizedString("_maximum_device_description", comment: "")
+    public static let reconnectTitle = NSLocalizedString("_reconnect_title", comment: "")
+    public static let subscriptionExpiredTitle = NSLocalizedString("_subscription_expired_title", comment: "")
+    public static let subscriptionExpiredDescription = NSLocalizedString("_subscription_expired_description", comment: "")
+    public static let subscriptionExpiredReconnectionDescription = NSLocalizedString("_subscription_expired_reconnection_description", comment: "")
+    public static let subscriptionUpgradeTitle = NSLocalizedString("_subscription_upgrade_title", comment: "")
+    public static let subscriptionUpgradeOption1 = NSLocalizedString("_subscription_upgrade_option1", comment: "")
+    public static let subscriptionUpgradeOption2 = NSLocalizedString("_subscription_upgrade_option2", comment: "")
+    public static let subscriptionUpgradeOption3 = NSLocalizedString("_subscription_upgrade_option3", comment: "")
+    
+    public static let tierFREE = NSLocalizedString("_tier_free", comment: "")
+    public static let tierBASIC = NSLocalizedString("_tier_basic", comment: "")
+    public static let tierPLUS = NSLocalizedString("_tier_plus", comment: "")
+    public static let tierVISIONARY = NSLocalizedString("_tier_visionary", comment: "")
 }

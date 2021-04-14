@@ -147,8 +147,10 @@ public class AppStateManager {
         
         do {
             let vpnCredentials = try vpnKeychain.fetch()
-            
-            if checkDelinquency(credentials: vpnCredentials) {
+            if vpnCredentials.isDelinquent {
+                let alert = UserBecameDelinquentAlert(reconnectionInfo: nil)
+                alertService?.push(alert: alert)
+                connectionFailed()
                 return
             }
         } catch {
@@ -387,19 +389,6 @@ public class AppStateManager {
         notifyObservers()
     }
     
-    private func checkDelinquency(credentials: VpnCredentials) -> Bool {
-        if credentials.isDelinquent {
-            alertService?.push(alert: DelinquentUserAlert(confirmHandler: {
-                SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
-            }))
-            
-            connectionFailed()
-            return true
-        } else {
-            return false
-        }
-    }
-    
     private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
@@ -412,11 +401,6 @@ public class AppStateManager {
         
         do {
             let vpnCredentials = try vpnKeychain.fetch()
-            
-            if checkDelinquency(credentials: vpnCredentials) {
-                return
-            }
-            
             checkApiForFailureReason(vpnCredentials: vpnCredentials)
         } catch {
             connectionFailed()
@@ -450,7 +434,8 @@ public class AppStateManager {
             guard let `self` = self, self.state.isDisconnected else { return }
             
             if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
-                self.alertService?.push(alert: SessionCountLimitAlert())
+                let alert = MaxSessionsAlert(userCurrentCredentials: rVpnCredentials ?? vpnCredentials)
+                self.alertService?.push(alert: alert)
                 self.connectionFailed()
             } else if let newVpnCredentials = rVpnCredentials, newVpnCredentials.password != vpnCredentials.password {
                 self.vpnKeychain.store(vpnCredentials: newVpnCredentials)
@@ -460,7 +445,6 @@ public class AppStateManager {
                 if self.state.isDisconnected {
                     self.isOnDemandEnabled { enabled in
                         guard !enabled else { return }
-                        
                         PMLog.D("Attempt connection after handling error")
                         self.connect(withConfiguration: lastConfiguration)
                     }
@@ -500,5 +484,4 @@ public class AppStateManager {
             self.connect(withConfiguration: lastConfig) // Retry connection
         })
     }
-    
 }

@@ -94,6 +94,19 @@ public enum AccountPlan: String {
         return ServicePlanDataServiceImplementation.shared.detailsOfServicePlan(named: self.rawValue)
     }
     
+    public var name: String {
+        switch self {
+        case .basic:
+            return LocalizedString.tierBASIC
+        case .plus:
+            return LocalizedString.tierPLUS
+        case .visionary:
+            return LocalizedString.tierVISIONARY
+        default:
+            return LocalizedString.tierFREE
+        }
+    }
+    
     public var displayName: String {
         let protonVPN = "ProtonVPN %@"
         switch self {

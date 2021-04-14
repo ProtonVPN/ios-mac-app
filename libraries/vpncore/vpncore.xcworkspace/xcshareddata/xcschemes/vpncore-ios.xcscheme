@@ -73,6 +73,9 @@
             </BuildableReference>
             <SkippedTests>
                <Test
+                  Identifier = "AlternativeRoutingTests">
+               </Test>
+               <Test
                   Identifier = "OpenVPNTCPAvailabilityCheckerTests">
                </Test>
                <Test
