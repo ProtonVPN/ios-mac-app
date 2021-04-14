@@ -39,7 +39,7 @@ protocol VpnProtocolChangeManager {
     func change(toProcol: VpnProtocol)
 }
 
-class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
+final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     
     typealias Factory = PropertiesManagerFactory
         & CoreAlertServiceFactory
@@ -56,7 +56,7 @@ class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         self.factory = factory
     }
     
-    public func change(toProcol vpnProtocol: VpnProtocol) {
+    func change(toProcol vpnProtocol: VpnProtocol) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
             set(vpnProtocol: vpnProtocol)
             return

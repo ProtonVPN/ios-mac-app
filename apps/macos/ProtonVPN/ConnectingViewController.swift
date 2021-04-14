@@ -24,25 +24,24 @@ import Cocoa
 
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
-    @IBOutlet weak var graphicContainer: NSView!
-    @IBOutlet weak var phaseLabel: NSTextField!
-    @IBOutlet weak var connectionLabel: NSTextField!
-    @IBOutlet var cancelButton: ConnectingOverlayButton!
-    @IBOutlet var retryButton: ConnectingOverlayButton!
+    @IBOutlet private weak var graphicContainer: NSView!
+    @IBOutlet private weak var phaseLabel: NSTextField!
+    @IBOutlet private weak var connectionLabel: NSTextField!
+    @IBOutlet private var cancelButton: ConnectingOverlayButton!
+    @IBOutlet private var retryButton: ConnectingOverlayButton!
     
-    @IBOutlet weak var mainStackView: NSStackView!
-    @IBOutlet weak var buttonsStackView: NSStackView!
+    @IBOutlet private weak var mainStackView: NSStackView!
+    @IBOutlet private weak var buttonsStackView: NSStackView!
     
-    @IBOutlet weak var connectionLabelContainer: NSView!
+    @IBOutlet private weak var connectionLabelContainer: NSView!
     private let textView = NSTextView()
-    private var heightConstraint: NSLayoutConstraint?
-    private var trailingConstraint: NSLayoutConstraint?
     
-    let viewModel: ConnectingOverlayViewModel
+    private let viewModel: ConnectingOverlayViewModel
     
-    var completionHandler: (() -> Void)?
+    private var completionHandler: (() -> Void)?
     
     // MARK: - Public functions
+    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -88,6 +87,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     }
     
     // MARK: - Private functions
+    
     private func update() {
         let graphic = viewModel.graphic(with: graphicContainer.bounds)
         if !graphicContainer.subviews.contains(graphic) {
@@ -141,6 +141,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     }
     
     // MARK: - OverlayViewModelDelegate
+    
     func stateChanged() {
         update()
     }

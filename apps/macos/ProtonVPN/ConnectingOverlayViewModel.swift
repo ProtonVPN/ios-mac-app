@@ -268,7 +268,7 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    public func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
+    func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
         timedOut = false
         if let vpnProtocol = vpnProtocol {
             vpnGateway.reconnect(with: vpnProtocol)
