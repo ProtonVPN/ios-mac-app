@@ -183,6 +183,7 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E9AB88D02628814600AFB12F /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
@@ -616,6 +617,7 @@
 		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
 		EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCoreCircleButton.swift; sourceTree = "<group>"; };
@@ -1893,6 +1895,7 @@
 				EEBE350F1EFAC582000ACCD1 /* TimeInterval+Extension.swift */,
 				42BDA8AF251A40A4009A0C96 /* NSTextField+RealSizing.swift */,
 				42082650256BB78600A621EC /* NSView+Children.swift */,
+				E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */,
 			);
 			name = Extensions;
 			sourceTree = "<group>";
@@ -2636,6 +2639,7 @@
 				E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */,
 				EEEB93261F4893CC003814BB /* WarningPopupViewModel.swift in Sources */,
 				42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */,
+				E9AB88D02628814600AFB12F /* NSStackView+Children.swift in Sources */,
 				EE27DB4B1F470EF700D2FF2B /* AccountViewModel.swift in Sources */,
 				42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */,
 				EE74FCB01F5DD71400E266BC /* PopUpViewModel.swift in Sources */,

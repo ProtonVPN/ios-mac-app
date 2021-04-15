@@ -153,7 +153,7 @@ class ConnectingOverlayViewModel {
         let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
         let string = String(format: LocalizedString.connectingVpn, boldString) + decription
                 
-        var attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
+        let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
         if let stringRange = string.range(of: boldString) {
             let range = NSRange(stringRange, in: string)
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSizeTitle)), range: range)
@@ -163,12 +163,12 @@ class ConnectingOverlayViewModel {
             attributedString.addAttribute(NSAttributedString.Key.font, value: NSFont.systemFont(ofSize: CGFloat(fontSizeDescription)), range: range)
         }
         
-        attributedString = attributedString.add(link: LocalizedString.timeoutKsIkeLink, withUrl: reconnectWithOvpnLink)
-        
         return attributedString
     }
     
-    var cancelButtonTitle: String {
+    // MARK: First button - Cancel/Done
+    
+    var firstButtonTitle: String {
         switch state {
         case .connected:
             return LocalizedString.done
@@ -177,23 +177,25 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    var cancelButtonStyle: ConnectingOverlayButton.Style {
+    var firstButtonStyle: ConnectingOverlayButton.Style {
         return .main
     }
     
-    var retryButtonTitle: String {
-        return isIkeWithKsEnabled
+    // MARK: Second button - retry
+    
+    var secondButtonTitle: String {
+        return timedOut && isIkeWithKsEnabled
             ? LocalizedString.tryAgainWithoutKS
             : LocalizedString.tryAgain
     }
     
-    var retryButtonStyle: ConnectingOverlayButton.Style {
+    var secondButtonStyle: ConnectingOverlayButton.Style {
         return timedOut && isIkeWithKsEnabled
             ? .colorGreen
             : .main
     }
     
-    var hideRetryButton: Bool {
+    var hideSecondButton: Bool {
         if timedOut {
             return false
         }
@@ -204,6 +206,20 @@ class ConnectingOverlayViewModel {
         default:
             return true
         }
+    }
+    
+    // MARK: Third button - Switch to other protocol
+    
+    var thirdButtonTitle: String {
+        return LocalizedString.timeoutKsIkeSwitchProtocol
+    }
+    
+    var thirdButtonStyle: ConnectingOverlayButton.Style {
+        return .colorGreen
+    }
+    
+    var hideThirdButton: Bool {
+        return !(timedOut && isIkeWithKsEnabled)
     }
     
     private var isReconnecting: Bool {
@@ -281,17 +297,7 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    func open(link url: URL) {
-        switch url.absoluteString {
-        case reconnectWithOvpnLink:
-            reconnectWithOvpn()
-            
-        default:
-            break // Do nothing
-        }
-    }
-    
-    private func reconnectWithOvpn() {
+    func reconnectWithOvpn() {
         let transportProtocol: VpnProtocol = .openVpn(.udp)
         
         // This will trigger reconnect after protocol is changed

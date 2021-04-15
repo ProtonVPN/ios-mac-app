@@ -27,14 +27,13 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     @IBOutlet private weak var graphicContainer: NSView!
     @IBOutlet private weak var phaseLabel: NSTextField!
     @IBOutlet private weak var connectionLabel: NSTextField!
-    @IBOutlet private var cancelButton: ConnectingOverlayButton!
-    @IBOutlet private var retryButton: ConnectingOverlayButton!
+    @IBOutlet private var firstButton: ConnectingOverlayButton! // Cancel
+    @IBOutlet private var secondButton: ConnectingOverlayButton! // Retry
+    @IBOutlet private var thirdButton: ConnectingOverlayButton! // Switch to openVPN
     
     @IBOutlet private weak var mainStackView: NSStackView!
     @IBOutlet private weak var buttonsStackView: NSStackView!
-    
-    @IBOutlet private weak var connectionLabelContainer: NSView!
-    private let textView = NSTextView()
+    private var temporaryButtonConstraints = [NSLayoutConstraint]()
     
     private let viewModel: ConnectingOverlayViewModel
     
@@ -67,8 +66,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         layerAnimation.fromValue = 1.0
         layerAnimation.toValue = 0.0
         layerAnimation.duration = time
-        cancelButton.layer?.add(layerAnimation, forKey: "fadeAnimation")
-        cancelButton.layer?.opacity = 0.0
+        firstButton.layer?.add(layerAnimation, forKey: "fadeAnimation")
+        firstButton.layer?.opacity = 0.0
         
         NSAnimationContext.runAnimationGroup({ (context) in
             context.duration = time
@@ -99,38 +98,55 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         phaseLabel.isHidden = viewModel.hidePhase
         phaseLabel.attributedStringValue = viewModel.firstString
         
-        setupTextView()
-        textView.textStorage?.setAttributedString(viewModel.secondString)
-        
         connectionLabel.attributedStringValue = viewModel.secondString
         connectionLabel.allowsEditingTextAttributes = true
         connectionLabel.isSelectable = true
         
-        cancelButton.title = viewModel.cancelButtonTitle
-        cancelButton.style = viewModel.cancelButtonStyle
+        updateButtons()
+    }
+    
+    private func updateButtons() {
+        firstButton.title = viewModel.firstButtonTitle
+        firstButton.style = viewModel.firstButtonStyle
+    
+        secondButton.isHidden = viewModel.hideSecondButton
+        secondButton.title = viewModel.secondButtonTitle
+        secondButton.style = viewModel.secondButtonStyle
         
-        retryButton.isHidden = viewModel.hideRetryButton
-        retryButton.title = viewModel.retryButtonTitle
-        retryButton.style = viewModel.retryButtonStyle
+        thirdButton.isHidden = viewModel.hideThirdButton
+        thirdButton.title = viewModel.thirdButtonTitle
+        thirdButton.style = viewModel.thirdButtonStyle
+                
+        NSLayoutConstraint.deactivate(temporaryButtonConstraints)
+        temporaryButtonConstraints.removeAll()
         
-        if retryButton.title.count > 10 { // "Try againg".count == 9
+        if !viewModel.hideThirdButton && !viewModel.hideSecondButton {
             buttonsStackView.orientation = .vertical
             buttonsStackView.alignment = .centerX
-            buttonsStackView.arrangedSubviews.forEach {
-                buttonsStackView.removeArrangedSubview( $0 )
-            }
-            buttonsStackView.addArrangedSubview(retryButton)
-            buttonsStackView.addArrangedSubview(cancelButton)
+            buttonsStackView.clear()
+            buttonsStackView.addArrangedSubview(thirdButton)
+            buttonsStackView.addArrangedSubview(secondButton)
+            buttonsStackView.addArrangedSubview(firstButton)
+            temporaryButtonConstraints.append(contentsOf: buttonsStackView.childrenFillWidth())
+                        
+        } else if !viewModel.hideSecondButton && secondButton.title.count > 10 { // "Try againg".count == 9
+            buttonsStackView.orientation = .vertical
+            buttonsStackView.alignment = .centerX
+            buttonsStackView.clear()
+            buttonsStackView.addArrangedSubview(secondButton)
+            buttonsStackView.addArrangedSubview(firstButton)
+            temporaryButtonConstraints.append(contentsOf: buttonsStackView.childrenFillWidth())
+            
         } else {
             buttonsStackView.orientation = .horizontal
-            buttonsStackView.arrangedSubviews.forEach {
-                buttonsStackView.removeArrangedSubview( $0 )
-            }
-            buttonsStackView.addArrangedSubview(cancelButton)
-            buttonsStackView.addArrangedSubview(retryButton)
+            buttonsStackView.alignment = .top
+            buttonsStackView.clear()
+            buttonsStackView.addArrangedSubview(firstButton)
+            buttonsStackView.addArrangedSubview(secondButton)
         }
-        
     }
+    
+    // MARK: - Actions
     
     @IBAction private func cancelConnecting(_ sender: Any) {
         viewModel.cancelConnecting()
@@ -140,50 +156,14 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         viewModel.retryConnection()
     }
     
+    @IBAction private func switchToOpenVPN(_ sender: Any) {
+        viewModel.reconnectWithOvpn()
+    }
+    
     // MARK: - OverlayViewModelDelegate
     
     func stateChanged() {
         update()
-    }
-    
-    private func setupTextView() {
-        guard !textView.isDescendant(of: connectionLabelContainer) else {
-            return
-        }
-        
-        textView.linkTextAttributes = [
-            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
-            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
-        ]
-
-        textView.isEditable = false
-        textView.isHorizontallyResizable = false
-        textView.isVerticallyResizable = false
-        textView.backgroundColor = .clear
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.delegate = self
-        
-        connectionLabelContainer.addSubview(textView)
-        NSLayoutConstraint.activate([
-            textView.topAnchor.constraint(equalTo: connectionLabel.topAnchor, constant: 0),
-            textView.bottomAnchor.constraint(equalTo: connectionLabel.bottomAnchor, constant: 0),
-            textView.leadingAnchor.constraint(equalTo: connectionLabel.leadingAnchor, constant: -4), // This is magic padding that puts NSTextView's text at the same place as in connectionLabel.
-            textView.trailingAnchor.constraint(equalTo: connectionLabel.trailingAnchor, constant: 4), // See above ^.
-        ])
-        
-        connectionLabel.alphaValue = 0.0
-    }
-    
-}
-
-extension ConnectingViewController: NSTextViewDelegate {
-    
-    func textView(_ textView: NSTextView, clickedOnLink link: Any, at charIndex: Int) -> Bool {
-        guard let url = link as? URL else {
-            return false
-        }
-        viewModel.open(link: url)
-        return true
     }
     
 }
