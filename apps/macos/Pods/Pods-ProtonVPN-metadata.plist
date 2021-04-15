@@ -1292,6 +1292,45 @@ SOFTWARE.
 		<dict>
 			<key>authors</key>
 			<dict>
+				<key>Frank Denis</key>
+				<string></string>
+			</dict>
+			<key>description</key>
+			<string></string>
+			<key>homepage</key>
+			<string>https://github.com/jedisct1/swift-sodium</string>
+			<key>licenseText</key>
+			<string>ISC License
+
+Copyright (c) 2014-2020, Frank Denis &lt;j at pureftpd dot org&gt;
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+</string>
+			<key>licenseType</key>
+			<string>ISC</string>
+			<key>name</key>
+			<string>Sodium</string>
+			<key>socialMediaURL</key>
+			<string>https://twitter.com/jedisct1</string>
+			<key>summary</key>
+			<string>Swift-Sodium provides a safe and easy to use interface to perform common cryptographic operations on Apple platforms.</string>
+			<key>version</key>
+			<string>0.9.1</string>
+		</dict>
+		<dict>
+			<key>authors</key>
+			<dict>
 				<key>Andy Matuschak</key>
 				<string>andy@andymatuschak.org</string>
 				<key>C.W. Betts</key>

@@ -35,6 +35,7 @@ PODS:
   - Sentry (5.2.2):
     - Sentry/Core (= 5.2.2)
   - Sentry/Core (5.2.2)
+  - Sodium (0.9.1)
   - Sparkle (1.24.0)
   - SwiftLint (0.42.0)
   - SwiftyBeaver (1.9.3)
@@ -59,6 +60,7 @@ PODS:
     - PMNetworking
     - ReachabilitySwift (= 5.0.0)
     - Sentry (= 5.2.2)
+    - Sodium
     - TrustKit
     - TunnelKit
 
@@ -85,6 +87,7 @@ SPEC REPOS:
     - ReachabilitySwift
     - SDWebImage
     - Sentry
+    - Sodium
     - Sparkle
     - SwiftLint
     - SwiftyBeaver
@@ -117,12 +120,13 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
+  Sodium: 23d11554ecd556196d313cf6130d406dfe7ac6da
   Sparkle: 270cd27377bf04e9c128af06e3a22d0f572d6ee3
   SwiftLint: 4fa9579c63416865179bc416f0a92d55f009600d
   SwiftyBeaver: 2e8acd6fc90c6d0a27055867a290794926d57c02
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
-  vpncore: 987786fc70ef7560dcf6fdc4ae5d25ddf85fed66
+  vpncore: 5609e4f1951bfde2da597fc979f101905aaee43b
 
 PODFILE CHECKSUM: 58c8f2aa0fce2fc4e70d9610ff2b400a705a136e
 
