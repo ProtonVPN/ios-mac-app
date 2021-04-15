@@ -32,7 +32,7 @@ public struct PublicKey: Codable {
 
     // ASN.1 DER
     var derRepresentation: String {
-        let publicKeyData = "302A300506032B6570032100".data(using: .bytesHexLiteral)! + rawRepresentation
+        let publicKeyData = "302A300506032B6570032100".dataFromHex()! + rawRepresentation
         let publicKeyBase64 = publicKeyData.base64EncodedString()
         return "-----BEGIN PUBLIC KEY-----\n\(publicKeyBase64)\n-----END PUBLIC KEY-----"
     }
@@ -47,7 +47,7 @@ public struct PrivateKey: Codable {
 
     // ASN.1 DER
     var derRepresentation: String {
-        let privateKeyData = "302E020100300506032B657004220420".data(using: .bytesHexLiteral)! + rawRepresentation
+        let privateKeyData = "302E020100300506032B657004220420".dataFromHex()! + rawRepresentation
         let privateKeyBase64 = privateKeyData.base64EncodedString()
         return "-----BEGIN PRIVATE KEY-----\n\(privateKeyBase64)\n-----END PRIVATE KEY-----"
     }
