@@ -334,7 +334,7 @@ extension AppSessionManagerImplementation: AppSessionRefresher {
     @objc func refreshData() {
         lastDataRefresh = Date()
         attemptRememberLogIn(success: {}, failure: { [unowned self] error in
-            PMLog.D("Failed to reistablish vpn credentials: \(error.localizedDescription)", level: .error)
+            PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
             
             let error = error as NSError
             switch error.code {
