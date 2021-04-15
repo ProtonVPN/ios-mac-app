@@ -50,7 +50,7 @@ final class DependencyContainer {
                                                                         timerFactory: TimerFactory(),
                                                                         propertiesManager: PropertiesManager(),
                                                                         vpnKeychain: vpnKeychain,
-                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer())
+                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer(), vpnAuthentication: makeVpnAuthentication())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
@@ -76,7 +76,8 @@ final class DependencyContainer {
     
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
-    
+
+    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper())
 }
 
 // MARK: NavigationServiceFactory
@@ -388,5 +389,12 @@ extension DependencyContainer: TroubleshootViewModelFactory {
 extension DependencyContainer: AppSpecificRequestAdapterFatory {
     func makeAppSpecificRequestAdapter() -> RequestAdapter? {
         return nil
+    }
+}
+
+// MARK: VpnAuthenticationManagerFactory
+extension DependencyContainer: VpnAuthenticationFactory {
+    func makeVpnAuthentication() -> VpnAuthentication {
+        return vpnAuthentication
     }
 }

@@ -48,7 +48,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -63,6 +63,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
+    private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
@@ -106,6 +107,22 @@ class AppSessionManagerImplementation: AppSessionManager {
             DispatchQueue.main.async { failure(error) }
         })
     }
+
+    private func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        guard loggedIn else {
+            success()
+            return
+        }
+
+        self.vpnAuthentication.refreshCertificates { result in
+            switch result {
+            case .success:
+                success()
+            case let .failure(error):
+                failure(error)
+            }
+        }
+    }
     
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp, success: { [weak self] properties in
@@ -124,7 +141,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
-                success()
+                self?.refreshVpnAuthCertificate(success: success, failure: failure)
             }, failure: { error in
                 self.logOutCleanup()
                 failure(error)
@@ -141,7 +158,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             
             self.setAndNotify(for: .established)
             ProfileManager.shared.refreshProfiles()
-            success()
+            self.refreshVpnAuthCertificate(success: success, failure: failure)
         })
         
         if propertiesManager.featureFlags.isAnnouncementOn {
