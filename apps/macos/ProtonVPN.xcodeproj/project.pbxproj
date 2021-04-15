@@ -15,6 +15,8 @@
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
 		42082671256BC3B900A621EC /* BlockeableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockeableScrollView.swift */; };
 		42314C6A255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */; };
+		423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */; };
+		423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */; };
 		42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */; };
 		42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */; };
 		42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */; };
@@ -414,6 +416,8 @@
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
 		42082670256BC3B900A621EC /* BlockeableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockeableScrollView.swift; sourceTree = "<group>"; };
 		42314C69255AC2FD00B7BDCC /* QuickSettingsDropdownOptionPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingsDropdownOptionPresenter.swift; sourceTree = "<group>"; };
+		423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
+		423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		42498A4F2518E96B00ACB7EC /* ExpandableContentPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandableContentPopupViewController.swift; sourceTree = "<group>"; };
 		42498A502518E96B00ACB7EC /* ExpandableContentPopup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExpandableContentPopup.xib; sourceTree = "<group>"; };
 		42498A532518EE3C00ACB7EC /* ExpandablePopupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExpandablePopupViewModel.swift; sourceTree = "<group>"; };
@@ -858,6 +862,15 @@
 			name = Pods;
 			sourceTree = "<group>";
 		};
+		423467C4261CEA9400A73773 /* Downgrade */ = {
+			isa = PBXGroup;
+			children = (
+				423467C5261CEAAF00A73773 /* UserAccountUpdateViewController.swift */,
+				423467C6261CEAAF00A73773 /* UserAccountUpdateViewController.xib */,
+			);
+			path = Downgrade;
+			sourceTree = "<group>";
+		};
 		42EF09DD257A713F00E2EDCA /* ProtonVPN OpenVPN */ = {
 			isa = PBXGroup;
 			children = (
@@ -1094,6 +1107,7 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
 				F36ECDFE2611D9EC0089B898 /* Common */,
 				F36ECE032611DBAC0089B898 /* Login */,
@@ -2224,6 +2238,7 @@
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
+				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
 				E180D1522125621300F4D1C7 /* Upsell.xib in Resources */,
 				EECEF3DB1F169A0500A16606 /* ServerItem.xib in Resources */,
@@ -2769,6 +2784,7 @@
 				E180D1622126C4C500F4D1C7 /* TourController.swift in Sources */,
 				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
+				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
 				D5966F2625382DAA0061A75F /* AnnouncementsViewController.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,

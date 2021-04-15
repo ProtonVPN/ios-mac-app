@@ -65,6 +65,10 @@ class OsxUiAlertService: UIAlertService {
         var modalVC: NSViewController!
         
         switch alert {
+        case is UserAccountUpdateAlert:
+            let userUpdateVC = UserAccountUpdateViewController(alert: alert as! UserAccountUpdateAlert)
+            alert.dismiss = dismissCompletion(alert)
+            modalVC = userUpdateVC
         case is ExpandableSystemAlert:
             let expandableViewModel = ExpandablePopupViewModel(alert as! ExpandableSystemAlert)
             expandableViewModel.dismissViewController = dismissCompletion(alert)

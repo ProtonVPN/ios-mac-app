@@ -186,6 +186,9 @@ extension MacAlertService: CoreAlertService {
         case let verificationAlert as UserVerificationAlert:
             show(verificationAlert)
             
+        case is UserAccountUpdateAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -195,7 +198,7 @@ extension MacAlertService: CoreAlertService {
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
-    
+
     // MARK: Alerts UI
     
     private func showDefaultSystemAlert(_ alert: SystemAlert) {
