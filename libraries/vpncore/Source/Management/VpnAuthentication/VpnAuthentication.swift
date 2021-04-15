@@ -295,10 +295,8 @@ extension VpnAuthenticationManager: VpnAuthentication {
     }
 
     public func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void) {
-        let keys = getKeys()
-
-        // if certificate is still valid use it
-        if let existingCertificate = self.getStoredCertificate(), existingCertificate.validUntil < Date() {
+        // keys are generated, certificate is stored and still valid, use it
+        if let keys = getStoredKeys(), let existingCertificate = getStoredCertificate(), existingCertificate.validUntil < Date() {
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return
         }
