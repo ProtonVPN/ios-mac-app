@@ -269,6 +269,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         
         AuthKeychain.clear()
         vpnKeychain.clear()
+        vpnAuthentication.clear()
         
         propertiesManager.logoutCleanup()
     }
