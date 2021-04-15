@@ -156,10 +156,10 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.propertiesManager.userIp = properties.ip
             
             self.resolveActiveSession(success: {
-                success()
+                self.refreshVpnAuthCertificate(success: success, failure: failure)
             }, failure: { error in
-                    self.logOutCleanup()
-                    failure(error)
+                self.logOutCleanup()
+                failure(error)
             })
         }, failure: { [weak self] error in
                 PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
@@ -171,8 +171,24 @@ class AppSessionManagerImplementation: AppSessionManager {
                         return
                 }
             
-                success()
+                self.refreshVpnAuthCertificate(success: success, failure: failure)
         })
+    }
+
+    private func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        guard loggedIn else {
+            success()
+            return
+        }
+
+        self.vpnAuthentication.refreshCertificates { result in
+            switch result {
+            case .success:
+                success()
+            case let .failure(error):
+                failure(error)
+            }
+        }
     }
     
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -197,7 +213,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
-                success()
+                self?.refreshVpnAuthCertificate(success: success, failure: failure)
             }, failure: { error in
                 self.logOutCleanup()
                 failure(error)
@@ -214,7 +230,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             
             self.setAndNotify(for: .established)
             ProfileManager.shared.refreshProfiles()
-            success()
+            self.refreshVpnAuthCertificate(success: success, failure: failure)
         })
         
         if propertiesManager.featureFlags.isAnnouncementOn {
