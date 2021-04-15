@@ -27,6 +27,7 @@ Pod::Spec.new do |s|
     s.dependency 'ReachabilitySwift', '5.0.0'
     s.dependency 'Sentry', '5.2.2'
     s.dependency 'TrustKit'
+    s.dependency 'Sodium'
     # s.dependency 'TunnelKit', '~> 2.0.5'
     s.dependency 'TunnelKit'
     s.dependency 'PMNetworking'

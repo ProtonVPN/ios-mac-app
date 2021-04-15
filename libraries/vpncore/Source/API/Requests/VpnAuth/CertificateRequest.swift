@@ -25,10 +25,10 @@ import Foundation
 
 final class CertificateRequest: BaseRequest {
 
-    let publicKey: String
+    let publicKey: PublicKey
     let deviceName: String
 
-    init(publicKey: String) {
+    init(publicKey: PublicKey) {
         self.publicKey = publicKey
         #if os(iOS)
         deviceName = UIDevice.current.name
@@ -53,7 +53,7 @@ final class CertificateRequest: BaseRequest {
 
     override var parameters: [String: Any]? {
         return [
-            "ClientPublicKey": publicKey,
+            "ClientPublicKey": publicKey.base64,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
             "Mode": "session"

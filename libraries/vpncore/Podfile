@@ -12,6 +12,7 @@ abstract_target 'vpncore' do
     pod 'KeychainAccess', '3.2.1'
     pod 'Sentry', '5.2.2'
     pod 'ReachabilitySwift', '5.0.0'
+    pod 'Sodium', '0.9.1'
 
     # Core
     pod 'PMNetworking', :path => '../pmnetworking' # run `pod update PMNetworking` after changing source
