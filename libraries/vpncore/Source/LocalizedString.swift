@@ -81,7 +81,7 @@ public class LocalizedString {
     public static let notConnected = NSLocalizedString("_not_connected", comment: "iOS: connection bar; Main mac app menu item;")
     public static let youAreNotConnected = NSLocalizedString("_you_are_not_connected", comment: "MacOS: text in main window")
     public static let tryAgain = NSLocalizedString("_try_agian", comment: "MacOS: button in connecting overlay")
-    public static let tryAgainWithoutKS = NSLocalizedString("_try_again_without_killswitch", comment: "MacOS: button in connecting overlay")    
+    public static let tryAgainWithoutKS = NSLocalizedString("_try_again_without_killswitch", comment: "MacOS: button in connecting overlay. Don't make this text longer than in english.")    
     public static let retry = NSLocalizedString("_retry", comment: "Button in some alerts")
     public static let freeServers = NSLocalizedString("_free_servers", comment: "iOS: section header in countries list")
     public static let basicServers = NSLocalizedString("_basic_servers", comment: "iOS: section header in countries list")
@@ -102,7 +102,7 @@ public class LocalizedString {
     public static let off = NSLocalizedString("_switch_side_button_off", comment: "Custom switch off")
     
     public static let timeoutKsIkeDescritpion = NSLocalizedString("_timeout_ks_ike_descritpion", comment: "MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on")
-    public static let timeoutKsIkeLink = NSLocalizedString("_timeout_ks_ike_link", comment: "MacOS: link in _timeout_ks_ike_descritpion string, that changes protocol to OpenVPN and trie sto reconnect")
+    public static let timeoutKsIkeSwitchProtocol = NSLocalizedString("_timeout_ks_ike_switch_protocol", comment: "MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english.")
     
     public static func countriesCount(_ number: Int) -> String {
         return String.localizedStringWithFormat(NSLocalizedString("_countries_count", comment: "iOS advandced plan features view. %@ is changed with the number of countries."), number)

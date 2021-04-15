@@ -101,7 +101,7 @@
 "_switch_side_button_off" = "OFF";
 
 "_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
-"_timeout_ks_ike_link" = "switch to OpenVPN protocol";
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
 // Notifications
 "_kill_switch_blocking_connection" = "Kill Switch blocking all connections";
