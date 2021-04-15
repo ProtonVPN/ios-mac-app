@@ -118,6 +118,10 @@ fileprivate class WindowServiceMock: WindowService {
     func presentKeyModal(viewController: NSViewController) {
         displayCount += 1
     }
+    
+    func isKeyModalPresent(viewController: NSViewController) -> Bool {
+        return false
+    }
 }
 
 fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {

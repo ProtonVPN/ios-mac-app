@@ -48,6 +48,9 @@ protocol WindowService: class {
     func closeActiveWindows()
     
     func presentKeyModal(viewController: NSViewController)
+    
+    /// Check if window with view controller of the same class is already open.
+    func isKeyModalPresent(viewController: NSViewController) -> Bool
 }
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
@@ -243,6 +246,23 @@ class WindowServiceImplementation: WindowService {
             }
         }
     }
+    
+    func isKeyModalPresent(viewController: NSViewController) -> Bool {
+        var parent: NSViewController?
+        
+        if let keyViewController = self.mainWindowController?.contentViewController {
+            parent = keyViewController
+        } else if let statusMenu = self.statusMenuWindowController?.contentViewController {
+            parent = statusMenu
+        }
+        guard let presentedViewControllers = parent?.presentedViewControllers else {
+            return false
+        }
+        return presentedViewControllers.contains {
+            return type(of: $0) == type(of: viewController)
+        }
+    }
+    
 }
 
 extension WindowServiceImplementation: WindowControllerDelegate {
