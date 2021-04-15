@@ -97,9 +97,12 @@ public final class VpnAuthenticationManager {
             MC4CAQAwBQYDK2VwBCIEIAxWc8RF4Rn42sPDqPqTY9uOhcsI7Xnm7aSi7n8k1HGz
             -----END PRIVATE KEY-----
             """,
-            publicKey: ""
+            publicKey: """
+            -----BEGIN PUBLIC KEY-----
+            MCowBQYDK2VwAyEALorY7BXtHmfCW7NgeKGV5DL7EFmrpdjd+BbFEPlZE6U=
+            -----END PUBLIC KEY-----
+            """
         )
-        // return VpnKeys(privateKey: "wLLM5GvLbBtdE2pCC1qMGXHFDM5j3SoU1WIIUtAxNW8=", publicKey: "8XmYqdauprZKZyv+8JJE7hpvjWEAvvx4G/1LYAA+hEw=")
     }
 
     private func getStoredCertificate() -> VpnCertificate? {
