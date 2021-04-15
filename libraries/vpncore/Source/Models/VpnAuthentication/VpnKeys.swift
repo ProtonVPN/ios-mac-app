@@ -23,24 +23,39 @@
 import Foundation
 import Sodium
 
+/**
+ Ed25519 public key
+ */
 public struct PublicKey: Codable {
-    let rawKey: [UInt8]
-    var base64: String {
-        let publicKeyData = "302A300506032B6570032100".data(using: .bytesHexLiteral)! + rawKey
+    // 32 byte Ed25519 key
+    let rawRepresentation: [UInt8]
+
+    // ASN.1 DER
+    var derRepresentation: String {
+        let publicKeyData = "302A300506032B6570032100".data(using: .bytesHexLiteral)! + rawRepresentation
         let publicKeyBase64 = publicKeyData.base64EncodedString()
         return "-----BEGIN PUBLIC KEY-----\n\(publicKeyBase64)\n-----END PUBLIC KEY-----"
     }
 }
 
+/**
+ Ed25519 private key
+ */
 public struct PrivateKey: Codable {
-    let rawKey: [UInt8]
-    var base64: String {
-        let privateKeyData = "302E020100300506032B657004220420".data(using: .bytesHexLiteral)! + rawKey
+    // 32 byte Ed25519 key
+    let rawRepresentation: [UInt8]
+
+    // ASN.1 DER
+    var derRepresentation: String {
+        let privateKeyData = "302E020100300506032B657004220420".data(using: .bytesHexLiteral)! + rawRepresentation
         let privateKeyBase64 = privateKeyData.base64EncodedString()
         return "-----BEGIN PRIVATE KEY-----\n\(privateKeyBase64)\n-----END PRIVATE KEY-----"
     }
 }
 
+/**
+ Ed25519 key pair
+ */
 struct VpnKeys: Codable {
     let privateKey: PrivateKey
     let publicKey: PublicKey
@@ -48,7 +63,7 @@ struct VpnKeys: Codable {
     init() {
         let sodium = Sodium()
         let keyPair = sodium.sign.keyPair()!
-        privateKey = PrivateKey(rawKey: keyPair.secretKey)
-        publicKey = PublicKey(rawKey: keyPair.publicKey)
+        privateKey = PrivateKey(rawRepresentation: keyPair.secretKey)
+        publicKey = PublicKey(rawRepresentation: keyPair.publicKey)
     }
 }    

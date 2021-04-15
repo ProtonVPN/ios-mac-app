@@ -53,7 +53,7 @@ final class CertificateRequest: BaseRequest {
 
     override var parameters: [String: Any]? {
         return [
-            "ClientPublicKey": publicKey.base64,
+            "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
             "Mode": "session"
