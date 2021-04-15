@@ -39,6 +39,7 @@ extension NSStackView {
     func clear() {
         self.arrangedSubviews.forEach {
             self.removeArrangedSubview( $0 )
+            $0.removeFromSuperview()
         }
     }
     
