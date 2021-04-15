@@ -161,19 +161,24 @@ public final class VpnAuthenticationManager {
 
     // swiftlint:disable function_body_length
     private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificate, Error>) -> Void) {
-
-        PMLog.D("Asking backend API for new vpn auth certificate")
-        /*let request = CertificateRequest(publicKey: keys.publicKey)
+        /*PMLog.D("Asking backend API for new vpn auth certificate")
+        let request = CertificateRequest(publicKey: keys.publicKey)
         self.alamofireWrapper.request(request) { (dict: JSONDictionary) in
             do {
                 let certificate = try VpnCertificate(dict: dict)
-                completion(.success(certificate))
+                DispatchQueue.main.async {
+                    completion(.success(certificate))
+                }
             } catch {
                 PMLog.ET("Failed to decoded vpn auth certificate from backend: \(error)")
-                completion(.failure(error))
+                DispatchQueue.main.async {
+                    completion(.failure(error))
+                }
             }
         } failure: { error in
-            completion(.failure(error))
+            DispatchQueue.main.async {
+                completion(.failure(error))
+            }
         }*/
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             PMLog.D("Got vpn auth certificate from backend API")
