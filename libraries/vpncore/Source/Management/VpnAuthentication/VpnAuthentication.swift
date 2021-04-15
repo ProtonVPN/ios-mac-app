@@ -59,7 +59,7 @@ public protocol VpnAuthentication {
 public final class VpnAuthenticationManager {    
     private struct StorageKey {
         static let vpnKeys = "vpnKeys"
-        static let vpnCertificate = "vpnCertificate"
+        static let vpnCertificate = "vpnCertificate3"
     }
 
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
@@ -204,15 +204,24 @@ extension VpnAuthenticationManager: VpnAuthentication {
         self.getCertificate(keys: keys) { result in
             switch result {
             case let .failure(error):
-                completion(.failure(error))
+                let nsError = error as NSError
+                switch nsError.code {
+                case 2500: // error ClientPublicKey fingerprint conflict, please regenerate a new key
+                    PMLog.D("Trying to recover by generating new keys and trying again")
+                    self.clear()
+                    objc_sync_exit(self)
+                    self.refreshCertificates(completion: completion)
+                default:
+                    completion(.failure(error))
+                    objc_sync_exit(self)
+                }
             case let .success(certificate):
                 // store it
                 self.store(certificate: certificate)
                 completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
+                objc_sync_exit(self)
             }
-            objc_sync_exit(self)
         }
-        return
     }
 
     public func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void) {
