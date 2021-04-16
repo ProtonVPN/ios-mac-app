@@ -125,6 +125,7 @@ public final class VpnAuthenticationManager {
 
     private func deleteKeys() {
         appKeychain[StorageKey.vpnKeys] = nil
+        deleteCertificate()
     }
 
     private func deleteCertificate() {
