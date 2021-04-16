@@ -1,6 +1,6 @@
 //
-//  VpnCertificate.swift
-//  vpncore - Created on 15.04.2021.
+//  VpnAuthenticationData.swift
+//  vpncore - Created on 16.04.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,17 +22,7 @@
 
 import Foundation
 
-public struct VpnCertificate: Codable {
-    let certificate: String
-    let validUntil: Date
-
-    init(certificate: String, validUntil: Date) {
-        self.certificate = certificate
-        self.validUntil = validUntil
-    }
-
-    init(dict: JSONDictionary) throws {
-        certificate = try dict.stringOrThrow(key: "Certificate")
-        validUntil = try dict.unixTimestampOrThrow(key: "ExpirationTime")
-    }
+public struct VpnAuthenticationData {
+    public let clientKey: PrivateKey
+    public let clientCertificate: String
 }
