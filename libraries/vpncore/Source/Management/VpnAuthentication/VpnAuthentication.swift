@@ -32,23 +32,21 @@ public protocol VpnAuthenticationFactory {
     func makeVpnAuthentication() -> VpnAuthentication
 }
 
+public typealias CertificateRefreshResult = (Result<(VpnAuthenticationData), Error>) -> Void
+public typealias AuthenticationDataResult = (Result<VpnAuthenticationData, Error>) -> Void
+
 public protocol VpnAuthentication {
     /**
-     Refreshes the client certificate
+     Refreshes the client certificate if needed
      */
-    func refreshCertificates(completion: @escaping (Result<(VpnAuthenticationData), Error>) -> Void)
+    func refreshCertificates(completion: @escaping CertificateRefreshResult)
 
     /**
      Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
 
      Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
      */
-    func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void)
-
-    /**
-     Invalidates the certificate, if one is stored. Should be called on user plan upgrade, downgrade, delinquent
-     */
-    func invalidateCertificate()
+    func loadAuthenticationData(completion: @escaping AuthenticationDataResult)
 
     /**
      Deletes all the generated and stored data, so keys and certificate
@@ -59,8 +57,11 @@ public protocol VpnAuthentication {
 public final class VpnAuthenticationManager {    
     private struct StorageKey {
         static let vpnKeys = "vpnKeys"
-        static let vpnCertificate = "vpnCertificate3"
+        static let vpnCertificate = "vpnCertificate"
     }
+
+    private var queue: [CertificateRefreshResult] = []
+    private var isExecuting = false
 
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     private let alamofireWrapper: AlamofireWrapper
@@ -94,6 +95,8 @@ public final class VpnAuthenticationManager {
             return keys
         } catch {
             PMLog.D("Keychain (vpn) read error: \(error)", level: .error)
+            // If keys are broken then the certificate is also unsable, so just delete everything and start again
+            clear()
             return nil
         }
     }
@@ -149,7 +152,6 @@ public final class VpnAuthenticationManager {
     }
 
     private func getKeys() -> VpnKeys {
-        // get or generate the keys first
         let keys: VpnKeys
         if let existingKeys = self.getStoredKeys() {
             PMLog.D("Using existing vpn authentication keys")
@@ -162,23 +164,23 @@ public final class VpnAuthenticationManager {
 
         return keys
     }
-}
 
-extension VpnAuthenticationManager: VpnAuthentication {
-    public func clear() {
-        deleteKeys()
-        deleteCertificate()
-    }
+    // Simple queue implementation for certificate refresh
+    private func execute() {
+        // make sure another certificate refresh is not already in progress
+        guard !isExecuting else {
+            return
+        }
 
-    public func invalidateCertificate() {
-        deleteCertificate()
-    }
+        // if the operation queue is empty then stop the queue
+        guard let completion = queue.first else {
+            isExecuting = false
+            return
+        }
 
-    public func refreshCertificates(completion: @escaping (Result<(VpnAuthenticationData), Error>) -> Void) {
+        // remove the operation to be processed so the queue actually shrinks and does not run forever
+        queue.removeFirst()
         PMLog.D("Checking if vpn authentication certificate refresh is needed")
-
-        // simple synchornization to make sure this method is not call multiple times in parallel
-        objc_sync_enter(self)
 
         let keys = getKeys()
         let existingCertificate = self.getStoredCertificate()
@@ -196,7 +198,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
         guard needsRefresh else {
             PMLog.D("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil)")
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate!.certificate)))
-            objc_sync_exit(self)
+            execute()
             return
         }
 
@@ -209,22 +211,47 @@ extension VpnAuthenticationManager: VpnAuthentication {
                 case 2500: // error ClientPublicKey fingerprint conflict, please regenerate a new key
                     PMLog.D("Trying to recover by generating new keys and trying again")
                     self.clear()
-                    objc_sync_exit(self)
-                    self.refreshCertificates(completion: completion)
+                    self.queue.append(completion)
+                    self.execute()
                 default:
                     completion(.failure(error))
-                    objc_sync_exit(self)
+                    self.execute()
                 }
             case let .success(certificate):
                 // store it
                 self.store(certificate: certificate)
                 completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
-                objc_sync_exit(self)
+                self.execute()
             }
         }
     }
+}
 
-    public func loadAuthenticationData(completion: @escaping (Result<VpnAuthenticationData, Error>) -> Void) {
+extension VpnAuthenticationManager: VpnAuthentication {
+    /**
+     Deletes all the generated and stored data, so keys and certificate
+     */
+    public func clear() {
+        deleteKeys()
+        deleteCertificate()
+    }
+
+    /**
+     Refreshes the client certificate if needed
+
+     Uses a queue internally to make sure parallel calls to this method are executed in a serial way. This is important to make sure multiple keys are not generated at the same time.
+     */
+    public func refreshCertificates(completion: @escaping CertificateRefreshResult) {
+        queue.append(completion)
+        execute()
+    }
+
+    /**
+     Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
+
+     Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
+     */
+    public func loadAuthenticationData(completion: @escaping AuthenticationDataResult) {
         // keys are generated, certificate is stored and still valid, use it
         if let keys = getStoredKeys(), let existingCertificate = getStoredCertificate(), existingCertificate.validUntil < Date() {
             PMLog.D("Loading stored vpn authentication data")
