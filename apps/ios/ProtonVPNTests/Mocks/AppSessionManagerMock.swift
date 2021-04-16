@@ -82,5 +82,8 @@ class AppSessionManagerMock: AppSessionManager {
     func canPreviewApp() -> Bool {
         return callbackCanPreviewApp?() ?? true
     }
-    
+
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        success()
+    }
 }

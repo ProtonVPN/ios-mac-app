@@ -48,6 +48,7 @@ protocol AppSessionManager {
     func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     
     func canPreviewApp() -> Bool
 }
@@ -175,7 +176,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         })
     }
 
-    private func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard loggedIn else {
             success()
             return

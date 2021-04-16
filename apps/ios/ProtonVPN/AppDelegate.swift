@@ -115,6 +115,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if propertiesManager.featureFlags.isAnnouncementOn {
             announcementRefresher.refresh()
         }
+
+        container.makeAppSessionManager().refreshVpnAuthCertificate(success: { }, failure: { _ in })
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
