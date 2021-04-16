@@ -40,6 +40,7 @@ protocol AppSessionManager {
     var sessionChanged: Notification.Name { get }
     
     func attemptRememberLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool)
     func logOut()
@@ -108,7 +109,7 @@ class AppSessionManagerImplementation: AppSessionManager {
         })
     }
 
-    private func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard loggedIn else {
             success()
             return

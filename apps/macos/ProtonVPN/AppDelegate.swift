@@ -96,6 +96,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         if propertiesManager.featureFlags.isAnnouncementOn {
             self.container.makeAnnouncementRefresher().refresh()
         }
+
+        container.makeAppSessionManager().refreshVpnAuthCertificate(success: { }, failure: { _ in })
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {

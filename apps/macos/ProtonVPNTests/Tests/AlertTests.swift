@@ -174,6 +174,7 @@ fileprivate class AppSessionManagerMock: AppSessionManager {
     
     func attemptRememberLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {}
     func logOut(force: Bool) {}
     func logOut() {}
     func replyToApplicationShouldTerminate() {}
