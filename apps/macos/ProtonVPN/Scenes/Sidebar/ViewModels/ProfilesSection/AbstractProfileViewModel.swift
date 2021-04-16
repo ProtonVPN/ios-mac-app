@@ -38,9 +38,8 @@ class AbstractProfileViewModel {
         case .custom(let serverWrapper):
             self.lowestServerTier = serverWrapper.server.tier
             self.underMaintenance = serverWrapper.server.underMaintenance
-            
-        case .fastest(let countryCode): fallthrough
-        case .random(let countryCode):
+
+        case .fastest(let countryCode), .random(let countryCode):
             guard let code = countryCode else {
                 self.lowestServerTier = 0
                 self.underMaintenance = false

@@ -234,8 +234,8 @@ class StatusBarIconBlinker {
     public func setImage(_ statusIcon: StatusIcon) {
         if statusIcon != self.statusIcon {
             self.statusIcon = statusIcon
-            if statusItem.image != emptyImage {
-                statusItem.image = statusIcon.image
+            if statusItem.button?.image != emptyImage {
+                statusItem.button?.image = statusIcon.image
             }
         }
     }
@@ -247,14 +247,14 @@ class StatusBarIconBlinker {
     private func stop() {
         timer?.invalidate()
         timer = nil
-        statusItem.image = statusIcon.image
+        statusItem.button?.image = statusIcon.image
     }
     
     @objc func fireTimer() {
-        if statusItem.image == emptyImage {
-            statusItem.image = statusIcon.image
+        if statusItem.button?.image == emptyImage {
+            statusItem.button?.image = statusIcon.image
         } else {
-            statusItem.image = emptyImage
+            statusItem.button?.image = emptyImage
         }
     }
     
