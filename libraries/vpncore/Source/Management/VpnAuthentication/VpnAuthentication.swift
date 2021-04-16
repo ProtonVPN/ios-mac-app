@@ -66,9 +66,13 @@ public final class VpnAuthenticationManager {
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     private let alamofireWrapper: AlamofireWrapper
     private let certificateRefreshDeadline: TimeInterval = 60 * 60 * 3 // 3 hours
+    private let voidQueueItem: CertificateRefreshResult = { _ in }
 
     public init(alamofireWrapper: AlamofireWrapper) {
         self.alamofireWrapper = alamofireWrapper
+
+        NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnPlanDowngraded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnUserDelinquent, object: nil)
     }
 
     private func getStoredCertificate() -> VpnCertificate? {
@@ -225,6 +229,13 @@ public final class VpnAuthenticationManager {
             }
         }
     }
+
+    @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification ) {
+        PMLog.D("User plan downgraded or delinquent, deleting keys and certificate and getting one ones")
+        clear()
+        queue.append(voidQueueItem)
+        execute()
+    }
 }
 
 extension VpnAuthenticationManager: VpnAuthentication {
@@ -232,6 +243,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
      Deletes all the generated and stored data, so keys and certificate
      */
     public func clear() {
+        queue.removeAll()
         deleteKeys()
         deleteCertificate()
     }
