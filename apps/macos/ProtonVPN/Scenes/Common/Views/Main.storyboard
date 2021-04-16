@@ -319,19 +319,6 @@
             </objects>
             <point key="canvasLocation" x="1489" y="-19"/>
         </scene>
-        <!--View Controller-->
-        <scene sceneID="C88-pR-bdp">
-            <objects>
-                <viewController id="m75-bO-tSa" sceneMemberID="viewController">
-                    <view key="view" id="Ggm-OA-fao">
-                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </view>
-                </viewController>
-                <customObject id="bfg-Hi-1oh" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="386" y="-94"/>
-        </scene>
     </scenes>
     <resources>
         <image name="protonvpn-white-transparent" width="121" height="21"/>
