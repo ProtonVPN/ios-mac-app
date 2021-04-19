@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import CommonCrypto
 import Foundation
 import Sodium
 
@@ -41,7 +42,7 @@ public struct PublicKey: Codable {
 /**
  Ed25519 private key
  */
-public struct PrivateKey: Codable {
+public struct SecretKey: Codable {
     // 32 byte Ed25519 key
     let rawRepresentation: [UInt8]
 
@@ -51,19 +52,30 @@ public struct PrivateKey: Codable {
         let privateKeyBase64 = privateKeyData.base64EncodedString()
         return "-----BEGIN PRIVATE KEY-----\n\(privateKeyBase64)\n-----END PRIVATE KEY-----"
     }
+
+    // 32 byte X25519 key
+    var rawX25519Representation: [UInt8] {
+        var digest = [UInt8](repeating: 0, count: Int(CC_SHA512_DIGEST_LENGTH))
+        CC_SHA512(rawRepresentation, CC_LONG(rawRepresentation.count), &digest)
+        var tmp = Array(digest.prefix(32)) // First 32 bytes of the SHA512 of the Ed25519 secret key
+        tmp[0] &= 0xF8
+        tmp[31] &= 0x7F
+        tmp[31] |= 0x40
+        return tmp
+    }
 }
 
 /**
  Ed25519 key pair
  */
 public struct VpnKeys: Codable {
-    let privateKey: PrivateKey
+    let privateKey: SecretKey
     let publicKey: PublicKey
 
     init() {
         let sodium = Sodium()
         let keyPair = sodium.sign.keyPair()!
-        privateKey = PrivateKey(rawRepresentation: keyPair.secretKey)
+        privateKey = SecretKey(rawRepresentation: keyPair.secretKey)
         publicKey = PublicKey(rawRepresentation: keyPair.publicKey)
     }
 }    
