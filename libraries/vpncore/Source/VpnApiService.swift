@@ -97,9 +97,9 @@ public class VpnApiService {
             dispatchGroup.leave()
         }, failure: failureClosure)
         
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+        dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, appStateManager: self?.appStateManager))
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -147,9 +147,9 @@ public class VpnApiService {
             dispatchGroup.leave()
         }, failure: failureClosure)
         
-        dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
+        dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, appStateManager: self?.appStateManager))
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig))
             } else if let error = rError {
                 failure(error)
             } else {
