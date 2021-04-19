@@ -23,17 +23,7 @@
 import Cocoa
 
 extension NSStackView {
-    
-    /// Make all children widths the same as stack width. Used with vertical alignment.
-    @discardableResult func childrenFillWidth() -> [NSLayoutConstraint] {
-        var constraints = [NSLayoutConstraint]()
-        self.arrangedSubviews.forEach { view in
-            constraints.append(view.widthAnchor.constraint(equalTo: self.widthAnchor, multiplier: 1))
-        }
-        NSLayoutConstraint.activate(constraints)
-        return constraints
-    }
-    
+        
     /// Removed all arranged subviews.
     /// Keep in mind that views should be retained if you inted to reuse them.
     func clear() {
