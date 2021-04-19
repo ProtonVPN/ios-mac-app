@@ -76,7 +76,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         container.appStateManager.isOnDemand = true
         container.appStateManager.state = .disconnected
         
-        wait(for: [expectation], timeout: 5)
+        wait(for: [expectation], timeout: 0.5)
     }
     
     func testWhenAppStateIsPreparingConnectionCancelButtonIsShown() throws {
