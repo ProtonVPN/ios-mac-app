@@ -143,7 +143,7 @@ extension AppDelegate {
                 return
             }
             
-            let appStateManager = self.container.makeAppStateManager()
+            var appStateManager = self.container.makeAppStateManager()
             
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {
@@ -163,7 +163,7 @@ extension AppDelegate {
         }.addCheck("1.7.1") { version, completion in
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
-            let appStateManager = self.container.makeAppStateManager()
+            var appStateManager = self.container.makeAppStateManager()
             
             appStateManager.onVpnStateChanged = { newState in
                 if newState != .invalid {

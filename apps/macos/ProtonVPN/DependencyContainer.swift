@@ -43,14 +43,15 @@ final class DependencyContainer {
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var alamofireWrapper: AlamofireWrapper = AlamofireWrapperImplementation(factory: self)
-    private lazy var appStateManager: AppStateManager = AppStateManager(vpnApiService: makeVpnApiService(),
-                                                                        vpnManager: vpnManager,
-                                                                        alamofireWrapper: alamofireWrapper,
-                                                                        alertService: macAlertService,
-                                                                        timerFactory: TimerFactory(),
-                                                                        propertiesManager: PropertiesManager(),
-                                                                        vpnKeychain: vpnKeychain,
-                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer())
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
+        vpnApiService: makeVpnApiService(),
+        vpnManager: vpnManager,
+        alamofireWrapper: alamofireWrapper,
+        alertService: macAlertService,
+        timerFactory: TimerFactory(),
+        propertiesManager: PropertiesManager(),
+        vpnKeychain: vpnKeychain,
+        configurationPreparer: makeVpnManagerConfigurationPreparer())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
