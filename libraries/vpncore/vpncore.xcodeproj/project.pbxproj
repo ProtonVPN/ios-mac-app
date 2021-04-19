@@ -903,6 +903,8 @@
 		F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */; };
 		F320563325E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
 		F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320563225E7D7CB00566DB7 /* FactoryMock.swift */; };
+		F3273340262DBD750059D72E /* ElipticCurveKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */; };
+		F3273341262DBD760059D72E /* ElipticCurveKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */; };
 		F352FDA725F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		F352FDA825F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		F3657A8425F66B1D00497451 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -1304,6 +1306,7 @@
 		F32055A925E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlamofireWrapper+AlternativeRouting.swift"; sourceTree = "<group>"; };
 		F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeRoutingTests.swift; sourceTree = "<group>"; };
 		F320563225E7D7CB00566DB7 /* FactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMock.swift; sourceTree = "<group>"; };
+		F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElipticCurveKeyTests.swift; sourceTree = "<group>"; };
 		F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3657A8325F66B1D00497451 /* SmartProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartProtocol.swift; sourceTree = "<group>"; };
 		F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartProtocolImplementationTests.swift; sourceTree = "<group>"; };
@@ -1618,6 +1621,7 @@
 				D5D606A52292DC5B00394CF9 /* Management */,
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
+				F3273337262DBD5E0059D72E /* Models */,
 				F320561825E7A23100566DB7 /* Networking */,
 				E935183D2617535600AB4C7C /* Protocols */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
@@ -1693,6 +1697,14 @@
 				F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */,
 			);
 			path = Networking;
+			sourceTree = "<group>";
+		};
+		F3273337262DBD5E0059D72E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		F36ECB382610A7760089B898 /* API */ = {
@@ -2952,6 +2964,7 @@
 				D5C205132487A0CE004FB58B /* UserApiService.swift in Sources */,
 				D5C205142487A0CE004FB58B /* ApiConstants.swift in Sources */,
 				D5C205152487A0CE004FB58B /* CoreAppConstants.swift in Sources */,
+				F3273340262DBD750059D72E /* ElipticCurveKeyTests.swift in Sources */,
 				D5C205162487A0CE004FB58B /* MapConstants.swift in Sources */,
 				D5C205172487A0CE004FB58B /* ProfileConstants.swift in Sources */,
 				D5C205182487A0CE004FB58B /* IkeProtocolFactory.swift in Sources */,
@@ -3425,6 +3438,7 @@
 				D5C2049924866B81004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2049A24866B81004FB58B /* RequestItem.swift in Sources */,
 				D5C2049C24866B81004FB58B /* GenericRequestRetrier.swift in Sources */,
+				F3273341262DBD760059D72E /* ElipticCurveKeyTests.swift in Sources */,
 				4257B21924EC1C1300C4E4AC /* VpnServerState.swift in Sources */,
 				D5C2049D24866B81004FB58B /* AuthApiService.swift in Sources */,
 				D5C2049E24866B81004FB58B /* PaymentsApiService.swift in Sources */,
