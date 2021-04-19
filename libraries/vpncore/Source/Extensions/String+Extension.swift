@@ -94,10 +94,13 @@ public extension String {
     }
 
     func dataFromHex() -> Data? {
-        guard self.count % 2 == 0 else { return nil }
+        let normalized = self.replacingOccurrences(of: ":", with: "")
+        guard normalized.count % 2 == 0 else {
+            return nil
+        }
         var data = Data()
         var byteLiteral = ""
-        for (index, character) in self.enumerated() {
+        for (index, character) in normalized.enumerated() {
             if index % 2 == 0 {
                 byteLiteral = String(character)
             } else {
