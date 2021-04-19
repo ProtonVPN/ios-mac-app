@@ -77,7 +77,7 @@ final class DependencyContainer {
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
 
-    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper())
+    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), keychain: VpnAuthenticationKeychain())
 }
 
 // MARK: NavigationServiceFactory
