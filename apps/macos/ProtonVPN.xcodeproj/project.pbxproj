@@ -184,6 +184,9 @@
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
 		E9AB88D02628814600AFB12F /* NSStackView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */; };
+		E9AB88DB262D661300AFB12F /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */; };
+		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
+		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
@@ -618,6 +621,9 @@
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
 		E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
+		E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
+		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
+		E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
 		EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCCoreCircleButton.swift; sourceTree = "<group>"; };
@@ -978,6 +984,8 @@
 			isa = PBXGroup;
 			children = (
 				D5421EA925B6DB0200280C29 /* Updates */,
+				E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */,
+				E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */,
 			);
 			path = Management;
 			sourceTree = "<group>";
@@ -1112,6 +1120,7 @@
 				D5421EA725B6DAF300280C29 /* Mocks */,
 				D5D298A925B5BBFE000FBD74 /* Management */,
 				E13F4D0020FCD6E100D985C2 /* JSON */,
+				E9AB88D9262D65EF00AFB12F /* ViewModels */,
 				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				E15B755120FA83CB0022C406 /* Info.plist */,
 			);
@@ -1174,6 +1183,14 @@
 				E17DE10821FB630C008CCC13 /* AppProtocol.swift */,
 			);
 			name = Protocols;
+			sourceTree = "<group>";
+		};
+		E9AB88D9262D65EF00AFB12F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */,
+			);
+			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		EE068DBF1F23E7C10006C2D0 /* Sidebar */ = {
@@ -2538,9 +2555,12 @@
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
+				E9AB88DB262D661300AFB12F /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
+				E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
+				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
 				E13F4CF920FC9E0F00D985C2 /* Dictionary+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

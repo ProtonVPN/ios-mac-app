@@ -21,3 +21,15 @@
 //
 
 import Foundation
+@testable import ProtonVPN
+@testable import vpncore
+
+class VpnProtocolChangeManagerMock: VpnProtocolChangeManager {
+    
+    var protocolChanged: ((VpnProtocol) -> Void)?
+    
+    func change(toProcol: VpnProtocol) {
+        protocolChanged?(toProcol)
+    }
+        
+}
