@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
 import vpncore
 
 protocol OverlayViewModelDelegate: class {
@@ -40,14 +39,12 @@ extension DependencyContainer: ConnectingOverlayViewModelFactory {
 class ConnectingOverlayViewModel {
     
     typealias Factory = AppStateManagerFactory
-        & NavigationServiceFactory
         & PropertiesManagerFactory
         & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
@@ -56,11 +53,21 @@ class ConnectingOverlayViewModel {
     
     private let loadingView: LoadingAnimationView
         
-    private(set) var state: AppState
+    private(set) var appState: AppState
     
     var timedOut = false
+    
     private var isIkeWithKsEnabled: Bool {
         return propertiesManager.vpnProtocol == .ike && propertiesManager.killSwitch == true
+    }
+    
+    private var isReconnecting: Bool {
+        switch appState {
+        case .connecting:
+            return !propertiesManager.intentionallyDisconnected
+        default:
+            return false
+        }
     }
     
     weak var delegate: OverlayViewModelDelegate?
@@ -69,14 +76,31 @@ class ConnectingOverlayViewModel {
     private let fontSizeDescription = 12.0
     private let fontSizeFirst = 12.0
     
-    private let reconnectWithOvpnLink = "pvpn://reconnect-with-ovpn"
+    init(factory: Factory, cancellation: @escaping () -> Void) {
+        self.factory = factory
+        self.appState = factory.makeAppStateManager().state
+        self.cancellation = cancellation
+        
+        loadingView = LoadingAnimationView(frame: CGRect.zero)
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector: #selector(appStateChanged(_:)),
+                                               name: appStateManager.stateChange,
+                                               object: nil)
+    }
+    
+    deinit {
+        loadingView.animate(false)
+    }
+    
+    // MARK: - Strings
     
     var hidePhase: Bool {
         if timedOut {
             return true
         }
         
-        switch state {
+        switch appState {
         case .error, .disconnected, .aborted:
             return true
         default:
@@ -85,7 +109,7 @@ class ConnectingOverlayViewModel {
     }
     
     var firstString: NSAttributedString {
-        switch state {
+        switch appState {
         case .connected:
             return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: fontSizeFirst)
         default:
@@ -111,7 +135,7 @@ class ConnectingOverlayViewModel {
             boldString = ""
         }
         
-        switch state {
+        switch appState {
         case .preparingConnection:
             string = LocalizedString.preparingConnection
         case .connected:
@@ -166,87 +190,57 @@ class ConnectingOverlayViewModel {
         return attributedString
     }
     
-    // MARK: First button - Cancel/Done
+    // MARK: - Buttons
     
-    var firstButtonTitle: String {
-        switch state {
+    typealias ButtonInfo = (String, ConnectingOverlayButton.Style, () -> Void)
+    
+    var buttons: [ButtonInfo] {
+        var buttons = [ButtonInfo]()
+        
+        if timedOut && isIkeWithKsEnabled {
+            buttons.append(retryWithOpenVpnButton)
+            buttons.append(retryWithoutKSButton)
+        } else if timedOut {
+            buttons.append(retryButton)
+        }
+        
+        switch appState {
         case .connected:
-            return LocalizedString.done
-        default:
-            return LocalizedString.cancel
-        }
-    }
-    
-    var firstButtonStyle: ConnectingOverlayButton.Style {
-        return .main
-    }
-    
-    // MARK: Second button - retry
-    
-    var secondButtonTitle: String {
-        return timedOut && isIkeWithKsEnabled
-            ? LocalizedString.tryAgainWithoutKS
-            : LocalizedString.tryAgain
-    }
-    
-    var secondButtonStyle: ConnectingOverlayButton.Style {
-        return timedOut && isIkeWithKsEnabled
-            ? .colorGreen
-            : .main
-    }
-    
-    var hideSecondButton: Bool {
-        if timedOut {
-            return false
+            buttons.append(doneButton)
+            
+        default:                        
+            buttons.append(cancelButton)
         }
         
-        switch state {
-        case .error, .disconnected:
-            return false
-        default:
-            return true
-        }
+        return buttons
     }
     
-    // MARK: Third button - Switch to other protocol
-    
-    var thirdButtonTitle: String {
-        return LocalizedString.timeoutKsIkeSwitchProtocol
+    private var cancelButton: ButtonInfo {
+        return (LocalizedString.cancel, .main, { self.cancelConnecting() })
     }
     
-    var thirdButtonStyle: ConnectingOverlayButton.Style {
-        return .colorGreen
+    private var doneButton: ButtonInfo {
+        return (LocalizedString.done, .main, { self.cancelConnecting() })
     }
     
-    var hideThirdButton: Bool {
-        return !(timedOut && isIkeWithKsEnabled)
+    private var retryButton: ButtonInfo {
+        return (LocalizedString.tryAgain, .main, { self.retryConnection() })
     }
     
-    private var isReconnecting: Bool {
-        switch state {
-        case .connecting:
-            return !propertiesManager.intentionallyDisconnected
-        default:
-            return false
-        }
+    private var retryWithoutKSButton: ButtonInfo {
+        return (LocalizedString.tryAgainWithoutKS, .colorGreen, {
+            self.disableKillSwitch()
+            self.retryConnection()
+        })
     }
     
-    init(factory: Factory, cancellation: @escaping () -> Void) {
-        self.factory = factory
-        self.state = factory.makeAppStateManager().state
-        self.cancellation = cancellation
-        
-        loadingView = LoadingAnimationView(frame: CGRect.zero)
-        
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(appStateChanged(_:)),
-                                               name: appStateManager.stateChange,
-                                               object: nil)
+    private var retryWithOpenVpnButton: ButtonInfo {
+        return (LocalizedString.timeoutKsIkeSwitchProtocol, .colorGreen, {
+            self.reconnectWithOvpn()
+        })
     }
     
-    deinit {
-        loadingView.animate(false)
-    }
+    // MARK: - Graphic
     
     func graphic(with frame: CGRect) -> NSView {
         if timedOut {
@@ -255,7 +249,7 @@ class ConnectingOverlayViewModel {
             return connectedView
         }
         
-        switch state {
+        switch appState {
         case .connected:
             loadingView.animate(false)
             let connectedView = NSImageView(frame: frame)
@@ -272,32 +266,34 @@ class ConnectingOverlayViewModel {
         }
     }
     
-    func cancelConnecting() {
+    // MARK: - Actions
+    
+    private func cancelConnecting() {
         NotificationCenter.default.removeObserver(self)
         DispatchQueue.main.async { [weak self] in
             self?.cancellation()
         }
-        if case AppState.connected(_) = state {
+        if case AppState.connected(_) = appState {
             return
         } else {
             appStateManager.cancelConnectionAttempt()
         }
     }
     
-    func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
+    private func disableKillSwitch() {
+        self.propertiesManager.killSwitch = false
+    }
+    
+    private func retryConnection(withProtocol vpnProtocol: VpnProtocol? = nil) {
         timedOut = false
         if let vpnProtocol = vpnProtocol {
             vpnGateway.reconnect(with: vpnProtocol)
         } else {
-            
-            if isIkeWithKsEnabled {
-                self.propertiesManager.killSwitch = false
-            }
-            self.vpnGateway.retryConnection()
+            vpnGateway.retryConnection()
         }
     }
     
-    func reconnectWithOvpn() {
+    private func reconnectWithOvpn() {
         let transportProtocol: VpnProtocol = .openVpn(.udp)
         
         // This will trigger reconnect after protocol is changed
@@ -314,10 +310,12 @@ class ConnectingOverlayViewModel {
         vpnProtocolChangeManager.change(toProcol: transportProtocol)
     }
     
+    // MARK: - Notification handlers
+    
     @objc private func appStateChanged(_ notification: Notification) {
         let state = appStateManager.state
 
-        let oldState = self.state
+        let oldState = self.appState
         if case AppState.connected(_) = oldState {
             // let overlay fade out
             return
@@ -332,7 +330,7 @@ class ConnectingOverlayViewModel {
                 self?.timedOut = true
             }
             
-            self?.state = state
+            self?.appState = state
             
             if let delegate = self?.delegate {
                 DispatchQueue.main.async {

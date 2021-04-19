@@ -27,14 +27,10 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     @IBOutlet private weak var graphicContainer: NSView!
     @IBOutlet private weak var phaseLabel: NSTextField!
     @IBOutlet private weak var connectionLabel: NSTextField!
-    @IBOutlet private var firstButton: ConnectingOverlayButton! // Cancel
-    @IBOutlet private var secondButton: ConnectingOverlayButton! // Retry
-    @IBOutlet private var thirdButton: ConnectingOverlayButton! // Switch to openVPN
     
     @IBOutlet private weak var mainStackView: NSStackView!
     @IBOutlet private weak var buttonsStackView: NSStackView!
-    private var temporaryButtonConstraints = [NSLayoutConstraint]()
-    
+        
     private let viewModel: ConnectingOverlayViewModel
     
     private var completionHandler: (() -> Void)?
@@ -66,8 +62,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         layerAnimation.fromValue = 1.0
         layerAnimation.toValue = 0.0
         layerAnimation.duration = time
-        firstButton.layer?.add(layerAnimation, forKey: "fadeAnimation")
-        firstButton.layer?.opacity = 0.0
+        buttonsStackView.layer?.add(layerAnimation, forKey: "fadeAnimation")
+        buttonsStackView.layer?.opacity = 0.0
         
         NSAnimationContext.runAnimationGroup({ (context) in
             context.duration = time
@@ -106,58 +102,58 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     }
     
     private func updateButtons() {
-        firstButton.title = viewModel.firstButtonTitle
-        firstButton.style = viewModel.firstButtonStyle
-    
-        secondButton.isHidden = viewModel.hideSecondButton
-        secondButton.title = viewModel.secondButtonTitle
-        secondButton.style = viewModel.secondButtonStyle
+        var buttons = viewModel.buttons
         
-        thirdButton.isHidden = viewModel.hideThirdButton
-        thirdButton.title = viewModel.thirdButtonTitle
-        thirdButton.style = viewModel.thirdButtonStyle
-                
-        NSLayoutConstraint.deactivate(temporaryButtonConstraints)
-        temporaryButtonConstraints.removeAll()
+        clickHandlers.removeAll()
+        buttonsStackView.clear()
+        buttonsStackView.alignment = .centerX
+        buttonsStackView.orientation = buttons.count > 2 || buttons.count > 1 && buttons[1].0.count > 9 // "Try againg".count == 9
+            ? .vertical
+            : .horizontal
         
-        if !viewModel.hideThirdButton && !viewModel.hideSecondButton {
-            buttonsStackView.orientation = .vertical
-            buttonsStackView.alignment = .centerX
-            buttonsStackView.clear()
-            buttonsStackView.addArrangedSubview(thirdButton)
-            buttonsStackView.addArrangedSubview(secondButton)
-            buttonsStackView.addArrangedSubview(firstButton)
-            temporaryButtonConstraints.append(contentsOf: buttonsStackView.childrenFillWidth())
-                        
-        } else if !viewModel.hideSecondButton && secondButton.title.count > 10 { // "Try againg".count == 9
-            buttonsStackView.orientation = .vertical
-            buttonsStackView.alignment = .centerX
-            buttonsStackView.clear()
-            buttonsStackView.addArrangedSubview(secondButton)
-            buttonsStackView.addArrangedSubview(firstButton)
-            temporaryButtonConstraints.append(contentsOf: buttonsStackView.childrenFillWidth())
-            
-        } else {
-            buttonsStackView.orientation = .horizontal
-            buttonsStackView.alignment = .top
-            buttonsStackView.clear()
-            buttonsStackView.addArrangedSubview(firstButton)
-            buttonsStackView.addArrangedSubview(secondButton)
+        // Put cancel button on the left
+        if buttonsStackView.orientation == .horizontal && buttons.count == 2 {
+            buttons.reverse()
         }
+        
+        for (index, buttonInfo) in buttons.enumerated() {
+            add(button: buttonInfo, atIndex: index)
+        }
+        
+    }
+    
+    private func add(button buttonInfo: ConnectingOverlayViewModel.ButtonInfo, atIndex index: Int) {
+        let button = ConnectingOverlayButton(title: buttonInfo.0, target: self, action: #selector(buttonClicked))
+        button.awakeFromNib()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.horizontalPadding = 15
+        buttonsStackView.addArrangedSubview(button)
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        if buttonsStackView.orientation == .vertical {
+            button.widthAnchor.constraint(equalTo: buttonsStackView.widthAnchor, multiplier: 1).isActive = true
+        } else {
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
+        }
+        
+        button.title = buttonInfo.0
+        button.style = buttonInfo.1
+        clickHandlers.append(buttonInfo.2)
+        button.tag = index
+        button.target = self
+        button.action = #selector(buttonClicked)
     }
     
     // MARK: - Actions
+        
+    private var clickHandlers = [() -> Void]()
     
-    @IBAction private func cancelConnecting(_ sender: Any) {
-        viewModel.cancelConnecting()
-    }
-    
-    @IBAction private func retryConneting(_ sender: Any) {
-        viewModel.retryConnection()
-    }
-    
-    @IBAction private func switchToOpenVPN(_ sender: Any) {
-        viewModel.reconnectWithOvpn()
+    @IBAction private func buttonClicked(_ sender: NSButton) {
+        let index = sender.tag
+        guard index >= 0 && index < clickHandlers.count else {
+            return
+        }
+        clickHandlers[index]()
     }
     
     // MARK: - OverlayViewModelDelegate

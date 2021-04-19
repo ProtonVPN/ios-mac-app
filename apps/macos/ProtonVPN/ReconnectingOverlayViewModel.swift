@@ -25,7 +25,7 @@ import vpncore
 class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
     override var secondString: NSAttributedString {
         if timedOut { return super.secondString }
-        switch state {
+        switch appState {
         case .connected, .error, .disconnected:
             return super.secondString
         default:
@@ -35,7 +35,7 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
     }
     
     override var firstString: NSAttributedString {
-        switch state {
+        switch appState {
         case .connected:
             return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: 12)
         default:

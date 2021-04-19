@@ -29,7 +29,7 @@ class ConnectingWindowController: WindowController {
     }
     
     required init(viewController: ConnectingViewController) {
-        let window = NSWindow(contentViewController: viewController)
+        let window = ConnectingOverlayWindow(contentViewController: viewController)
         super.init(window: window)
         
         setupWindow()
@@ -48,4 +48,13 @@ class ConnectingWindowController: WindowController {
         
         window.ignoresMouseEvents = false
     }
+}
+
+class ConnectingOverlayWindow: NSWindow {
+    
+    // This makes `addCursorRect` in `ConnectingOverlayButton` work.
+    override var canBecomeKey: Bool {
+        return true
+    }
+    
 }

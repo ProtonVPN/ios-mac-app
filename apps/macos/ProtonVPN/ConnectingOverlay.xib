@@ -8,14 +8,12 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConnectingViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
-                <outlet property="buttonsStackView" destination="J79-kU-gHb" id="Lct-Hw-4Jx"/>
+                <outlet property="button1" destination="SN9-pH-DJE" id="UMh-vp-tF8"/>
+                <outlet property="buttonsStackView" destination="J79-kU-gHb" id="HGY-M4-G4q"/>
                 <outlet property="connectionLabel" destination="rdD-jv-0P2" id="6Rx-6e-9gb"/>
-                <outlet property="firstButton" destination="SN9-pH-DJE" id="rge-1W-dCg"/>
                 <outlet property="graphicContainer" destination="hHD-0g-p4p" id="6M9-pH-dau"/>
                 <outlet property="mainStackView" destination="Rml-XC-dUB" id="7p2-pe-LTQ"/>
                 <outlet property="phaseLabel" destination="lcw-K7-AD9" id="TOK-3W-EyI"/>
-                <outlet property="secondButton" destination="PDj-1Z-iD3" id="1uQ-oa-XbG"/>
-                <outlet property="thirdButton" destination="1qd-Ry-Zlk" id="eVI-nO-Daz"/>
                 <outlet property="view" destination="XJd-M3-dH1" id="mia-MA-7pk"/>
             </connections>
         </customObject>
@@ -62,8 +60,8 @@
                                 <constraint firstItem="rdD-jv-0P2" firstAttribute="leading" secondItem="tpq-ZR-Wum" secondAttribute="leading" id="vBT-Ma-NPp"/>
                             </constraints>
                         </customView>
-                        <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J79-kU-gHb">
-                            <rect key="frame" x="-25" y="0.0" width="390" height="40"/>
+                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="15" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="J79-kU-gHb">
+                            <rect key="frame" x="110" y="0.0" width="120" height="40"/>
                             <subviews>
                                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SN9-pH-DJE" userLabel="Cancel Button" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
                                     <rect key="frame" x="-7" y="-7" width="134" height="52"/>
@@ -80,57 +78,15 @@
                                             <real key="value" value="15"/>
                                         </userDefinedRuntimeAttribute>
                                     </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="cancelConnecting:" target="-2" id="e0g-P3-Be1"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="PDj-1Z-iD3" userLabel="Second Button" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="128" y="-7" width="134" height="52"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="2hU-AV-b0C"/>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="EFt-Sq-Ona"/>
-                                    </constraints>
-                                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="F7K-Er-3Eb">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                            <real key="value" value="15"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="retryConneting:" target="-2" id="tdk-M2-aqq"/>
-                                    </connections>
-                                </button>
-                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="1qd-Ry-Zlk" userLabel="Third Button" customClass="ConnectingOverlayButton" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="263" y="-7" width="134" height="52"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="40" id="hn2-uJ-O29"/>
-                                        <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="120" id="nMW-P8-W8a"/>
-                                    </constraints>
-                                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nGs-fz-xfe">
-                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                        <font key="font" metaFont="system"/>
-                                    </buttonCell>
-                                    <userDefinedRuntimeAttributes>
-                                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
-                                            <real key="value" value="15"/>
-                                        </userDefinedRuntimeAttribute>
-                                    </userDefinedRuntimeAttributes>
-                                    <connections>
-                                        <action selector="switchToOpenVPN:" target="-2" id="0EX-dy-oJn"/>
-                                    </connections>
                                 </button>
                             </subviews>
+                            <constraints>
+                                <constraint firstItem="SN9-pH-DJE" firstAttribute="width" secondItem="J79-kU-gHb" secondAttribute="width" id="D5S-ZJ-2HL"/>
+                            </constraints>
                             <visibilityPriorities>
-                                <integer value="1000"/>
-                                <integer value="1000"/>
                                 <integer value="1000"/>
                             </visibilityPriorities>
                             <customSpacing>
-                                <real value="3.4028234663852886e+38"/>
-                                <real value="3.4028234663852886e+38"/>
                                 <real value="3.4028234663852886e+38"/>
                             </customSpacing>
                         </stackView>

@@ -213,6 +213,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         connectionOverlay.isHidden = false
         window.addChildWindow(overlayWindowController!.window!, ordered: .above)
         resizeOverlayWindow()
+        overlayWindowController!.window!.makeKey()
     }
     
     private func loading(show: Bool, animateClose: Bool = false) {
