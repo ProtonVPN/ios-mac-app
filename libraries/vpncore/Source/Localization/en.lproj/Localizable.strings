@@ -77,6 +77,7 @@
 "_not_connected" = "Not Connected";
 "_you_are_not_connected" = "You are not connected";
 "_try_agian" = "Try again";
+"_try_again_without_killswitch" = "Disable Kill Switch and retry";
 "_retry" = "Retry";
 "_free_servers" = "FREE SERVERS";
 "_basic_servers" = "BASIC SERVERS";
@@ -98,6 +99,9 @@
 "_upgrade_for_secure_core" = "to use Secure Core";
 "_switch_side_button_on" = "ON";
 "_switch_side_button_off" = "OFF";
+
+"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
 // Notifications
 "_kill_switch_blocking_connection" = "Kill Switch blocking all connections";
@@ -752,9 +756,10 @@
 
 // OpenVPN
 
-"_openvpn_settings_title" = "System Extension required";
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
-"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+"_openvpn_settings_title" = "Change settings to use OpenVPN";
+"_openvpn_settings_description" = "To use OpenVPN, you need to give ProtonVPN permission to load a system extension.";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.";
+"_openvpn_settings_step1_link" = "click here";
 "_openvpn_settings_step2" = "Make the necessary changes by clicking on the lock.";
 "_openvpn_settings_step3" = "Allow the system software to load.";
 

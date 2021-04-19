@@ -40,7 +40,7 @@ class StateAlertTests: XCTestCase {
         timerFactory = TimerFactoryMock()
         propertiesManager = PropertiesManagerMock()
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
-        appStateManager = AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer)
+        appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer)
     }
 
     func testDisconnectingAlertFirtTimeConnecting() {

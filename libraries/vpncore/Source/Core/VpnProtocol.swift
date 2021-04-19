@@ -87,6 +87,16 @@ public enum VpnProtocol {
             return false
         }
     }
+    
+    public var transportProtocol: TransportProtocol {
+        switch self {
+        case .ike:
+            return .undefined
+        case .openVpn(let transportProtocol):
+            return transportProtocol
+        }
+    }
+    
 }
 
 extension VpnProtocol: Codable {
