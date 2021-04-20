@@ -57,6 +57,7 @@
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
 		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
+		D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */; };
 		D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */; };
 		D57597C123B10C2E002D6631 /* WindowMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D57597C023B10C2E002D6631 /* WindowMenuController.swift */; };
 		D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */; };
@@ -186,7 +187,6 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
-		E9AB88DB262D661300AFB12F /* ConnectingOverlayViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */; };
 		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
 		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
@@ -473,6 +473,7 @@
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
+		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		D563319D23212A0800CE2EE3 /* AbstractProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractProfileViewModel.swift; sourceTree = "<group>"; };
 		D57597C023B10C2E002D6631 /* WindowMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WindowMenuController.swift; sourceTree = "<group>"; };
 		D58496A025935F8000CFAFDE /* ProtonVPN-release.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ProtonVPN-release.entitlements"; sourceTree = "<group>"; };
@@ -626,8 +627,6 @@
 		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
-		E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
-		E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
 		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
 		E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
@@ -952,6 +951,15 @@
 			path = Updates;
 			sourceTree = "<group>";
 		};
+		D549C8F5262EF4B900A0903F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */,
+			);
+			name = ViewModels;
+			path = ProtonVPNTests/ViewModels;
+			sourceTree = SOURCE_ROOT;
+		};
 		D5911707229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
@@ -981,15 +989,6 @@
 			path = Updates;
 			sourceTree = "<group>";
 		};
-		D5F45D61262EC0C700FB13E4 /* Recovered References */ = {
-			isa = PBXGroup;
-			children = (
-				E9AB88CF2628814600AFB12F /* NSStackView+Children.swift */,
-				E9AB88DA262D661300AFB12F /* ConnectingOverlayViewModelTests.swift */,
-			);
-			name = "Recovered References";
-			sourceTree = "<group>";
-		};
 		E13F4CFF20FCD6CF00D985C2 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -1011,11 +1010,12 @@
 		E15B754E20FA83CB0022C406 /* ProtonVPNTests */ = {
 			isa = PBXGroup;
 			children = (
-				D5421EA725B6DAF300280C29 /* Mocks */,
-				D5D298A925B5BBFE000FBD74 /* Management */,
-				E13F4D0020FCD6E100D985C2 /* JSON */,
-				E13F4CFF20FCD6CF00D985C2 /* Tests */,
 				E15B755120FA83CB0022C406 /* Info.plist */,
+				E13F4D0020FCD6E100D985C2 /* JSON */,
+				D5D298A925B5BBFE000FBD74 /* Management */,
+				D5421EA725B6DAF300280C29 /* Mocks */,
+				E13F4CFF20FCD6CF00D985C2 /* Tests */,
+				D549C8F5262EF4B900A0903F /* ViewModels */,
 			);
 			path = ProtonVPNTests;
 			sourceTree = "<group>";
@@ -1087,7 +1087,6 @@
 				E173304722C3555A00050F79 /* .gitlab-ci.yml */,
 				D5911714229F99CB005829DA /* .swiftlint.yml */,
 				31F23820696BA6450B77DEE9 /* Pods */,
-				D5F45D61262EC0C700FB13E4 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -2575,9 +2574,9 @@
 			files = (
 				E15B755C20FC8DA00022C406 /* MapCoordinateTranslatorTests.swift in Sources */,
 				D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */,
-				E9AB88DB262D661300AFB12F /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E13F4CF220FC99DA00D985C2 /* ServerManagerTests.swift in Sources */,
 				E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */,
+				D54B1E12262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift in Sources */,
 				E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */,
 				D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */,
 				E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */,
