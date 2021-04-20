@@ -159,44 +159,36 @@ extension AppDelegate {
                 return
             }
             
-            let appStateManager = self.container.makeAppStateManager()
-            
-            appStateManager.onVpnStateChanged = { newState in
-                if newState != .invalid {
-                    appStateManager.onVpnStateChanged = nil
-                }
-                
-                guard case .connected = newState else {
-                    return
-                }
-                
-                appStateManager.disconnect {
-                    self.container.makeVpnGateway().quickConnect()
-                }
-            }
+            self.reconnectWhenPossible()
             completion(nil)
             
         }.addCheck("1.7.1") { version, completion in
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
-            let appStateManager = self.container.makeAppStateManager()
             
-            appStateManager.onVpnStateChanged = { newState in
-                if newState != .invalid {
-                    appStateManager.onVpnStateChanged = nil
-                }
-                
-                guard case .connected = newState else {
-                    return
-                }
-                
-                appStateManager.disconnect {
-                    self.container.makeVpnGateway().quickConnect()
-                }
-            }
+            self.reconnectWhenPossible()
             completion(nil)
+            
         }.migrate { _ in
             // Migration complete
+        }
+    }
+    
+    private func reconnectWhenPossible() {
+        var appStateManager = self.container.makeAppStateManager()
+        
+        appStateManager.onVpnStateChanged = { newState in
+            if newState != .invalid {
+                appStateManager.onVpnStateChanged = nil
+            }
+            
+            guard case .connected = newState else {
+                return
+            }
+            
+            appStateManager.disconnect {
+                self.container.makeVpnGateway().quickConnect()
+            }
         }
     }
 }

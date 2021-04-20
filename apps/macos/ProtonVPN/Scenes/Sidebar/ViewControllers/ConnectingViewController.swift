@@ -24,17 +24,19 @@ import Cocoa
 
 class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
 
-    @IBOutlet weak var graphicContainer: NSView!
-    @IBOutlet weak var phaseLabel: NSTextField!
-    @IBOutlet weak var connectionLabel: NSTextField!
-    @IBOutlet weak var cancelButton: ConnectingOverlayButton!
-    @IBOutlet weak var retryButton: ConnectingOverlayButton!
+    @IBOutlet private weak var graphicContainer: NSView!
+    @IBOutlet private weak var phaseLabel: NSTextField!
+    @IBOutlet private weak var connectionLabel: NSTextField!
     
-    let viewModel: ConnectingOverlayViewModel
+    @IBOutlet private weak var mainStackView: NSStackView!
+    @IBOutlet private weak var buttonsStackView: NSStackView!
+        
+    private let viewModel: ConnectingOverlayViewModel
     
-    var completionHandler: (() -> Void)?
+    private var completionHandler: (() -> Void)?
     
     // MARK: - Public functions
+    
     required init?(coder: NSCoder) {
         fatalError("Unsupported initializer")
     }
@@ -60,8 +62,8 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
         layerAnimation.fromValue = 1.0
         layerAnimation.toValue = 0.0
         layerAnimation.duration = time
-        cancelButton.layer?.add(layerAnimation, forKey: "fadeAnimation")
-        cancelButton.layer?.opacity = 0.0
+        buttonsStackView.layer?.add(layerAnimation, forKey: "fadeAnimation")
+        buttonsStackView.layer?.opacity = 0.0
         
         NSAnimationContext.runAnimationGroup({ (context) in
             context.duration = time
@@ -80,6 +82,7 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
     }
     
     // MARK: - Private functions
+    
     private func update() {
         let graphic = viewModel.graphic(with: graphicContainer.bounds)
         if !graphicContainer.subviews.contains(graphic) {
@@ -89,24 +92,74 @@ class ConnectingViewController: NSViewController, OverlayViewModelDelegate {
             graphicContainer.addSubview(graphic)
         }
         phaseLabel.isHidden = viewModel.hidePhase
-        phaseLabel.attributedStringValue = viewModel.phaseString
-        connectionLabel.attributedStringValue = viewModel.connectingString
-        cancelButton.title = viewModel.cancelButtonTitle
-        cancelButton.color = viewModel.cancelButtonColor
-        retryButton.isHidden = viewModel.hideRetryButton
-        retryButton.title = viewModel.retryButtonTitle
+        phaseLabel.attributedStringValue = viewModel.firstString
+        
+        connectionLabel.attributedStringValue = viewModel.secondString
+        connectionLabel.allowsEditingTextAttributes = true
+        connectionLabel.isSelectable = true
+        
+        updateButtons()
     }
     
-    @IBAction private func cancelConnecting(_ sender: Any) {
-        viewModel.cancelConnecting()
+    private func updateButtons() {
+        var buttons = viewModel.buttons
+        
+        clickHandlers.removeAll()
+        buttonsStackView.clear()
+        buttonsStackView.alignment = .centerX
+        buttonsStackView.orientation = buttons.count > 2 || buttons.count > 1 && buttons[1].0.count > 9 // "Try againg".count == 9
+            ? .vertical
+            : .horizontal
+        
+        // Put cancel button on the left
+        if buttonsStackView.orientation == .horizontal && buttons.count == 2 {
+            buttons.reverse()
+        }
+        
+        for (index, buttonInfo) in buttons.enumerated() {
+            add(button: buttonInfo, atIndex: index)
+        }
+        
     }
     
-    @IBAction private func retryConneting(_ sender: Any) {
-        viewModel.retryConnection()
+    private func add(button buttonInfo: ConnectingOverlayViewModel.ButtonInfo, atIndex index: Int) {
+        let button = ConnectingOverlayButton(title: buttonInfo.0, target: self, action: #selector(buttonClicked))
+        button.awakeFromNib()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.horizontalPadding = 15
+        buttonsStackView.addArrangedSubview(button)
+        button.heightAnchor.constraint(equalToConstant: 40).isActive = true
+        
+        if buttonsStackView.orientation == .vertical {
+            button.widthAnchor.constraint(equalTo: buttonsStackView.widthAnchor, multiplier: 1).isActive = true
+        } else {
+            button.widthAnchor.constraint(greaterThanOrEqualToConstant: 120).isActive = true
+        }
+        
+        button.title = buttonInfo.0
+        button.style = buttonInfo.1
+        clickHandlers.append(buttonInfo.2)
+        button.tag = index
+        button.target = self
+        button.action = #selector(buttonClicked)
+    }
+    
+    // MARK: - Actions
+        
+    private var clickHandlers = [() -> Void]()
+    
+    @IBAction private func buttonClicked(_ sender: NSButton) {
+        let index = sender.tag
+        guard index >= 0 && index < clickHandlers.count else {
+            return
+        }
+        clickHandlers[index]()
     }
     
     // MARK: - OverlayViewModelDelegate
+    
     func stateChanged() {
         update()
     }
+    
 }

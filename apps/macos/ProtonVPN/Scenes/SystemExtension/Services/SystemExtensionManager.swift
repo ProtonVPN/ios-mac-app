@@ -28,39 +28,42 @@ protocol SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager
 }
 
-final class SystemExtensionManager: NSObject {
+protocol SystemExtensionManager {
     
-    typealias Factory = CoreAlertServiceFactory
+    typealias FinishedCallback = ((SystemExtensionManagerResult) -> Void)
+    
+    func requestExtensionInstall(completion: @escaping FinishedCallback)
+    func requestExtensionUninstall(completion: @escaping FinishedCallback)
+}
+
+struct SystemExtensionManagerNotification {
+    static let installationSuccess = Notification.Name("OpenVPNExtensionInstallSuccess")
+    static let installationError = Notification.Name("OpenVPNExtensionInstallError")
+}
+
+typealias SystemExtensionManagerResult = Result<Void, Error>
+
+class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
+    
+    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory
     
     fileprivate let factory: Factory
+    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
-    fileprivate var silent: Bool = false
     
     private var shouldNotifyInstall = false
-    private var completionCallback: ((Bool) -> Void)?
+    private var completionCallback: SystemExtensionManager.FinishedCallback?
     
     private var sysExUninstallRequestResultHandler = SystemExtensionUninstallRequestDelegate()
     
-    init(factory: Factory) {
+    init( factory: Factory ) {
         self.factory = factory
         super.init()
     }
     
-    func checkSystemExtensionState(silent: Bool, requestInstall: Bool, completion: @escaping (Bool) -> Void) {
-        self.silent = silent
-
-        PMLog.D("checkSystemExtensionState")
-        guard requestInstall else {
-            completion(false)
-            return
-        }
-
-        requestExtensionInstall(completion: completion)
-    }
-    
-    func requestExtensionInstall(completion: @escaping (Bool) -> Void) {
+    func requestExtensionInstall(completion: @escaping SystemExtensionManager.FinishedCallback) {
         shouldNotifyInstall = false
 
         PMLog.D("requestExtensionInstall")
@@ -75,7 +78,7 @@ final class SystemExtensionManager: NSObject {
     }
     
     /// Ask OS to uninstall our Network Extension
-    func requestExtensionUninstall(completion: @escaping ((Error?) -> Void)) {
+    func requestExtensionUninstall(completion: @escaping SystemExtensionManager.FinishedCallback) {
         PMLog.D("requestExtensionUninstall")
         let request = OSSystemExtensionRequest.deactivationRequest(
             forExtensionWithIdentifier: extensionIdentifier,
@@ -87,8 +90,7 @@ final class SystemExtensionManager: NSObject {
     }
 }
 
-@available(OSX 10.15, *)
-extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
+extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         
@@ -111,53 +113,44 @@ extension SystemExtensionManager: OSSystemExtensionRequestDelegate {
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
         shouldNotifyInstall = true
+        propertiesManager.openVPNExtensionTourDisplayed = true
+        
+        self.alertService.push(alert: OpenVPNExtensionTourAlert())
+        
         PMLog.D("SysEx install requestNeedsUserApproval")
-        completionCallback?(false)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx install request result: \(result.rawValue)")
-        // User gave access
-        switch result {
-        case .completed:
-            completionCallback?(true)
-            if !silent && shouldNotifyInstall {
-                alertService.push(alert: OpenVPNEnabledAlert())
-            }
-            
-        case .willCompleteAfterReboot:
-            // Display reconnect popup
-            completionCallback?(true)
-        }
+
+        self.completionCallback?(.success(()))
         self.completionCallback = nil
+        
+        NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
+        if shouldNotifyInstall {
+            alertService.push(alert: OpenVPNEnabledAlert())
+        }
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         PMLog.D("SysEx install request failed with error: \(error)")
+        guard completionCallback != nil else { return }
         
-        if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestCanceled {
-            // Actually a success, there was no need in reinstalling extension
-            self.completionCallback?(true)
-            self.completionCallback = nil
-            return
+        if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestSuperseded {
+            return // User requested one more time
         }
         
         // Display error group
-        self.completionCallback?(false)
+        self.completionCallback?(.failure(error))
         self.completionCallback = nil
-
-        guard !silent else {
-            return
-        }
-
+        NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationError, object: error)
         alertService.push(alert: OpenVPNInstallingErrorAlert())
     }
 }
 
-@available(OSX 10.15, *)
-final class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionRequestDelegate {
+class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionRequestDelegate {
     
-    var completion: ((Error?) -> Void)?
+    var completion: SystemExtensionManager.FinishedCallback?
     
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
         return .replace
@@ -168,12 +161,12 @@ final class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtension
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx request finished with result: \(result.rawValue)")
-        completion?(nil)
+        completion?(.success(()))
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
         PMLog.D("SysEx failed with error: \(error)")
-        completion?(error)
+        completion?(.failure(error))
     }
     
 }

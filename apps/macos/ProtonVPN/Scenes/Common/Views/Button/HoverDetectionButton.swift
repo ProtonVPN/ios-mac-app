@@ -24,7 +24,7 @@ import Cocoa
 
 class HoverDetectionButton: NSButton {
     
-    // Adds padding betweet text and button border
+    // Adds padding between text and button border
     @IBInspectable var horizontalPadding: CGFloat = 0
     @IBInspectable var verticalPadding: CGFloat = 0
 
@@ -64,7 +64,11 @@ class HoverDetectionButton: NSButton {
     }
     
     private func addMouseTracking() {
-        trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
+        trackingArea = NSTrackingArea(rect: bounds, options: trackingOptions(), owner: self, userInfo: nil)
+    }
+    
+    func trackingOptions() -> NSTrackingArea.Options {
+        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInKeyWindow, NSTrackingArea.Options.activeAlways]
     }
     
     override func updateTrackingAreas() {
