@@ -58,7 +58,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
     private var sysExUninstallRequestResultHandler = SystemExtensionUninstallRequestDelegate()
     
-    init( factory: Factory ) {
+    init(factory: Factory) {
         self.factory = factory
         super.init()
     }
