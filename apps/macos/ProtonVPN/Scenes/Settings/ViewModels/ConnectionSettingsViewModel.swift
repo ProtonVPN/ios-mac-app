@@ -177,9 +177,11 @@ final class ConnectionSettingsViewModel {
             return
         }
 
-        systemExtensionManager.requestExtensionInstall { installed in
-            self.propertiesManager.smartProtocol = installed
-
+        systemExtensionManager.requestExtensionInstall { result in
+            if case .success = result {
+                self.propertiesManager.smartProtocol = enabled
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                 self?.viewController?.reloadView()
             }

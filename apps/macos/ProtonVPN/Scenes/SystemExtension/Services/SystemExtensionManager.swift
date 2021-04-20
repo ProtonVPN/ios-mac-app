@@ -30,7 +30,7 @@ protocol SystemExtensionManagerFactory {
 
 protocol SystemExtensionManager {
     
-    typealias FinishedCallback = ((SystemExtensionManagerResult) -> Void)
+    typealias FinishedCallback = ((Result<Void, Error>) -> Void)
     
     func requestExtensionInstall(completion: @escaping FinishedCallback)
     func requestExtensionUninstall(completion: @escaping FinishedCallback)
@@ -40,8 +40,6 @@ struct SystemExtensionManagerNotification {
     static let installationSuccess = Notification.Name("OpenVPNExtensionInstallSuccess")
     static let installationError = Notification.Name("OpenVPNExtensionInstallError")
 }
-
-typealias SystemExtensionManagerResult = Result<Void, Error>
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
