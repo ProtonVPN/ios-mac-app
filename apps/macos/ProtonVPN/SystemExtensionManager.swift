@@ -45,10 +45,9 @@ typealias SystemExtensionManagerResult = Result<Void, Error>
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
-    typealias Factory = PropertiesManagerFactory & CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory
     
     fileprivate let factory: Factory
-    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
@@ -96,24 +95,12 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         
         return .replace // Have to always replace extension to make system ask for permission to install sysex even after failed first attempt.
         
-        // Change to the following code, when/if Apple responds to bug report FB8978342.
-        
-//        propertiesManager.vpnProtocol = .openVpn(transportProtocol)
-//        propertiesManager.openVPNExtensionTourDisplayed = true
-//
-//        if existing.bundleShortVersion.compareVersion(to: ext.bundleShortVersion) == ComparisonResult.orderedAscending {
-//            return .replace
-//        }
-//
-//        self.completionCallback?(propertiesManager.vpnProtocol)
-//        self.completionCallback = nil
-//        return .cancel
+        // Return cancel on equal version, when/if Apple responds to bug report FB8978342.
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
         // Requires user action
         shouldNotifyInstall = true
-        propertiesManager.openVPNExtensionTourDisplayed = true
         
         self.alertService.push(alert: OpenVPNExtensionTourAlert())
         

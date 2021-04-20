@@ -89,21 +89,18 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                 }
             }
             
-            if !sysexInstallationAlertShouldBeDisplayed {
+            if propertiesManager.openVPNExtensionTourDisplayed {
                 requestExtensionCallback()
                 
             } else {
                 alertService.push(alert: OpenVPNInstallationRequiredAlert(continueHandler: { [unowned self] in
+                    propertiesManager.openVPNExtensionTourDisplayed = true
                     requestExtensionCallback()
                     self.alertService.push(alert: OpenVPNExtensionTourAlert())
                 }, cancel: nil, dismiss: nil))
             }
         }
         
-    }
-    
-    private var sysexInstallationAlertShouldBeDisplayed: Bool {
-        return !propertiesManager.openVPNExtensionTourDisplayed
     }
         
 }
