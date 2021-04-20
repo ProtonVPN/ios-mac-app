@@ -50,10 +50,10 @@ public protocol VpnAuthentication {
 
 public final class VpnAuthenticationManager {
     private let queue = OperationQueue()
-    private let keychain: VpnAuthenticationKeychain
+    private let keychain: VpnAuthenticationStorage
     private let alamofireWrapper: AlamofireWrapper
 
-    public init(alamofireWrapper: AlamofireWrapper, keychain: VpnAuthenticationKeychain) {
+    public init(alamofireWrapper: AlamofireWrapper, keychain: VpnAuthenticationStorage) {
         self.alamofireWrapper = alamofireWrapper
         self.keychain = keychain
         queue.maxConcurrentOperationCount = 1

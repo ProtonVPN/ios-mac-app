@@ -27,19 +27,19 @@ enum CertificateRefreshError: Error {
 }
 
 final class CertificateRefreshAsyncOperation: AsyncOperation {
-    private let keychain: VpnAuthenticationKeychain
+    private let keychain: VpnAuthenticationStorage
     private let alamofireWrapper: AlamofireWrapper
     private let completion: CertificateRefreshCompletion?
     private let certificateRefreshDeadline: TimeInterval = 60 * 60 * 3 // 3 hours
     private var isRetry = false
 
-    init(keychain: VpnAuthenticationKeychain, alamofireWrapper: AlamofireWrapper) {
+    init(keychain: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper) {
         self.keychain = keychain
         self.alamofireWrapper = alamofireWrapper
         self.completion = nil
     }
 
-    init(keychain: VpnAuthenticationKeychain, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion?) {
+    init(keychain: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion?) {
         self.keychain = keychain
         self.alamofireWrapper = alamofireWrapper
         self.completion = completion

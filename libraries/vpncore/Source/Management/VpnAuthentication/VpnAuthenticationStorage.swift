@@ -23,7 +23,7 @@
 import Foundation
 import KeychainAccess
 
-public protocol VpnAuthenticationKeychain {
+public protocol VpnAuthenticationStorage {
     func deleteKeys()
     func deleteCertificate()
     func getKeys() -> VpnKeys
@@ -33,7 +33,7 @@ public protocol VpnAuthenticationKeychain {
     func store(certificate: VpnCertificate)
 }
 
-public final class VpnAuthenticationKeychainImplementation: VpnAuthenticationKeychain {
+public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     private struct StorageKey {
         static let vpnKeys = "vpnKeys"
         static let vpnCertificate = "vpnCertificate"
