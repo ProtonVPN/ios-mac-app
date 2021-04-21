@@ -99,7 +99,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        let appStateManager = container.makeAppStateManager()
+        var appStateManager = container.makeAppStateManager()
         // If the app was on a closed state, we'll have to wait for the configuration to be established
         appStateManager.onVpnStateChanged = { state in
             appStateManager.onVpnStateChanged = nil
