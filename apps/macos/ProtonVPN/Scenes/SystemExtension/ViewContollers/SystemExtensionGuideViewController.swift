@@ -25,11 +25,13 @@ import vpncore
 
 public protocol SystemExtensionGuideVCProtocol: NSViewController {
     
-    var descriptionText: String? { get set }
+    var descriptionText: NSAttributedString? { get set }
     
     func displayStep1()
     func displayStep2()
     func displayStep3()
+    
+    func closeSelf()
 }
 
 final class SystemExtensionGuideViewController: NSViewController, SystemExtensionGuideVCProtocol {
@@ -43,6 +45,7 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
     @IBOutlet private weak var step3View: NSView!
     
     @IBOutlet private weak var descriptionTF: NSTextField!
+    private let textView = NSTextView() //  Used for links
     
     @IBOutlet private weak var nextBtn: NSButton!
     @IBOutlet private weak var previousBtn: NSButton!
@@ -67,6 +70,7 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
         super.viewWillAppear()
         view.window?.applyModalAppearance(withTitle: LocalizedString.openVPNSettingsTitle)
         viewModel?.viewDidAppear()
+        setupTextView()
     }
     
     private func setupBody() {
@@ -91,6 +95,10 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
         dismiss(nil)
     }
     
+    @objc func closeSelf() {
+        dismiss(nil)
+    }
+    
     // MARK: - Actions
     
     @IBAction func nextAction(_ sender: Any) {
@@ -103,11 +111,11 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
     
     // MARK: - SystemExtensionGuideVCProtocol
     
-    var descriptionText: String? {
+    var descriptionText: NSAttributedString? {
         didSet {
             guard let descriptionText = descriptionText else { return }
             descriptionTF.attributedStringValue = descriptionText
-                .attributed(withColor: .white, fontSize: 20)
+            textView.textStorage?.setAttributedString(descriptionText)
         }
     }
     
@@ -149,6 +157,34 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
         previousBtn.isHidden = step1
         nextBtn.isHidden = step3
         confirmationButton.isHidden = !step3
+    }
+    
+    // Let's add some magic to have a green colored link.
+    private func setupTextView() {
+        guard !textView.isDescendant(of: bodyView) else {
+            return
+        }
+        
+        textView.linkTextAttributes = [
+            NSAttributedString.Key.foregroundColor: NSColor.protonGreen(),
+            NSAttributedString.Key.underlineStyle: NSUnderlineStyle.single.rawValue,
+        ]
+        
+        textView.isEditable = false
+        textView.isHorizontallyResizable = false
+        textView.isVerticallyResizable = false
+        textView.backgroundColor = .clear
+        textView.translatesAutoresizingMaskIntoConstraints = false
+        
+        bodyView.addSubview(textView)
+        NSLayoutConstraint.activate([
+            textView.topAnchor.constraint(equalTo: descriptionTF.topAnchor, constant: 0),
+            textView.bottomAnchor.constraint(equalTo: descriptionTF.bottomAnchor, constant: 0),
+            textView.leadingAnchor.constraint(equalTo: descriptionTF.leadingAnchor, constant: -4), // This is magic padding that puts NSTextView's text at the same place as in connectionLabel.
+            textView.trailingAnchor.constraint(equalTo: descriptionTF.trailingAnchor, constant: 4), // See above ^.
+        ])
+        
+        descriptionTF.alphaValue = 0
     }
     
 }

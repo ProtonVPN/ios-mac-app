@@ -34,8 +34,10 @@ final class SidebarViewModel {
 
         let alert = OpenVPNInstallationRequiredAlert(continueHandler: { [weak self] in
             // try to install
-            self?.systemExtensionManager.requestExtensionInstall(completion: { [weak self] installed in
-                self?.propertiesManager.smartProtocol = installed
+            self?.systemExtensionManager.requestExtensionInstall(completion: { [weak self] result in
+                if case .success = result {
+                    self?.propertiesManager.smartProtocol = true
+                }
             })
             // and show the user instructions
             self?.alertService.push(alert: OpenVPNExtensionTourAlert())

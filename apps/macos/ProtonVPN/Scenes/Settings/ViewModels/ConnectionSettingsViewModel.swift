@@ -25,7 +25,12 @@ import vpncore
 
 final class ConnectionSettingsViewModel {
     
-    typealias Factory = PropertiesManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & ProfileManagerFactory & SystemExtensionManagerFactory
+    typealias Factory = PropertiesManagerFactory
+        & VpnGatewayFactory
+        & CoreAlertServiceFactory
+        & ProfileManagerFactory
+        & SystemExtensionManagerFactory
+        & VpnProtocolChangeManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -33,11 +38,18 @@ final class ConnectionSettingsViewModel {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
 
     private weak var viewController: ReloadableViewController?
     
     init(factory: Factory) {
         self.factory = factory
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(protocolChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
     
     // MARK: - Current Index
@@ -133,45 +145,26 @@ final class ConnectionSettingsViewModel {
     
     func setProtocol(_ index: Int) {
         
-        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            self.set(protocolAtIndex: index)
-            return
-        }
-        
-        viewController?.reloadView()
-        alertService.push(alert: ReconnectOnSettingsChangeAlert {
-            var token: NSObjectProtocol?
-            token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
-                if let newProtocol = notification.object as? VpnProtocol {
-                    PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
-                    self?.vpnGateway.reconnect(with: newProtocol)
-                    self?.viewController?.reloadView()
-                }
-                
-                NotificationCenter.default.removeObserver(token!)
-            }
-            self.set(protocolAtIndex: index)
-        })
-    }
-    
-    private func set(protocolAtIndex index: Int) {
-        var transportProtocol: VpnProtocol.TransportProtocol = .tcp
-        
+        var transportProtocol: VpnProtocol
+
         switch index {
-        case 1: transportProtocol = .tcp
-        case 2: transportProtocol = .udp
+        case 1: transportProtocol = .openVpn(.tcp)
+        case 2: transportProtocol = .openVpn(.udp)
         default:
-            propertiesManager.vpnProtocol = .ike
-            return
+            transportProtocol = .ike
         }
-
-        systemExtensionManager.requestExtensionInstall { installed in
-            self.propertiesManager.vpnProtocol = installed ? .openVpn(transportProtocol) : .ike
-
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                self?.viewController?.reloadView()
-            }
-        }
+        
+        vpnProtocolChangeManager.change(toProcol: transportProtocol)
+        
+        // If user has to go to settings to enable sysex, let's change back to original protocol. Value will be updated if/when user approves sysex installation.
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2, execute: {
+            self.viewController?.reloadView()
+        })
+        
+    }
+        
+    @objc func protocolChanged() {
+        self.viewController?.reloadView()
     }
     
     func setAlternatveRouting(_ enabled: Bool) {
@@ -184,9 +177,11 @@ final class ConnectionSettingsViewModel {
             return
         }
 
-        systemExtensionManager.requestExtensionInstall { installed in
-            self.propertiesManager.smartProtocol = installed
-
+        systemExtensionManager.requestExtensionInstall { result in
+            if case .success = result {
+                self.propertiesManager.smartProtocol = enabled
+            }
+            
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
                 self?.viewController?.reloadView()
             }

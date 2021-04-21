@@ -67,21 +67,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            // only install the extension if OpenVPN is selected or Smart Protocol is enabled
-            let needsInstallExtension: Bool
-            switch propertiesManager.vpnProtocol {
-            case .ike:
-                needsInstallExtension = propertiesManager.smartProtocol
-            case .openVpn:
-                needsInstallExtension = true
-            }
-            self.container.makeSystemExtensionManager().checkSystemExtensionState(silent: true, requestInstall: needsInstallExtension) { installed in
-                // if installation of the extension fails then disable smart protocol and switch to IKEv2
-                if !installed {
-                    self.propertiesManager.vpnProtocol = .ike
-                    self.propertiesManager.smartProtocol = false
-                }
-            }
+            checkSystemExtension()
+            
             self.navigationService.launched()
         }
     }
@@ -148,6 +135,26 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         }
         return false
     }
+    
+    private func checkSystemExtension() {
+        // only install the extension if OpenVPN is selected or Smart Protocol is enabled
+        let needsInstallExtension: Bool
+        switch propertiesManager.vpnProtocol {
+        case .ike:
+            needsInstallExtension = propertiesManager.smartProtocol
+        case .openVpn:
+            needsInstallExtension = true
+        }
+        guard needsInstallExtension else {
+            return
+        }
+        self.container.makeSystemExtensionManager().requestExtensionInstall(completion: { [weak self] result in
+            if case .failure = result {
+                self?.propertiesManager.vpnProtocol = .ike
+                self?.propertiesManager.smartProtocol = false
+            }
+        })
+    }
 }
 
 // MARK: - Migration
@@ -161,44 +168,36 @@ extension AppDelegate {
                 return
             }
             
-            let appStateManager = self.container.makeAppStateManager()
-            
-            appStateManager.onVpnStateChanged = { newState in
-                if newState != .invalid {
-                    appStateManager.onVpnStateChanged = nil
-                }
-                
-                guard case .connected = newState else {
-                    return
-                }
-                
-                appStateManager.disconnect {
-                    self.container.makeVpnGateway().quickConnect()
-                }
-            }
+            self.reconnectWhenPossible()
             completion(nil)
             
         }.addCheck("1.7.1") { version, completion in
             // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
             PMLog.D("App was updated to version 1.7.1 from version " + version)
-            let appStateManager = self.container.makeAppStateManager()
             
-            appStateManager.onVpnStateChanged = { newState in
-                if newState != .invalid {
-                    appStateManager.onVpnStateChanged = nil
-                }
-                
-                guard case .connected = newState else {
-                    return
-                }
-                
-                appStateManager.disconnect {
-                    self.container.makeVpnGateway().quickConnect()
-                }
-            }
+            self.reconnectWhenPossible()
             completion(nil)
+            
         }.migrate { _ in
             // Migration complete
+        }
+    }
+    
+    private func reconnectWhenPossible() {
+        var appStateManager = self.container.makeAppStateManager()
+        
+        appStateManager.onVpnStateChanged = { newState in
+            if newState != .invalid {
+                appStateManager.onVpnStateChanged = nil
+            }
+            
+            guard case .connected = newState else {
+                return
+            }
+            
+            appStateManager.disconnect {
+                self.container.makeVpnGateway().quickConnect()
+            }
         }
     }
 }

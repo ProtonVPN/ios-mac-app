@@ -43,14 +43,15 @@ final class DependencyContainer {
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var alamofireWrapper: AlamofireWrapper = AlamofireWrapperImplementation(factory: self)
-    private lazy var appStateManager: AppStateManager = AppStateManager(vpnApiService: makeVpnApiService(),
-                                                                        vpnManager: vpnManager,
-                                                                        alamofireWrapper: alamofireWrapper,
-                                                                        alertService: macAlertService,
-                                                                        timerFactory: TimerFactory(),
-                                                                        propertiesManager: PropertiesManager(),
-                                                                        vpnKeychain: vpnKeychain,
-                                                                        configurationPreparer: makeVpnManagerConfigurationPreparer(), vpnAuthentication: makeVpnAuthentication())
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
+        vpnApiService: makeVpnApiService(),
+        vpnManager: vpnManager,
+        alamofireWrapper: alamofireWrapper,
+        alertService: macAlertService,
+        timerFactory: TimerFactory(),
+        propertiesManager: PropertiesManager(),
+        vpnKeychain: vpnKeychain,
+        configurationPreparer: makeVpnManagerConfigurationPreparer(), vpnAuthentication: vpnAuthentication)
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
@@ -374,7 +375,7 @@ extension DependencyContainer: UpdateManagerFactory {
 // MARK: - SystemExtensionManagerFactory
 extension DependencyContainer: SystemExtensionManagerFactory {
     func makeSystemExtensionManager() -> SystemExtensionManager {
-        return SystemExtensionManager(factory: self)
+        return SystemExtensionManagerImplementation(factory: self)
     }
 }
 

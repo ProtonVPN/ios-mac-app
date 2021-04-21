@@ -24,26 +24,67 @@ import Cocoa
 
 class ConnectingOverlayButton: HoverDetectionButton {
 
+    enum Style {
+        case main
+        case colorGreen
+        
+        func borderColor(hovered: Bool) -> NSColor {
+            switch self {
+            case .main: return .protonWhite()
+            case .colorGreen:
+                return hovered
+                    ? .protonGreen()
+                    : .white
+            }
+        }
+        
+        func backgroundColor(hovered: Bool) -> NSColor {
+            switch self {
+            case .main: return hovered
+                ? .protonWhite()
+                : NSColor.clear
+            case .colorGreen: return NSColor.clear
+            }
+        }
+        
+        func textColor(hovered: Bool) -> NSColor {
+            switch self {
+            case .main: return hovered
+                ? .protonBlack()
+                : .protonWhite()
+            case .colorGreen: return hovered
+                ? .protonGreen()
+                : .protonWhite()
+            }
+        }
+        
+        func textSize(hovered: Bool) -> Double {
+            return 16.0
+        }
+        
+    }
+    
+    public var style: Style = .main {
+        didSet {
+            needsDisplay = true
+        }
+    }
+    
     override var title: String {
         didSet {
             needsDisplay = true
         }
     }
     
-    public var color: NSColor = .protonWhite() {
-        didSet {
-            needsDisplay = true
-        }
+    // It differs from the one in HoverDetectionButton because this button is used in child window.
+    override func trackingOptions() -> NSTrackingArea.Options {
+        return [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp]
     }
     
     override func viewDidMoveToWindow() {
         super.viewDidMoveToWindow()
         
-        trackingAreas.forEach {
-            removeTrackingArea($0)
-        }
-        let trackingArea = NSTrackingArea(rect: bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.activeInActiveApp], owner: self, userInfo: nil)
-        addTrackingArea(trackingArea)
+        updateTrackingAreas()
     }
     
     override func viewWillDraw() {
@@ -52,18 +93,10 @@ class ConnectingOverlayButton: HoverDetectionButton {
         wantsLayer = true
         layer?.borderWidth = 2
         layer?.cornerRadius = bounds.height / 2
-        layer?.borderColor = color.cgColor
         
-        let textColor: NSColor
-        
-        if isHovered {
-            layer?.backgroundColor = color.cgColor
-            textColor = .protonBlack()
-        } else {
-            layer?.backgroundColor = NSColor.clear.cgColor
-            textColor = color
-        }
-        
-        attributedTitle = title.attributed(withColor: textColor, fontSize: 16)
+        layer?.backgroundColor = style.backgroundColor(hovered: isHovered).cgColor
+        layer?.borderColor = style.borderColor(hovered: isHovered).cgColor
+        attributedTitle = title.attributed(withColor: style.textColor(hovered: isHovered), fontSize: style.textSize(hovered: isHovered))
     }
+    
 }

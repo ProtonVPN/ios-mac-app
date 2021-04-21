@@ -239,6 +239,9 @@ extension MacAlertService: CoreAlertService {
 
     private func show(_ alert: OpenVPNExtensionTourAlert) {
         let viewController = SystemExtensionGuideViewController()
+        guard !windowService.isKeyModalPresent(viewController: viewController) else {
+            return // Don't show wizard twice
+        }
         let viewModel = SystemExtensionGuideViewModel()
         viewController.viewModel = viewModel
         viewModel.viewController = viewController
