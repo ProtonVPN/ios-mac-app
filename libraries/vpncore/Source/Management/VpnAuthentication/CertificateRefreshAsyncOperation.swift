@@ -57,20 +57,14 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             do {
                 let certificate = try VpnCertificate(dict: dict)
                 PMLog.D("Got new vpn authentication certificate valid until \(certificate.validUntil)")
-                DispatchQueue.main.async {
-                    completion(.success(certificate))
-                }
+                completion(.success(certificate))
             } catch {
                 PMLog.ET("Failed to decode vpn authentication certificate from backend: \(error)")
-                DispatchQueue.main.async {
-                    completion(.failure(error))
-                }
+                completion(.failure(error))
             }
         } failure: { error in
             PMLog.ET("Failed to get vpn authentication certificate from backend: \(error)")
-            DispatchQueue.main.async {
-                completion(.failure(error))
-            }
+            completion(.failure(error))
         }
     }
 
