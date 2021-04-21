@@ -96,7 +96,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
      */
     public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
         queue.addOperation(CertificateRefreshAsyncOperation(keychain: keychain, alamofireWrapper: alamofireWrapper, completion: { result in
-            executeOnMainThread { completion(result )}
+            executeOnMainThread { completion(result) }
         }))
     }
 
@@ -115,12 +115,12 @@ extension VpnAuthenticationManager: VpnAuthentication {
 
         // certificate is missing or no longer valid, refresh it and use
         refreshCertificates(completion: { result in
-            executeOnMainThread { completion(result )}
+            executeOnMainThread { completion(result) }
         })
     }
 }
 
-fileprivate func executeOnMainThread(closure: @escaping () -> Void) {
+private func executeOnMainThread(closure: @escaping () -> Void) {
     if Thread.isMainThread {
         closure()
     } else {

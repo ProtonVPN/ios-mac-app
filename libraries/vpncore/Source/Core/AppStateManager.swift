@@ -26,7 +26,35 @@ public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager
 }
 
-public class AppStateManager {
+public protocol AppStateManager {
+    var stateChange: Notification.Name { get }
+    var wake: Notification.Name { get }
+    
+    var state: AppState { get }
+    var onVpnStateChanged: ((VpnState) -> Void)? { get set }
+    
+    func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
+    
+    func cancelConnectionAttempt()
+    func cancelConnectionAttempt(completion: @escaping () -> Void)
+        
+    func prepareToConnect()
+    func connect(withConfiguration configuration: ConnectionConfiguration)
+    
+    func disconnect()
+    func disconnect(completion: @escaping () -> Void)
+    
+    func refreshState()
+    func connectedDate(completion: @escaping (Date?) -> Void)
+    func activeConnection() -> ConnectionConfiguration?
+}
+
+extension AppStateManager {
+    public var stateChange: Notification.Name { Notification.Name("AppStateManagerStateChange") }
+    public var wake: Notification.Name { Notification.Name("AppStateManagerWake") }
+}
+
+public class AppStateManagerImplementation: AppStateManager {
     
     private let alamofireWrapper: AlamofireWrapper
     private let vpnApiService: VpnApiService
@@ -36,11 +64,7 @@ public class AppStateManager {
     private let timerFactory: TimerFactoryProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
-    private let vpnAuthentication: VpnAuthentication
-    
-    public let stateChange = Notification.Name("AppStateManagerStateChange")
-    public let wake = Notification.Name("AppStateManagerWake")
-    
+        
     public weak var alertService: CoreAlertService?
     
     private var reachability: Reachability?
@@ -64,6 +88,8 @@ public class AppStateManager {
     
     private var timeoutTimer: Timer?
     private var serviceChecker: ServiceChecker?
+
+    private let vpnAuthentication: VpnAuthentication
     
     public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication) {
         self.vpnApiService = vpnApiService
@@ -224,6 +250,7 @@ public class AppStateManager {
     }
     
     // MARK: - Private functions
+    
     private func beginTimoutCountdown() {
         cancelTimout()
         timeoutTimer = timerFactory.timer(timeInterval: 30, repeats: false, block: { [weak self] _ in

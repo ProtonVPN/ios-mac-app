@@ -96,6 +96,16 @@ public enum VpnProtocol {
         #warning("Add condition for Wireguard when implemented")
         return .credentials
     }
+    
+    public var transportProtocol: TransportProtocol {
+        switch self {
+        case .ike:
+            return .undefined
+        case .openVpn(let transportProtocol):
+            return transportProtocol
+        }
+    }
+    
 }
 
 extension VpnProtocol: Codable {

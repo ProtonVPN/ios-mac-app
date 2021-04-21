@@ -20,8 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
-
 public struct VpnProperties {
     
     public let serverModels: [ServerModel]
@@ -29,7 +27,7 @@ public struct VpnProperties {
     public let ip: String?
     public let clientConfig: ClientConfig
     
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, appStateManager: AppStateManager?) {
+    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.ip = ip
