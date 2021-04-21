@@ -53,7 +53,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: PropertiesManager())
     
     var appStateManager: AppStateManager {
-        return AppStateManager(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer)
     }
     
     lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,

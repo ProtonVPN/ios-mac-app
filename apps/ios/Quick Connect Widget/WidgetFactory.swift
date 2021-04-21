@@ -63,7 +63,7 @@ class WidgetFactory {
     var appStateManager: AppStateManager {
         let keychain = VpnKeychain()
         let alamofireWrapper = AlamofireWrapperImplementation()
-        return AppStateManager(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
+        return AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
                                vpnManager: self.vpnManager,
                                alamofireWrapper: alamofireWrapper,
                                alertService: alertService,

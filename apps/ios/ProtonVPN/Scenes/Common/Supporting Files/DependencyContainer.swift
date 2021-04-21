@@ -39,7 +39,7 @@ class DependencyContainer {
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private var alamofireWrapper: AlamofireWrapper?
-    private lazy var appStateManager: AppStateManager = AppStateManager(vpnApiService: makeVpnApiService(),
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(vpnApiService: makeVpnApiService(),
                                                                         vpnManager: makeVpnManager(),
                                                                         alamofireWrapper: makeAlamofireWrapper(),
                                                                         alertService: makeCoreAlertService(),
