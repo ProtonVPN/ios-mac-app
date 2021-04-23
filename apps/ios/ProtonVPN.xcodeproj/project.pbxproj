@@ -237,7 +237,7 @@
 		D5136C84228592E80002C095 /* UIKitString+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCFB2090A4810030E1EB /* UIKitString+Extension.swift */; };
 		D5136C85228592E80002C095 /* ProtonButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DB1B721592772006B3617 /* ProtonButton.swift */; };
 		D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E169D52A21E5075100D35312 /* ElectronViewContainer.swift */; };
-		D5136C89228593880002C095 /* Srp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C06EBA21F23BF500425BC6 /* Srp.framework */; };
+		D5136C89228593880002C095 /* WireguardSRP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E1C06EBA21F23BF500425BC6 /* WireguardSRP.framework */; };
 		D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */; };
 		D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C912285A9190002C095 /* ServerUtilityTests.swift */; };
 		D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */; };
@@ -918,7 +918,7 @@
 		E1A4BF5C21ADBF3D004D187F /* Logs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Logs.xib; sourceTree = "<group>"; };
 		E1A9A67822BA3FE90073711B /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		E1A9A67E22BA603C0073711B /* PlanUpgradeChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUpgradeChecker.swift; sourceTree = "<group>"; };
-		E1C06EBA21F23BF500425BC6 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Srp.framework; sourceTree = "<group>"; };
+		E1C06EBA21F23BF500425BC6 /* WireguardSRP.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = WireguardSRP.framework; sourceTree = "<group>"; };
 		E1C2261822720E21001B208C /* HumanVerificationOptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationOptionsViewController.swift; sourceTree = "<group>"; };
 		E1C2261A22720EFF001B208C /* HumanVerificationOptionsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HumanVerificationOptionsViewModel.swift; sourceTree = "<group>"; };
 		E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardTableViewCell.swift; sourceTree = "<group>"; };
@@ -968,7 +968,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5136C89228593880002C095 /* Srp.framework in Frameworks */,
+				D5136C89228593880002C095 /* WireguardSRP.framework in Frameworks */,
 				D5136C1622858E340002C095 /* vpncore.framework in Frameworks */,
 				A1595062098A4981D1D59236 /* Pods_ProtonVPNTests.framework in Frameworks */,
 			);
@@ -1306,7 +1306,7 @@
 			isa = PBXGroup;
 			children = (
 				D5136C1522858E340002C095 /* vpncore.framework */,
-				E1C06EBA21F23BF500425BC6 /* Srp.framework */,
+				E1C06EBA21F23BF500425BC6 /* WireguardSRP.framework */,
 				E148AE5221C1683D007AB65A /* NetworkExtension.framework */,
 				E18006E6218B0B7B009E01E3 /* StoreKit.framework */,
 				E198D6B02163B31A00F2F0E0 /* libc++.tbd */,
