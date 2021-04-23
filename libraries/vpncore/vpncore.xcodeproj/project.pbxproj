@@ -138,10 +138,6 @@
 		B16019709F7CFD1A3CCCB20F /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */; };
 		D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
 		D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
-		D515C25F26089D9D00940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
-		D515C26026089D9D00940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
-		D515C2C02608A71700940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
-		D515C2C42608A71800940195 /* SRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = D515C25E26089D9D00940195 /* SRP.xcframework */; };
 		D51D9507249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
 		D51D9509249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
@@ -925,6 +921,10 @@
 		F3D4DA092630153D0032B752 /* VpnAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CD52626F5D10094C65E /* VpnAuthentication.swift */; };
 		F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9EE12629BDC60094C65E /* VpnAuthenticationData.swift */; };
 		F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
+		F3D4DC4E2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
+		F3D4DC4F2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
+		F3D4DC502632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
+		F3D4DC512632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A916DAED88E80FD9324A73 /* Pods_vpncore_vpncore_macosTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -1063,7 +1063,6 @@
 		D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimer.swift; sourceTree = "<group>"; };
 		D5063A6F247FB09E008DBEF9 /* .swiftlint.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = .swiftlint.yml; sourceTree = "<group>"; };
 		D5063A70247FB09E008DBEF9 /* .gitlab-ci.yml */ = {isa = PBXFileReference; lastKnownFileType = text.yaml; path = ".gitlab-ci.yml"; sourceTree = "<group>"; };
-		D515C25E26089D9D00940195 /* SRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = SRP.xcframework; path = Frameworks/SRP.xcframework; sourceTree = "<group>"; };
 		D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPlanRequest.swift; sourceTree = "<group>"; };
 		D51FBDD223E81E9C0056DC09 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = en; path = en.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D51FBDD423E81E9E0056DC09 /* pl */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = pl; path = pl.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
@@ -1309,6 +1308,7 @@
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModelMock.swift; sourceTree = "<group>"; };
 		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
+		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1316,8 +1316,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3D4DC4E2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */,
 				E9ECF9BE261C8BBC004501AE /* openssl.xcframework in Frameworks */,
-				D515C25F26089D9D00940195 /* SRP.xcframework in Frameworks */,
 				B04DFD94024F58A67AF2FC8E /* Pods_vpncore_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1328,7 +1328,7 @@
 			files = (
 				E9ECF999261C8B81004501AE /* openssl.xcframework in Frameworks */,
 				E1B5F5E221B68ABD00B558B0 /* vpncore.framework in Frameworks */,
-				D515C26026089D9D00940195 /* SRP.xcframework in Frameworks */,
+				F3D4DC4F2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */,
 				B16019709F7CFD1A3CCCB20F /* Pods_vpncore_vpncore_iosTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1337,8 +1337,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F3D4DC502632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */,
 				E9ECF9C2261C8BC5004501AE /* openssl.xcframework in Frameworks */,
-				D515C2C02608A71700940195 /* SRP.xcframework in Frameworks */,
 				A2521C9B72D98BF8D15E11E4 /* Pods_vpncore_vpncore_macos.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1349,7 +1349,7 @@
 			files = (
 				E9ECF9C6261C8BCD004501AE /* openssl.xcframework in Frameworks */,
 				E1B5F64621B6C65200B558B0 /* vpncore.framework in Frameworks */,
-				D515C2C42608A71800940195 /* SRP.xcframework in Frameworks */,
+				F3D4DC512632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */,
 				F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1360,8 +1360,8 @@
 		1424DAA14443FC92F0DE44D8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */,
 				E9ECF998261C8B81004501AE /* openssl.xcframework */,
-				D515C25E26089D9D00940195 /* SRP.xcframework */,
 				49E08E8F26F88C8ADEA6CC66 /* Pods_vpncore_vpncore_ios.framework */,
 				447989EB0B9F245C71BDB429 /* Pods_vpncore_vpncore_iosTests.framework */,
 				693DB6C019217ADCC791C1C0 /* Pods_vpncore_vpncore_macos.framework */,

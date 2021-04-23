@@ -22,60 +22,99 @@
 
 import CommonCrypto
 import Foundation
-import Sodium
+import WireguardSRP
 
 /**
  Ed25519 public key
  */
-public struct PublicKey: Codable {
+public struct PublicKey {
     // 32 byte Ed25519 key
-    let rawRepresentation: [UInt8]
+    public let rawRepresentation: [UInt8]
+
+    // base64 encoded raw key
+    public let base64Representation: String
 
     // ASN.1 DER
-    var derRepresentation: String {
-        let publicKeyData = "30:2A:30:05:06:03:2B:65:70:03:21:00".dataFromHex()! + rawRepresentation
-        let publicKeyBase64 = publicKeyData.base64EncodedString()
-        return "-----BEGIN PUBLIC KEY-----\n\(publicKeyBase64)\n-----END PUBLIC KEY-----"
+    public let  derRepresentation: String
+
+    init(keyPair: Ed25519KeyPair) {
+        var error: NSError?
+        rawRepresentation = ([UInt8])(keyPair.publicKeyBytes()!)
+        base64Representation = keyPair.publicKeyPKIXBase64(&error)
+        derRepresentation = keyPair.publicKeyPKIXPem(&error)
+    }
+
+    init(rawRepresentation: [UInt8]) {
+        let keyPair = Ed25519CreateKeyPair(nil, Data(bytes: rawRepresentation))!
+        self.init(keyPair: keyPair)
     }
 }
 
 /**
  Ed25519 private key
  */
-public struct SecretKey: Codable {
+public struct PrivateKey {
     // 32 byte Ed25519 key
-    let rawRepresentation: [UInt8]
+    public let rawRepresentation: [UInt8]
+
+    // base64 encoded raw key
+    public let base64Representation: String
 
     // ASN.1 DER
-    var derRepresentation: String {
-        let privateKeyData = "30:2E:02:01:00:30:05:06:03:2B:65:70:04:22:04:20".dataFromHex()! + rawRepresentation
-        let privateKeyBase64 = privateKeyData.base64EncodedString()
-        return "-----BEGIN PRIVATE KEY-----\n\(privateKeyBase64)\n-----END PRIVATE KEY-----"
-    }
+    public let derRepresentation: String
 
     // 32 byte X25519 key
-    var rawX25519Representation: [UInt8] {
-        var digest = [UInt8](repeating: 0, count: Int(CC_SHA512_DIGEST_LENGTH))
-        CC_SHA512(rawRepresentation, CC_LONG(rawRepresentation.count), &digest)
-        var tmp = Array(digest.prefix(32)) // First 32 bytes of the SHA512 of the Ed25519 secret key
-        tmp[0] &= 0xF8
-        tmp[31] &= 0x7F
-        tmp[31] |= 0x40
-        return tmp
+    public let rawX25519Representation: [UInt8]
+
+    // base64 encoded X25519 key
+    public let base64X25519Representation: String
+
+    init(keyPair: Ed25519KeyPair) {
+        rawRepresentation = ([UInt8])(keyPair.privateKeyBytes()!)
+        base64Representation = keyPair.privateKeyPKIXBase64()
+        derRepresentation = keyPair.privateKeyPKIXPem()
+        rawX25519Representation = ([UInt8])(keyPair.toX25519()!)
+        base64X25519Representation = keyPair.toX25519Base64()
+    }
+
+    init(rawRepresentation: [UInt8]) {
+        let keyPair = Ed25519CreateKeyPair(Data(bytes: rawRepresentation), nil)!
+        self.init(keyPair: keyPair)
     }
 }
 
 /**
  Ed25519 key pair
  */
-public struct VpnKeys: Codable {
-    let privateKey: SecretKey
+public struct VpnKeys {
+    let privateKey: PrivateKey
     let publicKey: PublicKey
 
-    init() {
-        let sodium = Sodium()
-        let keyPair = sodium.sign.keyPair()!
-        privateKey = SecretKey(rawRepresentation: keyPair.secretKey)
-        publicKey = PublicKey(rawRepresentation: keyPair.publicKey)
+    enum CodingKeys: String, CodingKey {
+        case privateKey
+        case publicKey
+    }
+
+    public init() {
+        let keyPair = Ed25519KeyPair()!
+        privateKey = PrivateKey(keyPair: keyPair)
+        publicKey = PublicKey(keyPair: keyPair)
     }
 }    
+
+extension VpnKeys: Codable {
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        let privateKeyData = try values.decode(Data.self, forKey: .privateKey)
+        let publicKeyData = try values.decode(Data.self, forKey: .publicKey)
+        let keyPair = Ed25519CreateKeyPair(privateKeyData, publicKeyData)!
+        privateKey = PrivateKey(keyPair: keyPair)
+        publicKey = PublicKey(keyPair: keyPair)
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(Data(bytes: (privateKey.rawRepresentation)), forKey: .privateKey)
+        try container.encode(Data(bytes: (publicKey.rawRepresentation)), forKey: .publicKey)
+    }
+}

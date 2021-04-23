@@ -24,14 +24,14 @@ import Foundation
 import XCTest
 
 final class ElipticCurveKeyTests: XCTestCase {
-    private let secretKey = SecretKey(rawRepresentation: [UInt8]("9d:68:0d:f3:05:ff:5b:10:db:5b:a0:dc:cb:6c:47:88:12:fd:f4:8a:ad:08:e9:96:d1:9a:28:f3:b3:2e:b2:56".dataFromHex()!))
+    private let secretKey = PrivateKey(rawRepresentation: [UInt8]("9d:68:0d:f3:05:ff:5b:10:db:5b:a0:dc:cb:6c:47:88:12:fd:f4:8a:ad:08:e9:96:d1:9a:28:f3:b3:2e:b2:56".dataFromHex()!))
     private let publicKey = PublicKey(rawRepresentation: [UInt8]("4b:90:a4:72:8e:94:7a:ea:ad:8c:2a:e5:f9:f6:cf:d5:af:75:1b:7d:9d:c8:e8:16:13:e4:61:ed:f6:64:8c:89".dataFromHex()!))
 
     func testKeysGeneration() {
         let keys = VpnKeys()
         XCTAssertEqual(keys.publicKey.rawRepresentation.count, 32)
         XCTAssertFalse(keys.publicKey.derRepresentation.isEmpty)
-        XCTAssertEqual(keys.privateKey.rawRepresentation.count, 64)
+        XCTAssertEqual(keys.privateKey.rawRepresentation.count, 32)
         XCTAssertFalse(keys.privateKey.derRepresentation.isEmpty)
     }
 
@@ -41,6 +41,7 @@ final class ElipticCurveKeyTests: XCTestCase {
             -----BEGIN PRIVATE KEY-----
             MC4CAQAwBQYDK2VwBCIEIJ1oDfMF/1sQ21ug3MtsR4gS/fSKrQjpltGaKPOzLrJW
             -----END PRIVATE KEY-----
+
             """
             , secretKey.derRepresentation)
     }
@@ -51,6 +52,7 @@ final class ElipticCurveKeyTests: XCTestCase {
             -----BEGIN PUBLIC KEY-----
             MCowBQYDK2VwAyEAS5Ckco6UeuqtjCrl+fbP1a91G32dyOgWE+Rh7fZkjIk=
             -----END PUBLIC KEY-----
+
             """
             , publicKey.derRepresentation)
     }

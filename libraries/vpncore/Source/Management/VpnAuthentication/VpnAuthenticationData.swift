@@ -23,6 +23,6 @@
 import Foundation
 
 public struct VpnAuthenticationData {
-    public let clientKey: SecretKey
+    public let clientKey: PrivateKey
     public let clientCertificate: String
 }
