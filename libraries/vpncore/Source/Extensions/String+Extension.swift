@@ -91,26 +91,7 @@ public extension String {
     func decodeBase64() -> Data {
         let decodedData = Data(base64Encoded: self, options: NSData.Base64DecodingOptions(rawValue: 0))
         return decodedData!
-    }
-
-    func dataFromHex() -> Data? {
-        let normalized = self.replacingOccurrences(of: ":", with: "")
-        guard normalized.count % 2 == 0 else {
-            return nil
-        }
-        var data = Data()
-        var byteLiteral = ""
-        for (index, character) in normalized.enumerated() {
-            if index % 2 == 0 {
-                byteLiteral = String(character)
-            } else {
-                byteLiteral.append(character)
-                guard let byte = UInt8(byteLiteral, radix: 16) else { return nil }
-                data.append(byte)
-            }
-        }
-        return data
-    }
+    }    
 }
 
 public extension String {

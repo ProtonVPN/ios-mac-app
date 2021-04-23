@@ -925,6 +925,8 @@
 		F3D4DC4F2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F3D4DC502632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F3D4DC512632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
+		F3D4DC76263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
+		F3D4DC78263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
 		F5E863ED3F3E0E324BCA3BBC /* Pods_vpncore_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91A916DAED88E80FD9324A73 /* Pods_vpncore_vpncore_macosTests.framework */; };
 /* End PBXBuildFile section */
 
@@ -1309,6 +1311,7 @@
 		F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModelMock.swift; sourceTree = "<group>"; };
 		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
+		F3D4DC74263316F60032B752 /* Keys+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keys+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -1460,6 +1463,7 @@
 				D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */,
 				D55D79182498F65B009669E0 /* StringCleanup.swift */,
 				D523F11524B759A5007DB086 /* StringUrl.swift */,
+				F3D4DC74263316F60032B752 /* Keys+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2992,6 +2996,7 @@
 				D596720F253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
 				D5C2052C2487A0CF004FB58B /* Foundation+Extension.swift in Sources */,
 				D5C2052D2487A0CF004FB58B /* NSCoding+Extension.swift in Sources */,
+				F3D4DC76263316F60032B752 /* Keys+Extensions.swift in Sources */,
 				D5C2052E2487A0CF004FB58B /* NSError+Extension.swift in Sources */,
 				D5C2052F2487A0CF004FB58B /* String+Extension.swift in Sources */,
 				D5C205302487A0CF004FB58B /* Collection+Extension.swift in Sources */,
@@ -3424,6 +3429,7 @@
 				D5C2049524866B81004FB58B /* BaseRequest.swift in Sources */,
 				D5C2049624866B81004FB58B /* VpnProperties.swift in Sources */,
 				D5C2049724866B81004FB58B /* UserProperties.swift in Sources */,
+				F3D4DC78263316F60032B752 /* Keys+Extensions.swift in Sources */,
 				D5C2049824866B81004FB58B /* ReportBug.swift in Sources */,
 				D5C2049924866B81004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2049A24866B81004FB58B /* RequestItem.swift in Sources */,

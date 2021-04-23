@@ -42,12 +42,7 @@ public struct PublicKey {
         rawRepresentation = ([UInt8])(keyPair.publicKeyBytes()!)
         base64Representation = keyPair.publicKeyPKIXBase64(&error)
         derRepresentation = keyPair.publicKeyPKIXPem(&error)
-    }
-
-    init(rawRepresentation: [UInt8]) {
-        let keyPair = Ed25519CreateKeyPair(nil, Data(bytes: rawRepresentation))!
-        self.init(keyPair: keyPair)
-    }
+    }    
 }
 
 /**
@@ -75,12 +70,7 @@ public struct PrivateKey {
         derRepresentation = keyPair.privateKeyPKIXPem()
         rawX25519Representation = ([UInt8])(keyPair.toX25519()!)
         base64X25519Representation = keyPair.toX25519Base64()
-    }
-
-    init(rawRepresentation: [UInt8]) {
-        let keyPair = Ed25519CreateKeyPair(Data(bytes: rawRepresentation), nil)!
-        self.init(keyPair: keyPair)
-    }
+    }    
 }
 
 /**
