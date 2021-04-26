@@ -248,6 +248,15 @@
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "Le profil sera définitivement supprimé. Voulez-vous continuer ?";
 
+/* (No Comment) */
+"_delinquent_description" = "You will be able to access premium features again after these are paid.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest FREE plan server available.";
+
+/* (No Comment) */
+"_delinquent_title" = "Your VPN account has pending invoices";
+
 /* Delinquent user alert */
 "_delinquent_user_description" = "Votre compte possède actuellement une facture en retard. Veuillez régler les factures impayées en vous rendant sur account.protonvpn.com";
 
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "VOTRE ESSAI GRATUIT %@";
 
+/* Downgrade */
+"_from_server_title" = "From %@ Server:";
+
 /* MacOS: General tab in setting window */
 "_general" = "Général";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Montrer la carte";
 
+/* (No Comment) */
+"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to PLUS to get up to %@ devices connected at the same time.";
+
+/* (No Comment) */
+"_maximum_device_title" = "You have reached your maximum device limit";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Peut-être plus tard";
 
@@ -994,7 +1012,10 @@
 "_openvpn_settings_enabled_title" = "Vous pouvez maintenant utiliser Smart Protocol et OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "Dans la boîte de dialogue qui s'ouvre lors de l'activation d’OpenVPN, sélectionnez Ouvrir les préférences de sécurité.";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "click here";
 
 /* Step 2 for enabling OpenVPN Extension */
 "_openvpn_settings_step2" = "Faites les changements nécessaires en cliquant sur le verrou.";
@@ -1245,6 +1266,9 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Votre connexion doit être relancée pour appliquer ce changement.";
 
+/* (No Comment) */
+"_reconnect_title" = "We are reconnecting to the fastest server available.";
+
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Reconnexion à %@";
 
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "Vous pouvez acheter plus de crédits afin de prolonger automatiquement votre abonnement actuel. À la fin de votre période d'abonnement actuelle, ces crédits seront appliqués pour prolonger votre offre.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Your subscription has been downgraded.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Your VPN subscription plan has expired";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "Vous avez bien acheté des crédits pour prolonger votre abonnement actuel.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Abonnement";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "L’abonnement actuel expirera le %@.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "SERVEURS TEST";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "temps écoulé";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
+
+/* (No Comment) */
+"_to_server_title" = "To %@ Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Dépannage";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Disable Kill Switch and retry";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Réessayer";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "Wi-Fi non sécurisé détecté";
 
+/* (No Comment) */
+"_update_billing" = "UPDATE MY BILLING";
+
 /* App update required alert */
 "_update_required" = "Mise à jour requise";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "Changer d'offre";
+
+/* (No Comment) */
+"_upgrade_again" = "UPGRADE AGAIN";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "pour utiliser Secure Core";

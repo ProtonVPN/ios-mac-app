@@ -248,6 +248,15 @@
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "Das Profil wird dauerhaft gelöscht. Möchten Sie fortfahren?";
 
+/* (No Comment) */
+"_delinquent_description" = "Nachdem diese beglichen sind, werden Sie wieder auf Premium-Funktionen zugreifen können.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Nachdem diese beglichen sind, werden Sie wieder auf Premium-Funktionen zugreifen können. Im Moment werden Sie mit dem schnellsten verfügbaren FREE-Paket-Server verbunden.";
+
+/* (No Comment) */
+"_delinquent_title" = "Ihr VPN-Konto enthält ausstehende Rechnungen";
+
 /* Delinquent user alert */
 "_delinquent_user_description" = "Ihr Konto hat derzeit eine überfällige Rechnung. Bitte zahlen Sie alle unbezahlten Rechnungen auf account.protonvpn.com";
 
@@ -318,10 +327,10 @@
 "_error_api_offline" = "Die ProtonVPN‐API ist derzeit offline";
 
 /* Error during payment alert - button */
-"_error_apply_payment_failed_free" = "Mit kostenlosem Konto fortfahren";
+"_error_apply_payment_failed_free" = "Weiter mit kostenlosem Konto";
 
 /* Error during payment alert - message text. This string contains names of buttons on the same alert: _error_apply_payment_failed_retry, _error_apply_payment_failed_free */
-"_error_apply_payment_failed_message" = "Ihre Zahlung konnte nicht verarbeitet werden. Um es erneut zu versuchen, klicken Sie auf „Wiederholen”. Ihr Konto wird nur einmalig belastet.\nUm mit einem kostenlosen Konto fortzufahren, klicken Sie auf „Mit kostenlosem Konto fortfahren”. Sie können zu einem späteren Zeitpunkt zu einem kostenpflichtigen Paket wechseln.";
+"_error_apply_payment_failed_message" = "Ihre Zahlung konnte nicht verarbeitet werden. Um es erneut zu versuchen, klicken Sie auf „Wiederholen”. Ihr Konto wird nur einmalig belastet.\nUm mit einem kostenlosen Konto fortzufahren, klicken Sie auf „Weiter mit kostenlosem Konto”. Sie können zu einem späteren Zeitpunkt zu einem kostenpflichtigen Paket wechseln.";
 
 /* Error applying credit after registration alert */
 "_error_apply_payment_failed_on_registration_message" = "Sie haben sich erfolgreich registriert, aber Ihre Zahlung wurde nicht verarbeitet. Um Ihre Zahlungsinformationen erneut zu senden, klicken Sie auf „Wiederholen”. Sie werden nur einmal belastet. Wenn das Problem weiterhin besteht, wenden Sie sich bitte an den Kundendienst.";
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "IHRE KOSTENLOSE PROBEPHASE IST %@";
 
+/* Downgrade */
+"_from_server_title" = "Von %@-Server:";
+
 /* MacOS: General tab in setting window */
 "_general" = "Allgemein";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Karte anzeigen";
 
+/* (No Comment) */
+"_maximum_device_description" = "Um dieses Gerät zu verbinden, trennen Sie bitte ein anderes Gerät oder führen Sie einen Wechsel zu PLUS durch, um bis zu %@ Geräte gleichzeitig verbinden zu können.";
+
+/* (No Comment) */
+"_maximum_device_title" = "Sie haben die max. mögliche Anzahl von Geräten erreicht";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Vielleicht später";
 
@@ -994,7 +1012,10 @@
 "_openvpn_settings_enabled_title" = "Sie können jetzt das Smart-Protokoll und OpenVPN verwenden";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "Wählen Sie im Dialogfeld, das beim Aktivieren von OpenVPN geöffnet wird, die Option „Sicherheitseinstellungen öffnen”.";
+"_openvpn_settings_step1" = "Wählen Sie im Dialogfeld (das beim Aktivieren von OpenVPN geöffnet wird) „Sicherheitseinstellungen öffnen”. Wenn dieser Bildschirm nicht automatisch angezeigt wird, klicken Sie hier.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "klicken Sie hier";
 
 /* Step 2 for enabling OpenVPN Extension */
 "_openvpn_settings_step2" = "Nehmen Sie die erforderlichen Änderungen vor, indem Sie auf das Schloss klicken.";
@@ -1245,6 +1266,9 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Ihre Verbindung muss neu aufgebaut werden, um diese Änderung zu übernehmen.";
 
+/* (No Comment) */
+"_reconnect_title" = "Sie werden mit dem schnellsten verfügbaren Server verbunden.";
+
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Verbindung zu %@ wiederherstellen";
 
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "Sie können weiteres Guthaben erwerben, um Ihr aktuelles Abonnement automatisch zu verlängern. Am Ende Ihrer aktuellen Abonnementperiode wird dieses Guthaben zur Fortsetzung Ihres Abos verwendet.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Ihr Abonnement wurde herabgestuft.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Ihr Abonnement wurde herabgestuft. Daher wird die Verbindung mit dem schnellsten verfügbaren Server wiederhergestellt.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Ihr VPN-Abonnement ist ausgelaufen";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "Sie haben erfolgreich Guthaben erworben, um Ihr aktuelles Abonnement verlängern zu können.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Abonnement";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Hunderte von Servern in %@ Ländern";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Verbinden Sie bis zu %@ Geräte gleichzeitig";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Erweiterte Funktionen: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Erneut aufwerten, um alle Funktionen nutzen zu können:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Das derzeitige Abonnement ist nur noch bis zum %@ gültig.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "TEST-SERVER";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "hat Zeit überschritten";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Eine andere Anwendung könnte Not-Trennung von „Kill Switch” stören.\n\nUm dieses Problem zu beheben, wechseln Sie zum OpenVPN-Protokoll oder deaktivieren Sie „Kill Switch” und versuchen Sie es erneut.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Zu OpenVPN wechseln und erneut versuchen";
+
+/* (No Comment) */
+"_to_server_title" = "Zu %@-Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Fehlerbehebung";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Kill Switch deaktivieren und erneut versuchen";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Erneut versuchen";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "Unsicheres WLAN erkannt";
 
+/* (No Comment) */
+"_update_billing" = "Meine Abrechnung aktualisieren";
+
 /* App update required alert */
 "_update_required" = "Update erforderlich";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "Upgraden";
+
+/* (No Comment) */
+"_upgrade_again" = "Erneut aufwerten";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = ", um Secure Core nutzen zu können";
