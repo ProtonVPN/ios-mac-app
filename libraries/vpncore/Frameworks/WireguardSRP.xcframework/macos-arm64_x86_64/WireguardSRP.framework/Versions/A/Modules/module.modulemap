@@ -2,6 +2,7 @@ framework module "WireguardSRP" {
 	header "ref.h"
     header "Srp.objc.h"
     header "Ed25519.objc.h"
+    header "LocalAgent.objc.h"
     header "Universe.objc.h"
     header "WireguardSRP.h"
 

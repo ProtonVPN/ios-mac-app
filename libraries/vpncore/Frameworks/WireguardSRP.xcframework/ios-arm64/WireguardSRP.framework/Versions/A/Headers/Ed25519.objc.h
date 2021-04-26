@@ -18,48 +18,54 @@
 @property(strong, readonly) _Nonnull id _ref;
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
+/**
+ * NewKeyPair generates new ED25519 key pair
+ */
 - (nullable instancetype)init;
 - (NSData* _Nullable)privateKeyBytes;
 /**
- * Private key in PKIX, ASN.1 DER format
+ * PrivateKeyPKIX private key in PKIX, ASN.1 DER format
  */
 - (NSData* _Nullable)privateKeyPKIX;
 /**
- * Private key PKIX, ASN.1 DER in Base64
+ * PrivateKeyPKIXBase64 returns private key PKIX, ASN.1 DER in Base64
  */
 - (NSString* _Nonnull)privateKeyPKIXBase64;
 /**
- * Private key ASN.1 DER representation as PEM
+ * PrivateKeyPKIXPem returns private key ASN.1 DER representation as PEM
  */
 - (NSString* _Nonnull)privateKeyPKIXPem;
 - (NSData* _Nullable)publicKeyBytes;
 /**
- * Public key in PKIX, ASN.1 DER format
+ * PublicKeyPKIX returns public key in PKIX, ASN.1 DER format
  */
 - (NSData* _Nullable)publicKeyPKIX:(NSError* _Nullable* _Nullable)error;
 /**
- * Public key PKIX, ASN.1 DER in Base64
+ * PublicKeyPKIXBase64 public key in PKIX, ASN.1 DER in Base64
  */
 - (NSString* _Nonnull)publicKeyPKIXBase64:(NSError* _Nullable* _Nullable)error;
 /**
- * Public key ASN.1 DER representation as PEM
+ * PublicKeyPKIXPem returns public key in ASN.1 DER representation as PEM
  */
 - (NSString* _Nonnull)publicKeyPKIXPem:(NSError* _Nullable* _Nullable)error;
 /**
- * Converts to X25519 secret key.
+ * ToX25519 converts to X25519 secret key.
  */
 - (NSData* _Nullable)toX25519;
 /**
- * Converts to X25519 secret key encoded as base64.
+ * ToX25519Base64 converts to X25519 secret key encoded as base64.
  */
 - (NSString* _Nonnull)toX25519Base64;
 @end
 
 /**
- * used only for testing
+ * CreateKeyPair creates KeyPair based on provided private and public keys. Only for test use.
  */
 FOUNDATION_EXPORT Ed25519KeyPair* _Nullable Ed25519CreateKeyPair(NSData* _Nullable pri, NSData* _Nullable pub);
 
+/**
+ * NewKeyPair generates new ED25519 key pair
+ */
 FOUNDATION_EXPORT Ed25519KeyPair* _Nullable Ed25519NewKeyPair(NSError* _Nullable* _Nullable error);
 
 #endif
