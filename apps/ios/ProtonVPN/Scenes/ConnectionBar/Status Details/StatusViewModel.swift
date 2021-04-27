@@ -177,11 +177,11 @@ class StatusViewModel {
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
         if let server = appStateManager.activeConnection()?.server, profileManager.existsProfile(withServer: server) {
-            cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier:"Delete Profile", color: .protonRed(), handler: { [deleteProfile] in
+            cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .protonRed(), handler: { [deleteProfile] in
                 deleteProfile()
             })
         } else {
-            cell = .button(title: LocalizedString.saveAsProfile, accessibilityIdentifier:"Save as Profile", color: .protonWhite(), handler: { [saveAsProfile] in
+            cell = .button(title: LocalizedString.saveAsProfile, accessibilityIdentifier: "Save as Profile", color: .protonWhite(), handler: { [saveAsProfile] in
                 saveAsProfile()
             })
         }
