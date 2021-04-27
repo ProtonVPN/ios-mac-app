@@ -24,7 +24,7 @@ import UIKit
 import GSMessages
 import vpncore
 
-protocol ProfilesViewControllerDelegate: class {
+protocol ProfilesViewControllerDelegate: AnyObject {
     func showProfileCreatedSuccessMessage()
     func showProfileEditedSuccessMessage()
     func reloadProfiles()

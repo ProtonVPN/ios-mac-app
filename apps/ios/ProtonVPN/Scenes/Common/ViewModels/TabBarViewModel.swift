@@ -23,11 +23,11 @@
 import Foundation
 import vpncore
 
-protocol TabBarViewModelModelDelegate: class {
+protocol TabBarViewModelModelDelegate: AnyObject {
     func removeLoginBox()
 }
 
-protocol TabBarViewModelDelegate: class {
+protocol TabBarViewModelDelegate: AnyObject {
     func removeLoginBox()
     func connectedQuickConnect()
     func connectingQuickConnect()

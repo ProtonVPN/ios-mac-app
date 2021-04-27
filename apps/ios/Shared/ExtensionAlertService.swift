@@ -23,7 +23,7 @@
 import Foundation
 import vpncore
 
-protocol ExtensionAlertServiceDelegate: class {
+protocol ExtensionAlertServiceDelegate: AnyObject {
     func actionErrorReceived()
 }
 

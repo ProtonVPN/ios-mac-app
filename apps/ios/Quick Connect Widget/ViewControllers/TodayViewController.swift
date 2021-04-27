@@ -25,7 +25,7 @@ import UIKit
 import vpncore
 import NotificationCenter
 
-protocol TodayViewControllerProtocol: class {
+protocol TodayViewControllerProtocol: AnyObject {
         
     func displayBlank()
     func displayUnreachable()

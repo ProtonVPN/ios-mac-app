@@ -25,7 +25,7 @@ import UIKit
 import Alamofire
 import vpncore
 
-protocol LoginViewModelDelegate: class {
+protocol LoginViewModelDelegate: AnyObject {
     func showError(_ error: Error)
     func dismissLogin()
 }
