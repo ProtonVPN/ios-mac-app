@@ -3792,7 +3792,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 6B32F52842911147DAAFB4F5 /* Pods-Quick Connect Widget.staging.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
@@ -3985,7 +3985,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D9CF223F5EBCB81DCFB705FF /* Pods-Quick Connect Widget.debug.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1085;
@@ -4013,7 +4013,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3BE0D824E80335AA0E4D54FE /* Pods-Quick Connect Widget.release.xcconfig */;
 			buildSettings = {
-				APPLICATION_EXTENSION_API_ONLY = NO;
+				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
