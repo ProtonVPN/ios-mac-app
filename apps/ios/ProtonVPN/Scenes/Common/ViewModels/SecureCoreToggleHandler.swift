@@ -23,7 +23,7 @@
 import Foundation
 import vpncore
 
-protocol SecureCoreToggleHandler: class {
+protocol SecureCoreToggleHandler: AnyObject {
     
     var alertService: AlertService { get }
     var vpnGateway: VpnGatewayProtocol? { get }

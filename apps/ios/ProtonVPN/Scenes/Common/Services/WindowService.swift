@@ -28,7 +28,7 @@ protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
 }
 
-protocol WindowService: class {
+protocol WindowService: AnyObject {
 
     func show(viewController: UIViewController)
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool)

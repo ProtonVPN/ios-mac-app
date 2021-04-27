@@ -48,7 +48,7 @@ extension DependencyContainer: PlanSelectionViewModelFactory {
     }
 }
 
-protocol PlanSelectionViewModel: class {
+protocol PlanSelectionViewModel: AnyObject {
     var selectedPlanChanged: (() -> Void)? { get set }
     var selectionLoadingChanged: ((Bool) -> Void)? { get set }
     var plansLoadingChanged: ((Bool) -> Void)? { get set }

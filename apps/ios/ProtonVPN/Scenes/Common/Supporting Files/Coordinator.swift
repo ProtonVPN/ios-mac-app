@@ -22,6 +22,6 @@
 
 import Foundation
 
-protocol Coordinator: class {
+protocol Coordinator: AnyObject {
     func start()
 }

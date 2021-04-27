@@ -33,7 +33,7 @@ extension DependencyContainer: SubscriptionInfoViewModelFactory {
     }
 }
 
-protocol SubscriptionInfoViewModel: class {
+protocol SubscriptionInfoViewModel: AnyObject {
     
     var plan: AccountPlan { get }
     var expirationText: String? { get }
