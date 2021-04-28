@@ -39,7 +39,7 @@ extension LocalAgentFeatures {
 
     static func with(jailed: Bool) -> LocalAgentFeatures? {
         let features = LocalAgentFeatures()
-        features?.setBool("jailed", value: jailed)
+        features?.setBool("jail", value: jailed)
         return features
     }
 }
