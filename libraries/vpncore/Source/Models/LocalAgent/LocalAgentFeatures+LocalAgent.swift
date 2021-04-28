@@ -24,22 +24,20 @@ import Foundation
 import WireguardSRP
 
 extension LocalAgentFeatures {
-    static func with(netshield: NetShieldType) -> LocalAgentFeatures? {
-        let features = LocalAgentFeatures()
+    func with(netshield: NetShieldType) -> LocalAgentFeatures? {
         switch netshield {
         case .off:
             break
         case .level1:
-            features?.setInt("netshield-level", value: 1)
+            setInt("netshield-level", value: 1)
         case .level2:
-            features?.setInt("netshield-level", value: 2)
+            setInt("netshield-level", value: 2)
         }
-        return features
+        return self
     }
 
-    static func with(jailed: Bool) -> LocalAgentFeatures? {
-        let features = LocalAgentFeatures()
-        features?.setBool("jail", value: jailed)
-        return features
+    func with(jailed: Bool) -> LocalAgentFeatures? {
+        setBool("jail", value: jailed)
+        return self
     }
 }
