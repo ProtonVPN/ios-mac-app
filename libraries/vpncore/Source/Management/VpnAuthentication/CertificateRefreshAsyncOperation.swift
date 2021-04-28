@@ -33,16 +33,10 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let certificateRefreshDeadline: TimeInterval = 60 * 60 * 3 // 3 hours
     private var isRetry = false
 
-    init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper) {
+    init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.alamofireWrapper = alamofireWrapper
         self.completion = nil
-    }
-
-    init(keychain: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion?) {
-        self.storage = keychain
-        self.alamofireWrapper = alamofireWrapper
-        self.completion = completion
     }
 
     private func finish(_ result: Result<(VpnAuthenticationData), Error>) {

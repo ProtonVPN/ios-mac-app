@@ -95,7 +95,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
      Uses a queue internally to make sure parallel calls to this method are executed in a serial way. This is important to make sure multiple keys are not generated at the same time.
      */
     public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
-        queue.addOperation(CertificateRefreshAsyncOperation(keychain: storage, alamofireWrapper: alamofireWrapper, completion: { result in
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper, completion: { result in
             executeOnMainThread { completion(result) }
         }))
     }
