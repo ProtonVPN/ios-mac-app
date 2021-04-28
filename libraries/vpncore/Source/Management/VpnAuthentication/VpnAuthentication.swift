@@ -50,19 +50,19 @@ public protocol VpnAuthentication {
 
 public final class VpnAuthenticationManager {
     private let queue = OperationQueue()
-    private let keychain: VpnAuthenticationStorage
+    private let storage: VpnAuthenticationStorage
     private let alamofireWrapper: AlamofireWrapper
 
-    public init(alamofireWrapper: AlamofireWrapper, keychain: VpnAuthenticationStorage) {
+    public init(alamofireWrapper: AlamofireWrapper, storage: VpnAuthenticationStorage) {
         self.alamofireWrapper = alamofireWrapper
-        self.keychain = keychain
+        self.storage = storage
         queue.maxConcurrentOperationCount = 1
 
         NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnPlanDowngraded, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlanOrBecameDelinquent), name: VpnKeychain.vpnUserDelinquent, object: nil)
     }
 
-    @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification ) {
+    @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification) {
         PMLog.D("User plan downgraded or delinquent, deleting keys and certificate and getting one ones")
 
         // certificate refresh requests might be in progress so first cancel all fo them
@@ -72,7 +72,7 @@ public final class VpnAuthenticationManager {
         clear()
 
         // and get new certificates
-        queue.addOperation(CertificateRefreshAsyncOperation(keychain: keychain, alamofireWrapper: alamofireWrapper))
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper))
     }
 }
 
@@ -85,8 +85,8 @@ extension VpnAuthenticationManager: VpnAuthentication {
         queue.cancelAllOperations()
 
         // delete everything from the keychain
-        keychain.deleteKeys()
-        keychain.deleteCertificate()
+        storage.deleteKeys()
+        storage.deleteCertificate()
     }
 
     /**
@@ -95,7 +95,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
      Uses a queue internally to make sure parallel calls to this method are executed in a serial way. This is important to make sure multiple keys are not generated at the same time.
      */
     public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
-        queue.addOperation(CertificateRefreshAsyncOperation(keychain: keychain, alamofireWrapper: alamofireWrapper, completion: { result in
+        queue.addOperation(CertificateRefreshAsyncOperation(keychain: storage, alamofireWrapper: alamofireWrapper, completion: { result in
             executeOnMainThread { completion(result) }
         }))
     }
@@ -107,7 +107,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
      */
     public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored and still valid, use it
-        if let keys = keychain.getStoredKeys(), let existingCertificate = keychain.getStoredCertificate(), existingCertificate.validUntil < Date() {
+        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), existingCertificate.validUntil < Date() {
             PMLog.D("Loading stored vpn authentication data")
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return
