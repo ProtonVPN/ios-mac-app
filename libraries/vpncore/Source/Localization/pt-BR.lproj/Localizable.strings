@@ -56,10 +56,10 @@
 "_all_servers_under_maintenance" = "Todos os servidores estão em manutenção. Isto normalmente significa que existem dificuldades técnicas na parte do ProtonVPN ou a sua rede é limitada.";
 
 /* Settings: Allow LAN information text. */
-"_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
+"_allow_lan_info" = "Permite contornar a VPN e conectar-se a dispositivos na sua rede local, como sua impressora.";
 
 /* Settings: Allow LAN label. */
-"_allow_lan_title" = "Allow LAN connections";
+"_allow_lan_title" = "Permitir conexões LAN";
 
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "Eu já tenho uma conta";
@@ -164,7 +164,7 @@
 "_connection_settings" = "Configurações de conexão";
 
 /* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Contact our support";
+"_contact_our_support" = "Contate nosso Suporte";
 
 /* Button in some alerts */
 "_continue" = "Continuar";
@@ -247,6 +247,15 @@
 
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "O perfil será apagado permanentemente. Deseja continuar?";
+
+/* (No Comment) */
+"_delinquent_description" = "Você será capaz de acessar os recursos premium novamente após pagar as faturas pendentes.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Você será capaz de acessar os recursos premium novamente após estes serem pagos. Por enquanto, estamos reconectando ao servidor mais rápido disponível no plano GRATUITO.";
+
+/* (No Comment) */
+"_delinquent_title" = "Sua conta VPN possui faturas pendentes";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "A sua conta tem atualmente uma fatura em atraso. Por favor, pague todas as faturas pendentes em account.protonvpn.com";
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "SUA AVALIAÇÃO GRATUITA %@";
 
+/* Downgrade */
+"_from_server_title" = "From %@ Server:";
+
 /* MacOS: General tab in setting window */
 "_general" = "Geral";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Mostrar mapa";
 
+/* (No Comment) */
+"_maximum_device_description" = "Por favor, desconecte outro dispositivo para conectar esse ou atualize para o PLUS para conectar %@ dispositivos ao mesmo tempo.";
+
+/* (No Comment) */
+"_maximum_device_title" = "Você alcançou o número máximo de dispositivos";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Talvez mais tarde";
 
@@ -979,31 +997,34 @@
 "_openvpn" = "OpenVPN";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_cannot_enable" = "Cannot enable OpenVPN";
+"_openvpn_cannot_enable" = "Não é possível ativar o OpenVPN";
 
 /* Popup description on error installing OpenVPN */
-"_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+"_openvpn_error_description" = "Ocorreu um erro ao instalar o OpenVPN.\nReinstale o ProtonVPN, certifique-se de estar localizado na pasta Aplicativos para corrigir este problema. Alternativamente, entre em contato com nosso suporte.";
 
 /* Enabling OpenVPN Description */
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
+"_openvpn_settings_description" = "ProtonVPN precisa carregar uma Extensão do Sistema para impulsionar o Smart Protocol e o OpenVPN.";
 
 /* Popup description after enabling OpenVPN */
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "Você habilitou com sucesso a Extensão do Sistema no seu dispositivo. Você pode agora utilizar o Smart Protocol e o OpenVPN";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_title" = "Agora você pode usar o Protocolo Inteligente e o OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+"_openvpn_settings_step1" = "Na caixa de dialogo que abre ao habilitar o OpenVPN, selecione Abrir Preferências de Segurança. Se essa tela não aparecer automaticamente, clique aqui.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "clique aqui";
 
 /* Step 2 for enabling OpenVPN Extension */
-"_openvpn_settings_step2" = "Make the necessary changes by clicking on the lock.";
+"_openvpn_settings_step2" = "Faça as alterações necessárias clicando na fechadura.";
 
 /* Step 3 for enabling OpenVPN Extension */
-"_openvpn_settings_step3" = "Allow the system software to load.";
+"_openvpn_settings_step3" = "Permita que o software do sistema carregue.";
 
 /* OpenVPN */
-"_openvpn_settings_title" = "System Extension required";
+"_openvpn_settings_title" = "Extensão do sistema necessária";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Visão geral";
@@ -1156,7 +1177,7 @@
 "_protocol" = "Protocolo";
 
 /* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Change the protocol of your VPN connection";
+"_protocol_tooltip" = "Alterar o protocolo da sua conexão VPN";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN para macOS";
@@ -1240,10 +1261,13 @@
 "_recommended" = "Recomendado";
 
 /* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Change protocol";
+"_reconnect_on_protocol_change_title" = "Mudar protocolo";
 
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
+"_reconnect_on_settings_change_body" = "Sua conexão precisa ser reiniciada para aplicar esta modificação.";
+
+/* (No Comment) */
+"_reconnect_title" = "Estamos reconectando para o servidor mais rápido disponível.";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Reconectando-se a %@";
@@ -1441,7 +1465,7 @@
 "_show" = "MOSTRAR";
 
 /* Button in some alerts */
-"_show_instructions" = "Show instructions";
+"_show_instructions" = "Mostrar instruções";
 
 /* MacOS: button in custom status menu */
 "_show_protonvpn" = "Abrir ProtonVPN";
@@ -1453,7 +1477,7 @@
 "_skip" = "Pular";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Usar automaticamente o protocolo e a porta que oferecem a melhor conectividade.";
 
 /* Smart Protocol */
 "_smart_protocol_title" = "Smart Protocol";
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "Você pode comprar mais créditos para estender automaticamente o seu plano atual. No final do período da sua assinatura, estes créditos serão aplicados para prolongar o seu plano.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Sua assinatura foi rebaixada.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Sua assinatura foi rebaixada, então estamos reconectando para o servidor mais rápido disponível.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "A assinatura do seu plano de VPN expirou";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "Compra de créditos efetuadas com sucesso para estender o seu plano atual.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plano de assinatura";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Centenas de servidores em %@ países";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "O plano atual irá expirar em %@.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "SERVIDORES DE TESTE";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "tempo esgotado";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
+
+/* (No Comment) */
+"_to_server_title" = "To %@ Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Solução de problemas";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Disable Kill Switch and retry";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Tentar novamente";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "Wi-Fi inseguro detectado";
 
+/* (No Comment) */
+"_update_billing" = "UPDATE MY BILLING";
+
 /* App update required alert */
 "_update_required" = "Atualização necessária";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "Upgrade";
+
+/* (No Comment) */
+"_upgrade_again" = "UPGRADE AGAIN";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "para usar o Secure Core";

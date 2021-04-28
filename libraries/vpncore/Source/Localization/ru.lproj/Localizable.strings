@@ -248,6 +248,15 @@
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "Профиль будет окончательно удален. Вы хотите продолжить?";
 
+/* (No Comment) */
+"_delinquent_description" = "You will be able to access premium features again after these are paid.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest FREE plan server available.";
+
+/* (No Comment) */
+"_delinquent_title" = "Your VPN account has pending invoices";
+
 /* Delinquent user alert */
 "_delinquent_user_description" = "У вашей учётной записи есть неоплаченный счёт. Пожалуйста, оплатите все неоплаченные счета на account.protonvpn.com";
 
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "БЕСПЛАТНАЯ ПРОБНАЯ ВЕРСИЯ %@";
 
+/* Downgrade */
+"_from_server_title" = "From %@ Server:";
+
 /* MacOS: General tab in setting window */
 "_general" = "Основные";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Показать карту";
 
+/* (No Comment) */
+"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to PLUS to get up to %@ devices connected at the same time.";
+
+/* (No Comment) */
+"_maximum_device_title" = "You have reached your maximum device limit";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Может, позже";
 
@@ -994,7 +1012,10 @@
 "_openvpn_settings_enabled_title" = "Теперь вы можете использовать Smart Protocol и OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "В диалоговом окне, открывающемся при включении OpenVPN, выберите Открыть параметры безопасности.";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "click here";
 
 /* Step 2 for enabling OpenVPN Extension */
 "_openvpn_settings_step2" = "Внесите необходимые изменения, кликнув на замок.";
@@ -1245,6 +1266,9 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Необходимо перезапустить соединение, чтобы применить это изменение.";
 
+/* (No Comment) */
+"_reconnect_title" = "We are reconnecting to the fastest server available.";
+
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Переподключение к %@";
 
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Your subscription has been downgraded.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Your VPN subscription plan has expired";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "План подписки";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Текущий тариф истекает %@.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "ТЕСТОВЫЕ СЕРВЕРЫ";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "время ожидания истекло";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
+
+/* (No Comment) */
+"_to_server_title" = "To %@ Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Устранение неисправностей";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Disable Kill Switch and retry";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Попробовать снова";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "Обнаружен небезопасный Wi-Fi";
 
+/* (No Comment) */
+"_update_billing" = "UPDATE MY BILLING";
+
 /* App update required alert */
 "_update_required" = "Требуется обновление";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "Улучшить";
+
+/* (No Comment) */
+"_upgrade_again" = "UPGRADE AGAIN";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "использовать Secure Core";
