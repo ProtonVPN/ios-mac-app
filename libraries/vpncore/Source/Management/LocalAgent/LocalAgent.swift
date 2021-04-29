@@ -25,7 +25,7 @@ import WireguardSRP
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(code: Int)
-    func didChangeState(state: LocalAgentState?)
+    func didChangeState(state: LocalAgentState)
 }
 
 protocol LocalAgent {
@@ -55,7 +55,6 @@ final class GoLocalAgent: LocalAgent {
         guard let currentState = agent?.state, !currentState.isEmpty else {
             return nil
         }
-
         return LocalAgentState.from(string: currentState)
     }
 
@@ -86,6 +85,10 @@ extension GoLocalAgent: LocalAgentNativeClientDelegate {
     }
 
     func didChangeState(state: LocalAgentState?) {
+        guard let state = state else {
+            return
+        }
+
         delegate?.didChangeState(state: state)
     }
 }

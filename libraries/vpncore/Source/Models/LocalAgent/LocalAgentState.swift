@@ -50,8 +50,6 @@ extension LocalAgentState {
             return .serverCertificateError
         case LocalAgentStateSoftJailed:
             return .softJailed
-        case "": // empty
-            return nil
         default:
             PMLog.ET("Trying to parse unknown local agent state \(string)")
             return nil
