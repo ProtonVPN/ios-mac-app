@@ -36,7 +36,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.alamofireWrapper = alamofireWrapper
-        self.completion = nil
+        self.completion = completion
     }
 
     private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
