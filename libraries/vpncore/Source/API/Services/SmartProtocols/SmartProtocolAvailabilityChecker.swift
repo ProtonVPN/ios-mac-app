@@ -114,7 +114,7 @@ extension SmartProtocolAvailabilityChecker {
         connection.stateUpdateHandler = { (state: NWConnection.State) in
             switch state {
             case .ready:
-                connection.receive(minimumIncompleteLength: 1, maximumLength: Int.max) { (data, context, isComplete, error) in
+                connection.receive(minimumIncompleteLength: 1, maximumLength: 64) { (data, context, isComplete, error) in
                     complete(data != nil)
                 }
                 connection.send(content: packet, completion: NWConnection.SendCompletion.contentProcessed(({ (error) in
