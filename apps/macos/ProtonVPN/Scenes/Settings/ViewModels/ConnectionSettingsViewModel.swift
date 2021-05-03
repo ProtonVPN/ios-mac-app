@@ -174,6 +174,7 @@ final class ConnectionSettingsViewModel {
     func setSmartProtocol(_ enabled: Bool) {
         guard enabled else {
             propertiesManager.smartProtocol = false
+            viewController?.reloadView()
             return
         }
 
