@@ -171,16 +171,21 @@ final class ConnectionSettingsViewModel {
         propertiesManager.alternativeRouting = enabled
     }
 
-    func setSmartProtocol(_ enabled: Bool) {
+    func setSmartProtocol(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         guard enabled else {
             propertiesManager.smartProtocol = false
+            completion(true)
             viewController?.reloadView()
             return
         }
 
         systemExtensionManager.requestExtensionInstall { result in
-            if case .success = result {
+            switch result {
+            case .success:
                 self.propertiesManager.smartProtocol = enabled
+                completion(true)
+            case .failure:
+                completion(false)
             }
             
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in

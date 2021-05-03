@@ -257,7 +257,10 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
     public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
         switch button.superview {
         case allowLANButton:
-            viewModel.setAllowLANAccess(value == .on, completion: { result in completion(result) })
+            viewModel.setAllowLANAccess(value == .on, completion: completion)
+
+        case smartProtocolButton:
+            viewModel.setSmartProtocol(value == .on, completion: completion)
             
         default:
             completion(true)
@@ -268,9 +271,6 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
         switch button.superview {
         case alternativeRoutingButton:
             viewModel.setAlternatveRouting(alternativeRoutingButton.currentButtonState == .on)
-             
-        case smartProtocolButton:
-            viewModel.setSmartProtocol(smartProtocolButton.currentButtonState == .on)
             
         default:
             break // Do nothing
