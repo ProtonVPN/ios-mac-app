@@ -172,25 +172,46 @@ final class ConnectionSettingsViewModel {
     }
 
     func setSmartProtocol(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        guard enabled else {
-            propertiesManager.smartProtocol = false
-            completion(true)
-            viewController?.reloadView()
-            return
+        let update = { (shouldReconnect: Bool) in
+            guard enabled else {
+                self.propertiesManager.smartProtocol = false
+                completion(true)
+                self.viewController?.reloadView()
+
+                if shouldReconnect {
+                    self.vpnGateway.retryConnection()
+                }
+                return
+            }
+
+            self.systemExtensionManager.requestExtensionInstall { result in
+                switch result {
+                case .success:
+                    self.propertiesManager.smartProtocol = enabled
+                    completion(true)
+
+                    if shouldReconnect {
+                        self.vpnGateway.retryConnection()
+                    }
+                case .failure:
+                    completion(false)
+                }
+
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                    self?.viewController?.reloadView()
+                }
+            }
         }
 
-        systemExtensionManager.requestExtensionInstall { result in
-            switch result {
-            case .success:
-                self.propertiesManager.smartProtocol = enabled
-                completion(true)
-            case .failure:
+        switch vpnGateway.connection {
+        case .connected, .connecting:
+            alertService.push(alert: ReconnectOnSmartProtocolChangeAlert(confirmHandler: {
+                update(true)
+            }, cancelHandler: {
                 completion(false)
-            }
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                self?.viewController?.reloadView()
-            }
+            }))
+        default:
+            update(false)
         }
     }
     

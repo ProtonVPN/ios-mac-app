@@ -188,6 +188,9 @@ extension MacAlertService: CoreAlertService {
             
         case is UserAccountUpdateAlert:
             showDefaultSystemAlert(alert)
+
+        case is ReconnectOnSmartProtocolChangeAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG
