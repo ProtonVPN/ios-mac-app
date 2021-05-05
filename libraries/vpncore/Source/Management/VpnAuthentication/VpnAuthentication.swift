@@ -77,9 +77,6 @@ public final class VpnAuthenticationManager {
 }
 
 extension VpnAuthenticationManager: VpnAuthentication {
-    /**
-     Deletes all the generated and stored data, so keys and certificate
-     */
     public func clear() {
         // first cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
         queue.cancelAllOperations()
@@ -89,22 +86,12 @@ extension VpnAuthenticationManager: VpnAuthentication {
         keychain.deleteCertificate()
     }
 
-    /**
-     Refreshes the client certificate if needed
-
-     Uses a queue internally to make sure parallel calls to this method are executed in a serial way. This is important to make sure multiple keys are not generated at the same time.
-     */
     public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
         queue.addOperation(CertificateRefreshAsyncOperation(keychain: keychain, alamofireWrapper: alamofireWrapper, completion: { result in
             executeOnMainThread { completion(result) }
         }))
     }
 
-    /**
-     Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
-
-     Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
-     */
     public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored and still valid, use it
         if let keys = keychain.getStoredKeys(), let existingCertificate = keychain.getStoredCertificate(), existingCertificate.validUntil < Date() {
