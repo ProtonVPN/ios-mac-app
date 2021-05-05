@@ -38,6 +38,8 @@ public protocol VpnAuthentication {
     /**
      Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
 
+     ***Note** The certificate might be expired. The expired certificate still allows to connect to VPN but the app will get jailed and needs to fetch a new certificate with the `refreshCertificates` method
+
      Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
      */
     func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion)
@@ -94,7 +96,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
 
     public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored and still valid, use it
-        if let keys = keychain.getStoredKeys(), let existingCertificate = keychain.getStoredCertificate(), existingCertificate.validUntil < Date() {
+        if let keys = keychain.getStoredKeys(), let existingCertificate = keychain.getStoredCertificate() {
             PMLog.D("Loading stored vpn authentication data")
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return
