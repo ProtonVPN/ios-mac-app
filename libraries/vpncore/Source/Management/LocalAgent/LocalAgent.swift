@@ -61,7 +61,7 @@ final class GoLocalAgent: LocalAgent {
     weak var delegate: LocalAgentDelegate?
 
     func connect(host: String, data: VpnAuthenticationData, netshield: NetShieldType) {
-        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.base64X25519Representation, serverCAsPEM: rootCerts, host: host, client: client, features: LocalAgentFeatures()?.with(netshield: netshield)?.with(jailed: false))
+        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.base64X25519Representation, serverCAsPEM: rootCerts, host: host, client: client, features: LocalAgentFeatures()?.with(netshield: netshield)?.with(jailed: false), connectivity: true)
     }
 
     func disconnect() {

@@ -35,20 +35,25 @@ enum LocalAgentState {
 
 extension LocalAgentState {
     static func from(string: String) -> LocalAgentState? {
+        guard let consts = LocalAgentConstants() else {
+            PMLog.ET("Failed to create local agent constants")
+            return nil
+        }
+
         switch string {
-        case LocalAgentStateConnected:
+        case consts.stateConnected:
             return .connected
-        case LocalAgentStateConnecting:
+        case consts.stateConnecting:
             return .connecting
-        case LocalAgentStateConnectionError:
+        case consts.stateConnectionError:
             return .connectionError
-        case LocalAgentStateDisconnected:
+        case consts.stateDisconnected:
             return .disconnected
-        case LocalAgentStateHardJailed:
+        case consts.stateHardJailed:
             return .hardJailed
-        case LocalAgentStateServerCertificateError:
+        case consts.stateServerCertificateError:
             return .serverCertificateError
-        case LocalAgentStateSoftJailed:
+        case consts.stateSoftJailed:
             return .softJailed
         default:
             PMLog.ET("Trying to parse unknown local agent state \(string)")
