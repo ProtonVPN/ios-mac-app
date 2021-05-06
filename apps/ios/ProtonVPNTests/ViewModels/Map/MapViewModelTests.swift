@@ -37,7 +37,7 @@ class MapViewModelTests: XCTestCase {
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManager())
-        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, keychain: VpnAuthenticationKeychain()))
+        appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: VpnAuthenticationKeychain()))
     }
     
     func testSecureCoreAnnotationLocations() {

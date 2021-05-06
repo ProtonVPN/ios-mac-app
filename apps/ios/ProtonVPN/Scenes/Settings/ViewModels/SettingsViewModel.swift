@@ -225,9 +225,26 @@ class SettingsViewModel {
         var cells: [TableViewCellModel] = []
 
         cells.append(.toggle(title: LocalizedString.smartProtocolTitle, on: propertiesManager.smartProtocol, enabled: true) { [unowned self] (toggleOn, callback) in
-            self.propertiesManager.smartProtocol.toggle()
-            callback(self.propertiesManager.smartProtocol)
-            self.reloadNeeded?()
+            let update = { (shouldReconnect: Bool) in
+                self.propertiesManager.smartProtocol.toggle()
+                callback(self.propertiesManager.smartProtocol)
+                self.reloadNeeded?()
+
+                if shouldReconnect {
+                    self.vpnGateway?.retryConnection()
+                }
+            }
+
+            switch self.appStateManager.state {
+            case .connected, .connecting:
+                alertService.push(alert: ReconnectOnSmartProtocolChangeAlert(confirmHandler: {
+                    update(true)
+                }, cancelHandler: {
+                    callback(self.propertiesManager.smartProtocol)
+                }))
+            default:
+                update(false)
+            }
         })
         cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
 

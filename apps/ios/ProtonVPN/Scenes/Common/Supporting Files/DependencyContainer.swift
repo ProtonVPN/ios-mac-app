@@ -73,7 +73,7 @@ class DependencyContainer {
 
     private lazy var challenge = CoreChallenge()
 
-    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), keychain: VpnAuthenticationKeychain())
+    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: VpnAuthenticationKeychain())
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
