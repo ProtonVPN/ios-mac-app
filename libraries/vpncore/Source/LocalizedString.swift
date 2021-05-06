@@ -706,6 +706,8 @@ public class LocalizedString {
     // MARK: - Smart Protocol
     public static let smartProtocolTitle = NSLocalizedString("_smart_protocol_title", comment: "Title for Smart Protocol in Settings")
     public static let smartProtocolDescription = NSLocalizedString("_smart_protocol_description", comment: "Description for Smart Protocol in Settings")
+    public static let smartProtocolReconnectModalTitle = NSLocalizedString("_smart_protocol_reconnect_modal_title", comment: "Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected")
+    public static let smartProtocolReconnectModalBody = NSLocalizedString("_smart_protocol_reconnect_modal_body", comment: "Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected")
     
     // Quick Settings
     

@@ -753,6 +753,8 @@
 // Smart Protocol
 "_smart_protocol_title" = "Smart Protocol";
 "_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_reconnect_modal_title" = "Reconnection required";
+"_smart_protocol_reconnect_modal_body" = "Your connection will be restarted to change the Smart Protocol mode.";
 
 // OpenVPN
 

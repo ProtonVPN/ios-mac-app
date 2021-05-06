@@ -56,10 +56,10 @@
 "_all_servers_under_maintenance" = "همه‌ی سرورها در حال تعمیر هستند. این بدان معناست که مشکلات فنی در سمت ProtonVPN وجود دارد، یا شبکه شما محدود شده است.";
 
 /* Settings: Allow LAN information text. */
-"_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
+"_allow_lan_info" = "اجازه می‌دهد که از VPN عبور کند و به دستگاه‌های موجود در شبکه محلی، مانند چاپگرتان متصل شود.";
 
 /* Settings: Allow LAN label. */
-"_allow_lan_title" = "Allow LAN connections";
+"_allow_lan_title" = "اجازه اتصال به شبکه‌های LAN";
 
 /* iOS: button for switching from sign-up to sign-in screen */
 "_already_have_account" = "من از قبل یک حساب کاربری دارم";
@@ -164,7 +164,7 @@
 "_connection_settings" = "تنظیمات اتصال";
 
 /* Text addressing to contact costumer support on several sites of the app */
-"_contact_our_support" = "Contact our support";
+"_contact_our_support" = "با تیم پشتیبانی ما تماس بگیرید";
 
 /* Button in some alerts */
 "_continue" = "ادامه";
@@ -247,6 +247,15 @@
 
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "پروفایل مذکور به طور کامل پاک خواهد شد. آیا از ادامه اطمینان دارید؟";
+
+/* (No Comment) */
+"_delinquent_description" = "You will be able to access premium features again after these are paid.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "You will be able to access premium features again after these are paid. For now, we are reconnecting to the fastest FREE plan server available.";
+
+/* (No Comment) */
+"_delinquent_title" = "Your VPN account has pending invoices";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "حساب کاربری شما یک فاکتور پرداخت‌نشده دارد. لطفا با مراجعه به account.protonvpn.com نسبت به پرداخت فاکتور(های) پرداخت نشده اقدام کنید";
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "طرح آزمایشی رایگان شما %@";
 
+/* Downgrade */
+"_from_server_title" = "From %@ Server:";
+
 /* MacOS: General tab in setting window */
 "_general" = "عمومی";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "نمایش نقشه";
 
+/* (No Comment) */
+"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to PLUS to get up to %@ devices connected at the same time.";
+
+/* (No Comment) */
+"_maximum_device_title" = "You have reached your maximum device limit";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "شاید بعدا";
 
@@ -979,10 +997,10 @@
 "_openvpn" = "OpenVPN";
 
 /* Popup title after enabling OpenVPN */
-"_openvpn_cannot_enable" = "Cannot enable OpenVPN";
+"_openvpn_cannot_enable" = "نمی‌توانیم OpenVPN را فعال کنیم";
 
 /* Popup description on error installing OpenVPN */
-"_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+"_openvpn_error_description" = "زمانی که درحال نصب OpenVPN بودیم خطایی رخ داد.\nبرای حل مشکل، ProtonVPN را دوباره نصب کنید، و مطمئن شوید که در پوشه Applications قرار دارد.\nدر غیراینصورت، با پشتیبانی ما تماس بگیرید.";
 
 /* Enabling OpenVPN Description */
 "_openvpn_settings_description" = "ProtonVPN برای استفاده از پروتکل هوشمند و OpenVPN به یک Extension System نیاز دارد.";
@@ -994,16 +1012,19 @@
 "_openvpn_settings_enabled_title" = "اکنون می توانید از Smart Protocol و OpenVPN استفاده کنید";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences.";
+"_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "click here";
 
 /* Step 2 for enabling OpenVPN Extension */
-"_openvpn_settings_step2" = "Make the necessary changes by clicking on the lock.";
+"_openvpn_settings_step2" = "تغییرات لازم را با کلیک کردن روی قفل اعمال کنید.";
 
 /* Step 3 for enabling OpenVPN Extension */
-"_openvpn_settings_step3" = "Allow the system software to load.";
+"_openvpn_settings_step3" = "اجازه اجرا به نرم‌افزار سیستم.";
 
 /* OpenVPN */
-"_openvpn_settings_title" = "System Extension required";
+"_openvpn_settings_title" = "نیاز به افزونه سیستمی است";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "نمای کلی";
@@ -1156,7 +1177,7 @@
 "_protocol" = "پروتکل";
 
 /* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Change the protocol of your VPN connection";
+"_protocol_tooltip" = "پروتکل اتصال VPN خود را تغییر دهید";
 
 /* Mac: neagent help screen */
 "_protonvpn_macos" = "ProtonVPN برای macOS";
@@ -1240,10 +1261,13 @@
 "_recommended" = "پیشنهاد شده";
 
 /* MacOS: Title of alert shown when user changed VPN protocol and connection has to be re-established */
-"_reconnect_on_protocol_change_title" = "Change protocol";
+"_reconnect_on_protocol_change_title" = "تغییر پروتکل";
 
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
-"_reconnect_on_settings_change_body" = "Your connection needs to be restarted to apply this change.";
+"_reconnect_on_settings_change_body" = "برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد.";
+
+/* (No Comment) */
+"_reconnect_title" = "We are reconnecting to the fastest server available.";
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "اتصال دوباره به %@";
@@ -1441,7 +1465,7 @@
 "_show" = "نمایش";
 
 /* Button in some alerts */
-"_show_instructions" = "Show instructions";
+"_show_instructions" = "نمایش دستورالعمل‌ها";
 
 /* MacOS: button in custom status menu */
 "_show_protonvpn" = "نمایش ProtonVPN";
@@ -1453,7 +1477,7 @@
 "_skip" = "رد کردن";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "استفاده خودکار از پروتکل و درگاهی که بهترین اتصال را ارائه می‌دهد.";
 
 /* Smart Protocol */
 "_smart_protocol_title" = "پروتکل هوشمند";
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "شما میتوانید اعتبار بیشتری بخرید تا بطور خودکار طرح فعلی خود را تمدید کنید. در انتهای دوره اشتراک فعلی شما، این اعتبارها به منظور ادامه طرح شما اعمال خواهد شد.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Your subscription has been downgraded.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Your subscription has been downgraded, so we are reconnecting to the fastest available server.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Your VPN subscription plan has expired";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "شما با موفقیت اعتبار خریداری کردید تا طرح فعلی خود را تمدید کنید.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "طرح اشتراک";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Hundreds of servers in %@ countries";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Connect up to %@ devices at the same time";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Advanced features: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Upgrade again to enjoy all the features:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "طرح فعلی در %@ تمام خواهد شد.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "سرورهای تست";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "وقفه";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
+
+/* (No Comment) */
+"_to_server_title" = "To %@ Server:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "عیب یابی";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Disable Kill Switch and retry";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "تلاش دوباره";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "شبکه WiFi ناامن شناسایی شد";
 
+/* (No Comment) */
+"_update_billing" = "UPDATE MY BILLING";
+
 /* App update required alert */
 "_update_required" = "به‌روزرسانی لازم است";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "ارتقا";
+
+/* (No Comment) */
+"_upgrade_again" = "UPGRADE AGAIN";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = "برای استفاده از Secure Core";

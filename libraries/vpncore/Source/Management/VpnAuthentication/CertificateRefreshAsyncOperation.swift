@@ -27,20 +27,14 @@ enum CertificateRefreshError: Error {
 }
 
 final class CertificateRefreshAsyncOperation: AsyncOperation {
-    private let keychain: VpnAuthenticationStorage
+    private let storage: VpnAuthenticationStorage
     private let alamofireWrapper: AlamofireWrapper
     private let completion: CertificateRefreshCompletion?
     private let certificateRefreshDeadline: TimeInterval = 60 * 60 * 3 // 3 hours
     private var isRetry = false
 
-    init(keychain: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper) {
-        self.keychain = keychain
-        self.alamofireWrapper = alamofireWrapper
-        self.completion = nil
-    }
-
-    init(keychain: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion?) {
-        self.keychain = keychain
+    init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion? = nil) {
+        self.storage = storage
         self.alamofireWrapper = alamofireWrapper
         self.completion = completion
     }
@@ -76,8 +70,8 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         PMLog.D("Checking if vpn authentication certificate refresh is needed")
 
-        let keys = keychain.getKeys()
-        let existingCertificate = keychain.getStoredCertificate()
+        let keys = storage.getKeys()
+        let existingCertificate = storage.getStoredCertificate()
 
         let needsRefresh: Bool
         if let certificate = existingCertificate {
@@ -113,8 +107,8 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 switch nsError.code {
                 case 2500 where !self.isRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
                     PMLog.D("Trying to recover by generating new keys and trying again")
-                    self.keychain.deleteKeys()
-                    self.keychain.deleteCertificate()
+                    self.storage.deleteKeys()
+                    self.storage.deleteCertificate()
                     self.isRetry = true
                     self.main()
                 default:
@@ -122,7 +116,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 }
             case let .success(certificate):
                 // store it
-                self.keychain.store(certificate: certificate)
+                self.storage.store(certificate: certificate)
                 self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
             }
         }

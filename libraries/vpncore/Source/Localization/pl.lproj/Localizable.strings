@@ -53,7 +53,7 @@
 "_all_servers_in_profile_under_maintenance" = "Serwery zapisane w profilu są w trakcie przerwy technicznej";
 
 /* Under maintenance alert */
-"_all_servers_under_maintenance" = "Wszystkie serwery są w trakcie przerwy technicznej. Zwykle oznacza to, że występują problemy techniczne po stronie ProtonVPNa lub łączność z siecią jest ograniczona.";
+"_all_servers_under_maintenance" = "Wszystkie serwery są w trakcie przerwy technicznej. Zwykle oznacza to, że występują problemy techniczne po stronie usługi ProtonVPN lub łączność z siecią jest ograniczona.";
 
 /* Settings: Allow LAN information text. */
 "_allow_lan_info" = "Pozwala na ominięcie ruchu VPN i połączenie się z urządzeniami w sieci lokalnej, takimi jak drukarka.";
@@ -247,6 +247,15 @@
 
 /* MacOS: profile deletion warning */
 "_delete_profile_warning" = "Profil zostanie trwale usunięty. Czy chcesz kontynuować?";
+
+/* (No Comment) */
+"_delinquent_description" = "Po zapłaceniu faktur, ponownie uzyskasz dostęp do funkcji premium.";
+
+/* (No Comment) */
+"_delinquent_reconnection_description" = "Po zapłaceniu faktur, ponownie uzyskasz dostęp do funkcji premium. Obecnie jesteś ponownie łączony z najszybszym dostępnym serwerem planu FREE.";
+
+/* (No Comment) */
+"_delinquent_title" = "Twoje konto VPN posiada oczekujące faktury";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "Twoje konto posiada obecnie zaległe faktury. Ureguluj wszystkie zobowiązania na account.protonvpn.com";
@@ -597,6 +606,9 @@
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "TWOJA DARMOWA WERSJA PRÓBNA %@";
 
+/* Downgrade */
+"_from_server_title" = "Z serwera planu %@:";
+
 /* MacOS: General tab in setting window */
 "_general" = "Ogólne";
 
@@ -810,6 +822,12 @@
 /* MacOS: Map view toggle button accessibility label (used by screen readers) */
 "_map_show" = "Pokaż mapę";
 
+/* (No Comment) */
+"_maximum_device_description" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu PLUS w celu połączenia %@ urządzeń jednocześnie.";
+
+/* (No Comment) */
+"_maximum_device_title" = "Wykorzystałeś limit liczby podłączonych urządzeń";
+
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Może później";
 
@@ -994,7 +1012,10 @@
 "_openvpn_settings_enabled_title" = "Możesz korzystać funkcji Smart Protocol i OpenVPN";
 
 /* Step 1 for enabling OpenVPN Extension */
-"_openvpn_settings_step1" = "W oknie, które otworzy się po wyłączeniu protokołu OpenVPN, wybierz \"Otwórz ustawienia bezpieczeństwa\".";
+"_openvpn_settings_step1" = "W oknie, które otworzy się po wyłączeniu protokołu OpenVPN, wybierz \"Otwórz ustawienia bezpieczeństwa\". Jeśli okno nie pojawi się automatycznie, kliknij tutaj.";
+
+/* Link text inside Step 1 for enabling OpenVPN Extension */
+"_openvpn_settings_step1_link" = "kliknij tutaj";
 
 /* Step 2 for enabling OpenVPN Extension */
 "_openvpn_settings_step2" = "Wprowadź niezbędne zmiany, klikając kłódkę.";
@@ -1245,6 +1266,9 @@
 /* MacOS: Body of alert shown when user changed some settings and connection has to be re-established */
 "_reconnect_on_settings_change_body" = "Aby zastosować zmiany, musisz ponownie nawiązać połączenie.";
 
+/* (No Comment) */
+"_reconnect_title" = "Jesteś ponownie łączony z najszybszym dostępnym serwerem.";
+
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. */
 "_reconnecting_to" = "Ponowne łączenie z %@";
 
@@ -1482,11 +1506,32 @@
 /* Text under current plan information */
 "_subscription_description" = "Możesz kupić więcej środków, aby automatycznie przedłużyć obecny plan. Pod koniec okresu obecnej subskrypcji środki te zostaną wykorzystane do kontynuacji planu.";
 
+/* (No Comment) */
+"_subscription_expired_description" = "Twoja subskrypcja została obniżona.";
+
+/* (No Comment) */
+"_subscription_expired_reconnection_description" = "Twoja subskrypcja została obniżona, więc zostałeś ponownie połączony z najszybszym dostępnym serwerem.";
+
+/* (No Comment) */
+"_subscription_expired_title" = "Twoja subskrypcja planu VPN wygasła";
+
 /* Message shown to user after he bought credits to extend subscription. */
 "_subscription_extended_success" = "Kupiłeś środki, aby przedłużyć swój obecny plan.";
 
 /* iOS Settings -> Connection: name of field. */
 "_subscription_plan" = "Plan subskrypcji";
+
+/* (No Comment) */
+"_subscription_upgrade_option1" = "Setki serwerów w %@ krajach";
+
+/* (No Comment) */
+"_subscription_upgrade_option2" = "Połącz do %@ urządzeń jednocześnie";
+
+/* (No Comment) */
+"_subscription_upgrade_option3" = "Zaawansowane funkcje: NetShield, Secure Core, Tor, P2P";
+
+/* (No Comment) */
+"_subscription_upgrade_title" = "Ulepsz plan ponownie, aby korzystać z funkcji:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Obecny plan wygaśnie w dniu %@.";
@@ -1525,8 +1570,29 @@
 /* iOS: section header in countries list */
 "_test_servers" = "TESTOWE SERWERY";
 
+/* (No Comment) */
+"_tier_basic" = "BASIC";
+
+/* (No Comment) */
+"_tier_free" = "FREE";
+
+/* (No Comment) */
+"_tier_plus" = "PLUS";
+
+/* (No Comment) */
+"_tier_visionary" = "VISIONARY";
+
 /* MacOS: connecting overlay */
 "_timed_out" = "nie powiodło się. Upłynął limit czasu żądania";
+
+/* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
+"_timeout_ks_ike_descritpion" = "Inna aplikacja może powodować konflikt z funkcją Kill Switch.\n\nAby rozwiązać problem, zmień protokół na OpenVPN lub wyłącz funkcję Kill Switch i ponów próbę.";
+
+/* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
+"_timeout_ks_ike_switch_protocol" = "Zmień na OpenVPN i ponów próbę";
+
+/* (No Comment) */
+"_to_server_title" = "Do serwera planu %@:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "Tor";
@@ -1653,6 +1719,9 @@
 /* Title of connection troubleshooting screen */
 "_troubleshoot_title" = "Rozwiązywanie problemów";
 
+/* MacOS: button in connecting overlay. Don't make this text longer than in english. */
+"_try_again_without_killswitch" = "Wyłącz Kill Switch i ponów próbę";
+
 /* MacOS: button in connecting overlay */
 "_try_agian" = "Spróbuj ponownie";
 
@@ -1677,6 +1746,9 @@
 /* MacOS */
 "_unsecure_wifi_title" = "Wykryto niezabezpieczoną sieć Wi-Fi";
 
+/* (No Comment) */
+"_update_billing" = "ZAKTUALIZUJ INFORMACJE O PŁATNOŚCI";
+
 /* App update required alert */
 "_update_required" = "Aktualizacja jest wymagana";
 
@@ -1691,6 +1763,9 @@
 
 /* Button in many placen in both iOS and MacOS apps */
 "_upgrade" = "Ulepsz";
+
+/* (No Comment) */
+"_upgrade_again" = "ULEPSZ PONOWNIE";
 
 /* Main mac app menu item */
 "_upgrade_for_secure_core" = ", aby móc korzystać z funkcji Secure Core";

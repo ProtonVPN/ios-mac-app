@@ -338,6 +338,19 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     }
 }
 
+public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
+    public var title: String? = LocalizedString.smartProtocolReconnectModalTitle
+    public var message: String? = LocalizedString.smartProtocolReconnectModalBody
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
 public class LogoutWarningAlert: SystemAlert {
     public var title: String? = LocalizedString.vpnConnectionActive
     public var message: String? = LocalizedString.logOutWarning
