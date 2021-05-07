@@ -752,4 +752,36 @@ public class LocalizedString {
     public static let tierBASIC = NSLocalizedString("_tier_basic", comment: "")
     public static let tierPLUS = NSLocalizedString("_tier_plus", comment: "")
     public static let tierVISIONARY = NSLocalizedString("_tier_visionary", comment: "")
+    
+    // Streaming and features
+    
+    public static let informationTitle = NSLocalizedString("_information_title", comment: "")
+    public static let featuresTitle = NSLocalizedString("_features_title", comment: "")
+    public static let performanceTitle = NSLocalizedString("_performance_title", comment: "")
+    public static let streamingTitle = NSLocalizedString("_streaming_title", comment: "")
+    public static let smartRoutingTitle = NSLocalizedString("_smart_routing_title", comment: "")
+    public static let p2pTitle = NSLocalizedString("_p2p_title", comment: "")
+    public static let torTitle = NSLocalizedString("_tor_title", comment: "")
+    public static let serverLoadTitle = NSLocalizedString("_server_load_title", comment: "")
+    
+    public static let streamingServersDescription = NSLocalizedString("_streaming_servers_description", comment: "")
+    public static let streamingServersNote = NSLocalizedString("_streaming_servers_note", comment: "")
+    public static let streamingServersExtra = NSLocalizedString("_streaming_servers_extra", comment: "")
+    
+    public static let featureSmartRoutingDescription = NSLocalizedString("_feature_smart_routing_description", comment: "")
+    public static let featureStreamingDescription = NSLocalizedString("_feature_streaming_description", comment: "")
+    public static let featureP2pDescription = NSLocalizedString("_feature_p2p_description", comment: "")
+    public static let featureTorDescription = NSLocalizedString("_feature_tor_description", comment: "")
+    public static let performanceLoadDescription = NSLocalizedString("_performance_load_description", comment: "")
+
+    public static let performanceLoadLow = NSLocalizedString("_performance_load_low", comment: "")
+    public static let performanceLoadMedium = NSLocalizedString("_performance_load_medium", comment: "")
+    public static let performanceLoadHigh = NSLocalizedString("_performance_load_high", comment: "")
+
+    public static let locationsFree = NSLocalizedString("_locations_free", comment: "")
+    public static let locationsAll = NSLocalizedString("_locations_all", comment: "")
+    public static let locationsBasicPlus = NSLocalizedString("_locations_basic_plus", comment: "")
+    public static let locationsBasic = NSLocalizedString("_locations_basic", comment: "")
+    public static let locationsPlus = NSLocalizedString("_locations_plus", comment: "")
+
 }

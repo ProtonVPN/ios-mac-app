@@ -29,6 +29,7 @@ public typealias VpnProtocolCallback = GenericCallback<VpnProtocol>
 public typealias VpnServerStateCallback = GenericCallback<VpnServerState>
 public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
 public typealias OptionalStringCallback = GenericCallback<String?>
+public typealias VpnStreamingResponseCallback = GenericCallback<VPNStreamingResponse>
 public typealias ContinuousServerPropertiesCallback = GenericCallback<ContinuousServerPropertiesDictionary>
 
 public protocol VpnApiServiceFactory {
@@ -51,6 +52,7 @@ public class VpnApiService {
         
         var rCredentials: VpnCredentials?
         var rServerModels: [ServerModel]?
+        var rStreamingServices: VPNStreamingResponse?
         var rUserIp: String?
         var rClientConfig: ClientConfig?
         var rError: Error?
@@ -90,7 +92,13 @@ public class VpnApiService {
             rCredentials = credentials
             dispatchGroup.leave()
         }, failure: silentFailureClosure)
-                
+        
+        dispatchGroup.enter()
+        virtualServices(success: { response in
+            rStreamingServices = response
+            dispatchGroup.leave()
+        }, failure: silentFailureClosure)
+        
         dispatchGroup.enter()
         clientConfig(success: { client in
             rClientConfig = client
@@ -99,7 +107,7 @@ public class VpnApiService {
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig))
+                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -113,6 +121,7 @@ public class VpnApiService {
         let dispatchGroup = DispatchGroup()
         
         var rServerModels: [ServerModel]?
+        var rStreamingServices: VPNStreamingResponse?
         var rUserIp: String?
         var rClientConfig: ClientConfig?
         var rError: Error?
@@ -136,6 +145,12 @@ public class VpnApiService {
                 rServerModels = serverModels
                 dispatchGroup.leave()
             }, failure: failureClosure)
+            
+            dispatchGroup.enter()
+            self?.virtualServices(success: { response in
+                rStreamingServices = response
+                dispatchGroup.leave()
+            }, failure: failureClosure)
         }
         
         dispatchGroup.enter()
@@ -149,7 +164,7 @@ public class VpnApiService {
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig))
+                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices))
             } else if let error = rError {
                 failure(error)
             } else {
@@ -323,6 +338,24 @@ public class VpnApiService {
         }
         
         alamofireWrapper.request(VPNClientConfigRequest(), success: successWrapper, failure: failure)
+    }
+    
+    public func virtualServices(success: @escaping VpnStreamingResponseCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: JSONCallback = { response in
+            do {
+                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let parsed = try decoder.decode(VPNStreamingResponse.self, from: data)
+                success(parsed)
+            } catch {
+                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                let error = ParseError.loadsParse
+                PMLog.ET(error.localizedDescription)
+                failure(error)
+            }
+        }
+        alamofireWrapper.request(VPNStreamingRequest(), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

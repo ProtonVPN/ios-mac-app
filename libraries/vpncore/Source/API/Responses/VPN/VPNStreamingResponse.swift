@@ -1,6 +1,6 @@
 //
-//  VpnProperties.swift
-//  vpncore - Created on 06/05/2020.
+//  VPNStreamingResponse.swift
+//  vpncore - Created on 19.04.21.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -20,19 +20,12 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-public struct VpnProperties {
-    
-    public let serverModels: [ServerModel]
-    public let streamingResponse: VPNStreamingResponse?
-    public let vpnCredentials: VpnCredentials?
-    public let ip: String?
-    public let clientConfig: ClientConfig
-    
-    public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?) {
-        self.serverModels = serverModels
-        self.vpnCredentials = vpnCredentials
-        self.ip = ip
-        self.clientConfig = clientConfig ?? ClientConfig.defaultConfig
-        self.streamingResponse = streamingResponse
-    }
+import Foundation
+
+public typealias StreamingDictServices = [String: [String: [VpnStreamingOption]]]
+
+public struct VPNStreamingResponse: Codable {
+    public let code: Int
+    public let resourceBaseURL: String
+    public let streamingServices: StreamingDictServices
 }
