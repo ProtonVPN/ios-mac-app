@@ -28,7 +28,7 @@ class UIConstants {
     
     // MARK: - Cell constants
     static let cellHeight: CGFloat = 52.5
-    static let headerHeight: CGFloat = 38
+    static let headerHeight: CGFloat = 56
     
     // MARK: - Messages
     static let messageOptions: [GSMessageOption] = [

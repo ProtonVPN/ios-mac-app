@@ -109,7 +109,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     var cellHeight: CGFloat {
-        return 61
+        return 72
     }
     
     func headerHeight(for section: Int) -> CGFloat {
@@ -118,12 +118,14 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     func numberOfSections() -> Int {
         setTier() // good place to update because generally an infrequent call that should be called every table reload
-        
-        // 2 sections if there are any tiers this user doesn't have access to
-        // First section = available countries
-        // Second section = upgrade required countries
-        // If there are no available countries for the tier, the first section is still there, just empty
-        return state.currentContent.contains(where: { $0.0.lowestTier > userTier }) ? 2 : 1
+        switch userTier {
+        case 0: // FREE
+            return 2
+        case 1: // BASIC
+            return 3
+        default: // PLUS-VISIONARY
+            return 1
+        }
     }
     
     func numberOfRows(in section: Int) -> Int {
@@ -131,12 +133,24 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     func titleFor(section: Int) -> String? {
-        guard numberOfRows(in: 1) > 1 else {
-            return nil
+        if numberOfRows(in: section) == 0 { return nil }
+        let totalCountries = " (\(numberOfRows(in: section)))"
+        switch userTier {
+        case 0:
+            return [LocalizedString.locationsFree, LocalizedString.locationsBasicPlus][section] + totalCountries
+        case 1:
+            return [LocalizedString.locationsBasic, LocalizedString.locationsPlus, LocalizedString.locationsFree][section] + totalCountries
+        default:
+            return LocalizedString.locationsAll + totalCountries
         }
-        return section == 0 ? LocalizedString.countriesFree.uppercased() : LocalizedString.countriesPremium.uppercased()
     }
 
+    func isTierTooLow( for section: Int ) -> Bool {
+        if userTier > 1 { return false }
+        if userTier == 0 { return section > 0 }
+        return section == 1
+    }
+    
     func cellModel(for row: Int, in section: Int) -> CountryItemViewModel? {
         let countryGroup = content(for: section)[row]
         
@@ -147,7 +161,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                     alertService: alertService,
                                     loginService: loginService,
                                     planService: planService,
-                                    connectionStatusService: connectionStatusService
+                                    connectionStatusService: connectionStatusService,
+                                    propertiesManager: propertiesManager
         )
     }
     
@@ -165,9 +180,17 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     private func content(for section: Int) -> [CountryGroup] {
-        return state.currentContent.filter({
-            section == 1 ? $0.0.lowestTier > userTier : $0.0.lowestTier <= userTier
-        })
+        switch userTier {
+        case 0:
+            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 0 }) }
+            return state.currentContent.filter({ $0.0.lowestTier > 0 }).sorted(by: { $0.0.lowestTier > $1.0.lowestTier })
+        case 1:
+            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier > 1 }) }
+            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 1 }) }
+            return state.currentContent.filter({ $0.0.lowestTier == 0 })
+        default:
+            return state.currentContent.sorted(by: { $0.0.lowestTier > $1.0.lowestTier })
+        }
     }
     
     private func addObservers() {

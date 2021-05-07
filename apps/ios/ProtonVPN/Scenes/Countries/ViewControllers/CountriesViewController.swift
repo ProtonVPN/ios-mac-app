@@ -49,7 +49,6 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         viewModel?.contentChanged = { [weak self] in self?.contentChanged() }
         viewModel?.connectionChanged = { [secureCoreSwitch, viewModel] in
             DispatchQueue.main.async {
@@ -61,6 +60,7 @@ final class CountriesViewController: UIViewController {
         setupConnectionBar()
         setupSecureCoreBar()
         setupTableView()
+        setupNavigationBar()
         
         NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)
     }
@@ -120,9 +120,21 @@ final class CountriesViewController: UIViewController {
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
     
+    private func setupNavigationBar() {
+        let image = #imageLiteral(resourceName: "ic-info-circle")
+        let rightItem = UIBarButtonItem(image: image, style: .plain, target: self, action: #selector(displayServicesInfo))
+        navigationItem.rightBarButtonItem = rightItem
+    }
+    
+    @objc private func displayServicesInfo() {
+        let viewModel = ServersFeaturesInformationViewModelImplementation()
+        let vc = ServersFeaturesInformationVC(viewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
+    }
+    
     private func contentChanged() {
         guard let viewModel = viewModel else { return }
-        
         secureCoreSwitch.setOn(viewModel.secureCoreOn, animated: true)
         tableView.reloadData()
     }
@@ -164,7 +176,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
             return
         }
         
-        if indexPath.section > 0 { // Premium countries
+        if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
             planService.presentPlanSelection()
             return
         }

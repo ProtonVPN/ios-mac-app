@@ -60,6 +60,16 @@ class CountryViewController: UIViewController {
         tableView.register(ServerViewCell.nib, forCellReuseIdentifier: ServerViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }
+    
+    private func displayStreamingServices() {
+        guard let viewModel = viewModel else { return }
+        let services = viewModel.streamingServices
+        let countryName = viewModel.countryName
+        let streamingFeaturesViewModel = ServersStreamingFeaturesViewModelImplementation(country: countryName, streamServices: services, propertiesManager: viewModel.propertiesManager )
+        let vc = ServersStreamingFeaturesVC(streamingFeaturesViewModel)
+        vc.modalPresentationStyle = .overFullScreen
+        present(vc, animated: true, completion: nil)
+    }
 }
 
 extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
@@ -71,6 +81,12 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
             headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
+            headerView.callback = nil
+            if let viewModel = self.viewModel, viewModel.streamingAvailable, viewModel.isSeverPlus(for: section) {
+                headerView.callback = { [weak self] in
+                    self?.displayStreamingServices()
+                }
+            }
             return headerView
         }
         return UIView()

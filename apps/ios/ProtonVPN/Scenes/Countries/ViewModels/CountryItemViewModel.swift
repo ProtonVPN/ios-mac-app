@@ -31,7 +31,6 @@ class CountryItemViewModel {
     private let alertService: AlertService
     private let loginService: LoginService
     private let planService: PlanService
-    
     private var vpnGateway: VpnGatewayProtocol?
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
@@ -41,7 +40,9 @@ class CountryItemViewModel {
         return userTier < countryModel.lowestTier
     }
     
-    private var underMaintenance: Bool {
+    let propertiesManager: PropertiesManagerProtocol
+    
+    var underMaintenance: Bool {
         return !serverModels.contains { !$0.underMaintenance }
     }
     
@@ -81,8 +82,8 @@ class CountryItemViewModel {
         return LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
     }
     
-    var description: NSAttributedString {
-        return formDescription()
+    var description: String {
+        return LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
     }
     
     var backgroundColor: UIColor {
@@ -90,33 +91,41 @@ class CountryItemViewModel {
     }
     
     var cellHeight: CGFloat {
-        return 61
+        return 60
     }
     
-    var connectionProperties: NSAttributedString {
-        var string: String = ""
-        if countryModel.feature.contains(.tor) {
-            string.append(LocalizedString.tor)
-        }
-        if countryModel.feature.contains(.p2p) {
-            if !string.isEmpty {
-                string.append(" | ")
-            }
-            string.append(LocalizedString.p2p)
-        }
-        return string.attributed(withColor: .protonFontLightGrey(), fontSize: 12, alignment: .left)
+    var torAvailable: Bool {
+        return countryModel.feature.contains(.tor)
+    }
+    
+    var p2pAvailable: Bool {
+        return countryModel.feature.contains(.p2p)
+    }
+    
+    var smartAvailable: Bool {
+        return false
+    }
+    
+    var streamingAvailable: Bool {
+        return !streamingServices.isEmpty
+    }
+    
+    var isCurrentlyConnected: Bool {
+        return isConnected || isConnecting
     }
     
     var connectIcon: UIImage? {
         if isUsersTierTooLow {
-            return UIImage(named: "con-locked")
+            return #imageLiteral(resourceName: "con-locked")
         } else if underMaintenance {
-            return UIImage(named: "con-unavailable")
-        } else if connectedUiState {
-            return UIImage(named: "con-connected")
+            return #imageLiteral(resourceName: "ic_maintenance")
         } else {
-            return UIImage(named: "con-available")
+            return #imageLiteral(resourceName: "con-available")
         }
+    }
+    
+    var streamingServices: [VpnStreamingOption] {
+        return propertiesManager.streamingServices[countryCode]?["2"] ?? []
     }
     
     var textInPlaceOfConnectIcon: String? {
@@ -124,7 +133,9 @@ class CountryItemViewModel {
     }
     
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
+        if underMaintenance { return 0.25 }
+        if isUsersTierTooLow { return 0.5 }
+        return 1.0
     }
     
     private lazy var freeServerViewModels: [ServerItemViewModel] = {
@@ -152,9 +163,11 @@ class CountryItemViewModel {
         return servers.map { (server) -> ServerItemViewModel in
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
-                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService)
+                return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                                           alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             case .secureCore:
-                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService)
+                return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                                                     alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             }
         }
     }
@@ -183,7 +196,7 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
@@ -193,7 +206,7 @@ class CountryItemViewModel {
         self.serverType = serverType
         self.planService = planService
         self.connectionStatusService = connectionStatusService
-        
+        self.propertiesManager = propertiesManager
         do {
             if let vpnGateway = vpnGateway {
                 userTier = try vpnGateway.userTier()
@@ -216,7 +229,12 @@ class CountryItemViewModel {
     }
     
     func titleFor(section: Int) -> String {
-        return CoreAppConstants.serverTierName(forTier: serverViewModels[section].tier)
+        let tier = serverViewModels[section].tier
+        return CoreAppConstants.serverTierName(forTier: tier) + " (\(self.serversCount(for: section)))"
+    }
+    
+    func isSeverPlus( for section: Int) -> Bool {
+        return serverViewModels[section].tier > 1
     }
     
     func cellModel(for row: Int, section: Int) -> ServerItemViewModel {
@@ -247,15 +265,6 @@ class CountryItemViewModel {
     fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    private func formDescription() -> NSAttributedString {
-        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        let attributedCountry = NSMutableAttributedString(attributedString: country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left))
-        let hyphenParagraphStyle = NSMutableParagraphStyle()
-        hyphenParagraphStyle.hyphenationFactor = 0.5
-        attributedCountry.addAttribute(.paragraphStyle, value: hyphenParagraphStyle, range: NSRange(location: 0, length: country.count))
-        return attributedCountry
     }
     
     @objc fileprivate func stateChanged() {

@@ -27,7 +27,12 @@ class CountryViewCell: UITableViewCell {
 
     @IBOutlet weak var flagIcon: UIImageView!
     @IBOutlet weak var countryName: UILabel!
-    @IBOutlet weak var connectionProperties: UILabel!
+    
+    @IBOutlet weak var p2pIV: UIImageView!
+    @IBOutlet weak var smartIV: UIImageView!
+    @IBOutlet weak var torIV: UIImageView!
+    @IBOutlet weak var streamingIV: UIImageView!
+    
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet var rightMarginConstraint: NSLayoutConstraint!
     @IBOutlet var rightNoMarginConstraint: NSLayoutConstraint!
@@ -39,14 +44,18 @@ class CountryViewCell: UITableViewCell {
             guard let viewModel = viewModel else { return }
             
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            countryName.attributedText = viewModel.description
+            countryName.text = viewModel.description
             countryName.numberOfLines = 2
             countryName.lineBreakMode = .byTruncatingTail
             
-            connectionProperties.attributedText = viewModel.connectionProperties
+            torIV.isHidden = !viewModel.torAvailable
+            smartIV.isHidden = !viewModel.smartAvailable
+            p2pIV.isHidden = !viewModel.p2pAvailable
+            streamingIV.isHidden = !viewModel.streamingAvailable
+            
             backgroundColor = viewModel.backgroundColor
             flagIcon.image = UIImage(named: viewModel.countryCode.lowercased() + "-plain")
-            [flagIcon, countryName, connectionProperties].forEach { view in
+            [flagIcon, countryName, torIV, p2pIV, smartIV, streamingIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
             
@@ -70,6 +79,9 @@ class CountryViewCell: UITableViewCell {
     }
     
     private func renderConnectButton() {
+        let isConnected = viewModel?.isCurrentlyConnected ?? false
+        let maintenance = viewModel?.underMaintenance ?? false
+        connectButton.backgroundColor = isConnected ? .protonGreen() : (maintenance ? .protonDarkGrey() :  .protonLightGrey())
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
