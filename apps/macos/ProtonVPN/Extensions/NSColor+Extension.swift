@@ -266,6 +266,21 @@ extension NSColor {
                        blue: 70/255,
                        alpha: 1)
     }
+    
+    class func protonServerRow() -> NSColor {
+        return NSColor(red: 37/255,
+                       green: 39/255,
+                       blue: 44/255,
+                       alpha: 1)
+    }
+    
+    class func protonExandableButton() -> NSColor {
+        return NSColor(red: 73/255,
+                       green: 77/255,
+                       blue: 85/255,
+                       alpha: 1)
+    }
+    
     class func protonBlack() -> NSColor {
         return .black
     }

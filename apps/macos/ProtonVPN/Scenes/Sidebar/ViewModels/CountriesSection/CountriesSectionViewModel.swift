@@ -24,11 +24,9 @@ import Foundation
 import vpncore
 
 enum CellModel {
-    
+    case header(CountriesServersHeaderViewModelProtocol)
     case country(CountryItemViewModel)
     case server(ServerItemViewModel)
-    case secureCoreCountry(SecureCoreCountryItemViewModel)
-    case secureCoreServer(SecureCoreServerItemViewModel)
 }
 
 struct ContentChange {
@@ -36,11 +34,13 @@ struct ContentChange {
     let insertedRows: IndexSet?
     let removedRows: IndexSet?
     let reset: Bool
+    let reload: IndexSet?
     
-    init(insertedRows: IndexSet?, removedRows: IndexSet?, reset: Bool = false) {
+    init(insertedRows: IndexSet? = nil, removedRows: IndexSet? = nil, reset: Bool = false, reload: IndexSet? = nil) {
         self.insertedRows = insertedRows
         self.removedRows = removedRows
         self.reset = reset
+        self.reload = reload
     }
 }
 
@@ -59,67 +59,22 @@ protocol CountriesSettingsDelegate: class {
 }
 
 class CountriesSectionViewModel {
-    
-    private enum ModelState {
         
-        case standard([CountryGroup], Set<String>)
-        case secureCore([CountryGroup], Set<String>)
-        
-        var currentContent: [CountryGroup] {
-            switch self {
-            case .standard(let content, _):
-                return content
-            case .secureCore(let content, _):
-                return content
-            }
-        }
-        
-        var currentlyExpanded: Set<String> {
-            switch self {
-            case .standard(_, let expanded):
-                return expanded
-            case .secureCore(_, let expanded):
-                return expanded
-            }
-        }
-        
-        var serverType: ServerType {
-            switch self {
-            case .standard:
-                return .standard
-            case .secureCore:
-                return .secureCore
-            }
-        }
-        
-        func withUpdated(expanded elements: Set<String>) -> ModelState {
-            switch self {
-            case .standard(let content, _):
-                return .standard(content, elements)
-            case .secureCore(let content, _):
-                return .secureCore(content, elements)
-            }
-        }
-    }
-    
-    private enum FetchResult {
-        case country(CountryModel, Bool)
-        case server(ServerModel)
-    }
-    
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
+    private var expandedCountries: Set<String> = []
     
     weak var delegate: CountriesSettingsDelegate?
     var contentChanged: ((ContentChange) -> Void)?
-    var disconnectWarning: ((WarningPopupViewModel) -> Void)?
     var secureCoreChange: ((Bool) -> Void)?
+    var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
+    var displayPremiumServices: (() -> Void)?
     let contentSwitch = Notification.Name("CountriesSectionViewModelContentSwitch")
     
-    var secureCoreState: ButtonState {
-        return state.serverType == .standard ? .off : .on
+    var isSecureCoreEnabled: Bool {
+        return propertiesManager.secureCoreToggle
     }
     
     var isNetShieldEnabled: Bool {
@@ -138,11 +93,15 @@ class CountriesSectionViewModel {
         return KillSwitchDropdownPresenter(factory)
     }
     
+    private var secureCoreState: Bool
     private var serverManager: ServerManager
-    private var state: ModelState
-    private var userTier: Int
+    private var countries: [CountryGroup] = []
+    private var data: [CellModel] = []
+    private let userTier: Int
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory
+    private var connectedServer: ServerModel?
+    
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory & CoreAlertServiceFactory
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -153,6 +112,7 @@ class CountriesSectionViewModel {
         self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
+        self.secureCoreState = self.propertiesManager.secureCoreToggle
         
         do {
             userTier = try vpnGateway.userTier()
@@ -160,306 +120,231 @@ class CountriesSectionViewModel {
             alertService.push(alert: CannotAccessVpnCredentialsAlert())
             userTier = CoreAppConstants.VpnTiers.free
         }
+        
         self.serverManager = ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
-        state = propertiesManager.serverTypeToggle == .standard ? .standard([], []) : .secureCore([], [])
+        if case .connected = appStateManager.state {
+            self.connectedServer = appStateManager.activeConnection()?.server
+        }
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: propertiesManager.killSwitchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.netShieldNotification, object: nil)
+        updateState(nil)
+    }
         
-        resetCurrentState()
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
-                                               name: serverManager.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings),
-                                               name: propertiesManager.killSwitchNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings),
-                                               name: PropertiesManager.netShieldNotification, object: nil)
+    func displayUpgradeMessage( _ serverModel: ServerModel? ) {
+        alertService.push(alert: UpgradeRequiredAlert(tier: userTier, serverType: serverModel?.serverType ?? .unspecified, forSpecificCountry: true, confirmHandler: nil))
     }
     
-    func isCountryExpanded(_ countryCode: String) -> Bool {
-        return state.currentlyExpanded.contains(countryCode)
-    }
-
-    func isCountryUnderMaintenance(_ countryCode: String) -> Bool {
-        let allServersUnderMaintenance = { (groups: [CountryGroup]) -> Bool in
-            guard let group = groups.first(where: { $0.0.countryCode == countryCode }) else {
-                PMLog.ET("Checking for country with invalid code")
-                return false
-            }
-
-            return group.1.allSatisfy({ $0.underMaintenance })
-        }
-
-        switch state {
-        case let .standard(groups, _):
-            return allServersUnderMaintenance(groups)
-        case let .secureCore(groups, _):
-            return allServersUnderMaintenance(groups)
-        }
-    }
-    
-    func toggleCell(forCountryCode countryCode: String) {
-        let content = state.currentContent
-        let expanded = state.currentlyExpanded
-        
-        let countBefore = rowCountBefore(countryCode: countryCode, inContent: content, expanded: expanded)
-        let countOf = rowCount(of: countryCode, in: content)
-        let range = IndexSet(integersIn: (countBefore + 1)..<(countBefore + 1 + countOf))
-        let isExpanded = expanded.contains(countryCode)
-        
-        let contentChange: ContentChange
-        
-        if isExpanded {
-            state = state.withUpdated(expanded: Set<String>(expanded.filter { $0 != countryCode }))
-            contentChange = ContentChange(insertedRows: nil, removedRows: range)
-        } else {
-            state = state.withUpdated(expanded: Set<String>(expanded + [countryCode]))
-            contentChange = ContentChange(insertedRows: range, removedRows: nil)
-        }
-        
-        contentChanged?(contentChange)
-    }
-    
-    func toggleStateAction() {
-        guard vpnGateway.connection != .connected else {
-            presentDisconnectOnStateToggleWarning()
+    func toggleCell(for countryCode: String) {
+        guard let country = countries.first( where: { $0.0.countryCode == countryCode }) else { return }
+        guard let index = data.firstIndex(where: {
+            if case .country( let countryVM ) = $0, countryVM.countryCode == countryCode { return true }
+            return false
+        }) else {
             return
         }
         
-        toggleState()
+        if !expandedCountries.contains(countryCode) {
+            expandedCountries.insert(countryCode)
+            let offset = insertServers(index + 1, countryGroup: country)
+            let contentChange = ContentChange(insertedRows: IndexSet(integersIn: index + 1 ..< index + offset + 1))
+            contentChanged?(contentChange)
+        } else {
+            expandedCountries.remove(countryCode)
+            let offset = removeServers(index, servers: country.1)
+            let contentChange = ContentChange(removedRows: IndexSet(integersIn: index + 1 ... index + offset))
+            contentChanged?(contentChange)
+        }
     }
     
     func filterContent(forQuery query: String) {
-        let pastCount = totalRowCount(ofContent: state.currentContent, expanded: state.currentlyExpanded)
-        
-        switch state {
-        case .standard:
-            var newContent = serverManager.grouping(for: .standard)
-            if !query.isEmpty {
-                newContent = newContent.filter { $0.0.matches(searchQuery: query) }
-            }
-            state = .standard(orderedCountries(newContent), [])
-        case .secureCore:
-            var newContent = serverManager.grouping(for: .secureCore)
-            if !query.isEmpty {
-                newContent = newContent.filter { $0.0.matches(searchQuery: query) }
-            }
-            state = .secureCore(orderedCountries(newContent), [])
-        }
-        
-        let newCount = totalRowCount(ofContent: state.currentContent, expanded: state.currentlyExpanded)
-        
-        let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount),
-                                          removedRows: IndexSet(integersIn: 0..<pastCount))
+        let pastCount = totalRowCount
+        updateState(query)
+        let newCount = totalRowCount
+        let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
         contentChanged?(contentChange)
     }
-    
-    var cellHeight: CGFloat {
-        return 50.0
-    }
-    
-    var cellCount: Int {
-        return totalRowCount(ofContent: state.currentContent, expanded: state.currentlyExpanded)
-    }
+        
+    var cellCount: Int { return totalRowCount }
     
     func cellModel(forRow row: Int) -> CellModel? {
-        switch state {
-        case .standard(let content, let expanded):
-            guard let result = fetchElement(from: content, expanded: expanded, row: row) else {
-                return nil
-            }
-            
-            switch result {
-            case .country(let country, let expanded):
-                return .country(CountryItemViewModel(countryModel: country,
-                                                     vpnGateway: vpnGateway,
-                                                     appStateManager: appStateManager,
-                                                     countriesSectionViewModel: self,
-                                                     enabled: userTier >= country.lowestTier,
-                                                     state: expanded ? .expanded : .normal))
-            case .server(let server):
-                return .server(ServerItemViewModel(serverModel: server,
-                                                   vpnGateway: vpnGateway,
-                                                   appStateManager: appStateManager,
-                                                   countriesSectionViewModel: self,
-                                                   requiresUpgrade: userTier < server.tier))
-            }
-        case .secureCore(let content, let expanded):
-            guard let result = fetchElement(from: content, expanded: expanded, row: row) else {
-                return nil
-            }
-
-            switch result {
-            case .country(let country, let expanded):
-                return .secureCoreCountry(SecureCoreCountryItemViewModel(countryModel: country,
-                                                                         vpnGateway: vpnGateway,
-                                                                         appStateManager: appStateManager,
-                                                                         countriesSectionViewModel: self,
-                                                                         enabled: userTier >= country.lowestTier,
-                                                                         state: expanded ? .expanded : .normal))
-            case .server(let server):
-                return .secureCoreServer(SecureCoreServerItemViewModel(serverModel: server,
-                                                                       vpnGateway: vpnGateway,
-                                                                       appStateManager: appStateManager,
-                                                                       countriesSectionViewModel: self,
-                                                                       requiresUpgrade: userTier < server.tier))
-            }
-        }
+        return data[row]
     }
     
     // MARK: - Private functions
     
-    private func toggleState() {
-        vpnGateway.changeActiveServerType(state.serverType == .secureCore ? .standard : .secureCore)
-    }
-    
     private func updateSecureCoreState() {
-        let removedRows: IndexSet
-        let insertedRows: IndexSet
-        
-        switch state {
-        case .standard(let content, let expanded):
-            removedRows = IndexSet(integersIn: 0..<totalRowCount(ofContent: content, expanded: expanded))
-            insertedRows = IndexSet(integersIn: 0..<serverManager.grouping(for: .secureCore).count)
-            state = .secureCore(orderedCountries(serverManager.grouping(for: .secureCore)), [])
-        case .secureCore(let content, let expanded):
-            removedRows = IndexSet(integersIn: 0..<totalRowCount(ofContent: content, expanded: expanded))
-            insertedRows = IndexSet(integersIn: 0..<serverManager.grouping(for: .standard).count)
-            state = .standard(orderedCountries(serverManager.grouping(for: .standard)), [])
-        }
-        
-        let contentChange = ContentChange(insertedRows: insertedRows, removedRows: removedRows, reset: true)
-        
+        expandedCountries = []
+        updateState(nil)
+        let contentChange = ContentChange(reset: true)
         self.contentChanged?(contentChange)
-        self.secureCoreChange?(self.state.serverType == .secureCore)
+        self.secureCoreChange?(propertiesManager.secureCoreToggle)
         self.updateSettings()
-        NotificationCenter.default.post(name: self.contentSwitch, object: self.state.serverType)
-    }
-    
-    private func orderedCountries(_ countries: [CountryGroup]) -> [CountryGroup] {
-        return countries.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-            if userTier == 0 && countryGroup1.0.lowestTier == 0 {
-                if  countryGroup2.0.lowestTier == 0 {
-                    return countryGroup1.0.country > countryGroup2.0.country
-                } else {
-                    return true
-                }
-            } else {
-                return countryGroup1.0.country < countryGroup2.0.country
-            }
-        })
+        NotificationCenter.default.post(name: self.contentSwitch, object: nil)
     }
     
     @objc private func vpnConnectionChanged() {
-        if propertiesManager.serverTypeToggle != state.serverType {
+        if secureCoreState != propertiesManager.secureCoreToggle {
+            secureCoreState = propertiesManager.secureCoreToggle
             updateSecureCoreState()
         }
-    }
-    
-    @objc private func resetCurrentState() {
-        let removedRows: IndexSet
-        let insertedRows: IndexSet
-        let newState: ModelState
-        let content: [CountryGroup]
-        let expanded: Set<String>
         
-        let oldUserTier = userTier
-        do {
-            userTier = try vpnGateway.userTier()
-        
-            vpnConnectionChanged()
-            
-            switch state {
-            case .standard(let c, let e):
-                content = c
-                expanded = e
-                newState = ModelState.standard(orderedCountries(serverManager.grouping(for: .standard)), expanded)
-            case .secureCore(let c, let e):
-                content = c
-                expanded = e
-                newState = ModelState.secureCore(orderedCountries(serverManager.grouping(for: .secureCore)), expanded)
-            }
-            
-            if oldUserTier == userTier && content.elementsEqual(newState.currentContent, by: { (group1, group2) -> Bool in
-                return group1.0 == group2.0 && group1.1.elementsEqual(group2.1, by: { (server1, server2) -> Bool in
-                    return server1.name == server2.name &&
-                           server1.underMaintenance == server2.underMaintenance &&
-                           server1.isFree == server2.isFree &&
-                           server1.ips[0].exitIp == server2.ips[0].exitIp
-                })
-            }) {
-                removedRows = IndexSet()
-                insertedRows = IndexSet()
-            } else {
-                removedRows = IndexSet(integersIn: 0..<totalRowCount(ofContent: content, expanded: expanded))
-                insertedRows = IndexSet(integersIn: 0..<totalRowCount(ofContent: newState.currentContent, expanded: newState.currentlyExpanded))
-            }
-            
-            state = newState
-            
-            let contentChange = ContentChange(insertedRows: insertedRows, removedRows: removedRows)
-            contentChanged?(contentChange)
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-        }
-    }
-    
-    private func fetchElement(from content: [CountryGroup], expanded: Set<String>, row: Int) -> FetchResult? {
-        var count = 0
-        for group in content {
-            let isExpanded = expanded.contains(group.0.countryCode)
-            if row == count {
-                return .country(group.0, isExpanded)
-            } else if isExpanded {
-                let oldCount = count
-                count += group.1.count
-                if row <= count {
-                    return .server(group.1[row - oldCount - 1])
-                }
-            }
-            count += 1
-        }
-        return nil
-    }
-    
-    private func rowCount(of countryCode: String, in content: [CountryGroup]) -> Int {
-        for group in content where group.0.countryCode == countryCode {
-            return group.1.count
-        }
-        return 0
-    }
-    
-    private func rowCountBefore(countryCode: String, inContent content: [CountryGroup], expanded: Set<String>) -> Int {
-        var count = 0
-        for group in content {
-            if group.0.countryCode == countryCode {
-                break
-            }
-            count += 1
-            if expanded.contains(group.0.countryCode) {
-                count += group.1.count
-            }
-        }
-        return count
-    }
-    
-    private func totalRowCount(ofContent content: [CountryGroup], expanded: Set<String>) -> Int {
-        var count = content.count
-        content.filter { expanded.contains($0.0.countryCode) }.forEach { count += $0.1.count }
-        return count
-    }
-    
-    private func presentDisconnectOnStateToggleWarning() {
-        let confirmationClosure: () -> Void = { [weak self] in
-            self?.vpnGateway.disconnect()
-            self?.toggleState()
+        if case .disconnected = appStateManager.state {
+            guard let currentServer = self.connectedServer else { return }
+            reloadData([currentServer])
+            self.connectedServer = nil
+            return
         }
         
-        let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: LocalizedString.vpnConnectionActive,
-                                              description: LocalizedString.viewToggleWillCauseDisconnect,
-                                              onConfirm: confirmationClosure)
-        disconnectWarning?(viewModel)
+        if case .connected = appStateManager.state {
+            guard let newServer = appStateManager.activeConnection()?.server, newServer.id != connectedServer?.id else { return }
+            var servers = [newServer]
+            if let oldServer = connectedServer { servers.append(oldServer) }
+            reloadData(servers)
+            connectedServer = newServer
+            return
+        }
+    }
+
+    private func reloadData( _ servers: [ServerModel] ) {
+        let indexes: [Int] = data.enumerated().compactMap { offset, data in
+            switch data {
+            case .country(let countryVM):
+                return servers.first(where: { $0.countryCode == countryVM.countryCode }) != nil ? offset : nil
+            case .server(let serverVM):
+                return servers.first(where: { $0.id == serverVM.serverModel.id }) != nil ? offset : nil
+            default:
+                return nil
+            }
+        }
+        self.contentChanged?(ContentChange(reload: IndexSet(indexes)))
+    }
+    
+    private var totalRowCount: Int {
+        return data.count
+    }
+    
+    private func updateState( _ filter: String? ) {
+        let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
+        var countries = serverManager.grouping(for: serverType)
+        if let query = filter, !query.isEmpty {
+            countries = countries.filter { $0.0.matches(searchQuery: query) }
+        }
+        self.countries = countries
+        data = groupServersIntoSections(countries, serverType: serverType)
+    }
+    
+    private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {
+        let servers = countryGroup.1
+        let country = countryGroup.0
+        
+        let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
+        let basicServers: [CellModel] = servers.filter { $0.tier == 1 }.map { .server(self.serverViewModel($0)) }
+        let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
+        let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
+        let basicHeaderVM = ServerHeaderViewModel(LocalizedString.basicServers, totalServers: basicServers.count, country: country, tier: 1, propertiesManager: propertiesManager, countriesViewModel: self)
+        let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
+        
+        var cells = [CellModel]()
+        
+        let addFree = {
+            if freeServers.isEmpty { return }
+            cells.append(.header(freeHeaderVM))
+            cells.append(contentsOf: freeServers)
+        }
+        
+        let addBasic = {
+            if basicServers.isEmpty { return }
+            cells.append(.header(basicHeaderVM))
+            cells.append(contentsOf: basicServers)
+        }
+        
+        let addPlus = {
+            if plusServers.isEmpty { return }
+            cells.append(.header(plusHeaderVM))
+            cells.append(contentsOf: plusServers)
+        }
+        
+        switch userTier {
+        case 0:
+            addFree()
+            addBasic()
+            addPlus()
+        case 1:
+            addBasic()
+            addPlus()
+            addFree()
+        default:
+            addPlus()
+            addBasic()
+            addFree()
+        }
+        
+        data.insert(contentsOf: cells, at: index)
+        return cells.count
+    }
+    
+    private func removeServers( _ index: Int, servers: [ServerModel] ) -> Int {
+        guard let secondIndex = data[(index + 1)...].firstIndex(where: {
+            if case .country = $0 { return true }
+            if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
+            return false
+        }) else { return 0 }
+        
+        let range = (index + 1 ..< secondIndex)
+        data.removeSubrange(range)
+        return range.count
+    }
+    
+    private func groupServersIntoSections(_ countries: [CountryGroup], serverType: ServerType ) -> [CellModel] {
+        if userTier > 1 {
+            // PLUS VISIONARY
+            let headerVM = CountryHeaderViewModel(LocalizedString.locationsAll, totalCountries: countries.count, isPremium: true, countriesViewModel: self)
+            return [ .header(headerVM) ] + countries.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, displaySeparator: index != 0))
+            }
+        }
+        
+        if userTier == 1 {
+            // BASIC
+            let basicLocations = countries.filter { $0.0.lowestTier < 2 }.sorted { $0.0.lowestTier > $1.0.lowestTier }
+            let plusLocations = countries.filter { $0.0.lowestTier > 1 }
+            let headerBasicVM = CountryHeaderViewModel(LocalizedString.locationsBasic, totalCountries: basicLocations.count, isPremium: false, countriesViewModel: self)
+            let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
+            
+            return [ .header(headerBasicVM) ] + basicLocations.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, displaySeparator: index != 0))
+            } + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
+                return .country(self.countryViewModel(country, displaySeparator: index != 0))
+            }
+        }
+        
+        // FREE
+
+        let freeLocations = countries.filter { $0.0.lowestTier == 0 }
+        let basicPlusLocations = countries.filter { $0.0.lowestTier != 0 }
+        let headerFreeVM = CountryHeaderViewModel(LocalizedString.locationsFree, totalCountries: freeLocations.count, isPremium: false, countriesViewModel: self)
+        let headerBasicPlusVM = CountryHeaderViewModel(LocalizedString.locationsBasicPlus, totalCountries: basicPlusLocations.count, isPremium: true, countriesViewModel: self)
+
+        return [ .header(headerFreeVM) ] + freeLocations.enumerated().map { index, country -> CellModel in
+            return .country(self.countryViewModel(country, displaySeparator: index != 0))
+        } + [ .header(headerBasicPlusVM) ] + basicPlusLocations.enumerated().map { index, country -> CellModel in
+            return .country(self.countryViewModel(country, displaySeparator: index != 0))
+        }
+    }
+    
+    private func countryViewModel( _ country: CountryGroup, displaySeparator: Bool ) -> CountryItemViewModel {
+        return CountryItemViewModel(
+                            country: country, vpnGateway: self.vpnGateway,
+                            appStateManager: self.appStateManager, countriesSectionViewModel: self,
+                            propertiesManager: self.propertiesManager, userTier: self.userTier, isOpened: false,
+                            displaySeparator: displaySeparator)
+    }
+    
+    private func serverViewModel( _ server: ServerModel ) -> ServerItemViewModel {
+        return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
+                                   propertiesManager: propertiesManager, countriesSectionViewModel: self, requiresUpgrade: userTier < server.tier)
     }
     
     @objc func updateSettings() {

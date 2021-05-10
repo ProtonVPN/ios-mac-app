@@ -48,9 +48,9 @@ class LoadCircle: NSView {
         let loadPortion = load > 15 ? load : 15
         let endAngle: CGFloat = (CGFloat(loadPortion) / 100) * (-2 * .pi) + .pi / 2
         context.setLineWidth(2.0)
-        if load < 50 {
+        if load < 76 {
             context.setStrokeColor(NSColor.loadGreen().cgColor)
-        } else if load < 90 {
+        } else if load < 91 {
             context.setStrokeColor(NSColor.loadYellow().cgColor)
         } else {
             context.setStrokeColor(NSColor.loadRed().cgColor)

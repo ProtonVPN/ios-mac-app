@@ -23,159 +23,75 @@
 import Cocoa
 import vpncore
 
-enum CellState: Int {
-    case normal
-    case expanded
-    
-    var opposite: CellState {
-        switch self {
-        case .normal:
-            return .expanded
-        case .expanded:
-            return .normal
-        }
-    }
-}
-
 class CountryItemViewModel {
     
-    fileprivate let countryModel: CountryModel
+    let countryModel: CountryModel
+    private let countryGroup: CountryGroup
     fileprivate let vpnGateway: VpnGatewayProtocol
     fileprivate let appStateManager: AppStateManager
+    fileprivate let propertiesManager: PropertiesManagerProtocol
+    
     private let countriesSectionViewModel: CountriesSectionViewModel
-    
-    let enabled: Bool
-    var cellStateChanged: ((CellState) -> Void)?
-    var connectionChanged: ((Bool) -> Void)?
-    
-    fileprivate(set) var isConnected: Bool
-    var state: CellState
-    
-    var countryCode: String {
-        return countryModel.countryCode
-    }
-    
-    var feature: ServerFeature {
-        return countryModel.feature
-    }
-    
-    var description: NSAttributedString {
-        return formDescription()
-    }
-    
-    var keywordImage: NSImage? {
-        if countryModel.feature.contains(.tor) {
-            return #imageLiteral(resourceName: "protonvpn-server-tor-list")
-        } else if countryModel.feature.contains(.p2p) {
-            return #imageLiteral(resourceName: "protonvpn-server-p2p-list")
-        } else {
-            return nil
-        }
-    }
-    
-    var keywordTooltip: String? {
-        if countryModel.feature.contains(.tor) {
-            return LocalizedString.torDescription
-        } else if countryModel.feature.contains(.p2p) {
-            return LocalizedString.p2pDescription
-        } else {
-            return nil
-        }
-    }
-    
-    var backgroundColor: NSColor {
-        if isConnected {
-            return NSColor.protonSelectedGrey()
-        } else {
-            return NSColor.protonGrey()
-        }
-    }
-
-    var underMaintenance: Bool {
-        return countriesSectionViewModel.isCountryUnderMaintenance(countryModel.countryCode)
-    }
-    
-    init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
-         countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
-        self.countryModel = countryModel
-        self.vpnGateway = vpnGateway
-        self.countriesSectionViewModel = countriesSectionViewModel
-        self.enabled = enabled
-        self.state = state
-        self.appStateManager = appStateManager
-        isConnected = enabled && vpnGateway.connection == .connected
-            && appStateManager.activeConnection()?.server.isSecureCore == false
-            && appStateManager.activeConnection()?.server.countryCode == countryModel.countryCode
         
-        if enabled {
-            startObserving()
-        }
+    var isSmartAvailable: Bool { false }
+    var isTorAvailable: Bool { countryModel.feature.contains(.tor) }
+    var isP2PAvailable: Bool { countryModel.feature.contains(.p2p) }
+    var isStreamingAvailable: Bool {
+        !propertiesManager.secureCoreToggle && propertiesManager.streamingServices[countryCode] != nil
+    }
+    
+    let isTierTooLow: Bool
+    let isServerUnderMaintenance: Bool
+    private(set) var isOpened: Bool
+    
+    var countryCode: String { countryModel.countryCode }
+    var secureCoreEnabled: Bool { propertiesManager.secureCoreToggle }
+    var countryName: String { LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable }
+    
+    var underMaintenance: Bool {
+        return countryGroup.1.first(where: { !$0.underMaintenance }) == nil
+    }
+    
+    var alphaForMainElements: CGFloat {
+        return underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
+    }
+    
+    var isConnected: Bool {
+        guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
+        return !isTierTooLow && vpnGateway.connection == .connected
+            && connectedServer.isSecureCore == false
+            && connectedServer.countryCode == countryGroup.0.countryCode
+    }
+    
+    let displaySeparator: Bool
+    
+    init(country: CountryGroup, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
+         countriesSectionViewModel: CountriesSectionViewModel, propertiesManager: PropertiesManagerProtocol,
+         userTier: Int, isOpened: Bool, displaySeparator: Bool) {
+        
+        self.countryGroup = country
+        self.countryModel = country.0
+        self.vpnGateway = vpnGateway
+        self.propertiesManager = propertiesManager
+        self.countriesSectionViewModel = countriesSectionViewModel
+        
+        self.isTierTooLow = userTier < country.0.lowestTier
+        self.isOpened = isOpened
+        self.isServerUnderMaintenance = false
+        self.displaySeparator = displaySeparator
+        self.appStateManager = appStateManager
     }
     
     func connectAction() {
         isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(country: countryCode, ofType: .standard)
     }
     
+    func upgradeAction() {
+        countriesSectionViewModel.displayUpgradeMessage(nil)
+    }
+    
     func changeCellState() {
-        state = state.opposite
-        countriesSectionViewModel.toggleCell(forCountryCode: countryCode)
-        cellStateChanged?(state)
-    }
-    
-    // MARK: - Private functions
-    fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    fileprivate func formDescription() -> NSAttributedString {
-        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        return country.attributed(withColor: underMaintenance ? NSColor.protonGreyOutOfFocus() : NSColor.protonWhite(), fontSize: 16, alignment: .left)
-    }
-    
-    @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged {
-            if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server,
-                activeServer.countryCode == countryCode {
-                isConnected = true
-            } else {
-                isConnected = false
-            }
-            connectionChanged(isConnected)
-        }
-    }
-}
-
-// MARK: - SecureCoreCountryItemViewModel subclass
-class SecureCoreCountryItemViewModel: CountryItemViewModel {
-    
-    override init(countryModel: CountryModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
-                  countriesSectionViewModel: CountriesSectionViewModel, enabled: Bool, state: CellState) {
-        super.init(countryModel: countryModel, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                   countriesSectionViewModel: countriesSectionViewModel, enabled: enabled, state: state)
-        
-        isConnected = enabled && vpnGateway.connection == .connected
-            && appStateManager.activeConnection()?.server.isSecureCore == true
-            && appStateManager.activeConnection()?.server.countryCode == countryModel.countryCode
-    }
-    
-    override fileprivate func formDescription() -> NSAttributedString {
-        let arrows = NSAttributedString.imageAttachment(named: "double-arrow-right-green", width: 10, height: 10, colored: underMaintenance ? NSColor.protonGreyOutOfFocus() : nil)!
-        let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        let attributedCountry = ("  " + country).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        return NSAttributedString.concatenate(arrows, attributedCountry)
-    }
-    
-    override fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    override func connectAction() {
-        isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(country: countryCode, ofType: .secureCore)
+        countriesSectionViewModel.toggleCell(for: countryCode)
+        isOpened = !isOpened
     }
 }

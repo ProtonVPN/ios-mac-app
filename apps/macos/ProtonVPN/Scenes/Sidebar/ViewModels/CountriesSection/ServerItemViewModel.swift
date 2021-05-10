@@ -25,194 +25,82 @@ import vpncore
 
 class ServerItemViewModel {
     
-    fileprivate let vpnGateway: VpnGatewayProtocol
-    fileprivate let appStateManager: AppStateManager
+    private let propertiesManager: PropertiesManagerProtocol
+    private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
+    
     private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
     
     let serverModel: ServerModel
     
-    let requiresUpgrade: Bool
-    let underMaintenance: Bool
+    var isSmartAvailable: Bool { false }
+    var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
+    var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
+    var isStreamingAvailable: Bool {
+        if serverModel.isSecureCore { return false }
+        let tier = String(serverModel.tier)
+        return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
+    }
     
-    private(set) var isConnected: Bool = false
-    fileprivate(set) var isCountryConnected: Bool = false
-    var connectionChanged: ((Bool) -> Void)?
+    let requiresUpgrade: Bool
     
     fileprivate var canConnect: Bool {
         return !requiresUpgrade && !underMaintenance
     }
     
-    var enabled: Bool {
-        return !underMaintenance
+    var alphaForMainElements: CGFloat {
+        return underMaintenance ? 0.5 : ( requiresUpgrade ? 0.75 : 1 )
+    }
+    
+    var underMaintenance: Bool {
+        return serverModel.underMaintenance
     }
     
     var load: Int {
         return serverModel.load
     }
     
-    var description: NSAttributedString {
-        return serverModel.name.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+    var isSecureCoreEnabled: Bool {
+        return serverModel.isSecureCore
     }
     
-    var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
-    }
-    
-    var hasKeyword: Bool {
-        return serverModel.feature.rawValue > 1
-    }
-    
-    var keywordIcons: [(NSImage, String)] {
-        var icons = [(NSImage, String)]()
-        
-        if serverModel.tier >= 2 {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-premium-list"), LocalizedString.premiumDescription))
+    var serverName: String {
+        guard serverModel.isSecureCore else {
+            return serverModel.name
         }
-        if serverModel.feature.contains(.tor) {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-tor-list"), LocalizedString.torDescription))
-        }
-        if serverModel.feature.contains(.p2p) {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-p2p-list"), LocalizedString.p2pDescription))
-        }
-        
-        return icons
+        return LocalizedString.via + " " + serverModel.entryCountry
     }
     
-    var backgroundColor: NSColor {
-        if isCountryConnected {
-            return NSColor.protonSelectedGrey()
-        } else {
-            return NSColor.protonGrey()
-        }
+    var cityName: String {
+        if underMaintenance { return LocalizedString.maintenance }
+        return serverModel.city ?? ""
     }
     
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
-         countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
+    var entryCountry: String? {
+        guard serverModel.isSecureCore else { return nil }
+        return serverModel.entryCountryCode
+    }
+    
+    var isConnected: Bool {
+        guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
+        return !requiresUpgrade && vpnGateway.connection == .connected
+            && connectedServer.id == serverModel.id
+    }
+
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol, countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
+        self.propertiesManager = propertiesManager
         self.serverModel = serverModel
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.countriesSectionViewModel = countriesSectionViewModel
         self.requiresUpgrade = requiresUpgrade
-        self.underMaintenance = serverModel.underMaintenance
-        isConnected = canConnect && vpnGateway.connection == .connected
-            && appStateManager.activeConnection()?.server.id == serverModel.id
-        isCountryConnected = vpnGateway.connection == .connected
-            && appStateManager.activeConnection()?.server.isSecureCore == false
-            && appStateManager.activeConnection()?.server.countryCode == serverModel.countryCode
-        
-        if canConnect {
-            startObserving()
-        }
     }
     
-    func isParentExpanded() -> Bool {
-        return countriesSectionViewModel.isCountryExpanded(serverModel.countryCode)
+    func upgradeAction() {
+        countriesSectionViewModel.displayUpgradeMessage(serverModel)
     }
     
     func connectAction() {
         isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(server: serverModel)
-    }
-    
-    // MARK: - Private functions
-    fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    private func formSecondaryDescription() -> NSAttributedString {
-        let description: String
-        var bold = true
-        if requiresUpgrade {
-            description = LocalizedString.upgrade
-        } else if underMaintenance {
-            description = LocalizedString.maintenance
-        } else {
-            bold = false
-            description = (serverModel.isFree ? "" : (serverModel.city ?? ""))
-        }
-        
-        return description.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: bold, alignment: .right)
-    }
-    
-    @objc fileprivate func stateChanged() {
-        if let connectionChanged = connectionChanged {
-            if vpnGateway.connection == .connected, let activeServer = appStateManager.activeConnection()?.server {
-                isConnected = activeServer.id == serverModel.id
-                isCountryConnected = activeServer.countryCode == serverModel.countryCode
-            } else {
-                isConnected = false
-                isCountryConnected = false
-            }
-            connectionChanged(isConnected)
-        }
-    }
-}
-
-// MARK: - SecureCoreServerItemViewModel subclass
-class SecureCoreServerItemViewModel: ServerItemViewModel {
-    
-    private var color: NSColor {
-        return canConnect ? .protonWhite() : .protonGreyOutOfFocus()
-    }
-    
-    var via: NSAttributedString {
-        return "via".attributed(withColor: color, fontSize: 16, alignment: .left)
-    }
-    
-    var countryCode: String {
-        return serverModel.isSecureCore ? serverModel.entryCountryCode : ""
-    }
-    
-    override var description: NSAttributedString {
-        return formDescription()
-    }
-    
-    var fullDescription: String {
-        return String(format: "%@ %@ %@", serverModel.country, description.string, secondaryDescription.string)
-    }	
-    
-    override var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
-    }
-    
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager,
-                  countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                   countriesSectionViewModel: countriesSectionViewModel, requiresUpgrade: requiresUpgrade)
-        
-        isCountryConnected = vpnGateway.connection == .connected
-            && appStateManager.activeConnection()?.server.hasSecureCore == true
-            && appStateManager.activeConnection()?.server.countryCode == serverModel.countryCode
-    }
-    
-    override fileprivate func startObserving() {
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    private func formDescription() -> NSAttributedString {
-        if !serverModel.isSecureCore {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        }
-        let country: NSAttributedString
-        country = String(format: LocalizedString.viaCountry, serverModel.entryCountry).attributed(withColor: color, fontSize: 16, alignment: .left)
-        return country
-    }
-    
-    private func formSecondaryDescription() -> NSAttributedString {
-        let description: String
-        if underMaintenance {
-            description = LocalizedString.maintenance
-        } else if requiresUpgrade {
-            description = LocalizedString.upgrade
-        } else {
-            description = ""
-        }
-        
-        return description.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
     }
 }

@@ -1,6 +1,6 @@
 //
-//  ExpandCellButton.swift
-//  ProtonVPN - Created on 27.06.19.
+//  CountriesSectionHeaderView.swift
+//  ProtonVPN - Created on 27.04.21.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -22,28 +22,21 @@
 
 import Cocoa
 
-class ExpandCellButton: HoverDetectionButton {
-    
-    var cellExpanded: Bool = false {
-        didSet {
-            needsDisplay = true
-        }
-    }
+class CountriesSectionHeaderView: NSView {
 
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configureButton()
+    @IBOutlet private weak var titleLbl: NSTextField!
+    @IBOutlet private weak var informationBtn: NSButton!
+    
+    @IBAction private func didTapInformationBtn(_ sender: Any) {
+        viewModel?.didTapInfoBtn?()
     }
     
-    override func viewWillDraw() {
-        super.viewWillDraw()
-        configureButton()
-    }
-        
-    private func configureButton() {
-        wantsLayer = true
-        contentTintColor = .white
-        layer?.backgroundColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGrey().cgColor
-        layer?.borderColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGreyOutOfFocus().cgColor
+    var viewModel: CountriesServersHeaderViewModelProtocol? {
+        didSet {
+            wantsLayer = true
+            titleLbl.stringValue = viewModel?.title ?? ""
+            layer?.backgroundColor = viewModel?.backgroundColor ?? .clear
+            informationBtn.isHidden = viewModel?.didTapInfoBtn == nil
+        }
     }
 }

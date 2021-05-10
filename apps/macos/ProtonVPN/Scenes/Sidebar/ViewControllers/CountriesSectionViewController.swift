@@ -25,10 +25,18 @@ import vpncore
 
 class CountriesSectionViewController: NSViewController {
 
-    fileprivate struct CellIdentifier {
-        static let country = "Country"
-        static let server = "Server"
-        static let secureCoreServer = "SecureCoreServer"
+    fileprivate enum Cell: String {
+        case country = "CountryItemCellView"
+        case server = "ServerItemCellView"
+        case header = "CountriesSectionHeaderView"
+        
+        var identifier: NSUserInterfaceItemIdentifier {
+            return NSUserInterfaceItemIdentifier(self.rawValue)
+        }
+        
+        var nib: NSNib? {
+            return NSNib(nibNamed: NSNib.Name(self.rawValue), bundle: nil)
+        }
     }
     
     enum QuickSettingType {
@@ -121,9 +129,9 @@ class CountriesSectionViewController: NSViewController {
         serverListTableView.selectionHighlightStyle = .none
         serverListTableView.intercellSpacing = NSSize(width: 0, height: 0)
         serverListTableView.backgroundColor = .protonGrey()
-        serverListTableView.register(NSNib(nibNamed: NSNib.Name("CountryItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country))
-        serverListTableView.register(NSNib(nibNamed: NSNib.Name("ServerItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.server))
-        serverListTableView.register(NSNib(nibNamed: NSNib.Name("SecureCoreServerItem"), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.secureCoreServer))
+        serverListTableView.register(Cell.country.nib, forIdentifier: Cell.country.identifier)
+        serverListTableView.register(Cell.server.nib, forIdentifier: Cell.server.identifier)
+        serverListTableView.register(Cell.header.nib, forIdentifier: Cell.header.identifier)
         
         serverListScrollView.backgroundColor = .protonGrey()
         shadowView.shadow(for: serverListScrollView.contentView.bounds.origin.y)
@@ -131,6 +139,8 @@ class CountriesSectionViewController: NSViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
         viewModel.contentChanged = { [unowned self] change in self.contentChanged(change) }
+        viewModel.displayPremiumServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: FeaturesOverlayViewModel())) }
+        viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
     }
     
     private func setupQuickSettings() {
@@ -220,41 +230,18 @@ class CountriesSectionViewController: NSViewController {
 
         serverListTableView.reloadData()
     }
-    
-    // swiftlint:disable cyclomatic_complexity
+
     private func contentChanged(_ contentChange: ContentChange) {
-        // Update content of currently visible rows
-        serverListTableView.enumerateAvailableRowViews { (rowView, row) in
-            if let cellWrapper = viewModel.cellModel(forRow: row) {
-                switch cellWrapper {
-                case .server(let model):
-                    if let serverView = rowView.subviews[0] as? ServerItemView {
-                        serverView.updateView(withModel: model)
-                        serverView.showServerInfo = { [weak self] in
-                            guard let `self` = self else { return }
-                            self.showInfo(for: row, and: serverView, with: model.serverModel)
-                        }
-                        if let infoButtonRow = infoButtonRowSelected, infoButtonRow == row, let serverInfoViewController = serverInfoViewController {
-                            serverInfoViewController.updateView(with: ServerInfoViewModel(server: model.serverModel))
-                        }
-                    }
-                case .secureCoreServer(let model):
-                    if let serverView = rowView.subviews[0] as? SecureCoreServerItemView {
-                        serverView.updateView(withModel: model)
-                        serverView.showServerInfo = { [weak self] in
-                            guard let `self` = self else { return }
-                            self.showInfo(for: row, and: serverView, with: model.serverModel)
-                        }
-                        if let infoButtonRow = infoButtonRowSelected, infoButtonRow == row, let serverInfoViewController = serverInfoViewController {
-                            serverInfoViewController.updateView(with: ServerInfoViewModel(server: model.serverModel))
-                        }
-                    }
-                default:
-                    break
-                }
-            }
+        
+        if contentChange.reset {
+            serverListTableView.reloadData()
+            return
         }
-        // swiftlint:enable cyclomatic_complexity
+        
+        if let indexes = contentChange.reload {
+            serverListTableView.reloadData(forRowIndexes: indexes, columnIndexes: IndexSet([0]))
+            return
+        }
         
         let shouldAnimate = contentChange.insertedRows == nil || contentChange.removedRows == nil
         
@@ -267,11 +254,8 @@ class CountriesSectionViewController: NSViewController {
             serverListTableView.insertRows(at: insertedRows, withAnimation: shouldAnimate ? [NSTableView.AnimationOptions.slideDown] : [])
         }
         serverListTableView.endUpdates()
-        
-        if contentChange.reset {
-            serverListTableView.scrollRowToVisible(0)
-        }
     }
+
 }
 
 extension CountriesSectionViewController: NSTableViewDataSource {
@@ -283,7 +267,14 @@ extension CountriesSectionViewController: NSTableViewDataSource {
 extension CountriesSectionViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return viewModel.cellHeight
+        switch viewModel.cellModel(forRow: row) {
+        case .country:
+            return 48
+        case .header:
+            return 36
+        default:
+            return 40
+        }
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
@@ -294,13 +285,12 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         
         switch cellWrapper {
         case .country(let model):
-            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
+            let cell = tableView.makeView(withIdentifier: Cell.country.identifier, owner: self) as! CountryItemCellView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
-            cell.hideSeparator = row == 0
             return cell
         case .server(let model):
-            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.server), owner: self) as! ServerItemView
+            let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
             cell.showServerInfo = { [weak self] in
@@ -308,20 +298,9 @@ extension CountriesSectionViewController: NSTableViewDelegate {
                 self.showInfo(for: row, and: cell, with: model.serverModel)
             }
             return cell
-        case .secureCoreCountry(let model):
-            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.country), owner: self) as! CountryItemView
-            cell.disabled = quickSettingDetailDisplayed
-            cell.updateView(withModel: model)
-            cell.hideSeparator = row == 0
-            return cell
-        case .secureCoreServer(let model):
-            let cell = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: CellIdentifier.secureCoreServer), owner: self) as! SecureCoreServerItemView
-            cell.disabled = quickSettingDetailDisplayed
-            cell.updateView(withModel: model)
-            cell.showServerInfo = { [weak self] in
-                guard let `self` = self else { return }
-                self.showInfo(for: row, and: cell, with: model.serverModel)
-            }
+        case .header(let model):
+            let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
+            cell.viewModel = model
             return cell
         }
     }

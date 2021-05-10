@@ -1,6 +1,6 @@
 //
-//  ExpandCellButton.swift
-//  ProtonVPN - Created on 27.06.19.
+//  FeatureRowView.swift
+//  ProtonVPN - Created on 22.04.21.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -21,29 +21,25 @@
 //
 
 import Cocoa
+import vpncore
 
-class ExpandCellButton: HoverDetectionButton {
+class FeatureRowView: NSView {
     
-    var cellExpanded: Bool = false {
+    @IBOutlet private weak var iconIV: NSImageView!
+    @IBOutlet private weak var titleLbl: NSTextField!
+    @IBOutlet private weak var descriptionLbl: NSTextField!
+    @IBOutlet private weak var learnMoreBtn: NSButton!
+    
+    var viewModel: FeatureCellViewModel! {
         didSet {
-            needsDisplay = true
+            titleLbl.stringValue = viewModel.title
+            iconIV.image = NSImage(named: viewModel.icon)
+            descriptionLbl.stringValue = viewModel.description
+            learnMoreBtn.title = LocalizedString.learnMore
         }
     }
-
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        configureButton()
-    }
     
-    override func viewWillDraw() {
-        super.viewWillDraw()
-        configureButton()
-    }
-        
-    private func configureButton() {
-        wantsLayer = true
-        contentTintColor = .white
-        layer?.backgroundColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGrey().cgColor
-        layer?.borderColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGreyOutOfFocus().cgColor
+    @IBAction private func didTapLearnMoreBtn(_ sender: Any) {
+        SafariService.openLink(url: viewModel.urlContact)
     }
 }
