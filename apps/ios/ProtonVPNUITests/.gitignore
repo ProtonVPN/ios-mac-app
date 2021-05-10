@@ -1,0 +1,2 @@
+# Removed to not commit actual credentials to git. Please copy `credentials.example.plist`  as `credentials.plist` file and enter working credentials for tests to run.
+credentials.plist
