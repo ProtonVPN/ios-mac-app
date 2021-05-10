@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17156" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17156"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AnnouncementsViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="backgroundView" destination="Meb-g6-3he" id="Cb4-RF-pbS"/>
+                <outlet property="scrollView" destination="xeU-8A-xWj" id="9I0-vW-FFr"/>
+                <outlet property="scrollViewHeightConstraint" destination="saa-rY-TMq" id="DbV-ey-yFO"/>
+                <outlet property="triangleImageView" destination="8Pp-d4-fyW" id="9fL-6T-lCh"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="61"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="8Pp-d4-fyW">
+                    <rect key="frame" x="439" y="49" width="23" height="12"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="12" id="25n-zu-qib"/>
+                        <constraint firstAttribute="width" constant="23" id="Dui-zt-ND5"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="triangle" id="rIu-pp-3Zj"/>
+                </imageView>
+                <customView focusRingType="none" translatesAutoresizingMaskIntoConstraints="NO" id="Meb-g6-3he">
+                    <rect key="frame" x="0.0" y="0.0" width="480" height="50"/>
+                    <subviews>
+                        <scrollView verticalCompressionResistancePriority="752" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" verticalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="xeU-8A-xWj">
+                            <rect key="frame" x="0.0" y="0.0" width="480" height="50"/>
+                            <clipView key="contentView" id="XaK-Ln-1Kf">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="50"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <subviews>
+                                    <view id="x3i-jc-2Lt">
+                                        <rect key="frame" x="0.0" y="0.0" width="480" height="50"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                </subviews>
+                                <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                            </clipView>
+                            <constraints>
+                                <constraint firstAttribute="height" priority="250" constant="40" id="saa-rY-TMq"/>
+                            </constraints>
+                            <edgeInsets key="contentInsets" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                            <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="Cd3-LV-4Oe">
+                                <rect key="frame" x="-100" y="-100" width="478" height="16"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                            <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="lhx-my-CdM">
+                                <rect key="frame" x="464" y="0.0" width="16" height="40"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                            </scroller>
+                        </scrollView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="xeU-8A-xWj" firstAttribute="leading" secondItem="Meb-g6-3he" secondAttribute="leading" id="E1g-L1-X9j"/>
+                        <constraint firstAttribute="trailing" secondItem="xeU-8A-xWj" secondAttribute="trailing" id="SIb-8L-iQt"/>
+                        <constraint firstItem="xeU-8A-xWj" firstAttribute="top" secondItem="Meb-g6-3he" secondAttribute="top" id="rDT-IO-K4F"/>
+                        <constraint firstAttribute="bottom" secondItem="xeU-8A-xWj" secondAttribute="bottom" id="tGs-dQ-fDO"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="Meb-g6-3he" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="2Ea-CK-mvE"/>
+                <constraint firstAttribute="trailing" secondItem="8Pp-d4-fyW" secondAttribute="trailing" constant="18" id="EWn-rB-JC7"/>
+                <constraint firstAttribute="bottom" secondItem="Meb-g6-3he" secondAttribute="bottom" id="eED-0J-ayN"/>
+                <constraint firstAttribute="trailing" secondItem="Meb-g6-3he" secondAttribute="trailing" id="iS4-xp-jhX"/>
+                <constraint firstItem="Meb-g6-3he" firstAttribute="top" secondItem="8Pp-d4-fyW" secondAttribute="bottom" constant="-1" id="jG2-2J-dAe"/>
+                <constraint firstItem="8Pp-d4-fyW" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="wFb-7H-nly"/>
+            </constraints>
+            <point key="canvasLocation" x="-213" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="triangle" width="23" height="12"/>
+    </resources>
+</document>

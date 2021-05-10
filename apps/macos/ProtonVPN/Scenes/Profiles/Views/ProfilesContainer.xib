@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ProfilesContainerViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="activeControllerViewContainer" destination="uO1-NW-xF6" id="FQp-AO-KKW"/>
+                <outlet property="profilesTabBarControllerViewContainer" destination="VN1-h9-N9z" id="M66-Ky-zRH"/>
+                <outlet property="view" destination="c22-O7-iKe" id="VmK-sx-RVG"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="900" height="500"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="uO1-NW-xF6">
+                    <rect key="frame" x="0.0" y="0.0" width="900" height="375"/>
+                </customView>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="VN1-h9-N9z">
+                    <rect key="frame" x="0.0" y="375" width="900" height="125"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="125" id="ytF-p0-hg8"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="uO1-NW-xF6" secondAttribute="trailing" id="1aJ-mm-aoX"/>
+                <constraint firstAttribute="bottom" secondItem="uO1-NW-xF6" secondAttribute="bottom" id="6wV-xh-X2e"/>
+                <constraint firstItem="uO1-NW-xF6" firstAttribute="top" secondItem="VN1-h9-N9z" secondAttribute="bottom" id="7Bf-Hl-85h"/>
+                <constraint firstItem="VN1-h9-N9z" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="Hqb-3f-W6d"/>
+                <constraint firstItem="uO1-NW-xF6" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="NrB-2B-PPU"/>
+                <constraint firstAttribute="trailing" secondItem="VN1-h9-N9z" secondAttribute="trailing" id="Q8E-0e-asW"/>
+                <constraint firstItem="VN1-h9-N9z" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="zGo-Ov-IQM"/>
+            </constraints>
+        </customView>
+    </objects>
+</document>

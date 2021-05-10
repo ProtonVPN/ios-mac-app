@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14113" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14113"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <collectionViewItem id="09f-hd-fl7" customClass="StatusMenuCountryViewItem" customModule="ProtonVPN" customModuleProvider="target">
+            <customView key="view" id="Hz6-mo-xeY">
+                <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                <subviews>
+                    <button translatesAutoresizingMaskIntoConstraints="NO" id="yry-hW-0ci" customClass="StatusMenuItemBackground" customModule="ProtonVPN" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="0.0" width="450" height="300"/>
+                        <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="KJ4-nG-bLs">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="selected:" target="09f-hd-fl7" id="Lea-s8-JeO"/>
+                        </connections>
+                    </button>
+                    <customView translatesAutoresizingMaskIntoConstraints="NO" id="X8L-TT-qxA" customClass="PassThroughView" customModule="ProtonVPN" customModuleProvider="target">
+                        <rect key="frame" x="0.0" y="127" width="450" height="46"/>
+                        <subviews>
+                            <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jxc-Q6-3cp" customClass="PassThroughImageView" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="205" y="16" width="42" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="42" id="FqT-R5-ECR"/>
+                                    <constraint firstAttribute="height" constant="30" id="VsE-hd-k6w"/>
+                                </constraints>
+                                <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="bqe-40-qw5"/>
+                            </imageView>
+                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="iA0-kL-8cn" customClass="PassThroughTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="210" y="0.0" width="32" height="14"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="14" id="ntz-gN-Dv0"/>
+                                </constraints>
+                                <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" refusesFirstResponder="YES" sendsActionOnEndEditing="YES" title="Code" id="t5d-Au-rle">
+                                    <font key="font" metaFont="smallSystem"/>
+                                    <color key="textColor" red="1" green="1" blue="1" alpha="0.84999999999999998" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="iA0-kL-8cn" secondAttribute="bottom" id="4So-Kk-K9G"/>
+                            <constraint firstItem="iA0-kL-8cn" firstAttribute="centerX" secondItem="X8L-TT-qxA" secondAttribute="centerX" id="BSa-HO-Xz2"/>
+                            <constraint firstItem="Jxc-Q6-3cp" firstAttribute="top" secondItem="X8L-TT-qxA" secondAttribute="top" id="S25-sl-2Ps"/>
+                            <constraint firstItem="iA0-kL-8cn" firstAttribute="top" secondItem="Jxc-Q6-3cp" secondAttribute="bottom" constant="2" id="smV-kS-hkj"/>
+                            <constraint firstItem="Jxc-Q6-3cp" firstAttribute="centerX" secondItem="X8L-TT-qxA" secondAttribute="centerX" id="uoI-db-0Dc"/>
+                        </constraints>
+                    </customView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="bottom" secondItem="yry-hW-0ci" secondAttribute="bottom" id="6Q2-ya-9U8"/>
+                    <constraint firstItem="yry-hW-0ci" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="7Tj-Cp-ePm"/>
+                    <constraint firstAttribute="trailing" secondItem="X8L-TT-qxA" secondAttribute="trailing" id="G7D-N5-IUa"/>
+                    <constraint firstAttribute="trailing" secondItem="yry-hW-0ci" secondAttribute="trailing" id="YKD-Zp-xVr"/>
+                    <constraint firstItem="X8L-TT-qxA" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="s91-iG-LbO"/>
+                    <constraint firstItem="yry-hW-0ci" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" id="sjk-El-3ye"/>
+                    <constraint firstItem="X8L-TT-qxA" firstAttribute="centerY" secondItem="Hz6-mo-xeY" secondAttribute="centerY" id="ucu-B0-tXj"/>
+                </constraints>
+            </customView>
+            <connections>
+                <outlet property="button" destination="yry-hW-0ci" id="Pjr-dc-5tl"/>
+                <outlet property="countryCodeLabel" destination="iA0-kL-8cn" id="YOk-BT-dzf"/>
+                <outlet property="countryFlag" destination="Jxc-Q6-3cp" id="8Mf-tf-2hx"/>
+            </connections>
+        </collectionViewItem>
+    </objects>
+</document>

@@ -1,0 +1,474 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ConnectionSettingsViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="allowLANButton" destination="pKc-xg-lrk" id="Ulf-YU-LpH"/>
+                <outlet property="allowLANIcon" destination="o0S-pj-mzL" id="yBP-Dl-XmB"/>
+                <outlet property="allowLANLabel" destination="fo8-UF-TQq" id="cOi-Qr-uNO"/>
+                <outlet property="allowLANSeparator" destination="VA6-tF-8uQ" id="ZRS-H0-exr"/>
+                <outlet property="alternativeRoutingButton" destination="P1Z-S9-md6" id="cfR-1F-9eT"/>
+                <outlet property="alternativeRoutingInfoIcon" destination="sGb-Bq-JxM" id="Lus-gv-88R"/>
+                <outlet property="alternativeRoutingLabel" destination="jnb-W0-wRQ" id="wEV-9O-ZYP"/>
+                <outlet property="alternativeRoutingSeparator" destination="Kg9-Dl-JRE" id="njg-Q8-SXg"/>
+                <outlet property="autoConnectInfoIcon" destination="KvR-3z-ZQJ" id="361-W6-dfU"/>
+                <outlet property="autoConnectLabel" destination="koN-do-dR6" id="zi2-va-TKt"/>
+                <outlet property="autoConnectList" destination="kkM-EL-YsG" id="SDU-5u-YOW"/>
+                <outlet property="autoConnectSeparator" destination="JTb-Px-r8q" id="J4W-1i-veZ"/>
+                <outlet property="dnsLeakProtectionButton" destination="KlO-7n-dB1" id="8K4-fq-9GL"/>
+                <outlet property="dnsLeakProtectionInfoIcon" destination="Zmq-AW-D49" id="rVj-Pu-pGJ"/>
+                <outlet property="dnsLeakProtectionLabel" destination="QNa-CH-077" id="GCw-EY-YdT"/>
+                <outlet property="dnsLeakProtectionSeparator" destination="M35-Jw-Qju" id="vQC-xY-LZf"/>
+                <outlet property="protocolInfoIcon" destination="aLO-su-KqV" id="EEq-Bk-eMD"/>
+                <outlet property="protocolLabel" destination="VyN-C7-RJs" id="KJ3-Cf-3vO"/>
+                <outlet property="protocolList" destination="QNh-jH-qdA" id="7vD-WP-F1O"/>
+                <outlet property="protocolSeparator" destination="hhN-6A-ZEd" id="hNf-00-MeN"/>
+                <outlet property="protocolView" destination="MAN-k2-pDp" id="4Ml-hz-coW"/>
+                <outlet property="quickConnectInfoIcon" destination="ZTJ-dJ-CnK" id="lfF-Lf-il9"/>
+                <outlet property="quickConnectLabel" destination="oot-M1-Qpj" id="rxz-fv-rpY"/>
+                <outlet property="quickConnectList" destination="VNa-Jv-QSm" id="cqk-i6-6OZ"/>
+                <outlet property="quickConnectSeparator" destination="uJy-8l-bfE" id="Xex-RU-zhH"/>
+                <outlet property="smartProtocolButton" destination="E99-Iu-7Yp" id="LM1-vJ-Rmr"/>
+                <outlet property="smartProtocolInfoIncon" destination="MuB-Rl-blw" id="aFs-36-3io"/>
+                <outlet property="smartProtocolLabel" destination="g7B-Mn-ke5" id="dkf-pr-wYW"/>
+                <outlet property="smartProtocolSeparator" destination="gqe-bk-ney" id="MCN-mr-iP1"/>
+                <outlet property="view" destination="XBX-SA-q2x" id="Ukw-Ua-dco"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="XBX-SA-q2x">
+            <rect key="frame" x="0.0" y="0.0" width="500" height="365"/>
+            <subviews>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="0.0" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="6hW-yr-SCJ">
+                    <rect key="frame" x="0.0" y="-25" width="500" height="390"/>
+                    <subviews>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="ebY-r7-unO" userLabel="Auto connect">
+                            <rect key="frame" x="0.0" y="330" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="koN-do-dR6" userLabel="Auto Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="118" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Auto connect label" id="13C-XK-goH">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="JTb-Px-r8q" userLabel="Auto Connect Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="Ic3-pr-r7F">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="L5r-Y1-Wg9"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KvR-3z-ZQJ" userLabel="Auto Connect Info Icon">
+                                    <rect key="frame" x="161" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="Ta9-9N-SfF"/>
+                                        <constraint firstAttribute="width" constant="15" id="nZL-gb-ZfJ"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="kaj-Ds-u8O"/>
+                                </imageView>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="kkM-EL-YsG" userLabel="Auto Connect List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="247" y="11" width="215" height="26"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="P9T-Fy-A8w"/>
+                                        <constraint firstAttribute="width" constant="208" id="V9D-6e-W7w"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="cU2-Kb-GiS" id="X1a-l1-XBY">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="rpP-BX-LMw">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="cU2-Kb-GiS"/>
+                                                <menuItem title="Item 2" id="SMq-XH-Gji"/>
+                                                <menuItem title="Item 3" id="4Uj-j5-TwH"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="JTb-Px-r8q" secondAttribute="bottom" id="2gD-Dy-4tg"/>
+                                <constraint firstItem="KvR-3z-ZQJ" firstAttribute="centerY" secondItem="ebY-r7-unO" secondAttribute="centerY" id="4qe-RW-1RZ"/>
+                                <constraint firstAttribute="height" constant="50" id="8e0-sB-VAd"/>
+                                <constraint firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" constant="42" id="9xT-fH-bjH"/>
+                                <constraint firstItem="kkM-EL-YsG" firstAttribute="centerY" secondItem="ebY-r7-unO" secondAttribute="centerY" id="GLt-Nh-KdA"/>
+                                <constraint firstItem="JTb-Px-r8q" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="Gyc-fR-ijL"/>
+                                <constraint firstItem="KvR-3z-ZQJ" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="trailing" constant="5" id="WWe-0m-B33"/>
+                                <constraint firstItem="koN-do-dR6" firstAttribute="centerY" secondItem="ebY-r7-unO" secondAttribute="centerY" id="jiG-Vs-BR5"/>
+                                <constraint firstItem="koN-do-dR6" firstAttribute="leading" secondItem="ebY-r7-unO" secondAttribute="leading" constant="42" id="v3U-Xi-lLh"/>
+                                <constraint firstItem="JTb-Px-r8q" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="xbC-3p-dx7"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="n39-Af-5V1" userLabel="Quick connect">
+                            <rect key="frame" x="0.0" y="280" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="oot-M1-Qpj" userLabel="Quick Connect Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="124" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Quick connect label" id="h1y-BH-smf">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="uJy-8l-bfE" userLabel="Quick Connect Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="t5c-WH-CQ9">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="lJ1-wT-1Uy"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ZTJ-dJ-CnK" userLabel="Quick Connect Info Icon">
+                                    <rect key="frame" x="167" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="F1b-1K-TbO"/>
+                                        <constraint firstAttribute="width" constant="15" id="mZk-tD-yXX"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="zcB-CH-Q7g"/>
+                                </imageView>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VNa-Jv-QSm" userLabel="Quick Connect List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="247" y="11" width="215" height="26"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="lnY-bw-U92"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="u45-MI-gPc" id="kba-uk-uh5">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="u3b-bv-wFm">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="u45-MI-gPc"/>
+                                                <menuItem title="Item 2" id="deM-JZ-JtF"/>
+                                                <menuItem title="Item 3" id="Iv6-6L-XDP"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="oot-M1-Qpj" firstAttribute="centerY" secondItem="n39-Af-5V1" secondAttribute="centerY" id="22Y-xn-CFv"/>
+                                <constraint firstItem="ZTJ-dJ-CnK" firstAttribute="leading" secondItem="oot-M1-Qpj" secondAttribute="trailing" constant="5" id="7aa-UW-CMZ"/>
+                                <constraint firstAttribute="bottom" secondItem="uJy-8l-bfE" secondAttribute="bottom" id="AIe-Wy-7uV"/>
+                                <constraint firstItem="uJy-8l-bfE" firstAttribute="leading" secondItem="oot-M1-Qpj" secondAttribute="leading" id="Mde-C8-3TS"/>
+                                <constraint firstItem="VNa-Jv-QSm" firstAttribute="centerY" secondItem="n39-Af-5V1" secondAttribute="centerY" id="SF6-w2-MXB"/>
+                                <constraint firstItem="uJy-8l-bfE" firstAttribute="trailing" secondItem="VNa-Jv-QSm" secondAttribute="trailing" id="UsH-aF-Zgr"/>
+                                <constraint firstAttribute="height" constant="50" id="X7q-cj-Jkd"/>
+                                <constraint firstItem="ZTJ-dJ-CnK" firstAttribute="centerY" secondItem="n39-Af-5V1" secondAttribute="centerY" id="iXZ-CG-QZY"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="s2r-2p-dvX" userLabel="Smart protocol">
+                            <rect key="frame" x="0.0" y="230" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="g7B-Mn-ke5" userLabel="Smart Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="95" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Smart Protocol" id="B3K-Nf-rPp">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="E99-Iu-7Yp" userLabel="Smart Protocol Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="423" y="15" width="35" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="BsY-i8-NDD"/>
+                                        <constraint firstAttribute="width" constant="35" id="HoX-cK-uTx"/>
+                                    </constraints>
+                                </customView>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="gqe-bk-ney" userLabel="Smart Protocol Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="f27-zz-SKk">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="F6K-Go-bgB"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MuB-Rl-blw" userLabel="Smart Protocol Info Icon">
+                                    <rect key="frame" x="138" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="0S7-HT-hq0"/>
+                                        <constraint firstAttribute="height" constant="15" id="T8H-sc-Q32"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="IYi-XZ-hiO"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="E99-Iu-7Yp" firstAttribute="centerY" secondItem="s2r-2p-dvX" secondAttribute="centerY" id="0Vt-Nq-Kqz"/>
+                                <constraint firstItem="g7B-Mn-ke5" firstAttribute="centerY" secondItem="s2r-2p-dvX" secondAttribute="centerY" id="FZr-ai-JDR"/>
+                                <constraint firstItem="gqe-bk-ney" firstAttribute="leading" secondItem="g7B-Mn-ke5" secondAttribute="leading" id="T47-Y2-kVi"/>
+                                <constraint firstItem="MuB-Rl-blw" firstAttribute="centerY" secondItem="s2r-2p-dvX" secondAttribute="centerY" id="njW-Dy-Ukl"/>
+                                <constraint firstAttribute="height" constant="50" id="o7H-hI-ZbJ"/>
+                                <constraint firstItem="MuB-Rl-blw" firstAttribute="leading" secondItem="g7B-Mn-ke5" secondAttribute="trailing" constant="5" id="s8J-3b-DkI"/>
+                                <constraint firstAttribute="bottom" secondItem="gqe-bk-ney" secondAttribute="bottom" id="sgT-7S-Tmu"/>
+                                <constraint firstItem="gqe-bk-ney" firstAttribute="trailing" secondItem="E99-Iu-7Yp" secondAttribute="trailing" id="xuM-VF-DVz"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="MAN-k2-pDp" userLabel="Protocol">
+                            <rect key="frame" x="0.0" y="180" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VyN-C7-RJs" userLabel="Protocol Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="55" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Protocol" id="Dmg-Oo-SnH">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="hhN-6A-ZEd" userLabel="Protocol Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="qKE-p4-SFA">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="Deu-v6-pA9"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="aLO-su-KqV" userLabel="Protocol Info Icon">
+                                    <rect key="frame" x="98" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="WYM-Dx-0H6"/>
+                                        <constraint firstAttribute="height" constant="15" id="yHF-4k-XkO"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="Ybr-fj-Zk5"/>
+                                </imageView>
+                                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNh-jH-qdA" userLabel="Protocol List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="247" y="11" width="215" height="26"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="rVX-A7-qQl"/>
+                                    </constraints>
+                                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="CZp-ll-ce2" id="Z1F-GZ-Mi1">
+                                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="menu"/>
+                                        <menu key="menu" id="eRe-zh-kmG">
+                                            <items>
+                                                <menuItem title="Item 1" state="on" id="CZp-ll-ce2"/>
+                                                <menuItem title="Item 2" id="jyD-0c-lur"/>
+                                                <menuItem title="Item 3" id="fXu-Tv-y3k"/>
+                                            </items>
+                                        </menu>
+                                    </popUpButtonCell>
+                                </popUpButton>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="hhN-6A-ZEd" firstAttribute="trailing" secondItem="QNh-jH-qdA" secondAttribute="trailing" id="447-7W-QFu"/>
+                                <constraint firstItem="hhN-6A-ZEd" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="leading" id="Ho3-6I-1Db"/>
+                                <constraint firstAttribute="height" constant="50" id="Mci-ga-hpU"/>
+                                <constraint firstItem="QNh-jH-qdA" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="Ogw-Id-R6W"/>
+                                <constraint firstItem="VyN-C7-RJs" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="bKT-YT-reV"/>
+                                <constraint firstItem="aLO-su-KqV" firstAttribute="centerY" secondItem="MAN-k2-pDp" secondAttribute="centerY" id="onb-ch-IdL"/>
+                                <constraint firstAttribute="bottom" secondItem="hhN-6A-ZEd" secondAttribute="bottom" id="sRN-RQ-Myr"/>
+                                <constraint firstItem="aLO-su-KqV" firstAttribute="leading" secondItem="VyN-C7-RJs" secondAttribute="trailing" constant="5" id="yb0-Iz-f1C"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="J4X-wa-j7j" userLabel="Allow LAN">
+                            <rect key="frame" x="0.0" y="130" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fo8-UF-TQq" userLabel="AllowLAN Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="74" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Allow LAN_" id="brK-0S-3mw">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="pKc-xg-lrk" userLabel="AllowLAN Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="423" y="15" width="35" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="35" id="88q-DD-klO"/>
+                                        <constraint firstAttribute="height" constant="20" id="jjD-1g-X19"/>
+                                    </constraints>
+                                </customView>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="VA6-tF-8uQ" userLabel="AllowLAN Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="EOW-JE-BKg">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="1Kc-3O-tRW"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="o0S-pj-mzL" userLabel="AllowLAN Info Icon">
+                                    <rect key="frame" x="117" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="GgX-DO-XkG"/>
+                                        <constraint firstAttribute="width" constant="15" id="zeq-11-WnR"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="N3X-YP-tUX"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="50" id="7fi-Sf-i7h"/>
+                                <constraint firstItem="VA6-tF-8uQ" firstAttribute="leading" secondItem="fo8-UF-TQq" secondAttribute="leading" id="M0L-Xl-38s"/>
+                                <constraint firstItem="fo8-UF-TQq" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="b7X-hd-IFe"/>
+                                <constraint firstItem="VA6-tF-8uQ" firstAttribute="trailing" secondItem="pKc-xg-lrk" secondAttribute="trailing" id="fdp-uJ-c2Y"/>
+                                <constraint firstItem="pKc-xg-lrk" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="j1t-vM-4hW"/>
+                                <constraint firstItem="o0S-pj-mzL" firstAttribute="centerY" secondItem="J4X-wa-j7j" secondAttribute="centerY" id="oHa-tV-41v"/>
+                                <constraint firstItem="o0S-pj-mzL" firstAttribute="leading" secondItem="fo8-UF-TQq" secondAttribute="trailing" constant="5" id="tBM-wE-vGC"/>
+                                <constraint firstAttribute="bottom" secondItem="VA6-tF-8uQ" secondAttribute="bottom" id="zg8-5H-Wi5"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="6Da-Ut-fXw" userLabel="DNS leak">
+                            <rect key="frame" x="0.0" y="80" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="QNa-CH-077" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="158" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="DNS leak protection label" id="k8P-Nc-kCR">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="KlO-7n-dB1" userLabel="Dns Leak Protection Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="423" y="15" width="35" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="548-9E-f04"/>
+                                        <constraint firstAttribute="width" constant="35" id="zrx-W6-gwp"/>
+                                    </constraints>
+                                </customView>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="M35-Jw-Qju" userLabel="Dns Leak Protection Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="bbW-Gt-abH">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="4hH-LC-GHC"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Zmq-AW-D49" userLabel="Dns Leak Protection Info Icon">
+                                    <rect key="frame" x="201" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="3qD-19-XzS"/>
+                                        <constraint firstAttribute="width" constant="15" id="AsS-7p-vED"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="zQW-fb-UNG"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="Zmq-AW-D49" firstAttribute="leading" secondItem="QNa-CH-077" secondAttribute="trailing" constant="5" id="AnZ-5E-oM0"/>
+                                <constraint firstItem="M35-Jw-Qju" firstAttribute="leading" secondItem="QNa-CH-077" secondAttribute="leading" id="GZV-9H-rvV"/>
+                                <constraint firstAttribute="bottom" secondItem="M35-Jw-Qju" secondAttribute="bottom" id="Lbz-Ni-2GI"/>
+                                <constraint firstItem="M35-Jw-Qju" firstAttribute="trailing" secondItem="KlO-7n-dB1" secondAttribute="trailing" id="Prw-Sz-1zm"/>
+                                <constraint firstItem="Zmq-AW-D49" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="fdw-XS-h0O"/>
+                                <constraint firstAttribute="height" constant="50" id="r4i-2V-H9b"/>
+                                <constraint firstItem="QNa-CH-077" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="uJq-U2-IOE"/>
+                                <constraint firstItem="KlO-7n-dB1" firstAttribute="centerY" secondItem="6Da-Ut-fXw" secondAttribute="centerY" id="zud-ZS-bBZ"/>
+                            </constraints>
+                        </customView>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="99N-dR-K4R" userLabel="Alternative routing">
+                            <rect key="frame" x="0.0" y="30" width="500" height="50"/>
+                            <subviews>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="jnb-W0-wRQ" userLabel="Dns Leak Protection Label" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="40" y="17" width="149" height="16"/>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Alternative routing label" id="CBm-7f-HNU">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <customView translatesAutoresizingMaskIntoConstraints="NO" id="P1Z-S9-md6" userLabel="Alternative routing Button" customClass="SwitchButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="423" y="15" width="35" height="20"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="20" id="QTf-g7-sXo"/>
+                                        <constraint firstAttribute="width" constant="35" id="pi4-k8-sO7"/>
+                                    </constraints>
+                                </customView>
+                                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="Kg9-Dl-JRE" userLabel="Alternative Routing Separator">
+                                    <rect key="frame" x="42" y="0.0" width="416" height="1"/>
+                                    <view key="contentView" id="BiU-Lz-HMt">
+                                        <rect key="frame" x="0.0" y="0.0" width="416" height="1"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    </view>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="1" id="CJh-Ok-g9g"/>
+                                    </constraints>
+                                </box>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="sGb-Bq-JxM" userLabel="Alternative Routing Info Icon">
+                                    <rect key="frame" x="192" y="18" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="15" id="Uaf-rK-kMk"/>
+                                        <constraint firstAttribute="height" constant="15" id="c9P-WQ-Vot"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="UMy-dc-5Fn"/>
+                                </imageView>
+                            </subviews>
+                            <constraints>
+                                <constraint firstAttribute="bottom" secondItem="Kg9-Dl-JRE" secondAttribute="bottom" id="7S9-l7-lQu"/>
+                                <constraint firstItem="sGb-Bq-JxM" firstAttribute="leading" secondItem="jnb-W0-wRQ" secondAttribute="trailing" constant="5" id="DK5-zv-btV"/>
+                                <constraint firstItem="Kg9-Dl-JRE" firstAttribute="leading" secondItem="jnb-W0-wRQ" secondAttribute="leading" id="NM1-xd-i62"/>
+                                <constraint firstItem="sGb-Bq-JxM" firstAttribute="centerY" secondItem="99N-dR-K4R" secondAttribute="centerY" id="QdW-Bk-I0v"/>
+                                <constraint firstItem="Kg9-Dl-JRE" firstAttribute="trailing" secondItem="P1Z-S9-md6" secondAttribute="trailing" id="aZG-ah-M8q"/>
+                                <constraint firstAttribute="height" constant="50" id="gtm-Vq-KCz"/>
+                                <constraint firstItem="P1Z-S9-md6" firstAttribute="centerY" secondItem="99N-dR-K4R" secondAttribute="centerY" id="yIh-Hc-e9b"/>
+                                <constraint firstItem="jnb-W0-wRQ" firstAttribute="centerY" secondItem="99N-dR-K4R" secondAttribute="centerY" id="zfz-tW-dNx"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <edgeInsets key="edgeInsets" left="0.0" right="0.0" top="10" bottom="30"/>
+                    <constraints>
+                        <constraint firstItem="QNa-CH-077" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="9dn-GV-dZK"/>
+                        <constraint firstItem="VyN-C7-RJs" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="9ih-Mj-H5x"/>
+                        <constraint firstItem="E99-Iu-7Yp" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="EWm-Db-eOM"/>
+                        <constraint firstItem="fo8-UF-TQq" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="Fbl-Nz-5zm"/>
+                        <constraint firstItem="jnb-W0-wRQ" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="Kaf-T9-Vpu"/>
+                        <constraint firstItem="KlO-7n-dB1" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="O5y-4L-bqJ"/>
+                        <constraint firstItem="VNa-Jv-QSm" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="PeO-47-IIh"/>
+                        <constraint firstItem="g7B-Mn-ke5" firstAttribute="leading" secondItem="oot-M1-Qpj" secondAttribute="leading" id="TRg-zE-BkX"/>
+                        <constraint firstItem="VA6-tF-8uQ" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="UIl-eM-syR"/>
+                        <constraint firstAttribute="trailing" secondItem="n39-Af-5V1" secondAttribute="trailing" id="VTh-dM-0cx"/>
+                        <constraint firstItem="KlO-7n-dB1" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="Wot-tA-ErS"/>
+                        <constraint firstItem="oot-M1-Qpj" firstAttribute="leading" secondItem="koN-do-dR6" secondAttribute="leading" id="b56-QG-VJF"/>
+                        <constraint firstItem="QNh-jH-qdA" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="fQX-JN-DTD"/>
+                        <constraint firstItem="QNh-jH-qdA" firstAttribute="leading" secondItem="kkM-EL-YsG" secondAttribute="leading" id="fmX-x6-HiB"/>
+                        <constraint firstItem="ebY-r7-unO" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="iQp-83-RpY"/>
+                        <constraint firstItem="VNa-Jv-QSm" firstAttribute="leading" secondItem="kkM-EL-YsG" secondAttribute="leading" id="j99-Ye-RAU"/>
+                        <constraint firstItem="n39-Af-5V1" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="o14-1A-Bpe"/>
+                        <constraint firstAttribute="trailing" secondItem="ebY-r7-unO" secondAttribute="trailing" id="oK1-Ia-JQl"/>
+                        <constraint firstItem="6Da-Ut-fXw" firstAttribute="leading" secondItem="6hW-yr-SCJ" secondAttribute="leading" id="qdI-23-sur"/>
+                        <constraint firstAttribute="width" constant="500" id="s2t-SO-KaO"/>
+                        <constraint firstItem="P1Z-S9-md6" firstAttribute="trailing" secondItem="kkM-EL-YsG" secondAttribute="trailing" id="wm6-S1-Gif"/>
+                        <constraint firstAttribute="trailing" secondItem="6Da-Ut-fXw" secondAttribute="trailing" id="yP5-Qv-HYO"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="6hW-yr-SCJ" firstAttribute="leading" secondItem="XBX-SA-q2x" secondAttribute="leading" id="7tj-rp-Wcg"/>
+                <constraint firstAttribute="trailing" secondItem="6hW-yr-SCJ" secondAttribute="trailing" id="q3d-2s-BSE"/>
+                <constraint firstItem="6hW-yr-SCJ" firstAttribute="top" secondItem="XBX-SA-q2x" secondAttribute="top" id="xaz-BL-cZA"/>
+            </constraints>
+            <point key="canvasLocation" x="121" y="347.5"/>
+        </customView>
+    </objects>
+</document>

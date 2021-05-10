@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="ServerItemCellView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="340" height="50"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
+                    <rect key="frame" x="20" y="13" width="242" height="24"/>
+                    <subviews>
+                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
+                            <rect key="frame" x="0.0" y="1" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="7C3-AU-qai"/>
+                                <constraint firstAttribute="height" constant="22" id="S0t-gY-fJc"/>
+                            </constraints>
+                            <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ic_maintenance" imagePosition="only" alignment="center" imageScaling="proportionallyDown" inset="2" id="AZ1-gW-NzA">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <color key="contentTintColor" red="0.61176470589999998" green="0.62745098040000002" blue="0.66666666669999997" alpha="1" colorSpace="calibratedRGB"/>
+                        </button>
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="rdo-bb-f1n" customClass="ColoredLoadButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="30" y="1" width="22" height="22"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="22" id="heA-Q6-1O2"/>
+                                <constraint firstAttribute="height" constant="22" id="xvT-N8-igd"/>
+                            </constraints>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="Uvw-Pr-rSR">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                        </button>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="YUD-lf-aWO" userLabel="flag">
+                            <rect key="frame" x="60" y="0.0" width="20" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="5Gd-vi-Y9r"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ad-plain" id="xWg-ce-g5M"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="6H3-fq-9lW">
+                            <rect key="frame" x="86" y="2" width="46" height="20"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" title="Label" id="Zkv-oY-oiz">
+                                <font key="font" metaFont="system" size="17"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="htq-Vh-M3a" userLabel="secure">
+                            <rect key="frame" x="138" y="0.0" width="8" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="8" id="6QB-6f-Fdv"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="double-arrow-right-green" id="25F-RR-AXu"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="61R-2Y-fBC">
+                            <rect key="frame" x="154" y="0.0" width="16" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="cKi-1L-PQn"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_smart-routing" id="YEC-V1-OMH"/>
+                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Meu-TF-bG3">
+                            <rect key="frame" x="178" y="0.0" width="16" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="IaS-xx-SrL"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_p2p" id="ZZQ-lv-SkV"/>
+                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="nA5-Vh-5IW">
+                            <rect key="frame" x="202" y="0.0" width="16" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="0cJ-0y-Rxt"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="in4-Bp-Qe5"/>
+                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oLC-aF-Rp9">
+                            <rect key="frame" x="226" y="0.0" width="16" height="24"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="16" id="hs2-7h-bx0"/>
+                            </constraints>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_streaming" id="Jan-YQ-ZaF"/>
+                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                        </imageView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="oLC-aF-Rp9" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="8c6-TV-JKX"/>
+                        <constraint firstItem="Meu-TF-bG3" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="HOf-LE-orL"/>
+                        <constraint firstItem="htq-Vh-M3a" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="IF8-bR-eIt"/>
+                        <constraint firstAttribute="height" constant="24" id="JwK-a6-OmP"/>
+                        <constraint firstItem="nA5-Vh-5IW" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="Qgi-yA-Uzw"/>
+                        <constraint firstItem="61R-2Y-fBC" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="U1s-sj-LC3"/>
+                        <constraint firstItem="6H3-fq-9lW" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="jY5-EB-TP9"/>
+                        <constraint firstItem="3jz-D5-q91" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="lOs-af-s0A"/>
+                        <constraint firstItem="rdo-bb-f1n" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="q1A-Z1-Vdw"/>
+                        <constraint firstItem="YUD-lf-aWO" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="wKM-jy-7Fz"/>
+                    </constraints>
+                    <visibilityPriorities>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                        <integer value="1000"/>
+                    </visibilityPriorities>
+                    <customSpacing>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                        <real value="3.4028234663852886e+38"/>
+                    </customSpacing>
+                </stackView>
+                <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0LY-WB-KAs" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="256" y="13" width="68" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="MmY-nG-zbD"/>
+                    </constraints>
+                    <buttonCell key="cell" type="bevel" title="CONNECT" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="Fs2-td-tjI">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                        <userDefinedRuntimeAttribute type="number" keyPath="verticalPadding">
+                            <real key="value" value="16"/>
+                        </userDefinedRuntimeAttribute>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <action selector="didTapConnectBtn:" target="c22-O7-iKe" id="Fy4-tH-SrT"/>
+                    </connections>
+                </button>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ewh-0g-OY6">
+                    <rect key="frame" x="288" y="17" width="30" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="City" id="l6m-pP-HZC">
+                        <font key="font" metaFont="system" size="14"/>
+                        <color key="textColor" red="0.44705882352941173" green="0.46274509803921571" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aym-qX-9lw">
+                    <rect key="frame" x="260" y="19" width="64" height="17"/>
+                    <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="rlB-0G-5Af">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="systemBold" size="14"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="didTapUpgradeBtn:" target="c22-O7-iKe" id="QkT-gR-5AO"/>
+                    </connections>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="aym-qX-9lw" secondAttribute="trailing" constant="16" id="MZf-po-Lqw"/>
+                <constraint firstItem="HwW-fd-TKx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="X3X-4g-elf"/>
+                <constraint firstAttribute="trailing" secondItem="Ewh-0g-OY6" secondAttribute="trailing" constant="24" id="Z0i-Ap-pUc"/>
+                <constraint firstItem="aym-qX-9lw" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" constant="-2" id="ZWz-pK-FSv"/>
+                <constraint firstItem="HwW-fd-TKx" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="eFq-cH-WkR"/>
+                <constraint firstItem="0LY-WB-KAs" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hAb-Vw-OhK"/>
+                <constraint firstItem="Ewh-0g-OY6" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="oMS-28-aC1"/>
+                <constraint firstAttribute="trailing" secondItem="0LY-WB-KAs" secondAttribute="trailing" constant="16" id="rQF-MJ-7wc"/>
+            </constraints>
+            <connections>
+                <outlet property="cityLbl" destination="Ewh-0g-OY6" id="211-QY-fGX"/>
+                <outlet property="connectBtn" destination="0LY-WB-KAs" id="5LA-gB-rpA"/>
+                <outlet property="loadIcon" destination="rdo-bb-f1n" id="Ygw-MS-wFP"/>
+                <outlet property="maintenanceIV" destination="3jz-D5-q91" id="stl-Vx-X3T"/>
+                <outlet property="p2pIV" destination="Meu-TF-bG3" id="lJI-60-3By"/>
+                <outlet property="secureCoreIV" destination="htq-Vh-M3a" id="YxX-Ra-YEF"/>
+                <outlet property="secureFlagIV" destination="YUD-lf-aWO" id="LnR-ZD-4Ws"/>
+                <outlet property="serverLbl" destination="6H3-fq-9lW" id="VTW-MY-YEC"/>
+                <outlet property="smartIV" destination="61R-2Y-fBC" id="GUd-7n-TeR"/>
+                <outlet property="streamingIV" destination="oLC-aF-Rp9" id="iKt-gV-gpT"/>
+                <outlet property="torIV" destination="nA5-Vh-5IW" id="llX-5m-nb6"/>
+                <outlet property="upgradeBtn" destination="aym-qX-9lw" id="1Il-BH-Jyo"/>
+            </connections>
+            <point key="canvasLocation" x="139" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="ad-plain" width="84" height="49"/>
+        <image name="double-arrow-right-green" width="60" height="60"/>
+        <image name="ic_maintenance" width="16" height="16"/>
+        <image name="ic_p2p" width="16" height="16"/>
+        <image name="ic_smart-routing" width="16" height="16"/>
+        <image name="ic_streaming" width="16" height="16"/>
+        <image name="ic_tor" width="16" height="16"/>
+    </resources>
+</document>

@@ -1,0 +1,16 @@
+# Xcode
+.DS_Store
+xcuserdata
+
+## Build generated
+ProtonVPN/build/
+ProtonVPN/DerivedData/
+
+# Fastlane
+**/fastlane/report.xml
+**/fastlane/Preview.html
+**/fastlane/screenshots
+**/fastlane/test_output
+
+# Obfuscated constants
+**/ObfuscatedConstants.swift

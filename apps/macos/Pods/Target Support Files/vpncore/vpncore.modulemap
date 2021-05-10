@@ -1,0 +1,6 @@
+framework module vpncore {
+  umbrella header "vpncore-umbrella.h"
+
+  export *
+  module * { export * }
+}

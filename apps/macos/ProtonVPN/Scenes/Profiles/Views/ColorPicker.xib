@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="12121" systemVersion="16G29" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="12121"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="ColorPickerViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="collectionView" destination="fGs-JW-aB9" id="KLW-3Q-pQe"/>
+                <outlet property="view" destination="c22-O7-iKe" id="gp0-JW-3vP"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+            <subviews>
+                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i9y-p5-qPT" customClass="DisabledScrollView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                    <clipView key="contentView" drawsBackground="NO" id="foZ-yF-V5j">
+                        <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView id="fGs-JW-aB9">
+                                <rect key="frame" x="0.0" y="0.0" width="180" height="40"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" id="dz1-T1-Idp"/>
+                                <color key="primaryBackgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </collectionView>
+                        </subviews>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </clipView>
+                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="YES" id="fSa-oN-tfE">
+                        <rect key="frame" x="1" y="23" width="178" height="16"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                    <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="QfV-US-Oqv">
+                        <rect key="frame" x="163" y="1" width="16" height="38"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </scroller>
+                </scrollView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="i9y-p5-qPT" secondAttribute="trailing" id="8sb-7K-2RF"/>
+                <constraint firstItem="i9y-p5-qPT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="GZN-PE-B9b"/>
+                <constraint firstAttribute="bottom" secondItem="i9y-p5-qPT" secondAttribute="bottom" id="IM1-XA-uoW"/>
+                <constraint firstItem="i9y-p5-qPT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="oEE-G5-NxO"/>
+            </constraints>
+            <point key="canvasLocation" x="78" y="159"/>
+        </customView>
+    </objects>
+</document>

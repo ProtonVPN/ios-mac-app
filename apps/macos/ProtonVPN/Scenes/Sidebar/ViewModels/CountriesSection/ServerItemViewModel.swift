@@ -1,0 +1,106 @@
+//
+//  ServerItemViewModel.swift
+//  ProtonVPN - Created on 27.06.19.
+//
+//  Copyright (c) 2019 Proton Technologies AG
+//
+//  This file is part of ProtonVPN.
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+//
+
+import Cocoa
+import vpncore
+
+class ServerItemViewModel {
+    
+    private let propertiesManager: PropertiesManagerProtocol
+    private let vpnGateway: VpnGatewayProtocol
+    private let appStateManager: AppStateManager
+    
+    private weak var countriesSectionViewModel: CountriesSectionViewModel! // weak to prevent retain cycle
+    
+    let serverModel: ServerModel
+    
+    var isSmartAvailable: Bool { false }
+    var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
+    var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
+    var isStreamingAvailable: Bool {
+        if serverModel.isSecureCore { return false }
+        let tier = String(serverModel.tier)
+        return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
+    }
+    
+    let requiresUpgrade: Bool
+    
+    fileprivate var canConnect: Bool {
+        return !requiresUpgrade && !underMaintenance
+    }
+    
+    var alphaForMainElements: CGFloat {
+        return underMaintenance ? 0.5 : ( requiresUpgrade ? 0.75 : 1 )
+    }
+    
+    var underMaintenance: Bool {
+        return serverModel.underMaintenance
+    }
+    
+    var load: Int {
+        return serverModel.load
+    }
+    
+    var isSecureCoreEnabled: Bool {
+        return serverModel.isSecureCore
+    }
+    
+    var serverName: String {
+        guard serverModel.isSecureCore else {
+            return serverModel.name
+        }
+        return LocalizedString.via + " " + serverModel.entryCountry
+    }
+    
+    var cityName: String {
+        if underMaintenance { return LocalizedString.maintenance }
+        return serverModel.city ?? ""
+    }
+    
+    var entryCountry: String? {
+        guard serverModel.isSecureCore else { return nil }
+        return serverModel.entryCountryCode
+    }
+    
+    var isConnected: Bool {
+        guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
+        return !requiresUpgrade && vpnGateway.connection == .connected
+            && connectedServer.id == serverModel.id
+    }
+
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol, countriesSectionViewModel: CountriesSectionViewModel, requiresUpgrade: Bool) {
+        self.propertiesManager = propertiesManager
+        self.serverModel = serverModel
+        self.appStateManager = appStateManager
+        self.vpnGateway = vpnGateway
+        self.countriesSectionViewModel = countriesSectionViewModel
+        self.requiresUpgrade = requiresUpgrade
+    }
+    
+    func upgradeAction() {
+        countriesSectionViewModel.displayUpgradeMessage(serverModel)
+    }
+    
+    func connectAction() {
+        isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(server: serverModel)
+    }
+}

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14490.70"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe" customClass="AttachedFileView" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="240" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7h0-jK-3g5" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="26" y="7" width="156" height="17"/>
+                    <textFieldCell key="cell" lineBreakMode="clipping" title="_Email:" id="kIa-XZ-D8Y">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="IwX-fW-n1l">
+                    <rect key="frame" x="8" y="6" width="12" height="19"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="12" id="hXL-uX-ATx"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" image="icon_file" id="tsv-yZ-4VF"/>
+                </imageView>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="CuK-ID-Oo8">
+                    <rect key="frame" x="184" y="0.0" width="24" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="2sr-57-9S7"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon_external" imagePosition="only" alignment="center" inset="2" id="u3g-Ty-lpq">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button translatesAutoresizingMaskIntoConstraints="NO" id="Gw7-uR-6N5">
+                    <rect key="frame" x="208" y="0.0" width="24" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="24" id="zWu-vq-5Do"/>
+                    </constraints>
+                    <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="icon_trash" imagePosition="only" alignment="center" inset="2" id="8sZ-xD-Squ">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="CuK-ID-Oo8" secondAttribute="bottom" id="Iu4-YH-LQ0"/>
+                <constraint firstItem="Gw7-uR-6N5" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="J3P-8q-NmM"/>
+                <constraint firstItem="CuK-ID-Oo8" firstAttribute="leading" secondItem="7h0-jK-3g5" secondAttribute="trailing" constant="4" id="KPe-YN-F3X"/>
+                <constraint firstItem="IwX-fW-n1l" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="8" id="L77-wk-dng"/>
+                <constraint firstAttribute="bottom" secondItem="IwX-fW-n1l" secondAttribute="bottom" constant="6" id="Ptt-QW-WG7"/>
+                <constraint firstItem="CuK-ID-Oo8" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="Pxp-NZ-itv"/>
+                <constraint firstAttribute="bottom" secondItem="Gw7-uR-6N5" secondAttribute="bottom" id="Xl3-bN-b5a"/>
+                <constraint firstItem="Gw7-uR-6N5" firstAttribute="leading" secondItem="CuK-ID-Oo8" secondAttribute="trailing" id="cu6-YZ-0ZK"/>
+                <constraint firstAttribute="trailing" secondItem="Gw7-uR-6N5" secondAttribute="trailing" constant="8" id="gBr-hY-KtI"/>
+                <constraint firstItem="IwX-fW-n1l" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="rhp-kX-dwf"/>
+                <constraint firstItem="7h0-jK-3g5" firstAttribute="leading" secondItem="IwX-fW-n1l" secondAttribute="trailing" constant="8" id="uEw-Ky-TCu"/>
+                <constraint firstItem="7h0-jK-3g5" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="yUM-a5-zmP"/>
+            </constraints>
+            <connections>
+                <outlet property="deleteButton" destination="Gw7-uR-6N5" id="NIn-sf-vKl"/>
+                <outlet property="fileImageView" destination="IwX-fW-n1l" id="dgj-9f-qCS"/>
+                <outlet property="finderButton" destination="CuK-ID-Oo8" id="HMV-mV-pj6"/>
+                <outlet property="profileNameLabel" destination="7h0-jK-3g5" id="02R-cA-UHE"/>
+            </connections>
+            <point key="canvasLocation" x="20" y="154"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="icon_external" width="14" height="12"/>
+        <image name="icon_file" width="12" height="16"/>
+        <image name="icon_trash" width="11" height="12"/>
+    </resources>
+</document>

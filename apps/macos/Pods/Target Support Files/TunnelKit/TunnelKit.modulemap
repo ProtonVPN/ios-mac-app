@@ -1,0 +1,6 @@
+framework module TunnelKit {
+  umbrella header "TunnelKit-umbrella.h"
+
+  export *
+  module * { export * }
+}
