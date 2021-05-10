@@ -75,6 +75,9 @@ public protocol PropertiesManagerProtocol: class {
     var alternativeRouting: Bool { get set }
     var smartProtocol: Bool { get set }
     
+    var streamingServices: StreamingDictServices { get set }
+    var streamingResourcesUrl: String? { get set }
+    
     func logoutCleanup()
     
 }
@@ -135,6 +138,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let humanValidationFailed: String = "humanValidationFailed"
         static let alternativeRouting: String = "alternativeRouting"
         static let smartProtocol: String = "smartProtocol"
+        static let streamingServices: String = "streamingServices"
+        static let streamingResourcesUrl: String = "streamingResourcesUrl"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -518,7 +523,31 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(newValue, forKey: Keys.smartProtocol)
         }
     }
-
+    
+    public var streamingServices: StreamingDictServices {
+        get {
+            if let data = Storage.userDefaults().data(forKey: Keys.streamingServices),
+               let stored = try? JSONDecoder().decode(StreamingDictServices.self, from: data) {
+                return stored
+            }
+            return [:]
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                Storage.setValue(data, forKey: Keys.streamingServices)
+            }
+        }
+    }
+    
+    public var streamingResourcesUrl: String? {
+        get {
+            return Storage.userDefaults().string(forKey: Keys.streamingResourcesUrl)
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.streamingResourcesUrl)
+        }
+    }
+    
     #if os(iOS)
     private let defaultSmartProtocol = true
     #else

@@ -61,8 +61,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var humanValidationFailed: Bool = false
     public var alternativeRouting: Bool = false
     public var smartProtocol: Bool = false
+    public var streamingServices: StreamingDictServices = [:]
     public var excludeLocalNetworks: Bool = true
-    
+    public var streamingResourcesUrl: String?
     var earlyAccess: Bool = false
     
     public init() {}

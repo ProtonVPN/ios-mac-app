@@ -79,10 +79,10 @@
 "_try_agian" = "Try again";
 "_try_again_without_killswitch" = "Disable Kill Switch and retry";
 "_retry" = "Retry";
-"_free_servers" = "FREE SERVERS";
-"_basic_servers" = "BASIC SERVERS";
-"_plus_servers" = "PLUS SERVERS";
-"_test_servers" = "TEST SERVERS";
+"_free_servers" = "FREE Servers";
+"_basic_servers" = "BASIC Servers";
+"_plus_servers" = "PLUS Servers";
+"_test_servers" = "TEST Servers";
 "_initializing_connection" = "Initializing Connection...";
 "_successfully_connected" = "Successfully Connected";
 "_failed" = "failed";
@@ -804,3 +804,35 @@
 "_tier_basic" = "BASIC";
 "_tier_plus" = "PLUS";
 "_tier_visionary" = "VISIONARY";
+
+// Streaming & Features
+
+"_information_title" = "Information";
+"_features_title" = "Features";
+"_performance_title" = "Performance";
+"_smart_routing_title" = "Smart Routing";
+"_streaming_title" = "Streaming";
+"_p2p_title" = "P2P/BitTorrent";
+"_tor_title" = "Tor";
+"_server_load_title" = "Server Load";
+
+"_streaming_servers_description" = "Connect to a Plus server in this country to start streaming.";
+"_streaming_servers_note" = "Note: Turn off the Location Service and clear the cache of the streaming apps to ensure new content appears.";
+"_streaming_servers_extra" = "and more";
+
+"_feature_smart_routing_description" = "This technology allows ProtonVPN to provide higher speed and security in difficult-to-serve countries.";
+"_feature_streaming_description" = "PLUS servers support streaming (Netflix, Disney+, etc) from anywhere in the world.";
+"_feature_p2p_description" = "These servers give the best performance for BitTorrent and file sharing.";
+"_feature_tor_description" = "Route your Internet traffic through the Tor network. Slower, but more private.";
+"_performance_load_description" = "Servers with high load are slower than servers with low load.";
+
+"_performance_load_low" = "Low";
+"_performance_load_medium" = "Medium";
+"_performance_load_high" = "High";
+
+
+"_locations_all" = "All Locations";
+"_locations_free" = "FREE Locations";
+"_locations_basic_plus" = "BASIC & PLUS Locations";
+"_locations_basic" = "BASIC Locations";
+"_locations_plus" = "PLUS Locations";

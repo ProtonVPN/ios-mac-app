@@ -28,8 +28,9 @@ public struct FeatureFlags: Codable {
     public let guestHoles: Int
     public let serverRefresh: Int
     public let pollNotificationAPI: Int
+    public let streamingServicesLogos: Int
     
-    public static let defaultConfig = FeatureFlags(netShield: 1, guestHoles: 0, serverRefresh: 0, pollNotificationAPI: 0)
+    public static let defaultConfig = FeatureFlags(netShield: 1, guestHoles: 0, serverRefresh: 0, pollNotificationAPI: 0, streamingServicesLogos: 0)
     
     // Some properties to get around dirty API
     
@@ -49,4 +50,7 @@ public struct FeatureFlags: Codable {
         return pollNotificationAPI != 0
     }
     
+    public var isStreamingServicesLogos: Bool {
+        return streamingServicesLogos != 0
+    }
 }

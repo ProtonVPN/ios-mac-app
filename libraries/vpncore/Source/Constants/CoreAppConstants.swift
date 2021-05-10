@@ -56,6 +56,12 @@ public class CoreAppConstants {
         public static let unsecureWiFiUrl = "https://protonvpn.com/blog/public-wifi-safety/"
         public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
         public static let alternativeRouting = "http://protonmail.com/blog/anti-censorship-alternative-routing"
+        
+        public static let learnMoreSmartRouting = "https://protonvpn.com/support/smart-routing"
+        public static let learnMoreStreaming = "https://protonvpn.com/support/streaming-guide/"
+        public static let learnMoreP2p = "https://protonvpn.com/support/bittorrent-vpn/"
+        public static let learnMoreTor = "https://protonvpn.com/support/tor-vpn/"
+        public static let learnMoreLoads = "https://protonvpn.com/support/server-load-percentages-and-colors-explained/"
     }
     
     public struct AttributionLinks {
