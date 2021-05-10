@@ -51,7 +51,7 @@ class CountryItemViewModelTests: XCTestCase {
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
             serverModel(withStatus: 0),
-            ]).connectIcon! == UIImage(named: "con-unavailable"), "UnderMaintenance returned false while all servers are under maintenance")
+            ]).connectIcon! == #imageLiteral(resourceName: "ic_maintenance"), "UnderMaintenance returned false while all servers are under maintenance")
     }
 
     // MARK: Mocks
@@ -77,7 +77,8 @@ class CountryItemViewModelTests: XCTestCase {
             alertService: AlertServiceEmptyStub(),
             loginService: LoginServiceMock(),
             planService: PlanServiceMock(),
-            connectionStatusService: ConnectionStatusServiceMock()
+            connectionStatusService: ConnectionStatusServiceMock(),
+            propertiesManager: PropertiesManager()
             )
 
         return viewModel

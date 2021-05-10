@@ -28,13 +28,15 @@ class ServerItemViewModel {
     fileprivate let serverModel: ServerModel
     fileprivate var vpnGateway: VpnGatewayProtocol?
     fileprivate let appStateManager: AppStateManager
+    fileprivate let propertiesManager: PropertiesManagerProtocol
     private let alertService: AlertService
     private let loginService: LoginService
     private var planService: PlanService
     private let connectionStatusService: ConnectionStatusService
     
     private let userTier: Int
-    fileprivate var isUsersTierTooLow: Bool {
+    
+    var isUsersTierTooLow: Bool {
         return userTier < serverModel.tier
     }
     
@@ -56,7 +58,11 @@ class ServerItemViewModel {
         return false
     }
     
-    private var connectedUiState: Bool {
+    var viaCountry: (name: String, code: String)? {
+        return nil
+    }
+    
+    var connectedUiState: Bool {
         return isConnected || isConnecting
     }
     
@@ -71,50 +77,51 @@ class ServerItemViewModel {
     var countryConnectionChanged: Notification.Name?
     
     // MARK: First line in the TableCell
-    var description: NSAttributedString {
-        return serverModel.name.attributed(withColor: .protonWhite(), fontSize: 16.5, alignment: .left)
-    }
     
-    var city: NSAttributedString {
-        return (serverModel.city ?? "").attributed(withColor: .protonWhite(), fontSize: 16.5, alignment: .left)
-    }
+    var description: String { return serverModel.name }
     
-    // MARK: Second line in the TableCell
-    var loadLabel: NSAttributedString {
-        return (LocalizedString.load + ":").attributed(withColor: .protonFontLightGrey(), fontSize: 14.5, alignment: .left)
-    }
-    
-    var loadValue: NSAttributedString {
-        return "\(serverModel.load)%".attributed(withColor: .protonFontLightGrey(), fontSize: 14.5, alignment: .left)
+    var city: String {
+        return serverModel.city ?? ""
     }
 
-    var maintenanceLabel: NSAttributedString {
-        return LocalizedString.serverUnderMaintenance.attributed(withColor: .protonFontLightGrey(), fontSize: 14.5, alignment: .left)
+    var loadValue: String {
+        return "\(serverModel.load)%"
     }
     
-    var connectionProperties: NSAttributedString {
-        var string: String = ""
-        if serverModel.feature.contains(.tor) {
-            string.append(LocalizedString.tor)
+    var loadColor: UIColor {
+        if serverModel.load > 90 {
+            return .protonRed()
+        } else if serverModel.load > 75 {
+            return .protonYellow()
+        } else {
+            return .protonGreen()
         }
-        if serverModel.feature.contains(.p2p) {
-            if !string.isEmpty {
-                string.append(" | ")
-            }
-            string.append(LocalizedString.p2p)
-        }
-        return string.attributed(withColor: .protonFontLightGrey(), fontSize: 12, alignment: .left)
+    }
+
+    var torAvailable: Bool {
+        return serverModel.feature.contains(.tor)
+    }
+    
+    var p2pAvailable: Bool {
+        return serverModel.feature.contains(.p2p)
+    }
+    
+    var smartAvailable: Bool {
+        return false
+    }
+    
+    var streamingAvailable: Bool {
+        let tier = String(serverModel.tier)
+        return propertiesManager.streamingServices[serverModel.countryCode]?[tier] != nil
     }
     
     var connectIcon: UIImage? {
-        if underMaintenance {
-            return UIImage(named: "con-maintenance")
-        } else if isUsersTierTooLow {
-            return UIImage(named: "con-locked")
-        } else if connectedUiState {
-            return UIImage(named: "con-connected")
+        if isUsersTierTooLow {
+            return #imageLiteral(resourceName: "con-locked")
+        } else if underMaintenance {
+            return #imageLiteral(resourceName: "ic_maintenance")
         } else {
-            return UIImage(named: "con-available")
+            return #imageLiteral(resourceName: "con-available")
         }
     }
     
@@ -123,30 +130,12 @@ class ServerItemViewModel {
     }
     
     var alphaOfMainElements: CGFloat {
-        return isUsersTierTooLow ? 0.5 : 1.0
-    }
-
-    var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
+        if underMaintenance { return 0.25 }
+        if isUsersTierTooLow { return 0.5 }
+        return 1.0
     }
     
-    var keywordIcons: [(UIImage, String)] {
-        var icons = [(UIImage, String)]()
-        
-        if serverModel.tier >= 2 {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-premium-list"), LocalizedString.premiumDescription))
-        }
-        if serverModel.feature.contains(.tor) {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-tor-list"), LocalizedString.torDescription))
-        }
-        if serverModel.feature.contains(.p2p) {
-            icons.append((#imageLiteral(resourceName: "protonvpn-server-p2p-list"), LocalizedString.p2pDescription))
-        }
-        
-        return icons
-    }
-    
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService) {
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
@@ -155,7 +144,7 @@ class ServerItemViewModel {
         self.loginService = loginService
         self.planService = planService
         self.connectionStatusService = connectionStatusService
-        
+        self.propertiesManager = propertiesManager
         let activeConnection = appStateManager.activeConnection()
         
         isCountryConnected = vpnGateway?.connection == .connected
@@ -203,19 +192,6 @@ class ServerItemViewModel {
                                                name: VpnGateway.connectionChanged, object: nil)
     }
     
-    private func formSecondaryDescription() -> NSAttributedString {
-        let description: NSAttributedString
-        if isUsersTierTooLow {
-            description = LocalizedString.upgrade.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
-        } else if underMaintenance {
-            description = LocalizedString.maintenance.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
-        } else {
-            description = (serverModel.isFree ? "" : serverModel.ips[0].exitIp).attributed(withColor: .protonWhite(), fontSize: 14, alignment: .right)
-        }
-        
-        return description
-    }
-    
     @objc fileprivate func stateChanged() {
         if let connectionChanged = connectionChanged {
             DispatchQueue.main.async {
@@ -227,25 +203,13 @@ class ServerItemViewModel {
 
 // MARK: - SecureCoreServerItemViewModel subclass
 class SecureCoreServerItemViewModel: ServerItemViewModel {
-    
-    var via: NSAttributedString {
-        return "via".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        
+    override var viaCountry: (name: String, code: String)? {
+        return serverModel.isSecureCore ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
     }
     
-    var countryCode: String {
-        return serverModel.isSecureCore ? serverModel.entryCountryCode : ""
-    }
-    
-    override var description: NSAttributedString {
-        return formDescription()
-    }
-    
-    override var secondaryDescription: NSAttributedString {
-        return formSecondaryDescription()
-    }
-    
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService)
+    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
+        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
         
         let activeConnection = appStateManager.activeConnection()
         
@@ -257,28 +221,5 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
     override fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
-    }
-    
-    private func formDescription() -> NSAttributedString {
-        if !serverModel.isSecureCore {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        }
-        let country: NSAttributedString
-        country = String(format: LocalizedString.viaCountry, serverModel.entryCountry).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        return country
-    }
-    
-    private func formSecondaryDescription() -> NSAttributedString {
-        let description: NSAttributedString
-        
-        if isUsersTierTooLow {
-            description = LocalizedString.upgrade.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
-        } else if underMaintenance {
-            description = LocalizedString.maintenance.attributed(withColor: .protonGreyOutOfFocus(), fontSize: 14, bold: true, alignment: .right)
-        } else {
-            description = "".attributed(withColor: .protonWhite(), fontSize: 14, alignment: .right)
-        }
-        
-        return description
     }
 }

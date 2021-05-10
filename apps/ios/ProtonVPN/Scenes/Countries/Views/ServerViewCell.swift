@@ -27,11 +27,18 @@ final class ServerViewCell: UITableViewCell {
 
     @IBOutlet private weak var serverNameLabel: UILabel!
     @IBOutlet private weak var cityNameLabel: UILabel!
-    @IBOutlet private weak var loadLabel: UILabel!
-    @IBOutlet private weak var loadValueLabel: UILabel!
-    @IBOutlet private weak var loadStackView: UIStackView!
-    @IBOutlet private weak var connectionPropertiesLabel: UILabel!
-    @IBOutlet private weak var maintenanceLabel: UILabel!
+    @IBOutlet private weak var loadLbl: UILabel!
+    @IBOutlet private weak var loadColorView: UIView!
+    @IBOutlet private weak var loadContainingView: UIView!
+
+    @IBOutlet private weak var smartIV: UIImageView!
+    @IBOutlet private weak var torIV: UIImageView!
+    @IBOutlet private weak var p2pIV: UIImageView!
+    @IBOutlet private weak var streamingIV: UIImageView!
+
+    @IBOutlet private weak var secureView: UIView!
+    @IBOutlet private weak var secureCountryLbl: UILabel!
+    @IBOutlet private weak var secureCoreIV: UIImageView!
     @IBOutlet private weak var connectButton: UIButton!
     
     var viewModel: ServerItemViewModel? {
@@ -42,16 +49,26 @@ final class ServerViewCell: UITableViewCell {
             selectionStyle = .none
             
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
-            serverNameLabel.attributedText = viewModel.description
-            cityNameLabel.attributedText = viewModel.city
-            loadLabel.attributedText = viewModel.loadLabel
-            loadValueLabel.attributedText = viewModel.loadValue
-            loadStackView.isHidden = viewModel.underMaintenance
-            maintenanceLabel.attributedText = viewModel.maintenanceLabel
-            maintenanceLabel.isHidden = !viewModel.underMaintenance
-            connectionPropertiesLabel.attributedText = viewModel.connectionProperties
-            [serverNameLabel, cityNameLabel, loadLabel, loadValueLabel, connectionPropertiesLabel, maintenanceLabel].forEach { view in
+            serverNameLabel.text = viewModel.description
+            serverNameLabel.isHidden = viewModel.viaCountry != nil
+            cityNameLabel.text = viewModel.city
+            cityNameLabel.isHidden = viewModel.viaCountry != nil
+            secureView.isHidden = viewModel.viaCountry == nil
+            
+            smartIV.isHidden = !viewModel.smartAvailable
+            torIV.isHidden = !viewModel.torAvailable
+            p2pIV.isHidden = !viewModel.p2pAvailable
+            streamingIV.isHidden = !viewModel.streamingAvailable
+            loadContainingView.isHidden = viewModel.underMaintenance || viewModel.isUsersTierTooLow
+            
+            loadLbl.text = viewModel.loadValue
+            loadColorView.backgroundColor = viewModel.loadColor
+            [serverNameLabel, cityNameLabel, torIV, p2pIV, smartIV, streamingIV, secureView].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
+            }
+            
+            if let viaCountry = viewModel.viaCountry {
+                setupSecureCore(country: viaCountry.name, countryCode: viaCountry.code)
             }
             
             DispatchQueue.main.async { [weak self] in
@@ -74,6 +91,9 @@ final class ServerViewCell: UITableViewCell {
     }
     
     private func renderConnectButton() {
+        let isConnected = viewModel?.connectedUiState ?? false
+        let maintenance = viewModel?.underMaintenance ?? false
+        connectButton.backgroundColor = isConnected ? .protonGreen() : (maintenance ? .protonDarkGrey() :  .protonLightGrey())
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
@@ -81,5 +101,10 @@ final class ServerViewCell: UITableViewCell {
             connectButton.setImage(viewModel?.connectIcon, for: .normal)
             connectButton.setTitle(nil, for: .normal)
         }
+    }
+    
+    private func setupSecureCore( country: String, countryCode: String ) {
+        secureCountryLbl.text = LocalizedString.via + " " + country.uppercased()
+        secureCoreIV.image = UIImage(named: countryCode.lowercased() + "-plain")
     }
 }

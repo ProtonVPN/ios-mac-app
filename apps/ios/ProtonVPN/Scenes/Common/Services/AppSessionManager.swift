@@ -153,6 +153,8 @@ class AppSessionManagerImplementation: AppSessionManager {
             if let credentials = properties.vpnCredentials {
                 self.vpnKeychain.store(vpnCredentials: credentials)
             }
+            self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+            self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
             self.serverStorage.store(properties.serverModels)
             self.propertiesManager.userIp = properties.ip
             
@@ -205,7 +207,8 @@ class AppSessionManagerImplementation: AppSessionManager {
                 self.vpnKeychain.store(vpnCredentials: credentials)
             }
             self.serverStorage.store(properties.serverModels)
-            
+            self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+            self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
             self.propertiesManager.userIp = properties.ip
             self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
             self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
