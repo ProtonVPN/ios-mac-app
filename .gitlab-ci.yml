@@ -64,6 +64,7 @@ core_ios_unit_tests:
     - iOS_ARM
   script:
     - fastlane ios_core_test
+    - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
   artifacts:
     reports:
       junit:
@@ -76,6 +77,7 @@ core_macos_unit_tests:
   script:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - fastlane macos_core_test
+    - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
   artifacts:
     reports:
       junit:

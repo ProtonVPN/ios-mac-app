@@ -17,8 +17,10 @@
 
 desc "Run all Core iOS tests"
 lane :ios_core_test do
-  run_tests(workspace: "ProtonVPN.xcworkspace",
-          scheme: "vpncore-ios")
+  scan(scheme: "vpncore-ios", 
+    result_bundle: true,
+    skip_slack: true,
+    clean: true)
 end
 
 desc "Run all Core macOS tests"
@@ -37,10 +39,10 @@ lane :macos_core_test do
     certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
   )
 
-  run_tests(
-    workspace: "ProtonVPN.xcworkspace",
-    scheme: "vpncore-macos"
-  )
+  scan(scheme: "vpncore-macos", 
+    result_bundle: true,
+    skip_slack: true,
+    clean: true)
 
   delete_keychain(
     name: ENV["DEVELOPER_KEYCHAIN_NAME"]
