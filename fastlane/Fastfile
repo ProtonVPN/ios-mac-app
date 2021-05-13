@@ -76,9 +76,13 @@ lane :macos_app_test do
     certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
   )
 
-  run_tests(workspace: "ProtonVPN.xcworkspace",            
-            scheme: "ProtonVPN-macOS",
-            number_of_retries: 1)
+  scan(
+      scheme: "ProtonVPN-macOS",
+      clean: true,
+      result_bundle: true,
+      skip_slack: true,
+      number_of_retries: 1
+  )
 
   delete_keychain(
     name: ENV["DEVELOPER_KEYCHAIN_NAME"]

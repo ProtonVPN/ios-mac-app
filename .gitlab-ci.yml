@@ -108,6 +108,7 @@ macos_unit_tests:
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN    
     - fastlane macos_app_test
+    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
