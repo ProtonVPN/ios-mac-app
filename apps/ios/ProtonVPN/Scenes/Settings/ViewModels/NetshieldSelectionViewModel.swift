@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import UIKit
 
 class NetshieldSelectionViewModel {
     

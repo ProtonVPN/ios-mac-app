@@ -16,20 +16,12 @@
 @class LocalAgentErrorMessage;
 @class LocalAgentFeatures;
 @class LocalAgentGetMessage;
-@class LocalAgentMessageSocketImpl;
+@class LocalAgentMessageSocket;
 @class LocalAgentReason;
 @class LocalAgentStatusMessage;
 @class LocalAgentStringArray;
-@protocol LocalAgentMessageSocket;
-@class LocalAgentMessageSocket;
 @protocol LocalAgentNativeClient;
 @class LocalAgentNativeClient;
-
-@protocol LocalAgentMessageSocket <NSObject>
-- (void)close;
-- (NSString* _Nonnull)receive:(NSError* _Nullable* _Nullable)error;
-- (BOOL)send:(NSString* _Nullable)p0 error:(NSError* _Nullable* _Nullable)error;
-@end
 
 @protocol LocalAgentNativeClient <NSObject>
 - (void)log:(NSString* _Nullable)text;
@@ -56,6 +48,9 @@
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nonnull instancetype)init;
+/**
+ * States
+ */
 @property (nonatomic) NSString* _Nonnull stateConnecting;
 @property (nonatomic) NSString* _Nonnull stateConnected;
 @property (nonatomic) NSString* _Nonnull stateSoftJailed;
@@ -65,6 +60,17 @@
 @property (nonatomic) NSString* _Nonnull stateServerCertificateError;
 @property (nonatomic) NSString* _Nonnull stateClientCertificateError;
 @property (nonatomic) NSString* _Nonnull stateDisconnected;
+/**
+ * Error codes
+ */
+@property (nonatomic) long errorCodeRestrictedServer;
+@property (nonatomic) long errorCodeCertificateRevoked;
+@property (nonatomic) long errorCodeCertificateExpired;
+@property (nonatomic) long errorCodeMaxSessions;
+@property (nonatomic) long errorCodeServerError;
+@property (nonatomic) long errorCodePolicyViolation;
+@property (nonatomic) long errorCodeUserTorrentNotAllowed;
+@property (nonatomic) long errorCodeUserBadBehavior;
 @end
 
 @interface LocalAgentErrorMessage : NSObject <goSeqRefInterface> {
@@ -104,16 +110,16 @@
 - (nonnull instancetype)init;
 @end
 
-@interface LocalAgentMessageSocketImpl : NSObject <goSeqRefInterface, LocalAgentMessageSocket> {
+@interface LocalAgentMessageSocket : NSObject <goSeqRefInterface> {
 }
 @property(strong, readonly) _Nonnull id _ref;
 
 - (nonnull instancetype)initWithRef:(_Nonnull id)ref;
 - (nonnull instancetype)init;
-@property (nonatomic) id<LocalAgentMessageSocket> _Nullable messageSocket;
-- (void)close;
-- (NSString* _Nonnull)receive:(NSError* _Nullable* _Nullable)error;
-- (BOOL)send:(NSString* _Nullable)msg error:(NSError* _Nullable* _Nullable)error;
+// skipped method MessageSocket.Receive with unsupported parameter or return types
+
+// skipped method MessageSocket.Send with unsupported parameter or return types
+
 @end
 
 @interface LocalAgentReason : NSObject <goSeqRefInterface> {
@@ -166,19 +172,7 @@ FOUNDATION_EXPORT LocalAgentAgentConnection* _Nullable LocalAgentNewAgentConnect
 
 FOUNDATION_EXPORT LocalAgentFeatures* _Nullable LocalAgentNewFeatures(void);
 
-@class LocalAgentMessageSocket;
-
 @class LocalAgentNativeClient;
-
-@interface LocalAgentMessageSocket : NSObject <goSeqRefInterface, LocalAgentMessageSocket> {
-}
-@property(strong, readonly) _Nonnull id _ref;
-
-- (nonnull instancetype)initWithRef:(_Nonnull id)ref;
-- (void)close;
-- (NSString* _Nonnull)receive:(NSError* _Nullable* _Nullable)error;
-- (BOOL)send:(NSString* _Nullable)p0 error:(NSError* _Nullable* _Nullable)error;
-@end
 
 @interface LocalAgentNativeClient : NSObject <goSeqRefInterface, LocalAgentNativeClient> {
 }

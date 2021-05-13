@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import AppKit
 
 class PopUpViewModel: NSObject {
     
