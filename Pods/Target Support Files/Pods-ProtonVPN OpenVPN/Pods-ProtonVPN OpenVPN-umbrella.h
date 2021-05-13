@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_ProtonVPN_OpenVPNVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_ProtonVPN_OpenVPNVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:ddabe5c7ab6113db7a70ba930cc65046eb4fa022969f923f13efaf238ae3aa48
+size 336

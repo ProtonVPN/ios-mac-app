@@ -1,18 +1,3 @@
-#import "SentryCrashBinaryImageProvider.h"
-#import "SentryDefines.h"
-#import <Foundation/Foundation.h>
-
-@class SentryDebugMeta;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SentryDebugMetaBuilder : NSObject
-SENTRY_NO_INIT
-
-- (id)initWithBinaryImageProvider:(id<SentryCrashBinaryImageProvider>)binaryImageProvider;
-
-- (NSArray<SentryDebugMeta *> *)buildDebugMeta;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:d72bdd67dda1155edcde222a4f2774f588b8d31a35055f4f841678ead439e569
+size 384

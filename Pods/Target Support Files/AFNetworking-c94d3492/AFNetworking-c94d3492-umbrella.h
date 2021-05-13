@@ -1,24 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "AFNetworking.h"
-#import "AFHTTPSessionManager.h"
-#import "AFURLSessionManager.h"
-#import "AFCompatibilityMacros.h"
-#import "AFNetworkReachabilityManager.h"
-#import "AFSecurityPolicy.h"
-#import "AFURLRequestSerialization.h"
-#import "AFURLResponseSerialization.h"
-
-FOUNDATION_EXPORT double AFNetworkingVersionNumber;
-FOUNDATION_EXPORT const unsigned char AFNetworkingVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7a4641fafb24ac57e231f23b14338c6b9119f6406a4b0755adc7d0fbe8e36af9
+size 587

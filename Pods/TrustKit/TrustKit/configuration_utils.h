@@ -1,21 +1,3 @@
-/*
- 
- configuration_utils.h
- TrustKit
- 
- Copyright 2017 The TrustKit Project Authors
- Licensed under the MIT license, see associated LICENSE file for terms.
- See AUTHORS file for the list of project authors.
- 
- */
-
-#import "TSKPinningValidatorCallback.h"
-
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
-
-// Figure out if a specific domain is pinned and retrieve this domain's configuration key; returns nil if no configuration was found
-NSString * _Nullable getPinningConfigurationKeyForDomain(NSString * _Nonnull hostname , NSDictionary<NSString *, TKSDomainPinningPolicy *> * _Nonnull domainPinningPolicies);
+version https://git-lfs.github.com/spec/v1
+oid sha256:ce1d18c4d0a468b98749ba2c41adeb44c96aae3c3423c9b64c5b13af30475f61
+size 658

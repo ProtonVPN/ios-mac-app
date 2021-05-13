@@ -1,10 +1,3 @@
-framework module "WireguardSRP" {
-	header "ref.h"
-    header "Srp.objc.h"
-    header "Ed25519.objc.h"
-    header "LocalAgent.objc.h"
-    header "Universe.objc.h"
-    header "WireguardSRP.h"
-
-    export *
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:92c6526870bcd3f9f674d17bc45951f6013fe6accf78213e80af355598066fee
+size 205

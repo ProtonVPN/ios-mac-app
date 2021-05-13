@@ -1,19 +1,3 @@
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-NS_SWIFT_NAME(RequestManager)
-@protocol SentryRequestManager <NSObject>
-
-@property (nonatomic, readonly, getter=isReady) BOOL ready;
-
-- (instancetype)initWithSession:(NSURLSession *)session;
-
-- (void)addRequest:(NSURLRequest *)request
-    completionHandler:(_Nullable SentryRequestOperationFinished)completionHandler;
-
-- (void)cancelAllOperations;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:68159f3f98a5e36f17c85d4c93c6ae03805f53cbe663a4c291f5f41653d61873
+size 437

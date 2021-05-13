@@ -1,17 +1,3 @@
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-/**
- * Parses a string in the format of http date to NSDate. For more details see:
- * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Date.
- * SentryHttpDateParser is thread safe.
- */
-NS_SWIFT_NAME(HttpDateParser)
-@interface SentryHttpDateParser : NSObject
-
-- (NSDate *_Nullable)dateFromString:(NSString *)string;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:9d3591378ef73dcf1f92b71c3a427087e9d15115aacb4f4851d7dd9fa6ded9dc
+size 413

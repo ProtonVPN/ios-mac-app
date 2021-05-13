@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double AwaitKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char AwaitKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7134e7c2605e2111d88be6d4206bfe08f527d287556fe507f71a814613d0e445
+size 308

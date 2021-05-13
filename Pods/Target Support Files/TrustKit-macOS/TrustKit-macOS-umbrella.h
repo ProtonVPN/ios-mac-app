@@ -1,22 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "TrustKit.h"
-#import "TSKTrustKitConfig.h"
-#import "TSKPinningValidator.h"
-#import "TSKPinningValidatorCallback.h"
-#import "TSKPinningValidatorResult.h"
-#import "TSKTrustDecision.h"
-
-FOUNDATION_EXPORT double TrustKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char TrustKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:53fbce31cc6e98ec6e5a24736281dbdb7baae464ac00d649992ae6076a9dfd29
+size 498

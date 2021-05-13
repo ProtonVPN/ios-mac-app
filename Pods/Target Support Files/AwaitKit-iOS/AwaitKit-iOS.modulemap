@@ -1,6 +1,3 @@
-framework module AwaitKit {
-  umbrella header "AwaitKit-iOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:b4a199788196100934ad40212798ffd069047bc62d8f8ba92b4f1b81802cd403
+size 110

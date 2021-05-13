@@ -1,23 +1,3 @@
-/*
- * This file is part of the SDWebImage package.
- * (c) Olivier Poitrey <rs@dailymotion.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-#import "SDImageCoder.h"
-
-SDImageCoderOption const SDImageCoderDecodeFirstFrameOnly = @"decodeFirstFrameOnly";
-SDImageCoderOption const SDImageCoderDecodeScaleFactor = @"decodeScaleFactor";
-SDImageCoderOption const SDImageCoderDecodePreserveAspectRatio = @"decodePreserveAspectRatio";
-SDImageCoderOption const SDImageCoderDecodeThumbnailPixelSize = @"decodeThumbnailPixelSize";
-
-SDImageCoderOption const SDImageCoderEncodeFirstFrameOnly = @"encodeFirstFrameOnly";
-SDImageCoderOption const SDImageCoderEncodeCompressionQuality = @"encodeCompressionQuality";
-SDImageCoderOption const SDImageCoderEncodeBackgroundColor = @"encodeBackgroundColor";
-SDImageCoderOption const SDImageCoderEncodeMaxPixelSize = @"encodeMaxPixelSize";
-SDImageCoderOption const SDImageCoderEncodeMaxFileSize = @"encodeMaxFileSize";
-SDImageCoderOption const SDImageCoderEncodeEmbedThumbnail = @"encodeEmbedThumbnail";
-
-SDImageCoderOption const SDImageCoderWebImageContext = @"webImageContext";
+version https://git-lfs.github.com/spec/v1
+oid sha256:b74121589d2b80fc92b8a7897d8607ab7f113bded075e3276bca6b129b9e59b5
+size 1195

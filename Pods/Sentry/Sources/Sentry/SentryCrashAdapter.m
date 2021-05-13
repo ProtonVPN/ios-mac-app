@@ -1,21 +1,3 @@
-#import "SentryCrashAdapter.h"
-#import "SentryCrash.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@implementation SentryCrashAdapter
-
-- (BOOL)crashedLastLaunch
-{
-    return SentryCrash.sharedInstance.crashedLastLaunch;
-}
-
-- (NSTimeInterval)activeDurationSinceLastCrash
-{
-    return SentryCrash.sharedInstance.activeDurationSinceLastCrash;
-}
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:64478697384d6252d03fb59643623f65aac715b1aacfc60d614fdd898b67de08
+size 387

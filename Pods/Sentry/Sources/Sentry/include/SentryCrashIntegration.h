@@ -1,10 +1,3 @@
-#import "SentryIntegrationProtocol.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SentryCrashIntegration : NSObject <SentryIntegrationProtocol>
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:3b7cc925de9728f05b3d11d71cf7579ae5065467cc26cd3dc3b82efe93f68580
+size 200

@@ -1,6 +1,3 @@
-framework module Pods_ProtonVPN_OpenVPN {
-  umbrella header "Pods-ProtonVPN OpenVPN-umbrella.h"
-
-  export *
-  module * { export * }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:dddb556990b6dddc29da568d20280f64938b46a002edbc361f414de6f8dbd3a1
+size 134

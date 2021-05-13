@@ -1,0 +1,4 @@
+Pods/**/* filter=lfs diff=lfs merge=lfs -text
+Pods/* filter=lfs diff=lfs merge=lfs -text
+libraries/vpncore/Frameworks/WireguardSRP.xcframework/**/* filter=lfs diff=lfs merge=lfs -text
+libraries/vpncore/Frameworks/WireguardSRP.xcframework/* filter=lfs diff=lfs merge=lfs -text

@@ -1,26 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "fwd.h"
-#import "AnyPromise.h"
-#import "PromiseKit.h"
-#import "NSURLSession+AnyPromise.h"
-#import "NSTask+AnyPromise.h"
-#import "NSNotificationCenter+AnyPromise.h"
-#import "PMKFoundation.h"
-#import "PMKUIKit.h"
-#import "UIView+AnyPromise.h"
-#import "UIViewController+AnyPromise.h"
-
-FOUNDATION_EXPORT double PromiseKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char PromiseKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:c1d8b5943a6140772789968f27dc9f282822485b3f43002f06d91bdaa64e45b0
+size 601

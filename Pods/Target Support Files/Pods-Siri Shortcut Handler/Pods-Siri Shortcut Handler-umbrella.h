@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_Siri_Shortcut_HandlerVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Siri_Shortcut_HandlerVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:40a414c09b663f3f812470454a508d8f441bb033153b737b00a17194337c53c4
+size 344

@@ -1,5 +1,3 @@
-#import <Foundation/Foundation.h>
-@interface PodsDummy_Pods_OpenVPN_Extension : NSObject
-@end
-@implementation PodsDummy_Pods_OpenVPN_Extension
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:5ff2d0807bc755c02926beb1989eb26ee26f4f94f71aa883950df0cbff970dd8
+size 148
