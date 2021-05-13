@@ -1,0 +1,9 @@
+ProtonVPN.xcworkspace/xcuserdata
+Pods/Pods.xcodeproj/xcuserdata
+
+### OSX ###
+*.DS_Store
+.AppleDouble
+.LSOverride
+fastlane/report.xml
+fastlane/test_output

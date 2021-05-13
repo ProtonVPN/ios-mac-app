@@ -114,7 +114,7 @@ final class ChallengeAppSpecificRequestAdapter: RequestAdapter {
     }
 
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
-        guard let data = urlRequest.httpBody, var json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], var payload = json["Payload"] as? [String: Any] else {
+        guard let data = urlRequest.httpBody, var json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any], var payload = json?["Payload"] as? [String: Any] else {
             completion(.success(urlRequest))
             return
         }
@@ -123,7 +123,7 @@ final class ChallengeAppSpecificRequestAdapter: RequestAdapter {
 
         var urlRequest = urlRequest
         payload["vpn-ios-challenge"] = try? challenge.export()
-        json["Payload"] = payload
+        json!["Payload"] = payload
         urlRequest.httpBody = try? JSONSerialization.data(withJSONObject: json, options: [])
 
         completion(.success(urlRequest))

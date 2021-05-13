@@ -62,6 +62,10 @@ class WindowServiceImplementation: WindowService {
     
     init (window: UIWindow) {
         self.window = window
+
+        if ProcessInfo.processInfo.arguments.contains("UITests") {
+            window.layer.speed = 100
+        }
         
         setupAppearance()
     }

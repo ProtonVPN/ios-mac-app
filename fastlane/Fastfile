@@ -1,0 +1,80 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+
+
+desc "Run all Core iOS tests"
+lane :ios_core_test do
+  run_tests(workspace: "ProtonVPN.xcworkspace",
+          scheme: "vpncore-ios")
+end
+
+desc "Run all Core macOS tests"
+lane :macos_core_test do
+  create_keychain(
+    name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+    password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    default_keychain: false,
+    add_to_search_list: true,
+    unlock: true
+  )
+  import_certificate(
+    keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+    keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    certificate_path: 'Certificates.p12',
+    certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
+  )
+
+  run_tests(
+    workspace: "ProtonVPN.xcworkspace",
+    scheme: "vpncore-macos"
+  )
+
+  delete_keychain(
+    name: ENV["DEVELOPER_KEYCHAIN_NAME"]
+  )
+end
+
+desc "Run all iOS app tests"
+lane :ios_app_test do
+  run_tests(workspace: "ProtonVPN.xcworkspace",
+          devices: ["iPhone 11"],
+          scheme: "ProtonVPN-iOS")
+end
+
+desc "Run all Core macOS tests"
+lane :macos_app_test do
+  create_keychain(
+    name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+    password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    default_keychain: false,
+    add_to_search_list: true,
+    unlock: true
+  )
+  import_certificate(
+    keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
+    keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    certificate_path: 'Certificates.p12',
+    certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
+  )
+
+  run_tests(workspace: "ProtonVPN.xcworkspace",            
+            scheme: "ProtonVPN-macOS",
+            number_of_retries: 1)
+
+  delete_keychain(
+    name: ENV["DEVELOPER_KEYCHAIN_NAME"]
+  )
+end

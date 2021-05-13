@@ -60,6 +60,10 @@ class ProtonVPNUITests: XCTestCase {
         }
         
         window.typeKey("w", modifierFlags:[.command, .shift])
+        
+        // Make sure app is fully logged out
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Login"], handler: nil)
+        waitForExpectations(timeout: 5, handler: nil)
     }
         
     func waitForElementToDisappear(_ element: XCUIElement) -> Bool {
