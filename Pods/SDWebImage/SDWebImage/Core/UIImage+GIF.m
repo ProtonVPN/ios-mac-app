@@ -1,22 +1,3 @@
-/*
- * This file is part of the SDWebImage package.
- * (c) Olivier Poitrey <rs@dailymotion.com>
- * (c) Laurin Brandner
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-#import "UIImage+GIF.h"
-#import "SDImageGIFCoder.h"
-
-@implementation UIImage (GIF)
-
-+ (nullable UIImage *)sd_imageWithGIFData:(nullable NSData *)data {
-    if (!data) {
-        return nil;
-    }
-    return [[SDImageGIFCoder sharedCoder] decodedImageWithData:data options:0];
-}
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:d164dcb6ef87e448d1aaadf6801427e224a34c27cb9ad3c068bb298c99100a68
+size 536

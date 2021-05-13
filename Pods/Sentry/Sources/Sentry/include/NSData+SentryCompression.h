@@ -1,12 +1,3 @@
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface NSData (SentryCompression)
-
-- (NSData *_Nullable)sentry_gzippedWithCompressionLevel:(NSInteger)compressionLevel
-                                                  error:(NSError *_Nullable *_Nullable)error;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:92517db28596beb8150ad0d21f1a76ead1ec65feb0281681838f168381a108ee
+size 306

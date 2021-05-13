@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_Core_vpncore_macosTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Core_vpncore_macosTestsVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:cdd88b499e7eccb6aa707e086df7c524784826c69e3c6e47fd0a30ecf5ffb374
+size 348

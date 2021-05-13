@@ -1,14 +1,3 @@
-/*
-* This file is part of the SDWebImage package.
-* (c) Olivier Poitrey <rs@dailymotion.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
-
-#import "SDWebImageCompat.h"
-
-/// Copy the associated object from source image to target image. The associated object including all the category read/write properties.
-/// @param source source
-/// @param target target
-FOUNDATION_EXPORT void SDImageCopyAssociatedObject(UIImage * _Nullable source, UIImage * _Nullable target);
+version https://git-lfs.github.com/spec/v1
+oid sha256:4b12986020335a5b404a4f7f1384fe5898a166ea8c11fe936eb062b38cd56441
+size 550

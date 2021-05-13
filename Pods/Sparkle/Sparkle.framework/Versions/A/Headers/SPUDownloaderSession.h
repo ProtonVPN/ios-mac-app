@@ -1,20 +1,3 @@
-//
-//  SPUDownloaderSession.h
-//  Sparkle
-//
-//  Created by Deadpikle on 12/20/17.
-//  Copyright © 2017 Sparkle Project. All rights reserved.
-//
-
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
-#import "SPUDownloader.h"
-#import "SPUDownloaderProtocol.h"
-
-NS_CLASS_AVAILABLE(NSURLSESSION_AVAILABLE, 7_0)
-@interface SPUDownloaderSession : SPUDownloader <SPUDownloaderProtocol>
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:6455cb433f743f6878ad1dafd55a9100aceb492948b643b9716ff4005cbb7984
+size 428

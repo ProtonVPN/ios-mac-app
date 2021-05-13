@@ -1,17 +1,3 @@
-#import <Foundation/Foundation.h>
-
-#import "SentryDefines.h"
-#import "SentryOptions.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@protocol SentryIntegrationProtocol <NSObject>
-
-/**
- * installs the integration and returns YES if successful.
- */
-- (void)installWithOptions:(SentryOptions *)options;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:5e7a1a7a416f36bcac4b7e41b6bf0c5fd8fa12dd9434d077ffdb633efb60a36a
+size 310

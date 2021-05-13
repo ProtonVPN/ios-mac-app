@@ -1,14 +1,3 @@
-// Don't move Foundation.h. We need it here in order to have
-// TargetConditionals.h automatically imported. This is needed
-// so that `#if TARGET_OS_OSX` is working fine. If we move
-// this the SDK breaks for MacOS.
-#import <Foundation/Foundation.h>
-
-#if TARGET_OS_OSX
-#    import <AppKit/NSApplication.h>
-@interface SentryCrashExceptionApplication : NSApplication
-#else
-@interface SentryCrashExceptionApplication : NSObject
-#endif
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:5b911f0ba3ea62c6b3dd33f273b80274fd629171cb046095b27a8a2a42b1c9f4
+size 439

@@ -1,18 +1,3 @@
-#import <Foundation/NSOperation.h>
-#import <Foundation/NSThread.h>
-#import "PMKFoundation.h"
-
-@implementation NSNotificationCenter (PromiseKit)
-
-+ (AnyPromise *)once:(NSString *)name {
-    return [AnyPromise promiseWithResolverBlock:^(PMKResolver resolve) {
-        __block id identifier;
-        identifier = [[NSNotificationCenter defaultCenter] addObserverForName:name object:nil queue:[NSOperationQueue mainQueue] usingBlock:^(NSNotification *note) {
-            [[NSNotificationCenter defaultCenter] removeObserver:identifier name:name object:nil];
-            identifier = nil;
-            resolve(PMKManifold(note, note.userInfo));
-        }];
-    }];
-}
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:e45e25c899cd510a2064ee702b2486d3e0672c84e92f28acb9e39ee33143deac
+size 667

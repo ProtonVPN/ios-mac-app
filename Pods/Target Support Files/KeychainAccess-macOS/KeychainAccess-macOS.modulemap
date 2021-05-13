@@ -1,6 +1,3 @@
-framework module KeychainAccess {
-  umbrella header "KeychainAccess-macOS-umbrella.h"
-
-  export *
-  module * { export * }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:f8aead211d27c09cd3420a4f8047ce97a5626141e408985b2914089895b25c16
+size 124

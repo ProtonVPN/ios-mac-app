@@ -1,21 +1,3 @@
-/*
- * This file is part of the SDWebImage package.
- * (c) Olivier Poitrey <rs@dailymotion.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-#import <Foundation/Foundation.h>
-#import "SDWebImageCompat.h"
-
-/// This is used for operation management, but not for operation queue execute
-@interface SDImageCachesManagerOperation : NSOperation
-
-@property (nonatomic, assign, readonly) NSUInteger pendingCount;
-
-- (void)beginWithTotalCount:(NSUInteger)totalCount;
-- (void)completeOne;
-- (void)done;
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:004c88bf5acb7a25c6a789b16def1da2551a7afdf7689c1a03afe9bd12f2db8e
+size 588

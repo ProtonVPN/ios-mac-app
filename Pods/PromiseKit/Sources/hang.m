@@ -1,29 +1,3 @@
-#import "AnyPromise.h"
-#import "AnyPromise+Private.h"
-@import CoreFoundation.CFRunLoop;
-
-/**
- Suspends the active thread waiting on the provided promise.
-
- @return The value of the provided promise once resolved. 
- */
-id PMKHang(AnyPromise *promise) {
-    if (promise.pending) {
-        static CFRunLoopSourceContext context;
-
-        CFRunLoopRef runLoop = CFRunLoopGetCurrent();
-        CFRunLoopSourceRef runLoopSource = CFRunLoopSourceCreate(NULL, 0, &context);
-        CFRunLoopAddSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
-
-        promise.ensure(^{
-            CFRunLoopStop(runLoop);
-        });
-        while (promise.pending) {
-            CFRunLoopRun();
-        }
-        CFRunLoopRemoveSource(runLoop, runLoopSource, kCFRunLoopDefaultMode);
-        CFRelease(runLoopSource);
-    }
-
-    return promise.value;
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:71636126fb7b5a2667c320a3e299964e435166330f338d80d30ee1a94bf647e9
+size 835

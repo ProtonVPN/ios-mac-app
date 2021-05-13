@@ -1,19 +1,3 @@
-#import "SentryRateLimitCategory.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-NS_SWIFT_NAME(RateLimitCategoryMapper)
-@interface SentryRateLimitCategoryMapper : NSObject
-
-/** Maps an event type to the category for rate limiting.
- */
-+ (SentryRateLimitCategory)mapEventTypeToCategory:(NSString *)eventType;
-
-+ (SentryRateLimitCategory)mapEnvelopeItemTypeToCategory:(NSString *)itemType;
-
-+ (SentryRateLimitCategory)mapIntegerToCategory:(NSUInteger)value;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:3d9ec6ed28eaa6526abc452ddf4c883109ddbd96fb0a2e59ddaeaece20746bec
+size 500

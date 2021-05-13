@@ -1,22 +1,3 @@
-#import <Foundation/Foundation.h>
-
-@class SentryEvent;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SentryCrashReportConverter : NSObject
-
-@property (nonatomic, strong) NSDictionary *userContext;
-
-- (instancetype)initWithReport:(NSDictionary *)report;
-
-/**
- * Converts the report to an SentryEvent.
- *
- * @return The converted event or nil if an error occured during the conversion.
- */
-- (SentryEvent *_Nullable)convertReportToEvent;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:984cf42287caad5334dc40a9850ee70c520770e4ed2013b0abd5811c8ccc2599
+size 456

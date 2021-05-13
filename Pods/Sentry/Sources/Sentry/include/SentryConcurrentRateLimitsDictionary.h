@@ -1,21 +1,3 @@
-#import "SentryRateLimitCategory.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-/** A thread safe wrapper around a dictionary to store rate limits.
- */
-@interface SentryConcurrentRateLimitsDictionary : NSObject
-
-/**
- Adds the passed rate limit for the given category. If a rate limit already
- exists it is overwritten.
- */
-- (void)addRateLimit:(SentryRateLimitCategory)category validUntil:(NSDate *)date;
-
-/** Returns the date until the rate limit is active. */
-- (NSDate *)getRateLimitForCategory:(SentryRateLimitCategory)category;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:bbebeab7c0da5a6a5cc62e92e7f83f4ec1ac0a9b1046ea169e62e3629cb75c8a
+size 578

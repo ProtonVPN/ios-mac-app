@@ -1,15 +1,3 @@
-${PODS_ROOT}/Target Support Files/Pods-ProtonVPN-mac/Pods-ProtonVPN-mac-frameworks.sh
-${BUILT_PRODUCTS_DIR}/AFNetworking-c94d3492/AFNetworking.framework
-${BUILT_PRODUCTS_DIR}/Alamofire-macOS/Alamofire.framework
-${BUILT_PRODUCTS_DIR}/AwaitKit-macOS/AwaitKit.framework
-${BUILT_PRODUCTS_DIR}/KeychainAccess-macOS/KeychainAccess.framework
-${BUILT_PRODUCTS_DIR}/PMNetworking-macOS/PMNetworking.framework
-${BUILT_PRODUCTS_DIR}/PromiseKit.root-CorePromise-Foundation/PromiseKit.framework
-${BUILT_PRODUCTS_DIR}/ReachabilitySwift-macOS/Reachability.framework
-${BUILT_PRODUCTS_DIR}/Sentry-macOS/Sentry.framework
-${BUILT_PRODUCTS_DIR}/SwiftyBeaver-macOS/SwiftyBeaver.framework
-${BUILT_PRODUCTS_DIR}/TrustKit-macOS/TrustKit.framework
-${BUILT_PRODUCTS_DIR}/TunnelKit-macOS/TunnelKit.framework
-${BUILT_PRODUCTS_DIR}/SDWebImage/SDWebImage.framework
-${PODS_ROOT}/Sparkle/Sparkle.framework
-${PODS_XCFRAMEWORKS_BUILD_DIR}/openssl/openssl.framework/openssl
+version https://git-lfs.github.com/spec/v1
+oid sha256:976a2c66455bf86cc0f8460a3ae813bdc418c401f985ec38c99e7ababa522b39
+size 937

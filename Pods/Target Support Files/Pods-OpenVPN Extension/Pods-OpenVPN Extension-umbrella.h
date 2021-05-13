@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_OpenVPN_ExtensionVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_OpenVPN_ExtensionVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7c85820680139219efade6a68211ef404280a82e1ec2acd57085b1f968794e27
+size 336

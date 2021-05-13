@@ -1,35 +1,3 @@
-//
-//  UserDefaults+emoji.swift
-//  ProtonMail - Created on 6/19/20.
-//
-//
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonMail.
-//
-//  ProtonMail is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  ProtonMail is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-
-import Foundation
-
-extension UserDefaults {
-    static func recentlyEmoji() -> [String] {
-        guard let preferences = UserDefaults(suiteName: "com.apple.EmojiPreferences"),
-            let defaults = preferences.dictionary(forKey: "EMFDefaultsKey"),
-            let recents = defaults["EMFRecentsKey"] as? [String]
-        else {
-            return []
-        }
-        return recents
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:86c3a5022dde5b9be0983389c940273ffc27a2c4ffb42bd4a80e84d740eda545
+size 1213

@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double TunnelKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char TunnelKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:561560b9d5a8c009a6bda7487b5f0095e712b94832e9e74c9f0037de63238498
+size 310

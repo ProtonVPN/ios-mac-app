@@ -1,36 +1,3 @@
-#import "SentryException.h"
-#import "SentryMechanism.h"
-#import "SentryStacktrace.h"
-#import "SentryThread.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@implementation SentryException
-
-- (instancetype)initWithValue:(NSString *)value type:(NSString *)type
-{
-    self = [super init];
-    if (self) {
-        self.value = value;
-        self.type = type;
-    }
-    return self;
-}
-
-- (NSDictionary<NSString *, id> *)serialize
-{
-    NSMutableDictionary *serializedData = [NSMutableDictionary new];
-
-    [serializedData setValue:self.value forKey:@"value"];
-    [serializedData setValue:self.type forKey:@"type"];
-    [serializedData setValue:[self.mechanism serialize] forKey:@"mechanism"];
-    [serializedData setValue:self.module forKey:@"module"];
-    [serializedData setValue:self.thread.threadId forKey:@"thread_id"];
-    [serializedData setValue:[self.thread.stacktrace serialize] forKey:@"stacktrace"];
-
-    return serializedData;
-}
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:41712b2710a7f560116c546c409ea1d3623f39bedabc82914ca219ea5e8ad60b
+size 948
