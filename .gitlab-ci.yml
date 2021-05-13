@@ -91,6 +91,7 @@ ios_unit_tests:
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/ios/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
     - fastlane ios_app_test
+    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   artifacts:
     reports:
       junit:

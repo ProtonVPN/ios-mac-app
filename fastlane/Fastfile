@@ -51,9 +51,13 @@ end
 
 desc "Run all iOS app tests"
 lane :ios_app_test do
-  run_tests(workspace: "ProtonVPN.xcworkspace",
-          devices: ["iPhone 11"],
-          scheme: "ProtonVPN-iOS")
+    scan(
+      scheme: "ProtonVPN-iOS",
+      clean: true,
+      result_bundle: true,
+      skip_slack: true,
+      devices: ["iPhone 11"]
+    )
 end
 
 desc "Run all Core macOS tests"
