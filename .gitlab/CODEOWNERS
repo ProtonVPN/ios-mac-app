@@ -1,0 +1,3 @@
+# Gitlab code owners for this project. They will be automatically
+# requested to review pull requests unless a later match is found.
+*   @ikulman @jozevic @mflores
