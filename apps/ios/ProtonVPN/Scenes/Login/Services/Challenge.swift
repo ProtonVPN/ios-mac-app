@@ -23,7 +23,7 @@
 import Alamofire
 import Foundation
 import vpncore
-import PMChallenge
+import ProtonCore_Challenge
 import UIKit
 
 protocol ChallengeFactory {

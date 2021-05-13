@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import PMNetworking
+import ProtonCore_Doh
 
 class DoHVPN: DoH, ServerConfig {
     private let propertiesManager = PropertiesManager()

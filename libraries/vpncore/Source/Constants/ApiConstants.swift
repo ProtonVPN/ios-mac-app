@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import PMNetworking
+import ProtonCore_Doh
 #if os(iOS)
 import UIKit
 #endif
