@@ -1,0 +1,6 @@
+framework module Pods_ProtonVPNmacOSTests {
+  umbrella header "Pods-ProtonVPNmacOSTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -56,7 +56,7 @@ internal func NSLocalizedString(_ key: String, comment: String = "") -> String {
     #endif
     
     // Look for string in vpncore
-    string = NSLocalizedString(key, bundle: Bundle.vpncore, value: key, comment: comment)
+    string = NSLocalizedString(key, bundle: Bundle.main, value: key, comment: comment)
     guard string == key else {
         return string
     }
@@ -71,7 +71,7 @@ internal func NSLocalizedString(_ key: String, comment: String = "") -> String {
         return string
     }
     
-    guard let enCorePath = enPathForBundle(Bundle.vpncore),
+    guard let enCorePath = enPathForBundle(Bundle.main),
           let enCoreBundle = Bundle(path: enCorePath) else {
         return key
     }
