@@ -1,0 +1,6 @@
+framework module Pods_Core_vpncore_macosTests {
+  umbrella header "Pods-Core-vpncore-macosTests-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -53,7 +53,7 @@ public class LocalizationUtility {
     
     private func loadShortNames() {
         do {
-            let data = try Data(contentsOf: Bundle.vpncore.url(forResource: "country-names", withExtension: "plist")!)
+            let data = try Data(contentsOf: Bundle.main.url(forResource: "country-names", withExtension: "plist")!)
             let decoder = PropertyListDecoder()
             namesToShorten = try decoder.decode([String: String].self, from: data)
         } catch {

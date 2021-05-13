@@ -253,7 +253,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     }
     
     public func storeServerCertificate() throws {
-        let certificateFile = Bundle.vpncore.path(forResource: StorageKey.serverCertificate, ofType: "der")!
+        let certificateFile = Bundle.main.path(forResource: StorageKey.serverCertificate, ofType: "der")!
         let certificateData = NSData(contentsOfFile: certificateFile)!
         let certificate = SecCertificateCreateWithData(nil, certificateData)!
         

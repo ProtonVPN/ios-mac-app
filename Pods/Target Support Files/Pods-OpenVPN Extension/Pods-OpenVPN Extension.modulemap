@@ -1,0 +1,6 @@
+framework module Pods_OpenVPN_Extension {
+  umbrella header "Pods-OpenVPN Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}

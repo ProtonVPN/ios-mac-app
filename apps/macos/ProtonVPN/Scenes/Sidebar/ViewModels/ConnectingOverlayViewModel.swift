@@ -21,6 +21,7 @@
 //
 
 import vpncore
+import AppKit
 
 protocol OverlayViewModelDelegate: class {
     func stateChanged()

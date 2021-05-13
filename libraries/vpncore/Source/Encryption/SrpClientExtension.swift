@@ -26,7 +26,7 @@ import WireguardSRP
 public func SrpAuth(_ hashVersion: Int, _ userName: String, _ password: String,
                     _ salt: String, _ signedModulus: String, _ serverEphemeral: String) throws -> SrpAuth? {
     var error: NSError?
-    let outAuth = SrpNewAuth(hashVersion, userName, password.data(using: .utf8), salt, signedModulus, serverEphemeral, &error)
+    let outAuth = SrpNewAuth(hashVersion, userName, password, salt, signedModulus, serverEphemeral, &error)
     if let err = error {
         throw err
     }
@@ -35,7 +35,7 @@ public func SrpAuth(_ hashVersion: Int, _ userName: String, _ password: String,
 
 public func SrpAuthForVerifier(_ password: String, _ signedModulus: String, _ rawSalt: Data) throws -> SrpAuth? {
     var error: NSError?
-    let outAuth = SrpNewAuthForVerifier(password.data(using: .utf8), signedModulus, rawSalt, &error)
+    let outAuth = SrpNewAuthForVerifier(password, signedModulus, rawSalt, &error)
     if let err = error {
         throw err
     }
