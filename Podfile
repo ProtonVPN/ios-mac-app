@@ -3,6 +3,15 @@ workspace 'ProtonVPN'
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
+def proton_core_path
+    'git@gitlab.protontech.ch:apple/shared/protoncore.git'
+end
+
+def proton_core_branch
+    # 'main'
+    'refactor/pod_per_module'
+end
+
 def openvpn
   pod 'TunnelKit', :git => 'git@gitlab.protontech.ch:apple/vpn/tunnelkit.git', :branch => 'protonvpn2/keychain'
 end
@@ -23,7 +32,8 @@ def vpn_core
     openvpn
 
     # Core
-    pod 'PMNetworking', :git => 'git@gitlab.protontech.ch:apple/shared/pmnetworking.git', :commit => '35b8e110bb15082073be8cf6d95440da954c9365'
+    pod 'ProtonCore-Log', :git => proton_core_path, :branch => proton_core_branch
+    pod 'ProtonCore-Doh', :git => proton_core_path, :branch => proton_core_branch
 end    
 
 abstract_target 'Core' do
@@ -57,7 +67,9 @@ target 'ProtonVPN' do
   pod 'AlamofireImage', '~> 4.1'
   
   pod 'ReachabilitySwift', '5.0.0'
-  pod 'PMChallenge', :git => 'git@gitlab.protontech.ch:apple/shared/pmchallenge.git', :tag => '0.0.4'
+  
+  pod 'ProtonCore-Challenge', :git => proton_core_path, :branch => proton_core_branch
+  pod 'ProtonCore-Foundations', :git => proton_core_path, :branch => proton_core_branch
   
   target 'OpenVPN Extension' do
     openvpn

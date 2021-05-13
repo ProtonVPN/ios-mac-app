@@ -1,41 +1,16 @@
 PODS:
-  - AFNetworking (4.0.1):
-    - AFNetworking/NSURLSession (= 4.0.1)
-    - AFNetworking/Reachability (= 4.0.1)
-    - AFNetworking/Security (= 4.0.1)
-    - AFNetworking/Serialization (= 4.0.1)
-    - AFNetworking/UIKit (= 4.0.1)
-  - AFNetworking/NSURLSession (4.0.1):
-    - AFNetworking/Reachability
-    - AFNetworking/Security
-    - AFNetworking/Serialization
-  - AFNetworking/Reachability (4.0.1)
-  - AFNetworking/Security (4.0.1)
-  - AFNetworking/Serialization (4.0.1)
-  - AFNetworking/UIKit (4.0.1):
-    - AFNetworking/NSURLSession
   - Alamofire (5.3.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - AwaitKit (5.0.1):
-    - PromiseKit (~> 6)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
   - OpenSSL-Apple (1.1.1j.11)
-  - PMChallenge (0.0.4)
-  - PMNetworking (1.0.0):
-    - AFNetworking (~> 4.0)
-    - AwaitKit (~> 5.0.0)
-    - PromiseKit (~> 6.0)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
-    - PromiseKit/CorePromise
+  - ProtonCore-Challenge (1.0.0):
+    - ProtonCore-Foundations
+  - ProtonCore-Doh (1.0.0):
+    - ProtonCore-Log
+  - ProtonCore-Foundations (1.0.0)
+  - ProtonCore-Log (1.0.0)
   - ReachabilitySwift (5.0.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
@@ -67,8 +42,10 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
-  - "PMChallenge (from `git@gitlab.protontech.ch:apple/shared/pmchallenge.git`, tag `0.0.4`)"
-  - "PMNetworking (from `git@gitlab.protontech.ch:apple/shared/pmnetworking.git`, commit `35b8e110bb15082073be8cf6d95440da954c9365`)"
+  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
+  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
+  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
+  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (= 5.2.2)
@@ -79,14 +56,11 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - AFNetworking
     - Alamofire
     - AlamofireImage
-    - AwaitKit
     - GSMessages
     - KeychainAccess
     - OpenSSL-Apple
-    - PromiseKit
     - ReachabilitySwift
     - SDWebImage
     - Sentry
@@ -95,12 +69,18 @@ SPEC REPOS:
     - SwiftyBeaver
 
 EXTERNAL SOURCES:
-  PMChallenge:
-    :git: "git@gitlab.protontech.ch:apple/shared/pmchallenge.git"
-    :tag: 0.0.4
-  PMNetworking:
-    :commit: 35b8e110bb15082073be8cf6d95440da954c9365
-    :git: "git@gitlab.protontech.ch:apple/shared/pmnetworking.git"
+  ProtonCore-Challenge:
+    :branch: refactor/pod_per_module
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Doh:
+    :branch: refactor/pod_per_module
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Foundations:
+    :branch: refactor/pod_per_module
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Log:
+    :branch: refactor/pod_per_module
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -109,12 +89,18 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 CHECKOUT OPTIONS:
-  PMChallenge:
-    :git: "git@gitlab.protontech.ch:apple/shared/pmchallenge.git"
-    :tag: 0.0.4
-  PMNetworking:
-    :commit: 35b8e110bb15082073be8cf6d95440da954c9365
-    :git: "git@gitlab.protontech.ch:apple/shared/pmnetworking.git"
+  ProtonCore-Challenge:
+    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Doh:
+    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Foundations:
+    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+  ProtonCore-Log:
+    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -123,16 +109,15 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 SPEC CHECKSUMS:
-  AFNetworking: 7864c38297c79aaca1500c33288e429c3451fdce
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  AwaitKit: a6d0b0b6d603cedda8ef1c1c249b8d6730359917
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   OpenSSL-Apple: bb7c9715a259404de040f5359ed3b3170cedf8d6
-  PMChallenge: efd562984cf2c0db28e39c2d06e8336025a26633
-  PMNetworking: da1b9cbdcbe6df0f265a9228a579f149340b3fa1
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  ProtonCore-Challenge: 9c7c31dc50d141e0932deb19f0e1cf76c05c8f46
+  ProtonCore-Doh: a10003cfb4ff7c7765abb4a02bbd64613fdbc613
+  ProtonCore-Foundations: 92d7320c445f475fd9ca33255ffcf18204ed7b53
+  ProtonCore-Log: a3ffb798c2a089431a361f718ece5e0198e5ea6d
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
@@ -142,6 +127,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 1a6c0d7a3d6ceeca671eacdd38f51a7173d85c0a
+PODFILE CHECKSUM: 90e274c19beba58f97469839608251b3881204c6
 
 COCOAPODS: 1.10.1
