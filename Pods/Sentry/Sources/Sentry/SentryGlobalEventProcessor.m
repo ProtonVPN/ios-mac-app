@@ -1,27 +1,3 @@
-#import "SentryGlobalEventProcessor.h"
-#import "SentryLog.h"
-
-@implementation SentryGlobalEventProcessor
-
-+ (instancetype)shared
-{
-    static SentryGlobalEventProcessor *instance = nil;
-    static dispatch_once_t onceToken;
-    dispatch_once(&onceToken, ^{ instance = [[self alloc] initPrivate]; });
-    return instance;
-}
-
-- (instancetype)initPrivate
-{
-    if (self = [super init]) {
-        self.processors = [NSMutableArray new];
-    }
-    return self;
-}
-
-- (void)addEventProcessor:(SentryEventProcessor)newProcessor
-{
-    [self.processors addObject:newProcessor];
-}
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:96a5484bb349d440de639ee688b7ef89a174bbdd518875ad4c4da09b42a6dabb
+size 576

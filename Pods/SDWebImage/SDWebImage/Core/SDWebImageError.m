@@ -1,13 +1,3 @@
-/*
- * This file is part of the SDWebImage package.
- * (c) Olivier Poitrey <rs@dailymotion.com>
- * (c) Jamie Pinkham
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-#import "SDWebImageError.h"
-
-NSErrorDomain const _Nonnull SDWebImageErrorDomain = @"SDWebImageErrorDomain";
-NSErrorUserInfoKey const _Nonnull SDWebImageErrorDownloadStatusCodeKey = @"SDWebImageErrorDownloadStatusCodeKey";
+version https://git-lfs.github.com/spec/v1
+oid sha256:7a543fdba5fa94910a5f18b49b1a6bcc3afff4bbec3df31b904b3954928f170c
+size 473

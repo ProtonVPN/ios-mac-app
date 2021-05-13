@@ -1,31 +1,3 @@
-#import "SentryScope+Private.h"
-#import <objc/runtime.h>
-
-@implementation SentryScope (Private)
-
-@dynamic listeners;
-
-- (NSMutableArray<SentryScopeListener> *)listeners
-{
-    return objc_getAssociatedObject(self, @selector(listeners));
-}
-
-- (void)setListeners:(NSMutableArray<SentryScopeListener> *)listeners
-{
-    objc_setAssociatedObject(
-        self, @selector(listeners), listeners, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-}
-
-- (void)addScopeListener:(SentryScopeListener)listener;
-{
-    [self.listeners addObject:listener];
-}
-
-- (void)notifyListeners
-{
-    for (SentryScopeListener listener in self.listeners) {
-        listener(self);
-    }
-}
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:72549262b9a32d2d41b77746f0e228811613db0abc14c6bc8255b08cbb3f2775
+size 652

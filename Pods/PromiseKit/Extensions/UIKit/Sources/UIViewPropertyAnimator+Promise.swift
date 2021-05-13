@@ -1,14 +1,3 @@
-#if !PMKCocoaPods
-import PromiseKit
-#endif
-import UIKit
-
-@available(iOS 10, tvOS 10, *)
-public extension UIViewPropertyAnimator {
-    func startAnimation(_: PMKNamespacer) -> Guarantee<UIViewAnimatingPosition> {
-        return Guarantee {
-            addCompletion($0)
-            startAnimation()
-        }
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:c73d891ed703f3eb5af6fa67f94e0862a6722343989c5e279f1815765e076a68
+size 316

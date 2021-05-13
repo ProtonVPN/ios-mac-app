@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_Quick_Connect_WidgetVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Quick_Connect_WidgetVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:bc1c5ebcf7900aad678bc347f286c2053cead26f49c70abfcae64912d0a93d82
+size 342

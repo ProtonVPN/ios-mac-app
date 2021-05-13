@@ -1,28 +1,3 @@
-#import <Foundation/Foundation.h>
-
-#import "SentryDefines.h"
-
-@class SentrySession, SentryEnvelope;
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SentrySerialization : NSObject
-
-+ (NSData *_Nullable)dataWithJSONObject:(NSDictionary *)dictionary
-                                  error:(NSError *_Nullable *_Nullable)error;
-
-+ (NSData *_Nullable)dataWithSession:(SentrySession *)session
-                               error:(NSError *_Nullable *_Nullable)error;
-
-+ (SentrySession *_Nullable)sessionWithData:(NSData *)sessionData;
-
-// TODO: use (NSOutputStream *)outputStream
-+ (NSData *_Nullable)dataWithEnvelope:(SentryEnvelope *)envelope
-                                error:(NSError *_Nullable *_Nullable)error;
-
-// TODO: (NSInputStream *)inputStream
-+ (SentryEnvelope *_Nullable)envelopeWithData:(NSData *)data;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:892ab6a3123b13bcc076876653f55fcc4bfe4bdbbc3160cb7671d4d52d3fc529
+size 836

@@ -1,10 +1,3 @@
-/*
- * Copyright 2002-2016 The OpenSSL Project Authors. All Rights Reserved.
- *
- * Licensed under the OpenSSL license (the "License").  You may not use
- * this file except in compliance with the License.  You can obtain a copy
- * in the file LICENSE in the source distribution or at
- * https://www.openssl.org/source/license.html
- */
-
-#include <openssl/ec.h>
+version https://git-lfs.github.com/spec/v1
+oid sha256:95fb89add3bd32b6d43dcf1a51d1839b915e774d7138afaf618e690efbf414bb
+size 358

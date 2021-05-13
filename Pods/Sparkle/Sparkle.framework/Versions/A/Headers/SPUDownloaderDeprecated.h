@@ -1,13 +1,3 @@
-//
-//  SPUDownloaderDeprecated.h
-//  Sparkle
-//
-//  Created by Deadpikle on 12/20/17.
-//  Copyright © 2017 Sparkle Project. All rights reserved.
-//
-
-#import "SPUDownloader.h"
-
-@interface SPUDownloaderDeprecated : SPUDownloader <SPUDownloaderProtocol>
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:03b3c1321c2e4c7d17fc90dec8b961d57add73492bc233ea7413c289e3c5af14
+size 258

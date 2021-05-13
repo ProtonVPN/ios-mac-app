@@ -1,0 +1,2 @@
+Pods/**/* filter=lfs diff=lfs merge=lfs -text
+Pods/* filter=lfs diff=lfs merge=lfs -text

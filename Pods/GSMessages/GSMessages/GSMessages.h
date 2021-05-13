@@ -1,19 +1,3 @@
-//
-//  GSMessages.h
-//  GSMessages
-//
-//  Created by svpcadmin on 2016/01/04.
-//  Copyright © 2016年 Gesen. All rights reserved.
-//
-
-#import <UIKit/UIKit.h>
-
-//! Project version number for GSMessages.
-FOUNDATION_EXPORT double GSMessagesVersionNumber;
-
-//! Project version string for GSMessages.
-FOUNDATION_EXPORT const unsigned char GSMessagesVersionString[];
-
-// In this header, you should import all the public headers of your framework using statements like #import <GSMessages/PublicHeader.h>
-
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:575bf408a1067f397a6ef78dd00cb550fdfb425ba3f6c75ebb8f43f233bfb629
+size 501

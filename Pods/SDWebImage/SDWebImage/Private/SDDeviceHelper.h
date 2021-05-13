@@ -1,18 +1,3 @@
-/*
-* This file is part of the SDWebImage package.
-* (c) Olivier Poitrey <rs@dailymotion.com>
-*
-* For the full copyright and license information, please view the LICENSE
-* file that was distributed with this source code.
-*/
-
-#import <Foundation/Foundation.h>
-#import "SDWebImageCompat.h"
-
-/// Device information helper methods
-@interface SDDeviceHelper : NSObject
-
-+ (NSUInteger)totalMemory;
-+ (NSUInteger)freeMemory;
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:e35c4c255732e547a460f036a04d73d70da492dec31d227b2d44ac4093cc04a3
+size 423

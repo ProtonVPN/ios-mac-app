@@ -1,13 +1,3 @@
-/*
- * This file is part of the SDWebImage package.
- * (c) Olivier Poitrey <rs@dailymotion.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
-#import "SDInternalMacros.h"
-
-void sd_executeCleanupBlock (__strong sd_cleanupBlock_t *block) {
-    (*block)();
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:76f796a8dd49d17927ec682f7aabbfcba7b2f11d63ab3ca2595a1e21e72895a1
+size 344

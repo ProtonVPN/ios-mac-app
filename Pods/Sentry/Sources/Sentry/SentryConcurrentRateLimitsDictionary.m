@@ -1,36 +1,3 @@
-#import "SentryConcurrentRateLimitsDictionary.h"
-#import <Foundation/Foundation.h>
-
-@interface
-SentryConcurrentRateLimitsDictionary ()
-
-/* Key is the type and value is valid until date */
-@property (nonatomic, strong) NSMutableDictionary<NSNumber *, NSDate *> *rateLimits;
-
-@end
-
-@implementation SentryConcurrentRateLimitsDictionary
-
-- (instancetype)init
-{
-    if (self = [super init]) {
-        self.rateLimits = [[NSMutableDictionary alloc] init];
-    }
-    return self;
-}
-
-- (void)addRateLimit:(SentryRateLimitCategory)category validUntil:(NSDate *)date
-{
-    @synchronized(self.rateLimits) {
-        self.rateLimits[@(category)] = date;
-    }
-}
-
-- (NSDate *)getRateLimitForCategory:(SentryRateLimitCategory)category
-{
-    @synchronized(self.rateLimits) {
-        return self.rateLimits[@(category)];
-    }
-}
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:742abab13212aabdc65fcea185ddf3ca709db5f96df24c489eb2d193e8b03a8c
+size 818

@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double Pods_Core_vpncore_iosTestsVersionNumber;
-FOUNDATION_EXPORT const unsigned char Pods_Core_vpncore_iosTestsVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:0276a1da8262ba2b8c47c2f9ace7193d419fdf7480712e01a8c969274ba230cd
+size 344

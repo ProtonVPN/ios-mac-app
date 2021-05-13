@@ -1,23 +1,3 @@
-#import "SentryCrashMachineContext.h"
-#import "SentryCrashThread.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-/** A wrapper around SentryCrashMachineContext for testability.
- */
-@protocol SentryCrashMachineContextWrapper <NSObject>
-
-- (void)fillContextForCurrentThread:(struct SentryCrashMachineContext *)context;
-
-- (int)getThreadCount:(struct SentryCrashMachineContext *)context;
-
-- (SentryCrashThread)getThread:(struct SentryCrashMachineContext *)context withIndex:(int)index;
-
-- (void)getThreadName:(const SentryCrashThread)thread
-            andBuffer:(char *const)buffer
-         andBufLength:(int)bufLength;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:5ade7efd696d5673c1d5fd7a5b4b69932682352f46b183dae231e5d046d2789d
+size 662
