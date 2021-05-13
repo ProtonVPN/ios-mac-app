@@ -1,35 +1,3 @@
-//
-//  Extensions.swift
-//  SwiftyBeaver
-//
-//  Created by Sebastian Kreutzberger on 13.12.17.
-//  Copyright © 2017 Sebastian Kreutzberger. All rights reserved.
-//
-
-import Foundation
-
-extension String {
-    /// cross-Swift compatible characters count
-    var length: Int {
-        return self.count
-    }
-
-    /// cross-Swift-compatible first character
-    var firstChar: Character? {
-        return self.first
-    }
-
-    /// cross-Swift-compatible last character
-    var lastChar: Character? {
-        return self.last
-    }
-
-    /// cross-Swift-compatible index
-    func find(_ char: Character) -> Index? {
-        #if swift(>=5)
-            return self.firstIndex(of: char)
-        #else
-            return self.index(of: char)
-        #endif
-    }
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:3ebf221e08c8868ab34dc2fd2a096ef7a3cbae426288067d2811c9882b44e3be
+size 755

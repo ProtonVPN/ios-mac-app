@@ -1,27 +1,3 @@
-#import <Foundation/Foundation.h>
-
-@class SentryHttpDateParser;
-
-NS_ASSUME_NONNULL_BEGIN
-
-/** Parses value of HTTP header "Retry-After" which in most cases is sent in
- combination with HTTP status 429 Too Many Requests. For more details see:
- https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.37
-*/
-NS_SWIFT_NAME(RetryAfterHeaderParser)
-@interface SentryRetryAfterHeaderParser : NSObject
-
-- (instancetype)initWithHttpDateParser:(SentryHttpDateParser *)httpDateParser;
-
-/** Parses the HTTP header into a NSDate.
-
- @param retryAfterHeader The header value.
-
- @return NSDate representation of Retry-After. If the date can't be parsed nil
- is returned.
-*/
-- (NSDate *_Nullable)parse:(NSString *_Nullable)retryAfterHeader;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:2708b224ab55a84b4095c59c0e7273724305e91022bc2bd7da8a8f563c10e166
+size 759

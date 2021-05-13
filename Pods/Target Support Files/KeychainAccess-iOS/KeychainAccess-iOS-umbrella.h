@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double KeychainAccessVersionNumber;
-FOUNDATION_EXPORT const unsigned char KeychainAccessVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:9bd926204be6db1cead67ecc631c6fee2a2290e5009a2a969aaeeba6a60610e4
+size 320

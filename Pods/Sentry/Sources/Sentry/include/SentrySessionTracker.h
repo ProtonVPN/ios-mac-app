@@ -1,19 +1,3 @@
-#import <Foundation/Foundation.h>
-
-#import "SentryCurrentDateProvider.h"
-#import "SentryEvent.h"
-#import "SentryOptions.h"
-
-/**
- * Tracks sessions for release health. For more info see:
- * https://docs.sentry.io/workflow/releases/health/#session
- */
-NS_SWIFT_NAME(SessionTracker)
-@interface SentrySessionTracker : NSObject
-SENTRY_NO_INIT
-
-- (instancetype)initWithOptions:(SentryOptions *)options
-            currentDateProvider:(id<SentryCurrentDateProvider>)currentDateProvider;
-- (void)start;
-- (void)stop;
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:a62d0a90f1c85cf84e23aafa185e036f128220f20b0172b97425681d3b6906e6
+size 514

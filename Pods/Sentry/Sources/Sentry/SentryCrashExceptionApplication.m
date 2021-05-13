@@ -1,28 +1,3 @@
-#import "SentryCrashExceptionApplication.h"
-#import "SentryCrash.h"
-#import "SentryDefines.h"
-#import "SentrySDK.h"
-
-@implementation SentryCrashExceptionApplication
-
-#if TARGET_OS_OSX
-
-- (void)reportException:(NSException *)exception
-{
-    [[NSUserDefaults standardUserDefaults]
-        registerDefaults:@{ @"NSApplicationCrashOnExceptions" : @YES }];
-    if (nil != SentryCrash.sharedInstance.uncaughtExceptionHandler && nil != exception) {
-        SentryCrash.sharedInstance.uncaughtExceptionHandler(exception);
-    }
-    [super reportException:exception];
-}
-
-- (void)_crashOnException:(NSException *)exception
-{
-    [SentrySDK captureException:exception];
-    abort();
-}
-
-#endif
-
-@end
+version https://git-lfs.github.com/spec/v1
+oid sha256:f4da384b289759368db9889870330c254d7467d99f6fc2fa6814ec3e8bb2ffb2
+size 688

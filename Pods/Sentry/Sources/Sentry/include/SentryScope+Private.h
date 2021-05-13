@@ -1,18 +1,3 @@
-#import <Foundation/Foundation.h>
-
-#import "SentryScope.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-typedef void (^SentryScopeListener)(SentryScope *scope);
-
-@interface SentryScope (Private)
-
-@property (nonatomic, retain) NSMutableArray<SentryScopeListener> *listeners;
-
-- (void)addScopeListener:(SentryScopeListener)listener;
-- (void)notifyListeners;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:4fd519d85759b7e17fabba1fe63aefaf4d6de3818ba0601a0071120c0dfd3719
+size 366

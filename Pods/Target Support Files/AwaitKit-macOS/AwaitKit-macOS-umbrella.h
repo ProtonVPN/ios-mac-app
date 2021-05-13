@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double AwaitKitVersionNumber;
-FOUNDATION_EXPORT const unsigned char AwaitKitVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:868894267406ce8dfd5549ffda4b4919117903647ed7f11c95442ee35784b34f
+size 308

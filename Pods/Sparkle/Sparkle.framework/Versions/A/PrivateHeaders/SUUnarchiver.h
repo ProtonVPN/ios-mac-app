@@ -1,21 +1,3 @@
-//
-//  SUUnarchiver.h
-//  Sparkle
-//
-//  Created by Andy Matuschak on 3/16/06.
-//  Copyright 2006 Andy Matuschak. All rights reserved.
-//
-
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@protocol SUUnarchiverProtocol;
-
-@interface SUUnarchiver : NSObject
-
-+ (nullable id <SUUnarchiverProtocol>)unarchiverForPath:(NSString *)path updatingHostBundlePath:(nullable NSString *)hostPath decryptionPassword:(nullable NSString *)decryptionPassword;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:4906006a74ed9725f5e4225aa63e6d0db84110cb6043b64d766a528a3d3eb43e
+size 483

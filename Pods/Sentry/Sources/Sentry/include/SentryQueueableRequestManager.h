@@ -1,12 +1,3 @@
-#import <Foundation/Foundation.h>
-
-#import "SentryDefines.h"
-#import "SentryRequestManager.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface SentryQueueableRequestManager : NSObject <SentryRequestManager>
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:378fc9b5222692003cec6bcc73d321fc9c597bef277b2a61d436dba674825a0a
+size 224

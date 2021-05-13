@@ -1,16 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-
-FOUNDATION_EXPORT double AlamofireImageVersionNumber;
-FOUNDATION_EXPORT const unsigned char AlamofireImageVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:b167de35ac70c73f3528938f25e08d2a7c997b229966c6eeecfb36b1f1106ce8
+size 320

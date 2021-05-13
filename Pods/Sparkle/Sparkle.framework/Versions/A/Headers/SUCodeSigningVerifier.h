@@ -1,26 +1,3 @@
-//
-//  SUCodeSigningVerifier.h
-//  Sparkle
-//
-//  Created by Andy Matuschak on 7/5/12.
-//
-//
-
-#ifndef SUCODESIGNINGVERIFIER_H
-#define SUCODESIGNINGVERIFIER_H
-
-#if __has_feature(modules)
-@import Foundation;
-#else
-#import <Foundation/Foundation.h>
-#endif
-#import "SUExport.h"
-
-SU_EXPORT @interface SUCodeSigningVerifier : NSObject
-+ (BOOL)codeSignatureAtBundleURL:(NSURL *)oldBundlePath matchesSignatureAtBundleURL:(NSURL *)newBundlePath error:(NSError  **)error;
-+ (BOOL)codeSignatureIsValidAtBundleURL:(NSURL *)bundlePath error:(NSError **)error;
-+ (BOOL)bundleAtURLIsCodeSigned:(NSURL *)bundlePath;
-+ (NSDictionary *)codeSignatureInfoAtBundleURL:(NSURL *)bundlePath;
-@end
-
-#endif
+version https://git-lfs.github.com/spec/v1
+oid sha256:3cfc2aaa57da47c87121f0f660429d573c8337890155dba5e791c30042f143b5
+size 681

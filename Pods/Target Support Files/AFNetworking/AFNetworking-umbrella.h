@@ -1,34 +1,3 @@
-#ifdef __OBJC__
-#import <UIKit/UIKit.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
-#import "AFNetworking.h"
-#import "AFHTTPSessionManager.h"
-#import "AFURLSessionManager.h"
-#import "AFCompatibilityMacros.h"
-#import "AFNetworkReachabilityManager.h"
-#import "AFSecurityPolicy.h"
-#import "AFURLRequestSerialization.h"
-#import "AFURLResponseSerialization.h"
-#import "AFAutoPurgingImageCache.h"
-#import "AFImageDownloader.h"
-#import "AFNetworkActivityIndicatorManager.h"
-#import "UIActivityIndicatorView+AFNetworking.h"
-#import "UIButton+AFNetworking.h"
-#import "UIImageView+AFNetworking.h"
-#import "UIKit+AFNetworking.h"
-#import "UIProgressView+AFNetworking.h"
-#import "UIRefreshControl+AFNetworking.h"
-#import "WKWebView+AFNetworking.h"
-
-FOUNDATION_EXPORT double AFNetworkingVersionNumber;
-FOUNDATION_EXPORT const unsigned char AFNetworkingVersionString[];
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:8bf8ce2eb48e8effb35e05a9bb36ca60493a27edc8c7bdf90010baee0083843a
+size 967

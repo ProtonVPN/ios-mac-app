@@ -1,18 +1,3 @@
-#!/bin/bash
-set -e
-set -o pipefail
-if [ "$#" -ne 2 ]; then
-  echo "Usage: $0 update_archive_file dsa_priv.pem"
-  echo "This is an old DSA signing script for deprecated DSA keys."
-  echo "Do not use this for new applications."
-  exit 1
-fi
-openssl=/usr/bin/openssl
-version=`$openssl version`
-if [[ $version =~ "OpenSSL 0.9" ]]; then
-	# pre-10.13 system: Fall back to OpenSSL DSS1 digest because it does not like the -sha1 option
-	$openssl dgst -sha1 -binary < "$1" | $openssl dgst -dss1 -sign "$2" | $openssl enc -base64
-else
-	# 10.13 and later: Use LibreSSL SHA1 digest
-	$openssl dgst -sha1 -binary < "$1" | $openssl dgst -sha1 -sign "$2" | $openssl enc -base64
-fi
+version https://git-lfs.github.com/spec/v1
+oid sha256:3f73009252ee385e34d476e77a1c0ccf78195cd982ba3e243975bccc3bb414db
+size 664

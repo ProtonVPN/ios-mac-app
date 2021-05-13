@@ -1,33 +1,3 @@
-#import "SentryLog.h"
-#import "SentryClient.h"
-#import "SentrySDK.h"
-
-NS_ASSUME_NONNULL_BEGIN
-
-@implementation SentryLog
-
-+ (void)logWithMessage:(NSString *)message andLevel:(SentryLogLevel)level
-{
-    SentryLogLevel defaultLevel = kSentryLogLevelError;
-    if (SentrySDK.logLevel > 0) {
-        defaultLevel = SentrySDK.logLevel;
-    }
-    if (level <= defaultLevel && level != kSentryLogLevelNone) {
-        NSLog(@"Sentry - %@:: %@", [self.class logLevelToString:level], message);
-    }
-}
-
-+ (NSString *)logLevelToString:(SentryLogLevel)level
-{
-    switch (level) {
-    case kSentryLogLevelDebug:
-        return @"Debug";
-    case kSentryLogLevelVerbose:
-        return @"Verbose";
-    default:
-        return @"Error";
-    }
-}
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:07903a4b457708ac09bae79d33e1dfb7376f7ff958d0b7b73904ea45d78a22bf
+size 759

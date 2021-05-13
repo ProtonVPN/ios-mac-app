@@ -1,31 +1,3 @@
-//
-//  HumanVerifyService.swift
-//  Pods
-//
-//  Created on 5/22/20.
-//
-//
-//  Copyright (c) 2019 Proton Technologies AG
-//
-//  This file is part of ProtonMail.
-//
-//  ProtonMail is free software: you can redistribute it and/or modify
-//  it under the terms of the GNU General Public License as published by
-//  the Free Software Foundation, either version 3 of the License, or
-//  (at your option) any later version.
-//
-//  ProtonMail is distributed in the hope that it will be useful,
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//  GNU General Public License for more details.
-//
-//  You should have received a copy of the GNU General Public License
-//  along with ProtonMail.  If not, see <https://www.gnu.org/licenses/>.
-
-import Foundation
-
-// HumanVerifyService
-protocol HumanVerifyService: Service {
-    func someFeature() -> String
-
-}
+version https://git-lfs.github.com/spec/v1
+oid sha256:5d1a8161d0dc9bae57803fe90485a3dc4be87764ca26ad132a07f34fbc26472f
+size 931

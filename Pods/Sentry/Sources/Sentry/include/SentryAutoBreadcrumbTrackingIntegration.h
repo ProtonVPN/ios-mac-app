@@ -1,13 +1,3 @@
-#import "SentryIntegrationProtocol.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-/**
- * This automatically adds breadcrumbs for different user actions.
- */
-@interface SentryAutoBreadcrumbTrackingIntegration : NSObject <SentryIntegrationProtocol>
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:6bf815dd3bb1d0ed2aef05ba9edfa1018f16c64045835dc7f8471f6c1a47d0e8
+size 292

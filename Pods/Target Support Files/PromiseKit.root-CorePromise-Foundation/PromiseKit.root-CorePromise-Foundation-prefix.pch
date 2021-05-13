@@ -1,12 +1,3 @@
-#ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#else
-#ifndef FOUNDATION_EXPORT
-#if defined(__cplusplus)
-#define FOUNDATION_EXPORT extern "C"
-#else
-#define FOUNDATION_EXPORT extern
-#endif
-#endif
-#endif
-
+version https://git-lfs.github.com/spec/v1
+oid sha256:7ccb6bebb3581f184d84297201431c1d75e0123eeb61b6e324e4b5c2d0a6ac78
+size 195

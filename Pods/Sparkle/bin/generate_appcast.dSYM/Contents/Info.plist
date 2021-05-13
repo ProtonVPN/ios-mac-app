@@ -1,20 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-//Apple Computer//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-<plist version="1.0">
-	<dict>
-		<key>CFBundleDevelopmentRegion</key>
-		<string>English</string>
-		<key>CFBundleIdentifier</key>
-		<string>com.apple.xcode.dsym.generate_appcast</string>
-		<key>CFBundleInfoDictionaryVersion</key>
-		<string>6.0</string>
-		<key>CFBundlePackageType</key>
-		<string>dSYM</string>
-		<key>CFBundleSignature</key>
-		<string>????</string>
-		<key>CFBundleShortVersionString</key>
-		<string>1.0</string>
-		<key>CFBundleVersion</key>
-		<string>1</string>
-	</dict>
-</plist>
+version https://git-lfs.github.com/spec/v1
+oid sha256:fde6a362df398f439af7ff94bafd1cd631f12cc9f78c0f6bd325679106ce3700
+size 645

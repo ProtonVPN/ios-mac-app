@@ -1,24 +1,3 @@
-#import "SentryRateLimits.h"
-#import <Foundation/Foundation.h>
-
-@class SentryRetryAfterHeaderParser;
-@class SentryRateLimitParser;
-
-NS_ASSUME_NONNULL_BEGIN
-
-/**
- Parses HTTP responses from the Sentry server for rate limits and stores them
- in memory. The server can communicate a rate limit either through the 429
- status code with a "Retry-After" header or through any response with a custom
- "X-Sentry-Rate-Limits" header. This class is thread safe.
-*/
-NS_SWIFT_NAME(DefaultRateLimits)
-@interface SentryDefaultRateLimits : NSObject <SentryRateLimits>
-
-- (instancetype)initWithRetryAfterHeaderParser:
-                    (SentryRetryAfterHeaderParser *)retryAfterHeaderParser
-                            andRateLimitParser:(SentryRateLimitParser *)rateLimitParser;
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:d50c1937082f2aa7bb289f41c8a36ad88e3f3e2b8ad30a20343e7f8724485a9d
+size 795

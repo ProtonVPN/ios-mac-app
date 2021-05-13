@@ -1,32 +1,3 @@
-#import "SentryCurrentDate.h"
-#import "SentryCurrentDateProvider.h"
-#import "SentryDefaultCurrentDateProvider.h"
-#import <Foundation/Foundation.h>
-
-NS_ASSUME_NONNULL_BEGIN
-
-@interface
-SentryCurrentDate ()
-
-@end
-
-@implementation SentryCurrentDate
-
-static id<SentryCurrentDateProvider> currentDateProvider;
-
-+ (NSDate *_Nonnull)date
-{
-    if (nil == currentDateProvider) {
-        currentDateProvider = [[SentryDefaultCurrentDateProvider alloc] init];
-    }
-    return [currentDateProvider date];
-}
-
-+ (void)setCurrentDateProvider:(id<SentryCurrentDateProvider>)value
-{
-    currentDateProvider = value;
-}
-
-@end
-
-NS_ASSUME_NONNULL_END
+version https://git-lfs.github.com/spec/v1
+oid sha256:c627e69be4f09775f98aa8af5281a29412293c9869be8ed8cef6a62f5e1c9583
+size 632
