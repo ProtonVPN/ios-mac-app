@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */; };
+		04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */; };
 		179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2F5ECE24133CF5914BB05 /* Pods_Core_vpncore_ios.framework */; };
 		42066EF9263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
 		42066EFA263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
@@ -151,7 +152,9 @@
 		4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
 		4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
+		4C82CE7F5F5EAB7C52A0C74C /* Pods-Core-vpncore-macosTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */; };
 		507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */; };
+		50CF7392A9299102BB1EFB0E /* Pods-Core-vpncore-macos-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */; };
 		C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B9946CE395EC9A8551017C /* Pods_Core_vpncore_macos.framework */; };
 		D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
 		D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
@@ -652,6 +655,7 @@
 		D5FFE6EF24A5D39B00F0F4A1 /* UserBaseV4Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6ED24A5D39B00F0F4A1 /* UserBaseV4Request.swift */; };
 		D5FFE6F024A5D39B00F0F4A1 /* UserBaseV4Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6ED24A5D39B00F0F4A1 /* UserBaseV4Request.swift */; };
 		D5FFE6F124A5D39B00F0F4A1 /* UserBaseV4Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6ED24A5D39B00F0F4A1 /* UserBaseV4Request.swift */; };
+		E0CB011583BEA889AC7F8553 /* Pods-Core-vpncore-iosTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */; };
 		E10155D3230988C500A4B5CB /* AppStateManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10155D0230988A600A4B5CB /* AppStateManagerImplementationTests.swift */; };
 		E10155D4230988C600A4B5CB /* AppStateManagerImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E10155D0230988A600A4B5CB /* AppStateManagerImplementationTests.swift */; };
 		E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */ = {isa = PBXBuildFile; fileRef = E1144D4C22E857F40087A685 /* prepare_obfuscated_constants.sh */; };
@@ -989,6 +993,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-ios-metadata.plist"; sourceTree = "<group>"; };
 		14B9946CE395EC9A8551017C /* Pods_Core_vpncore_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core_vpncore_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1985A7A2814D3A45F2314A67 /* Pods-Core-vpncore-macosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1C6698E4F6F75C8FEB2FE3A3 /* Pods-Core-vpncore-macos.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.release.xcconfig"; sourceTree = "<group>"; };
@@ -1089,9 +1094,12 @@
 		66E61904240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = ru; path = ru.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		66E61905240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Intents.strings; sourceTree = "<group>"; };
 		66E61906240CFC26005E9950 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = Localization/ru.lproj/Localizable.strings; sourceTree = "<group>"; };
+		75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macos-metadata.plist"; sourceTree = "<group>"; };
+		86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-macosTests-metadata.plist"; sourceTree = "<group>"; };
 		9BC4350A67B269190E142741 /* Pods-Core-vpncore-ios.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-ios.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-ios/Pods-Core-vpncore-ios.debug.xcconfig"; sourceTree = "<group>"; };
 		9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core_vpncore_iosTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
+		B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-iosTests-metadata.plist"; sourceTree = "<group>"; };
 		C06FA74B404A712CB9FC055D /* Pods-Core-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
 		D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimer.swift; sourceTree = "<group>"; };
 		D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BuyPlanRequest.swift; sourceTree = "<group>"; };
@@ -1408,6 +1416,10 @@
 				1C6698E4F6F75C8FEB2FE3A3 /* Pods-Core-vpncore-macos.release.xcconfig */,
 				1985A7A2814D3A45F2314A67 /* Pods-Core-vpncore-macosTests.debug.xcconfig */,
 				EA4DEB81BCB1EC4098C3F10E /* Pods-Core-vpncore-macosTests.release.xcconfig */,
+				0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */,
+				75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */,
+				B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */,
+				86C5C3DFC45D967302ACFBB2 /* Pods-Core-vpncore-macosTests-metadata.plist */,
 			);
 			name = Pods;
 			path = ../../Pods;
@@ -2528,6 +2540,7 @@
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				E1144D4D22E857F40087A685 /* prepare_obfuscated_constants.sh in Resources */,
 				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
+				04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2540,6 +2553,7 @@
 				D5A8812A22CE06EB009B63D1 /* test_log_1.log in Resources */,
 				E1B828B924ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */,
 				D5A8812D22CE06F6009B63D1 /* test_log_2.log in Resources */,
+				E0CB011583BEA889AC7F8553 /* Pods-Core-vpncore-iosTests-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2552,6 +2566,7 @@
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
 				E1B6A33124AC5C050004322A /* ProtonVPN_ike_root.der in Resources */,
 				E1C99F5021C3C56600C54333 /* Localizable.strings in Resources */,
+				50CF7392A9299102BB1EFB0E /* Pods-Core-vpncore-macos-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2565,6 +2580,7 @@
 				D51FBDD123E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
 				E1B828B824ACB5380070C53C /* ProtonVPN_ike_root.der in Resources */,
 				D5A8812E22CE06F6009B63D1 /* test_log_2.log in Resources */,
+				4C82CE7F5F5EAB7C52A0C74C /* Pods-Core-vpncore-macosTests-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

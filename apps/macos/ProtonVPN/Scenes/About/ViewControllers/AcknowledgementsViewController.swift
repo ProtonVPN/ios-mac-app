@@ -55,7 +55,7 @@ class AcknowledgementsViewController: NSViewController {
         guard let path = Bundle.main.path(forResource: "text-template", ofType: "html"), let htmlTemplate = try? String(contentsOfFile: path) else {
             return ""
         }
-        guard let path2 = Bundle.main.path(forResource: "Pods-ProtonVPN-metadata", ofType: "plist"),
+        guard let path2 = Bundle.main.path(forResource: "Pods-ProtonVPN-mac-metadata", ofType: "plist"),
             let metadata = NSDictionary(contentsOfFile: path2),
             let libraries = metadata["specs"] as? [NSDictionary]
         else {
