@@ -12,6 +12,7 @@ This app uses CocoaPods for most dependencies. Everything is inside this reposit
 
 ## Setup
 
+- Enable [git lfs](https://git-lfs.github.com) on your machine 
 - Clone this repository
 - Configure code signing for all targets with a paid Apple developer account (required due to VPN entitlements) and change the bundle identifiers to something unique
 - Clean build folder in Xcode (`Cmd+Shift+K`)
