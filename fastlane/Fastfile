@@ -26,29 +26,11 @@ lane :ios_core_test do
 end
 
 desc "Run all Core macOS tests"
-lane :macos_core_test do
-  create_keychain(
-    name: ENV["DEVELOPER_KEYCHAIN_NAME"],
-    password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
-    default_keychain: false,
-    add_to_search_list: true,
-    unlock: true
-  )
-  import_certificate(
-    keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
-    keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
-    certificate_path: 'Certificates.p12',
-    certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
-  )
-
+lane :macos_core_test do  
   scan(scheme: "vpncore-macos", 
     result_bundle: true,
     skip_slack: true,
     clean: true)
-
-  delete_keychain(
-    name: ENV["DEVELOPER_KEYCHAIN_NAME"]
-  )
 end
 
 desc "Run all iOS app tests"
@@ -64,30 +46,36 @@ lane :ios_app_test do
 end
 
 desc "Run all Core macOS tests"
-lane :macos_app_test do
-  create_keychain(
-    name: ENV["DEVELOPER_KEYCHAIN_NAME"],
-    password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
-    default_keychain: false,
-    add_to_search_list: true,
-    unlock: true
-  )
-  import_certificate(
-    keychain_name: ENV["DEVELOPER_KEYCHAIN_NAME"],
-    keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
-    certificate_path: 'Certificates.p12',
-    certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
-  )
-
+lane :macos_app_test do 
   scan(
       scheme: "ProtonVPN-macOS",
       clean: true,
       result_bundle: true,
       skip_slack: true,
       number_of_retries: 1
-  )
+  )  
+end
 
+lane :create_macos_keychain do
+  keychain_name = ENV["CI_PIPELINE_ID"]
+  create_keychain(
+    name: keychain_name,
+    password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    default_keychain: false,
+    add_to_search_list: true,
+    unlock: true
+  )
+  import_certificate(
+    keychain_name: keychain_name,
+    keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+    certificate_path: 'Certificates.p12',
+    certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
+  )
+end
+
+lane :delete_macos_keychain do
+  keychain_name = ENV["CI_PIPELINE_ID"]
   delete_keychain(
-    name: ENV["DEVELOPER_KEYCHAIN_NAME"]
+    name: keychain_name
   )
 end

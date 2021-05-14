@@ -79,8 +79,11 @@ core_macos_unit_tests:
     - macOS_ARM
   script:
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
+    - fastlane create_macos_keychain
     - fastlane macos_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-macos.xcresult vpncore.framework
+  after_script: # Cleanup    
+    - fastlane delete_macos_keychain
   artifacts:
     reports:
       junit:
@@ -113,11 +116,13 @@ macos_unit_tests:
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE_OVPN    
+    - fastlane create_macos_keychain
     - fastlane macos_app_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-macOS.xcresult ProtonVPN.app
   after_script: # Cleanup
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
+    - fastlane delete_macos_keychain
   tags:
     - macOS_ARM
   artifacts:
