@@ -52,7 +52,7 @@ class SmsCountryCodeViewController: UIViewController {
     private func setUpSearchBar() {
         if #available(iOS 11.0, *) {
             searchController.searchResultsUpdater = self
-            searchController.dimsBackgroundDuringPresentation = false
+            searchController.obscuresBackgroundDuringPresentation = false
             searchController.searchBar.placeholder = LocalizedString.searchPhoneCountryCodePlaceholder
             searchController.searchBar.barStyle = .black
             navigationItem.searchController = searchController
