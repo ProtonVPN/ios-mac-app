@@ -3,8 +3,12 @@ workspace 'ProtonVPN'
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
+def proton_url
+  'git@' + ENV["PROTON_GIT_URL"]
+end
+
 def proton_core_path
-    'git@gitlab.protontech.ch:apple/shared/protoncore.git'
+    proton_url + ':apple/shared/protoncore.git'
 end
 
 def proton_core_branch
@@ -13,7 +17,7 @@ def proton_core_branch
 end
 
 def openvpn
-  pod 'TunnelKit', :git => 'git@gitlab.protontech.ch:apple/vpn/tunnelkit.git', :branch => 'protonvpn2/keychain'
+  pod 'TunnelKit', :git => proton_url + ':apple/vpn/tunnelkit.git', :branch => 'protonvpn2/keychain'
 end
 
 def vpn_core
