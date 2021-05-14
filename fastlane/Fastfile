@@ -17,9 +17,11 @@
 
 desc "Run all Core iOS tests"
 lane :ios_core_test do
+  simulator_name = ENV["CI_PIPELINE_ID"]
   scan(scheme: "vpncore-ios", 
     result_bundle: true,
     skip_slack: true,
+    devices: [simulator_name],
     clean: true)
 end
 
@@ -51,12 +53,13 @@ end
 
 desc "Run all iOS app tests"
 lane :ios_app_test do
+    simulator_name = ENV["CI_PIPELINE_ID"]
     scan(
       scheme: "ProtonVPN-iOS",
       clean: true,
       result_bundle: true,
       skip_slack: true,
-      devices: ["iPhone 11"]
+      devices: [simulator_name]
     )
 end
 
