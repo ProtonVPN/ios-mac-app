@@ -54,6 +54,8 @@
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7F6A56B3DF09B9572A2FB05E /* Pods_ProtonVPN_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */; };
+		844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */; };
+		851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */; };
 		8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */; };
 		CCEFA9F416993B0624BEE7E5 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */; };
 		D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
@@ -99,6 +101,7 @@
 		D5FD4C1E264C1B3A001F26CE /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
 		D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; };
 		D5FD4C20264C1E6E001F26CE /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		D97746283DCDA99D9169BA3F /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */; };
 		E1144E3E22E8D4770087A685 /* ObfuscatedConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */; };
 		E1248885220A18D2005B9A9E /* CodeSignatureComparitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */; };
 		E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1261FB8202CA45C005E9880 /* ColoredLoadButton.swift */; };
@@ -437,6 +440,8 @@
 		0663E3B7259DCB960059E88D /* SystemExtensionGuideViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewController.swift; sourceTree = "<group>"; };
 		0663E3B8259DCB960059E88D /* SystemExtensionGuideViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SystemExtensionGuideViewController.xib; sourceTree = "<group>"; };
 		0663E44C259E22CD0059E88D /* SystemExtensionGuideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemExtensionGuideViewModel.swift; sourceTree = "<group>"; };
+		07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNmacOSTests-metadata.plist"; sourceTree = "<group>"; };
+		0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-mac-metadata.plist"; sourceTree = "<group>"; };
 		10FD08319E3414E8FB8C87CA /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		175C87E18CDDBF7273E34B29 /* Pods-ProtonVPN-mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-mac.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-mac/Pods-ProtonVPN-mac.debug.xcconfig"; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
@@ -586,6 +591,7 @@
 		D5DE76AA257635F70077C610 /* SwiftChecker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwiftChecker.swift; sourceTree = "<group>"; };
 		D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
 		D5FD4C1C264C1B30001F26CE /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN OpenVPN-metadata.plist"; sourceTree = "<group>"; };
 		E10FA80422C21AC100CD03B2 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
@@ -1004,6 +1010,9 @@
 				EA59C9C32908DDB8FE7B9AC0 /* Pods-ProtonVPNmacOSTests.debug.xcconfig */,
 				8EADC60F8DA3F42CF288EDAE /* Pods-ProtonVPNmacOSTests.release.xcconfig */,
 				C331B0EA32CEDA55E73C5228 /* Pods-ProtonVPNmacOSTests.staging.xcconfig */,
+				0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */,
+				D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */,
+				07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */,
 			);
 			name = Pods;
 			path = ../../Pods;
@@ -2338,6 +2347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D97746283DCDA99D9169BA3F /* Pods-ProtonVPN OpenVPN-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2354,6 +2364,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E13F4CFE20FCC98800D985C2 /* ServerManagerTestServers.json in Resources */,
+				844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2439,6 +2450,7 @@
 				E180D15621258EF500F4D1C7 /* TrialAboutToExpire.xib in Resources */,
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
+				851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

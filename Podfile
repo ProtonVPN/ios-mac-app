@@ -3,14 +3,6 @@ workspace 'ProtonVPN'
 # ignore all warnings from all pods
 inhibit_all_warnings!
 
-post_install do |installer|
-  installer.pods_project.targets.each do |target|
-    target.build_configurations.each do |config|
-      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'
-    end
-  end
-end
-
 def proton_core_path
     'git@gitlab.protontech.ch:apple/shared/protoncore.git'
 end
@@ -120,4 +112,21 @@ target 'ProtonVPNmacOSTests' do
   project 'apps/macOS/macOS.xcodeproj'
   inherit! :search_paths
   vpn_core
+end
+
+# Other
+
+post_install do |installer|
+
+  # Create plist with info about used frameworks
+  plugin 'cocoapods-acknowledgements'
+  require 'fileutils'
+  FileUtils.cp_r('Pods/Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN-acknowledgements.markdown', 'ACKNOWLEDGEMENTS.md')
+
+
+  installer.pods_project.targets.each do |target|
+    target.build_configurations.each do |config|
+      config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'
+    end
+  end
 end
