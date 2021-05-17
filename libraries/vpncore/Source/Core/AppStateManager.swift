@@ -257,6 +257,8 @@ public class AppStateManagerImplementation: AppStateManager {
             return propertiesManager.lastIkeConnection
         case .openVpn:
             return propertiesManager.lastOpenVpnConnection
+        case .wireGuard:
+            return propertiesManager.lastWireguardConnection
         }
     }
     
@@ -310,6 +312,8 @@ public class AppStateManagerImplementation: AppStateManager {
             self.propertiesManager.lastIkeConnection = connectionConfiguration
         case .openVpn:
             self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
+        case .wireGuard:
+            #warning("Use authData for Wireguard when it is implemented")
         }
         
         vpnManager.connect(configuration: vpnManagerConfiguration, authData: authData, completion: {

@@ -514,6 +514,7 @@
 "_ikev2" = "IKEv2";
 "_tcp" = "TCP";
 "_udp" = "UDP";
+"_wireguard" = "WireGuard";
 "_view_logs" = "View Logs";
 "_logs" = "Logs";
 "_application_logs" = "Application Logs";

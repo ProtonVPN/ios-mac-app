@@ -58,6 +58,7 @@ public enum VpnProtocol {
     
     case ike
     case openVpn(TransportProtocol)
+    case wireGuard
     
     public var localizedString: String {
         var string: String
@@ -74,6 +75,8 @@ public enum VpnProtocol {
             case .undefined:
                 break
             }
+        case .wireGuard:
+            string = LocalizedString.wireguard
         }
         
         return string
@@ -94,22 +97,34 @@ public enum VpnProtocol {
             return false
         }
     }
+    
+    public var isWireGuard: Bool {
+        if case .wireGuard = self {
+            return true
+        } else {
+            return false
+        }
+    }
 
     public var authenticationType: AuthenticationType {
         #if DEBUG
         return isOpenVpn ? AuthenticationType.certificate : AuthenticationType.credentials
         #else
-        #warning("Add condition for Wireguard when implemented")
-        return .credentials
+        switch self {
+        case .wireGuard: return .certificate
+        default: return .credentials
+        }
         #endif
     }
-    
+
     public var transportProtocol: TransportProtocol {
         switch self {
         case .ike:
             return .undefined
         case .openVpn(let transportProtocol):
             return transportProtocol
+        case .wireGuard:
+            return .undefined
         }
     }
     
@@ -132,6 +147,8 @@ extension VpnProtocol: Codable {
         case 1:
             let transportProtocol = try container.decode(TransportProtocol.self, forKey: .transportProtocol)
             self = .openVpn(transportProtocol)
+        case 2:
+            self = .wireGuard
         default:
             throw CodingError.unknownValue
         }
@@ -146,6 +163,8 @@ extension VpnProtocol: Codable {
         case .openVpn(let transportProtocol):
             try container.encode(1, forKey: .rawValue)
             try container.encode(transportProtocol, forKey: .transportProtocol)
+        case .wireGuard:
+            try container.encode(2, forKey: .rawValue)
         }
     }
 }
@@ -178,6 +197,8 @@ extension VpnProtocol {
         case .openVpn(let transportProtocol):
             data[0] = 1
             transportProtocol.encode(with: aCoder)
+        case .wireGuard:
+            data[0] = 2
         }
         aCoder.encode(data, forKey: CoderKey.vpnProtocol)
     }
