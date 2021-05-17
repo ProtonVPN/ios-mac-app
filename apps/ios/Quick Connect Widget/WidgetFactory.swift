@@ -63,6 +63,8 @@ class WidgetFactory {
     var appStateManager: AppStateManager {
         let keychain = VpnKeychain()
         let alamofireWrapper = AlamofireWrapperImplementation()
+        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
         return AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
                                vpnManager: self.vpnManager,
                                alamofireWrapper: alamofireWrapper,
@@ -70,6 +72,6 @@ class WidgetFactory {
                                timerFactory: TimerFactory(),
                                propertiesManager: self.propertiesManager,
                                vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager), vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: VpnAuthenticationKeychain()))
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager), vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain))
     }
 }

@@ -36,8 +36,10 @@ class SiriHandlerViewModel {
     
     private let alertService = ExtensionAlertService()
     
-    lazy var appStateManager = {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: VpnAuthenticationKeychain()))
+    lazy var appStateManager: AppStateManager = {
+        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain))
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?
