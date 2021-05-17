@@ -39,9 +39,11 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         static let vpnCertificate = "vpnCertificate"
     }
 
-    private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
+    private let appKeychain: Keychain
 
-    public init() { }
+    public init(accessGroup: String) {
+        appKeychain = Keychain(service: CoreAppConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
+    }
 
     public func deleteKeys() {
         appKeychain[StorageKey.vpnKeys] = nil
