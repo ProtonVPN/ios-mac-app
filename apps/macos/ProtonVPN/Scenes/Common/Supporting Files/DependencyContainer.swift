@@ -78,7 +78,11 @@ final class DependencyContainer {
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
 
-    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: VpnAuthenticationKeychain())
+    private lazy var vpnAuthentication: VpnAuthentication = {
+        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)ch.protonvpn.macos")
+        return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
+    }()
 }
 
 // MARK: NavigationServiceFactory
