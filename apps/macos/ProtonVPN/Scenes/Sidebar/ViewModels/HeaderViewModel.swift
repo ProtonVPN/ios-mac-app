@@ -107,6 +107,8 @@ final class HeaderViewModel {
             case .undefined:
                 name = "OpenVPN"
             }
+        case .wireGuard:
+            name = "WireGuard"
         }
 
         return name.attributed(withColor: NSColor.protonWhite(), fontSize: 12)

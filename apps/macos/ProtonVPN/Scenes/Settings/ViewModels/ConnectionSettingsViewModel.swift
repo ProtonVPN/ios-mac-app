@@ -88,6 +88,8 @@ final class ConnectionSettingsViewModel {
         switch vpnProtocol {
         case .openVpn(let transport):
             return transport == .tcp ? 1 : 2
+        case .wireGuard:
+            return 3
         default:
             return 0
         }
@@ -127,7 +129,7 @@ final class ConnectionSettingsViewModel {
         return profileManager.allProfiles.count
     }
     
-    var protocolItemCount: Int { return 3 }
+    var protocolItemCount: Int { return 4 }
         
     // MARK: - Setters
     
@@ -164,6 +166,7 @@ final class ConnectionSettingsViewModel {
         switch index {
         case 1: transportProtocol = .openVpn(.tcp)
         case 2: transportProtocol = .openVpn(.udp)
+        case 3: transportProtocol = .wireGuard
         default:
             transportProtocol = .ike
         }
@@ -308,6 +311,8 @@ final class ConnectionSettingsViewModel {
             transport = " (" + LocalizedString.tcp + ")"
         case 2:
             transport = " (" + LocalizedString.udp + ")"
+        case 3:
+            return LocalizedString.wireguard.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         default:
             return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         }

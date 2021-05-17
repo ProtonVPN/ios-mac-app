@@ -35,6 +35,7 @@ final class DependencyContainer {
     private var appGroup: String {
         return "\(teamId)group.ch.protonvpn.mac"
     }
+    private let wireguardVpnExtensionBundleIdentifier = "ch.protonvpn.mac.WireGuard-Extension"
     
     // Singletons
     private lazy var navigationService = NavigationService(self)
@@ -42,6 +43,9 @@ final class DependencyContainer {
                                                                  openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
                                                                                                         appGroup: appGroup,
                                                                                                         propertiesManager: makePropertiesManager()),
+                                                                 wireguardProtocolFactory: WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
+                                                                                                                    appGroup: appGroup,
+                                                                                                                    propertiesManager: makePropertiesManager()),
                                                                  appGroup: appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
                                                                  vpnKeychain: vpnKeychain,
