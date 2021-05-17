@@ -22,6 +22,7 @@
 
 import Foundation
 import WireguardSRP
+import Reachability
 
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(code: Int)
@@ -45,10 +46,22 @@ protocol LocalAgentFactory {
 final class GoLocalAgent: LocalAgent {
     private var agent: LocalAgentAgentConnection?
     private let client: LocalAgentNativeClient
+    private let reachability: Reachability?
 
     init() {
+        reachability = try? Reachability()
+
         client = LocalAgentNativeClient()
         client.delegate = self
+
+        try? reachability?.startNotifier()
+
+        // giving the agent a hint when connectivity is restored in case it is stuck in a back off
+        reachability?.whenReachable = { [weak self] _ in self?.agent?.setConnectivity(true) }
+    }
+
+    deinit {
+        reachability?.stopNotifier()
     }
 
     var state: LocalAgentState? {
