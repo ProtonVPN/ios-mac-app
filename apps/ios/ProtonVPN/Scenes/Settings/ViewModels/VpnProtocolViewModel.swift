@@ -45,6 +45,10 @@ class VpnProtocolViewModel {
                 switchVpnProtocol(.ike)
                 return true
             }),
+            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol] in
+                switchVpnProtocol(.wireGuard)
+                return true
+            }),
             .checkmarkStandard(title: LocalizedString.openVpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
                 switchVpnProtocol(.openVpn(openVpnTransportProtocol))
                 return true
