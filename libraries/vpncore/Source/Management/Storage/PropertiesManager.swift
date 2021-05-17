@@ -38,6 +38,7 @@ public protocol PropertiesManagerProtocol: class {
     var hasConnected: Bool { get set }
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
+    var lastWireguardConnection: ConnectionConfiguration? { get set }
     var lastConnectedTimeStamp: Double { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
     var lastUserAccountPlan: AccountPlan? { get set }
@@ -94,6 +95,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let connectOnDemand = "ConnectOnDemand"
         static let lastIkeConnection = "LastIkeConnection"
         static let lastOpenVpnConnection = "LastOpenVPNConnection"
+        static let lastWireguardConnection = "LastWireguardConnection"
         static let lastConnectedTimeStamp = "LastConnectedTimeStamp"
         static let lastConnectionRequest = "LastConnectionRequest"
         static let lastUserAccountPlan = "LastUserAccountPlan"
@@ -215,6 +217,22 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             let data = try? PropertyListEncoder().encode(newValue)
             Storage.setValue(data, forKey: Keys.lastOpenVpnConnection)
+        }
+    }
+    
+    public var lastWireguardConnection: ConnectionConfiguration? {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.lastWireguardConnection) else { return nil }
+            
+            do {
+                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
+            } catch {
+                return nil
+            }
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastWireguardConnection)
         }
     }
     
@@ -585,6 +603,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         secureCoreToggle = false
         lastIkeConnection = nil
         lastOpenVpnConnection = nil
+        lastWireguardConnection = nil
         lastConnectedTimeStamp = -1
         trialWelcomed = false
         warnedTrialExpiring = false

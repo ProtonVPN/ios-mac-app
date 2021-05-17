@@ -54,6 +54,8 @@ public class VpnManager: VpnManagerProtocol {
     
     private var ikeProtocolFactory: VpnProtocolFactory
     private var openVpnProtocolFactory: VpnProtocolFactory
+    private var wireguardProtocolFactory: VpnProtocolFactory
+    
     private var currentVpnProtocolFactory: VpnProtocolFactory? {
         guard let currentVpnProtocol = currentVpnProtocol else {
             return nil
@@ -64,6 +66,8 @@ public class VpnManager: VpnManagerProtocol {
             return ikeProtocolFactory
         case .openVpn:
             return openVpnProtocolFactory
+        case .wireGuard:
+            return wireguardProtocolFactory
         }
     }
     
@@ -101,9 +105,10 @@ public class VpnManager: VpnManagerProtocol {
     let vpnKeychain: VpnKeychainProtocol
     var localAgent: LocalAgent?
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
+        self.wireguardProtocolFactory = wireguardProtocolFactory
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
@@ -225,6 +230,9 @@ public class VpnManager: VpnManagerProtocol {
             ikeProtocolFactory.logs(completion: completion)
         case .openVpn:
             openVpnProtocolFactory.logs(completion: completion)
+        case .wireGuard:
+            #warning("Implement!")
+            completion(nil)
         }
     }
     
@@ -234,6 +242,9 @@ public class VpnManager: VpnManagerProtocol {
             ikeProtocolFactory.logFile(completion: completion)
         case .openVpn:
             openVpnProtocolFactory.logFile(completion: completion)
+        case .wireGuard:
+            #warning("Implement!")
+            completion(nil)
         }
     }
     
