@@ -82,7 +82,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         case .ike:
             propertiesManager.vpnProtocol = vpnProtocol
             
-        case .openVpn:            
+        case .openVpn:
             let requestExtensionCallback: (() -> Void) = {
                 self.systemExtensionManager.requestExtensionInstall { result in
                     if case .success = result {
@@ -101,6 +101,10 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                     self.alertService.push(alert: SystemExtensionTourAlert())
                 }, cancel: nil, dismiss: nil))
             }
+        
+        case .wireGuard:
+            #warning("Implement proper logic")
+            propertiesManager.vpnProtocol = vpnProtocol
         }
         
     }

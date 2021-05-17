@@ -154,6 +154,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             needsInstallExtension = propertiesManager.smartProtocol
         case .openVpn:
             needsInstallExtension = true
+        case .wireGuard:
+            #warning("Check what extensions should be installed")
+            needsInstallExtension = true
         }
         guard needsInstallExtension else {
             return
