@@ -474,7 +474,6 @@
 		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
 		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
-		4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42918CF1263836410065992E /* CountriesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionHeaderView.swift; sourceTree = "<group>"; };
 		42918CF8263836530065992E /* CountriesSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountriesSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -525,7 +524,6 @@
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
-		D557D4BA264AC188007E4396 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D557D541264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D557D543264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D557D545264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -607,7 +605,6 @@
 		D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
 		D5FD4C1C264C1B30001F26CE /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN OpenVPN-metadata.plist"; sourceTree = "<group>"; };
-		E10FA80422C21AC100CD03B2 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSignatureComparitor.swift; sourceTree = "<group>"; };
@@ -1001,13 +998,10 @@
 				E94EFFEF2653D0A60024DBFB /* Sparkle.framework */,
 				E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */,
 				D5FD4C1C264C1B30001F26CE /* vpncore.framework */,
-				D557D4BA264AC188007E4396 /* vpncore.framework */,
-				E10FA80422C21AC100CD03B2 /* Srp.framework */,
 				EE182C551F617C0000F3BA4C /* NetworkExtension.framework */,
 				EEFA87651F6170F200DE880D /* MapKit.framework */,
 				EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */,
 				7518A5EF1EEF362900E1EB2B /* libc++.tbd */,
-				4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */,
 				C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */,
 				029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */,
 				AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */,
