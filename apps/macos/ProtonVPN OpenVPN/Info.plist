@@ -36,5 +36,7 @@
 			<string>$(PRODUCT_MODULE_NAME).PacketTunnelProvider</string>
 		</dict>
 	</dict>
+    <key>SUPublicEDKey</key>
+    <string>y7wt2MmWReFFUiBA7kUO2yeATskHETavgiQe9Ib2+7g=</string>
 </dict>
 </plist>
