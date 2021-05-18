@@ -112,7 +112,6 @@ target 'ProtonVPN-mac' do
   vpn_core
 
   # Third party pods
-  pod 'Sparkle', '1.24.0'
   pod 'SDWebImage', '5.10.0'
 
 end
