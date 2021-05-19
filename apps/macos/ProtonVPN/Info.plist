@@ -71,5 +71,7 @@
 	<string>https://protonvpn.com/download/macos-update2.xml</string>
 	<key>SUPublicDSAKeyFile</key>
 	<string>dsa_pub.pem</string>
+	<key>SUPublicEDKey</key>
+	<string>y7wt2MmWReFFUiBA7kUO2yeATskHETavgiQe9Ib2+7g=</string>
 </dict>
 </plist>
