@@ -29,7 +29,12 @@ import vpncore
 final class DependencyContainer {
     
     private let openVpnExtensionBundleIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
-    private let appGroup = "J6S6Q257EK.group.ch.protonvpn.mac"
+    private var teamId: String {
+        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+    }
+    private var appGroup: String {
+        return "\(teamId)group.ch.protonvpn.mac"
+    }
     
     // Singletons
     private lazy var navigationService = NavigationService(self)
@@ -38,6 +43,7 @@ final class DependencyContainer {
                                                                                                         appGroup: appGroup,
                                                                                                         propertiesManager: makePropertiesManager()),
                                                                  appGroup: appGroup,
+                                                                 vpnAuthentication: vpnAuthentication,
                                                                  alertService: macAlertService)
     
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
@@ -78,7 +84,10 @@ final class DependencyContainer {
     // Manages app updates
     private lazy var updateManager = UpdateManager(self)
 
-    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: VpnAuthenticationKeychain())
+    private lazy var vpnAuthentication: VpnAuthentication = {
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos")
+        return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
+    }()
 }
 
 // MARK: NavigationServiceFactory

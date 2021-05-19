@@ -73,7 +73,11 @@ class DependencyContainer {
 
     private lazy var challenge = CoreChallenge()
 
-    private lazy var vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: VpnAuthenticationKeychain())
+    private lazy var vpnAuthentication: VpnAuthentication = {
+        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
+        return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
+    }()
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil

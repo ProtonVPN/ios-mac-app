@@ -203,6 +203,9 @@
 		E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */; };
 		E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */; };
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
+		E94EFFF02653D0A60024DBFB /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94EFFEF2653D0A60024DBFB /* Sparkle.framework */; };
+		E94EFFF32653D10D0024DBFB /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E94EFFEF2653D0A60024DBFB /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E94EFFF62653D2260024DBFB /* org.sparkle-project.InstallerLauncher.xpc in Copy Sparkle XPC */ = {isa = PBXBuildFile; fileRef = E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
 		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
@@ -407,6 +410,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E94EFFF32653D10D0024DBFB /* Sparkle.framework in Embed Frameworks */,
 				D5FD4C20264C1E6E001F26CE /* vpncore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
@@ -420,6 +424,17 @@
 			files = (
 			);
 			name = "Copy Network Helper";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E94EFFF52653D2010024DBFB /* Copy Sparkle XPC */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/XPCServices";
+			dstSubfolderSpec = 16;
+			files = (
+				E94EFFF62653D2260024DBFB /* org.sparkle-project.InstallerLauncher.xpc in Copy Sparkle XPC */,
+			);
+			name = "Copy Sparkle XPC";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		EE8CA7AE1F06F8BB00BA829F /* Copy Starter */ = {
@@ -459,7 +474,6 @@
 		42742F952478205E00E389C8 /* KillSwitchSwift5Popup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KillSwitchSwift5Popup.swift; sourceTree = "<group>"; };
 		42742F962478205E00E389C8 /* KillSwitchSwift5Popup.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KillSwitchSwift5Popup.xib; sourceTree = "<group>"; };
 		427A1F0F24F5398900E95912 /* NotificationManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerProtocol.swift; sourceTree = "<group>"; };
-		4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		428B63C325558B5F00C90D40 /* QuickSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuickSettingButton.swift; sourceTree = "<group>"; };
 		42918CF1263836410065992E /* CountriesSectionHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountriesSectionHeaderView.swift; sourceTree = "<group>"; };
 		42918CF8263836530065992E /* CountriesSectionHeaderView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CountriesSectionHeaderView.xib; sourceTree = "<group>"; };
@@ -510,7 +524,6 @@
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D54B1E11262EF62C002BCAB7 /* ConnectingOverlayViewModelTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectingOverlayViewModelTests.swift; sourceTree = "<group>"; };
-		D557D4BA264AC188007E4396 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D557D541264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D557D543264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.stringsdict; name = de; path = de.lproj/Localizable.stringsdict; sourceTree = "<group>"; };
 		D557D545264AC337007E4396 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Intents.strings; sourceTree = "<group>"; };
@@ -592,7 +605,6 @@
 		D5F45D7B262EC16A00FB13E4 /* NSStackView+Children.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSStackView+Children.swift"; sourceTree = "<group>"; };
 		D5FD4C1C264C1B30001F26CE /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN OpenVPN-metadata.plist"; sourceTree = "<group>"; };
-		E10FA80422C21AC100CD03B2 /* Srp.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Srp.framework; path = Frameworks/Srp.framework; sourceTree = "<group>"; };
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSignatureComparitor.swift; sourceTree = "<group>"; };
@@ -697,6 +709,8 @@
 		E1FFCF79202DA24A001B8108 /* ServerInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewModel.swift; sourceTree = "<group>"; };
 		E1FFCF7F202DAF17001B8108 /* ServerInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerInfoViewController.swift; sourceTree = "<group>"; };
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
+		E94EFFEF2653D0A60024DBFB /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../macos/ProtonVPN/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = "org.sparkle-project.InstallerLauncher.xpc"; path = "../macos/ProtonVPN/Frameworks/org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
 		E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
@@ -909,6 +923,7 @@
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
 				8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */,
 				D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */,
+				E94EFFF02653D0A60024DBFB /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -980,14 +995,13 @@
 		7461E535C10E886FBC226611 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E94EFFEF2653D0A60024DBFB /* Sparkle.framework */,
+				E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */,
 				D5FD4C1C264C1B30001F26CE /* vpncore.framework */,
-				D557D4BA264AC188007E4396 /* vpncore.framework */,
-				E10FA80422C21AC100CD03B2 /* Srp.framework */,
 				EE182C551F617C0000F3BA4C /* NetworkExtension.framework */,
 				EEFA87651F6170F200DE880D /* MapKit.framework */,
 				EE8CA7B01F06F94800BA829F /* ServiceManagement.framework */,
 				7518A5EF1EEF362900E1EB2B /* libc++.tbd */,
-				4283254E726AEEE1543FDDA3 /* Pods_OpenVPN_Extension.framework */,
 				C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */,
 				029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */,
 				AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */,
@@ -2137,6 +2151,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42EF09EB257A713F00E2EDCA /* Build configuration list for PBXNativeTarget "ProtonVPN OpenVPN" */;
 			buildPhases = (
+				E94EFFF72653E0190024DBFB /* Increment Build Number Script */,
 				B33F276558A5DA22AEB268BF /* [CP] Check Pods Manifest.lock */,
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
@@ -2219,13 +2234,14 @@
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
 				490AD3FF2A46889CCE6608BD /* [CP] Embed Pods Frameworks */,
+				D5FD4C21264C1E6E001F26CE /* Embed Frameworks */,
 				E1054DC1230552C1002F8B6D /* Sign Sparkle Apps */,
+				E94EFFF52653D2010024DBFB /* Copy Sparkle XPC */,
 				EE8CA7AE1F06F8BB00BA829F /* Copy Starter */,
 				E17DE11E21FF387D008CCC13 /* Copy Network Helper */,
 				E148AE5521C2628A007AB65A /* Sentry dSYM upload */,
 				D5479534228D9BDB00639216 /* Run SwiftLint Script */,
 				42EF09E7257A713F00E2EDCA /* Embed System Extensions */,
-				D5FD4C21264C1E6E001F26CE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -2335,9 +2351,9 @@
 			targets = (
 				EED534801EEC112000013607 /* ProtonVPN-mac */,
 				EEB404C61F77F639006CF513 /* ProtonVPNStarter */,
+				42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */,
 				E15B754C20FA83CB0022C406 /* ProtonVPNmacOSTests */,
 				D5911705229F9574005829DA /* ProtonVPNmacOSUITests */,
-				42EF09DA257A713F00E2EDCA /* ProtonVPN OpenVPN */,
 			);
 		};
 /* End PBXProject section */
@@ -2653,6 +2669,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\necho \"sentry-cli: dSYM upload starting\"\nif which sentry-cli >/dev/null; then\nexport SENTRY_URL='https://sentry.protontech.ch/'\nexport SENTRY_ORG='sentry'\nexport SENTRY_PROJECT='macos-vpn-prod'\n# Add auth token to your env vars:\n# export SENTRY_AUTH_TOKEN=YOU_AUTH_TOKEN\nERROR=$(sentry-cli upload-dsym 2>&1 >/dev/null)\necho \"sentry-cli: dSYM upload complete\"\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\nfi\n";
+		};
+		E94EFFF72653E0190024DBFB /* Increment Build Number Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Increment Build Number Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		EF653936EE2C101EC65FCD60 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3094,6 +3128,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN.entitlements";
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1234;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3104,7 +3139,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 2.0.1;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
@@ -3126,6 +3161,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN-release.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1234;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3136,7 +3172,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 2.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
@@ -3157,6 +3193,7 @@
 				CODE_SIGN_ENTITLEMENTS = "ProtonVPN OpenVPN/ProtonVPN_OpenVPN-release.entitlements";
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1234;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -3167,7 +3204,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 0.1.0;
+				MARKETING_VERSION = 2.0.1;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
@@ -3315,7 +3352,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -3346,7 +3383,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3485,7 +3522,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3514,7 +3551,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3672,7 +3709,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE = "";
@@ -3712,7 +3749,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = 2.0.0;
+				MARKETING_VERSION = 2.0.1;
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;

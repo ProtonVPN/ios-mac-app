@@ -41,7 +41,7 @@ class UpdateManager: NSObject {
     private var appSessionManager: AppSessionManager?
     private let propertiesManager = PropertiesManager()
     
-    private var updater: SUUpdater
+    private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?
 
     public var currentVersion: String? {
@@ -68,34 +68,20 @@ class UpdateManager: NSObject {
     
     public init(_ factory: Factory) {
         self.factory = factory
-        updater = SUUpdater.shared()
-
         super.init()
         
-        setupUrl()
         NotificationCenter.default.addObserver(self, selector: #selector(earlyAccessChanged), name: PropertiesManager.earlyAccessNotification, object: nil)
         
         suDateFormatter.dateFormat = "EEE, dd MMM yyyy HH:mm:ss ZZ"
         
-        updater.delegate = self
+        updater = SPUStandardUpdaterController(updaterDelegate: self, userDriverDelegate: nil)
     }
-    
-    private func setupUrl() {
-        let url = URL(string: updateFileSelector.updateFileUrl)
-        guard updater.feedURL != url else {
-            return
-        }
-        updater.feedURL = url
-        PMLog.D("Updated feedURL to \(updater.feedURL.absoluteString)")
-    }
-    
+        
     @objc private func earlyAccessChanged(_ notification: NSNotification) {
         turnOnEarlyAccess((notification.object as? Bool) ?? false)
     }
     
     private func turnOnEarlyAccess(_ earlyAccess: Bool) {
-        setupUrl()
-        
         if earlyAccess {
             checkForUpdates(nil, silently: false)
         }
@@ -114,21 +100,21 @@ class UpdateManager: NSObject {
             }
         }
         
-        silently ? updater.checkForUpdatesInBackground() : updater.checkForUpdates(self)
+        silently ? updater?.updater?.checkForUpdatesInBackground() : updater?.checkForUpdates(self)
     }
     
     func startUpdate() {
-        updater.installUpdatesIfAvailable()
+        updater?.checkForUpdates(self)
     }
     
     // MARK: - Private data
         
     private var currentAppCastItem: SUAppcastItem? {
-        guard let items = appcast?.items as? [SUAppcastItem] else {
+        guard let items = appcast?.items else {
             return nil
         }
         let currentVersion = self.currentVersion
-        for item in items where item.displayVersionString.elementsEqual(currentVersion ?? "wrong-string") {
+        for item in items where item.displayVersionString?.elementsEqual(currentVersion ?? "wrong-string") ?? false {
             return item
         }
         return nil
@@ -138,17 +124,23 @@ class UpdateManager: NSObject {
     
 }
 
-extension UpdateManager: SUUpdaterDelegate {
-
-    func updaterWillRelaunchApplication(_ updater: SUUpdater) {
+extension UpdateManager: SPUUpdaterDelegate {
+    
+    func updaterWillRelaunchApplication(_ updater: SPUUpdater) {
         if let sessionManager = appSessionManager, sessionManager.loggedIn {
             propertiesManager.rememberLoginAfterUpdate = true
         }
     }
     
-    func updater(_ updater: SUUpdater, didFinishLoading appcast: SUAppcast) {
+    func updater(_ updater: SPUUpdater, didFinishLoading appcast: SUAppcast) {
         self.appcast = appcast
         stateUpdated?()
+    }
+    
+    func feedURLString(for updater: SPUUpdater) -> String? {
+        let url = updateFileSelector.updateFileUrl
+        PMLog.D("FeedURL is \(url)")
+        return url
     }
     
 }

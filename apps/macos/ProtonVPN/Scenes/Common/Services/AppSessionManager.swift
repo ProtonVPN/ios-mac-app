@@ -137,6 +137,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             if self.appStateManager.state.isDisconnected {
                 self.propertiesManager.userIp = properties.ip
             }
+            self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
             self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
             self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
