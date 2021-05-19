@@ -299,10 +299,9 @@ public class AppStateManagerImplementation: AppStateManager {
             self.propertiesManager.lastIkeConnection = connectionConfiguration
         case .openVpn:
             self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
-        #warning("Use authData for Wireguard when it is implemented")
         }
         
-        vpnManager.connect(configuration: vpnManagerConfiguration, completion: {
+        vpnManager.connect(configuration: vpnManagerConfiguration, authData: authData, completion: {
             // COMPLETION
         })
     }
