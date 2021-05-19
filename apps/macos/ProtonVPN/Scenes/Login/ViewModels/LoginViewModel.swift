@@ -22,7 +22,6 @@
 
 import Alamofire
 import Foundation
-import Sparkle
 import vpncore
 
 class LoginViewModel {

@@ -37,7 +37,7 @@ class WidgetFactory {
     let alertService = ExtensionAlertService()
     let propertiesManager = PropertiesManager()
     let alamofireWrapper = AlamofireWrapperImplementation()
-    let vpnAuthenticationKeychain = VpnAuthenticationKeychain()
+    let vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)prt.ProtonVPN")
 
     var todayViewModel:TodayViewModel {
         let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )

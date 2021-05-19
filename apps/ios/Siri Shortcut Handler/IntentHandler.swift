@@ -34,10 +34,12 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let appGroup = "group.ch.protonmail.vpn"
         let propertiesManager = PropertiesManager()
         let vpnKeychain = VpnKeychain()
+        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
         let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(NetShieldPropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
         
-        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: VpnAuthenticationKeychain())), vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, netShieldPropertyProvider: netShieldPropertyProvider)
+        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain)), vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, netShieldPropertyProvider: netShieldPropertyProvider)
         
         super.init()
     }
