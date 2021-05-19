@@ -50,28 +50,21 @@ class ProtonVPNUITests: XCTestCase {
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()
+    let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-        
             login(withCredentials: credentials[0])
     }
     
     func loginAsBasicUser() {
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-        
             login(withCredentials: credentials[1])
     }
     
     func loginAsPlusUser() {
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-        
             login(withCredentials: credentials[2])
     }
     
     func loginAsVisionaryUser() {
-        let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
-        
             login(withCredentials: credentials[3])
     }
     
