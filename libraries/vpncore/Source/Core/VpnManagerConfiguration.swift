@@ -45,8 +45,9 @@ public struct VpnManagerConfiguration {
     public let passwordReference: Data
     public let vpnProtocol: VpnProtocol
     public let preferredPorts: [Int]?
+    public let netShield: NetShieldType
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, preferredPorts: [Int]?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, preferredPorts: [Int]?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -55,6 +56,7 @@ public struct VpnManagerConfiguration {
         self.password = password
         self.passwordReference = passwordReference
         self.vpnProtocol = vpnProtocol
+        self.netShield = netShield
         self.preferredPorts = preferredPorts
     }
 }
@@ -91,6 +93,7 @@ public class VpnManagerConfigurationPreparer {
                                            password: vpnCredentials.password,
                                            passwordReference: passwordRef,
                                            vpnProtocol: connectionConfig.vpnProtocol,
+                                           netShield: connectionConfig.netShieldType,
                                            preferredPorts: connectionConfig.preferredPorts
             )
         } catch {
