@@ -24,7 +24,7 @@ import XCTest
 
 class StateAlertTests: XCTestCase {
 
-    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), vpnProtocol: .ike, preferredPorts: nil)
+    let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), vpnProtocol: .ike, netShield: .off, preferredPorts: nil)
     let alamofireWrapper = AlamofireWrapperImplementation()
     let vpnKeychain = VpnKeychainMock()
     

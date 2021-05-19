@@ -29,7 +29,7 @@ public protocol VpnManagerProtocol {
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     func setOnDemand(_ enabled: Bool)
-    func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
+    func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
     func connectedDate(completion: @escaping (Date?) -> Void)
     func refreshState()
@@ -78,6 +78,9 @@ public class VpnManager: VpnManagerProtocol {
             return true
         }
     }
+
+    private var localAgent: LocalAgent?
+    private var authData: VpnAuthenticationData?
     
     public private(set) var state: VpnState = .invalid
     public var currentVpnProtocol: VpnProtocol? {
@@ -125,13 +128,13 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+    public func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
             PMLog.D("About to start connection process")
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
-                self?.prepareConnection(forConfiguration: configuration, completion: completion)
+                self?.prepareConnection(forConfiguration: configuration, authData: authData, completion: completion)
             }
         }
     }
@@ -237,11 +240,15 @@ public class VpnManager: VpnManagerProtocol {
     // MARK: - Private functions
     // MARK: - Connecting
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
+                                   authData: VpnAuthenticationData?,
                                    completion: @escaping () -> Void) {
         if state.volatileConnection {
             setState()
             return
         }
+
+        localAgent = authData.flatMap({ GoLocalAgent(host: "10.2.0.1:65432", data: $0, netshield: configuration.netShield) })
+        localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
@@ -348,6 +355,7 @@ public class VpnManager: VpnManagerProtocol {
         
         setOnDemand(false) { vpnManager in
             self.stopTunnelOrRunCompletion(vpnManager: vpnManager)
+            self.localAgent?.disconnect()
         }
     }
     
@@ -471,6 +479,9 @@ public class VpnManager: VpnManagerProtocol {
         case .disconnected, .invalid:
             self.disconnectCompletion?()
             self.disconnectCompletion = nil
+            self.localAgent?.disconnect()
+        case .connected:
+            self.localAgent?.connect()
         default:
             break
         }
@@ -602,5 +613,15 @@ public class VpnManager: VpnManagerProtocol {
         } else {
             request()
         }
+    }
+}
+
+extension VpnManager: LocalAgentDelegate {
+    func didReceiveError(code: Int) {
+        PMLog.ET("Local agent reported error \(code)")
+    }
+
+    func didChangeState(state: LocalAgentState) {
+        PMLog.D("Local agent state changed to \(state)")
     }
 }
