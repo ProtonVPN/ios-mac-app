@@ -37,7 +37,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
         let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(NetShieldPropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
         
-        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup), vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, netShieldPropertyProvider: netShieldPropertyProvider)
+        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper, vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager), appGroup: appGroup, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: VpnAuthenticationKeychain())), vpnKeychain: vpnKeychain, propertiesManager: propertiesManager, netShieldPropertyProvider: netShieldPropertyProvider)
         
         super.init()
     }

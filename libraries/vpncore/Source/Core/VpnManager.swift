@@ -96,12 +96,14 @@ public class VpnManager: VpnManagerProtocol {
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
     private let alertService: CoreAlertService?
+    private let vpnAuthentication: VpnAuthentication
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.appGroup = appGroup
         self.alertService = alertService
+        self.vpnAuthentication = vpnAuthentication
         
         prepareManagers()
     }
@@ -247,7 +249,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(host: "10.2.0.1:65432", data: $0, netshield: configuration.netShield) })
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield) })
         localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
@@ -577,6 +579,23 @@ public class VpnManager: VpnManagerProtocol {
                 self.currentVpnProtocol = .openVpn(.undefined)
             } else {
                 self.currentVpnProtocol = .ike
+            }
+
+            // connected to a protocol that requires local agent, but local agent is nil and VPN
+            // This is connected means the app was started while a VPN connection is already active
+            if self.currentVpnProtocol?.authenticationType == .certificate, self.localAgent == nil, case .connected = self.state {
+                // load last authentication data (that should be available)
+                self.vpnAuthentication.loadAuthenticationData { result in
+                    switch result {
+                    case .failure:
+                        PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
+                    case let .success(data):
+                        // create a local agent instance and connect
+                        self.localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
+                        self.localAgent?.delegate = self
+                        self.localAgent?.connect()
+                    }
+                }
             }
             
             self.setState()
