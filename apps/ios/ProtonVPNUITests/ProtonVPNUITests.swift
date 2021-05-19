@@ -50,7 +50,7 @@ class ProtonVPNUITests: XCTestCase {
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()
-    let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
             login(withCredentials: credentials[0])
