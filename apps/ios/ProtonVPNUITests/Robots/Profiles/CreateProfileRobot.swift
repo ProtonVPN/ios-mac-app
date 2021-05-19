@@ -42,12 +42,6 @@ class CreateProfileRobot: CoreElements {
         return T()
     }
     
-    func backProfile() -> ProfileRobot {
-        button("Map").tap()
-        button(tabBars).tap()
-        return ProfileRobot()
-    }
-    
     private func enterProfileName(_ name: String) -> CreateProfileRobot {
         textField(nameField).tap().typeText(name)
         return self
