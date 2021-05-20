@@ -6,15 +6,21 @@ import os.log
 
 extension FileManager {
     
+    static private var teamId: String {
+        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
+    }
+    
     static var appGroupId: String? {
-        #if os(iOS)
-        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
-        #elseif os(macOS)
-        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
-        #else
-        #error("Unimplemented")
-        #endif
-        return Bundle.main.object(forInfoDictionaryKey: appGroupIdInfoDictionaryKey) as? String
+//        #if os(iOS)
+//        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
+//        #elseif os(macOS)
+//        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
+//        #else
+//        #error("Unimplemented")
+//        #endif
+//        return Bundle.main.object(forInfoDictionaryKey: appGroupIdInfoDictionaryKey) as? String
+        
+        return "group.ch.protonvpn.mac"
     }
     
     private static var sharedFolderURL: URL? {

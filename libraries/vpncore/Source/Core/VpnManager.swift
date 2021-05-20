@@ -593,6 +593,7 @@ public class VpnManager: VpnManagerProtocol {
         let dispatchGroup = DispatchGroup()
         
         var openVpnCurrentlyActive = false
+        var wireGuardVpnCurrentlyActive = false
         
         dispatchGroup.enter()
         ikeProtocolFactory.vpnProviderManager(for: .status) { _, _ in
@@ -614,12 +615,29 @@ public class VpnManager: VpnManagerProtocol {
             dispatchGroup.leave()
         }
         
+        dispatchGroup.enter()
+        wireguardProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
+            guard let `self` = self, let manager = manager else {
+                dispatchGroup.leave()
+                return
+            }
+            
+            let state = self.newState(forManager: manager)
+            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
+                wireGuardVpnCurrentlyActive = true
+            }
+            
+            dispatchGroup.leave()
+        }
+        
         dispatchGroup.notify(queue: .main) { [weak self] in
             guard let `self` = self else { return }
             
             // OpenVPN takes precedence but if neither are active, then it should remain unchanged
             if openVpnCurrentlyActive {
                 self.currentVpnProtocol = .openVpn(.undefined)
+            } else if wireGuardVpnCurrentlyActive {
+                self.currentVpnProtocol = .wireGuard
             } else {
                 self.currentVpnProtocol = .ike
             }

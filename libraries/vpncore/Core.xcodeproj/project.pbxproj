@@ -690,8 +690,6 @@
 		E129C6D722A9488900D8437E /* CLLocationCoordinate2D+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E129C6D522A9488900D8437E /* CLLocationCoordinate2D+Extension.swift */; };
 		E13791B82313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13791B72313D3B300D7B1FA /* ConnectionConfiguration.swift */; };
 		E13791B92313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13791B72313D3B300D7B1FA /* ConnectionConfiguration.swift */; };
-		E13DEEAA22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
-		E13DEEAB22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E148AE5E21C28CF4007AB65A /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E148AE5D21C28CF4007AB65A /* AlertService.swift */; };
 		E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E148AE5D21C28CF4007AB65A /* AlertService.swift */; };
 		E148AE6221C29818007AB65A /* ErrorCodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = E148AE6121C29818007AB65A /* ErrorCodes.swift */; };
@@ -2912,7 +2910,6 @@
 				4295DFFC24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				F30B9D8E26281F990094C65E /* VpnKeys.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
-				E13DEEAA22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
 				4257B21224EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
 				D55D790A24978996009669E0 /* APILogger.swift in Sources */,
@@ -3411,7 +3408,6 @@
 				4295DFFD24C9D6C200EF1A92 /* MigrationVersion.swift in Sources */,
 				D5B53ADA25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
 				E1B5F67421B8241B00B558B0 /* MapConstants.swift in Sources */,
-				E13DEEAB22BBBD16001844F8 /* VpnKeychainMock.swift in Sources */,
 				4257B21324EBCFFC00C4E4AC /* VPNServerRequest.swift in Sources */,
 				424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */,
 				D55D790C24978996009669E0 /* APILogger.swift in Sources */,

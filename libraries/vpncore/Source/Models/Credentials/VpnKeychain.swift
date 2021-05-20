@@ -39,6 +39,9 @@ public protocol VpnKeychainProtocol {
     func storeServerCertificate() throws
     func clear()
     
+    func getPasswordRefference(forKey key: String) throws -> Data
+    func setPassword(_ password: String, forKey key: String) throws
+    
     // Dealing with old vpn password entry.
     // These can be deleted after all users have iOS version > 1.3.2 and MacOs app version > 1.5.5
     func hasOldVpnPassword() -> Bool
@@ -64,9 +67,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
     public static let vpnMaxDevicesReached = Notification.Name("VpnMaxDevicesReached")
-    
-    private typealias Factory = PropertiesManagerFactory
-    
+        
     public init() {}
     
     public func fetch() throws -> VpnCredentials {
@@ -88,7 +89,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     
     public func fetchOpenVpnPassword() throws -> Data {
         do {
-            let password = try getPasswordRefference()
+            let password = try getPasswordRefference(forKey: StorageKey.vpnServerPassword)
             return password
         } catch let error {
             PMLog.D(error.localizedDescription, level: .error)
@@ -118,7 +119,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
         
         do {
-            try setPassword(vpnCredentials.password)
+            try setPassword(vpnCredentials.password, forKey: StorageKey.vpnServerPassword)
         } catch let error {
             PMLog.ET("Error occurred during OpenVPN password storage: \(error.localizedDescription)")
         }
@@ -138,8 +139,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     // Password is set and retrieved without using the library because NEVPNProtocol reuquires it to be
     // a "persistent keychain reference to a keychain item containing the password component of the
     // tunneling protocol authentication credential".
-    private func getPasswordRefference() throws -> Data {
-        var query = formBaseQuery(forKey: StorageKey.vpnServerPassword)
+    public func getPasswordRefference(forKey key: String) throws -> Data {
+        var query = formBaseQuery(forKey: key)
         query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
         query[kSecReturnPersistentRef as AnyHashable] = kCFBooleanTrue
         
@@ -156,7 +157,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
     }
     
-    private func setPassword(_ password: String) throws {
+    public func setPassword(_ password: String, forKey key: String) throws {
         do {
             var query = formBaseQuery(forKey: StorageKey.vpnServerPassword)
             query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
