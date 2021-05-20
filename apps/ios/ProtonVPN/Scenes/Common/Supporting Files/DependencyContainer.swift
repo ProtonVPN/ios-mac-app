@@ -30,7 +30,7 @@ import KeychainAccess
 class DependencyContainer {
     
     private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-    private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuard-Extension"
+    private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuardiOS-Extension"
     private let appGroup = "group.ch.protonmail.vpn"
     
     // Singletons
