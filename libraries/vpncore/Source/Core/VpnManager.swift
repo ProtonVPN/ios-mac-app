@@ -636,8 +636,8 @@ public class VpnManager: VpnManagerProtocol {
 }
 
 extension VpnManager: LocalAgentDelegate {
-    func didReceiveError(code: Int) {
-        PMLog.ET("Local agent reported error \(code)")
+    func didReceiveError(error: LocalAgentError) {
+        PMLog.ET("Local agent reported error \(error)")
     }
 
     func didChangeState(state: LocalAgentState) {
