@@ -25,7 +25,7 @@ import WireguardSRP
 import Reachability
 
 protocol LocalAgentDelegate: AnyObject {
-    func didReceiveError(code: Int)
+    func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
 }
 
@@ -100,7 +100,11 @@ final class GoLocalAgent: LocalAgent {
 
 extension GoLocalAgent: LocalAgentNativeClientDelegate {
     func didReceiveError(code: Int) {
-        delegate?.didReceiveError(code: code)
+        guard let error = LocalAgentError.from(code: code) else {            
+            return
+        }
+
+        delegate?.didReceiveError(error: error)
     }
 
     func didChangeState(state: LocalAgentState?) {
