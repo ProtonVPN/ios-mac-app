@@ -742,7 +742,7 @@
 		954D2A931124ECB13F5DE123 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
 		B29CD69D26540F1600978637 /* ProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/ProfileRobot.swift; sourceTree = "<group>"; };
 		B29CD6A326540F2700978637 /* CreateProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/CreateProfileRobot.swift; sourceTree = "<group>"; };
-		B29CD6A826540F4D00978637 /* ProfilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfilesTests.swift; path = ../../../ios/ProtonVPNUITests/NewUITest/ProfilesTests.swift; sourceTree = "<group>"; };
+		B29CD6A826540F4D00978637 /* ProfilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
 		B29CD6B2265410D200978637 /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/LoginRobot.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1418,9 +1418,17 @@
 		B29CD6A726540F2D00978637 /* NewUITest */ = {
 			isa = PBXGroup;
 			children = (
-				B29CD6A826540F4D00978637 /* ProfilesTests.swift */,
+				B29CD8D1265BB66300978637 /* Profiles */,
 			);
 			path = NewUITest;
+			sourceTree = "<group>";
+		};
+		B29CD8D1265BB66300978637 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD6A826540F4D00978637 /* ProfilesTests.swift */,
+			);
+			path = Profiles;
 			sourceTree = "<group>";
 		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
