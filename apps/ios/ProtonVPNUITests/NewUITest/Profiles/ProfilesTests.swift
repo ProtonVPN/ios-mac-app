@@ -26,7 +26,7 @@ class ProfilesTests: ProtonVPNUITests {
         profileRobot
             .addNewProfile()
             .setProfileDetails(profilename, countryName)
-            .saveProf(robot: ProfileRobot.self)
+            .saveProfile(robot: ProfileRobot.self)
             .verify.createdProfile()
             .deleteProfile(profilename, countryName)
             .verify.profileIsDeleted(profilename, countryName)
@@ -40,11 +40,44 @@ class ProfilesTests: ProtonVPNUITests {
         profileRobot
             .addNewProfile()
             .setProfileDetails(profilename, countryName)
-            .saveProf(robot: ProfileRobot.self)
+            .saveProfile(robot: ProfileRobot.self)
             .verify.createdProfile()
             .addNewProfile()
             .setProfileWithSameName(profilename, countryName)
-            .saveProf(robot: CreateProfileRobot.self)
+            .saveProfile(robot: CreateProfileRobot.self)
             .verify.profileWithSameName()
+    }
+    
+    func testFreeUserCannotCreateProfileWithSecureCore() {
+        let profilename = StringUtils().randomAlphanumericString()
+    
+        loginAsFreeUser()
+        profileRobot
+            .addNewProfile()
+            .setSecureCoreProfile(profilename)
+            .verify.subscribtionRequiredMessage()
+    }
+    
+    func testBasicUserCannotCreateProfileWithSecureCore() {
+        let profilename = StringUtils().randomAlphanumericString()
+    
+        loginAsBasicUser()
+        profileRobot
+            .addNewProfile()
+            .setSecureCoreProfile(profilename)
+            .verify.subscribtionRequiredMessage()
+    }
+    
+    func testMakeDefaultAndSecureCoreProfilePlusUser() {
+        let profilename = StringUtils().randomAlphanumericString()
+        let countryName = "Netherlands"
+        let serverVia = "Iceland"
+        
+        loginAsPlusUser()
+        profileRobot
+            .addNewProfile()
+            .makeDefaultProfileWithSecureCore(profilename, countryName, serverVia)
+            .saveProfile(robot: ProfileRobot.self)
+            .verify.createdProfile()
     }
 }

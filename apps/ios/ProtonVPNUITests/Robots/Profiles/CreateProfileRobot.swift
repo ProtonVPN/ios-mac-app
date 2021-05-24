@@ -14,8 +14,12 @@ fileprivate let nameField = "Enter Profile Name"
 fileprivate let countryField = "Select Country"
 fileprivate let serverField = "Select Server"
 fileprivate let fastesServer = "  Fastest"
-fileprivate let saveProfile = "Save"
+fileprivate let saveProfileButton = "Save"
 fileprivate let tabBars = "Profiles"
+fileprivate let secureCoreToggle = "Secure Core"
+fileprivate let defaultprofileToggle = "Make Default Profile"
+fileprivate let subscribtionRequired = "Plus or Visionary subscription required"
+fileprivate let okButton = "OK"
 
 class CreateProfileRobot: CoreElements {
     
@@ -23,22 +27,37 @@ class CreateProfileRobot: CoreElements {
     
     func setProfileDetails(_ name: String, _ countryname: String) -> CreateProfileRobot {
         return enterProfileName(name)
-            .enterCountry()
+            .selectCountry()
             .chooseCountry(" " + " " + countryname)
-            .enterServer()
+            .selectServer()
             .chooseServer()
     }
     
     func setProfileWithSameName(_ name: String, _ countryname: String)-> CreateProfileRobot {
         return enterProfileName(name)
-            .enterCountry()
+            .selectCountry()
             .chooseCountry(" " + " " + countryname)
-            .enterServer()
+            .selectServer()
             .chooseServer()
     }
     
-    func saveProf<T: CoreElements>(robot _: T.Type) -> T {
-        button(saveProfile).tap()
+    func makeDefaultProfileWithSecureCore(_ name: String, _ countryname: String, _ server: String) -> CreateProfileRobot {
+        return enterProfileName(name)
+            .secureCoreON()
+            .selectCountry()
+            .chooseCountry(" " + " " + countryname)
+            .selectServer()
+            .chooseServerVia(server)
+            .defaultProfileON()
+    }
+    
+    func setSecureCoreProfile(_ name: String)-> CreateProfileRobot {
+        return enterProfileName(name)
+            .secureCoreON()
+    }
+    
+    func saveProfile<T: CoreElements>(robot _: T.Type) -> T {
+        button(saveProfileButton).tap()
         return T()
     }
     
@@ -47,7 +66,7 @@ class CreateProfileRobot: CoreElements {
         return self
     }
     
-    private func enterCountry() -> CreateProfileRobot {
+    private func selectCountry() -> CreateProfileRobot {
         staticText(countryField).tap()
         return self
     }
@@ -57,7 +76,7 @@ class CreateProfileRobot: CoreElements {
         return self
     }
     
-    private func enterServer() -> CreateProfileRobot {
+    private func selectServer() -> CreateProfileRobot {
         staticText(serverField).tap()
         return self
     }
@@ -67,11 +86,32 @@ class CreateProfileRobot: CoreElements {
         return self
     }
     
+    private func chooseServerVia(_ server: String) -> CreateProfileRobot {
+        staticText("via    " + server).tap()
+        return self
+    }
+    
+    private func secureCoreON() -> CreateProfileRobot {
+        swittch(secureCoreToggle).tap()
+        return self
+    }
+    
+    private func defaultProfileON() -> CreateProfileRobot {
+        swittch(defaultprofileToggle).tap()
+        return self
+    }
+    
     class Verify: CoreElements {
         
         @discardableResult
         func profileWithSameName() -> CreateProfileRobot{
             staticText(profileSameName).checkExists()
+            return CreateProfileRobot()
+        }
+        
+        @discardableResult
+        func subscribtionRequiredMessage() -> CreateProfileRobot{
+            staticText(subscribtionRequired).checkExists()
             return CreateProfileRobot()
         }
     }
