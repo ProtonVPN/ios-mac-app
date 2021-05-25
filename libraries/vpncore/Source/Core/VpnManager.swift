@@ -537,14 +537,14 @@ public class VpnManager: VpnManagerProtocol {
     // swiftlint:enable cyclomatic_complexity function_body_length
     
     private func newState(forManager vpnManager: NEVPNManager) -> VpnState {
-        let status = vpnManager.connection.status.rawValue
+        let status = vpnManager.connection.status
         let username = vpnManager.protocolConfiguration?.username ?? ""
         let serverAddress = vpnManager.protocolConfiguration?.serverAddress ?? ""
         
         switch status {
-        case 0:
+        case .invalid:
             return .invalid
-        case 1:
+        case .disconnected:
             if let error = lastError() {
                 switch error {
                 case ProtonVpnError.tlsServerVerification, ProtonVpnError.tlsInitialisation:
@@ -553,13 +553,13 @@ public class VpnManager: VpnManagerProtocol {
                 }
             }
             return .disconnected
-        case 2:
+        case .connecting:
             return .connecting(ServerDescriptor(username: username, address: serverAddress))
-        case 3:
+        case .connected:
             return .connected(ServerDescriptor(username: username, address: serverAddress))
-        case 4:
+        case .reasserting:
             return .reasserting(ServerDescriptor(username: username, address: serverAddress))
-        default:
+        case .disconnecting:
             return .disconnecting(ServerDescriptor(username: username, address: serverAddress))
         }
     }
