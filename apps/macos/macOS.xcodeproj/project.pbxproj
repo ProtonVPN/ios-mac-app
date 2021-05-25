@@ -3141,7 +3141,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
@@ -3174,7 +3174,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
@@ -3206,7 +3206,7 @@
 					"@executable_path/../../../../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonvpn.mac.OpenVPN-Extension";
 				PRODUCT_NAME = "$(inherited)";
@@ -3355,7 +3355,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
@@ -3386,7 +3386,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3525,7 +3525,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3554,7 +3554,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.ProtonVPNStarter;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -3714,7 +3714,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = "$(inherited)";
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
 				PROVISIONING_PROFILE = "";
@@ -3754,7 +3754,7 @@
 					"@executable_path/../Frameworks",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.15;
-				MARKETING_VERSION = "$(VPN_APP_VERSION)";
+				MARKETING_VERSION = "$(MAC_APP_VERSION)";
 				OTHER_SWIFT_FLAGS = "$(inherited) -D COCOAPODS";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonvpn.mac;
 				PRODUCT_NAME = ProtonVPN;
