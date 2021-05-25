@@ -74,8 +74,8 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         let needsRefresh: Bool
         if let certificate = existingCertificate {
-            // check if we are past the refresh time recommended by the backend
-            needsRefresh = Date() > certificate.refreshTime
+            // check if we are past the refresh time recommended by the backend or expired
+            needsRefresh = certificate.isExpired || certificate.shouldBeRefreshed
         } else {
             PMLog.D("No stored vpn authentication certificate found")
             // no certificate exists, refresh is definitely needed
