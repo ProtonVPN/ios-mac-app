@@ -80,7 +80,6 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     private var localAgent: LocalAgent?
-    private var authData: VpnAuthenticationData?
     
     public private(set) var state: VpnState = .invalid
     public var currentVpnProtocol: VpnProtocol? {
