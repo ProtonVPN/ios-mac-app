@@ -1,0 +1,12 @@
+//
+//  Config.xcconfig
+//  macOS
+//
+//  Created by Igor Kulman on 24.05.2021.
+//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+MAC_APP_VERSION = 2.0.1

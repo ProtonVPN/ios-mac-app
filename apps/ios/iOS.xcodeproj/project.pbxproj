@@ -998,6 +998,7 @@
 		EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
+		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3BBB87925DD56A300E700B5 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMock.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1188,6 +1189,7 @@
 		791DE5D0208DDA3000A29EA5 = {
 			isa = PBXGroup;
 			children = (
+				F38BB450265C0CF600329619 /* Config.xcconfig */,
 				791DE5DB208DDA3000A29EA5 /* ProtonVPN */,
 				E14414F822EF38ED00894DD0 /* OpenVPN Extension */,
 				E148AE4121C141B0007AB65A /* Quick Connect Widget */,
@@ -3543,6 +3545,7 @@
 /* Begin XCBuildConfiguration section */
 		791DE601208DDA3200A29EA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3608,6 +3611,7 @@
 		};
 		791DE602208DDA3200A29EA5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3688,7 +3692,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3723,7 +3727,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3796,7 +3800,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
@@ -3822,7 +3826,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.Siri-Shortcut-Handler";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -3886,6 +3890,7 @@
 		};
 		E1144E3F22E9C5150087A685 /* Staging */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = F38BB450265C0CF600329619 /* Config.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -3973,7 +3978,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MODULEMAP_FILE = "";
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug;
 				PRODUCT_NAME = "$(TARGET_NAME) Test";
@@ -4004,7 +4009,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug.widget;
@@ -4032,7 +4037,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.Siri-Shortcut-Handler";
@@ -4112,7 +4117,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
@@ -4139,7 +4144,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.debug.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4166,7 +4171,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = "ch.protonmail.vpn.OpenVPN-Extension";
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -4194,7 +4199,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.widget;
@@ -4221,7 +4226,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
-				MARKETING_VERSION = 2.4.0;
+				MARKETING_VERSION = "$(IOS_APP_VERSION)";
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.widget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
