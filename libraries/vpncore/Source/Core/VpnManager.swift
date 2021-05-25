@@ -590,10 +590,7 @@ public class VpnManager: VpnManagerProtocol {
                     case .failure:
                         PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
                     case let .success(data):
-                        // create a local agent instance and connect
-                        self.localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
-                        self.localAgent?.delegate = self
-                        self.localAgent?.connect()
+                        self.reconnectLocalAgent(data: data)
                     }
                 }
             }
@@ -633,11 +630,37 @@ public class VpnManager: VpnManagerProtocol {
             request()
         }
     }
+
+    private func reconnectLocalAgent(data: VpnAuthenticationData) {
+        localAgent?.disconnect()
+        localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
+        localAgent?.delegate = self
+        localAgent?.connect()
+    }
 }
 
 extension VpnManager: LocalAgentDelegate {
     func didReceiveError(error: LocalAgentError) {
-        PMLog.ET("Local agent reported error \(error)")
+        switch error {
+        case .certificateExpired, .certificateRevoked:
+            PMLog.D("Local agent reported expired or revoked certificate, trying to refresh and reconnect")
+            vpnAuthentication.refreshCertificates { [weak self] result in
+                switch result {
+                case let .success(data):
+                    PMLog.D("Reconnecting to local agent with new certificate")
+                    self?.reconnectLocalAgent(data: data)
+                case let .failure(error):
+                    PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
+                    self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                    self?.disconnect { [weak self] in
+                        self?.localAgent?.disconnect()
+                    }
+                }
+            }
+        default:
+            #warning("Handle all the errors")
+            PMLog.ET("Local agent reported error \(error)")
+        }
     }
 
     func didChangeState(state: LocalAgentState) {
