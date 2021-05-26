@@ -2153,8 +2153,8 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 42EF09EB257A713F00E2EDCA /* Build configuration list for PBXNativeTarget "ProtonVPN OpenVPN" */;
 			buildPhases = (
-				E94EFFF72653E0190024DBFB /* Increment Build Number Script */,
 				B33F276558A5DA22AEB268BF /* [CP] Check Pods Manifest.lock */,
+				E94EFFF72653E0190024DBFB /* Increment Build Number Script */,
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
 				42EF09D9257A713F00E2EDCA /* Resources */,
