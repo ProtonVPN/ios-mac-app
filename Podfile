@@ -17,7 +17,7 @@ def proton_core_branch
 end
 
 def openvpn
-  pod 'TunnelKit', :git => proton_url + ':apple/vpn/tunnelkit.git', :branch => 'protonvpn2/keychain'
+  pod 'TunnelKit', :git => proton_url + ':apple/vpn/tunnelkit.git', :branch => 'fix/no-shutdownon-write-error'
 end
 
 def pm_automation

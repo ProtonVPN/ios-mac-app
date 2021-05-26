@@ -5,7 +5,7 @@ PODS:
   - CryptoSwift (1.4.0)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
-  - OpenSSL-Apple (1.1.1j.11)
+  - OpenSSL-Apple (1.1.1k.11)
   - PMTestAutomation (1.0.1):
     - SwiftOTP
   - ProtonCore-Challenge (1.0.0):
@@ -24,7 +24,7 @@ PODS:
   - SwiftLint (0.43.1)
   - SwiftOTP (2.0.3):
     - CryptoSwift (>= 1.0.0)
-  - SwiftyBeaver (1.9.4)
+  - SwiftyBeaver (1.9.5)
   - TrustKit (1.7.0)
   - TunnelKit (3.3.1):
     - TunnelKit/Protocols/OpenVPN (= 3.3.1)
@@ -56,7 +56,7 @@ DEPENDENCIES:
   - Sentry (= 5.2.2)
   - SwiftLint
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
-  - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `protonvpn2/keychain`)"
+  - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `fix/no-shutdownon-write-error`)"
 
 SPEC REPOS:
   trunk:
@@ -93,7 +93,7 @@ EXTERNAL SOURCES:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
-    :branch: protonvpn2/keychain
+    :branch: fix/no-shutdownon-write-error
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 CHECKOUT OPTIONS:
@@ -116,7 +116,7 @@ CHECKOUT OPTIONS:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
-    :commit: 86a2b9b6450d06358ae3d4871dfec95da19abe65
+    :commit: 74dcaf4250870e31d054d8cfe0227d38d568dd4a
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 SPEC CHECKSUMS:
@@ -125,7 +125,7 @@ SPEC CHECKSUMS:
   CryptoSwift: 7cc902df1784de3b389a387756c7d710f197730c
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
-  OpenSSL-Apple: bb7c9715a259404de040f5359ed3b3170cedf8d6
+  OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   PMTestAutomation: a39a548c349474117c7f8493f25f4f1184c3dcf9
   ProtonCore-Challenge: 9c7c31dc50d141e0932deb19f0e1cf76c05c8f46
   ProtonCore-Doh: a10003cfb4ff7c7765abb4a02bbd64613fdbc613
@@ -136,10 +136,10 @@ SPEC CHECKSUMS:
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
   SwiftOTP: ce98ded1ab42e4e66c39228fcad6b0c07b98e494
-  SwiftyBeaver: 576177b2c5c94b3aedd5993914e91271a0524e88
+  SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 7991040aeebab5705257583cb839aa6a00fc3297
+PODFILE CHECKSUM: 5605a41609299a0ca4ec72cbb3a73d4fca1f9c46
 
 COCOAPODS: 1.10.1
