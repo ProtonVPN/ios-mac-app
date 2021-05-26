@@ -27,15 +27,17 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let protocolConfiguration = NETunnelProviderProtocol()
-//        let keychain = Keychain(group: appGroup)
-
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = "172.83.45.3:51820"
+                
+        let config = """
+                PUT CONFIG HERE
+                """
+        let key = "PVPN-WG-TEST"
+        let keychain = VpnKeychain()
+        try keychain.setPassword(config, forKey: key)
+        protocolConfiguration.passwordReference = try? keychain.getPasswordRefference(forKey: key)
         
-//        protocolConfiguration.passwordReference = try? keychain.passwordReference(for: username, context: context)
-        protocolConfiguration.passwordReference = configuration.passwordReference
-        
-//        protocolConfiguration.providerConfiguration = generatedProviderConfiguration(appGroup: appGroup)
         #if os(macOS)
         protocolConfiguration.providerConfiguration = ["UID": getuid()]
         #endif

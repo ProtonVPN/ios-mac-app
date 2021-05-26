@@ -131,7 +131,8 @@ public class VpnKeychain: VpnKeychainProtocol {
         appKeychain[data: StorageKey.vpnCredentials] = nil
         deleteServerCertificate()
         do {
-            try clearPassword()
+            try clearPassword(forKey: StorageKey.vpnServerPassword)
+            try clearPassword(forKey: "PVPN-WG-TEST") // FIX ME please
             DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: nil) }
         } catch { }
     }
@@ -159,7 +160,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     
     public func setPassword(_ password: String, forKey key: String) throws {
         do {
-            var query = formBaseQuery(forKey: StorageKey.vpnServerPassword)
+            var query = formBaseQuery(forKey: key)
             query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
             query[kSecReturnAttributes as AnyHashable] = kCFBooleanTrue
             query[kSecReturnData as AnyHashable] = kCFBooleanTrue
@@ -181,10 +182,10 @@ public class VpnKeychain: VpnKeychainProtocol {
             }
         } catch {
             do {
-                try clearPassword()
+                try clearPassword(forKey: key)
             } catch { }
             
-            var query = formBaseQuery(forKey: StorageKey.vpnServerPassword)
+            var query = formBaseQuery(forKey: key)
             query[kSecValueData as AnyHashable] = password.data(using: String.Encoding.utf8) as Any
             
             let result = SecItemAdd(query as CFDictionary, nil)
@@ -194,8 +195,8 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
     }
     
-    private func clearPassword() throws {
-        let query = formBaseQuery(forKey: StorageKey.vpnServerPassword)
+    private func clearPassword(forKey key: String) throws {
+        let query = formBaseQuery(forKey: key)
         
         let result = SecItemDelete(query as CFDictionary)
         if result != errSecSuccess {
