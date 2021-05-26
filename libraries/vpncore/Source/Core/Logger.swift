@@ -21,6 +21,7 @@
 
 import Foundation
 import Sentry
+import OSLog
 
 public class PMLog {
     
@@ -165,7 +166,7 @@ public class PMLog {
     // swiftlint:disable no_print
     public static func printToConsole(_ text: String) {
         #if DEBUG
-        print(text)
+        os_log("%@", text)
         #endif
     }
     // swiftlint:enable no_print
