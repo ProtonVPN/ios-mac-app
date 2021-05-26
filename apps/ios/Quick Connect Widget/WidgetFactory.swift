@@ -59,7 +59,8 @@ class WidgetFactory {
                                                     propertiesManager: self.propertiesManager)
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
-                          appGroup: self.appGroup, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
+                          appGroup: self.appGroup,
+                          vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
     }
     
     var appStateManager: AppStateManager {
@@ -71,6 +72,7 @@ class WidgetFactory {
                                timerFactory: TimerFactory(),
                                propertiesManager: self.propertiesManager,
                                vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager), vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager),
+                               vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
     }
 }
