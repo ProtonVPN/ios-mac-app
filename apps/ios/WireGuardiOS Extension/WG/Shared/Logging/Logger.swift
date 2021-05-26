@@ -55,11 +55,12 @@ public class Logger {
 }
 
 func wg_log(_ type: OSLogType, staticMessage msg: StaticString) {
-    os_log(msg, log: OSLog.default, type: type)
+//    os_log(msg, log: OSLog.default, type: type) // Bring me back after wg integration is done
+    os_log("[PROTONTEST]  %{public}s", log: OSLog.default, type: type, String(describing: msg))
     Logger.global?.log(message: "\(msg)")
 }
 
 func wg_log(_ type: OSLogType, message msg: String) {
-    os_log("%{public}s", log: OSLog.default, type: type, msg)
+    os_log("[PROTONTEST]  %{public}s", log: OSLog.default, type: type, msg)
     Logger.global?.log(message: msg)
 }
