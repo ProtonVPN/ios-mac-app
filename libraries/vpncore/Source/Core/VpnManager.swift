@@ -351,12 +351,12 @@ public class VpnManager: VpnManagerProtocol {
     // MARK: - Disconnecting
     private func startDisconnect(completion: @escaping (() -> Void)) {
         PMLog.D("Closing VPN tunnel")
-        
+
+        localAgent?.disconnect()
         disconnectCompletion = completion
         
         setOnDemand(false) { vpnManager in
             self.stopTunnelOrRunCompletion(vpnManager: vpnManager)
-            self.localAgent?.disconnect()
         }
     }
     
