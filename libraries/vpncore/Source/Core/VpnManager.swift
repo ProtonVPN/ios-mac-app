@@ -658,6 +658,7 @@ public class VpnManager: VpnManagerProtocol {
             
             self.setState()
             
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.vpnStatusChanged),
                                                    name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         }
