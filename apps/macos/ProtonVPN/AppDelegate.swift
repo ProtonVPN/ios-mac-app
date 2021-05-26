@@ -36,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     fileprivate let container = DependencyContainer()
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
+    private lazy var systemExtensionManager: SystemExtensionManager = container.makeSystemExtensionManager()
     
     private var notificationManager: NotificationManagerProtocol!
     
@@ -148,7 +149,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         guard needsInstallExtension else {
             return
         }
-        self.container.makeSystemExtensionManager().requestExtensionInstall(completion: { [weak self] result in
+        systemExtensionManager.requestExtensionInstall(completion: { [weak self] result in
             if case .failure = result {
                 self?.propertiesManager.vpnProtocol = .ike
                 self?.propertiesManager.smartProtocol = false
