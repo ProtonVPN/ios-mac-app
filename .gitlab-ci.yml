@@ -139,9 +139,9 @@ variables:
 ios_testflight_internal:
   stage: release
   before_script:
+    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
     - fastlane create_ios_keychain
   script:
-    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
     - fastlane sigh download_all --download_xcode_profiles
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - export NEW_BUILD_NUMBER=$(./generate_build_number.sh)
