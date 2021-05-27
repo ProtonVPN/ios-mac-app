@@ -144,7 +144,7 @@ ios_testflight_internal:
   script:
     - fastlane sigh download_all --download_xcode_profiles
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - export NEW_BUILD_NUMBER=$(./generate_build_number.sh)
+    - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
     - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
     # - fastlane ios internal_staging changelog:"Latest $CI_COMMIT_REF_NAME build"
   after_script: # Cleanup
