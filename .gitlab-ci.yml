@@ -2,6 +2,7 @@ stages:
   - linting
   - core_unit_tests
   - apps_unit_tests
+  - release
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -134,3 +135,28 @@ macos_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit        
+
+ios_testflight_internal:
+  stage: release
+  before_script:
+    - create_ios_keychain
+  script:
+    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
+    - fastlane sigh download_all --download_xcode_profiles
+    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
+    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
+    # - fastlane ios internal_staging changelog:"Latest $CI_COMMIT_REF_NAME build"
+  after_script: # Cleanup
+    - rm -f Certificates.p12
+    - fastlane delete_ios_keychain
+  tags:
+    - iOS-deploy
+  environment:
+    name: deployment
+  when: manual
+  artifacts:
+    name: "ios-build-nr"
+    when: always
+    paths:
+      - .last_build_nr
+    expire_in: 7 days

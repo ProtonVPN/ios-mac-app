@@ -83,3 +83,66 @@ lane :delete_macos_keychain do
     name: keychain_name
   )
 end
+
+def create_ios_keychain
+  keychain_name = ENV["CI_PIPELINE_ID"]
+  create_keychain(
+      name: keychain_name,
+      password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+      default_keychain: false,
+      add_to_search_list: true,
+      unlock: true
+  )
+  import_certificate(
+      keychain_name: keychain_name,
+      keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
+      certificate_path: 'Certificates.p12',
+      certificate_password: ENV["DISTRIBUTION_CERTIFICATE_PASSWORD"]
+  )
+end
+
+def delete_ios_keychain
+  delete_keychain(
+      name: ENV["CI_PIPELINE_ID"]
+  )
+end
+
+lane :ios_internal_beta do |options|
+  if !options[:changelog]
+      abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
+  end
+  
+  clear_derived_data
+
+  increment_build_number(
+    build_number: ENV["NEW_BUILD_NUMBER"],
+    xcodeproj: "./apps/ios/iOS.xcodeproj"
+  )
+
+  # Release build
+  build_app(
+      scheme: "ProtonVPN-iOS",
+      clean: true,
+      output_directory: "build/",
+      export_method: "app-store",
+      export_options: {
+          provisioningProfiles: {
+              "ch.protonmail.vpn" => "ProtonVPN Release",
+              "ch.protonmail.vpn.OpenVPN-Extension" => "ProtonVPN OpenVPN Release",
+              "ch.protonmail.vpn.widget" => "ProtonVPN Widget Release",
+              "ch.protonmail.vpn.Siri-Shortuct-Handler" => "ProtonVPN Siri Shortcuts Release"
+          }
+      }
+  )
+  upload_to_testflight(
+      team_name: "Proton Technologies AG",
+      groups: ["Internal Members"],
+      changelog: options[:changelog],
+      distribute_external: true,
+      demo_account_required: true
+  )
+
+  # Updload dSYMs to Sentry
+  sentry_upload_dsym
+
+end
