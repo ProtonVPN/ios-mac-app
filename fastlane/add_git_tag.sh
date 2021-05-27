@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 APP_OS="ios"
 VERSION_NUMBER=`grep -E "IOS_APP_VERSION" apps/ios/Config.xcconfig | grep -Eo "([0-9]+\.[0-9]+\.[0-9]+)"`
 BUILD_NUMBER=`cat .last_build_nr`
