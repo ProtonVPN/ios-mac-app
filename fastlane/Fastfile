@@ -84,7 +84,7 @@ lane :delete_macos_keychain do
   )
 end
 
-def create_ios_keychain
+lane :create_ios_keychain do
   keychain_name = ENV["CI_PIPELINE_ID"]
   create_keychain(
       name: keychain_name,
@@ -101,7 +101,7 @@ def create_ios_keychain
   )
 end
 
-def delete_ios_keychain
+lane :delete_ios_keychain do
   delete_keychain(
       name: ENV["CI_PIPELINE_ID"]
   )
