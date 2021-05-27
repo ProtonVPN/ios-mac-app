@@ -146,7 +146,7 @@ ios_testflight_internal:
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
     - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
-    # - fastlane ios internal_staging changelog:"Latest $CI_COMMIT_REF_NAME build"
+    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS Staging"
   after_script: # Cleanup
     - rm -f Certificates.p12
     - fastlane delete_ios_keychain

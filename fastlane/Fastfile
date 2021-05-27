@@ -111,6 +111,12 @@ lane :ios_internal_beta do |options|
   if !options[:changelog]
       abort("Please provide a changelog by appending`changelog:\"<Log notes>\"` to running this lane")
   end
+
+  if !options[:scheme]
+    SCHEME = "ProtonVPN-iOS"
+  else
+    SCHEME = options[:scheme]
+  end
   
   clear_derived_data
 
@@ -121,7 +127,7 @@ lane :ios_internal_beta do |options|
 
   # Release build
   build_app(
-      scheme: "ProtonVPN-iOS",
+      scheme: SCHEME,
       clean: true,
       output_directory: "build/",
       export_method: "app-store",
