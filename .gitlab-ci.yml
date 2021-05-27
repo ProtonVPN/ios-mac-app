@@ -140,11 +140,6 @@ variables:
 ios_testflight_internal:
   stage: release
   before_script:
-    - eval $(ssh-agent -s)
-    - ssh-add -D # Delete all ssh private keys
-    - echo "$CI_SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add - > /dev/null
-    - ssh-add -l # Lists fingerprints of all identities currently represented by the agent
-    - ssh-keyscan -t rsa ${CI_SERVER_HOST} > ~/.ssh/known_hosts
     - git config --global user.email $GIT_CI_EMAIL
     - git config --global user.name $GIT_CI_USERNAME
     - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
@@ -157,7 +152,6 @@ ios_testflight_internal:
     - ./fastlane/add_git_tag.sh
     # - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS Staging"
   after_script: # Cleanup
-    - ssh-add -D # Delete all ssh private keys
     - rm -f Certificates.p12
     # - fastlane delete_ios_keychain
   tags:
