@@ -21,7 +21,7 @@ def openvpn
 end
 
 def pm_automation
-  pod 'PMTestAutomation', :git => 'git@gitlab.protontech.ch:apple/shared/pmtestautomation.git', :commit => '36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d'
+  pod 'PMTestAutomation', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d'
 end
 
 def vpn_core
