@@ -9,3 +9,4 @@ fastlane/report.xml
 fastlane/test_output
 DerivedData
 fastlane/README.md
+.last_build_nr
