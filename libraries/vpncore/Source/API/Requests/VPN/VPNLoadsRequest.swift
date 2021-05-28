@@ -20,8 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
-
 class VPNLoadsRequest: VPNBaseRequest {
     
     let ip: String?
