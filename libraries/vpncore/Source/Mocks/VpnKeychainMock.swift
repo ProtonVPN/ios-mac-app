@@ -86,4 +86,12 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public func clearOldVpnPassword() throws {
     }
     
+    public func getPasswordRefference(forKey key: String) throws -> Data {
+        return Data()
+    }
+    
+    public func setPassword(_ password: String, forKey key: String) throws {
+        
+    }
+    
 }
