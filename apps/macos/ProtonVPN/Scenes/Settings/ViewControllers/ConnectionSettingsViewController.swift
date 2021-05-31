@@ -43,7 +43,13 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet private weak var protocolSeparator: NSBox!
     @IBOutlet private weak var protocolInfoIcon: NSImageView!
-
+    
+    @IBOutlet private weak var vpnAcceleratorView: NSView!
+    @IBOutlet private weak var vpnAcceleratorLabel: PVPNTextField!
+    @IBOutlet private weak var vpnAcceleratorButton: SwitchButton!
+    @IBOutlet private weak var vpnAcceleratorSeparator: NSBox!
+    @IBOutlet private weak var vpnAcceleratorInfoIcon: NSImageView!
+    
     @IBOutlet private weak var dnsLeakProtectionLabel: PVPNTextField!
     @IBOutlet private weak var dnsLeakProtectionButton: SwitchButton!
     @IBOutlet private weak var dnsLeakProtectionSeparator: NSBox!
@@ -128,6 +134,19 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
+    }
+    
+    private func setupVpnAcceleratorItem() {
+        vpnAcceleratorView.isHidden = !viewModel.isAcceleratorFeatureEnabled
+        vpnAcceleratorLabel.attributedStringValue = LocalizedString
+            .vpnAcceleratorTitle
+            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        vpnAcceleratorInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        vpnAcceleratorInfoIcon.toolTip = LocalizedString.vpnAcceleratorDescription
+        vpnAcceleratorButton.setState(viewModel.vpnAcceleratorEnabled ? .on : .off)
+        vpnAcceleratorButton.delegate = self
+        vpnAcceleratorSeparator.fillColor = .protonLightGrey()
+        
     }
     
     private func setupDnsLeakProtectionItem() {
@@ -225,6 +244,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupView()
         setupAutoConnectItem()
         setupQuickConnectItem()
+        setupVpnAcceleratorItem()
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
@@ -259,11 +279,15 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
     
     public func shouldToggle(_ button: NSButton, to value: ButtonState, completion: @escaping (Bool) -> Void) {
         switch button.superview {
+        
         case allowLANButton:
             viewModel.setAllowLANAccess(value == .on, completion: completion)
 
         case smartProtocolButton:
             viewModel.setSmartProtocol(value == .on, completion: completion)
+            
+        case vpnAcceleratorButton:
+            viewModel.setVpnAccelerator(value == .on, completion: completion)
             
         default:
             completion(true)

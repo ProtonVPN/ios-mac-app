@@ -338,6 +338,51 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     }
 }
 
+public class ReconnectOnActionAlert: SystemAlert {
+    public var title: String?
+    public var message: String? = LocalizedString.actionRequiresRecconect
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        title = actionTitle
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class TurnOnKillSwitchAlert: SystemAlert {
+    public var title: String? = LocalizedString.turnKSOnTitle
+    public var message: String? = LocalizedString.turnKSOnDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.turnOn, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class AllowLANConnectionsAlert: SystemAlert {
+    public var title: String? = LocalizedString.allowLANTitle
+    public var message: String? = LocalizedString.allowLANDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        
+        if connected {
+            message! += "\n\n" + LocalizedString.allowLANNote
+        }
+        
+        actions.append(AlertAction(title: LocalizedString.allow, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
 public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public var title: String? = LocalizedString.smartProtocolReconnectModalTitle
     public var message: String? = LocalizedString.smartProtocolReconnectModalBody

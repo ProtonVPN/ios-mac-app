@@ -69,6 +69,10 @@ class SettingsViewModel {
         
         sections.append(accountSection)
         sections.append(securitySection)
+        
+        if propertiesManager.featureFlags.isVpnAccelerator {
+            sections.append(connectionSection)
+        }
         sections.append(extensionsSection)
         if let batterySection = batterySection {
             sections.append(batterySection)
@@ -284,6 +288,27 @@ class SettingsViewModel {
         cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemDescriptionAlternative.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemLinkAlternative1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
+    }
+    
+    private var connectionSection: TableViewSection {
+        var cells: [TableViewCellModel] = [
+            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
+                guard self.isConnected else {
+                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    return
+                }
+                
+                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
+                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    self.vpnGateway?.retryConnection()
+                }))
+            })
+        ]
+        
+        cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
+        return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
     
     private var extensionsSection: TableViewSection {
