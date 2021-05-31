@@ -64,11 +64,11 @@ core_ios_unit_tests:
   tags:
     - iOS_ARM
   script:
-    - xcrun simctl create ${CI_PIPELINE_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
   after_script:
-    - xcrun simctl delete $CI_PIPELINE_ID
+    - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:
@@ -95,13 +95,13 @@ ios_unit_tests:
   tags:
     - iOS_ARM
   script:
-    - xcrun simctl create ${CI_PIPELINE_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/ios/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
     - fastlane ios_app_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
-    - xcrun simctl delete $CI_PIPELINE_ID
+    - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:

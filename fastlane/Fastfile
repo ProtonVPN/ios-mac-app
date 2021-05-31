@@ -17,7 +17,7 @@ $derived_data_path = "DerivedData"
 
 desc "Run all Core iOS tests"
 lane :ios_core_test do
-  simulator_name = ENV["CI_PIPELINE_ID"]
+  simulator_name = ENV["CI_JOB_ID"]
   scan(scheme: "vpncore-ios", 
     result_bundle: true,
     derived_data_path: $derived_data_path,
@@ -37,7 +37,7 @@ end
 
 desc "Run all iOS app tests"
 lane :ios_app_test do
-    simulator_name = ENV["CI_PIPELINE_ID"]
+    simulator_name = ENV["CI_JOB_ID"]
     scan(
       scheme: "ProtonVPN-iOS",
       derived_data_path: $derived_data_path,
@@ -61,7 +61,7 @@ lane :macos_app_test do
 end
 
 lane :create_macos_keychain do
-  keychain_name = ENV["CI_PIPELINE_ID"]
+  keychain_name = ENV["CI_JOB_ID"]
   create_keychain(
     name: keychain_name,
     password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
@@ -78,14 +78,14 @@ lane :create_macos_keychain do
 end
 
 lane :delete_macos_keychain do
-  keychain_name = ENV["CI_PIPELINE_ID"]
+  keychain_name = ENV["CI_JOB_ID"]
   delete_keychain(
     name: keychain_name
   )
 end
 
 lane :create_ios_keychain do
-  keychain_name = ENV["CI_PIPELINE_ID"]
+  keychain_name = ENV["CI_JOB_ID"]
   create_keychain(
       name: keychain_name,
       password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
@@ -103,7 +103,7 @@ end
 
 lane :delete_ios_keychain do
   delete_keychain(
-      name: ENV["CI_PIPELINE_ID"]
+      name: ENV["CI_JOB_ID"]
   )
 end
 
