@@ -102,6 +102,18 @@ final class ConnectionSettingsViewModel {
     var allowLAN: Bool {
         return propertiesManager.excludeLocalNetworks
     }
+
+    var showSmartProtocolOption: Bool {
+        return propertiesManager.featureFlags.isSmartProtocols
+    }
+    
+    var isAcceleratorFeatureEnabled: Bool {
+        return propertiesManager.featureFlags.isVpnAccelerator
+    }
+    
+    var vpnAcceleratorEnabled: Bool {
+        return propertiesManager.vpnAcceleratorEnabled
+    }
     
     // MARK: - Item counts
     
@@ -170,7 +182,7 @@ final class ConnectionSettingsViewModel {
     func setAlternatveRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
     }
-
+    
     func setSmartProtocol(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let update = { (shouldReconnect: Bool) in
             guard enabled else {
@@ -215,8 +227,43 @@ final class ConnectionSettingsViewModel {
         }
     }
     
-    func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+    func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+            self.propertiesManager.vpnAcceleratorEnabled = enabled
+            completion(true)
+            return
+        }
+        
+        alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
+            self.propertiesManager.vpnAcceleratorEnabled = enabled
+            self.vpnGateway.retryConnection()
+            completion(true)
+        }, cancelHandler: {
+            completion(false)
+        }))
+    }
+    
+    func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+        
+        let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
+        
+        if propertiesManager.killSwitch {
+            let alert = AllowLANConnectionsAlert(connected: isConnected) {
+                self.propertiesManager.excludeLocalNetworks = enabled
+                self.propertiesManager.killSwitch = false
+                if isConnected {
+                    self.vpnGateway.retryConnection()
+                }
+                completion(true)
+            } cancelHandler: {
+                completion(false)
+            }
+            
+            self.alertService.push(alert: alert)
+            return
+        }
+        
+        guard isConnected else {
             propertiesManager.excludeLocalNetworks = enabled
             completion(true)
             return

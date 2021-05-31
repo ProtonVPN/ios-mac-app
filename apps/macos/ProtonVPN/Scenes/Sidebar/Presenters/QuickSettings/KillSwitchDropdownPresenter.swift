@@ -26,11 +26,12 @@ import AppKit
 
 class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory
+    typealias Factory = VpnGatewayFactory & PropertiesManagerFactory & AppStateManagerFactory & CoreAlertServiceFactory
     
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     override var learnLink: String {
         return CoreAppConstants.ProtonVpnLinks.killSwitchSupport
@@ -52,7 +53,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsKSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
-        viewController?.dropdownNote.stringValue = ""
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.qsKSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
         viewController?.dropdownUgradeButton.isHidden = true
         if propertiesManager.featureFlags.isNetShield {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
@@ -80,10 +81,20 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let text = LocalizedString.killSwitch + " " + LocalizedString.on.capitalized
         let icon = #imageLiteral(resourceName: "qs_killswitch_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
-            self.propertiesManager.killSwitch = true
-            if self.vpnGateway.connection == .connected {
-                self.vpnGateway.retryConnection()
+            let wrapper = {
+                self.propertiesManager.killSwitch = true
+                self.propertiesManager.excludeLocalNetworks = false
+                if self.vpnGateway.connection == .connected {
+                    self.vpnGateway.retryConnection()
+                }
             }
+            
+            guard self.propertiesManager.excludeLocalNetworks else {
+                wrapper()
+                return
+            }
+            
+            self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: wrapper, cancelHandler: nil))
         })
     }
 }

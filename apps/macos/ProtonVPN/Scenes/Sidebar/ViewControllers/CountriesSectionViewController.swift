@@ -64,6 +64,9 @@ class CountriesSectionViewController: NSViewController {
     @IBOutlet weak var netShieldBtn: QuickSettingButton!
     @IBOutlet weak var killSwitchBtn: QuickSettingButton!
     
+    @IBOutlet weak var listTrailingConstraint: NSLayoutConstraint!
+    @IBOutlet weak var listLeadingConstraint: NSLayoutConstraint!
+    
     @IBOutlet weak var secureCoreContainer: NSBox!
     @IBOutlet weak var netshieldContainer: NSBox!
     @IBOutlet weak var killSwitchContainer: NSBox!
@@ -92,6 +95,13 @@ class CountriesSectionViewController: NSViewController {
         setupSearchSection()
         setupTableView()
         setupQuickSettings()
+        
+        guard #available(OSX 11, *) else {
+            // quickfix for older versions than big sur
+            listLeadingConstraint.constant = 0
+            listTrailingConstraint.constant = 0
+            return
+        }
     }
     
     override func viewWillAppear() {

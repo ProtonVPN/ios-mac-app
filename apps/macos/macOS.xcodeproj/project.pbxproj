@@ -365,6 +365,7 @@
 		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
+		F3237BF2266103DA00BE8AAE /* FeaturesFlags+Platform.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3237BF1266103DA00BE8AAE /* FeaturesFlags+Platform.swift */; };
 		F3DF4D3E2603A7DD0054B678 /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */; };
 /* End PBXBuildFile section */
 
@@ -876,6 +877,7 @@
 		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
+		F3237BF1266103DA00BE8AAE /* FeaturesFlags+Platform.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "FeaturesFlags+Platform.swift"; path = "../../../../macos/ProtonVPN/Extensions/Core/FeaturesFlags+Platform.swift"; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
 		F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1866,6 +1868,7 @@
 				E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */,
 				E1616BDF21C91B9700F42D79 /* PropertiesManager+Extension.swift */,
 				D5906F1122D36035001BC074 /* AccountPlan+Extension.swift */,
+				F3237BF1266103DA00BE8AAE /* FeaturesFlags+Platform.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2958,6 +2961,7 @@
 				EEBB82EC1F1DF6120041432A /* OverviewViewController.swift in Sources */,
 				E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */,
 				EE98CFE71F1519D4000D6688 /* NSImage+Extension.swift in Sources */,
+				F3237BF2266103DA00BE8AAE /* FeaturesFlags+Platform.swift in Sources */,
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				D5966FE4253885B00061A75F /* TriangleView.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,

@@ -193,6 +193,15 @@ extension MacAlertService: CoreAlertService {
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
             
+        case is ReconnectOnActionAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is TurnOnKillSwitchAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is AllowLANConnectionsAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

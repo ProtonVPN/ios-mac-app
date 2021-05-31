@@ -13,13 +13,14 @@
 # Uncomment the line if you want fastlane to automatically update itself
 # update_fastlane
 
-
+$derived_data_path = "DerivedData"
 
 desc "Run all Core iOS tests"
 lane :ios_core_test do
   simulator_name = ENV["CI_PIPELINE_ID"]
   scan(scheme: "vpncore-ios", 
     result_bundle: true,
+    derived_data_path: $derived_data_path,
     skip_slack: true,
     devices: [simulator_name],
     clean: true)
@@ -29,6 +30,7 @@ desc "Run all Core macOS tests"
 lane :macos_core_test do  
   scan(scheme: "vpncore-macos", 
     result_bundle: true,
+    derived_data_path: $derived_data_path,
     skip_slack: true,
     clean: true)
 end
@@ -38,6 +40,7 @@ lane :ios_app_test do
     simulator_name = ENV["CI_PIPELINE_ID"]
     scan(
       scheme: "ProtonVPN-iOS",
+      derived_data_path: $derived_data_path,
       clean: true,
       result_bundle: true,
       skip_slack: true,
@@ -50,6 +53,7 @@ lane :macos_app_test do
   scan(
       scheme: "ProtonVPN-macOS",
       clean: true,
+      derived_data_path: $derived_data_path,
       result_bundle: true,
       skip_slack: true,
       number_of_retries: 1

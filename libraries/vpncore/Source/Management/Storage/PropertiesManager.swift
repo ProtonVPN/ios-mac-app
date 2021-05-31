@@ -63,6 +63,7 @@ public protocol PropertiesManagerProtocol: class {
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
     var excludeLocalNetworks: Bool { get set }
+    var vpnAcceleratorEnabled: Bool { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -134,6 +135,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let featureFlags = "FeatureFlags"
         static let netshield = "NetShield"
         static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
+        static let vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
         
         static let humanValidationFailed: String = "humanValidationFailed"
         static let alternativeRouting: String = "alternativeRouting"
@@ -462,6 +464,15 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
+        }
+    }
+    
+    public var vpnAcceleratorEnabled: Bool {
+        get {
+            return Storage.userDefaults().object(forKey: Keys.vpnAcceleratorEnabled) as? Bool ?? true
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled)
         }
     }
     

@@ -129,6 +129,11 @@
 		921E3680E612A1D8F1A969F2 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E73DB36971335A429DF2C4 /* Pods_Quick_Connect_Widget.framework */; };
 		96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */; };
 		A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */; };
+		B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD69D26540F1600978637 /* ProfileRobot.swift */; };
+		B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6A326540F2700978637 /* CreateProfileRobot.swift */; };
+		B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6A826540F4D00978637 /* ProfilesTests.swift */; };
+		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
+		B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6B2265410D200978637 /* LoginRobot.swift */; };
 		B8F0BAE6EEFE43932E7D20B1 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */; };
 		D511084524614D480018872A /* PlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511083D24614D480018872A /* PlanCardView.swift */; };
 		D511084624614D480018872A /* PlanCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D511083E24614D480018872A /* PlanCardView.xib */; };
@@ -735,6 +740,11 @@
 		83E73DB36971335A429DF2C4 /* Pods_Quick_Connect_Widget.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Quick_Connect_Widget.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8695CC4885740C90F7AFC80D /* Pods-OpenVPN Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.debug.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		954D2A931124ECB13F5DE123 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
+		B29CD69D26540F1600978637 /* ProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/ProfileRobot.swift; sourceTree = "<group>"; };
+		B29CD6A326540F2700978637 /* CreateProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/CreateProfileRobot.swift; sourceTree = "<group>"; };
+		B29CD6A826540F4D00978637 /* ProfilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
+		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
+		B29CD6B2265410D200978637 /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/LoginRobot.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
 		CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1387,6 +1397,40 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		B29CD69B26540EEE00978637 /* Robots */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD69C26540EF400978637 /* Profiles */,
+				B29CD6B2265410D200978637 /* LoginRobot.swift */,
+			);
+			path = Robots;
+			sourceTree = "<group>";
+		};
+		B29CD69C26540EF400978637 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD69D26540F1600978637 /* ProfileRobot.swift */,
+				B29CD6A326540F2700978637 /* CreateProfileRobot.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B29CD6A726540F2D00978637 /* NewUITest */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD8D1265BB66300978637 /* Profiles */,
+			);
+			path = NewUITest;
+			sourceTree = "<group>";
+		};
+		B29CD8D1265BB66300978637 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B29CD6A826540F4D00978637 /* ProfilesTests.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1654,6 +1698,8 @@
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
+				B29CD6A726540F2D00978637 /* NewUITest */,
+				B29CD69B26540EEE00978637 /* Robots */,
 				D5811D87229BE20F0087B63A /* Unlogged user */,
 				D5AAA12C229D334900EA839A /* Login */,
 				D5AAA129229D28CC00EA839A /* Other classes */,
@@ -1689,6 +1735,7 @@
 			isa = PBXGroup;
 			children = (
 				D5AAA12A229D28E400EA839A /* Credentials.swift */,
+				B29CD6AE2654109600978637 /* StringUtils.swift */,
 			);
 			path = "Other classes";
 			sourceTree = "<group>";
@@ -3354,11 +3401,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
+				B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */,
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
-				F3521E1A264AA40F0070F177 /* BuildFile in Sources */,
+				F3521E1A264AA40F0070F177 /* (null) in Sources */,
+				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
+				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
+				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
 				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
 				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,
 			);

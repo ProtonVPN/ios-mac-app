@@ -24,7 +24,12 @@ final class SidebarViewModel {
         self.factory = factory
     }
 
-    func showOpenVPNAlert() {
+    func showSystemExtensionInstallAlert() {
+        // if Smart Protocols are hidden then do not show the extension install request at app startup
+        guard propertiesManager.featureFlags.isSmartProtocols else {
+            return
+        }
+
         guard !propertiesManager.openVPNExtensionTourDisplayed else {
             return
         }
