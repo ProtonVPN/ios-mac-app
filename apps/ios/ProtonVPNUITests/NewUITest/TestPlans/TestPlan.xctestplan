@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "A2DF8CAF-50FD-4713-9C95-5ECC362BFAF8",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "language" : "en"
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iOS.xcodeproj",
+        "identifier" : "D5811D7C229BBD870087B63A",
+        "name" : "ProtonVPNUITests"
+      }
+    }
+  ],
+  "version" : 1
+}

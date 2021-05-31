@@ -8,7 +8,6 @@
 
 import PMTestAutomation
 
-fileprivate let tabBars = "Profiles"
 fileprivate let editButton = "Edit"
 fileprivate let doneButton = "Done"
 fileprivate let addButton = "Add"
@@ -21,12 +20,10 @@ class ProfileRobot: CoreElements {
     
     @discardableResult
     func addNewProfile() -> CreateProfileRobot {
-        button(tabBars).tap()
         return addNew()
     }
     
     func deleteProfile(_ name: String, _ countryname: String) -> ProfileRobot {
-        button(tabBars).tap()
         return delete(name, countryname)
     }
     
