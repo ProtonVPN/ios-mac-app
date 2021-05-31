@@ -25,14 +25,19 @@ import Foundation
 public struct VpnCertificate: Codable {
     let certificate: String
     let validUntil: Date
+    let refreshTime: Date
 
-    init(certificate: String, validUntil: Date) {
-        self.certificate = certificate
-        self.validUntil = validUntil
+    var isExpired: Bool {
+        return Date() > validUntil
+    }
+
+    var shouldBeRefreshed: Bool {
+        return Date() > refreshTime
     }
 
     init(dict: JSONDictionary) throws {
         certificate = try dict.stringOrThrow(key: "Certificate")
         validUntil = try dict.unixTimestampOrThrow(key: "ExpirationTime")
+        refreshTime = try dict.unixTimestampOrThrow(key: "RefreshTime")
     }
 }

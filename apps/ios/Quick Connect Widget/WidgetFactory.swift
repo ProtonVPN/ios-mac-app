@@ -36,6 +36,8 @@ class WidgetFactory {
 
     let alertService = ExtensionAlertService()
     let propertiesManager = PropertiesManager()
+    let alamofireWrapper = AlamofireWrapperImplementation()
+    let vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)prt.ProtonVPN")
 
     var todayViewModel:TodayViewModel {
         let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )
@@ -57,14 +59,12 @@ class WidgetFactory {
                                                     propertiesManager: self.propertiesManager)
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
-                          appGroup: self.appGroup)
+                          appGroup: self.appGroup,
+                          vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
     }
     
     var appStateManager: AppStateManager {
         let keychain = VpnKeychain()
-        let alamofireWrapper = AlamofireWrapperImplementation()
-        let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
         return AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
                                vpnManager: self.vpnManager,
                                alamofireWrapper: alamofireWrapper,
@@ -72,6 +72,7 @@ class WidgetFactory {
                                timerFactory: TimerFactory(),
                                propertiesManager: self.propertiesManager,
                                vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager), vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain))
+                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager),
+                               vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
     }
 }

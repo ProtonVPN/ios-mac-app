@@ -136,7 +136,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
                                                object: nil)
 
         DispatchQueue.main.async { // bit of a delay
-            self.viewModel.showOpenVPNAlert()
+            self.viewModel.showSystemExtensionInstallAlert()
         }
     }
     

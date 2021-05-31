@@ -93,8 +93,12 @@ public enum VpnProtocol {
     }
 
     public var authenticationType: AuthenticationType {
+        #if DEBUG
+        return isOpenVpn ? AuthenticationType.certificate : AuthenticationType.credentials
+        #else
         #warning("Add condition for Wireguard when implemented")
         return .credentials
+        #endif
     }
     
     public var transportProtocol: TransportProtocol {

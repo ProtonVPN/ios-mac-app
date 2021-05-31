@@ -30,7 +30,6 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
     private let alamofireWrapper: AlamofireWrapper
     private let completion: CertificateRefreshCompletion?
-    private let certificateRefreshDeadline: TimeInterval = 60 * 60 * 3 // 3 hours
     private var isRetry = false
 
     init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion? = nil) {
@@ -75,8 +74,8 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         let needsRefresh: Bool
         if let certificate = existingCertificate {
-            // refresh is needed if the certificate expired before a safe interval
-            needsRefresh = certificate.validUntil < Date().addingTimeInterval(certificateRefreshDeadline)
+            // check if we are past the refresh time recommended by the backend or expired
+            needsRefresh = certificate.isExpired || certificate.shouldBeRefreshed
         } else {
             PMLog.D("No stored vpn authentication certificate found")
             // no certificate exists, refresh is definitely needed

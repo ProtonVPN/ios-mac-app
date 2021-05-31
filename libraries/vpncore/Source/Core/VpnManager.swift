@@ -29,7 +29,7 @@ public protocol VpnManagerProtocol {
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     func setOnDemand(_ enabled: Bool)
-    func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
+    func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
     func connectedDate(completion: @escaping (Date?) -> Void)
     func refreshState()
@@ -78,6 +78,8 @@ public class VpnManager: VpnManagerProtocol {
             return true
         }
     }
+
+    private var localAgent: LocalAgent?
     
     public private(set) var state: VpnState = .invalid
     public var currentVpnProtocol: VpnProtocol? {
@@ -93,12 +95,14 @@ public class VpnManager: VpnManagerProtocol {
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
     private let alertService: CoreAlertService?
+    private let vpnAuthentication: VpnAuthentication
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.appGroup = appGroup
         self.alertService = alertService
+        self.vpnAuthentication = vpnAuthentication
         
         prepareManagers()
     }
@@ -125,13 +129,13 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+    public func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
             PMLog.D("About to start connection process")
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
-                self?.prepareConnection(forConfiguration: configuration, completion: completion)
+                self?.prepareConnection(forConfiguration: configuration, authData: authData, completion: completion)
             }
         }
     }
@@ -237,11 +241,15 @@ public class VpnManager: VpnManagerProtocol {
     // MARK: - Private functions
     // MARK: - Connecting
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
+                                   authData: VpnAuthenticationData?,
                                    completion: @escaping () -> Void) {
         if state.volatileConnection {
             setState()
             return
         }
+
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield) })
+        localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
@@ -343,7 +351,8 @@ public class VpnManager: VpnManagerProtocol {
     // MARK: - Disconnecting
     private func startDisconnect(completion: @escaping (() -> Void)) {
         PMLog.D("Closing VPN tunnel")
-        
+
+        localAgent?.disconnect()
         disconnectCompletion = completion
         
         setOnDemand(false) { vpnManager in
@@ -471,6 +480,9 @@ public class VpnManager: VpnManagerProtocol {
         case .disconnected, .invalid:
             self.disconnectCompletion?()
             self.disconnectCompletion = nil
+            self.localAgent?.disconnect()
+        case .connected:
+            self.localAgent?.connect()
         default:
             break
         }
@@ -567,6 +579,20 @@ public class VpnManager: VpnManagerProtocol {
             } else {
                 self.currentVpnProtocol = .ike
             }
+
+            // connected to a protocol that requires local agent, but local agent is nil and VPN
+            // This is connected means the app was started while a VPN connection is already active
+            if self.currentVpnProtocol?.authenticationType == .certificate, self.localAgent == nil, case .connected = self.state {
+                // load last authentication data (that should be available)
+                self.vpnAuthentication.loadAuthenticationData { result in
+                    switch result {
+                    case .failure:
+                        PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
+                    case let .success(data):
+                        self.reconnectLocalAgent(data: data)
+                    }
+                }
+            }
             
             self.setState()
             
@@ -602,5 +628,41 @@ public class VpnManager: VpnManagerProtocol {
         } else {
             request()
         }
+    }
+
+    private func reconnectLocalAgent(data: VpnAuthenticationData) {
+        localAgent?.disconnect()
+        localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
+        localAgent?.delegate = self
+        localAgent?.connect()
+    }
+}
+
+extension VpnManager: LocalAgentDelegate {
+    func didReceiveError(error: LocalAgentError) {
+        switch error {
+        case .certificateExpired, .certificateRevoked:
+            PMLog.D("Local agent reported expired or revoked certificate, trying to refresh and reconnect")
+            vpnAuthentication.refreshCertificates { [weak self] result in
+                switch result {
+                case let .success(data):
+                    PMLog.D("Reconnecting to local agent with new certificate")
+                    self?.reconnectLocalAgent(data: data)
+                case let .failure(error):
+                    PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
+                    self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                    self?.disconnect { [weak self] in
+                        self?.localAgent?.disconnect()
+                    }
+                }
+            }
+        default:
+            #warning("Handle all the errors")
+            PMLog.ET("Local agent reported error \(error)")
+        }
+    }
+
+    func didChangeState(state: LocalAgentState) {
+        PMLog.D("Local agent state changed to \(state)")
     }
 }

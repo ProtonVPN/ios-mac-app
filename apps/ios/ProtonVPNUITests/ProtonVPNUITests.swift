@@ -20,6 +20,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
+import PMTestAutomation
 import XCTest
 
 class ProtonVPNUITests: XCTestCase {
@@ -47,6 +48,42 @@ class ProtonVPNUITests: XCTestCase {
     }
 
     // MARK: - Helper methods
+    
+    private let loginRobot = LoginRobot()
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+    
+    func loginAsFreeUser() {
+        login(withCredentials: credentials[0])
+    }
+    
+    func loginAsBasicUser() {
+        login(withCredentials: credentials[1])
+    }
+    
+    func loginAsPlusUser() {
+        login(withCredentials: credentials[2])
+    }
+    
+    func loginAsVisionaryUser() {
+        login(withCredentials: credentials[3])
+    }
+    
+    private func login(withCredentials credentials: Credentials) {
+        super.setUp()
+        logoutIfNeeded()
+        openLoginScreen()
+        loginRobot
+            .loginUser(credentials: credentials)
+    }
+ 
+    private func openLoginScreen(){
+        let skipButton = app.buttons["Skip"]
+        skipButton.tap()
+        assertLastWizardScreen()
+        app.buttons["Log In"].tap()
+        assertLoginScreenOpen()
+    }
+    
     
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars

@@ -7,3 +7,4 @@ Pods/Pods.xcodeproj/xcuserdata
 .LSOverride
 fastlane/report.xml
 fastlane/test_output
+DerivedData

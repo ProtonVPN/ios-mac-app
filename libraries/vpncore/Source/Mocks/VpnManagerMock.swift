@@ -44,7 +44,7 @@ public class VpnManagerMock: VpnManagerProtocol {
         onDemand = enabled
     }
     
-    public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {}
+    public func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void) {}
     
     public func disconnect(completion: @escaping () -> Void) {}
     

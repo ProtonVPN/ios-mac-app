@@ -25,7 +25,7 @@ import WireguardSRP
 import Reachability
 
 protocol LocalAgentDelegate: AnyObject {
-    func didReceiveError(code: Int)
+    func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
 }
 
@@ -33,7 +33,7 @@ protocol LocalAgent {
     var state: LocalAgentState? { get }
     var delegate: LocalAgentDelegate? { get set }
 
-    func connect(host: String, data: VpnAuthenticationData, netshield: NetShieldType)
+    func connect()
     func disconnect()
     func update(netshield: NetShieldType)
     func unjail()
@@ -48,9 +48,14 @@ final class GoLocalAgent: LocalAgent {
     private let client: LocalAgentNativeClient
     private let reachability: Reachability?
 
-    init() {
-        reachability = try? Reachability()
+    private let data: VpnAuthenticationData
+    private let netshield: NetShieldType
 
+    init(data: VpnAuthenticationData, netshield: NetShieldType) {
+        self.data = data
+        self.netshield = netshield
+
+        reachability = try? Reachability()
         client = LocalAgentNativeClient()
         client.delegate = self
 
@@ -62,6 +67,7 @@ final class GoLocalAgent: LocalAgent {
 
     deinit {
         reachability?.stopNotifier()
+        agent?.close()
     }
 
     var state: LocalAgentState? {
@@ -73,8 +79,8 @@ final class GoLocalAgent: LocalAgent {
 
     weak var delegate: LocalAgentDelegate?
 
-    func connect(host: String, data: VpnAuthenticationData, netshield: NetShieldType) {
-        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.base64X25519Representation, serverCAsPEM: rootCerts, host: host, client: client, features: LocalAgentFeatures()?.with(netshield: netshield)?.with(jailed: false), connectivity: true)
+    func connect() {
+        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.derRepresentation, serverCAsPEM: rootCerts, host: "10.2.0.1:65432", client: client, features: LocalAgentFeatures()?.with(netshield: netshield)?.with(jailed: false), connectivity: true)
     }
 
     func disconnect() {
@@ -94,7 +100,11 @@ final class GoLocalAgent: LocalAgent {
 
 extension GoLocalAgent: LocalAgentNativeClientDelegate {
     func didReceiveError(code: Int) {
-        delegate?.didReceiveError(code: code)
+        guard let error = LocalAgentError.from(code: code) else {            
+            return
+        }
+
+        delegate?.didReceiveError(error: error)
     }
 
     func didChangeState(state: LocalAgentState?) {

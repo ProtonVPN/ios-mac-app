@@ -98,6 +98,9 @@ extension VpnAuthenticationManager: VpnAuthentication {
         // keys are generated, certificate is stored, use it
         if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate() {
             PMLog.D("Loading stored vpn authentication data")
+            if !existingCertificate.isExpired {
+                PMLog.D("Stored vpn authentication certificate is expired, the local agent will connect but certificate refresh will be needed")
+            }
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return
         }

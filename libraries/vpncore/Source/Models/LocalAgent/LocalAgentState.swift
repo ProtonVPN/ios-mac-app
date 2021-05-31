@@ -29,11 +29,14 @@ enum LocalAgentState {
     case softJailed
     case hardJailed
     case connectionError
+    case serverUnreachable
     case serverCertificateError
+    case clientCertificateError
     case disconnected
 }
 
 extension LocalAgentState {
+    // swiftlint:disable cyclomatic_complexity
     static func from(string: String) -> LocalAgentState? {
         guard let consts = LocalAgentConstants() else {
             PMLog.ET("Failed to create local agent constants")
@@ -51,8 +54,12 @@ extension LocalAgentState {
             return .disconnected
         case consts.stateHardJailed:
             return .hardJailed
+        case consts.stateServerUnreachable:
+            return .serverUnreachable
         case consts.stateServerCertificateError:
             return .serverCertificateError
+        case consts.stateClientCertificateError:
+            return .clientCertificateError
         case consts.stateSoftJailed:
             return .softJailed
         default:
