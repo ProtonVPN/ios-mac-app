@@ -64,6 +64,7 @@ class ReportBugViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        logsSwitch.accessibilityIdentifier = "vpn logs"
         view.backgroundColor = .protonGrey()
         lineView.backgroundColor = .protonDarkGrey()
         

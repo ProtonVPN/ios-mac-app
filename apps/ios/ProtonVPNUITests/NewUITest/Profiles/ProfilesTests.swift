@@ -10,7 +10,7 @@ import XCTest
 
 class ProfilesTests: ProtonVPNUITests {
     
-    private let loginRobot = LoginRobot()
+    private let mainRobot = MainRobot()
     private let profileRobot = ProfileRobot()
     private let createProfileRobot = CreateProfileRobot()
     
@@ -23,7 +23,8 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Netherlands"
         
         loginAsFreeUser()
-        profileRobot
+        mainRobot
+            .goToProfilesTab()
             .addNewProfile()
             .setProfileDetails(profilename, countryName)
             .saveProfile(robot: ProfileRobot.self)
@@ -37,7 +38,8 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Netherlands"
     
         loginAsBasicUser()
-        profileRobot
+        mainRobot
+            .goToProfilesTab()
             .addNewProfile()
             .setProfileDetails(profilename, countryName)
             .saveProfile(robot: ProfileRobot.self)
@@ -52,7 +54,8 @@ class ProfilesTests: ProtonVPNUITests {
         let profilename = StringUtils().randomAlphanumericString()
     
         loginAsFreeUser()
-        profileRobot
+        mainRobot
+            .goToProfilesTab()
             .addNewProfile()
             .setSecureCoreProfile(profilename)
             .verify.subscribtionRequiredMessage()
@@ -62,7 +65,8 @@ class ProfilesTests: ProtonVPNUITests {
         let profilename = StringUtils().randomAlphanumericString()
     
         loginAsBasicUser()
-        profileRobot
+        mainRobot
+            .goToProfilesTab()
             .addNewProfile()
             .setSecureCoreProfile(profilename)
             .verify.subscribtionRequiredMessage()
@@ -74,7 +78,8 @@ class ProfilesTests: ProtonVPNUITests {
         let serverVia = "Iceland"
         
         loginAsPlusUser()
-        profileRobot
+        mainRobot
+            .goToProfilesTab()
             .addNewProfile()
             .makeDefaultProfileWithSecureCore(profilename, countryName, serverVia)
             .saveProfile(robot: ProfileRobot.self)
