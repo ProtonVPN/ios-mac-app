@@ -585,6 +585,7 @@ public class VpnManager: VpnManagerProtocol {
         return nil
     }
     
+    // swiftlint:disable function_body_length
     /*
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
@@ -663,6 +664,7 @@ public class VpnManager: VpnManagerProtocol {
                                                    name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         }
     }
+    // swiftlint:enable function_body_length
     
     @objc private func vpnStatusChanged() {
         setState()
