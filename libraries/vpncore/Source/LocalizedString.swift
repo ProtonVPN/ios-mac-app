@@ -42,6 +42,10 @@ public class LocalizedString {
     public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
     public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
+    public static let turnOn = NSLocalizedString("_turn_on", comment: "")
+    public static let notNow = NSLocalizedString("_not_now", comment: "")
+    public static let allow = NSLocalizedString("_allow", comment: "")
+    
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
     public static let quitWarning = NSLocalizedString("_quit_warning", comment: "MacOS: alert show before quitting app if VPN is connected")
@@ -500,6 +504,11 @@ public class LocalizedString {
     
     public static let allowLANTitle = NSLocalizedString("_allow_lan_title", comment: "Settings: Allow LAN label.")
     public static let allowLANInfo = NSLocalizedString("_allow_lan_info", comment: "Settings: Allow LAN information text.")
+    public static let allowLANDescription = NSLocalizedString("_allow_lan_description", comment: "Settings: Allow LAN information text.")
+    public static let allowLANNote = NSLocalizedString("_allow_lan_note", comment: "Settings: Allow LAN information text.")
+    
+    public static let turnKSOnTitle = NSLocalizedString("_turn_ks_on_title", comment: "Quick Settings: Enable Kill Switch")
+    public static let turnKSOnDescription = NSLocalizedString("_turn_ks_on_description", comment: "Quick Settings: Enable Kill Switch")
     
     // MARK: - Plans
     public static let getPlan = NSLocalizedString("_get_plan", comment: "%@ is a plan name e.g. Get Plus Plan")
@@ -692,6 +701,7 @@ public class LocalizedString {
     public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
     public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
     public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
+    public static let qsKSNote = NSLocalizedString("_quick_settings_killSwitch_note", comment: "Note for Kill Switch on Quick Settings.")
     public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")
     public static let qsApplyingSettings = NSLocalizedString("_applying_settings_", comment: "Title on reconnection info")
     public static let qsReestablishingConnection = NSLocalizedString("_reestablish_vpn_connection_", comment: "Title on reconnection view controller")
@@ -783,5 +793,8 @@ public class LocalizedString {
     public static let locationsBasicPlus = NSLocalizedString("_locations_basic_plus", comment: "")
     public static let locationsBasic = NSLocalizedString("_locations_basic", comment: "")
     public static let locationsPlus = NSLocalizedString("_locations_plus", comment: "")
-
+    
+    public static let vpnAcceleratorTitle = NSLocalizedString("_vpn_accelerator_title", comment: "")
+    public static let vpnAcceleratorDescription = NSLocalizedString("_vpn_accelerator_description", comment: "")
+    public static let actionRequiresRecconect = NSLocalizedString("_action_requires_reconnect", comment: "")
 }

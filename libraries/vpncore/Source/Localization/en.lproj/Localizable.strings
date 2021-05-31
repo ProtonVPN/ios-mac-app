@@ -44,6 +44,9 @@
 "_more_info" = "More info";
 "_less_info" = "Less info";
 "_contact_our_support" = "Contact our support";
+"_turn_on" = "Turn on";
+"_not_now" = "Not now";
+"_allow" = "Allow";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
@@ -520,8 +523,15 @@
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
 "_activate_widget_step_3" = "Add the ProtonVPN widget to the list of active widgets.";
 "_report_bug" = "Report Bug";
+
 "_allow_lan_title" = "Allow LAN connections";
 "_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
+"_allow_lan_description" = "Doing so will disable the Kill Switch";
+"_allow_lan_note" = "Note: Restart your VPN connection to apply this change";
+
+"_turn_ks_on_title" = "Turn Kill Switch on?";
+"_turn_ks_on_description" = "When Kill Switch is on, you won't be able to connect to your local network or access devices connected to it";
+
 
 // Plans
 
@@ -733,6 +743,7 @@
 "_quick_settings_killSwitch_description" = "Disables Internet if the VPN connection drops to prevent accidental IP leak.";
 "_quick_settings_secureCore_note" = "Secure Core may reduce VPN speed";
 "_quick_settings_netShield_note" = "If websites don’t load, try disabling NetShield";
+"_quick_settings_killSwitch_note" = "If you can't connect to devices on your local network, try disabling Kill Switch.";
 "_quick_settings_get_plus" = "GET PLUS";
 "_applying_settings_" = "Applying settings";
 "_reestablish_vpn_connection_" = "Re-establishing VPN connection.";
@@ -830,9 +841,12 @@
 "_performance_load_medium" = "Medium";
 "_performance_load_high" = "High";
 
-
 "_locations_all" = "All Locations";
 "_locations_free" = "FREE Locations";
 "_locations_basic_plus" = "BASIC & PLUS Locations";
 "_locations_basic" = "BASIC Locations";
 "_locations_plus" = "PLUS Locations";
+
+"_vpn_accelerator_title" = "VPN Accelerator";
+"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%";
+"_action_requires_reconnect" = "This action requires to re-connect";

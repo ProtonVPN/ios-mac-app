@@ -13,6 +13,8 @@
                 <outlet property="killSwitchBtn" destination="1zu-fE-s41" id="HVd-zK-KQW"/>
                 <outlet property="killSwitchContainer" destination="ly1-uI-H8k" id="P0N-0G-p2T"/>
                 <outlet property="killSwitchSectionView" destination="Jr2-NA-2AB" id="Q71-pC-heB"/>
+                <outlet property="listLeadingConstraint" destination="AkH-nz-rRf" id="eLG-bn-7ra"/>
+                <outlet property="listTrailingConstraint" destination="eYc-kp-Qvn" id="x8J-HP-eOb"/>
                 <outlet property="netShieldBox" destination="AVF-NI-b29" id="fu0-ap-1bb"/>
                 <outlet property="netShieldBtn" destination="COp-Cy-iCa" id="NQi-fi-I3y"/>
                 <outlet property="netShieldSectionView" destination="Uag-7s-udL" id="82m-sY-u6Z"/>

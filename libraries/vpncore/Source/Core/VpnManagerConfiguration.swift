@@ -14,6 +14,7 @@ public enum VpnManagerClientConfiguration {
     case macClient
     case netShieldLevel1
     case netShieldLevel2
+    case vpnAccelerator
     case label(String)
 
     var usernameSuffix: String {
@@ -22,6 +23,8 @@ public enum VpnManagerClientConfiguration {
             return "pi"
         case .macClient:
             return "pm"
+        case .vpnAccelerator:
+            return "nst"
         case .netShieldLevel1:
             return "f1"
         case .netShieldLevel2:
@@ -117,6 +120,11 @@ public class VpnManagerConfigurationPreparer {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
 
+        if propertiesManager.featureFlags.isVpnAccelerator && !propertiesManager.vpnAcceleratorEnabled {
+            // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated and feature enabled
+            extraConfiguration += [.vpnAccelerator]
+        }
+        
         if let label = connectionConfig.serverIp.label, !label.isEmpty {
             extraConfiguration += [.label(label)]
         }
