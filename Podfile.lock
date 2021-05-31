@@ -56,7 +56,7 @@ DEPENDENCIES:
   - Sentry (= 5.2.2)
   - SwiftLint
   - TrustKit (from `https://github.com/ProtonMail/TrustKit`, commit `838fba789e01c9cabff77acea3fb7135f71a220f`)
-  - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `fix/no-shutdownon-write-error`)"
+  - "TunnelKit (from `git@gitlab.protontech.ch:apple/vpn/tunnelkit.git`, branch `develop`)"
 
 SPEC REPOS:
   trunk:
@@ -93,7 +93,7 @@ EXTERNAL SOURCES:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
-    :branch: fix/no-shutdownon-write-error
+    :branch: develop
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 CHECKOUT OPTIONS:
@@ -116,7 +116,7 @@ CHECKOUT OPTIONS:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
   TunnelKit:
-    :commit: 74dcaf4250870e31d054d8cfe0227d38d568dd4a
+    :commit: 08bcdc6246d1ff71674b4e5e4dc97ae54b58a131
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 SPEC CHECKSUMS:
@@ -140,6 +140,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 5605a41609299a0ca4ec72cbb3a73d4fca1f9c46
+PODFILE CHECKSUM: 5a86850f7191f2e2147323c79d80090c1dcdf554
 
 COCOAPODS: 1.10.1
