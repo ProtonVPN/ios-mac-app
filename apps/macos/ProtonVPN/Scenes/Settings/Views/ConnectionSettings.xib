@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -36,6 +36,7 @@
                 <outlet property="smartProtocolButton" destination="E99-Iu-7Yp" id="LM1-vJ-Rmr"/>
                 <outlet property="smartProtocolInfoIncon" destination="MuB-Rl-blw" id="aFs-36-3io"/>
                 <outlet property="smartProtocolLabel" destination="g7B-Mn-ke5" id="dkf-pr-wYW"/>
+                <outlet property="smartProtocolSectionView" destination="s2r-2p-dvX" id="JMk-J5-jMR"/>
                 <outlet property="smartProtocolSeparator" destination="gqe-bk-ney" id="MCN-mr-iP1"/>
                 <outlet property="view" destination="XBX-SA-q2x" id="Ukw-Ua-dco"/>
             </connections>
