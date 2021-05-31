@@ -52,7 +52,7 @@ public struct VpnManagerConfiguration {
     public let vpnAccelerator: Bool
     public let bouncing: String?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -60,6 +60,7 @@ public struct VpnManagerConfiguration {
         self.username = username
         self.password = password
         self.passwordReference = passwordReference
+        self.authData = authData
         self.vpnProtocol = vpnProtocol
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
@@ -84,7 +85,7 @@ public class VpnManagerConfigurationPreparer {
         self.propertiesManager = propertiesManager
     }
     
-    public func prepareConfiguration(from connectionConfig: ConnectionConfiguration) -> VpnManagerConfiguration? {
+    public func prepareConfiguration(from connectionConfig: ConnectionConfiguration, authData: VpnAuthenticationData?) -> VpnManagerConfiguration? {
         do {
             let vpnCredentials = try vpnKeychain.fetch()
             let passwordRef = try vpnKeychain.fetchOpenVpnPassword()
@@ -99,6 +100,7 @@ public class VpnManagerConfigurationPreparer {
                                            username: vpnCredentials.name + self.extraConfiguration(with: connectionConfig),
                                            password: vpnCredentials.password,
                                            passwordReference: passwordRef,
+                                           authData: authData,
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled,

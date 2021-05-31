@@ -30,12 +30,9 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = "172.83.45.3:51820"
                 
-        let config = """
-                PUT CONFIG HERE
-                """
         let key = "PVPN-WG-TEST"
         let keychain = VpnKeychain()
-        try keychain.setPassword(config, forKey: key)
+        try keychain.setPassword(configuration.wireguardConfig, forKey: key)
         protocolConfiguration.passwordReference = try? keychain.getPasswordRefference(forKey: key)
         
         #if os(macOS)
@@ -80,4 +77,25 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         completion(nil)
     }
         
+}
+
+extension VpnManagerConfiguration {
+    
+    var wireguardConfig: String {
+        var output = "[Interface]\n"
+        
+        if let authData = authData {
+            output.append("PrivateKey = \(authData.clientKey.base64X25519Representation)\n")
+        }
+        output.append("Address = 10.2.0.2/32\n")
+        output.append("DNS = 10.2.0.1\n")
+        
+        output.append("\n[Peer]\n")
+        output.append("PublicKey = TcpH/ozM+f16aiEzzmKap78Ifdb62JAeGFiBqKeqjVo=\n")
+        output.append("AllowedIPs = 0.0.0.0/0\n")
+        output.append("Endpoint = \(self.entryServerAddress):51820\n")
+        
+        return output
+    }
+    
 }

@@ -107,14 +107,16 @@ public enum VpnProtocol {
     }
 
     public var authenticationType: AuthenticationType {
-        #if DEBUG
-        return isOpenVpn ? AuthenticationType.certificate : AuthenticationType.credentials
-        #else
         switch self {
+        case .ike: return .credentials
+        case .openVpn:
+            #if DEBUG
+            return isOpenVpn ? AuthenticationType.certificate : AuthenticationType.credentials
+            #else
+            return .credentials
+            #endif
         case .wireGuard: return .certificate
-        default: return .credentials
         }
-        #endif
     }
 
     public var transportProtocol: TransportProtocol {
