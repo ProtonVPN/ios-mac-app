@@ -302,7 +302,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func makeConnection(_ connectionConfiguration: ConnectionConfiguration, authData: VpnAuthenticationData? = nil) {
-        guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration) else {
+        guard let vpnManagerConfiguration = configurationPreparer.prepareConfiguration(from: connectionConfiguration, authData: authData) else {
             cancelConnectionAttempt()
             return
         }
@@ -313,7 +313,7 @@ public class AppStateManagerImplementation: AppStateManager {
         case .openVpn:
             self.propertiesManager.lastOpenVpnConnection = connectionConfiguration
         case .wireGuard:
-            #warning("Use authData for Wireguard when it is implemented")
+            self.propertiesManager.lastWireguardConnection = connectionConfiguration
         }
         
         vpnManager.connect(configuration: vpnManagerConfiguration, authData: authData, completion: {
