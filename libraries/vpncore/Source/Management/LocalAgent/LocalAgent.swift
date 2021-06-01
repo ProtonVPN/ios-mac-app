@@ -36,6 +36,7 @@ protocol LocalAgent {
     func connect()
     func disconnect()
     func update(netshield: NetShieldType)
+    func update(vpnAccelerator: Bool)
     func unjail()
 }
 
@@ -91,6 +92,11 @@ final class GoLocalAgent: LocalAgent {
 
     func update(netshield: NetShieldType) {
         let features = LocalAgentFeatures()?.with(netshield: netshield)
+        agent?.setFeatures(features)
+    }
+
+    func update(vpnAccelerator: Bool) {
+        let features = LocalAgentFeatures()?.with(vpnAccelerator: vpnAccelerator)
         agent?.setFeatures(features)
     }
 
