@@ -24,7 +24,7 @@ import Foundation
 import WireguardSRP
 
 extension LocalAgentFeatures {
-    func with(netshield: NetShieldType) -> LocalAgentFeatures? {
+    func with(netshield: NetShieldType) -> LocalAgentFeatures {
         switch netshield {
         case .off:
             break
@@ -36,8 +36,13 @@ extension LocalAgentFeatures {
         return self
     }
 
-    func with(jailed: Bool) -> LocalAgentFeatures? {
+    func with(jailed: Bool) -> LocalAgentFeatures {
         setBool("jail", value: jailed)
+        return self
+    }
+
+    func with(vpnAccelerator: Bool) -> LocalAgentFeatures {
+        setBool("split-tcp", value: vpnAccelerator)
         return self
     }
 }
