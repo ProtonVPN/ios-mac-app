@@ -248,7 +248,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield) })
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator) })
         localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
@@ -632,7 +632,7 @@ public class VpnManager: VpnManagerProtocol {
 
     private func reconnectLocalAgent(data: VpnAuthenticationData) {
         localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
+        localAgent = GoLocalAgent(data: data, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled)
         localAgent?.delegate = self
         localAgent?.connect()
     }
