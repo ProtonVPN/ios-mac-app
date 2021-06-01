@@ -2,7 +2,7 @@
   "configurations" : [
     {
       "id" : "A2DF8CAF-50FD-4713-9C95-5ECC362BFAF8",
-      "name" : "Configuration 1",
+      "name" : "Tests running on simulator",
       "options" : {
 
       }
