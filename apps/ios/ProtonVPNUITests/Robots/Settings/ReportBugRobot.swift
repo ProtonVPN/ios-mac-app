@@ -15,7 +15,7 @@ fileprivate let yourMessageInput = "Your message..."
 fileprivate let reportMessaheTitle = "REPORT MESSAGE"
 fileprivate let sendReportButton = "Send Report"
 fileprivate let invalidEmailMessage = "Invalid email address"
-fileprivate let bugReportSuccesslMessage = "Thank you for your report"
+fileprivate let bugReportSuccessMessage = "Thank you for your report"
 fileprivate let okButton = "OK"
 
 class ReportBugRobot: CoreElements {
@@ -25,11 +25,6 @@ class ReportBugRobot: CoreElements {
     func fillBugReportForm(_ email: String, _ message: String) -> ReportBugRobot {
         swittch(vpnLogsSwitch).tap()
         return typeEmailAndMessage(email, message)
-    }
-    
-    func typeEmailOnly(_ email: String) -> ReportBugRobot {
-        textField(contactEmailInput).tap().typeText(email)
-        return ReportBugRobot()
     }
     
     func sendBugReport() -> ReportBugRobot {
@@ -53,8 +48,8 @@ class ReportBugRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func bugReportisSent() -> ReportBugRobot {
-            staticText(bugReportSuccesslMessage).wait().checkExists()
+        func bugReportIsSent() -> ReportBugRobot {
+            staticText(bugReportSuccessMessage).wait().checkExists()
             return ReportBugRobot()
         }
         

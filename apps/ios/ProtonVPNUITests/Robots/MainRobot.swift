@@ -12,7 +12,7 @@ import PMTestAutomation
 fileprivate let tabProfiles = "Profiles"
 fileprivate let tabSettings = "Settings"
 
-//[MainRobot] class contains actions for main app view.
+// MainRobot class contains actions for main app view.
 
 class MainRobot: CoreElements {
     
