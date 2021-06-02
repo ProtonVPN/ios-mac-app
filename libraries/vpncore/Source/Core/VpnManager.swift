@@ -256,6 +256,16 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
+        // also update the last connection request and active connection for retries and reconnections
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
+        switch currentVpnProtocol {
+        case .ike:
+            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
+        case .openVpn:
+            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
+        default:
+            break
+        }
         localAgent.update(netshield: netShieldType)
     }
     
