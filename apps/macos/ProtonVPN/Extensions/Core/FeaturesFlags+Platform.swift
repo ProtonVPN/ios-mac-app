@@ -13,4 +13,9 @@ extension FeatureFlags {
     var isSmartProtocols: Bool {
         return false
     }
+    
+    var isWireGuard: Bool {
+        return false
+    }
+    
 }

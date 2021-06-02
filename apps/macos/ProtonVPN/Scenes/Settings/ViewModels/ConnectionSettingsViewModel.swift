@@ -39,8 +39,11 @@ final class ConnectionSettingsViewModel {
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
-    private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    
+    private var featureFlags: FeatureFlags {
+        return propertiesManager.featureFlags
+    }
 
     private weak var viewController: ReloadableViewController?
     
@@ -129,7 +132,9 @@ final class ConnectionSettingsViewModel {
         return profileManager.allProfiles.count
     }
     
-    var protocolItemCount: Int { return 4 }
+    var protocolItemCount: Int {
+        return featureFlags.isWireGuard ? 4 : 3
+    }
         
     // MARK: - Setters
     
