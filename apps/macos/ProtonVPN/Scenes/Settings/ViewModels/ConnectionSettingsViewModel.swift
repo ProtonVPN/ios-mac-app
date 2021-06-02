@@ -228,19 +228,24 @@ final class ConnectionSettingsViewModel {
     }
     
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            self.propertiesManager.vpnAcceleratorEnabled = enabled
+        switch vpnGateway.connection {
+        case .connected where vpnProtocol.authenticationType == .certificate:
+            // in-place change when connected and using local agent
+            vpnGateway.set(vpnAccelerator: enabled)
+            propertiesManager.vpnAcceleratorEnabled = enabled
             completion(true)
-            return
+        case .connected, .connecting:
+            alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
+                self.propertiesManager.vpnAcceleratorEnabled = enabled
+                self.vpnGateway.retryConnection()
+                completion(true)
+            }, cancelHandler: {
+                completion(false)
+            }))
+        default:
+            propertiesManager.vpnAcceleratorEnabled = enabled
+            completion(true)
         }
-        
-        alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
-            self.propertiesManager.vpnAcceleratorEnabled = enabled
-            self.vpnGateway.retryConnection()
-            completion(true)
-        }, cancelHandler: {
-            completion(false)
-        }))
     }
     
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
