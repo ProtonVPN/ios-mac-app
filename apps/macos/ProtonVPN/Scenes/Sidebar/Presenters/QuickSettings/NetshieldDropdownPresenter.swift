@@ -46,7 +46,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     override var options: [QuickSettingsDropdownOptionPresenter] {
-        return [netshieldOff, netshieldLevel1, netshieldLevel2]
+        return [NetShieldType.off, NetShieldType.level1, NetShieldType.level2].map({ self.createNetshieldOption(level: $0) })
     }
     
     override func viewDidLoad() {
@@ -57,51 +57,9 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     }
     
     // MARK: - Private
-    
-    private var netshieldOff: QuickSettingGenericOption {
-        let active = netShieldPropertyProvider.netShieldType == .off
-        let text = LocalizedString.qsNetshieldOptionOff
-        let icon = #imageLiteral(resourceName: "qs_netshield_off")
-        return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, selectCallback: {
-            self.netShieldPropertyProvider.netShieldType = .off
-            if self.vpnGateway.connection == .connected {
-                self.vpnGateway.reconnect(with: self.netShieldPropertyProvider.netShieldType)
-            }
-        })
-    }
-    
-    private var netshieldLevel1: QuickSettingGenericOption {
-        let level = NetShieldType.level1
-        let active = netShieldPropertyProvider.netShieldType == level
-        let text = LocalizedString.qsNetshieldOptionLevel1
-        let icon = #imageLiteral(resourceName: "qs_netshield_level1")
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
-            guard !level.isUserTierTooLow(self.currentUserTier) else {
-                self.openUpgradeLink()
-                return
-            }
-            self.netShieldPropertyProvider.netShieldType = .level1
-            if self.vpnGateway.connection == .connected {
-                self.vpnGateway.reconnect(with: self.netShieldPropertyProvider.netShieldType)
-            }
-        })
-    }
-    
-    private var netshieldLevel2: QuickSettingGenericOption {
-        let level = NetShieldType.level2
-        let active = netShieldPropertyProvider.netShieldType == level
-        let text = LocalizedString.qsNetshieldOptionLevel2
-        let icon = #imageLiteral(resourceName: "qs_netshield_level2")
-        return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
-            guard !level.isUserTierTooLow(self.currentUserTier) else {
-                self.openUpgradeLink()
-                return
-            }
-            self.netShieldPropertyProvider.netShieldType = .level2
-            if self.vpnGateway.connection == .connected {
-                self.vpnGateway.reconnect(with: self.netShieldPropertyProvider.netShieldType)
-            }
-        })
+
+    private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
+        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, netShieldPropertyProvider: netShieldPropertyProvider, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: openUpgradeLink)
     }
     
     private var currentUserTier: Int {
