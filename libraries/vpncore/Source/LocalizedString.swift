@@ -492,7 +492,7 @@ public class LocalizedString {
     public static let ikev2 = NSLocalizedString("_ikev2", comment: "iOS Settings -> Protocol: IKEv2 option")
     public static let tcp = NSLocalizedString("_tcp", comment: "iOS Settings -> Protocol -> OpenVPN: TCP option")
     public static let udp = NSLocalizedString("_udp", comment: "iOS Settings -> Protocol -> OpenVPN: UDP option")
-    public static let wireguard = NSLocalizedString("_wireguard", comment: "iOS Settings -> Protocol: IKEv2 option")
+    public static let wireguard = NSLocalizedString("_wireguard", comment: "iOS Settings -> Protocol: WireGuard option")
     public static let viewLogs = NSLocalizedString("_view_logs", comment: "MacOS menu item; iOS setting screen item")
     public static let logs = NSLocalizedString("_logs", comment: "iOS logs screen title")
     public static let applicationLogs = NSLocalizedString("_application_logs", comment: "iOS Settings: applications logs row")
