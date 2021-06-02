@@ -98,5 +98,12 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public func reconnect(with vpnProtocol: VpnProtocol) {
         
     }
-    
+
+    public func set(vpnAccelerator: Bool) {
+
+    }
+
+    public func set(netShieldType: NetShieldType) {
+
+    }
 }
