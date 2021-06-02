@@ -53,7 +53,7 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
 }
 
 final class QuickSettingNetshieldOption: QuickSettingGenericOption {
-    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
+    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
         var netShieldPropertyProvider = netShieldPropertyProvider
 
         let text: String
@@ -86,7 +86,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
                 // in-place change when connected and using local agent
                 netShieldPropertyProvider.netShieldType = level
-                vpnGateway.set(netShieldType: level)
+                vpnManager.set(netShieldType: level)
             case .connected, .connecting:
                 netShieldPropertyProvider.netShieldType = level
                 vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)

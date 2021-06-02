@@ -80,11 +80,7 @@ public protocol VpnGatewayProtocol: class {
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
-    func disconnect(completion: @escaping () -> Void)
-
-    func set(vpnAccelerator: Bool)
-    func set(netShieldType: NetShieldType)
-    
+    func disconnect(completion: @escaping () -> Void)    
 }
 
 public protocol VpnGatewayFactory {
@@ -259,15 +255,7 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         
         connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType)
-    }
-
-    public func set(vpnAccelerator: Bool) {
-
-    }
-
-    public func set(netShieldType: NetShieldType) {
-        
-    }
+    }    
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         do {

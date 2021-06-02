@@ -37,6 +37,7 @@ class SettingsViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let connectionStatusService: ConnectionStatusService
     private var netShieldPropertyProvider: NetShieldPropertyProvider
+    private let vpnManager: VpnManagerProtocol
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
@@ -48,7 +49,7 @@ class SettingsViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -60,6 +61,7 @@ class SettingsViewModel {
         self.netshieldService = netshieldService
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.vpnManager = vpnManager
         
         startObserving()
     }
@@ -270,7 +272,7 @@ class SettingsViewModel {
                     case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
                         approve()
                         // in-place change when connected and using local agent
-                        vpnGateway.set(netShieldType: type)
+                        self.vpnManager.set(netShieldType: type)
                     case .connected, .connecting:
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
@@ -311,7 +313,7 @@ class SettingsViewModel {
                 case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
                     // in-place change when connected and using local agent
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                    vpnGateway.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                    self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                 case .connected, .connecting:
                     self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
