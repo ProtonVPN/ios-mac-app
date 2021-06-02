@@ -262,14 +262,23 @@ class SettingsViewModel {
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
                 pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in
-                    if self.appStateManager.state.isSafeToEnd {
+                    guard let vpnGateway = self.vpnGateway else {
+                        return
+                    }
+
+                    switch vpnGateway.connection {
+                    case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
                         approve()
-                    } else {
+                        // in-place change when connected and using local agent
+                        vpnGateway.set(netShieldType: type)
+                    case .connected, .connecting:
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
                             self.connectionStatusService.presentStatusViewController()
                         }))
+                    default:
+                        approve()
                     }
                 }, { type in
                     self.netShieldPropertyProvider.netShieldType = type
