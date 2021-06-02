@@ -184,10 +184,12 @@ extension VpnProtocol {
         }
         
         switch data[0] {
-        case 0:
-            self = .ike
-        default:
+        case 1:
             self = .openVpn(TransportProtocol(coder: aDecoder))
+        case 2:
+            self = .wireGuard
+        default:
+            self = .ike
         }
     }
     
