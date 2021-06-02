@@ -81,9 +81,17 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                 openUpgradeLink()
                 return
             }
-            netShieldPropertyProvider.netShieldType = level
-            if vpnGateway.connection == .connected {
+
+            switch vpnGateway.connection {
+            case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
+                // in-place change when connected and using local agent
+                netShieldPropertyProvider.netShieldType = level
+                vpnGateway.set(netShieldType: level)
+            case .connected, .connecting:
+                netShieldPropertyProvider.netShieldType = level
                 vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
+            default:
+                netShieldPropertyProvider.netShieldType = level
             }
         })
     }
