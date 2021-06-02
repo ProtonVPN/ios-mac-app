@@ -37,6 +37,9 @@ public protocol VpnManagerProtocol {
     func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void)
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
+
+    func set(vpnAccelerator: Bool)
+    func set(netShieldType: NetShieldType)
 }
 
 public protocol VpnManagerFactory {
@@ -236,6 +239,24 @@ public class VpnManager: VpnManagerProtocol {
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         
         prepareManagers()
+    }
+
+    public func set(vpnAccelerator: Bool) {
+        guard let localAgent = localAgent else {
+            PMLog.ET("Trying to change vpn accelerator via local agent when local agent instance does not exist")
+            return
+        }
+
+        localAgent.update(vpnAccelerator: vpnAccelerator)
+    }
+
+    public func set(netShieldType: NetShieldType) {
+        guard let localAgent = localAgent else {
+            PMLog.ET("Trying to change netshield via local agent when local agent instance does not exist")
+            return
+        }
+
+        localAgent.update(netshield: netShieldType)
     }
     
     // MARK: - Private functions

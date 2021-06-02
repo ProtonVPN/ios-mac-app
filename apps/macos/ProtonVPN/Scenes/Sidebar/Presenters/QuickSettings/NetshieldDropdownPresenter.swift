@@ -26,11 +26,12 @@ import AppKit
 
 class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     
-    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory
+    typealias Factory = VpnGatewayFactory & NetShieldPropertyProviderFactory & AppStateManagerFactory & VpnManagerFactory
     
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     
     override var title: String! {
         return LocalizedString.netshieldTitle
@@ -59,7 +60,7 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     // MARK: - Private
 
     private func createNetshieldOption(level: NetShieldType) -> QuickSettingGenericOption {
-        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, netShieldPropertyProvider: netShieldPropertyProvider, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: openUpgradeLink)
+        return QuickSettingNetshieldOption(level: level, vpnGateway: vpnGateway, vpnManager: vpnManager, netShieldPropertyProvider: netShieldPropertyProvider, isActive: netShieldPropertyProvider.netShieldType == level, currentUserTier: currentUserTier, openUpgradeLink: openUpgradeLink)
     }
     
     private var currentUserTier: Int {

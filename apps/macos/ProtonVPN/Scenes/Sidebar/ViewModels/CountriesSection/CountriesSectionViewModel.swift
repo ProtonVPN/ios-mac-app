@@ -101,7 +101,7 @@ class CountriesSectionViewModel {
     
     private var connectedServer: ServerModel?
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory & CoreAlertServiceFactory & VpnManagerFactory
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()

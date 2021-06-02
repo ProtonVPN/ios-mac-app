@@ -31,6 +31,7 @@ final class ConnectionSettingsViewModel {
         & ProfileManagerFactory
         & SystemExtensionManagerFactory
         & VpnProtocolChangeManagerFactory
+        & VpnManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -39,6 +40,7 @@ final class ConnectionSettingsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     private weak var viewController: ReloadableViewController?
     
@@ -231,7 +233,7 @@ final class ConnectionSettingsViewModel {
         switch vpnGateway.connection {
         case .connected where vpnProtocol.authenticationType == .certificate:
             // in-place change when connected and using local agent
-            vpnGateway.set(vpnAccelerator: enabled)
+            vpnManager.set(vpnAccelerator: enabled)
             propertiesManager.vpnAcceleratorEnabled = enabled
             completion(true)
         case .connected, .connecting:

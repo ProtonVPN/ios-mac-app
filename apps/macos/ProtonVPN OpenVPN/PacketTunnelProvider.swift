@@ -27,7 +27,7 @@ class PacketTunnelProvider: OpenVPNTunnelProvider {
     
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         if let credentials = try? JSONDecoder().decode(OpenVPN.Credentials.self, from: messageData) {
-            
+
             let keychain = Keychain(group: nil)
             do {
                 let currentPassword = try? keychain.password(for: credentials.username)
