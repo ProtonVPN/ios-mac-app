@@ -11,6 +11,10 @@ import vpncore
 
 extension FeatureFlags {
     var isWireGuard: Bool {
+        #if DEBUG
+        return true
+        #else
         return false
+        #endif
     }
 }
