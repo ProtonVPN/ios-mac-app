@@ -17,9 +17,11 @@ class VpnProtocolViewModel {
     
     private var vpnProtocol: VpnProtocol
     private var openVpnTransportProtocol: VpnProtocol.TransportProtocol // maintains transport protocol selection even when vpn protocol is changed
+    private var featureFlags: FeatureFlags
     
-    init(vpnProtocol: VpnProtocol) {
+    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags) {
         self.vpnProtocol = vpnProtocol
+        self.featureFlags = featureFlags
         
         if case VpnProtocol.openVpn(let transportProtocol) = vpnProtocol {
             self.openVpnTransportProtocol = transportProtocol
@@ -40,20 +42,27 @@ class VpnProtocolViewModel {
     }
     
     private var vpnProtocols: TableViewSection {
-        return TableViewSection(title: "", cells: [
-            .checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke, handler: { [switchVpnProtocol] in
-                switchVpnProtocol(.ike)
-                return true
-            }),
-            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol] in
-                switchVpnProtocol(.wireGuard)
-                return true
-            }),
-            .checkmarkStandard(title: LocalizedString.openVpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
-                switchVpnProtocol(.openVpn(openVpnTransportProtocol))
-                return true
-            })
-        ])
+        var cells = [TableViewCellModel]()
+            
+        cells.append(.checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke, handler: { [switchVpnProtocol] in
+            switchVpnProtocol(.ike)
+            return true
+        }))
+        
+        if featureFlags.isWireGuard {
+            cells.append(
+                .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol] in
+                    switchVpnProtocol(.wireGuard)
+                    return true
+            }))
+        }
+        
+        cells.append(.checkmarkStandard(title: LocalizedString.openVpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
+            switchVpnProtocol(.openVpn(openVpnTransportProtocol))
+            return true
+        }))
+                
+        return TableViewSection(title: "", cells: cells)
     }
     
     private var transportProtocols: TableViewSection {

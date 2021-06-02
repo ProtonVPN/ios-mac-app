@@ -415,7 +415,7 @@ class SettingsViewModel {
     }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: propertiesManager.vpnProtocol)
+        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: propertiesManager.vpnProtocol, featureFlags: propertiesManager.featureFlags)
         vpnProtocolViewModel.protocolChanged = { [self] vpnProtocol in
             self.propertiesManager.vpnProtocol = vpnProtocol
         }

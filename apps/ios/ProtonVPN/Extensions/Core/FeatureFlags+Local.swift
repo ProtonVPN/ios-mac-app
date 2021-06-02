@@ -1,8 +1,8 @@
 //
-//  FeaturesFlags+Platform.swift
-//  ProtonVPN-mac
+//  FeatureFlags+Local.swift
+//  ProtonVPN
 //
-//  Created by Igor Kulman on 28.05.2021.
+//  Created by Jaroslav on 2021-06-02.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
@@ -10,12 +10,7 @@ import Foundation
 import vpncore
 
 extension FeatureFlags {
-    var isSmartProtocols: Bool {
-        return false
-    }
-    
     var isWireGuard: Bool {
         return false
     }
-    
 }
