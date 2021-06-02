@@ -293,17 +293,27 @@ class SettingsViewModel {
     private var connectionSection: TableViewSection {
         var cells: [TableViewCellModel] = [
             .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
-                guard self.isConnected else {
-                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                guard let vpnGateway = self.vpnGateway else {
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                     return
                 }
-                
-                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
+
+                switch vpnGateway.connection {
+                case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
+                    // in-place change when connected and using local agent
+                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                    vpnGateway.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                case .connected, .connecting:
+                    self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
+                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                        self.vpnGateway?.retryConnection()
+                    }))
+                default:
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
-                    self.vpnGateway?.retryConnection()
-                }))
+                }
             })
         ]
         
