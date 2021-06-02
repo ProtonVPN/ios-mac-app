@@ -46,6 +46,7 @@ public struct VpnManagerConfiguration {
     public let username: String
     public let password: String
     public let passwordReference: Data
+    public let authData: VpnAuthenticationData?
     public let vpnProtocol: VpnProtocol
     public let preferredPorts: [Int]?
     public let netShield: NetShieldType
