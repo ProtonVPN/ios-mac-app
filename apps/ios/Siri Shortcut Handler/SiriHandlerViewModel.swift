@@ -56,7 +56,7 @@ class SiriHandlerViewModel {
     
     init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         setUpNSCoding(withModuleName: "ProtonVPN")
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
+        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
         
         self.alamofireWrapper = alamofireWrapper
         self.vpnApiService = vpnApiService

@@ -525,6 +525,10 @@
 		E9445D8526528D510075FD31 /* ringlogger.c in Sources */ = {isa = PBXBuildFile; fileRef = E9445D7B26528D510075FD31 /* ringlogger.c */; };
 		E9445D8626528D510075FD31 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9445D7C26528D510075FD31 /* Logger.swift */; };
 		E9445D8726528D510075FD31 /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9445D7E26528D510075FD31 /* ErrorNotifier.swift */; };
+		E9492ED72669177D00500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
+		E9492ED82669178000500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
+		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
+		E9492EDA2669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E992F2822667603F00169C6B /* FeatureFlags+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992F2812667603F00169C6B /* FeatureFlags+Local.swift */; };
 		F3103B2426558E2600D7E00C /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D588264AC349007E4396 /* ProtonVPN_ike_root.der */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -3612,6 +3616,7 @@
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
 				D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
+				E9492EDA2669178100500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3643,6 +3648,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E14414FA22EF38ED00894DD0 /* PacketTunnelProvider.swift in Sources */,
+				E9492ED82669178000500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3659,6 +3665,7 @@
 				E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */,
 				42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */,
 				E169D52C21E5075100D35312 /* ElectronViewContainer.swift in Sources */,
+				E9492ED92669178100500E7D /* AppConstants.swift in Sources */,
 				422395832446E9E00089002F /* URLConstants.swift in Sources */,
 				422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */,
 			);
@@ -3671,6 +3678,7 @@
 				E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */,
 				E9445D7F26528D510075FD31 /* FileManager+Extension.swift in Sources */,
 				E9445D8226528D510075FD31 /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
+				E9492ED72669177D00500E7D /* AppConstants.swift in Sources */,
 				E9445D8426528D510075FD31 /* String+ArrayConversion.swift in Sources */,
 				E9445D8626528D510075FD31 /* Logger.swift in Sources */,
 				E9445D8126528D510075FD31 /* NotificationToken.swift in Sources */,

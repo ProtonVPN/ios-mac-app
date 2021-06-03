@@ -32,7 +32,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let alamofireWrapper = AlamofireWrapperImplementation()
         let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
         let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuard-Extension"
-        let appGroup = "group.ch.protonmail.vpn"
+        let appGroup = AppConstants.AppGroups.main
         let propertiesManager = PropertiesManager()
         let vpnKeychain = VpnKeychain()
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
