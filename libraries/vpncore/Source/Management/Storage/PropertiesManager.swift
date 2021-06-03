@@ -148,8 +148,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
-    public static var earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
-    public static var vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
+    public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
+    public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
+    public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
+    public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -476,24 +478,14 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    var killSwitchNotification: Notification.Name {
-        return Notification.Name("KillSwitchChanged")
-    }
-    
     public var killSwitch: Bool {
         get {
             return Storage.userDefaults().bool(forKey: Keys.killSwitch)
         }
         set {
             Storage.setValue(newValue, forKey: Keys.killSwitch)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
-            }
+            postNotificationOnUIThread(type(of: self).killSwitchNotification, object: newValue)
         }
-    }
-    
-    var excludeLocalNetworksNotification: Notification.Name {
-        return Notification.Name("ExcludeLocalNetworksChanged")
     }
     
     public var excludeLocalNetworks: Bool {
@@ -502,9 +494,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.excludeLocalNetworks)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.excludeLocalNetworksNotification, object: nil)
-            }
+            postNotificationOnUIThread(type(of: self).excludeLocalNetworksNotification, object: newValue)
         }
     }
         
