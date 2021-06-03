@@ -160,6 +160,7 @@ class CountriesSectionViewModel {
     
     func filterContent(forQuery query: String) {
         let pastCount = totalRowCount
+        expandedCountries.removeAll()
         updateState(query)
         let newCount = totalRowCount
         let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
