@@ -24,6 +24,10 @@ import UIKit
 
 class AppConstants {
     
+    struct AppGroups {
+        static let main = "group.ch.protonmail.vpn"
+    }
+    
     struct Time {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: Double = 3

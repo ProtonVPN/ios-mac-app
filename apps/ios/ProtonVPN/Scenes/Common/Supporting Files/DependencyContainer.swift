@@ -31,7 +31,7 @@ class DependencyContainer {
     
     private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
     private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuardiOS-Extension"
-    private let appGroup = "group.ch.protonmail.vpn"
+    private let appGroup = AppConstants.AppGroups.main
     
     // Singletons
     private lazy var navigationService = NavigationService(self)

@@ -41,7 +41,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: "group.ch.protonmail.vpn")!)
+        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
         ApiConstants.apiHost = ObfuscatedConstants.apiHost
         Subscription.specialCoupons = ObfuscatedConstants.specialCoupons

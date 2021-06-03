@@ -6,13 +6,13 @@
 	<array>
 		<string>packet-tunnel-provider</string>
 	</array>
-    <key>com.apple.security.application-groups</key>
-    <array>
-        <string>group.ch.protonmail.vpn</string>
-    </array>
-    <key>keychain-access-groups</key>
-    <array>
-        <string>$(AppIdentifierPrefix)prt.ProtonVPN</string>
-    </array>
+	<key>com.apple.security.application-groups</key>
+	<array>
+		<string>group.ch.protonmail.vpn</string>
+	</array>
+	<key>keychain-access-groups</key>
+	<array>
+		<string>$(AppIdentifierPrefix)prt.ProtonVPN</string>
+	</array>
 </dict>
 </plist>
