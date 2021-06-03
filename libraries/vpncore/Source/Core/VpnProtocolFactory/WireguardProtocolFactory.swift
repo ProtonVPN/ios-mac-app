@@ -14,6 +14,7 @@ public class WireguardProtocolFactory {
     private let bundleId: String
     private let appGroup: String
     private let propertiesManager: PropertiesManagerProtocol
+    private var vpnManager: NETunnelProviderManager?
     
     public init(bundleId: String, appGroup: String, propertiesManager: PropertiesManagerProtocol) {
         self.bundleId = bundleId
@@ -28,7 +29,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleId
-        protocolConfiguration.serverAddress = "172.83.45.3:51820"
+        protocolConfiguration.serverAddress = configuration.entryServerAddress
                 
         let key = "PVPN-WG-TEST"
         let keychain = VpnKeychain()
@@ -43,7 +44,16 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     }
     
     public func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void) {
+        if requirement == .status, let vpnManager = vpnManager {
+            completion(vpnManager, nil)
+        } else {
+            loadManager(completion: completion)
+        }
+    }
+    
+    private func loadManager(completion: @escaping (NEVPNManager?, Error?) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
+            PMLog.D("[PROTONTEST] NETunnelProviderManager.loadAllFromPreferences WG")
             guard let `self` = self else {
                 completion(nil, ProtonVpnError.vpnManagerUnavailable)
                 return
@@ -57,11 +67,11 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
                 return
             }
             
-            let vpnManager = managers.first(where: { [unowned self] (manager) -> Bool in
+            self.vpnManager = managers.first(where: { [unowned self] (manager) -> Bool in
                 return (manager.protocolConfiguration as? NETunnelProviderProtocol)?.providerBundleIdentifier == self.bundleId
             }) ?? NETunnelProviderManager()
 
-            completion(vpnManager, nil)
+            completion(self.vpnManager, nil)
         }
     }
     
