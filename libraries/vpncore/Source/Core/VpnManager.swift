@@ -279,7 +279,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator) })
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, hostname: configuration.hostname) })
         localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
@@ -662,8 +662,23 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     private func reconnectLocalAgent(data: VpnAuthenticationData) {
+        let currentHostname: String?
+        switch currentVpnProtocol {
+        case .ike:
+            currentHostname = propertiesManager.lastIkeConnection?.server.domain
+        case .openVpn:
+            currentHostname = propertiesManager.lastOpenVpnConnection?.server.domain
+        default:
+            currentHostname = nil
+        }
+
+        guard let hostname = currentHostname else {
+            PMLog.ET("Cannot reconnect to the local agent with missing hostname")
+            return
+        }
+
         localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled)
+        localAgent = GoLocalAgent(data: data, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled, hostname: hostname)
         localAgent?.delegate = self
         localAgent?.connect()
     }
@@ -672,7 +687,7 @@ public class VpnManager: VpnManagerProtocol {
 extension VpnManager: LocalAgentDelegate {
     func didReceiveError(error: LocalAgentError) {
         switch error {
-        case .certificateExpired, .certificateRevoked:
+        case .certificateExpired, .certificateRevoked, .certificateNotProvided, .badCertificateSignature:
             PMLog.D("Local agent reported expired or revoked certificate, trying to refresh and reconnect")
             vpnAuthentication.refreshCertificates { [weak self] result in
                 switch result {
