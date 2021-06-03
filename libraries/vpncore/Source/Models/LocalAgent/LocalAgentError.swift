@@ -21,13 +21,17 @@ enum LocalAgentError: Error {
     case maxSessionsPro
     case keyUsedMultipleTimes
     case serverError
-    case policyViolation
+    case policyViolation1
+    case policyViolation2
     case userTorrentNotAllowed
     case userBadBehavior
+    case guestSession
+    case badCertificateSignature
+    case certificateNotProvided
 }
 
 extension LocalAgentError {
-    // swiftlint:disable cyclomatic_complexity
+    // swiftlint:disable cyclomatic_complexity function_body_length
     static func from(code: Int) -> LocalAgentError? {
         guard let consts = LocalAgentConstants() else {
             PMLog.ET("Failed to create local agent constants")
@@ -57,12 +61,20 @@ extension LocalAgentError {
             return .keyUsedMultipleTimes
         case consts.errorCodeServerError:
             return .serverError
-        case consts.errorCodePolicyViolation:
-            return .policyViolation
+        case consts.errorCodePolicyViolation1:
+            return .policyViolation1
+        case consts.errorCodePolicyViolation2:
+            return .policyViolation2
         case consts.errorCodeUserTorrentNotAllowed:
             return .userTorrentNotAllowed
         case consts.errorCodeUserBadBehavior:
             return .userBadBehavior
+        case consts.errorCodeGuestSession:
+            return .guestSession
+        case consts.errorCodeBadCertSignature:
+            return .badCertificateSignature
+        case consts.errorCodeCertNotProvided:
+            return .certificateNotProvided
         default:
             PMLog.ET("Trying to parse unknown local agent error \(code)")
             return nil
