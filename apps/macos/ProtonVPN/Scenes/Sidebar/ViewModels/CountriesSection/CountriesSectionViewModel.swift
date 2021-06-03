@@ -127,7 +127,7 @@ class CountriesSectionViewModel {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: propertiesManager.killSwitchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.netShieldNotification, object: nil)
         updateState(nil)
     }
