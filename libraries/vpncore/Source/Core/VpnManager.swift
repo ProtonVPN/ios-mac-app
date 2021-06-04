@@ -687,8 +687,16 @@ public class VpnManager: VpnManagerProtocol {
 extension VpnManager: LocalAgentDelegate {
     func didReceiveError(error: LocalAgentError) {
         switch error {
-        case .certificateExpired, .certificateRevoked, .certificateNotProvided, .badCertificateSignature:
-            PMLog.D("Local agent reported expired or revoked certificate, trying to refresh and reconnect")
+        case .certificateExpired, .certificateNotProvided, .badCertificateSignature, .certificateRevoked:
+            switch error {
+            case .certificateExpired, .certificateNotProvided:
+                PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
+            case .badCertificateSignature, .certificateRevoked:
+                PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new keys and certificate and reconnect")
+                vpnAuthentication.clear()
+            default:
+                break // never happening
+            }
             vpnAuthentication.refreshCertificates { [weak self] result in
                 switch result {
                 case let .success(data):
