@@ -44,6 +44,7 @@ final class DependencyContainer {
                                                                                                         propertiesManager: makePropertiesManager()),
                                                                  appGroup: appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
+                                                                 vpnKeychain: vpnKeychain,
                                                                  alertService: macAlertService)
     
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()

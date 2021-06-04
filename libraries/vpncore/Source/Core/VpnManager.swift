@@ -99,13 +99,15 @@ public class VpnManager: VpnManagerProtocol {
     private let appGroup: String
     private let alertService: CoreAlertService?
     private let vpnAuthentication: VpnAuthentication
+    private let vpnKeychain: VpnKeychainProtocol
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
+        self.vpnKeychain = vpnKeychain
         
         prepareManagers()
     }
@@ -685,30 +687,39 @@ public class VpnManager: VpnManagerProtocol {
 }
 
 extension VpnManager: LocalAgentDelegate {
+    private func refreshCertificateAndReconnectToLocalAgent() {
+        vpnAuthentication.refreshCertificates { [weak self] result in
+            switch result {
+            case let .success(data):
+                PMLog.D("Reconnecting to local agent with new certificate")
+                self?.reconnectLocalAgent(data: data)
+            case let .failure(error):
+                PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
+                self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                self?.disconnect { [weak self] in
+                    self?.localAgent?.disconnect()
+                }
+            }
+        }
+    }
+
     func didReceiveError(error: LocalAgentError) {
         switch error {
-        case .certificateExpired, .certificateNotProvided, .badCertificateSignature, .certificateRevoked:
-            switch error {
-            case .certificateExpired, .certificateNotProvided:
-                PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
-            case .badCertificateSignature, .certificateRevoked:
-                PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new keys and certificate and reconnect")
-                vpnAuthentication.clear()
-            default:
-                break // never happening
+        case .certificateExpired, .certificateNotProvided:
+            PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
+            refreshCertificateAndReconnectToLocalAgent()
+        case .badCertificateSignature, .certificateRevoked:
+            PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new keys and certificate and reconnect")
+            vpnAuthentication.clear()
+            refreshCertificateAndReconnectToLocalAgent()
+        case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
+            guard let credentials = try? vpnKeychain.fetch() else {
+                PMLog.ET("Cannot show max session alert because getting credentials failed")
+                return
             }
-            vpnAuthentication.refreshCertificates { [weak self] result in
-                switch result {
-                case let .success(data):
-                    PMLog.D("Reconnecting to local agent with new certificate")
-                    self?.reconnectLocalAgent(data: data)
-                case let .failure(error):
-                    PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
-                    self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
-                    self?.disconnect { [weak self] in
-                        self?.localAgent?.disconnect()
-                    }
-                }
+
+            disconnect {
+                self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
             }
         default:
             #warning("Handle all the errors")
