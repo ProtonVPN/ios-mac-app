@@ -25,6 +25,17 @@ public class WireguardProtocolFactory {
 }
 
 extension WireguardProtocolFactory: VpnProtocolFactory {
+    
+    private enum Message: UInt8 {
+        // Standard messages
+        case getRuntimeTunnelConfiguration = 0
+        // Proton messages
+        case flushLogsToFile = 101
+        
+        var data: Data {
+            return Data([self.rawValue])
+        }        
+    }
             
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let protocolConfiguration = NETunnelProviderProtocol()
@@ -80,11 +91,31 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     }
     
     public func logs(completion: @escaping (String?) -> Void) {
-        completion(nil)
+        guard let fileUrl = logFile() else {
+            completion(nil)
+            return
+        }
+        do {
+            let log = try String(contentsOf: fileUrl)
+            completion(log)
+        } catch {
+            PMLog.D("Error reading WireGuard log file: \(error)")
+            completion(nil)
+        }
     }
     
-    public func logFile(completion: @escaping (URL?) -> Void) {
-        completion(nil)
+    public func logFile() -> URL? {
+        guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
+            PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
+            return nil
+        }
+        // Flush logs to file. Async, but should be done before user get's the file.
+        vpnProviderManager(for: .configuration) { manager, error in 
+            guard let manager = manager else { return }
+            try? ((manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession)?.sendProviderMessage(Message.flushLogsToFile.data, responseHandler: nil)
+        }
+        
+        return sharedFolderURL.appendingPathComponent("WireGuard.log")
     }
         
 }

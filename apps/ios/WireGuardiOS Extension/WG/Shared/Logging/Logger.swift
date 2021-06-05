@@ -50,7 +50,7 @@ public class Logger {
             appVersion += " (\(appBuild))"
         }
 
-        Logger.global?.log(message: "App version: \(appVersion)")
+        Logger.global?.log(message: "WG Extension version: \(appVersion)")
     }
 }
 

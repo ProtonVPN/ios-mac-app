@@ -106,10 +106,10 @@ class ReportBugViewController: UIViewController {
                 viewModel.add(files: [applicationLogFile])
             }
             
-            vpnManager.logFile(for: .openVpn(.undefined)) { [weak self] (fileUrl) in
-                guard let `self` = self, let fileUrl = fileUrl, self.logsSwitch.isOn else { return }
-                self.viewModel.add(files: [fileUrl])
+            if let fileUrl = vpnManager.logFile(for: .openVpn(.undefined)) {
+                viewModel.add(files: [fileUrl])
             }
+            
         } else {
             viewModel.removeAllFiles()
         }

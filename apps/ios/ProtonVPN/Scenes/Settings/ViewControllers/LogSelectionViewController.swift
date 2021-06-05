@@ -17,22 +17,20 @@ class LogSelectionViewController: UIViewController {
     var genericDataSource: GenericTableViewDataSource?
     
     private let viewModel: LogSelectionViewModel
+    private let settingsService: SettingsService
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    init(viewModel: LogSelectionViewModel) {
+    init(viewModel: LogSelectionViewModel, settingsService: SettingsService) {
         self.viewModel = viewModel
-        
+        self.settingsService = settingsService
+
         super.init(nibName: "LogSelection", bundle: nil)
         
-        viewModel.contentChanged = { [weak self] in
-            self?.updateTableView()
-            self?.tableView.reloadData()
-        }
-        viewModel.pushHandler = { [pushViewController] viewController in
-            pushViewController(viewController)
+        viewModel.pushHandler = { [weak self] logsViewModel in
+            self?.pushViewController(settingsService.makeLogsViewController(viewModel: logsViewModel))
         }
     }
     
@@ -45,7 +43,7 @@ class LogSelectionViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
+
         tableView.reloadData()
     }
     

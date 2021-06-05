@@ -497,6 +497,7 @@ public class LocalizedString {
     public static let logs = NSLocalizedString("_logs", comment: "iOS logs screen title")
     public static let applicationLogs = NSLocalizedString("_application_logs", comment: "iOS Settings: applications logs row")
     public static let openVpnLogs = NSLocalizedString("_open_vpn_logs", comment: "iOS Settings: OpenVPN logs row")
+    public static let wireguardLogs = NSLocalizedString("_wireguard_logs", comment: "iOS Settings: WireGuard logs row")
     public static let activateWidget = NSLocalizedString("_activate_widget", comment: "iOS widget help screen: title")
     public static let activateWidgetStep1 = NSLocalizedString("_activate_widget_step_1", comment: "iOS widget help screen: text")
     public static let activateWidgetStep2 = NSLocalizedString("_activate_widget_step_2", comment: "iOS widget help screen: text")

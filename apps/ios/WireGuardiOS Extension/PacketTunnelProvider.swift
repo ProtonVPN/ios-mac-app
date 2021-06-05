@@ -34,7 +34,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
-        Logger.configureGlobal(tagged: "NET", withFilePath: FileManager.logFileURL?.path)
+        setupLogging()
 
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
 
@@ -116,9 +116,10 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         NSLog("[PROTONTEST] WG handleAppMessage")
-        guard let completionHandler = completionHandler else { return }
-
-        if messageData.count == 1 && messageData[0] == 0 {
+        
+        if messageData.count == 1 && messageData[0] == 101 {
+            flushLogsToFile()
+        } else if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
                 if let settings = settings {
@@ -127,9 +128,25 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler(data)
             }
         } else {
-            completionHandler(nil)
+            completionHandler?(nil)
         }
     }
+    
+    private func setupLogging() {
+        Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
+    }
+    
+    private func flushLogsToFile() {
+        NSLog("[PROTONTEST] WG flushLogsToFile")
+        guard let path = FileManager.logTextFileURL?.path else { return }
+        if Logger.global == nil { // Probably NE was not yet started
+            setupLogging()
+        }
+        if Logger.global?.writeLog(to: path) ?? false {
+            NSLog("[PROTONTEST] WG flushLogsToFile written to file \(path) ")
+        }
+    }
+    
 }
 
 extension WireGuardLogLevel {

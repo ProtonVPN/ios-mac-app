@@ -153,12 +153,12 @@ fileprivate class CustomServersViewModelFactoryMock: CustomServersViewModel.Fact
 
 fileprivate class SettingsServiceMock: SettingsService {
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        let viewModel = LogSelectionViewModel(vpnManager: VpnManagerMock(), settingsService: self)
-        return LogSelectionViewController(viewModel: viewModel)
+        let viewModel = LogSelectionViewModel(logFileProvider: MockLogFilesProvider())
+        return LogSelectionViewController(viewModel: viewModel, settingsService: self)
     }
     
     func makeLogsViewController(viewModel: LogsViewModel) -> LogsViewController {
-        let viewModel = LogsViewModel(title: "", logs: "", logFile: URL(fileURLWithPath: ""))
+        let viewModel = LogsViewModel(title: "", logFile: URL(fileURLWithPath: ""))
         return LogsViewController(viewModel: viewModel)
     }
     

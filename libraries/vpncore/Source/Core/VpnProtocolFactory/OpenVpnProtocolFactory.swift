@@ -147,13 +147,12 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         }
     }
     
-    public func logFile(completion: @escaping (URL?) -> Void) {
-        guard let logUrl = emptyTunnelConfiguration.urlForLog(in: appGroup) else {
-            completion(nil)
-            return
+    public func logFile() -> URL? {
+        guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
+            PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
+            return nil
         }
-        
-        completion(logUrl)
+        return sharedFolderURL.appendingPathComponent("debug.log")
     }
     
     // MARK: - Private stuff

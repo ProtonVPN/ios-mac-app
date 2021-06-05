@@ -62,8 +62,8 @@ public class VpnManagerMock: VpnManagerProtocol {
         completion(nil)
     }
     
-    public func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void) {
-        completion(nil)
+    public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
+        return nil
     }
     
     public func refreshManagers() {}

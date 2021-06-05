@@ -10,33 +10,30 @@ extension FileManager {
         return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
     }
     
-    static var appGroupId: String? {
-//        #if os(iOS)
-//        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
-//        #elseif os(macOS)
-//        let appGroupIdInfoDictionaryKey = "group.ch.protonmail.vpn"
-//        #else
-//        #error("Unimplemented")
-//        #endif
-//        return Bundle.main.object(forInfoDictionaryKey: appGroupIdInfoDictionaryKey) as? String
-        
-        return "group.ch.protonvpn.mac"
+    static var appGroupId: String {
+        #if os(iOS)
+        return AppConstants.AppGroups.main
+        #elseif os(macOS)
+        #error("Unimplemented")
+        #else
+        #error("Unimplemented")
+        #endif
     }
     
     private static var sharedFolderURL: URL? {
-        guard let appGroupId = FileManager.appGroupId else {
-            os_log("Cannot obtain app group ID from bundle", log: OSLog.default, type: .error)
-            return nil
-        }
-        guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupId) else {
-            wg_log(.error, message: "Cannot obtain shared folder URL")
+        guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: FileManager.appGroupId) else {
+            wg_log(.error, message: "Cannot obtain shared folder URL for appGroupId \(FileManager.appGroupId) ")
             return nil
         }
         return sharedFolderURL
     }
-
+    
     static var logFileURL: URL? {
-        return sharedFolderURL?.appendingPathComponent("tunnel-log.bin")
+        return sharedFolderURL?.appendingPathComponent("WireGuard.bin")
+    }
+    
+    static var logTextFileURL: URL? {
+        return sharedFolderURL?.appendingPathComponent("WireGuard.log")
     }
 
     static var networkExtensionLastErrorFileURL: URL? {

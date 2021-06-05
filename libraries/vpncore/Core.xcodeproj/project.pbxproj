@@ -877,6 +877,10 @@
 		E9DC7A2F262DC032001A0FC0 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
 		E9DC7A54262DC4DF001A0FC0 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
 		E9DC7A58262DC4DF001A0FC0 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
+		E9FF41FD266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
+		E9FF41FE266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
+		E9FF41FF266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
+		E9FF4200266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
 		F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6A25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
 		F3021D6B25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */; };
@@ -1345,6 +1349,7 @@
 		E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardProtocolFactory.swift; sourceTree = "<group>"; };
 		E98763DE260DCE78002E06E1 /* PMLogTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogTests.swift; sourceTree = "<group>"; };
 		E9ECF998261C8B81004501AE /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = "Pods/OpenSSL-Apple/frameworks/openssl.xcframework"; sourceTree = "<group>"; };
+		E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFilesProvider.swift; sourceTree = "<group>"; };
 		EA4DEB81BCB1EC4098C3F10E /* Pods-Core-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
 		F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
 		F3021D7225E93E2A00EF73A1 /* TroubleshootItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootItem.swift; sourceTree = "<group>"; };
@@ -2365,6 +2370,7 @@
 			isa = PBXGroup;
 			children = (
 				D5D2954425A5BDF6000FBD74 /* UserTierProvider.swift */,
+				E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */,
 				D5D2955125A5D551000FBD74 /* NetShieldPropertyProvider.swift */,
 			);
 			path = Providers;
@@ -2821,6 +2827,7 @@
 				E1616BB021C7BC9B00F42D79 /* ApiConstants.swift in Sources */,
 				F3021D8025E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				D55D79142498F63C009669E0 /* String+Cleanup.swift in Sources */,
+				E9FF41FD266A6F6900F29180 /* LogFilesProvider.swift in Sources */,
 				D563B26E2345DA5800F98797 /* UserError.swift in Sources */,
 				D56B68DF2507A1CF00796E0C /* NetShieldType.swift in Sources */,
 				E15367E622663FA7009BB1D2 /* ServerTierChecker.swift in Sources */,
@@ -3271,6 +3278,7 @@
 				D5A8812122CDD5A3009B63D1 /* ReportBugViewModelTests.swift in Sources */,
 				F3FBB102267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				D523F11224B7543C007DB086 /* String+Url.swift in Sources */,
+				E9FF41FE266A6F6900F29180 /* LogFilesProvider.swift in Sources */,
 				D5C2046124866A41004FB58B /* HumanVerificationToken.swift in Sources */,
 				D5C2042A24866675004FB58B /* ServerManager.swift in Sources */,
 				D5C2045D248669D0004FB58B /* CodingErrors.swift in Sources */,
@@ -3379,6 +3387,7 @@
 				42370608262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */,
 				E1616B8C21C7ACC300F42D79 /* AccountPlan.swift in Sources */,
+				E9FF41FF266A6F6900F29180 /* LogFilesProvider.swift in Sources */,
 				E148AE5F21C28CF4007AB65A /* AlertService.swift in Sources */,
 				D5DCCAAC252B4A8E004CB353 /* CoreBaseRequest.swift in Sources */,
 				4295DFFA24C9D65600EF1A92 /* MigrationManager.swift in Sources */,
@@ -3759,6 +3768,7 @@
 				F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */,
 				F31321AA25E3AA7A006F414F /* DoH.swift in Sources */,
 				D5C2044F24866903004FB58B /* Storage.swift in Sources */,
+				E9FF4200266A6F6900F29180 /* LogFilesProvider.swift in Sources */,
 				D5C2045E248669D1004FB58B /* CodingErrors.swift in Sources */,
 				D5C2046E24866B0D004FB58B /* OpenVpnConfig.swift in Sources */,
 				F3021D6C25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
