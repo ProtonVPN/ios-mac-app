@@ -31,10 +31,10 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv3", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "US", entryCountryCode: "CH"),
         serverModel("serv4", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "UK", entryCountryCode: "CH"),
         serverModel("serv5", tier: CoreAppConstants.VpnTiers.free, feature: ServerFeature.zero, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv6", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
-        serverModel("serv7", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
-        serverModel("serv8", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
-        serverModel("serv9", tier: CoreAppConstants.VpnTiers.visionary, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
+        serverModel("serv6", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "US", entryCountryCode: "BE"),
+        serverModel("serv7", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "UK", entryCountryCode: "CH"),
+        serverModel("serv8", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "DE", entryCountryCode: "CH"),
+        serverModel("serv9", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
         ])
     
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
@@ -61,7 +61,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage),
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
@@ -69,7 +69,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               protocolSelectionService: ProtocolServiceMock(),
                                                               alertService: AlertServiceEmptyStub(),
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
-                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage), 
+                                                              serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage), 
                                                               appStateManager: appStateManager,
                                                               vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
     

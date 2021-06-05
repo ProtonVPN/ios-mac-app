@@ -200,7 +200,7 @@ class StatusMenuViewModel {
     }
     
     func toggleSecureCore(_ state: ButtonState) {
-        if state == .on, let userTier = (try? vpnGateway?.userTier()) ?? CoreAppConstants.VpnTiers.free, userTier < CoreAppConstants.VpnTiers.visionary {
+        if state == .on, let userTier = (try? vpnGateway?.userTier()) ?? CoreAppConstants.VpnTiers.free, userTier < CoreAppConstants.VpnTiers.plus {
             viewController?.secureCoreSwitch.setState(.off)
             alertService.push(alert: SecureCoreRequiresUpgradeAlert(continueHandler: {
                 SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.upgrade )

@@ -316,7 +316,7 @@ class SettingsViewModel {
                     self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                 case .connected, .connecting:
-                    self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
+                    self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
                         self.propertiesManager.vpnAcceleratorEnabled.toggle()
                         callback(self.propertiesManager.vpnAcceleratorEnabled)
                         self.vpnGateway?.retryConnection()

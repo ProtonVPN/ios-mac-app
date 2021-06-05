@@ -132,6 +132,10 @@
 		4242B0A52465A7E20042145A /* Data+JSONDictionary.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */; };
 		4242B0A72465A7F60042145A /* DataRequest+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A62465A7F60042145A /* DataRequest+Validation.swift */; };
 		4242B0A82465A7F60042145A /* DataRequest+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0A62465A7F60042145A /* DataRequest+Validation.swift */; };
+		4243631F26555D590027EAEE /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243631E26555D590027EAEE /* SessionsResponse.swift */; };
+		4243632026555D590027EAEE /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243631E26555D590027EAEE /* SessionsResponse.swift */; };
+		4243632126555D590027EAEE /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243631E26555D590027EAEE /* SessionsResponse.swift */; };
+		4243632226555D590027EAEE /* SessionsResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4243631E26555D590027EAEE /* SessionsResponse.swift */; };
 		424A012A24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012B24A9F41800F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
 		424A012C24AA013400F3EEE4 /* DefaultConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 424A012924A9F41800F3EEE4 /* DefaultConstants.swift */; };
@@ -1055,6 +1059,7 @@
 		4242B0A02465A7CB0042145A /* AFDataResponse+Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AFDataResponse+Filter.swift"; sourceTree = "<group>"; };
 		4242B0A32465A7E20042145A /* Data+JSONDictionary.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Data+JSONDictionary.swift"; sourceTree = "<group>"; };
 		4242B0A62465A7F60042145A /* DataRequest+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DataRequest+Validation.swift"; sourceTree = "<group>"; };
+		4243631E26555D590027EAEE /* SessionsResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionsResponse.swift; sourceTree = "<group>"; };
 		424A012924A9F41800F3EEE4 /* DefaultConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefaultConstants.swift; sourceTree = "<group>"; };
 		4257B21124EBCFFC00C4E4AC /* VPNServerRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VPNServerRequest.swift; sourceTree = "<group>"; };
 		4257B21424EC150000C4E4AC /* VpnServerState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnServerState.swift; sourceTree = "<group>"; };
@@ -1798,6 +1803,7 @@
 				42370604262DA21300A920CF /* VPN */,
 				F36ECB3F2610A78F0089B898 /* Core */,
 				E116D76722C229FB00D14A51 /* AuthInfoResponse.swift */,
+				4243631E26555D590027EAEE /* SessionsResponse.swift */,
 				E1616BBD21C7D24E00F42D79 /* Responses.swift */,
 				D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */,
 				D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */,
@@ -2948,6 +2954,7 @@
 				4242B03E2465A4220042145A /* ReportsBaseRequest.swift in Sources */,
 				D5ADF5192281975E0062367C /* SiriHelperProtocol.swift in Sources */,
 				F30B9EA72629B1A30094C65E /* CertificateRefreshAsyncOperation.swift in Sources */,
+				4243631F26555D590027EAEE /* SessionsResponse.swift in Sources */,
 				F30B9EE22629BDC60094C65E /* VpnAuthenticationData.swift in Sources */,
 				4257B21524EC150000C4E4AC /* VpnServerState.swift in Sources */,
 				E1616BAA21C7B8DD00F42D79 /* AuthKeychain.swift in Sources */,
@@ -3024,6 +3031,7 @@
 				D5C205002487A0CE004FB58B /* AuthInfoRequest.swift in Sources */,
 				D5C205012487A0CE004FB58B /* AuthModulusRequest.swift in Sources */,
 				D5C205022487A0CE004FB58B /* AuthRefreshRequest.swift in Sources */,
+				4243632026555D590027EAEE /* SessionsResponse.swift in Sources */,
 				D5C205032487A0CE004FB58B /* UserBaseRequest.swift in Sources */,
 				D5C205042487A0CE004FB58B /* UserCodeRequest.swift in Sources */,
 				D5C205052487A0CE004FB58B /* UserCheckRequest.swift in Sources */,
@@ -3303,6 +3311,7 @@
 				E1616BCC21C7D89C00F42D79 /* TimerFactory.swift in Sources */,
 				4242B08D2465A4D80042145A /* AlamofireWrapper.swift in Sources */,
 				E1616B9821C7AE1F00F42D79 /* Subscription.swift in Sources */,
+				4243632126555D590027EAEE /* SessionsResponse.swift in Sources */,
 				4242B05B2465A43E0042145A /* UserBaseRequest.swift in Sources */,
 				E1616C1621CBF68B00F42D79 /* PropertiesManager.swift in Sources */,
 				E1B5F67D21B8253500B558B0 /* String+Extension.swift in Sources */,
@@ -3460,6 +3469,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5D2954825A5BDF6000FBD74 /* UserTierProvider.swift in Sources */,
+				4243632226555D590027EAEE /* SessionsResponse.swift in Sources */,
 				D5C204D324866BB5004FB58B /* SrpClientExtension.swift in Sources */,
 				D5C204D424866BB5004FB58B /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				D5C204D524866BB5004FB58B /* Date+Misc.swift in Sources */,
