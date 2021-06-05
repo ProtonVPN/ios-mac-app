@@ -516,7 +516,7 @@ public class LocalizedString {
     public static let allCountries = NSLocalizedString("_all_countries", comment: "Account plan description")
     public static let planConnection = NSLocalizedString("_plans_connection", comment: "Account plan description")
     public static func planConnections(_ number: Int) -> String {
-        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), number)
+        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), "\(number)")
     }
     public static let speed = NSLocalizedString("_speed", comment: "%@ is a speed description e.g. Speed: Highest")
     public static let medium = NSLocalizedString("_medium", comment: "Value of speed in _speed")
@@ -748,14 +748,22 @@ public class LocalizedString {
     public static let delinquentPlanDescription = NSLocalizedString("_delinquent_description", comment: "")
     public static let delinquentPlanReconnectionDescription = NSLocalizedString("_delinquent_reconnection_description", comment: "")
     public static let maximumDeviceTitle = NSLocalizedString("_maximum_device_title", comment: "")
-    public static let maximumDeviceDescription = NSLocalizedString("_maximum_device_description", comment: "")
+    public static func maximumDeviceDescription(_ devices: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_maximum_device_description", comment: ""), "\(devices)")
+    }
     public static let reconnectTitle = NSLocalizedString("_reconnect_title", comment: "")
     public static let subscriptionExpiredTitle = NSLocalizedString("_subscription_expired_title", comment: "")
     public static let subscriptionExpiredDescription = NSLocalizedString("_subscription_expired_description", comment: "")
     public static let subscriptionExpiredReconnectionDescription = NSLocalizedString("_subscription_expired_reconnection_description", comment: "")
     public static let subscriptionUpgradeTitle = NSLocalizedString("_subscription_upgrade_title", comment: "")
-    public static let subscriptionUpgradeOption1 = NSLocalizedString("_subscription_upgrade_option1", comment: "")
-    public static let subscriptionUpgradeOption2 = NSLocalizedString("_subscription_upgrade_option2", comment: "")
+    
+    public static func subscriptionUpgradeOption1(_ countriesNumber: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_subscription_upgrade_option1", comment: ""), "\(countriesNumber)")
+    }
+    public static func subscriptionUpgradeOption2(_ sessionsMaximum: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_subscription_upgrade_option2", comment: ""), "\(sessionsMaximum)")
+    }
+
     public static let subscriptionUpgradeOption3 = NSLocalizedString("_subscription_upgrade_option3", comment: "")
     
     public static let tierFREE = NSLocalizedString("_tier_free", comment: "")
@@ -795,6 +803,7 @@ public class LocalizedString {
     public static let locationsPlus = NSLocalizedString("_locations_plus", comment: "")
     
     public static let vpnAcceleratorTitle = NSLocalizedString("_vpn_accelerator_title", comment: "")
+    public static let vpnAcceleratorChangeTitle = NSLocalizedString("_vpn_accelerator_change_title", comment: "")
     public static let vpnAcceleratorDescription = NSLocalizedString("_vpn_accelerator_description", comment: "")
     public static let actionRequiresRecconect = NSLocalizedString("_action_requires_reconnect", comment: "")
 }

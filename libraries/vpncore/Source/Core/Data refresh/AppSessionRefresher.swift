@@ -26,8 +26,11 @@ import Foundation
 public protocol AppSessionRefresher {
     var lastDataRefresh: Date? { get }
     var lastServerLoadsRefresh: Date? { get }
+    var lastAccountRefresh: Date? { get }
+        
     func refreshData()
     func refreshServerLoads()
+    func refreshAccount()
 }
 
 public protocol AppSessionRefresherFactory {

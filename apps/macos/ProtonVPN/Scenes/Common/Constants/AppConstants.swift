@@ -66,6 +66,9 @@ class AppConstants {
         static let fullServerRefresh: TimeInterval = 3600 * 3 // 3 hours
         static let serverLoadsRefresh: TimeInterval = 60 * 15 // 15 minutes
         
+        // Account
+        static let userAccountRefresh: TimeInterval = 60 * 3 // 3 minutes
+        
         // Status bar blinking speed
         static let statusIconBlink: TimeInterval = 0.6 // seconds
     }

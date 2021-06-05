@@ -44,8 +44,8 @@ final class ConnectionSettingsViewModel {
     
     init(factory: Factory) {
         self.factory = factory
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(protocolChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.excludeLocalNetworksNotification, object: nil)
     }
     
     deinit {
@@ -175,7 +175,7 @@ final class ConnectionSettingsViewModel {
         
     }
         
-    @objc func protocolChanged() {
+    @objc func settingsChanged() {
         self.viewController?.reloadView()
     }
     
@@ -234,7 +234,7 @@ final class ConnectionSettingsViewModel {
             return
         }
         
-        alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
+        alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
             self.propertiesManager.vpnAcceleratorEnabled = enabled
             self.vpnGateway.retryConnection()
             completion(true)

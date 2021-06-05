@@ -59,7 +59,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     var contentChanged: (() -> Void)?
     var connectionChanged: (() -> Void)?
     
-    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
+    private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
     private var state: ModelState = .standard([])
     
@@ -173,7 +173,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     // MARK: - Private functions
     func setTier() {
         do {
-            userTier = try vpnGateway?.userTier() ?? CoreAppConstants.VpnTiers.visionary
+            userTier = try vpnGateway?.userTier() ?? CoreAppConstants.VpnTiers.plus
         } catch {
             userTier = CoreAppConstants.VpnTiers.free
         }
@@ -200,6 +200,8 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionStateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
+                                               name: VpnKeychain.vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: serverManager.contentChanged, object: nil)
     }
@@ -242,4 +244,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         connectionChanged?()
     }
     
+    @objc private func reloadContent() {
+        contentChanged?()
+    }
 }

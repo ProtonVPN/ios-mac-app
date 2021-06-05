@@ -360,7 +360,7 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.turnOn, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
 }
@@ -378,7 +378,7 @@ public class AllowLANConnectionsAlert: SystemAlert {
             message! += "\n\n" + LocalizedString.allowLANNote
         }
         
-        actions.append(AlertAction(title: LocalizedString.allow, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
 }
@@ -752,8 +752,8 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( userCurrentCredentials: VpnCredentials ) {
-        message = String(format: LocalizedString.maximumDeviceDescription, 5)
+    public init(userCurrentCredentials: VpnCredentials) {
+        message = LocalizedString.maximumDeviceDescription(5)
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
     }
@@ -769,9 +769,10 @@ public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo? ) {
+    public init(accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.subscriptionExpiredReconnectionDescription
         }
@@ -788,9 +789,10 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( reconnectionInfo: VpnReconnectInfo? ) {
+    public init(reconnectionInfo: VpnReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.delinquentPlanReconnectionDescription
         }

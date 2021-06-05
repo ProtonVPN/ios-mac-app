@@ -94,8 +94,8 @@ class UserAccountUpdateViewController: UIViewController {
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
         
-        feature1Lbl.text = String(format: LocalizedString.subscriptionUpgradeOption1, 54)
-        feature2Lbl.text = String(format: LocalizedString.subscriptionUpgradeOption2, 5)
+        feature1Lbl.text = LocalizedString.subscriptionUpgradeOption1(54)
+        feature2Lbl.text = LocalizedString.subscriptionUpgradeOption2(5)
         feature3Lbl.text = LocalizedString.subscriptionUpgradeOption3
     }
     
