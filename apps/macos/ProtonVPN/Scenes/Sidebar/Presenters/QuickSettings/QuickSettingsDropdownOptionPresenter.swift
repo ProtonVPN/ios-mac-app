@@ -82,15 +82,14 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                 return
             }
 
-            switch vpnGateway.connection {
-            case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
-                // in-place change when connected and using local agent
+            switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+            case .withLocalAgent:
                 netShieldPropertyProvider.netShieldType = level
                 vpnManager.set(netShieldType: level)
-            case .connected, .connecting:
+            case .withReconnect:
                 netShieldPropertyProvider.netShieldType = level
                 vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
-            default:
+            case .immediatelly:
                 netShieldPropertyProvider.netShieldType = level
             }
         })

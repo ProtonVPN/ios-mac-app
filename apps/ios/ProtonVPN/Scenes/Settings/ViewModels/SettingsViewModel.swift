@@ -268,18 +268,17 @@ class SettingsViewModel {
                         return
                     }
 
-                    switch vpnGateway.connection {
-                    case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
+                    switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+                    case .withLocalAgent:
                         approve()
-                        // in-place change when connected and using local agent
                         self.vpnManager.set(netShieldType: type)
-                    case .connected, .connecting:
+                    case .withReconnect:
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
                             self.connectionStatusService.presentStatusViewController()
                         }))
-                    default:
+                    case .immediatelly:
                         approve()
                     }
                 }, { type in
@@ -309,19 +308,18 @@ class SettingsViewModel {
                     return
                 }
 
-                switch vpnGateway.connection {
-                case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
-                    // in-place change when connected and using local agent
+                switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+                case .withLocalAgent:
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
-                case .connected, .connecting:
+                case .withReconnect:
                     self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
                         self.propertiesManager.vpnAcceleratorEnabled.toggle()
                         callback(self.propertiesManager.vpnAcceleratorEnabled)
                         self.vpnGateway?.retryConnection()
                     }))
-                default:
+                case .immediatelly:
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                 }
