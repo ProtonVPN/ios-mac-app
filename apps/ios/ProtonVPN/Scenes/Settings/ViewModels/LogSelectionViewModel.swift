@@ -9,83 +9,33 @@
 
 import Foundation
 import vpncore
-import UIKit
 
 class LogSelectionViewModel {
     
-    private let settingsService: SettingsService
+    var pushHandler: ((LogsViewModel) -> Void)?
     
-    var contentChanged: (() -> Void)?
-    var pushHandler: ((UIViewController) -> Void)?
-    
-    private var openVpnLogs: String? {
-        didSet {
-            openVpnLogsRecieved()
-        }
-    }
-    
-    private var openVpnLogFile: URL? {
-        didSet {
-            openVpnLogsRecieved()
-        }
-    }
-    
-    init(vpnManager: VpnManagerProtocol, settingsService: SettingsService) {
-        self.settingsService = settingsService
-        vpnManager.logsContent(for: .openVpn(.undefined)) { [weak self] (contents) in
-            self?.openVpnLogs = contents
-        }
-        vpnManager.logFile(for: .openVpn(.undefined)) { [weak self] (file) in
-            self?.openVpnLogFile = file
+    init(logFileProvider: LogFilesProvider) {
+        let fileManager = FileManager()
+        logCells = logFileProvider.logFiles.compactMap { (title, url) -> TableViewCellModel? in
+            guard let url = url, fileManager.fileExists(atPath: url.path) else { return nil }
+                        
+            return TableViewCellModel.pushStandard(title: title, handler: {
+                self.pushApplicationLogsViewController(withUrl: url, titled: title)
+            })
         }
     }
     
     var tableViewData: [TableViewSection] {
         let sections: [TableViewSection] = [
-            logs
+            TableViewSection(title: "", cells: logCells)
         ]
-        
         return sections
     }
     
-    private var logs: TableViewSection {
-        var cells: [TableViewCellModel] = [
-            .pushStandard(title: LocalizedString.applicationLogs, handler: { [pushApplicationLogsViewController] in
-                pushApplicationLogsViewController()
-            })
-        ]
+    private var logCells = [TableViewCellModel]()
         
-        if openVpnLogs != nil {
-            cells.append(
-                .pushStandard(title: LocalizedString.openVpnLogs, handler: { [pushOpenVpnLogsViewController] in
-                    pushOpenVpnLogsViewController()
-                })
-            )
-        }
+    private func pushApplicationLogsViewController(withUrl url: URL, titled title: String) {
+        pushHandler?(LogsViewModel(title: title, logFile: url))
+    }
         
-        return TableViewSection(title: "", cells: cells)
-    }
-    
-    private func openVpnLogsRecieved() {
-        if openVpnLogs != nil && openVpnLogFile != nil {
-            DispatchQueue.main.async { [weak self] in
-                self?.contentChanged?()
-            }
-        }
-    }
-    
-    private func pushApplicationLogsViewController() {
-        guard let logFile = PMLog.logFile() else { return }
-        
-        let logsViewModel = LogsViewModel(title: LocalizedString.applicationLogs, logs: PMLog.logsContent(), logFile: logFile)
-        pushHandler?(settingsService.makeLogsViewController(viewModel: logsViewModel))
-    }
-    
-    private func pushOpenVpnLogsViewController() {
-        guard let logString = openVpnLogs, let logFile = openVpnLogFile else { return }
-        
-        let logsViewModel = LogsViewModel(title: LocalizedString.openVpnLogs, logs: logString, logFile: logFile)
-        pushHandler?(settingsService.makeLogsViewController(viewModel: logsViewModel))
-    }
-    
 }

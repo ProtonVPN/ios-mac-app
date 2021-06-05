@@ -21,6 +21,6 @@ public protocol VpnProtocolFactory {
     func vpnProviderManager(for requirement: VpnProviderManagerRequirement, completion: @escaping (NEVPNManager?, Error?) -> Void)
     func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
     func logs(completion: @escaping (String?) -> Void)
-    func logFile(completion: @escaping (URL?) -> Void)
+    func logFile() -> URL?
     
 }

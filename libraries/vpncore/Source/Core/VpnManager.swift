@@ -34,7 +34,7 @@ public protocol VpnManagerProtocol {
     func connectedDate(completion: @escaping (Date?) -> Void)
     func refreshState()
     func logsContent(for vpnProtocol: VpnProtocol, completion: @escaping (String?) -> Void)
-    func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void)
+    func logFile(for vpnProtocol: VpnProtocol) -> URL?
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
 
@@ -231,20 +231,18 @@ public class VpnManager: VpnManagerProtocol {
         case .openVpn:
             openVpnProtocolFactory.logs(completion: completion)
         case .wireGuard:
-            #warning("Implement!")
-            completion(nil)
+            wireguardProtocolFactory.logs(completion: completion)
         }
     }
     
-    public func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void) {
+    public func logFile(for vpnProtocol: VpnProtocol) -> URL? {
         switch vpnProtocol {
         case .ike:
-            ikeProtocolFactory.logFile(completion: completion)
+            return ikeProtocolFactory.logFile()
         case .openVpn:
-            openVpnProtocolFactory.logFile(completion: completion)
+            return openVpnProtocolFactory.logFile()
         case .wireGuard:
-            #warning("Implement!")
-            completion(nil)
+            return wireguardProtocolFactory.logFile()
         }
     }
     

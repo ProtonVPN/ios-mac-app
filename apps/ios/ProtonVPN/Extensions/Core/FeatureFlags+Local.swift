@@ -10,7 +10,7 @@ import Foundation
 import vpncore
 
 extension FeatureFlags {
-    var isWireGuard: Bool {
+    public var isWireGuard: Bool {
         #if DEBUG
         return true
         #else
