@@ -26,7 +26,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public var throwsOnFetch: Bool = false
     
     public static var vpnCredentialsChanged = Notification.Name("")
-    public static var vpnPlanDowngraded = Notification.Name("")
+    public static var vpnPlanChanged = Notification.Name("")
     public static var vpnMaxDevicesReached = Notification.Name("")
     public static var vpnUserDelinquent = Notification.Name("")
     

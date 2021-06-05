@@ -67,7 +67,7 @@ class DependencyContainer {
     private lazy var paymentTokenStorage = MemoryPaymentTokenStorage(lifetime: AppConstants.Time.paymentTokenLifetime)
     
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh)
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh)
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 

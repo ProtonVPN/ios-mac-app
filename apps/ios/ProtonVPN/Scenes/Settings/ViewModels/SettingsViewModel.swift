@@ -299,7 +299,7 @@ class SettingsViewModel {
                     return
                 }
                 
-                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorTitle, confirmHandler: {
+                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                     self.vpnGateway?.retryConnection()

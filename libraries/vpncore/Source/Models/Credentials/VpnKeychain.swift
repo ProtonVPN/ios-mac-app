@@ -28,7 +28,7 @@ public typealias VpnReconnectInfo = (from: ServerModel, to: ServerModel)
 public protocol VpnKeychainProtocol {
     
     static var vpnCredentialsChanged: Notification.Name { get }
-    static var vpnPlanDowngraded: Notification.Name { get }
+    static var vpnPlanChanged: Notification.Name { get }
     static var vpnMaxDevicesReached: Notification.Name { get }
     static var vpnUserDelinquent: Notification.Name { get }
     
@@ -61,7 +61,7 @@ public class VpnKeychain: VpnKeychainProtocol {
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
-    public static let vpnPlanDowngraded = Notification.Name("VpnKeychainPlanDowngraded")
+    public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
     public static let vpnMaxDevicesReached = Notification.Name("VpnMaxDevicesReached")
     
@@ -103,12 +103,14 @@ public class VpnKeychain: VpnKeychainProtocol {
                 let downgradeInfo = VpnDowngradeInfo(currentCredentials, vpnCredentials)
                 if !currentCredentials.isDelinquent, vpnCredentials.isDelinquent {
                     NotificationCenter.default.post(name: VpnKeychain.vpnUserDelinquent, object: downgradeInfo)
-                } else if currentCredentials.maxTier < vpnCredentials.maxTier {
-                    NotificationCenter.default.post(name: VpnKeychain.vpnPlanDowngraded, object: downgradeInfo)
+                }
+
+                if currentCredentials.maxTier != vpnCredentials.maxTier {
+                    NotificationCenter.default.post(name: VpnKeychain.vpnPlanChanged, object: downgradeInfo)
                 }
             }
         }
-        
+
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
         } catch let error {

@@ -32,6 +32,7 @@ public protocol PropertiesManagerProtocol: class {
     static var netShieldNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
     static var vpnProtocolNotification: Notification.Name { get }
+    static var excludeLocalNetworksNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -57,7 +58,8 @@ public protocol PropertiesManagerProtocol: class {
     var openVpnConfig: OpenVpnConfig? { get set }
     var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
-    
+    var sessions: [SessionModel] { get set }
+
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
@@ -107,7 +109,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let currentSubscription = "currentSubscription"
         static let defaultPlanDetails = "defaultPlanDetails"
         static let isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        
+        static let sessions = "UserOpenedSessions"
         static let customServers = "CustomServers"
         
         // Trial
@@ -536,6 +538,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             if let data = try? JSONEncoder().encode(newValue) {
                 Storage.setValue(data, forKey: Keys.streamingServices)
+            }
+        }
+    }
+    
+    public var sessions: [SessionModel] {
+        get {
+            if let data = Storage.userDefaults().data(forKey: Keys.sessions),
+               let stored = try? JSONDecoder().decode([SessionModel].self, from: data) {
+                return stored
+            }
+            return []
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                Storage.setValue(data, forKey: Keys.sessions)
             }
         }
     }

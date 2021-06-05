@@ -63,10 +63,10 @@ extension SecureCoreToggleHandler {
         do {
             userTier = try vpnGateway.userTier()
         } catch {
-            userTier = CoreAppConstants.VpnTiers.visionary // not logged in
+            userTier = CoreAppConstants.VpnTiers.plus // not logged in
         }
-        if activeView == .standard && userTier < CoreAppConstants.VpnTiers.visionary {
-            alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.visionary, serverType: .secureCore, forSpecificCountry: false, confirmHandler: {
+        if activeView == .standard && userTier < CoreAppConstants.VpnTiers.plus {
+            alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.plus, serverType: .secureCore, forSpecificCountry: false, confirmHandler: {
                 completionWrapper(false)
             }))
         } else if vpnGateway.connection != .connected {

@@ -154,7 +154,7 @@ class CountryItemViewModel {
     
     private lazy var plusServerViewModels: [ServerItemViewModel] = {
         let plusServers = serverModels.filter({ (serverModel) -> Bool in
-            serverModel.tier >= CoreAppConstants.VpnTiers.visionary
+            serverModel.tier >= CoreAppConstants.VpnTiers.plus
         })
         return serverViewModels(for: plusServers)
     }()
@@ -211,7 +211,7 @@ class CountryItemViewModel {
             if let vpnGateway = vpnGateway {
                 userTier = try vpnGateway.userTier()
             } else { // not logged in
-                userTier = CoreAppConstants.VpnTiers.visionary
+                userTier = CoreAppConstants.VpnTiers.plus
             }
         } catch {
             userTier = CoreAppConstants.VpnTiers.free

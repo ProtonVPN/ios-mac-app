@@ -526,11 +526,11 @@
 
 "_allow_lan_title" = "Allow LAN connections";
 "_allow_lan_info" = "Allows to bypass the VPN and connect to devices on your local network, like your printer.";
-"_allow_lan_description" = "Doing so will disable the Kill Switch";
-"_allow_lan_note" = "Note: Restart your VPN connection to apply this change";
+"_allow_lan_description" = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?";
+"_allow_lan_note" = "Note that your connection need to be restarted to apply this change";
 
 "_turn_ks_on_title" = "Turn Kill Switch on?";
-"_turn_ks_on_description" = "When Kill Switch is on, you won't be able to connect to your local network or access devices connected to it";
+"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network? \n\nContinue?";
 
 
 // Plans
@@ -848,5 +848,6 @@
 "_locations_plus" = "PLUS Locations";
 
 "_vpn_accelerator_title" = "VPN Accelerator";
+"_vpn_accelerator_change_title" = "Change VPN Accelerator";
 "_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%";
-"_action_requires_reconnect" = "This action requires to re-connect";
+"_action_requires_reconnect" = "Your connection needs to be restarted to apply this change";

@@ -28,10 +28,10 @@ public class CoreAppConstants {
     public struct VpnTiers {
         public static let free = 0
         public static let basic = 1
-        public static let visionary = 2
-        public static let max = 3
+        public static let plus = 2
+        public static let visionary = 3
         
-        public static let allCases = [free, basic, visionary, max]
+        public static let allCases = [free, basic, plus, visionary]
     }
     
     public struct ProtonMailLinks {
