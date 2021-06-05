@@ -325,13 +325,12 @@ class StatusViewModel {
             return
         }
 
-        switch vpnGateway.connection {
-        case .connected where vpnGateway.lastConnectionRequest?.vpnProtocol.authenticationType == .certificate:
-            // in-place change when connected and using local agent
+        switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+        case .withLocalAgent:
             self.netShieldPropertyProvider.netShieldType = newValue
             self.vpnManager.set(netShieldType: newValue)
             self.contentChanged?()
-        case .connected, .connecting:
+        case .withReconnect:
             self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
                 // Save to general settings
                 self.netShieldPropertyProvider.netShieldType = newValue
@@ -340,7 +339,7 @@ class StatusViewModel {
             }, cancelHandler: {
                 self.contentChanged?()
             }))
-        default:
+        case .immediatelly:
             self.netShieldPropertyProvider.netShieldType = newValue
             self.contentChanged?()
         }

@@ -230,13 +230,13 @@ final class ConnectionSettingsViewModel {
     }
     
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        switch vpnGateway.connection {
-        case .connected where vpnProtocol.authenticationType == .certificate:
+        switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnProtocol) {
+        case .withLocalAgent:
             // in-place change when connected and using local agent
             vpnManager.set(vpnAccelerator: enabled)
             propertiesManager.vpnAcceleratorEnabled = enabled
             completion(true)
-        case .connected, .connecting:
+        case .withReconnect:
             alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
                 self.propertiesManager.vpnAcceleratorEnabled = enabled
                 self.vpnGateway.retryConnection()
@@ -244,7 +244,7 @@ final class ConnectionSettingsViewModel {
             }, cancelHandler: {
                 completion(false)
             }))
-        default:
+        case .immediatelly:
             propertiesManager.vpnAcceleratorEnabled = enabled
             completion(true)
         }
