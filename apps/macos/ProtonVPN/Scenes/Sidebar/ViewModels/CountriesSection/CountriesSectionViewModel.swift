@@ -94,14 +94,28 @@ class CountriesSectionViewModel {
     }
     
     private var secureCoreState: Bool
-    private var serverManager: ServerManager
     private var countries: [CountryGroup] = []
     private var data: [CellModel] = []
-    private let userTier: Int
-    
+
+    private var userTier: Int {
+        (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+    }
+
+    private var serverManager: ServerManager {
+        return ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
+    }
+
     private var connectedServer: ServerModel?
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory & CoreAlertServiceFactory & VpnManagerFactory
+    typealias Factory = VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        PropertiesManagerFactory &
+        AppStateManagerFactory &
+        NetShieldPropertyProviderFactory &
+        CoreAlertServiceFactory &
+        VpnKeychainFactory &
+        VpnManagerFactory
+
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -113,22 +127,18 @@ class CountriesSectionViewModel {
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
         self.secureCoreState = self.propertiesManager.secureCoreToggle
-        
-        do {
-            userTier = try vpnGateway.userTier()
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-            userTier = CoreAppConstants.VpnTiers.free
-        }
-        
-        self.serverManager = ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
         if case .connected = appStateManager.state {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
+
+        let vpnKeychain = factory.makeVpnKeychain()
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+
         updateState(nil)
     }
         
@@ -174,7 +184,13 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
-    
+    @objc private func userPlanDidChange() {
+        expandedCountries = []
+        updateState(nil)
+        let contentChange = ContentChange(reset: true)
+        self.contentChanged?(contentChange)
+    }
+
     private func updateSecureCoreState() {
         expandedCountries = []
         updateState(nil)

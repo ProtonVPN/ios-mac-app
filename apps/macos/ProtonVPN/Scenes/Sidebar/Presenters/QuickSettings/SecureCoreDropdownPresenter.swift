@@ -88,7 +88,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private func requiresUpdate(secureCore isOn: Bool) -> Bool {
         return isOn
-            ? currentUserTier < CoreAppConstants.VpnTiers.visionary
+            ? currentUserTier < CoreAppConstants.VpnTiers.plus
             : false
     }
     

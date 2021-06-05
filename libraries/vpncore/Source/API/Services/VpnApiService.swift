@@ -56,7 +56,7 @@ public class VpnApiService {
         var rUserIp: String?
         var rClientConfig: ClientConfig?
         var rError: Error?
-        
+
         let failureClosure: ErrorCallback = { error in
             rError = error
             dispatchGroup.leave()
@@ -115,7 +115,6 @@ public class VpnApiService {
             }
         }
     }
-    // swiftlint:enable function_body_length
     
     public func refreshServerInfoIfIpChanged(lastKnownIp: String?, success: @escaping VpnPropertiesCallback, failure: @escaping ErrorCallback) {
         let dispatchGroup = DispatchGroup()
@@ -125,7 +124,7 @@ public class VpnApiService {
         var rUserIp: String?
         var rClientConfig: ClientConfig?
         var rError: Error?
-        
+
         let failureClosure: ErrorCallback = { error in
             rError = error
             dispatchGroup.leave()
@@ -152,7 +151,7 @@ public class VpnApiService {
                 dispatchGroup.leave()
             }, failure: failureClosure)
         }
-        
+
         dispatchGroup.enter()
         userIp(success: ipResolvedClosure, failure: failureClosure)
         
@@ -173,6 +172,8 @@ public class VpnApiService {
         }
     }
     
+    // swiftlint:enable function_body_length
+
     public func clientCredentials(success: @escaping VpnCredentialsCallback, failure: @escaping ErrorCallback) {
         let successWrapper: JSONCallback = { json in
             do {
@@ -262,27 +263,20 @@ public class VpnApiService {
     }
     
     public func sessions(success: @escaping SessionModelsCallback, failure: @escaping ErrorCallback) {
+        
         let successWrapper: JSONCallback = { response in
-            guard let sessionsJson = response.jsonArray(key: "Sessions") else {
-                PMLog.D("'Sessions' field not present in user's sessions response", level: .error)
-                let error = ParseError.sessionCountParse
+            do {
+                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
+                success(sessionsResponse.sessions)
+            } catch {
+                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                let error = ParseError.loadsParse
                 PMLog.ET(error.localizedDescription)
                 failure(error)
-                return
             }
-            
-            var sessions = [SessionModel]()
-            for json in sessionsJson {
-                do {
-                    sessions.append(try SessionModel(dic: json))
-                } catch {
-                    PMLog.D("Failed to parse session info for json: \(json)", level: .error)
-                    let error = ParseError.serverParse
-                    PMLog.ET(error.localizedDescription)
-                }
-            }
-            
-            success(sessions)
         }
         
         alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)

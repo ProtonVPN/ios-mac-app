@@ -27,7 +27,7 @@ public struct VpnProperties {
     public let vpnCredentials: VpnCredentials?
     public let ip: String?
     public let clientConfig: ClientConfig
-    
+
     public init(serverModels: [ServerModel], vpnCredentials: VpnCredentials?, ip: String?, clientConfig: ClientConfig?, streamingResponse: VPNStreamingResponse?) {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials

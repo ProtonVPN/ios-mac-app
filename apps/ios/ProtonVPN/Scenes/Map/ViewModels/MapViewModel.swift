@@ -97,7 +97,7 @@ class MapViewModel: SecureCoreToggleHandler {
         self.appStateManager = appStateManager
         self.loginService = loginService
         self.alertService = alertService
-        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: serverStorage)
+        self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
@@ -138,7 +138,7 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func refreshAnnotations(forView viewType: ServerType) {
         let vpnCredentials = try? vpnKeychain.fetch()
-        let userTier = vpnCredentials?.maxTier ?? CoreAppConstants.VpnTiers.visionary
+        let userTier = vpnCredentials?.maxTier ?? CoreAppConstants.VpnTiers.plus
         
         countryExitAnnotations = exitAnnotations(type: viewType, userTier: userTier)
         

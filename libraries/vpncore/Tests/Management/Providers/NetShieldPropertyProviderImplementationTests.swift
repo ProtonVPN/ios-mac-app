@@ -34,8 +34,8 @@ class NetShieldPropertyProviderImplementationTests: XCTestCase {
     
     func testWhenNothingIsSetReturnsLevel1ForPaidUsers() throws {
         XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)).netShieldType == .level1)
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)).netShieldType == .level1)
         XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)).netShieldType == .level1)
-        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.max)).netShieldType == .level1)
     }
     
     func testWhenNothingIsSetReturnsOffForFreeUsers() throws {
@@ -73,8 +73,8 @@ class NetShieldPropertyProviderImplementationTests: XCTestCase {
     
     func testPaidUserCanTurnNetShieldOn() throws {
         XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.basic)).isUserEligibleForNetShield == true)
+        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.plus)).isUserEligibleForNetShield == true)
         XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.visionary)).isUserEligibleForNetShield == true)
-        XCTAssert(NetShieldPropertyProviderImplementation(getFactory(netShieldType: nil, tier: CoreAppConstants.VpnTiers.max)).isUserEligibleForNetShield == true)
     }
     
     // MARK: -

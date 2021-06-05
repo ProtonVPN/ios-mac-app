@@ -43,7 +43,7 @@ class ProfilesViewModel {
             if let vpnGateway = vpnGateway {
                 return try vpnGateway.userTier()
             } else { // not logged in
-                return CoreAppConstants.VpnTiers.visionary
+                return CoreAppConstants.VpnTiers.plus
             }
         } catch {
             return CoreAppConstants.VpnTiers.free

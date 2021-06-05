@@ -29,27 +29,36 @@ public protocol AppSessionRefreshTimerFactory {
 public class AppSessionRefreshTimer {
     private let fullServerRefreshTimeout: TimeInterval // Default: 3 hours
     private let serverLoadsRefreshTimeout: TimeInterval // Default: 15 minutes
+    private let accountRefreshTimeout: TimeInterval // Default: 3 minutes
     
     public typealias Factory = AppSessionRefresherFactory
     private let factory: Factory
     
     private var timerFullRefresh: Timer?
     private var timerLoadsRefresh: Timer?
+    private var timerAccountRefresh: Timer?
     
     public typealias RefreshCheckerCallback = () -> Bool
     private let canRefreshFull: RefreshCheckerCallback
     private let canRefreshLoads: RefreshCheckerCallback
+    private let canRefreshAccount: RefreshCheckerCallback
     
     private var appSessionRefresher: AppSessionRefresher {
         return factory.makeAppSessionRefresher() // Do not retain it
     }
     
-    public init(factory: Factory, fullRefresh: TimeInterval, serverLoadsRefresh: TimeInterval, canRefreshFull: @escaping RefreshCheckerCallback = { return true }, canRefreshLoads: @escaping RefreshCheckerCallback = { return true }) {
+    public init(factory: Factory, fullRefresh: TimeInterval, serverLoadsRefresh: TimeInterval, accountRefresh: TimeInterval,
+                canRefreshFull: @escaping RefreshCheckerCallback = { return true },
+                canRefreshLoads: @escaping RefreshCheckerCallback = { return true },
+                canRefreshAccount: @escaping RefreshCheckerCallback = { return true }) {
         self.factory = factory
         self.fullServerRefreshTimeout = fullRefresh
         self.serverLoadsRefreshTimeout = serverLoadsRefresh
+        self.accountRefreshTimeout = accountRefresh
+        
         self.canRefreshFull = canRefreshFull
         self.canRefreshLoads = canRefreshLoads
+        self.canRefreshAccount = canRefreshAccount
     }
     
     public func start(now: Bool = false) {
@@ -61,11 +70,19 @@ public class AppSessionRefreshTimer {
             PMLog.D("Server loads refresh timer started (\(serverLoadsRefreshTimeout))", level: .trace)
             timerLoadsRefresh = Timer.scheduledTimer(timeInterval: serverLoadsRefreshTimeout, target: self, selector: #selector(refreshLoads), userInfo: nil, repeats: true)
         }
+        if timerAccountRefresh == nil || !timerAccountRefresh!.isValid {
+            PMLog.D("Account refresh timer started (\(accountRefreshTimeout))", level: .trace)
+            timerAccountRefresh = Timer.scheduledTimer(timeInterval: accountRefreshTimeout, target: self, selector: #selector(refreshAccount), userInfo: nil, repeats: true)
+        }
         if now {
             if appSessionRefresher.lastDataRefresh == nil || appSessionRefresher.lastDataRefresh!.addingTimeInterval(fullServerRefreshTimeout) < Date() {
                 refreshFull()
             } else if appSessionRefresher.lastServerLoadsRefresh == nil || appSessionRefresher.lastServerLoadsRefresh!.addingTimeInterval(serverLoadsRefreshTimeout) < Date() {
                 refreshLoads()
+            }
+            
+            if appSessionRefresher.lastAccountRefresh == nil || appSessionRefresher.lastAccountRefresh!.addingTimeInterval(accountRefreshTimeout) < Date() {
+                refreshAccount()
             }
         }
     }
@@ -87,8 +104,12 @@ public class AppSessionRefreshTimer {
     }
     
     @objc private func refreshLoads() {
-        guard canRefreshLoads() else {
-            return }
+        guard canRefreshLoads() else { return }
         appSessionRefresher.refreshServerLoads()
+    }
+    
+    @objc private func refreshAccount() {
+        guard canRefreshAccount() else { return }
+        appSessionRefresher.refreshAccount()
     }
 }
