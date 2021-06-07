@@ -178,8 +178,8 @@ extension MacAlertService: CoreAlertService {
         case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case is SystemExtensionTourAlert:
-            show(alert as! SystemExtensionTourAlert)
+        case let systemExtensionTourAlert as SystemExtensionTourAlert:
+            show(systemExtensionTourAlert)
             
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
