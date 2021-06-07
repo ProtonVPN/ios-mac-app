@@ -43,10 +43,11 @@ struct SystemExtensionManagerNotification {
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
-    typealias Factory = CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
     
     fileprivate let factory: Factory
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
+    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
     
@@ -100,7 +101,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         // Requires user action
         shouldNotifyInstall = true
         
-        self.alertService.push(alert: OpenVPNExtensionTourAlert())
+        self.alertService.push(alert: SystemExtensionTourAlert())
         
         PMLog.D("SysEx install requestNeedsUserApproval")
     }
@@ -113,7 +114,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
         if shouldNotifyInstall {
-            alertService.push(alert: OpenVPNEnabledAlert())
+            alertService.push(alert: SysexEnabledAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols))
         }
     }
     
@@ -129,7 +130,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         self.completionCallback?(.failure(error))
         self.completionCallback = nil
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationError, object: error)
-        alertService.push(alert: OpenVPNInstallingErrorAlert())
+        alertService.push(alert: SysexInstallingErrorAlert())
     }
 }
 

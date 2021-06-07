@@ -685,34 +685,37 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
     }
 }
 
-public class OpenVPNInstallationRequiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNSettingsTitle
-    public var message: String? = LocalizedString.openVPNSettingsDescription
+public class SysexInstallationRequiredAlert: SystemAlert {
+    public var title: String? = LocalizedString.sysexInstallTitle
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+    public init(isSmartProtocolAvailable: Bool, continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        message = isSmartProtocolAvailable ? LocalizedString.sysexInstallDescription : LocalizedString.sysexInstallDescriptionWithoutSmartProtocol
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
 }
 
-public class OpenVPNEnabledAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNEnabledTitle
-    public var message: String? = LocalizedString.openVPNEnabledDescription
+public class SysexEnabledAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init() {
+    public init(isSmartProtocolAvailable: Bool) {
+        title = isSmartProtocolAvailable ? LocalizedString.sysexInstalledTitle : LocalizedString.sysexInstalledTitleWithoutSmartProtocol
+        message = isSmartProtocolAvailable ? LocalizedString.sysexInstalledDescription : LocalizedString.sysexInstalledDescriptionWithoutSmartProtocol
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
 
-public class OpenVPNInstallingErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNCannotEnable
-    public var message: String? = LocalizedString.openVPNErrorDescription
+public class SysexInstallingErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.sysexInstallCannotEnable
+    public var message: String? = LocalizedString.sysexInstallErrorDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -722,7 +725,7 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
     }
 }
 
-public class OpenVPNExtensionTourAlert: SystemAlert {
+public class SystemExtensionTourAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
