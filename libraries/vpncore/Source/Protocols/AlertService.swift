@@ -692,7 +692,10 @@ public class OpenVPNInstallationRequiredAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+    public init(isSmartProtocolAvailable: Bool, continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        if !isSmartProtocolAvailable {
+            message = LocalizedString.openVPNSettingsDescriptionWithoutSmartProtocol
+        }
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
@@ -705,7 +708,11 @@ public class OpenVPNEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init() {
+    public init(isSmartProtocolAvailable: Bool) {
+        if !isSmartProtocolAvailable {
+            title = LocalizedString.openVPNEnabledTitleWithoutSmartProtocol
+            message = LocalizedString.openVPNEnabledDescriptionWithoutSmartProtocol
+        }
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }

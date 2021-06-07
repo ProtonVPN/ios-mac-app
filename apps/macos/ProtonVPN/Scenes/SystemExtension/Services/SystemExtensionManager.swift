@@ -43,10 +43,11 @@ struct SystemExtensionManagerNotification {
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
-    typealias Factory = CoreAlertServiceFactory
+    typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
     
     fileprivate let factory: Factory
     fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
+    fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
     
     fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
     
@@ -113,7 +114,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
         if shouldNotifyInstall {
-            alertService.push(alert: OpenVPNEnabledAlert())
+            alertService.push(alert: OpenVPNEnabledAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols))
         }
     }
     

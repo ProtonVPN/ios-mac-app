@@ -770,14 +770,17 @@
 // OpenVPN
 
 "_openvpn_settings_title" = "System Extension required";
-"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage OpenVPN.";
+"_openvpn_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.";
+"_openvpn_settings_description_no_smart_protocol" = "ProtonVPN requires to load a System Extension to leverage OpenVPN.";
 "_openvpn_settings_step1" = "In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.";
 "_openvpn_settings_step1_link" = "click here";
 "_openvpn_settings_step2" = "Make the necessary changes by clicking on the lock.";
 "_openvpn_settings_step3" = "Allow the system software to load.";
 
-"_openvpn_settings_enabled_title" = "You can now use OpenVPN";
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use OpenVPN";
+"_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
+"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN.";
+"_openvpn_settings_enabled_title_no_smart_protocol" = "You can now use OpenVPN";
+"_openvpn_settings_enabled_description_no_smart_protocol" = "You have successfully enabled the System Extension on your device. You can now use OpenVPN.";
 
 "_openvpn_cannot_enable" = "Cannot enable OpenVPN";
 "_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
