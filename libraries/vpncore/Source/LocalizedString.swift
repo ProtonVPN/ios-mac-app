@@ -721,21 +721,21 @@ public class LocalizedString {
     
     // Quick Settings
     
-    public static let openVPNSettingsTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
-    public static let openVPNSettingsDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
-    public static let openVPNSettingsDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_description_no_smart_protocol", comment: "Enabling OpenVPN Description")
-    public static let openVPNSettingsStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep1Link = NSLocalizedString("_openvpn_settings_step1_link", comment: "Link text inside Step 1 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
+    public static let sysexInstallTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
+    public static let sysexInstallDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
+    public static let sysexInstallDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_description_no_smart_protocol", comment: "Enabling OpenVPN Description")
+    public static let sysexInstallStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
+    public static let sysexInstallStep1Link = NSLocalizedString("_openvpn_settings_step1_link", comment: "Link text inside Step 1 for enabling OpenVPN Extension")
+    public static let sysexInstallStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
+    public static let sysexInstallStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
 
-    public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
-    public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
-    public static let openVPNEnabledTitleWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_title_no_smart_protocol", comment: "Popup title after enabling macOS System Extension")
-    public static let openVPNEnabledDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_description_no_smart_protocol", comment: "Popup description after enabling macOS System Extension")
+    public static let sysexInstalledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
+    public static let sysexInstalledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
+    public static let sysexInstalledTitleWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_title_no_smart_protocol", comment: "Popup title after enabling macOS System Extension")
+    public static let sysexInstalledDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_description_no_smart_protocol", comment: "Popup description after enabling macOS System Extension")
     
-    public static let openVPNCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
-    public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
+    public static let sysexInstallCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
+    public static let sysexInstallErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
 
     // MARK: - Cert based auth
     public static let vpnAuthCertificateFailTitle = NSLocalizedString("_vpnauth_certfail_title", comment: "Failed to get VPN certificate Title")

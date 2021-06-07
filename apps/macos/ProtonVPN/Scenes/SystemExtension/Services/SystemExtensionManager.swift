@@ -101,7 +101,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         // Requires user action
         shouldNotifyInstall = true
         
-        self.alertService.push(alert: OpenVPNExtensionTourAlert())
+        self.alertService.push(alert: SystemExtensionTourAlert())
         
         PMLog.D("SysEx install requestNeedsUserApproval")
     }
@@ -114,7 +114,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
         if shouldNotifyInstall {
-            alertService.push(alert: OpenVPNEnabledAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols))
+            alertService.push(alert: SysexEnabledAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols))
         }
     }
     
@@ -130,7 +130,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         self.completionCallback?(.failure(error))
         self.completionCallback = nil
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationError, object: error)
-        alertService.push(alert: OpenVPNInstallingErrorAlert())
+        alertService.push(alert: SysexInstallingErrorAlert())
     }
 }
 
