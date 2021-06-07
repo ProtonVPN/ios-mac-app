@@ -68,7 +68,7 @@ final class SystemExtensionGuideViewController: NSViewController, SystemExtensio
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.applyModalAppearance(withTitle: LocalizedString.openVPNSettingsTitle)
+        view.window?.applyModalAppearance(withTitle: LocalizedString.sysexInstallTitle)
         viewModel?.viewDidAppear()
         setupTextView()
     }
