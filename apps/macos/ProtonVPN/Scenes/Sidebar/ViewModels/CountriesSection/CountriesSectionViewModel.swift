@@ -303,11 +303,11 @@ class CountriesSectionViewModel {
     }
     
     private func removeServers( _ index: Int, servers: [ServerModel] ) -> Int {
-        guard let secondIndex = data[(index + 1)...].firstIndex(where: {
+        let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
             if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
             return false
-        }) else { return 0 }
+        }) ?? data.count
         
         let range = (index + 1 ..< secondIndex)
         data.removeSubrange(range)
