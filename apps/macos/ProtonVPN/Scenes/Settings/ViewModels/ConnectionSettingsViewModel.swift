@@ -111,11 +111,11 @@ final class ConnectionSettingsViewModel {
     }
 
     var showSmartProtocolOption: Bool {
-        return propertiesManager.featureFlags.isSmartProtocols
+        return featureFlags.isSmartProtocols
     }
     
     var isAcceleratorFeatureEnabled: Bool {
-        return propertiesManager.featureFlags.isVpnAccelerator
+        return featureFlags.isVpnAccelerator
     }
     
     var vpnAcceleratorEnabled: Bool {
