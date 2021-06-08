@@ -52,8 +52,9 @@ public struct VpnManagerConfiguration {
     public let netShield: NetShieldType
     public let vpnAccelerator: Bool
     public let bouncing: String?
+    public let serverPublicKey: String?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?, serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -67,6 +68,7 @@ public struct VpnManagerConfiguration {
         self.vpnAccelerator = vpnAccelerator
         self.preferredPorts = preferredPorts
         self.bouncing = bouncing
+        self.serverPublicKey = serverPublicKey
     }
 }
 
@@ -106,7 +108,8 @@ public class VpnManagerConfigurationPreparer {
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            bouncing: connectionConfig.serverIp.label,
-                                           preferredPorts: connectionConfig.preferredPorts
+                                           preferredPorts: connectionConfig.preferredPorts,
+                                           serverPublicKey: connectionConfig.serverIp.x25519PublicKey
             )
         } catch {
             // issues retrieving vpn keychain item
