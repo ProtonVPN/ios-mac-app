@@ -37,10 +37,9 @@ public protocol VpnKeychainProtocol {
     func store(vpnCredentials: VpnCredentials)
     func getServerCertificate() throws -> SecCertificate
     func storeServerCertificate() throws
+    func store(wireguardConfiguration: String) throws -> Data
+    func fetchWireguardConfiguration() throws -> Data
     func clear()
-    
-    func getPasswordRefference(forKey key: String) throws -> Data
-    func setPassword(_ password: String, forKey key: String) throws
     
     // Dealing with old vpn password entry.
     // These can be deleted after all users have iOS version > 1.3.2 and MacOs app version > 1.5.5
@@ -244,6 +243,8 @@ public class VpnKeychain: VpnKeychainProtocol {
         }
     }
     
+    // MARK: - Certificates
+    
     public func getServerCertificate() throws -> SecCertificate {
         let query: [String: Any] = [kSecClass as String: kSecClassCertificate,
                                     kSecAttrLabel as String: StorageKey.serverCertificate,
@@ -277,6 +278,17 @@ public class VpnKeychain: VpnKeychainProtocol {
                                     kSecAttrLabel as String: StorageKey.serverCertificate,
                                     kSecReturnRef as String: kCFBooleanTrue as Any]
         SecItemDelete(query as CFDictionary)
+    }
+    
+    // MARK: - Wireguard
+    
+    public func store(wireguardConfiguration: String) throws -> Data {
+        try setPassword(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
+        return try fetchWireguardConfiguration()
+    }
+    
+    public func fetchWireguardConfiguration() throws -> Data {
+        return try getPasswordRefference(forKey: StorageKey.wireguardSettings)
     }
     
 }
