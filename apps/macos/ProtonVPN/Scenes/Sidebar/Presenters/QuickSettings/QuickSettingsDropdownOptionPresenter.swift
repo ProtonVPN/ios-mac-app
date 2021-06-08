@@ -83,13 +83,13 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
             }
 
             switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-            case .withLocalAgent:
+            case .withConnectionUpdate:
                 netShieldPropertyProvider.netShieldType = level
                 vpnManager.set(netShieldType: level)
             case .withReconnect:
                 netShieldPropertyProvider.netShieldType = level
                 vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
-            case .immediatelly:
+            case .immediately:
                 netShieldPropertyProvider.netShieldType = level
             }
         })

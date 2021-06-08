@@ -326,7 +326,7 @@ class StatusViewModel {
         }
 
         switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-        case .withLocalAgent:
+        case .withConnectionUpdate:
             self.netShieldPropertyProvider.netShieldType = newValue
             self.vpnManager.set(netShieldType: newValue)
             self.contentChanged?()
@@ -339,7 +339,7 @@ class StatusViewModel {
             }, cancelHandler: {
                 self.contentChanged?()
             }))
-        case .immediatelly:
+        case .immediately:
             self.netShieldPropertyProvider.netShieldType = newValue
             self.contentChanged?()
         }

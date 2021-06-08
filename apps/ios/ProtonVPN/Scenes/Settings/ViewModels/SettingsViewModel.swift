@@ -269,7 +269,7 @@ class SettingsViewModel {
                     }
 
                     switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-                    case .withLocalAgent:
+                    case .withConnectionUpdate:
                         approve()
                         self.vpnManager.set(netShieldType: type)
                     case .withReconnect:
@@ -278,7 +278,7 @@ class SettingsViewModel {
                             self.vpnGateway?.reconnect(with: type)
                             self.connectionStatusService.presentStatusViewController()
                         }))
-                    case .immediatelly:
+                    case .immediately:
                         approve()
                     }
                 }, { type in
@@ -309,7 +309,7 @@ class SettingsViewModel {
                 }
 
                 switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-                case .withLocalAgent:
+                case .withConnectionUpdate:
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
@@ -319,7 +319,7 @@ class SettingsViewModel {
                         callback(self.propertiesManager.vpnAcceleratorEnabled)
                         self.vpnGateway?.retryConnection()
                     }))
-                case .immediatelly:
+                case .immediately:
                     self.propertiesManager.vpnAcceleratorEnabled.toggle()
                     callback(self.propertiesManager.vpnAcceleratorEnabled)
                 }

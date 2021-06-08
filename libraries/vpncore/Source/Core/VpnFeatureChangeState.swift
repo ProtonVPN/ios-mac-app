@@ -9,20 +9,20 @@
 import Foundation
 
 public enum VpnFeatureChangeState {
-    case withLocalAgent
+    case withConnectionUpdate
     case withReconnect
-    case immediatelly
+    case immediately
 }
 
 extension VpnFeatureChangeState {
     public init(status: ConnectionStatus, vpnProtocol: VpnProtocol?) {
         switch status {
         case .connected where vpnProtocol?.authenticationType == .certificate:
-            self = .withLocalAgent
+            self = .withConnectionUpdate
         case .connected, .connecting:
             self = .withReconnect
         default:
-            self = .immediatelly
+            self = .immediately
         }
     }
 }
