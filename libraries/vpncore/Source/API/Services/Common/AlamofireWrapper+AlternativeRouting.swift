@@ -73,6 +73,12 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
             return
         }
 
+        // If the request is being made to the status URL host, never retry it as it not affected by alternative routing
+        if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrl.host {
+            completion(.doNotRetry)
+            return
+        }
+
         // Check if the reponse error can be recovered from using alternative routing
         // First we need to extract the underlying networking error from the Alamofire error recieved, because `DoH.handleError(:)` does not know about Alamofire.
         // Then check if `DoH` can handle the networking error. If yes the DoH.handleError(:)` call also immediatelly resolves alternative routes internally so the request can be just retried
