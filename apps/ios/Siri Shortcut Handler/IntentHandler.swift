@@ -43,7 +43,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager),
                                     wireguardProtocolFactory: WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager),
                                     appGroup: appGroup,
-                                    vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain))
+                                    vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain),
+                                    vpnKeychain: vpnKeychain)
         
         siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper,
                                                     vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),

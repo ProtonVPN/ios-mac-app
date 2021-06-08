@@ -275,6 +275,8 @@ public class VpnManager: VpnManagerProtocol {
             propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
         case .openVpn:
             propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
+        case .wireGuard:
+            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(netShieldType: netShieldType)
         case nil:
             break
         }
