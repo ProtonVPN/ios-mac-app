@@ -130,9 +130,11 @@ extension VpnManagerConfiguration {
         output.append("DNS = 10.2.0.1\n")
         
         output.append("\n[Peer]\n")
-        output.append("PublicKey = TcpH/ozM+f16aiEzzmKap78Ifdb62JAeGFiBqKeqjVo=\n")
+        if let serverPublicKey = serverPublicKey {
+            output.append("PublicKey = \(serverPublicKey)\n")
+        }
         output.append("AllowedIPs = 0.0.0.0/0\n")
-        output.append("Endpoint = \(self.entryServerAddress):51820\n")
+        output.append("Endpoint = \(entryServerAddress):51820\n")
         
         return output
     }
