@@ -127,4 +127,8 @@ final class BrokenHostDoH: DoHVPN {
     override var defaultHost: String {
         return "https://broken.domain"
     }
+
+    override var statusHost: String {
+        return "http://nothing.working"
+    }
 }

@@ -40,7 +40,9 @@ class DoHVPN: DoH, ServerConfig {
     var apiHost: String {
         return customApiHost
     }
-    let statusHost: String = "http://protonstatus.com"
+    var statusHost: String {
+        return "http://protonstatus.com"
+    }
 
     private var customApiHost: String
 
