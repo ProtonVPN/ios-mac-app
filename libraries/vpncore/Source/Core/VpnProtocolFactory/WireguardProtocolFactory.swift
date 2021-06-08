@@ -42,10 +42,9 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = configuration.entryServerAddress
                 
-        let key = "PVPN-WG-TEST"
         let keychain = VpnKeychain()
-        try keychain.setPassword(configuration.wireguardConfig, forKey: key)
-        protocolConfiguration.passwordReference = try? keychain.getPasswordRefference(forKey: key)
+        try keychain.setPassword(configuration.wireguardConfig, forKey: VpnKeychain.StorageKey.wireguardSettings)
+        protocolConfiguration.passwordReference = try? keychain.getPasswordRefference(forKey: VpnKeychain.StorageKey.wireguardSettings)
         
         #if os(macOS)
         protocolConfiguration.providerConfiguration = ["UID": getuid()]

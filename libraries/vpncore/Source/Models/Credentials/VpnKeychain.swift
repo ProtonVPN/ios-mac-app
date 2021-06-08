@@ -59,6 +59,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let openVpnPassword_old = "openVpnPassword"
         static let vpnServerPassword = "ProtonVPN-Server-Password"
         static let serverCertificate = "ProtonVPN_ike_root"
+        static let wireguardSettings = "ProtonVPN_wg_settings"
     }
     
     private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
@@ -132,7 +133,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         deleteServerCertificate()
         do {
             try clearPassword(forKey: StorageKey.vpnServerPassword)
-            try clearPassword(forKey: "PVPN-WG-TEST") // FIX ME please
+            try clearPassword(forKey: StorageKey.wireguardSettings)
             DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: nil) }
         } catch { }
     }
