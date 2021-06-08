@@ -255,7 +255,7 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         
         connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType)
-    }    
+    }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         do {

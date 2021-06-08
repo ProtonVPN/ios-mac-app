@@ -265,7 +265,7 @@ public class VpnManager: VpnManagerProtocol {
             propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
         case .openVpn:
             propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
-        default:
+        case nil:
             break
         }
         localAgent.update(netshield: netShieldType)
@@ -670,7 +670,7 @@ public class VpnManager: VpnManagerProtocol {
             currentHostname = propertiesManager.lastIkeConnection?.server.domain
         case .openVpn:
             currentHostname = propertiesManager.lastOpenVpnConnection?.server.domain
-        default:
+        case nil:
             currentHostname = nil
         }
 
