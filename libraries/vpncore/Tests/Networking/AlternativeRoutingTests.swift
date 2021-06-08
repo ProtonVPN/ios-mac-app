@@ -92,6 +92,7 @@ final class AlternativeRoutingTests: XCTestCase {
     }
 
     func testStatusURLNotBeingAffected() {
+        ApiConstants.doh = try! DoHVPN(apiHost: apiHost)
         factory.propertiesManagerMock.alternativeRouting = true
         let alamofireWrapper = factory.makeAlamofireWrapper()
 
@@ -103,6 +104,24 @@ final class AlternativeRoutingTests: XCTestCase {
             expectation.fulfill()
         }, failure: { (error: Error) -> Void in
             XCTFail("Request should succeed")
+            expectation.fulfill()
+        })
+
+        wait(for: [expectation], timeout: 10)
+    }
+
+    func testStatusURLNotRetriedForevevWhenInaccessible() {
+        ApiConstants.doh = try! InaccessibleStatusUrlDoH(apiHost: apiHost)
+        factory.propertiesManagerMock.alternativeRouting = true
+        let alamofireWrapper = factory.makeAlamofireWrapper()
+
+        let expectation = XCTestExpectation(description: "Status request working")
+
+        let request = CheckStatusRequest()
+        alamofireWrapper.request(request, success: { (data: String) -> Void in
+            XCTFail("Request should NOT succeed for an inaccessible status URL")
+            expectation.fulfill()
+        }, failure: { (error: Error) -> Void in
             expectation.fulfill()
         })
 
@@ -127,7 +146,9 @@ final class BrokenHostDoH: DoHVPN {
     override var defaultHost: String {
         return "https://broken.domain"
     }
+}
 
+final class InaccessibleStatusUrlDoH: DoHVPN {
     override var statusHost: String {
         return "http://nothing.working"
     }
