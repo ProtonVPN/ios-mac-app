@@ -51,7 +51,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         }
 
         // If the request is being made to the status URL, never modify it
-       if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrlHost {
+        if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrlHost {
             completion(.success(urlRequest))
             return
         }
