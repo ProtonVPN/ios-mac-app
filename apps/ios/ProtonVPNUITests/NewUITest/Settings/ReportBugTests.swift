@@ -29,7 +29,7 @@ class ReportBugTests: ProtonVPNUITests {
             .openReportBugWindow()
             .fillBugReportForm(email, message)
             .sendBugReport()
-            .verify.bugReportisSent()
+            .verify.bugReportIsSent()
             .closeBugReporForm()
             .verify.bugReporFormIsClosed()
     }
