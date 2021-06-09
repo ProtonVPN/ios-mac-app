@@ -23,8 +23,6 @@ import NetworkExtension
 
 public protocol VpnManagerProtocol {
 
-    static var needsReconnectNotification: Notification.Name { get }
-    
     var stateChanged: (() -> Void)? { get set }
     var state: VpnState { get }
     var currentVpnProtocol: VpnProtocol? { get }
@@ -102,8 +100,6 @@ public class VpnManager: VpnManagerProtocol {
     private let alertService: CoreAlertService?
     private let vpnAuthentication: VpnAuthentication
     private let vpnKeychain: VpnKeychainProtocol
-
-    public static let needsReconnectNotification = Notification.Name("VpnManagerNeedsReconnect")
     
     public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
@@ -720,7 +716,7 @@ extension VpnManager: LocalAgentDelegate {
             refreshCertificateWithError { _ in
                 PMLog.D("Generated new keys and got new certificate, asking to reconnect")
                 executeOnUIThread {
-                    NotificationCenter.default.post(name: type(of: self).needsReconnectNotification, object: nil)
+                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
                 }
             }
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:

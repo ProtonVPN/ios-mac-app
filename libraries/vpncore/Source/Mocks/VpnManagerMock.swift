@@ -75,6 +75,4 @@ public class VpnManagerMock: VpnManagerProtocol {
     public func set(netShieldType: NetShieldType) {
 
     }
-
-    public static let needsReconnectNotification = Notification.Name("VpnManagerNeedsReconnect")
 }
