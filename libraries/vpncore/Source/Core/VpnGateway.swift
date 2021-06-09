@@ -168,8 +168,8 @@ public class VpnGateway: VpnGatewayProtocol {
         }
         NotificationCenter.default.addObserver(self, selector: #selector(userPlanChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userBecameDelinquent), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged),
-                                               name: appStateManager.stateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged), name: appStateManager.stateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reconnectOnNotification), name: VpnManager.needsReconnectNotification, object: nil)
     }
     
     public func userTier() throws -> Int {
@@ -346,6 +346,10 @@ public class VpnGateway: VpnGatewayProtocol {
             guard let `self` = self else { return }
             NotificationCenter.default.post(name: VpnGateway.connectionChanged, object: self.connection)
         }
+    }
+
+    @objc private func reconnectOnNotification() {
+        connect(with: lastConnectionRequest)
     }
 }
 
