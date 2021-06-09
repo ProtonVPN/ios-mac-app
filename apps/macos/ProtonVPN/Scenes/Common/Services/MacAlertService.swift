@@ -169,17 +169,17 @@ extension MacAlertService: CoreAlertService {
         case is UnreachableNetworkAlert:
             showDefaultSystemAlert(alert)
             
-        case is OpenVPNInstallationRequiredAlert:
+        case is SysexInstallationRequiredAlert:
             showDefaultSystemAlert(alert)
             
-        case is OpenVPNEnabledAlert:
+        case is SysexEnabledAlert:
             showDefaultSystemAlert(alert)
             
-        case is OpenVPNInstallingErrorAlert:
+        case is SysexInstallingErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case is OpenVPNExtensionTourAlert:
-            show(alert as! OpenVPNExtensionTourAlert)
+        case let systemExtensionTourAlert as SystemExtensionTourAlert:
+            show(systemExtensionTourAlert)
             
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
@@ -191,6 +191,15 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is ReconnectOnSmartProtocolChangeAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is ReconnectOnActionAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is TurnOnKillSwitchAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is AllowLANConnectionsAlert:
             showDefaultSystemAlert(alert)
             
         default:
@@ -241,7 +250,7 @@ extension MacAlertService: CoreAlertService {
         windowService.presentKeyModal(viewController: neagentViewController)
     }
 
-    private func show(_ alert: OpenVPNExtensionTourAlert) {
+    private func show(_ alert: SystemExtensionTourAlert) {
         let viewController = SystemExtensionGuideViewController()
         guard !windowService.isKeyModalPresent(viewController: viewController) else {
             return // Don't show wizard twice

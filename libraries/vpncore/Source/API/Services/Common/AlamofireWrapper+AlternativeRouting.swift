@@ -51,7 +51,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         }
 
         // If the request is being made to the status URL, never modify it
-       if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrlHost {
+        if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrlHost {
             completion(.success(urlRequest))
             return
         }
@@ -69,6 +69,12 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         // Check for a valid `URLRequest` and get its URL
         guard let requestUrl = request.request?.url else {
             PMLog.D("Not retrying an invalid request without an URL")
+            completion(.doNotRetry)
+            return
+        }
+
+        // If the request is being made to the status URL host, never retry it as it not affected by alternative routing
+        if let statusUrl = URL(string: ApiConstants.statusURL), statusUrl.host == requestUrl.host {
             completion(.doNotRetry)
             return
         }

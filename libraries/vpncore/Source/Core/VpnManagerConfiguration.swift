@@ -14,6 +14,7 @@ public enum VpnManagerClientConfiguration {
     case macClient
     case netShieldLevel1
     case netShieldLevel2
+    case vpnAccelerator
     case label(String)
 
     var usernameSuffix: String {
@@ -22,6 +23,8 @@ public enum VpnManagerClientConfiguration {
             return "pi"
         case .macClient:
             return "pm"
+        case .vpnAccelerator:
+            return "nst"
         case .netShieldLevel1:
             return "f1"
         case .netShieldLevel2:
@@ -46,8 +49,9 @@ public struct VpnManagerConfiguration {
     public let vpnProtocol: VpnProtocol
     public let preferredPorts: [Int]?
     public let netShield: NetShieldType
+    public let vpnAccelerator: Bool
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, preferredPorts: [Int]?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, preferredPorts: [Int]?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -57,6 +61,7 @@ public struct VpnManagerConfiguration {
         self.passwordReference = passwordReference
         self.vpnProtocol = vpnProtocol
         self.netShield = netShield
+        self.vpnAccelerator = vpnAccelerator
         self.preferredPorts = preferredPorts
     }
 }
@@ -94,6 +99,7 @@ public class VpnManagerConfigurationPreparer {
                                            passwordReference: passwordRef,
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
+                                           vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            preferredPorts: connectionConfig.preferredPorts
             )
         } catch {
@@ -117,6 +123,11 @@ public class VpnManagerConfigurationPreparer {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
 
+        if propertiesManager.featureFlags.isVpnAccelerator && !propertiesManager.vpnAcceleratorEnabled {
+            // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated and feature enabled
+            extraConfiguration += [.vpnAccelerator]
+        }
+        
         if let label = connectionConfig.serverIp.label, !label.isEmpty {
             extraConfiguration += [.label(label)]
         }

@@ -21,64 +21,16 @@
 
 import Foundation
 
-public class SessionModel: NSObject, NSCoding {
-    
-    public enum VpnProtocol: String {
-        case ikev2
-        case openvpn
-        case other
-    }
-    
-    public let sessionId: String
-    public let exitIp: String
-    public let vpnProtocol: VpnProtocol
+public class SessionModel: NSObject, Codable {
+
+    public let sessionID: String
+    public let exitIP: String
+    public let `protocol`: String
     
     override public var description: String {
         return
-            "SessionID: \(sessionId)\n" +
-            "ExitIP: \(exitIp)\n" +
-            "Protocol: \(vpnProtocol.rawValue)"
-    }
-    
-    public init(sessionId: String, exitIp: String, vpnProtocol: VpnProtocol) {
-        self.sessionId = sessionId
-        self.exitIp = exitIp
-        self.vpnProtocol = vpnProtocol
-        super.init()
-    }
-    
-    internal init(dic: JSONDictionary) throws {
-        sessionId = try dic.stringOrThrow(key: "SessionID") // "SessionID": "ABC"
-        exitIp = try dic.stringOrThrow(key: "ExitIP") // "ExitIP": "192.2.3.4"
-        vpnProtocol = VpnProtocol(rawValue: try dic.stringOrThrow(key: "Protocol")) ?? .other // "Protocol": "ikev2"
-        super.init()
-    }
-    
-    // MARK: - NSCoding
-    private struct CoderKey {
-        static let sessionId = "sessionId"
-        static let exitIp = "exitIp"
-        static let vpnProtocol = "vpnProtocol"
-    }
-    
-    public required convenience init?(coder aDecoder: NSCoder) {
-        guard let sessionId = aDecoder.decodeObject(forKey: CoderKey.sessionId) as? String,
-              let exitIp = aDecoder.decodeObject(forKey: CoderKey.exitIp) as? String,
-              let vpnProtocolString = aDecoder.decodeObject(forKey: CoderKey.vpnProtocol) as? String,
-              let vpnProtocol = VpnProtocol(rawValue: vpnProtocolString)
-        else {
-            let error = ProtonVpnError.decode(location: "SessionModel")
-            PMLog.D("Failed to decode SessionModel", level: .error)
-            PMLog.ET(error.localizedDescription)
-            return nil
-        }
-        
-        self.init(sessionId: sessionId, exitIp: exitIp, vpnProtocol: vpnProtocol)
-    }
-    
-    public func encode(with aCoder: NSCoder) {
-        aCoder.encode(sessionId, forKey: CoderKey.sessionId)
-        aCoder.encode(exitIp, forKey: CoderKey.exitIp)
-        aCoder.encode(vpnProtocol.rawValue, forKey: CoderKey.vpnProtocol)
+            "SessionID: \(self.sessionID)\n" +
+            "ExitIP: \(self.exitIP)\n" +
+            "Protocol: \(self.protocol)"
     }
 }

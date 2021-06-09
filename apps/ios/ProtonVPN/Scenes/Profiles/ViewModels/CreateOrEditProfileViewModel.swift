@@ -292,8 +292,8 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private func toggleState(completion: @escaping (Bool) -> Void) {
         if case ModelState.standard = state {
-            guard userTier >= CoreAppConstants.VpnTiers.visionary else {
-                alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.visionary, serverType: .secureCore, forSpecificCountry: false, confirmHandler: { completion(false) }))
+            guard userTier >= CoreAppConstants.VpnTiers.plus else {
+                alertService.push(alert: UpgradeRequiredAlert(tier: CoreAppConstants.VpnTiers.plus, serverType: .secureCore, forSpecificCountry: false, confirmHandler: { completion(false) }))
                 return
             }
             

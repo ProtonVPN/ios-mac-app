@@ -27,7 +27,7 @@ import vpncore
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -38,6 +38,7 @@ class StatusViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
@@ -320,22 +321,27 @@ class StatusViewModel {
     }
     
     private func changeNetshield(to newValue: NetShieldType) {
-        let isConnected = connectionSatus == .connected
-        
-        guard isConnected else { // Not connected, just save to settings
-            self.netShieldPropertyProvider.netShieldType = newValue
-            self.contentChanged?()
+        guard let vpnGateway = vpnGateway else {
             return
         }
-        
-        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
-            // Save to general settings
+
+        switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+        case .withConnectionUpdate:
             self.netShieldPropertyProvider.netShieldType = newValue
-            self.vpnGateway?.reconnect(with: newValue)
-            
-        }, cancelHandler: {
+            self.vpnManager.set(netShieldType: newValue)
             self.contentChanged?()
-        }))
+        case .withReconnect:
+            self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
+                // Save to general settings
+                self.netShieldPropertyProvider.netShieldType = newValue
+                self.vpnGateway?.reconnect(with: newValue)
+
+            }, cancelHandler: {
+                self.contentChanged?()
+            }))
+        case .immediately:
+            self.netShieldPropertyProvider.netShieldType = newValue
+            self.contentChanged?()
+        }
     }
-    
 }

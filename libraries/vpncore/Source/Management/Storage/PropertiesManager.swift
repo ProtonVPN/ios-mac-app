@@ -32,6 +32,7 @@ public protocol PropertiesManagerProtocol: class {
     static var netShieldNotification: Notification.Name { get }
     static var earlyAccessNotification: Notification.Name { get }
     static var vpnProtocolNotification: Notification.Name { get }
+    static var excludeLocalNetworksNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -57,12 +58,14 @@ public protocol PropertiesManagerProtocol: class {
     var openVpnConfig: OpenVpnConfig? { get set }
     var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
-    
+    var sessions: [SessionModel] { get set }
+
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
     var excludeLocalNetworks: Bool { get set }
+    var vpnAcceleratorEnabled: Bool { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -106,7 +109,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let currentSubscription = "currentSubscription"
         static let defaultPlanDetails = "defaultPlanDetails"
         static let isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        
+        static let sessions = "UserOpenedSessions"
         static let customServers = "CustomServers"
         
         // Trial
@@ -134,6 +137,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let featureFlags = "FeatureFlags"
         static let netshield = "NetShield"
         static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
+        static let vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
         
         static let humanValidationFailed: String = "humanValidationFailed"
         static let alternativeRouting: String = "alternativeRouting"
@@ -146,8 +150,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let userIpNotification = Notification.Name("UserIp")
     public static let featureFlagsNotification = Notification.Name("FeatureFlags")
     public static let netShieldNotification: Notification.Name = Notification.Name("NetShieldChangedNotification")
-    public static var earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
-    public static var vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
+    public static let earlyAccessNotification: Notification.Name = Notification.Name("EarlyAccessChanged")
+    public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
+    public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
+    public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -465,8 +471,13 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    var killSwitchNotification: Notification.Name {
-        return Notification.Name("KillSwitchChanged")
+    public var vpnAcceleratorEnabled: Bool {
+        get {
+            return Storage.userDefaults().object(forKey: Keys.vpnAcceleratorEnabled) as? Bool ?? true
+        }
+        set {
+            Storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled)
+        }
     }
     
     public var killSwitch: Bool {
@@ -475,14 +486,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.killSwitch)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.killSwitchNotification, object: nil)
-            }
+            postNotificationOnUIThread(type(of: self).killSwitchNotification, object: newValue)
         }
-    }
-    
-    var excludeLocalNetworksNotification: Notification.Name {
-        return Notification.Name("ExcludeLocalNetworksChanged")
     }
     
     public var excludeLocalNetworks: Bool {
@@ -491,9 +496,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.excludeLocalNetworks)
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.excludeLocalNetworksNotification, object: nil)
-            }
+            postNotificationOnUIThread(type(of: self).excludeLocalNetworksNotification, object: newValue)
         }
     }
         
@@ -535,6 +538,21 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             if let data = try? JSONEncoder().encode(newValue) {
                 Storage.setValue(data, forKey: Keys.streamingServices)
+            }
+        }
+    }
+    
+    public var sessions: [SessionModel] {
+        get {
+            if let data = Storage.userDefaults().data(forKey: Keys.sessions),
+               let stored = try? JSONDecoder().decode([SessionModel].self, from: data) {
+                return stored
+            }
+            return []
+        }
+        set {
+            if let data = try? JSONEncoder().encode(newValue) {
+                Storage.setValue(data, forKey: Keys.sessions)
             }
         }
     }

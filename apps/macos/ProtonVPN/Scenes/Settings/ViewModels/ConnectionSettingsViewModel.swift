@@ -31,6 +31,7 @@ final class ConnectionSettingsViewModel {
         & ProfileManagerFactory
         & SystemExtensionManagerFactory
         & VpnProtocolChangeManagerFactory
+        & VpnManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -39,13 +40,14 @@ final class ConnectionSettingsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
 
     private weak var viewController: ReloadableViewController?
     
     init(factory: Factory) {
         self.factory = factory
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(protocolChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(settingsChanged), name: PropertiesManager.excludeLocalNetworksNotification, object: nil)
     }
     
     deinit {
@@ -105,6 +107,14 @@ final class ConnectionSettingsViewModel {
 
     var showSmartProtocolOption: Bool {
         return propertiesManager.featureFlags.isSmartProtocols
+    }
+    
+    var isAcceleratorFeatureEnabled: Bool {
+        return propertiesManager.featureFlags.isVpnAccelerator
+    }
+    
+    var vpnAcceleratorEnabled: Bool {
+        return propertiesManager.vpnAcceleratorEnabled
     }
     
     // MARK: - Item counts
@@ -167,14 +177,14 @@ final class ConnectionSettingsViewModel {
         
     }
         
-    @objc func protocolChanged() {
+    @objc func settingsChanged() {
         self.viewController?.reloadView()
     }
     
     func setAlternatveRouting(_ enabled: Bool) {
         propertiesManager.alternativeRouting = enabled
     }
-
+    
     func setSmartProtocol(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
         let update = { (shouldReconnect: Bool) in
             guard enabled else {
@@ -219,8 +229,48 @@ final class ConnectionSettingsViewModel {
         }
     }
     
+    func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
+        switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnProtocol) {
+        case .withConnectionUpdate:
+            // in-place change when connected and using local agent
+            vpnManager.set(vpnAccelerator: enabled)
+            propertiesManager.vpnAcceleratorEnabled = enabled
+            completion(true)
+        case .withReconnect:
+            alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
+                self.propertiesManager.vpnAcceleratorEnabled = enabled
+                self.vpnGateway.retryConnection()
+                completion(true)
+            }, cancelHandler: {
+                completion(false)
+            }))
+        case .immediately:
+            propertiesManager.vpnAcceleratorEnabled = enabled
+            completion(true)
+        }
+    }
+    
     func setAllowLANAccess(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
+        
+        let isConnected = vpnGateway.connection == .connected || vpnGateway.connection == .connecting
+        
+        if propertiesManager.killSwitch {
+            let alert = AllowLANConnectionsAlert(connected: isConnected) {
+                self.propertiesManager.excludeLocalNetworks = enabled
+                self.propertiesManager.killSwitch = false
+                if isConnected {
+                    self.vpnGateway.retryConnection()
+                }
+                completion(true)
+            } cancelHandler: {
+                completion(false)
+            }
+            
+            self.alertService.push(alert: alert)
+            return
+        }
+        
+        guard isConnected else {
             propertiesManager.excludeLocalNetworks = enabled
             completion(true)
             return

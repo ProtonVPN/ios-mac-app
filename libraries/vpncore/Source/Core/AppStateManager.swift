@@ -162,6 +162,7 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnManager.refreshState()
     }
     
+    // swiftlint:disable cyclomatic_complexity function_body_length
     public func connect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
@@ -178,6 +179,15 @@ public class AppStateManagerImplementation: AppStateManager {
                 alertService?.push(alert: alert)
                 connectionFailed()
                 return
+            }
+            
+            if propertiesManager.sessions.count >= vpnCredentials.maxConnect {
+                if let exitIp = lastAttemptedConfiguration?.serverIp.exitIp, propertiesManager.sessions.first(where: { $0.exitIP == exitIp }) == nil {
+                    let alert = MaxSessionsAlert(userCurrentCredentials: vpnCredentials)
+                    alertService?.push(alert: alert)
+                    connectionFailed()
+                    return
+                }
             }
         } catch {
             connectionFailed()
@@ -213,6 +223,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
+    // swiftlint:enable cyclomatic_complexity function_body_length
 
     public func disconnect() {
         disconnect {}

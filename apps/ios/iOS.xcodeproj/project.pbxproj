@@ -508,16 +508,16 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
 		F3103B2426558E2600D7E00C /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D588264AC349007E4396 /* ProtonVPN_ike_root.der */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E11264A9D300070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E14264A9D340070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E16264A9D370070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E17264A9D370070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		F3521E17264A9D370070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		F3521E1A264AA40F0070F177 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
@@ -595,7 +595,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3521E11264A9D300070F177 /* vpncore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -606,7 +605,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3521E14264A9D340070F177 /* vpncore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -617,7 +615,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				F3521E17264A9D370070F177 /* vpncore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1012,6 +1009,7 @@
 		E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerTableViewCell.swift; sourceTree = "<group>"; };
 		E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ColorPickerTableViewCell.xib; sourceTree = "<group>"; };
 		E297CD5417EBE288B62F3B9A /* Pods-Siri Shortcut Handler.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.debug.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.debug.xcconfig"; sourceTree = "<group>"; };
+		E9200ED62660CC0F00BBAB9C /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9E6E1C3FAF7A4D864A605CC /* Pods-Quick Connect Widget.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.staging.xcconfig"; path = "Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.staging.xcconfig"; sourceTree = "<group>"; };
 		EB2244E51CA0DBD254B41DB9 /* Pods-ProtonVPNUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1051,8 +1049,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */,
 				D554556422805539006574F9 /* NetworkExtension.framework in Frameworks */,
-				F3521E16264A9D370070F177 /* vpncore.framework in Frameworks */,
 				A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1336,6 +1334,7 @@
 		7995FCFF2090A66F0030E1EB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E9200ED62660CC0F00BBAB9C /* vpncore.framework */,
 				D54D331D264A97CB000BEF04 /* vpncore.framework */,
 				D573D113264A70980033CE19 /* UIKit.framework */,
 				E148AE5221C1683D007AB65A /* NetworkExtension.framework */,
@@ -2912,7 +2911,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		D5136C0C2284154F0002C095 /* Run SwiftLint Script */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2930,7 +2929,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\"\nfi\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		D5136C0D228415570002C095 /* Run Swiftlint */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2948,7 +2947,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		D52B36F250D80929C9A0EEB0 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2988,7 +2987,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/SwiftLint/swiftlint\"\n";
+			shellScript = "if [ -z \"$CI\" ]; then\n\"${PODS_ROOT}/SwiftLint/swiftlint\" --strict\nelse\necho \"Skipping swiftlint on CI\"\nfi\n";
 		};
 		E17FBC5D22DF75160080300A /* Generate Obfuscated Constants */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3809,6 +3808,7 @@
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -3912,6 +3912,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;
@@ -4060,6 +4061,7 @@
 				CODE_SIGN_ENTITLEMENTS = ProtonVPN/ProtonVPN.entitlements;
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				ENABLE_BITCODE = NO;
 				HEADER_SEARCH_PATHS = (
@@ -4094,6 +4096,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Quick Connect Widget/Info.plist";
@@ -4122,6 +4125,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Siri Shortcut Handler/Siri Shortcut Handler.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Siri Shortcut Handler/Info.plist";
@@ -4312,6 +4316,7 @@
 				CODE_SIGN_ENTITLEMENTS = "Quick Connect Widget/Quick Connect Widget.entitlements";
 				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
+				CURRENT_PROJECT_VERSION = 1085;
 				DEVELOPMENT_TEAM = 2SB5Z68H26;
 				INFOPLIST_FILE = "Quick Connect Widget/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 12.1;

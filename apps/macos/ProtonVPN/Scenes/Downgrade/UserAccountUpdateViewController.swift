@@ -84,7 +84,12 @@ class UserAccountUpdateViewController: NSViewController {
         setupActions()
         setupServers()
     }
-    
+
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        alert.dismiss?()
+    }
+
     // MARK: - Private
     
     private func setupFeatures() {
@@ -92,8 +97,8 @@ class UserAccountUpdateViewController: NSViewController {
         feature2View.isHidden = !alert.displayFeatures
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
-        feature1Lbl.stringValue = String(format: LocalizedString.subscriptionUpgradeOption1, "54")
-        feature2Lbl.stringValue = String(format: LocalizedString.subscriptionUpgradeOption2, "5")
+        feature1Lbl.stringValue = LocalizedString.subscriptionUpgradeOption1(54)
+        feature2Lbl.stringValue = LocalizedString.subscriptionUpgradeOption2(5)
         feature3Lbl.stringValue = LocalizedString.subscriptionUpgradeOption3
     }
     

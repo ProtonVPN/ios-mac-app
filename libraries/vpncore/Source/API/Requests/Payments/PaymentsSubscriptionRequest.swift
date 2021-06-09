@@ -20,8 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
-
 class PaymentsSubscriptionRequest: PaymentsBaseRequest {
     override func path() -> String {
         return super.path() + "/subscription"

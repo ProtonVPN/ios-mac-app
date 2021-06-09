@@ -94,14 +94,28 @@ class CountriesSectionViewModel {
     }
     
     private var secureCoreState: Bool
-    private var serverManager: ServerManager
     private var countries: [CountryGroup] = []
     private var data: [CellModel] = []
-    private let userTier: Int
-    
+
+    private var userTier: Int {
+        (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+    }
+
+    private var serverManager: ServerManager {
+        return ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
+    }
+
     private var connectedServer: ServerModel?
     
-    typealias Factory = VpnGatewayFactory & CoreAlertServiceFactory & PropertiesManagerFactory & AppStateManagerFactory & NetShieldPropertyProviderFactory & CoreAlertServiceFactory
+    typealias Factory = VpnGatewayFactory &
+        CoreAlertServiceFactory &
+        PropertiesManagerFactory &
+        AppStateManagerFactory &
+        NetShieldPropertyProviderFactory &
+        CoreAlertServiceFactory &
+        VpnKeychainFactory &
+        VpnManagerFactory
+
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -113,22 +127,18 @@ class CountriesSectionViewModel {
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
         self.secureCoreState = self.propertiesManager.secureCoreToggle
-        
-        do {
-            userTier = try vpnGateway.userTier()
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-            userTier = CoreAppConstants.VpnTiers.free
-        }
-        
-        self.serverManager = ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
         if case .connected = appStateManager.state {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
+
+        let vpnKeychain = factory.makeVpnKeychain()
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: propertiesManager.killSwitchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+
         updateState(nil)
     }
         
@@ -160,6 +170,7 @@ class CountriesSectionViewModel {
     
     func filterContent(forQuery query: String) {
         let pastCount = totalRowCount
+        expandedCountries.removeAll()
         updateState(query)
         let newCount = totalRowCount
         let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
@@ -173,7 +184,13 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
-    
+    @objc private func userPlanDidChange() {
+        expandedCountries = []
+        updateState(nil)
+        let contentChange = ContentChange(reset: true)
+        self.contentChanged?(contentChange)
+    }
+
     private func updateSecureCoreState() {
         expandedCountries = []
         updateState(nil)
@@ -286,11 +303,11 @@ class CountriesSectionViewModel {
     }
     
     private func removeServers( _ index: Int, servers: [ServerModel] ) -> Int {
-        guard let secondIndex = data[(index + 1)...].firstIndex(where: {
+        let secondIndex = data[(index + 1)...].firstIndex(where: {
             if case .country = $0 { return true }
             if case .header(let vm) = $0, vm is CountryHeaderViewModel { return true }
             return false
-        }) else { return 0 }
+        }) ?? data.count
         
         let range = (index + 1 ..< secondIndex)
         data.removeSubrange(range)

@@ -17,11 +17,11 @@ def proton_core_branch
 end
 
 def openvpn
-  pod 'TunnelKit', :git => proton_url + ':apple/vpn/tunnelkit.git', :branch => 'protonvpn2/keychain'
+  pod 'TunnelKit', :git => proton_url + ':apple/vpn/tunnelkit.git', :branch => 'develop'
 end
 
 def pm_automation
-  pod 'PMTestAutomation', :git => 'git@gitlab.protontech.ch:apple/shared/pmtestautomation.git', :commit => '36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d'
+  pod 'PMTestAutomation', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d'
 end
 
 def vpn_core

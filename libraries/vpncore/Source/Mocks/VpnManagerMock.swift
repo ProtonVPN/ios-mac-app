@@ -67,5 +67,12 @@ public class VpnManagerMock: VpnManagerProtocol {
     }
     
     public func refreshManagers() {}
-    
+
+    public func set(vpnAccelerator: Bool) {
+
+    }
+
+    public func set(netShieldType: NetShieldType) {
+
+    }
 }

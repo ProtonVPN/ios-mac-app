@@ -27,4 +27,8 @@ public struct ConnectionConfiguration: Codable {
         self.netShieldType = netShieldType
         self.preferredPorts = preferredPorts
     }
+
+    public func withChanged(netShieldType: NetShieldType) -> ConnectionConfiguration {
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, preferredPorts: preferredPorts)
+    }
 }

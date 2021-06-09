@@ -44,6 +44,7 @@ final class DependencyContainer {
                                                                                                         propertiesManager: makePropertiesManager()),
                                                                  appGroup: appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
+                                                                 vpnKeychain: vpnKeychain,
                                                                  alertService: macAlertService)
     
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
@@ -70,7 +71,8 @@ final class DependencyContainer {
     private var authApiService: AuthApiService!
     
     // Refreshes app data at predefined time intervals
-    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, canRefreshFull: { return true }, canRefreshLoads: { return NSApp.isActive })
+    private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh,
+                                                           serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh, canRefreshLoads: { return NSApp.isActive })
     
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)

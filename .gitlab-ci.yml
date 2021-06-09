@@ -2,6 +2,7 @@ stages:
   - linting
   - core_unit_tests
   - apps_unit_tests
+  - release
 
 variables:
   LC_ALL: "en_US.UTF-8"
@@ -63,11 +64,11 @@ core_ios_unit_tests:
   tags:
     - iOS_ARM
   script:
-    - xcrun simctl create ${CI_PIPELINE_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - fastlane ios_core_test
     - fastlane/print-coverage.sh fastlane/test_output/vpncore-ios.xcresult vpncore.framework
   after_script:
-    - xcrun simctl delete $CI_PIPELINE_ID
+    - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:
@@ -94,13 +95,13 @@ ios_unit_tests:
   tags:
     - iOS_ARM
   script:
-    - xcrun simctl create ${CI_PIPELINE_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/ios/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
     - fastlane ios_app_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
-    - xcrun simctl delete $CI_PIPELINE_ID
+    - xcrun simctl delete $CI_JOB_ID
   artifacts:
     reports:
       junit:
@@ -134,3 +135,33 @@ macos_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit        
+
+
+ios_testflight_internal:
+  stage: release
+  before_script:
+    - git config --global user.email $GIT_CI_EMAIL
+    - git config --global user.name $GIT_CI_USERNAME
+    - base64 -D -o Certificates.p12 <<< $DISTRIBUTION_CERTIFICATE
+    - fastlane create_ios_keychain
+  script:
+    - fastlane sigh download_all --download_xcode_profiles
+    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
+    - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
+    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
+    - ./fastlane/add_git_tag.sh
+    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS Staging"
+  after_script: # Cleanup
+    - rm -f Certificates.p12
+    - fastlane delete_ios_keychain
+  tags:
+    - iOS-deploy
+  environment:
+    name: deployment
+  when: manual
+  artifacts:
+    name: "ios-build-nr"
+    when: always
+    paths:
+      - .last_build_nr
+    expire_in: 7 days
