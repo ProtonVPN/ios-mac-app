@@ -970,6 +970,10 @@
 		F3D4DC502632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F3D4DC76263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
 		F3D4DC78263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
+		F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
+		F3EF4ECD2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
+		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
+		F3EF4ECF2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1366,6 +1370,7 @@
 		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
 		F3D4DC74263316F60032B752 /* Keys+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keys+Extensions.swift"; sourceTree = "<group>"; };
+		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
 		FD419E5BD3648410225BC264 /* Pods-Core-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -2090,6 +2095,7 @@
 				E1B5F65F21B81E7700B558B0 /* LocationUtility.swift */,
 				E160845821DE1E9100E34D04 /* SafariService.swift */,
 				E1616BFB21C95C5C00F42D79 /* Weak.swift */,
+				F3EF4ECB2670C22300109CA3 /* Threading.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2879,6 +2885,7 @@
 				42370606262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				E1B5F63221B6B19200B558B0 /* VpnState.swift in Sources */,
 				4242B0232465A40F0042145A /* PaymentsCreditRequest.swift in Sources */,
+				F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */,
 				E129C6C122A90E6500D8437E /* PropertiesManagerMock.swift in Sources */,
 				D5DCCAC0252B4BAF004CB353 /* CoreApiService.swift in Sources */,
 				F30B9D8926281F840094C65E /* VpnCertificate.swift in Sources */,
@@ -3004,6 +3011,7 @@
 				D5C204E82487A0CE004FB58B /* Responses.swift in Sources */,
 				4257B21824EC1C1200C4E4AC /* VpnServerState.swift in Sources */,
 				D5C204E92487A0CE004FB58B /* PaymentsApplyCreditRequest.swift in Sources */,
+				F3EF4ECD2670C22300109CA3 /* Threading.swift in Sources */,
 				F30B9CE6262705550094C65E /* VpnAuthentication.swift in Sources */,
 				D5C204EA2487A0CE004FB58B /* PaymentsBaseRequest.swift in Sources */,
 				F36535612638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */,
@@ -3357,6 +3365,7 @@
 				F32055AC25E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift in Sources */,
 				F365355326383DDC001B7E88 /* LocalAgent.swift in Sources */,
 				F3021D8225E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift in Sources */,
+				F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */,
 				4242B0962465A4E60042145A /* HumanVerificationAdapter.swift in Sources */,
 				D523F11324B7543C007DB086 /* String+Url.swift in Sources */,
 				4242B0102465A40F0042145A /* PaymentsApplyCreditRequest.swift in Sources */,
@@ -3601,6 +3610,7 @@
 				D5C204AD24866B81004FB58B /* VpnManagerConfiguration.swift in Sources */,
 				D5C204AE24866B81004FB58B /* ApplicationError.swift in Sources */,
 				D5C204AF24866B81004FB58B /* ErrorCodes.swift in Sources */,
+				F3EF4ECF2670C22300109CA3 /* Threading.swift in Sources */,
 				42370609262DA22300A920CF /* VPNStreamingResponse.swift in Sources */,
 				D5C204B024866B81004FB58B /* FormValidationError.swift in Sources */,
 				D5C204B124866B81004FB58B /* KeychainError.swift in Sources */,
