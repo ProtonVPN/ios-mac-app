@@ -124,6 +124,7 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public static let connectionChanged = Notification.Name("VpnGatewayConnectionChanged")
     public static let activeServerTypeChanged = Notification.Name("VpnGatewayActiveServerTypeChanged")
+    public static let needsReconnectNotification = Notification.Name("VpnManagerNeedsReconnect")
     
     public weak var alertService: CoreAlertService? {
         didSet {
@@ -169,7 +170,7 @@ public class VpnGateway: VpnGatewayProtocol {
         NotificationCenter.default.addObserver(self, selector: #selector(userPlanChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userBecameDelinquent), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged), name: appStateManager.stateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(reconnectOnNotification), name: VpnManager.needsReconnectNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reconnectOnNotification), name: type(of: self).needsReconnectNotification, object: nil)
     }
     
     public func userTier() throws -> Int {
