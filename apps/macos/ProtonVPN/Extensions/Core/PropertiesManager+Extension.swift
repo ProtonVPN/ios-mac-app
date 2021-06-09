@@ -25,12 +25,7 @@ import ServiceManagement
 import vpncore
 
 extension PropertiesManagerProtocol {
-    
-    var killSwitchNotification: Notification.Name {
-        return Notification.Name("KillSwitchChanged")
-    }
-    
-    public var earlyAccess: Bool {
+    var earlyAccess: Bool {
         get {
             return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.earlyAccess)
         }

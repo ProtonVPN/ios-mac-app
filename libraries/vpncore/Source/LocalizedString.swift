@@ -42,6 +42,10 @@ public class LocalizedString {
     public static let settingsManageSubscription = NSLocalizedString("_manage_subscription", comment: "iOS: Button in settings screen")
     public static let upgradeRequired = NSLocalizedString("_upgrade_required", comment: "iOS & MacOS: text near country or server; MacOS: title of several alerts")
     public static let reconnectionRequired = NSLocalizedString("_reconnection_required", comment: "iOS & MacOS: text that requires restart connection")
+    public static let turnOn = NSLocalizedString("_turn_on", comment: "")
+    public static let notNow = NSLocalizedString("_not_now", comment: "")
+    public static let allow = NSLocalizedString("_allow", comment: "")
+    
     public static let maintenance = NSLocalizedString("_maintenance", comment: "Server status in many places in iOS and MacOS apps")
     public static let quit = NSLocalizedString("_quit", comment: "MacOS: quit application button in custom status menu")
     public static let quitWarning = NSLocalizedString("_quit_warning", comment: "MacOS: alert show before quitting app if VPN is connected")
@@ -500,6 +504,11 @@ public class LocalizedString {
     
     public static let allowLANTitle = NSLocalizedString("_allow_lan_title", comment: "Settings: Allow LAN label.")
     public static let allowLANInfo = NSLocalizedString("_allow_lan_info", comment: "Settings: Allow LAN information text.")
+    public static let allowLANDescription = NSLocalizedString("_allow_lan_description", comment: "Settings: Allow LAN information text.")
+    public static let allowLANNote = NSLocalizedString("_allow_lan_note", comment: "Settings: Allow LAN information text.")
+    
+    public static let turnKSOnTitle = NSLocalizedString("_turn_ks_on_title", comment: "Quick Settings: Enable Kill Switch")
+    public static let turnKSOnDescription = NSLocalizedString("_turn_ks_on_description", comment: "Quick Settings: Enable Kill Switch")
     
     // MARK: - Plans
     public static let getPlan = NSLocalizedString("_get_plan", comment: "%@ is a plan name e.g. Get Plus Plan")
@@ -507,7 +516,7 @@ public class LocalizedString {
     public static let allCountries = NSLocalizedString("_all_countries", comment: "Account plan description")
     public static let planConnection = NSLocalizedString("_plans_connection", comment: "Account plan description")
     public static func planConnections(_ number: Int) -> String {
-        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), number)
+        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), "\(number)")
     }
     public static let speed = NSLocalizedString("_speed", comment: "%@ is a speed description e.g. Speed: Highest")
     public static let medium = NSLocalizedString("_medium", comment: "Value of speed in _speed")
@@ -692,6 +701,7 @@ public class LocalizedString {
     public static let qsKSdescription = NSLocalizedString("_quick_settings_killSwitch_description", comment: "Description for Kill Switch on Quick Settings.")
     public static let qsSCNote = NSLocalizedString("_quick_settings_secureCore_note", comment: "Note for Secure Core on Quick Settings.")
     public static let qsNSNote = NSLocalizedString("_quick_settings_netShield_note", comment: "Note for NetShield on Quick Settings.")
+    public static let qsKSNote = NSLocalizedString("_quick_settings_killSwitch_note", comment: "Note for Kill Switch on Quick Settings.")
     public static let qsGetPlus = NSLocalizedString("_quick_settings_get_plus", comment: "Get Plus button, for premium functionalities")
     public static let qsApplyingSettings = NSLocalizedString("_applying_settings_", comment: "Title on reconnection info")
     public static let qsReestablishingConnection = NSLocalizedString("_reestablish_vpn_connection_", comment: "Title on reconnection view controller")
@@ -711,18 +721,21 @@ public class LocalizedString {
     
     // Quick Settings
     
-    public static let openVPNSettingsTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
-    public static let openVPNSettingsDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
-    public static let openVPNSettingsStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep1Link = NSLocalizedString("_openvpn_settings_step1_link", comment: "Link text inside Step 1 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
-    public static let openVPNSettingsStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
+    public static let sysexInstallTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
+    public static let sysexInstallDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
+    public static let sysexInstallDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_description_no_smart_protocol", comment: "Enabling OpenVPN Description")
+    public static let sysexInstallStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
+    public static let sysexInstallStep1Link = NSLocalizedString("_openvpn_settings_step1_link", comment: "Link text inside Step 1 for enabling OpenVPN Extension")
+    public static let sysexInstallStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
+    public static let sysexInstallStep3 = NSLocalizedString("_openvpn_settings_step3", comment: "Step 3 for enabling OpenVPN Extension")
 
-    public static let openVPNEnabledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
-    public static let openVPNEnabledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
+    public static let sysexInstalledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
+    public static let sysexInstalledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
+    public static let sysexInstalledTitleWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_title_no_smart_protocol", comment: "Popup title after enabling macOS System Extension")
+    public static let sysexInstalledDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_description_no_smart_protocol", comment: "Popup description after enabling macOS System Extension")
     
-    public static let openVPNCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
-    public static let openVPNErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
+    public static let sysexInstallCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
+    public static let sysexInstallErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
 
     // MARK: - Cert based auth
     public static let vpnAuthCertificateFailTitle = NSLocalizedString("_vpnauth_certfail_title", comment: "Failed to get VPN certificate Title")
@@ -738,14 +751,22 @@ public class LocalizedString {
     public static let delinquentPlanDescription = NSLocalizedString("_delinquent_description", comment: "")
     public static let delinquentPlanReconnectionDescription = NSLocalizedString("_delinquent_reconnection_description", comment: "")
     public static let maximumDeviceTitle = NSLocalizedString("_maximum_device_title", comment: "")
-    public static let maximumDeviceDescription = NSLocalizedString("_maximum_device_description", comment: "")
+    public static func maximumDeviceDescription(_ devices: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_maximum_device_description", comment: ""), "\(devices)")
+    }
     public static let reconnectTitle = NSLocalizedString("_reconnect_title", comment: "")
     public static let subscriptionExpiredTitle = NSLocalizedString("_subscription_expired_title", comment: "")
     public static let subscriptionExpiredDescription = NSLocalizedString("_subscription_expired_description", comment: "")
     public static let subscriptionExpiredReconnectionDescription = NSLocalizedString("_subscription_expired_reconnection_description", comment: "")
     public static let subscriptionUpgradeTitle = NSLocalizedString("_subscription_upgrade_title", comment: "")
-    public static let subscriptionUpgradeOption1 = NSLocalizedString("_subscription_upgrade_option1", comment: "")
-    public static let subscriptionUpgradeOption2 = NSLocalizedString("_subscription_upgrade_option2", comment: "")
+    
+    public static func subscriptionUpgradeOption1(_ countriesNumber: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_subscription_upgrade_option1", comment: ""), "\(countriesNumber)")
+    }
+    public static func subscriptionUpgradeOption2(_ sessionsMaximum: Int) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_subscription_upgrade_option2", comment: ""), "\(sessionsMaximum)")
+    }
+
     public static let subscriptionUpgradeOption3 = NSLocalizedString("_subscription_upgrade_option3", comment: "")
     
     public static let tierFREE = NSLocalizedString("_tier_free", comment: "")
@@ -783,5 +804,9 @@ public class LocalizedString {
     public static let locationsBasicPlus = NSLocalizedString("_locations_basic_plus", comment: "")
     public static let locationsBasic = NSLocalizedString("_locations_basic", comment: "")
     public static let locationsPlus = NSLocalizedString("_locations_plus", comment: "")
-
+    
+    public static let vpnAcceleratorTitle = NSLocalizedString("_vpn_accelerator_title", comment: "")
+    public static let vpnAcceleratorChangeTitle = NSLocalizedString("_vpn_accelerator_change_title", comment: "")
+    public static let vpnAcceleratorDescription = NSLocalizedString("_vpn_accelerator_description", comment: "")
+    public static let actionRequiresRecconect = NSLocalizedString("_action_requires_reconnect", comment: "")
 }

@@ -85,7 +85,7 @@ class CreateNewProfileViewModel {
     internal var userTier: Int = 0
     
     init(editProfile: Notification.Name, factory: Factory) {
-        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.max, serverStorage: ServerStorageConcrete())
+        serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
         profileManager = ProfileManager.shared
         self.factory = factory
         

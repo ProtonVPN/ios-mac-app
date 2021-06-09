@@ -80,8 +80,7 @@ public protocol VpnGatewayProtocol: class {
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
-    func disconnect(completion: @escaping () -> Void)
-    
+    func disconnect(completion: @escaping () -> Void)    
 }
 
 public protocol VpnGatewayFactory {
@@ -167,7 +166,7 @@ public class VpnGateway: VpnGatewayProtocol {
         if case AppState.connected(_) = appStateManager.state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
         }
-        NotificationCenter.default.addObserver(self, selector: #selector(userDowngradedPlan), name: type(of: vpnKeychain).vpnPlanDowngraded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(userPlanChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userBecameDelinquent), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged),
                                                name: appStateManager.stateChange, object: nil)
@@ -305,7 +304,6 @@ public class VpnGateway: VpnGatewayProtocol {
                 
                 self.propertiesManager.userIp = properties.ip
                 self.serverStorage.store(properties.serverModels)
-                
                 ProfileManager.shared.refreshProfiles()
             }, failure: { _ in
                 // Ignore failures as this is a non-critical call
@@ -352,42 +350,62 @@ public class VpnGateway: VpnGatewayProtocol {
 }
 
 fileprivate extension VpnGateway {
-    @objc func userDowngradedPlan( _ notification: NSNotification ) {
+    @objc func userPlanChanged( _ notification: NSNotification ) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
-        let reconnectInfo = reconnectServer(downgradeInfo)
+
+        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.plus {
+            propertiesManager.secureCoreToggle = false
+            if propertiesManager.netShieldType == .level2 {
+                propertiesManager.netShieldType = .level1
+            }
+        }
+        
+        if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
+            propertiesManager.netShieldType = .none
+        }
+        
+        guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }
+        
+        var reconnectInfo: VpnReconnectInfo?
+        
+        if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+            reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
+        }
+
         let alert = UserPlanDowngradedAlert(accountUpdate: downgradeInfo, reconnectionInfo: reconnectInfo)
         alertService?.push(alert: alert)
     }
     
     @objc func userBecameDelinquent( _ notification: NSNotification ) {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
-        let reconnectInfo = reconnectServer(downgradeInfo)
+        var reconnectInfo: VpnReconnectInfo?
+        
+        if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+            reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
+        }
+
         let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
         alertService?.push(alert: alert)
     }
     
-    private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo ) -> VpnReconnectInfo? {
-        guard !propertiesManager.intentionallyDisconnected,
-              let lastRequest = propertiesManager.lastConnectionRequest,
-              let lastConnection = (lastRequest.vpnProtocol == .ike ? propertiesManager.lastIkeConnection : propertiesManager.lastOpenVpnConnection) else {
-            return nil
-        }
-        
+    private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> VpnReconnectInfo? {
+        guard let previousServer = oldServer else { return nil }
+
         let tier = downgradeInfo.to.maxTier
         let serverManager = ServerManagerImplementation.instance(forTier: downgradeInfo.to.maxTier, serverStorage: ServerStorageConcrete())
         let selector = VpnServerSelector(serverType: .unspecified, userTier: tier, serverGrouping: serverManager.grouping(for: serverTypeToggle), appStateGetter: {
             return self.appStateManager.state
         })
         
-        guard let toServer = selector.selectServer(connectionRequest: ConnectionRequest(
-                                                    serverType: serverTypeToggle,
-                                                    connectionType: .fastest,
-                                                    vpnProtocol: propertiesManager.vpnProtocol,
-                                                    netShieldType: propertiesManager.netShieldType ?? .off,
-                                                    profileId: nil)) else {
-            return nil
-        }
-        connectTo(server: toServer)
-        return (lastConnection.server, toServer)
+        let request = ConnectionRequest(
+            serverType: serverTypeToggle,
+            connectionType: .fastest,
+            vpnProtocol: propertiesManager.vpnProtocol,
+            netShieldType: .off,
+            profileId: nil)
+        
+        guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
+        self.connect(with: request.vpnProtocol, server: toServer, netShieldType: request.netShieldType)
+        return (previousServer, toServer)
     }
 }

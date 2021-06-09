@@ -37,6 +37,9 @@ public protocol VpnManagerProtocol {
     func logFile(for vpnProtocol: VpnProtocol, completion: @escaping (URL?) -> Void)
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
+
+    func set(vpnAccelerator: Bool)
+    func set(netShieldType: NetShieldType)
 }
 
 public protocol VpnManagerFactory {
@@ -96,13 +99,15 @@ public class VpnManager: VpnManagerProtocol {
     private let appGroup: String
     private let alertService: CoreAlertService?
     private let vpnAuthentication: VpnAuthentication
+    private let vpnKeychain: VpnKeychainProtocol
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
+        self.vpnKeychain = vpnKeychain
         
         prepareManagers()
     }
@@ -237,6 +242,34 @@ public class VpnManager: VpnManagerProtocol {
         
         prepareManagers()
     }
+
+    public func set(vpnAccelerator: Bool) {
+        guard let localAgent = localAgent else {
+            PMLog.ET("Trying to change vpn accelerator via local agent when local agent instance does not exist")
+            return
+        }
+
+        localAgent.update(vpnAccelerator: vpnAccelerator)
+    }
+
+    public func set(netShieldType: NetShieldType) {
+        guard let localAgent = localAgent else {
+            PMLog.ET("Trying to change netshield via local agent when local agent instance does not exist")
+            return
+        }
+
+        // also update the last connection request and active connection for retries and reconnections
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
+        switch currentVpnProtocol {
+        case .ike:
+            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
+        case .openVpn:
+            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
+        case nil:
+            break
+        }
+        localAgent.update(netshield: netShieldType)
+    }
     
     // MARK: - Private functions
     // MARK: - Connecting
@@ -248,7 +281,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield) })
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, hostname: configuration.hostname) })
         localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
@@ -631,30 +664,62 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     private func reconnectLocalAgent(data: VpnAuthenticationData) {
+        let currentHostname: String?
+        switch currentVpnProtocol {
+        case .ike:
+            currentHostname = propertiesManager.lastIkeConnection?.server.domain
+        case .openVpn:
+            currentHostname = propertiesManager.lastOpenVpnConnection?.server.domain
+        case nil:
+            currentHostname = nil
+        }
+
+        guard let hostname = currentHostname else {
+            PMLog.ET("Cannot reconnect to the local agent with missing hostname")
+            return
+        }
+
         localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, netshield: self.propertiesManager.netShieldType ?? .off)
+        localAgent = GoLocalAgent(data: data, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled, hostname: hostname)
         localAgent?.delegate = self
         localAgent?.connect()
     }
 }
 
 extension VpnManager: LocalAgentDelegate {
+    private func refreshCertificateAndReconnectToLocalAgent() {
+        vpnAuthentication.refreshCertificates { [weak self] result in
+            switch result {
+            case let .success(data):
+                PMLog.D("Reconnecting to local agent with new certificate")
+                self?.reconnectLocalAgent(data: data)
+            case let .failure(error):
+                PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
+                self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                self?.disconnect { [weak self] in
+                    self?.localAgent?.disconnect()
+                }
+            }
+        }
+    }
+
     func didReceiveError(error: LocalAgentError) {
         switch error {
-        case .certificateExpired, .certificateRevoked:
-            PMLog.D("Local agent reported expired or revoked certificate, trying to refresh and reconnect")
-            vpnAuthentication.refreshCertificates { [weak self] result in
-                switch result {
-                case let .success(data):
-                    PMLog.D("Reconnecting to local agent with new certificate")
-                    self?.reconnectLocalAgent(data: data)
-                case let .failure(error):
-                    PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
-                    self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
-                    self?.disconnect { [weak self] in
-                        self?.localAgent?.disconnect()
-                    }
-                }
+        case .certificateExpired, .certificateNotProvided:
+            PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
+            refreshCertificateAndReconnectToLocalAgent()
+        case .badCertificateSignature, .certificateRevoked:
+            PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new keys and certificate and reconnect")
+            vpnAuthentication.clear()
+            refreshCertificateAndReconnectToLocalAgent()
+        case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
+            guard let credentials = try? vpnKeychain.fetch() else {
+                PMLog.ET("Cannot show max session alert because getting credentials failed")
+                return
+            }
+
+            disconnect {
+                self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
             }
         default:
             #warning("Handle all the errors")

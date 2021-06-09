@@ -164,6 +164,9 @@ extension IosAlertService: CoreAlertService {
         case is ReconnectOnSmartProtocolChangeAlert:
             showDefaultSystemAlert(alert)
             
+        case is ReconnectOnActionAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

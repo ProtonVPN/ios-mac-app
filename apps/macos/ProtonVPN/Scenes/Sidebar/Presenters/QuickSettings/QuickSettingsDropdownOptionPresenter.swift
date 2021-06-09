@@ -51,3 +51,47 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
         self.selectCallback = selectCallback
     }
 }
+
+final class QuickSettingNetshieldOption: QuickSettingGenericOption {
+    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
+        var netShieldPropertyProvider = netShieldPropertyProvider
+
+        let text: String
+        switch level {
+        case .level1:
+            text = LocalizedString.qsNetshieldOptionLevel1
+        case .level2:
+            text = LocalizedString.qsNetshieldOptionLevel2
+        case .off:
+            text = LocalizedString.qsNetshieldOptionOff
+        }
+
+        let icon: NSImage
+        switch level {
+        case .level1:
+            icon = #imageLiteral(resourceName: "qs_netshield_level1")
+        case .level2:
+            icon = #imageLiteral(resourceName: "qs_netshield_level2")
+        case .off:
+            icon = #imageLiteral(resourceName: "qs_netshield_off")
+        }
+
+        super.init(text, icon: icon, active: isActive, requiresUpdate: level.isUserTierTooLow(currentUserTier), selectCallback: {
+            guard !level.isUserTierTooLow(currentUserTier) else {
+                openUpgradeLink()
+                return
+            }
+
+            switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+            case .withConnectionUpdate:
+                netShieldPropertyProvider.netShieldType = level
+                vpnManager.set(netShieldType: level)
+            case .withReconnect:
+                netShieldPropertyProvider.netShieldType = level
+                vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
+            case .immediately:
+                netShieldPropertyProvider.netShieldType = level
+            }
+        })
+    }
+}

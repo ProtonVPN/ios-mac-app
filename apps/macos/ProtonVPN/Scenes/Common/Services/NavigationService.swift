@@ -47,6 +47,7 @@ class NavigationService {
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & VpnProtocolChangeManagerFactory
+        & VpnManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()

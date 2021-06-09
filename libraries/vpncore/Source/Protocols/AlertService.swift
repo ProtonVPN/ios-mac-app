@@ -338,6 +338,51 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     }
 }
 
+public class ReconnectOnActionAlert: SystemAlert {
+    public var title: String?
+    public var message: String? = LocalizedString.actionRequiresRecconect
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        title = actionTitle
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class TurnOnKillSwitchAlert: SystemAlert {
+    public var title: String? = LocalizedString.turnKSOnTitle
+    public var message: String? = LocalizedString.turnKSOnDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
+public class AllowLANConnectionsAlert: SystemAlert {
+    public var title: String? = LocalizedString.allowLANTitle
+    public var message: String? = LocalizedString.allowLANDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        
+        if connected {
+            message! += "\n\n" + LocalizedString.allowLANNote
+        }
+        
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+    }
+}
+
 public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public var title: String? = LocalizedString.smartProtocolReconnectModalTitle
     public var message: String? = LocalizedString.smartProtocolReconnectModalBody
@@ -640,34 +685,37 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
     }
 }
 
-public class OpenVPNInstallationRequiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNSettingsTitle
-    public var message: String? = LocalizedString.openVPNSettingsDescription
+public class SysexInstallationRequiredAlert: SystemAlert {
+    public var title: String? = LocalizedString.sysexInstallTitle
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+    public init(isSmartProtocolAvailable: Bool, continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        message = isSmartProtocolAvailable ? LocalizedString.sysexInstallDescription : LocalizedString.sysexInstallDescriptionWithoutSmartProtocol
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
 }
 
-public class OpenVPNEnabledAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNEnabledTitle
-    public var message: String? = LocalizedString.openVPNEnabledDescription
+public class SysexEnabledAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init() {
+    public init(isSmartProtocolAvailable: Bool) {
+        title = isSmartProtocolAvailable ? LocalizedString.sysexInstalledTitle : LocalizedString.sysexInstalledTitleWithoutSmartProtocol
+        message = isSmartProtocolAvailable ? LocalizedString.sysexInstalledDescription : LocalizedString.sysexInstalledDescriptionWithoutSmartProtocol
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
 
-public class OpenVPNInstallingErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openVPNCannotEnable
-    public var message: String? = LocalizedString.openVPNErrorDescription
+public class SysexInstallingErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.sysexInstallCannotEnable
+    public var message: String? = LocalizedString.sysexInstallErrorDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -677,7 +725,7 @@ public class OpenVPNInstallingErrorAlert: SystemAlert {
     }
 }
 
-public class OpenVPNExtensionTourAlert: SystemAlert {
+public class SystemExtensionTourAlert: SystemAlert {
     public var title: String?
     public var message: String?
     public var actions = [AlertAction]()
@@ -707,8 +755,8 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( userCurrentCredentials: VpnCredentials ) {
-        message = String(format: LocalizedString.maximumDeviceDescription, 5)
+    public init(userCurrentCredentials: VpnCredentials) {
+        message = LocalizedString.maximumDeviceDescription(5)
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
     }
@@ -724,9 +772,10 @@ public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo? ) {
+    public init(accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.subscriptionExpiredReconnectionDescription
         }
@@ -743,9 +792,10 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init( reconnectionInfo: VpnReconnectInfo? ) {
+    public init(reconnectionInfo: VpnReconnectInfo?) {
         actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.delinquentPlanReconnectionDescription
         }

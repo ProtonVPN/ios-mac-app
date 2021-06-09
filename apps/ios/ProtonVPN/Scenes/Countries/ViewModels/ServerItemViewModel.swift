@@ -155,7 +155,7 @@ class ServerItemViewModel {
             if let vpnGateway = vpnGateway {
                 userTier = try vpnGateway.userTier()
             } else { // not logged in
-                userTier = CoreAppConstants.VpnTiers.visionary
+                userTier = CoreAppConstants.VpnTiers.plus
             }
         } catch {
             userTier = CoreAppConstants.VpnTiers.free

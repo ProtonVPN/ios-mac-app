@@ -87,6 +87,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     // AppSessionRefresher
     var lastDataRefresh: Date?
     var lastServerLoadsRefresh: Date?
+    var lastAccountRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
@@ -213,7 +214,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
             self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
-            
+
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
@@ -244,8 +245,6 @@ class AppSessionManagerImplementation: AppSessionManager {
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        disconnectIfNeeded()
-        
         let refreshNotification = Notification(name: sessionRefreshed, object: nil)
         DispatchQueue.main.async { NotificationCenter.default.post(refreshNotification) }
         
@@ -263,18 +262,6 @@ class AppSessionManagerImplementation: AppSessionManager {
             == vpnCredentials.name.removeSubstring(startingWithCharacter: VpnManagerConfiguration.configConcatChar) {
             success()
             return
-        }
-    }
-    
-    private func disconnectIfNeeded() {
-        guard let vpnCredentials = try? vpnKeychain.fetch() else { return }
-
-        if case AppState.connected(_) = appStateManager.state {
-            if let server = appStateManager.activeConnection()?.server {
-                if server.tier > vpnCredentials.maxTier {
-                    appStateManager.disconnect()
-                }
-            }
         }
     }
     
@@ -382,5 +369,20 @@ extension AppSessionManagerImplementation: AppSessionRefresher {
         }, failure: { error in
             PMLog.D("Error received: \(error)", level: .error)
         })
+    }
+    
+    @objc func refreshAccount() {
+        lastAccountRefresh = Date()
+        
+        let errorCallback: ErrorCallback = { error in
+            PMLog.D("Error received: \(error)", level: .error)
+        }
+        
+        vpnApiService.sessions(success: { sessions in
+            self.propertiesManager.sessions = sessions
+            self.vpnApiService.clientCredentials(success: { credentials in
+                self.vpnKeychain.store(vpnCredentials: credentials)
+            }, failure: errorCallback)
+        }, failure: errorCallback)
     }
 }

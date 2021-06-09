@@ -37,6 +37,7 @@ class SettingsViewModel {
     private let vpnKeychain: VpnKeychainProtocol
     private let connectionStatusService: ConnectionStatusService
     private var netShieldPropertyProvider: NetShieldPropertyProvider
+    private let vpnManager: VpnManagerProtocol
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
@@ -48,7 +49,7 @@ class SettingsViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -60,6 +61,7 @@ class SettingsViewModel {
         self.netshieldService = netshieldService
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.vpnManager = vpnManager
         
         startObserving()
     }
@@ -69,6 +71,10 @@ class SettingsViewModel {
         
         sections.append(accountSection)
         sections.append(securitySection)
+        
+        if propertiesManager.featureFlags.isVpnAccelerator {
+            sections.append(connectionSection)
+        }
         sections.append(extensionsSection)
         if let batterySection = batterySection {
             sections.append(batterySection)
@@ -258,14 +264,22 @@ class SettingsViewModel {
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
                 pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in
-                    if self.appStateManager.state.isSafeToEnd {
+                    guard let vpnGateway = self.vpnGateway else {
+                        return
+                    }
+
+                    switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+                    case .withConnectionUpdate:
                         approve()
-                    } else {
+                        self.vpnManager.set(netShieldType: type)
+                    case .withReconnect:
                         self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                             approve()
                             self.vpnGateway?.reconnect(with: type)
                             self.connectionStatusService.presentStatusViewController()
                         }))
+                    case .immediately:
+                        approve()
                     }
                 }, { type in
                     self.netShieldPropertyProvider.netShieldType = type
@@ -284,6 +298,36 @@ class SettingsViewModel {
         cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemDescriptionAlternative.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemLinkAlternative1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
+    }
+    
+    private var connectionSection: TableViewSection {
+        var cells: [TableViewCellModel] = [
+            .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
+                guard let vpnGateway = self.vpnGateway else {
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    return
+                }
+
+                switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
+                case .withConnectionUpdate:
+                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                    self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                case .withReconnect:
+                    self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                        self.vpnGateway?.retryConnection()
+                    }))
+                case .immediately:
+                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                }
+            })
+        ]
+        
+        cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
+        return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
     
     private var extensionsSection: TableViewSection {

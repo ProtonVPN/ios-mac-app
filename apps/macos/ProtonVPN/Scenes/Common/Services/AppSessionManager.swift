@@ -73,6 +73,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     // AppSessionRefresher
     var lastDataRefresh: Date?
     var lastServerLoadsRefresh: Date?
+    var lastAccountRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
@@ -171,8 +172,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        disconnectIfNeeded()
-        
+
         DispatchQueue.main.async { [weak self] in
             self?.navService?.sessionRefreshed()
         }
@@ -216,22 +216,6 @@ class AppSessionManagerImplementation: AppSessionManager {
                 failure(ProtonVpnError.fetchSession)
             }))
             return
-        }
-    }
-    
-    private func disconnectIfNeeded() {
-        do {
-            let vpnCredentials = try vpnKeychain.fetch()
-
-            if case AppState.connected(_) = appStateManager.state {
-                if let server = appStateManager.activeConnection()?.server {
-                    if server.tier > vpnCredentials.maxTier {
-                        appStateManager.disconnect()
-                    }
-                }
-            }
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
         }
     }
     
@@ -362,4 +346,18 @@ extension AppSessionManagerImplementation: AppSessionRefresher {
         })
     }
     
+    @objc func refreshAccount() {
+        lastAccountRefresh = Date()
+        
+        let errorCallback: ErrorCallback = { error in
+            PMLog.D("Error received: \(error)", level: .error)
+        }
+        
+        vpnApiService.sessions(success: { sessions in
+            self.propertiesManager.sessions = sessions
+            self.vpnApiService.clientCredentials(success: { credentials in
+                self.vpnKeychain.store(vpnCredentials: credentials)
+            }, failure: errorCallback)
+        }, failure: errorCallback)
+    }
 }
