@@ -98,6 +98,7 @@ ios_unit_tests:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/ios/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
