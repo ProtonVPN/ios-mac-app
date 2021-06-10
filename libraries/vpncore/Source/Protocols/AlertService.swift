@@ -807,3 +807,13 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
         }
     }
 }
+
+public class VpnServerErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.localAgentServerErrorTitle
+    public var message: String? = LocalizedString.localAgentServerErrorMessage
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}

@@ -856,3 +856,8 @@
 "_vpn_accelerator_change_title" = "Change VPN Accelerator";
 "_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%";
 "_action_requires_reconnect" = "Your connection needs to be restarted to apply this change";
+
+// Local agent
+
+"_local_agent_server_error_title" = "Server error";
+"_local_agent_server_error_message" = "An error occured on the server. Please connect to another server.";
