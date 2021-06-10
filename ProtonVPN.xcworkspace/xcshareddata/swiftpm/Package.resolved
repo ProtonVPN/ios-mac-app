@@ -3,10 +3,10 @@
     "pins": [
       {
         "package": "WireGuardKit",
-        "repositoryURL": "https://git.zx2c4.com/wireguard-apple",
+        "repositoryURL": "https://github.com/jaroslavas/wireguard-apple.git",
         "state": {
           "branch": null,
-          "revision": "eb528c766baedaf6d84c4ded820a67513122cf69",
+          "revision": "79121c5bdf072ce87c0370e070f82982233f5fb2",
           "version": null
         }
       }
