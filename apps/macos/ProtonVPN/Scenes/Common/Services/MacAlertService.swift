@@ -201,6 +201,9 @@ extension MacAlertService: CoreAlertService {
             
         case is AllowLANConnectionsAlert:
             showDefaultSystemAlert(alert)
+
+        case is VpnServerErrorAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

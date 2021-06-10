@@ -725,6 +725,11 @@ extension VpnManager: LocalAgentDelegate {
             disconnect {
                 self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
             }
+        case .serverError:
+            PMLog.D("Server error occured, showing the user an alert and disconnecting")
+            disconnect {
+                self.alertService?.push(alert: VpnServerErrorAlert())
+            }
         default:
             #warning("Handle all the errors")
             PMLog.ET("Local agent reported error \(error)")

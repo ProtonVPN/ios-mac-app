@@ -166,6 +166,9 @@ extension IosAlertService: CoreAlertService {
             
         case is ReconnectOnActionAlert:
             showDefaultSystemAlert(alert)
+
+        case is VpnServerErrorAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

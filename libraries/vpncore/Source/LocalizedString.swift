@@ -813,4 +813,7 @@ public class LocalizedString {
     public static let vpnAcceleratorChangeTitle = NSLocalizedString("_vpn_accelerator_change_title", comment: "")
     public static let vpnAcceleratorDescription = NSLocalizedString("_vpn_accelerator_description", comment: "")
     public static let actionRequiresRecconect = NSLocalizedString("_action_requires_reconnect", comment: "")
+
+    public static let localAgentServerErrorTitle = NSLocalizedString("_local_agent_server_error_title", comment: "")
+    public static let localAgentServerErrorMessage = NSLocalizedString("_local_agent_server_error_message", comment: "")
 }
