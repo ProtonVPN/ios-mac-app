@@ -692,6 +692,16 @@ extension VpnManager: LocalAgentDelegate {
         }
     }
 
+    private func reconnectWithNewKeyAndcertificate() {
+        vpnAuthentication.clear()
+        refreshCertificateWithError { _ in
+            PMLog.D("Generated new keys and got new certificate, asking to reconnect")
+            executeOnUIThread {
+                NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
+            }
+        }
+    }
+
     func didReceiveError(error: LocalAgentError) {
         switch error {
         case .certificateExpired, .certificateNotProvided:
@@ -701,14 +711,11 @@ extension VpnManager: LocalAgentDelegate {
                 self?.reconnectLocalAgent(data: data)
             }
         case .badCertificateSignature, .certificateRevoked:
-            PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new keys and certificate and reconnect")
-            vpnAuthentication.clear()
-            refreshCertificateWithError { _ in
-                PMLog.D("Generated new keys and got new certificate, asking to reconnect")
-                executeOnUIThread {
-                    NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
-                }
-            }
+            PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new key and certificate and reconnect")
+            reconnectWithNewKeyAndcertificate()
+        case .keyUsedMultipleTimes:
+            PMLog.D("Key used multiple times, trying to generate new key and certificate and reconnect")
+            reconnectWithNewKeyAndcertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
             guard let credentials = try? vpnKeychain.fetch() else {
                 PMLog.ET("Cannot show max session alert because getting credentials failed")
