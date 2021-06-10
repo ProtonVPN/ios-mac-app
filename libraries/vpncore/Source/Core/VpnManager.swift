@@ -725,7 +725,7 @@ extension VpnManager: LocalAgentDelegate {
             disconnect {
                 self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
             }
-        case .serverError:
+        case .serverError, .restrictedServer:
             PMLog.D("Server error occured, showing the user an alert and disconnecting")
             disconnect {
                 self.alertService?.push(alert: VpnServerErrorAlert())
