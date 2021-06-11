@@ -52,4 +52,11 @@ extension LocalAgentFeatures {
         }
         return self
     }
+
+    func with(configuration: LocalAgentConfiguration) -> LocalAgentFeatures {
+        return self
+            .with(netshield: configuration.netshield)
+            .with(vpnAccelerator: configuration.vpnAccelerator)
+            .with(bouncing: configuration.bouncing)
+    }
 }

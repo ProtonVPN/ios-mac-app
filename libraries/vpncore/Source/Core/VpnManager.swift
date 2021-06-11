@@ -281,7 +281,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(data: $0, netshield: configuration.netShield, vpnAccelerator: configuration.vpnAccelerator, hostname: configuration.hostname) })
+        localAgent = authData.flatMap({ GoLocalAgent(data: $0, configuration: LocalAgentConfiguration(configuration: configuration)) })
         localAgent?.delegate = self
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
@@ -664,23 +664,13 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     private func reconnectLocalAgent(data: VpnAuthenticationData) {
-        let currentHostname: String?
-        switch currentVpnProtocol {
-        case .ike:
-            currentHostname = propertiesManager.lastIkeConnection?.server.domain
-        case .openVpn:
-            currentHostname = propertiesManager.lastOpenVpnConnection?.server.domain
-        case nil:
-            currentHostname = nil
-        }
-
-        guard let hostname = currentHostname else {
-            PMLog.ET("Cannot reconnect to the local agent with missing hostname")
+        guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, vpnProtocol: currentVpnProtocol) else {
+            PMLog.ET("Cannot reconnect to the local agent with missing configuraton")
             return
         }
 
         localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled, hostname: hostname)
+        localAgent = GoLocalAgent(data: data, configuration: configuration)
         localAgent?.delegate = self
         localAgent?.connect()
     }
