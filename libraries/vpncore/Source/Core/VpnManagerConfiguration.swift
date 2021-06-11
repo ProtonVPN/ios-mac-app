@@ -50,8 +50,9 @@ public struct VpnManagerConfiguration {
     public let preferredPorts: [Int]?
     public let netShield: NetShieldType
     public let vpnAccelerator: Bool
+    public let bouncing: String?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, preferredPorts: [Int]?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -63,6 +64,7 @@ public struct VpnManagerConfiguration {
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
         self.preferredPorts = preferredPorts
+        self.bouncing = bouncing
     }
 }
 
@@ -100,6 +102,7 @@ public class VpnManagerConfigurationPreparer {
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
+                                           bouncing: connectionConfig.serverIp.label,
                                            preferredPorts: connectionConfig.preferredPorts
             )
         } catch {
