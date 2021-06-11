@@ -974,6 +974,10 @@
 		F3EF4ECD2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3EF4ECF2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
+		F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F3FBB102267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F3FBB104267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1371,6 +1375,7 @@
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
 		F3D4DC74263316F60032B752 /* Keys+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keys+Extensions.swift"; sourceTree = "<group>"; };
 		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
+		F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConfiguration.swift; sourceTree = "<group>"; };
 		FD419E5BD3648410225BC264 /* Pods-Core-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1781,6 +1786,7 @@
 		F36535652638567A001B7E88 /* LocalAgent */ = {
 			isa = PBXGroup;
 			children = (
+				F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */,
 				F38BB44B265B893F00329619 /* LocalAgentError.swift */,
 				F365355526384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift */,
 				F365355A2638522E001B7E88 /* LocalAgentState.swift */,
@@ -2868,6 +2874,7 @@
 				4242B0602465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */,
 				D56B68E32507CBBD00796E0C /* ClientConfig.swift in Sources */,
 				D5B53AD825188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
+				F3FBB101267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */,
 				E1616C0921C95E1800F42D79 /* ProfileConstants.swift in Sources */,
 				E1616C1421CBF5EE00F42D79 /* Storage.swift in Sources */,
@@ -3246,6 +3253,7 @@
 				D523F11A24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
 				D5C2044224866724004FB58B /* Logger.swift in Sources */,
 				D5A8812122CDD5A3009B63D1 /* ReportBugViewModelTests.swift in Sources */,
+				F3FBB102267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				D523F11224B7543C007DB086 /* String+Url.swift in Sources */,
 				D5C2046124866A41004FB58B /* HumanVerificationToken.swift in Sources */,
 				D5C2042A24866675004FB58B /* ServerManager.swift in Sources */,
@@ -3264,6 +3272,7 @@
 			files = (
 				4242B0332465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				4242B0632465A43E0042145A /* UserCreateRequest.swift in Sources */,
+				F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				D5B4712424DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
 				E129C6CE22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
 				4242B0352465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */,
@@ -3724,6 +3733,7 @@
 				F3021D7625E93E2A00EF73A1 /* TroubleshootItem.swift in Sources */,
 				D5C204252486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
 				D5ADFBCC23A0CF2E00C28CFF /* URL+Extension.swift in Sources */,
+				F3FBB104267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				D5C2046224866A41004FB58B /* HumanVerificationToken.swift in Sources */,
 				D59671FE253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */,
