@@ -45,4 +45,11 @@ extension LocalAgentFeatures {
         setBool("split-tcp", value: vpnAccelerator)
         return self
     }
+
+    func with(bouncing: String?) -> LocalAgentFeatures {
+        if let bouncing = bouncing {
+            setString("bouncing", value: bouncing)
+        }
+        return self
+    }
 }
