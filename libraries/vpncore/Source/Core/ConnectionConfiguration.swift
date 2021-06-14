@@ -9,9 +9,8 @@
 
 import Foundation
 
-// Used to contain the details of a connection from the perspective of our service.
-// This can be matched with the limited details contained by the VPN services.
-
+/// Used to contain the details of a connection from the perspective of our service.
+/// This can be matched with the limited details contained by the VPN services.
 public struct ConnectionConfiguration: Codable {
     
     public let server: ServerModel
