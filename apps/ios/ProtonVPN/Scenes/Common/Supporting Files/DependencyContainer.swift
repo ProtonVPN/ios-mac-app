@@ -35,7 +35,7 @@ class DependencyContainer {
     // Singletons
     private lazy var navigationService = NavigationService(self)
      
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager()), appGroup: appGroup, vpnAuthentication: makeVpnAuthentication(), vpnKeychain: vpnKeychain, alertService: iosAlertService)
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager()), appGroup: appGroup, vpnAuthentication: makeVpnAuthentication(), vpnKeychain: vpnKeychain, propertiesManager: makePropertiesManager(), alertService: iosAlertService)
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private var alamofireWrapper: AlamofireWrapper?

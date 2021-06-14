@@ -61,7 +61,7 @@ class WidgetFactory {
         return VpnManager(ikeFactory: IkeProtocolFactory(),
                           openVpnFactory: openVpnFactory,
                           appGroup: self.appGroup,
-                          vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain), vpnKeychain: keychain)
+                          vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain), vpnKeychain: keychain, propertiesManager: propertiesManager)
     }
     
     var appStateManager: AppStateManager {
