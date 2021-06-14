@@ -163,9 +163,11 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     private func setupAlternativeRoutingItem() {
         alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemTitleAlternative.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-
         alternativeRoutingInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        alternativeRoutingInfoIcon.toolTip = LocalizedString.troubleshootItemDescriptionAlternative.replacingOccurrences(of: LocalizedString.troubleshootItemLinkAlternative1, with: "")
+        let tooltip = LocalizedString.troubleshootItemDescriptionAlternative
+            .replacingOccurrences(of: LocalizedString.troubleshootItemLinkAlternative1, with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+        alternativeRoutingInfoIcon.toolTip = String(tooltip)
 
         alternativeRoutingButton.setState(viewModel.alternativeRouting ? .on : .off)
         alternativeRoutingButton.delegate = self

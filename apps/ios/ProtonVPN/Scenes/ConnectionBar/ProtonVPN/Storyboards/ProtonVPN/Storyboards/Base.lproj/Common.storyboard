@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nde-1b-wub">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="nde-1b-wub">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -23,25 +23,26 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Connected" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gsL-EG-ZOw">
-                                <rect key="frame" x="20" y="0.0" width="230.5" height="50"/>
+                                <rect key="frame" x="20" y="0.0" width="227" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="255" verticalHuggingPriority="251" text="00:00:00" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="khb-sG-pRQ">
-                                <rect key="frame" x="258.5" y="0.0" width="71.5" height="50"/>
+                                <rect key="frame" x="255" y="0.0" width="71" height="50"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="arrow-right" translatesAutoresizingMaskIntoConstraints="NO" id="v5z-Fv-isN">
-                                <rect key="frame" x="350" y="18.5" width="13" height="13"/>
+                                <rect key="frame" x="346" y="18.5" width="13" height="13"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="13" id="Eyd-4I-pY1"/>
                                     <constraint firstAttribute="width" constant="13" id="psm-Hj-Dby"/>
                                 </constraints>
                             </imageView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="1es-tg-I6Q"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="vx6-lh-0Na" firstAttribute="height" secondItem="lxd-B5-qQS" secondAttribute="height" id="2ZO-7x-dXY"/>
@@ -56,9 +57,8 @@
                             <constraint firstItem="vx6-lh-0Na" firstAttribute="leadingMargin" secondItem="1es-tg-I6Q" secondAttribute="leading" id="n9O-AH-kJJ"/>
                             <constraint firstAttribute="leading" secondItem="gsL-EG-ZOw" secondAttribute="leading" constant="-20" id="ngg-1Y-bib"/>
                             <constraint firstItem="1es-tg-I6Q" firstAttribute="trailing" secondItem="vx6-lh-0Na" secondAttribute="trailing" id="qqv-H2-pTF"/>
-                            <constraint firstAttribute="trailing" secondItem="v5z-Fv-isN" secondAttribute="trailing" constant="12" id="wYu-Jd-zyb"/>
+                            <constraint firstAttribute="trailing" secondItem="v5z-Fv-isN" secondAttribute="trailing" constant="16" id="wYu-Jd-zyb"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="1es-tg-I6Q"/>
                     </view>
                     <size key="freeformSize" width="375" height="50"/>
                     <connections>
@@ -86,6 +86,7 @@
                                 <color key="separatorColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </tableView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="PXS-Cd-tkZ"/>
                         <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="PXS-Cd-tkZ" firstAttribute="bottom" secondItem="1Fo-0s-96R" secondAttribute="bottom" id="01Q-fe-QAU"/>
@@ -93,7 +94,6 @@
                             <constraint firstItem="PXS-Cd-tkZ" firstAttribute="trailing" secondItem="1Fo-0s-96R" secondAttribute="trailing" id="eRU-H4-rda"/>
                             <constraint firstItem="1Fo-0s-96R" firstAttribute="leading" secondItem="PXS-Cd-tkZ" secondAttribute="leading" id="mhG-33-yL4"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="PXS-Cd-tkZ"/>
                     </view>
                     <connections>
                         <outlet property="tableView" destination="1Fo-0s-96R" id="tTg-Kb-UDg"/>

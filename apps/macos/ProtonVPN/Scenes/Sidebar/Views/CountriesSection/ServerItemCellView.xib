@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HwW-fd-TKx">
-                    <rect key="frame" x="20" y="13" width="242" height="24"/>
+                    <rect key="frame" x="24" y="13" width="242" height="24"/>
                     <subviews>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="3jz-D5-q91">
                             <rect key="frame" x="0.0" y="1" width="22" height="22"/>
@@ -130,7 +130,7 @@
                     </customSpacing>
                 </stackView>
                 <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0LY-WB-KAs" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="256" y="13" width="68" height="24"/>
+                    <rect key="frame" x="248" y="13" width="68" height="24"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="24" id="MmY-nG-zbD"/>
                     </constraints>
@@ -159,7 +159,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aym-qX-9lw">
-                    <rect key="frame" x="260" y="19" width="64" height="17"/>
+                    <rect key="frame" x="252" y="19" width="64" height="17"/>
                     <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" imageScaling="proportionallyDown" inset="2" id="rlB-0G-5Af">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="systemBold" size="14"/>
@@ -170,14 +170,14 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="aym-qX-9lw" secondAttribute="trailing" constant="16" id="MZf-po-Lqw"/>
-                <constraint firstItem="HwW-fd-TKx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="X3X-4g-elf"/>
+                <constraint firstAttribute="trailing" secondItem="aym-qX-9lw" secondAttribute="trailing" constant="24" id="MZf-po-Lqw"/>
+                <constraint firstItem="HwW-fd-TKx" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="X3X-4g-elf"/>
                 <constraint firstAttribute="trailing" secondItem="Ewh-0g-OY6" secondAttribute="trailing" constant="24" id="Z0i-Ap-pUc"/>
                 <constraint firstItem="aym-qX-9lw" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" constant="-2" id="ZWz-pK-FSv"/>
                 <constraint firstItem="HwW-fd-TKx" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="eFq-cH-WkR"/>
                 <constraint firstItem="0LY-WB-KAs" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hAb-Vw-OhK"/>
                 <constraint firstItem="Ewh-0g-OY6" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="oMS-28-aC1"/>
-                <constraint firstAttribute="trailing" secondItem="0LY-WB-KAs" secondAttribute="trailing" constant="16" id="rQF-MJ-7wc"/>
+                <constraint firstAttribute="trailing" secondItem="0LY-WB-KAs" secondAttribute="trailing" constant="24" id="rQF-MJ-7wc"/>
             </constraints>
             <connections>
                 <outlet property="cityLbl" destination="Ewh-0g-OY6" id="211-QY-fGX"/>

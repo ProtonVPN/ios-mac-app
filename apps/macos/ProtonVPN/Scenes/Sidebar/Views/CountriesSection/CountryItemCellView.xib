@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -25,7 +25,7 @@
                     </connections>
                 </button>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vFF-N8-oAa">
-                    <rect key="frame" x="16" y="15" width="70" height="20"/>
+                    <rect key="frame" x="24" y="15" width="70" height="20"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KLl-LD-vXT" userLabel="flag">
                             <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
@@ -69,7 +69,7 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga">
-                    <rect key="frame" x="104" y="9" width="228" height="32"/>
+                    <rect key="frame" x="110" y="9" width="206" height="32"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-wV-au5">
                             <rect key="frame" x="0.0" y="0.0" width="16" height="32"/>
@@ -95,16 +95,8 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="VEd-mZ-v1n"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PWT-Qd-pUB">
-                            <rect key="frame" x="66" y="0.0" width="16" height="32"/>
-                            <constraints>
-                                <constraint firstAttribute="width" constant="16" id="UeL-kC-qWz"/>
-                            </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_streaming" id="YCV-5A-dCC"/>
-                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="7wh-uQ-7Lp">
-                            <rect key="frame" x="88" y="0.0" width="64" height="32"/>
+                            <rect key="frame" x="66" y="0.0" width="64" height="32"/>
                             <buttonCell key="cell" type="bevel" title="Upgrade" bezelStyle="rounded" alignment="center" controlSize="large" imageScaling="proportionallyDown" inset="2" id="fbx-Yz-THp">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="systemBold" size="14"/>
@@ -115,7 +107,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YiN-1X-AMz" customClass="ExpandCellButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="158" y="0.0" width="32" height="32"/>
+                            <rect key="frame" x="136" y="0.0" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="32" id="UMX-gq-tXs"/>
                                 <constraint firstAttribute="height" constant="32" id="z9M-ZG-Ajk"/>
@@ -129,7 +121,7 @@
                             </connections>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Vvv-5a-M1i">
-                            <rect key="frame" x="196" y="0.0" width="32" height="32"/>
+                            <rect key="frame" x="174" y="0.0" width="32" height="32"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="32" id="4Si-Nw-rXE"/>
                                 <constraint firstAttribute="width" constant="32" id="r5r-fO-uYO"/>
@@ -149,13 +141,10 @@
                         <constraint firstItem="7wh-uQ-7Lp" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="Gt1-Cq-d2t"/>
                         <constraint firstItem="a2P-N6-2pz" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="KU3-F3-UbJ"/>
                         <constraint firstAttribute="bottom" secondItem="AUT-fa-vc3" secondAttribute="bottom" id="UgB-uy-0bs"/>
-                        <constraint firstItem="PWT-Qd-pUB" firstAttribute="top" secondItem="ir3-ke-8Ga" secondAttribute="top" id="cxn-9j-LGf"/>
                         <constraint firstAttribute="bottom" secondItem="Jbi-wV-au5" secondAttribute="bottom" id="dv5-bm-XVl"/>
-                        <constraint firstAttribute="bottom" secondItem="PWT-Qd-pUB" secondAttribute="bottom" id="qCr-aF-wCs"/>
                         <constraint firstAttribute="height" constant="32" id="yjP-7e-DiT"/>
                     </constraints>
                     <visibilityPriorities>
-                        <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
                         <integer value="1000"/>
@@ -170,11 +159,10 @@
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
                         <real value="3.4028234663852886e+38"/>
-                        <real value="3.4028234663852886e+38"/>
                     </customSpacing>
                 </stackView>
                 <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dyo-h7-133" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="226" y="9" width="68" height="32"/>
+                    <rect key="frame" x="208" y="9" width="68" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="oFh-La-Ogt"/>
                     </constraints>
@@ -202,15 +190,15 @@
                 </customView>
             </subviews>
             <constraints>
-                <constraint firstItem="vFF-N8-oAa" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="16" id="1kB-O8-zcy"/>
+                <constraint firstItem="vFF-N8-oAa" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="1kB-O8-zcy"/>
                 <constraint firstItem="iz4-kg-3lt" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="6JB-uC-cyY"/>
-                <constraint firstAttribute="trailing" secondItem="ir3-ke-8Ga" secondAttribute="trailing" constant="8" id="6ir-Y2-L2M"/>
+                <constraint firstAttribute="trailing" secondItem="ir3-ke-8Ga" secondAttribute="trailing" constant="24" id="6ir-Y2-L2M"/>
                 <constraint firstItem="Dyo-h7-133" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="aUR-uB-adt"/>
                 <constraint firstAttribute="trailing" secondItem="iz4-kg-3lt" secondAttribute="trailing" id="bOp-6R-2oi"/>
                 <constraint firstItem="ir3-ke-8Ga" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="dmM-UY-QYf"/>
                 <constraint firstAttribute="top" secondItem="iz4-kg-3lt" secondAttribute="top" id="fin-hi-Hw7"/>
                 <constraint firstItem="vFF-N8-oAa" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hhE-OW-Krw"/>
-                <constraint firstAttribute="trailing" secondItem="Dyo-h7-133" secondAttribute="trailing" constant="46" id="zUF-3r-GZt"/>
+                <constraint firstAttribute="trailing" secondItem="Dyo-h7-133" secondAttribute="trailing" constant="64" id="zUF-3r-GZt"/>
             </constraints>
             <connections>
                 <outlet property="connectButton" destination="Dyo-h7-133" id="FwW-wt-3tm"/>
@@ -222,7 +210,6 @@
                 <outlet property="secureIV" destination="gAW-1O-emT" id="cam-UR-Srm"/>
                 <outlet property="separatorView" destination="iz4-kg-3lt" id="WdW-zB-cvU"/>
                 <outlet property="smartIV" destination="Jbi-wV-au5" id="qoQ-rC-tYo"/>
-                <outlet property="streamingIV" destination="PWT-Qd-pUB" id="fZ6-ux-oRz"/>
                 <outlet property="torIV" destination="AUT-fa-vc3" id="A2R-To-lxK"/>
                 <outlet property="upgradeBtn" destination="7wh-uQ-7Lp" id="jce-2G-JRa"/>
             </connections>
@@ -236,7 +223,6 @@
         <image name="ic_p2p" width="16" height="16"/>
         <image name="ic_section_arrow_down" width="14" height="8"/>
         <image name="ic_smart-routing" width="16" height="16"/>
-        <image name="ic_streaming" width="16" height="16"/>
         <image name="ic_tor" width="16" height="16"/>
     </resources>
 </document>

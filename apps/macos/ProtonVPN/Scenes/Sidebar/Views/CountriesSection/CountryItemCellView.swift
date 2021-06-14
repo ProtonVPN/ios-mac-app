@@ -33,7 +33,6 @@ final class CountryItemCellView: NSView {
     @IBOutlet private weak var smartIV: NSImageView!
     @IBOutlet private weak var p2pIV: NSImageView!
     @IBOutlet private weak var torIV: NSImageView!
-    @IBOutlet private weak var streamingIV: NSImageView!
     @IBOutlet private weak var separatorView: NSView!
     @IBOutlet private weak var upgradeBtn: NSButton!
     @IBOutlet private weak var maintenanceBtn: NSButton!
@@ -59,7 +58,7 @@ final class CountryItemCellView: NSView {
         torIV.toolTip = LocalizedString.torTitle
         p2pIV.toolTip = LocalizedString.p2pTitle
         smartIV.toolTip = LocalizedString.smartProtocolTitle
-        streamingIV.toolTip = LocalizedString.streamingTitle
+
         separatorView.wantsLayer = true
         separatorView.layer?.backgroundColor = NSColor.protonExandableButton().cgColor
         let trackingFrame = NSRect(origin: frame.origin, size: CGSize(width: frame.size.width, height: frame.size.height - 4))
@@ -74,7 +73,6 @@ final class CountryItemCellView: NSView {
             return
         }
         connectButton.isHidden = viewModel.isTierTooLow
-        streamingIV.isHidden = (viewModel.isStreamingAvailable && !viewModel.isTierTooLow)  || !viewModel.isStreamingAvailable
         torIV.isHidden = (viewModel.isTorAvailable && !viewModel.isTierTooLow) || !viewModel.isTorAvailable
         p2pIV.isHidden = (viewModel.isP2PAvailable && !viewModel.isTierTooLow) || !viewModel.isP2PAvailable
         smartIV.isHidden = (viewModel.isSmartAvailable && !viewModel.isTierTooLow) || !viewModel.isSmartAvailable
@@ -91,7 +89,7 @@ final class CountryItemCellView: NSView {
     func updateView(withModel viewModel: CountryItemViewModel) {
         self.viewModel = viewModel
         
-        [torIV, p2pIV, smartIV, secureIV, streamingIV, expandButton, flagIV, countryLbl, maintenanceBtn].forEach {
+        [torIV, p2pIV, smartIV, secureIV, expandButton, flagIV, countryLbl, maintenanceBtn].forEach {
             $0?.alphaValue = viewModel.alphaForMainElements
         }
     
@@ -128,7 +126,6 @@ final class CountryItemCellView: NSView {
     // MARK: - Private
     
     private func configureFeatures() {
-        streamingIV.isHidden = !viewModel.isStreamingAvailable || viewModel.isConnected
         torIV.isHidden = !viewModel.isTorAvailable || viewModel.isConnected
         p2pIV.isHidden = !viewModel.isP2PAvailable || viewModel.isConnected
         smartIV.isHidden = !viewModel.isSmartAvailable || viewModel.isConnected

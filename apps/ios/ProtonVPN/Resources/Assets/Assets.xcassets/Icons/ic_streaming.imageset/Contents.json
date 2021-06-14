@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "ic_streaming.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_streaming.pdf",
       "idiom" : "universal",
       "scale" : "2x"
     },

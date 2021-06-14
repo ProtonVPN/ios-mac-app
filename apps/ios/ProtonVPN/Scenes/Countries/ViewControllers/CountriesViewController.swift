@@ -110,11 +110,8 @@ final class CountriesViewController: UIViewController {
     private func setupTableView() {
         tableView.dataSource = self
         tableView.delegate = self
-
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? 61
-        tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIColor.protonBlack()
         tableView.backgroundColor = .protonDarkGrey()
         tableView.register(CountryViewCell.nib, forCellReuseIdentifier: CountryViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)

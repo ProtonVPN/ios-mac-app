@@ -281,7 +281,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
         case .country:
             return 48
         case .header:
-            return 36
+            return 32
         default:
             return 40
         }

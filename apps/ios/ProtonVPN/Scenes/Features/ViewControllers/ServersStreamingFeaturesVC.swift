@@ -58,7 +58,7 @@ class ServersStreamingFeaturesVC: UIViewController {
         servicesCV.register(StreamingServiceCell.nib, forCellWithReuseIdentifier: StreamingServiceCell.identifier)
         servicesCV.delegate = self
         servicesCV.dataSource = self
-        
+        view.backgroundColor = .protonWidgetBackground
     }
     
     // MARK: - Actions

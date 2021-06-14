@@ -73,5 +73,7 @@
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
 	<string>y7wt2MmWReFFUiBA7kUO2yeATskHETavgiQe9Ib2+7g=</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Dark</string>
 </dict>
 </plist>
