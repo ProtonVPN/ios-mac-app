@@ -71,7 +71,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         return state.serverType == .secureCore
     }
 
-    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory & ConnectionStatusServiceFactory
+    public typealias Factory = AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & LoginServiceFactory & PlanServiceFactory & ConnectionStatusServiceFactory & VpnKeychainFactory
     private let factory: Factory
     
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -79,6 +79,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var keychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService = factory.makeConnectionStatusService()
     
     private let countryService: CountryService
@@ -113,7 +114,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     func headerHeight(for section: Int) -> CGFloat {
-        return titleFor(section: section) != nil ? UIConstants.headerHeight : 0
+        return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
     }
     
     func numberOfSections() -> Int {
@@ -173,6 +174,10 @@ class CountriesViewModel: SecureCoreToggleHandler {
     // MARK: - Private functions
     func setTier() {
         do {
+            if (try keychain.fetch()).isDelinquent {
+                userTier = CoreAppConstants.VpnTiers.free
+                return
+            }
             userTier = try vpnGateway?.userTier() ?? CoreAppConstants.VpnTiers.plus
         } catch {
             userTier = CoreAppConstants.VpnTiers.free

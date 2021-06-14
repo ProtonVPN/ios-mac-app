@@ -64,6 +64,7 @@ class CountriesSectionViewModel {
     private let appStateManager: AppStateManager
     private let alertService: CoreAlertService
     private let propertiesManager: PropertiesManagerProtocol
+    private let vpnKeychain: VpnKeychainProtocol
     private var expandedCountries: Set<String> = []
     
     weak var delegate: CountriesSettingsDelegate?
@@ -98,7 +99,10 @@ class CountriesSectionViewModel {
     private var data: [CellModel] = []
 
     private var userTier: Int {
-        (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+        if let credentials = try? vpnKeychain.fetch(), credentials.isDelinquent {
+            return CoreAppConstants.VpnTiers.free
+        }
+        return (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
     }
 
     private var serverManager: ServerManager {
@@ -123,6 +127,7 @@ class CountriesSectionViewModel {
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
+        self.vpnKeychain = factory.makeVpnKeychain()
         self.appStateManager = factory.makeAppStateManager()
         self.alertService = factory.makeCoreAlertService()
         self.propertiesManager = factory.makePropertiesManager()
@@ -131,7 +136,6 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
-        let vpnKeychain = factory.makeVpnKeychain()
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.killSwitchNotification, object: nil)
@@ -248,8 +252,9 @@ class CountriesSectionViewModel {
         if let query = filter, !query.isEmpty {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
-        self.countries = countries
-        data = groupServersIntoSections(countries, serverType: serverType)
+        
+        self.countries = countries.sorted { $1.0.country > $0.0.country }
+        data = groupServersIntoSections(self.countries, serverType: serverType)
     }
     
     private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {
@@ -330,9 +335,13 @@ class CountriesSectionViewModel {
             let headerBasicVM = CountryHeaderViewModel(LocalizedString.locationsBasic, totalCountries: basicLocations.count, isPremium: false, countriesViewModel: self)
             let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
             
-            return [ .header(headerBasicVM) ] + basicLocations.enumerated().map { index, country -> CellModel in
+            let basicSections = [ .header(headerBasicVM) ] + basicLocations.enumerated().map { index, country -> CellModel in
                 return .country(self.countryViewModel(country, displaySeparator: index != 0))
-            } + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
+            }
+            
+            if plusLocations.isEmpty { return basicSections }
+            
+            return basicSections + [ .header(headerPlusVM) ] + plusLocations.enumerated().map { index, country -> CellModel in
                 return .country(self.countryViewModel(country, displaySeparator: index != 0))
             }
         }

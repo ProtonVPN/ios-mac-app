@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -14,7 +14,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Jz-n1-dnC">
-                    <rect key="frame" x="14" y="8" width="133" height="17"/>
+                    <rect key="frame" x="22" y="14" width="133" height="17"/>
                     <textFieldCell key="cell" lineBreakMode="clipping" title="FREE Locations (12)" id="oyu-WT-Gx2">
                         <font key="font" metaFont="system" size="14"/>
                         <color key="textColor" red="0.44705882352941173" green="0.46274509803921571" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
@@ -22,7 +22,7 @@
                     </textFieldCell>
                 </textField>
                 <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="HGV-Lo-Tqc">
-                    <rect key="frame" x="306" y="8" width="16" height="16"/>
+                    <rect key="frame" x="296" y="15" width="16" height="16"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="16" id="20Y-U2-Q4U"/>
                         <constraint firstAttribute="width" constant="16" id="Zg3-ey-2ll"/>
@@ -38,10 +38,10 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="bottom" secondItem="HGV-Lo-Tqc" secondAttribute="bottom" constant="8" id="CCa-Rh-n02"/>
-                <constraint firstItem="8Jz-n1-dnC" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="16" id="Gzr-wH-lBF"/>
-                <constraint firstAttribute="bottom" secondItem="8Jz-n1-dnC" secondAttribute="bottom" constant="8" id="tS1-FR-yAs"/>
-                <constraint firstAttribute="trailing" secondItem="HGV-Lo-Tqc" secondAttribute="trailing" constant="14" id="zl0-zC-7zf"/>
+                <constraint firstItem="8Jz-n1-dnC" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="Gzr-wH-lBF"/>
+                <constraint firstItem="8Jz-n1-dnC" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="mWA-go-VLj"/>
+                <constraint firstItem="HGV-Lo-Tqc" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="uUA-1Y-Ahf"/>
+                <constraint firstAttribute="trailing" secondItem="HGV-Lo-Tqc" secondAttribute="trailing" constant="24" id="zl0-zC-7zf"/>
             </constraints>
             <connections>
                 <outlet property="informationBtn" destination="HGV-Lo-Tqc" id="w1y-6Y-2Fb"/>

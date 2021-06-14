@@ -39,6 +39,12 @@ class FeatureTableViewCell: UITableViewCell {
     @IBOutlet private weak var loadHighView: UIView!
     @IBOutlet private weak var loadHighLbl: UILabel!
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectionStyle = .none
+        backgroundColor = .protonWidgetBackground
+    }
+    
     var viewModel: FeatureCellViewModel! {
         didSet {
             titleLbl.text = viewModel.title

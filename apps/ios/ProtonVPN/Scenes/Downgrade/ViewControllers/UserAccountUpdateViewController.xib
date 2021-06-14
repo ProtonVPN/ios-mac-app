@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -287,33 +287,62 @@ subscription has expired</string>
                                 <constraint firstAttribute="height" constant="16" id="P5U-Q6-KF9"/>
                             </constraints>
                         </view>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFH-UM-B5P" userLabel="PrimaryAction" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NcH-UZ-iWQ" userLabel="primaryAction">
                             <rect key="frame" x="0.0" y="672.5" width="382" height="48"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KFH-UM-B5P" userLabel="PrimaryAction" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="41" y="0.0" width="300" height="48"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="300" id="8X2-Qr-R13"/>
+                                        <constraint firstAttribute="height" constant="48" id="H1m-zh-uWN"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
+                                    <state key="normal" title="UPGRADE AGAIN">
+                                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didTapPrimaryAction:" destination="-1" eventType="touchUpInside" id="axE-PM-ebO"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="48" id="H1m-zh-uWN"/>
+                                <constraint firstItem="KFH-UM-B5P" firstAttribute="top" secondItem="NcH-UZ-iWQ" secondAttribute="top" id="6G7-sZ-Xhb"/>
+                                <constraint firstItem="KFH-UM-B5P" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="NcH-UZ-iWQ" secondAttribute="leading" constant="8" id="6Kx-Tu-aD3"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="KFH-UM-B5P" secondAttribute="trailing" constant="8" id="78z-eH-JQx"/>
+                                <constraint firstAttribute="height" constant="48" id="REr-7O-lIO"/>
+                                <constraint firstAttribute="bottom" secondItem="KFH-UM-B5P" secondAttribute="bottom" id="SYu-5b-5PJ"/>
+                                <constraint firstItem="KFH-UM-B5P" firstAttribute="centerX" secondItem="NcH-UZ-iWQ" secondAttribute="centerX" id="ciV-bH-etn"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="boldSystem" pointSize="16"/>
-                            <state key="normal" title="UPGRADE AGAIN">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </state>
-                            <connections>
-                                <action selector="didTapPrimaryAction:" destination="-1" eventType="touchUpInside" id="axE-PM-ebO"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRL-C0-cXj" userLabel="SecondAction">
+                        </view>
+                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Bl-9z-jRC" userLabel="SecondAction">
                             <rect key="frame" x="0.0" y="728.5" width="382" height="48"/>
+                            <subviews>
+                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TRL-C0-cXj" userLabel="SecondAction">
+                                    <rect key="frame" x="41" y="0.0" width="300" height="48"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="48" id="DaC-38-1mM"/>
+                                        <constraint firstAttribute="width" constant="300" id="sbO-hW-gvJ"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                    <state key="normal" title="NO THANKS">
+                                        <color key="titleColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
+                                    </state>
+                                    <connections>
+                                        <action selector="didTapSecondAction:" destination="-1" eventType="touchUpInside" id="pfc-K4-Lda"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <constraints>
-                                <constraint firstAttribute="height" constant="48" id="DaC-38-1mM"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="48" id="EJM-j1-yPE"/>
+                                <constraint firstAttribute="height" constant="48" id="C7a-QP-R1B"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TRL-C0-cXj" secondAttribute="trailing" constant="8" id="DuV-2F-exO"/>
+                                <constraint firstItem="TRL-C0-cXj" firstAttribute="top" secondItem="1Bl-9z-jRC" secondAttribute="top" id="JRv-m0-MeK"/>
+                                <constraint firstItem="TRL-C0-cXj" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="1Bl-9z-jRC" secondAttribute="leading" constant="8" id="TCq-1T-wdF"/>
+                                <constraint firstItem="TRL-C0-cXj" firstAttribute="centerX" secondItem="1Bl-9z-jRC" secondAttribute="centerX" id="gn4-pZ-qlD"/>
+                                <constraint firstAttribute="bottom" secondItem="TRL-C0-cXj" secondAttribute="bottom" id="khA-4E-NwE"/>
                             </constraints>
-                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                            <state key="normal" title="NO THANKS">
-                                <color key="titleColor" red="0.30196078430000001" green="0.63921568630000003" blue="0.34509803919999998" alpha="1" colorSpace="calibratedRGB"/>
-                            </state>
-                            <connections>
-                                <action selector="didTapSecondAction:" destination="-1" eventType="touchUpInside" id="pfc-K4-Lda"/>
-                            </connections>
-                        </button>
+                        </view>
                     </subviews>
                 </stackView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dhU-5w-Ea1" userLabel="CloseBtn">

@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "ic_smart-routing.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_smart-routing.pdf",
       "idiom" : "universal",
       "scale" : "2x"
     },

@@ -244,7 +244,7 @@
 "_make_default_profile" = "Make Default Profile";
 "_default_profile_tooltip" = "\"Quick Connect\" button uses default profile.\n";
 "_feature" = "Feature";
-"_use_secure_core" = "Use Secure Core";
+"_use_secure_core" = "Secure Core";
 "_select_country" = "Select Country";
 "_server" = "Server";
 "_select_server" = "Select Server";

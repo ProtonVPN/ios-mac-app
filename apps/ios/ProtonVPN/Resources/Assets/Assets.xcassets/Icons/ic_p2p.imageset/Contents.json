@@ -1,11 +1,11 @@
 {
   "images" : [
     {
+      "filename" : "ic_p2p.pdf",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "ic_p2p.pdf",
       "idiom" : "universal",
       "scale" : "2x"
     },

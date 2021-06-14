@@ -31,7 +31,6 @@ class CountryViewCell: UITableViewCell {
     @IBOutlet weak var p2pIV: UIImageView!
     @IBOutlet weak var smartIV: UIImageView!
     @IBOutlet weak var torIV: UIImageView!
-    @IBOutlet weak var streamingIV: UIImageView!
     
     @IBOutlet weak var connectButton: UIButton!
     @IBOutlet var rightMarginConstraint: NSLayoutConstraint!
@@ -51,11 +50,10 @@ class CountryViewCell: UITableViewCell {
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.smartAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
-            streamingIV.isHidden = !viewModel.streamingAvailable
             
             backgroundColor = viewModel.backgroundColor
             flagIcon.image = UIImage(named: viewModel.countryCode.lowercased() + "-plain")
-            [flagIcon, countryName, torIV, p2pIV, smartIV, streamingIV].forEach { view in
+            [flagIcon, countryName, torIV, p2pIV, smartIV].forEach { view in
                 view?.alpha = viewModel.alphaOfMainElements
             }
             
@@ -82,6 +80,7 @@ class CountryViewCell: UITableViewCell {
         let isConnected = viewModel?.isCurrentlyConnected ?? false
         let maintenance = viewModel?.underMaintenance ?? false
         connectButton.backgroundColor = isConnected ? .protonGreen() : (maintenance ? .protonDarkGrey() :  .protonLightGrey())
+
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)
             connectButton.setTitle(text, for: .normal)
