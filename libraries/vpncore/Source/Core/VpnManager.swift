@@ -717,12 +717,11 @@ extension VpnManager: LocalAgentDelegate {
             PMLog.D("Key used multiple times, trying to generate new key and certificate and reconnect")
             reconnectWithNewKeyAndcertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
-            guard let credentials = try? vpnKeychain.fetch() else {
-                PMLog.ET("Cannot show max session alert because getting credentials failed")
-                return
-            }
-
             disconnect {
+                guard let credentials = try? self.vpnKeychain.fetch() else {
+                    PMLog.ET("Cannot show max session alert because getting credentials failed")
+                    return
+                }
                 self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
             }
         case .serverError, .restrictedServer:
