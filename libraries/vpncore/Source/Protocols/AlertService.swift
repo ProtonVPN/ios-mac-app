@@ -207,10 +207,7 @@ public class DelinquentUserAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.account, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-    }
+    public init() { }
 }
 
 public class VpnStuckAlert: SystemAlert {
