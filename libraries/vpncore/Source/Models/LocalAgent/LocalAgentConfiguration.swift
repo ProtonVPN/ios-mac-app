@@ -34,6 +34,8 @@ extension LocalAgentConfiguration {
             configuration = propertiesManager.lastIkeConnection
         case .openVpn:
             configuration = propertiesManager.lastOpenVpnConnection
+        case .wireGuard:
+            configuration = propertiesManager.lastWireguardConnection
         case nil:
             configuration = nil
         }
