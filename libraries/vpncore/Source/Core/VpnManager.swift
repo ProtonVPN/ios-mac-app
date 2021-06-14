@@ -729,11 +729,10 @@ extension VpnManager: LocalAgentDelegate {
             disconnect {
                 self.alertService?.push(alert: VpnServerErrorAlert())
             }
-        default:
-            #warning("Handle all the errors")
-            PMLog.ET("Local agent reported error \(error)")
         case .guestSession:
             PMLog.ET("Internal status that should never be seen, check the app implementation")
+        case .policyViolation1, .policyViolation2, .userTorrentNotAllowed, .userBadBehavior:
+            PMLog.ET("Local agent reported error \(error) that the app does not handle")
         }
     }
 
