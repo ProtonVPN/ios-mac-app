@@ -51,7 +51,6 @@ public class VpnManager: VpnManagerProtocol {
     private var quickReconnection = false
     
     private let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
-    private let propertiesManager = PropertiesManager()
     
     private var ikeProtocolFactory: VpnProtocolFactory
     private var openVpnProtocolFactory: VpnProtocolFactory
@@ -81,8 +80,6 @@ public class VpnManager: VpnManagerProtocol {
             return true
         }
     }
-
-    private var localAgent: LocalAgent?
     
     public private(set) var state: VpnState = .invalid
     public var currentVpnProtocol: VpnProtocol? {
@@ -97,17 +94,21 @@ public class VpnManager: VpnManagerProtocol {
     
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
-    private let alertService: CoreAlertService?
-    private let vpnAuthentication: VpnAuthentication
-    private let vpnKeychain: VpnKeychainProtocol
+
+    let propertiesManager: PropertiesManagerProtocol
+    let alertService: CoreAlertService?
+    let vpnAuthentication: VpnAuthentication
+    let vpnKeychain: VpnKeychainProtocol
+    var localAgent: LocalAgent?
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.appGroup = appGroup
         self.alertService = alertService
         self.vpnAuthentication = vpnAuthentication
         self.vpnKeychain = vpnKeychain
+        self.propertiesManager = propertiesManager
         
         prepareManagers()
     }
@@ -281,8 +282,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        localAgent = authData.flatMap({ GoLocalAgent(data: $0, configuration: LocalAgentConfiguration(configuration: configuration)) })
-        localAgent?.delegate = self
+        connectLocalAgent(data: authData, configuration: configuration)
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
@@ -661,82 +661,5 @@ public class VpnManager: VpnManagerProtocol {
         } else {
             request()
         }
-    }
-
-    private func reconnectLocalAgent(data: VpnAuthenticationData) {
-        guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, vpnProtocol: currentVpnProtocol) else {
-            PMLog.ET("Cannot reconnect to the local agent with missing configuraton")
-            return
-        }
-
-        localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, configuration: configuration)
-        localAgent?.delegate = self
-        localAgent?.connect()
-    }
-}
-
-extension VpnManager: LocalAgentDelegate {
-    private func refreshCertificateWithError(success: @escaping (VpnAuthenticationData) -> Void) {
-        vpnAuthentication.refreshCertificates { [weak self] result in
-            switch result {
-            case let .success(data):
-                success(data)
-            case let .failure(error):
-                PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
-                self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
-                self?.disconnect { [weak self] in
-                    self?.localAgent?.disconnect()
-                }
-            }
-        }
-    }
-
-    private func reconnectWithNewKeyAndcertificate() {
-        vpnAuthentication.clear()
-        refreshCertificateWithError { _ in
-            PMLog.D("Generated new keys and got new certificate, asking to reconnect")
-            executeOnUIThread {
-                NotificationCenter.default.post(name: VpnGateway.needsReconnectNotification, object: nil)
-            }
-        }
-    }
-
-    func didReceiveError(error: LocalAgentError) {
-        switch error {
-        case .certificateExpired, .certificateNotProvided:
-            PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
-            refreshCertificateWithError { [weak self] data in
-                PMLog.D("Reconnecting to local agent with new certificate")
-                self?.reconnectLocalAgent(data: data)
-            }
-        case .badCertificateSignature, .certificateRevoked:
-            PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new key and certificate and reconnect")
-            reconnectWithNewKeyAndcertificate()
-        case .keyUsedMultipleTimes:
-            PMLog.D("Key used multiple times, trying to generate new key and certificate and reconnect")
-            reconnectWithNewKeyAndcertificate()
-        case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
-            disconnect {
-                guard let credentials = try? self.vpnKeychain.fetch() else {
-                    PMLog.ET("Cannot show max session alert because getting credentials failed")
-                    return
-                }
-                self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
-            }
-        case .serverError, .restrictedServer:
-            PMLog.D("Server error occured, showing the user an alert and disconnecting")
-            disconnect {
-                self.alertService?.push(alert: VpnServerErrorAlert())
-            }
-        case .guestSession:
-            PMLog.ET("Internal status that should never be seen, check the app implementation")
-        case .policyViolation1, .policyViolation2, .userTorrentNotAllowed, .userBadBehavior:
-            PMLog.ET("Local agent reported error \(error) that the app does not handle")
-        }
-    }
-
-    func didChangeState(state: LocalAgentState) {
-        PMLog.D("Local agent state changed to \(state)")
-    }
+    }    
 }
