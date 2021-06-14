@@ -84,7 +84,12 @@ extension VpnManager: LocalAgentDelegate {
             }
         case .guestSession:
             PMLog.ET("Internal status that should never be seen, check the app implementation")
-        case .policyViolation1, .policyViolation2, .userTorrentNotAllowed, .userBadBehavior:
+        case .policyViolation2:
+            PMLog.D("Disconnecting because of unpaid invoces")
+            disconnect {
+                self.alertService?.push(alert: DelinquentUserAlert())
+            }
+        case .policyViolation1, .userTorrentNotAllowed, .userBadBehavior:
             PMLog.ET("Local agent reported error \(error) that the app does not handle")
         }
     }
