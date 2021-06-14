@@ -732,6 +732,8 @@ extension VpnManager: LocalAgentDelegate {
         default:
             #warning("Handle all the errors")
             PMLog.ET("Local agent reported error \(error)")
+        case .guestSession:
+            PMLog.ET("Internal status that should never be seen, check the app implementation")
         }
     }
 
