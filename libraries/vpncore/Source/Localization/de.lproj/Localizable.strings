@@ -823,7 +823,7 @@
 "_map_show" = "Karte anzeigen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Um dieses Gerät zu verbinden, trennen Sie bitte ein anderes Gerät oder führen Sie einen Wechsel zu PLUS durch, um bis zu %@ Geräte gleichzeitig verbinden zu können.";
+"_maximum_device_description" = "Um dieses Gerät zu verbinden, trennen Sie bitte ein anderes Gerät oder führen Sie einen Wechsel zu %@ durch, um bis zu %d Geräte gleichzeitig verbinden zu können.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Sie haben die max. mögliche Anzahl von Geräten erreicht";

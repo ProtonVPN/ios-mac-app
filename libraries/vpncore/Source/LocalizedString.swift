@@ -516,7 +516,7 @@ public class LocalizedString {
     public static let allCountries = NSLocalizedString("_all_countries", comment: "Account plan description")
     public static let planConnection = NSLocalizedString("_plans_connection", comment: "Account plan description")
     public static func planConnections(_ number: Int) -> String {
-        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), "\(number)")
+        return String.localizedStringWithFormat(NSLocalizedString("_plans_connections", comment: ""), number)
     }
     public static let speed = NSLocalizedString("_speed", comment: "%@ is a speed description e.g. Speed: Highest")
     public static let medium = NSLocalizedString("_medium", comment: "Value of speed in _speed")
@@ -526,6 +526,8 @@ public class LocalizedString {
     public static let doYouWantToActivateSubscriptionFor = NSLocalizedString("_do_you_want_to_activate_subscription_for", comment: "Alert message during In App Purchase")
     public static let mostPopular = NSLocalizedString("_most_popular", comment: "Label in Plan information")
     public static let advancedFeatures = NSLocalizedString("_advanced_features", comment: "Plan information")
+    public static let adblockerNetshieldFeature = NSLocalizedString("_adblocker_netshield_feature", comment: "Plan information")
+    
     public static let selectPlan = NSLocalizedString("_select_plan", comment: "Button in plan selection")
     public static let plansFooter = NSLocalizedString("_plans_footer", comment: "Text description in plan selection screen")
     public static let perYearShort = NSLocalizedString("_per_year_short", comment: "Per year. Appended to plan price.")
@@ -751,8 +753,10 @@ public class LocalizedString {
     public static let delinquentPlanDescription = NSLocalizedString("_delinquent_description", comment: "")
     public static let delinquentPlanReconnectionDescription = NSLocalizedString("_delinquent_reconnection_description", comment: "")
     public static let maximumDeviceTitle = NSLocalizedString("_maximum_device_title", comment: "")
-    public static func maximumDeviceDescription(_ devices: Int) -> String {
-        return String.localizedStringWithFormat(NSLocalizedString("_maximum_device_description", comment: ""), "\(devices)")
+    
+    public static let maximumDeviceDescriptionReached = NSLocalizedString("_maximum_device_reached_description", comment: "")
+    public static func maximumDeviceDescription(_ account: AccountPlan) -> String {
+        return String.localizedStringWithFormat(NSLocalizedString("_maximum_device_description", comment: ""), account.name, account.devicesCount)
     }
     public static let reconnectTitle = NSLocalizedString("_reconnect_title", comment: "")
     public static let subscriptionExpiredTitle = NSLocalizedString("_subscription_expired_title", comment: "")

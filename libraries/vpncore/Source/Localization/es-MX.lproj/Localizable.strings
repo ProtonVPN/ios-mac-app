@@ -823,7 +823,7 @@
 "_map_show" = "Mostrar mapa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Desconecte otro dispositivo para conectar éste o actualice a un plan Plus para conectar hasta %@ dispositivos al mismo tiempo.";
+"_maximum_device_description" = "Desconecte otro dispositivo para conectar éste o actualice a un plan %@ para conectar hasta %d dispositivos al mismo tiempo.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Ha alcanzado el límite máximo de dispositivos";

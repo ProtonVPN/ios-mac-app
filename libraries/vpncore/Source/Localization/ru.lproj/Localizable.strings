@@ -823,7 +823,7 @@
 "_map_show" = "Показать карту";
 
 /* (No Comment) */
-"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to PLUS to get up to %@ devices connected at the same time.";
+"_maximum_device_description" = "Please disconnect another device to connect this one or upgrade to %@ to get up to %d devices connected at the same time.";
 
 /* (No Comment) */
 "_maximum_device_title" = "You have reached your maximum device limit";

@@ -56,24 +56,27 @@ class PlanInfoView: UIView {
         self.layer.shadowOffset = CGSize(width: 0, height: 2)
     }
     
+    private lazy var serversManager: ServerManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
+    
     private func fillPoints() {
         var newPoints = [String]()
-        
+        let countriesCount = serversManager.grouping(for: .standard).count
         switch plan {
         case .basic:
-            newPoints.append(plan.countries)
-            newPoints.append(plan.devices)
+            newPoints.append(LocalizedString.countriesCount(countriesCount))
+            newPoints.append(LocalizedString.planConnections(plan.devicesCount))
             newPoints.append(plan.speedDescription)
             
         case .plus:
-            newPoints.append(plan.countries)
-            newPoints.append(plan.devices)
+            newPoints.append(LocalizedString.countriesCount(countriesCount))
+            newPoints.append(LocalizedString.planConnections(plan.devicesCount))
             newPoints.append(plan.speedDescription)
             newPoints.append(LocalizedString.featureBlockedContent)
             newPoints.append(LocalizedString.featureTor)
             newPoints.append(LocalizedString.featureSecureCore)
             newPoints.append(LocalizedString.featureBT)
-            
+            newPoints.append(LocalizedString.adblockerNetshieldFeature)
+
         default:
             break
         }

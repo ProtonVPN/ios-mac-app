@@ -823,7 +823,7 @@
 "_map_show" = "Kaart tonen";
 
 /* (No Comment) */
-"_maximum_device_description" = "Verbreek een ander apparaat om deze te verbinden of upgrade naar PLUS om tegelijkertijd %@ apparaten verbonden te krijgen.";
+"_maximum_device_description" = "Verbreek een ander apparaat om deze te verbinden of upgrade naar %@ om tegelijkertijd %d apparaten verbonden te krijgen.";
 
 /* (No Comment) */
 "_maximum_device_title" = "U hebt uw maximum apparaat limiet bereikt";

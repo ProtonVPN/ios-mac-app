@@ -46,16 +46,16 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
 
     var moreFeaturesSelected: ((AccountPlan) -> Void)?
     
-    private var pricePrimarySize: CGFloat = 30.0
+    private let pricePrimarySize: CGFloat = 30.0
+    private let priceSecondarySize: CGFloat = 18.0
+    private let serversManager: ServerManager
+    private let featuresLabelOriginalSize: CGSize = .zero
     
-    private var priceSecondarySize: CGFloat = 18.0
-    
-    private var featuresLabelOriginalSize: CGSize = .zero
-    
-    init( _ plan: AccountPlan, storeKitManager: StoreKitManager, moreFeaturesSelected: ((AccountPlan) -> Void)? = nil ) {
+    init( _ plan: AccountPlan, storeKitManager: StoreKitManager, serversManager: ServerManager, moreFeaturesSelected: ((AccountPlan) -> Void)? = nil ) {
         self.plan = plan
         self.storeKitManager = storeKitManager
         self.moreFeaturesSelected = moreFeaturesSelected
+        self.serversManager = serversManager
     }
     
     func setSelected(_ selected: Bool) {
@@ -63,25 +63,40 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
     }
     
     // MARK: - Private
-    
+    // swiftlint:disable function_body_length
+
     private func fillView() {
         view.titleLabel.text = plan.displayName
         view.moreFeaturesButton.addTarget(self, action: #selector(didTapMoreFeatures), for: .touchUpInside)
         view.moreFeaturesButton.isHidden = !plan.hasAdvancedFeatures
         view.bottomSeparatorView.isHidden = !plan.hasAdvancedFeatures
-        view.featuresLabel.text = "\(plan.countries)\n\(plan.devices)\n\(plan.speedDescription)"
+    
+        var totalCountries = 0
+        let totalConnections = plan.devicesCount
+        
+        switch plan {
+        case .free:
+            totalCountries = serversManager.grouping(for: .standard).filter { $0.0.lowestTier == 0 }.count
+        default:
+            totalCountries = serversManager.grouping(for: .standard).count
+        }
+        
+        let featuresText = "\(LocalizedString.countriesCount(totalCountries))\n\(LocalizedString.planConnections(totalConnections))\n\(plan.speedDescription)\n\(LocalizedString.adblockerNetshieldFeature)"
+        let attributedFeaturesText = NSMutableAttributedString(string: featuresText)
+        let range: NSRange = NSRange(location: featuresText.count - LocalizedString.adblockerNetshieldFeature.count, length: LocalizedString.adblockerNetshieldFeature.count)
+        if plan != .plus { attributedFeaturesText.addAttributes( [NSAttributedString.Key.strikethroughStyle: 1], range: range) }
+        view.featuresLabel.attributedText = attributedFeaturesText
         view.featuresLabel.textAlignment = .natural
         view.mostPopularContainerView.isHidden = !plan.isMostPopular
                 
         guard let productId = plan.storeKitProductId, let price = storeKitManager.priceLabelForProduct(id: productId) else {
             var text = LocalizedString.unavailable
             var textColor = UIColor.protonFontLightGrey()
-            
+
             if [.free, .trial].contains(plan) {
                 text = LocalizedString.free
                 textColor = .protonGreen()
             }
-            
             view.priceLabel.attributedText = text.attributed(withColor: textColor, fontSize: pricePrimarySize, bold: true, alignment: .center)
             organizeLayout()
             return
@@ -105,6 +120,8 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
         
         organizeLayout()
     }
+    
+    // swiftlint:enable function_body_length
     
     private func organizeLayout() {
         
