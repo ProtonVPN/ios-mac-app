@@ -84,6 +84,7 @@ extension VpnManager: LocalAgentDelegate {
             }
         case .guestSession:
             PMLog.ET("Internal status that should never be seen, check the app implementation")
+            disconnect { }
         case .policyViolation2:
             PMLog.D("Disconnecting because of unpaid invoces")
             disconnect {
