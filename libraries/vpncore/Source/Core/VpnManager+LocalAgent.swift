@@ -91,6 +91,7 @@ extension VpnManager: LocalAgentDelegate {
             }
         case .policyViolation1, .userTorrentNotAllowed, .userBadBehavior:
             PMLog.ET("Local agent reported error \(error) that the app does not handle")
+            disconnect { }
         }
     }
 
