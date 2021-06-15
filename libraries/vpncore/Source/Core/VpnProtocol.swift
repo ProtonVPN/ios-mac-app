@@ -27,7 +27,10 @@ public enum VpnProtocol {
         }
         
         public init(coder aDecoder: NSCoder) {
-            let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as! Data
+            guard let data = aDecoder.decodeObject(forKey: CoderKey.transportProtocol) as? Data else {
+                self = .undefined
+                return
+            }
             switch data[0] {
             case 0:
                 self = .tcp
