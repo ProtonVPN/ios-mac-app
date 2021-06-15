@@ -816,4 +816,7 @@ public class LocalizedString {
 
     public static let localAgentServerErrorTitle = NSLocalizedString("_local_agent_server_error_title", comment: "")
     public static let localAgentServerErrorMessage = NSLocalizedString("_local_agent_server_error_message", comment: "")
+
+    public static let localAgentPolicyViolationErrorTitle = NSLocalizedString("_local_agent_policy_violation_error_title", comment: "")
+    public static let localAgentPolicyViolationErrorMessage = NSLocalizedString("_local_agent_policy_violation_error_message", comment: "")
 }

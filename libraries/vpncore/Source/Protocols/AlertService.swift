@@ -814,3 +814,13 @@ public class VpnServerErrorAlert: SystemAlert {
 
     public init() { }
 }
+
+public class VpnServerSubscriptionErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.localAgentPolicyViolationErrorTitle
+    public var message: String? = LocalizedString.localAgentPolicyViolationErrorMessage
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}
