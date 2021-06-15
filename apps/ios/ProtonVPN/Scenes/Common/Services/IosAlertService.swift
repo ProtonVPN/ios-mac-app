@@ -169,6 +169,9 @@ extension IosAlertService: CoreAlertService {
 
         case is VpnServerErrorAlert:
             showDefaultSystemAlert(alert)
+
+        case is VpnServerSubscriptionErrorAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG
