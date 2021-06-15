@@ -124,7 +124,7 @@ class PlanSelectionViewController: UIViewController {
         
         viewModel.plans.enumerated().forEach { (i: Int, plan: AccountPlan) in
             let planView = PlanCardView.loadViewFromNib() as PlanCardView
-            planView.presenter = PlanCardViewPresenterImplementation(plan, storeKitManager: viewModel.storeKitManager) { [weak self] plan in
+            planView.presenter = viewModel.planCardPresenter(plan) { [weak self] plan in
                 self?.showAdvancedFeatures(forPlan: plan)
             }
 

@@ -823,7 +823,7 @@
 "_map_show" = "Mostra mappa";
 
 /* (No Comment) */
-"_maximum_device_description" = "Disconnetti un altro dispositivo per collegare questo o aggiorna a PLUS per ottenere fino a %@ dispositivi connessi allo stesso tempo.";
+"_maximum_device_description" = "Disconnetti un altro dispositivo per collegare questo o aggiorna a %@ per ottenere fino a %d dispositivi connessi allo stesso tempo.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Hai raggiunto il limite massimo di dispositivi";

@@ -39,12 +39,11 @@ extension DependencyContainer: PlanSelectionViewModelFactory {
     }
     
     func makePlanSelectionWithPurchaseViewModel() -> PlanSelectionViewModel {
-        return PlanSelectionWithPurchaseViewModel(
-                                      appSessionManager: makeAppSessionManager(),
-                                      planService: makePlanService(),
-                                      alertService: makeCoreAlertService(),
-                                      servicePlanDataService: makeServicePlanDataService(),
-                                      storeKitManager: self.makeStoreKitManager())
+        return PlanSelectionWithPurchaseViewModel(appSessionManager: makeAppSessionManager(),
+                                                  planService: makePlanService(),
+                                                  alertService: makeCoreAlertService(),
+                                                  servicePlanDataService: makeServicePlanDataService(),
+                                                  storeKitManager: self.makeStoreKitManager())
     }
 }
 
@@ -63,6 +62,7 @@ protocol PlanSelectionViewModel: AnyObject {
     var allowDismissal: Bool { get }
     var headingString: String { get }
     func finishPlanSelection(_ plan: AccountPlan)
+    func planCardPresenter(_ plan: AccountPlan, moreFeaturesSelected: ((AccountPlan) -> Void)?) -> PlanCardViewPresenter
     func cancel()
     var viewBecameVisible: Bool { get set }
 }
@@ -92,6 +92,7 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
         }
     }
     private var postponedAlert: SystemAlert?
+    private lazy var serversManager: ServerManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
     
     fileprivate init(servicePlanDataService: ServicePlanDataService, storeKitManager: StoreKitManager, alertService: AlertService) {
         self.servicePlanDataService = servicePlanDataService
@@ -123,6 +124,10 @@ class AbstractPlanSelectionViewModel: PlanSelectionViewModel {
     }
     
     func finishPlanSelection(_ plan: AccountPlan) {
+    }
+    
+    func planCardPresenter(_ plan: AccountPlan, moreFeaturesSelected: ((AccountPlan) -> Void)?) -> PlanCardViewPresenter {
+       return PlanCardViewPresenterImplementation(plan, storeKitManager: storeKitManager, serversManager: serversManager, moreFeaturesSelected: moreFeaturesSelected)
     }
     
     /// Show allert immediately if view is visible. Otherwise postopones it until view becomes visible.

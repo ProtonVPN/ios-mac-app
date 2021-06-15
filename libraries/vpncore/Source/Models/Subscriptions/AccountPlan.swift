@@ -148,31 +148,6 @@ public enum AccountPlan: String {
         }
     }
     
-    public var countries: String {
-        switch self {
-        case .free:
-            return LocalizedString.freeCountries
-        case .basic, .plus, .visionary, .trial:
-            return LocalizedString.allCountries
-        }
-    }
-    
-    public var countriesCount: String {
-        switch self {
-        case .free:
-            return LocalizedString.countriesCount(3)
-        case .basic, .plus, .visionary, .trial:
-            return LocalizedString.countriesCountPlus(50)
-        }
-    }
-    
-    public var devices: String {
-        guard let details = fetchDetails() else {
-            return ""
-        }
-        return LocalizedString.planConnections(details.maxVPN)
-    }
-    
     public var devicesCount: Int {
         guard let details = fetchDetails() else {
             return 0

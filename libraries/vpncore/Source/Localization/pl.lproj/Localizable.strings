@@ -823,7 +823,7 @@
 "_map_show" = "Pokaż mapę";
 
 /* (No Comment) */
-"_maximum_device_description" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu PLUS w celu połączenia %@ urządzeń jednocześnie.";
+"_maximum_device_description" = "Aby połączyć się, rozłącz inne urządzenie lub ulepsz konto do planu %@ w celu połączenia %d urządzeń jednocześnie.";
 
 /* (No Comment) */
 "_maximum_device_title" = "Wykorzystałeś limit liczby podłączonych urządzeń";

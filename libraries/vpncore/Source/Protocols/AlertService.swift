@@ -756,7 +756,15 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     public var dismiss: (() -> Void)?
     
     public init(userCurrentCredentials: VpnCredentials) {
-        message = LocalizedString.maximumDeviceDescription(5)
+        switch userCurrentCredentials.accountPlan {
+        case .free:
+            message = LocalizedString.maximumDeviceDescription(AccountPlan.basic)
+        case .basic:
+            message = LocalizedString.maximumDeviceDescription(AccountPlan.plus)
+        default:
+            message = LocalizedString.maximumDeviceDescriptionReached
+        }
+        
         actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
         actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
     }

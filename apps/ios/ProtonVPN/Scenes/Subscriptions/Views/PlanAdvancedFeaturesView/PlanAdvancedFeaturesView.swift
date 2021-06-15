@@ -36,10 +36,13 @@ class PlanAdvancedFeaturesView: UIView {
     @IBOutlet var speedValueLabel: UILabel!
     @IBOutlet var connectionsLabel: UILabel!
     @IBOutlet var connectionsValueLabel: UILabel!
+    @IBOutlet var adblockerNetshieldValueLabel: UILabel!
     @IBOutlet var streamingLabel: UILabel!
     @IBOutlet var torLabel: UILabel!
     @IBOutlet var secureCoreLabel: UILabel!
     @IBOutlet var closeButton: ProtonButton!
+    
+    private lazy var serversManager: ServerManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
     
     public var plan: AccountPlan! {
         didSet {
@@ -56,7 +59,7 @@ class PlanAdvancedFeaturesView: UIView {
     
     private func fillViews() {
         titleLabel.text = plan.displayName
-        serversValueLabel.text = plan.countriesCount
+        serversValueLabel.text = LocalizedString.countriesCount(serversManager.grouping(for: .standard).count)
         speedValueLabel.text = plan.speed
         connectionsValueLabel.text = "\(plan.devicesCount)"
     }
@@ -93,7 +96,7 @@ class PlanAdvancedFeaturesView: UIView {
         streamingLabel.text = LocalizedString.featureSecureStreaming
         torLabel.text = LocalizedString.featureTor
         secureCoreLabel.text = LocalizedString.featureSecureCore
-        
+        adblockerNetshieldValueLabel.text = LocalizedString.adblockerNetshieldFeature
         closeButton.setTitle(LocalizedString.close, for: .normal)
     }
     
