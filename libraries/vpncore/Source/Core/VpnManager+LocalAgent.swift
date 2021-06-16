@@ -54,9 +54,8 @@ extension VpnManager {
     }
 
     func disconnectWithAlert(alert: SystemAlert) {
-        disconnect {
-            self.alertService?.push(alert: alert)
-        }
+        disconnect { }
+        alertService?.push(alert: alert)
     }
 }
 
@@ -76,13 +75,12 @@ extension VpnManager: LocalAgentDelegate {
             PMLog.D("Key used multiple times, trying to generate new key and certificate and reconnect")
             reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
-            disconnect {
-                guard let credentials = try? self.vpnKeychain.fetch() else {
-                    PMLog.ET("Cannot show max session alert because getting credentials failed")
-                    return
-                }
-                self.alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
+            disconnect { }
+            guard let credentials = try? vpnKeychain.fetch() else {
+                PMLog.ET("Cannot show max session alert because getting credentials failed")
+                return
             }
+            alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
         case .serverError, .restrictedServer:
             PMLog.D("Server error occured, showing the user an alert and disconnecting")
             disconnectWithAlert(alert: VpnServerErrorAlert())
