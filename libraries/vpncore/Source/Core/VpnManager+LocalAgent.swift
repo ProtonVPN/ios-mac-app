@@ -52,6 +52,12 @@ extension VpnManager {
             }
         }
     }
+
+    func disconnectWithAlert(alert: SystemAlert) {
+        disconnect {
+            self.alertService?.push(alert: alert)
+        }
+    }
 }
 
 extension VpnManager: LocalAgentDelegate {
@@ -79,19 +85,17 @@ extension VpnManager: LocalAgentDelegate {
             }
         case .serverError, .restrictedServer:
             PMLog.D("Server error occured, showing the user an alert and disconnecting")
-            disconnect {
-                self.alertService?.push(alert: VpnServerErrorAlert())
-            }
+            disconnectWithAlert(alert: VpnServerErrorAlert())
         case .guestSession:
             PMLog.ET("Internal status that should never be seen, check the app implementation")
             disconnect { }
         case .policyViolation2:
             PMLog.D("Disconnecting because of unpaid invoces")
-            disconnect {
-                self.alertService?.push(alert: DelinquentUserAlert())
-            }
-        case .policyViolation1, .userTorrentNotAllowed, .userBadBehavior:
-            PMLog.ET("Local agent reported error \(error) that the app does not handle")
+            disconnectWithAlert(alert: DelinquentUserAlert())
+        case .policyViolation1:
+            disconnectWithAlert(alert: VpnServerSubscriptionErrorAlert())
+        case .userTorrentNotAllowed, .userBadBehavior:
+            PMLog.ET("Local agent reported error \(error) that the app does not handle, just disconnecting")
             disconnect { }
         }
     }
