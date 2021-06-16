@@ -25,116 +25,49 @@ import UIKit
 import vpncore
 import NotificationCenter
 
-protocol TodayViewControllerProtocol: AnyObject {
-    func displayBlank()
-    func displayUnreachable()
-    func displayError()
-    func displayConnected(_ server: String?, entryCountry: String?, country: String?)
-    func displayDisconnected()
-    func displayConnecting()
-    func displayNoGateWay()
-    
-    func extensionOpenUrl(_ url: URL)
-}
-
-final class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControllerProtocol {
+final class TodayViewController: UIViewController {
         
-    @IBOutlet weak var connectionIcon: UIImageView?
-    @IBOutlet weak var electronContainerView: UIView?
-    @IBOutlet weak var connectionLabel: UILabel!
-    @IBOutlet weak var countryLabel: UILabel!
-    @IBOutlet weak var ipLabel: UILabel!
-    @IBOutlet weak var electronContainer: ElectronViewContainer!
-    @IBOutlet weak var connectButton: ProtonButton!
-    @IBOutlet weak var buttonContainerView: UIView!
+    @IBOutlet private weak var connectionIcon: UIImageView?
+    @IBOutlet private weak var electronContainerView: UIView?
+    @IBOutlet private weak var connectionLabel: UILabel!
+    @IBOutlet private weak var countryLabel: UILabel!
+    @IBOutlet private weak var ipLabel: UILabel!
+    @IBOutlet private weak var electronContainer: ElectronViewContainer!
+    @IBOutlet private weak var connectButton: ProtonButton!
+    @IBOutlet private weak var buttonContainerView: UIView!
 
     private let widgetFactory = WidgetFactory()
-    private var viewModel: TodayViewModel?
+    private let viewModel: TodayViewModel
     
     required init?(coder aDecoder: NSCoder) {
+        viewModel = widgetFactory.makeTodayViewModel()
         super.init(coder: aDecoder)
-        let viewModel = widgetFactory.makeTodayViewModel()
-        viewModel.viewController = self
-        self.viewModel = viewModel
+        viewModel.delegate = self
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .protonWidgetBackground
         connectionIcon?.image = connectionIcon?.image?.withRenderingMode(.alwaysTemplate)
-        viewModel?.viewDidLoad()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel?.viewWillAppear(animated)
+        viewModel.update()
     }
     
-    func setConnectButtonTitle(_ title: String) {
+    @IBAction private func didTapConnectButton(_ sender: Any) {
+        viewModel.connect()
+    }
+    
+    // MARK: - Util
+
+    private func setConnectButtonTitle(_ title: String) {
         UIView.performWithoutAnimation {
             connectButton.setTitle(title, for: .normal)
             connectButton.layoutIfNeeded()
         }
     }
-    
-    @IBAction private func didTapConnectButton(_ sender: Any) {
-        viewModel?.connectAction(sender)
-    }
-    
-    // MARK: - NCWidgetProviding
-    
-    func widgetPerformUpdate(completionHandler: (@escaping (NCUpdateResult) -> Void)) {
-        viewModel?.viewWillAppear(false)
-        completionHandler(NCUpdateResult.newData)
-    }
-    
-    // MARK: - TodayViewControllerProtocol
-    
-    func displayBlank() {
-        genericStyle(buttonHidden: true, iconTint: .protonGrey())
-    }
-    
-    func displayUnreachable() {
-        genericStyle(buttonHidden: true, connectionString: LocalizedString.networkUnreachable,
-                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
-    }
-    
-    func displayError() {
-        genericStyle(LocalizedString.ok, connectionString: LocalizedString.connectionFailed,
-                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
-    }
-        
-    func displayNoGateWay(){
-        genericStyle(LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
-    }
-    
-    func displayConnected(_ server: String?, entryCountry:String?, country: String?){
-        var connectionString = LocalizedString.connected
-        if let entryCountry = entryCountry {
-             connectionString += " " + LocalizedString.via + " \(entryCountry)"
-        }
-        
-        genericStyle(LocalizedString.disconnect,
-                     buttonState: .destructive,
-                     ipAddress: server,
-                     country: country,
-                     connectionString: connectionString)
-    }
-    
-    func displayDisconnected(){
-        genericStyle(LocalizedString.quickConnect, connectionString: LocalizedString.disconnected,
-                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
-    }
-    
-    func displayConnecting(){
-        genericStyle(LocalizedString.cancel, buttonState: .destructive, connectionString: LocalizedString.connectingDotDotDot, animate: true)
-    }
-    
-    func extensionOpenUrl(_ url: URL) {
-        extensionContext?.open(url, completionHandler: nil)
-    }
-    
-    // MARK: - Util
     
     private func reAdjustSize() {
         guard let buttonWidth = connectButton.titleLabel?.realSize.width,
@@ -146,7 +79,7 @@ final class TodayViewController: UIViewController, NCWidgetProviding, TodayViewC
         electronContainerView?.isHidden = buttonWidth + connectionLabel.realSize.width > view.frame.width - 140
     }
     
-    private func genericStyle(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
+    private func updateUI(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
                                ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
                                connectionString: String = "", connectionLabelTint: UIColor = .protonGreen(),
                                iconTint: UIColor = .protonGreen(), animate: Bool = false) {
@@ -167,5 +100,48 @@ final class TodayViewController: UIViewController, NCWidgetProviding, TodayViewC
         }
         
         reAdjustSize()
+    }
+}
+
+// MARK: - NCWidgetProviding
+
+extension TodayViewController: NCWidgetProviding {
+    func widgetPerformUpdate(completionHandler: @escaping (NCUpdateResult) -> Void) {
+        viewModel.update()
+        completionHandler(NCUpdateResult.newData)
+    }
+}
+
+// MARK: - TodayViewModelDelegate
+
+extension TodayViewController: TodayViewModelDelegate {
+    func didChangeState(state: TodayViewModelState) {
+        switch state {
+        case .blank:
+            updateUI(buttonHidden: true, iconTint: .protonGrey())
+        case let .connected(server, entryCountry: entryCountry, country: country):
+            let connectionString: String
+            if let entryCountry = entryCountry {
+                 connectionString = "\(LocalizedString.connected) \(LocalizedString.via) \(entryCountry)"
+            } else {
+                connectionString = LocalizedString.connected
+            }
+
+            updateUI(LocalizedString.disconnect, buttonState: .destructive, ipAddress: server, country: country, connectionString: connectionString)
+        case .connecting:
+            updateUI(LocalizedString.cancel, buttonState: .destructive, connectionString: LocalizedString.connectingDotDotDot, animate: true)
+        case .disconnected:
+            updateUI(LocalizedString.quickConnect, connectionString: LocalizedString.disconnected, connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
+        case .error:
+            updateUI(LocalizedString.ok, connectionString: LocalizedString.connectionFailed, connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
+        case .noGateway:
+            updateUI(LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
+        case .unreachable:
+            updateUI(buttonHidden: true, connectionString: LocalizedString.networkUnreachable, connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
+        }
+    }
+
+    func didRequestUrl(url: URL) {
+        extensionContext?.open(url, completionHandler: nil)
     }
 }

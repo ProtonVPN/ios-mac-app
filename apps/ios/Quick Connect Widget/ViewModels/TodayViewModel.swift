@@ -24,32 +24,64 @@ import Reachability
 import vpncore
 import NotificationCenter
 
+enum TodayViewModelState {
+    case blank
+    case unreachable
+    case error
+    case connected(_ server: String?, entryCountry: String?, country: String?)
+    case disconnected
+    case connecting
+    case noGateway
+}
+
+protocol TodayViewModelDelegate: AnyObject {
+    func didChangeState(state: TodayViewModelState)
+    func didRequestUrl(url: URL)
+}
+
 final class TodayViewModel {
-    
-    weak var viewController: TodayViewControllerProtocol?
-    
     private var reachability: Reachability?
     private var timer: Timer?
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnManager: VpnManagerProtocol
+
+    weak var delegate: TodayViewModelDelegate?
     
     init(propertiesManager: PropertiesManagerProtocol, vpnManager: VpnManagerProtocol) {
         self.propertiesManager = propertiesManager
         self.vpnManager = vpnManager
-    }
-    
-    func viewDidLoad() {
+
         reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
-        reachability?.whenUnreachable = { [weak self] _ in self?.viewController?.displayUnreachable() }
+        reachability?.whenUnreachable = { [weak self] _ in self?.delegate?.didChangeState(state: .unreachable) }
         try? reachability?.startNotifier()
         timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
             self?.connectionChanged()
         })
     }
     
-    func viewWillAppear(_ animated: Bool) {
+    func update() {
         connectionChanged()
+    }
+
+    func connect() {
+        guard propertiesManager.hasConnected else {
+            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
+                delegate?.didRequestUrl(url: url)
+            }
+            return
+        }
+
+        switch vpnManager.state {
+        case .connected, .connecting:
+            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
+                delegate?.didRequestUrl(url: url)
+            }
+        default:
+            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
+                delegate?.didRequestUrl(url: url)
+            }
+        }
     }
     
     deinit { reachability?.stopNotifier() }
@@ -58,15 +90,15 @@ final class TodayViewModel {
     
     private func displayConnected() {
         guard let connection = activeConnection() else {
-            viewController?.displayDisconnected()
+            delegate?.didChangeState(state: .disconnected)
             return
         }
                 
         let server = connection.server
         let country = LocalizationUtility.default.countryName(forCode: server.countryCode)
         let ip = connection.serverIp.exitIp
-        
-        viewController?.displayConnected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country)
+
+        delegate?.didChangeState(state: .connected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country))
     }
 
     private func activeConnection() -> ConnectionConfiguration? {
@@ -83,14 +115,13 @@ final class TodayViewModel {
     }
     
     @objc private func connectionChanged() {
-        
         if let reachability = reachability, reachability.connection == .unavailable {
-            viewController?.displayUnreachable()
+            delegate?.didChangeState(state: .unreachable)
             return
         }
         
         guard propertiesManager.hasConnected else {
-            viewController?.displayNoGateWay()
+            delegate?.didChangeState(state: .noGateway)
             return
         }
         
@@ -101,38 +132,15 @@ final class TodayViewModel {
         case .connected:
             displayConnected()
         case .connecting:
-            viewController?.displayConnecting()
-        case .disconnected, .disconnecting:
-            viewController?.displayDisconnected()
-        default:
-            viewController?.displayDisconnected()
-            break
-        }
-    }
-    
-    @objc func connectAction(_ sender: Any) {
-        guard propertiesManager.hasConnected else {
-            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
-            return
-        }
-        
-        switch vpnManager.state {
-        case .connected, .connecting:
-            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
-        default:
-            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
-                viewController?.extensionOpenUrl(url)
-            }
+            delegate?.didChangeState(state: .connecting)
+        case .disconnected, .disconnecting, .invalid, .reasserting, .error:
+            delegate?.didChangeState(state: .disconnected)
         }
     }
 }
 
 extension TodayViewModel: ExtensionAlertServiceDelegate {
     func actionErrorReceived() {
-        viewController?.displayError()
+        delegate?.didChangeState(state: .error)
     }
 }
