@@ -29,7 +29,7 @@ protocol SmartProtocol {
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
-    private enum SmartProtocolProtocol: Int {
+    private enum SmartProtocolProtocol {
         case ikev2
         case openVpnUdp
         case openVpnTcp
@@ -43,6 +43,28 @@ final class SmartProtocolImplementation: SmartProtocol {
             case .openVpnTcp:
                 return .openVpn(.tcp)
             }
+        }
+
+        var sortOrder: Int {
+            #if os(iOS)
+            switch self {
+            case .openVpnUdp:
+                return 1
+            case .openVpnTcp:
+                return 2
+            case .ikev2:
+                return 3
+            }
+            #else
+            switch self {
+            case .ikev2:
+                return 1
+            case .openVpnUdp:
+                return 2
+            case .openVpnTcp:
+                return 3
+            }
+            #endif
         }
     }
 
@@ -81,11 +103,16 @@ final class SmartProtocolImplementation: SmartProtocol {
         }
 
         group.notify(queue: queue) {
-            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.rawValue < rhs.rawValue })
+            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.sortOrder < rhs.sortOrder })
 
             guard let best = sorted.first, let ports = availablePorts[best] else {
+                #if os(iOS)
+                PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
+                completion(VpnProtocol.openVpn(.udp), [])
+                #else
                 PMLog.D("No best protocol determined, fallback to IKEv2")
                 completion(VpnProtocol.ike, [])
+                #endif
                 return
             }
 

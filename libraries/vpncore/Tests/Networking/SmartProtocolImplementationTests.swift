@@ -110,7 +110,11 @@ final class SmartProtocolImplementationTests: XCTestCase {
         let sp = SmartProtocolImplementation(config: config)
         group.notify(queue: .main) {
             sp.determineBestProtocol(server: ServerModelMock(domain: "localhost")) { (proto, ports) in
+                #if os(iOS)
+                XCTAssertEqual(proto, VpnProtocol.openVpn(.udp))
+                #else
                 XCTAssertEqual(proto, VpnProtocol.ike)
+                #endif
                 XCTAssertEqual(ports, [])
                 expectation.fulfill()
             }
