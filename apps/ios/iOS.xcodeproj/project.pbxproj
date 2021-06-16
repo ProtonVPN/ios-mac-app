@@ -506,6 +506,10 @@
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
+		E96E2ABC2678D0B8000102B3 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E9BAC09B2678DA3B00027DD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D557D4FB264AC32D007E4396 /* Localizable.strings */; };
+		E9BAC09C2678DA3B00027DD6 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D557D4FD264AC32D007E4396 /* Localizable.stringsdict */; };
+		E9BAC09D2678DAAA00027DD6 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = D557D592264AC355007E4396 /* country-names.plist */; };
 		F3103B2426558E2600D7E00C /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = D557D588264AC349007E4396 /* ProtonVPN_ike_root.der */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -599,6 +603,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				E96E2ABC2678D0B8000102B3 /* vpncore.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2760,6 +2765,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9BAC09D2678DAAA00027DD6 /* country-names.plist in Resources */,
+				E9BAC09B2678DA3B00027DD6 /* Localizable.strings in Resources */,
+				E9BAC09C2678DA3B00027DD6 /* Localizable.stringsdict in Resources */,
 				E148AE4621C141B0007AB65A /* MainInterface.storyboard in Resources */,
 				E1C983B621E4BBFD00C81666 /* Assets.xcassets in Resources */,
 				E1616C1021CB933400F42D79 /* Client.plist in Resources */,
