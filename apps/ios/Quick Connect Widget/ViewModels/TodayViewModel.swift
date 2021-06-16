@@ -84,35 +84,11 @@ final class TodayViewModel {
         }
     }
     
-    deinit { reachability?.stopNotifier() }
+    deinit {
+        reachability?.stopNotifier()        
+    }
     
     // MARK: - Utils
-    
-    private func displayConnected() {
-        guard let connection = activeConnection() else {
-            delegate?.didChangeState(state: .disconnected)
-            return
-        }
-                
-        let server = connection.server
-        let country = LocalizationUtility.default.countryName(forCode: server.countryCode)
-        let ip = connection.serverIp.exitIp
-
-        delegate?.didChangeState(state: .connected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country))
-    }
-
-    private func activeConnection() -> ConnectionConfiguration? {
-        guard let currentVpnProtocol = vpnManager.currentVpnProtocol else {
-            return nil
-        }
-
-        switch currentVpnProtocol {
-        case .ike:
-            return propertiesManager.lastIkeConnection
-        case .openVpn:
-            return propertiesManager.lastOpenVpnConnection
-        }
-    }
     
     @objc private func connectionChanged() {
         if let reachability = reachability, reachability.connection == .unavailable {
@@ -130,7 +106,21 @@ final class TodayViewModel {
         
         switch vpnManager.state {
         case .connected:
-            displayConnected()
+            let connection: ConnectionConfiguration?
+            switch vpnManager.currentVpnProtocol {
+            case .ike:
+                connection = propertiesManager.lastIkeConnection
+            case .openVpn:
+                connection = propertiesManager.lastOpenVpnConnection
+            case nil:
+                connection = nil
+            }
+
+            guard let activeConection = connection else {
+                return
+            }
+
+            delegate?.didChangeState(state: .connected(activeConection.serverIp.exitIp, entryCountry: activeConection.server.isSecureCore ? activeConection.server.entryCountryCode : nil, country: LocalizationUtility.default.countryName(forCode: activeConection.server.countryCode)))
         case .connecting:
             delegate?.didChangeState(state: .connecting)
         case .disconnected, .disconnecting, .invalid, .reasserting, .error:
