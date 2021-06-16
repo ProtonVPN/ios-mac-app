@@ -43,7 +43,7 @@ extension VpnManager {
         }
     }
 
-    func reconnectWithNewKeyAndcertificate() {
+    func reconnectWithNewKeyAndCertificate() {
         vpnAuthentication.clear()
         refreshCertificateWithError { _ in
             PMLog.D("Generated new keys and got new certificate, asking to reconnect")
@@ -71,10 +71,10 @@ extension VpnManager: LocalAgentDelegate {
             }
         case .badCertificateSignature, .certificateRevoked:
             PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new key and certificate and reconnect")
-            reconnectWithNewKeyAndcertificate()
+            reconnectWithNewKeyAndCertificate()
         case .keyUsedMultipleTimes:
             PMLog.D("Key used multiple times, trying to generate new key and certificate and reconnect")
-            reconnectWithNewKeyAndcertificate()
+            reconnectWithNewKeyAndCertificate()
         case .maxSessionsBasic, .maxSessionsPro, .maxSessionsFree, .maxSessionsPlus, .maxSessionsUnknown, .maxSessionsVisionary:
             disconnect {
                 guard let credentials = try? self.vpnKeychain.fetch() else {
