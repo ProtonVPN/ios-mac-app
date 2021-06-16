@@ -26,9 +26,6 @@
 		422395822446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395832446E9E00089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		422395842446EF660089002F /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
-		422EAB1B243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
-		422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
-		422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422EAB1A243F20D800C7A16C /* GenericViewModel.swift */; };
 		422EAB1E243F2A1000C7A16C /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */; };
 		428DF978262EFCDE00944379 /* ServersStreamingFeaturesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */; };
@@ -514,10 +511,7 @@
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E16264A9D370070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
-		F3521E17264A9D370070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		F3521E1A264AA40F0070F177 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
@@ -638,7 +632,6 @@
 		421B3BD6261B2C2200670A7C /* UserAccountUpdateViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccountUpdateViewController.swift; sourceTree = "<group>"; };
 		421B3BD7261B2C2200670A7C /* UserAccountUpdateViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UserAccountUpdateViewController.xib; sourceTree = "<group>"; };
 		422395812446E9E00089002F /* URLConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLConstants.swift; sourceTree = "<group>"; };
-		422EAB1A243F20D800C7A16C /* GenericViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenericViewModel.swift; sourceTree = "<group>"; };
 		428DF976262EFCDE00944379 /* ServersStreamingFeaturesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersStreamingFeaturesVC.swift; sourceTree = "<group>"; };
 		428DF977262EFCDE00944379 /* ServersStreamingFeaturesVC.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServersStreamingFeaturesVC.xib; sourceTree = "<group>"; };
 		428DF98A262F031600944379 /* ServersStreamingFeaturesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersStreamingFeaturesViewModel.swift; sourceTree = "<group>"; };
@@ -1198,7 +1191,6 @@
 			children = (
 				7980ECD520F70C0800D5432B /* TabBarViewModel.swift */,
 				E11B0CBC21B15452008E7B25 /* SecureCoreToggleHandler.swift */,
-				422EAB1A243F20D800C7A16C /* GenericViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -3089,7 +3081,6 @@
 				E11DA6B12188C07900CDF310 /* PlanSelectionViewController.swift in Sources */,
 				422395822446E9E00089002F /* URLConstants.swift in Sources */,
 				E1D21AAD21830E72000C389B /* SecureCoreEntryCountryModel.swift in Sources */,
-				422EAB1B243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				79F986F320D838D90064C1C7 /* SettingsViewModel.swift in Sources */,
 				79FD80E521108049003B16E2 /* LaunchViewController.swift in Sources */,
 				E13EDF6E21F0C1CD00030CE7 /* InstructionStepTableViewCell.swift in Sources */,
@@ -3372,7 +3363,6 @@
 				D53E83DC232B6D320031CD49 /* SignUpFormViewModelTests.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
-				422EAB1D243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
 				D511085F246189DC0018872A /* SubscriptionInfoController.swift in Sources */,
 				42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */,
@@ -3469,7 +3459,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				422EAB1C243F20D800C7A16C /* GenericViewModel.swift in Sources */,
 				E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */,
 				D5A8CD742456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				E14C2AA521E4E72400E8578E /* ProtonButton.swift in Sources */,
