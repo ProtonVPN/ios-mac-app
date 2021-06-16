@@ -757,9 +757,7 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
     
     public init(userCurrentCredentials: VpnCredentials) {
         switch userCurrentCredentials.accountPlan {
-        case .free:
-            message = LocalizedString.maximumDeviceDescription(AccountPlan.basic)
-        case .basic:
+        case .free, .basic:
             message = LocalizedString.maximumDeviceDescription(AccountPlan.plus)
         default:
             message = LocalizedString.maximumDeviceDescriptionReached
