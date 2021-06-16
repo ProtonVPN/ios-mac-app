@@ -410,3 +410,20 @@ extension DependencyContainer: VpnAuthenticationFactory {
         return vpnAuthentication
     }
 }
+
+// MARK: ServicePlanDataServiceFactory
+extension DependencyContainer: ServicePlanDataServiceFactory {
+    func makeServicePlanDataService() -> ServicePlanDataService {
+        if ServicePlanDataServiceImplementation.shared.paymentsService == nil {
+            ServicePlanDataServiceImplementation.shared.paymentsService = self.makePaymentsApiService()
+        }
+        return ServicePlanDataServiceImplementation.shared
+    }
+}
+
+// MARK: PaymentsApiServiceFactory
+extension DependencyContainer: PaymentsApiServiceFactory {
+    func makePaymentsApiService() -> PaymentsApiService {
+        return PaymentsApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
+    }
+}
