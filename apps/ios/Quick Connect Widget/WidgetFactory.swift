@@ -23,56 +23,28 @@
 import Foundation
 import vpncore
 
-class AlertServiceStub: CoreAlertService {
-    func push(alert: SystemAlert) { }
-}
-
-class WidgetFactory {
-    
-    static var shared = WidgetFactory()
-    
+final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
     private let appGroup = "group.ch.protonmail.vpn"
 
-    let alertService = ExtensionAlertService()
-    let propertiesManager = PropertiesManager()
-    let alamofireWrapper = AlamofireWrapperImplementation()
-    let vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)prt.ProtonVPN")
-    let keychain = VpnKeychain()
-
-    var todayViewModel:TodayViewModel {
-        let viewModel = TodayViewModelImplementation( self.propertiesManager, vpnManager: self.vpnManager, appStateManager: self.appStateManager )
-        self.alertService.delegate = viewModel
-        return viewModel
-    }
+    private let alertService = ExtensionAlertService()
+    private let propertiesManager = PropertiesManager()
+    private let alamofireWrapper = AlamofireWrapperImplementation()
+    private let vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)prt.ProtonVPN")
+    private let keychain = VpnKeychain()
     
-    private init() {
+    init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
-        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: self.appGroup)!)
+        Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: appGroup)!)
     }
-    
-    
-    // MARK: - Computed
-    
-    var vpnManager: VpnManagerProtocol {
-        let openVpnFactory = OpenVpnProtocolFactory(bundleId: self.openVpnExtensionBundleIdentifier,
-                                                    appGroup: self.appGroup,
-                                                    propertiesManager: self.propertiesManager)
-        return VpnManager(ikeFactory: IkeProtocolFactory(),
-                          openVpnFactory: openVpnFactory,
-                          appGroup: self.appGroup,
-                          vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain), vpnKeychain: keychain, propertiesManager: propertiesManager)
-    }
-    
-    var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
-                               vpnManager: self.vpnManager,
-                               alamofireWrapper: alamofireWrapper,
-                               alertService: alertService,
-                               timerFactory: TimerFactory(),
-                               propertiesManager: self.propertiesManager,
-                               vpnKeychain: keychain,
-                               configurationPreparer: VpnManagerConfigurationPreparer(vpnKeychain: keychain, alertService: self.alertService, propertiesManager: self.propertiesManager),
-                               vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain))
+
+    func makeTodayViewModel() -> TodayViewModel {
+        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
+        let vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain)
+        let vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: openVpnFactory, appGroup: appGroup, vpnAuthentication: vpnAuthentication, vpnKeychain: keychain, propertiesManager: propertiesManager)
+
+        let viewModel = TodayViewModel(propertiesManager: propertiesManager, vpnManager: vpnManager)
+        alertService.delegate = viewModel
+        return viewModel
     }
 }

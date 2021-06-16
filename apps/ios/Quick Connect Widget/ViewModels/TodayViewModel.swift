@@ -24,12 +24,7 @@ import Reachability
 import vpncore
 import NotificationCenter
 
-protocol TodayViewModel: GenericViewModel {
-    var viewController: TodayViewControllerProtocol? { get set }
-    func connectAction( _ sender: Any )
-}
-
-class TodayViewModelImplementation: TodayViewModel {
+final class TodayViewModel {
     
     weak var viewController: TodayViewControllerProtocol?
     
@@ -37,12 +32,10 @@ class TodayViewModelImplementation: TodayViewModel {
     private var timer: Timer?
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnManager: VpnManagerProtocol
-    private let appStateManager: AppStateManager
     
-    init( _ propertiesManager: PropertiesManagerProtocol, vpnManager: VpnManagerProtocol, appStateManager: AppStateManager ){
+    init(propertiesManager: PropertiesManagerProtocol, vpnManager: VpnManagerProtocol) {
         self.propertiesManager = propertiesManager
         self.vpnManager = vpnManager
-        self.appStateManager = appStateManager
     }
     
     func viewDidLoad() {
@@ -64,9 +57,9 @@ class TodayViewModelImplementation: TodayViewModel {
     // MARK: - Utils
     
     private func displayConnected() {
-        guard let connection = appStateManager.activeConnection() else {
-                viewController?.displayDisconnected()
-                return
+        guard let connection = activeConnection() else {
+            viewController?.displayDisconnected()
+            return
         }
                 
         let server = connection.server
@@ -74,6 +67,19 @@ class TodayViewModelImplementation: TodayViewModel {
         let ip = connection.serverIp.exitIp
         
         viewController?.displayConnected(ip, entryCountry: server.isSecureCore ? server.entryCountryCode : nil, country: country)
+    }
+
+    private func activeConnection() -> ConnectionConfiguration? {
+        guard let currentVpnProtocol = vpnManager.currentVpnProtocol else {
+            return nil
+        }
+
+        switch currentVpnProtocol {
+        case .ike:
+            return propertiesManager.lastIkeConnection
+        case .openVpn:
+            return propertiesManager.lastOpenVpnConnection
+        }
     }
     
     @objc private func connectionChanged() {
@@ -125,7 +131,7 @@ class TodayViewModelImplementation: TodayViewModel {
     }
 }
 
-extension TodayViewModelImplementation: ExtensionAlertServiceDelegate {
+extension TodayViewModel: ExtensionAlertServiceDelegate {
     func actionErrorReceived() {
         viewController?.displayError()
     }

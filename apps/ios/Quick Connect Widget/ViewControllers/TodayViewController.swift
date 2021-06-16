@@ -26,21 +26,18 @@ import vpncore
 import NotificationCenter
 
 protocol TodayViewControllerProtocol: AnyObject {
-        
     func displayBlank()
     func displayUnreachable()
     func displayError()
-    func displayConnected( _ server: String?, entryCountry: String?, country: String? )
+    func displayConnected(_ server: String?, entryCountry: String?, country: String?)
     func displayDisconnected()
     func displayConnecting()
     func displayNoGateWay()
     
-    func extensionOpenUrl( _ url: URL )
+    func extensionOpenUrl(_ url: URL)
 }
 
-class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControllerProtocol {
-    
-    var viewModel: TodayViewModel?
+final class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControllerProtocol {
         
     @IBOutlet weak var connectionIcon: UIImageView?
     @IBOutlet weak var electronContainerView: UIView?
@@ -50,10 +47,13 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
     @IBOutlet weak var electronContainer: ElectronViewContainer!
     @IBOutlet weak var connectButton: ProtonButton!
     @IBOutlet weak var buttonContainerView: UIView!
+
+    private let widgetFactory = WidgetFactory()
+    private var viewModel: TodayViewModel?
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
-        var viewModel = WidgetFactory.shared.todayViewModel
+        let viewModel = widgetFactory.makeTodayViewModel()
         viewModel.viewController = self
         self.viewModel = viewModel
     }
@@ -70,11 +70,6 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         viewModel?.viewWillAppear(animated)
     }
     
-    override func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-        viewModel?.viewWillDisappear(animated)
-    }
-    
     func setConnectButtonTitle(_ title: String) {
         UIView.performWithoutAnimation {
             connectButton.setTitle(title, for: .normal)
@@ -82,7 +77,7 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         }
     }
     
-    @IBAction func didTapConnectButton(_ sender: Any) {
+    @IBAction private func didTapConnectButton(_ sender: Any) {
         viewModel?.connectAction(sender)
     }
     
@@ -96,43 +91,43 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
     // MARK: - TodayViewControllerProtocol
     
     func displayBlank() {
-        genericStyle( buttonHidden: true, iconTint: .protonGrey())
+        genericStyle(buttonHidden: true, iconTint: .protonGrey())
     }
     
     func displayUnreachable() {
-        genericStyle( buttonHidden: true, connectionString: LocalizedString.networkUnreachable,
-                      connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
+        genericStyle(buttonHidden: true, connectionString: LocalizedString.networkUnreachable,
+                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
     }
     
     func displayError() {
-        genericStyle( LocalizedString.ok, connectionString: LocalizedString.connectionFailed,
-                      connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey() )
+        genericStyle(LocalizedString.ok, connectionString: LocalizedString.connectionFailed,
+                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
     }
         
     func displayNoGateWay(){
-        genericStyle( LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
+        genericStyle(LocalizedString.logIn, connectionString: LocalizedString.logInToUseWidget, connectionLabelTint: .protonWhite())
     }
     
-    func displayConnected( _ server: String?, entryCountry:String?, country: String? ){
+    func displayConnected(_ server: String?, entryCountry:String?, country: String?){
         var connectionString = LocalizedString.connected
         if let entryCountry = entryCountry {
              connectionString += " " + LocalizedString.via + " \(entryCountry)"
         }
         
-        genericStyle( LocalizedString.disconnect,
-                      buttonState: .destructive,
-                      ipAddress: server,
-                      country: country,
-                      connectionString: connectionString )
+        genericStyle(LocalizedString.disconnect,
+                     buttonState: .destructive,
+                     ipAddress: server,
+                     country: country,
+                     connectionString: connectionString)
     }
     
     func displayDisconnected(){
-        genericStyle( LocalizedString.quickConnect, connectionString: LocalizedString.disconnected,
-                      connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey() )
+        genericStyle(LocalizedString.quickConnect, connectionString: LocalizedString.disconnected,
+                     connectionLabelTint: .protonUnavailableGrey(), iconTint: .protonUnavailableGrey())
     }
     
     func displayConnecting(){
-        genericStyle( LocalizedString.cancel, buttonState: .destructive, connectionString: LocalizedString.connectingDotDotDot, animate: true )
+        genericStyle(LocalizedString.cancel, buttonState: .destructive, connectionString: LocalizedString.connectingDotDotDot, animate: true)
     }
     
     func extensionOpenUrl(_ url: URL) {
@@ -151,10 +146,10 @@ class TodayViewController: UIViewController, NCWidgetProviding, TodayViewControl
         electronContainerView?.isHidden = buttonWidth + connectionLabel.realSize.width > view.frame.width - 140
     }
     
-    private func genericStyle( _ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
+    private func genericStyle(_ buttonTitle: String = "", buttonState: ProtonButton.CustomState = .primary,
                                ipAddress: String? = nil, country: String? = nil, buttonHidden: Bool = false,
                                connectionString: String = "", connectionLabelTint: UIColor = .protonGreen(),
-                               iconTint: UIColor = .protonGreen(), animate: Bool = false ) {
+                               iconTint: UIColor = .protonGreen(), animate: Bool = false) {
         ipLabel.isHidden = ipAddress == nil
         countryLabel.isHidden = country == nil
         buttonContainerView.isHidden = buttonHidden
