@@ -75,6 +75,4 @@ public class VpnManagerMock: VpnManagerProtocol {
     public func set(netShieldType: NetShieldType) {
 
     }
-
-    public func getStateAndConnection(completion: @escaping ((Bool, VpnState, ConnectionConfiguration?) -> Void)) { }
 }
