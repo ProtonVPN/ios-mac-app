@@ -22,7 +22,6 @@
 
 import Reachability
 import vpncore
-import NotificationCenter
 
 enum TodayViewModelState {
     case blank
