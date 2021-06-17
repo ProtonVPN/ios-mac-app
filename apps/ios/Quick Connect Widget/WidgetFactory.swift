@@ -51,7 +51,7 @@ final class WidgetFactory {
                                     vpnKeychain: keychain,
                                     propertiesManager: propertiesManager)
 
-        let viewModel = TodayViewModel(propertiesManager: propertiesManager, vpnManager: vpnManager)
+        let viewModel = TodayViewModel(vpnManager: vpnManager)
         alertService.delegate = viewModel
         return viewModel
     }

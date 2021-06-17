@@ -41,13 +41,11 @@ protocol TodayViewModelDelegate: AnyObject {
 final class TodayViewModel {
     private var reachability: Reachability?
     private var timer: Timer?
-    private let propertiesManager: PropertiesManagerProtocol
     private let vpnManager: VpnManagerProtocol
 
     weak var delegate: TodayViewModelDelegate?
     
-    init(propertiesManager: PropertiesManagerProtocol, vpnManager: VpnManagerProtocol) {
-        self.propertiesManager = propertiesManager
+    init(vpnManager: VpnManagerProtocol) {
         self.vpnManager = vpnManager
 
         reachability = try? Reachability()
@@ -59,26 +57,28 @@ final class TodayViewModel {
         })
     }
     
-    func update() {
-        connectionChanged()
+    func update(completion: (()-> Void)? = nil) {
+        connectionChanged(completion: completion)
     }
 
     func connect() {
-        guard propertiesManager.hasConnected else {
-            if let url = URL(string: URLConstants.deepLinkBaseUrl) {
-                delegate?.didRequestUrl(url: url)
+        vpnManager.getStateAndConnection { [weak self] (hasConnected, state, _) in
+            guard hasConnected else {
+                if let url = URL(string: URLConstants.deepLinkBaseUrl) {
+                    self?.delegate?.didRequestUrl(url: url)
+                }
+                return
             }
-            return
-        }
 
-        switch vpnManager.state {
-        case .connected, .connecting:
-            if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
-                delegate?.didRequestUrl(url: url)
-            }
-        default:
-            if let url = URL(string: URLConstants.deepLinkConnectUrl) {
-                delegate?.didRequestUrl(url: url)
+            switch state {
+            case .connected, .connecting:
+                if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
+                    self?.delegate?.didRequestUrl(url: url)
+                }
+            default:
+                if let url = URL(string: URLConstants.deepLinkConnectUrl) {
+                    self?.delegate?.didRequestUrl(url: url)
+                }
             }
         }
     }
@@ -89,43 +89,36 @@ final class TodayViewModel {
     
     // MARK: - Utils
     
-    @objc private func connectionChanged() {
+    @objc private func connectionChanged(completion: (()-> Void)? = nil) {
         if let reachability = reachability, reachability.connection == .unavailable {
             delegate?.didChangeState(state: .unreachable)
+            completion?()
             return
         }
-        
-        guard propertiesManager.hasConnected else {
-            delegate?.didChangeState(state: .noGateway)
-            return
-        }
-        
-        vpnManager.refreshManagers()
-        vpnManager.refreshState()
-        
-        switch vpnManager.state {
-        case .connected:
-            let connection: ConnectionConfiguration?
-            switch vpnManager.currentVpnProtocol {
-            case .ike:
-                connection = propertiesManager.lastIkeConnection
-            case .openVpn:
-                connection = propertiesManager.lastOpenVpnConnection
-            case .wireGuard:
-                connection = propertiesManager.lastWireguardConnection
-            case nil:
-                connection = nil
-            }
 
-            guard let activeConection = connection else {
+        vpnManager.getStateAndConnection { [weak self] (hasConnected, state, connection) in
+            guard hasConnected else {
+                self?.delegate?.didChangeState(state: .noGateway)
+                completion?()
                 return
             }
 
-            delegate?.didChangeState(state: .connected(activeConection.serverIp.exitIp, entryCountry: activeConection.server.isSecureCore ? activeConection.server.entryCountryCode : nil, country: LocalizationUtility.default.countryName(forCode: activeConection.server.countryCode)))
-        case .connecting:
-            delegate?.didChangeState(state: .connecting)
-        case .disconnected, .disconnecting, .invalid, .reasserting, .error:
-            delegate?.didChangeState(state: .disconnected)
+            switch state {
+            case .connected:
+                guard let activeConection = connection else {
+                    completion?()
+                    return
+                }
+
+                self?.delegate?.didChangeState(state: .connected(activeConection.serverIp.exitIp, entryCountry: activeConection.server.isSecureCore ? activeConection.server.entryCountryCode : nil, country: LocalizationUtility.default.countryName(forCode: activeConection.server.countryCode)))
+                completion?()
+            case .connecting:
+                self?.delegate?.didChangeState(state: .connecting)
+                completion?()
+            case .disconnected, .disconnecting, .invalid, .reasserting, .error:
+                self?.delegate?.didChangeState(state: .disconnected)
+                completion?()
+            }
         }
     }
 }
