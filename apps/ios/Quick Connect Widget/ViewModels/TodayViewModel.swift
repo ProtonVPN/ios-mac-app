@@ -41,12 +41,12 @@ protocol TodayViewModelDelegate: AnyObject {
 final class TodayViewModel {
     private var reachability: Reachability?
     private var timer: Timer?
-    private let vpnManager: VpnManagerProtocol
+    private let vpnStateConfiguration: VpnStateConfiguration
 
     weak var delegate: TodayViewModelDelegate?
     
-    init(vpnManager: VpnManagerProtocol) {
-        self.vpnManager = vpnManager
+    init(vpnStateConfiguration: VpnStateConfiguration) {
+        self.vpnStateConfiguration = vpnStateConfiguration
 
         reachability = try? Reachability()
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
@@ -62,15 +62,15 @@ final class TodayViewModel {
     }
 
     func connect() {
-        vpnManager.getStateAndConnection { [weak self] (hasConnected, state, _) in
-            guard hasConnected else {
+        vpnStateConfiguration.getInfo { [weak self] info in
+            guard info.hasConnected else {
                 if let url = URL(string: URLConstants.deepLinkBaseUrl) {
                     self?.delegate?.didRequestUrl(url: url)
                 }
                 return
             }
 
-            switch state {
+            switch info.state {
             case .connected, .connecting:
                 if let url = URL(string: URLConstants.deepLinkDisconnectUrl) {
                     self?.delegate?.didRequestUrl(url: url)
@@ -96,16 +96,16 @@ final class TodayViewModel {
             return
         }
 
-        vpnManager.getStateAndConnection { [weak self] (hasConnected, state, connection) in
-            guard hasConnected else {
+        vpnStateConfiguration.getInfo { [weak self] info in
+            guard info.hasConnected else {
                 self?.delegate?.didChangeState(state: .noGateway)
                 completion?()
                 return
             }
 
-            switch state {
+            switch info.state {
             case .connected:
-                guard let activeConection = connection else {
+                guard let activeConection = info.connection else {
                     completion?()
                     return
                 }

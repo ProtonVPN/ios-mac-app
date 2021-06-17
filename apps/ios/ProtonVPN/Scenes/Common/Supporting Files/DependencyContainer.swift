@@ -27,7 +27,7 @@ import KeychainAccess
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
-class DependencyContainer {
+final class DependencyContainer {
     
     private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
     private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuardiOS-Extension"
@@ -36,14 +36,18 @@ class DependencyContainer {
     // Singletons
     private lazy var navigationService = NavigationService(self)
      
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(),
-                                                                     openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager()),
-                                                                     wireguardProtocolFactory: WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager()),
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
+                                                                     openVpnFactory: openVpnFactory,
+                                                                     wireguardProtocolFactory: wireguardFactory,
                                                                      appGroup: appGroup,
                                                                      vpnAuthentication: makeVpnAuthentication(),
                                                                      vpnKeychain: vpnKeychain,
                                                                      propertiesManager: makePropertiesManager(),
+                                                                     vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                      alertService: iosAlertService)
+    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var ikeFactory = IkeProtocolFactory()
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private var alamofireWrapper: AlamofireWrapper?
@@ -453,5 +457,12 @@ extension DependencyContainer: AppSpecificRequestAdapterFatory {
 extension DependencyContainer: VpnAuthenticationFactory {
     func makeVpnAuthentication() -> VpnAuthentication {
         return vpnAuthentication
+    }
+}
+
+// MARK: VpnStateConfigurationFactory
+extension DependencyContainer: VpnStateConfigurationFactory {
+    func makeVpnStateConfiguration() -> VpnStateConfiguration {
+        return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
     }
 }

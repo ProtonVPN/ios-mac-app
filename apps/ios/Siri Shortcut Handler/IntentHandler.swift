@@ -39,13 +39,18 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
         let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(NetShieldPropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
-        let vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(),
-                                    openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager),
-                                    wireguardProtocolFactory: WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager),
+        let ikeFactory = IkeProtocolFactory()
+        let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
+        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
+        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
+        let vpnManager = VpnManager(ikeFactory: ikeFactory,
+                                    openVpnFactory: openVpnFactory,
+                                    wireguardProtocolFactory: wireguardVpnFactory,
                                     appGroup: appGroup,
                                     vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain),
                                     vpnKeychain: vpnKeychain,
-                                    propertiesManager: propertiesManager)
+                                    propertiesManager: propertiesManager,
+                                    vpnStateConfiguration: vpnStateConfiguration)
         
         siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper,
                                                     vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),
