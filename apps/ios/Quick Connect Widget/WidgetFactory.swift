@@ -41,8 +41,15 @@ final class WidgetFactory {
 
     func makeTodayViewModel() -> TodayViewModel {
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
+        let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain)
-        let vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(), openVpnFactory: openVpnFactory, appGroup: appGroup, vpnAuthentication: vpnAuthentication, vpnKeychain: keychain, propertiesManager: propertiesManager)
+        let vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(),
+                                    openVpnFactory: openVpnFactory,
+                                    wireguardProtocolFactory: wireguardVpnFactory,
+                                    appGroup: appGroup,
+                                    vpnAuthentication: vpnAuthentication,
+                                    vpnKeychain: keychain,
+                                    propertiesManager: propertiesManager)
 
         let viewModel = TodayViewModel(propertiesManager: propertiesManager, vpnManager: vpnManager)
         alertService.delegate = viewModel
