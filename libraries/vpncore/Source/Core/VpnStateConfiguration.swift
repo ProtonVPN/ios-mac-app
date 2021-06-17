@@ -179,19 +179,17 @@ public class VpnStateConfigurationManager: VpnStateConfiguration {
     private func lastError() -> Error? {
         let defaults = UserDefaults(suiteName: appGroup)
         let errorKey = "TunnelKitLastError"
-        guard let lastError = defaults?.object(forKey: errorKey) else {
+        guard let lastError = defaults?.object(forKey: errorKey) as? String else {
             return nil
         }
-        if let error = lastError as? String {
-            switch error {
-            case "tlsServerVerification": return ProtonVpnError.tlsServerVerification
-            case "tlsInitialization": return ProtonVpnError.tlsInitialisation
-            default: break
-            }
+
+        switch lastError {
+        case "tlsServerVerification":
+            return ProtonVpnError.tlsServerVerification
+        case "tlsInitialization":
+            return ProtonVpnError.tlsInitialisation
+        default:
+            return NSError(code: 0, localizedDescription: lastError)
         }
-        if let errorString = lastError as? String {
-            return NSError(code: 0, localizedDescription: errorString)
-        }
-        return nil
     }
 }
