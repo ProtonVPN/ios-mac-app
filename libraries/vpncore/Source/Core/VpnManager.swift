@@ -37,6 +37,7 @@ public protocol VpnManagerProtocol {
     func logFile(for vpnProtocol: VpnProtocol) -> URL?
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
+    func getStateAndConnection(completion: @escaping ((Bool, VpnState, ConnectionConfiguration?) -> Void))
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
@@ -282,8 +283,40 @@ public class VpnManager: VpnManagerProtocol {
         }
         localAgent.update(netshield: netShieldType)
     }
+
+    public func getStateAndConnection(completion: @escaping ((Bool, VpnState, ConnectionConfiguration?) -> Void)) {
+        determineActiveVpnProtocol { [weak self] vpnProtocol in
+            guard let self = self else {
+                return
+            }
+
+            let connection: ConnectionConfiguration?
+            let activeFactory: VpnProtocolFactory
+            switch vpnProtocol {
+            case .ike:
+                connection = self.propertiesManager.lastIkeConnection
+                activeFactory = self.ikeProtocolFactory
+            case .openVpn:
+                connection = self.propertiesManager.lastOpenVpnConnection
+                activeFactory = self.openVpnProtocolFactory
+            case .wireGuard:
+                connection = self.propertiesManager.lastWireguardConnection
+                activeFactory = self.wireguardProtocolFactory
+            }
+
+            self.determineActiveVpnState(activeFactory: activeFactory) { result in
+                switch result {
+                case let .failure(error):
+                    completion(self.propertiesManager.hasConnected, VpnState.error(error), connection)
+                case let .success((_, state)):
+                    completion(self.propertiesManager.hasConnected, state, connection)
+                }
+            }
+        }
+    }
     
     // MARK: - Private functions
+
     // MARK: - Connecting
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
                                    authData: VpnAuthenticationData?,
