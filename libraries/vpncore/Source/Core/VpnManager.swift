@@ -460,35 +460,37 @@ public class VpnManager: VpnManagerProtocol {
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
         }
-        
-        currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let `self` = self, !self.quickReconnection else { return }
-            if let error = error {
-                self.setState(withError: error)
+
+        determineActiveVpnState(activeFactory: currentVpnProtocolFactory) { [weak self] result in
+            guard let self = self, !self.quickReconnection else {
                 return
             }
-            guard let vpnManager = vpnManager else { return }
-            
-            let newState = self.newState(forManager: vpnManager)
 
-            guard newState != self.state else { return }
-            
-            switch newState {
-            case .disconnecting:
-                self.quickReconnection = true
-                self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
-                    let newState = self.newState(forManager: vpnManager)
-                    switch newState {
-                    case .connecting:
-                        self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+            switch result {
+            case let .failure(error):
+                self.setState(withError: error)
+            case let .success((vpnManager, newState)):
+                guard newState != self.state else {
+                    return
+                }
+
+                switch newState {
+                case .disconnecting:
+                    self.quickReconnection = true
+                    self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
+                        let newState = self.newState(forManager: vpnManager)
+                        switch newState {
+                        case .connecting:
+                            self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+                                self.updateState(vpnManager)
+                            }
+                        default:
                             self.updateState(vpnManager)
                         }
-                    default:
-                        self.updateState(vpnManager)
                     }
+                default:
+                    self.updateState(vpnManager)
                 }
-            default:
-                self.updateState(vpnManager)
             }
         }
     }
@@ -583,6 +585,21 @@ public class VpnManager: VpnManagerProtocol {
             return NSError(code: 0, localizedDescription: errorString)
         }
         return nil
+    }
+
+    private func determineActiveVpnState(activeFactory: VpnProtocolFactory, completion: @escaping ((Result<(NEVPNManager, VpnState), Error>) -> Void)) {
+        activeFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+            guard let self = self, let vpnManager = vpnManager else {
+                return
+            }
+
+            let newState = self.newState(forManager: vpnManager)
+            completion(.success((vpnManager, newState)))
+        }
     }
 
     private func determineActiveVpnProtocol(completion: @escaping ((VpnProtocol) -> Void)) {
