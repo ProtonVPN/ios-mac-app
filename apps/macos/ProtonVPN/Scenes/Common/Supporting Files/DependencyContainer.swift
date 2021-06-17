@@ -39,19 +39,18 @@ final class DependencyContainer {
     
     // Singletons
     private lazy var navigationService = NavigationService(self)
-    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: IkeProtocolFactory(),
-                                                                 openVpnFactory: OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier,
-                                                                                                        appGroup: appGroup,
-                                                                                                        propertiesManager: makePropertiesManager()),
-                                                                 wireguardProtocolFactory: WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier,
-                                                                                                                    appGroup: appGroup,
-                                                                                                                    propertiesManager: makePropertiesManager()),
+    private lazy var vpnManager: VpnManagerProtocol = VpnManager(ikeFactory: ikeFactory,
+                                                                 openVpnFactory: openVpnFactory,
+                                                                 wireguardProtocolFactory: wireguardFactory,
                                                                  appGroup: appGroup,
                                                                  vpnAuthentication: vpnAuthentication,
                                                                  vpnKeychain: vpnKeychain,
                                                                  propertiesManager: makePropertiesManager(),
+                                                                 vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                  alertService: macAlertService)
-    
+    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var ikeFactory = IkeProtocolFactory()
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
     private lazy var alamofireWrapper: AlamofireWrapper = AlamofireWrapperImplementation(factory: self)
@@ -430,5 +429,12 @@ extension DependencyContainer: ServicePlanDataServiceFactory {
 extension DependencyContainer: PaymentsApiServiceFactory {
     func makePaymentsApiService() -> PaymentsApiService {
         return PaymentsApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
+    }
+}
+
+// MARK: VpnStateConfigurationFactory
+extension DependencyContainer: VpnStateConfigurationFactory {
+    func makeVpnStateConfiguration() -> VpnStateConfiguration {
+        return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
     }
 }
