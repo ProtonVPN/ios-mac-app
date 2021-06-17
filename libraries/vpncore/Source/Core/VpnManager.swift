@@ -584,64 +584,71 @@ public class VpnManager: VpnManagerProtocol {
         }
         return nil
     }
-    
-    // swiftlint:disable function_body_length
+
+    private func determineActiveVpnProtocol(completion: @escaping ((VpnProtocol) -> Void)) {
+        let dispatchGroup = DispatchGroup()
+
+        var openVpnCurrentlyActive = false
+        var wireGuardVpnCurrentlyActive = false
+
+        dispatchGroup.enter()
+        ikeProtocolFactory.vpnProviderManager(for: .status) { _, _ in
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.enter()
+        openVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
+            guard let self = self, let manager = manager else {
+                dispatchGroup.leave()
+                return
+            }
+
+            let state = self.newState(forManager: manager)
+            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
+                openVpnCurrentlyActive = true
+            }
+
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.enter()
+        wireguardProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
+            guard let self = self, let manager = manager else {
+                dispatchGroup.leave()
+                return
+            }
+
+            let state = self.newState(forManager: manager)
+            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
+                wireGuardVpnCurrentlyActive = true
+            }
+
+            dispatchGroup.leave()
+        }
+
+        dispatchGroup.notify(queue: .main) {
+            // OpenVPN takes precedence but if neither are active, then it should remain unchanged
+            if openVpnCurrentlyActive {
+                completion(.openVpn(.undefined))
+            } else if wireGuardVpnCurrentlyActive {
+                completion(.wireGuard)
+            } else {
+                completion(.ike)
+            }
+        }
+    }
+
     /*
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
     private func prepareManagers() {
-        let dispatchGroup = DispatchGroup()
-        
-        var openVpnCurrentlyActive = false
-        var wireGuardVpnCurrentlyActive = false
-        
-        dispatchGroup.enter()
-        ikeProtocolFactory.vpnProviderManager(for: .status) { _, _ in
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        openVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
-            guard let `self` = self, let manager = manager else {
-                dispatchGroup.leave()
+        determineActiveVpnProtocol { [weak self] vpnProtocol in
+            guard let self = self else {
                 return
             }
-            
-            let state = self.newState(forManager: manager)
-            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
-                openVpnCurrentlyActive = true
-            }
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        wireguardProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
-            guard let `self` = self, let manager = manager else {
-                dispatchGroup.leave()
-                return
-            }
-            
-            let state = self.newState(forManager: manager)
-            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
-                wireGuardVpnCurrentlyActive = true
-            }
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let `self` = self else { return }
-            
-            // OpenVPN takes precedence but if neither are active, then it should remain unchanged
-            if openVpnCurrentlyActive {
-                self.currentVpnProtocol = .openVpn(.undefined)
-            } else if wireGuardVpnCurrentlyActive {
-                self.currentVpnProtocol = .wireGuard
-            } else {
-                self.currentVpnProtocol = .ike
-            }
+
+            self.currentVpnProtocol = vpnProtocol
 
             // connected to a protocol that requires local agent, but local agent is nil and VPN
             // This is connected means the app was started while a VPN connection is already active
@@ -656,15 +663,14 @@ public class VpnManager: VpnManagerProtocol {
                     }
                 }
             }
-            
+
             self.setState()
-            
+
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.vpnStatusChanged),
                                                    name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         }
     }
-    // swiftlint:enable function_body_length
     
     @objc private func vpnStatusChanged() {
         setState()
