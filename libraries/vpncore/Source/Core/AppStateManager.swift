@@ -182,7 +182,7 @@ public class AppStateManagerImplementation: AppStateManager {
             }
             
             if propertiesManager.sessions.count >= vpnCredentials.maxConnect {
-                if let exitIp = lastAttemptedConfiguration?.serverIp.exitIp, propertiesManager.sessions.first(where: { $0.exitIP == exitIp }) == nil {
+                if let entryIp = lastAttemptedConfiguration?.serverIp.entryIp, propertiesManager.sessions.first(where: { $0.exitIP == entryIp }) == nil {
                     let alert = MaxSessionsAlert(userCurrentCredentials: vpnCredentials)
                     alertService?.push(alert: alert)
                     connectionFailed()
