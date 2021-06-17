@@ -111,6 +111,8 @@ final class TodayViewModel {
                 connection = propertiesManager.lastIkeConnection
             case .openVpn:
                 connection = propertiesManager.lastOpenVpnConnection
+            case .wireGuard:
+                connection = propertiesManager.lastWireguardConnection
             case nil:
                 connection = nil
             }
