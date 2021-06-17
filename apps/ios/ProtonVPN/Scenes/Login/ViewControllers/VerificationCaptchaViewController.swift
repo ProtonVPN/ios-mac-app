@@ -36,9 +36,9 @@ class VerificationCaptchaViewController: UIViewController {
         return viewModel.captchaToken
     }
     
-    private lazy var captchaUrl = "https://\(ApiConstants.captchaHost)/captcha/captcha.html?client=ios&host=\(ApiConstants.baseHost)&token=\(captchaToken)"
-    private let captchaExpiredUrl = "https://\(ApiConstants.captchaHost)/expired_recaptcha_response://"
-    private let captchaResponseUrl = "https://\(ApiConstants.captchaHost)/captcha/recaptcha_response://"
+    private lazy var captchaUrl = "\(ApiConstants.captchaHost)/core/v4/captcha?Token=\(captchaToken)"
+    private let captchaExpiredUrl = "\(ApiConstants.captchaHost)/core/v4/expired_recaptcha_response://"
+    private let captchaResponseUrl = "\(ApiConstants.captchaHost)/core/v4/recaptcha_response://"
     
     override func viewDidLoad() {
         super.viewDidLoad()

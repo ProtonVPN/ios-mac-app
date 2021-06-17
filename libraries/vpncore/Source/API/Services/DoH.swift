@@ -28,7 +28,6 @@ class DoHVPN: DoH, ServerConfig {
 
     let liveURL: String = "https://api.protonvpn.ch" // do not change to development url due to IAP restriction
     let signupDomain: String = "protonmail.com"
-    let captchaHost: String = "secure.protonmail.com"
     let defaultPath: String = ""
     var defaultHost: String {
         #if RELEASE
@@ -36,6 +35,9 @@ class DoHVPN: DoH, ServerConfig {
         #endif
 
         return propertiesManager.apiEndpoint ?? liveURL
+    }
+    var captchaHost: String {
+        return defaultHost
     }
     var apiHost: String {
         return customApiHost
