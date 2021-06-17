@@ -2,12 +2,22 @@ stages:
   - linting
   - core_unit_tests
   - apps_unit_tests
+  - bot # comes from translations/generator job
   - release
 
 variables:
   LC_ALL: "en_US.UTF-8"
   LANG: "en_US.UTF-8"
 
+include:
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/sync-crowdin.gitlab-ci.yml'
+    
+  - project: 'translations/generator'
+    ref: master
+    file: '/jobs/commit-locales.gitlab-ci.yml'
+    
 core_lint:
   stage: linting
   tags:
@@ -166,3 +176,16 @@ ios_testflight_internal:
     paths:
       - .last_build_nr
     expire_in: 7 days
+
+# --- Translation related tasks ---
+# Jobs comes from the generator inside gitlab translations/generator
+# Config for the project itself (i18n config) is inside translations/config-app
+i18n-crowdin-upload:
+  variables:
+      I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
+  extends: .i18n-sync-crowdin-shared-apple
+
+i18n-crowdin-download:
+  variables:
+      I18N_COMMIT_CROWDIN_PROJECT: 'apple-vpn'
+  extends: .i18n-commit-locales-shared-apple
