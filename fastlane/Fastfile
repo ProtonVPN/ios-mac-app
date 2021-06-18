@@ -14,6 +14,7 @@
 # update_fastlane
 
 $derived_data_path = "DerivedData"
+$keychain_name = ENV["CI_KEYCHAIN_NAME"]
 
 desc "Run all Core iOS tests"
 lane :ios_core_test do
@@ -61,16 +62,16 @@ lane :macos_app_test do
 end
 
 lane :create_macos_keychain do
-  keychain_name = ENV["CI_JOB_ID"]
   create_keychain(
-    name: keychain_name,
+    name: $keychain_name,
     password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
     default_keychain: false,
     add_to_search_list: true,
-    unlock: true
+    unlock: true,
+    require_create: false
   )
   import_certificate(
-    keychain_name: keychain_name,
+    keychain_name: $keychain_name,
     keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
     certificate_path: 'Certificates.p12',
     certificate_password: ENV["DEVELOPER_CERTIFICATE_PASSWORD"]
@@ -78,23 +79,24 @@ lane :create_macos_keychain do
 end
 
 lane :delete_macos_keychain do
-  keychain_name = ENV["CI_JOB_ID"]
   delete_keychain(
-    name: keychain_name
+    name: $keychain_name
   )
 end
 
 lane :create_ios_keychain do
-  keychain_name = ENV["CI_JOB_ID"]
   create_keychain(
-      name: keychain_name,
+      name: $keychain_name,
       password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
       default_keychain: false,
       add_to_search_list: true,
-      unlock: true
+      unlock: true,
+      timeout: false,
+      lock_when_sleeps: false,
+      lock_after_timeout: false
   )
   import_certificate(
-      keychain_name: keychain_name,
+      keychain_name: $keychain_name,
       keychain_password: ENV["DEVELOPER_KEYCHAIN_PASSWORD"],
       certificate_path: 'Certificates.p12',
       certificate_password: ENV["DISTRIBUTION_CERTIFICATE_PASSWORD"]
@@ -103,7 +105,7 @@ end
 
 lane :delete_ios_keychain do
   delete_keychain(
-      name: ENV["CI_JOB_ID"]
+      name: $keychain_name
   )
 end
 
@@ -136,7 +138,8 @@ lane :ios_internal_beta do |options|
               "ch.protonmail.vpn" => "ProtonVPN Release",
               "ch.protonmail.vpn.OpenVPN-Extension" => "ProtonVPN OpenVPN Release",
               "ch.protonmail.vpn.widget" => "ProtonVPN Widget Release",
-              "ch.protonmail.vpn.Siri-Shortuct-Handler" => "ProtonVPN Siri Shortcuts Release"
+              "ch.protonmail.vpn.Siri-Shortuct-Handler" => "ProtonVPN Siri Shortcuts Release",
+              "ch.protonmail.vpn.WireGuardiOS-Extension" => "ProtonVPN Wireguard extension Release"
           }
       }
   )

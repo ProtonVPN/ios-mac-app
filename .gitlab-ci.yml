@@ -8,6 +8,7 @@ stages:
 variables:
   LC_ALL: "en_US.UTF-8"
   LANG: "en_US.UTF-8"
+  CI_KEYCHAIN_NAME: $CI_JOB_ID
 
 include:
   - project: 'translations/generator'
@@ -161,7 +162,9 @@ ios_testflight_internal:
     - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
     - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
     - ./fastlane/add_git_tag.sh
-    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS Staging"
+    - fastlane delete_ios_keychain ## Re-create keychain to have less problems
+    - fastlane create_ios_keychain
+    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS-Staging"
   after_script: # Cleanup
     - rm -f Certificates.p12
     - fastlane delete_ios_keychain
@@ -170,6 +173,8 @@ ios_testflight_internal:
   environment:
     name: deployment
   when: manual
+  variables:
+    CI_KEYCHAIN_NAME: "IOS_RELEASE"
   artifacts:
     name: "ios-build-nr"
     when: always
