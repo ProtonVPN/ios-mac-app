@@ -35,13 +35,7 @@ class CountryItemViewModel {
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
     
-    private var userTier: Int {
-        if let vpnGateway = vpnGateway {
-            return (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
-        } else { // not logged in
-            return CoreAppConstants.VpnTiers.plus
-        }
-    }
+    private var userTier: Int = CoreAppConstants.VpnTiers.plus
     
     private var isUsersTierTooLow: Bool {
         return userTier < countryModel.lowestTier
@@ -244,6 +238,8 @@ class CountryItemViewModel {
             return
         }
         
+        updateTier()
+        
         if isUsersTierTooLow {
             planService.presentPlanSelection() 
         } else if underMaintenance {
@@ -258,7 +254,20 @@ class CountryItemViewModel {
         }
     }
     
+    func updateTier() {
+        do {
+            if let vpnGateway = vpnGateway {
+                userTier = try vpnGateway.userTier()
+            } else { // not logged in
+                userTier = CoreAppConstants.VpnTiers.plus
+            }
+        } catch {
+            userTier = CoreAppConstants.VpnTiers.free
+        }
+    }
+    
     // MARK: - Private functions
+    
     fileprivate func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: VpnGateway.connectionChanged, object: nil)
