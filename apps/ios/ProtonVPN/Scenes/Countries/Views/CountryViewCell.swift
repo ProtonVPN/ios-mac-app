@@ -41,7 +41,7 @@ class CountryViewCell: UITableViewCell {
     var viewModel: CountryItemViewModel? {
         didSet {
             guard let viewModel = viewModel else { return }
-            
+            viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             countryName.text = viewModel.description
             countryName.numberOfLines = 2
