@@ -52,9 +52,9 @@ public class VpnManager: VpnManagerProtocol {
     
     private let connectionQueue = DispatchQueue(label: "ch.protonvpn.vpnmanager.connection", qos: .utility)
     
-    private var ikeProtocolFactory: VpnProtocolFactory
-    private var openVpnProtocolFactory: VpnProtocolFactory
-    private var wireguardProtocolFactory: VpnProtocolFactory
+    private let ikeProtocolFactory: VpnProtocolFactory
+    private let openVpnProtocolFactory: VpnProtocolFactory
+    private let wireguardProtocolFactory: VpnProtocolFactory
     
     private var currentVpnProtocolFactory: VpnProtocolFactory? {
         guard let currentVpnProtocol = currentVpnProtocol else {
@@ -99,13 +99,15 @@ public class VpnManager: VpnManagerProtocol {
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
 
+    private let vpnStateConfiguration: VpnStateConfiguration
+
     let propertiesManager: PropertiesManagerProtocol
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
     let vpnKeychain: VpnKeychainProtocol
     var localAgent: LocalAgent?
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
@@ -114,6 +116,7 @@ public class VpnManager: VpnManagerProtocol {
         self.vpnAuthentication = vpnAuthentication
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
+        self.vpnStateConfiguration = vpnStateConfiguration
         
         prepareManagers()
     }
@@ -281,9 +284,10 @@ public class VpnManager: VpnManagerProtocol {
             break
         }
         localAgent.update(netshield: netShieldType)
-    }
+    }    
     
     // MARK: - Private functions
+
     // MARK: - Connecting
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
                                    authData: VpnAuthenticationData?,
@@ -456,46 +460,48 @@ public class VpnManager: VpnManagerProtocol {
             self.stateChanged?()
             return
         }
-        
-        guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
+
+        guard let vpnProtocol = currentVpnProtocol else {
             return
         }
-        
-        currentVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] vpnManager, error in
-            guard let `self` = self, !self.quickReconnection else { return }
-            if let error = error {
-                self.setState(withError: error)
+
+        vpnStateConfiguration.determineActiveVpnState(vpnProtocol: vpnProtocol) { [weak self] result in
+            guard let self = self, !self.quickReconnection else {
                 return
             }
-            guard let vpnManager = vpnManager else { return }
-            
-            let newState = self.newState(forManager: vpnManager)
 
-            guard newState != self.state else { return }
-            
-            switch newState {
-            case .disconnecting:
-                self.quickReconnection = true
-                self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
-                    let newState = self.newState(forManager: vpnManager)
-                    switch newState {
-                    case .connecting:
-                        self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+            switch result {
+            case let .failure(error):
+                self.setState(withError: error)
+            case let .success((vpnManager, newState)):
+                guard newState != self.state else {
+                    return
+                }
+
+                switch newState {
+                case .disconnecting:
+                    self.quickReconnection = true
+                    self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickReconnectTime) {
+                        let newState = self.vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
+                        switch newState {
+                        case .connecting:
+                            self.connectionQueue.asyncAfter(deadline: .now() + CoreAppConstants.UpdateTime.quickUpdateTime) {
+                                self.updateState(vpnManager)
+                            }
+                        default:
                             self.updateState(vpnManager)
                         }
-                    default:
-                        self.updateState(vpnManager)
                     }
+                default:
+                    self.updateState(vpnManager)
                 }
-            default:
-                self.updateState(vpnManager)
             }
         }
     }
     
     private func updateState(_ vpnManager: NEVPNManager) {
         quickReconnection = false
-        let newState = self.newState(forManager: vpnManager)
+        let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
         self.state = newState
         PMLog.D(self.state.logDescription)
@@ -535,113 +541,18 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     // swiftlint:enable cyclomatic_complexity function_body_length
-    
-    private func newState(forManager vpnManager: NEVPNManager) -> VpnState {
-        let status = vpnManager.connection.status
-        let username = vpnManager.protocolConfiguration?.username ?? ""
-        let serverAddress = vpnManager.protocolConfiguration?.serverAddress ?? ""
-        
-        switch status {
-        case .invalid:
-            return .invalid
-        case .disconnected:
-            if let error = lastError() {
-                switch error {
-                case ProtonVpnError.tlsServerVerification, ProtonVpnError.tlsInitialisation:
-                    return .error(error)
-                default: break
-                }
-            }
-            return .disconnected
-        case .connecting:
-            return .connecting(ServerDescriptor(username: username, address: serverAddress))
-        case .connected:
-            return .connected(ServerDescriptor(username: username, address: serverAddress))
-        case .reasserting:
-            return .reasserting(ServerDescriptor(username: username, address: serverAddress))
-        case .disconnecting:
-            return .disconnecting(ServerDescriptor(username: username, address: serverAddress))
-        }
-    }
-    
-    /// Get last VPN connectino error.
-    /// Currently detects only errors from OpenVPN connection.
-    private func lastError() -> Error? {
-        let defaults = UserDefaults(suiteName: appGroup)
-        let errorKey = "TunnelKitLastError"
-        guard let lastError = defaults?.object(forKey: errorKey) else {
-            return nil
-        }
-        if let error = lastError as? String {
-            switch error {
-            case "tlsServerVerification": return ProtonVpnError.tlsServerVerification
-            case "tlsInitialization": return ProtonVpnError.tlsInitialisation
-            default: break
-            }
-        }
-        if let errorString = lastError as? String {
-            return NSError(code: 0, localizedDescription: errorString)
-        }
-        return nil
-    }
-    
-    // swiftlint:disable function_body_length
+
     /*
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
     private func prepareManagers() {
-        let dispatchGroup = DispatchGroup()
-        
-        var openVpnCurrentlyActive = false
-        var wireGuardVpnCurrentlyActive = false
-        
-        dispatchGroup.enter()
-        ikeProtocolFactory.vpnProviderManager(for: .status) { _, _ in
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        openVpnProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
-            guard let `self` = self, let manager = manager else {
-                dispatchGroup.leave()
+        vpnStateConfiguration.determineActiveVpnProtocol { [weak self] vpnProtocol in
+            guard let self = self else {
                 return
             }
-            
-            let state = self.newState(forManager: manager)
-            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
-                openVpnCurrentlyActive = true
-            }
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.enter()
-        wireguardProtocolFactory.vpnProviderManager(for: .status) { [weak self] manager, error in
-            guard let `self` = self, let manager = manager else {
-                dispatchGroup.leave()
-                return
-            }
-            
-            let state = self.newState(forManager: manager)
-            if state.stableConnection || state.volatileConnection { // state is connected or in some kind of transition state
-                wireGuardVpnCurrentlyActive = true
-            }
-            
-            dispatchGroup.leave()
-        }
-        
-        dispatchGroup.notify(queue: .main) { [weak self] in
-            guard let `self` = self else { return }
-            
-            // OpenVPN takes precedence but if neither are active, then it should remain unchanged
-            if openVpnCurrentlyActive {
-                self.currentVpnProtocol = .openVpn(.undefined)
-            } else if wireGuardVpnCurrentlyActive {
-                self.currentVpnProtocol = .wireGuard
-            } else {
-                self.currentVpnProtocol = .ike
-            }
+
+            self.currentVpnProtocol = vpnProtocol
 
             // connected to a protocol that requires local agent, but local agent is nil and VPN
             // This is connected means the app was started while a VPN connection is already active
@@ -656,15 +567,14 @@ public class VpnManager: VpnManagerProtocol {
                     }
                 }
             }
-            
+
             self.setState()
-            
+
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.vpnStatusChanged),
                                                    name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
         }
     }
-    // swiftlint:enable function_body_length
     
     @objc private func vpnStatusChanged() {
         setState()
