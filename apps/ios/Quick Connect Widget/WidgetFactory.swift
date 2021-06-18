@@ -30,9 +30,6 @@ final class WidgetFactory {
 
     private let alertService = ExtensionAlertService()
     private let propertiesManager = PropertiesManager()
-    private let alamofireWrapper = AlamofireWrapperImplementation()
-    private let vpnAuthenticationKeychain = VpnAuthenticationKeychain(accessGroup: "\(Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String)prt.ProtonVPN")
-    private let keychain = VpnKeychain()
     
     init() {
         setUpNSCoding(withModuleName: "ProtonVPN")
@@ -42,16 +39,8 @@ final class WidgetFactory {
     func makeTodayViewModel() -> TodayViewModel {
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
-        let vpnAuthentication = VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthenticationKeychain)
-        let vpnManager = VpnManager(ikeFactory: IkeProtocolFactory(),
-                                    openVpnFactory: openVpnFactory,
-                                    wireguardProtocolFactory: wireguardVpnFactory,
-                                    appGroup: appGroup,
-                                    vpnAuthentication: vpnAuthentication,
-                                    vpnKeychain: keychain,
-                                    propertiesManager: propertiesManager)
-
-        let viewModel = TodayViewModel(propertiesManager: propertiesManager, vpnManager: vpnManager)
+        let vpnStateConfiguration = VpnStateConfigurationManager(ikeProtocolFactory: IkeProtocolFactory(), openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardVpnFactory, propertiesManager: propertiesManager, appGroup: appGroup)
+        let viewModel = TodayViewModel(vpnStateConfiguration: vpnStateConfiguration)
         alertService.delegate = viewModel
         return viewModel
     }
