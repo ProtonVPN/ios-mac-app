@@ -109,7 +109,7 @@ public class VpnGateway: VpnGatewayProtocol {
     private let siriHelper: SiriHelperProtocol?
     
     private var tier: Int {
-        return (try? vpnKeychain.fetch().maxTier) ?? CoreAppConstants.VpnTiers.free
+        return (try? userTier()) ?? CoreAppConstants.VpnTiers.free
     }
 
     private var serverManager: ServerManager {
