@@ -57,7 +57,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     var contentChanged: (() -> Void)?
-    var connectionChanged: (() -> Void)?
     
     private let serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
     private var userTier: Int = 0
@@ -203,11 +202,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
         
         NotificationCenter.default.addObserver(self, selector: #selector(activeServerTypeSet),
                                                name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(connectionStateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
                                                name: VpnKeychain.vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadContent),
                                                name: serverManager.contentChanged, object: nil)
     }
     
@@ -236,20 +233,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     @objc private func activeServerTypeSet() {
         guard propertiesManager.serverTypeToggle != activeView else { return }
-        
-        resetCurrentState()
+        reloadContent()
     }
 
-    @objc private func resetCurrentState() {        
-        setStateOf(type: propertiesManager.serverTypeToggle)
-        contentChanged?()
-    }
-    
-    @objc private func connectionStateChanged() {
-        connectionChanged?()
-    }
-    
     @objc private func reloadContent() {
+        setTier()
+        setStateOf(type: propertiesManager.serverTypeToggle)
         contentChanged?()
     }
 }

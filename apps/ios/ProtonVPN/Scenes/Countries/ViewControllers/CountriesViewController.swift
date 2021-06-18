@@ -49,13 +49,7 @@ final class CountriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewModel?.contentChanged = { [weak self] in self?.contentChanged() }
-        viewModel?.connectionChanged = { [secureCoreSwitch, viewModel] in
-            DispatchQueue.main.async {
-                secureCoreSwitch?.isEnabled = viewModel?.enableViewToggle ?? false
-            }
-        }
-        
+        viewModel?.contentChanged = { [weak self] in self?.contentChanged() }        
         setupView()
         setupConnectionBar()
         setupSecureCoreBar()
