@@ -47,7 +47,7 @@ final class ServerViewCell: UITableViewCell {
             
             backgroundColor = viewModel.backgroundColor
             selectionStyle = .none
-            
+            viewModel.updateTier()
             viewModel.connectionChanged = { [weak self] in self?.stateChanged() }
             serverNameLabel.text = viewModel.description
             serverNameLabel.isHidden = viewModel.viaCountry != nil

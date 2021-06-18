@@ -34,13 +34,7 @@ class ServerItemViewModel {
     private var planService: PlanService
     private let connectionStatusService: ConnectionStatusService
     
-    private var userTier: Int {
-        if let vpnGateway = vpnGateway {
-            return (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
-        } else { // not logged in
-            return CoreAppConstants.VpnTiers.plus
-        }
-    }
+    private var userTier: Int = CoreAppConstants.VpnTiers.plus
     
     var isUsersTierTooLow: Bool {
         return userTier < serverModel.tier
@@ -167,7 +161,9 @@ class ServerItemViewModel {
             loginService.presentSignup()
             return
         }
-
+        
+        updateTier()
+        
         if underMaintenance {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
@@ -179,6 +175,18 @@ class ServerItemViewModel {
         } else {
             vpnGateway.connectTo(server: serverModel)
             connectionStatusService.presentStatusViewController()
+        }
+    }
+    
+    func updateTier() {
+        do {
+            if let vpnGateway = vpnGateway {
+                userTier = try vpnGateway.userTier()
+            } else { // not logged in
+                userTier = CoreAppConstants.VpnTiers.plus
+            }
+        } catch {
+            userTier = CoreAppConstants.VpnTiers.free
         }
     }
     
