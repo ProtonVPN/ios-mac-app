@@ -34,7 +34,13 @@ class ServerItemViewModel {
     private var planService: PlanService
     private let connectionStatusService: ConnectionStatusService
     
-    private let userTier: Int
+    private var userTier: Int {
+        if let vpnGateway = vpnGateway {
+            return (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
+        } else { // not logged in
+            return CoreAppConstants.VpnTiers.plus
+        }
+    }
     
     var isUsersTierTooLow: Bool {
         return userTier < serverModel.tier
@@ -150,16 +156,6 @@ class ServerItemViewModel {
         isCountryConnected = vpnGateway?.connection == .connected
             && activeConnection?.server.isSecureCore == false
             && activeConnection?.server.countryCode == serverModel.countryCode
-        
-        do {
-            if let vpnGateway = vpnGateway {
-                userTier = try vpnGateway.userTier()
-            } else { // not logged in
-                userTier = CoreAppConstants.VpnTiers.plus
-            }
-        } catch {
-            userTier = CoreAppConstants.VpnTiers.free
-        }
         
         if canConnect {
             startObserving()
