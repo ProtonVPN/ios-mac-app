@@ -40,7 +40,6 @@ protocol TodayViewModelDelegate: AnyObject {
 
 final class TodayViewModel {
     private var reachability: Reachability?
-    private var timer: Timer?
     private let vpnStateConfiguration: VpnStateConfiguration
 
     weak var delegate: TodayViewModelDelegate?
@@ -52,9 +51,6 @@ final class TodayViewModel {
         reachability?.whenReachable = { [weak self] _ in self?.connectionChanged() }
         reachability?.whenUnreachable = { [weak self] _ in self?.delegate?.didChangeState(state: .unreachable) }
         try? reachability?.startNotifier()
-        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true, block: { [weak self] _ in
-            self?.connectionChanged()
-        })
     }
     
     func update(completion: (()-> Void)? = nil) {
