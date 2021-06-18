@@ -99,7 +99,6 @@ public class VpnGateway: VpnGatewayProtocol {
     
     private let vpnApiService: VpnApiService
     private let appStateManager: AppStateManager
-    private let serverManager: ServerManager
     private let profileManager: ProfileManager
     private let serverTierChecker: ServerTierChecker
     private let vpnKeychain: VpnKeychainProtocol
@@ -109,8 +108,14 @@ public class VpnGateway: VpnGatewayProtocol {
     
     private let siriHelper: SiriHelperProtocol?
     
-    private var tier: Int
-    
+    private var tier: Int {
+        return (try? vpnKeychain.fetch().maxTier) ?? CoreAppConstants.VpnTiers.free
+    }
+
+    private var serverManager: ServerManager {
+        return ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
+    }
+
     private var globalVpnProtocol: VpnProtocol {
         return propertiesManager.vpnProtocol
     }
@@ -153,14 +158,7 @@ public class VpnGateway: VpnGatewayProtocol {
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        do {
-            tier = try vpnKeychain.fetch().maxTier
-        } catch {
-            // default tier was max before, probably not needed anymore
-            tier = CoreAppConstants.VpnTiers.free
-        }
         
-        serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
         profileManager = ProfileManager.shared
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
         
