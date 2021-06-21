@@ -131,6 +131,8 @@ class SettingsViewModel {
                                                name: appSessionManager.sessionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: propertiesManager).netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
+                                               name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
