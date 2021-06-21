@@ -174,6 +174,7 @@ class CountryItemViewModel {
     }
     
     private lazy var serverViewModels = { () -> [(tier: Int, viewModels: [ServerItemViewModel])] in
+        updateTier()
         var serverTypes = [(tier: Int, viewModels: [ServerItemViewModel])]()
         if !freeServerViewModels.isEmpty {
             serverTypes.append((tier: 0, viewModels: freeServerViewModels))
