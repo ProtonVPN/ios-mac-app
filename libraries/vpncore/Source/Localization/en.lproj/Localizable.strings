@@ -103,7 +103,7 @@
 "_switch_side_button_on" = "ON";
 "_switch_side_button_off" = "OFF";
 
-"_timeout_ks_ike_descritpion" = "Another application might interfere with Kill Switch.\n\nTo fix this problem switch to OpenVPN protocol or disable Kill Switch and retry.";
+"_timeout_ks_ike_descritpion" = "Another application might be interfering with Kill Switch. To fix this problem, switch to the OpenVPN protocol or disable Kill Switch and retry.";
 "_timeout_ks_ike_switch_protocol" = "Switch to OpenVPN and retry";
 
 // Notifications
@@ -144,7 +144,7 @@
 "_get_verification_email" = "Get verification email";
 "_get_verification_sms" = "Get verification SMS";
 "_select_verification_option" = "Please select a verification option to proceed:";
-"_select_verification_option_top_message" = "To prevent abuse, you must verify you are human.";
+"_select_verification_option_top_message" = "To prevent abuse, you must verify you are a human.";
 "_use_captcha_verification" = "Verify with CAPTCHA";
 "_use_other_email_address" = "Verify with email";
 "_use_sms_verification" = "Verify with SMS";
