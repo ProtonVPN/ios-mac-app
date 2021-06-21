@@ -20,31 +20,23 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import CommonCrypto
 import Foundation
-import WireguardSRP
 
 /**
  Ed25519 public key
  */
-public struct PublicKey {
+public struct PublicKey: Codable {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
     // ASN.1 DER
-    public let  derRepresentation: String
-
-    init(keyPair: Ed25519KeyPair) {
-        var error: NSError?
-        rawRepresentation = ([UInt8])(keyPair.publicKeyBytes()!)
-        derRepresentation = keyPair.publicKeyPKIXPem(&error)
-    }    
+    public let  derRepresentation: String      
 }
 
 /**
  Ed25519 private key
  */
-public struct PrivateKey {
+public struct PrivateKey: Codable {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
@@ -52,47 +44,13 @@ public struct PrivateKey {
     public let derRepresentation: String
 
     // base64 encoded X25519 key
-    public let base64X25519Representation: String
-
-    init(keyPair: Ed25519KeyPair) {
-        rawRepresentation = ([UInt8])(keyPair.privateKeyBytes()!)
-        derRepresentation = keyPair.privateKeyPKIXPem()
-        base64X25519Representation = keyPair.toX25519Base64()
-    }    
+    public let base64X25519Representation: String     
 }
 
 /**
  Ed25519 key pair
  */
-public struct VpnKeys {
+public struct VpnKeys: Codable {
     let privateKey: PrivateKey
     let publicKey: PublicKey
-
-    enum CodingKeys: String, CodingKey {
-        case privateKey
-        case publicKey
-    }
-
-    public init() {
-        let keyPair = Ed25519KeyPair()!
-        privateKey = PrivateKey(keyPair: keyPair)
-        publicKey = PublicKey(keyPair: keyPair)
-    }
-}    
-
-extension VpnKeys: Codable {
-    public init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        let privateKeyData = try values.decode(Data.self, forKey: .privateKey)
-        let publicKeyData = try values.decode(Data.self, forKey: .publicKey)
-        let keyPair = Ed25519CreateKeyPair(privateKeyData, publicKeyData)!
-        privateKey = PrivateKey(keyPair: keyPair)
-        publicKey = PublicKey(keyPair: keyPair)
-    }
-
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(Data(bytes: (privateKey.rawRepresentation)), forKey: .privateKey)
-        try container.encode(Data(bytes: (publicKey.rawRepresentation)), forKey: .publicKey)
-    }
 }

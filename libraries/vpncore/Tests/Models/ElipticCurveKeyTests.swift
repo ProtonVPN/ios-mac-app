@@ -65,11 +65,8 @@ final class ElipticCurveKeyTests: XCTestCase {
         let decoded = try! JSONDecoder().decode(VpnKeys.self, from: serialized)
         XCTAssertEqual(keys.privateKey.rawRepresentation, decoded.privateKey.rawRepresentation)
         XCTAssertEqual(keys.privateKey.derRepresentation, decoded.privateKey.derRepresentation)
-        XCTAssertEqual(keys.privateKey.base64Representation, decoded.privateKey.base64Representation)
         XCTAssertEqual(keys.privateKey.base64X25519Representation, decoded.privateKey.base64X25519Representation)
-        XCTAssertEqual(keys.privateKey.rawX25519Representation, decoded.privateKey.rawX25519Representation)
         XCTAssertEqual(keys.publicKey.rawRepresentation, decoded.publicKey.rawRepresentation)
         XCTAssertEqual(keys.publicKey.derRepresentation, decoded.publicKey.derRepresentation)
-        XCTAssertEqual(keys.publicKey.base64Representation, decoded.publicKey.base64Representation)
     }
 }
