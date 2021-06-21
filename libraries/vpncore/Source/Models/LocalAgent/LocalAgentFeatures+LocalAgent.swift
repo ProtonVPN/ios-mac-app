@@ -27,7 +27,7 @@ extension LocalAgentFeatures {
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
         switch netshield {
         case .off:
-            break
+            setInt("netshield-level", value: 0)
         case .level1:
             setInt("netshield-level", value: 1)
         case .level2:
