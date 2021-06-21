@@ -101,4 +101,14 @@ extension VpnManager: LocalAgentDelegate {
     func didChangeState(state: LocalAgentState) {
         PMLog.D("Local agent state changed to \(state)")
     }
+
+    func didChangeFeatures(netshield: NetShieldType, vpnAccelerator: Bool) {
+        if propertiesManager.netShieldType != netshield {
+            propertiesManager.netShieldType = netshield
+        }
+
+        if propertiesManager.vpnAcceleratorEnabled != vpnAccelerator {
+            propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
+        }
+    }
 }
