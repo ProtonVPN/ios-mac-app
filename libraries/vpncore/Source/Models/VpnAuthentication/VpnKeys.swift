@@ -31,16 +31,12 @@ public struct PublicKey {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
-    // base64 encoded raw key
-    public let base64Representation: String
-
     // ASN.1 DER
     public let  derRepresentation: String
 
     init(keyPair: Ed25519KeyPair) {
         var error: NSError?
         rawRepresentation = ([UInt8])(keyPair.publicKeyBytes()!)
-        base64Representation = keyPair.publicKeyPKIXBase64(&error)
         derRepresentation = keyPair.publicKeyPKIXPem(&error)
     }    
 }
@@ -52,23 +48,15 @@ public struct PrivateKey {
     // 32 byte Ed25519 key
     public let rawRepresentation: [UInt8]
 
-    // base64 encoded raw key
-    public let base64Representation: String
-
     // ASN.1 DER
     public let derRepresentation: String
-
-    // 32 byte X25519 key
-    public let rawX25519Representation: [UInt8]
 
     // base64 encoded X25519 key
     public let base64X25519Representation: String
 
     init(keyPair: Ed25519KeyPair) {
         rawRepresentation = ([UInt8])(keyPair.privateKeyBytes()!)
-        base64Representation = keyPair.privateKeyPKIXBase64()
         derRepresentation = keyPair.privateKeyPKIXPem()
-        rawX25519Representation = ([UInt8])(keyPair.toX25519()!)
         base64X25519Representation = keyPair.toX25519Base64()
     }    
 }
