@@ -71,7 +71,7 @@ class UserAccountUpdateViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "ProtonVPN"
-        view.wantsLayer
+        view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.protonGrey().cgColor
         serversView.wantsLayer = true
         serversView.layer?.backgroundColor = #colorLiteral(red: 0.1450980392, green: 0.1529411765, blue: 0.1725490196, alpha: 1)
