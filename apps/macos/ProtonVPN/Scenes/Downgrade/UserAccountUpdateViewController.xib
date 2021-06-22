@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="Image references" minToolsVersion="12.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -55,7 +55,7 @@
                             </constraints>
                             <textFieldCell key="cell" alignment="center" title="Your PLUS plan subscription ends in 24 hours" id="Nui-Nq-Z1L">
                                 <font key="font" metaFont="system" size="32"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
@@ -69,7 +69,7 @@
                             <rect key="frame" x="-2" y="257" width="443" height="38"/>
                             <textFieldCell key="cell" alignment="center" title="Renew your subscription now and continue enjoying access to PLUS servers and features." id="6lJ-zL-gQN">
                                 <font key="font" metaFont="system" size="16"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
@@ -83,7 +83,7 @@
                                             <rect key="frame" x="26" y="35" width="110" height="15"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="From PLUS server:" id="pQR-Gp-Wfp">
                                                 <font key="font" metaFont="cellTitle"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -99,7 +99,7 @@
                                             <rect key="frame" x="46" y="13" width="75" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="US-CA#63" id="nw8-gN-grr">
                                                 <font key="font" metaFont="system" size="14"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -120,7 +120,7 @@
                                             <rect key="frame" x="26" y="35" width="119" height="15"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="To FREE server:" id="a0C-Ng-HdC">
                                                 <font key="font" metaFont="cellTitle"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -136,7 +136,7 @@
                                             <rect key="frame" x="46" y="13" width="75" height="17"/>
                                             <textFieldCell key="cell" lineBreakMode="clipping" title="US-CA#63" id="JHG-2l-1CI">
                                                 <font key="font" metaFont="system" size="14"/>
-                                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                             </textFieldCell>
                                         </textField>
@@ -187,7 +187,7 @@
                             <rect key="frame" x="-2" y="114" width="288" height="19"/>
                             <textFieldCell key="cell" title="Upgrade again to enjoy all the features:" id="3q6-9N-7Kn">
                                 <font key="font" metaFont="system" size="16"/>
-                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
@@ -212,7 +212,7 @@
                                     <rect key="frame" x="28" y="-26" width="405" height="50"/>
                                     <textFieldCell key="cell" title="Hundreds of servers in 54 countries" id="hIg-ge-TOf">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
@@ -242,7 +242,7 @@
                                     <rect key="frame" x="28" y="-26" width="405" height="50"/>
                                     <textFieldCell key="cell" title="Connect up to 5 devices at the same time" id="xMb-XB-VeI">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
@@ -272,7 +272,7 @@
                                     <rect key="frame" x="28" y="0.0" width="405" height="50"/>
                                     <textFieldCell key="cell" title="Advanced features: NetShield, Secure Core, Tor, P2P" id="yPo-Bt-B26">
                                         <font key="font" metaFont="system" size="14"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
