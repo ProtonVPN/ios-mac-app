@@ -383,12 +383,24 @@ fileprivate extension VpnGateway {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         var reconnectInfo: VpnReconnectInfo?
         
-        if case .connected = connection, let server = appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
-            reconnectInfo = reconnectServer(downgradeInfo, oldServer: server)
+        let errorCallback: ErrorCallback = { error in
+            PMLog.D("Error received: \(error)", level: .error)
         }
+        
+        self.disconnect {
+            self.vpnApiService.sessions(success: { sessions in
+                self.propertiesManager.sessions = sessions
+                self.vpnApiService.clientCredentials(success: { credentials in
+                    self.vpnKeychain.store(vpnCredentials: credentials)
+                    if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+                        reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
+                    }
 
-        let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
-        alertService?.push(alert: alert)
+                    let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
+                    self.alertService?.push(alert: alert)
+                }, failure: errorCallback)
+            }, failure: errorCallback)
+        }
     }
     
     private func reconnectServer( _ downgradeInfo: VpnDowngradeInfo, oldServer: ServerModel? ) -> VpnReconnectInfo? {
