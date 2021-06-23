@@ -358,13 +358,10 @@ fileprivate extension VpnGateway {
 
         if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.plus {
             propertiesManager.secureCoreToggle = false
-            if propertiesManager.netShieldType == .level2 {
-                propertiesManager.netShieldType = .level1
-            }
         }
         
         if downgradeInfo.to.maxTier < CoreAppConstants.VpnTiers.basic {
-            propertiesManager.netShieldType = .none
+            propertiesManager.netShieldType = .off
         }
         
         guard downgradeInfo.to.maxTier < downgradeInfo.from.maxTier else { return }
