@@ -948,6 +948,14 @@
 		F349B1F52680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
 		F349B1F62680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
 		F349B1F72680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
+		F349B1F92683BBCB002C7A16 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F349B1FA2683BBCC002C7A16 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
+		F349B1FB2683BBD4002C7A16 /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
+		F349B1FC2683BBD4002C7A16 /* IKEv2AvailabilityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */; };
+		F349B1FD2683BBD7002C7A16 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */; };
+		F349B1FE2683BBD8002C7A16 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657AA025F6905900497451 /* OpenVPNTCPAvailabilityCheckerTests.swift */; };
+		F349B1FF2683BBDC002C7A16 /* SmartProtocolImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */; };
+		F349B2002683BBDC002C7A16 /* SmartProtocolImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */; };
 		F365355126383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
 		F365355226383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
 		F365355326383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
@@ -3176,6 +3184,7 @@
 				D523F11624B759A5007DB086 /* StringUrl.swift in Sources */,
 				D5C205382487A0CF004FB58B /* ProfileUtility.swift in Sources */,
 				D5C205392487A0CF004FB58B /* ServicePlanDataService.swift in Sources */,
+				F349B1FC2683BBD4002C7A16 /* IKEv2AvailabilityTests.swift in Sources */,
 				D5C2053A2487A0CF004FB58B /* StoreKitManager.swift in Sources */,
 				D5686B1B24E3D2D600CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D5C2053B2487A0CF004FB58B /* TrialChecker.swift in Sources */,
@@ -3203,6 +3212,7 @@
 				D5DC52C4252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				D5C205482487A0CF004FB58B /* AuthCredentials.swift in Sources */,
 				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
+				F349B2002683BBDC002C7A16 /* SmartProtocolImplementationTests.swift in Sources */,
 				D5C205492487A0CF004FB58B /* AuthKeychain.swift in Sources */,
 				D5C2054A2487A0CF004FB58B /* VpnCredentials.swift in Sources */,
 				D5C2054B2487A0CF004FB58B /* VpnKeychain.swift in Sources */,
@@ -3218,6 +3228,7 @@
 				E9DC7A2B262DC032001A0FC0 /* ServerModelMock.swift in Sources */,
 				D5C2054F2487A0CF004FB58B /* Arithmetic.swift in Sources */,
 				D5C205502487A0CF004FB58B /* HexColor.swift in Sources */,
+				F349B1F92683BBCB002C7A16 /* OpenVpnConfigTests.swift in Sources */,
 				D5D2945025A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3653569263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D5C205512487A0CF004FB58B /* LocationUtility.swift in Sources */,
@@ -3287,6 +3298,7 @@
 				E9DC7A23262DC011001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */,
 				D5C2046724866AD9004FB58B /* PropertiesManager.swift in Sources */,
 				F30B9E77262886C80094C65E /* VpnKeys.swift in Sources */,
+				F349B1FE2683BBD8002C7A16 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */,
 				D5C204522486692B004FB58B /* ProfileType.swift in Sources */,
 				D5C204282486664E004FB58B /* ServerType.swift in Sources */,
 				D523F11A24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
@@ -3550,6 +3562,7 @@
 				D5686B1A24E3D2BF00CC8836 /* ValidateSubscriptionResponse.swift in Sources */,
 				D5C204D724866BB6004FB58B /* NSCoding+Extension.swift in Sources */,
 				D5C204D824866BB6004FB58B /* NSError+Extension.swift in Sources */,
+				F349B1FF2683BBDC002C7A16 /* SmartProtocolImplementationTests.swift in Sources */,
 				D5C204D924866BB6004FB58B /* String+Extension.swift in Sources */,
 				F320563425E7D7CB00566DB7 /* FactoryMock.swift in Sources */,
 				D5C204DA24866BB6004FB58B /* Collection+Extension.swift in Sources */,
@@ -3641,6 +3654,7 @@
 				D5DCCACD252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5C204A324866B81004FB58B /* MapConstants.swift in Sources */,
 				D5D2946325A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
+				F349B1FD2683BBD7002C7A16 /* OpenVPNTCPAvailabilityCheckerTests.swift in Sources */,
 				D5C204A424866B81004FB58B /* ProfileConstants.swift in Sources */,
 				4241A8DE24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */,
 				D5C204A524866B81004FB58B /* IkeProtocolFactory.swift in Sources */,
@@ -3672,6 +3686,7 @@
 				D5C204B124866B81004FB58B /* KeychainError.swift in Sources */,
 				D5D2948A25A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				D5C204B224866B81004FB58B /* NetworkError.swift in Sources */,
+				F349B1FB2683BBD4002C7A16 /* IKEv2AvailabilityTests.swift in Sources */,
 				D5C204B324866B81004FB58B /* ProtonApiError.swift in Sources */,
 				D5C204B424866B81004FB58B /* ProtonVpnError.swift in Sources */,
 				D5C204B524866B81004FB58B /* UserError.swift in Sources */,
@@ -3702,6 +3717,7 @@
 				D5C204C624866B81004FB58B /* ServicePlanDetails.swift in Sources */,
 				D5686B1C24E3D2D700CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D55D790D24978996009669E0 /* APILogger.swift in Sources */,
+				F349B1FA2683BBCC002C7A16 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204C724866B81004FB58B /* PaymentAction.swift in Sources */,
 				F365355926384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				D5C204C824866B81004FB58B /* PaymentToken.swift in Sources */,
