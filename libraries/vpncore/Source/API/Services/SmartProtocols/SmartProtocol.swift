@@ -45,7 +45,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        var sortOrder: Int {
+        var priority: Int {
             #if os(iOS)
             switch self {
             case .openVpnUdp:
@@ -103,7 +103,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         }
 
         group.notify(queue: queue) {
-            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.sortOrder < rhs.sortOrder })
+            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best] else {
                 #if os(iOS)
