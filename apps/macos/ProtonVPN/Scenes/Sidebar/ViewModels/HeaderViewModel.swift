@@ -97,18 +97,18 @@ final class HeaderViewModel {
         let name: String
         switch vpnProtocol {
         case .ike:
-            name = "IKEv2"
+            name = LocalizedString.ikev2
         case let .openVpn(transport):
             switch transport {
             case .tcp:
-                name = "OpenVPN (TCP)"
+                name = "\(LocalizedString.openVpn) (\(LocalizedString.tcp))"
             case .udp:
-                name = "OpenVPN (UDP)"
+                name = "\(LocalizedString.openVpn) (\(LocalizedString.udp))"
             case .undefined:
-                name = "OpenVPN"
+                name = LocalizedString.openVpn
             }
         case .wireGuard:
-            name = "WireGuard"
+            name = LocalizedString.wireguard
         }
 
         return name.attributed(withColor: NSColor.protonWhite(), fontSize: 12)
