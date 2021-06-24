@@ -413,7 +413,7 @@ fileprivate extension VpnGateway {
             serverType: serverTypeToggle,
             connectionType: .fastest,
             vpnProtocol: propertiesManager.vpnProtocol,
-            netShieldType: .off,
+            netShieldType: propertiesManager.netShieldType ?? .off,
             profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
