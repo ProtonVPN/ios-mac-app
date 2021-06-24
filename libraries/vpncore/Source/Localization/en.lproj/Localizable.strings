@@ -519,7 +519,7 @@
 "_logs" = "Logs";
 "_application_logs" = "Application Logs";
 "_open_vpn_logs" = "OpenVPN Logs";
-"_wireguard_logs" = "WireGuard Logs";
+"_wireguard_logs" = "WireGuard® Logs";
 "_activate_widget" = "Activate Widget";
 "_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";
