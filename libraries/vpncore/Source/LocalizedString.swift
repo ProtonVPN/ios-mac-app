@@ -1422,9 +1422,9 @@ public enum LocalizedString {
   public static let welcomeTitle = LocalizedString.tr("Localizable", "_welcome_title")
   /// iOS Widget
   public static let widget = LocalizedString.tr("Localizable", "_widget")
-  /// WireGuard
+  /// WireGuard® (beta)
   public static let wireguard = LocalizedString.tr("Localizable", "_wireguard")
-  /// WireGuard Logs
+  /// WireGuard® (beta) Logs
   public static let wireguardLogs = LocalizedString.tr("Localizable", "_wireguard_logs")
   /// You are not connected
   public static let youAreNotConnected = LocalizedString.tr("Localizable", "_you_are_not_connected")

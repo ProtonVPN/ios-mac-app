@@ -101,11 +101,11 @@ final class HeaderViewModel {
         case let .openVpn(transport):
             switch transport {
             case .tcp:
-                name = "\(LocalizedString.openVpn) (\(LocalizedString.tcp))"
+                name = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
             case .udp:
-                name = "\(LocalizedString.openVpn) (\(LocalizedString.udp))"
+                name = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
             case .undefined:
-                name = LocalizedString.openVpn
+                name = LocalizedString.openvpn
             }
         case .wireGuard:
             name = LocalizedString.wireguard
