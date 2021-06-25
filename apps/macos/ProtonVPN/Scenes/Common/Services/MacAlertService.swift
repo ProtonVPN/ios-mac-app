@@ -119,10 +119,7 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is MITMAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is KillSwitchErrorAlert:
-            showDefaultSystemAlert(alert)
+            showDefaultSystemAlert(alert)            
             
         case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
             show(killSwitchRequiresSwift5Alert)           

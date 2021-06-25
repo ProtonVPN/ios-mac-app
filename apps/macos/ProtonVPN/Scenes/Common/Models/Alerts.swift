@@ -36,20 +36,6 @@ public class ActiveFirewallAlert: SystemAlert {
     }
 }
 
-public class KillSwitchErrorAlert: ExpandableSystemAlert {
-    public var title: String? = LocalizedString.killSwitchErrorTitle
-    public var message: String? = LocalizedString.killSwitchErrorHead
-    public var expandableInfo: String? = LocalizedString.killSwitchErrorInfo
-    public var footInfo: String? = LocalizedString.killSwitchErrorFoot
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init() {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .cancel, handler: nil))
-    }
-}
-
 public class KillSwitchRequiresSwift5Alert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
     public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupMsg
