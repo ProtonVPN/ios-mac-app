@@ -23,19 +23,6 @@
 import Foundation
 import vpncore
 
-public class ActiveFirewallAlert: SystemAlert {
-    public var title: String? = LocalizedString.existingFirewallPopupTitle
-    public var message: String? = LocalizedString.existingFirewallPopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public class KillSwitchRequiresSwift5Alert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
     public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupMsg

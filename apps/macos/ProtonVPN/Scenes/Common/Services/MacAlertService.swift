@@ -109,9 +109,6 @@ extension MacAlertService: CoreAlertService {
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
             
-        case is ActiveFirewallAlert:
-            showDefaultSystemAlert(alert)
-            
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
             
