@@ -524,8 +524,8 @@
 		E9492EDA2669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */; };
-		E98EE34C2671EC2400B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34B2671EC2400B86BA0 /* WireGuardKit */; };
-		E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
+		E98EE34C2671EC2400B86BA0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34B2671EC2400B86BA0 /* SwiftPackageProductDependency */; };
+		E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */; };
 		E992F2822667603F00169C6B /* FeatureFlags+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992F2812667603F00169C6B /* FeatureFlags+Local.swift */; };
 		E9BAC09B2678DA3B00027DD6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = D557D4FB264AC32D007E4396 /* Localizable.strings */; };
 		E9BAC09C2678DA3B00027DD6 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = D557D4FD264AC32D007E4396 /* Localizable.stringsdict */; };
@@ -535,7 +535,7 @@
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		F3521E1A264AA40F0070F177 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
@@ -1083,7 +1083,7 @@
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
-				E98EE34C2671EC2400B86BA0 /* WireGuardKit in Frameworks */,
+				E98EE34C2671EC2400B86BA0 /* BuildFile in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1139,7 +1139,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */,
+				E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2571,7 +2571,7 @@
 			);
 			name = ProtonVPN;
 			packageProductDependencies = (
-				E98EE34B2671EC2400B86BA0 /* WireGuardKit */,
+				E98EE34B2671EC2400B86BA0 /* SwiftPackageProductDependency */,
 			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
@@ -2691,7 +2691,7 @@
 			);
 			name = "WireGuardiOS Extension";
 			packageProductDependencies = (
-				E98EE34D2671EDD200B86BA0 /* WireGuardKit */,
+				E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -2817,7 +2817,7 @@
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
-				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -3644,7 +3644,7 @@
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
 				B293D83C2660FC6100E0ECCB /* SettingsRobot.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
-				F3521E1A264AA40F0070F177 /* (null) in Sources */,
+				F3521E1A264AA40F0070F177 /* BuildFile in Sources */,
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
@@ -4798,7 +4798,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+		E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4809,14 +4809,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E98EE34B2671EC2400B86BA0 /* WireGuardKit */ = {
+		E98EE34B2671EC2400B86BA0 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */;
 			productName = WireGuardKit;
 		};
-		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
+		E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
