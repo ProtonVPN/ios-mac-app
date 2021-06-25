@@ -10,7 +10,7 @@
 import Foundation
 import vpncore
 
-class VpnProtocolViewModel {
+final class VpnProtocolViewModel {
     
     var protocolChanged: ((VpnProtocol) -> Void)?
     var contentChanged: (() -> Void)?
