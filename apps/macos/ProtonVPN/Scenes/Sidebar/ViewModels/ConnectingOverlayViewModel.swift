@@ -225,7 +225,7 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgian, .main, { self.retryConnection() })
+        return (LocalizedString.tryAgain, .main, { self.retryConnection() })
     }
     
     private var retryWithoutKSButton: ButtonInfo {

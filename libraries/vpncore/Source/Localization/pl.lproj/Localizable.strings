@@ -1723,7 +1723,7 @@
 "_try_again_without_killswitch" = "Wyłącz Kill Switch i ponów próbę";
 
 /* MacOS: button in connecting overlay */
-"_try_agian" = "Spróbuj ponownie";
+"_try_again" = "Spróbuj ponownie";
 
 /* iOS Settings -> Protocol -> OpenVPN: UDP option */
 "_udp" = "UDP";

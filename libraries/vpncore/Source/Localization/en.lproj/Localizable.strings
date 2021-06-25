@@ -79,7 +79,7 @@
 "_connected_to_vpn" = "Connected to %@";
 "_not_connected" = "Not Connected";
 "_you_are_not_connected" = "You are not connected";
-"_try_agian" = "Try again";
+"_try_again" = "Try again";
 "_try_again_without_killswitch" = "Disable Kill Switch and retry";
 "_retry" = "Retry";
 "_free_servers" = "FREE Servers";

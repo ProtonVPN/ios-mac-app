@@ -1333,7 +1333,7 @@
 "_trial_welcome_heading_iOS" = "Üdvözlünk a fedélzeten";
 
 /* MacOS: button in connecting overlay */
-"_try_agian" = "Próbáld újra";
+"_try_again" = "Próbáld újra";
 
 /* iOS Settings -> Protocol -> OpenVPN: UDP option */
 "_udp" = "UDP";

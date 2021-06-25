@@ -1298,10 +1298,10 @@ public enum LocalizedString {
   public static let troubleshootItemProxyTitle = LocalizedString.tr("Localizable", "_troubleshoot_item_proxy_title")
   /// Troubleshooting
   public static let troubleshootTitle = LocalizedString.tr("Localizable", "_troubleshoot_title")
+  /// Try again
+  public static let tryAgain = LocalizedString.tr("Localizable", "_try_again")
   /// Disable Kill Switch and retry
   public static let tryAgainWithoutKillswitch = LocalizedString.tr("Localizable", "_try_again_without_killswitch")
-  /// Try again
-  public static let tryAgian = LocalizedString.tr("Localizable", "_try_agian")
   /// By activating Kill Switch, you won't be able to access devices on your local network? \n\nContinue?
   public static let turnKsOnDescription = LocalizedString.tr("Localizable", "_turn_ks_on_description")
   /// Turn Kill Switch on?
