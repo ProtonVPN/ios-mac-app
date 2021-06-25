@@ -125,7 +125,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     private func setupProtocolItem() {
         protocolLabel.attributedStringValue = LocalizedString
-            .protocolLabel
+            .protocol
             .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         protocolList.isBordered = false
         protocolList.target = self
@@ -162,10 +162,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     private func setupAlternativeRoutingItem() {
-        alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemTitleAlternative.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        alternativeRoutingLabel.attributedStringValue = LocalizedString.troubleshootItemAltTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         alternativeRoutingInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        let tooltip = LocalizedString.troubleshootItemDescriptionAlternative
-            .replacingOccurrences(of: LocalizedString.troubleshootItemLinkAlternative1, with: "")
+        let tooltip = LocalizedString.troubleshootItemAltDescription
+            .replacingOccurrences(of: LocalizedString.troubleshootItemAltLink1, with: "")
             .trimmingCharacters(in: .whitespacesAndNewlines)
         alternativeRoutingInfoIcon.toolTip = String(tooltip)
 
@@ -192,10 +192,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
     
     private func setupAllowLANItem() {
-        allowLANLabel.attributedStringValue = LocalizedString.allowLANTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        allowLANLabel.attributedStringValue = LocalizedString.allowLanTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
 
         allowLANIcon.image = NSImage(named: NSImage.Name("info_green"))
-        allowLANIcon.toolTip = LocalizedString.allowLANInfo
+        allowLANIcon.toolTip = LocalizedString.allowLanInfo
 
         allowLANButton.setState(viewModel.allowLAN ? .on : .off)
         allowLANButton.delegate = self

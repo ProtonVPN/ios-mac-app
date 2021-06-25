@@ -48,14 +48,14 @@ class TrialWelcomeViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let title = NSMutableAttributedString(attributedString: String(format: LocalizedString.enjoyForFree, LocalizedString.plus).attributed(withColor: .protonWhite(), fontSize: 48, bold: true))
+        let title = NSMutableAttributedString(attributedString: LocalizedString.enjoyForFree(LocalizedString.plus).attributed(withColor: .protonWhite(), fontSize: 48, bold: true))
         let plusRange = (title.string as NSString).range(of: LocalizedString.plus)
         title.addAttribute(.foregroundColor, value: NSColor.protonUpsellGreen(), range: plusRange)
         titleLabel.attributedStringValue = title
         
-        let description = NSMutableAttributedString(attributedString: String(format: LocalizedString.welcomeGiftDescription, LocalizedString.protonVpnPlus).attributed(withColor: .protonWhite(), fontSize: 20))
+        let description = NSMutableAttributedString(attributedString: LocalizedString.welcomeGiftDescription(LocalizedString.protonvpnPlus).attributed(withColor: .protonWhite(), fontSize: 20))
         let descriptionFullRange = (description.string as NSString).range(of: description.string)
-        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonVpnPlus)
+        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonvpnPlus)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 6
@@ -66,7 +66,7 @@ class TrialWelcomeViewController: NSViewController {
         
         secureCoreLabel.attributedStringValue = LocalizedString.secureCore.attributed(withColor: .protonWhite(), fontSize: 20)
         p2pLabel.attributedStringValue = LocalizedString.p2pServers.attributed(withColor: .protonWhite(), fontSize: 20)
-        connectionsLabel.attributedStringValue = LocalizedString.connectionsAvailable.attributed(withColor: .protonWhite(), fontSize: 20)
+        connectionsLabel.attributedStringValue = LocalizedString._5Connections.attributed(withColor: .protonWhite(), fontSize: 20)
         countriesLabel.attributedStringValue = LocalizedString.multipleCountries.attributed(withColor: .protonWhite(), fontSize: 20)
         
         skipButton.title = LocalizedString.skip

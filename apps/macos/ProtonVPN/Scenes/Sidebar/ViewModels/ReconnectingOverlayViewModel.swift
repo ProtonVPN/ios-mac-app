@@ -29,7 +29,7 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
         case .connected, .error, .disconnected:
             return super.secondString
         default:
-            return (LocalizedString.qsReestablishingConnection + "\n\n" + LocalizedString.qsYourIpWillNotBeExposed)
+            return (LocalizedString.reestablishVpnConnection + "\n\n" + LocalizedString.ipWillNotBeExposed)
             .attributed(withColor: .protonWhite(), fontSize: 20)
         }
     }
@@ -39,7 +39,7 @@ class ReconnectingOverlayViewModel: ConnectingOverlayViewModel {
         case .connected:
             return LocalizedString.successfullyConnected.attributed(withColor: .protonWhite(), fontSize: 12)
         default:
-            return LocalizedString.qsApplyingSettings.attributed(withColor: .white, fontSize: 15)
+            return LocalizedString.applyingSettings.attributed(withColor: .white, fontSize: 15)
         }
     }
 }

@@ -84,7 +84,7 @@ class NotificationManager: NSObject, NotificationManagerProtocol {
     }
     
     private func connectInformativeText(forServer server: ServerModel) -> String {
-        return String(format: LocalizedString.ipValue, appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
+        return LocalizedString.ipValue(appStateManager.activeConnection()?.serverIp.exitIp ?? LocalizedString.unavailable)
     }
     
     private func fire(_ notification: NSUserNotification) {
@@ -106,9 +106,9 @@ extension NotificationManager: NSUserNotificationCenterDelegate {
 extension NotificationManager {
     func displayServerGoingOnMaintenance() {
         let notification = NSUserNotification()
-        notification.title = LocalizedString.onMaintenanceDetectedTitle
-        notification.subtitle = LocalizedString.onMaintenanceDetectedSubtitle
-        notification.informativeText = LocalizedString.onMaintenanceDetectedDescription
+        notification.title = LocalizedString.maintenanceOnServerDetectedTitle
+        notification.subtitle = LocalizedString.maintenanceOnServerDetectedSubtitle
+        notification.informativeText = LocalizedString.maintenanceOnServerDetectedSubtitle
         notification.hasActionButton = false
         fire(notification)
     }

@@ -322,7 +322,7 @@ final class ConnectionSettingsViewModel {
         default:
             return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         }
-        return (LocalizedString.openVpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return (LocalizedString.openvpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
     // MARK: - Values

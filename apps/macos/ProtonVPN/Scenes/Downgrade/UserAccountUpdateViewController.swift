@@ -135,15 +135,15 @@ class UserAccountUpdateViewController: NSViewController {
         setServerHeader(toServer, LocalizedString.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
     
-    private func setServerHeader( _ server: ServerModel, _ headerFormat: String, _ flagIV: NSImageView, _ serverName: NSTextField, _ serverHeader: NSTextField ) {
+    private func setServerHeader( _ server: ServerModel, _ headerFormat: (String) -> String, _ flagIV: NSImageView, _ serverName: NSTextField, _ serverHeader: NSTextField ) {
         serverName.stringValue = server.name
         flagIV.image = NSImage(named: server.countryCode.lowercased() + "-plain")
-        serverHeader.stringValue = String(format: headerFormat, serverType(server))
+        serverHeader.stringValue = headerFormat(serverType(server))
     }
     
     private func serverType( _ server: ServerModel ) -> String {
-        let tiers = [ LocalizedString.tierFREE, LocalizedString.tierBASIC,
-                      LocalizedString.tierPLUS, LocalizedString.tierVISIONARY]
+        let tiers = [ LocalizedString.tierFree, LocalizedString.tierBasic,
+                      LocalizedString.tierPlus, LocalizedString.tierVisionary]
         
         return tiers[server.tier]
     }

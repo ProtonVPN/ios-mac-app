@@ -46,14 +46,14 @@ class TrialExpiredViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let title = NSMutableAttributedString(attributedString: String(format: LocalizedString.freeTrialExpiredTitle, LocalizedString.expired).attributed(withColor: .protonWhite(), fontSize: 40, bold: true))
+        let title = NSMutableAttributedString(attributedString: LocalizedString.freeTrialExpiredTitle(LocalizedString.expired).attributed(withColor: .protonWhite(), fontSize: 40, bold: true))
         let plusRange = (title.string as NSString).range(of: LocalizedString.expired)
         title.addAttribute(.foregroundColor, value: NSColor.protonUpsellRed(), range: plusRange)
         titleLabel.attributedStringValue = title
         
-        let description = NSMutableAttributedString(attributedString: String(format: LocalizedString.freeTrialExpiredDescription, LocalizedString.protonVpnPlus).attributed(withColor: .protonWhite(), fontSize: 20))
+        let description = NSMutableAttributedString(attributedString: LocalizedString.freeTrialExpiredDescription(LocalizedString.protonvpnPlus).attributed(withColor: .protonWhite(), fontSize: 20))
         let descriptionFullRange = (description.string as NSString).range(of: description.string)
-        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonVpnPlus)
+        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonvpnPlus)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 4
@@ -64,7 +64,7 @@ class TrialExpiredViewController: NSViewController {
         
         secureCoreLabel.attributedStringValue = LocalizedString.secureCore.attributed(withColor: .protonWhite(), fontSize: 20)
         p2pLabel.attributedStringValue = LocalizedString.p2pServers.attributed(withColor: .protonWhite(), fontSize: 20)
-        connectionsLabel.attributedStringValue = LocalizedString.connectionsAvailable.attributed(withColor: .protonWhite(), fontSize: 20)
+        connectionsLabel.attributedStringValue = LocalizedString._5Connections.attributed(withColor: .protonWhite(), fontSize: 20)
         countriesLabel.attributedStringValue = LocalizedString.multipleCountries.attributed(withColor: .protonWhite(), fontSize: 20)
         
         laterButton.title = LocalizedString.maybeLater

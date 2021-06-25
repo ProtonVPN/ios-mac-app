@@ -216,7 +216,7 @@ final class HeaderViewModel {
     }
     
     private func formIpLabel() -> NSAttributedString {
-        let ip = String(format: LocalizedString.ipValue, getCurrentIp() ?? LocalizedString.unavailable)
+        let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.attributed(withColor: .protonWhite(), fontSize: 14, alignment: .left))
         let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
         attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 14), range: ipRange)

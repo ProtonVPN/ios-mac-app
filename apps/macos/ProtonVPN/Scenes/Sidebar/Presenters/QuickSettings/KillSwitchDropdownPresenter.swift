@@ -52,8 +52,8 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsKSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.qsKSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsKillSwitchDescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsKillSwitchNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
         viewController?.dropdownUgradeButton.isHidden = true
         if propertiesManager.featureFlags.isNetShield {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
@@ -66,7 +66,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var killSwitchOff: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
-        let text = LocalizedString.killSwitch + " " + LocalizedString.off.capitalized
+        let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOff.capitalized
         let icon = #imageLiteral(resourceName: "qs_killswitch_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
@@ -78,7 +78,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var killSwitchOn: QuickSettingGenericOption {
         let active = propertiesManager.killSwitch
-        let text = LocalizedString.killSwitch + " " + LocalizedString.on.capitalized
+        let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOn.capitalized
         let icon = #imageLiteral(resourceName: "qs_killswitch_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, selectCallback: {
             let wrapper = {
