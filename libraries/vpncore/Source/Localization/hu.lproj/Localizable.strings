@@ -131,7 +131,7 @@
 "_connecting_vpn" = "Kapcsolódás %@";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "Kapcsolódás...";
+"_connectingDotDotDot" = "Kapcsolódás...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Kapcsolódás";

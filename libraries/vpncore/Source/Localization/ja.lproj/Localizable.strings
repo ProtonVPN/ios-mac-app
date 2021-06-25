@@ -131,7 +131,7 @@
 "_connecting_vpn" = "%@ に接続中";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "接続中...";
+"_connectingDotDotDot" = "接続中...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "接続";

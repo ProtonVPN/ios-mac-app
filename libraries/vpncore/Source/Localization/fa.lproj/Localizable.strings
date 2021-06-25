@@ -152,7 +152,7 @@
 "_connecting_vpn" = "درحال اتصال به %@";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "درحال اتصال...";
+"_connectingDotDotDot" = "درحال اتصال...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "اتصال";

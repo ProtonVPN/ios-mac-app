@@ -61,7 +61,7 @@ public enum ProtonVpnError: LocalizedError {
         case .vpnProperties:
             return LocalizedString.errorVpnProperties
         case .decode(let location):
-            return String(format: LocalizedString.errorDecode, location)
+            return LocalizedString.errorDecode(location)
         case .connectionFailed:
             return LocalizedString.connectionFailed
         case .vpnManagerUnavailable:

@@ -97,13 +97,13 @@ public enum AccountPlan: String {
     public var name: String {
         switch self {
         case .basic:
-            return LocalizedString.tierBASIC
+            return LocalizedString.tierBasic
         case .plus:
-            return LocalizedString.tierPLUS
+            return LocalizedString.tierPlus
         case .visionary:
-            return LocalizedString.tierVISIONARY
+            return LocalizedString.tierVisionary
         default:
-            return LocalizedString.tierFREE
+            return LocalizedString.tierFree
         }
     }
     
@@ -138,13 +138,13 @@ public enum AccountPlan: String {
     public var callToAction: String {
         switch self {
         case .free, .trial:
-            return String(format: LocalizedString.getPlan, "Free")
+            return LocalizedString.getPlan("Free")
         case .basic:
-            return String(format: LocalizedString.getPlan, "Basic")
+            return LocalizedString.getPlan("Basic")
         case .plus:
-            return String(format: LocalizedString.getPlan, "Plus")
+            return LocalizedString.getPlan("Plus")
         case .visionary:
-            return String(format: LocalizedString.getPlan, "Visionary")
+            return LocalizedString.getPlan("Visionary")
         }
     }
     
@@ -173,7 +173,7 @@ public enum AccountPlan: String {
         case .basic:
             return LocalizedString.planSpeedHigh
         case .plus, .visionary, .trial:
-            return LocalizedString.planSpeedFastests
+            return LocalizedString.planSpeedFastest
         }
     }
     

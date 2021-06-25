@@ -1,0 +1,10 @@
+strings:
+  inputs: 
+    - libraries/vpncore/Source/Localization/en.lproj/Localizable.strings
+    - libraries/vpncore/Source/Localization/en.lproj/Localizable.stringsdict
+  outputs:
+    params:
+      publicAccess: true
+      enumName: LocalizedString
+    templateName: structured-swift5
+    output: libraries/vpncore/Source/LocalizedString.swift

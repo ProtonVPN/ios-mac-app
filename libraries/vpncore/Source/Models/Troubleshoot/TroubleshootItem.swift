@@ -48,8 +48,8 @@ public final class AlternateRoutingTroubleshootItem: ActionableTroubleshootItem 
     init(propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager
 
-        title = LocalizedString.troubleshootItemTitleAlternative
-        description = NSMutableAttributedString(string: LocalizedString.troubleshootItemDescriptionAlternative).add(link: LocalizedString.troubleshootItemLinkAlternative1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)
+        title = LocalizedString.troubleshootItemAltTitle
+        description = NSMutableAttributedString(string: LocalizedString.troubleshootItemAltDescription).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)
         isOn = propertiesManager.alternativeRouting
     }
 

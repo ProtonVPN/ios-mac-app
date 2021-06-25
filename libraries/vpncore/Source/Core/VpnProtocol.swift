@@ -66,7 +66,7 @@ public enum VpnProtocol {
         case .ike:
             string = LocalizedString.ikev2
         case .openVpn(let transportProtocol):
-            string = LocalizedString.openVpn
+            string = LocalizedString.openvpn
             switch transportProtocol {
             case .tcp:
                 string += " / " + LocalizedString.tcp

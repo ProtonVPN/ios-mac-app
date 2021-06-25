@@ -32,7 +32,7 @@ class NetworkError {
     private static let notConnectedToInternet = NSError(code: NetworkErrorCode.notConnectedToInternet,
                                                         localizedDescription: LocalizedString.neNotConnectedToTheInternet)
     private static let tls = NSError(code: NetworkErrorCode.tls,
-                                     localizedDescription: LocalizedString.errorMITMdescription)
+                                     localizedDescription: LocalizedString.errorMitmDescription)
     
     static func error(forCode code: Int) -> NSError {
         let error: NSError
