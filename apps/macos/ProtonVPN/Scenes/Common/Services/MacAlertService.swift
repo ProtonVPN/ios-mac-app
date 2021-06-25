@@ -124,9 +124,6 @@ extension MacAlertService: CoreAlertService {
         case is KillSwitchErrorAlert:
             showDefaultSystemAlert(alert)
             
-        case let killSwitchBlockingAlert as KillSwitchBlockingAlert:
-            show(killSwitchBlockingAlert)
-            
         case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
             show(killSwitchRequiresSwift5Alert)           
             
@@ -300,17 +297,6 @@ extension MacAlertService: CoreAlertService {
         alert.actions.append(upgradeAction)
         
         uiAlertService.displayAlert(alert)
-    }
-    
-    private func show(_ alert: KillSwitchBlockingAlert) {
-        let descriptionText = String(format: LocalizedString.killSwitchBlockingBody,
-                                             LocalizedString.preferences)
-        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .natural))
-        
-        let settingsRange = (descriptionText as NSString).range(of: LocalizedString.preferences, options: .backwards)
-        description.addAttribute(.link, value: "protonvpn://settings/connection", range: settingsRange)
-        
-        uiAlertService.displayAlert(alert, message: description)
     }
     
     private func show( _ alert: KillSwitchRequiresSwift5Alert ) {
