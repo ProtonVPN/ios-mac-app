@@ -821,4 +821,7 @@ public class LocalizedString {
 
     public static let localAgentPolicyViolationErrorTitle = NSLocalizedString("_local_agent_policy_violation_error_title", comment: "")
     public static let localAgentPolicyViolationErrorMessage = NSLocalizedString("_local_agent_policy_violation_error_message", comment: "")
+
+    public static let wireguardFilterWarningText = NSLocalizedString("_wireguard_filter_warning_text", comment: "Shown when switching protocol to WireGuard")
+    public static let wireguardProfileWarningText = NSLocalizedString("_wireguard_profile_warning_text", comment: "Shown when trying to use WireGuard with a profile that does not include any WireGuard servers")
 }
