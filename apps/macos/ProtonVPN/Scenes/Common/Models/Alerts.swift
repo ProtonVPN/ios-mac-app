@@ -50,19 +50,6 @@ public class KillSwitchErrorAlert: ExpandableSystemAlert {
     }
 }
 
-public class KillSwitchBlockingAlert: SystemAlert {
-    public var title: String? = LocalizedString.killSwitchBlockingTitle
-    public var message: String? = String(format: LocalizedString.killSwitchBlockingBody, LocalizedString.preferences)
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.killSwitchDisable, style: .destructive, handler: confirmHandler))
-    }
-}
-
 public class KillSwitchRequiresSwift5Alert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
     public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupMsg
