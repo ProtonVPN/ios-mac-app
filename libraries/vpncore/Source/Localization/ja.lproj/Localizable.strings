@@ -1333,7 +1333,7 @@
 "_trial_welcome_heading_iOS" = "ProtonVPNへようこそ";
 
 /* MacOS: button in connecting overlay */
-"_try_agian" = "再試行";
+"_try_again" = "再試行";
 
 /* iOS Settings -> Protocol -> OpenVPN: UDP option */
 "_udp" = "UDP";

@@ -124,7 +124,7 @@ class ConnectingOverlayViewModelTests: XCTestCase {
         
         let buttons = viewModel.buttons
         XCTAssert(buttons.count == 2)
-        XCTAssert(buttons[0].0 == LocalizedString.tryAgian)
+        XCTAssert(buttons[0].0 == LocalizedString.tryAgain)
         XCTAssert(buttons[1].0 == LocalizedString.cancel)
     }
     
