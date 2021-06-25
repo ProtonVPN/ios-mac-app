@@ -64,17 +64,17 @@ class PlanInfoView: UIView {
         switch plan {
         case .basic:
             newPoints.append(LocalizedString.countriesCount(countriesCount))
-            newPoints.append(LocalizedString.planConnections(plan.devicesCount))
+            newPoints.append(LocalizedString.plansConnections(plan.devicesCount))
             newPoints.append(plan.speedDescription)
             
         case .plus:
             newPoints.append(LocalizedString.countriesCount(countriesCount))
-            newPoints.append(LocalizedString.planConnections(plan.devicesCount))
+            newPoints.append(LocalizedString.plansConnections(plan.devicesCount))
             newPoints.append(plan.speedDescription)
             newPoints.append(LocalizedString.featureBlockedContent)
             newPoints.append(LocalizedString.featureTor)
             newPoints.append(LocalizedString.featureSecureCore)
-            newPoints.append(LocalizedString.featureBT)
+            newPoints.append(LocalizedString.featureBt)
             newPoints.append(LocalizedString.adblockerNetshieldFeature)
 
         default:

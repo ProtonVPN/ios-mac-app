@@ -104,7 +104,7 @@ class HumanVerificationCoordinatorImplementation: HumanVerificationCoordinator {
         }
         viewModel.switchToLoginWithProtonMailAddress = {            
             self.finished?()
-            self.loginService.presentLogin(dismissible: true, username: nil, errorMessage: LocalizedString.errorSignupUsingProtonMailAddress)
+            self.loginService.presentLogin(dismissible: true, username: nil, errorMessage: LocalizedString.errorSignupUsingProtonmailAddress)
         }
         humanVerificationService.presentVerificationEmail(viewModel: viewModel)
     }

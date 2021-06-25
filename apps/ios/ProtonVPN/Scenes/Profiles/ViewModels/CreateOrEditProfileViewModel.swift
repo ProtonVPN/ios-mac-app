@@ -183,7 +183,7 @@ class CreateOrEditProfileViewModel: NSObject {
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
         guard result == .success else {
-            messageHandler?(LocalizedString.profileNameUnique, GSMessageType.warning, UIConstants.messageOptions)
+            messageHandler?(LocalizedString.profileNameNeedsToBeUnique, GSMessageType.warning, UIConstants.messageOptions)
             completion(false)
             return
         }
@@ -246,7 +246,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private var protocolCell: TableViewCellModel {
-        return TableViewCellModel.pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString) { [weak self] in
+        return TableViewCellModel.pushKeyValue(key: LocalizedString.protocol, value: vpnProtocol.localizedString) { [weak self] in
             self?.pushProtocolViewController()
         }
     }

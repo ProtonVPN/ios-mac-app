@@ -92,9 +92,9 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
         
         if let endDate = subscription.endDate, endDate.isFuture {
             if self.willRenewAutomcatically {
-                return String(format: LocalizedString.subscritpionWillRenew, endDate.formattedShortDate)
+                return LocalizedString.subscriptionWillRenew(endDate.formattedShortDate)
             }
-            return String(format: LocalizedString.subscritpionWillExpire, endDate.formattedShortDate)
+            return LocalizedString.subscriptionWillExpire(endDate.formattedShortDate)
         }
         
         return nil
@@ -104,7 +104,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
         guard showBuyButton else {
             return nil
         }
-        return LocalizedString.subscritpionDescription
+        return LocalizedString.subscriptionDescription
     }
     
     var showBuyButton: Bool {
@@ -208,7 +208,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
     
     private func reload(showSuccessfullPayment: Bool = true) {
         isLoading = true
-        let successMessage = String(format: LocalizedString.subscritpionExtendSuccess, servicePlanDataStorage.currentSubscription?.endDate?.formattedShortDate ?? "")
+        let successMessage = String(format: LocalizedString.subscriptionExtendedSuccess, servicePlanDataStorage.currentSubscription?.endDate?.formattedShortDate ?? "")
         
         appSessionManager.loadDataWithoutLogin(success: { [weak self] in
             self?.isLoading = false

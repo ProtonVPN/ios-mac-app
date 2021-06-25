@@ -128,11 +128,11 @@ class UserAccountUpdateViewController: UIViewController {
         setServerHeader(toServer, LocalizedString.toServerTitle, toServerIV, toServerLbl, toServerTitleLbl)
     }
     
-    private func setServerHeader( _ server: ServerModel, _ headerFormat: String, _ flagIV: UIImageView, _ serverName: UILabel, _ serverHeader: UILabel ) {
-        let tiers = [LocalizedString.tierFREE, LocalizedString.tierBASIC, LocalizedString.tierPLUS, LocalizedString.tierVISIONARY]
+    private func setServerHeader( _ server: ServerModel, _ headerFormat: (String) -> String, _ flagIV: UIImageView, _ serverName: UILabel, _ serverHeader: UILabel ) {
+        let tiers = [LocalizedString.tierFree, LocalizedString.tierBasic, LocalizedString.tierPlus, LocalizedString.tierVisionary]
         serverName.text = server.name
         flagIV.image = UIImage(named: server.countryCode.lowercased() + "-plain")
-        serverHeader.text = String(format: headerFormat, tiers[server.tier])
+        serverHeader.text = headerFormat(tiers[server.tier])
     }
     
     // MARK: - Actions

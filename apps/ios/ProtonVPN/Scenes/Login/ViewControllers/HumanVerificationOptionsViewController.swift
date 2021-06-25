@@ -80,7 +80,7 @@ class HumanVerificationOptionsViewController: UIViewController {
         emailButton.setTitle(LocalizedString.useOtherEmailAddress, for: .normal)
         emailButton.isHidden = !viewModel.showEmailOption()
         
-        smsButton.setTitle(LocalizedString.useSMSVerification, for: .normal)
+        smsButton.setTitle(LocalizedString.useSmsVerification, for: .normal)
         smsButton.isHidden = !viewModel.showSMSOption()
         
         supportButton.setTitle(LocalizedString.requestInvitation, for: .normal)

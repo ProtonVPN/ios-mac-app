@@ -67,7 +67,7 @@ class SubscriptionInfoController: UIViewController {
     private func setupView() {
         view.backgroundColor = .protonPlansGrey()
         
-        titleLabel.attributedText = LocalizedString.settingsManageSubscription.attributed(withColor: .protonWhite(), fontSize: 24)
+        titleLabel.attributedText = LocalizedString.manageSubscription.attributed(withColor: .protonWhite(), fontSize: 24)
         
         let closeImage = UIImage(named: "close-nav-bar")
         navCloseButton = UIBarButtonItem(image: closeImage, style: .done, target: self, action: #selector(closeButtonTapped(_:)))
@@ -150,7 +150,7 @@ class SubscriptionInfoController: UIViewController {
         let button = buyButton!
         button.translatesAutoresizingMaskIntoConstraints = false
         button.styleCenterMultiline()
-        button.setTitle(String(format: LocalizedString.subscritpionButton, viewModel.planPrice), for: .normal)
+        button.setTitle(LocalizedString.subscriptionButton(viewModel.planPrice), for: .normal)
         button.addTarget(self, action: #selector(onButtonClick), for: .touchUpInside)
 
         scrollViewBody.add(subView: button, withTopMargin: nil, rightMargin: nil, bottomMargin: nil, leftMargin: nil)

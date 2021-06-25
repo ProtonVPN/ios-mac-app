@@ -68,7 +68,7 @@ class TrialWelcomeViewController: UIViewController {
     }
     
     private func setUpHeading() {
-        headingLabel.attributedText = LocalizedString.trialWelcomeHeadingIos.uppercased().attributed(withColor: .protonWhite(), font: UIFont.boldSystemFont(ofSize: 24), alignment: .center)
+        headingLabel.attributedText = LocalizedString.trialWelcomeHeadingIOS.uppercased().attributed(withColor: .protonWhite(), font: UIFont.boldSystemFont(ofSize: 24), alignment: .center)
     }
     
     private func setUpImage() {
@@ -76,11 +76,11 @@ class TrialWelcomeViewController: UIViewController {
     }
     
     private func setUpDescription() {
-        descriptionLabel.attributedText = LocalizedString.trialWelcomeDescriptionIos.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .center)
+        descriptionLabel.attributedText = LocalizedString.trialWelcomeDescriptionIOS.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .center)
     }
     
     private func setUpTrialEndingLabel() {
-        trialEndingLabel.attributedText = LocalizedString.trialWelcomeEndsInIos.attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .center)
+        trialEndingLabel.attributedText = LocalizedString.trialWelcomeEndsInIOS.attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .center)
     }
     
     private func setUpTimeRemainingLabel() {
