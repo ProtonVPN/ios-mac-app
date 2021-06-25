@@ -51,8 +51,8 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsSCdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.qsSCNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsSecureCoreDescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsSecureCoreNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
         if propertiesManager.featureFlags.isNetShield {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 3) + 7
         } else {
@@ -64,7 +64,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var secureCoreOff: QuickSettingGenericOption {
         let active = !propertiesManager.secureCoreToggle
-        let text = LocalizedString.secureCore + " " + LocalizedString.off.capitalized
+        let text = LocalizedString.secureCore + " " + LocalizedString.switchSideButtonOff.capitalized
         let icon = #imageLiteral(resourceName: "qs_securecore_off")
         return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: active, requiresUpdate: requiresUpdate(secureCore: false), selectCallback: {
             self.vpnGateway.changeActiveServerType(.standard)
@@ -74,7 +74,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
     
     private var secureCoreOn: QuickSettingGenericOption {
         let active = propertiesManager.secureCoreToggle
-        let text = LocalizedString.secureCore + " " + LocalizedString.on.capitalized
+        let text = LocalizedString.secureCore + " " + LocalizedString.switchSideButtonOn.capitalized
         let icon = #imageLiteral(resourceName: "qs_securecore_on")
         return QuickSettingGenericOption(text, icon: icon, active: active, requiresUpdate: requiresUpdate(secureCore: true), selectCallback: {
             guard !self.requiresUpdate(secureCore: true) else {

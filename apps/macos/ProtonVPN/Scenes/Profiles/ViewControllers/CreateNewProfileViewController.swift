@@ -127,7 +127,7 @@ class CreateNewProfileViewController: NSViewController {
     }
     
     private func setupTypeSection() {
-        typeLabel.attributedStringValue = (LocalizedString.serverType + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        typeLabel.attributedStringValue = (LocalizedString.feature + ":").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         
         typeList.isBordered = false
         typeList.menu?.delegate = self
@@ -252,7 +252,7 @@ class CreateNewProfileViewController: NSViewController {
     
     @objc private func cancelButtonAction() {
         if isSessionUnderway {
-            let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"), title: LocalizedString.createNewProfileHeader,
+            let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"), title: LocalizedString.createNewProfile,
                                                   description: LocalizedString.currentSelectionWillBeLost) { [weak self] in
                 self?.viewModel.cancelCreation()
             }

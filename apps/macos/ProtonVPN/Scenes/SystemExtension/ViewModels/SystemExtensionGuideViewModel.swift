@@ -63,16 +63,16 @@ class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProt
         switch currentView {
         case 0:
             viewController?.displayStep1()
-            viewController?.descriptionText = NSMutableAttributedString(attributedString: ("1. " + LocalizedString.sysexInstallStep1)
+            viewController?.descriptionText = NSMutableAttributedString(attributedString: ("1. " + LocalizedString.openvpnSettingsStep1)
                 .attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize))
-                .add(link: LocalizedString.sysexInstallStep1Link, withUrl: "x-apple.systempreferences:com.apple.preference.security?General")
+                .add(link: LocalizedString.openvpnSettingsStep1Link, withUrl: "x-apple.systempreferences:com.apple.preference.security?General")
             
         case 1:
             viewController?.displayStep2()
-            viewController?.descriptionText = ("2. " + LocalizedString.sysexInstallStep2).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
+            viewController?.descriptionText = ("2. " + LocalizedString.openvpnSettingsStep2).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
         default:
             viewController?.displayStep3()
-            viewController?.descriptionText = ("3. " + LocalizedString.sysexInstallStep3).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
+            viewController?.descriptionText = ("3. " + LocalizedString.openvpnSettingsStep3).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
         }
     }
     

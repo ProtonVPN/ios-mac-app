@@ -59,11 +59,11 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
         let text: String
         switch level {
         case .level1:
-            text = LocalizedString.qsNetshieldOptionLevel1
+            text = LocalizedString.quickSettingsNetshieldOptionLevel1
         case .level2:
-            text = LocalizedString.qsNetshieldOptionLevel2
+            text = LocalizedString.quickSettingsNetshieldOptionLevel2
         case .off:
-            text = LocalizedString.qsNetshieldOptionOff
+            text = LocalizedString.quickSettingsNetshieldOptionOff
         }
 
         let icon: NSImage

@@ -269,9 +269,9 @@ class StatusMenuViewModel {
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),
-                                              title: LocalizedString.unsecureWiFiTitle,
-                                              description: "\(LocalizedString.unsecureWiFi): \(wifiName). \(LocalizedString.unsecureWiFiLearnMore)",
-                                              linkDescription: LocalizedString.unsecureWiFiLearnMore,
+                                              title: LocalizedString.unsecureWifiTitle,
+                                              description: "\(LocalizedString.unsecureWifi): \(wifiName). \(LocalizedString.unsecureWifiLearnMore)",
+                                              linkDescription: LocalizedString.unsecureWifiLearnMore,
                                               url: CoreAppConstants.ProtonVpnLinks.unsecureWiFiUrl,
                                               onConfirm: confirmationClosure)
 
@@ -351,7 +351,7 @@ class StatusMenuViewModel {
     }
     
     private func formIpAddress() -> NSAttributedString {
-        let ip = String(format: LocalizedString.ipValue, getCurrentIp() ?? LocalizedString.unavailable)
+        let ip = LocalizedString.ipValue(getCurrentIp() ?? LocalizedString.unavailable)
         let attributedString = NSMutableAttributedString(attributedString: ip.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left))
         let ipRange = (ip as NSString).range(of: getCurrentIp() ?? LocalizedString.unavailable)
         attributedString.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 12), range: ipRange)

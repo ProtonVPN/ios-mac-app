@@ -54,9 +54,9 @@ class TrialAboutToExpireViewController: NSViewController {
         
         titleLabel.attributedStringValue = LocalizedString.freeTrialAboutToExpireTitle.attributed(withColor: .protonWhite(), fontSize: 32, bold: true)
         
-        let description = NSMutableAttributedString(attributedString: String(format: LocalizedString.freeTrialAboutToExpireDescription, LocalizedString.protonVpnPlus).attributed(withColor: .protonWhite(), fontSize: 18))
+        let description = NSMutableAttributedString(attributedString: LocalizedString.freeTrialAboutToExpireDescription(LocalizedString.protonvpnPlus).attributed(withColor: .protonWhite(), fontSize: 18))
         let descriptionFullRange = (description.string as NSString).range(of: description.string)
-        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonVpnPlus)
+        let descriptionPlusRange = (description.string as NSString).range(of: LocalizedString.protonvpnPlus)
         let paragraphStyle = NSMutableParagraphStyle()
         paragraphStyle.alignment = .center
         paragraphStyle.lineSpacing = 6
@@ -64,8 +64,8 @@ class TrialAboutToExpireViewController: NSViewController {
         description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: 18), range: descriptionPlusRange)
         descriptionLabel.attributedStringValue = description
         
-        connectionsTitle.attributedStringValue = LocalizedString.connectionsAvailable.attributed(withColor: .protonWhite(), fontSize: 18)
-        connectionsDescription.attributedStringValue = LocalizedString.connectionsAvailableDescription.attributed(withColor: .protonWhite(), fontSize: 12)
+        connectionsTitle.attributedStringValue = LocalizedString._5Connections.attributed(withColor: .protonWhite(), fontSize: 18)
+        connectionsDescription.attributedStringValue = LocalizedString._5ConnectionsDescription.attributed(withColor: .protonWhite(), fontSize: 12)
         secureCoreTitle.attributedStringValue = LocalizedString.secureCore.attributed(withColor: .protonWhite(), fontSize: 18)
         secureCoreDescription.attributedStringValue = LocalizedString.secureCoreDescription.attributed(withColor: .protonWhite(), fontSize: 12)
         serversTitle.attributedStringValue = LocalizedString.multipleServersTitle.attributed(withColor: .protonWhite(), fontSize: 18)

@@ -53,8 +53,8 @@ class NetshieldDropdownPresenter: QuickSettingDropdownPresenter {
     override func viewDidLoad() {
         super.viewDidLoad()
         viewController?.dropdownUgradeButton.isHidden = true
-        viewController?.dropdownDescription.attributedStringValue = LocalizedString.qsNSdescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
-        viewController?.dropdownNote.attributedStringValue = LocalizedString.qsNSNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
+        viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
+        viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsNetShieldNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
     }
     
     // MARK: - Private

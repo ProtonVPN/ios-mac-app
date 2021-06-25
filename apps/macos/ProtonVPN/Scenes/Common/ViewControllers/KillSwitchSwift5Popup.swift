@@ -44,12 +44,11 @@ class KillSwitchSwift5Popup: NSViewController {
         keepDisabledButton.title = alert.actions[alert.cancelActionIndex].title
         
         dontAskButton.isHidden = !alert.dontShowCheckbox
-        dontAskButton.title = LocalizedString.killSwitchDontAsk
+        dontAskButton.title = LocalizedString.ksDontAsk
         dontAskButton.state = .off
         
         let message = alert.message ?? ""
-        let description = String(format: message, LocalizedString.killSwitchSwift5LibraryName)
-        popupMessageLabel.hyperLink(originalText: description, hyperLink: LocalizedString.killSwitchSwift5LibraryName, urlString: utilUrl)
+        popupMessageLabel.hyperLink(originalText: message, hyperLink: LocalizedString.ksSwift5LibName, urlString: utilUrl)
         
         let gestureIV = NSClickGestureRecognizer(target: self, action: #selector(didTapUrl))
         instructionIV.addGestureRecognizer(gestureIV)
@@ -57,7 +56,7 @@ class KillSwitchSwift5Popup: NSViewController {
    
     override func viewWillAppear() {
         super.viewWillAppear()
-        view.window?.applyWarningAppearance(withTitle: LocalizedString.protonVpnMacOS)
+        view.window?.applyWarningAppearance(withTitle: LocalizedString.protonvpnMacos)
     }
     
     // MARK: - Actions

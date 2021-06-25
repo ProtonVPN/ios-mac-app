@@ -25,7 +25,7 @@ import vpncore
 
 public class KillSwitchRequiresSwift5Alert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
-    public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupMsg
+    public var message: String? = LocalizedString.ksRequiresSwift5PopupMsg(LocalizedString.ksSwift5LibName)
     public var actions = [AlertAction]()
     public var doneActionIndex = 0
     public var cancelActionIndex = 1
@@ -36,7 +36,7 @@ public class KillSwitchRequiresSwift5Alert: SystemAlert {
     
     public init( _ retries: Int, swiftChecker: SwiftChecker, confirmHandler: @escaping (Bool) -> Void) {
         if retries > 0 {
-            self.message = LocalizedString.killSwitchRequiresSwiftPopupMsg2
+            self.message = LocalizedString.ksRequiresSwift5PopupMsg2(LocalizedString.ksSwift5LibName)
             if swiftChecker.isSwiftAvailable() {
                 dontShowCheckbox = true
             }

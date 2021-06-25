@@ -71,7 +71,7 @@ class ProfilesTabBarViewController: NSViewController {
         overviewButton.target = self
         overviewButton.action = #selector(overviewButtonAction)
         
-        createNewProfileButton.title = LocalizedString.createNewProfileHeader
+        createNewProfileButton.title = LocalizedString.createNewProfile
         createNewProfileButton.target = self
         createNewProfileButton.action = #selector(createNewProfileButtonAction)
     }

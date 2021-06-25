@@ -140,15 +140,15 @@ class ConnectingOverlayViewModel {
         case .preparingConnection:
             string = LocalizedString.preparingConnection
         case .connected:
-            string = String(format: LocalizedString.vpnConnected, boldString)
+            string = LocalizedString.connectedToVpn(boldString)
         case .error, .disconnected:
             boldString = LocalizedString.failed
-            string = String(format: LocalizedString.connectingVpn, boldString)
+            string = LocalizedString.connectingVpn(boldString)
         default:
             if isReconnecting {
-                string = String(format: LocalizedString.reConnectingTo + "\n", boldString)
+                string = LocalizedString.reconnectingTo(boldString) + "\n"
             } else {
-                string = String(format: LocalizedString.connectingTo, boldString)
+                string = LocalizedString.connectingTo(boldString)
             }
         }
         
@@ -164,7 +164,7 @@ class ConnectingOverlayViewModel {
     private var timedOutSecondString: NSAttributedString {
         if !isIkeWithKsEnabled {
             let boldString = LocalizedString.timedOut
-            let string = String(format: LocalizedString.connectingVpn, boldString)
+            let string = LocalizedString.connectingVpn(boldString)
             let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
             
             if let stringRange = string.range(of: boldString) {
@@ -176,7 +176,7 @@ class ConnectingOverlayViewModel {
         
         let boldString = LocalizedString.timedOut
         let decription = "\n\n" + LocalizedString.timeoutKsIkeDescritpion
-        let string = String(format: LocalizedString.connectingVpn, boldString) + decription
+        let string = LocalizedString.connectingVpn(boldString) + decription
                 
         let attributedString = NSMutableAttributedString(attributedString: string.attributed(withColor: .protonWhite(), fontSize: fontSizeTitle))
         if let stringRange = string.range(of: boldString) {
@@ -225,11 +225,11 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgain, .main, { self.retryConnection() })
+        return (LocalizedString.tryAgian, .main, { self.retryConnection() })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
-        return (LocalizedString.tryAgainWithoutKS, .colorGreen, {
+        return (LocalizedString.tryAgainWithoutKillswitch, .colorGreen, {
             self.disableKillSwitch()
             self.retryConnection()
         })

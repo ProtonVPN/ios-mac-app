@@ -153,7 +153,7 @@ class ReportBugViewController: NSViewController {
         emailLabel.stringValue = LocalizedString.reportFieldEmail
         contryLabel.stringValue = LocalizedString.reportFieldCountry
         fileSizeLabel.stringValue = LocalizedString.reportMaxFileSize
-        ispLabel.stringValue = LocalizedString.reportFieldISP
+        ispLabel.stringValue = LocalizedString.reportFieldIsp
         accountLabel.stringValue = LocalizedString.reportFieldAccount
         planLabel.stringValue = LocalizedString.reportFieldPlan
         versionLabel.stringValue = LocalizedString.reportFieldVersion

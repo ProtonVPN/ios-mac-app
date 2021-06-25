@@ -207,7 +207,7 @@ class CreateNewProfileViewModel {
             state = ModelState(serverType: .standard, editedProfile: nil)
             NotificationCenter.default.post(name: sessionFinished, object: nil)
         case .nameInUse:
-            contentWarning?(LocalizedString.profileNameUnique)
+            contentWarning?(LocalizedString.profileNameNeedsToBeUnique)
         }
     }
     // swiftlint:enable function_parameter_count

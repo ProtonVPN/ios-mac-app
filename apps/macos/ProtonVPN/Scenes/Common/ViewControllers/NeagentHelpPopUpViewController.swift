@@ -48,7 +48,7 @@ class NeagentHelpPopUpViewController: NSViewController {
     override func viewWillAppear() {
         super.viewWillAppear()
         
-        view.window?.applyWarningAppearance(withTitle: LocalizedString.protonVpnMacOS)
+        view.window?.applyWarningAppearance(withTitle: LocalizedString.protonvpnMacos)
     }
     
     private func setupBody() {
@@ -57,7 +57,7 @@ class NeagentHelpPopUpViewController: NSViewController {
         
         let fontSize: CGFloat = 21
         
-        let text = String(format: LocalizedString.neagentDescription,
+        let text = LocalizedString.neagentDescription(
                           LocalizedString.neagentPassword,
                           LocalizedString.macPassword,
                           LocalizedString.neagentFirstStep,

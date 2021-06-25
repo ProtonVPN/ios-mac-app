@@ -215,7 +215,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     }
     
     override var attributedCountry: NSAttributedString {
-        return String(format: LocalizedString.secureCoreCountry, (LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable)).attributed(withColor: .protonWhite(), fontSize: 14)
+        return LocalizedString.secureCoreCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable).attributed(withColor: .protonWhite(), fontSize: 14)
     }
     
     override var buttonWidth: CGFloat {
