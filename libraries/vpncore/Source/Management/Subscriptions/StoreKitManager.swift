@@ -182,7 +182,7 @@ public class StoreKitManagerImplementation: NSObject, StoreKitManager {
             case .haveTransactionOfAnotherUser: return LocalizedString.errorTransactionOfOtherUser
             case .alreadyPurchasedPlanDoesNotMatchBackend: return LocalizedString.errorPurchasedPlanDoesNotMatchAvailable
             case .sandboxReceipt: return LocalizedString.errorSandboxReceipt
-            case .creditsApplied: return LocalizedString.errorCreditsApplied
+            case .creditsApplied: return LocalizedString.errorCreditApplied
             case .transactionFailedByUnknownReason: return LocalizedString.errorTransactionFailedByUnknownReason
             case .noActiveUsername: return LocalizedString.errorNoActiveUsername
             case .noNewSubscriptionInSuccessfullResponse: return LocalizedString.errorNoNewSubscriptionInSuccessfullResponse

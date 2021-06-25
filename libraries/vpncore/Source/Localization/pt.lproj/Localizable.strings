@@ -152,7 +152,7 @@
 "_connecting_vpn" = "A ligar %@";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "A ligar...";
+"_connectingDotDotDot" = "A ligar...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Ligação";

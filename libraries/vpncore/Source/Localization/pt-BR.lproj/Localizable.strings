@@ -152,7 +152,7 @@
 "_connecting_vpn" = "Conectando %@";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "Conectando...";
+"_connectingDotDotDot" = "Conectando...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Conexão";

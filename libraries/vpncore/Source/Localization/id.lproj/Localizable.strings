@@ -131,7 +131,7 @@
 "_connecting_vpn" = "%@ menyambungkan";
 
 /* iOS: connection bar, iOS widget */
-"_connecting..." = "Menyambungkan...";
+"_connectingDotDotDot" = "Menyambungkan...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Sambungan";

@@ -63,7 +63,7 @@
 "_clear_application_data" = "Clear Application Data";
 "_preparing_connection" = "Checking server availability";
 "_connecting" = "Connecting";
-"_connecting..." = "Connecting...";
+"_connectingDotDotDot" = "Connecting...";
 "_countries_free" = "Free countries";
 "_countries_premium" = "Premium countries";
 
