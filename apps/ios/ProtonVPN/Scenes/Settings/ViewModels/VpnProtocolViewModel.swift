@@ -57,7 +57,7 @@ class VpnProtocolViewModel {
             }))
         }
         
-        cells.append(.checkmarkStandard(title: LocalizedString.openVpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
+        cells.append(.checkmarkStandard(title: LocalizedString.openvpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
             switchVpnProtocol(.openVpn(openVpnTransportProtocol))
             return true
         }))

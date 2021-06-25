@@ -81,7 +81,7 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
             totalCountries = serversManager.grouping(for: .standard).count
         }
         
-        let featuresText = "\(LocalizedString.countriesCount(totalCountries))\n\(LocalizedString.planConnections(totalConnections))\n\(plan.speedDescription)\n\(LocalizedString.adblockerNetshieldFeature)"
+        let featuresText = "\(LocalizedString.countriesCount(totalCountries))\n\(LocalizedString.plansConnections(totalConnections))\n\(plan.speedDescription)\n\(LocalizedString.adblockerNetshieldFeature)"
         let attributedFeaturesText = NSMutableAttributedString(string: featuresText)
         let range: NSRange = NSRange(location: featuresText.count - LocalizedString.adblockerNetshieldFeature.count, length: LocalizedString.adblockerNetshieldFeature.count)
         if plan == .free { attributedFeaturesText.addAttributes( [NSAttributedString.Key.strikethroughStyle: 1], range: range) }

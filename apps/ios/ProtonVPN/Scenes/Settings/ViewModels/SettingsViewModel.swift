@@ -221,7 +221,7 @@ class SettingsViewModel {
             }))
         }
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: LocalizedString.settingsManageSubscription, accessibilityIdentifier: "Manage subscription", color: .protonConnectGreen(), handler: { [weak self, accountPlan] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .protonConnectGreen(), handler: { [weak self, accountPlan] in
                 self?.manageSubscriptionAction(plan: accountPlan!)
             }))
         }
@@ -259,7 +259,7 @@ class SettingsViewModel {
         cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
 
         if !propertiesManager.smartProtocol {
-            cells.append(.pushKeyValue(key: LocalizedString.protocolLabel, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
+            cells.append(.pushKeyValue(key: LocalizedString.protocol, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
                 protocolCellAction()
             }))
         }
@@ -289,17 +289,17 @@ class SettingsViewModel {
                     self.netShieldPropertyProvider.netShieldType = type
                 })
             }))
-            cells.append(.tooltip(text: LocalizedString.netshieldTitleTootltip))
+            cells.append(.tooltip(text: LocalizedString.netshieldTitleTooltip))
         }
         
         cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
-        cells.append(.toggle(title: LocalizedString.troubleshootItemTitleAlternative, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
+        cells.append(.toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
             self.propertiesManager.alternativeRouting.toggle()
             callback(self.propertiesManager.alternativeRouting)
         })
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemDescriptionAlternative.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemLinkAlternative1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltTitle.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }

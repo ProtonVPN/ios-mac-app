@@ -122,11 +122,11 @@ class StatusViewModel {
         
         switch status {
         case .connected:
-            cell = .textWithActivityCell(title: String(format: LocalizedString.vpnConnected, connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
+            cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
         case .disconnected:
             cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
         case .connecting:
-            cell = .textWithActivityCell(title: String(format: LocalizedString.connectingTo, connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+            cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         case .disconnecting:
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         }
@@ -153,7 +153,7 @@ class StatusViewModel {
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: LocalizedString.ip, value: activeConnection?.serverIp.exitIp ?? ""),
             .staticKeyValue(key: LocalizedString.server, value: (activeConnection?.server.name ?? "") + city),
-            .staticKeyValue(key: LocalizedString.protocolLabel, value: activeConnection?.vpnProtocol.localizedString ?? ""),
+            .staticKeyValue(key: LocalizedString.protocol, value: activeConnection?.vpnProtocol.localizedString ?? ""),
             timeCell
         ]
         

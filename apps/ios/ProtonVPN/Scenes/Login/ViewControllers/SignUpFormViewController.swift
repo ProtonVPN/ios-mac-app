@@ -168,7 +168,7 @@ final class SignUpFormViewController: UIViewController {
     private func setupFooterSection() {
         let switchToLoginTitle = LocalizedString.alreadyHaveAccount.attributed(withColor: .protonUnavailableGrey(), fontSize: 14, alignment: .center)
         loginButton.setAttributedTitle(switchToLoginTitle, for: .normal)
-        let attributedDisclaimer = NSMutableAttributedString(attributedString: String(format: LocalizedString.termsAndConditionsDisclaimer, LocalizedString.termsAndConditions, LocalizedString.privacyPolicy).attributed(withColor: .protonFontDark(), fontSize: 12))
+        let attributedDisclaimer = NSMutableAttributedString(attributedString: LocalizedString.termsAndConditionsDisclaimer(LocalizedString.termsAndConditions, LocalizedString.privacyPolicy).attributed(withColor: .protonFontDark(), fontSize: 12))
         let fullRange = (attributedDisclaimer.string as NSString).range(of: attributedDisclaimer.string)
         let termsRange = (attributedDisclaimer.string as NSString).range(of: LocalizedString.termsAndConditions)
         let privacyRange = (attributedDisclaimer.string as NSString).range(of: LocalizedString.privacyPolicy)

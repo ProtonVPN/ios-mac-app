@@ -114,7 +114,7 @@ class SiriHandlerViewModel {
         case .disconnecting:
             return LocalizedString.disconnecting
         default:
-            return LocalizedString.vpnStatusNotLoggedIn
+            return LocalizedString.vpnstatusNotLoggedin
         }
     }
     

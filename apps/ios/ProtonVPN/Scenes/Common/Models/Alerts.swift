@@ -23,8 +23,8 @@ import Foundation
 import vpncore
 
 public class TrialExpiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.trialExpiredAlertTitleIos
-    public var message: String? = LocalizedString.trialExpiredAlertBodyIos
+    public var title: String? = LocalizedString.trialExpiredAlertTitleIOS
+    public var message: String? = LocalizedString.trialExpiredAlertBodyIOS
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
