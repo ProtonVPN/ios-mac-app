@@ -109,6 +109,12 @@ extension MacAlertService: CoreAlertService {
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
             
+<<<<<<< HEAD
+=======
+        case is ActiveFirewallAlert:
+            showDefaultSystemAlert(alert)
+            
+>>>>>>> 3ff7347b (Removing unused alerts)
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
             
