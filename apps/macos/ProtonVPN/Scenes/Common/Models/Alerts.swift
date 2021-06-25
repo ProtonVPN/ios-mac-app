@@ -102,34 +102,6 @@ public class HelperInstallFailedAlert: SystemAlert {
     }
 }
 
-public class InstallingHelperAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperInstallPopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    var okAction: AlertAction { return actions.first! }
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-    }
-}
-
-public class UpdatingHelperAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperUpdatePopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    var okAction: AlertAction { return actions.first! }
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-    }
-}
-
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = LocalizedString.deleteApplicationDataPopupTitle
     public var message: String? = LocalizedString.deleteApplicationDataPopupBody
