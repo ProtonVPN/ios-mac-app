@@ -89,19 +89,6 @@ public class KillSwitchRequiresSwift5Alert: SystemAlert {
     }
 }
 
-public class HelperInstallFailedAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperInstallIssuePopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.retry, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.disable, style: .cancel, handler: cancelHandler))
-    }
-}
-
 public class ClearApplicationDataAlert: SystemAlert {
     public var title: String? = LocalizedString.deleteApplicationDataPopupTitle
     public var message: String? = LocalizedString.deleteApplicationDataPopupBody

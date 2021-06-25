@@ -128,10 +128,7 @@ extension MacAlertService: CoreAlertService {
             show(killSwitchBlockingAlert)
             
         case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
-            show(killSwitchRequiresSwift5Alert)
-           
-        case is HelperInstallFailedAlert:
-            showDefaultSystemAlert(alert)
+            show(killSwitchRequiresSwift5Alert)           
             
         case is ClearApplicationDataAlert:
             showDefaultSystemAlert(alert)
