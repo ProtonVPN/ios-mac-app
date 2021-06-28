@@ -66,6 +66,10 @@ class MapSectionViewModel {
     
     var annotations: [CountryAnnotationViewModel] = []
     var connections: [ConnectionViewModel] = []
+
+    private var mustSupportWireguard: Bool {
+        return !propertiesManager.smartProtocol && propertiesManager.vpnProtocol == .wireGuard
+    }
     
     init(appStateManager: AppStateManager, propertiesManager: PropertiesManagerProtocol,
          vpnGateway: VpnGatewayProtocol, navService: NavigationService, vpnKeychain: VpnKeychainProtocol,
@@ -84,6 +88,8 @@ class MapSectionViewModel {
                                                name: viewToggle, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
+                                               name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         
         activeView = propertiesManager.serverTypeToggle
         annotations = annotations(forView: activeView)
@@ -170,7 +176,7 @@ class MapSectionViewModel {
     }
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: .standard).map {
+        return serverManager.grouping(for: .standard).filter(mustSupportWireguard: mustSupportWireguard).map {
             let annotation = StandardCountryAnnotationViewModel(appStateManager: appStateManager,
                                                                       vpnGateway: vpnGateway,
                                                                      country: $0.0,
@@ -205,7 +211,7 @@ class MapSectionViewModel {
     }
     
     private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        let exitCountries = serverManager.grouping(for: .secureCore).map {
+        let exitCountries = serverManager.grouping(for: .secureCore).filter(mustSupportWireguard: mustSupportWireguard).map {
             let annotation = SCExitCountryAnnotationViewModel(appStateManager: appStateManager,
                                                                                   vpnGateway: vpnGateway,
                                                                                      country: $0.0,
