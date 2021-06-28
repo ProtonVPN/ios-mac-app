@@ -417,6 +417,7 @@ fileprivate extension VpnGateway {
             profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
+        propertiesManager.lastConnectionRequest = request
         self.connect(with: request.vpnProtocol, server: toServer, netShieldType: request.netShieldType)
         return (previousServer, toServer)
     }
