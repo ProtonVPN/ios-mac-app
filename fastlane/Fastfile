@@ -142,6 +142,10 @@ lane :ios_internal_beta do |options|
           }
       }
   )
+
+  # Updload dSYMs to Sentry
+  sentry_upload_dsym
+  
   upload_to_testflight(
       team_name: "Proton Technologies AG",
       groups: ["Internal Members"],
@@ -149,8 +153,5 @@ lane :ios_internal_beta do |options|
       distribute_external: true,
       demo_account_required: true
   )
-
-  # Updload dSYMs to Sentry
-  sentry_upload_dsym
 
 end
