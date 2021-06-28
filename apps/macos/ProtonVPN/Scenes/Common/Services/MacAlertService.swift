@@ -109,15 +109,6 @@ extension MacAlertService: CoreAlertService {
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
             
-        case is ActiveFirewallAlert:
-            showDefaultSystemAlert(alert)
-            
-        case let installingHelperAlert as InstallingHelperAlert:
-            show(installingHelperAlert)
-            
-        case let updatingHelperAlert as UpdatingHelperAlert:
-            show(updatingHelperAlert)
-            
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
             
@@ -125,19 +116,10 @@ extension MacAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
 
         case is MITMAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is KillSwitchErrorAlert:
-            showDefaultSystemAlert(alert)
-            
-        case let killSwitchBlockingAlert as KillSwitchBlockingAlert:
-            show(killSwitchBlockingAlert)
+            showDefaultSystemAlert(alert)            
             
         case let killSwitchRequiresSwift5Alert as KillSwitchRequiresSwift5Alert:
-            show(killSwitchRequiresSwift5Alert)
-           
-        case is HelperInstallFailedAlert:
-            showDefaultSystemAlert(alert)
+            show(killSwitchRequiresSwift5Alert)           
             
         case is ClearApplicationDataAlert:
             showDefaultSystemAlert(alert)
@@ -309,43 +291,6 @@ extension MacAlertService: CoreAlertService {
         alert.actions.append(upgradeAction)
         
         uiAlertService.displayAlert(alert)
-    }
-    
-    private func show(_ alert: InstallingHelperAlert) {
-        let fontSize: Double = 14
-        let text = String(format: LocalizedString.killSwitchHelperInstallPopupBody, LocalizedString.macPassword)
-        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .natural))
-        
-        let passwordRange = (text as NSString).range(of: LocalizedString.macPassword)
-        
-        description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSize)), range: passwordRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: passwordRange)
-        
-        uiAlertService.displayAlert(alert, message: description)
-    }
-    
-    private func show(_ alert: UpdatingHelperAlert) {
-        let fontSize: Double = 14
-        let text = String(format: LocalizedString.killSwitchHelperUpdatePopupBody, LocalizedString.macPassword)
-        let description = NSMutableAttributedString(attributedString: text.attributed(withColor: .protonWhite(), fontSize: fontSize, alignment: .natural))
-        
-        let passwordRange = (text as NSString).range(of: LocalizedString.macPassword)
-        
-        description.addAttribute(.font, value: NSFont.boldSystemFont(ofSize: CGFloat(fontSize)), range: passwordRange)
-        description.addAttribute(.foregroundColor, value: NSColor.protonGreen(), range: passwordRange)
-        
-        uiAlertService.displayAlert(alert, message: description)
-    }
-    
-    private func show(_ alert: KillSwitchBlockingAlert) {
-        let descriptionText = String(format: LocalizedString.killSwitchBlockingBody,
-                                             LocalizedString.preferences)
-        let description = NSMutableAttributedString(attributedString: descriptionText.attributed(withColor: .white, fontSize: 14, alignment: .natural))
-        
-        let settingsRange = (descriptionText as NSString).range(of: LocalizedString.preferences, options: .backwards)
-        description.addAttribute(.link, value: "protonvpn://settings/connection", range: settingsRange)
-        
-        uiAlertService.displayAlert(alert, message: description)
     }
     
     private func show( _ alert: KillSwitchRequiresSwift5Alert ) {

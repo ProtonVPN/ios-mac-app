@@ -24,6 +24,15 @@ import Foundation
 import WireguardSRP
 
 extension LocalAgentFeatures {
+    var vpnAccelerator: Bool {
+        return getBool("split-tcp")
+    }
+
+    var netshield: NetShieldType {
+        let value = getInt("netshield-level")
+        return NetShieldType(rawValue: value) ?? .off
+    }
+
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
         switch netshield {
         case .off:

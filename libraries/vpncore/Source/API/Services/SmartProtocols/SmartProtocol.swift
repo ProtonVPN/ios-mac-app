@@ -45,7 +45,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        var sortOrder: Int {
+        var priority: Int {
             #if os(iOS)
             switch self {
             case .openVpnUdp:
@@ -69,21 +69,18 @@ final class SmartProtocolImplementation: SmartProtocol {
     }
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
-    private let queue: DispatchQueue
 
     init(config: OpenVpnConfig) {
-        let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
-
         checkers = [
             .ikev2: IKEv2AvailabilityChecker(),
             .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
             .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
         ]
-        self.queue = queue
     }
 
     func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
         let group = DispatchGroup()
+        let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
 
         PMLog.D("Determining best protocol for \(server.domain)")
@@ -91,19 +88,20 @@ final class SmartProtocolImplementation: SmartProtocol {
         for (proto, checker) in checkers {
             group.enter()
             checker.checkAvailability(server: server) { result in
-                switch result {
-                case .unavailable:
-                    break
-                case let .available(ports: ports):
-                    availablePorts[proto] = ports
+                queue.async {
+                    switch result {
+                    case .unavailable:
+                        break
+                    case let .available(ports: ports):
+                        availablePorts[proto] = ports
+                    }
+                    group.leave()
                 }
-
-                group.leave()
             }
         }
 
         group.notify(queue: queue) {
-            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.sortOrder < rhs.sortOrder })
+            let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best] else {
                 #if os(iOS)

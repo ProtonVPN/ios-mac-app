@@ -23,46 +23,6 @@
 import Foundation
 import vpncore
 
-public class ActiveFirewallAlert: SystemAlert {
-    public var title: String? = LocalizedString.existingFirewallPopupTitle
-    public var message: String? = LocalizedString.existingFirewallPopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
-    }
-}
-
-public class KillSwitchErrorAlert: ExpandableSystemAlert {
-    public var title: String? = LocalizedString.killSwitchErrorTitle
-    public var message: String? = LocalizedString.killSwitchErrorHead
-    public var expandableInfo: String? = LocalizedString.killSwitchErrorInfo
-    public var footInfo: String? = LocalizedString.killSwitchErrorFoot
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init() {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .cancel, handler: nil))
-    }
-}
-
-public class KillSwitchBlockingAlert: SystemAlert {
-    public var title: String? = LocalizedString.killSwitchBlockingTitle
-    public var message: String? = String(format: LocalizedString.killSwitchBlockingBody, LocalizedString.preferences)
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.killSwitchDisable, style: .destructive, handler: confirmHandler))
-    }
-}
-
 public class KillSwitchRequiresSwift5Alert: SystemAlert {
     public var title: String? = LocalizedString.killSwitchBlockingTitle
     public var message: String? = LocalizedString.killSwitchRequiresSwiftPopupMsg
@@ -86,47 +46,6 @@ public class KillSwitchRequiresSwift5Alert: SystemAlert {
         
         actions.append(AlertAction(title: LocalizedString.done, style: .destructive, handler: nil))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
-    }
-}
-
-public class HelperInstallFailedAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperInstallIssuePopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.retry, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.disable, style: .cancel, handler: cancelHandler))
-    }
-}
-
-public class InstallingHelperAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperInstallPopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    var okAction: AlertAction { return actions.first! }
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-    }
-}
-
-public class UpdatingHelperAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = LocalizedString.killSwitchHelperUpdatePopupBody
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    var okAction: AlertAction { return actions.first! }
-    
-    public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
     }
 }
 
