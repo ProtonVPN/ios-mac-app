@@ -52,7 +52,8 @@ class UserAccountUpdateViewController: NSViewController {
     @IBOutlet weak var toServerTitleLbl: NSTextField!
     @IBOutlet weak var toServerIV: NSImageView!
     @IBOutlet weak var toServerLbl: NSTextField!
-    
+
+    private lazy var serverManager: ServerManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: ServerStorageConcrete())
     private let alert: UserAccountUpdateAlert
     var dismissCompletion: (() -> Void)?
     
@@ -70,6 +71,8 @@ class UserAccountUpdateViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "ProtonVPN"
+        view.wantsLayer = true
+        view.layer?.backgroundColor = NSColor.protonGrey().cgColor
         serversView.wantsLayer = true
         serversView.layer?.backgroundColor = #colorLiteral(red: 0.1450980392, green: 0.1529411765, blue: 0.1725490196, alpha: 1)
         serversView.layer?.cornerRadius = 8
@@ -97,8 +100,9 @@ class UserAccountUpdateViewController: NSViewController {
         feature2View.isHidden = !alert.displayFeatures
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
-        feature1Lbl.stringValue = LocalizedString.subscriptionUpgradeOption1(54)
-        feature2Lbl.stringValue = LocalizedString.subscriptionUpgradeOption2(5)
+        guard alert.displayFeatures else { return }
+        feature1Lbl.stringValue = LocalizedString.subscriptionUpgradeOption1(serverManager.grouping(for: .standard).count)
+        feature2Lbl.stringValue = LocalizedString.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
         feature3Lbl.stringValue = LocalizedString.subscriptionUpgradeOption3
     }
     
