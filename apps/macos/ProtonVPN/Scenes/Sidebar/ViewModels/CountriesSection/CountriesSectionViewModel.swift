@@ -249,12 +249,10 @@ class CountriesSectionViewModel {
     
     private func updateState( _ filter: String? ) {
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
-        var countries = serverManager.grouping(for: serverType)
+        self.countries = serverManager.grouping(for: serverType)
         if let query = filter, !query.isEmpty {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
-        
-        self.countries = countries.sorted { $1.0.country > $0.0.country }
         data = groupServersIntoSections(self.countries, serverType: serverType)
     }
     
@@ -331,7 +329,7 @@ class CountriesSectionViewModel {
         
         if userTier == 1 {
             // BASIC
-            let basicLocations = countries.filter { $0.0.lowestTier < 2 }.sorted { $0.0.lowestTier > $1.0.lowestTier }
+            let basicLocations = countries.filter { $0.0.lowestTier < 2 }
             let plusLocations = countries.filter { $0.0.lowestTier > 1 }
             let headerBasicVM = CountryHeaderViewModel(LocalizedString.locationsBasic, totalCountries: basicLocations.count, isPremium: false, countriesViewModel: self)
             let headerPlusVM = CountryHeaderViewModel(LocalizedString.locationsPlus, totalCountries: plusLocations.count, isPremium: true, countriesViewModel: self)
