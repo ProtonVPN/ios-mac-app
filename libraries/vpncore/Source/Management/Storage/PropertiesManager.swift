@@ -34,6 +34,7 @@ public protocol PropertiesManagerProtocol: class {
     static var vpnProtocolNotification: Notification.Name { get }
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
+    static var killSwitchNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
