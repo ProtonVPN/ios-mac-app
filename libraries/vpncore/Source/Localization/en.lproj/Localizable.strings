@@ -722,7 +722,7 @@
 
 // Battery usage
 "_battery_title" = "Battery usage";
-"_battery_descritption" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
+"_battery_description" = "All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.";
 "_battery_more" = "Want to learn more?";
 
 // Netshield

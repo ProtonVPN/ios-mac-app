@@ -92,7 +92,7 @@
 "_basic_servers" = "BASIC‐SERVER";
 
 /* Battery usages screen description */
-"_battery_descritption" = "Der gesamte Datenverkehr Ihres Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
+"_battery_description" = "Der gesamte Datenverkehr Ihres Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Möchten Sie mehr erfahren?";

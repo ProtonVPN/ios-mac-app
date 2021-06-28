@@ -92,7 +92,7 @@
 "_basic_servers" = "СЕРВЕРЫ BASIC";
 
 /* Battery usages screen description */
-"_battery_descritption" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет записывать на ProtonVPN то, что скачивают/отправляют другие приложения.";
+"_battery_description" = "Весь трафик на вашем телефоне будет проходить через OpenVPN, поэтому iOS будет записывать на ProtonVPN то, что скачивают/отправляют другие приложения.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Хотите узнать больше?";
