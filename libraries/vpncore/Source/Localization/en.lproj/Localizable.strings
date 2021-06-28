@@ -514,12 +514,12 @@
 "_ikev2" = "IKEv2";
 "_tcp" = "TCP";
 "_udp" = "UDP";
-"_wireguard" = "WireGuard";
+"_wireguard" = "WireGuard® (beta)";
 "_view_logs" = "View Logs";
 "_logs" = "Logs";
 "_application_logs" = "Application Logs";
 "_open_vpn_logs" = "OpenVPN Logs";
-"_wireguard_logs" = "WireGuard Logs";
+"_wireguard_logs" = "WireGuard® (beta) Logs";
 "_activate_widget" = "Activate Widget";
 "_activate_widget_step_1" = "From your homescreen, swipe to the left most screen to access your widgets.";
 "_activate_widget_step_2" = "Scroll all the way down and tap the edit button.";

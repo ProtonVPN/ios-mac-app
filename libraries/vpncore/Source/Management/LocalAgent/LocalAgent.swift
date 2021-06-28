@@ -27,6 +27,7 @@ import Reachability
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
+    func didChangeFeatures(netshield: NetShieldType, vpnAccelerator: Bool)
 }
 
 protocol LocalAgent {
@@ -119,5 +120,9 @@ extension GoLocalAgent: LocalAgentNativeClientDelegate {
         }
 
         delegate?.didChangeState(state: state)
+
+        if let features = agent?.status?.features {
+            delegate?.didChangeFeatures(netshield: features.netshield, vpnAccelerator: features.vpnAccelerator)
+        }
     }
 }
