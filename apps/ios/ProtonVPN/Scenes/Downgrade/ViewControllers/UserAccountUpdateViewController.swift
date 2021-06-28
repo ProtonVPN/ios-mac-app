@@ -55,6 +55,7 @@ class UserAccountUpdateViewController: UIViewController {
     
     private let alert: UserAccountUpdateAlert
     private let navigationService: NavigationService?
+    private lazy var serverManager: ServerManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: ServerStorageConcrete())
     
     var dismissCompletion: (() -> Void)?
     
@@ -93,9 +94,9 @@ class UserAccountUpdateViewController: UIViewController {
         feature2View.isHidden = !alert.displayFeatures
         feature3View.isHidden = !alert.displayFeatures
         featuresTitleLbl.isHidden = !alert.displayFeatures
-        
-        feature1Lbl.text = LocalizedString.subscriptionUpgradeOption1(54)
-        feature2Lbl.text = LocalizedString.subscriptionUpgradeOption2(5)
+        guard alert.displayFeatures else { return }
+        feature1Lbl.text = LocalizedString.subscriptionUpgradeOption1(serverManager.grouping(for: .standard).count)
+        feature2Lbl.text = LocalizedString.subscriptionUpgradeOption2(AccountPlan.plus.devicesCount)
         feature3Lbl.text = LocalizedString.subscriptionUpgradeOption3
     }
     
