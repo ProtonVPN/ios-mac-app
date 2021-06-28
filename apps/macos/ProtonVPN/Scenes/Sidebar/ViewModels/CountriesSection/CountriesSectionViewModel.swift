@@ -123,6 +123,10 @@ class CountriesSectionViewModel {
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+
+    private var mustSupportWireguard: Bool {
+        return !propertiesManager.smartProtocol && propertiesManager.vpnProtocol == .wireGuard
+    }
     
     init(factory: Factory) {
         self.factory = factory
@@ -141,8 +145,9 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
 
         updateState(nil)
     }
@@ -189,7 +194,7 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
-    @objc private func userPlanDidChange() {
+    @objc private func reloadDataOnChange() {
         expandedCountries = []
         updateState(nil)
         let contentChange = ContentChange(reset: true)
@@ -254,7 +259,7 @@ class CountriesSectionViewModel {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
         
-        self.countries = countries.sorted { $1.0.country > $0.0.country }
+        self.countries = countries.filter(mustSupportWireguard: mustSupportWireguard).sorted { $1.0.country > $0.0.country }
         data = groupServersIntoSections(self.countries, serverType: serverType)
     }
     
