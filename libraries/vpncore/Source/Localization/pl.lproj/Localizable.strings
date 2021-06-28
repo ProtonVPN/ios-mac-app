@@ -92,7 +92,7 @@
 "_basic_servers" = "PODSTAWOWE SERWERY";
 
 /* Battery usages screen description */
-"_battery_descritption" = "Cały ruch sieciowy telefonu będzie zarządzany przez protokół OpenVPN, dlatego system iOS przydzieli użycie baterii innych aplikacji do aplikacji ProtonVPN.";
+"_battery_description" = "Cały ruch sieciowy telefonu będzie zarządzany przez protokół OpenVPN, dlatego system iOS przydzieli użycie baterii innych aplikacji do aplikacji ProtonVPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Chcesz dowiedzieć się więcej?";

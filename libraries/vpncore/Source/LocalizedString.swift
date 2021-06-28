@@ -83,7 +83,7 @@ public enum LocalizedString {
   /// BASIC Servers
   public static let basicServers = LocalizedString.tr("Localizable", "_basic_servers")
   /// All traffic on your phone will be managed through OpenVPN, therefore iOS will allocate the battery usage of other apps to ProtonVPN.
-  public static let batteryDescritption = LocalizedString.tr("Localizable", "_battery_descritption")
+  public static let batteryDescription = LocalizedString.tr("Localizable", "_battery_description")
   /// Want to learn more?
   public static let batteryMore = LocalizedString.tr("Localizable", "_battery_more")
   /// Battery usage

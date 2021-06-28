@@ -37,7 +37,7 @@ class BatteryUsageViewController: UIViewController {
 
     private func setupTranslations() {
         self.title = LocalizedString.batteryTitle
-        descriptionLabel.text = LocalizedString.batteryDescritption
+        descriptionLabel.text = LocalizedString.batteryDescription
         moreButton.setTitle(LocalizedString.batteryMore, for: .normal)
     }
 

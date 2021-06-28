@@ -92,7 +92,7 @@
 "_basic_servers" = "BASIS SERVERS";
 
 /* Battery usages screen description */
-"_battery_descritption" = "Al het netwerkverkeer op uw telefoon verloopt via OpenVPN, daarom toont iOS het batterijgebruik van andere apps alsof het van ProtonVPN is.";
+"_battery_description" = "Al het netwerkverkeer op uw telefoon verloopt via OpenVPN, daarom toont iOS het batterijgebruik van andere apps alsof het van ProtonVPN is.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Wilt u meer weten?";

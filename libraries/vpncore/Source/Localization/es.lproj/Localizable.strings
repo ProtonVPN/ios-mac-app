@@ -92,7 +92,7 @@
 "_basic_servers" = "SERVIDORES BASIC";
 
 /* Battery usages screen description */
-"_battery_descritption" = "Todo el tráfico en tu teléfono se administrará a través de OpenVPN, por lo tanto iOS asignará el uso de batería de otras aplicaciones a ProtonVPN.";
+"_battery_description" = "Todo el tráfico en tu teléfono se administrará a través de OpenVPN, por lo tanto iOS asignará el uso de batería de otras aplicaciones a ProtonVPN.";
 
 /* Battery usage More info button text */
 "_battery_more" = "¿Quieres saber más?";
