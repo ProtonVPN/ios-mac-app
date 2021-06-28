@@ -91,7 +91,6 @@ lane :create_ios_keychain do
       default_keychain: false,
       add_to_search_list: true,
       unlock: true,
-      timeout: false,
       lock_when_sleeps: false,
       lock_after_timeout: false
   )
