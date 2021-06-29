@@ -19,11 +19,13 @@ final class VpnProtocolViewModel {
     private var openVpnTransportProtocol: VpnProtocol.TransportProtocol // maintains transport protocol selection even when vpn protocol is changed
     private let featureFlags: FeatureFlags
     private let alertService: AlertService
+    private let showProtocolWarnings: Bool
     
-    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags, alertService: AlertService) {
+    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags, alertService: AlertService, showProtocolWarnings: Bool = true) {
         self.vpnProtocol = vpnProtocol
         self.featureFlags = featureFlags
         self.alertService = alertService
+        self.showProtocolWarnings = showProtocolWarnings
         
         if case VpnProtocol.openVpn(let transportProtocol) = vpnProtocol {
             self.openVpnTransportProtocol = transportProtocol
@@ -53,7 +55,12 @@ final class VpnProtocolViewModel {
         
         if featureFlags.isWireGuard {
             cells.append(
-                .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol, alertService] in
+                .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol, alertService, showProtocolWarnings] in
+                    guard showProtocolWarnings else {
+                        switchVpnProtocol(.wireGuard)
+                        return true
+                    }
+
                     let alert = WireguardSupportWarningAlert(continueHandler: { [switchVpnProtocol] in
                         switchVpnProtocol(.wireGuard)
                     })
