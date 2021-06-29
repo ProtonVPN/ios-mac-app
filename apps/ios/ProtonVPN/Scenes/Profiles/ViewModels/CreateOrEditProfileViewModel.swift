@@ -363,7 +363,7 @@ class CreateOrEditProfileViewModel: NSObject {
     }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: vpnProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService)
+        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: vpnProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService, showProtocolWarnings: false)
         vpnProtocolViewModel.protocolChanged = { [self] vpnProtocol in
             self.vpnProtocol = vpnProtocol
             self.saveButtonEnabled = true
