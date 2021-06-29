@@ -187,13 +187,13 @@ class CountriesViewModel: SecureCoreToggleHandler {
         switch userTier {
         case 0:
             if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 0 }) }
-            return state.currentContent.filter({ $0.0.lowestTier > 0 }).sorted(by: { $0.0.lowestTier > $1.0.lowestTier })
+            return state.currentContent.filter({ $0.0.lowestTier > 0 })
         case 1:
             if section == 1 { return state.currentContent.filter({ $0.0.lowestTier > 1 }) }
             if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 1 }) }
             return state.currentContent.filter({ $0.0.lowestTier == 0 })
         default:
-            return state.currentContent.sorted(by: { $0.0.lowestTier > $1.0.lowestTier })
+            return state.currentContent
         }
     }
     
@@ -210,26 +210,12 @@ class CountriesViewModel: SecureCoreToggleHandler {
                                                name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
     }
     
-    private func orderedCountries(_ countries: [CountryGroup]) -> [CountryGroup] {
-        return countries.sorted(by: { (countryGroup1, countryGroup2) -> Bool in
-            if userTier == 0 && countryGroup1.0.lowestTier == 0 {
-                if  countryGroup2.0.lowestTier == 0 {
-                    return countryGroup1.0.country > countryGroup2.0.country
-                } else {
-                    return true
-                }
-            } else {
-                return countryGroup1.0.country < countryGroup2.0.country
-            }
-        })
-    }
-    
     internal func setStateOf(type: ServerType) {
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            state = ModelState.standard(orderedCountries(serverManager.grouping(for: .standard).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries)))
+            state = ModelState.standard(serverManager.grouping(for: .standard).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
         case .secureCore:
-            state = ModelState.secureCore(orderedCountries(serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries)))
+            state = ModelState.secureCore(serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
         }
     }
     
