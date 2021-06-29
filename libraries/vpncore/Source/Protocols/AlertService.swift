@@ -829,7 +829,7 @@ public class WireguardSupportWarningAlert: SystemAlert {
     public var title: String? = LocalizedString.wireguard
     public var message: String? = LocalizedString.wireguardFilterWarningText
     public var actions = [AlertAction]()
-    public let isError: Bool = true
+    public let isError: Bool = false
     public var dismiss: (() -> Void)?
 
     public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil) {
