@@ -83,6 +83,8 @@ public protocol PropertiesManagerProtocol: class {
     
     var streamingServices: StreamingDictServices { get set }
     var streamingResourcesUrl: String? { get set }
+
+    var showOnlyWireguardServersAndCountries: Bool { get }
     
     func logoutCleanup()
     
@@ -586,6 +588,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             Storage.setValue(newValue, forKey: Keys.streamingResourcesUrl)
         }
+    }
+
+    public var showOnlyWireguardServersAndCountries: Bool {
+        return !smartProtocol && vpnProtocol == .wireGuard
     }
     
     #if os(iOS)
