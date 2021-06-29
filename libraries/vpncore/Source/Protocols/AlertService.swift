@@ -844,3 +844,11 @@ public class WireguardSupportWarningAlert: SystemAlert {
         dismiss = cancel
     }
 }
+
+public class WireguardProfileErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.wireguard
+    public var message: String? = LocalizedString.wireguardProfileWarningText
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+}
