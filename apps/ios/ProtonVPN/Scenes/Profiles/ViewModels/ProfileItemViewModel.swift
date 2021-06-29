@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 import vpncore
 
-class ProfileItemViewModel {
+final class ProfileItemViewModel {
     
     private let profile: Profile
     private let vpnGateway: VpnGatewayProtocol?
@@ -166,9 +166,6 @@ class ProfileItemViewModel {
             vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()
         }
-    }
-    
-    func deleteAction() {
     }
     
     // MARK: Descriptors
