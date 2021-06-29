@@ -192,6 +192,9 @@ extension MacAlertService: CoreAlertService {
 
         case is WireguardSupportWarningAlert:
             showDefaultSystemAlert(alert)
+
+        case is WireguardProfileErrorAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG
