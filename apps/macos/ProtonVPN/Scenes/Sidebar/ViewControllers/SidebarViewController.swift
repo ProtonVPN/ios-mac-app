@@ -23,23 +23,23 @@
 import Cocoa
 import vpncore
 
-class SidebarViewController: NSViewController, NSWindowDelegate {
+final class SidebarViewController: NSViewController, NSWindowDelegate {
 
     static let reconnectionNotificationName = Notification.Name("SidebarViewControllerReconnect")
 
     private let sidebarWidth = AppConstants.Windows.sidebarWidth
     private let expandButtonWidth: CGFloat = 28
     
-    @IBOutlet weak var allThings: NSView!
+    @IBOutlet private weak var allThings: NSView!
     
-    @IBOutlet weak var headerControllerViewContainer: NSView!
-    @IBOutlet weak var tabBarControllerViewContainer: NSView!
-    @IBOutlet weak var activeControllerViewContainer: NSView!
-    @IBOutlet weak var announcementsControllerViewContainer: NSView!
-    @IBOutlet weak var connectionOverlay: ConnectionOverlay!
-    @IBOutlet weak var sidebarContainerView: NSView!
-    @IBOutlet weak var expandButton: ExpandMapButton!
-    @IBOutlet weak var expandButtonLeading: NSLayoutConstraint!
+    @IBOutlet private weak var headerControllerViewContainer: NSView!
+    @IBOutlet private weak var tabBarControllerViewContainer: NSView!
+    @IBOutlet private weak var activeControllerViewContainer: NSView!
+    @IBOutlet private weak var announcementsControllerViewContainer: NSView!
+    @IBOutlet private weak var connectionOverlay: ConnectionOverlay!
+    @IBOutlet private weak var sidebarContainerView: NSView!
+    @IBOutlet private weak var expandButton: ExpandMapButton!
+    @IBOutlet private weak var expandButtonLeading: NSLayoutConstraint!
     
     private var headerViewController: HeaderViewController!
     private var activeController: NSViewController!
@@ -64,6 +64,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
         & PropertiesManagerFactory
         & CoreAlertServiceFactory
         & SystemExtensionManagerFactory
+        & CoreAlertServiceFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
@@ -79,7 +80,7 @@ class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
-        let viewModel = ProfilesSectionViewModel(vpnGateway: self.vpnGateway, navService: navService)
+        let viewModel = ProfilesSectionViewModel(vpnGateway: self.vpnGateway, navService: navService, alertService: factory.makeCoreAlertService())
         return ProfileSectionViewController(viewModel: viewModel)
     }()
     

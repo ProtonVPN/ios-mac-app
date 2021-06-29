@@ -33,6 +33,7 @@ class ProfilesSectionViewModel {
     private let vpnGateway: VpnGatewayProtocol
     private let profileManager: ProfileManager
     private let navService: NavigationService
+    private let alertService: CoreAlertService
     
     var contentChanged: (() -> Void)?
     
@@ -48,9 +49,10 @@ class ProfilesSectionViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService) {
+    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
         self.navService = navService
+        self.alertService = alertService
         profileManager = ProfileManager.shared
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
                                                name: profileManager.contentChanged, object: nil)
@@ -65,7 +67,7 @@ class ProfilesSectionViewModel {
     
     func cellModel(forRow index: Int) -> ProfilesSectionListCell {
         if index < cellCount - 1 {
-            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier))
+            return .profile(ProfileItemViewModel(profile: profileManager.allProfiles[index], vpnGateway: vpnGateway, userTier: userTier, alertService: alertService))
         } else {
             return .footer(self)
         }
