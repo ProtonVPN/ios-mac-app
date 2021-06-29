@@ -71,6 +71,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var sessions: [SessionModel] = []
     public var streamingResourcesUrl: String?
     var earlyAccess: Bool = false
+    public var showOnlyWireguardServersAndCountries: Bool = false
     
     public init() {}
     

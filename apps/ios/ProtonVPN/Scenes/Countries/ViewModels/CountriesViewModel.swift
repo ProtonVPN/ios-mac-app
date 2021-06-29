@@ -83,10 +83,6 @@ class CountriesViewModel: SecureCoreToggleHandler {
     
     private let countryService: CountryService
     var vpnGateway: VpnGatewayProtocol?
-
-    private var mustSupportWireguard: Bool {
-        return !propertiesManager.smartProtocol && propertiesManager.vpnProtocol == .wireGuard
-    }
     
     init(factory: Factory, vpnGateway: VpnGatewayProtocol?, countryService: CountryService, loginService: LoginService) {
         self.factory = factory
@@ -231,9 +227,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal func setStateOf(type: ServerType) {
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            state = ModelState.standard(orderedCountries(serverManager.grouping(for: .standard).filter(mustSupportWireguard: mustSupportWireguard)))
+            state = ModelState.standard(orderedCountries(serverManager.grouping(for: .standard).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries)))
         case .secureCore:
-            state = ModelState.secureCore(orderedCountries(serverManager.grouping(for: .secureCore).filter(mustSupportWireguard: mustSupportWireguard)))
+            state = ModelState.secureCore(orderedCountries(serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries)))
         }
     }
     

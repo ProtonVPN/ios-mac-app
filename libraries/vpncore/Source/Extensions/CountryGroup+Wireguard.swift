@@ -7,11 +7,10 @@
 //
 
 import Foundation
-import vpncore
 
 extension Array where Element == CountryGroup {
-    public func filter(mustSupportWireguard: Bool) -> Self {
-        guard mustSupportWireguard else {
+    public func filter(showOnlyWireguardServersAndCountries: Bool) -> Self {
+        guard showOnlyWireguardServersAndCountries else {
             return self
         }
 

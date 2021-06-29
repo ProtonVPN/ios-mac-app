@@ -124,10 +124,6 @@ class CountriesSectionViewModel {
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
 
-    private var mustSupportWireguard: Bool {
-        return !propertiesManager.smartProtocol && propertiesManager.vpnProtocol == .wireGuard
-    }
-    
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
@@ -259,7 +255,7 @@ class CountriesSectionViewModel {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
         
-        self.countries = countries.filter(mustSupportWireguard: mustSupportWireguard).sorted { $1.0.country > $0.0.country }
+        self.countries = countries.filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).sorted { $1.0.country > $0.0.country }
         data = groupServersIntoSections(self.countries, serverType: serverType)
     }
     
