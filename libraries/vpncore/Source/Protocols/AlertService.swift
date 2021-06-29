@@ -851,4 +851,6 @@ public class WireguardProfileErrorAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
+
+    public init() { }
 }
