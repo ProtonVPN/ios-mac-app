@@ -153,6 +153,11 @@ final class ProfileItemViewModel {
             loginService.presentSignup()
             return
         }
+
+        if profile.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
+            alertService.push(alert: WireguardProfileErrorAlert())
+            return
+        }
         
         if isUsersTierTooLow {
             planService.presentPlanSelection()
