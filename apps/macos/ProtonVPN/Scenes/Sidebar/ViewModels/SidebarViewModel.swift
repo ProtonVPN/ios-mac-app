@@ -32,7 +32,7 @@ final class SidebarViewModel {
         // just show once
         propertiesManager.openVPNExtensionTourDisplayed = true
 
-        let alert = SysexInstallationRequiredAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols, continueHandler: { [weak self] in
+        let alert = SysexInstallationRequiredAlert(continueHandler: { [weak self] in
             // try to install
             self?.systemExtensionManager.requestExtensionInstall(completion: { [weak self] result in
                 if case .success = result {

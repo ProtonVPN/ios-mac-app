@@ -114,7 +114,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
         if shouldNotifyInstall {
-            alertService.push(alert: SysexEnabledAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols))
+            alertService.push(alert: SysexEnabledAlert())
         }
     }
     
