@@ -689,8 +689,8 @@ public class SysexInstallationRequiredAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(isSmartProtocolAvailable: Bool, continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
-        message = isSmartProtocolAvailable ? LocalizedString.sysexInstallDescription : LocalizedString.sysexInstallDescriptionWithoutSmartProtocol
+    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        message = LocalizedString.sysexInstallDescription
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
@@ -703,9 +703,9 @@ public class SysexEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(isSmartProtocolAvailable: Bool) {
-        title = isSmartProtocolAvailable ? LocalizedString.sysexInstalledTitle : LocalizedString.sysexInstalledTitleWithoutSmartProtocol
-        message = isSmartProtocolAvailable ? LocalizedString.sysexInstalledDescription : LocalizedString.sysexInstalledDescriptionWithoutSmartProtocol
+    public init() {
+        title = LocalizedString.sysexInstalledTitle
+        message = LocalizedString.sysexInstalledDescription
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }

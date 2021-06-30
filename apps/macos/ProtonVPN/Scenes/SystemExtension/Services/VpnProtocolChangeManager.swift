@@ -95,7 +95,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                 requestExtensionCallback()
                 
             } else {
-                alertService.push(alert: SysexInstallationRequiredAlert(isSmartProtocolAvailable: propertiesManager.featureFlags.isSmartProtocols, continueHandler: { [unowned self] in
+                alertService.push(alert: SysexInstallationRequiredAlert(continueHandler: { [unowned self] in
                     propertiesManager.openVPNExtensionTourDisplayed = true
                     requestExtensionCallback()
                     self.alertService.push(alert: SystemExtensionTourAlert())
