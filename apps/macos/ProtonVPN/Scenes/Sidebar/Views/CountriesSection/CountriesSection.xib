@@ -36,20 +36,20 @@
         <customView autoresizesSubviews="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c22-O7-iKe" userLabel="Sidebar View">
             <rect key="frame" x="0.0" y="0.0" width="514" height="507"/>
             <subviews>
-                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" hasHorizontalScroller="NO" hasVerticalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybt-K1-fU1" customClass="BlockeableScrollView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="-16" y="0.0" width="546" height="391"/>
+                <scrollView borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="0.0" verticalLineScroll="19" verticalPageScroll="0.0" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ybt-K1-fU1" customClass="BlockeableScrollView" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
                     <clipView key="contentView" autoresizesSubviews="NO" drawsBackground="NO" copiesOnScroll="NO" id="i8K-V1-h4p">
-                        <rect key="frame" x="0.0" y="0.0" width="546" height="391"/>
+                        <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="cyQ-Pz-NoP">
-                                <rect key="frame" x="0.0" y="0.0" width="546" height="391"/>
+                            <tableView autoresizesSubviews="NO" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" tableStyle="plain" selectionHighlightStyle="none" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" floatsGroupRows="NO" id="cyQ-Pz-NoP">
+                                <rect key="frame" x="0.0" y="0.0" width="514" height="391"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
-                                    <tableColumn width="514" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
+                                    <tableColumn width="511" minWidth="40" maxWidth="1000" id="iP6-d7-OA7">
                                         <tableHeaderCell key="headerCell" lineBreakMode="truncatingTail" borderStyle="border">
                                             <color key="textColor" name="headerTextColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="headerColor" catalog="System" colorSpace="catalog"/>
@@ -62,11 +62,11 @@
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
                                             <tableCellView id="3UN-bf-YeF">
-                                                <rect key="frame" x="11" y="1" width="523" height="17"/>
+                                                <rect key="frame" x="1" y="1" width="511" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vcu-Fa-qNu">
-                                                        <rect key="frame" x="0.0" y="0.0" width="523" height="17"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="511" height="17"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" title="Table View Cell" id="O64-lx-a5C">
                                                             <font key="font" metaFont="system"/>
@@ -86,17 +86,17 @@
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xKP-wR-0TS" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="xKP-wR-0TS">
                         <rect key="frame" x="-100" y="-100" width="365" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="tYH-L0-q5F" customClass="TransparentBackedScroller" customModule="ProtonVPN" customModuleProvider="target">
+                    <scroller key="verticalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="tYH-L0-q5F">
                         <rect key="frame" x="-100" y="-100" width="15" height="366"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                 </scrollView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="KXN-5h-obj" customClass="ShadowView" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="-16" y="345" width="546" height="46"/>
+                    <rect key="frame" x="0.0" y="345" width="514" height="46"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="46" id="KQ4-vZ-C8w"/>
                     </constraints>
@@ -294,7 +294,7 @@
                 <constraint firstAttribute="trailing" secondItem="j34-Mf-pR3" secondAttribute="trailing" id="9LX-kE-DXe"/>
                 <constraint firstAttribute="trailing" secondItem="62O-3H-Vui" secondAttribute="trailing" constant="14" id="9vh-Ih-lvs"/>
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="top" secondItem="qf9-9Y-IsT" secondAttribute="bottom" constant="8" id="AaB-5p-t3i"/>
-                <constraint firstItem="Ybt-K1-fU1" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="-16" id="AkH-nz-rRf"/>
+                <constraint firstItem="Ybt-K1-fU1" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="AkH-nz-rRf"/>
                 <constraint firstItem="xcp-Uy-Ngx" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="48" id="GYL-Uq-07r"/>
                 <constraint firstItem="xcp-Uy-Ngx" firstAttribute="width" secondItem="c22-O7-iKe" secondAttribute="width" id="IQo-Nk-ea5"/>
                 <constraint firstItem="qf9-9Y-IsT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" id="LrI-lG-a0n"/>
@@ -305,7 +305,7 @@
                 <constraint firstItem="Ybt-K1-fU1" firstAttribute="top" secondItem="j34-Mf-pR3" secondAttribute="bottom" id="atF-z6-NKg"/>
                 <constraint firstItem="qf9-9Y-IsT" firstAttribute="top" secondItem="62O-3H-Vui" secondAttribute="bottom" id="cdk-fe-BKf"/>
                 <constraint firstAttribute="bottom" secondItem="Ybt-K1-fU1" secondAttribute="bottom" id="dlO-F7-PdK"/>
-                <constraint firstAttribute="trailing" secondItem="Ybt-K1-fU1" secondAttribute="trailing" constant="-16" id="eYc-kp-Qvn"/>
+                <constraint firstAttribute="trailing" secondItem="Ybt-K1-fU1" secondAttribute="trailing" id="eYc-kp-Qvn"/>
                 <constraint firstItem="ly1-uI-H8k" firstAttribute="width" secondItem="xcp-Uy-Ngx" secondAttribute="width" id="gth-D9-z9C"/>
                 <constraint firstItem="wdu-7r-MZX" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="sqQ-Ko-j1f"/>
                 <constraint firstItem="62O-3H-Vui" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="14" id="sqk-q4-SEA"/>
