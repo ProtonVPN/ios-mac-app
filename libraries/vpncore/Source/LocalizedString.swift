@@ -727,7 +727,6 @@ public class LocalizedString {
     
     public static let sysexInstallTitle = NSLocalizedString("_openvpn_settings_title", comment: "Enabling OpenVPN Title")
     public static let sysexInstallDescription = NSLocalizedString("_openvpn_settings_description", comment: "Enabling OpenVPN Description")
-    public static let sysexInstallDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_description_no_smart_protocol", comment: "Enabling OpenVPN Description")
     public static let sysexInstallStep1 = NSLocalizedString("_openvpn_settings_step1", comment: "Step 1 for enabling OpenVPN Extension")
     public static let sysexInstallStep1Link = NSLocalizedString("_openvpn_settings_step1_link", comment: "Link text inside Step 1 for enabling OpenVPN Extension")
     public static let sysexInstallStep2 = NSLocalizedString("_openvpn_settings_step2", comment: "Step 2 for enabling OpenVPN Extension")
@@ -735,8 +734,6 @@ public class LocalizedString {
 
     public static let sysexInstalledTitle = NSLocalizedString("_openvpn_settings_enabled_title", comment: "Popup title after enabling OpenVPN")
     public static let sysexInstalledDescription = NSLocalizedString("_openvpn_settings_enabled_description", comment: "Popup description after enabling OpenVPN")
-    public static let sysexInstalledTitleWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_title_no_smart_protocol", comment: "Popup title after enabling macOS System Extension")
-    public static let sysexInstalledDescriptionWithoutSmartProtocol = NSLocalizedString("_openvpn_settings_enabled_description_no_smart_protocol", comment: "Popup description after enabling macOS System Extension")
     
     public static let sysexInstallCannotEnable = NSLocalizedString("_openvpn_cannot_enable", comment: "Popup title after enabling OpenVPN")
     public static let sysexInstallErrorDescription = NSLocalizedString("_openvpn_error_description", comment: "Popup description on error installing OpenVPN")
