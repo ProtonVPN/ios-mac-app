@@ -110,10 +110,6 @@ final class ConnectionSettingsViewModel {
     var allowLAN: Bool {
         return propertiesManager.excludeLocalNetworks
     }
-
-    var showSmartProtocolOption: Bool {
-        return featureFlags.isSmartProtocols
-    }
     
     var isAcceleratorFeatureEnabled: Bool {
         return featureFlags.isVpnAccelerator
