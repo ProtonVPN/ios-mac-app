@@ -130,7 +130,7 @@ lane :ios_internal_beta do |options|
   build_app(
       scheme: SCHEME,
       clean: true,
-      output_directory: "build/",
+      output_directory: "build/" + SCHEME + "/",
       export_method: "app-store",
       export_options: {
           provisioningProfiles: {
@@ -144,7 +144,8 @@ lane :ios_internal_beta do |options|
   )
 
   # Updload dSYMs to Sentry
-  sentry_upload_dsym
+  #sentry_upload_dsym
+  # Enable back when sentry dsym uploads start working again
   
   upload_to_testflight(
       team_name: "Proton Technologies AG",
