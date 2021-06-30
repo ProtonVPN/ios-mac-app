@@ -84,7 +84,11 @@ public class AuthApiServiceImplementation: AuthApiService {
             self.alamofireWrapper.request(AuthenticateRequest(authProperties), success: authSuccessWrapper, failure: failure)
         }
     
-        alamofireWrapper.request(AuthInfoRequest(username), success: authInfoSuccessWrapper, failure: failure)
+        let antiAbuseSuccessWrapper: SuccessCallback = {
+            self.alamofireWrapper.request(AuthInfoRequest(username), success: authInfoSuccessWrapper, failure: failure)
+        }
+        
+        alamofireWrapper.request(DomainsAvailableRequest(type: .login), success: antiAbuseSuccessWrapper, failure: failure)
     }
     
     public func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback) {
