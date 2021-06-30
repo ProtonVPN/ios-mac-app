@@ -142,11 +142,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func checkSystemExtension() {
-        // always disable Smart Protocols when hidden as a feature
-        if !propertiesManager.featureFlags.isSmartProtocols {
-            propertiesManager.smartProtocol = false
-        }
-
         // only install the extension if OpenVPN is selected or Smart Protocol is enabled
         let needsInstallExtension: Bool
         switch propertiesManager.vpnProtocol {

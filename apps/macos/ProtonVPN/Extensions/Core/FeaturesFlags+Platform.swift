@@ -10,10 +10,6 @@ import Foundation
 import vpncore
 
 extension FeatureFlags {
-    var isSmartProtocols: Bool {
-        return false
-    }
-    
     var isWireGuard: Bool {
         #if DEBUG
         return true
