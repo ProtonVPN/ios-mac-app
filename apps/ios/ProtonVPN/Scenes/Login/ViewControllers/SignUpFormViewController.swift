@@ -128,14 +128,17 @@ final class SignUpFormViewController: UIViewController {
         view.setNeedsLayout()
         
         emailField.returnPressed = { [weak self] _ in self?.usernameField.focus() }
+        emailField.endEditing = { [weak self] _ in _ = self?.validateEmail() }
         viewModel.observeTextField(textField: emailField, type: .recoveryEmail)
 
         usernameField.returnPressed = { [weak self] _ in self?.password1Field.focus() }
+        usernameField.endEditing = { [weak self] _ in _ = self?.validateUsername() }
         viewModel.observeTextField(textField: usernameField, type: .username)
 
         password1Field.returnPressed = { [weak self] _ in self?.password2Field.focus() }
         viewModel.observeTextField(textField: password1Field, type: .password)
-
+        
+        password2Field.endEditing = { [weak self] _ in _ = self?.validatePassword2() }
         password2Field.returnPressed = { [weak self] _ in
             self?.view.endEditing(true)
             self?.mainButtonTapped(self as Any)
@@ -195,33 +198,48 @@ final class SignUpFormViewController: UIViewController {
         }
     }
     
-    private func validateFormFields() -> Bool {
-        var isValid = true
+    private func validateEmail() -> Bool {
         if let emailError = viewModel.validateEmail() {
             emailField.state = .error(emailError.localizedDescription, emailError.identifier)
-            isValid = false
+            return false
         } else {
             emailField.state = .normal
+            return true
         }
+    }
+    
+    private func validateUsername() -> Bool {
         if let usernameError = viewModel.validateUserName() {
             usernameField.state = .error(usernameError.localizedDescription, usernameError.identifier)
-            isValid = false
+            return false
         } else {
             usernameField.state = .normal
+            return true
         }
+    }
+    
+    private func validatePassword1() -> Bool {
         if let password1Error = viewModel.validatePassword1() {
             password1Field.state = .error(password1Error.localizedDescription, password1Error.identifier)
-            isValid = false
+            return false
         } else {
             password1Field.state = .normal
+            return true
         }
+    }
+    
+    private func validatePassword2() -> Bool {
         if let password2Error = viewModel.validatePassword2() {
             password2Field.state = .error(password2Error.localizedDescription, password2Error.identifier)
-            isValid = false
+            return false
         } else {
             password2Field.state = .normal
+            return true
         }
-        return isValid
+    }
+    
+    private func validateFormFields() -> Bool {
+        return validateEmail() && validateUsername() && validatePassword1() && validatePassword2()
     }
     
     private func showError(_ error: Error) {
