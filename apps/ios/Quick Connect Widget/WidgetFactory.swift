@@ -25,7 +25,7 @@ import vpncore
 
 final class WidgetFactory {
     private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-    private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuard-Extension"
+    private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuardiOS-Extension"
     private let appGroup = AppConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
