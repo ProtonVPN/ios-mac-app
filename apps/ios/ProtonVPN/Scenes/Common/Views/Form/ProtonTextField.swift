@@ -57,6 +57,7 @@ class ProtonTextField: UIView {
     
     public var textChanged: ((ProtonTextField) -> Void)?
     public var returnPressed: ((ProtonTextField) -> Void)?
+    public var endEditing: ((ProtonTextField) -> Void)?
     
     public var text: String {
         get {
@@ -215,4 +216,7 @@ extension ProtonTextField: UITextFieldDelegate {
         textChanged?(self)
     }
     
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
+        endEditing?(self)
+    }
 }
