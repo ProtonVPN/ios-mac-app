@@ -24,7 +24,7 @@ import Foundation
 import UIKit
 import vpncore
 
-class ProfileItemViewModel {
+final class ProfileItemViewModel {
     
     private let profile: Profile
     private let vpnGateway: VpnGatewayProtocol?
@@ -153,6 +153,11 @@ class ProfileItemViewModel {
             loginService.presentSignup()
             return
         }
+
+        if profile.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
+            alertService.push(alert: WireguardProfileErrorAlert())
+            return
+        }
         
         if isUsersTierTooLow {
             planService.presentPlanSelection()
@@ -166,9 +171,6 @@ class ProfileItemViewModel {
             vpnGateway.connectTo(profile: profile)
             connectionStatusService.presentStatusViewController()
         }
-    }
-    
-    func deleteAction() {
     }
     
     // MARK: Descriptors

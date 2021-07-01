@@ -30,12 +30,14 @@ class PrefillInformation {
     let typeIndex: Int
     let countryIndex: Int
     let serverIndex: Int
+    let vpnProtocolIndex: Int
     
-    init(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
+    init(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, vpnProtocolIndex: Int) {
         self.name = name
         self.color = color
         self.typeIndex = typeIndex
         self.countryIndex = countryIndex
         self.serverIndex = serverIndex
+        self.vpnProtocolIndex = vpnProtocolIndex
     }
 }

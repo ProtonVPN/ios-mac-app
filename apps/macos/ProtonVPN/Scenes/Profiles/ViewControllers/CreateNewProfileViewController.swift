@@ -23,31 +23,34 @@
 import Cocoa
 import vpncore
 
-class CreateNewProfileViewController: NSViewController {
+final class CreateNewProfileViewController: NSViewController {
     
-    @IBOutlet weak var profileSettingsLabel: PVPNTextField!
-    @IBOutlet weak var nameLabel: PVPNTextField!
-    @IBOutlet weak var nameTextField: TextFieldWithFocus!
-    @IBOutlet weak var nameTextFieldHorizontalLine: NSBox!
-    @IBOutlet weak var colorPickerLabel: PVPNTextField!
-    @IBOutlet weak var colorPickerViewContainer: NSView!
+    @IBOutlet private weak var profileSettingsLabel: PVPNTextField!
+    @IBOutlet private weak var nameLabel: PVPNTextField!
+    @IBOutlet private weak var nameTextField: TextFieldWithFocus!
+    @IBOutlet private weak var nameTextFieldHorizontalLine: NSBox!
+    @IBOutlet private weak var colorPickerLabel: PVPNTextField!
+    @IBOutlet private weak var colorPickerViewContainer: NSView!
     
-    @IBOutlet weak var connectionSettingsLabel: PVPNTextField!
-    @IBOutlet weak var typeLabel: PVPNTextField!
-    @IBOutlet weak var typeList: HoverDetectionPopUpButton!
-    @IBOutlet weak var typeListHorizontalLine: NSBox!
-    @IBOutlet weak var countryLabel: PVPNTextField!
-    @IBOutlet weak var countryList: HoverDetectionPopUpButton!
-    @IBOutlet weak var countryListHorizontalLine: NSBox!
-    @IBOutlet weak var serverLabel: PVPNTextField!
-    @IBOutlet weak var serverList: HoverDetectionPopUpButton!
-    @IBOutlet weak var serverListHorizontalLine: NSBox!
+    @IBOutlet private weak var connectionSettingsLabel: PVPNTextField!
+    @IBOutlet private weak var typeLabel: PVPNTextField!
+    @IBOutlet private weak var typeList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var typeListHorizontalLine: NSBox!
+    @IBOutlet private weak var countryLabel: PVPNTextField!
+    @IBOutlet private weak var countryList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var countryListHorizontalLine: NSBox!
+    @IBOutlet private weak var serverLabel: PVPNTextField!
+    @IBOutlet private weak var serverList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var serverListHorizontalLine: NSBox!
+    @IBOutlet private weak var protocolLabel: PVPNTextField!
+    @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var protocolListHorizontalLine: NSBox!
 
-    @IBOutlet weak var warningLabel: PVPNTextField!
-    @IBOutlet weak var warningLabelHorizontalLine: NSBox!
-    @IBOutlet weak var footerView: NSView!
-    @IBOutlet weak var saveButton: PrimaryActionButton!
-    @IBOutlet weak var cancelButton: WhiteCancelationButton!
+    @IBOutlet private weak var warningLabel: PVPNTextField!
+    @IBOutlet private weak var warningLabelHorizontalLine: NSBox!
+    @IBOutlet private weak var footerView: NSView!
+    @IBOutlet private weak var saveButton: PrimaryActionButton!
+    @IBOutlet private weak var cancelButton: WhiteCancelationButton!
     
     fileprivate var viewModel: CreateNewProfileViewModel!
     
@@ -78,6 +81,7 @@ class CreateNewProfileViewController: NSViewController {
         setupTypeSection()
         setupCountrySection()
         setupServerSection()
+        setupProtocolSection()
         setupWarningSection()
         setupFooterView()
         
@@ -117,6 +121,17 @@ class CreateNewProfileViewController: NSViewController {
         nameTextField.focusDelegate = self
         
         nameTextFieldHorizontalLine.fillColor = .protonLightGrey()
+    }
+
+    private func setupProtocolSection() {
+        protocolLabel.attributedStringValue = LocalizedString.vpnProtocol.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+
+        protocolList.isBordered = false
+        protocolList.menu?.delegate = self
+        protocolList.target = self
+        protocolList.action = #selector(protocolSelected)
+
+        protocolListHorizontalLine.fillColor = .protonLightGrey()
     }
     
     private func setupColorSection() {
@@ -179,10 +194,11 @@ class CreateNewProfileViewController: NSViewController {
         footerView.layer?.backgroundColor = NSColor.protonGreyShade().cgColor
     }
     
-    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0) {
+    internal func populateLists(selectedType: Int = 0, selectedCountry: Int = 0, selectedServer: Int = 0, selectedProtocol: Int = 0) {
         refreshTypeList(withSelectionAt: selectedType)
         refreshCountryList(for: selectedType, withSelectionAt: selectedCountry)
         refreshServerList(for: typeList.indexOfSelectedItem, and: selectedCountry, withSelectionAt: selectedServer)
+        refreshProtocolList(withSelectionAt: selectedProtocol)
     }
     
     private func refreshTypeList(withSelectionAt selectedIndex: Int) {
@@ -196,6 +212,18 @@ class CreateNewProfileViewController: NSViewController {
         }
         
         typeList.select(typeList.menu?.item(at: selectedIndex))
+    }
+
+    private func refreshProtocolList(withSelectionAt selectedIndex: Int) {
+        protocolList.removeAllItems()
+        
+        for vpnProtocol in viewModel.availableVpnProtocols {
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.vpnProtocol(for: vpnProtocol)
+            protocolList.menu?.addItem(menuItem)
+        }
+
+        protocolList.select(protocolList.menu?.item(at: selectedIndex))
     }
 
     private func refreshCountryList(for typeIndex: Int, withSelectionAt selectedIndex: Int) {
@@ -239,6 +267,10 @@ class CreateNewProfileViewController: NSViewController {
         refreshTypeList(withSelectionAt: typeList.indexOfSelectedItem)
         refreshCountryList(for: typeList.indexOfSelectedItem, withSelectionAt: 0)
         refreshServerList(for: typeList.indexOfSelectedItem, and: countryList.indexOfSelectedItem, withSelectionAt: 0)
+    }
+
+    @objc private func protocolSelected() {
+        refreshProtocolList(withSelectionAt: protocolList.indexOfSelectedItem)
     }
     
     @objc private func countrySelected() {
@@ -298,7 +330,7 @@ class CreateNewProfileViewController: NSViewController {
         
         viewModel.createProfile(name: nameTextField.stringValue, color: selectedColor,
                                 typeIndex: selectedType, countryIndex: selectedCountry,
-                                serverIndex: selectedServer)
+                                serverIndex: selectedServer, vpnProtocolIndex: protocolList.indexOfSelectedItem)
     }
     
     private func appendedWithSeparator(string: String) -> String {
@@ -336,7 +368,8 @@ class CreateNewProfileViewController: NSViewController {
         
         populateLists(selectedType: profileInformation.typeIndex,
                       selectedCountry: adjustedCountryIndex,
-                      selectedServer: adjustedServerIndex
+                      selectedServer: adjustedServerIndex,
+                      selectedProtocol: profileInformation.vpnProtocolIndex
         )
     }
     

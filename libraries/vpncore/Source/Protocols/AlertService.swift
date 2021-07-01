@@ -824,3 +824,33 @@ public class VpnServerSubscriptionErrorAlert: SystemAlert {
 
     public init() { }
 }
+
+public class WireguardSupportWarningAlert: SystemAlert {
+    public var title: String? = LocalizedString.wireguard
+    public var message: String? = LocalizedString.wireguardFilterWarningText
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil) {
+        actions = [
+            AlertAction(title: LocalizedString.continue, style: .confirmative, handler: {
+                continueHandler()
+            }),
+            AlertAction(title: LocalizedString.cancel, style: .cancel, handler: {
+                cancel?()
+            })
+        ]
+        dismiss = cancel
+    }
+}
+
+public class WireguardProfileErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.wireguard
+    public var message: String? = LocalizedString.wireguardProfileWarningText
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() { }
+}

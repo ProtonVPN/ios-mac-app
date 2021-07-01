@@ -65,6 +65,10 @@ public protocol VpnGatewayProtocol: class {
     
     var connection: ConnectionStatus { get }
     var lastConnectionRequest: ConnectionRequest? { get }
+
+    static var connectionChanged: Notification.Name { get }
+    static var activeServerTypeChanged: Notification.Name { get }
+    static var needsReconnectNotification: Notification.Name { get }
     
     func userTier() throws -> Int
     func changeActiveServerType(_ serverType: ServerType)

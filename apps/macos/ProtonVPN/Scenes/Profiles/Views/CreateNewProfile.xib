@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="16097" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16097"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -20,6 +20,9 @@
                 <outlet property="nameTextField" destination="rVj-Ub-X2f" id="BWB-Bv-VaQ"/>
                 <outlet property="nameTextFieldHorizontalLine" destination="2Av-tx-fMt" id="iws-oq-KYJ"/>
                 <outlet property="profileSettingsLabel" destination="njs-1o-jnp" id="nXv-B6-Lcw"/>
+                <outlet property="protocolLabel" destination="0L7-YK-IMv" id="4LZ-Ie-LYm"/>
+                <outlet property="protocolList" destination="L0N-my-I9p" id="8eR-GN-mZv"/>
+                <outlet property="protocolListHorizontalLine" destination="m1f-5O-xVe" id="TwN-td-OlL"/>
                 <outlet property="saveButton" destination="2II-AM-dOz" id="M3J-QS-9Xe"/>
                 <outlet property="serverLabel" destination="Sk1-39-Mzh" id="bvK-kX-sS0"/>
                 <outlet property="serverList" destination="P7g-i0-fdM" id="KeW-Gq-t38"/>
@@ -80,6 +83,14 @@
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sk1-39-Mzh" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                     <rect key="frame" x="469" y="211" width="86" height="16"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 3" id="b8Z-uC-rbR">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0L7-YK-IMv" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="469" y="149" width="86" height="16"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Picker label 4" id="OUd-aw-gSk">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -154,13 +165,13 @@
                     </constraints>
                 </customView>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="2ue-uR-ZZQ" userLabel="Type List" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="606" y="330" width="255" height="25"/>
+                    <rect key="frame" x="605" y="329" width="257" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="L8b-jS-vbU"/>
                     </constraints>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="gTR-4G-YRS" id="JNz-ck-25Y">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="Ua4-DS-pa4">
                             <items>
                                 <menuItem title="Item 1" state="on" id="gTR-4G-YRS"/>
@@ -171,14 +182,14 @@
                     </popUpButtonCell>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="pql-Bu-2na" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="606" y="268" width="255" height="25"/>
+                    <rect key="frame" x="605" y="267" width="257" height="26"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="250" id="GWG-D7-c4G"/>
                         <constraint firstAttribute="height" constant="21" id="vlT-Ha-Q6D"/>
                     </constraints>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="Ea9-95-HQ0" id="i6h-sH-nWR">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="VDf-da-O6j">
                             <items>
                                 <menuItem title="Item 1" state="on" id="Ea9-95-HQ0"/>
@@ -189,13 +200,13 @@
                     </popUpButtonCell>
                 </popUpButton>
                 <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P7g-i0-fdM" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="606" y="206" width="255" height="25"/>
+                    <rect key="frame" x="605" y="205" width="257" height="26"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="21" id="HUw-Y9-nAy"/>
                     </constraints>
                     <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="4ev-Q8-Csy" id="JJe-2T-1jE">
                         <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
+                        <font key="font" metaFont="menu"/>
                         <menu key="menu" id="JzX-3w-W4w">
                             <items>
                                 <menuItem title="Item 1" state="on" id="4ev-Q8-Csy"/>
@@ -236,7 +247,7 @@
                     </constraints>
                 </box>
                 <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="LR0-PJ-2rZ">
-                    <rect key="frame" x="430" y="145" width="40" height="1"/>
+                    <rect key="frame" x="430" y="93" width="40" height="1"/>
                     <view key="contentView" id="WtG-cN-LxG">
                         <rect key="frame" x="0.0" y="0.0" width="40" height="1"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -246,28 +257,59 @@
                     </constraints>
                 </box>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="meN-iu-7gi" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="428" y="146" width="44" height="19"/>
+                    <rect key="frame" x="428" y="94" width="44" height="19"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" usesSingleLineMode="YES" id="KA8-kx-scx">
                         <font key="font" metaFont="system" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="L0N-my-I9p" customClass="HoverDetectionPopUpButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="605" y="143" width="257" height="26"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="sUR-jA-5Ya"/>
+                    </constraints>
+                    <popUpButtonCell key="cell" type="push" title="Item 1" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" selectedItem="KuC-xs-yFE" id="rVt-TH-cBQ">
+                        <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="menu"/>
+                        <menu key="menu" id="g1F-ST-wSG">
+                            <items>
+                                <menuItem title="Item 1" state="on" id="KuC-xs-yFE"/>
+                                <menuItem title="Item 2" id="tVJ-Lv-p2T"/>
+                                <menuItem title="Item 3" id="VY6-dD-Nla"/>
+                            </items>
+                        </menu>
+                    </popUpButtonCell>
+                </popUpButton>
+                <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="m1f-5O-xVe">
+                    <rect key="frame" x="608" y="134" width="250" height="1"/>
+                    <view key="contentView" id="dwi-2b-Djs">
+                        <rect key="frame" x="0.0" y="0.0" width="250" height="1"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                    </view>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="8fX-MG-RD3"/>
+                    </constraints>
+                </box>
             </subviews>
             <constraints>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="leading" secondItem="2ue-uR-ZZQ" secondAttribute="leading" id="2yv-yR-kep"/>
                 <constraint firstItem="nfq-Sc-kkp" firstAttribute="top" secondItem="tyb-ge-VC6" secondAttribute="bottom" constant="46" id="37i-Mw-aPI"/>
+                <constraint firstItem="m1f-5O-xVe" firstAttribute="trailing" secondItem="L0N-my-I9p" secondAttribute="trailing" id="3Ig-5q-ebI"/>
                 <constraint firstItem="Ztl-fh-UeK" firstAttribute="centerY" secondItem="njs-1o-jnp" secondAttribute="centerY" id="5M9-Sm-W2n"/>
                 <constraint firstItem="rVj-Ub-X2f" firstAttribute="centerY" secondItem="tyb-ge-VC6" secondAttribute="centerY" id="5d1-fl-OeA"/>
                 <constraint firstItem="tyb-ge-VC6" firstAttribute="top" secondItem="njs-1o-jnp" secondAttribute="bottom" constant="36" id="6SJ-TW-ZBe"/>
                 <constraint firstItem="meN-iu-7gi" firstAttribute="centerX" secondItem="c22-O7-iKe" secondAttribute="centerX" id="6uf-lB-4yq"/>
                 <constraint firstItem="8uS-Rc-jdf" firstAttribute="centerY" secondItem="nfq-Sc-kkp" secondAttribute="centerY" id="9BK-fg-DTK"/>
+                <constraint firstItem="m1f-5O-xVe" firstAttribute="leading" secondItem="L0N-my-I9p" secondAttribute="leading" id="DUE-lj-4K4"/>
                 <constraint firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" constant="42" id="Dil-vv-tpx"/>
                 <constraint firstItem="t9x-nT-TtE" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="DyX-Qw-pi0"/>
-                <constraint firstItem="meN-iu-7gi" firstAttribute="top" secondItem="Sk1-39-Mzh" secondAttribute="bottom" constant="46" id="EoC-bY-WHC"/>
+                <constraint firstItem="meN-iu-7gi" firstAttribute="top" secondItem="0L7-YK-IMv" secondAttribute="bottom" constant="36" id="EoC-bY-WHC"/>
+                <constraint firstItem="0L7-YK-IMv" firstAttribute="leading" secondItem="Sk1-39-Mzh" secondAttribute="leading" id="JoZ-v6-4bL"/>
                 <constraint firstItem="Q7F-4A-CvQ" firstAttribute="trailing" secondItem="2ue-uR-ZZQ" secondAttribute="trailing" id="Kqu-f6-cbS"/>
                 <constraint firstItem="4hm-1b-MMH" firstAttribute="centerY" secondItem="nfq-Sc-kkp" secondAttribute="centerY" id="LUP-ub-tEU"/>
                 <constraint firstAttribute="bottom" secondItem="t9x-nT-TtE" secondAttribute="bottom" id="N6M-VJ-Cb7"/>
+                <constraint firstItem="0L7-YK-IMv" firstAttribute="top" secondItem="Sk1-39-Mzh" secondAttribute="bottom" constant="46" id="NOQ-Yd-XfB"/>
                 <constraint firstItem="njs-1o-jnp" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="25" id="PLG-dM-ywv"/>
                 <constraint firstItem="P7g-i0-fdM" firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" id="SS2-Rt-gQ5"/>
                 <constraint firstItem="Fun-GM-J1J" firstAttribute="leading" secondItem="pql-Bu-2na" secondAttribute="leading" id="SeI-8J-aWR"/>
@@ -281,6 +323,8 @@
                 <constraint firstItem="Fun-GM-J1J" firstAttribute="trailing" secondItem="pql-Bu-2na" secondAttribute="trailing" id="cch-Ue-CUK"/>
                 <constraint firstItem="Sk1-39-Mzh" firstAttribute="top" secondItem="8uS-Rc-jdf" secondAttribute="bottom" constant="46" id="crY-Us-RT0"/>
                 <constraint firstItem="iwQ-wN-amU" firstAttribute="trailing" secondItem="P7g-i0-fdM" secondAttribute="trailing" id="dYu-Dl-rzM"/>
+                <constraint firstItem="m1f-5O-xVe" firstAttribute="top" secondItem="L0N-my-I9p" secondAttribute="bottom" constant="12" id="df6-7r-wg8"/>
+                <constraint firstItem="L0N-my-I9p" firstAttribute="leading" secondItem="P7g-i0-fdM" secondAttribute="leading" id="e5L-wZ-u5G"/>
                 <constraint firstItem="iwQ-wN-amU" firstAttribute="leading" secondItem="P7g-i0-fdM" secondAttribute="leading" id="ecy-pO-x35"/>
                 <constraint firstItem="njs-1o-jnp" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="42" id="f8m-FY-plU"/>
                 <constraint firstItem="2ue-uR-ZZQ" firstAttribute="width" secondItem="pql-Bu-2na" secondAttribute="width" id="gpb-aF-Jik"/>
@@ -294,6 +338,7 @@
                 <constraint firstItem="r3x-zb-5zf" firstAttribute="top" secondItem="2ue-uR-ZZQ" secondAttribute="bottom" constant="12" id="osL-vM-ceU"/>
                 <constraint firstItem="7Fn-fT-TVd" firstAttribute="leading" secondItem="Ztl-fh-UeK" secondAttribute="leading" id="rc8-zq-Waa"/>
                 <constraint firstItem="tyb-ge-VC6" firstAttribute="leading" secondItem="njs-1o-jnp" secondAttribute="leading" id="snn-Zw-Hcf"/>
+                <constraint firstItem="L0N-my-I9p" firstAttribute="centerY" secondItem="0L7-YK-IMv" secondAttribute="centerY" id="t8q-xP-0me"/>
                 <constraint firstItem="2ue-uR-ZZQ" firstAttribute="centerY" secondItem="7Fn-fT-TVd" secondAttribute="centerY" id="ta1-hI-Dz6"/>
                 <constraint firstItem="nfq-Sc-kkp" firstAttribute="leading" secondItem="tyb-ge-VC6" secondAttribute="leading" id="tgx-uN-ndU"/>
                 <constraint firstItem="2Av-tx-fMt" firstAttribute="leading" secondItem="rVj-Ub-X2f" secondAttribute="leading" id="uNi-eS-6DT"/>
@@ -301,6 +346,7 @@
                 <constraint firstAttribute="trailing" secondItem="rVj-Ub-X2f" secondAttribute="trailing" constant="471" id="wbo-eB-oK3"/>
                 <constraint firstItem="pql-Bu-2na" firstAttribute="centerY" secondItem="8uS-Rc-jdf" secondAttribute="centerY" id="wrN-21-kiJ"/>
                 <constraint firstItem="pql-Bu-2na" firstAttribute="trailing" secondItem="2ue-uR-ZZQ" secondAttribute="trailing" id="yEH-v9-l0Y"/>
+                <constraint firstItem="L0N-my-I9p" firstAttribute="trailing" secondItem="P7g-i0-fdM" secondAttribute="trailing" id="yEl-6G-PKW"/>
                 <constraint firstItem="P7g-i0-fdM" firstAttribute="width" secondItem="pql-Bu-2na" secondAttribute="width" id="ye5-mF-Uac"/>
             </constraints>
             <point key="canvasLocation" x="138" y="299"/>

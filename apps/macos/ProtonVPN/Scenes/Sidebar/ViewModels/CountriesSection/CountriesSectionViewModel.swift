@@ -123,7 +123,7 @@ class CountriesSectionViewModel {
     private let factory: Factory
     
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-    
+
     init(factory: Factory) {
         self.factory = factory
         self.vpnGateway = factory.makeVpnGateway()
@@ -136,13 +136,14 @@ class CountriesSectionViewModel {
             self.connectedServer = appStateManager.activeConnection()?.server
         }
 
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.activeServerTypeChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: VpnGateway.connectionChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.killSwitchNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.vpnAcceleratorNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: PropertiesManager.netShieldNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(userPlanDidChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).activeServerTypeChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(vpnConnectionChanged), name: type(of: vpnGateway).connectionChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).killSwitchNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(updateSettings), name: type(of: propertiesManager).netShieldNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
 
         updateState(nil)
     }
@@ -189,7 +190,7 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
-    @objc private func userPlanDidChange() {
+    @objc private func reloadDataOnChange() {
         expandedCountries = []
         updateState(nil)
         let contentChange = ContentChange(reset: true)
@@ -253,7 +254,7 @@ class CountriesSectionViewModel {
         if let query = filter, !query.isEmpty {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
-        data = groupServersIntoSections(self.countries, serverType: serverType)
+        data = groupServersIntoSections(self.countries.filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
     }
     
     private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {

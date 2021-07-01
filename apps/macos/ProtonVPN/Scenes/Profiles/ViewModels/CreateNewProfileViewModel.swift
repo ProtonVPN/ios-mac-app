@@ -132,7 +132,8 @@ class CreateNewProfileViewModel {
         }
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
-                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex)
+                                      typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex,
+                                      vpnProtocolIndex: availableVpnProtocols.index(of: profile.vpnProtocol) ?? 0)
         
         prefillContent?(info)
     }
@@ -141,17 +142,52 @@ class CreateNewProfileViewModel {
         state = ModelState(serverType: .standard, editedProfile: nil)
         NotificationCenter.default.post(name: sessionFinished, object: nil)
     }
-    
-    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
-        
-        // Here you can ask user if he wants to continue/reconnect/etc.
-        
-        finishCreatingProfile(name: name,
-                              color: color,
-                              typeIndex: typeIndex,
-                              countryIndex: countryIndex,
-                              serverIndex: serverIndex)
+
+    // swiftlint:disable function_parameter_count
+    func createProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int, vpnProtocolIndex: Int) {
+        let serverType = serverTypeFrom(index: typeIndex)
+        let grouping = serverManager.grouping(for: serverType)
+        let countryModel = ServerUtility.country(in: grouping, index: countryIndex)!
+        let countryCode = countryModel.countryCode
+
+        let id: String
+        if let editedProfile = state.editedProfile {
+            id = editedProfile.id
+        } else {
+            id = String.randomString(length: Profile.idLength)
+        }
+
+        let accessTier: Int
+        let serverOffering: ServerOffering
+
+        if serverIndex == DefaultServerOffering.fastest.index {
+            accessTier = countryModel.lowestTier
+            serverOffering = .fastest(countryCode)
+        } else if serverIndex == DefaultServerOffering.random.index {
+            accessTier = countryModel.lowestTier
+            serverOffering = .random(countryCode)
+        } else {
+            let adjustedServerIndex = serverIndex - defaultServerCount
+            let serverModel = ServerUtility.server(in: grouping, countryIndex: countryIndex, serverIndex: adjustedServerIndex)!
+            accessTier = serverModel.tier
+            serverOffering = .custom(ServerWrapper(server: serverModel))
+        }
+
+        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
+                              profileType: .user, serverType: serverType, serverOffering: serverOffering,
+                              name: name, vpnProtocol: availableVpnProtocols[vpnProtocolIndex])
+
+        let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
+
+        switch result {
+        case .success:
+            state = ModelState(serverType: .standard, editedProfile: nil)
+            NotificationCenter.default.post(name: sessionFinished, object: nil)
+        case .nameInUse:
+            contentWarning?(LocalizedString.profileNameNeedsToBeUnique)
+        }
     }
+    // swiftlint:enable function_parameter_count
     
     private func serverTypeFrom(index: Int) -> ServerType {
         switch index {
@@ -166,52 +202,6 @@ class CreateNewProfileViewModel {
         }
     }
     
-    private func finishCreatingProfile(name: String, color: NSColor, typeIndex: Int, countryIndex: Int, serverIndex: Int) {
-        
-        let serverType = serverTypeFrom(index: typeIndex)
-        let grouping = serverManager.grouping(for: serverType)
-        let countryModel = ServerUtility.country(in: grouping, index: countryIndex)!
-        let countryCode = countryModel.countryCode
-        
-        let id: String
-        if let editedProfile = state.editedProfile {
-            id = editedProfile.id
-        } else {
-            id = String.randomString(length: Profile.idLength)
-        }
-        
-        let accessTier: Int
-        let serverOffering: ServerOffering
-        
-        if serverIndex == DefaultServerOffering.fastest.index {
-            accessTier = countryModel.lowestTier
-            serverOffering = .fastest(countryCode)
-        } else if serverIndex == DefaultServerOffering.random.index {
-            accessTier = countryModel.lowestTier
-            serverOffering = .random(countryCode)
-        } else {
-            let adjustedServerIndex = serverIndex - defaultServerCount
-            let serverModel = ServerUtility.server(in: grouping, countryIndex: countryIndex, serverIndex: adjustedServerIndex)!
-            accessTier = serverModel.tier
-            serverOffering = .custom(ServerWrapper(server: serverModel))
-        }
-        
-        let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
-                              profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, vpnProtocol: PropertiesManager().vpnProtocol)
-        
-        let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
-        
-        switch result {
-        case .success:
-            state = ModelState(serverType: .standard, editedProfile: nil)
-            NotificationCenter.default.post(name: sessionFinished, object: nil)
-        case .nameInUse:
-            contentWarning?(LocalizedString.profileNameNeedsToBeUnique)
-        }
-    }
-    // swiftlint:enable function_parameter_count
-    
     var typeCount: Int {
         return 4
     }
@@ -219,6 +209,8 @@ class CreateNewProfileViewModel {
     var isNetshieldEnabled: Bool {
         return propertiesManager.featureFlags.isNetShield
     }
+
+    let availableVpnProtocols = [VpnProtocol.ike, VpnProtocol.openVpn(.tcp), VpnProtocol.openVpn(.udp), VpnProtocol.wireGuard]
     
     func countryCount(for typeIndex: Int) -> Int {
         let type = ProfileUtility.serverType(for: typeIndex)
@@ -243,6 +235,27 @@ class CreateNewProfileViewModel {
             title = LocalizedString.tor
         }
         
+        return title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+    }
+
+    func vpnProtocol(for vpnProtocol: VpnProtocol) -> NSAttributedString {
+        let title: String
+        switch vpnProtocol {
+        case .ike:
+            title = LocalizedString.ikev2
+        case let .openVpn(transport):
+            switch transport {
+            case .tcp:
+                title = "\(LocalizedString.openvpn) (\(LocalizedString.tcp))"
+            case .udp:
+                title = "\(LocalizedString.openvpn) (\(LocalizedString.udp))"
+            case .undefined:
+                title = LocalizedString.openvpn
+            }
+        case .wireGuard:
+            title = LocalizedString.wireguard
+        }
+
         return title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     

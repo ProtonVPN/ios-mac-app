@@ -34,6 +34,7 @@ public protocol PropertiesManagerProtocol: class {
     static var vpnProtocolNotification: Notification.Name { get }
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
+    static var killSwitchNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -82,6 +83,8 @@ public protocol PropertiesManagerProtocol: class {
     
     var streamingServices: StreamingDictServices { get set }
     var streamingResourcesUrl: String? { get set }
+
+    var showOnlyWireguardServersAndCountries: Bool { get }
     
     func logoutCleanup()
     
@@ -585,6 +588,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             Storage.setValue(newValue, forKey: Keys.streamingResourcesUrl)
         }
+    }
+
+    public var showOnlyWireguardServersAndCountries: Bool {
+        return !smartProtocol && vpnProtocol == .wireGuard
     }
     
     #if os(iOS)
