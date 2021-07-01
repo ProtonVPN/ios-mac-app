@@ -866,3 +866,8 @@
 
 "_local_agent_policy_violation_error_title" = "Policy violation";
 "_local_agent_policy_violation_error_message" = "You are not allowed to connect to the server. Choose a different server or upgrade your plan.";
+
+// Wireguard
+
+"_wireguard_filter_warning_text" = "All our servers will soon support WireGuard®. For now, only currently available servers will show up in your country list.";
+"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard®. To connect, try another protocol or a server supporting WireGuard®.";

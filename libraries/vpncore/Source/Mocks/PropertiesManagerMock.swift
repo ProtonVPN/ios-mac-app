@@ -22,7 +22,7 @@
 import Foundation
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
-
+    public static var killSwitchNotification: Notification.Name = Notification.Name("")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("")
     public static var userIpNotification: Notification.Name = Notification.Name("")
     public static var netShieldNotification: Notification.Name = Notification.Name("")
@@ -71,6 +71,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var sessions: [SessionModel] = []
     public var streamingResourcesUrl: String?
     var earlyAccess: Bool = false
+    public var showOnlyWireguardServersAndCountries: Bool = false
     
     public init() {}
     

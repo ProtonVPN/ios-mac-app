@@ -10,11 +10,11 @@
 import UIKit
 import vpncore
 
-class VpnProtocolViewController: UIViewController {
+final class VpnProtocolViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet private weak var tableView: UITableView!
     
-    var genericDataSource: GenericTableViewDataSource?
+    private var genericDataSource: GenericTableViewDataSource?
     
     private let viewModel: VpnProtocolViewModel
     

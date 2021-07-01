@@ -28,6 +28,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     private static let maxCharCount = 30
     
     private let vpnGateway: VpnGatewayProtocol
+    private let alertService: CoreAlertService
     
     var enabled: Bool {
         return !underMaintenance
@@ -53,12 +54,18 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         return formSecondaryDescription()
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int, alertService: CoreAlertService) {
         self.vpnGateway = vpnGateway
+        self.alertService = alertService
         super.init(profile: profile, userTier: userTier)
     }
     
     func connectAction() {
+        if profile.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
+            alertService.push(alert: WireguardProfileErrorAlert())
+            return
+        }
+
         guard !isUsersTierTooLow else {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
             return
