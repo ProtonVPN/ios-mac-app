@@ -176,8 +176,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     }
 
     private func setupSmartProtocolItem() {
-        smartProtocolSectionView.isHidden = !viewModel.showSmartProtocolOption
-
         smartProtocolLabel.attributedStringValue = LocalizedString.smartProtocolTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
 
         smartProtocolInfoIncon.image = NSImage(named: NSImage.Name("info_green"))

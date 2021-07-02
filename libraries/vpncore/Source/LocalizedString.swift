@@ -760,16 +760,10 @@ public enum LocalizedString {
   public static let openvpnErrorDescription = LocalizedString.tr("Localizable", "_openvpn_error_description")
   /// ProtonVPN requires to load a System Extension to leverage Smart Protocol and OpenVPN.
   public static let openvpnSettingsDescription = LocalizedString.tr("Localizable", "_openvpn_settings_description")
-  /// ProtonVPN requires to load a System Extension to leverage OpenVPN.
-  public static let openvpnSettingsDescriptionNoSmartProtocol = LocalizedString.tr("Localizable", "_openvpn_settings_description_no_smart_protocol")
   /// You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN.
   public static let openvpnSettingsEnabledDescription = LocalizedString.tr("Localizable", "_openvpn_settings_enabled_description")
-  /// You have successfully enabled the System Extension on your device. You can now use OpenVPN.
-  public static let openvpnSettingsEnabledDescriptionNoSmartProtocol = LocalizedString.tr("Localizable", "_openvpn_settings_enabled_description_no_smart_protocol")
   /// You can now use Smart Protocol and OpenVPN
   public static let openvpnSettingsEnabledTitle = LocalizedString.tr("Localizable", "_openvpn_settings_enabled_title")
-  /// You can now use OpenVPN
-  public static let openvpnSettingsEnabledTitleNoSmartProtocol = LocalizedString.tr("Localizable", "_openvpn_settings_enabled_title_no_smart_protocol")
   /// In the dialog box that opens when enabling OpenVPN, select Open Security Preferences. If this screen doesn't appear automatically, click here.
   public static let openvpnSettingsStep1 = LocalizedString.tr("Localizable", "_openvpn_settings_step1")
   /// click here
