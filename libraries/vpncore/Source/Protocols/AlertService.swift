@@ -689,8 +689,8 @@ public class SysexInstallationRequiredAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(isSmartProtocolAvailable: Bool, continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
-        message = isSmartProtocolAvailable ? LocalizedString.openvpnSettingsDescription : LocalizedString.openvpnSettingsEnabledTitleNoSmartProtocol
+    public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
+        message = LocalizedString.openvpnSettingsDescription
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
@@ -703,9 +703,9 @@ public class SysexEnabledAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(isSmartProtocolAvailable: Bool) {
-        title = isSmartProtocolAvailable ? LocalizedString.openvpnSettingsEnabledTitle : LocalizedString.openvpnSettingsEnabledTitleNoSmartProtocol
-        message = isSmartProtocolAvailable ? LocalizedString.openvpnSettingsEnabledDescription : LocalizedString.openvpnSettingsEnabledDescriptionNoSmartProtocol
+    public init() {
+        title = LocalizedString.openvpnSettingsEnabledTitle
+        message = LocalizedString.openvpnSettingsEnabledDescription
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
