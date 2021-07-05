@@ -31,7 +31,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public let exitCountryCode: String
     public let tier: Int
     public private(set) var score: Double
-    public let status: Int
+    public private(set) var status: Int
     public let feature: ServerFeature
     public let city: String?
     public var ips: [ServerIp] = []
@@ -159,6 +159,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public func update(continousProperties: ContinuousServerProperties) {
         load = continousProperties.load
         score = continousProperties.score
+        status = continousProperties.status
     }
     
     // MARK: - NSCoding
