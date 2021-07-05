@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="ConnectingViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
-                <outlet property="button1" destination="SN9-pH-DJE" id="UMh-vp-tF8"/>
                 <outlet property="buttonsStackView" destination="J79-kU-gHb" id="HGY-M4-G4q"/>
                 <outlet property="connectionLabel" destination="rdD-jv-0P2" id="6Rx-6e-9gb"/>
                 <outlet property="graphicContainer" destination="hHD-0g-p4p" id="6M9-pH-dau"/>
