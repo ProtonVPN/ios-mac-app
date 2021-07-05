@@ -113,19 +113,16 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     func headerHeight(for section: Int) -> CGFloat {
+        if numberOfSections() < 2 { return 0 }
         return titleFor(section: section) != nil ? UIConstants.countriesHeaderHeight : 0
     }
     
     func numberOfSections() -> Int {
         setTier() // good place to update because generally an infrequent call that should be called every table reload
-        switch userTier {
-        case 0: // FREE
-            return 2
-        case 1: // BASIC
-            return 3
-        default: // PLUS-VISIONARY
-            return 1
-        }
+        return CoreAppConstants.VpnTiers.allCases
+            .map { self.content(for: $0) }
+            .filter { !$0.isEmpty }
+            .count
     }
     
     func numberOfRows(in section: Int) -> Int {
@@ -139,7 +136,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
         case 0:
             return [LocalizedString.locationsFree, LocalizedString.locationsBasicPlus][section] + totalCountries
         case 1:
-            return [LocalizedString.locationsBasic, LocalizedString.locationsPlus, LocalizedString.locationsFree][section] + totalCountries
+            return [LocalizedString.locationsBasic, LocalizedString.locationsPlus][section] + totalCountries
         default:
             return LocalizedString.locationsAll + totalCountries
         }
@@ -187,14 +184,14 @@ class CountriesViewModel: SecureCoreToggleHandler {
         switch userTier {
         case 0:
             if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 0 }) }
-            return state.currentContent.filter({ $0.0.lowestTier > 0 })
+            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier > 0 }) }
         case 1:
-            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier > 1 }) }
-            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier == 1 }) }
-            return state.currentContent.filter({ $0.0.lowestTier == 0 })
+            if section == 0 { return state.currentContent.filter({ $0.0.lowestTier < 2 }) }
+            if section == 1 { return state.currentContent.filter({ $0.0.lowestTier == 2 }) }
         default:
-            return state.currentContent
+            if section == 0 { return state.currentContent }
         }
+        return []
     }
     
     private func addObservers() {
