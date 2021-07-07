@@ -107,9 +107,7 @@ class MapSectionViewModel {
     }
     
     @objc private func viewToggled(_ notification: Notification) {
-        if let newView = notification.object as? ServerType, newView != activeView {
-            setView(newView)
-        }
+        setView(propertiesManager.serverTypeToggle)
     }
     
     @objc private func resetCurrentState() {
