@@ -137,11 +137,7 @@
 "_allow" = "Allow";
 
 /* %@ is an IP address e.g. IP: 123.45.67.890 */
-
-/* %@ is an IP address e.g. IP: 123.45.67.890 */
 "_ip_value" = "IP: %@";
-
-/* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 
 /* %@ is an IP address e.g. Public IP: 123.45.67.890 */
 "_public_ip" = "Public IP: %@";
@@ -181,8 +177,6 @@
 
 /* MacOS: connecting overlay. %@ is a failure or timeout e.g. Connecting failed */
 "_connecting_vpn" = "Connecting %@";
-
-/* %@ is a country followed by a server e.g. Connecting to Switzerland CH#1 */
 
 /* MacOS: connecting overlay. %@ is a country followed by a server e.g. Connecting to Switzerland CH#1. iOS: String in connection status screen. %@ is a country followed by `>> second country` in case it is a connection with SecureCore */
 "_connecting_to" = "Connecting to %@";
@@ -406,9 +400,6 @@
 /* iOS: link inside text under sign-up form */
 "_terms_and_conditions" = "Terms and Conditions";
 
-/* %@1 is a link with a title of 'Terms and Conditions'
- %@2 is a link with a title of 'Privacy Policy' */
-
 /* iOS: text under sign-up form. %@1 is a link with a title of 'Terms and Conditions'; %@2 is a link with a title of 'Privacy Policy' */
 "_terms_and_conditions_disclaimer" = "By using ProtonVPN, you agree to our\n%@ and %@";
 
@@ -430,22 +421,19 @@
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Your purchase was successful. Your ProtonVPN Plus plan is now active.";
 
-/* iOS: data disclaimen screen */
+/* iOS: data disclaimer screen */
 "_data_disclaimer_title" = "Protect yourself online";
 
-/* %@1 is a bold 'Username, email address'
- %@2 is a bold 'Your device model and OS version' */
-
-/* iOS: data disclaimen screen */
+/* iOS: data disclaimer screen */
 "_data_disclaimer_text" = "ProtonVPN is committed to protecting and respecting your privacy. It is our overriding policy to collect as little user data as possible to ensure a private and anonymous user experience in the use of the App, specifically:\n\n%@ – to log you in, help to recover a lost password, and send important service updates.\n\n%@ – for crash reports and errors only.\n\nThe ProtonVPN App does not process any user information besides this data. We don't log your online activity nor any personal identifiable information. All data listed above is stored and processed on ProtonVPN's own system, with no third party ever having access to it.";
 
-/* iOS: data disclaimen screen */
+/* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Username, email address";
 
-/* iOS: data disclaimen screen */
+/* iOS: data disclaimer screen */
 "_data_disclaimer_device_details" = "Your device model and OS version";
 
-/* iOS: data disclaimen screen button */
+/* iOS: data disclaimer screen button */
 "_data_disclaimer_agree" = "Agree & Continue";
 
 // Map
@@ -469,8 +457,6 @@
 
 /* Description shown together with server info icon */
 "_premium_description" = "Premium server";
-
-/* %@ is a country e.g. via Switzerland */
 
 /* Used for SecureCore connection labels. %@ is a country e.g. via Switzerland */
 "_via_country" = "via %@";
@@ -500,12 +486,8 @@
 /* Text in warning screen before actions that will disconnect VPN */
 "_view_toggle_will_cause_disconnect" = "Toggling Secure Core will end your current connection.";
 
-/* Load follows e.g. Server Load: 24% */
-
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_load" = "Server Load:";
-
-/* IP address follows e.g. Server IP: 123.45.67.890 */
 
 /* MacOS: label in server info view (shown after click on Info icon in countries list */
 "_server_ip" = "Server IP:";
@@ -734,14 +716,11 @@
 "_error_apply_payment_failed_retry" = "Retry";
 "_error_apply_payment_failed_free" = "Continue with free account";
 
-/* %@ describes a data object in the app e.g. Failed to decode archived data in class: SessionModel */
-
 /* Error decoding an object */
 "_error_decode" = "Failed to decode archived data in class: %@";
 
 /* Internal application error */
 "_error_email_verification_disabled" = "Email verification temporarily disabled";
-
 
 /* Error writing to system keychain */
 "_error_keychain_write" = "Proton couldn't communicate with your device. Please try again later.";
@@ -1090,8 +1069,6 @@
 /* MacOS: killswitch alert */
 "_kill_switch_helper_install_popup_body" = "To enable Kill Switch, you may be asked to provide your computer account password. If a request appears, enter your %@ and accept.\n\nYou may see this request again occasionally when the ProtonVPN app receives updates.";
 
-/* %@ is 'Mac password' */
-
 /* MacOS: updating helper alert */
 "_kill_switch_helper_update_popup_body" = "The most recent update you downloaded requires you to provide your computer account password. When the request appears, please enter your %@ and accept.\n\nIf you do not enter your Mac password, Kill Switch will be turned off.";
 
@@ -1242,8 +1219,6 @@
 // Plans
 
 /* %@ is a plan name e.g. Get Plus Plan */
-
-/* %@ is a plan name e.g. Get Plus Plan */
 "_get_plan" = "Get %@ Plan";
 
 /* Account plan description */
@@ -1251,8 +1226,6 @@
 
 /* Account plan description */
 "_all_countries" = "50+ countries";
-
-/* %@ is a speed description e.g. Speed: Highest */
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ speed";
@@ -1346,10 +1319,6 @@
 "_enjoy_for_free" = "ENJOY %@ FOR FREE!";
 "_protonvpn_plus" = "ProtonVPN PLUS";
 
-/* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you:
- 
- A list of Plus plan-only features follows this text */
-
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "As a welcome gift, you are granted a 7-day access to a\n%@ subscription which gives you:";
 
@@ -1364,13 +1333,7 @@
 "_expired" = "EXPIRED";
 
 /* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
-
-/* %@ is always 'EXPIRED' e.g. YOUR FREE TRIAL EXPIRED */
 "_free_trial_expired_title" = "YOUR FREE TRIAL %@";
-
-/* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS:
- 
- A list of Plus plan-only features follows this text */
 
 /* %@ is always 'ProtonVPN PLUS' e.g. Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from ProtonVPN PLUS: A list of Plus plan-only features follows this text */
 "_free_trial_expired_description" = "Your account has been downgraded to ProtonVPN FREE.\nHere's what you will miss from %@:";
@@ -1397,10 +1360,6 @@
 
 /* MacOS: \Trial about to expire\ screen title */
 "_free_trial_about_to_expire_title" = "Your free trial is about to expire!";
-
-/* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features:
- 
- I list of Plus plan-only features follows this text */
 
 /* %@ is always 'ProtonVPN PLUS' e.g. Upgrade to ProtonVPN PLUS and continue enjoying these features: I list of Plus plan-only features follows this text */
 "_free_trial_about_to_expire_description" = "Upgrade to %@ and continue enjoying these features:";
