@@ -134,6 +134,10 @@ class MapViewModel: SecureCoreToggleHandler {
                                                name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
                                                name: serverManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
+                                               name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
+                                               name: VpnKeychain.vpnPlanChanged, object: nil)
     }
     
     private func refreshAnnotations(forView viewType: ServerType) {

@@ -138,11 +138,15 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        
+        if (viewModel?.numberOfSections() ?? 0) < 2 { return nil }
+        
         if let headerView = tableView.dequeueReusableHeaderFooterView(withIdentifier: ServersHeaderView.identifier) as? ServersHeaderView {
             headerView.setName(name: viewModel?.titleFor(section: section) ?? "")
             return headerView
         }
-        return UIView()
+        
+        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
