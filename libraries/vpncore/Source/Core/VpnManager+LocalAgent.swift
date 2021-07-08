@@ -100,6 +100,15 @@ extension VpnManager: LocalAgentDelegate {
 
     func didChangeState(state: LocalAgentState) {
         PMLog.D("Local agent state changed to \(state)")
+
+        switch state {
+        case .clientCertificateError:
+            // because the local agent library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
+            // instead use this state as the certificate expired error
+            didReceiveError(error: LocalAgentError.certificateExpired)
+        default:
+            break
+        }
     }
 
     func didChangeFeatures(netshield: NetShieldType, vpnAccelerator: Bool) {
