@@ -11,9 +11,8 @@ def proton_core_path
     proton_url + ':apple/shared/protoncore.git'
 end
 
-def proton_core_branch
-    # 'main'
-    'refactor/pod_per_module'
+def proton_core_version
+  '1.6.0'
 end
 
 def openvpn
@@ -24,12 +23,16 @@ def pm_automation
   pod 'PMTestAutomation', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d'
 end
 
+def keychain_access
+  pod 'KeychainAccess', '3.2.1'
+end
+
 def vpn_core
     use_frameworks!    
     pod 'Alamofire', '5.3.0'
-    pod 'KeychainAccess', '3.2.1'
     pod 'Sentry', '5.2.2'
     pod 'ReachabilitySwift', '5.0.0'
+    keychain_access
     
     # Checks code style and bad practices
     pod 'SwiftLint'
@@ -42,8 +45,8 @@ def vpn_core
     openvpn
 
     # Core
-    pod 'ProtonCore-Log', :git => proton_core_path, :branch => proton_core_branch
-    pod 'ProtonCore-Doh', :git => proton_core_path, :branch => proton_core_branch
+    pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
 end    
 
 abstract_target 'Core' do
@@ -78,8 +81,8 @@ target 'ProtonVPN' do
   
   pod 'ReachabilitySwift', '5.0.0'
   
-  pod 'ProtonCore-Challenge', :git => proton_core_path, :branch => proton_core_branch
-  pod 'ProtonCore-Foundations', :git => proton_core_path, :branch => proton_core_branch
+  pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
@@ -103,6 +106,14 @@ target 'ProtonVPN' do
     pm_automation
   end
 
+end
+
+target 'WireGuardiOS Extension' do
+  project 'apps/iOS/iOS.xcodeproj'
+  platform :ios, '12.1'
+  use_frameworks!
+  
+  keychain_access
 end
 
 

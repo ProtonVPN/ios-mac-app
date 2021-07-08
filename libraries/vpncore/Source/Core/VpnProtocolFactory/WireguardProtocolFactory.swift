@@ -62,7 +62,6 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     
     private func loadManager(completion: @escaping (NEVPNManager?, Error?) -> Void) {
         NETunnelProviderManager.loadAllFromPreferences { [weak self] (managers, error) in
-            PMLog.D("[PROTONTEST] NETunnelProviderManager.loadAllFromPreferences WG")
             guard let `self` = self else {
                 completion(nil, ProtonVpnError.vpnManagerUnavailable)
                 return

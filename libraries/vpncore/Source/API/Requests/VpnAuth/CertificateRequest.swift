@@ -52,11 +52,15 @@ final class CertificateRequest: BaseRequest {
     }
 
     override var parameters: [String: Any]? {
-        return [
+        var params = [
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
             "Mode": "session"
         ]
+        if let duration = CertificateConstants.certificateDuration {
+            params["Duration"] = duration
+        }
+        return params
     }
 }

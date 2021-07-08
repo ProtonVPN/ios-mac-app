@@ -39,10 +39,10 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
         static let vpnCertificate = "vpnCertificate"
     }
 
-    private let appKeychain: Keychain
+    private let appKeychain: KeychainAccess.Keychain
 
     public init(accessGroup: String) {
-        appKeychain = Keychain(service: CoreAppConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
+        appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
     }
 
     public func deleteKeys() {

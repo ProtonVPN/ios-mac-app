@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Alamofire
 
 public class AuthCredentials: NSObject, NSCoding {
     
@@ -41,7 +40,7 @@ public class AuthCredentials: NSObject, NSCoding {
         }
     }
     
-    private let VERSION: Int = 0 // Current build version.
+    let VERSION: Int = 0 // Current build version.
     
     public let cacheVersion: Int // Cached version default is 0
     public let username: String
@@ -87,11 +86,7 @@ public class AuthCredentials: NSObject, NSCoding {
         scopes = scopeString.components(separatedBy: .whitespaces).map { Scope($0) }
         super.init()
     }
-    
-    public func updatedWithAccessToken(response: RefreshAccessTokenResponse) -> AuthCredentials {
-        return AuthCredentials(version: VERSION, username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, expiration: response.expiration, scopes: scopes)
-    }
-    
+        
     // MARK: - NSCoding
     private struct CoderKey {
         static let authCacheVersion = "authCacheVersion"
@@ -131,16 +126,6 @@ public class AuthCredentials: NSObject, NSCoding {
         
         let scopesData = NSKeyedArchiver.archivedData(withRootObject: scopes.map { $0.rawValue })
         aCoder.encode(scopesData, forKey: CoderKey.scopes)
-    }
-    
-}
-
-// Used for refreshing auth token on API
-extension AuthCredentials: AuthenticationCredential {
-    
-    // Refresh the token even before we actually receive 401 from the server.
-    public var requiresRefresh: Bool {
-        return Date(timeIntervalSinceNow: 60 * 5) > expiration
     }
     
 }

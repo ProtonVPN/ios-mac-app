@@ -8,12 +8,12 @@ PODS:
   - OpenSSL-Apple (1.1.1k.11)
   - PMTestAutomation (1.0.1):
     - SwiftOTP
-  - ProtonCore-Challenge (1.0.0):
-    - ProtonCore-Foundations
-  - ProtonCore-Doh (1.0.0):
-    - ProtonCore-Log
-  - ProtonCore-Foundations (1.0.0)
-  - ProtonCore-Log (1.0.0)
+  - ProtonCore-Challenge (1.6.0):
+    - ProtonCore-Foundations (= 1.6.0)
+  - ProtonCore-Doh (1.6.0):
+    - ProtonCore-Log (= 1.6.0)
+  - ProtonCore-Foundations (1.6.0)
+  - ProtonCore-Log (1.6.0)
   - ReachabilitySwift (5.0.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
@@ -48,10 +48,10 @@ DEPENDENCIES:
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
   - "PMTestAutomation (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d`)"
-  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
-  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
-  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
-  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, branch `refactor/pod_per_module`)"
+  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `1.6.0`)"
+  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `1.6.0`)"
+  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `1.6.0`)"
+  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `1.6.0`)"
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (= 5.2.2)
@@ -81,17 +81,17 @@ EXTERNAL SOURCES:
     :commit: 36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-Challenge:
-    :branch: refactor/pod_per_module
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Doh:
-    :branch: refactor/pod_per_module
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Foundations:
-    :branch: refactor/pod_per_module
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Log:
-    :branch: refactor/pod_per_module
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -104,17 +104,17 @@ CHECKOUT OPTIONS:
     :commit: 36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-Challenge:
-    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Doh:
-    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Foundations:
-    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   ProtonCore-Log:
-    :commit: 2a9bb7e0d9ff7b15d3057ce3cd23ef0bc2a250ee
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 1.6.0
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -130,10 +130,10 @@ SPEC CHECKSUMS:
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   PMTestAutomation: a39a548c349474117c7f8493f25f4f1184c3dcf9
-  ProtonCore-Challenge: 9c7c31dc50d141e0932deb19f0e1cf76c05c8f46
-  ProtonCore-Doh: a10003cfb4ff7c7765abb4a02bbd64613fdbc613
-  ProtonCore-Foundations: 92d7320c445f475fd9ca33255ffcf18204ed7b53
-  ProtonCore-Log: a3ffb798c2a089431a361f718ece5e0198e5ea6d
+  ProtonCore-Challenge: e07848862a934c3657899ff2932601bee4f7d3a0
+  ProtonCore-Doh: 17597f3b7ca406b321c1c82437e04278e84f0676
+  ProtonCore-Foundations: e28b324433950eb9f654ae2faf7d73c4bc7706bc
+  ProtonCore-Log: 088798034a2dd8526816cef01397c659e6df0065
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
@@ -144,6 +144,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 28756b61a6d4e508b6003cd3a945c6074a048a68
+PODFILE CHECKSUM: 2d8bf6beb46744f987ce2f69e5d614b8064cbc42
 
 COCOAPODS: 1.10.1
