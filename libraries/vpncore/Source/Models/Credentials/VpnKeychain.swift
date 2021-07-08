@@ -61,7 +61,7 @@ public class VpnKeychain: VpnKeychainProtocol {
         static let wireguardSettings = "ProtonVPN_wg_settings"
     }
     
-    private let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
+    private let appKeychain = Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static let vpnCredentialsChanged = Notification.Name("VpnKeychainCredentialsChanged")
     public static let vpnPlanChanged = Notification.Name("VpnKeychainPlanChanged")

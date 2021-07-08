@@ -53,7 +53,7 @@
                                                 <rect key="frame" x="16" y="8" width="88.5" height="50"/>
                                                 <subviews>
                                                     <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" text="Hello World" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" preferredMaxLayoutWidth="280" translatesAutoresizingMaskIntoConstraints="NO" id="GcN-lo-r42">
-                                                        <rect key="frame" x="0.0" y="0.0" width="88.5" height="25"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="88.5" height="25"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <color key="textColor" cocoaTouchSystemColor="lightTextColor"/>
                                                         <nil key="highlightedColor"/>

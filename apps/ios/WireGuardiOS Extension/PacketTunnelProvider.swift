@@ -13,24 +13,19 @@ import WireGuardKit
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
     
-    public override init() {
-        NSLog("[PROTONTEST] WG init")
-        super.init()
-    }
-
+    private let certificateRefreshManager = CertificateRefreshManager()
+    
     deinit {
-        NSLog("[PROTONTEST] WG deinit")
+        wg_log(.info, message: "PacketTunnelProvider deinited")
     }
 
     private lazy var adapter: WireGuardAdapter = {
         return WireGuardAdapter(with: self) { logLevel, message in
-            wg_log(logLevel.osLogLevel, message: message)
+            wg_log(.info, message: message)
         }
     }()
 
     override func startTunnel(options: [String: NSObject]?, completionHandler: @escaping (Error?) -> Void) {
-        NSLog("[PROTONTEST] WG startTunnel")
-        
         let activationAttemptId = options?["activationAttemptId"] as? String
         let errorNotifier = ErrorNotifier(activationAttemptId: activationAttemptId)
 
@@ -41,13 +36,13 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            NSLog("[PROTONTEST] Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            wg_log(.info, message: "Error in guard 1: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
         guard let tunnelConfiguration = tunnelProviderProtocol.asTunnelConfiguration() else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
             completionHandler(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
-            NSLog("[PROTONTEST] Error in guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
+            wg_log(.info, message: "Error in guard 2: \(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)")
             return
         }
 
@@ -55,10 +50,12 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
         adapter.start(tunnelConfiguration: tunnelConfiguration) { adapterError in
             guard let adapterError = adapterError else {
                 let interfaceName = self.adapter.interfaceName ?? "unknown"
-
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
+                
+                self.certificateRefreshManager.planNextRefresh()
+                
                 return
             }
 
@@ -86,7 +83,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 completionHandler(PacketTunnelProviderError.couldNotStartBackend)
 
             case .invalidState:
-                NSLog("[PROTONTEST] Error in switch: invalidState")
+                wg_log(.error, message: "Starting tunnel failed with invalidState")
                 // Must never happen
                 fatalError()
             }
@@ -94,7 +91,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func stopTunnel(with reason: NEProviderStopReason, completionHandler: @escaping () -> Void) {
-        NSLog("[PROTONTEST] WG stopTunnel")
         wg_log(.info, staticMessage: "Stopping tunnel")
 
         adapter.stop { error in
@@ -115,7 +111,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
 
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
-        NSLog("[PROTONTEST] WG handleAppMessage")
+        wg_log(.info, message: "Handle App Message size: \(messageData.count)")
         
         if messageData.count == 1 && messageData[0] == 101 {
             flushLogsToFile()
@@ -137,13 +133,14 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     }
     
     private func flushLogsToFile() {
-        NSLog("[PROTONTEST] WG flushLogsToFile")
         guard let path = FileManager.logTextFileURL?.path else { return }
         if Logger.global == nil { // Probably NE was not yet started
             setupLogging()
         }
         if Logger.global?.writeLog(to: path) ?? false {
-            NSLog("[PROTONTEST] WG flushLogsToFile written to file \(path) ")
+            wg_log(.info, message: "flushLogsToFile written to file \(path) ")
+        } else {
+            wg_log(.info, message: "flushLogsToFile error while writing to file \(path) ")
         }
     }
     

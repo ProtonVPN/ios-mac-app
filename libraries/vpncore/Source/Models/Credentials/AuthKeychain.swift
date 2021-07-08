@@ -30,7 +30,7 @@ public class AuthKeychain {
         static let authCredentials = "authCredentials"
     }
     
-    private static let appKeychain = Keychain(service: CoreAppConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
+    private static let appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain).accessibility(.afterFirstUnlockThisDeviceOnly)
     
     public static func fetch() -> AuthCredentials? {
         NSKeyedUnarchiver.setClass(AuthCredentials.self, forClassName: "ProtonVPN.AuthCredentials")

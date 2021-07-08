@@ -22,9 +22,7 @@
 import Foundation
 
 public class CoreAppConstants {
-    
-    public static let appKeychain = "ProtonVPN"
-    
+        
     public struct VpnTiers {
         public static let free = 0
         public static let basic = 1

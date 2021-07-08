@@ -112,7 +112,7 @@ extension TunnelConfiguration {
         }
 
         let peerPublicKeysArray = peerConfigurations.map { $0.publicKey }
-        let peerPublicKeysSet = Set<PublicKey>(peerPublicKeysArray)
+        let peerPublicKeysSet = Set<WireGuardKit.PublicKey>(peerPublicKeysArray)
         if peerPublicKeysArray.count != peerPublicKeysSet.count {
             throw ParseError.multiplePeersWithSamePublicKey
         }
@@ -169,7 +169,7 @@ extension TunnelConfiguration {
         guard let privateKeyString = attributes["privatekey"] else {
             throw ParseError.interfaceHasNoPrivateKey
         }
-        guard let privateKey = PrivateKey(base64Key: privateKeyString) else {
+        guard let privateKey = WireGuardKit.PrivateKey(base64Key: privateKeyString) else {
             throw ParseError.interfaceHasInvalidPrivateKey(privateKeyString)
         }
         var interface = InterfaceConfiguration(privateKey: privateKey)
@@ -215,7 +215,7 @@ extension TunnelConfiguration {
         guard let publicKeyString = attributes["publickey"] else {
             throw ParseError.peerHasNoPublicKey
         }
-        guard let publicKey = PublicKey(base64Key: publicKeyString) else {
+        guard let publicKey = WireGuardKit.PublicKey(base64Key: publicKeyString) else {
             throw ParseError.peerHasInvalidPublicKey(publicKeyString)
         }
         var peer = PeerConfiguration(publicKey: publicKey)

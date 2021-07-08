@@ -6,18 +6,8 @@ import os.log
 
 extension FileManager {
     
-    static private var teamId: String {
-        return Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
-    }
-    
     static var appGroupId: String {
-        #if os(iOS)
-        return AppConstants.AppGroups.main
-        #elseif os(macOS)
-        #error("Unimplemented")
-        #else
-        #error("Unimplemented")
-        #endif
+        return WGConstants.appGroupId
     }
     
     private static var sharedFolderURL: URL? {
