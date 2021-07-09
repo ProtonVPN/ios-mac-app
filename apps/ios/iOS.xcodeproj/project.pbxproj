@@ -526,6 +526,7 @@
 		E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
 		E986309C269835E500F56B87 /* Intents.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9863060269835E500F56B87 /* Intents.strings */; };
 		E98630A0269863C200F56B87 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E986309E269863C200F56B87 /* Intents.intentdefinition */; };
+		E98630A226987C6B00F56B87 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E986300726982E9000F56B87 /* ProtonVPN_ike_root.der */; };
 		E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
 		E992F2822667603F00169C6B /* FeatureFlags+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992F2812667603F00169C6B /* FeatureFlags+Local.swift */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -2867,6 +2868,7 @@
 				E19D11AF22B97C8100D41C23 /* TrialWelcome.xib in Resources */,
 				D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */,
 				79059960212AE0A400C0E401 /* DefaultProfileTableViewCell.xib in Resources */,
+				E98630A226987C6B00F56B87 /* ProtonVPN_ike_root.der in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
 				D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */,
