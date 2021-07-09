@@ -56,6 +56,12 @@ class CountryItemViewModel {
         return underMaintenance ? 0.25 : ( isTierTooLow ? 0.5 : 1 )
     }
     
+    var accessibilityLabel: String {
+        if isTierTooLow { return "\(countryName). \(LocalizedString.updateRequired)" }
+        if underMaintenance { return "\(countryName). \(LocalizedString.onMaintenance)" }
+        return countryName
+    }
+    
     var isConnected: Bool {
         guard let connectedServer = appStateManager.activeConnection()?.server else { return false }
         return !isTierTooLow && vpnGateway.connection == .connected

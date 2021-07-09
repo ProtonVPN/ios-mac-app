@@ -76,6 +76,26 @@ class ServerItemViewModel {
         return serverModel.city ?? ""
     }
     
+    var accessibilityLabel: String {
+        if requiresUpgrade { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.updateRequired)" }
+        if underMaintenance { return "\(LocalizedString.server ): \(serverName). \(LocalizedString.onMaintenance)" }
+
+        var features: [String] = []
+
+        if isTorAvailable { features.append(LocalizedString.torTitle) }
+        if isP2PAvailable { features.append(LocalizedString.p2pTitle) }
+        if isSmartAvailable { features.append(LocalizedString.smartRoutingTitle) }
+        if isStreamingAvailable { features.append(LocalizedString.streamingTitle) }
+        
+        let description = "\(LocalizedString.server ): \(serverName), \(cityName). \(LocalizedString.serverLoad) \(load)%"
+
+        if features.isEmpty { return description }
+            
+        return "\(description)." + features.reduce(LocalizedString.featuresTitle + ": ", { result, feature in
+            return result + feature + "."
+        })
+    }
+    
     var entryCountry: String? {
         guard serverModel.isSecureCore else { return nil }
         return serverModel.entryCountryCode

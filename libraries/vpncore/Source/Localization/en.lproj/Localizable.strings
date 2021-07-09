@@ -51,7 +51,11 @@
 /* iOS & MacOS: text near country or server; MacOS: title of several alerts */
 "_upgrade_required" = "Upgrade Required";
 
+/* MacOS: voice over indication for a country or server on maintenance*/
+"_on_maintenance" = "On maintenance";
+
 /* iOS & MacOS: text that requires restart connection */
+
 "_reconnection_required" = "Reconnection Required";
 
 /* Server status in many places in iOS and MacOS apps */
@@ -1775,3 +1779,4 @@
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
 "_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard®. To connect, try another protocol or a server supporting WireGuard®.";
+
