@@ -92,6 +92,7 @@ class ServerItemCellView: NSView {
         connectBtn.isHovered = false
         upgradeBtn.isHidden = !viewModel.requiresUpgrade
         setupInfoView()
+        
         [loadIcon, maintenanceIV, secureFlagIV, secureCoreIV, serverLbl, cityLbl, torIV, smartIV, p2pIV, streamingIV].forEach {
             $0?.alphaValue = viewModel.alphaForMainElements
         }
@@ -99,6 +100,8 @@ class ServerItemCellView: NSView {
         if let code = viewModel.entryCountry {
             secureFlagIV.image = NSImage(named: code.lowercased() + "-plain")
         }
+        
+        setupAccessibility()
     }
 
     // MARK: - Private functions
@@ -128,6 +131,11 @@ class ServerItemCellView: NSView {
     }
     
     // MARK: - Accessibility
+    private func setupAccessibility() {
+        setAccessibilityLabel(viewModel.accessibilityLabel)
+        connectBtn.nameForAccessibility = viewModel.serverName
+        connectBtn.setAccessibilityElement(true)
+    }
     
     override func accessibilityChildren() -> [Any]? {
         return [connectBtn]

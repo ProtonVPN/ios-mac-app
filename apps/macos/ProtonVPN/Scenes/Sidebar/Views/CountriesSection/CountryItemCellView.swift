@@ -106,6 +106,7 @@ final class CountryItemCellView: NSView {
         maintenanceBtn.isHidden = !viewModel.underMaintenance
         connectButton.isHovered = false
         configureFeatures()
+        setupAccessibility()
     }
     // MARK: - Actions
     
@@ -134,7 +135,7 @@ final class CountryItemCellView: NSView {
     // MARK: - Accessibility
 
     private func setupAccessibility() {
-        setAccessibilityLabel(String(format: "%@ %@", countryLbl?.attributedStringValue.string ?? "", ""))
+        setAccessibilityLabel(viewModel.accessibilityLabel)
         connectButton.nameForAccessibility = viewModel.countryName
         connectButton.setAccessibilityElement(true)
         expandButton.setAccessibilityElement(true)

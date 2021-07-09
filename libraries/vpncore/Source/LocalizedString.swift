@@ -748,6 +748,8 @@ public enum LocalizedString {
   public static let notNow = LocalizedString.tr("Localizable", "_not_now")
   /// OK
   public static let ok = LocalizedString.tr("Localizable", "_ok")
+  /// On maintenance
+  public static let onMaintenance = LocalizedString.tr("Localizable", "_on_maintenance")
   /// Show ProtonVPN to log in...
   public static let openAppToLogIn = LocalizedString.tr("Localizable", "_open_app_to_log_in")
   /// OpenVPN Logs
