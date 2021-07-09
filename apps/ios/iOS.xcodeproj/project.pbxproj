@@ -520,13 +520,17 @@
 		E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */; };
 		E986300426982E7E00F56B87 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E986300326982E7E00F56B87 /* country-names.plist */; };
-		E986300526982E7E00F56B87 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E986300326982E7E00F56B87 /* country-names.plist */; };
 		E986300626982E7E00F56B87 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E986300326982E7E00F56B87 /* country-names.plist */; };
 		E986309A269835E500F56B87 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E986305C269835E500F56B87 /* Localizable.strings */; };
 		E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
 		E986309C269835E500F56B87 /* Intents.strings in Resources */ = {isa = PBXBuildFile; fileRef = E9863060269835E500F56B87 /* Intents.strings */; };
 		E98630A0269863C200F56B87 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = E986309E269863C200F56B87 /* Intents.intentdefinition */; };
 		E98630A226987C6B00F56B87 /* ProtonVPN_ike_root.der in Resources */ = {isa = PBXBuildFile; fileRef = E986300726982E9000F56B87 /* ProtonVPN_ike_root.der */; };
+		E98630A3269888E600F56B87 /* country-names.plist in Resources */ = {isa = PBXBuildFile; fileRef = E986300326982E7E00F56B87 /* country-names.plist */; };
+		E98630A4269889DC00F56B87 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E986305C269835E500F56B87 /* Localizable.strings */; };
+		E98630A5269889DD00F56B87 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E986305C269835E500F56B87 /* Localizable.strings */; };
+		E98630A6269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
+		E98630A7269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
 		E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
 		E992F2822667603F00169C6B /* FeatureFlags+Local.swift in Sources */ = {isa = PBXBuildFile; fileRef = E992F2812667603F00169C6B /* FeatureFlags+Local.swift */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -2911,6 +2915,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				D554556522805D0F006574F9 /* Client.plist in Resources */,
+				E98630A7269889E200F56B87 /* Localizable.stringsdict in Resources */,
+				E98630A5269889DD00F56B87 /* Localizable.strings in Resources */,
 				E986300626982E7E00F56B87 /* country-names.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2929,7 +2935,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */,
-				E986300526982E7E00F56B87 /* country-names.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2937,9 +2942,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E98630A4269889DC00F56B87 /* Localizable.strings in Resources */,
 				E148AE4621C141B0007AB65A /* MainInterface.storyboard in Resources */,
 				E1C983B621E4BBFD00C81666 /* Assets.xcassets in Resources */,
+				E98630A3269888E600F56B87 /* country-names.plist in Resources */,
 				E1616C1021CB933400F42D79 /* Client.plist in Resources */,
+				E98630A6269889E200F56B87 /* Localizable.stringsdict in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
