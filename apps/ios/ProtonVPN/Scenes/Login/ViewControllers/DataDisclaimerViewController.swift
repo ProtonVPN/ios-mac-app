@@ -41,7 +41,7 @@ class DataDisclaimerViewController: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = .protonBlack()
-        let disclaimer = NSMutableAttributedString(attributedString: String(format: "\(LocalizedString.dataDisclaimerTitle)\n\n\n\(LocalizedString.dataDisclaimerText)", LocalizedString.dataDisclaimerUserDetails, LocalizedString.dataDisclaimerDeviceDetails).attributed(withColor: .protonFontLightGrey(), fontSize: 16, alignment: .left))
+        let disclaimer = NSMutableAttributedString(attributedString: "\(LocalizedString.dataDisclaimerTitle)\n\n\n\(LocalizedString.dataDisclaimerText(LocalizedString.dataDisclaimerUserDetails, LocalizedString.dataDisclaimerDeviceDetails))".attributed(withColor: .protonFontLightGrey(), fontSize: 16, alignment: .left))
         let fullRange = (disclaimer.string as NSString).range(of: disclaimer.string)
         let titleRange = (disclaimer.string as NSString).range(of: LocalizedString.dataDisclaimerTitle)
         let userRange = (disclaimer.string as NSString).range(of: LocalizedString.dataDisclaimerUserDetails)
