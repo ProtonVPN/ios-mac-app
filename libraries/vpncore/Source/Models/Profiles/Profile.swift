@@ -52,18 +52,18 @@ public class Profile: NSObject, NSCoding {
         switch serverOffering {
         case .fastest(let cCode):
             if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .fastest), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id)
+                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .fastest), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id, allowVpnProtocolChange: false)
             } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .fastest, vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id)
+                return ConnectionRequest(serverType: serverType, connectionType: .fastest, vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id, allowVpnProtocolChange: false)
             }
         case .random(let cCode):
             if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .random), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id)
+                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .random), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id, allowVpnProtocolChange: false)
             } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .random, vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id)
+                return ConnectionRequest(serverType: serverType, connectionType: .random, vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id, allowVpnProtocolChange: false)
             }
         case .custom(let sWrapper):
-            return ConnectionRequest(serverType: serverType, connectionType: .country(sWrapper.server.countryCode, .server(sWrapper.server)), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id)
+            return ConnectionRequest(serverType: serverType, connectionType: .country(sWrapper.server.countryCode, .server(sWrapper.server)), vpnProtocol: vpnProtocol, netShieldType: netShield, profileId: id, allowVpnProtocolChange: false)
         }
     }
     

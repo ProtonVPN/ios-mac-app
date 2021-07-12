@@ -28,13 +28,14 @@ public struct ConnectionRequest: Codable {
     public let vpnProtocol: VpnProtocol
     public let netShieldType: NetShieldType
     public let profileId: String?
+    public let allowVpnProtocolChange: Bool? // optional for backward compatibility after upgrade
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType, profileId: self.profileId, allowVpnProtocolChange: self.allowVpnProtocolChange)
     }
     
     public func withChanged(vpnProtocol: VpnProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: vpnProtocol, netShieldType: self.netShieldType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: vpnProtocol, netShieldType: self.netShieldType, profileId: self.profileId, allowVpnProtocolChange: self.allowVpnProtocolChange)
     }
 }
 
