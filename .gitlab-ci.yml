@@ -186,7 +186,10 @@ ios_testflight_internal:
     when: always
     paths:
       - .last_build_nr
-    expire_in: 7 days
+      - build/
+    exclude:
+      - build/*.ipa
+    expire_in: 60 days
 
 # --- Translation related tasks ---
 # Jobs comes from the generator inside gitlab translations/generator
