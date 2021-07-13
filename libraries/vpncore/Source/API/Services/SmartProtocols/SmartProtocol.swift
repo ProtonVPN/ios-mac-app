@@ -80,7 +80,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
         let group = DispatchGroup()
-        let queue = DispatchQueue(label: "SmartProtocolQueue", attributes: .concurrent)
+        let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
 
         PMLog.D("Determining best protocol for \(server.domain)")
@@ -88,7 +88,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         for (proto, checker) in checkers {
             group.enter()
             checker.checkAvailability(server: server) { result in
-                queue.async {
+                lockQueue.async {
                     switch result {
                     case .unavailable:
                         break
@@ -100,7 +100,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: queue) {
+        group.notify(queue: .global()) {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best] else {
