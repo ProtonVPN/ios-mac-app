@@ -21,21 +21,80 @@
 
 import Foundation
 
+public enum ConnectionProtocol: Codable, Equatable {
+    case vpnProtocol(VpnProtocol)
+    case smartProtocol
+
+    private enum Keys: CodingKey {
+        case smartProtocol
+        case vpnProtocol
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
+            self = .vpnProtocol(vpnProtocol)
+        } else {
+            self = .smartProtocol
+        }
+    }
+
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: Keys.self)
+        switch self {
+        case .smartProtocol:
+            try container.encode(true, forKey: .smartProtocol)
+        case let .vpnProtocol(vpnProtocol):
+            try container.encode(vpnProtocol, forKey: .vpnProtocol)
+        }
+    }
+}
+
 public struct ConnectionRequest: Codable {
-    
     public let serverType: ServerType
     public let connectionType: ConnectionRequestType
-    public let vpnProtocol: VpnProtocol
+    public let connectionProtocol: ConnectionProtocol
     public let netShieldType: NetShieldType
     public let profileId: String?
-    public let allowVpnProtocolChange: Bool? // optional for backward compatibility after upgrade
+
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, profileId: String?) {
+        self.serverType = serverType
+        self.connectionType = connectionType
+        self.connectionProtocol = connectionProtocol
+        self.netShieldType = netShieldType
+        self.profileId = profileId
+    }
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: self.vpnProtocol, netShieldType: netShieldType, profileId: self.profileId, allowVpnProtocolChange: self.allowVpnProtocolChange)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, profileId: self.profileId)
     }
     
     public func withChanged(vpnProtocol: VpnProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, vpnProtocol: vpnProtocol, netShieldType: self.netShieldType, profileId: self.profileId, allowVpnProtocolChange: self.allowVpnProtocolChange)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, profileId: self.profileId)
+    }
+
+    private enum Keys: CodingKey {
+        case serverType
+        case connectionType
+        case connectionProtocol
+        case netShieldType
+        case profileId
+        case vpnProtocol
+    }
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: Keys.self)
+        serverType = try container.decode(ServerType.self, forKey: .serverType)
+        connectionType = try container.decode(ConnectionRequestType.self, forKey: .connectionType)
+        netShieldType = try container.decode(NetShieldType.self, forKey: .netShieldType)
+        profileId = try container.decodeIfPresent(String.self, forKey: .profileId)
+
+        // compatiblity with previous format
+        if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
+            connectionProtocol = .vpnProtocol(vpnProtocol)
+        } else {
+            connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
+        }
     }
 }
 
@@ -137,7 +196,7 @@ extension CountryConnectionRequestType: Codable {
 extension ConnectionRequest: Equatable {
     
     public static func == (lhs: ConnectionRequest, rhs: ConnectionRequest) -> Bool {
-        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.vpnProtocol == rhs.vpnProtocol
+        return lhs.serverType == rhs.serverType && lhs.connectionType == rhs.connectionType && lhs.connectionProtocol == rhs.connectionProtocol
     }
 }
 

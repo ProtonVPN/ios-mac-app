@@ -119,13 +119,17 @@ public class VpnGateway: VpnGatewayProtocol {
     private var serverManager: ServerManager {
         return ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
     }
-
-    private var globalVpnProtocol: VpnProtocol {
-        return propertiesManager.vpnProtocol
-    }
-    
+   
     private var serverTypeToggle: ServerType {
         return propertiesManager.secureCoreToggle ? .secureCore : .standard
+    }
+
+    private var globalConnectionProtocol: ConnectionProtocol {
+        if propertiesManager.smartProtocol {
+            return .smartProtocol
+        }
+
+        return .vpnProtocol(propertiesManager.vpnProtocol)
     }
     
     private var connectionPreparer: VpnConnectionPreparer?
@@ -211,19 +215,19 @@ public class VpnGateway: VpnGatewayProtocol {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
             return profile.connectionRequest(withDefaultNetshield: netShieldType)
         } else {
-            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil, allowVpnProtocolChange: true)
+            return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
         }
     }
     
     public func connectTo(country countryCode: String, ofType serverType: ServerType) {
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil, allowVpnProtocolChange: true)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(countryCode, .fastest), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
     
     public func connectTo(server: ServerModel) {
         let countryType = CountryConnectionRequestType.server(server)
-        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), vpnProtocol: globalVpnProtocol, netShieldType: netShieldType, profileId: nil, allowVpnProtocolChange: true)
+        let connectionRequest = ConnectionRequest(serverType: serverTypeToggle, connectionType: .country(server.countryCode, countryType), connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
         
         connect(with: connectionRequest)
     }
@@ -253,11 +257,11 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastConnectionRequest = request
         
         guard let request = request else {
-            connect(with: globalVpnProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType, allowProtocolChange: nil)
+            connect(with: globalConnectionProtocol, server: appStateManager.activeConnection()?.server, netShieldType: netShieldType)
             return
         }
         
-        connect(with: request.vpnProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType, allowProtocolChange: request.allowVpnProtocolChange)
+        connect(with: request.connectionProtocol, server: selectServer(connectionRequest: request), netShieldType: request.netShieldType)
     }
     
     private func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
@@ -324,7 +328,7 @@ public class VpnGateway: VpnGatewayProtocol {
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }
     
-    private func connect(with vpnProtocol: VpnProtocol, server: ServerModel?, netShieldType: NetShieldType, allowProtocolChange: Bool?) {
+    private func connect(with connectionProtocol: ConnectionProtocol, server: ServerModel?, netShieldType: NetShieldType) {
         guard let server = server else {
             return
         }
@@ -338,15 +342,15 @@ public class VpnGateway: VpnGatewayProtocol {
         }
 
         PMLog.D("Selected \(serverIp.entryIp) as server ip for \(server.domain)")
-        
-        guard propertiesManager.smartProtocol, allowProtocolChange == true else {
+
+        switch connectionProtocol {
+        case .smartProtocol:
+            smartProtocol = SmartProtocolImplementation(config: propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig)
+            smartProtocol?.determineBestProtocol(server: serverIp) { [weak self] (vpnProtocol, ports) in
+                self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: ports)
+            }
+        case let .vpnProtocol(vpnProtocol):
             connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType)
-            return
-        }
-        
-        smartProtocol = SmartProtocolImplementation(config: propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig)
-        smartProtocol?.determineBestProtocol(server: serverIp) { [weak self] (vpnProtocol, ports) in
-            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: ports)
         }
     }
     
@@ -422,14 +426,13 @@ fileprivate extension VpnGateway {
         let request = ConnectionRequest(
             serverType: serverTypeToggle,
             connectionType: .fastest,
-            vpnProtocol: propertiesManager.vpnProtocol,
+            connectionProtocol: globalConnectionProtocol,
             netShieldType: propertiesManager.netShieldType ?? .off,
-            profileId: nil,
-            allowVpnProtocolChange: propertiesManager.lastConnectionRequest?.allowVpnProtocolChange)
+            profileId: nil)
         
         guard let toServer = selector.selectServer(connectionRequest: request) else { return nil }
         propertiesManager.lastConnectionRequest = request
-        self.connect(with: request.vpnProtocol, server: toServer, netShieldType: request.netShieldType, allowProtocolChange: request.allowVpnProtocolChange)
+        self.connect(with: request.connectionProtocol, server: toServer, netShieldType: request.netShieldType)
         return (previousServer, toServer)
     }
 }
