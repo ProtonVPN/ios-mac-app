@@ -46,7 +46,7 @@ class CertificateRefreshRequest {
                 return
             }
             
-            wg_log(.debug, message: "Response cert: \(certificate)")
+            wg_log(.debug, message: "Response cert is valid until: \(certificate.validUntil)")
             completionHandler(.success(certificate))
             
         }

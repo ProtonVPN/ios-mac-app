@@ -51,7 +51,7 @@ final class CertificateRefreshManager {
     
     @objc private func timerFired() {
         if let certificate = vpnAuthenticationStorage.getStoredCertificate() {
-            wg_log(.info, message: "Current cert: \(certificate)")
+            wg_log(.info, message: "Current cert is valid until: \(certificate.validUntil)")
             
             let nextRefreshTime = certificate.refreshTime.addingTimeInterval(refreshEarlierBy)
             guard nextRefreshTime <= Date() else {
