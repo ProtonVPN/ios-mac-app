@@ -68,7 +68,7 @@
 "_always_on_vpn" = "VPN sempre ativa";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "O Kill Switch não é suportado no iOS. A VPN sempre ativa restaura a conexão VPN de forma rápida e automática. Para sua segurança, este recurso está sempre ligado.";
+"_always_on_vpn_tooltip_ios" = "A VPN sempre ativa restaura a conexão VPN de forma rápida e automática. Para sua segurança, este recurso está sempre ligado.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "A VPN sempre ativa irá reconectá-lo automaticamente";
