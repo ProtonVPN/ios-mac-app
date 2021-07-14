@@ -118,7 +118,8 @@ class CountriesSectionViewModel {
         NetShieldPropertyProviderFactory &
         CoreAlertServiceFactory &
         VpnKeychainFactory &
-        VpnManagerFactory
+        VpnManagerFactory &
+        VpnStateConfigurationFactory
 
     private let factory: Factory
     
