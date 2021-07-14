@@ -296,10 +296,7 @@ class SettingsViewModel {
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
         if #available(iOS 14, *) {
-            cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true) { [unowned self] (toggleOn, callback) in
-                self.propertiesManager.killSwitch.toggle()
-                callback(self.propertiesManager.killSwitch)
-            })
+            cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true, handler: ksSwitchCallback()))
             cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
         }
         
@@ -341,15 +338,79 @@ class SettingsViewModel {
         cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
         
         if #available(iOS 14.2, *) {
-            cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: { (toggleOn, callback) in
-                self.propertiesManager.excludeLocalNetworks.toggle()
-                callback(self.propertiesManager.excludeLocalNetworks)
-            }))
-            
+            cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()))
             cells.append(.tooltip(text: LocalizedString.allowLanInfo))
         }
         
         return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
+    }
+    
+    private func switchLANCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
+        return { (toggleOn, callback) in
+            let isConnected = self.vpnGateway?.connection == .connected || self.vpnGateway?.connection == .connecting
+            
+            var alert: SystemAlert
+            
+            if self.propertiesManager.killSwitch, !self.propertiesManager.excludeLocalNetworks {
+                alert = AllowLANConnectionsAlert(connected: isConnected) {
+                    self.propertiesManager.excludeLocalNetworks = true
+                    self.propertiesManager.killSwitch = false
+                    if isConnected { self.vpnGateway?.retryConnection() }
+                    self.reloadNeeded?()
+                    callback(true)
+                } cancelHandler: {
+                    callback(false)
+                }
+            } else if isConnected {
+                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
+                    self.propertiesManager.excludeLocalNetworks.toggle()
+                    self.vpnGateway?.retryConnection()
+                    callback(self.propertiesManager.excludeLocalNetworks)
+                }, cancelHandler: {
+                    callback(self.propertiesManager.excludeLocalNetworks)
+                })
+            } else {
+                self.propertiesManager.excludeLocalNetworks.toggle()
+                callback(self.propertiesManager.excludeLocalNetworks)
+                return
+            }
+            
+            self.alertService.push(alert: alert)
+        }
+    }
+    
+    private func ksSwitchCallback () -> ((Bool, @escaping (Bool) -> Void) -> Void) {
+        return { (toggleOn, callback) in
+            let isConnected = self.vpnGateway?.connection == .connected || self.vpnGateway?.connection == .connecting
+            
+            var alert: SystemAlert
+            
+            if self.propertiesManager.excludeLocalNetworks, !self.propertiesManager.killSwitch {
+                alert = TurnOnKillSwitchAlert {
+                    self.propertiesManager.excludeLocalNetworks = false
+                    self.propertiesManager.killSwitch = true
+                    if isConnected { self.vpnGateway?.retryConnection() }
+                    self.reloadNeeded?()
+                    callback(true)
+                } cancelHandler: {
+                    callback(false)
+                }
+            } else if isConnected {
+                alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
+                    self.propertiesManager.killSwitch.toggle()
+                    self.vpnGateway?.retryConnection()
+                    callback(self.propertiesManager.killSwitch)
+                }, cancelHandler: {
+                    callback(self.propertiesManager.killSwitch)
+                })
+            } else {
+                self.propertiesManager.killSwitch.toggle()
+                callback(self.propertiesManager.killSwitch)
+                return
+            }
+            
+            self.alertService.push(alert: alert)
+        }
     }
     
     private var extensionsSection: TableViewSection {
