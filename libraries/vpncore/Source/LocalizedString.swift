@@ -66,7 +66,7 @@ public enum LocalizedString {
   public static let alreadyHaveAccount = LocalizedString.tr("Localizable", "_already_have_account")
   /// Always-on VPN
   public static let alwaysOnVpn = LocalizedString.tr("Localizable", "_always_on_vpn")
-  /// Kill Switch is not supported on iOS. Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.
+  /// Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.
   public static let alwaysOnVpnTooltipIos = LocalizedString.tr("Localizable", "_always_on_vpn_tooltip_ios")
   /// Always-on VPN will reconnect you automatically
   public static let alwaysOnWillReconnect = LocalizedString.tr("Localizable", "_always_on_will_reconnect")
