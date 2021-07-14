@@ -50,15 +50,13 @@ class SmsCountryCodeViewController: UIViewController {
     }
     
     private func setUpSearchBar() {
-        if #available(iOS 11.0, *) {
-            searchController.searchResultsUpdater = self
-            searchController.obscuresBackgroundDuringPresentation = false
-            searchController.searchBar.placeholder = LocalizedString.searchPhoneCountryCodePlaceholder
-            searchController.searchBar.barStyle = .black
-            navigationItem.searchController = searchController
-            
-            navigationItem.hidesSearchBarWhenScrolling = false
-        }
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = LocalizedString.searchPhoneCountryCodePlaceholder
+        searchController.searchBar.barStyle = .black
+        navigationItem.searchController = searchController
+
+        navigationItem.hidesSearchBarWhenScrolling = false
     }
     
     private func setUpTableView() {
@@ -72,9 +70,7 @@ class SmsCountryCodeViewController: UIViewController {
     }
     
     @objc private func doneTapped() {
-        if #available(iOS 11.0, *) {
-            searchController.dismiss(animated: false, completion: nil)
-        }
+        searchController.dismiss(animated: false, completion: nil)
         navigationController?.dismiss(animated: true, completion: nil)
     }
 }

@@ -133,19 +133,13 @@ class ProtonTextField: UIView {
             textField.spellCheckingType = .no
             textField.keyboardType = .emailAddress
             textField.keyboardAppearance = .default
-            if #available(iOS 11.0, *) {
-                textField.smartDashesType = .no
-                textField.smartInsertDeleteType = .no
-                textField.smartQuotesType = .no
-            }
+            textField.smartDashesType = .no
+            textField.smartInsertDeleteType = .no
+            textField.smartQuotesType = .no
         case .username:
             textField.autocapitalizationType = .none
             textField.autocorrectionType = .no
-            if #available(iOS 11.0, *) {
-                textField.textContentType = .username
-            } else {
-                textField.textContentType = .nickname
-            }
+            textField.textContentType = .username
         case .password:
             textField.isSecureTextEntry = true
             textField.autocapitalizationType = .none

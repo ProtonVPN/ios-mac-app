@@ -79,11 +79,7 @@ class TabBarController: UITabBarController {
         view.addSubview(quickConnectButton)
         
         let bottomItem: Any
-        if #available(iOS 11.0, *) {
-            bottomItem = view.safeAreaLayoutGuide
-        } else {
-            bottomItem = view as Any
-        }
+        bottomItem = view.safeAreaLayoutGuide
         
         quickConnectButton.translatesAutoresizingMaskIntoConstraints = false
         let widthConstraint = NSLayoutConstraint(item: quickConnectButton, attribute: .width, relatedBy: .equal, toItem: tabBar, attribute: .width, multiplier: 1 / CGFloat(tabBar.items?.count ?? 5), constant: 4)
@@ -115,18 +111,11 @@ class TabBarController: UITabBarController {
             buttons[1].addGestureRecognizer(loginTap)
         }
         
-        if #available(iOS 11.0, *) {
-            let safeGuide = view.safeAreaLayoutGuide
-            loginBoxView!.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
-            loginBoxView!.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
-            loginBoxView!.heightAnchor.constraint(equalToConstant: loginBoxView.height).isActive = true
-            loginBoxView!.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
-        } else {
-            loginBoxView!.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            loginBoxView!.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            loginBoxView!.heightAnchor.constraint(equalToConstant: loginBoxView.height).isActive = true
-            loginBoxView!.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
-        }
+        let safeGuide = view.safeAreaLayoutGuide
+        loginBoxView!.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
+        loginBoxView!.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
+        loginBoxView!.heightAnchor.constraint(equalToConstant: loginBoxView.height).isActive = true
+        loginBoxView!.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
         
         view.bringSubviewToFront(quickConnectButton)
     }
