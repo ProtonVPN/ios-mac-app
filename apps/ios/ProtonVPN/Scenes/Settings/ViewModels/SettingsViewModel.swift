@@ -295,6 +295,12 @@ class SettingsViewModel {
         cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
+        cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true) { [unowned self] (toggleOn, callback) in
+            self.propertiesManager.killSwitch.toggle()
+            callback(self.propertiesManager.killSwitch)
+        })
+        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+        
         cells.append(.toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
             self.propertiesManager.alternativeRouting.toggle()
             callback(self.propertiesManager.alternativeRouting)
