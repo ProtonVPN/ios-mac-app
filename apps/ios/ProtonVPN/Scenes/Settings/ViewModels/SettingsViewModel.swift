@@ -270,10 +270,6 @@ class SettingsViewModel {
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
                 pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in
-                    guard let vpnGateway = self.vpnGateway else {
-                        return
-                    }
-
                     self.vpnStateConfiguration.getInfo { info in
                         switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
                         case .withConnectionUpdate:
