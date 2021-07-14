@@ -19,13 +19,11 @@ final class VpnProtocolViewModel {
     private var openVpnTransportProtocol: VpnProtocol.TransportProtocol // maintains transport protocol selection even when vpn protocol is changed
     private let featureFlags: FeatureFlags
     private let alertService: AlertService
-    private let showProtocolWarnings: Bool
     
-    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags, alertService: AlertService, showProtocolWarnings: Bool = true) {
+    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags, alertService: AlertService) {
         self.vpnProtocol = vpnProtocol
         self.featureFlags = featureFlags
         self.alertService = alertService
-        self.showProtocolWarnings = showProtocolWarnings
         
         if case VpnProtocol.openVpn(let transportProtocol) = vpnProtocol {
             self.openVpnTransportProtocol = transportProtocol
@@ -54,18 +52,10 @@ final class VpnProtocolViewModel {
         }))
         
         cells.append(
-            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol, alertService, showProtocolWarnings] in
-                guard showProtocolWarnings else {
-                    switchVpnProtocol(.wireGuard)
-                    return true
-                }
-                
-                let alert = WireguardSupportWarningAlert(continueHandler: { [switchVpnProtocol] in
-                    switchVpnProtocol(.wireGuard)
-                })
-                alertService.push(alert: alert)
-                return false
-            }))
+            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol] in
+                switchVpnProtocol(.wireGuard)
+                return true
+        }))
         
         cells.append(.checkmarkStandard(title: LocalizedString.openvpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
             switchVpnProtocol(.openVpn(openVpnTransportProtocol))
