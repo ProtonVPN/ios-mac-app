@@ -62,7 +62,7 @@
 "_always_on_vpn" = "Mindig bekapcsolt VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Az IOS nem támogatja a Kill Switch szolgáltatást. A mindig bekapcsolt VPN gyorsan és automatikusan visszaállítja a biztonságos VPN kapcsolatot. A biztonságod érdekében ez a szolgáltatás mindig be van kapcsolva.";
+"_always_on_vpn_tooltip_ios" = "A mindig bekapcsolt VPN gyorsan és automatikusan visszaállítja a biztonságos VPN kapcsolatot. A biztonságod érdekében ez a szolgáltatás mindig be van kapcsolva.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "A mindig bekapcsolt VPN automatikusan újracsatlakozik";

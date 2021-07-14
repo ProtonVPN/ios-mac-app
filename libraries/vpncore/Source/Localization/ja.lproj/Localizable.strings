@@ -62,7 +62,7 @@
 "_always_on_vpn" = "常時接続 VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "iOS はキルスイッチに対応していません。常時接続 VPN では、安全な VPN 接続を迅速かつ自動的に再確立します。セキュリティを保つため、この設定は常に有効になっています。";
+"_always_on_vpn_tooltip_ios" = "常時接続 VPN では、安全な VPN 接続を迅速かつ自動的に再確立します。セキュリティを保つため、この設定は常に有効になっています。";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "常に VPN を使用する設定の場合、自動的に再接続します。";

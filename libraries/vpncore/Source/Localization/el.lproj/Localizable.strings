@@ -62,7 +62,7 @@
 "_always_on_vpn" = "Πάντα-ενεργό VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Το Kill Switch δεν υποστηρίζεται στο iOS. Το Πάντα-ενεργό VPN, επανεκκινεί μια ασφαλή σύνδεση VPN ομαλά και αυτόματα. Για την ασφάλειά σας, αυτή η λειτουργία είναι πάντα ενεργοποιημένη.";
+"_always_on_vpn_tooltip_ios" = "Το Πάντα-ενεργό VPN, επανεκκινεί μια ασφαλή σύνδεση VPN ομαλά και αυτόματα. Για την ασφάλειά σας, αυτή η λειτουργία είναι πάντα ενεργοποιημένη.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Το Πάντα-ενεργό VPN θα σας επανασυνδέσει αυτόματα";

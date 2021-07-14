@@ -62,7 +62,7 @@
 "_always_on_vpn" = "VPN selalu aktif";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Kill Switch tidak didukung di iOS. VPN Selalu-Aktif membangun kembali sambungan aman VPN dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
+"_always_on_vpn_tooltip_ios" = "VPN Selalu-Aktif membangun kembali sambungan aman VPN dengan segera dan otomatis. Demi keamanan Anda, fitur ini selalu aktif.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "VPN Selalu-aktif otomatis akan menyambungkan Anda kembali";
