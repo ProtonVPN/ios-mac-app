@@ -337,9 +337,17 @@ public class VpnManager: VpnManagerProtocol {
         
         // MARK: - KillSwitch configuration
         #if os(OSX)
+        configuration.includeAllNetworks = propertiesManager.killSwitch
+        configuration.excludeLocalNetworks = propertiesManager.excludeLocalNetworks
+        #elseif os(iOS)
+        if #available(iOS 14, *) {
             configuration.includeAllNetworks = propertiesManager.killSwitch
+        }
+        if #available(iOS 14.2, *) {
             configuration.excludeLocalNetworks = propertiesManager.excludeLocalNetworks
+        }
         #endif
+
         vpnManager.protocolConfiguration = configuration
         vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
         vpnManager.isOnDemandEnabled = hasConnected
