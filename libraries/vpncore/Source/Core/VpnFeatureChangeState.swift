@@ -15,8 +15,8 @@ public enum VpnFeatureChangeState {
 }
 
 extension VpnFeatureChangeState {
-    public init(status: ConnectionStatus, vpnProtocol: VpnProtocol?) {
-        switch status {
+    public init(state: VpnState, vpnProtocol: VpnProtocol?) {
+        switch state {
         case .connected where vpnProtocol?.authenticationType == .certificate:
             self = .withConnectionUpdate
         case .connected, .connecting:
