@@ -62,15 +62,11 @@ class CountryAnnotationViewModel {
     }
     
     var buttonWidth: CGFloat {
-        if #available(macOS 10.13, *) {
-            let countryWidth = attributedCountry.size().width + titlePadding * 2
-            let connectWidth = attributedConnect.size().width + titlePadding * 2
-            let disconnectWidth = attributedDisconnect.size().width + titlePadding * 2
-            let widths = [minWidth, countryWidth, connectWidth, disconnectWidth]
-            return 2 * round((widths.max() ?? fallBackWidth) / 2) // prevents bluring on non-retina
-        } else {
-            return fallBackWidth
-        }
+        let countryWidth = attributedCountry.size().width + titlePadding * 2
+        let connectWidth = attributedConnect.size().width + titlePadding * 2
+        let disconnectWidth = attributedDisconnect.size().width + titlePadding * 2
+        let widths = [minWidth, countryWidth, connectWidth, disconnectWidth]
+        return 2 * round((widths.max() ?? fallBackWidth) / 2) // prevents bluring on non-retina
     }
     
     fileprivate(set) var state: ViewState = .idle {
@@ -219,11 +215,7 @@ class SCEntryCountryAnnotationViewModel: CountryAnnotationViewModel {
     }
     
     override var buttonWidth: CGFloat {
-        if #available(macOS 10.13, *) {
-            return 2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
-        } else {
-            return 240
-        }
+        return 2 * round((attributedCountry.size().width + titlePadding * 2) / 2)
     }
     
     init(appStateManager: AppStateManager, countryCode: String, exitCountryCodes: [String], coordinate: CLLocationCoordinate2D) {
