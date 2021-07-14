@@ -1773,10 +1773,6 @@
 
 // Wireguard
 
-
-/* Shown when switching protocol to WireGuard */
-"_wireguard_filter_warning_text" = "All our servers will soon support WireGuard®. For now, only currently available servers will show up in your country list.";
-
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
 "_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard®. To connect, try another protocol or a server supporting WireGuard®.";
 
