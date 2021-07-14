@@ -53,21 +53,19 @@ final class VpnProtocolViewModel {
             return true
         }))
         
-        if featureFlags.isWireGuard {
-            cells.append(
-                .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol, alertService, showProtocolWarnings] in
-                    guard showProtocolWarnings else {
-                        switchVpnProtocol(.wireGuard)
-                        return true
-                    }
-
-                    let alert = WireguardSupportWarningAlert(continueHandler: { [switchVpnProtocol] in
-                        switchVpnProtocol(.wireGuard)
-                    })
-                    alertService.push(alert: alert)
-                    return false
+        cells.append(
+            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol, alertService, showProtocolWarnings] in
+                guard showProtocolWarnings else {
+                    switchVpnProtocol(.wireGuard)
+                    return true
+                }
+                
+                let alert = WireguardSupportWarningAlert(continueHandler: { [switchVpnProtocol] in
+                    switchVpnProtocol(.wireGuard)
+                })
+                alertService.push(alert: alert)
+                return false
             }))
-        }
         
         cells.append(.checkmarkStandard(title: LocalizedString.openvpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
             switchVpnProtocol(.openVpn(openVpnTransportProtocol))
