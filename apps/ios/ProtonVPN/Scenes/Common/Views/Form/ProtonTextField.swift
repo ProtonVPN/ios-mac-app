@@ -120,8 +120,7 @@ class ProtonTextField: UIView {
             errorLabel.accessibilityIdentifier = accessibilityIdentifier
         }
     }
-    
-    // swiftlint:disable function_body_length
+
     private func setupVariety() {
         setupPasswordButton()
         
@@ -147,14 +146,7 @@ class ProtonTextField: UIView {
             textField.spellCheckingType = .no
             textField.keyboardType = .default
             textField.keyboardAppearance = .default
-            if #available(iOS 12.0, *) {
-                textField.textContentType = .newPassword
-            } else if #available(iOS 11.0, *) {
-                textField.textContentType = .password
-                textField.smartDashesType = .no
-                textField.smartInsertDeleteType = .no
-                textField.smartQuotesType = .no
-            }
+            textField.textContentType = .newPassword
             renderShowPasswordButton()
         case .oneTimeCode:
             textField.autocapitalizationType = .none
@@ -162,13 +154,7 @@ class ProtonTextField: UIView {
             textField.spellCheckingType = .no
             textField.keyboardType = .numberPad
             textField.keyboardAppearance = .default
-            if #available(iOS 12.0, *) {
-                textField.textContentType = .oneTimeCode
-            } else if #available(iOS 11.0, *) {
-                textField.smartDashesType = .no
-                textField.smartInsertDeleteType = .no
-                textField.smartQuotesType = .no
-            }
+            textField.textContentType = .oneTimeCode
         }
     }
     // swiftlint:enable function_body_length
