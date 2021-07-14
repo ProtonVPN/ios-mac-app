@@ -60,7 +60,7 @@ class UpdateManager: NSObject {
     }
     
     public var releaseNotes: [String]? {
-        guard let items = appcast?.items as? [SUAppcastItem] else {
+        guard let items = appcast?.items else {
             return nil
         }
         return items.map { ($0 as SUAppcastItem).itemDescription ?? "" }
