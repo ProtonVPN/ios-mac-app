@@ -176,6 +176,15 @@ extension IosAlertService: CoreAlertService {
         case is WireguardProfileErrorAlert:
             showDefaultSystemAlert(alert)
             
+        case is AllowLANConnectionsAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is TurnOnKillSwitchAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is ReconnectOnSettingsChangeAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
