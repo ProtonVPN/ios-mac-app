@@ -53,7 +53,7 @@ class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
 }
 
 final class QuickSettingNetshieldOption: QuickSettingGenericOption {
-    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
+    init(level: NetShieldType, vpnGateway: VpnGatewayProtocol, vpnManager: VpnManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, vpnStateConfiguration: VpnStateConfiguration, isActive: Bool, currentUserTier: Int, openUpgradeLink: @escaping () -> Void) {
         var netShieldPropertyProvider = netShieldPropertyProvider
 
         let text: String
@@ -82,15 +82,17 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                 return
             }
 
-            switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-            case .withConnectionUpdate:
-                netShieldPropertyProvider.netShieldType = level
-                vpnManager.set(netShieldType: level)
-            case .withReconnect:
-                netShieldPropertyProvider.netShieldType = level
-                vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
-            case .immediately:
-                netShieldPropertyProvider.netShieldType = level
+            vpnStateConfiguration.getInfo { info in
+                switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                case .withConnectionUpdate:
+                    netShieldPropertyProvider.netShieldType = level
+                    vpnManager.set(netShieldType: level)
+                case .withReconnect:
+                    netShieldPropertyProvider.netShieldType = level
+                    vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
+                case .immediately:
+                    netShieldPropertyProvider.netShieldType = level
+                }
             }
         })
     }

@@ -32,6 +32,7 @@ final class ConnectionSettingsViewModel {
         & SystemExtensionManagerFactory
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
+        & VpnStateConfigurationFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -41,6 +42,7 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
+    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
@@ -235,23 +237,25 @@ final class ConnectionSettingsViewModel {
     }
     
     func setVpnAccelerator(_ enabled: Bool, completion: @escaping ((Bool) -> Void)) {
-        switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnProtocol) {
-        case .withConnectionUpdate:
-            // in-place change when connected and using local agent
-            vpnManager.set(vpnAccelerator: enabled)
-            propertiesManager.vpnAcceleratorEnabled = enabled
-            completion(true)
-        case .withReconnect:
-            alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: {
-                self.propertiesManager.vpnAcceleratorEnabled = enabled
-                self.vpnGateway.retryConnection()
+        vpnStateConfiguration.getInfo { [weak self] info in
+            switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+            case .withConnectionUpdate:
+                // in-place change when connected and using local agent
+                self?.vpnManager.set(vpnAccelerator: enabled)
+                self?.propertiesManager.vpnAcceleratorEnabled = enabled
                 completion(true)
-            }, cancelHandler: {
-                completion(false)
-            }))
-        case .immediately:
-            propertiesManager.vpnAcceleratorEnabled = enabled
-            completion(true)
+            case .withReconnect:
+                self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
+                    self?.propertiesManager.vpnAcceleratorEnabled = enabled
+                    self?.vpnGateway.retryConnection()
+                    completion(true)
+                }, cancelHandler: {
+                    completion(false)
+                }))
+            case .immediately:
+                self?.propertiesManager.vpnAcceleratorEnabled = enabled
+                completion(true)
+            }
         }
     }
     
