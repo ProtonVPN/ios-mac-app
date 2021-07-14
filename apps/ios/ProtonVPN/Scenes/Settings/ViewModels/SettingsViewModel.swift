@@ -331,6 +331,14 @@ class SettingsViewModel {
         ]
         
         cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
+        
+        cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: { (toggleOn, callback) in
+            self.propertiesManager.excludeLocalNetworks.toggle()
+            callback(self.propertiesManager.excludeLocalNetworks)
+        }))
+        
+        cells.append(.tooltip(text: LocalizedString.allowLanInfo))
+        
         return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
     
