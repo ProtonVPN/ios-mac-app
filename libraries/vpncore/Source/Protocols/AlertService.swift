@@ -356,7 +356,10 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
+        if connected {
+            message! += "\n\n" + LocalizedString.allowLanNote
+        }
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
@@ -370,11 +373,9 @@ public class AllowLANConnectionsAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        
         if connected {
             message! += "\n\n" + LocalizedString.allowLanNote
         }
-        
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
