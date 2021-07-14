@@ -1420,8 +1420,6 @@ public enum LocalizedString {
   public static let widget = LocalizedString.tr("Localizable", "_widget")
   /// WireGuard® (beta)
   public static let wireguard = LocalizedString.tr("Localizable", "_wireguard")
-  /// All our servers will soon support WireGuard®. For now, only currently available servers will show up in your country list.
-  public static let wireguardFilterWarningText = LocalizedString.tr("Localizable", "_wireguard_filter_warning_text")
   /// WireGuard® (beta) Logs
   public static let wireguardLogs = LocalizedString.tr("Localizable", "_wireguard_logs")
   /// This profile's server does not yet support WireGuard®. To connect, try another protocol or a server supporting WireGuard®.
