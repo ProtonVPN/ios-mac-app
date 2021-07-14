@@ -506,6 +506,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var killSwitch: Bool {
         get {
+            #if os(iOS)
+            guard #available(iOS 14, *) else { return false }
+            #endif
             return Storage.userDefaults().bool(forKey: Keys.killSwitch)
         }
         set {
@@ -516,6 +519,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var excludeLocalNetworks: Bool {
         get {
+            #if os(iOS)
+            guard #available(iOS 14.2, *) else { return false }
+            #endif
             return Storage.userDefaults().bool(forKey: Keys.excludeLocalNetworks)
         }
         set {
