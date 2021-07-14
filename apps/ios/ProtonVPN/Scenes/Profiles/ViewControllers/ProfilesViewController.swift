@@ -89,10 +89,9 @@ class ProfilesViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        if #available(iOS 11.0, *) {
-            // Fixes inset for profiles, which is not sufficient in the storyboard file
-            tableView.separatorInsetReference = .fromAutomaticInsets
-        }
+        // Fixes inset for profiles, which is not sufficient in the storyboard file
+        tableView.separatorInsetReference = .fromAutomaticInsets
+
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? UIConstants.cellHeight
         tableView.backgroundColor = .protonDarkGrey()
