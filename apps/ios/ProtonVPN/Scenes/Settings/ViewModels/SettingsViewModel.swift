@@ -295,11 +295,13 @@ class SettingsViewModel {
         cells.append(.toggle(title: LocalizedString.alwaysOnVpn, on: true, enabled: false, handler: nil))
         cells.append(.tooltip(text: LocalizedString.alwaysOnVpnTooltipIos))
 
-        cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true) { [unowned self] (toggleOn, callback) in
-            self.propertiesManager.killSwitch.toggle()
-            callback(self.propertiesManager.killSwitch)
-        })
-        cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+        if #available(iOS 14, *) {
+            cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true) { [unowned self] (toggleOn, callback) in
+                self.propertiesManager.killSwitch.toggle()
+                callback(self.propertiesManager.killSwitch)
+            })
+            cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+        }
         
         cells.append(.toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
             self.propertiesManager.alternativeRouting.toggle()
@@ -338,12 +340,14 @@ class SettingsViewModel {
         
         cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
         
-        cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: { (toggleOn, callback) in
-            self.propertiesManager.excludeLocalNetworks.toggle()
-            callback(self.propertiesManager.excludeLocalNetworks)
-        }))
-        
-        cells.append(.tooltip(text: LocalizedString.allowLanInfo))
+        if #available(iOS 14.2, *) {
+            cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: { (toggleOn, callback) in
+                self.propertiesManager.excludeLocalNetworks.toggle()
+                callback(self.propertiesManager.excludeLocalNetworks)
+            }))
+            
+            cells.append(.tooltip(text: LocalizedString.allowLanInfo))
+        }
         
         return TableViewSection(title: LocalizedString.connection.uppercased(), cells: cells)
     }
