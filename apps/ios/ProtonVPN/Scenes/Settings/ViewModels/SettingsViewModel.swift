@@ -38,6 +38,7 @@ class SettingsViewModel {
     private let connectionStatusService: ConnectionStatusService
     private var netShieldPropertyProvider: NetShieldPropertyProvider
     private let vpnManager: VpnManagerProtocol
+    private let vpnStateConfiguration: VpnStateConfiguration
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
@@ -49,7 +50,7 @@ class SettingsViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -62,6 +63,7 @@ class SettingsViewModel {
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.vpnManager = vpnManager
+        self.vpnStateConfiguration = vpnStateConfiguration
         
         startObserving()
     }
@@ -272,18 +274,20 @@ class SettingsViewModel {
                         return
                     }
 
-                    switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-                    case .withConnectionUpdate:
-                        approve()
-                        self.vpnManager.set(netShieldType: type)
-                    case .withReconnect:
-                        self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
+                    self.vpnStateConfiguration.getInfo { info in
+                        switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                        case .withConnectionUpdate:
                             approve()
-                            self.vpnGateway?.reconnect(with: type)
-                            self.connectionStatusService.presentStatusViewController()
-                        }))
-                    case .immediately:
-                        approve()
+                            self.vpnManager.set(netShieldType: type)
+                        case .withReconnect:
+                            self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
+                                approve()
+                                self.vpnGateway?.reconnect(with: type)
+                                self.connectionStatusService.presentStatusViewController()
+                            }))
+                        case .immediately:
+                            approve()
+                        }
                     }
                 }, { type in
                     self.netShieldPropertyProvider.netShieldType = type
@@ -312,25 +316,22 @@ class SettingsViewModel {
     private var connectionSection: TableViewSection {
         var cells: [TableViewCellModel] = [
             .toggle(title: LocalizedString.vpnAcceleratorTitle, on: propertiesManager.vpnAcceleratorEnabled, enabled: true, handler: { (toggleOn, callback)  in
-                guard let vpnGateway = self.vpnGateway else {
-                    callback(self.propertiesManager.vpnAcceleratorEnabled)
-                    return
-                }
-
-                switch VpnFeatureChangeState(status: vpnGateway.connection, vpnProtocol: vpnGateway.lastConnectionRequest?.vpnProtocol) {
-                case .withConnectionUpdate:
-                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                    self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
-                    callback(self.propertiesManager.vpnAcceleratorEnabled)
-                case .withReconnect:
-                    self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                self.vpnStateConfiguration.getInfo { info in
+                    switch VpnFeatureChangeState(state: info.state, vpnProtocol: info.connection?.vpnProtocol) {
+                    case .withConnectionUpdate:
+                        self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                        self.vpnManager.set(vpnAccelerator: self.propertiesManager.vpnAcceleratorEnabled)
+                        callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    case .withReconnect:
+                        self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
+                            self.propertiesManager.vpnAcceleratorEnabled.toggle()
+                            callback(self.propertiesManager.vpnAcceleratorEnabled)
+                            self.vpnGateway?.retryConnection()
+                        }))
+                    case .immediately:
                         self.propertiesManager.vpnAcceleratorEnabled.toggle()
                         callback(self.propertiesManager.vpnAcceleratorEnabled)
-                        self.vpnGateway?.retryConnection()
-                    }))
-                case .immediately:
-                    self.propertiesManager.vpnAcceleratorEnabled.toggle()
-                    callback(self.propertiesManager.vpnAcceleratorEnabled)
+                    }
                 }
             })
         ]
