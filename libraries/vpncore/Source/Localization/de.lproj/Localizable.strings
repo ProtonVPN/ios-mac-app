@@ -68,7 +68,7 @@
 "_always_on_vpn" = "Always‐On‐VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Kill Switch wird nicht auf iOS unterstützt. Eine Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu Ihrer Sicherheit ist diese Option ständig aktiviert.";
+"_always_on_vpn_tooltip_ios" = "Eine Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu Ihrer Sicherheit ist diese Option ständig aktiviert.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Always‐on‐VPN stellt Ihre Verbindung automatisch wieder her";
