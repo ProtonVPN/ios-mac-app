@@ -25,7 +25,7 @@ import Foundation
 typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
 protocol SmartProtocol {
-    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion)
+    func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion)
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
@@ -81,7 +81,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         ]
     }
 
-    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
+    func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
         let group = DispatchGroup()
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]

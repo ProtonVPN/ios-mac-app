@@ -58,7 +58,7 @@ final class IKEv2AvailabilityTests: XCTestCase {
         let sp = IKEv2AvailabilityChecker(port: port)
 
         server?.ready = {
-            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.01")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports, [port])
@@ -75,7 +75,7 @@ final class IKEv2AvailabilityTests: XCTestCase {
     func testIKEv2NotListening() {
         let expectation = XCTestExpectation(description: "IKEv2 not listening")
         let sp = IKEv2AvailabilityChecker()
-        sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+        sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.01")) { result in
             switch result {
             case .available:
                 XCTFail()
