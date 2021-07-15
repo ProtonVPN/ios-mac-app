@@ -84,6 +84,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     }
     
     public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        self.flushLogs(self.vpnManager) // Creates logfile so it's ready if/when user needs it.
         completion()
     }
     
@@ -109,10 +110,14 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         // Flush logs to file. Async, but should be done before user get's the file.
         vpnProviderManager(for: .configuration) { manager, error in 
             guard let manager = manager else { return }
-            try? ((manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession)?.sendProviderMessage(Message.flushLogsToFile.data, responseHandler: nil)
+            self.flushLogs(manager)
         }
         
         return sharedFolderURL.appendingPathComponent("WireGuard.log")
+    }
+    
+    private func flushLogs(_ manager: NEVPNManager?) {
+        try? ((manager as? NETunnelProviderManager)?.connection as? NETunnelProviderSession)?.sendProviderMessage(Message.flushLogsToFile.data, responseHandler: nil)
     }
         
 }
