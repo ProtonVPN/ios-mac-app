@@ -36,7 +36,7 @@ final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
         self.port = port
     }
 
-    func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
+    func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         checkAvailability(server: server, ports: [port], parameters: .udp, completion: completion)
     }
 
