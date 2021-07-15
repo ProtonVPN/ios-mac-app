@@ -97,7 +97,7 @@ class CountriesSectionViewModel {
     private var secureCoreState: Bool
     private var countries: [CountryGroup] = []
     private var data: [CellModel] = []
-
+    private var servers: [String: [CellModel]] = [:]
     private var userTier: Int {
         if let credentials = try? vpnKeychain.fetch(), credentials.isDelinquent {
             return CoreAppConstants.VpnTiers.free
@@ -190,6 +190,56 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
+    
+    private func setupServers () {
+        servers = [:]
+        self.countries.forEach { country, servers in
+            let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
+            let basicServers: [CellModel] = servers.filter { $0.tier == 1 }.map { .server(self.serverViewModel($0)) }
+            let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
+            let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
+            let basicHeaderVM = ServerHeaderViewModel(LocalizedString.basicServers, totalServers: basicServers.count, country: country, tier: 1, propertiesManager: propertiesManager, countriesViewModel: self)
+            let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
+            
+            var cells = [CellModel]()
+            
+            let addFree = {
+                if freeServers.isEmpty { return }
+                cells.append(.header(freeHeaderVM))
+                cells.append(contentsOf: freeServers)
+            }
+            
+            let addBasic = {
+                if basicServers.isEmpty { return }
+                cells.append(.header(basicHeaderVM))
+                cells.append(contentsOf: basicServers)
+            }
+            
+            let addPlus = {
+                if plusServers.isEmpty { return }
+                cells.append(.header(plusHeaderVM))
+                cells.append(contentsOf: plusServers)
+            }
+            
+            switch userTier {
+            case 0:
+                addFree()
+                addBasic()
+                addPlus()
+            case 1:
+                addBasic()
+                addPlus()
+                addFree()
+            default:
+                addPlus()
+                addBasic()
+                addFree()
+            }
+            
+            self.servers[country.countryCode] = cells
+        }
+    }
+    
     @objc private func reloadDataOnChange() {
         expandedCountries = []
         updateState(nil)
@@ -255,54 +305,11 @@ class CountriesSectionViewModel {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
         data = groupServersIntoSections(self.countries.filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
+        setupServers()
     }
     
     private func insertServers( _ index: Int, countryGroup: CountryGroup ) -> Int {
-        let servers = countryGroup.1
-        let country = countryGroup.0
-        
-        let freeServers: [CellModel] = servers.filter { $0.tier == 0 }.map { .server(self.serverViewModel($0)) }
-        let basicServers: [CellModel] = servers.filter { $0.tier == 1 }.map { .server(self.serverViewModel($0)) }
-        let plusServers: [CellModel] = servers.filter { $0.tier > 1 }.map { .server(self.serverViewModel($0)) }
-        let freeHeaderVM = ServerHeaderViewModel(LocalizedString.freeServers, totalServers: freeServers.count, country: country, tier: 0, propertiesManager: propertiesManager, countriesViewModel: self)
-        let basicHeaderVM = ServerHeaderViewModel(LocalizedString.basicServers, totalServers: basicServers.count, country: country, tier: 1, propertiesManager: propertiesManager, countriesViewModel: self)
-        let plusHeaderVM = ServerHeaderViewModel(LocalizedString.plusServers, totalServers: plusServers.count, country: country, tier: 2, propertiesManager: propertiesManager, countriesViewModel: self)
-        
-        var cells = [CellModel]()
-        
-        let addFree = {
-            if freeServers.isEmpty { return }
-            cells.append(.header(freeHeaderVM))
-            cells.append(contentsOf: freeServers)
-        }
-        
-        let addBasic = {
-            if basicServers.isEmpty { return }
-            cells.append(.header(basicHeaderVM))
-            cells.append(contentsOf: basicServers)
-        }
-        
-        let addPlus = {
-            if plusServers.isEmpty { return }
-            cells.append(.header(plusHeaderVM))
-            cells.append(contentsOf: plusServers)
-        }
-        
-        switch userTier {
-        case 0:
-            addFree()
-            addBasic()
-            addPlus()
-        case 1:
-            addBasic()
-            addPlus()
-            addFree()
-        default:
-            addPlus()
-            addBasic()
-            addFree()
-        }
-        
+        guard let cells = self.servers[countryGroup.0.countryCode] else { return 0 }
         data.insert(contentsOf: cells, at: index)
         return cells.count
     }
