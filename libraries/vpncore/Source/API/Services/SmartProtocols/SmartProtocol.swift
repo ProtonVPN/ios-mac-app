@@ -22,7 +22,7 @@
 
 import Foundation
 
-typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
+typealias SmartProtocolCompletion = (VpnProtocol, [Int]?) -> Void
 
 protocol SmartProtocol {
     func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion)
@@ -103,13 +103,13 @@ final class SmartProtocolImplementation: SmartProtocol {
         group.notify(queue: .global()) {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
-            guard let best = sorted.first, let ports = availablePorts[best] else {
+            guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
                 #if os(iOS)
                 PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
-                completion(VpnProtocol.openVpn(.udp), [])
+                completion(VpnProtocol.openVpn(.udp), nil)
                 #else
                 PMLog.D("No best protocol determined, fallback to IKEv2")
-                completion(VpnProtocol.ike, [])
+                completion(VpnProtocol.ike, nil)
                 #endif
                 return
             }
