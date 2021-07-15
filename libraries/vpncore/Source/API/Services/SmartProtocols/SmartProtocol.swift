@@ -22,7 +22,7 @@
 
 import Foundation
 
-typealias SmartProtocolCompletion = (VpnProtocol, [Int]?) -> Void
+typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
 protocol SmartProtocol {
     func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion)
@@ -69,8 +69,11 @@ final class SmartProtocolImplementation: SmartProtocol {
     }
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
+    private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {
+        self.config = config
+
         checkers = [
             .ikev2: IKEv2AvailabilityChecker(),
             .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
@@ -82,6 +85,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         let group = DispatchGroup()
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
+        let defaultUdpPorts = config.defaultUdpPorts.shuffled()
 
         PMLog.D("Determining best protocol for \(server.domain)")
 
@@ -106,10 +110,10 @@ final class SmartProtocolImplementation: SmartProtocol {
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
                 #if os(iOS)
                 PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
-                completion(VpnProtocol.openVpn(.udp), nil)
+                completion(VpnProtocol.openVpn(.udp), defaultUdpPorts)
                 #else
                 PMLog.D("No best protocol determined, fallback to IKEv2")
-                completion(VpnProtocol.ike, nil)
+                completion(VpnProtocol.ike, [500])
                 #endif
                 return
             }
