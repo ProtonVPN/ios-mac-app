@@ -87,7 +87,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
         let defaultUdpPorts = config.defaultUdpPorts.shuffled()
 
-        PMLog.D("Determining best protocol for \(server.domain)")
+        PMLog.D("Determining best protocol for \(server.entryIp)")
 
         for (proto, checker) in checkers {
             group.enter()
@@ -118,7 +118,7 @@ final class SmartProtocolImplementation: SmartProtocol {
                 return
             }
 
-            PMLog.D("Best protocol for \(server.domain) is \(best.vpnProtocol) with ports \(ports)")
+            PMLog.D("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)")
             completion(best.vpnProtocol, ports)
         }
     }
