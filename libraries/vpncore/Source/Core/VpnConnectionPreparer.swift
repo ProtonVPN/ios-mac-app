@@ -39,28 +39,30 @@ class VpnConnectionPreparer {
         self.vpnKeychain = vpnKeychain
     }
     
-    func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, netShieldType: NetShieldType, preferredPorts: [Int]? = nil) {
-        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, netShieldType: netShieldType, preferredPorts: preferredPorts) {
+    func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, preferredPorts: [Int]? = nil) {
+        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: preferredPorts) {
             appStateManager.connect(withConfiguration: configuration)
         }
     }
-    
-    // MARK: - Private functions
-    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer serverModel: ServerModel?, netShieldType: NetShieldType, preferredPorts: [Int]?) -> ConnectionConfiguration? {
-        guard let server = serverModel else { return nil }
-        
-        if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
-            return nil
-        }
-        
+
+    func selectServerIp(server: ServerModel) -> ServerIp? {
         let availableServerIps = server.ips.filter { !$0.underMaintenance }
-        
+
         guard !availableServerIps.isEmpty else {
             serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: false, type: server.serverType, reason: .existingConnection)
             return nil
         }
-        
+
         let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))]
+        return serverIp
+    }
+    
+    // MARK: - Private functions
+    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, preferredPorts: [Int]?) -> ConnectionConfiguration? {
+        
+        if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
+            return nil
+        }
         
         return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, preferredPorts: preferredPorts)
     }

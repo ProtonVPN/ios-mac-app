@@ -897,8 +897,8 @@
 		E9DC7A1F262DBFF3001A0FC0 /* OpenVPNAvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352FDA625F3970E005E83A2 /* OpenVPNAvailabilityChecker.swift */; };
 		E9DC7A23262DC011001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		E9DC7A27262DC011001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
-		E9DC7A2B262DC032001A0FC0 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
-		E9DC7A2F262DC032001A0FC0 /* ServerModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */; };
+		E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
+		E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
 		E9DC7A54262DC4DF001A0FC0 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
 		E9DC7A58262DC4DF001A0FC0 /* NetworkServer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A9925F688F400497451 /* NetworkServer.swift */; };
 		E9FF41FD266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
@@ -1438,7 +1438,7 @@
 		F38BB44B265B893F00329619 /* LocalAgentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentError.swift; sourceTree = "<group>"; };
 		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
-		F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerModelMock.swift; sourceTree = "<group>"; };
+		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
 		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
 		F3D4DC74263316F60032B752 /* Keys+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keys+Extensions.swift"; sourceTree = "<group>"; };
@@ -1636,7 +1636,7 @@
 			children = (
 				D5CC008E256C0C5F003FA161 /* StoreKitStateCheckerMock.swift */,
 				D5D2958725A5DEB6000FBD74 /* UserTierProviderMock.swift */,
-				F3AFC0E525FA0E90005FF4D7 /* ServerModelMock.swift */,
+				F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */,
 			);
 			path = Mocks;
 			sourceTree = "<group>";
@@ -3326,7 +3326,7 @@
 				F3021D7425E93E2A00EF73A1 /* TroubleshootItem.swift in Sources */,
 				D51D9508249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,
 				F387A2682677625E00F0C3D8 /* VpnManager+LocalAgent.swift in Sources */,
-				E9DC7A2B262DC032001A0FC0 /* ServerModelMock.swift in Sources */,
+				E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				D5C2054F2487A0CF004FB58B /* Arithmetic.swift in Sources */,
 				D5C205502487A0CF004FB58B /* HexColor.swift in Sources */,
 				F349B1F92683BBCB002C7A16 /* OpenVpnConfigTests.swift in Sources */,
@@ -3702,7 +3702,7 @@
 				D5C2047A24866B81004FB58B /* PaymentsMethodsRequest.swift in Sources */,
 				D51D950A249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */,
 				D5C2047B24866B81004FB58B /* PaymentsPlansRequest.swift in Sources */,
-				E9DC7A2F262DC032001A0FC0 /* ServerModelMock.swift in Sources */,
+				E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				D5DCCAC3252B4BAF004CB353 /* CoreApiService.swift in Sources */,
 				D5C2047D24866B81004FB58B /* PaymentsStatusRequest.swift in Sources */,
 				F30B9E7F262886C90094C65E /* VpnKeys.swift in Sources */,
