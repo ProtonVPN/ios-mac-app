@@ -1386,7 +1386,7 @@ public enum LocalizedString {
   public static let viewToggleWillCauseDisconnect = LocalizedString.tr("Localizable", "_view_toggle_will_cause_disconnect")
   /// Change VPN Accelerator
   public static let vpnAcceleratorChangeTitle = LocalizedString.tr("Localizable", "_vpn_accelerator_change_title")
-  /// VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%
+  /// VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%
   public static let vpnAcceleratorDescription = LocalizedString.tr("Localizable", "_vpn_accelerator_description")
   /// VPN Accelerator
   public static let vpnAcceleratorTitle = LocalizedString.tr("Localizable", "_vpn_accelerator_title")
