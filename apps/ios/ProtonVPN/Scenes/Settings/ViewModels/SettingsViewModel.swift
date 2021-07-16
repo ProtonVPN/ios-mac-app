@@ -386,7 +386,7 @@ class SettingsViewModel {
             var alert: SystemAlert
             
             if self.propertiesManager.excludeLocalNetworks, !self.propertiesManager.killSwitch {
-                alert = TurnOnKillSwitchAlert(connected: isConnected) {
+                alert = TurnOnKillSwitchAlert {
                     self.propertiesManager.excludeLocalNetworks = false
                     self.propertiesManager.killSwitch = true
                     if isConnected { self.vpnGateway?.retryConnection() }
