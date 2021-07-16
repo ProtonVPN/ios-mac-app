@@ -1,5 +1,5 @@
 //
-//  ServerModelMock.swift
+//  ServerIpMock.swift
 //  vpncore - Created on 11.03.2021.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,8 +22,8 @@
 
 import Foundation
 
-final class ServerModelMock: ServerModel {
-    convenience init(domain: String) {
-        self.init(id: "id", name: domain, domain: domain, load: 5, entryCountryCode: "", exitCountryCode: "", tier: 0, feature: .zero, city: nil, ips: [], score: 0, status: 0, location: ServerLocation(lat: 0, long: 0))
+final class ServerIpMock: ServerIp {
+    convenience init(entryIp: String) {
+        self.init(id: entryIp, entryIp: entryIp, exitIp: entryIp, domain: entryIp, status: 0)
     }
 }
