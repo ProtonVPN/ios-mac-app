@@ -65,7 +65,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.0.1")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports.sorted(), self.config.defaultTcpPorts)
@@ -96,7 +96,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.0.1")) { result in
                 switch result {
                 case let .available(ports: ports):
                     XCTAssertEqual(ports.sorted(), [10001, 10002])
@@ -113,7 +113,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
     func testTCPNotListening() {
         let expectation = XCTestExpectation(description: "testTCPNotListening")
         let sp = OpenVPNTCPAvailabilityChecker(config: config)
-        sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+        sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.0.1")) { result in
             switch result {
             case .available:
                 XCTFail()
@@ -143,7 +143,7 @@ final class OpenVPNTCPAvailabilityCheckerTests: XCTestCase {
 
         group.notify(queue: .main) {
             let sp = OpenVPNTCPAvailabilityChecker(config: self.config)
-            sp.checkAvailability(server: ServerModelMock(domain: "localhost")) { result in
+            sp.checkAvailability(server: ServerIpMock(entryIp: "127.0.0.1")) { result in
                 switch result {
                 case .available:
                     XCTFail()
