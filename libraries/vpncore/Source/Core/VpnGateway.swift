@@ -332,6 +332,8 @@ public class VpnGateway: VpnGatewayProtocol {
         guard let serverIp = connectionPreparer?.selectServerIp(server: server) else {
             return
         }
+
+        PMLog.D("Selected \(serverIp.entryIp) as server ip for \(server.domain)")
         
         guard propertiesManager.smartProtocol else {
             connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType)
