@@ -69,7 +69,7 @@
                     </customSpacing>
                 </stackView>
                 <stackView distribution="fill" orientation="horizontal" alignment="top" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ir3-ke-8Ga">
-                    <rect key="frame" x="126" y="9" width="206" height="32"/>
+                    <rect key="frame" x="110" y="9" width="206" height="32"/>
                     <subviews>
                         <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Jbi-wV-au5">
                             <rect key="frame" x="0.0" y="0.0" width="16" height="32"/>
@@ -162,7 +162,7 @@
                     </customSpacing>
                 </stackView>
                 <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Dyo-h7-133" customClass="ConnectButton" customModule="ProtonVPN" customModuleProvider="target">
-                    <rect key="frame" x="224" y="9" width="68" height="32"/>
+                    <rect key="frame" x="208" y="9" width="68" height="32"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="32" id="oFh-La-Ogt"/>
                     </constraints>
@@ -192,13 +192,13 @@
             <constraints>
                 <constraint firstItem="vFF-N8-oAa" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="24" id="1kB-O8-zcy"/>
                 <constraint firstItem="iz4-kg-3lt" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="6JB-uC-cyY"/>
-                <constraint firstAttribute="trailing" secondItem="ir3-ke-8Ga" secondAttribute="trailing" constant="8" id="6ir-Y2-L2M"/>
+                <constraint firstAttribute="trailing" secondItem="ir3-ke-8Ga" secondAttribute="trailing" constant="24" id="6ir-Y2-L2M"/>
                 <constraint firstItem="Dyo-h7-133" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="aUR-uB-adt"/>
                 <constraint firstAttribute="trailing" secondItem="iz4-kg-3lt" secondAttribute="trailing" id="bOp-6R-2oi"/>
                 <constraint firstItem="ir3-ke-8Ga" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="dmM-UY-QYf"/>
                 <constraint firstAttribute="top" secondItem="iz4-kg-3lt" secondAttribute="top" id="fin-hi-Hw7"/>
                 <constraint firstItem="vFF-N8-oAa" firstAttribute="centerY" secondItem="c22-O7-iKe" secondAttribute="centerY" id="hhE-OW-Krw"/>
-                <constraint firstAttribute="trailing" secondItem="Dyo-h7-133" secondAttribute="trailing" constant="48" id="zUF-3r-GZt"/>
+                <constraint firstAttribute="trailing" secondItem="Dyo-h7-133" secondAttribute="trailing" constant="64" id="zUF-3r-GZt"/>
             </constraints>
             <connections>
                 <outlet property="connectButton" destination="Dyo-h7-133" id="FwW-wt-3tm"/>

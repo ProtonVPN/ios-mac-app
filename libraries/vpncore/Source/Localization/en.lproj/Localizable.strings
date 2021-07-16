@@ -1760,7 +1760,7 @@
 
 "_vpn_accelerator_title" = "VPN Accelerator";
 "_vpn_accelerator_change_title" = "Change VPN Accelerator";
-"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%";
+"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%";
 "_action_requires_reconnect" = "Your connection needs to be restarted to apply this change";
 
 // Local agent
