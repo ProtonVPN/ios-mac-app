@@ -196,7 +196,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         let socketType = socketTypeFor(connectionConfiguration.vpnProtocol)
         
         let ports: [Int]
-        if let preferredPorts = connectionConfiguration.preferredPorts {
+        if let preferredPorts = connectionConfiguration.preferredPorts, !preferredPorts.isEmpty {
             ports = preferredPorts
         } else {
             switch socketType {

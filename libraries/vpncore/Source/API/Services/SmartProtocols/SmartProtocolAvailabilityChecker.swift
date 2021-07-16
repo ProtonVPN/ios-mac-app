@@ -37,7 +37,7 @@ protocol SmartProtocolAvailabilityChecker: AnyObject {
     var protocolName: String { get }
 
     func createTestPacket() -> Data
-    func checkAvailability(server: ServerModel, completion: @escaping SmartProtocolAvailabilityCheckerCompletion)
+    func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion)
 }
 
 extension SmartProtocolAvailabilityChecker {
@@ -45,11 +45,11 @@ extension SmartProtocolAvailabilityChecker {
         return 3
     }
 
-    func checkAvailability(server: ServerModel, ports: [Int], parameters: NWParameters, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
+    func checkAvailability(server: ServerIp, ports: [Int], parameters: NWParameters, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         let group = DispatchGroup()
         var availablePorts: [Int] = []
 
-        PMLog.D("Checking \(protocolName) availability for \(server.domain)")
+        PMLog.D("Checking \(protocolName) availability for \(server.entryIp)")
 
         for port in ports {
             group.enter()
@@ -67,9 +67,9 @@ extension SmartProtocolAvailabilityChecker {
     }
 
     // swiftlint:disable function_body_length
-    func checkAvailability(server: ServerModel, port: Int, parameters: NWParameters, completion: @escaping (Bool) -> Void) {
+    func checkAvailability(server: ServerIp, port: Int, parameters: NWParameters, completion: @escaping (Bool) -> Void) {
         let protocolName = self.protocolName
-        let host = NWEndpoint.Host(server.domain)
+        let host = NWEndpoint.Host(server.entryIp)
 
         guard let port = NWEndpoint.Port("\(port)") else {
             PMLog.ET("Invalid port for \(protocolName) smart protocol check")
@@ -90,7 +90,7 @@ extension SmartProtocolAvailabilityChecker {
             }
 
             completed = true
-            PMLog.D("\(protocolName) NOT available for \(server.domain) on port \(port) (timeout)")
+            PMLog.D("\(protocolName) NOT available for \(server.entryIp) on port \(port) (timeout)")
             cleanup()
             completion(false)
         }
@@ -101,13 +101,13 @@ extension SmartProtocolAvailabilityChecker {
             }
 
             completed = true
-            PMLog.D("\(protocolName)\(result ? "" : " NOT") available for \(server.domain) on port \(port)")
+            PMLog.D("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)")
             task.cancel()
             cleanup()
             completion(result)
         }
 
-        PMLog.D("Checking \(protocolName) availability for \(server.domain) on port \(port)")
+        PMLog.D("Checking \(protocolName) availability for \(server.entryIp) on port \(port)")
 
         let packet = createTestPacket()
         let connection = NWConnection(host: host, port: port, using: parameters)

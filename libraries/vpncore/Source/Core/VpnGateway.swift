@@ -332,15 +332,21 @@ public class VpnGateway: VpnGatewayProtocol {
         appStateManager.prepareToConnect()
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)
+
+        guard let serverIp = connectionPreparer?.selectServerIp(server: server) else {
+            return
+        }
+
+        PMLog.D("Selected \(serverIp.entryIp) as server ip for \(server.domain)")
         
         guard propertiesManager.smartProtocol, allowProtocolChange == true else {
-            connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType)
+            connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType)
             return
         }
         
         smartProtocol = SmartProtocolImplementation(config: propertiesManager.openVpnConfig ?? OpenVpnConfig.defaultConfig)
-        smartProtocol?.determineBestProtocol(server: server) { [weak self] (vpnProtocol, ports) in
-            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, netShieldType: netShieldType, preferredPorts: ports)
+        smartProtocol?.determineBestProtocol(server: serverIp) { [weak self] (vpnProtocol, ports) in
+            self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: ports)
         }
     }
     

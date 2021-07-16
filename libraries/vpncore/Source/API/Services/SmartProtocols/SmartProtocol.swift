@@ -22,10 +22,10 @@
 
 import Foundation
 
-typealias SmartProtocolCompletion = (VpnProtocol, [Int]?) -> Void
+typealias SmartProtocolCompletion = (VpnProtocol, [Int]) -> Void
 
 protocol SmartProtocol {
-    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion)
+    func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion)
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
@@ -69,8 +69,11 @@ final class SmartProtocolImplementation: SmartProtocol {
     }
 
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
+    private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {
+        self.config = config
+
         checkers = [
             .ikev2: IKEv2AvailabilityChecker(),
             .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
@@ -78,12 +81,13 @@ final class SmartProtocolImplementation: SmartProtocol {
         ]
     }
 
-    func determineBestProtocol(server: ServerModel, completion: @escaping SmartProtocolCompletion) {
+    func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
         let group = DispatchGroup()
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
+        let defaultUdpPorts = config.defaultUdpPorts.shuffled()
 
-        PMLog.D("Determining best protocol for \(server.domain)")
+        PMLog.D("Determining best protocol for \(server.entryIp)")
 
         for (proto, checker) in checkers {
             group.enter()
@@ -106,15 +110,15 @@ final class SmartProtocolImplementation: SmartProtocol {
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
                 #if os(iOS)
                 PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
-                completion(VpnProtocol.openVpn(.udp), nil)
+                completion(VpnProtocol.openVpn(.udp), defaultUdpPorts)
                 #else
                 PMLog.D("No best protocol determined, fallback to IKEv2")
-                completion(VpnProtocol.ike, nil)
+                completion(VpnProtocol.ike, [500])
                 #endif
                 return
             }
 
-            PMLog.D("Best protocol for \(server.domain) is \(best.vpnProtocol) with ports \(ports)")
+            PMLog.D("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)")
             completion(best.vpnProtocol, ports)
         }
     }
