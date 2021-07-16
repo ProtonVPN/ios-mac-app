@@ -94,7 +94,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                 return
             }
             
-            self.alertService.push(alert: TurnOnKillSwitchAlert(connected: false, confirmHandler: wrapper, cancelHandler: nil))
+            self.alertService.push(alert: TurnOnKillSwitchAlert(confirmHandler: wrapper, cancelHandler: nil))
         })
     }
 }

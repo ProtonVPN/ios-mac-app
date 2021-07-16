@@ -356,10 +356,7 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
     
-    public init(connected: Bool, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        if connected {
-            message! += "\n\n" + LocalizedString.allowLanNote
-        }
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
         actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
     }
