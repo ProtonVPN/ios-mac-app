@@ -13,9 +13,9 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d страны</string>
+			<string>%d+ стран</string>
 			<key>many</key>
-			<string>%d стран</string>
+			<string>%d+ стран</string>
 			<key>one</key>
 			<string>%d страна</string>
 			<key>other</key>
@@ -33,7 +33,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d+ страны</string>
+			<string>%d+ стран</string>
 			<key>many</key>
 			<string>%d+ стран</string>
 			<key>one</key>
@@ -53,7 +53,7 @@
 			<key>NSStringFormatValueTypeKey</key>
 			<string>d</string>
 			<key>few</key>
-			<string>%d подключения</string>
+			<string>%d подключений</string>
 			<key>many</key>
 			<string>%d подключений</string>
 			<key>one</key>

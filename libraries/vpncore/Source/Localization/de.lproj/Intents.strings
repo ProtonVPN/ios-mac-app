@@ -1,14 +1,14 @@
 /* (No Comment) */
-"1l8xNj" = "Verbindung trennen";
+"1l8xNj" = "Trennen";
 
 /* (No Comment) */
 "2LMbbw" = "Verbindungsstatus";
 
 /* (No Comment) */
-"8tZ81X" = "Schnellverbindung";
+"8tZ81X" = "Schnellverbinden";
 
 /* (No Comment) */
-"cQ4Mju" = "Verbindung trennen";
+"cQ4Mju" = "Trennen";
 
 /* (No Comment) */
 "hIcJsr" = "ProtonVPN-Verbindungsstatus abrufen";
@@ -29,7 +29,7 @@
 "ujOFps" = "Status";
 
 /* (No Comment) */
-"Ya0ZRy" = "Schnellverbindung";
+"Ya0ZRy" = "Schnellverbinden";
 
 /* (No Comment) */
 "ZqjXZN" = "${status}";
