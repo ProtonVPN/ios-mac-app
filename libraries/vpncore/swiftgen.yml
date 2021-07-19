@@ -6,5 +6,6 @@ strings:
     params:
       publicAccess: true
       enumName: LocalizedString
+      lookupFunction: localizeStringAndFallbackToEn
     templateName: structured-swift5
     output: Source/LocalizedString.swift
