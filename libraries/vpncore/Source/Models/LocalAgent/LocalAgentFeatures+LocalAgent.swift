@@ -23,41 +23,77 @@
 import Foundation
 import WireguardSRP
 
+enum LocalAgentFeaturesKeys: String {
+    case vpnAccelerator = "split-tcp"
+    case netShield = "netshield-level"
+    case jailed = "jail"
+    case bouncing
+}
+
 extension LocalAgentFeatures {
-    var vpnAccelerator: Bool {
-        return getBool("split-tcp")
+    func hasKey(key: LocalAgentFeaturesKeys) -> Bool {
+        return hasKey(key.rawValue)
     }
 
-    var netshield: NetShieldType {
-        let value = getInt("netshield-level")
-        return NetShieldType(rawValue: value) ?? .off
+    func getInt(key: LocalAgentFeaturesKeys) -> Int? {
+        guard hasKey(key: key) else {
+            return nil
+        }
+
+        return getInt(key.rawValue)
+    }
+
+    func getBool(key: LocalAgentFeaturesKeys) -> Bool? {
+        guard hasKey(key: key) else {
+            return nil
+        }
+
+        return getBool(key.rawValue)
+    }
+
+    func set(_ key: LocalAgentFeaturesKeys, value: Bool) {
+        setBool(key.rawValue, value: value)
+    }
+
+    func set(_ key: LocalAgentFeaturesKeys, value: Int) {
+        setInt(key.rawValue, value: value)
+    }
+
+    func set(_ key: LocalAgentFeaturesKeys, value: String) {
+        setString(key.rawValue, value: value)
+    }
+}
+
+extension LocalAgentFeatures {
+    var vpnAccelerator: Bool? {
+        return getBool(key: .vpnAccelerator)
+    }
+
+    var netshield: NetShieldType? {
+        guard let value = getInt(key: .netShield) else {
+            return nil
+        }
+        return NetShieldType(rawValue: value)
     }
 
     func with(netshield: NetShieldType) -> LocalAgentFeatures {
-        switch netshield {
-        case .off:
-            setInt("netshield-level", value: 0)
-        case .level1:
-            setInt("netshield-level", value: 1)
-        case .level2:
-            setInt("netshield-level", value: 2)
-        }
+        set(.netShield, value: netshield.rawValue)
         return self
     }
 
     func with(jailed: Bool) -> LocalAgentFeatures {
-        setBool("jail", value: jailed)
+        set(.jailed, value: jailed)
         return self
     }
 
     func with(vpnAccelerator: Bool) -> LocalAgentFeatures {
-        setBool("split-tcp", value: vpnAccelerator)
+        set(.vpnAccelerator, value: vpnAccelerator)
         return self
     }
 
     func with(bouncing: String?) -> LocalAgentFeatures {
         if let bouncing = bouncing {
-            setString("bouncing", value: bouncing)
+            set(.bouncing, value: bouncing)
         }
         return self
     }

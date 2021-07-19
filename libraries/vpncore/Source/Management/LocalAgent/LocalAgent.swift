@@ -27,7 +27,7 @@ import Reachability
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
-    func didChangeFeatures(netshield: NetShieldType, vpnAccelerator: Bool)
+    func didChangeFeatures(netshield: NetShieldType?, vpnAccelerator: Bool?)
 }
 
 protocol LocalAgent {
