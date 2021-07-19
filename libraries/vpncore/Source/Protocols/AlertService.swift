@@ -323,7 +323,7 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
 }
 
 public class ReconnectOnSettingsChangeAlert: SystemAlert {
-    public var title: String? = LocalizedString.reconnectOnProtocolChangeTitle
+    public var title: String? = LocalizedString.changeSettings
     public var message: String? = LocalizedString.reconnectOnSettingsChangeBody
     public var actions = [AlertAction]()
     public let isError: Bool = true

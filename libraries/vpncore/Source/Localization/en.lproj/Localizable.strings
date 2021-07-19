@@ -125,6 +125,9 @@
 /* Common word */
 "_close" = "Close";
 
+/* Changing settings title */
+"_change_settings" = "Change settings";
+
 /* Suggest the user to upgrade account for new features */
 "_get_plus_for_feature" = "Get ProtonVPN Plus to unlock this and other features.";
 
