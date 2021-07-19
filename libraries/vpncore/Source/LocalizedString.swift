@@ -94,6 +94,8 @@ public enum LocalizedString {
   public static let cancelReconnection = LocalizedString.tr("Localizable", "_cancel_reconnection")
   /// Changing protocols will end your current VPN session.
   public static let changeProtocolDisconnectWarning = LocalizedString.tr("Localizable", "_change_protocol_disconnect_warning")
+  /// Change settings
+  public static let changeSettings = LocalizedString.tr("Localizable", "_change_settings")
   /// Changelog
   public static let changelog = LocalizedString.tr("Localizable", "_changelog")
   /// Please check if all the fields are filled in
