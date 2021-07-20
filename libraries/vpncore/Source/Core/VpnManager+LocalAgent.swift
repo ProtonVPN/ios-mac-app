@@ -103,7 +103,7 @@ extension VpnManager: LocalAgentDelegate {
 
         switch state {
         case .clientCertificateError:
-            // because the local agent library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
+            // because the local agent shared library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
             // instead use this state as the certificate expired error
             didReceiveError(error: LocalAgentError.certificateExpired)
         default:
@@ -111,16 +111,22 @@ extension VpnManager: LocalAgentDelegate {
         }
     }
 
-    func didChangeFeatures(netshield: NetShieldType?, vpnAccelerator: Bool?) {
-        let currentNetshield = propertiesManager.netShieldType ?? NetShieldType.off
-        if let netshield = netshield, currentNetshield != netshield {
-            PMLog.D("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent")
-            propertiesManager.netShieldType = netshield
+    func didReceiveFeature(vpnAccelerator: Bool) {
+        guard propertiesManager.vpnAcceleratorEnabled != vpnAccelerator else {
+            return
         }
 
-        if let vpnAccelerator = vpnAccelerator, propertiesManager.vpnAcceleratorEnabled != vpnAccelerator {
-            PMLog.D("VPN Accelerator was set to \(propertiesManager.vpnAcceleratorEnabled), changing to \(vpnAccelerator) received from local agent")
-            propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
+        PMLog.D("VPN Accelerator was set to \(propertiesManager.vpnAcceleratorEnabled), changing to \(vpnAccelerator) received from local agent")
+        propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
+    }
+
+    func didReceiveFeature(netshield: NetShieldType) {
+        let currentNetshield = propertiesManager.netShieldType ?? NetShieldType.off
+        guard currentNetshield != netshield else {
+            return
         }
+
+        PMLog.D("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent")
+        propertiesManager.netShieldType = netshield
     }
 }

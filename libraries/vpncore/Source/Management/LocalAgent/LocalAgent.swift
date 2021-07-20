@@ -27,7 +27,8 @@ import Reachability
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
-    func didChangeFeatures(netshield: NetShieldType?, vpnAccelerator: Bool?)
+    func didReceiveFeature(netshield: NetShieldType)
+    func didReceiveFeature(vpnAccelerator: Bool)
 }
 
 protocol LocalAgent {
@@ -52,6 +53,8 @@ final class GoLocalAgent: LocalAgent {
 
     private let data: VpnAuthenticationData
     private let configuration: LocalAgentConfiguration
+
+    private var previousState: LocalAgentState?
 
     init(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
         self.data = data
@@ -119,10 +122,47 @@ extension GoLocalAgent: LocalAgentNativeClientDelegate {
             return
         }
 
-        delegate?.didChangeState(state: state)
+        defer {
+            // always save the previous state, but at the end of the call because it is needed for some comparisons
+            previousState = state
+        }
 
-        if let features = agent?.status?.features {
-            delegate?.didChangeFeatures(netshield: features.netshield, vpnAccelerator: features.vpnAccelerator)
+        // only inform about state change when the state really changes
+        // e.g: changing Netshield in Connected state causes the local agent shared library to invoke onState with Connected again, just with different features
+        if previousState != state {
+            delegate?.didChangeState(state: state)
+        }
+
+        // Here come some conditions when the features received from the local agent shared library need to be ignored
+        // The main reason is that those features are not "right" and the app using them to change settings would result in connecting with wrong Netshield level or VPN accelerator on next connection or reconnection
+
+        // only check received features in Connected state
+        // the problem here is that states like HardJailed reset Netshield in features to off
+        guard state == .connected else {
+            PMLog.D("Not checking features in \(state) state")
+            return
+        }
+
+        // ignore the first time the features are received right after connecting
+        // in this state the local agent shared library reports features from previous connection
+        if previousState == .connecting, state == .connected {
+            PMLog.D("Not checking features right after connecting")
+        }
+
+        guard let features = agent?.status?.features else {
+            // getting features is not guaranteed
+            return
+        }
+
+        // the features are just reported, the local agent does not know what the current values in the app are
+        // it is up to the app to compare them and decide what to do
+
+        if let netshield = features.netshield {
+            delegate?.didReceiveFeature(netshield: netshield)
+        }
+
+        if let vpnAccelerator = features.vpnAccelerator {
+            delegate?.didReceiveFeature(vpnAccelerator: vpnAccelerator)
         }
     }
 }
