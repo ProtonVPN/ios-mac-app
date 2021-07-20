@@ -10,3 +10,4 @@ fastlane/test_output
 DerivedData
 fastlane/README.md
 .last_build_nr
+libraries/vpncore/Source/LocalizedString.swift
