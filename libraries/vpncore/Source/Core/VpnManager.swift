@@ -84,8 +84,23 @@ public class VpnManager: VpnManagerProtocol {
             return true
         }
     }
+
+    private var vpnTunnelState: VpnState = .invalid
     
-    public private(set) var state: VpnState = .invalid
+    public var state: VpnState {
+        // not using local agent, use the VPN tunnel state
+        guard let localAgent = localAgent, let localAgentState = localAgent.state else {
+            return vpnTunnelState
+        }
+
+        // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
+        // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
+        if localAgentState != .connected, case let VpnState.connected(descriptor) = vpnTunnelState {
+            return VpnState.connecting(descriptor)
+        }
+
+        return vpnTunnelState
+    }
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
             if oldValue == nil, let delayedRequest = delayedDisconnectRequest {
@@ -452,7 +467,7 @@ public class VpnManager: VpnManagerProtocol {
     private func setState(withError error: Error? = nil) {
         if let error = error {
             PMLog.ET("VPN error: \(error.localizedDescription)")
-            state = .error(error)
+            vpnTunnelState = .error(error)
             disconnectCompletion?()
             disconnectCompletion = nil
             self.stateChanged?()
@@ -501,7 +516,7 @@ public class VpnManager: VpnManagerProtocol {
         quickReconnection = false
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
-        self.state = newState
+        self.vpnTunnelState = newState
         PMLog.D(self.state.logDescription)
         
         switch self.state {

@@ -115,6 +115,8 @@ extension VpnManager: LocalAgentDelegate {
     func didChangeState(state: LocalAgentState) {
         PMLog.D("Local agent state changed to \(state)")
 
+        stateChanged?()
+
         switch state {
         case .clientCertificateError:
             // because the local agent shared library does not return certificate expired error when connecting with expired certificate 🤷‍♀️
