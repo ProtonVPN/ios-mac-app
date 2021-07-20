@@ -40,17 +40,17 @@ final class LocalAgentNativeClient: NSObject, LocalAgentNativeClientProtocol {
     }
 
     func onError(_ code: Int, description: String?) {
-        PMLog.D("Received error \(code): \(description ?? "(empty)")")
+        PMLog.D("Received error \(code): \(description ?? "(empty)") from local agent shared library")
         delegate?.didReceiveError(code: code)
     }
 
     func onState(_ state: String?) {
         guard let state = state else {
-            PMLog.ET("Received empty state")
+            PMLog.ET("Received empty state from local agent shared library")
             return
         }
 
-        PMLog.D("Local agent state changed to \(state)")
+        PMLog.D("Local agent shared library state reported as changed to \(state)")
         delegate?.didChangeState(state: LocalAgentState.from(string: state))
     }
 }
