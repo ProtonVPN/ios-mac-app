@@ -112,11 +112,14 @@ extension VpnManager: LocalAgentDelegate {
     }
 
     func didChangeFeatures(netshield: NetShieldType?, vpnAccelerator: Bool?) {
-        if let netshield = netshield, propertiesManager.netShieldType != netshield {
+        let currentNetshield = propertiesManager.netShieldType ?? NetShieldType.off
+        if let netshield = netshield, currentNetshield != netshield {
+            PMLog.D("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent")
             propertiesManager.netShieldType = netshield
         }
 
         if let vpnAccelerator = vpnAccelerator, propertiesManager.vpnAcceleratorEnabled != vpnAccelerator {
+            PMLog.D("VPN Accelerator was set to \(propertiesManager.vpnAcceleratorEnabled), changing to \(vpnAccelerator) received from local agent")
             propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
         }
     }
