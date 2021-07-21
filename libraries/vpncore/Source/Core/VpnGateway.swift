@@ -350,6 +350,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: ports)
             }
         case let .vpnProtocol(vpnProtocol):
+            PMLog.D("Connecting with \(vpnProtocol)")
             connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType)
         }
     }
