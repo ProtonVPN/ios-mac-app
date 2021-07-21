@@ -58,35 +58,33 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     
     func change(toProcol vpnProtocol: VpnProtocol) {
         guard vpnGateway.connection == .connected || vpnGateway.connection == .connecting else {
-            set(vpnProtocol: vpnProtocol)
+            set(vpnProtocol: vpnProtocol, reconnect: false)
             return
         }
         
-        alertService.push(alert: ReconnectOnSettingsChangeAlert {
-            // Protocol change to OpenVPN is asynchronuos, so we will wait for a notification
-            var token: NSObjectProtocol?
-            token = NotificationCenter.default.addObserver(forName: PropertiesManager.vpnProtocolNotification, object: nil, queue: nil) { [weak self] (notification) in
-                if let newProtocol = notification.object as? VpnProtocol {
-                    PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
-                    self?.vpnGateway.reconnect(with: newProtocol)
-                }
-                NotificationCenter.default.removeObserver(token!)
-            }
-            self.set(vpnProtocol: vpnProtocol)
+        alertService.push(alert: ReconnectOnSettingsChangeAlert { [weak self] in
+            self?.set(vpnProtocol: vpnProtocol, reconnect: true)
         })
     }
     
-    private func set(vpnProtocol: VpnProtocol) {
-        
+    private func set(vpnProtocol: VpnProtocol, reconnect: Bool) {
+        let reconnectIfNeeded = { [weak self] in
+            if reconnect {
+                PMLog.D("New protocol set to \(vpnProtocol). VPN will reconnect.")
+                self?.vpnGateway.reconnect(with: vpnProtocol)
+            }
+        }
+
         switch vpnProtocol {
         case .ike:
             propertiesManager.vpnProtocol = vpnProtocol
-            
+            reconnectIfNeeded()
         case .openVpn:
             let requestExtensionCallback: (() -> Void) = {
                 self.systemExtensionManager.requestExtensionInstall { result in
                     if case .success = result {
                         self.propertiesManager.vpnProtocol = vpnProtocol
+                        reconnectIfNeeded()
                     }
                 }
             }
@@ -105,6 +103,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         case .wireGuard:
             #warning("Implement proper logic")
             propertiesManager.vpnProtocol = vpnProtocol
+            reconnectIfNeeded()
         }
         
     }
