@@ -147,6 +147,7 @@ extension GoLocalAgent: LocalAgentNativeClientDelegate {
         // in this state the local agent shared library reports features from previous connection
         if previousState == .connecting, state == .connected {
             PMLog.D("Not checking features right after connecting")
+            return
         }
 
         guard let features = agent?.status?.features else {
