@@ -70,7 +70,7 @@ public struct ConnectionRequest: Codable {
     }
     
     public func withChanged(vpnProtocol: VpnProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: self.netShieldType, profileId: self.profileId)
     }
 
     private enum Keys: CodingKey {
