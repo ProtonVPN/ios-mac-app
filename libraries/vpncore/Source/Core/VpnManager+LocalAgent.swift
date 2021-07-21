@@ -57,6 +57,20 @@ extension VpnManager {
         disconnect { }
         alertService?.push(alert: alert)
     }
+
+    func updateActiveConnection(netShieldType: NetShieldType) {
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(netShieldType: netShieldType)
+        switch currentVpnProtocol {
+        case .ike:
+            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(netShieldType: netShieldType)
+        case .openVpn:
+            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(netShieldType: netShieldType)
+        case .wireGuard:
+            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(netShieldType: netShieldType)
+        case nil:
+            break
+        }
+    }
 }
 
 extension VpnManager: LocalAgentDelegate {
@@ -127,6 +141,7 @@ extension VpnManager: LocalAgentDelegate {
         }
 
         PMLog.D("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent")
+        updateActiveConnection(netShieldType: netshield)
         propertiesManager.netShieldType = netshield
     }
 }
