@@ -29,6 +29,8 @@ protocol LocalAgentNativeClientDelegate: AnyObject {
 }
 
 final class LocalAgentNativeClient: NSObject, LocalAgentNativeClientProtocol {
+    func onStatusUpdate(_ status: LocalAgentStatusMessage?) { }
+
     weak var delegate: LocalAgentNativeClientDelegate?
 
     func log(_ text: String?) {
