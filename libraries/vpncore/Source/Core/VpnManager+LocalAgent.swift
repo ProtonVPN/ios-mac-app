@@ -74,6 +74,7 @@ extension VpnManager {
 }
 
 extension VpnManager: LocalAgentDelegate {
+    // swiftlint:disable cyclomatic_complexity
     func didReceiveError(error: LocalAgentError) {
         switch error {
         case .certificateExpired, .certificateNotProvided:
@@ -113,6 +114,7 @@ extension VpnManager: LocalAgentDelegate {
             PMLog.D("Local agent reported restricted server error, waiting for the local agent to recover")
         }
     }
+    // swiftlint:enable cyclomatic_complexity
 
     func didChangeState(state: LocalAgentState) {
         PMLog.D("Local agent state changed to \(state)")
