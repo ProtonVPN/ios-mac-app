@@ -110,7 +110,8 @@ final class GoLocalAgent: LocalAgent {
 
 extension GoLocalAgent: LocalAgentNativeClientDelegate {
     func didReceiveError(code: Int) {
-        guard let error = LocalAgentError.from(code: code) else {            
+        guard let error = LocalAgentError.from(code: code) else {
+            PMLog.D("Ignoring unknown local agent error")
             return
         }
 
