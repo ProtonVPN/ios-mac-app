@@ -98,12 +98,7 @@ class CountriesSectionViewModel {
     private var countries: [CountryGroup] = []
     private var data: [CellModel] = []
     private var servers: [String: [CellModel]] = [:]
-    private var userTier: Int {
-        if let credentials = try? vpnKeychain.fetch(), credentials.isDelinquent {
-            return CoreAppConstants.VpnTiers.free
-        }
-        return (try? vpnGateway.userTier()) ?? CoreAppConstants.VpnTiers.free
-    }
+    private var userTier: Int = CoreAppConstants.VpnTiers.free
 
     private var serverManager: ServerManager {
         return ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
@@ -145,7 +140,6 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
-
         updateState(nil)
     }
         
@@ -191,6 +185,17 @@ class CountriesSectionViewModel {
     }
     
     // MARK: - Private functions
+    private func setTier() {
+        do {
+            if (try vpnKeychain.fetch()).isDelinquent {
+                userTier = CoreAppConstants.VpnTiers.free
+                return
+            }
+            userTier = try vpnGateway.userTier()
+        } catch {
+            userTier = CoreAppConstants.VpnTiers.free
+        }
+    }
     
     private func setupServers () {
         servers = [:]
@@ -300,6 +305,7 @@ class CountriesSectionViewModel {
     }
     
     private func updateState( _ filter: String? ) {
+        setTier()
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
         self.countries = serverManager.grouping(for: serverType)
         if let query = filter, !query.isEmpty {

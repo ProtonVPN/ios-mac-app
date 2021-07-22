@@ -168,7 +168,7 @@ class CountriesViewModel: SecureCoreToggleHandler {
     }
     
     // MARK: - Private functions
-    func setTier() {
+    private func setTier() {
         do {
             if (try keychain.fetch()).isDelinquent {
                 userTier = CoreAppConstants.VpnTiers.free
