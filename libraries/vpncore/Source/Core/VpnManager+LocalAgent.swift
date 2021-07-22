@@ -95,7 +95,7 @@ extension VpnManager: LocalAgentDelegate {
                 return
             }
             alertService?.push(alert: MaxSessionsAlert(userCurrentCredentials: credentials))
-        case .serverError, .restrictedServer:
+        case .serverError:
             PMLog.D("Server error occured, showing the user an alert and disconnecting")
             disconnectWithAlert(alert: VpnServerErrorAlert())
         case .guestSession:
@@ -109,6 +109,8 @@ extension VpnManager: LocalAgentDelegate {
         case .userTorrentNotAllowed, .userBadBehavior:
             PMLog.ET("Local agent reported error \(error) that the app does not handle, just disconnecting")
             disconnect { }
+        case .restrictedServer:
+            PMLog.D("Local agent reported restricted server error, waiting for the local agent to recover")
         }
     }
 
