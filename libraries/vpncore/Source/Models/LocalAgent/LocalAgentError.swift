@@ -21,8 +21,8 @@ enum LocalAgentError: Error {
     case maxSessionsPro
     case keyUsedMultipleTimes
     case serverError
-    case policyViolation1
-    case policyViolation2
+    case policyViolationLowPlan
+    case policyViolationDelinquent
     case userTorrentNotAllowed
     case userBadBehavior
     case guestSession
@@ -61,10 +61,10 @@ extension LocalAgentError {
             return .keyUsedMultipleTimes
         case consts.errorCodeServerError:
             return .serverError
-        case consts.errorCodePolicyViolation1:
-            return .policyViolation1
-        case consts.errorCodePolicyViolation2:
-            return .policyViolation2
+        case consts.errorCodePolicyViolationLowPlan:
+            return .policyViolationLowPlan
+        case consts.errorCodePolicyViolationDelinquent:
+            return .policyViolationDelinquent
         case consts.errorCodeUserTorrentNotAllowed:
             return .userTorrentNotAllowed
         case consts.errorCodeUserBadBehavior:

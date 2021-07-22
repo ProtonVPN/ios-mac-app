@@ -102,10 +102,10 @@ extension VpnManager: LocalAgentDelegate {
         case .guestSession:
             PMLog.ET("Internal status that should never be seen, check the app implementation")
             disconnect { }
-        case .policyViolation2:
+        case .policyViolationDelinquent:
             PMLog.D("Disconnecting because of unpaid invoces")
             disconnectWithAlert(alert: DelinquentUserAlert())
-        case .policyViolation1:
+        case .policyViolationLowPlan:
             disconnectWithAlert(alert: VpnServerSubscriptionErrorAlert())
         case .userTorrentNotAllowed, .userBadBehavior:
             PMLog.ET("Local agent reported error \(error) that the app does not handle, just disconnecting")
