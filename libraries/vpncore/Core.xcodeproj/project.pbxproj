@@ -1020,16 +1020,12 @@
 		F38BB44D265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44F265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
-		F3D4DA01263014F00032B752 /* ElipticCurveKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */; };
-		F3D4DA05263014F10032B752 /* ElipticCurveKeyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */; };
 		F3D4DA092630153D0032B752 /* VpnAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CD52626F5D10094C65E /* VpnAuthentication.swift */; };
 		F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9EE12629BDC60094C65E /* VpnAuthenticationData.swift */; };
 		F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
 		F3D4DC4E2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F3D4DC4F2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
 		F3D4DC502632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */ = {isa = PBXBuildFile; fileRef = F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */; };
-		F3D4DC76263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
-		F3D4DC78263316F60032B752 /* Keys+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D4DC74263316F60032B752 /* Keys+Extensions.swift */; };
 		F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3EF4ECD2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
 		F3EF4ECE2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
@@ -1423,7 +1419,6 @@
 		F32055A925E6599300566DB7 /* AlamofireWrapper+AlternativeRouting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AlamofireWrapper+AlternativeRouting.swift"; sourceTree = "<group>"; };
 		F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlternativeRoutingTests.swift; sourceTree = "<group>"; };
 		F320563225E7D7CB00566DB7 /* FactoryMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FactoryMock.swift; sourceTree = "<group>"; };
-		F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ElipticCurveKeyTests.swift; sourceTree = "<group>"; };
 		F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CountryGroup+Wireguard.swift"; sourceTree = "<group>"; };
 		F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnFeatureChangeState.swift; sourceTree = "<group>"; };
 		F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnKeys+Generation.swift"; sourceTree = "<group>"; };
@@ -1446,7 +1441,6 @@
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
 		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
-		F3D4DC74263316F60032B752 /* Keys+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Keys+Extensions.swift"; sourceTree = "<group>"; };
 		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
 		F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConfiguration.swift; sourceTree = "<group>"; };
 		FD419E5BD3648410225BC264 /* Pods-Core-vpncore-iosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1620,7 +1614,6 @@
 				D5ADFBCE23A0D09600C28CFF /* URLArrayTests.swift */,
 				D55D79182498F65B009669E0 /* StringCleanup.swift */,
 				D523F11524B759A5007DB086 /* StringUrl.swift */,
-				F3D4DC74263316F60032B752 /* Keys+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1769,7 +1762,6 @@
 				D5D606A52292DC5B00394CF9 /* Management */,
 				4241A8D724C9EE86005412FB /* Migration */,
 				D5CC008D256C0C4B003FA161 /* Mocks */,
-				F3273337262DBD5E0059D72E /* Models */,
 				F320561825E7A23100566DB7 /* Networking */,
 				E935183D2617535600AB4C7C /* Protocols */,
 				D5A8812822CE06C4009B63D1 /* Resources */,
@@ -1846,14 +1838,6 @@
 				F3657A8E25F670E400497451 /* SmartProtocolImplementationTests.swift */,
 			);
 			path = Networking;
-			sourceTree = "<group>";
-		};
-		F3273337262DBD5E0059D72E /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				F3273338262DBD700059D72E /* ElipticCurveKeyTests.swift */,
-			);
-			path = Models;
 			sourceTree = "<group>";
 		};
 		F36535642638566F001B7E88 /* LocalAgent */ = {
@@ -3278,7 +3262,6 @@
 				D5C2052C2487A0CF004FB58B /* Foundation+Extension.swift in Sources */,
 				E952B2A326525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				D5C2052D2487A0CF004FB58B /* NSCoding+Extension.swift in Sources */,
-				F3D4DC76263316F60032B752 /* Keys+Extensions.swift in Sources */,
 				D5C2052E2487A0CF004FB58B /* NSError+Extension.swift in Sources */,
 				D5C2052F2487A0CF004FB58B /* String+Extension.swift in Sources */,
 				D5C205302487A0CF004FB58B /* Collection+Extension.swift in Sources */,
@@ -3354,7 +3337,6 @@
 				D5C205542487A0CF004FB58B /* QuickConnect.swift in Sources */,
 				D5C2043A248666EB004FB58B /* ServerLocation.swift in Sources */,
 				D5C20434248666B8004FB58B /* ServerModel.swift in Sources */,
-				F3D4DA01263014F00032B752 /* ElipticCurveKeyTests.swift in Sources */,
 				D5C2044C248668F5004FB58B /* ContinuousServerProperties.swift in Sources */,
 				D5FFE6E024A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */,
 				D5C20438248666E3004FB58B /* ServerIp.swift in Sources */,
@@ -3764,7 +3746,6 @@
 				D5C2049624866B81004FB58B /* VpnProperties.swift in Sources */,
 				D5C2049724866B81004FB58B /* UserProperties.swift in Sources */,
 				E95E8E772696F76F001AE3FA /* CertificateConstants.swift in Sources */,
-				F3D4DC78263316F60032B752 /* Keys+Extensions.swift in Sources */,
 				D5C2049824866B81004FB58B /* ReportBug.swift in Sources */,
 				D5C2049924866B81004FB58B /* ServicePlansProperties.swift in Sources */,
 				D5C2049A24866B81004FB58B /* RequestItem.swift in Sources */,
@@ -3833,7 +3814,6 @@
 				D5C204BA24866B81004FB58B /* ServicePlanDataService.swift in Sources */,
 				D5C204BB24866B81004FB58B /* StoreKitManager.swift in Sources */,
 				D5C204BC24866B81004FB58B /* TrialChecker.swift in Sources */,
-				F3D4DA05263014F10032B752 /* ElipticCurveKeyTests.swift in Sources */,
 				D5C204BD24866B81004FB58B /* AlertServiceMock.swift in Sources */,
 				F3D4DA092630153D0032B752 /* VpnAuthentication.swift in Sources */,
 				D5C204BE24866B81004FB58B /* PropertiesManagerMock.swift in Sources */,
