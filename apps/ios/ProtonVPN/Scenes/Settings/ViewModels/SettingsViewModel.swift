@@ -243,7 +243,8 @@ class SettingsViewModel {
                 self.reloadNeeded?()
 
                 if shouldReconnect {
-                    self.vpnGateway?.retryConnection()
+                    let connectionProtocol: ConnectionProtocol = self.propertiesManager.smartProtocol ? .smartProtocol : .vpnProtocol(self.propertiesManager.vpnProtocol)
+                    self.vpnGateway?.reconnect(with: connectionProtocol)
                 }
             }
 

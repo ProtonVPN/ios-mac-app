@@ -80,7 +80,7 @@ public protocol VpnGatewayProtocol: class {
     func connectTo(profile: Profile)
     func retryConnection()
     func reconnect(with netShieldType: NetShieldType)
-    func reconnect(with vpnProtocol: VpnProtocol)
+    func reconnect(with connectionProtocol: ConnectionProtocol)
     func connect(with request: ConnectionRequest?)
     func stopConnecting(userInitiated: Bool)
     func disconnect()
@@ -244,10 +244,10 @@ public class VpnGateway: VpnGatewayProtocol {
         connect(with: lastConnectionRequest?.withChanged(netShieldType: netShieldType))
     }
     
-    public func reconnect(with vpnProtocol: VpnProtocol) {
+    public func reconnect(with connectionProtocol: ConnectionProtocol) {
         disconnect {
             DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(CoreAppConstants.protocolChangeDelay), execute: { // Delay enhances reconnection success rate
-                self.connect(with: self.lastConnectionRequest?.withChanged(vpnProtocol: vpnProtocol))
+                self.connect(with: self.lastConnectionRequest?.withChanged(connectionProtocol: connectionProtocol))
             })
         }
     }
