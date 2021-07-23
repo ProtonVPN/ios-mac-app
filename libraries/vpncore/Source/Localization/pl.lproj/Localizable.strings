@@ -1993,13 +1993,13 @@
 "_widget" = "Widżet iOS";
 
 /* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard® (beta)";
+"_wireguard" = "WireGuard (beta)";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Logi WireGuard® (beta)";
+"_wireguard_logs" = "Logi WireGuard (beta)";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "Ten profil serwera nie obsługuje protokołu WireGuard®. Aby połączyć się, wybierz inny protokół lub serwer wspierający WireGuard®.";
+"_wireguard_profile_warning_text" = "Ten profil serwera nie obsługuje protokołu WireGuard. Aby połączyć się, wybierz inny protokół lub serwer wspierający WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Nie jesteś połączony";

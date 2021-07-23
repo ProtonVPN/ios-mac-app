@@ -1999,7 +1999,7 @@
 "_wireguard_logs" = "گزارش‌های WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "سرور این پروفایل هنوز از WireGuard® پشتیبانی نمی‌کند. برای اتصال، از یک پروتکل یا سرور دیگر که از WireGuard® پشتیبانی می‌کند استفاده کنید.";
+"_wireguard_profile_warning_text" = "سرور این پروفایل هنوز از WireGuard پشتیبانی نمی‌کند. برای اتصال، از یک پروتکل یا سرور دیگر که از WireGuard پشتیبانی می‌کند استفاده کنید.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "شما متصل نیستید";
