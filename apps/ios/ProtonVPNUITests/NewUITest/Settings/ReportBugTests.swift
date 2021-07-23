@@ -20,7 +20,7 @@ class ReportBugTests: ProtonVPNUITests {
     
     func testSendBugReportVisionaryUser() {
         
-        let message = StringUtils().randomAlphanumericString(length: 201)
+        let message = StringUtils().randomAlphanumericString(length: 200)
         let email = "testemail@automation.com"
         
         loginAsVisionaryUser()
@@ -36,7 +36,7 @@ class ReportBugTests: ProtonVPNUITests {
     
     func testSendBugReportWithInvalidEmailBasicUser() {
         
-        let message = StringUtils().randomAlphanumericString(length: 201)
+        let message = StringUtils().randomAlphanumericString(length: 200)
         let email = "testemailautomation.com"
         
         loginAsBasicUser()
@@ -45,6 +45,20 @@ class ReportBugTests: ProtonVPNUITests {
             .openReportBugWindow()
             .fillBugReportForm(email, message)
             .sendBugReport()
-            .verify.errorMessageIsShown()
+            .verify.invalidEmailMessageIsShown()
+    }
+    
+    func testSendBugReportWithShortMessageFreeUser() {
+        
+        let message = StringUtils().randomAlphanumericString(length: 10)
+        let email = "testemail@automation.com"
+        
+        loginAsFreeUser()
+        mainRobot
+            .goToSettingsTab()
+            .openReportBugWindow()
+            .fillBugReportForm(email, message)
+            .sendBugReport()
+            .verify.addMoreDetailsdMessagIsShown()
     }
 }
