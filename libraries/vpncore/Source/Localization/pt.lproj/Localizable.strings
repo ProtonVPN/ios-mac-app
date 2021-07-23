@@ -1999,7 +1999,7 @@
 "_wireguard_logs" = "Diários do WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta o WireGuard®. Para ligar, tente outro protocolo ou um servidor que suporte o WireGuard®.";
+"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta o WireGuard. Para ligar, tente outro protocolo ou um servidor que suporte o WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Não há ligação";

@@ -1182,7 +1182,7 @@
 "_udp" = "UDP";
 
 /* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard® (beta)";
+"_wireguard" = "WireGuard (beta)";
 
 /* MacOS menu item; iOS setting screen item */
 "_view_logs" = "View Logs";
@@ -1197,7 +1197,7 @@
 "_open_vpn_logs" = "OpenVPN Logs";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "WireGuard® (beta) Logs";
+"_wireguard_logs" = "WireGuard (beta) Logs";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Activate Widget";
@@ -1780,5 +1780,5 @@
 // Wireguard
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard®. To connect, try another protocol or a server supporting WireGuard®.";
+"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard. To connect, try another protocol or a server supporting WireGuard.";
 

@@ -1999,7 +1999,7 @@
 "_wireguard_logs" = "Journaux WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "Le serveur de ce profil ne supporte pas encore WireGuard®. Pour vous connecter, essayez un autre protocole ou un serveur prenant en charge WireGuard®.";
+"_wireguard_profile_warning_text" = "Le serveur de ce profil ne supporte pas encore WireGuard. Pour vous connecter, essayez un autre protocole ou un serveur prenant en charge WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Vous n'êtes pas connecté";

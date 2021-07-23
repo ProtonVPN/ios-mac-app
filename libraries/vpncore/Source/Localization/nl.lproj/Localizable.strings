@@ -1999,7 +1999,7 @@
 "_wireguard_logs" = "WireGuard Logboeken";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "De server van dit profiel ondersteunt nog geen WireGuard®. Om verbinding te maken, probeer een ander protocol of een server support WireGuard®.";
+"_wireguard_profile_warning_text" = "De server van dit profiel ondersteunt nog geen WireGuard. Om verbinding te maken, probeer een ander protocol of een server support WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "U bent niet verbonden";
