@@ -15,6 +15,7 @@ fileprivate let yourMessageInput = "Your message..."
 fileprivate let reportMessaheTitle = "REPORT MESSAGE"
 fileprivate let sendReportButton = "Send Report"
 fileprivate let invalidEmailMessage = "Invalid email address"
+fileprivate let addMoreDetailsdMessage = "Please add more detail to your submission"
 fileprivate let bugReportSuccessMessage = "Thank you for your report"
 fileprivate let okButton = "OK"
 
@@ -54,8 +55,14 @@ class ReportBugRobot: CoreElements {
         }
         
         @discardableResult
-        func errorMessageIsShown() -> ReportBugRobot {
+        func invalidEmailMessageIsShown() -> ReportBugRobot {
             staticText(invalidEmailMessage).wait().checkExists()
+            return ReportBugRobot()
+        }
+        
+        @discardableResult
+        func addMoreDetailsdMessagIsShown() -> ReportBugRobot {
+            staticText(addMoreDetailsdMessage).wait().checkExists()
             return ReportBugRobot()
         }
     }
