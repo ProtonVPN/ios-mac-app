@@ -71,7 +71,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         let reconnectIfNeeded = { [weak self] in
             if reconnect {
                 PMLog.D("New protocol set to \(vpnProtocol). VPN will reconnect.")
-                self?.vpnGateway.reconnect(with: vpnProtocol)
+                self?.vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
             }
         }
 
