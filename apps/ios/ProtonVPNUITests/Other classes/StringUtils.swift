@@ -10,10 +10,10 @@ import Foundation
 
 struct StringUtils {
 
-    func randomAlphanumericString(length: Int = 10) -> String {
+    func randomAlphanumericString(length: Int) -> String {
         let allowedChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
         let allowedCharsCount = UInt32(allowedChars.count)
-        var randomString = "auto_"
+        var randomString = ""
 
         for _ in 0..<length {
             let randomNum = Int(arc4random_uniform(allowedCharsCount))

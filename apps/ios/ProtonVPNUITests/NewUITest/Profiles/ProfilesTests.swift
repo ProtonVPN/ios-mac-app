@@ -19,7 +19,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
 
     func testCreateAndDeleteProfileFreeUser() {
-        let profilename = StringUtils().randomAlphanumericString()
+        let profilename = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
         loginAsFreeUser()
@@ -34,7 +34,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testCreateProfileWithTheSameNameBasicUser() {
-        let profilename = StringUtils().randomAlphanumericString()
+        let profilename = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
     
         loginAsBasicUser()
@@ -51,7 +51,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testFreeUserCannotCreateProfileWithSecureCore() {
-        let profilename = StringUtils().randomAlphanumericString()
+        let profilename = StringUtils().randomAlphanumericString(length: 10)
     
         loginAsFreeUser()
         mainRobot
@@ -62,7 +62,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testBasicUserCannotCreateProfileWithSecureCore() {
-        let profilename = StringUtils().randomAlphanumericString()
+        let profilename = StringUtils().randomAlphanumericString(length: 10)
     
         loginAsBasicUser()
         mainRobot
@@ -73,7 +73,7 @@ class ProfilesTests: ProtonVPNUITests {
     }
     
     func testMakeDefaultAndSecureCoreProfilePlusUser() {
-        let profilename = StringUtils().randomAlphanumericString()
+        let profilename = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         let serverVia = "Iceland"
         
