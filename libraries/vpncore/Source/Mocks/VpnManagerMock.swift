@@ -75,4 +75,7 @@ public class VpnManagerMock: VpnManagerProtocol {
     public func set(netShieldType: NetShieldType) {
 
     }
+
+    public private(set) var isLocalAgentConnected: Bool?
+    public var localAgentStateChanged: (() -> Void)?
 }

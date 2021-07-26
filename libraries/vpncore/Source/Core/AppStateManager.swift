@@ -28,9 +28,11 @@ public protocol AppStateManagerFactory {
 
 public protocol AppStateManager {
     var stateChange: Notification.Name { get }
+    var displayStateChange: Notification.Name { get }
     var wake: Notification.Name { get }
     
     var state: AppState { get }
+    var displayState: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
@@ -51,6 +53,7 @@ public protocol AppStateManager {
 
 extension AppStateManager {
     public var stateChange: Notification.Name { Notification.Name("AppStateManagerStateChange") }
+    public var displayStateChange: Notification.Name { Notification.Name("AppStateManagerDisplayStateChange") }
     public var wake: Notification.Name { Notification.Name("AppStateManagerWake") }
 }
 
@@ -68,7 +71,22 @@ public class AppStateManagerImplementation: AppStateManager {
     public weak var alertService: CoreAlertService?
     
     private var reachability: Reachability?
-    public private(set) var state: AppState = .disconnected
+    public private(set) var state: AppState = .disconnected {
+        didSet {
+            computeDisplayState()
+        }
+    }
+    public var displayState: AppState = .disconnected {
+        didSet {
+            DispatchQueue.main.async { [weak self] in
+                guard let self = self else {
+                    return
+                }
+
+                NotificationCenter.default.post(name: self.displayStateChange, object: self.state)
+            }
+        }
+    }
     private var vpnState: VpnState = .invalid {
         didSet {
             onVpnStateChanged?(vpnState)
@@ -337,6 +355,9 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnManager.stateChanged = { [weak self] in
             self?.vpnStateChanged()
         }
+        vpnManager.localAgentStateChanged = { [weak self] in
+            self?.computeDisplayState()
+        }
         
         NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged), name: type(of: propertiesManager).hasConnectedNotification, object: nil)
     }
@@ -524,5 +545,23 @@ public class AppStateManagerImplementation: AppStateManager {
             self.reconnectingAfterStuckDisconnecting = true
             self.connect(withConfiguration: lastConfig) // Retry connection
         })
+    }
+
+    private func computeDisplayState() {
+        // not using local agent, use the real state
+        guard let isLocalAgentConnected = vpnManager.isLocalAgentConnected else {
+            displayState = state
+            return
+        }
+
+        // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
+        // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
+        if !isLocalAgentConnected, case let AppState.connected(descriptor) = state {
+            PMLog.D("Showing state as Connecting because local agent not connected yet")
+            displayState = AppState.connecting(descriptor)
+            return
+        }
+
+        displayState = state
     }
 }

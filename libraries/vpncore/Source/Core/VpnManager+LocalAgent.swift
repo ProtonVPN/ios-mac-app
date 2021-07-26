@@ -11,6 +11,7 @@ import WireguardSRP
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData?, configuration: VpnManagerConfiguration) {
+        isLocalAgentConnected = false
         localAgent?.disconnect()
         localAgent = data.flatMap({ GoLocalAgent(data: $0, configuration: LocalAgentConfiguration(configuration: configuration)) })
         localAgent?.delegate = self
@@ -22,6 +23,7 @@ extension VpnManager {
             return
         }
 
+        isLocalAgentConnected = false
         localAgent?.disconnect()
         localAgent = GoLocalAgent(data: data, configuration: configuration)
         localAgent?.delegate = self
@@ -119,7 +121,7 @@ extension VpnManager: LocalAgentDelegate {
     func didChangeState(state: LocalAgentState) {
         PMLog.D("Local agent state changed to \(state)")
 
-        stateChanged?()
+        isLocalAgentConnected = state == .connected
 
         switch state {
         case .clientCertificateError:
