@@ -32,8 +32,12 @@ public protocol AppStateManager {
     var wake: Notification.Name { get }
     
     var state: AppState { get }
-    var displayState: AppState { get }
     var onVpnStateChanged: ((VpnState) -> Void)? { get set }
+
+    // The state displayed to the user in the UI is not always the same as the "real" VPN state
+    // For example when connected to the VPN and using local agent we do not want to show the user "Connected" because Internet is not yet available before the local agent connects
+    // So we fake it with a "Connecting" display state
+    var displayState: AppState { get }
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     
