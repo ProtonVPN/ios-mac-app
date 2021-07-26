@@ -40,8 +40,27 @@ class ConnectionBarViewModel {
         self.appStateManager = appStateManager
         
         NotificationCenter.default.addObserver(self, selector: #selector(updateState), name: appStateManager.stateChange, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(updateDisplayState), name: appStateManager.displayStateChange, object: nil)
+
+        self.updateDisplayState()
         self.updateState()
+    }
+
+    @objc func updateDisplayState() {
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else {
+                return
+            }
+
+            switch self.appStateManager.displayState {
+            case .connected:
+                self.setConnected?()
+            case .preparingConnection, .connecting:
+                self.setConnecting?()
+            default:
+                self.setDisconnected?()
+            }
+        }
     }
     
     @objc func updateState() {
@@ -49,22 +68,15 @@ class ConnectionBarViewModel {
             self?.connectedDate = date ?? Date()
         }
         
-        DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            
-            switch self.appStateManager.state {
-            case .connected:
-                self.setConnected?()
-                if !self.timer.isValid {
-                    self.runTimer()
-                }
-            case .preparingConnection, .connecting:
-                self.timer.invalidate()
-                self.setConnecting?()
-            default:
-                self.timer.invalidate()
-                self.setDisconnected?()
+        switch self.appStateManager.state {
+        case .connected:
+            if !self.timer.isValid {
+                self.runTimer()
             }
+        case .preparingConnection, .connecting:
+            self.timer.invalidate()
+        default:
+            self.timer.invalidate()
         }
     }
     
