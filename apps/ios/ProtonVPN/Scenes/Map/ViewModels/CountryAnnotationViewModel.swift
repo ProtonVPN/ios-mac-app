@@ -62,8 +62,8 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     var viewState: AnnotationViewState = .idle {
         didSet {
             if oldValue != viewState { // to prevent excessive draw calls
-                DispatchQueue.main.async { [unowned self] in
-                    self.buttonStateChanged?()
+                DispatchQueue.main.async { [weak self] in
+                    self?.buttonStateChanged?()
                 }
             }
         }
