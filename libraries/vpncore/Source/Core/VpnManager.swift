@@ -101,6 +101,9 @@ public class VpnManager: VpnManagerProtocol {
 
     public internal(set) var isLocalAgentConnected: Bool? {
         didSet {
+            guard isLocalAgentConnected != oldValue else {
+                return
+            }
             localAgentStateChanged?()
         }
     }
