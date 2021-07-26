@@ -25,6 +25,8 @@ public protocol VpnManagerProtocol {
 
     var stateChanged: (() -> Void)? { get set }
     var state: VpnState { get }
+    var localAgentStateChanged: (() -> Void)? { get set }
+    var isLocalAgentConnected: Bool? { get }
     var currentVpnProtocol: VpnProtocol? { get }
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
@@ -85,22 +87,8 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
 
-    private var vpnTunnelState: VpnState = .invalid
-    
-    public var state: VpnState {
-        // not using local agent, use the VPN tunnel state
-        guard let localAgent = localAgent, let localAgentState = localAgent.state else {
-            return vpnTunnelState
-        }
+    public private(set) var state: VpnState = .invalid
 
-        // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
-        // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
-        if localAgentState != .connected, case let VpnState.connected(descriptor) = vpnTunnelState {
-            return VpnState.connecting(descriptor)
-        }
-
-        return vpnTunnelState
-    }
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
             if oldValue == nil, let delayedRequest = delayedDisconnectRequest {
@@ -110,6 +98,13 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     public var stateChanged: (() -> Void)?
+
+    public internal(set) var isLocalAgentConnected: Bool? {
+        didSet {
+            localAgentStateChanged?()
+        }
+    }
+    public var localAgentStateChanged: (() -> Void)?
     
     /// App group is used to read errors from OpenVPN in user defaults
     private let appGroup: String
@@ -120,7 +115,13 @@ public class VpnManager: VpnManagerProtocol {
     let alertService: CoreAlertService?
     let vpnAuthentication: VpnAuthentication
     let vpnKeychain: VpnKeychainProtocol
-    var localAgent: LocalAgent?
+    var localAgent: LocalAgent? {
+        didSet {
+            if localAgent == nil {
+                isLocalAgentConnected = nil
+            }
+        }
+    }
     
     public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil) {
         self.ikeProtocolFactory = ikeFactory
@@ -467,7 +468,7 @@ public class VpnManager: VpnManagerProtocol {
     private func setState(withError error: Error? = nil) {
         if let error = error {
             PMLog.ET("VPN error: \(error.localizedDescription)")
-            vpnTunnelState = .error(error)
+            state = .error(error)
             disconnectCompletion?()
             disconnectCompletion = nil
             self.stateChanged?()
@@ -516,7 +517,7 @@ public class VpnManager: VpnManagerProtocol {
         quickReconnection = false
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
-        self.vpnTunnelState = newState
+        self.state = newState
         PMLog.D(self.state.logDescription)
         
         switch self.state {
