@@ -51,7 +51,8 @@ class ConnectionBarViewController: UIViewController {
         viewModel?.setConnected = { [weak self] in self?.setConnected() }
         viewModel?.updateConnected = { [weak self] in self?.updateConnected() }
         viewModel?.setDisconnected = { [weak self] in self?.setDisconnected() }
-        
+
+        viewModel?.updateDisplayState()
         viewModel?.updateState()
     }
     
