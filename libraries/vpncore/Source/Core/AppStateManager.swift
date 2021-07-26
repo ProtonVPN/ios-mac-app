@@ -564,7 +564,7 @@ public class AppStateManagerImplementation: AppStateManager {
 
         // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
         // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
-        if !isLocalAgentConnected, case let AppState.connected(descriptor) = state {
+        if !isLocalAgentConnected, case let AppState.connected(descriptor) = state, !propertiesManager.intentionallyDisconnected {
             PMLog.D("Showing state as Connecting because local agent not connected yet")
             displayState = AppState.connecting(descriptor)
             return
