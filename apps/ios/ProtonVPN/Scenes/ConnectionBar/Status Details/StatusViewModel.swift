@@ -112,24 +112,18 @@ class StatusViewModel {
         return sections
     }
     
-    private var connectionStatusSection: TableViewSection {
-        guard let status = connectionSatus else {
-            return TableViewSection(title: "", showHeader: false, cells: [
-                .textWithActivityCell(title: LocalizedString.unavailable, textColor: .protonWhite(), backgroundColor: .protonGrey(), showActivity: false)
-            ])
-        }
-        
+    private var connectionStatusSection: TableViewSection {        
         let cell: TableViewCellModel
-        
-        switch status {
+
+        switch appStateManager.displayState {
         case .connected:
             cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
-        case .disconnected:
-            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
-        case .connecting:
+        case .preparingConnection, .connecting:
             cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         case .disconnecting:
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+        case .disconnected, .aborted, .error:
+            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
         }
         
         return TableViewSection(title: "", showHeader: false, cells: [cell])
@@ -248,6 +242,7 @@ class StatusViewModel {
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: VpnGateway.connectionChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged), name: appStateManager.stateChange, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: appStateManager.displayStateChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: type(of: propertiesManager).netShieldNotification, object: nil)
     }
     
