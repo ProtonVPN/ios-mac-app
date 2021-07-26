@@ -73,11 +73,19 @@ public class AppStateManagerImplementation: AppStateManager {
     private var reachability: Reachability?
     public private(set) var state: AppState = .disconnected {
         didSet {
+            guard !state.displayEquals(other: oldValue) else {
+                return
+            }
+
             computeDisplayState()
         }
     }
     public var displayState: AppState = .disconnected {
         didSet {
+            guard !displayState.displayEquals(other: oldValue) else {
+                return
+            }
+
             DispatchQueue.main.async { [weak self] in
                 guard let self = self else {
                     return
@@ -563,5 +571,29 @@ public class AppStateManagerImplementation: AppStateManager {
         }
 
         displayState = state
+    }
+}
+
+fileprivate extension AppState {
+    // not intended as general comparison (Equatable) just for comparing the state for the UI
+    func displayEquals(other: AppState) -> Bool {
+        switch (self, other) {
+        case (AppState.aborted, AppState.aborted):
+            return true
+        case (AppState.connected, AppState.connected):
+            return true
+        case (AppState.connecting, AppState.connecting):
+            return true
+        case (AppState.disconnected, AppState.disconnected):
+            return true
+        case (AppState.disconnecting, AppState.disconnecting):
+            return true
+        case (AppState.error, AppState.error):
+            return true
+        case (AppState.preparingConnection, AppState.preparingConnection):
+            return true
+        default:
+            return false
+        }
     }
 }
