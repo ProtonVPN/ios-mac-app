@@ -83,7 +83,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         }
 
         guard needsRefresh else {
-            PMLog.D("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil)")
+            PMLog.D("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil))")
             finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate!.certificate)))
             return
         }
