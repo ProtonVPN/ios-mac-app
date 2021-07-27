@@ -96,14 +96,13 @@ class TabBarViewModel {
     
     @objc func stateChanged() {
         DispatchQueue.main.async { [weak self] in
-            guard let `self` = self else { return }
-            
-            if self.vpnGateway?.connection == .connected {
-                self.delegate?.connectedQuickConnect()
-            } else if self.vpnGateway?.connection == .connecting {
-                self.delegate?.connectingQuickConnect()
-            } else {
-                self.delegate?.disconnectedQuickConnect()
+            switch self?.appStateManager.displayState {
+            case .connected:
+                self?.delegate?.connectedQuickConnect()
+            case .preparingConnection, .connecting:
+                self?.delegate?.connectingQuickConnect()
+            default:
+                self?.delegate?.disconnectedQuickConnect()
             }
         }
     }
@@ -111,7 +110,7 @@ class TabBarViewModel {
     // MARK: - Private
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
-                                               name: VpnGateway.connectionChanged, object: nil)
+                                               name: appStateManager.displayStateChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
                                                name: sessionManager.sessionChanged, object: nil)
     }
