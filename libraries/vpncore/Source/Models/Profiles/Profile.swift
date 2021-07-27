@@ -46,24 +46,16 @@ public class Profile: NSObject, NSCoding {
             "Protocol: \(vpnProtocol)\n"
     }
     
-    public func connectionRequest(withDefaultNetshield defaultNetshield: NetShieldType) -> ConnectionRequest {
-        let netShield = defaultNetshield
-        
+    public func connectionRequest(withDefaultNetshield netShield: NetShieldType, globalConnectionProtocol: ConnectionProtocol) -> ConnectionRequest {       
         switch serverOffering {
-        case .fastest(let cCode):
-            if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .fastest), connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
-            } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .fastest, connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
-            }
-        case .random(let cCode):
-            if let cCode = cCode {
-                return ConnectionRequest(serverType: serverType, connectionType: .country(cCode, .random), connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
-            } else {
-                return ConnectionRequest(serverType: serverType, connectionType: .random, connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
-            }
-        case .custom(let sWrapper):
-            return ConnectionRequest(serverType: serverType, connectionType: .country(sWrapper.server.countryCode, .server(sWrapper.server)), connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
+        case let .fastest(countryCode):
+            let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .fastest) }) ?? ConnectionRequestType.fastest
+            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShield, profileId: id)
+        case let .random(countryCode):
+            let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .random) }) ?? ConnectionRequestType.random
+            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShield, profileId: id)
+        case let .custom(serverWrapper):
+            return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
         }
     }
     
