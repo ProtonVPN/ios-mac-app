@@ -32,7 +32,7 @@ public class Profile: NSObject, NSCoding {
     public let serverType: ServerType
     public let serverOffering: ServerOffering
     public let name: String
-    public let vpnProtocol: VpnProtocol
+    public let connectionProtocol: ConnectionProtocol
     
     override public var description: String {
         return
@@ -43,23 +43,23 @@ public class Profile: NSObject, NSCoding {
             "Server type: \(serverType.description)\n" +
             "Server offering: \(serverOffering.description)\n" +
             "Name: \(name)\n" +
-            "Protocol: \(vpnProtocol)\n"
+            "Protocol: \(connectionProtocol)\n"
     }
     
-    public func connectionRequest(withDefaultNetshield netShield: NetShieldType, globalConnectionProtocol: ConnectionProtocol) -> ConnectionRequest {       
+    public func connectionRequest(withDefaultNetshield netShield: NetShieldType) -> ConnectionRequest {
         switch serverOffering {
         case let .fastest(countryCode):
             let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .fastest) }) ?? ConnectionRequestType.fastest
-            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShield, profileId: id)
+            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShield, profileId: id)
         case let .random(countryCode):
             let connectionType: ConnectionRequestType = countryCode.flatMap({ ConnectionRequestType.country($0, .random) }) ?? ConnectionRequestType.random
-            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: globalConnectionProtocol, netShieldType: netShield, profileId: id)
+            return ConnectionRequest(serverType: serverType, connectionType: connectionType, connectionProtocol: connectionProtocol, netShieldType: netShield, profileId: id)
         case let .custom(serverWrapper):
-            return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: .vpnProtocol(vpnProtocol), netShieldType: netShield, profileId: id)
+            return ConnectionRequest(serverType: serverType, connectionType: .country(serverWrapper.server.countryCode, .server(serverWrapper.server)), connectionProtocol: connectionProtocol, netShieldType: netShield, profileId: id)
         }
     }
     
-    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
+    public init(id: String, accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, connectionProtocol: ConnectionProtocol) {
         self.id = id
         self.accessTier = accessTier
         self.profileIcon = profileIcon
@@ -67,13 +67,13 @@ public class Profile: NSObject, NSCoding {
         self.serverType = serverType
         self.serverOffering = serverOffering
         self.name = name
-        self.vpnProtocol = vpnProtocol ?? .ike
+        self.connectionProtocol = connectionProtocol
     }
     
-    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, vpnProtocol: VpnProtocol?) {
+    public convenience init(accessTier: Int, profileIcon: ProfileIcon, profileType: ProfileType, serverType: ServerType, serverOffering: ServerOffering, name: String, connectionProtocol: ConnectionProtocol) {
         let id = String.randomString(length: Profile.idLength)
         self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType,
-                  serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
+                  serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: connectionProtocol)
     }
     
     // MARK: - NSCoding
@@ -81,18 +81,26 @@ public class Profile: NSObject, NSCoding {
         static let id = "id"
         static let accessTier = "accessTier"
         static let name = "name"
+        static let connectionProtocol = "connectionProtocol"
     }
     
     public required convenience init?(coder aDecoder: NSCoder) {
-        self.init(id: aDecoder.decodeObject(forKey: CoderKey.id) as! String,
-                  accessTier: aDecoder.decodeInteger(forKey: CoderKey.accessTier),
-                  profileIcon: ProfileIcon(coder: aDecoder),
-                  profileType: ProfileType(coder: aDecoder),
-                  serverType: ServerType(coder: aDecoder),
-                  serverOffering: ServerOffering(coder: aDecoder),
-                  name: aDecoder.decodeObject(forKey: CoderKey.name) as! String,
-                  vpnProtocol: VpnProtocol(coder: aDecoder)
-        )
+        let id = aDecoder.decodeObject(forKey: CoderKey.id) as! String
+        let accessTier = aDecoder.decodeInteger(forKey: CoderKey.accessTier)
+        let profileIcon = ProfileIcon(coder: aDecoder)
+        let profileType = ProfileType(coder: aDecoder)
+        let serverType = ServerType(coder: aDecoder)
+        let serverOffering = ServerOffering(coder: aDecoder)
+        let name = aDecoder.decodeObject(forKey: CoderKey.name) as! String
+
+        // old version data
+        if let vpnProtocol = VpnProtocol(coder: aDecoder) {
+            self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
+            return
+        }
+
+        let connectionProtocolCodingValue = aDecoder.decodeInteger(forKey: CoderKey.connectionProtocol)
+        self.init(id: id, accessTier: accessTier, profileIcon: profileIcon, profileType: profileType, serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: ConnectionProtocol.from(codingValue: connectionProtocolCodingValue) ?? .vpnProtocol(DefaultConstants.vpnProtocol))
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -103,7 +111,7 @@ public class Profile: NSObject, NSCoding {
         serverType.encode(with: aCoder)
         serverOffering.encode(with: aCoder)
         aCoder.encode(name, forKey: CoderKey.name)
-        vpnProtocol.encode(with: aCoder)
+        aCoder.encode(connectionProtocol.codingValue, forKey: CoderKey.connectionProtocol)
     }
     
     public func copyWith(newNetShieldType type: NetShieldType) -> Profile {
@@ -114,7 +122,44 @@ public class Profile: NSObject, NSCoding {
                        serverType: self.serverType,
                        serverOffering: self.serverOffering,
                        name: self.name,
-                       vpnProtocol: self.vpnProtocol
+                       connectionProtocol: self.connectionProtocol
                        )
+    }
+}
+
+fileprivate extension ConnectionProtocol {
+    var codingValue: Int {
+        switch self {
+        case .smartProtocol:
+            return 0
+        case let .vpnProtocol(vpnProtocol):
+            switch vpnProtocol {
+            case .ike:
+                return 1
+            case .openVpn(.udp), .openVpn(.undefined):
+                return 2
+            case .openVpn(.tcp):
+                return 3
+            case .wireGuard:
+                return 4
+            }
+        }
+    }
+
+    static func from(codingValue: Int) -> ConnectionProtocol? {
+        switch codingValue {
+        case 0:
+            return .smartProtocol
+        case 1:
+            return .vpnProtocol(.ike)
+        case 2:
+            return .vpnProtocol(.openVpn(.udp))
+        case 3:
+            return vpnProtocol(.openVpn(.tcp))
+        case 4:
+            return .vpnProtocol(.wireGuard)
+        default:
+            return nil
+        }
     }
 }
