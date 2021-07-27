@@ -178,7 +178,7 @@ class CreateOrEditProfileViewModel: NSObject {
         }
         
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation), profileType: .user,
-                              serverType: serverType, serverOffering: serverOffering, name: name, vpnProtocol: vpnProtocol)
+                              serverType: serverType, serverOffering: serverOffering, name: name, connectionProtocol: .vpnProtocol(vpnProtocol))
         
         let result = editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
         
@@ -286,8 +286,13 @@ class CreateOrEditProfileViewModel: NSObject {
         
         selectedCountryGroup = countries.filter { $0.0.countryCode == profile.serverOffering.countryCode }.first
         selectedServerOffering = profile.serverOffering
-        
-        self.vpnProtocol = profile.vpnProtocol
+
+        switch profile.connectionProtocol {
+        case .smartProtocol:
+            self.vpnProtocol = propertiesManager.vpnProtocol
+        case let .vpnProtocol(vpnProtocol):
+            self.vpnProtocol = vpnProtocol
+        }
     }
     
     private func toggleState(completion: @escaping (Bool) -> Void) {

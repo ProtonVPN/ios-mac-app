@@ -37,8 +37,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         serverModel("serv9", tier: CoreAppConstants.VpnTiers.plus, feature: ServerFeature.secureCore, exitCountryCode: "FR", entryCountryCode: "CH"),
         ])
     
-    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
-    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", vpnProtocol: nil)
+    lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
+    lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     
     let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
     
