@@ -33,6 +33,7 @@ final class ProfileItemViewModel {
     private let planService: PlanService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let connectionStatusService: ConnectionStatusService
+    private let connectionProtocolPropertyProvider: ConnectionProtocolPropertyProvider
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -40,14 +41,14 @@ final class ProfileItemViewModel {
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, globalConnectionProtocol: connectionProtocolPropertyProvider.connectionProtocol)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, globalConnectionProtocol: connectionProtocolPropertyProvider.connectionProtocol)
         }
         return false
     }
@@ -104,7 +105,7 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService, connectionProtocolPropertyProvider: ConnectionProtocolPropertyProvider) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.loginService = loginService
@@ -113,6 +114,7 @@ final class ProfileItemViewModel {
         self.planService = planService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.connectionStatusService = connectionStatusService
+        self.connectionProtocolPropertyProvider = connectionProtocolPropertyProvider
                 
         switch profile.serverOffering {
         case .custom(let serverWrapper):

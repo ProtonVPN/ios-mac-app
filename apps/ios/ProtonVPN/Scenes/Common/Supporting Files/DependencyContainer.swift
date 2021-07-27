@@ -96,6 +96,8 @@ final class DependencyContainer {
     #else
     private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper(factory: self)
     #endif
+
+    private lazy var propertiesManager = PropertiesManager()
 }
 
 // MARK: NavigationServiceFactory
@@ -139,14 +141,14 @@ extension DependencyContainer: VpnKeychainFactory {
 // MARK: PropertiesManagerFactory
 extension DependencyContainer: PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManager()
+        return propertiesManager
     }
 }
 
 // MARK: ServicePlanDataStorageFactory
 extension DependencyContainer: ServicePlanDataStorageFactory {
     func makeServicePlanDataStorage() -> ServicePlanDataStorage {
-        return PropertiesManager()
+        return propertiesManager
     }
 }
 
@@ -464,5 +466,12 @@ extension DependencyContainer: VpnAuthenticationFactory {
 extension DependencyContainer: VpnStateConfigurationFactory {
     func makeVpnStateConfiguration() -> VpnStateConfiguration {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
+    }
+}
+
+// MARK: ConnectionProtocolPropertyProviverFactory
+extension DependencyContainer: ConnectionProtocolPropertyProviverFactory {
+    func makeConnectionProtocolPropertyProvider() -> ConnectionProtocolPropertyProvider {
+        return propertiesManager
     }
 }

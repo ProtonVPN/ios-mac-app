@@ -21,6 +21,14 @@
 
 import Foundation
 
+public protocol ConnectionProtocolPropertyProvider {
+    var connectionProtocol: ConnectionProtocol { get }
+}
+
+public protocol ConnectionProtocolPropertyProviverFactory {
+    func makeConnectionProtocolPropertyProvider() -> ConnectionProtocolPropertyProvider
+}
+
 public enum ConnectionProtocol: Codable, Equatable {
     case vpnProtocol(VpnProtocol)
     case smartProtocol
