@@ -213,7 +213,7 @@ public class VpnGateway: VpnGatewayProtocol {
     
     public func quickConnectConnectionRequest() -> ConnectionRequest {
         if let quickConnectProfileId = propertiesManager.quickConnect, let profile = profileManager.profile(withId: quickConnectProfileId) {
-            return profile.connectionRequest(withDefaultNetshield: netShieldType, globalConnectionProtocol: propertiesManager.connectionProtocol)
+            return profile.connectionRequest(withDefaultNetshield: netShieldType)
         } else {
             return ConnectionRequest(serverType: serverTypeToggle, connectionType: .fastest, connectionProtocol: globalConnectionProtocol, netShieldType: netShieldType, profileId: nil)
         }
@@ -233,7 +233,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func connectTo(profile: Profile) {
-        connect(with: profile.connectionRequest(withDefaultNetshield: netShieldType, globalConnectionProtocol: propertiesManager.connectionProtocol))
+        connect(with: profile.connectionRequest(withDefaultNetshield: netShieldType))
     }
     
     public func retryConnection() {

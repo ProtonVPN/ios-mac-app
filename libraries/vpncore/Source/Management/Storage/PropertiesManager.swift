@@ -92,7 +92,7 @@ public protocol PropertiesManagerProtocol: class {
     
 }
 
-public class PropertiesManager: PropertiesManagerProtocol, ConnectionProtocolPropertyProvider {
+public class PropertiesManager: PropertiesManagerProtocol {
     
     private struct Keys {
       
