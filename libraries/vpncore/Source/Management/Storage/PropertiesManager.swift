@@ -85,12 +85,14 @@ public protocol PropertiesManagerProtocol: class {
     var streamingResourcesUrl: String? { get set }
 
     var showOnlyWireguardServersAndCountries: Bool { get }
+
+    var connectionProtocol: ConnectionProtocol { get }
     
     func logoutCleanup()
     
 }
 
-public class PropertiesManager: PropertiesManagerProtocol {
+public class PropertiesManager: PropertiesManagerProtocol, ConnectionProtocolPropertyProvider {
     
     private struct Keys {
       
@@ -598,6 +600,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public var showOnlyWireguardServersAndCountries: Bool {
         return !smartProtocol && vpnProtocol == .wireGuard
+    }
+
+    public var connectionProtocol: ConnectionProtocol {
+        return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
     }
     
     #if os(iOS)
