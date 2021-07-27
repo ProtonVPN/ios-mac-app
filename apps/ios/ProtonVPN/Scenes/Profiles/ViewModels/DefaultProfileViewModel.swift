@@ -42,7 +42,7 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.random,
-                           vpnProtocol: propertiesManager.vpnProtocol)
+                           connectionProtocol: propertiesManager.connectionProtocol)
         default:
             return Profile(id: "st_f", accessTier: 0,
                            profileIcon: .image("con-fastest"),
@@ -50,20 +50,20 @@ class DefaultProfileViewModel {
                            serverType: propertiesManager.serverTypeToggle,
                            serverOffering: serverOffering,
                            name: LocalizedString.fastest,
-                           vpnProtocol: propertiesManager.vpnProtocol)
+                           connectionProtocol: propertiesManager.connectionProtocol)
         }
     }
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, globalConnectionProtocol: propertiesManager.connectionProtocol)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, globalConnectionProtocol: propertiesManager.connectionProtocol)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
         }
         return false
     }

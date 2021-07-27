@@ -468,10 +468,3 @@ extension DependencyContainer: VpnStateConfigurationFactory {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
     }
 }
-
-// MARK: ConnectionProtocolPropertyProviverFactory
-extension DependencyContainer: ConnectionProtocolPropertyProviverFactory {
-    func makeConnectionProtocolPropertyProvider() -> ConnectionProtocolPropertyProvider {
-        return propertiesManager
-    }
-}
