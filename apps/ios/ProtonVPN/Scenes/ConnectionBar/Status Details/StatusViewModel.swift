@@ -52,10 +52,6 @@ class StatusViewModel {
         return appSessionManager.sessionStatus == .established
     }
     
-    var connectionSatus: ConnectionStatus? {
-        return vpnGateway?.connection
-    }
-    
     private var userTier: Int {
         let tier: Int
         do {
@@ -99,12 +95,16 @@ class StatusViewModel {
         if propertiesManager.featureFlags.isNetShield {
             sections.append(netshieldSection)
         }
-        
-        if connectionSatus == .connected {
+
+        switch appStateManager.displayState {
+        case .connected:
             sections.append(technicalDetailsSectionConnected)
             timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
             sections.append(saveAsProfileSection)
-        } else {
+        case .connecting, .preparingConnection:
+            sections.append(technicalDetailsSectionConnecting)
+            timeCellIndexPath = nil
+        default:
             sections.append(technicalDetailsSectionDisconnected)
             timeCellIndexPath = nil
         }
@@ -165,6 +165,15 @@ class StatusViewModel {
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.notConnected),
         ]
         
+        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+    }
+
+    private var technicalDetailsSectionConnecting: TableViewSection {
+        let cells: [TableViewCellModel] = [
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.connecting),
+        ]
+
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
     }
     
@@ -272,7 +281,13 @@ class StatusViewModel {
             return netshieldUnavailableSection
         }
         
-        let isConnected = connectionSatus == .connected
+        let isConnected: Bool
+        switch appStateManager.state {
+        case .connected:
+            isConnected = true
+        default:
+            isConnected = false
+        }
         let activeConnection = appStateManager.activeConnection()
         let currentNetshieldType = isConnected ? activeConnection?.netShieldType : netShieldPropertyProvider.netShieldType
         let isNetshieldOn = currentNetshieldType != .off
