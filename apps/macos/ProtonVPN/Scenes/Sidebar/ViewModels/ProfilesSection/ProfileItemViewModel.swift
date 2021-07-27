@@ -61,7 +61,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     }
     
     func connectAction() {
-        if profile.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
+        if profile.connectionProtocol == ConnectionProtocol.vpnProtocol(.wireGuard), case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
             alertService.push(alert: WireguardProfileErrorAlert())
             return
         }

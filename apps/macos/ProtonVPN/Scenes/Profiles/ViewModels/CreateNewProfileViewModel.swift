@@ -131,9 +131,16 @@ class CreateNewProfileViewModel {
             sIndex = defaultServerCount + (ServerUtility.serverIndex(in: grouping, model: sWrapper.server) ?? 0)
         }
         state = ModelState(serverType: profile.serverType, editedProfile: profile)
+        let profileVpnProtocol: VpnProtocol
+        switch profile.connectionProtocol {
+        case .smartProtocol:
+            profileVpnProtocol = propertiesManager.vpnProtocol
+        case let .vpnProtocol(vpnProtocol):
+            profileVpnProtocol = vpnProtocol
+        }
         let info = PrefillInformation(name: profile.name, color: NSColor(rgbHex: color),
                                       typeIndex: tIndex, countryIndex: cIndex, serverIndex: sIndex,
-                                      vpnProtocolIndex: availableVpnProtocols.index(of: profile.vpnProtocol) ?? 0)
+                                      vpnProtocolIndex: availableVpnProtocols.index(of: profileVpnProtocol) ?? 0)
         
         prefillContent?(info)
     }
@@ -175,7 +182,7 @@ class CreateNewProfileViewModel {
 
         let profile = Profile(id: id, accessTier: accessTier, profileIcon: .circle(color.hexRepresentation),
                               profileType: .user, serverType: serverType, serverOffering: serverOffering,
-                              name: name, vpnProtocol: availableVpnProtocols[vpnProtocolIndex])
+                              name: name, connectionProtocol: .vpnProtocol(availableVpnProtocols[vpnProtocolIndex]))
 
         let result = state.editedProfile != nil ? profileManager.updateProfile(profile) : profileManager.createProfile(profile)
 
