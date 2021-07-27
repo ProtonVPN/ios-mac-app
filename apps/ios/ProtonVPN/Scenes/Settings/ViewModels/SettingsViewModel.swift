@@ -304,7 +304,7 @@ class SettingsViewModel {
             self.propertiesManager.alternativeRouting.toggle()
             callback(self.propertiesManager.alternativeRouting)
         })
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltTitle.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
