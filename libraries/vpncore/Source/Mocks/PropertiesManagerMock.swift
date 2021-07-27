@@ -72,6 +72,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var streamingResourcesUrl: String?
     var earlyAccess: Bool = false
     public var showOnlyWireguardServersAndCountries: Bool = false
+    public var connectionProtocol: ConnectionProtocol {
+        return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+    }
     
     public init() {}
     
