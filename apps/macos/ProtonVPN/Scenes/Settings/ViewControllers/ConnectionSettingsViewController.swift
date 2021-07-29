@@ -143,6 +143,8 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
             .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         vpnAcceleratorInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
         vpnAcceleratorInfoIcon.toolTip = LocalizedString.vpnAcceleratorDescription
+            .replacingOccurrences(of: LocalizedString.vpnAcceleratorDescriptionAltLink, with: "")
+            .trimmingCharacters(in: .whitespacesAndNewlines)
         vpnAcceleratorButton.setState(viewModel.vpnAcceleratorEnabled ? .on : .off)
         vpnAcceleratorButton.delegate = self
         vpnAcceleratorSeparator.fillColor = .protonLightGrey()
