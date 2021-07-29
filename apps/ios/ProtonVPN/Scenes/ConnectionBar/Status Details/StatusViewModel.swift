@@ -180,7 +180,8 @@ class StatusViewModel {
     
     private var saveAsProfileSection: TableViewSection {
         let cell: TableViewCellModel
-        if let server = appStateManager.activeConnection()?.server, profileManager.existsProfile(withServer: server) {
+        // same condition as on the Profiles screen to be consistent
+        if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType ?? .off) == vpnGateway?.lastConnectionRequest }) != nil {
             cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .protonRed(), handler: { [deleteProfile] in
                 deleteProfile()
             })
