@@ -1948,7 +1948,10 @@
 "_vpn_accelerator_change_title" = "Alterar Acelerador de VPN";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "O acelerador de VPN permite um conjunto exclusivo de tecnologias de melhoria de desempenho que podem aumentar as velocidades de VPN em até 400%";
+"_vpn_accelerator_description" = "O acelerador de VPN permite um conjunto exclusivo de tecnologias de melhoria de desempenho que podem aumentar as velocidades de VPN em até 400%%.\nSaiba mais";
+
+/* Link with more info in the VPN Accelerator description */
+"_vpn_accelerator_description_alt_link" = "Saiba mais";
 
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";

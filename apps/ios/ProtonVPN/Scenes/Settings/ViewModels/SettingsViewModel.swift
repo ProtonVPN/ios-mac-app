@@ -331,8 +331,8 @@ class SettingsViewModel {
                 }
             })
         ]
-        
-        cells.append(.tooltip(text: LocalizedString.vpnAcceleratorDescription))
+
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator)))
         
         if #available(iOS 14.2, *) {
             cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()))
