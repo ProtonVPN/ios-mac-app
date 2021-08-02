@@ -374,19 +374,17 @@ public class VpnManager: VpnManagerProtocol {
             }
         }
         
-        #if os(OSX)
         // Any non-personal VPN configuration with includeAllNetworks enabled, prevents IKEv2 (with includeAllNetworks) from connecting. #VPNAPPL-566
-        if #available(OSX 10.15, *), configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
+        if #available(OSX 10.15, iOS 14, *), configuration.includeAllNetworks && configuration.isKind(of: NEVPNProtocolIKEv2.self) {
             self.removeConfiguration(self.openVpnProtocolFactory, completionHandler: { _ in
-                saveToPreferences()
+                self.removeConfiguration(self.wireguardProtocolFactory, completionHandler: { _ in
+                    saveToPreferences()
+                })
             })
         } else {
             saveToPreferences()
         }
-        #else
-            saveToPreferences()
-        #endif
-        
+                
     }
     
     private func startConnection(completion: @escaping () -> Void) {
