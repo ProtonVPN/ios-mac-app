@@ -101,20 +101,13 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section) {
-            if let secureCoreCellModel = cellModel as? SecureCoreServerItemViewModel {
-                if let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerViewCell.identifier) as? ServerViewCell {
-                    serverCell.viewModel = secureCoreCellModel
-                    return serverCell
-                }
-            } else {
-                if let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerViewCell.identifier) as? ServerViewCell {
-                    serverCell.viewModel = cellModel
-                    return serverCell
-                }
-            }
+        guard let cellModel = viewModel?.cellModel(for: indexPath.row, section: indexPath.section), let serverCell = tableView.dequeueReusableCell(withIdentifier: ServerViewCell.identifier) as? ServerViewCell else {
+            return UITableViewCell()
         }
-        return UITableViewCell()
+
+        serverCell.viewModel = cellModel
+        serverCell.delegate = self
+        return serverCell
     }
     
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
@@ -124,5 +117,11 @@ extension CountryViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         return 0
+    }
+}
+
+extension CountryViewController: ServerViewCellDelegate {
+    func userDidRequestStreamingInfo() {
+        displayStreamingServices()
     }
 }
