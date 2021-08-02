@@ -41,6 +41,7 @@ public protocol PropertiesManagerProtocol: class {
     var lastIkeConnection: ConnectionConfiguration? { get set }
     var lastOpenVpnConnection: ConnectionConfiguration? { get set }
     var lastWireguardConnection: ConnectionConfiguration? { get set }
+    var lastPreparedServer: ServerModel? { get set }
     var lastConnectedTimeStamp: Double { get set }
     var lastConnectionRequest: ConnectionRequest? { get set }
     var lastUserAccountPlan: AccountPlan? { get set }
@@ -102,6 +103,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let lastIkeConnection = "LastIkeConnection"
         static let lastOpenVpnConnection = "LastOpenVPNConnection"
         static let lastWireguardConnection = "LastWireguardConnection"
+        static let lastPreparingServer = "LastPreparingServer"
         static let lastConnectedTimeStamp = "LastConnectedTimeStamp"
         static let lastConnectionRequest = "LastConnectionRequest"
         static let lastUserAccountPlan = "LastUserAccountPlan"
@@ -242,7 +244,18 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(data, forKey: Keys.lastWireguardConnection)
         }
     }
-    
+
+    public var lastPreparedServer: ServerModel? {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.lastPreparingServer) else { return nil }
+            return try? PropertyListDecoder().decode(ServerModel.self, from: data)
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.lastPreparingServer)
+        }
+    }
+
     public var lastConnectedTimeStamp: Double {
         get {
             return Storage.userDefaults().double(forKey: Keys.lastConnectedTimeStamp)

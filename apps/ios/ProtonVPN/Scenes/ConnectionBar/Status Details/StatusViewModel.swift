@@ -130,15 +130,14 @@ class StatusViewModel {
     }
     
     private var connectionCountryString: String {
-        guard let activeConnection = appStateManager.activeConnection() else {
-            return ""
-        }
-
+        
+        guard let lastPreparedServer = propertiesManager.lastPreparedServer else { return "" }
+        
         if propertiesManager.serverTypeToggle == .secureCore {
-            return "\(activeConnection.server.entryCountry) >> \(activeConnection.server.exitCountry)"
-        } else {
-            return activeConnection.server.exitCountry
+            return "\(lastPreparedServer.entryCountry) >> \(lastPreparedServer.exitCountry)"
         }
+        
+        return lastPreparedServer.country
     }
     
     private var technicalDetailsSectionConnected: TableViewSection {
