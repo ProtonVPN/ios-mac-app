@@ -147,7 +147,7 @@
                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8b2-dP-uUu" userLabel="row-button">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="61"/>
                         <connections>
-                            <action selector="connectButtonTap:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="o4V-oB-1qx"/>
+                            <action selector="rowTapped:forEvent:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Iph-7Q-KGK"/>
                         </connections>
                     </button>
                     <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2Vk-vj-5zc" userLabel="connect-button">
