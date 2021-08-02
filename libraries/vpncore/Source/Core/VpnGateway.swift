@@ -332,7 +332,7 @@ public class VpnGateway: VpnGatewayProtocol {
         guard let server = server else {
             return
         }
-        
+        propertiesManager.lastPreparedServer = server
         appStateManager.prepareToConnect()
         
         connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)

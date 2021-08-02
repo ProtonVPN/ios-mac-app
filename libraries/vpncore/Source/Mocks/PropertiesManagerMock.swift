@@ -36,6 +36,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastIkeConnection: ConnectionConfiguration?
     public var lastOpenVpnConnection: ConnectionConfiguration?
     public var lastWireguardConnection: ConnectionConfiguration?
+    public var lastPreparedServer: ServerModel?
     public var lastConnectedTimeStamp: Double = 0
     public var lastConnectionRequest: ConnectionRequest?
     public var lastUserAccountPlan: AccountPlan?
