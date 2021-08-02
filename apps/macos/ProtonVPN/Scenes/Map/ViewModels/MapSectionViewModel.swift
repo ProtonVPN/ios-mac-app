@@ -170,7 +170,7 @@ class MapSectionViewModel {
     }
     
     private func standardAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: .standard).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
+        return serverManager.grouping(for: .standard).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
             let annotation = StandardCountryAnnotationViewModel(appStateManager: appStateManager,
                                                                       vpnGateway: vpnGateway,
                                                                      country: $0.0,
@@ -205,7 +205,7 @@ class MapSectionViewModel {
     }
     
     private func secureCoreAnnotations(_ userTier: Int) -> [CountryAnnotationViewModel] {
-        let exitCountries = serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
+        let exitCountries = serverManager.grouping(for: .secureCore).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
             let annotation = SCExitCountryAnnotationViewModel(appStateManager: appStateManager,
                                                                                   vpnGateway: vpnGateway,
                                                                                      country: $0.0,

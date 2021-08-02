@@ -210,9 +210,9 @@ class CountriesViewModel: SecureCoreToggleHandler {
     internal func setStateOf(type: ServerType) {
         switch type {
         case .standard, .p2p, .tor, .unspecified:
-            state = ModelState.standard(serverManager.grouping(for: .standard).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
+            state = ModelState.standard(serverManager.grouping(for: .standard).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
         case .secureCore:
-            state = ModelState.secureCore(serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
+            state = ModelState.secureCore(serverManager.grouping(for: .secureCore).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries))
         }
     }
     

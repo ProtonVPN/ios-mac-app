@@ -155,7 +155,7 @@ class MapViewModel: SecureCoreToggleHandler {
     }
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
-        return serverManager.grouping(for: type).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
+        return serverManager.grouping(for: type).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
             let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, appStateManager: appStateManager, enabled: $0.0.lowestTier <= userTier, alertService: alertService, loginService: loginService, connectionStatusService: connectionStatusService)
             
             if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
@@ -189,7 +189,7 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func secureCoreEntryAnnotations(_ userTier: Int) -> Set<SecureCoreEntryCountryModel> {
         var entryCountries = Set<SecureCoreEntryCountryModel>()
-        serverManager.grouping(for: .secureCore).filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).forEach { group in
+        serverManager.grouping(for: .secureCore).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).forEach { group in
             group.1.forEach { (server) in
                 var entryCountry = SecureCoreEntryCountryModel(appStateManager: appStateManager, countryCode: server.entryCountryCode, location: LocationUtility.coordinate(forCountry: server.entryCountryCode))
                 if let oldEntry = entryCountries.first(where: { (element) -> Bool in return entryCountry == element }) {
