@@ -1219,8 +1219,10 @@
 "_allow_lan_description" = "In order to allow LAN access, Kill Switch must be turned off.\n\nContinue?";
 "_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
 
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "Turn Kill Switch on?";
-"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network? \n\nContinue?";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network. \n\nContinue?";
 
 
 // Plans
