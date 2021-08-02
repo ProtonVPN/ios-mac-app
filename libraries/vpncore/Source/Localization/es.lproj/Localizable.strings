@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Al cambiar de protocolos finalizará su sesión de VPN actual.";
 
+/* Changing settings title */
+"_change_settings" = "Change settings";
+
 /* MacOS: About window */
 "_changelog" = "Registro de cambios";
 
@@ -167,7 +170,7 @@
 "_connecting_vpn" = "Conectando %@";
 
 /* (No Comment) */
-"_connectingDotDotDot" = "Connecting...";
+"_connectingDotDotDot" = "Conectando...";
 
 /* MacOS Profiles Overview: Table column header; MacOS Settings Tab title; */
 "_connection" = "Conexión";
@@ -677,10 +680,10 @@
 "_invalid_refresh_token_please_login" = "Ha pasado un tiempo desde la última vez que usastes la aplicación ProtonVPN. Por favor inicie nuevamente.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_description" = "Desde los científicos e ingenieros que crearon ProtonMail, bienvenidos a un Internet más seguro y privado.";
+"_ios_onboarding_page1_description" = "De parte de los científicos e ingenieros que crearon ProtonMail, bienvenidos a un Internet más seguro y privado.";
 
 /* iOS onboarding texts */
-"_ios_onboarding_page1_title" = "Bienvenido a un mejor Internet";
+"_ios_onboarding_page1_title" = "Bienvenido/a a un mejor Internet";
 
 /* iOS onboarding texts */
 "_ios_onboarding_page2_description" = "Golpeamos la censura y las restricciones regionales. No tenemos anuncios, ni límites de ancho de banda, y no vendemos tus datos.";
@@ -1738,7 +1741,7 @@
 "_trial_welcome_ends_in_iOS" = "Tu prueba termina en";
 
 /* iOS trial welcome screen */
-"_trial_welcome_heading_iOS" = "Bienvenido a bordo";
+"_trial_welcome_heading_iOS" = "Bienvenido/a a bordo";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_description" = "En caso de que los sitios de Proton estén bloqueados, esta configuración permite a la aplicación probar rutas alternativas de red para llegar a Proton, que puede ser útil para evitar problemas de red o de firewalls. Recomendamos mantener esta configuración encendida para mayor fiabilidad. \nMás información";
@@ -1951,7 +1954,7 @@
 "_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
 
 /* Link with more info in the VPN Accelerator description */
-"_vpn_accelerator_description_alt_link" = "Learn more";
+"_vpn_accelerator_description_alt_link" = "Más información";
 
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
@@ -1990,7 +1993,7 @@
 "_welcome_gift_description" = "Como regalo de bienvenida, se le concede un acceso de 7 días a una suscripción de\n%@ que te da:";
 
 /* MacOS welcome screen: title */
-"_welcome_title" = "¡BIENVENIDO A BORDO!";
+"_welcome_title" = "¡BIENVENIDO/A A BORDO!";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "widget de iOS";
@@ -2002,7 +2005,7 @@
 "_wireguard_logs" = "Registros de WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "El servidor de este perfil aún no soporta WireGuard. Para conectarlo, prueba con otro protocolo o un servidor compatible con WireGuard.";
+"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard. To connect, try another protocol or a server supporting WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "No estás conectado";

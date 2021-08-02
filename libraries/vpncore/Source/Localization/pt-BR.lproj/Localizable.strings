@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Alterar os protocolos irá encerrar sua sessão de VPN atual.";
 
+/* Changing settings title */
+"_change_settings" = "Change settings";
+
 /* MacOS: About window */
 "_changelog" = "Registro de alterações";
 
@@ -1948,7 +1951,7 @@
 "_vpn_accelerator_change_title" = "Alterar Acelerador de VPN";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "O acelerador de VPN permite um conjunto exclusivo de tecnologias de melhoria de desempenho que podem aumentar as velocidades de VPN em até 400%%.\nSaiba mais";
+"_vpn_accelerator_description" = "O acelerador de VPN permite um conjunto exclusivo de tecnologias de melhoria de desempenho que podem aumentar as velocidades de VPN em até 400%";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Saiba mais";
@@ -1996,13 +1999,13 @@
 "_widget" = "Widget do iOS";
 
 /* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard (beta)";
+"_wireguard" = "WireGuard® (beta)";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Logs do WireGuard (beta)";
+"_wireguard_logs" = "Logs do WireGuard® (beta)";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta WireGuard. Para conectar-se, tente outro protocolo ou um servidor que suporte WireGuard.";
+"_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta WireGuard®. Para conectar-se, tente outro protocolo ou um servidor que suporte WireGuard®.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Você não está conectado";

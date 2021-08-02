@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Das Ändern von Protokollen wird Ihre aktuelle VPN-Sitzung beenden.";
 
+/* Changing settings title */
+"_change_settings" = "Einstellungen ändern";
+
 /* MacOS: About window */
 "_changelog" = "Änderungsprotokoll";
 
@@ -704,7 +707,7 @@
 "_ip_will_not_be_exposed" = "Ihre IP wird nicht enthüllt.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch (Not-Trennung)";
+"_kill_switch" = "Kill Switch (Risiko-Trennung)";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_body" = "Kill Switch schützt Ihre IP\n\nIhre Internetverbindung wird wieder aufgenommen, sobald ProtonVPN sich wieder mit einem Server verbunden hat. Um ohne VPN-Schutz fortzufahren, deaktivieren Sie Kill Switch.";
@@ -713,7 +716,7 @@
 "_kill_switch_blocking_connection" = "Kill Switch (Not‐Trennung) sperrt alle Ihre Verbindungen";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch (Not-Trennung)";
+"_kill_switch_blocking_title" = "Kill Switch (Risiko-Trennung)";
 
 /* MacOS: killswitch blocking alert button */
 "_kill_switch_disable" = "Kill Switch (Not‐Trennung) deaktivieren";
@@ -770,7 +773,7 @@
 "_ks_swift5_lib_name" = "Swift 5-Bibliothek zur Laufzeitunterstützung";
 
 /* MacOS: link in login screen */
-"_learn_more" = "Erfahren Sie mehr";
+"_learn_more" = "Mehr erfahren";
 
 /* MacOS: SecureCore warning alert when users plan has to be upgraded */
 "_learn_more_about_secure_core" = "Erfahren Sie mehr über Secure Core";
@@ -1304,7 +1307,7 @@
 "_quick_settings_tour_feature_2" = "Surfen Sie mit NetShield frei von Schadsoftware und Werbung im Internet.";
 
 /* MacOS app tour: quick settings kill switch */
-"_quick_settings_tour_feature_3" = "Verhindern Sie die Offenlegung Ihrer IP durch Aktivieren des „Kill Switch” (Not-Trennung).";
+"_quick_settings_tour_feature_3" = "Verhindern Sie die Offenlegung Ihrer IP durch Aktivieren des „Kill Switch” (Risiko-Trennung).";
 
 /* MacOS app tour: quick settings title */
 "_quick_settings_tour_title" = "Schnelleinstellungen";
@@ -1676,7 +1679,7 @@
 "_timed_out" = "hat Zeit überschritten";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Eine andere Anwendung könnte die Not-Trennung von „Kill Switch” stören.\n\nUm dieses Problem zu beheben, wechseln Sie zum OpenVPN-Protokoll oder deaktivieren Sie „Kill Switch” und versuchen Sie es erneut.";
+"_timeout_ks_ike_descritpion" = "Eine andere Anwendung könnte die Risiko-Trennung von „Kill Switch” stören. Um dieses Problem zu beheben, wechseln Sie zum OpenVPN-Protokoll oder deaktivieren Sie „Kill Switch” und versuchen Sie es erneut.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Zu OpenVPN wechseln und erneut versuchen";
@@ -1744,7 +1747,7 @@
 "_troubleshoot_item_alt_description" = "Für den Fall, dass Proton-Websites gesperrt sind, ermöglicht diese Einstellung der App, eine alternative Netzwerkweiterleitung auszuprobieren, um Proton erreichen zu können, was zur Umgehung von Firewalls oder Netzwerkproblemen nützlich sein kann. Wir empfehlen, diese Einstellung für eine größere Zuverlässigkeit beizubehalten.\nMehr erfahren";
 
 /* (No Comment) */
-"_troubleshoot_item_alt_link1" = "Erfahren Sie mehr";
+"_troubleshoot_item_alt_link1" = "Mehr erfahren";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_title" = "Alternatives Routing erlauben";
@@ -1948,10 +1951,10 @@
 "_vpn_accelerator_change_title" = "VPN-Accelerator ändern";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "„VPN Accelerator“ ermöglicht eine Reihe von einzigartigen leistungssteigernden Technologien, die die VPN-Geschwindigkeit um bis zu 400%% erhöhen können.\nErfahren Sie mehr";
+"_vpn_accelerator_description" = "„VPN Accelerator“ ermöglicht eine Reihe von einzigartigen leistungssteigernden Technologien, die die VPN-Geschwindigkeit um bis zu 400% erhöhen können";
 
 /* Link with more info in the VPN Accelerator description */
-"_vpn_accelerator_description_alt_link" = "Erfahren Sie mehr";
+"_vpn_accelerator_description_alt_link" = "Mehr erfahren";
 
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
