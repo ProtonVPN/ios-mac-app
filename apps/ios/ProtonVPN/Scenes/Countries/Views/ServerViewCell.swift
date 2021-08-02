@@ -23,6 +23,10 @@
 import UIKit
 import vpncore
 
+protocol ServerViewCellDelegate: AnyObject {
+    func userDidRequestStreamingInfo()
+}
+
 final class ServerViewCell: UITableViewCell {
 
     @IBOutlet private weak var serverNameLabel: UILabel!
@@ -40,6 +44,8 @@ final class ServerViewCell: UITableViewCell {
     @IBOutlet private weak var secureCountryLbl: UILabel!
     @IBOutlet private weak var secureCoreIV: UIImageView!
     @IBOutlet private weak var connectButton: UIButton!
+
+    weak var delegate: ServerViewCellDelegate?
     
     var viewModel: ServerItemViewModel? {
         didSet {
@@ -82,6 +88,21 @@ final class ServerViewCell: UITableViewCell {
         stateChanged()
     }
     
+    @IBAction func rowTapped(_ sender: Any, forEvent event: UIEvent) {
+        guard let button = sender as? UIButton, let touches = event.touches(for: button), let touch = touches.first, let convertedStreamingView = streamingIV.superview?.convert(streamingIV.frame, to: nil) else {
+            connect()
+            return
+        }
+
+        let touchLocation = touch.location(in: self)
+        let margin: CGFloat = 5
+        guard convertedStreamingView.origin.x - margin < touchLocation.x, touchLocation.x < convertedStreamingView.origin.x + convertedStreamingView.width + margin else {
+            connect()
+            return
+        }
+
+        delegate?.userDidRequestStreamingInfo()
+    }
     @IBAction func connectButtonTap(_ sender: Any) {
         connect()
     }
