@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Het wijzigen van protocollen zal uw huidige VPN-sessie beëindigen.";
 
+/* Changing settings title */
+"_change_settings" = "Change settings";
+
 /* MacOS: About window */
 "_changelog" = "Wat is er veranderd";
 
@@ -581,19 +584,19 @@
 "_feature_server_count" = "Verbinden met servers in";
 
 /* (No Comment) */
-"_feature_smart_routing_description" = "Met deze technologie kan ProtonVPN hogere snelheid en beveiliging bieden in moeilijkheids-tot-dienstlanden.";
+"_feature_smart_routing_description" = "Met deze technologie kan ProtonVPN hogere snelheid en beveiliging bieden in landen waar de  toegang tot VPNs beperkt is.";
 
 /* iOS plan feature */
 "_feature_speed" = "Snelheid";
 
 /* (No Comment) */
-"_feature_streaming_description" = "PLUS servers ondersteunen streaming (Netflix, Disney+, enz.) van overal in de wereld.";
+"_feature_streaming_description" = "PLUS-servers ondersteunen mediastreaming (Netflix, Disney+, enz.) wereldwijd.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor via VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Routeer uw internetverkeer via het Tor-netwerk. Langer, maar meer privé.";
+"_feature_tor_description" = "Stuur uw internetverkeer over het Tor-netwerk. Langzamer, maar meer privé.";
 
 /* (No Comment) */
 "_features_title" = "Mogelijkheden";
@@ -1951,7 +1954,7 @@
 "_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
 
 /* Link with more info in the VPN Accelerator description */
-"_vpn_accelerator_description_alt_link" = "Learn more";
+"_vpn_accelerator_description_alt_link" = "Meer informatie";
 
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
@@ -2002,7 +2005,7 @@
 "_wireguard_logs" = "WireGuard Logboeken";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "De server van dit profiel ondersteunt nog geen WireGuard. Om verbinding te maken, probeer een ander protocol of een server support WireGuard.";
+"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard. To connect, try another protocol or a server supporting WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "U bent niet verbonden";

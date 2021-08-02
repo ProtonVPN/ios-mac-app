@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "Изменение протоколов завершит вашу текущую сессию VPN.";
 
+/* Changing settings title */
+"_change_settings" = "Изменить настройки";
+
 /* MacOS: About window */
 "_changelog" = "Список изменений";
 
@@ -1526,7 +1529,7 @@
 "_setup_complete_basic" = "Ваша покупка прошла успешно. Ваш план ProtonVPN Basic теперь активен.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Теперь вы подписались на тарифный план ProtonVPN Free. Для начала, насладитесь семью днями тарифного плана ProtonVPN Plus бесплатно.";
+"_setup_complete_free" = "Теперь вы подписались на тарифный план ProtonVPN Free. Для начала, наслаждайтесь семь дней тарифным планом ProtonVPN Plus бесплатно.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Ваша покупка прошла успешно. Ваш план ProtonVPN Plus теперь активен.";
@@ -1948,7 +1951,7 @@
 "_vpn_accelerator_change_title" = "Изменить VPN-ускоритель";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%.\nУзнать больше";
+"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Узнать больше";

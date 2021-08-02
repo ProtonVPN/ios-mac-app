@@ -124,6 +124,9 @@
 /* Warning text that changing the VPN protocol will require the current VPN session to be disconnected */
 "_change_protocol_disconnect_warning" = "تغییر دادن پروتکل ها، نشست جاری VPN شما را پایان میبخشد.";
 
+/* Changing settings title */
+"_change_settings" = "Change settings";
+
 /* MacOS: About window */
 "_changelog" = "لیست تغییرات";
 
@@ -1951,7 +1954,7 @@
 "_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
 
 /* Link with more info in the VPN Accelerator description */
-"_vpn_accelerator_description_alt_link" = "Learn more";
+"_vpn_accelerator_description_alt_link" = "بیشتر بدانید";
 
 /* (No Comment) */
 "_vpn_accelerator_title" = "VPN Accelerator";
@@ -2002,7 +2005,7 @@
 "_wireguard_logs" = "گزارش‌های WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
-"_wireguard_profile_warning_text" = "سرور این پروفایل هنوز از WireGuard پشتیبانی نمی‌کند. برای اتصال، از یک پروتکل یا سرور دیگر که از WireGuard پشتیبانی می‌کند استفاده کنید.";
+"_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard. To connect, try another protocol or a server supporting WireGuard.";
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "شما متصل نیستید";
