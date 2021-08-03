@@ -24,7 +24,7 @@ import Foundation
 import Network
 
 final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
-    var connections: [String: NWConnection] = [:]
+    let ping: SmartProtocolPing
     let lockQueue: DispatchQueue
     var protocolName: String {
         return "IKEv2"
@@ -34,31 +34,10 @@ final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
     init(port: Int = 500) {
         self.lockQueue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue")
         self.port = port
+        self.ping = SharedLibrarySmartProtocolPing()
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        checkAvailability(server: server, ports: [port], parameters: .udp, completion: completion)
-    }
-
-    func createTestPacket() -> Data {
-        var bytes: [UInt8] = []
-        for _ in 0 ..< 8 {
-            bytes.append(UInt8.random(in: 0..<255))
-        }
-        for _ in 0 ..< 8 {
-            bytes.append(0)
-        }
-        bytes.append(0x21)
-        bytes.append(0x20)
-        bytes.append(0x22)
-        bytes.append(0x08)
-        for _ in 0 ..< 4 {
-            bytes.append(0)
-        }
-        for _ in 0 ..< 4 {
-            bytes.append(0)
-        }
-
-        return Data(bytes)
+        checkAvailability(server: server, ports: [port], completion: completion)
     }
 }
