@@ -25,14 +25,14 @@ import Network
 
 final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
     var connections: [String: NWConnection] = [:]
-    let queue: DispatchQueue
+    let lockQueue: DispatchQueue
     var protocolName: String {
         return "IKEv2"
     }
     let port: Int
 
     init(port: Int = 500) {
-        self.queue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue", attributes: .concurrent)
+        self.lockQueue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue")
         self.port = port
     }
 
