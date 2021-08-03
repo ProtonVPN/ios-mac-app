@@ -32,7 +32,7 @@ typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvailabilit
 
 protocol SmartProtocolAvailabilityChecker: AnyObject {
     var connections: [String: NWConnection] { get set }
-    var queue: DispatchQueue { get }
+    var lockQueue: DispatchQueue { get }
     var timeout: TimeInterval { get }
     var protocolName: String { get }
 
@@ -53,15 +53,22 @@ extension SmartProtocolAvailabilityChecker {
 
         for port in ports {
             group.enter()
-            checkAvailability(server: server, port: port, parameters: parameters) { result in
-                if result {
-                    availablePorts.append(port)
+            checkAvailability(server: server, port: port, parameters: parameters) { [weak self] result in
+                guard let self = self else {
+                    group.leave()
+                    return
                 }
-                group.leave()
+
+                self.lockQueue.async {
+                    if result {
+                        availablePorts.append(port)
+                    }
+                    group.leave()
+                }
             }
         }
 
-        group.notify(queue: queue) {
+        group.notify(queue: .global()) {
             completion(availablePorts.isEmpty ? .unavailable : .available(ports: availablePorts))
         }
     }
@@ -129,9 +136,9 @@ extension SmartProtocolAvailabilityChecker {
             }
         }
 
-        queue.asyncAfter(deadline: .now() + timeout, execute: task)
+        DispatchQueue.global().asyncAfter(deadline: .now() + timeout, execute: task)
         connections[connectionId] = connection
-        connection.start(queue: queue)
+        connection.start(queue: .global())
     }
     // swiftlint:enable function_body_length
 }
