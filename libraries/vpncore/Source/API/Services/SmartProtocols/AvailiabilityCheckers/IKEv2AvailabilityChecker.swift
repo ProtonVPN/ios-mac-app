@@ -23,18 +23,14 @@
 import Foundation
 import Network
 
-final class IKEv2AvailabilityChecker: SmartProtocolAvailabilityChecker {
-    let ping: SmartProtocolPing
-    let lockQueue: DispatchQueue
+final class IKEv2AvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
     var protocolName: String {
         return "IKEv2"
     }
     let port: Int
 
     init(port: Int = 500) {
-        self.lockQueue = DispatchQueue(label: "IKEv2AvailabilityCheckerQueue")
         self.port = port
-        self.ping = SharedLibrarySmartProtocolPing()
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {

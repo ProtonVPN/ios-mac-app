@@ -21,6 +21,7 @@
 //
 
 import Foundation
+import WireguardSRP
 
 enum SmartProtocolAvailabilityCheckerResult {
     case unavailable
@@ -30,12 +31,11 @@ enum SmartProtocolAvailabilityCheckerResult {
 typealias SmartProtocolAvailabilityCheckerCompletion = (SmartProtocolAvailabilityCheckerResult) -> Void
 
 protocol SmartProtocolAvailabilityChecker: AnyObject {
-    var lockQueue: DispatchQueue { get }
     var timeout: TimeInterval { get }
     var protocolName: String { get }
-    var ping: SmartProtocolPing { get }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion)
+    func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void)
 }
 
 extension SmartProtocolAvailabilityChecker {
@@ -46,18 +46,14 @@ extension SmartProtocolAvailabilityChecker {
     func checkAvailability(server: ServerIp, ports: [Int], completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
         let group = DispatchGroup()
         var availablePorts: [Int] = []
+        let lockQueue = DispatchQueue(label: "\(protocolName)AvailabilityCheckerQueue")
 
         PMLog.D("Checking \(protocolName) availability for \(server.entryIp)")
 
         for port in ports {
             group.enter()
-            ping.ping(protocolName: protocolName, server: server, port: port, timeout: timeout) { [weak self] result in
-                guard let self = self else {
-                    group.leave()
-                    return
-                }
-
-                self.lockQueue.async {
+            ping(protocolName: protocolName, server: server, port: port, timeout: timeout) { result in
+                lockQueue.async {
                     if result {
                         availablePorts.append(port)
                     }
@@ -68,6 +64,35 @@ extension SmartProtocolAvailabilityChecker {
 
         group.notify(queue: .global()) {
             completion(availablePorts.isEmpty ? .unavailable : .available(ports: availablePorts))
+        }
+    }
+}
+
+protocol SharedLibrarySmartProtocolAvailabilityChecker: SmartProtocolAvailabilityChecker { }
+
+extension SharedLibrarySmartProtocolAvailabilityChecker {
+    func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
+        PMLog.D("Checking \(protocolName) availability for \(server.entryIp) on port \(port)")
+
+        guard let key = server.x25519PublicKey else {
+            PMLog.D("Cannot check \(protocolName) availability for \(server.entryIp) on port \(port) because of missing public key")
+            completion(false)
+            return
+        }
+
+        DispatchQueue.global(qos: .userInitiated).async {
+            var error: NSError?
+            var ret: ObjCBool = false
+            let result = VpnPingPingSync(server.entryIp, port, key, Int(timeout), &ret, &error)
+
+            if let error = error {
+                PMLog.D("\(protocolName) NOT available for \(server.entryIp) on port \(port) (Error: \(error)")
+                completion(false)
+                return
+            }
+
+            PMLog.D("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)")
+            completion(result)
         }
     }
 }
