@@ -216,13 +216,13 @@ github-push-commits:
     RELEASE_SYNC_TO_BRANCH: 'develop'
     RELEASE_SYNC_FROM_BRANCH: 'develop'
   # Run the job only if we have a tag ex:
-  #   - release/mac/1.1.1111111
-  #   - release/ios/1.1.1
+  #   - mac/1.1.1111111
+  #   - ios/1.1.1
   only: &onlyTagsFilterOpenSource
     refs:
       - tags
     variables:
-      - $CI_COMMIT_TAG =~ /^release\/(mac|ios)\/\d+\.\d+\.\d+$/
+      - $CI_COMMIT_TAG =~ /^(mac|ios)\/\d+\.\d+\.\d+$/
 
 github-push-tag:
   extends: .release-sync-tags-shared
