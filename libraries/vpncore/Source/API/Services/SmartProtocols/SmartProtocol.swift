@@ -33,6 +33,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         case ikev2
         case openVpnUdp
         case openVpnTcp
+        case wireguard
 
         var vpnProtocol: VpnProtocol {
             switch self {
@@ -42,12 +43,16 @@ final class SmartProtocolImplementation: SmartProtocol {
                 return .openVpn(.udp)
             case .openVpnTcp:
                 return .openVpn(.tcp)
+            case .wireguard:
+                return .wireGuard
             }
         }
 
         var priority: Int {
             #if os(iOS)
             switch self {
+            case .wireguard:
+                return 0
             case .openVpnUdp:
                 return 1
             case .openVpnTcp:
@@ -57,6 +62,8 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
             #else
             switch self {
+            case .wireguard:
+                return 0
             case .ikev2:
                 return 1
             case .openVpnUdp:
@@ -77,7 +84,8 @@ final class SmartProtocolImplementation: SmartProtocol {
         checkers = [
             .ikev2: IKEv2AvailabilityChecker(),
             .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
-            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config)
+            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config),
+            .wireguard: WireguardAvailabilityChecker()
         ]
     }
 
@@ -85,7 +93,6 @@ final class SmartProtocolImplementation: SmartProtocol {
         let group = DispatchGroup()
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
-        let defaultUdpPorts = config.defaultUdpPorts.shuffled()
 
         PMLog.D("Determining best protocol for \(server.entryIp)")
 
@@ -108,13 +115,8 @@ final class SmartProtocolImplementation: SmartProtocol {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
-                #if os(iOS)
-                PMLog.D("No best protocol determined, fallback to OpenVPN UDP")
-                completion(VpnProtocol.openVpn(.udp), defaultUdpPorts)
-                #else
-                PMLog.D("No best protocol determined, fallback to IKEv2")
-                completion(VpnProtocol.ike, [500])
-                #endif
+                PMLog.D("No best protocol determined, fallback to Wireguard")
+                completion(VpnProtocol.wireGuard, [51820])
                 return
             }
 
