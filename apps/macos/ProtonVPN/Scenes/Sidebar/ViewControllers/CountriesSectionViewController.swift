@@ -303,10 +303,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
             let cell = tableView.makeView(withIdentifier: Cell.server.identifier, owner: self) as! ServerItemCellView
             cell.disabled = quickSettingDetailDisplayed
             cell.updateView(withModel: model)
-            cell.showServerInfo = { [weak self] in
-                guard let `self` = self else { return }
-                self.showInfo(for: row, and: cell, with: model.serverModel)
-            }
+            cell.delegate = self
             return cell
         case .header(let model):
             let cell = tableView.makeView(withIdentifier: Cell.header.identifier, owner: self) as! CountriesSectionHeaderView
@@ -333,5 +330,15 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
             .filter { $0 != nil }
             .map { $0! }
             .forEach { $0.reloadOptions() }
+    }
+}
+
+extension CountriesSectionViewController: ServerItemCellViewDelegate {
+    func userDidRequestServerInfo(for cell: NSView, server: ServerItemViewModel) {
+        showInfo(for: serverListTableView.row(for: cell), and: cell, with: server.serverModel)
+    }
+
+    func userDidRequestStreamingInfo(server: ServerItemViewModel) {
+        viewModel.showStreamingServices(server: server)
     }
 }

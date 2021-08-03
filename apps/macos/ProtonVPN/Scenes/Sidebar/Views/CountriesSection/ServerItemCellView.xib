@@ -85,17 +85,22 @@
                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_tor" id="in4-Bp-Qe5"/>
                             <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                         </imageView>
-                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oLC-aF-Rp9">
+                        <button translatesAutoresizingMaskIntoConstraints="NO" id="xnJ-CI-Tms">
                             <rect key="frame" x="226" y="0.0" width="16" height="24"/>
                             <constraints>
-                                <constraint firstAttribute="width" constant="16" id="hs2-7h-bx0"/>
+                                <constraint firstAttribute="width" constant="16" id="z2R-cG-iyr"/>
                             </constraints>
-                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="ic_streaming" id="Jan-YQ-ZaF"/>
-                            <color key="contentTintColor" red="0.44705882349999998" green="0.46274509800000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
-                        </imageView>
+                            <buttonCell key="cell" type="square" bezelStyle="shadowlessSquare" image="ic_streaming" imagePosition="only" alignment="center" imageScaling="proportionallyUpOrDown" inset="2" id="rmO-kh-wEA">
+                                <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                <font key="font" metaFont="system"/>
+                            </buttonCell>
+                            <connections>
+                                <action selector="didTapStreaming:" target="c22-O7-iKe" id="hAr-oF-Uji"/>
+                            </connections>
+                        </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="oLC-aF-Rp9" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="8c6-TV-JKX"/>
+                        <constraint firstItem="xnJ-CI-Tms" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="9sA-fP-N82"/>
                         <constraint firstItem="Meu-TF-bG3" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="HOf-LE-orL"/>
                         <constraint firstItem="htq-Vh-M3a" firstAttribute="centerY" secondItem="HwW-fd-TKx" secondAttribute="centerY" id="IF8-bR-eIt"/>
                         <constraint firstAttribute="height" constant="24" id="JwK-a6-OmP"/>
@@ -189,7 +194,7 @@
                 <outlet property="secureFlagIV" destination="YUD-lf-aWO" id="LnR-ZD-4Ws"/>
                 <outlet property="serverLbl" destination="6H3-fq-9lW" id="VTW-MY-YEC"/>
                 <outlet property="smartIV" destination="61R-2Y-fBC" id="GUd-7n-TeR"/>
-                <outlet property="streamingIV" destination="oLC-aF-Rp9" id="iKt-gV-gpT"/>
+                <outlet property="streamingIV" destination="xnJ-CI-Tms" id="tF6-HR-2EO"/>
                 <outlet property="torIV" destination="nA5-Vh-5IW" id="llX-5m-nb6"/>
                 <outlet property="upgradeBtn" destination="aym-qX-9lw" id="1Il-BH-Jyo"/>
             </connections>
