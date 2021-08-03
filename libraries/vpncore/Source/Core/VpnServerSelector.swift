@@ -49,11 +49,13 @@ class VpnServerSelector {
     public func selectServer(connectionRequest: ConnectionRequest) -> ServerModel? {
         // use the ui to determine connection type if unspecified
         let type = connectionRequest.serverType == .unspecified ? serverTypeToggle : connectionRequest.serverType
+        let onlyWireguardServersAndCountries = connectionRequest.connectionProtocol == .vpnProtocol(.wireGuard)
+        let serverGrouping = serverGrouping.filter(onlyWireguardServersAndCountries: onlyWireguardServersAndCountries)
         
         let sortedServers: [ServerModel]
         let forSpecificCountry: Bool
         if case ConnectionRequestType.country(let countryCode, _) = connectionRequest.connectionType { // servers of a single country
-            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode) else {
+            guard let countryGroup = userAccessibleGrouping(type, countryCode: countryCode, serverGrouping: serverGrouping) else {
                 return nil
             }
             sortedServers = countryGroup.1.sorted(by: { ($1.tier, $0.score) < ($0.tier, $1.score) }) // sort by highest tier first, then lowest score
@@ -92,7 +94,7 @@ class VpnServerSelector {
         }
     }
     
-    private func userAccessibleGrouping(_ type: ServerType, countryCode: String) -> CountryGroup? {
+    private func userAccessibleGrouping(_ type: ServerType, countryCode: String, serverGrouping: [CountryGroup]) -> CountryGroup? {
         return serverGrouping
             .filter({ $0.0.countryCode == countryCode })
             .first

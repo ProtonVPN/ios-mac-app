@@ -9,8 +9,8 @@
 import Foundation
 
 extension Array where Element == CountryGroup {
-    public func filter(showOnlyWireguardServersAndCountries: Bool) -> Self {
-        guard showOnlyWireguardServersAndCountries else {
+    public func filter(onlyWireguardServersAndCountries: Bool) -> Self {
+        guard onlyWireguardServersAndCountries else {
             return self
         }
 
