@@ -8,18 +8,14 @@
 
 import Foundation
 
-final class WireguardAvailabilityChecker: SmartProtocolAvailabilityChecker {
-    let ping: SmartProtocolPing
-    let lockQueue: DispatchQueue
+final class WireguardAvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
     var protocolName: String {
         return "Wireguard"
     }
     let port: Int
 
     init(port: Int = 51820) {
-        self.lockQueue = DispatchQueue(label: "WireguardAvailabilityCheckerQueue")
         self.port = port
-        self.ping = SharedLibrarySmartProtocolPing()
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {

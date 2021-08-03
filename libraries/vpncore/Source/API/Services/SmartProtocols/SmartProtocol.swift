@@ -29,52 +29,6 @@ protocol SmartProtocol {
 }
 
 final class SmartProtocolImplementation: SmartProtocol {
-    private enum SmartProtocolProtocol {
-        case ikev2
-        case openVpnUdp
-        case openVpnTcp
-        case wireguard
-
-        var vpnProtocol: VpnProtocol {
-            switch self {
-            case .ikev2:
-                return .ike
-            case .openVpnUdp:
-                return .openVpn(.udp)
-            case .openVpnTcp:
-                return .openVpn(.tcp)
-            case .wireguard:
-                return .wireGuard
-            }
-        }
-
-        var priority: Int {
-            #if os(iOS)
-            switch self {
-            case .wireguard:
-                return 0
-            case .openVpnUdp:
-                return 1
-            case .openVpnTcp:
-                return 2
-            case .ikev2:
-                return 3
-            }
-            #else
-            switch self {
-            case .wireguard:
-                return 0
-            case .ikev2:
-                return 1
-            case .openVpnUdp:
-                return 2
-            case .openVpnTcp:
-                return 3
-            }
-            #endif
-        }
-    }
-
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
     private let config: OpenVpnConfig
 

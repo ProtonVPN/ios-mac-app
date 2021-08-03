@@ -8,18 +8,14 @@
 
 import Foundation
 
-final class OpenVPNUDPAvailabilityChecker: SmartProtocolAvailabilityChecker {
-    let ping: SmartProtocolPing
-    let lockQueue: DispatchQueue
+final class OpenVPNUDPAvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
     var protocolName: String {
         return "OpenVPN UDP"
     }
     private let config: OpenVpnConfig
 
     init(config: OpenVpnConfig) {
-        self.lockQueue = DispatchQueue(label: "OpenVPNUDPAvailabilityCheckerQueue")
         self.config = config
-        self.ping = SharedLibrarySmartProtocolPing()
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
