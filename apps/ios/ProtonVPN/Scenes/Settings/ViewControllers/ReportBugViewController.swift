@@ -110,6 +110,10 @@ class ReportBugViewController: UIViewController {
                 viewModel.add(files: [fileUrl])
             }
             
+            if let fileUrl = vpnManager.logFile(for: .wireGuard) {
+                viewModel.add(files: [fileUrl])
+            }
+            
         } else {
             viewModel.removeAllFiles()
         }
