@@ -647,7 +647,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         alternativeRouting = true
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
-        
+        killSwitch = false
         #if !APP_EXTENSION
         currentSubscription = nil
         #endif
