@@ -183,6 +183,14 @@ class CountriesSectionViewModel {
     func cellModel(forRow row: Int) -> CellModel? {
         return data[row]
     }
+
+    func showStreamingServices(server: ServerItemViewModel) {
+        guard !propertiesManager.secureCoreToggle, server.serverModel.tier > 1, let streamServicesDict = propertiesManager.streamingServices[server.serverModel.countryCode], let key = streamServicesDict.keys.first, let streamServices = streamServicesDict[key] else {
+            return
+        }
+
+        displayStreamingServices?(server.serverModel.country, streamServices, propertiesManager)
+    }
     
     // MARK: - Private functions
     private func setTier() {

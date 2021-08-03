@@ -23,13 +23,18 @@
 import Cocoa
 import vpncore
 
-class ServerItemCellView: NSView {
+protocol ServerItemCellViewDelegate: AnyObject {
+    func userDidRequestServerInfo(for cell: NSView, server: ServerItemViewModel)
+    func userDidRequestStreamingInfo(server: ServerItemViewModel)
+}
+
+final class ServerItemCellView: NSView {
     
     @IBOutlet private weak var loadIcon: ColoredLoadButton!
     @IBOutlet private weak var smartIV: NSImageView!
     @IBOutlet private weak var p2pIV: NSImageView!
     @IBOutlet private weak var torIV: NSImageView!
-    @IBOutlet private weak var streamingIV: NSImageView!
+    @IBOutlet private weak var streamingIV: NSButton!
 
     @IBOutlet private weak var serverLbl: NSTextField!
     @IBOutlet private weak var cityLbl: NSTextField!
@@ -54,9 +59,9 @@ class ServerItemCellView: NSView {
     
     private var viewModel: ServerItemViewModel!
     
-    var showServerInfo: (() -> Void)?
-    
-    public var disabled: Bool = false
+    var disabled: Bool = false
+
+    weak var delegate: ServerItemCellViewDelegate?
 
     override func mouseEntered(with event: NSEvent) {
         if disabled || viewModel.underMaintenance || viewModel.requiresUpgrade {
@@ -116,20 +121,22 @@ class ServerItemCellView: NSView {
         }
     }
     
-    @IBAction func didTapConnectBtn(_ sender: Any) {
+    @IBAction private func didTapConnectBtn(_ sender: Any) {
         viewModel.connectAction()
     }
     
-    @IBAction func didTapUpgradeBtn(_ sender: Any) {
+    @IBAction private func didTapUpgradeBtn(_ sender: Any) {
         viewModel.upgradeAction()
     }
     
     @objc private func showInfo() {
-        if let showServerInfo = showServerInfo {
-            showServerInfo()
-        }
+        delegate?.userDidRequestServerInfo(for: self, server: viewModel)
     }
-    
+
+    @IBAction private func didTapStreaming(_ sender: Any) {
+        delegate?.userDidRequestStreamingInfo(server: viewModel)
+    }
+
     // MARK: - Accessibility
     private func setupAccessibility() {
         setAccessibilityLabel(viewModel.accessibilityLabel)
