@@ -311,7 +311,7 @@ class CountriesSectionViewModel {
         if let query = filter, !query.isEmpty {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
-        data = groupServersIntoSections(self.countries.filter(showOnlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
+        data = groupServersIntoSections(self.countries.filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
         setupServers()
     }
     
