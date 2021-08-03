@@ -1999,10 +1999,10 @@
 "_widget" = "Widget do iOS";
 
 /* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard (beta)";
+"_wireguard" = "WireGuard";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "Logs do WireGuard (beta)";
+"_wireguard_logs" = "Logs do WireGuard";
 
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
 "_wireguard_profile_warning_text" = "O servidor deste perfil ainda não suporta WireGuard. Para conectar-se, tente outro protocolo ou um servidor que suporte WireGuard.";
