@@ -1182,7 +1182,7 @@
 "_udp" = "UDP";
 
 /* iOS Settings -> Protocol: WireGuard option */
-"_wireguard" = "WireGuard (beta)";
+"_wireguard" = "WireGuard";
 
 /* MacOS menu item; iOS setting screen item */
 "_view_logs" = "View Logs";
@@ -1197,7 +1197,7 @@
 "_open_vpn_logs" = "OpenVPN Logs";
 
 /* iOS Settings: WireGuard logs row */
-"_wireguard_logs" = "WireGuard (beta) Logs";
+"_wireguard_logs" = "WireGuard Logs";
 
 /* iOS widget help screen: title */
 "_activate_widget" = "Activate Widget";
