@@ -2,12 +2,10 @@ PODS:
   - Alamofire (5.3.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - CryptoSwift (1.4.0)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
   - OpenSSL-Apple (1.1.1k.11)
-  - PMTestAutomation (1.0.1):
-    - SwiftOTP
+  - pmtest (1.0.0)
   - ProtonCore-Challenge (2.0.1):
     - ProtonCore-Foundations (= 2.0.1)
   - ProtonCore-Doh (2.0.1):
@@ -23,8 +21,6 @@ PODS:
   - Sentry/Core (5.2.2)
   - SwiftGen (6.4.0)
   - SwiftLint (0.43.1)
-  - SwiftOTP (2.0.3):
-    - CryptoSwift (>= 1.0.0)
   - SwiftyBeaver (1.9.5)
   - TrustKit (1.7.0)
   - TunnelKit (3.3.1):
@@ -47,7 +43,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
-  - "PMTestAutomation (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d`)"
+  - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
   - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `2.0.1`)"
   - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `2.0.1`)"
   - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `2.0.1`)"
@@ -64,7 +60,6 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
-    - CryptoSwift
     - GSMessages
     - KeychainAccess
     - OpenSSL-Apple
@@ -73,12 +68,11 @@ SPEC REPOS:
     - Sentry
     - SwiftGen
     - SwiftLint
-    - SwiftOTP
     - SwiftyBeaver
 
 EXTERNAL SOURCES:
-  PMTestAutomation:
-    :commit: 36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d
+  pmtest:
+    :commit: 579ef5f66deea4231784614d936956982f53ee30
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
@@ -100,8 +94,8 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/vpn/tunnelkit.git"
 
 CHECKOUT OPTIONS:
-  PMTestAutomation:
-    :commit: 36020af08c9eaa795d3ee314e7a30fa8fe4b9c5d
+  pmtest:
+    :commit: 579ef5f66deea4231784614d936956982f53ee30
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
@@ -125,11 +119,10 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  CryptoSwift: 7cc902df1784de3b389a387756c7d710f197730c
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
-  PMTestAutomation: a39a548c349474117c7f8493f25f4f1184c3dcf9
+  pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
   ProtonCore-Challenge: ebe8f8c06aadea63b9807f9efa9d254db700616c
   ProtonCore-Doh: 044a3d0876a99c66f4464a1278e18202277841b9
   ProtonCore-Foundations: d6780f5837a227aecead724c25cb5a5bac00c8be
@@ -139,11 +132,10 @@ SPEC CHECKSUMS:
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
   SwiftGen: 67860cc7c3cfc2ed25b9b74cfd55495fc89f9108
   SwiftLint: 99f82d07b837b942dd563c668de129a03fc3fb52
-  SwiftOTP: ce98ded1ab42e4e66c39228fcad6b0c07b98e494
   SwiftyBeaver: 84069991dd5dca07d7069100985badaca7f0ce82
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 3264cbf41b675c64501a110a31729a2761387d9a
+PODFILE CHECKSUM: 3c96002831abe89322f5fb900b0639bbbcdc1479
 
 COCOAPODS: 1.10.1

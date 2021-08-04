@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import PMTestAutomation
+import pmtest
 
 fileprivate let headerTitle = "Settings"
 fileprivate let reportBugtButton = "Report Bug"
