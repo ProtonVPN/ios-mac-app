@@ -6,7 +6,7 @@
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
-import PMTestAutomation
+import pmtest
 
 fileprivate let editButton = "Edit"
 fileprivate let doneButton = "Done"
