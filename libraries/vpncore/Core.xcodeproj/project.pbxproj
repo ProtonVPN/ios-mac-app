@@ -1020,6 +1020,10 @@
 		F38BB44D265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44F265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
+		F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
+		F3A05A3526C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
+		F3A05A3626C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
+		F3A05A3726C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
 		F3D4DA092630153D0032B752 /* VpnAuthentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CD52626F5D10094C65E /* VpnAuthentication.swift */; };
 		F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9EE12629BDC60094C65E /* VpnAuthenticationData.swift */; };
 		F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
@@ -1436,6 +1440,7 @@
 		F387A2662677625E00F0C3D8 /* VpnManager+LocalAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnManager+LocalAgent.swift"; sourceTree = "<group>"; };
 		F387A26B267B550D00F0C3D8 /* VpnStateConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnStateConfiguration.swift; sourceTree = "<group>"; };
 		F38BB44B265B893F00329619 /* LocalAgentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentError.swift; sourceTree = "<group>"; };
+		F3A05A3326C14223004D9E18 /* AppDisplayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDisplayState.swift; sourceTree = "<group>"; };
 		F3AF15D825F26EEF0025CDEE /* IKEv2AvailabilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityTests.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
@@ -2214,6 +2219,7 @@
 				F36ECB742610A9820089B898 /* Data refresh */,
 				F36ECB732610A9780089B898 /* VpnProtocolFactory */,
 				E1B5F63021B6B18C00B558B0 /* AppState.swift */,
+				F3A05A3326C14223004D9E18 /* AppDisplayState.swift */,
 				E1616B8021C7AA9E00F42D79 /* AppStateManager.swift */,
 				E13791B72313D3B300D7B1FA /* ConnectionConfiguration.swift */,
 				E1B5F64321B6BAF100B558B0 /* Logger.swift */,
@@ -3120,6 +3126,7 @@
 				E1D187F82302B0AA00C5F492 /* VpnProtocol.swift in Sources */,
 				E1616B9D21C7B5D900F42D79 /* ProtonVpnError.swift in Sources */,
 				E1B5F63121B6B19200B558B0 /* AppState.swift in Sources */,
+				F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				4242B02C2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				D5E1514C24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */,
 				E123909E227C4E5A004B607A /* ApplicationError.swift in Sources */,
@@ -3304,6 +3311,7 @@
 				D5C205432487A0CF004FB58B /* VpnManagerMock.swift in Sources */,
 				E9DC7A1B262DBFF3001A0FC0 /* OpenVPNAvailabilityChecker.swift in Sources */,
 				D5C205442487A0CF004FB58B /* AccountPlan.swift in Sources */,
+				F3A05A3526C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				D5C205452487A0CF004FB58B /* ServicePlanDetails.swift in Sources */,
 				D5C205462487A0CF004FB58B /* PaymentAction.swift in Sources */,
 				D5D2958825A5DEB6000FBD74 /* UserTierProviderMock.swift in Sources */,
@@ -3638,6 +3646,7 @@
 				4242B02D2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				F30B9ED92629BCED0094C65E /* VpnAuthenticationStorage.swift in Sources */,
 				D5E1514E24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */,
+				F3A05A3626C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				E123909F227C4E5A004B607A /* ApplicationError.swift in Sources */,
 				E1B5F63321B6B19200B558B0 /* AppState.swift in Sources */,
 				E148AE6C21C2A263007AB65A /* LocalizedString.swift in Sources */,
@@ -3752,6 +3761,7 @@
 				D5C2049C24866B81004FB58B /* GenericRequestRetrier.swift in Sources */,
 				4257B21924EC1C1300C4E4AC /* VpnServerState.swift in Sources */,
 				F365355E2638522E001B7E88 /* LocalAgentState.swift in Sources */,
+				F3A05A3726C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				D5C2049D24866B81004FB58B /* AuthApiService.swift in Sources */,
 				D5C2049E24866B81004FB58B /* PaymentsApiService.swift in Sources */,
 				D5C204D224866B99004FB58B /* Hash.swift in Sources */,

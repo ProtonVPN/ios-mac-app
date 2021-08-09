@@ -37,7 +37,7 @@ public protocol AppStateManager {
     // The state displayed to the user in the UI is not always the same as the "real" VPN state
     // For example when connected to the VPN and using local agent we do not want to show the user "Connected" because Internet is not yet available before the local agent connects
     // So we fake it with a "Connecting" display state
-    var displayState: AppState { get }
+    var displayState: AppDisplayState { get }
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     
@@ -77,16 +77,12 @@ public class AppStateManagerImplementation: AppStateManager {
     private var reachability: Reachability?
     public private(set) var state: AppState = .disconnected {
         didSet {
-            guard !state.displayEquals(other: oldValue) else {
-                return
-            }
-
             computeDisplayState()
         }
     }
-    public var displayState: AppState = .disconnected {
+    public var displayState: AppDisplayState = .disconnected {
         didSet {
-            guard !displayState.displayEquals(other: oldValue) else {
+            guard displayState != oldValue else {
                 return
             }
 
@@ -562,42 +558,18 @@ public class AppStateManagerImplementation: AppStateManager {
     private func computeDisplayState() {
         // not using local agent, use the real state
         guard let isLocalAgentConnected = vpnManager.isLocalAgentConnected else {
-            displayState = state
+            displayState = state.asDisplayState()
             return
         }
 
         // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
         // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
-        if !isLocalAgentConnected, case let AppState.connected(descriptor) = state, !propertiesManager.intentionallyDisconnected {
+        if !isLocalAgentConnected, case AppState.connected = state, !propertiesManager.intentionallyDisconnected {
             PMLog.D("Showing state as Connecting because local agent not connected yet")
-            displayState = AppState.connecting(descriptor)
+            displayState = .fetchingInfo
             return
         }
 
-        displayState = state
-    }
-}
-
-fileprivate extension AppState {
-    // not intended as general comparison (Equatable) just for comparing the state for the UI
-    func displayEquals(other: AppState) -> Bool {
-        switch (self, other) {
-        case (AppState.aborted, AppState.aborted):
-            return true
-        case (AppState.connected, AppState.connected):
-            return true
-        case (AppState.connecting, AppState.connecting):
-            return true
-        case (AppState.disconnected, AppState.disconnected):
-            return true
-        case (AppState.disconnecting, AppState.disconnecting):
-            return true
-        case (AppState.error, AppState.error):
-            return true
-        case (AppState.preparingConnection, AppState.preparingConnection):
-            return true
-        default:
-            return false
-        }
+        displayState = state.asDisplayState()
     }
 }

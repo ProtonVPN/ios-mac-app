@@ -101,7 +101,7 @@ class StatusViewModel {
             sections.append(technicalDetailsSectionConnected)
             timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
             sections.append(saveAsProfileSection)
-        case .connecting, .preparingConnection:
+        case .connecting, .fetchingInfo:
             sections.append(technicalDetailsSectionConnecting)
             timeCellIndexPath = nil
         default:
@@ -118,11 +118,11 @@ class StatusViewModel {
         switch appStateManager.displayState {
         case .connected:
             cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
-        case .preparingConnection, .connecting:
+        case .fetchingInfo, .connecting:
             cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         case .disconnecting:
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
-        case .disconnected, .aborted, .error:
+        case .disconnected:
             cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
         }
         
