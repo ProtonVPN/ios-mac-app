@@ -55,9 +55,9 @@ class ConnectionBarViewModel {
             switch self.appStateManager.displayState {
             case .connected:
                 self.setConnected?()
-            case .preparingConnection, .connecting:
+            case .connecting, .fetchingInfo:
                 self.setConnecting?()
-            default:
+            case .disconnected, .disconnecting:
                 self.setDisconnected?()
             }
         }
