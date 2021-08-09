@@ -24,17 +24,15 @@ import Foundation
 import UIKit
 import vpncore
 
-class ConnectionBarViewModel {
+final class ConnectionBarViewModel {
     
     private let appStateManager: AppStateManager
     
     private var timer = Timer()
     private var connectedDate = Date()
     
-    var setConnecting: (() -> Void)?
-    var setConnected: (() -> Void)?
+    var onAppDisplayStateChanged: ((AppDisplayState) -> Void)?
     var updateConnected: (() -> Void)?
-    var setDisconnected: (() -> Void)?
     
     init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
@@ -52,14 +50,7 @@ class ConnectionBarViewModel {
                 return
             }
 
-            switch self.appStateManager.displayState {
-            case .connected:
-                self.setConnected?()
-            case .connecting, .fetchingInfo:
-                self.setConnecting?()
-            case .disconnected, .disconnecting:
-                self.setDisconnected?()
-            }
+            self.onAppDisplayStateChanged?(self.appStateManager.displayState)
         }
     }
     

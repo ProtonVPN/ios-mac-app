@@ -46,11 +46,20 @@ class ConnectionBarViewController: UIViewController {
         connectedLabel.text = LocalizedString.connected
         
         arrowImage.image = arrowImage.image?.imageFlippedForRightToLeftLayoutDirection()
-        
-        viewModel?.setConnecting = { [weak self] in self?.setConnecting() }
-        viewModel?.setConnected = { [weak self] in self?.setConnected() }
+
+        viewModel?.onAppDisplayStateChanged = { [weak self] state in
+            switch state {
+            case .connecting:
+                self?.setConnecting()
+            case .connected:
+                self?.setConnected()
+            case .disconnecting, .disconnected:
+                self?.setDisconnected()
+            case .fetchingInfo:
+                self?.setFetchingInfo()
+            }
+        }
         viewModel?.updateConnected = { [weak self] in self?.updateConnected() }
-        viewModel?.setDisconnected = { [weak self] in self?.setDisconnected() }
 
         viewModel?.updateDisplayState()
         viewModel?.updateState()
@@ -65,6 +74,16 @@ class ConnectionBarViewController: UIViewController {
         }
         parentViewController.addChild(self)
         didMove(toParent: parentViewController)
+    }
+
+    private func setFetchingInfo() {
+        self.view.backgroundColor = .protonGreen()
+        self.connectedLabel.isHidden = true
+        self.timerLabel.isHidden = true
+        self.notConnectedLabel.isHidden = false
+        self.notConnectedLabel.text = LocalizedString.fetchingServerInfo
+        self.notConnectedLabel.textColor = .protonWhite()
+        self.view.setNeedsDisplay()
     }
     
     private func setConnecting() {

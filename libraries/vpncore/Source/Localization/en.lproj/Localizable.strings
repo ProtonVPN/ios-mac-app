@@ -1787,3 +1787,8 @@
 /* Shown when trying to use WireGuard with a profile that does not include any WireGuard servers */
 "_wireguard_profile_warning_text" = "This profile's server does not yet support WireGuard. To connect, try another protocol or a server supporting WireGuard.";
 
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_fetching_server_info" = "Fetching server info";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_fetching_server_info_for" = "Fetching server info for %@";
