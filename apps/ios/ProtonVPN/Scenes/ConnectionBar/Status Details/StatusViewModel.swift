@@ -101,8 +101,11 @@ class StatusViewModel {
             sections.append(technicalDetailsSectionConnected)
             timeCellIndexPath = IndexPath(row: 3, section: sections.count - 1)
             sections.append(saveAsProfileSection)
-        case .connecting, .fetchingInfo:
+        case .connecting:
             sections.append(technicalDetailsSectionConnecting)
+            timeCellIndexPath = nil
+        case .fetchingInfo:
+            sections.append(technicalDetailsSectionFetchingInfo)
             timeCellIndexPath = nil
         default:
             sections.append(technicalDetailsSectionDisconnected)
@@ -118,8 +121,10 @@ class StatusViewModel {
         switch appStateManager.displayState {
         case .connected:
             cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
-        case .fetchingInfo, .connecting:
+        case .connecting:
             cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+        case .fetchingInfo:
+            cell = .textWithActivityCell(title: LocalizedString.fetchingServerInfoFor(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: true)
         case .disconnecting:
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         case .disconnected:
@@ -171,6 +176,15 @@ class StatusViewModel {
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
             .staticKeyValue(key: LocalizedString.server, value: LocalizedString.connecting),
+        ]
+
+        return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
+    }
+
+    private var technicalDetailsSectionFetchingInfo: TableViewSection {
+        let cells: [TableViewCellModel] = [
+            .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
+            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.fetchingServerInfoFor(connectionCountryString)),
         ]
 
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
