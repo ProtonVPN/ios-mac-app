@@ -249,6 +249,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             cell.titleLabel.text = title
             cell.titleLabel.textColor = textColor
+            cell.activityIndicatorView.color = textColor
             cell.backgroundColor = backgroundColor
             if showActivity {
                 cell.activityIndicatorView.startAnimating()
