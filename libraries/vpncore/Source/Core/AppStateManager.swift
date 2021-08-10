@@ -36,7 +36,7 @@ public protocol AppStateManager {
 
     // The state displayed to the user in the UI is not always the same as the "real" VPN state
     // For example when connected to the VPN and using local agent we do not want to show the user "Connected" because Internet is not yet available before the local agent connects
-    // So we fake it with a "Connecting" display state
+    // So we fake it with a "Loading connection info" display state
     var displayState: AppDisplayState { get }
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
@@ -563,10 +563,10 @@ public class AppStateManagerImplementation: AppStateManager {
         }
 
         // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
-        // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show connecting
+        // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show loading connection info
         if !isLocalAgentConnected, case AppState.connected = state, !propertiesManager.intentionallyDisconnected {
-            PMLog.D("Showing state as Connecting because local agent not connected yet")
-            displayState = .fetchingInfo
+            PMLog.D("Showing state as Loading connection info because local agent not connected yet")
+            displayState = .loadingConnectionInfo
             return
         }
 

@@ -104,8 +104,8 @@ class StatusViewModel {
         case .connecting:
             sections.append(technicalDetailsSectionConnecting)
             timeCellIndexPath = nil
-        case .fetchingInfo:
-            sections.append(technicalDetailsSectionFetchingInfo)
+        case .loadingConnectionInfo:
+            sections.append(technicalDetailsSectionLoadingConnectionInfo)
             timeCellIndexPath = nil
         default:
             sections.append(technicalDetailsSectionDisconnected)
@@ -123,8 +123,8 @@ class StatusViewModel {
             cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
         case .connecting:
             cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
-        case .fetchingInfo:
-            cell = .textWithActivityCell(title: LocalizedString.fetchingServerInfoFor(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: true)
+        case .loadingConnectionInfo:
+            cell = .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: true)
         case .disconnecting:
             cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
         case .disconnected:
@@ -181,10 +181,10 @@ class StatusViewModel {
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
     }
 
-    private var technicalDetailsSectionFetchingInfo: TableViewSection {
+    private var technicalDetailsSectionLoadingConnectionInfo: TableViewSection {
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
-            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.fetchingServerInfo),
+            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.loadingConnectionInfo),
         ]
 
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)

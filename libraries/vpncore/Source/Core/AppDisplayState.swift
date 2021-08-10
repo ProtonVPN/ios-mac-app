@@ -11,7 +11,7 @@ import Foundation
 public enum AppDisplayState {
     case connected
     case connecting
-    case fetchingInfo
+    case loadingConnectionInfo
     case disconnecting
     case disconnected
 }
