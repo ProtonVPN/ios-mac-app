@@ -46,6 +46,7 @@ class CountryViewCell: UITableViewCell {
             countryName.text = viewModel.description
             countryName.numberOfLines = 2
             countryName.lineBreakMode = .byTruncatingTail
+            countryName.tintColor = .protonWhite()
             
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.smartAvailable
