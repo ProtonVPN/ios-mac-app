@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class OpenVPNUDPAvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
+final class OpenVPNUDPAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     var protocolName: String {
         return "OpenVPN UDP"
     }
