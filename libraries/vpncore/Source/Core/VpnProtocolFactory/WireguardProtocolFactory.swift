@@ -44,6 +44,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
                 
         let keychain = VpnKeychain()
         protocolConfiguration.passwordReference = try? keychain.store(wireguardConfiguration: configuration.wireguardConfig)
+        protocolConfiguration.disconnectOnSleep = true
         
         #if os(macOS)
         protocolConfiguration.providerConfiguration = ["UID": getuid()]
