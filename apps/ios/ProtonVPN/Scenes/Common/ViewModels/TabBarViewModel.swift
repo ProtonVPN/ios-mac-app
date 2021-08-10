@@ -99,7 +99,7 @@ class TabBarViewModel {
             switch self?.appStateManager.displayState {
             case .connected:
                 self?.delegate?.connectedQuickConnect()
-            case .fetchingInfo, .connecting:
+            case .loadingConnectionInfo, .connecting:
                 self?.delegate?.connectingQuickConnect()
             default:
                 self?.delegate?.disconnectedQuickConnect()

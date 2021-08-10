@@ -55,8 +55,8 @@ class ConnectionBarViewController: UIViewController {
                 self?.setConnected()
             case .disconnecting, .disconnected:
                 self?.setDisconnected()
-            case .fetchingInfo:
-                self?.setFetchingInfo()
+            case .loadingConnectionInfo:
+                self?.setLoadingConnectionInfo()
             }
         }
         viewModel?.updateConnected = { [weak self] in self?.updateConnected() }
@@ -76,12 +76,12 @@ class ConnectionBarViewController: UIViewController {
         didMove(toParent: parentViewController)
     }
 
-    private func setFetchingInfo() {
+    private func setLoadingConnectionInfo() {
         self.view.backgroundColor = .protonGreen()
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
-        self.notConnectedLabel.text = LocalizedString.fetchingServerInfo
+        self.notConnectedLabel.text = LocalizedString.loadingConnectionInfo
         self.notConnectedLabel.textColor = .protonWhite()
         self.view.setNeedsDisplay()
     }
