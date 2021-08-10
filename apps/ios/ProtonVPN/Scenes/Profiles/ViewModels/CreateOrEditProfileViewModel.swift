@@ -213,8 +213,9 @@ class CreateOrEditProfileViewModel: NSObject {
     
     private var secureCoreCell: TableViewCellModel {
         return TableViewCellModel.toggle(title: LocalizedString.featureSecureCore, on: isSecureCore, enabled: true) { [weak self] (_, callback) in
-            self?.toggleState(completion: { on in
+            self?.toggleState(completion: { [weak self] on in
                 callback(on)
+                self?.contentChanged?()
             })
         }
     }
