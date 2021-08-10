@@ -13,6 +13,9 @@
   },
   "testTargets" : [
     {
+      "skippedTests" : [
+        "ConnectionTests"
+      ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",
         "identifier" : "D5811D7C229BBD870087B63A",

@@ -13,6 +13,10 @@ fileprivate let doneButton = "Done"
 fileprivate let addButton = "Add"
 fileprivate let deleteButton = "Delete"
 fileprivate let successMessage = "New Profile saved"
+fileprivate let buttonConnect = "con available"
+fileprivate let buttonDisconnect = "con connected"
+fileprivate let fastestProfile = "Fastest Connection"
+fileprivate let randomProfile = "Random Connection"
 
 class ProfileRobot: CoreElements {
     
@@ -25,6 +29,36 @@ class ProfileRobot: CoreElements {
     
     func deleteProfile(_ name: String, _ countryname: String) -> ProfileRobot {
         return delete(name, countryname)
+    }
+    
+    func connectToAProfile(_ name: String) -> ConnectionStatusRobot {
+        button(buttonConnect).byIndex(2).tap()
+        return ConnectionStatusRobot()
+    }
+    
+    func disconnectFromAProfile() -> MainRobot {
+        button(buttonDisconnect).tap()
+        return MainRobot()
+    }
+    
+    func connectToAFastesServer() -> MainRobot {
+        staticText(fastestProfile).tap()
+        return MainRobot()
+    }
+    
+    func disconnectFromAFastesServer() -> MainRobot {
+        staticText(fastestProfile).tap()
+        return MainRobot()
+    }
+    
+    func connectToARandomServer() -> MainRobot {
+        staticText(randomProfile).tap()
+        return MainRobot()
+    }
+    
+    func disconnectFromARandomServer() -> MainRobot {
+        staticText(randomProfile).tap()
+        return MainRobot()
     }
     
     private func addNew() -> CreateProfileRobot {

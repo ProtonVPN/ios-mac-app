@@ -73,6 +73,11 @@
                BlueprintName = "ProtonVPNUITests"
                ReferencedContainer = "container:iOS.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "ConnectionTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>
