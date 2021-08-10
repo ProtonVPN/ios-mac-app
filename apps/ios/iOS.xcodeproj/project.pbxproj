@@ -137,6 +137,11 @@
 		B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6A826540F4D00978637 /* ProfilesTests.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
 		B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6B2265410D200978637 /* LoginRobot.swift */; };
+		B2BA40EB26C28C0F00DF04C3 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */; };
+		B2BA40ED26C28C1E00DF04C3 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */; };
+		B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */; };
+		B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */; };
+		B2BA40F426C2A63E00DF04C3 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */; };
 		B8F0BAE6EEFE43932E7D20B1 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */; };
 		D511084524614D480018872A /* PlanCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D511083D24614D480018872A /* PlanCardView.swift */; };
 		D511084624614D480018872A /* PlanCardView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D511083E24614D480018872A /* PlanCardView.xib */; };
@@ -811,6 +816,11 @@
 		B29CD6A826540F4D00978637 /* ProfilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
 		B29CD6B2265410D200978637 /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/LoginRobot.swift; sourceTree = "<group>"; };
+		B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountryListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/CountryListRobot.swift; sourceTree = "<group>"; };
+		B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionStatusRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ConnectionStatusRobot.swift; sourceTree = "<group>"; };
+		B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ServerListRobot.swift; sourceTree = "<group>"; };
+		B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionTests.swift; path = ../../../../ios/ProtonVPNUITests/NewUITest/Connection/ConnectionTests.swift; sourceTree = "<group>"; };
+		B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/MapRobot.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		BDB268B7C236ED5B1A411ACD /* Pods-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
 		C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -1544,6 +1554,7 @@
 		B29CD69B26540EEE00978637 /* Robots */ = {
 			isa = PBXGroup;
 			children = (
+				B2BA40E926C28BD000DF04C3 /* Connection */,
 				B293D82C2660FB7F00E0ECCB /* Settings */,
 				B29CD69C26540EF400978637 /* Profiles */,
 				B29CD6B2265410D200978637 /* LoginRobot.swift */,
@@ -1564,6 +1575,7 @@
 		B29CD6A726540F2D00978637 /* NewUITest */ = {
 			isa = PBXGroup;
 			children = (
+				B2BA40F026C28C3D00DF04C3 /* Connection */,
 				B293D876266106D700E0ECCB /* TestPlans */,
 				B293D82B2660FB7100E0ECCB /* Settings */,
 				B29CD8D1265BB66300978637 /* Profiles */,
@@ -1577,6 +1589,25 @@
 				B29CD6A826540F4D00978637 /* ProfilesTests.swift */,
 			);
 			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B2BA40E926C28BD000DF04C3 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */,
+				B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */,
+				B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */,
+				B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		B2BA40F026C28C3D00DF04C3 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */,
+			);
+			path = Connection;
 			sourceTree = "<group>";
 		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
@@ -3739,6 +3770,7 @@
 			files = (
 				B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */,
 				B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */,
+				B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */,
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
@@ -3747,12 +3779,16 @@
 				F3521E1A264AA40F0070F177 /* BuildFile in Sources */,
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
+				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
 				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
+				B2BA40EB26C28C0F00DF04C3 /* CountryListRobot.swift in Sources */,
 				B293D8342660FC0A00E0ECCB /* ReportBugRobot.swift in Sources */,
+				B2BA40ED26C28C1E00DF04C3 /* ConnectionStatusRobot.swift in Sources */,
 				B293D8382660FC3B00E0ECCB /* ReportBugTests.swift in Sources */,
 				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
 				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,
+				B2BA40F426C2A63E00DF04C3 /* MapRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

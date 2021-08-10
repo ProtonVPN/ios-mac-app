@@ -20,7 +20,7 @@ def openvpn
 end
 
 def pm_automation
-  pod 'pmtest', :git => proton_url + ':apple/shared/pmtest.git', :commit => '579ef5f66deea4231784614d936956982f53ee30'
+  pod 'pmtest', :git => proton_url + ':apple/shared/pmtestautomation.git', :commit => '579ef5f66deea4231784614d936956982f53ee30'
 end
 
 def keychain_access
