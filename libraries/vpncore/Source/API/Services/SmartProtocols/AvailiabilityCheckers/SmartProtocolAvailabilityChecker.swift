@@ -83,7 +83,7 @@ extension SharedLibrarySmartProtocolAvailabilityChecker {
         DispatchQueue.global(qos: .userInitiated).async {
             var error: NSError?
             var ret: ObjCBool = false
-            let result = VpnPingPingSync(server.entryIp, port, key, Int(timeout * 1000), &ret, &error)
+            let result = VpnPingPingSyncWithError(server.entryIp, port, key, Int(timeout * 1000), &ret, &error)
 
             if let error = error {
                 PMLog.D("\(protocolName) NOT available for \(server.entryIp) on port \(port) (Error: \(error)")
