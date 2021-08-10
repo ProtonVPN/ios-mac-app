@@ -68,9 +68,9 @@ extension SmartProtocolAvailabilityChecker {
     }
 }
 
-protocol SharedLibrarySmartProtocolAvailabilityChecker: SmartProtocolAvailabilityChecker { }
+protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker { }
 
-extension SharedLibrarySmartProtocolAvailabilityChecker {
+extension SharedLibraryUDPAvailabilityChecker {
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
         PMLog.D("Checking \(protocolName) availability for \(server.entryIp) on port \(port)")
 

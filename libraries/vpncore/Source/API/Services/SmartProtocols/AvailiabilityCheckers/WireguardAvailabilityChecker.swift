@@ -8,7 +8,7 @@
 
 import Foundation
 
-final class WireguardAvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
+final class WireguardAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     var protocolName: String {
         return "Wireguard"
     }

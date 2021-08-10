@@ -23,7 +23,7 @@
 import Foundation
 import Network
 
-final class IKEv2AvailabilityChecker: SharedLibrarySmartProtocolAvailabilityChecker {
+final class IKEv2AvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     var protocolName: String {
         return "IKEv2"
     }
