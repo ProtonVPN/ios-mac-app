@@ -184,7 +184,7 @@ class StatusViewModel {
     private var technicalDetailsSectionFetchingInfo: TableViewSection {
         let cells: [TableViewCellModel] = [
             .staticKeyValue(key: LocalizedString.ip, value: propertiesManager.userIp ?? LocalizedString.unavailable),
-            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.fetchingServerInfoFor(connectionCountryString)),
+            .staticKeyValue(key: LocalizedString.server, value: LocalizedString.fetchingServerInfo),
         ]
 
         return TableViewSection(title: LocalizedString.technicalDetails.uppercased(), cells: cells)
