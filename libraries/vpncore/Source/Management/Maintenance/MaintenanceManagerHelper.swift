@@ -45,7 +45,7 @@ public class MaintenanceManagerHelper {
     }
     
     public func startMaintenanceManager() {
-        guard propertiesManager.featureFlags.isServerRefresh else {
+        guard propertiesManager.featureFlags.serverRefresh else {
             maintenanceManager.stopObserving()
             return // Feature is disabled
         }

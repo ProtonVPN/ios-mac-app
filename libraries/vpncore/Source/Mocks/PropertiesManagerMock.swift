@@ -53,13 +53,15 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var warnedTrialExpired: Bool = false
     public var reportBugEmail: String?
     public var openVpnConfig: OpenVpnConfig?
+    public var wireguardConfig: WireguardConfig?
+    public var smartProtocolConfig: SmartProtocolConfig?
     public var vpnProtocol: VpnProtocol = .ike
     public var currentSubscription: Subscription?
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
     public var lastAppVersion = MigrationVersion("0")
     public var lastTimeForeground: Date?
-    public var featureFlags: FeatureFlags = FeatureFlags.defaultConfig
+    public var featureFlags: FeatureFlags = FeatureFlags()
     public var netShieldType: NetShieldType? = .off
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false

@@ -32,7 +32,7 @@ public struct VpnProperties {
         self.serverModels = serverModels
         self.vpnCredentials = vpnCredentials
         self.ip = ip
-        self.clientConfig = clientConfig ?? ClientConfig.defaultConfig
+        self.clientConfig = clientConfig ?? ClientConfig()
         self.streamingResponse = streamingResponse
     }
 }

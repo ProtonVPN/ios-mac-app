@@ -112,7 +112,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
-        if propertiesManager.featureFlags.isAnnouncementOn {
+        if propertiesManager.featureFlags.pollNotificationAPI {
             announcementRefresher.refresh()
         }
 
@@ -204,7 +204,7 @@ fileprivate extension AppDelegate {
     
     @objc func featureFlagsChanged() {
         // Check servers in maintenance
-        guard propertiesManager.featureFlags.isServerRefresh else {
+        guard propertiesManager.featureFlags.serverRefresh else {
             UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalNever)
             return
         }

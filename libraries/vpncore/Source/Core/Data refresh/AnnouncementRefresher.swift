@@ -73,7 +73,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
     
     @objc func featureFlagsChanged(_ notification: NSNotification) {
         guard let featureFlags = notification.object as? FeatureFlags else { return }
-        if featureFlags.isAnnouncementOn {
+        if featureFlags.pollNotificationAPI {
             refresh()
         } else { // Hide announcements
             resetTimer()

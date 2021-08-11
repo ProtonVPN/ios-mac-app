@@ -38,7 +38,7 @@ class StreamingServiceCell: UICollectionViewCell {
             serviceIV.isHidden = true
             serviceLbl.isHidden = false
             
-            guard propertiesManager.featureFlags.isStreamingServicesLogos,
+            guard propertiesManager.featureFlags.streamingServicesLogos,
                   let icon = service?.icon,
                   let baseUrl = propertiesManager.streamingResourcesUrl,
                   let url = URL(string: baseUrl + icon ) else {

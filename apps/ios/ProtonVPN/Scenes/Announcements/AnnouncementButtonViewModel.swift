@@ -51,7 +51,7 @@ class AnnouncementButtonViewModel {
     // MARK: Main part
     
     public var showAnnouncements: Bool {
-        guard propertiesManager.featureFlags.isAnnouncementOn else {
+        guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return !announcementManager.fetchCurrentAnnouncements().isEmpty

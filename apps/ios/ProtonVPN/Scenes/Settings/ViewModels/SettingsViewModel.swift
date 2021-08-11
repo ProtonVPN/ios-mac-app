@@ -74,7 +74,7 @@ class SettingsViewModel {
         sections.append(accountSection)
         sections.append(securitySection)
         
-        if propertiesManager.featureFlags.isVpnAccelerator {
+        if propertiesManager.featureFlags.vpnAccelerator {
             sections.append(connectionSection)
         }
         sections.append(extensionsSection)
@@ -266,7 +266,7 @@ class SettingsViewModel {
             }))
         }
         
-        let netShieldAvailable = propertiesManager.featureFlags.isNetShield
+        let netShieldAvailable = propertiesManager.featureFlags.netShield
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
                 pushNetshieldSelectionViewController(self.netShieldPropertyProvider.netShieldType, { type, approve in

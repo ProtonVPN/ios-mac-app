@@ -106,7 +106,7 @@ public class VpnManagerConfigurationPreparer {
                                            authData: authData,
                                            vpnProtocol: connectionConfig.vpnProtocol,
                                            netShield: connectionConfig.netShieldType,
-                                           vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
+                                           vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            bouncing: connectionConfig.serverIp.label,
                                            preferredPorts: connectionConfig.preferredPorts,
                                            serverPublicKey: connectionConfig.serverIp.x25519PublicKey
@@ -128,11 +128,11 @@ public class VpnManagerConfigurationPreparer {
         var extraConfiguration: [VpnManagerClientConfiguration] = [.macClient]
         #endif
         
-        if propertiesManager.featureFlags.isNetShield {
+        if propertiesManager.featureFlags.netShield {
             extraConfiguration += connectionConfig.netShieldType.vpnManagerClientConfigurationFlags
         }
 
-        if propertiesManager.featureFlags.isVpnAccelerator && !propertiesManager.vpnAcceleratorEnabled {
+        if propertiesManager.featureFlags.vpnAccelerator && !propertiesManager.vpnAcceleratorEnabled {
             // VPN accelerator works with opposite logic, we send this suffix in case of NOT activated and feature enabled
             extraConfiguration += [.vpnAccelerator]
         }

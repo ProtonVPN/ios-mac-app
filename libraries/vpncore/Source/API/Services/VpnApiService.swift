@@ -320,8 +320,8 @@ public class VpnApiService {
                 let decoder = JSONDecoder()
                 // this strategy is decapitalizing first letter of response's labels to get appropriate name
                 decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let clientConfigResponse = try decoder.decode(ClientConfig.self, from: data)
-                success(clientConfigResponse)
+                let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
+                success(clientConfigResponse.clientConfig)
             
             } catch {
                 PMLog.D("Failed to parse load info for json: \(response)", level: .error)
