@@ -212,6 +212,8 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
             self.propertiesManager.userIp = properties.ip
             self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+            self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
+            self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
             self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
 
@@ -238,7 +240,7 @@ class AppSessionManagerImplementation: AppSessionManager {
             self.refreshVpnAuthCertificate(success: success, failure: failure)
         })
         
-        if propertiesManager.featureFlags.isAnnouncementOn {
+        if propertiesManager.featureFlags.pollNotificationAPI {
             announcementRefresher.refresh()
         }
         

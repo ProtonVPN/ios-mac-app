@@ -88,6 +88,10 @@ public protocol PropertiesManagerProtocol: class {
     var showOnlyWireguardServersAndCountries: Bool { get }
 
     var connectionProtocol: ConnectionProtocol { get }
+
+    var wireguardConfig: WireguardConfig? { get set }
+
+    var smartProtocolConfig: SmartProtocolConfig? { get set }
     
     func logoutCleanup()
     
@@ -154,6 +158,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let smartProtocol: String = "smartProtocol"
         static let streamingServices: String = "streamingServices"
         static let streamingResourcesUrl: String = "streamingResourcesUrl"
+
+        static let wireguardConfig = "WireguardConfig"
+        static let smartProtocolConfig = "SmartProtocolConfig"
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -420,6 +427,32 @@ public class PropertiesManager: PropertiesManagerProtocol {
             Storage.setValue(data, forKey: Keys.openVpnConfig)
         }
     }
+
+    public var wireguardConfig: WireguardConfig? {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.wireguardConfig) else {
+                return nil
+            }
+            return try? PropertyListDecoder().decode(WireguardConfig.self, from: data)
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.wireguardConfig)
+        }
+    }
+
+    public var smartProtocolConfig: SmartProtocolConfig? {
+        get {
+            guard let data = Storage.userDefaults().data(forKey: Keys.smartProtocolConfig) else {
+                return nil
+            }
+            return try? PropertyListDecoder().decode(SmartProtocolConfig.self, from: data)
+        }
+        set {
+            let data = try? PropertyListEncoder().encode(newValue)
+            Storage.setValue(data, forKey: Keys.smartProtocolConfig)
+        }
+    }
     
     public var vpnProtocol: VpnProtocol {
         get {
@@ -486,7 +519,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
             if let data = Storage.userDefaults().data(forKey: Keys.featureFlags) {
                 current = try? JSONDecoder().decode(FeatureFlags.self, from: data)
             }
-            return current ?? FeatureFlags.defaultConfig
+            return current ?? FeatureFlags()
         }
         set {
             if let data = try? JSONEncoder().encode(newValue) {

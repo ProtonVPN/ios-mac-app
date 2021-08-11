@@ -22,16 +22,22 @@
 
 import Foundation
 
-public struct ClientConfig: Codable {
-    
+public struct ClientConfig {
     public let openVPNConfig: OpenVpnConfig
     public let featureFlags: FeatureFlags
     public let serverRefreshInterval: Int
-    
-    public static let defaultConfig = ClientConfig(
-        openVPNConfig: OpenVpnConfig.defaultConfig,
-        featureFlags: FeatureFlags.defaultConfig,
-        serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
-    )
+    public let wireGuardConfig: WireguardConfig
+    public let smartProtocolConfig: SmartProtocolConfig
 
+    public init(openVPNConfig: OpenVpnConfig, featureFlags: FeatureFlags, serverRefreshInterval: Int, wireGuardConfig: WireguardConfig, smartProtocolConfig: SmartProtocolConfig) {
+        self.openVPNConfig = openVPNConfig
+        self.featureFlags = featureFlags
+        self.serverRefreshInterval = serverRefreshInterval
+        self.wireGuardConfig = wireGuardConfig
+        self.smartProtocolConfig = smartProtocolConfig
+    }
+
+    public init() {
+        self.init(openVPNConfig: OpenVpnConfig(), featureFlags: FeatureFlags(), serverRefreshInterval: CoreAppConstants.Maintenance.defaultMaintenanceCheckTime, wireGuardConfig: WireguardConfig(), smartProtocolConfig: SmartProtocolConfig())
+    }
 }

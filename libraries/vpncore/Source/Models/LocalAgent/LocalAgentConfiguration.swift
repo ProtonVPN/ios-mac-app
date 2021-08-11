@@ -44,6 +44,6 @@ extension LocalAgentConfiguration {
             return nil
         }
 
-        self.init(hostname: connectionConfiguration.serverIp.domain, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.isVpnAccelerator || propertiesManager.vpnAcceleratorEnabled, bouncing: connectionConfiguration.serverIp.label)
+        self.init(hostname: connectionConfiguration.serverIp.domain, netshield: propertiesManager.netShieldType ?? .off, vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled, bouncing: connectionConfiguration.serverIp.label)
     }
 }

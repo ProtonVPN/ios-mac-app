@@ -23,46 +23,29 @@
 import Foundation
 
 public struct FeatureFlags: Codable {
-    
-    public let netShield: Int
-    public let guestHoles: Int
-    public let serverRefresh: Int
-    public let pollNotificationAPI: Int
-    public let streamingServicesLogos: Int
-    public let vpnAccelerator: Int
-    
-    public static let defaultConfig = FeatureFlags(
-        netShield: 1,
-        guestHoles: 0,
-        serverRefresh: 0,
-        pollNotificationAPI: 0,
-        streamingServicesLogos: 0,
-        vpnAccelerator: 0
-    )
-    
-    // Some properties to get around dirty API
-    
-    public var isNetShield: Bool {
-        return netShield != 0
+    public let smartReconnect: Bool
+    public let vpnAccelerator: Bool
+    public let netShield: Bool
+    public let streamingServicesLogos: Bool
+    public let portForwarding: Bool
+    public let moderateNAT: Bool
+    public let pollNotificationAPI: Bool
+    public let serverRefresh: Bool
+    public let guestHoles: Bool
+
+    public init(smartReconnect: Bool, vpnAccelerator: Bool, netShield: Bool, streamingServicesLogos: Bool, portForwarding: Bool, moderateNAT: Bool, pollNotificationAPI: Bool, serverRefresh: Bool, guestHoles: Bool) {
+        self.smartReconnect = smartReconnect
+        self.vpnAccelerator = vpnAccelerator
+        self.netShield = netShield
+        self.streamingServicesLogos = streamingServicesLogos
+        self.portForwarding = portForwarding
+        self.moderateNAT = moderateNAT
+        self.pollNotificationAPI = pollNotificationAPI
+        self.serverRefresh = serverRefresh
+        self.guestHoles = guestHoles
     }
-    
-    public var isGuestHoles: Bool {
-        return guestHoles != 0
-    }
-    
-    public var isServerRefresh: Bool {
-        return serverRefresh != 0
-    }
-    
-    public var isAnnouncementOn: Bool {
-        return pollNotificationAPI != 0
-    }
-    
-    public var isStreamingServicesLogos: Bool {
-        return streamingServicesLogos != 0
-    }
-    
-    public var isVpnAccelerator: Bool {
-        return vpnAccelerator != 0
+
+    public init() {
+        self.init(smartReconnect: false, vpnAccelerator: false, netShield: true, streamingServicesLogos: false, portForwarding: false, moderateNAT: false, pollNotificationAPI: false, serverRefresh: false, guestHoles: false)
     }
 }

@@ -24,6 +24,6 @@ import Alamofire
 
 class VPNClientConfigRequest: VPNBaseRequest {
     override func path() -> String {
-        return super.path() + "/clientconfig"
+        return super.path() + "/v2/clientconfig"
     }
 }

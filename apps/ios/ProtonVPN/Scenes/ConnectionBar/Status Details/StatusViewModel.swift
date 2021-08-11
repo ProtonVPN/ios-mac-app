@@ -92,7 +92,7 @@ class StatusViewModel {
         
         sections.append(connectionStatusSection)
         
-        if propertiesManager.featureFlags.isNetShield {
+        if propertiesManager.featureFlags.netShield {
             sections.append(netshieldSection)
         }
 

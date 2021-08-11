@@ -139,6 +139,8 @@ class AppSessionManagerImplementation: AppSessionManager {
                 self.propertiesManager.userIp = properties.ip
             }
             self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+            self.propertiesManager.wireguardConfig = properties.clientConfig.wireguardConfig
+            self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
             self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
             self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
