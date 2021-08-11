@@ -1692,7 +1692,7 @@
 "_openvpn_settings_step3" = "Allow the system software to load.";
 
 "_openvpn_settings_enabled_title" = "You can now use Smart Protocol and OpenVPN";
-"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol and OpenVPN.";
+"_openvpn_settings_enabled_description" = "You have successfully enabled the System Extension. You can now use Smart Protocol and OpenVPN.";
 
 "_openvpn_cannot_enable" = "Cannot enable OpenVPN";
 "_openvpn_error_description" = "An error occurred while installing OpenVPN.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
