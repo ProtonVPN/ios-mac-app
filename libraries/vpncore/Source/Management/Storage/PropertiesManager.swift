@@ -59,7 +59,7 @@ public protocol PropertiesManagerProtocol: class {
     var warnedTrialExpiring: Bool { get set }
     var warnedTrialExpired: Bool { get set }
     
-    var openVpnConfig: OpenVpnConfig? { get set }
+    var openVpnConfig: OpenVpnConfig { get set }
     var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
     var sessions: [SessionModel] { get set }
@@ -89,9 +89,9 @@ public protocol PropertiesManagerProtocol: class {
 
     var connectionProtocol: ConnectionProtocol { get }
 
-    var wireguardConfig: WireguardConfig? { get set }
+    var wireguardConfig: WireguardConfig { get set }
 
-    var smartProtocolConfig: SmartProtocolConfig? { get set }
+    var smartProtocolConfig: SmartProtocolConfig { get set }
     
     func logoutCleanup()
     
@@ -415,12 +415,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var openVpnConfig: OpenVpnConfig? {
+    public var openVpnConfig: OpenVpnConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.openVpnConfig) else {
-                return nil
+            guard let data = Storage.userDefaults().data(forKey: Keys.openVpnConfig), let config = try? PropertyListDecoder().decode(OpenVpnConfig.self, from: data)  else {
+                return OpenVpnConfig()
             }
-            return try? PropertyListDecoder().decode(OpenVpnConfig.self, from: data)
+            return config
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
@@ -428,12 +428,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public var wireguardConfig: WireguardConfig? {
+    public var wireguardConfig: WireguardConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.wireguardConfig) else {
-                return nil
+            guard let data = Storage.userDefaults().data(forKey: Keys.wireguardConfig), let config = try? PropertyListDecoder().decode(WireguardConfig.self, from: data) else {
+                return WireguardConfig()
             }
-            return try? PropertyListDecoder().decode(WireguardConfig.self, from: data)
+            return config
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
@@ -441,12 +441,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
 
-    public var smartProtocolConfig: SmartProtocolConfig? {
+    public var smartProtocolConfig: SmartProtocolConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.smartProtocolConfig) else {
-                return nil
+            guard let data = Storage.userDefaults().data(forKey: Keys.smartProtocolConfig), let config = try? PropertyListDecoder().decode(SmartProtocolConfig.self, from: data) else {
+                return SmartProtocolConfig()
             }
-            return try? PropertyListDecoder().decode(SmartProtocolConfig.self, from: data)
+            return config
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
