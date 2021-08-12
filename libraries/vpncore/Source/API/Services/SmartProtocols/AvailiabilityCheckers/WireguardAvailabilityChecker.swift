@@ -12,13 +12,13 @@ final class WireguardAvailabilityChecker: SharedLibraryUDPAvailabilityChecker {
     var protocolName: String {
         return "Wireguard"
     }
-    let port: Int
+    private let config: WireguardConfig
 
-    init(port: Int = 51820) {
-        self.port = port
+    init(config: WireguardConfig) {
+        self.config = config
     }
 
     func checkAvailability(server: ServerIp, completion: @escaping SmartProtocolAvailabilityCheckerCompletion) {
-        checkAvailability(server: server, ports: [port], completion: completion)
+        checkAvailability(server: server, ports: config.defaultPorts, completion: completion)
     }
 }
