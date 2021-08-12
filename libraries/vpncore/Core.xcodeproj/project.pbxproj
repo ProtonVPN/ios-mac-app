@@ -988,8 +988,6 @@
 		F349B1F52680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
 		F349B1F62680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
 		F349B1F72680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */; };
-		F349B1F92683BBCB002C7A16 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
-		F349B1FA2683BBCC002C7A16 /* OpenVpnConfigTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */; };
 		F365355126383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
 		F365355226383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
 		F365355326383DDC001B7E88 /* LocalAgent.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355026383DDC001B7E88 /* LocalAgent.swift */; };
@@ -1454,7 +1452,6 @@
 		F3A05A3326C14223004D9E18 /* AppDisplayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDisplayState.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
-		F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OpenVpnConfigTests.swift; sourceTree = "<group>"; };
 		F3D4DC4D2632FF9B0032B752 /* WireguardSRP.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = WireguardSRP.xcframework; path = Frameworks/WireguardSRP.xcframework; sourceTree = "<group>"; };
 		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
 		F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConfiguration.swift; sourceTree = "<group>"; };
@@ -1844,7 +1841,6 @@
 		F320561825E7A23100566DB7 /* Networking */ = {
 			isa = PBXGroup;
 			children = (
-				F3AFC1DA25FBAEDD005FF4D7 /* OpenVpnConfigTests.swift */,
 				F320561925E7A25A00566DB7 /* AlternativeRoutingTests.swift */,
 			);
 			path = Networking;
@@ -3358,7 +3354,6 @@
 				E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */,
 				D5C2054F2487A0CF004FB58B /* Arithmetic.swift in Sources */,
 				D5C205502487A0CF004FB58B /* HexColor.swift in Sources */,
-				F349B1F92683BBCB002C7A16 /* OpenVpnConfigTests.swift in Sources */,
 				D5D2945025A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				F3653569263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D5C205512487A0CF004FB58B /* LocationUtility.swift in Sources */,
@@ -3865,7 +3860,6 @@
 				D5C204C624866B81004FB58B /* ServicePlanDetails.swift in Sources */,
 				D5686B1C24E3D2D700CC8836 /* ValidateSubscriptionRequest.swift in Sources */,
 				D55D790D24978996009669E0 /* APILogger.swift in Sources */,
-				F349B1FA2683BBCC002C7A16 /* OpenVpnConfigTests.swift in Sources */,
 				D5C204C724866B81004FB58B /* PaymentAction.swift in Sources */,
 				F365355926384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				D5C204C824866B81004FB58B /* PaymentToken.swift in Sources */,
