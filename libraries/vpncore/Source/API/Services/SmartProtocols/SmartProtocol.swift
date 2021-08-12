@@ -30,16 +30,13 @@ protocol SmartProtocol {
 
 final class SmartProtocolImplementation: SmartProtocol {
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
-    private let config: OpenVpnConfig
 
-    init(config: OpenVpnConfig) {
-        self.config = config
-
+    init(openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
         checkers = [
             .ikev2: IKEv2AvailabilityChecker(),
-            .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: config),
-            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: config),
-            .wireguard: WireguardAvailabilityChecker()
+            .openVpnUdp: OpenVPNUDPAvailabilityChecker(config: openVpnConfig),
+            .openVpnTcp: OpenVPNTCPAvailabilityChecker(config: openVpnConfig),
+            .wireguard: WireguardAvailabilityChecker(config: wireguardConfig)
         ]
     }
 
