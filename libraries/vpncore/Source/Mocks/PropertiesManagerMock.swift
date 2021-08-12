@@ -52,9 +52,9 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var warnedTrialExpiring: Bool = false
     public var warnedTrialExpired: Bool = false
     public var reportBugEmail: String?
-    public var openVpnConfig: OpenVpnConfig?
-    public var wireguardConfig: WireguardConfig?
-    public var smartProtocolConfig: SmartProtocolConfig?
+    public var openVpnConfig: OpenVpnConfig = OpenVpnConfig()
+    public var wireguardConfig: WireguardConfig = WireguardConfig()
+    public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var vpnProtocol: VpnProtocol = .ike
     public var currentSubscription: Subscription?
     public var apiEndpoint: String?

@@ -239,7 +239,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     }
     
     private func portsConfig() -> OpenVpnConfig {
-        return propertiesManager.openVpnConfig ?? OpenVpnConfig()
+        return propertiesManager.openVpnConfig
     }
     
     private func logData(completion: @escaping (Data?) -> Void) {
