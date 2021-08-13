@@ -9,7 +9,16 @@
 import Foundation
 
 public struct WireguardConfig: Codable {
-    let defaultPorts: [Int]
+    public let defaultPorts: [Int]
+    public var dns: String {
+        return "10.2.0.1"
+    }
+    public var address: String {
+        return "10.2.0.2/32"
+    }
+    public var allowedIPs: String {
+        return "0.0.0.0/0"
+    }
 
     init(defaultPorts: [Int] = [51820]) {
         self.defaultPorts = defaultPorts
