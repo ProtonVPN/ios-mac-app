@@ -43,7 +43,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         protocolConfiguration.serverAddress = configuration.entryServerAddress
                 
         let keychain = VpnKeychain()
-        protocolConfiguration.passwordReference = try? keychain.store(wireguardConfiguration: configuration.wireguardConfig)
+        protocolConfiguration.passwordReference = try? keychain.store(wireguardConfiguration: configuration.asWireguardConfiguration(config: propertiesManager.wireguardConfig))
         protocolConfiguration.disconnectOnSleep = true
         
         #if os(macOS)
@@ -124,24 +124,30 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 }
 
 extension VpnManagerConfiguration {
-    
-    var wireguardConfig: String {
+    func asWireguardConfiguration(config: WireguardConfig) -> String {
         var output = "[Interface]\n"
         
         if let authData = authData {
             output.append("PrivateKey = \(authData.clientKey.base64X25519Representation)\n")
         }
-        output.append("Address = 10.2.0.2/32\n")
-        output.append("DNS = 10.2.0.1\n")
+        output.append("Address = \(config.address)\n")
+        output.append("DNS = \(config.dns)\n")
         
         output.append("\n[Peer]\n")
         if let serverPublicKey = serverPublicKey {
             output.append("PublicKey = \(serverPublicKey)\n")
         }
-        output.append("AllowedIPs = 0.0.0.0/0\n")
-        output.append("Endpoint = \(entryServerAddress):51820\n")
+        output.append("AllowedIPs = \(config.allowedIPs)\n")
+
+        let ports: [Int]
+        if let preferredPorts = preferredPorts, !preferredPorts.isEmpty {
+            ports = preferredPorts
+        } else {
+            ports = config.defaultPorts.shuffled()
+        }
+        let port = ports.first!
+        output.append("Endpoint = \(entryServerAddress):\(port)\n")
         
         return output
     }
-    
 }
