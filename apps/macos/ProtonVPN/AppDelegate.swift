@@ -85,7 +85,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
-        if propertiesManager.featureFlags.isAnnouncementOn {
+        if propertiesManager.featureFlags.pollNotificationAPI {
             self.container.makeAnnouncementRefresher().refresh()
         }
 

@@ -55,7 +55,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsKillSwitchDescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsKillSwitchNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
         viewController?.dropdownUgradeButton.isHidden = true
-        if propertiesManager.featureFlags.isNetShield {
+        if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 3) - 7
         } else {
             viewController?.arrowHorizontalConstraint.constant = ((AppConstants.Windows.sidebarWidth - 18) / 5) + 12
