@@ -53,7 +53,7 @@ class SecureCoreDropdownPresenter: QuickSettingDropdownPresenter {
         super.viewDidLoad()
         viewController?.dropdownDescription.attributedStringValue = LocalizedString.quickSettingsSecureCoreDescription.attributed(withColor: .protonWhite(), fontSize: 12, alignment: .left)
         viewController?.dropdownNote.attributedStringValue = LocalizedString.quickSettingsSecureCoreNote.attributed(withColor: .protonGreyUnselectedWhite(), fontSize: 12, italic: true, alignment: .left)
-        if propertiesManager.featureFlags.isNetShield {
+        if propertiesManager.featureFlags.netShield {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 3) + 7
         } else {
             viewController?.arrowHorizontalConstraint.constant = -((AppConstants.Windows.sidebarWidth - 18) / 5) - 12

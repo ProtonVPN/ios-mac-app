@@ -214,7 +214,7 @@ class CreateNewProfileViewModel {
     }
     
     var isNetshieldEnabled: Bool {
-        return propertiesManager.featureFlags.isNetShield
+        return propertiesManager.featureFlags.netShield
     }
 
     let availableVpnProtocols = [VpnProtocol.ike, VpnProtocol.openVpn(.tcp), VpnProtocol.openVpn(.udp)]

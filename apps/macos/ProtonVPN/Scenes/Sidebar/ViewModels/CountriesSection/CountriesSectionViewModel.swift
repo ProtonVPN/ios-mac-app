@@ -79,7 +79,7 @@ class CountriesSectionViewModel {
     }
     
     var isNetShieldEnabled: Bool {
-        return propertiesManager.featureFlags.isNetShield
+        return propertiesManager.featureFlags.netShield
     }
     
     // MARK: - QuickSettings presenters

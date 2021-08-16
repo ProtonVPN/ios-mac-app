@@ -114,7 +114,7 @@ final class ConnectionSettingsViewModel {
     }
     
     var isAcceleratorFeatureEnabled: Bool {
-        return featureFlags.isVpnAccelerator
+        return featureFlags.vpnAccelerator
     }
     
     var vpnAcceleratorEnabled: Bool {

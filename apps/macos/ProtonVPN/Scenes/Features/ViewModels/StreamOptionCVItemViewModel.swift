@@ -33,7 +33,7 @@ class StreamOptionCVItemViewModel: StreamOptionCVItemViewModelProtocol {
     var serviceName: String { option.name }
     
     var url: URL? {
-        guard propertiesManager.featureFlags.isStreamingServicesLogos,
+        guard propertiesManager.featureFlags.streamingServicesLogos,
               let baseUrl = propertiesManager.streamingResourcesUrl else { return nil }
         let icon = option.icon
         return URL(string: baseUrl + icon )

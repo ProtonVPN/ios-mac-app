@@ -121,7 +121,7 @@ final class HeaderViewModel {
     // MARK: - Announcements bell
     
     public var showAnnouncements: Bool {
-        guard propertiesManager.featureFlags.isAnnouncementOn else {
+        guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return !announcementManager.fetchCurrentAnnouncements().isEmpty
