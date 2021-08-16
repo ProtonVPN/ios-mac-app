@@ -30,35 +30,52 @@ protocol SmartProtocol {
 
 final class SmartProtocolImplementation: SmartProtocol {
     private let checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker]
+    private let fallback: (SmartProtocolProtocol, [Int])
 
     init(smartProtocolConfig: SmartProtocolConfig, openVpnConfig: OpenVpnConfig, wireguardConfig: WireguardConfig) {
         var checkers: [SmartProtocolProtocol: SmartProtocolAvailabilityChecker] = [:]
+        var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
         if smartProtocolConfig.iKEv2 {
             PMLog.D("IKEv2 will be used for Smart Protocol checks")
             checkers[.ikev2] = IKEv2AvailabilityChecker()
+
+            fallbackCandidates.append((SmartProtocolProtocol.ikev2, [500]))
         }
 
         if smartProtocolConfig.openVPN {
             PMLog.D("OpenVPN will be used for Smart Protocol checks")
             checkers[.openVpnUdp] = OpenVPNUDPAvailabilityChecker(config: openVpnConfig)
             checkers[.openVpnTcp] = OpenVPNTCPAvailabilityChecker(config: openVpnConfig)
+
+            fallbackCandidates.append((SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts))
+            fallbackCandidates.append((SmartProtocolProtocol.openVpnTcp, openVpnConfig.defaultTcpPorts))
         }
 
         if smartProtocolConfig.wireGuard {
             PMLog.D("Wireguard will be used for Smart Protocol checks")
             checkers[.wireguard] = WireguardAvailabilityChecker(config: wireguardConfig)
+
+            fallbackCandidates.append((SmartProtocolProtocol.wireguard, wireguardConfig.defaultPorts))
+        }
+
+        if let fallback = fallbackCandidates.min(by: { lhs, rhs in lhs.0.priority < rhs.0.priority }) {
+            self.fallback = fallback
+        } else {
+            #if os(iOS)
+            self.fallback = (SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts)
+            #else
+            self.fallback = (SmartProtocolProtocol.ikev2, [500])
+            #endif
         }
 
         self.checkers = checkers
     }
 
     func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
-        let wiregardFallbackPort = 51820
-
         guard !checkers.isEmpty else {
-            PMLog.ET("Client config received from backend has all the VPN procols disabled for Smart Protocol, fallback to Wireguard")
-            completion(VpnProtocol.wireGuard, [wiregardFallbackPort])
+            PMLog.ET("Client config received from backend has all the VPN procols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)")
+            completion(fallback.0.vpnProtocol, fallback.1)
             return
         }
 
@@ -83,12 +100,12 @@ final class SmartProtocolImplementation: SmartProtocol {
             }
         }
 
-        group.notify(queue: .global()) {
+        group.notify(queue: .global()) { [fallback] in
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
-                PMLog.D("No best protocol determined, fallback to Wireguard")
-                completion(VpnProtocol.wireGuard, [wiregardFallbackPort])
+                PMLog.D("No best protocol determined, fallback to \(fallback.0.vpnProtocol)")
+                completion(fallback.0.vpnProtocol, fallback.1)
                 return
             }
 
