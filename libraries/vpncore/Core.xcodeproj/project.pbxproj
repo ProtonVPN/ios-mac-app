@@ -1028,6 +1028,10 @@
 		F38BB44D265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44E265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
 		F38BB44F265B893F00329619 /* LocalAgentError.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38BB44B265B893F00329619 /* LocalAgentError.swift */; };
+		F39E71CA26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
+		F39E71CB26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
+		F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
+		F39E71CD26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
 		F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
 		F3A05A3526C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
 		F3A05A3626C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
@@ -1449,6 +1453,7 @@
 		F389188B26C3D673006214A8 /* WireguardConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardConfig.swift; sourceTree = "<group>"; };
 		F389189026C3E55A006214A8 /* SmartProtocolConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartProtocolConfig.swift; sourceTree = "<group>"; };
 		F38BB44B265B893F00329619 /* LocalAgentError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentError.swift; sourceTree = "<group>"; };
+		F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientConfigResponse.swift; sourceTree = "<group>"; };
 		F3A05A3326C14223004D9E18 /* AppDisplayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDisplayState.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
@@ -1906,6 +1911,7 @@
 				E116D76722C229FB00D14A51 /* AuthInfoResponse.swift */,
 				4243631E26555D590027EAEE /* SessionsResponse.swift */,
 				E1616BBD21C7D24E00F42D79 /* Responses.swift */,
+				F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */,
 				D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */,
 				D5B4712524DD7F2F0041D122 /* ValidateSubscriptionResponse.swift */,
 			);
@@ -3077,6 +3083,7 @@
 				E1616C0021C95D1E00F42D79 /* ProfileManager.swift in Sources */,
 				E1616BE521C9392600F42D79 /* VpnGateway.swift in Sources */,
 				4242B0302465A41A0042145A /* VPNClientCredentialsRequest.swift in Sources */,
+				F39E71CA26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E12485952243D62F0049B57D /* ConnectionRequest.swift in Sources */,
 				4242B0852465A4D10042145A /* VpnProperties.swift in Sources */,
 				E1B5F65721B81E4000B558B0 /* ServerModel.swift in Sources */,
@@ -3227,6 +3234,7 @@
 				D5C205062487A0CE004FB58B /* UserCheckUsernameRequest.swift in Sources */,
 				D59671FD253D747A0061A75F /* CoreApiServiceMock.swift in Sources */,
 				D59671CE253D5D440061A75F /* AnnouncementManagerImplementationTests.swift in Sources */,
+				F39E71CB26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E9C9FDC8268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				D5D2985C25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */,
 				D5C205072487A0CE004FB58B /* UserCreateRequest.swift in Sources */,
@@ -3509,6 +3517,7 @@
 				4242B04C2465A4380042145A /* AuthModulusRequest.swift in Sources */,
 				E129C6D722A9488900D8437E /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				D585B50E2447069000E901F3 /* PaymentAction.swift in Sources */,
+				F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E1A9A67D22BA501E0073711B /* TrialService.swift in Sources */,
 				4242B01C2465A40F0042145A /* PaymentsMethodsRequest.swift in Sources */,
 				E1B5F65521B81E3A00B558B0 /* ServerFeature.swift in Sources */,
@@ -3711,6 +3720,7 @@
 				D5C204DC24866BB6004FB58B /* AFDataResponse+Filter.swift in Sources */,
 				D5C204DD24866BB6004FB58B /* Data+JSONDictionary.swift in Sources */,
 				F38BB44F265B893F00329619 /* LocalAgentError.swift in Sources */,
+				F39E71CD26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				42066EFC263040E0001F86DB /* FeatureCellViewModel.swift in Sources */,
 				D5D2985D25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */,
 				D5C204DE24866BB6004FB58B /* DataRequest+Validation.swift in Sources */,
