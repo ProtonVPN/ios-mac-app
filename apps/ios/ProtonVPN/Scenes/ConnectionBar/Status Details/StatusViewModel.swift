@@ -212,8 +212,8 @@ class StatusViewModel {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
             PMLog.ET("Could not create profile because matching profile already exists")
-            messageHandler?(LocalizedString.profileCreationFailed,
-                            GSMessageType.error,
+            messageHandler?(LocalizedString.profileCreatedSuccessfully,
+                            GSMessageType.success,
                             UIConstants.messageOptions)
             DispatchQueue.main.async { self.contentChanged?() }
             return
