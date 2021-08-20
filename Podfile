@@ -83,6 +83,24 @@ target 'ProtonVPN' do
   
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Login', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Crypto', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Authentication', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Authentication-KeyGeneration', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-HumanVerification', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Payments', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-PaymentsUI', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-SRP', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
