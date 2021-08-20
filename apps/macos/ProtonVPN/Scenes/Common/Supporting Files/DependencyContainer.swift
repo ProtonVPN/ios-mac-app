@@ -402,13 +402,6 @@ extension DependencyContainer: TroubleshootViewModelFactory {
     }
 }
 
-// MARK: AppSpecificRequestAdapterFatory
-extension DependencyContainer: AppSpecificRequestAdapterFatory {
-    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
-        return nil
-    }
-}
-
 // MARK: VpnAuthenticationManagerFactory
 extension DependencyContainer: VpnAuthenticationFactory {
     func makeVpnAuthentication() -> VpnAuthentication {

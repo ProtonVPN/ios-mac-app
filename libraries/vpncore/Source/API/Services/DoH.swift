@@ -23,26 +23,26 @@
 import Foundation
 import ProtonCore_Doh
 
-class DoHVPN: DoH, ServerConfig {
+public class DoHVPN: DoH, ServerConfig {
     private let propertiesManager = PropertiesManager()
 
-    let liveURL: String = "https://api.protonvpn.ch" // do not change to development url due to IAP restriction
-    let signupDomain: String = "protonmail.com"
-    let defaultPath: String = ""
-    var defaultHost: String {
+    public let liveURL: String = "https://api.protonvpn.ch" // do not change to development url due to IAP restriction
+    public let signupDomain: String = "protonmail.com"
+    public let defaultPath: String = ""
+    public var defaultHost: String {
         #if RELEASE
         return liveURL
         #endif
 
         return propertiesManager.apiEndpoint ?? liveURL
     }
-    var captchaHost: String {
+    public var captchaHost: String {
         return defaultHost
     }
-    var apiHost: String {
+    public var apiHost: String {
         return customApiHost
     }
-    var statusHost: String {
+    public var statusHost: String {
         return "http://protonstatus.com"
     }
 
