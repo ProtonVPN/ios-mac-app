@@ -47,7 +47,6 @@ class MapViewModel: SecureCoreToggleHandler {
     var activeView: ServerType = .standard
     
     private let appStateManager: AppStateManager
-    private let loginService: LoginService
     private let serverManager: ServerManager
     private let vpnKeychain: VpnKeychainProtocol
     private let propertiesManager: PropertiesManagerProtocol
@@ -93,9 +92,8 @@ class MapViewModel: SecureCoreToggleHandler {
     var connectionStateChanged: (() -> Void)?
     var reorderAnnotations: (() -> Void)?
 
-    init(appStateManager: AppStateManager, loginService: LoginService, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
+    init(appStateManager: AppStateManager, alertService: AlertService, serverStorage: ServerStorage, vpnGateway: VpnGatewayProtocol?, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService) {
         self.appStateManager = appStateManager
-        self.loginService = loginService
         self.alertService = alertService
         self.serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: serverStorage)
         self.vpnGateway = vpnGateway
@@ -156,7 +154,7 @@ class MapViewModel: SecureCoreToggleHandler {
     
     private func exitAnnotations(type: ServerType, userTier: Int) -> [CountryAnnotationViewModel] {
         return serverManager.grouping(for: type).filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries).map {
-            let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, appStateManager: appStateManager, enabled: $0.0.lowestTier <= userTier, alertService: alertService, loginService: loginService, connectionStatusService: connectionStatusService)
+            let annotationViewModel = CountryAnnotationViewModel(countryModel: $0.0, servers: $0.1, serverType: activeView, vpnGateway: vpnGateway, appStateManager: appStateManager, enabled: $0.0.lowestTier <= userTier, alertService: alertService, connectionStatusService: connectionStatusService)
             
             if let oldAnnotationViewModel = countryExitAnnotations.first(where: { (oldAnnotationViewModel) -> Bool in
                 return oldAnnotationViewModel.countryCode == annotationViewModel.countryCode

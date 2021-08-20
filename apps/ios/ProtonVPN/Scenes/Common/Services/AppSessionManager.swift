@@ -43,6 +43,7 @@ protocol AppSessionManager {
     func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void)
     func logOut(force: Bool)
     
     func loadDataWithoutFetching() -> Bool
@@ -92,17 +93,35 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             DispatchQueue.main.async { failure(error) }
         })
     }
+
+    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void) {
+        do {
+            try AuthKeychain.store(authCredentials)
+        } catch {
+            DispatchQueue.main.async {
+                comletion(.failure(ProtonVpnError.keychainWriteFailed))
+            }
+            return
+        }
+
+        storeKitManager.processAllTransactions { [weak self] in // this should run after every login
+            self?.retrievePropertiesAndLogIn(success: {
+                comletion(.success(()))
+            }, failure: { error in
+                comletion(.failure(error))
+            })
+        }
+    }
     
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         authApiService.authenticate(username: username, password: password, success: { [weak self] authCredentials in
-            do {
-                try AuthKeychain.store(authCredentials)
-            } catch {
-                DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
-                return
-            }
-            self?.storeKitManager.processAllTransactions { // this should run after every login
-                self?.retrievePropertiesAndLogIn(success: success, failure: failure)
+            self?.finishLogin(authCredentials: authCredentials) { result in
+                switch result {
+                case .success:
+                    success()
+                case let .failure(error):
+                    failure(error)
+                }
             }
         }, failure: { error in
             PMLog.ET("Failed to obtain user's auth credentials: \(error.localizedDescription)")

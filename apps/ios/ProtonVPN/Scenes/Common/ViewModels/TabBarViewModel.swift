@@ -28,7 +28,6 @@ protocol TabBarViewModelModelDelegate: AnyObject {
 }
 
 protocol TabBarViewModelDelegate: AnyObject {
-    func removeLoginBox()
     func connectedQuickConnect()
     func connectingQuickConnect()
     func disconnectedQuickConnect()
@@ -59,17 +58,10 @@ class TabBarViewModel {
     }
     
     // MARK: Functions
-    func logInTapped() {
-        navigationService.presentLogin()
-    }
-    
-    func signUpTapped() {
-        navigationService.presentSignup()
-    }
     
     func quickConnectTapped() {
         guard let vpnGateway = vpnGateway else {
-            navigationService.presentSignup()
+            navigationService.presentWelcome()
             return
         }
         
@@ -89,7 +81,7 @@ class TabBarViewModel {
         if sessionManager.loggedIn {
             return true
         } else {
-            navigationService.presentLogin()
+            navigationService.presentWelcome()
             return false
         }
     }
@@ -111,13 +103,5 @@ class TabBarViewModel {
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(stateChanged),
                                                name: appStateManager.displayStateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
-                                               name: sessionManager.sessionChanged, object: nil)
-    }
-    
-    @objc private func sessionChanged(_ notification: Notification) {
-        if sessionManager.sessionStatus == .established {
-            delegate?.removeLoginBox()
-        }
     }
 }

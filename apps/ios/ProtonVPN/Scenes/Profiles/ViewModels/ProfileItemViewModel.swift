@@ -28,7 +28,6 @@ final class ProfileItemViewModel {
     
     private let profile: Profile
     private let vpnGateway: VpnGatewayProtocol?
-    private let loginService: LoginService
     private let alertService: AlertService
     private let planService: PlanService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
@@ -104,10 +103,9 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, loginService: LoginService, alertService: AlertService, userTier: Int, planService: PlanService, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, planService: PlanService, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
-        self.loginService = loginService
         self.alertService = alertService
         self.userTier = userTier
         self.planService = planService
@@ -150,7 +148,6 @@ final class ProfileItemViewModel {
     
     func connectAction() {
         guard let vpnGateway = vpnGateway else {
-            loginService.presentSignup()
             return
         }
 
