@@ -70,7 +70,6 @@ class ProtonVPNUITests: XCTestCase {
     
     private func login(withCredentials credentials: Credentials) {
         super.setUp()
-        logoutIfNeeded()
         openLoginScreen()
         loginRobot
             .loginUser(credentials: credentials)
@@ -84,6 +83,15 @@ class ProtonVPNUITests: XCTestCase {
         assertLoginScreenOpen()
     }
     
+    func logInIfNeeded() {
+        let tabBarsQuery = app.tabBars
+        if tabBarsQuery.allElementsBoundByIndex.count > 0  {
+            return
+        }
+        else {
+            loginAsPlusUser()
+        }
+    }
     
     func logoutIfNeeded() {
         let tabBarsQuery = app.tabBars

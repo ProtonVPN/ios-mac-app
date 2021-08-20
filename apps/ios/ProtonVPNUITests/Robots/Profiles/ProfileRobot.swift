@@ -12,7 +12,8 @@ fileprivate let editButton = "Edit"
 fileprivate let doneButton = "Done"
 fileprivate let addButton = "Add"
 fileprivate let deleteButton = "Delete"
-fileprivate let successMessage = "New Profile saved"
+fileprivate let newProfileSuccessMessage = "New Profile saved"
+fileprivate let editProfileSuccessMessage = "Profile updated"
 fileprivate let buttonConnect = "con available"
 fileprivate let buttonDisconnect = "con connected"
 fileprivate let fastestProfile = "Fastest Connection"
@@ -29,6 +30,12 @@ class ProfileRobot: CoreElements {
     
     func deleteProfile(_ name: String, _ countryname: String) -> ProfileRobot {
         return delete(name, countryname)
+    }
+    
+    func editProfile(_ name: String) -> CreateProfileRobot {
+         edit(name)
+        return CreateProfileRobot()
+        
     }
     
     func connectToAProfile(_ name: String) -> ConnectionStatusRobot {
@@ -73,6 +80,13 @@ class ProfileRobot: CoreElements {
         return self
     }
     
+    @discardableResult
+    private func edit(_ name: String) -> ProfileRobot {
+        button(editButton).tap()
+        staticText(name).tap()
+        return self
+    }
+    
     class Verify: CoreElements {
         
         func profileIsDeleted(_ name: String, _ countryname: String) {
@@ -80,8 +94,21 @@ class ProfileRobot: CoreElements {
         }
         
         @discardableResult
-        func createdProfile() -> ProfileRobot {
-            staticText(successMessage).checkExists()
+        func profileIsCreated() -> ProfileRobot {
+            staticText(newProfileSuccessMessage).checkExists()
+            return ProfileRobot()
+        }
+        
+        @discardableResult
+        func profileIsEdited() -> ProfileRobot {
+            staticText(editProfileSuccessMessage).checkExists()
+            return ProfileRobot()
+        }
+        
+        @discardableResult
+        func recommendedProfilesAreVisible() -> ProfileRobot {
+            staticText(fastestProfile).checkExists()
+            staticText(randomProfile).checkExists()
             return ProfileRobot()
         }
     }

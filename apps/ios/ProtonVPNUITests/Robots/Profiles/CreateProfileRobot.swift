@@ -11,6 +11,7 @@ import pmtest
 fileprivate let profileSameName = "Profile with same name already exists"
 fileprivate let nameField = "Enter Profile Name"
 fileprivate let countryField = "Select Country"
+fileprivate let countryButton = "Country"
 fileprivate let serverField = "Select Server"
 fileprivate let fastesServer = "  Fastest"
 fileprivate let saveProfileButton = "Save"
@@ -40,6 +41,14 @@ class CreateProfileRobot: CoreElements {
             .chooseServer()
     }
     
+    func editProfileDetails(_ newname: String, _ countryname: String, _ newcountryname: String)-> CreateProfileRobot {
+        return editProfileName(newname)
+            .editCountry("  " + countryname)
+            .chooseCountry(" " + " " + newcountryname)
+            .selectServer()
+            .chooseServer()
+    }
+    
     func makeDefaultProfileWithSecureCore(_ name: String, _ countryname: String, _ server: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .secureCoreON()
@@ -65,8 +74,18 @@ class CreateProfileRobot: CoreElements {
         return self
     }
     
+    private func editProfileName(_ name: String) -> CreateProfileRobot {
+        textField(name).tap().typeText("_edit")
+        return self
+    }
+    
     private func selectCountry() -> CreateProfileRobot {
         staticText(countryField).tap()
+        return self
+    }
+    
+    private func editCountry(_ country: String) -> CreateProfileRobot {
+        staticText(country).tap()
         return self
     }
     
