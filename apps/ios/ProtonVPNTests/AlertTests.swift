@@ -122,10 +122,6 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
         return AppSessionManagerMock(sessionStatus: .established, loggedIn: true, sessionChanged: Notification.Name(rawValue: ""))
     }
     
-    func makeHumanVerificationCoordinator(verificationMethods: VerificationMethods?, startingErrorMessage: String?, success: @escaping ((HumanVerificationToken) -> Void), failure: @escaping ((Error) -> Void)) -> HumanVerificationCoordinator {
-        return HumanVerificationCoordinatorMock()
-    }
-    
     func makeWindowService() -> WindowService {
         return windowService
     }
@@ -138,11 +134,6 @@ fileprivate class IosAlertServiceFactoryMock: IosAlertService.Factory {
         return TroubleshootCoordinatorMock();
     }
     
-}
-
-fileprivate class HumanVerificationCoordinatorMock: HumanVerificationCoordinator {
-    func start() {}
-    var finished: (() -> Void)?
 }
 
 fileprivate class CustomServersViewModelFactoryMock: CustomServersViewModel.Factory {
