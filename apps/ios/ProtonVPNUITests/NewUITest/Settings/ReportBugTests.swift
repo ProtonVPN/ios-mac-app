@@ -39,8 +39,7 @@ class ReportBugTests: ProtonVPNUITests {
         let message = StringUtils().randomAlphanumericString(length: 10)
         let email = "testemailautomation.com"
         
-        logoutIfNeeded()
-        loginAsFreeUser()
+        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .openReportBugWindow()

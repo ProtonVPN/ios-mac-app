@@ -15,6 +15,7 @@ class ConnectionTests: ProtonVPNUITests {
     private let connectionStatusRobot = ConnectionStatusRobot()
     private let countryListRobot = CountryListRobot()
     private let serverListRobot = ServerListRobot()
+    private let settingstRobot = SettingsRobot()
     
     override func setUp() {
         super.setUp()
@@ -92,7 +93,7 @@ class ConnectionTests: ProtonVPNUITests {
             .addNewProfile()
             .setProfileDetails(profilename, countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.createdProfile()
+            .verify.profileIsCreated()
             .connectToAProfile(profilename)
             .verify.connectedToAServer(countryName)
             .backToPreviouseTab(robot: ProfileRobot.self, back)
@@ -133,7 +134,7 @@ class ConnectionTests: ProtonVPNUITests {
             .addNewProfile()
             .makeDefaultProfileWithSecureCore(profilename, countryName, serverVia)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.createdProfile()
+            .verify.profileIsCreated()
         mainRobot
             .quickConnectViaQCbutton()
             .verify.connectedToASCServer(status)
@@ -163,5 +164,19 @@ class ConnectionTests: ProtonVPNUITests {
             .openServerList(countryName)
             .connectToAPlusServer(serverName)
             .verify.upgradeSubscribtionIsOpenBasicUser()
+    }
+    
+    func testLogoutWhileConnectedToVPNServer() {
+        
+        let countryName = "Australia"
+        
+        logInIfNeeded()
+        mainRobot
+            .goToCountriesTab()
+            .connectToAserver()
+            .verify.connectedToAServer(countryName)
+            .goToSettingsTab()
+            .logOut()
+            .verify.logOutSuccessfully()
     }
 }

@@ -2,7 +2,7 @@
 //  SettingsTests.swift
 //  ProtonVPNUITests
 //
-//  Created by Egle Predkelyte on 2021-08-23.
+//  Created by Egle Predkelyte on 2021-08-20.
 //  Copyright © 2021 Proton Technologies AG. All rights reserved.
 //
 
