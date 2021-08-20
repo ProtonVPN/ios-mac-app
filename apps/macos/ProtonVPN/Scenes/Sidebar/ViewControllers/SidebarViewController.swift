@@ -63,7 +63,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & ConnectingOverlayViewModelFactory
         & PropertiesManagerFactory
         & CoreAlertServiceFactory
-        & SystemExtensionManagerFactory
+        & SystemExtensionsStateCheckFactory
         & CoreAlertServiceFactory
     public var factory: Factory!
     

@@ -134,6 +134,12 @@ target 'ProtonVPN OpenVPN' do
   vpn_core
 end
 
+target 'ProtonVPN WireGuard' do
+  project 'apps/macOS/macOS.xcodeproj'
+  use_frameworks!
+  keychain_access
+end
+
 target 'ProtonVPNmacOSTests' do
   project 'apps/macOS/macOS.xcodeproj'
   inherit! :search_paths

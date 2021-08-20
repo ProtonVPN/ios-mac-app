@@ -90,8 +90,12 @@ public class VpnKeychainMock: VpnKeychainProtocol {
         return Data()
     }
     
-    public func fetchWireguardConfiguration() throws -> Data {
+    public func fetchWireguardConfigurationReference() throws -> Data {
         return Data()
+    }
+    
+    public func fetchWireguardConfiguration() throws -> String? {
+        return nil
     }
     
 }

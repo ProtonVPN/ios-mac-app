@@ -45,12 +45,14 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         & CoreAlertServiceFactory
         & SystemExtensionManagerFactory
         & VpnGatewayFactory
+        & SystemExtensionsStateCheckFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
     
     init(factory: Factory) {
         self.factory = factory
@@ -79,31 +81,19 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
         case .ike:
             propertiesManager.vpnProtocol = vpnProtocol
             reconnectIfNeeded()
-        case .openVpn:
-            let requestExtensionCallback: (() -> Void) = {
-                self.systemExtensionManager.requestExtensionInstall { result in
-                    if case .success = result {
-                        self.propertiesManager.vpnProtocol = vpnProtocol
-                        reconnectIfNeeded()
-                    }
+        
+        case .openVpn, .wireGuard:
+            systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
+                switch result {
+                case .success:
+                    self.propertiesManager.vpnProtocol = vpnProtocol
+                    reconnectIfNeeded()
+                    
+                case .failure:
+                    PMLog.D("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed")
                 }
             }
             
-            if propertiesManager.openVPNExtensionTourDisplayed {
-                requestExtensionCallback()
-                
-            } else {
-                alertService.push(alert: SysexInstallationRequiredAlert(continueHandler: { [unowned self] in
-                    propertiesManager.openVPNExtensionTourDisplayed = true
-                    requestExtensionCallback()
-                    self.alertService.push(alert: SystemExtensionTourAlert())
-                }, cancel: nil, dismiss: nil))
-            }
-        
-        case .wireGuard:
-            #warning("Implement proper logic")
-            propertiesManager.vpnProtocol = vpnProtocol
-            reconnectIfNeeded()
         }
         
     }

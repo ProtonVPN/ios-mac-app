@@ -46,7 +46,6 @@ class AppConstants {
         static let trialWelcomed = "TrialWelcomed"
         static let warnedTrialExpiring = "WarnedTrialExpiring"
         static let warnedTrialExpired = "WarnedTrialExpired"
-        static let openVPNExtensionTourDisplayed = "openVPNExtensionTourDisplayed"
     }
     
     struct FilePaths {

@@ -24,39 +24,7 @@ import TunnelKit
 import NetworkExtension
 
 class PacketTunnelProvider: OpenVPNTunnelProvider {
-    
-    override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
-        if let credentials = try? JSONDecoder().decode(OpenVPN.Credentials.self, from: messageData) {
-
-            let keychain = Keychain(group: nil)
-            do {
-                let currentPassword = try? keychain.password(for: credentials.username)
-                guard currentPassword != credentials.password else {
-                    completionHandler?(nil)
-                    return
-                }
-                
-                try keychain.set(password: credentials.password, for: credentials.username)
-                NSLog("PacketTunnelProvider new password saved")
-                let ref = try keychain.passwordReference(for: credentials.username)
-                
-                self.credentials = credentials
-                self.session?.credentials = credentials
-                
-                self.startTunnel(completionHandler: {error in
-                    NSLog("PacketTunnelProvider tunnel start finished \(String(describing: error))")
-                })
-                
-                completionHandler?(ref)
-                
-            } catch {
-                NSLog("PacketTunnelProvider can't write password to keychain: \(error)")
-            }
-            return
-        }
-        super.handleAppMessage(messageData, completionHandler: completionHandler)
-    }
-    
+        
     open override func startTunnel(options: [String : NSObject]? = nil, completionHandler: @escaping (Error?) -> Void) {
         let keychain = Keychain(group: nil)
         do {

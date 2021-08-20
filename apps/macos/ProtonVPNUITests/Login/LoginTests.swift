@@ -93,6 +93,8 @@ class LoginTests: ProtonVPNUITests {
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: fieldPassword, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         
+        dismissDialogs()
+        
         fieldUsername.clearAndEnterText(text: credentials.username)
         fieldPassword.clearAndEnterText(text: credentials.password)
         loginButton.click()
@@ -103,6 +105,7 @@ class LoginTests: ProtonVPNUITests {
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         
+        dismissDialogs()
         dismissPopups()
         
         window.typeKey(",", modifierFlags:.command)

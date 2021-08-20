@@ -26,57 +26,86 @@ import vpncore
 protocol SystemExtensionGuideViewModelProtocol: NSObject {
     func didTapNext()
     func didTapPrevious()
-    func viewDidAppear()
+    func didTapAccept()
+    func viewWillAppear()
+    var isNextButtonVisible: Bool { get }
+    var isPrevButtonVisible: Bool { get }
+    var steps: [SystemExtensionGuideViewModel.Step] { get }
+    var step: (Int, SystemExtensionGuideViewModel.Step) { get }
 }
 
-class SystemExtensionGuideViewModel: NSObject, SystemExtensionGuideViewModelProtocol {
+class SystemExtensionGuideViewModel: NSObject {
+ 
+    struct Step {
+        let title: String
+        let description: String
+        let imageName: String
+    }
+    
+    let steps: [Step] = [
+        Step(title: LocalizedString.sysexWizardStep1Title, description: LocalizedString.sysexWizardStep1Description, imageName: "1-step"),
+        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, imageName: "2-step"),
+        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, imageName: "3-step"),
+        Step(title: LocalizedString.sysexWizardStep4Title, description: LocalizedString.sysexWizardStep4Description, imageName: "4-step"),
+        Step(title: LocalizedString.sysexWizardStep5Title, description: LocalizedString.sysexWizardStep5Description, imageName: "5-step"),
+    ]
+    private var currentStep = 0
     
     weak var viewController: SystemExtensionGuideVCProtocol?
+    var acceptedHandler: () -> Void
     
-    private var currentView = 0
-    
-    private let descriptionFontSize = 20.0
-    private let descriptionTextColor = NSColor.protonWhite()
-    
-    func viewDidAppear() {
-        currentView = 0
-        updateView()
-        
-        // Autoclose this window after installation finishes
-        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationError, object: nil)
-    }
-    
-    func didTapNext() {
-        currentView += 1
-        updateView()
-    }
-    
-    func didTapPrevious() {
-        currentView -= 1
-        updateView()
+    init(acceptedHandler: @escaping () -> Void) {
+        self.acceptedHandler = acceptedHandler
     }
     
     // MARK: - Private
     
     private func updateView() {
-        switch currentView {
-        case 0:
-            viewController?.displayStep1()
-            viewController?.descriptionText = NSMutableAttributedString(attributedString: ("1. " + LocalizedString.openvpnSettingsStep1)
-                .attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize))
-                .add(link: LocalizedString.openvpnSettingsStep1Link, withUrl: "x-apple.systempreferences:com.apple.preference.security?General")
-            
-        case 1:
-            viewController?.displayStep2()
-            viewController?.descriptionText = ("2. " + LocalizedString.openvpnSettingsStep2).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
-        default:
-            viewController?.displayStep3()
-            viewController?.descriptionText = ("3. " + LocalizedString.openvpnSettingsStep3).attributed(withColor: descriptionTextColor, fontSize: descriptionFontSize)
-        }
+        viewController?.render()
     }
     
     @objc private func closeSelf() {
         viewController?.closeSelf()
     }
+}
+
+// MARK: - SystemExtensionGuideViewModelProtocol
+
+extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
+    
+    func viewWillAppear() {
+        // Autoclose this window after installation finishes
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationError, object: nil)
+        
+        currentStep = 0
+        updateView()
+    }
+    
+    func didTapNext() {
+        currentStep = min(currentStep + 1, steps.count - 1)
+        viewController?.render()
+    }
+    
+    func didTapPrevious() {
+        currentStep = max(currentStep - 1, 0)
+        viewController?.render()
+    }
+    
+    func didTapAccept() {
+        acceptedHandler()
+    }
+    
+    var isNextButtonVisible: Bool {
+        return currentStep < steps.count - 1
+    }
+    
+    var isPrevButtonVisible: Bool {
+        return currentStep > 0
+    }
+    
+    var step: (Int, Step) {
+        return (currentStep, steps[currentStep])
+    }
+    
 }

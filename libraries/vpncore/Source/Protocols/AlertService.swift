@@ -681,36 +681,33 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
 }
 
 public class SysexInstallationRequiredAlert: SystemAlert {
-    public var title: String? = LocalizedString.openvpnSettingsTitle
-    public var message: String?
+    public var title: String? = LocalizedString.sysexSettingsTitle
+    public var message: String? = LocalizedString.sysexSettingsDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
-        message = LocalizedString.openvpnSettingsDescription
         actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
     }
 }
 
 public class SysexEnabledAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
+    public var title: String? = LocalizedString.sysexEnabledTitle
+    public var message: String? = LocalizedString.sysexEnabledDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     
     public init() {
-        title = LocalizedString.openvpnSettingsEnabledTitle
-        message = LocalizedString.openvpnSettingsEnabledDescription
         actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
     }
 }
 
 public class SysexInstallingErrorAlert: SystemAlert {
-    public var title: String? = LocalizedString.openvpnCannotEnable
-    public var message: String? = LocalizedString.openvpnErrorDescription
+    public var title: String? = LocalizedString.sysexCannotEnable
+    public var message: String? = LocalizedString.sysexErrorDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -726,8 +723,11 @@ public class SystemExtensionTourAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
+    public var continueHandler: () -> Void
     
-    public init() { }
+    public init(continueHandler: @escaping () -> Void) {
+        self.continueHandler = continueHandler
+    }
 }
 
 public class VPNAuthCertificateRefreshErrorAlert: SystemAlert {

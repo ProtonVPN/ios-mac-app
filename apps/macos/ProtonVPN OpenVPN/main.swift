@@ -23,8 +23,11 @@
 import Foundation
 import NetworkExtension
 
+let ipc = IPCOvpnService(withExtension: IPCHelper.extensionMachServiceName(from: Bundle.main), logger: { NSLog("[PROTON-WG] \($0)") })
+
 autoreleasepool {
     NEProvider.startSystemExtensionMode()
+    ipc.startListener()
 }
 
 dispatchMain()

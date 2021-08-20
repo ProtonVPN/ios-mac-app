@@ -53,6 +53,7 @@ class ProtonVPNUITests: XCTestCase {
         sleep(2)
         
         dismissPopups()
+        dismissDialogs()
         
         let logoutButton = app.menuBars.menuItems["Log Out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
@@ -77,14 +78,29 @@ class ProtonVPNUITests: XCTestCase {
     
     func dismissPopups() {
         let dismissButtons = ["Maybe Later", "Cancel"]
-
+        
         for button in dismissButtons {
             if app.buttons[button].exists {
-                app.buttons[button].click()
-
-                // repeat in case another alert is is queued
+                app.buttons[button].firstMatch.click()
+                
+                // repeat in case another alert is queued
                 sleep(1)
                 dismissPopups()
+                return
+            }
+        }
+    }
+    
+    func dismissDialogs() {
+        let dialogs = ["Enabling custom protocols"]
+        
+        for dialog in dialogs {
+            if app.dialogs[dialog].exists {
+                app.dialogs[dialog].firstMatch.buttons["_XCUI:CloseWindow"].click()
+
+                // repeat in case another alert is queued
+                sleep(1)
+                dismissDialogs()
                 return
             }
         }

@@ -30,8 +30,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     
     override init() {
         let alamofireWrapper = AlamofireWrapperImplementation()
-        let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-        let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuard-Extension"
+        let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
+        let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
         let propertiesManager = PropertiesManager()
         let vpnKeychain = VpnKeychain()
@@ -50,7 +50,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain),
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
-                                    vpnStateConfiguration: vpnStateConfiguration)
+                                    vpnStateConfiguration: vpnStateConfiguration,
+                                    vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: propertiesManager))
         
         siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper,
                                                     vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper),

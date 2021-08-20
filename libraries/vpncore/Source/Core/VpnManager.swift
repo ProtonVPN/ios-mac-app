@@ -58,6 +58,8 @@ public class VpnManager: VpnManagerProtocol {
     private let openVpnProtocolFactory: VpnProtocolFactory
     private let wireguardProtocolFactory: VpnProtocolFactory
     
+    private let vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory
+    
     private var currentVpnProtocolFactory: VpnProtocolFactory? {
         guard let currentVpnProtocol = currentVpnProtocol else {
             return nil
@@ -126,7 +128,7 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil) {
+    public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory) {
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
@@ -136,6 +138,7 @@ public class VpnManager: VpnManagerProtocol {
         self.vpnKeychain = vpnKeychain
         self.propertiesManager = propertiesManager
         self.vpnStateConfiguration = vpnStateConfiguration
+        self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         
         prepareManagers()
     }
@@ -323,14 +326,14 @@ public class VpnManager: VpnManagerProtocol {
             
             do {
                 let protocolConfiguration = try currentVpnProtocolFactory.create(configuration)
-                self.configureConnection(forProtocol: protocolConfiguration, vpnManager: vpnManager) {
-                    self.startConnection(completion: completion)
-                    
-                    // OVPN first connection fix. Pushes creds after extension is already running. Fix this to something better when solution will be available.
-                    DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(2), execute: {
-                        currentVpnProtocolFactory.connectionStarted(configuration: configuration) { }
-                    })
+                let credentialsConfigurator = self.vpnCredentialsConfiguratorFactory.getCredentialsConfigurator(for: configuration.vpnProtocol)
+                
+                credentialsConfigurator.prepareCredentials(for: protocolConfiguration, configuration: configuration) { protocolConfigurationWithCreds in
+                    self.configureConnection(forProtocol: protocolConfigurationWithCreds, vpnManager: vpnManager) {
+                        self.startConnection(completion: completion)
+                    }
                 }
+                
             } catch {
                 PMLog.ET(error)
             }

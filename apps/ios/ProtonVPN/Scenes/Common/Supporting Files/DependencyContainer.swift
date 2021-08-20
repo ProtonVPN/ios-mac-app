@@ -29,8 +29,6 @@ import KeychainAccess
 
 final class DependencyContainer {
     
-    private let openVpnExtensionBundleIdentifier = "ch.protonmail.vpn.OpenVPN-Extension"
-    private let wireguardVpnExtensionBundleIdentifier = "ch.protonmail.vpn.WireGuardiOS-Extension"
     private let appGroup = AppConstants.AppGroups.main
     
     // Singletons
@@ -44,10 +42,11 @@ final class DependencyContainer {
                                                                      vpnKeychain: vpnKeychain,
                                                                      propertiesManager: makePropertiesManager(),
                                                                      vpnStateConfiguration: makeVpnStateConfiguration(),
-                                                                     alertService: iosAlertService)
-    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+                                                                     alertService: iosAlertService,
+                                                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()))
+    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: AppConstants.NetworkExtensions.wireguard, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var ikeFactory = IkeProtocolFactory()
-    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
     private var alamofireWrapper: AlamofireWrapper?

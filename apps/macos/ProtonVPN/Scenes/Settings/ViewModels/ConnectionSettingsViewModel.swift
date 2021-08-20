@@ -29,7 +29,7 @@ final class ConnectionSettingsViewModel {
         & VpnGatewayFactory
         & CoreAlertServiceFactory
         & ProfileManagerFactory
-        & SystemExtensionManagerFactory
+        & SystemExtensionsStateCheckFactory
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
@@ -37,7 +37,7 @@ final class ConnectionSettingsViewModel {
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
-    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -132,7 +132,7 @@ final class ConnectionSettingsViewModel {
     }
     
     var protocolItemCount: Int {
-        return featureFlags.isWireGuard ? 4 : 3
+        return 4
     }
         
     // MARK: - Setters
@@ -205,21 +205,23 @@ final class ConnectionSettingsViewModel {
                 return
             }
 
-            self.systemExtensionManager.requestExtensionInstall { result in
-                switch result {
-                case .success:
-                    self.propertiesManager.smartProtocol = enabled
-                    completion(true)
+            self.systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
+                DispatchQueue.main.async {
+                    switch result {
+                    case .success:
+                        self.propertiesManager.smartProtocol = enabled
+                        completion(true)
 
-                    if shouldReconnect {
-                        self.vpnGateway.retryConnection()
+                        if shouldReconnect {
+                            self.vpnGateway.retryConnection()
+                        }
+                    case .failure:
+                        completion(false)
                     }
-                case .failure:
-                    completion(false)
-                }
-
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
-                    self?.viewController?.reloadView()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.15) { [weak self] in
+                        self?.viewController?.reloadView()
+                    }
                 }
             }
         }

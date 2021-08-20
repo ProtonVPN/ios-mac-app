@@ -28,6 +28,11 @@ class AppConstants {
         static let main = "group.ch.protonmail.vpn"
     }
     
+    struct NetworkExtensions {
+        static let openVpn = "ch.protonmail.vpn.OpenVPN-Extension"
+        static let wireguard = "ch.protonmail.vpn.WireGuardiOS-Extension"
+    }
+    
     struct Time {
         // Connection stuck timming
         static let waitingTimeForConnectionStuck: Double = 3

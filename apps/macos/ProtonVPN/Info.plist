@@ -2,10 +2,10 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>AppIdentifierPrefix</key>
-	<string>$(AppIdentifierPrefix)</string>
 	<key>ATSApplicationFontsPath</key>
 	<string>.</string>
+	<key>AppIdentifierPrefix</key>
+	<string>$(AppIdentifierPrefix)</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleExecutable</key>
@@ -73,6 +73,8 @@
 	<string>dsa_pub.pem</string>
 	<key>SUPublicEDKey</key>
 	<string>y7wt2MmWReFFUiBA7kUO2yeATskHETavgiQe9Ib2+7g=</string>
+	<key>TeamIdentifierPrefix</key>
+	<string>$(TeamIdentifierPrefix)</string>
 	<key>UIUserInterfaceStyle</key>
 	<string>Dark</string>
 </dict>

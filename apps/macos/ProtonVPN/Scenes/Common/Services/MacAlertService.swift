@@ -246,7 +246,7 @@ extension MacAlertService: CoreAlertService {
         guard !windowService.isKeyModalPresent(viewController: viewController) else {
             return // Don't show wizard twice
         }
-        let viewModel = SystemExtensionGuideViewModel()
+        let viewModel = SystemExtensionGuideViewModel(acceptedHandler: alert.continueHandler)
         viewController.viewModel = viewModel
         viewModel.viewController = viewController
         windowService.presentKeyModal(viewController: viewController)
