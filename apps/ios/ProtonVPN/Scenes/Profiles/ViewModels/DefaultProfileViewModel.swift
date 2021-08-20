@@ -28,7 +28,6 @@ class DefaultProfileViewModel {
     private let serverOffering: ServerOffering
     private let vpnGateway: VpnGatewayProtocol?
     private let propertiesManager: PropertiesManagerProtocol
-    private let loginService: LoginService
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     
@@ -106,11 +105,10 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, loginService: LoginService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
-        self.loginService = loginService
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
         
@@ -119,7 +117,6 @@ class DefaultProfileViewModel {
     
     func connectAction() {
         guard let vpnGateway = vpnGateway else {
-            loginService.presentSignup()
             return
         }
         

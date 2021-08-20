@@ -23,9 +23,8 @@
 import UIKit
 import vpncore
 
-class TabBarController: UITabBarController {
+final class TabBarController: UITabBarController {
 
-    private var loginBoxView: LoginBoxView!
     private var quickConnectButtonConnecting = false
     private let quickConnectButton = UIButton()
     private let electron = UIView() // animating ball
@@ -51,12 +50,6 @@ class TabBarController: UITabBarController {
     }
 
     func setupView() {
-        removeLoginBox()
-        if let viewModel = viewModel, viewModel.sessionManager.loggedIn {
-            // logged in
-        } else {
-            setupLoginBoxView()
-        }
         selectedIndex = 0
         
         tabBar.items?.forEach { item in
@@ -98,49 +91,12 @@ class TabBarController: UITabBarController {
         disconnectedQuickConnect()
     }
     
-    private func setupLoginBoxView() {
-        loginBoxView = LoginBoxView.loadViewFromNib() as LoginBoxView
-        loginBoxView!.translatesAutoresizingMaskIntoConstraints = false
-        view.addSubview(loginBoxView!)
-        
-        if let buttons = loginBoxView.buttons {
-            let signUpTap = UITapGestureRecognizer(target: self, action: #selector(signUpTapped(_:)))
-            buttons[0].addGestureRecognizer(signUpTap)
-            
-            let loginTap = UITapGestureRecognizer(target: self, action: #selector(loginTapped(_:)))
-            buttons[1].addGestureRecognizer(loginTap)
-        }
-        
-        let safeGuide = view.safeAreaLayoutGuide
-        loginBoxView!.leadingAnchor.constraint(equalTo: safeGuide.leadingAnchor).isActive = true
-        loginBoxView!.trailingAnchor.constraint(equalTo: safeGuide.trailingAnchor).isActive = true
-        loginBoxView!.heightAnchor.constraint(equalToConstant: loginBoxView.height).isActive = true
-        loginBoxView!.bottomAnchor.constraint(equalTo: tabBar.topAnchor).isActive = true
-        
-        view.bringSubviewToFront(quickConnectButton)
-    }
-    
-    @objc private func loginTapped(_ sender: UIGestureRecognizer) {
-        viewModel?.logInTapped()
-    }
-    
-    @objc private func signUpTapped(_ sender: UIGestureRecognizer) {
-        viewModel?.signUpTapped()
-    }
-    
     @objc private func quickConnectTapped(_ sender: UIButton) {
         viewModel?.quickConnectTapped()
     }
 }
 
 extension TabBarController: TabBarViewModelDelegate {
-    
-    func removeLoginBox() {
-        if let loginBoxView = loginBoxView {
-            loginBoxView.removeFromSuperview()
-        }
-    }
-    
     func connectedQuickConnect() {
         quickConnectButtonConnecting = false
         self.tabBar.items?[2].setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.protonConnectGreen()], for: .normal)

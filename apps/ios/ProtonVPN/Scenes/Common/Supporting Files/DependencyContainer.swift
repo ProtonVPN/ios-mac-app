@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
 import Foundation
 import vpncore
 import KeychainAccess
@@ -64,7 +63,6 @@ final class DependencyContainer {
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
     private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
-    private lazy var signinInfoContainer = SigninInfoContainer()
     
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
@@ -81,8 +79,6 @@ final class DependencyContainer {
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh)
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
-
-    private lazy var challenge = CoreChallenge()
 
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
@@ -314,13 +310,6 @@ extension DependencyContainer: TrustKitHelperFactory {
     }
 }
 
-// MARK: SigninInfoContainerFactory
-extension DependencyContainer: SigninInfoContainerFactory {
-    func makeSigninInfoContainer() -> SigninInfoContainer {
-        return signinInfoContainer
-    }    
-}
-
 // MARK: PaymentTokenStorageFactory
 extension DependencyContainer: PaymentTokenStorageFactory {
     func makePaymentTokenStorage() -> PaymentTokenStorage {
@@ -433,24 +422,10 @@ extension DependencyContainer: NetShieldPropertyProviderFactory {
     }
 }
 
-// MARK: ChallengeFactory
-extension DependencyContainer: ChallengeFactory {
-    func makeChallenge() -> Challenge {
-        return challenge
-    }
-}
-
 // MARK: TroubleshootViewModelFactory
 extension DependencyContainer: TroubleshootViewModelFactory {
     func makeTroubleshootViewModel() -> TroubleshootViewModel {
         return TroubleshootViewModel(propertiesManager: makePropertiesManager())
-    }
-}
-
-// MARK: AppSpecificRequestAdapterFatory
-extension DependencyContainer: AppSpecificRequestAdapterFatory {
-    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
-        return ChallengeAppSpecificRequestAdapter(challenge: challenge)
     }
 }
 
@@ -465,5 +440,12 @@ extension DependencyContainer: VpnAuthenticationFactory {
 extension DependencyContainer: VpnStateConfigurationFactory {
     func makeVpnStateConfiguration() -> VpnStateConfiguration {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
+    }
+}
+
+// MARK: LoginServiceFactory
+extension DependencyContainer: LoginServiceFactory {
+    func makeLoginService() -> LoginService {
+        return CoreLoginService(factory: self)
     }
 }

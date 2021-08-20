@@ -45,5 +45,7 @@ struct URLConstants {
     // MARK: - Other
     
     static let utmSource = "app-ios"
+
+    static let appStoreUrl = "itms-apps://itunes.apple.com/app/id1437005085"
     
 }

@@ -23,7 +23,7 @@
 import Alamofire
 import Foundation
 
-final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory & AppSpecificRequestAdapterFatory {
+final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory {
 
     private lazy var alamofireWrapper: AlamofireWrapper = {
         return AlamofireWrapperImplementation(factory: self)
