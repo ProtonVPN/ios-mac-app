@@ -157,7 +157,6 @@
 		D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
 		D5136C1422858D9D0002C095 /* CountryAnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79848BAF20D2011500EF6F9F /* CountryAnnotationViewModel.swift */; };
 		D5136C192285918C0002C095 /* AlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C182285918C0002C095 /* AlertService.swift */; };
-		D5136C1B228591FB0002C095 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1A228591FB0002C095 /* LoginService.swift */; };
 		D5136C1C228592470002C095 /* NavigationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5598520AB181000E6D3F6 /* NavigationService.swift */; };
 		D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1D21AB221831DA2000C389B /* AnnotationViewModel.swift */; };
 		D5136C22228592E80002C095 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
@@ -256,7 +255,6 @@
 		D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
 		D53E83D5232A11400031CD49 /* ProtonTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53E83D4232A11400031CD49 /* ProtonTextField.xib */; };
 		D53E83D7232A5F4D0031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
-		D53E83DC232B6D320031CD49 /* SignUpFormViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83DB232B6D320031CD49 /* SignUpFormViewModelTests.swift */; };
 		D53E83E0232B6F300031CD49 /* UserApiServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83DF232B6F300031CD49 /* UserApiServiceMock.swift */; };
 		D53E83E2232B710E0031CD49 /* AuthApiServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83E1232B710E0031CD49 /* AuthApiServiceMock.swift */; };
 		D53E83E4232B76540031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
@@ -334,9 +332,7 @@
 		D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */; };
 		D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */; };
-		D5BF950D2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950C2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift */; };
 		D5BF951023559AAF00C7D1E7 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
-		D5BF95182355A59100C7D1E7 /* UserPropertiesCreatorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95162355A59100C7D1E7 /* UserPropertiesCreatorMock.swift */; };
 		D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
 		D5D4D05622E1DAE30034389A /* ProfileServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */; };
@@ -348,7 +344,6 @@
 		D5F56899232620C600795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
-		D5F568A42327855100795953 /* SignUpCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689F23277EF000795953 /* SignUpCoordinatorTests.swift */; };
 		D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
 		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
@@ -508,8 +503,8 @@
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
-		F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
+		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -775,7 +770,6 @@
 		D5110855246153500018872A /* SubscriptionInfoController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SubscriptionInfoController.xib; sourceTree = "<group>"; };
 		D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
-		D5136C1A228591FB0002C095 /* LoginService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		D5136C8D2285A2620002C095 /* ColorPickerViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPickerViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C912285A9190002C095 /* ServerUtilityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerUtilityTests.swift; sourceTree = "<group>"; };
 		D5136C942285AEA10002C095 /* CountryItemViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryItemViewModelTests.swift; sourceTree = "<group>"; };
@@ -790,7 +784,6 @@
 		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
 		D53E83D4232A11400031CD49 /* ProtonTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProtonTextField.xib; sourceTree = "<group>"; };
 		D53E83D6232A5F4D0031CD49 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
-		D53E83DB232B6D320031CD49 /* SignUpFormViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewModelTests.swift; sourceTree = "<group>"; };
 		D53E83DF232B6F300031CD49 /* UserApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserApiServiceMock.swift; sourceTree = "<group>"; };
 		D53E83E1232B710E0031CD49 /* AuthApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthApiServiceMock.swift; sourceTree = "<group>"; };
 		D54D331D264A97CB000BEF04 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -846,9 +839,7 @@
 		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
 		D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePlanDataServiceMock.swift; sourceTree = "<group>"; };
-		D5BF950C2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpFormViewModelMock.swift; sourceTree = "<group>"; };
 		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
-		D5BF95162355A59100C7D1E7 /* UserPropertiesCreatorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPropertiesCreatorMock.swift; sourceTree = "<group>"; };
 		D5C137692334A54D00D20514 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
 		D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileServiceMock.swift; sourceTree = "<group>"; };
@@ -858,7 +849,6 @@
 		D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementButtonViewModel.swift; sourceTree = "<group>"; };
 		D5F56898232620C600795953 /* DependencyContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyContainer.swift; sourceTree = "<group>"; };
 		D5F5689A23263C7D00795953 /* IosAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IosAlertService.swift; sourceTree = "<group>"; };
-		D5F5689F23277EF000795953 /* SignUpCoordinatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpCoordinatorTests.swift; sourceTree = "<group>"; };
 		D5F568A22327833100795953 /* AppSessionManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionManagerMock.swift; sourceTree = "<group>"; };
 		E0AC83A56B01FC7CB17C2689 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		E109118D2295A111001F6A0B /* UIViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Extension.swift"; sourceTree = "<group>"; };
@@ -1028,7 +1018,6 @@
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
-		F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMock.swift; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/LoginService.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		F613F0A928F442C2F592BBB3 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1277,7 +1266,6 @@
 			isa = PBXGroup;
 			children = (
 				D550A1A425651B5000FE2D54 /* Extensions */,
-				D5F5689E23277EC500795953 /* Coordinators */,
 				E129C6D122A9325D00D8437E /* JSON */,
 				D5136C17228591750002C095 /* Mocks */,
 				D5136C8F2285A8FB0002C095 /* Management */,
@@ -1587,7 +1575,6 @@
 				D5136C1122858CF00002C095 /* Map */,
 				D5136C8C2285A23F0002C095 /* Profiles */,
 				E9492EE1266A14BC00500E7D /* Settings */,
-				D53E83DA232B6D190031CD49 /* Signup */,
 				E1C8705E22BA0A87009CF4CE /* Trial */,
 			);
 			path = ViewModels;
@@ -1607,13 +1594,9 @@
 			children = (
 				D53E83DE232B6F130031CD49 /* ApiService */,
 				D55B36CE2458002000D8B0B9 /* Coordinator */,
-				D5BF95152355A58600C7D1E7 /* Misc */,
-				D5BF950B2354AD7000C7D1E7 /* ViewModels */,
 				D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */,
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
-				F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */,
-				D5136C1A228591FB0002C095 /* LoginService.swift */,
 				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
 				D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */,
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
@@ -1679,14 +1662,6 @@
 				D53E83D4232A11400031CD49 /* ProtonTextField.xib */,
 			);
 			path = Form;
-			sourceTree = "<group>";
-		};
-		D53E83DA232B6D190031CD49 /* Signup */ = {
-			isa = PBXGroup;
-			children = (
-				D53E83DB232B6D320031CD49 /* SignUpFormViewModelTests.swift */,
-			);
-			path = Signup;
 			sourceTree = "<group>";
 		};
 		D53E83DE232B6F130031CD49 /* ApiService */ = {
@@ -1842,14 +1817,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		D5BF950B2354AD7000C7D1E7 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				D5BF950C2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift */,
-			);
-			path = ViewModels;
-			sourceTree = "<group>";
-		};
 		D5BF950E23559A9D00C7D1E7 /* TestExtensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -1858,28 +1825,12 @@
 			path = TestExtensions;
 			sourceTree = "<group>";
 		};
-		D5BF95152355A58600C7D1E7 /* Misc */ = {
-			isa = PBXGroup;
-			children = (
-				D5BF95162355A59100C7D1E7 /* UserPropertiesCreatorMock.swift */,
-			);
-			path = Misc;
-			sourceTree = "<group>";
-		};
 		D5F37633254010C7008C7207 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
 				D5F37634254010EF008C7207 /* UIViewController+Announcements.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		D5F5689E23277EC500795953 /* Coordinators */ = {
-			isa = PBXGroup;
-			children = (
-				D5F5689F23277EF000795953 /* SignUpCoordinatorTests.swift */,
-			);
-			path = Coordinators;
 			sourceTree = "<group>";
 		};
 		E119AF712170B88100255F7E /* Views */ = {
@@ -3334,6 +3285,7 @@
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
 				D5136C2E228592E80002C095 /* UIDevice+Extension.swift in Sources */,
 				D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */,
+				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
 				D55B36CA2457FE4100D8B0B9 /* TroubleshootViewController.swift in Sources */,
@@ -3366,7 +3318,6 @@
 				D5136C43228592E80002C095 /* SelectionViewController.swift in Sources */,
 				D5136C45228592E80002C095 /* SettingsViewController.swift in Sources */,
 				42066FDA263049C5001F86DB /* ServersStreamingFeaturesVC.swift in Sources */,
-				F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */,
 				D5136C46228592E80002C095 /* WidgetSettingsViewController.swift in Sources */,
 				D5136C47228592E80002C095 /* PlanSelectionViewController.swift in Sources */,
 				060D071725D34599002B98B8 /* AppSessionManager.swift in Sources */,
@@ -3394,7 +3345,6 @@
 				D5136C55228592E80002C095 /* ServerItemViewModel.swift in Sources */,
 				D5136C56228592E80002C095 /* ConnectionViewModel.swift in Sources */,
 				D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */,
-				D5BF95182355A59100C7D1E7 /* UserPropertiesCreatorMock.swift in Sources */,
 				D5136C57228592E80002C095 /* MapViewModel.swift in Sources */,
 				E19D11B022B97EDE00D41C23 /* TrialWelcomeViewController.swift in Sources */,
 				D5136C58228592E80002C095 /* SecureCoreEntryCountryModel.swift in Sources */,
@@ -3432,7 +3382,6 @@
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
 				E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */,
 				D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */,
-				D5BF950D2354AD8800C7D1E7 /* SignUpFormViewModelMock.swift in Sources */,
 				D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */,
 				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
@@ -3442,7 +3391,6 @@
 				D5136C70228592E80002C095 /* ColorPickerItem.swift in Sources */,
 				D5136C71228592E80002C095 /* ProfilesTableViewCell.swift in Sources */,
 				D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */,
-				D53E83DC232B6D320031CD49 /* SignUpFormViewModelTests.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
@@ -3478,7 +3426,6 @@
 				D5110852246150DF0018872A /* Date+Formatters.swift in Sources */,
 				D5136C84228592E80002C095 /* UIKitString+Extension.swift in Sources */,
 				D5D4D05822E1E3E40034389A /* ServerStorageArrayMock.swift in Sources */,
-				D5F568A42327855100795953 /* SignUpCoordinatorTests.swift in Sources */,
 				D5136C85228592E80002C095 /* ProtonButton.swift in Sources */,
 				D5136C86228592E80002C095 /* ElectronViewContainer.swift in Sources */,
 				D5A8813222CE2721009B63D1 /* ReportBugViewController.swift in Sources */,
@@ -3486,7 +3433,6 @@
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */,
-				D5136C1B228591FB0002C095 /* LoginService.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,

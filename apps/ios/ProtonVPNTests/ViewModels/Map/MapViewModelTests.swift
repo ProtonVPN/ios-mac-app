@@ -44,7 +44,7 @@ class MapViewModelTests: XCTestCase {
     
     func testSecureCoreAnnotationLocations() {
         let serverStorage = ServerStorageMock(fileName: "LiveServers", bundle: Bundle(for: type(of: self)))
-        let mapViewModel = MapViewModel(appStateManager: appStateManager, loginService: LoginServiceMock(), alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: VpnKeychainMock(), propertiesManager: PropertiesManagerMock(), connectionStatusService: ConnectionStatusServiceMock())
+        let mapViewModel = MapViewModel(appStateManager: appStateManager, alertService: AlertServiceEmptyStub(), serverStorage: serverStorage, vpnGateway: nil, vpnKeychain: VpnKeychainMock(), propertiesManager: PropertiesManagerMock(), connectionStatusService: ConnectionStatusServiceMock())
         mapViewModel.setStateOf(type: .secureCore)
         
         let annotations = mapViewModel.annotations

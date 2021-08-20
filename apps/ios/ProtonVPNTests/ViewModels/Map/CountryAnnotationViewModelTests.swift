@@ -80,7 +80,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
             alertService: AlertServiceEmptyStub(),
             propertiesManager: PropertiesManager())
         let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock())
-        let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: nil, appStateManager: appStateManager, enabled: true, alertService: AlertServiceEmptyStub(), loginService: LoginServiceMock(), connectionStatusService: ConnectionStatusServiceMock())
+        let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: nil, appStateManager: appStateManager, enabled: true, alertService: AlertServiceEmptyStub(), connectionStatusService: ConnectionStatusServiceMock())
         
         return viewModel
     }
