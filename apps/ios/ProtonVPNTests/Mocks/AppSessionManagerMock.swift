@@ -58,6 +58,10 @@ class AppSessionManagerMock: AppSessionManager {
     func logOut(force: Bool) {
         callbackLogOut?()
     }
+
+    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void) {
+
+    }
     
     func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         callbackAttemptDataRefreshWithoutLogin?(success, failure)
