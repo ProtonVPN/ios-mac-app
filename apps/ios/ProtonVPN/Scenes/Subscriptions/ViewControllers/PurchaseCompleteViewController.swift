@@ -30,8 +30,8 @@ class PurchaseCompleteViewController: UIViewController {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var doneButton: ProtonButton!
     
-    var logInService: LoginService?
     var plan: AccountPlan?
+    var navigationService: NavigationService?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -69,7 +69,7 @@ class PurchaseCompleteViewController: UIViewController {
     
     // MARK: User actions
     @IBAction func doneButtonTapped(_ sender: Any) {
-        logInService?.presentMainInterface()
+        navigationService?.presentMainInterface()
         dismiss(animated: true, completion: nil)
     }
 }

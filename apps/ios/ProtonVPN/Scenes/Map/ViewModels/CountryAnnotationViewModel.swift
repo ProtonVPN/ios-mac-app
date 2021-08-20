@@ -36,7 +36,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     private var vpnGateway: VpnGatewayProtocol?
     private let appStateManager: AppStateManager
     private let alertService: AlertService
-    private let loginService: LoginService
     private let connectionStatusService: ConnectionStatusService
     
     private let requiresUpgrade: Bool
@@ -163,14 +162,13 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     let showAnchor: Bool = true
     
-    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, loginService: LoginService, connectionStatusService: ConnectionStatusService) {
+    init(countryModel: CountryModel, servers: [ServerModel], serverType: ServerType, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, enabled: Bool, alertService: AlertService, connectionStatusService: ConnectionStatusService) {
         self.countryModel = countryModel
         self.serverModels = servers
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.requiresUpgrade = !enabled
         self.alertService = alertService
-        self.loginService = loginService
         self.serverType = serverType
         self.connectionStatusService = connectionStatusService
         
@@ -183,7 +181,6 @@ class CountryAnnotationViewModel: AnnotationViewModel {
             viewState = .selected
         case .selected:
             guard let vpnGateway = vpnGateway else {
-                loginService.presentSignup()
                 return
             }
             

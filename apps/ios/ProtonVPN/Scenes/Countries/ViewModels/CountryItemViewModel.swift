@@ -29,7 +29,6 @@ class CountryItemViewModel {
     private let serverModels: [ServerModel]
     private let appStateManager: AppStateManager
     private let alertService: AlertService
-    private let loginService: LoginService
     private let planService: PlanService
     private var vpnGateway: VpnGatewayProtocol?
     private var serverType: ServerType
@@ -165,10 +164,10 @@ class CountryItemViewModel {
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
                 return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                           alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
+                                           alertService: alertService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             case .secureCore:
                 return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                                     alertService: alertService, loginService: loginService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
+                                                     alertService: alertService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             }
         }
     }
@@ -198,13 +197,12 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, loginService: LoginService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
-        self.loginService = loginService
         self.serverType = serverType
         self.planService = planService
         self.connectionStatusService = connectionStatusService
@@ -235,7 +233,6 @@ class CountryItemViewModel {
     
     func connectAction() {
         guard let vpnGateway = vpnGateway else {
-            loginService.presentSignup()
             return
         }
         

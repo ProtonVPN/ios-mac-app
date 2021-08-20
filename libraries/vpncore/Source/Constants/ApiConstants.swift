@@ -24,7 +24,7 @@ import ProtonCore_Doh
 
 public struct ApiConstants {
     // swiftlint:disable force_try
-    internal static var doh = try! DoHVPN(apiHost: "")
+    public static var doh = try! DoHVPN(apiHost: "")
     // swiftlint:enable force_try
 
     public static var apiHost: String = "" {
@@ -84,11 +84,11 @@ public struct ApiConstants {
         return Bundle.main.infoDictionary?["CFBundleVersion"] as? String ?? ""
     }
     
-    static var appVersion: String {
+    public static var appVersion: String {
         return clientId + "_" + bundleShortVersion
     }
     
-    static var userAgent: String {
+    public static var userAgent: String {
         let info = ProcessInfo()
         let osVersion = info.operatingSystemVersion
         let processName = info.processName

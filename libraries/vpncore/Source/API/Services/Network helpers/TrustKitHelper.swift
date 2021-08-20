@@ -80,7 +80,7 @@ public final class TrustKitHelper: SessionDelegate {
     public typealias Factory = AlamofireWrapperFactory
     private var factory: Factory
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
-    private var trustKit: TrustKit!
+    public let trustKit: TrustKit!
     
     public init(factory: Factory, hardfail: Bool = true) {
         self.factory = factory

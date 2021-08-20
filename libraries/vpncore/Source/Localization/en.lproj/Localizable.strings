@@ -1830,3 +1830,9 @@
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info_for" = "Loading connection info for %@";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Protect yourself online";
+
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "I know you've been hurt by someone else. I can tell by the way you carry yourself. But if you let me, here's what I'll do: I'll take care of you";

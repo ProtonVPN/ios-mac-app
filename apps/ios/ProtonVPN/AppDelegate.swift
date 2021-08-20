@@ -137,7 +137,7 @@ fileprivate extension AppDelegate {
             
         case URLConstants.deepLinkLoginAction:
             DispatchQueue.main.async { [weak self] in
-                self?.navigationService.presentLogin(dismissible: false)
+                self?.navigationService.presentWelcome()                
             }
             
         case URLConstants.deepLinkConnectAction:

@@ -25,7 +25,7 @@ import vpncore
 
 class IosAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & HumanVerificationCoordinatorFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
@@ -117,7 +117,7 @@ extension IosAlertService: CoreAlertService {
                 showNotificationStyleAlert(message: alert.message ?? "")
             }
         case let userVerificationAlert as UserVerificationAlert:
-            show(userVerificationAlert)
+            fatalError("Implement using Core Human Verification if it happens")
             
         case is ErrorNotificationAlert:
             showNotificationStyleAlert(message: alert.message ?? "", type: .error, accessibilityIdentifier: (alert as! ErrorNotificationAlert).accessibilityIdentifier)
@@ -224,14 +224,6 @@ extension IosAlertService: CoreAlertService {
         case .notification:
             showNotificationStyleAlert(message: alert.title ?? alert.message ?? "")
         }
-    }
-    
-    private func show(_ alert: UserVerificationAlert) {
-        let coordinator = factory.makeHumanVerificationCoordinator(verificationMethods: alert.verificationMethods, startingErrorMessage: alert.message, success: alert.success, failure: alert.failure)
-        coordinator.finished = {
-            self.windowService.dismissModal()
-        }
-        coordinator.start()
     }
     
     private func show(_ alert: ReportBugAlert) {
