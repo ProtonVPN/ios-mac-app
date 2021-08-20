@@ -77,6 +77,11 @@ class LoginTests: ProtonVPNUITests {
             trialButton.tap()
         }
         
+        let extensionsButton = app.buttons["Begin manual configuration"]
+        if extensionsButton.waitForExistence(timeout: 5) {
+            extensionsButton.tap()
+        }
+        
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
         waitForExpectations(timeout: 10, handler: nil)
         

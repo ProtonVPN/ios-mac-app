@@ -31,9 +31,11 @@ protocol SystemExtensionManagerFactory {
 protocol SystemExtensionManager {
     
     typealias FinishedCallback = ((Result<Void, Error>) -> Void)
+    typealias StatusCallback = ((SystemExtensionStatus) -> Void)
     
-    func requestExtensionInstall(completion: @escaping FinishedCallback)
-    func requestExtensionUninstall(completion: @escaping FinishedCallback)
+    func extenstionStatus(forType type: SystemExtensionType, completion: @escaping StatusCallback)
+    func requestExtensionInstall(forType type: SystemExtensionType, completion: @escaping FinishedCallback)
+    func requestExtensionUninstall(forType type: SystemExtensionType, completion: @escaping FinishedCallback)
 }
 
 struct SystemExtensionManagerNotification {
@@ -41,34 +43,79 @@ struct SystemExtensionManagerNotification {
     static let installationError = Notification.Name("OpenVPNExtensionInstallError")
 }
 
+enum SystemExtensionType: String, CaseIterable {
+    case openVPN = "ch.protonvpn.mac.OpenVPN-Extension"
+    case wireGuard = "ch.protonvpn.mac.WireGuard-Extension"
+    
+    var machServiceName: String {
+        let teamId = Bundle.main.infoDictionary!["TeamIdentifierPrefix"] as! String
+        return "\(teamId)group.\(rawValue)"
+    }
+}
+
+enum SystemExtensionStatus {
+    case notInstalled
+    case outdated
+    case ok
+}
+
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
-    typealias Factory = CoreAlertServiceFactory & PropertiesManagerFactory
+    typealias Factory = /*CoreAlertServiceFactory &*/ PropertiesManagerFactory
     
     fileprivate let factory: Factory
-    fileprivate lazy var alertService: CoreAlertService = self.factory.makeCoreAlertService()
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
-    
-    fileprivate let extensionIdentifier = "ch.protonvpn.mac.OpenVPN-Extension"
-    
+        
     private var shouldNotifyInstall = false
-    private var completionCallback: SystemExtensionManager.FinishedCallback?
+    private var completionCallbacks = [String: SystemExtensionManager.FinishedCallback]()
     
     private var sysExUninstallRequestResultHandler = SystemExtensionUninstallRequestDelegate()
+    
+    private var xpcConnections = [String: XPCServiceUser]()
     
     init(factory: Factory) {
         self.factory = factory
         super.init()
     }
     
-    func requestExtensionInstall(completion: @escaping SystemExtensionManager.FinishedCallback) {
+    func extenstionStatus(forType type: SystemExtensionType, completion: @escaping StatusCallback) {
+        getXpcConnection(for: type.machServiceName).getVersion(completionHandler: { result in
+            guard let data = result, let info = try? JSONDecoder().decode(ExtensionInfo.self, from: data) else {
+                PMLog.D("SysEx (\(type)) didn't return its version. Probably not yet installed.")
+                return completion(.notInstalled)
+            }
+            PMLog.D("Got sysex (\(type)) version from extension: \(info)")
+            
+            let appVersion = ExtensionInfo.current
+            switch info.compare(to: appVersion) {
+            case .orderedAscending:
+                completion(.outdated)
+                
+            case .orderedDescending:
+                PMLog.D("SysEx version (\(info)) is higher that apps version (\(appVersion)")
+                completion(.outdated)
+                
+            case .orderedSame:
+                completion(.ok)
+            }
+        })
+    }
+    
+    private func getXpcConnection(for service: String) -> XPCServiceUser {
+        if xpcConnections[service] == nil {
+            xpcConnections[service] = XPCServiceUser(withExtension: service, logger: { PMLog.D($0) })
+        }
+        return xpcConnections[service]!
+    }
+    
+    func requestExtensionInstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
         shouldNotifyInstall = false
 
         PMLog.D("requestExtensionInstall")
-        self.completionCallback = completion
+        completionCallbacks.updateValue(completion, forKey: type.rawValue)
         
         let request = OSSystemExtensionRequest.activationRequest(
-            forExtensionWithIdentifier: extensionIdentifier,
+            forExtensionWithIdentifier: type.rawValue,
             queue: .main
         )
         request.delegate = self
@@ -76,10 +123,10 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     }
     
     /// Ask OS to uninstall our Network Extension
-    func requestExtensionUninstall(completion: @escaping SystemExtensionManager.FinishedCallback) {
+    func requestExtensionUninstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
         PMLog.D("requestExtensionUninstall")
         let request = OSSystemExtensionRequest.deactivationRequest(
-            forExtensionWithIdentifier: extensionIdentifier,
+            forExtensionWithIdentifier: type.rawValue,
             queue: .main
         )
         sysExUninstallRequestResultHandler.completion = completion
@@ -98,39 +145,30 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-        // Requires user action
-        shouldNotifyInstall = true
-        
-        self.alertService.push(alert: SystemExtensionTourAlert())
-        
-        PMLog.D("SysEx install requestNeedsUserApproval")
+        PMLog.D("SysEx install requestNeedsUserApproval (\(request.identifier)")
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx install request result: \(result.rawValue)")
-
-        self.completionCallback?(.success(()))
-        self.completionCallback = nil
+        
+        completionCallbacks[request.identifier]?(.success(()))
+        completionCallbacks[request.identifier] = nil
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
-        if shouldNotifyInstall {
-            alertService.push(alert: SysexEnabledAlert())
-        }
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        PMLog.D("SysEx install request failed with error: \(error)")
-        guard completionCallback != nil else { return }
+        PMLog.D("SysEx (\(request.identifier)) install request failed with error: \(error)")
+        guard completionCallbacks[request.identifier] != nil else { return }
         
         if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestSuperseded {
             return // User requested one more time
         }
         
         // Display error group
-        self.completionCallback?(.failure(error))
-        self.completionCallback = nil
+        completionCallbacks[request.identifier]?(.failure(error))
+        completionCallbacks[request.identifier] = nil
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationError, object: error)
-        alertService.push(alert: SysexInstallingErrorAlert())
     }
 }
 

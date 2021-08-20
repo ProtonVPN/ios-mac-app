@@ -38,7 +38,8 @@ public protocol VpnKeychainProtocol {
     func getServerCertificate() throws -> SecCertificate
     func storeServerCertificate() throws
     func store(wireguardConfiguration: String) throws -> Data
-    func fetchWireguardConfiguration() throws -> Data
+    func fetchWireguardConfigurationReference() throws -> Data
+    func fetchWireguardConfiguration() throws -> String?
     func clear()
     
     // Dealing with old vpn password entry.
@@ -284,11 +285,36 @@ public class VpnKeychain: VpnKeychainProtocol {
     
     public func store(wireguardConfiguration: String) throws -> Data {
         try setPassword(wireguardConfiguration, forKey: StorageKey.wireguardSettings)
-        return try fetchWireguardConfiguration()
+        return try fetchWireguardConfigurationReference()
     }
     
-    public func fetchWireguardConfiguration() throws -> Data {
+    public func fetchWireguardConfigurationReference() throws -> Data {
         return try getPasswordRefference(forKey: StorageKey.wireguardSettings)
+    }
+    
+    public func fetchWireguardConfiguration() throws -> String? {
+        
+        var query = formBaseQuery(forKey: StorageKey.wireguardSettings)
+        query[kSecMatchLimit as AnyHashable] = kSecMatchLimitOne
+        query[kSecValuePersistentRef as AnyHashable] = try fetchWireguardConfigurationReference()
+        query[kSecReturnData as AnyHashable] = true
+        
+        var secItem: AnyObject?
+        let result = SecItemCopyMatching(query as CFDictionary, &secItem)
+        if result != errSecSuccess {
+            PMLog.D("Keychain error: \(result)")
+            return nil
+        }
+        
+        if let item = secItem as? Data {
+            let config = String(data: item, encoding: String.Encoding.utf8)
+            PMLog.D("Config read: \(config ?? "-")")
+            return config
+            
+        } else {
+            PMLog.D("Keychain error: can't read data")
+            return nil
+        }
     }
     
 }

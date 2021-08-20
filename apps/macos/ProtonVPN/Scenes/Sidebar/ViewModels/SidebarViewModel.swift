@@ -13,35 +13,24 @@ import vpncore
 final class SidebarViewModel {
     typealias Factory = PropertiesManagerFactory
         & CoreAlertServiceFactory
-        & SystemExtensionManagerFactory
+        & SystemExtensionsStateCheckFactory
     private let factory: Factory
 
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
 
     init(factory: SidebarViewModel.Factory) {
         self.factory = factory
     }
 
     func showSystemExtensionInstallAlert() {
-        guard !propertiesManager.openVPNExtensionTourDisplayed else {
-            return
+        systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
+            if case .success(let resultType) = result, case .installed = resultType {
+                PMLog.D("Turning on SmartProtocol for the first time")
+                self.propertiesManager.smartProtocol = true
+            }
         }
-
-        // just show once
-        propertiesManager.openVPNExtensionTourDisplayed = true
-
-        let alert = SysexInstallationRequiredAlert(continueHandler: { [weak self] in
-            // try to install
-            self?.systemExtensionManager.requestExtensionInstall(completion: { [weak self] result in
-                if case .success = result {
-                    self?.propertiesManager.smartProtocol = true
-                }
-            })
-            // and show the user instructions
-            self?.alertService.push(alert: SystemExtensionTourAlert())
-        })
-        alertService.push(alert: alert)
     }
+    
 }

@@ -93,12 +93,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let openVpnConfig = openVpnConfiguration(for: configuration)
         let generator = tunnelProviderGenerator(for: openVpnConfig)
-        let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
-        #if !os(macOS) // On mac sysex sets the password itself. Doing it here, prevents it from connecting.
-        let storage = TunnelKit.Keychain(group: appGroup)
-        try? storage.set(password: credentials.password, for: credentials.username, context: bundleId)
-        #endif
-        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: bundleId, username: credentials.username)
+        let neProtocol = try generator.generatedTunnelProtocol(withBundleIdentifier: bundleId, appGroup: appGroup, context: bundleId, username: configuration.username)
         return neProtocol
     }
     
@@ -108,32 +103,6 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         } else {
             loadManager(completion: completion)
         }
-    }
-    
-    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
-        #if !os(macOS)
-        // Nothing to do on iOS
-        completion()
-        
-        #else
-        
-        let credentials = OpenVPN.Credentials(configuration.username, configuration.password)
-        
-        guard let vpnManager = vpnManager,
-              let session = vpnManager.connection as? NETunnelProviderSession,
-              let message = try? JSONEncoder().encode(credentials) else {
-            completion()
-            return
-        }
-        do {
-            try session.sendProviderMessage(message, responseHandler: { result in
-                completion()
-            })
-        } catch {
-            completion()
-        }
-        
-        #endif
     }
     
     public func logs(completion: @escaping (String?) -> Void) {

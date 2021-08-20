@@ -29,12 +29,10 @@ public class IkeProtocolFactory: VpnProtocolFactory {
     public func create(_ configuration: VpnManagerConfiguration) throws -> NEVPNProtocol {
         let config = NEVPNProtocolIKEv2()
         
-        config.username = configuration.username
         config.localIdentifier = configuration.username // makes it easier to troubleshoot connection issues server-side
         config.remoteIdentifier = configuration.hostname
         config.serverAddress = configuration.entryServerAddress
         config.useExtendedAuthentication = true
-        config.passwordReference = configuration.passwordReference
         config.disconnectOnSleep = false
         config.enablePFS = false
         config.deadPeerDetectionRate = .high
@@ -71,11 +69,6 @@ public class IkeProtocolFactory: VpnProtocolFactory {
             
             completion(NEVPNManager.shared(), nil)
         }
-    }
-    
-    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
-        // Nothing to do in IKEv2
-        completion()
     }
     
     public func logs(completion: @escaping (String?) -> Void) {

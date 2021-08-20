@@ -47,7 +47,8 @@ final class DependencyContainer {
                                                                  vpnKeychain: vpnKeychain,
                                                                  propertiesManager: makePropertiesManager(),
                                                                  vpnStateConfiguration: makeVpnStateConfiguration(),
-                                                                 alertService: macAlertService)
+                                                                 alertService: macAlertService,
+                                                                 vpnCredentialsConfiguratorFactory: MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()))
     private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())

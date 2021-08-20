@@ -41,15 +41,9 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         let protocolConfiguration = NETunnelProviderProtocol()
         protocolConfiguration.providerBundleIdentifier = bundleId
         protocolConfiguration.serverAddress = configuration.entryServerAddress
-                
-        let keychain = VpnKeychain()
-        protocolConfiguration.passwordReference = try? keychain.store(wireguardConfiguration: configuration.asWireguardConfiguration(config: propertiesManager.wireguardConfig))
+        #if os(iOS)
         protocolConfiguration.disconnectOnSleep = true
-        
-        #if os(macOS)
-        protocolConfiguration.providerConfiguration = ["UID": getuid()]
         #endif
-        
         return protocolConfiguration
     }
     
@@ -82,11 +76,6 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 
             completion(self.vpnManager, nil)
         }
-    }
-    
-    public func connectionStarted(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
-        self.flushLogs(self.vpnManager) // Creates logfile so it's ready if/when user needs it.
-        completion()
     }
     
     public func logs(completion: @escaping (String?) -> Void) {
@@ -124,7 +113,8 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
 }
 
 extension VpnManagerConfiguration {
-    func asWireguardConfiguration(config: WireguardConfig) -> String {
+    
+    public func asWireguardConfiguration(config: WireguardConfig) -> String {
         var output = "[Interface]\n"
         
         if let authData = authData {

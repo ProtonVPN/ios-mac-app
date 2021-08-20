@@ -77,33 +77,34 @@ class HelpMenuViewModel {
     private func clearAllDataAndTerminate() {
         
         // System Extension
-        systemExtensionManager.requestExtensionUninstall { error in
-            
-            // keychain
-            self.vpnKeychain.clear()
-            AuthKeychain.clear()
+        systemExtensionManager.requestExtensionUninstall(forType: .openVPN) { error in
+            self.systemExtensionManager.requestExtensionUninstall(forType: .wireGuard) { error in
+                // keychain
+                self.vpnKeychain.clear()
+                AuthKeychain.clear()
 
-            // app data
-            if let bundleIdentifier = Bundle.main.bundleIdentifier {
-                Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
-                Storage.userDefaults().synchronize()
+                // app data
+                if let bundleIdentifier = Bundle.main.bundleIdentifier {
+                    Storage.userDefaults().removePersistentDomain(forName: bundleIdentifier)
+                    Storage.userDefaults().synchronize()
+                }
+
+                do {
+                    try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
+                } catch {}
+                do {
+                    try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
+                } catch {}
+
+                // vpn profile
+                self.vpnManager.removeConfigurations(completionHandler: nil)
+
+                // quit
+                DispatchQueue.main.async {
+                    NSApplication.shared.terminate(self)
+                }
+                    
             }
-
-            do {
-                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.sandbox) // legacy
-            } catch {}
-            do {
-                try FileManager.default.removeItem(atPath: AppConstants.FilePaths.starterSandbox) // legacy
-            } catch {}
-
-            // vpn profile
-            self.vpnManager.removeConfigurations(completionHandler: nil)
-
-            // quit
-            DispatchQueue.main.async {
-                NSApplication.shared.terminate(self)
-            }
-            
         }
     }
 }
