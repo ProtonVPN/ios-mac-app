@@ -23,11 +23,17 @@
 import UIKit
 import vpncore
 
-class LaunchViewController: UIViewController {
+final class LaunchViewController: UIViewController {
+    enum AnimationMode {
+        case delayed
+        case immediate
+    }
 
-    @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet weak var underLogoLabel: UILabel!
-    
+    @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
+    @IBOutlet private weak var underLogoLabel: UILabel!
+
+    var mode: AnimationMode = .delayed
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,9 +49,14 @@ class LaunchViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
-        Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
-            self?.loadingIndicator.isHidden = false
+
+        switch mode {
+        case .delayed:
+            Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false) { [weak self] _ in
+                self?.loadingIndicator.isHidden = false
+            }
+        case .immediate:
+            loadingIndicator.isHidden = false
         }
     }
     
