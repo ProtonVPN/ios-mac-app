@@ -60,6 +60,7 @@ final class CoreLoginService {
     private func finishLgin(data: LoginData) {
         // login / signup flow is dismisse dat this point, show the generic loading screen
         if let launchViewController = navigationService.makeLaunchViewController() {
+            launchViewController.mode = .immediate
             windowService.show(viewController: launchViewController)
         }
 
