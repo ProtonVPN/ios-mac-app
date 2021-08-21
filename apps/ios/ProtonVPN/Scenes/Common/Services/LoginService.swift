@@ -52,11 +52,7 @@ final class CoreLoginService {
         appSessionRefresher = factory.makeAppSessionRefresher()
         navigationService = factory.makeNavigationService()
         windowService = factory.makeWindowService()
-        alertService = factory.makeCoreAlertService()
-
-        let trusKitHelper = factory.makeTrustKitHelper()
-        PMAPIService.trustKit = trusKitHelper?.trustKit
-        PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
+        alertService = factory.makeCoreAlertService()        
 
         forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
     }
