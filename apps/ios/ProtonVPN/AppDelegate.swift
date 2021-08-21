@@ -23,6 +23,8 @@
 import Sentry
 import UIKit
 import vpncore
+import ProtonCore_Services
+import ProtonCore_Log
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -60,6 +62,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
+
+        setupCoreIntegration()
     
         navigationService.launched()
         
@@ -87,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let action = url.host else {
-            PMLog.printToConsole("Invalid URL")
+            PMLog.D("Invalid URL")
             return false
         }
         
@@ -153,7 +157,7 @@ fileprivate extension AppDelegate {
                 }
             }
         default:
-            PMLog.printToConsole("Invalid url action: \(action)")
+            PMLog.D("Invalid url action: \(action)")
             return false
         }
         
@@ -212,4 +216,21 @@ fileprivate extension AppDelegate {
         UIApplication.shared.setMinimumBackgroundFetchInterval(time)
     }
     
+}
+
+extension AppDelegate {
+    private func setupCoreIntegration() {
+        let trusKitHelper = container.makeTrustKitHelper()
+        PMAPIService.trustKit = trusKitHelper?.trustKit
+        PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
+
+        ProtonCore_Log.PMLog.callback = { (log, level) in
+            switch level {
+            case .debug, .info, .trace, .warn:
+                PMLog.D("[Core] \(log)")
+            case .error, .fatal:
+                PMLog.ET("[Core] \(log)")
+            }
+        }
+    }
 }
