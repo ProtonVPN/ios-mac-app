@@ -49,13 +49,16 @@ class ProfilesSectionViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService) {
+    init(vpnGateway: VpnGatewayProtocol, navService: NavigationService, alertService: CoreAlertService, protocolChangeNotifications: [Notification.Name]) {
         self.vpnGateway = vpnGateway
         self.navService = navService
         self.alertService = alertService
         profileManager = ProfileManager.shared
-        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
-                                               name: profileManager.contentChanged, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: profileManager.contentChanged, object: nil)
+        for notificationName in protocolChangeNotifications {
+            NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged), name: notificationName, object: nil)
+        }
+        
     }
     
     func cellHeight(forRow index: Int) -> CGFloat {
