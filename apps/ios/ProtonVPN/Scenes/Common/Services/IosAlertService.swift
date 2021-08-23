@@ -117,7 +117,8 @@ extension IosAlertService: CoreAlertService {
                 showNotificationStyleAlert(message: alert.message ?? "")
             }
         case let userVerificationAlert as UserVerificationAlert:
-            fatalError("Implement using Core Human Verification if it happens")
+            #warning("Implement Core networking or Core human verification")
+            PMLog.ET("User verification required outside the Login / Signup flow, not handled yet")
             
         case is ErrorNotificationAlert:
             showNotificationStyleAlert(message: alert.message ?? "", type: .error, accessibilityIdentifier: (alert as! ErrorNotificationAlert).accessibilityIdentifier)
