@@ -35,6 +35,7 @@ public protocol PropertiesManagerProtocol: class {
     static var excludeLocalNetworksNotification: Notification.Name { get }
     static var vpnAcceleratorNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
+    static var smartProtocolNotification: Notification.Name { get }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -172,6 +173,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
     public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
+    public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -602,6 +604,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.smartProtocol)
+            postNotificationOnUIThread(type(of: self).smartProtocolNotification, object: newValue)
         }
     }
     
