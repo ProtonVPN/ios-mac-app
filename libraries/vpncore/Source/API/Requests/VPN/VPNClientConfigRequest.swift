@@ -20,10 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNClientConfigRequest: VPNBaseRequest {
-    override func path() -> String {
-        return super.path() + "/v2/clientconfig"
+final class VPNClientConfigRequest: Request {
+    var path: String {
+        return "/vpn/v2/clientconfig"
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }

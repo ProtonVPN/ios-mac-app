@@ -34,28 +34,32 @@ public protocol CoreApiService {
 
 public class CoreApiServiceImplementation: CoreApiService {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     
-    public init(alamofireWrapper: AlamofireWrapper) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking) {
+        self.networking = networking
     }
     
     public func getApiNotifications(success: @escaping GetApiNotificationsCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                decoder.dateDecodingStrategy = .secondsSince1970
-                let result = try decoder.decode(GetApiNotificationsResponse.self, from: data)
+        networking.request(CoreApiNotificationsRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    decoder.dateDecodingStrategy = .secondsSince1970
+                    let result = try decoder.decode(GetApiNotificationsResponse.self, from: data)
 
-                success(result)
-            } catch let error {
+                    success(result)
+                } catch let error {
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(CoreApiNotificationsRequest(), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

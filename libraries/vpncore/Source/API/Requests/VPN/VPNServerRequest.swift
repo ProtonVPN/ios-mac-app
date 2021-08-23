@@ -20,24 +20,21 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNServerRequest: VPNBaseRequest {
+final class VPNServerRequest: Request {
     
     let serverId: String
     
     init( _ serverId: String) {
         self.serverId = serverId
-        super.init()
     }
     
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/servers/" + serverId
+    var path: String {
+        return "/vpn/servers/" + serverId
     }
-    
-    override var header: [String: String]? {
-        return nonAuthenticatedHeader
+
+    var isAuth: Bool {
+        return false
     }
 }

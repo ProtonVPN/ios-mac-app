@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
-import Alamofire
+import ProtonCore_Networking
 
 public typealias ClientConfigCallback = GenericCallback<ClientConfig>
 public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
@@ -37,13 +37,11 @@ public protocol VpnApiServiceFactory {
 }
 
 public class VpnApiService {
-    
-    private let alamofireWrapper: AlamofireWrapper
-    
     public var appStateManager: AppStateManager?
+    private let networking: Networking
     
-    public init(alamofireWrapper: AlamofireWrapper) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking) {
+        self.networking = networking
     }
     
     // swiftlint:disable function_body_length
@@ -174,52 +172,29 @@ public class VpnApiService {
     
     // swiftlint:enable function_body_length
 
-    public func clientCredentials(success: @escaping VpnCredentialsCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let vpnCredential = try VpnCredentials(dic: json)
-                success(vpnCredential)
-            } catch {
-                let error = error as NSError
-                if error.code != -1 {
-                    PMLog.ET(error.localizedDescription)
-                    failure(error)
-                } else {
-                    PMLog.D("Error occurred during user's VPN credentials parsing", level: .error)
-                    let error = ParseError.vpnCredentialsParse
-                    PMLog.ET(error.localizedDescription)
-                    failure(error)
-                }
-            }
-        }
-        
-        alamofireWrapper.request(VPNClientCredentialsRequest(), success: successWrapper, failure: failure)
-    }
-    
-    public func serverInfoSuccessWrapper(success: @escaping ServerModelsCallback, failure: @escaping ErrorCallback) -> JSONCallback {
-        let successWrapper: JSONCallback = { response in
-            guard let serversJson = response.jsonArray(key: "LogicalServers") else {
-                PMLog.D("'Servers' field not present in server info request's response", level: .error)
-                let error = ParseError.serverParse
-                PMLog.ET(error.localizedDescription)
-                failure(error)
-                return
-            }
-            
-            var serverModels: [ServerModel] = []
-            for json in serversJson {
+    public func clientCredentials(success: @escaping VpnCredentialsCallback, failure: @escaping ErrorCallback) {        
+        networking.request(VPNClientCredentialsRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
                 do {
-                    serverModels.append(try ServerModel(dic: json))
+                    let vpnCredential = try VpnCredentials(dic: json)
+                    success(vpnCredential)
                 } catch {
-                    PMLog.D("Failed to parse server info for json: \(json)", level: .error)
-                    let error = ParseError.serverParse
-                    PMLog.ET(error.localizedDescription)
+                    let error = error as NSError
+                    if error.code != -1 {
+                        PMLog.ET(error.localizedDescription)
+                        failure(error)
+                    } else {
+                        PMLog.D("Error occurred during user's VPN credentials parsing", level: .error)
+                        let error = ParseError.vpnCredentialsParse
+                        PMLog.ET(error.localizedDescription)
+                        failure(error)
+                    }
                 }
+            case let .failure(error):
+                failure(error)
             }
-            success(serverModels)
         }
-        
-        return successWrapper
     }
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
@@ -228,128 +203,174 @@ public class VpnApiService {
         if let ip = ip {
             shortenedIp = truncatedIp(ip)
         }
-        
-        let successWrapper = serverInfoSuccessWrapper(success: success, failure: failure)
-        alamofireWrapper.request(VPNLogicalServicesRequest(shortenedIp), success: successWrapper, failure: failure)
+
+        networking.request(VPNLogicalServicesRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                guard let serversJson = json.jsonArray(key: "LogicalServers") else {
+                    PMLog.D("'Servers' field not present in server info request's response", level: .error)
+                    let error = ParseError.serverParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                    return
+                }
+
+                var serverModels: [ServerModel] = []
+                for json in serversJson {
+                    do {
+                        serverModels.append(try ServerModel(dic: json))
+                    } catch {
+                        PMLog.D("Failed to parse server info for json: \(json)", level: .error)
+                        let error = ParseError.serverParse
+                        PMLog.ET(error.localizedDescription)
+                    }
+                }
+                success(serverModels)
+            case let .failure(error):
+                failure(error)
+            }
+        }
     }
     
     public func serverState(serverId id: String, success: @escaping VpnServerStateCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { response in
-            guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
-                let error = ParseError.serverParse
-                PMLog.D("'Server' field not present in server info request's response", level: .error)
-                PMLog.ET(error.localizedDescription)
+        networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
+                    let error = ParseError.serverParse
+                    PMLog.D("'Server' field not present in server info request's response", level: .error)
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                    return
+                }
+                success(serverState)
+            case let .failure(error):
                 failure(error)
-                return
             }
-            success(serverState)
         }
-        alamofireWrapper.request(VPNServerRequest(id), success: successWrapper, failure: failure)
     }
     
     public func userIp(success: @escaping StringCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { response in
-            guard let ip = response.string("IP") else {
-                PMLog.D("'IP' field not present in user's ip location response", level: .error)
-                let error = ParseError.userIpParse
-                PMLog.ET(error.localizedDescription)
+        networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                guard let ip = response.string("IP") else {
+                    PMLog.D("'IP' field not present in user's ip location response", level: .error)
+                    let error = ParseError.userIpParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                    return
+                }
+                success(ip)
+            case let .failure(error):
                 failure(error)
-                return
             }
-            success(ip)
         }
-        
-        alamofireWrapper.request(VPNLocationRequest(), success: successWrapper, failure: failure)
     }
     
     public func sessions(success: @escaping SessionModelsCallback, failure: @escaping ErrorCallback) {
-        
-        let successWrapper: JSONCallback = { response in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
-                success(sessionsResponse.sessions)
-            } catch {
-                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
-                let error = ParseError.loadsParse
-                PMLog.ET(error.localizedDescription)
+        networking.request(VPNSessionsRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
+                    success(sessionsResponse.sessions)
+                } catch {
+                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                    let error = ParseError.loadsParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        
-        alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)
     }
     
     public func loads(lastKnownIp: String?, success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { response in
-            guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
-                PMLog.D("'LogicalServers' field not present in loads response", level: .error)
-                let error = ParseError.loadsParse
-                PMLog.ET(error.localizedDescription)
-                failure(error)
-                return
-            }
-            
-            var loads = ContinuousServerPropertiesDictionary()
-            for json in loadsJson {
-                do {
-                    let load = try ContinuousServerProperties(dic: json)
-                    loads[load.serverId] = load
-                } catch {
-                    PMLog.D("Failed to parse load info for json: \(json)", level: .error)
-                    let error = ParseError.loadsParse
-                    PMLog.ET(error.localizedDescription)
-                }
-            }
-            
-            success(loads)
-        }
         var shortenedIp: String?
         if let ip = lastKnownIp {
             shortenedIp = truncatedIp(ip)
         }
-        alamofireWrapper.request(VPNLoadsRequest(shortenedIp), success: successWrapper, failure: failure)
+        networking.request(VPNLoadsRequest(shortenedIp)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
+                    PMLog.D("'LogicalServers' field not present in loads response", level: .error)
+                    let error = ParseError.loadsParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                    return
+                }
+
+                var loads = ContinuousServerPropertiesDictionary()
+                for json in loadsJson {
+                    do {
+                        let load = try ContinuousServerProperties(dic: json)
+                        loads[load.serverId] = load
+                    } catch {
+                        PMLog.D("Failed to parse load info for json: \(json)", level: .error)
+                        let error = ParseError.loadsParse
+                        PMLog.ET(error.localizedDescription)
+                    }
+                }
+
+                success(loads)
+            case let .failure(error):
+                failure(error)
+            }
+
+        }
     }
     
-    public func clientConfig(success: @escaping ClientConfigCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { response in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
-                success(clientConfigResponse.clientConfig)
-            
-            } catch {
-                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
-                let error = ParseError.loadsParse
-                PMLog.ET(error.localizedDescription)
+    public func clientConfig(success: @escaping ClientConfigCallback, failure: @escaping ErrorCallback) {        
+        networking.request(VPNClientConfigRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
+                    success(clientConfigResponse.clientConfig)
+
+                } catch {
+                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                    let error = ParseError.loadsParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        
-        alamofireWrapper.request(VPNClientConfigRequest(), success: successWrapper, failure: failure)
     }
     
     public func virtualServices(success: @escaping VpnStreamingResponseCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { response in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let parsed = try decoder.decode(VPNStreamingResponse.self, from: data)
-                success(parsed)
-            } catch {
-                PMLog.D("Failed to parse load info for json: \(response)", level: .error)
-                let error = ParseError.loadsParse
-                PMLog.ET(error.localizedDescription)
+        networking.request(VPNStreamingRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(response):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let parsed = try decoder.decode(VPNStreamingResponse.self, from: data)
+                    success(parsed)
+                } catch {
+                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                    let error = ParseError.loadsParse
+                    PMLog.ET(error.localizedDescription)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
+
         }
-        alamofireWrapper.request(VPNStreamingRequest(), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

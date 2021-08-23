@@ -60,14 +60,15 @@ public class ServerStorageMock: ServerStorage {
         } catch {
             fatalError("Error loading JSON servers")
         }
-        
-        let vpnApiService = VpnApiService(alamofireWrapper: AlamofireWrapperImplementation()) 
+
+        fatalError("Implement me")
+        /*let vpnApiService = VpnApiService(networking: CoreNetworking())
         let successWrapper = vpnApiService.serverInfoSuccessWrapper(success: { [weak self] (serverModels) in
             self?.servers = serverModels
         }, failure: { (error) in
             fatalError("Failed to parse JSON")
         })
         
-        successWrapper(jsonDictionary)
+        successWrapper(jsonDictionary)*/
     }
 }

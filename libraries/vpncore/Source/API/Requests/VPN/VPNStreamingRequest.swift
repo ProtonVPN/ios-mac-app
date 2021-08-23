@@ -20,17 +20,15 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNStreamingRequest: VPNBaseRequest {
+final class VPNStreamingRequest: Request {
         
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/streamingservices"
+    var path: String {
+        return "/vpn/streamingservices"
     }
-    
-    override var header: [String: String]? {
-        return nonAuthenticatedHeader
+
+    var isAuth: Bool {
+        return false
     }
 }

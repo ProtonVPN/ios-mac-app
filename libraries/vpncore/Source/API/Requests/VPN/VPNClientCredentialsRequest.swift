@@ -20,8 +20,10 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNClientCredentialsRequest: VPNBaseRequest {
-    // For now this request does not need any override
+final class VPNClientCredentialsRequest: Request {
+    var path: String {
+        return "/vpn"
+    }
 }

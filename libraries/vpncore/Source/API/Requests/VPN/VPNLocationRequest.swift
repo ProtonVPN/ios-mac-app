@@ -20,10 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNLocationRequest: VPNBaseRequest {
-    override func path() -> String {
-        return super.path() + "/location"
+final class VPNLocationRequest: Request {
+    var path: String {
+        return "/vpn/location"
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }
