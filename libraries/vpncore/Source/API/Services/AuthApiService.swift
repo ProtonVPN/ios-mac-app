@@ -38,72 +38,82 @@ public protocol AuthApiService {
 
 public class AuthApiServiceImplementation: AuthApiService {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
      
-    public init(alamofireWrapper: AlamofireWrapper) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking) {
+        self.networking = networking
     }
     
     public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
-        
-        let authInfoSuccessWrapper: JSONCallback = { [unowned self] json in
-            
-            let authInfoReponse: AuthenticationInfoResponse
-            do {
-                authInfoReponse = try AuthenticationInfoResponse(dictionary: json)
-            } catch {
-                PMLog.D("/authInfo response failed parsing", level: .error)
-                let error = ParseError.authInfoParse
-                PMLog.ET(error.localizedDescription)
-                failure(error)
-                return
-            }
-            
-            let authProperties: AuthenticationProperties
-            do {
-                authProperties = try authInfoReponse.formProperties(for: username, password: password)
-            } catch let error {
-                PMLog.D("Authentication properties creation failed", level: .error)
-                PMLog.ET(error.localizedDescription)
-                failure(error)
-                return
-            }
-            
-            let authSuccessWrapper: JSONCallback = { json in
-                do {
-                    let authCredentials = try AuthCredentials(username: username, dic: json)
-                    success(authCredentials)
-                } catch {
-                    PMLog.D("/auth response failed parsing", level: .error)
-                    let error = ParseError.authCredentialsParse
-                    PMLog.ET(error.localizedDescription)
-                    failure(error)
+        networking.request(DomainsAvailableRequest(type: .login)) { (result: Result<(), Error>) in
+            switch result {
+            case .success:
+                self.networking.request(AuthInfoRequest(username)) { (result: Result<JSONDictionary, Error>) in
+                    switch result {
+                    case let .success(json):
+                        let authInfoReponse: AuthenticationInfoResponse
+                        do {
+                            authInfoReponse = try AuthenticationInfoResponse(dictionary: json)
+                        } catch {
+                            PMLog.D("/authInfo response failed parsing", level: .error)
+                            let error = ParseError.authInfoParse
+                            PMLog.ET(error.localizedDescription)
+                            failure(error)
+                            return
+                        }
+
+                        let authProperties: AuthenticationProperties
+                        do {
+                            authProperties = try authInfoReponse.formProperties(for: username, password: password)
+                        } catch let error {
+                            PMLog.D("Authentication properties creation failed", level: .error)
+                            PMLog.ET(error.localizedDescription)
+                            failure(error)
+                            return
+                        }
+
+                        self.networking.request(AuthenticateRequest(authProperties)) { (result: Result<JSONDictionary, Error>) in
+                            switch result {
+                            case let .success(json):
+                                do {
+                                    let authCredentials = try AuthCredentials(username: username, dic: json)
+                                    success(authCredentials)
+                                } catch {
+                                    PMLog.D("/auth response failed parsing", level: .error)
+                                    let error = ParseError.authCredentialsParse
+                                    PMLog.ET(error.localizedDescription)
+                                    failure(error)
+                                }
+                            case let .failure(error):
+                                failure(error)
+                            }
+                        }
+                    case let .failure(error):
+                        failure(error)
+                    }
                 }
+            case let .failure(error):
+                failure(error)
             }
-            
-            self.alamofireWrapper.request(AuthenticateRequest(authProperties), success: authSuccessWrapper, failure: failure)
         }
-    
-        let antiAbuseSuccessWrapper: SuccessCallback = {
-            self.alamofireWrapper.request(AuthInfoRequest(username), success: authInfoSuccessWrapper, failure: failure)
-        }
-        
-        alamofireWrapper.request(DomainsAvailableRequest(type: .login), success: antiAbuseSuccessWrapper, failure: failure)
     }
     
-    public func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let response = try ModulusResponse(dic: json)
-                success(response)
-            } catch {
-                PMLog.D("Error occurred during modulus parsing", level: .error)
-                let error = ParseError.modulusParse
+    public func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback) {        
+        networking.request(AuthModulusRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let response = try ModulusResponse(dic: json)
+                    success(response)
+                } catch {
+                    PMLog.D("Error occurred during modulus parsing", level: .error)
+                    let error = ParseError.modulusParse
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        
-        alamofireWrapper.request(AuthModulusRequest(), success: successWrapper, failure: failure)
     }
 
     public func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
@@ -113,25 +123,28 @@ public class AuthApiServiceImplementation: AuthApiService {
             return
         }
         
-        let successWrapper: JSONCallback = { json in
-            do {
-                let response = try RefreshAccessTokenResponse(dic: json)
-                let updatedCreds = authCreds.updatedWithAccessToken(response: response)
+        let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
+        networking.request(AuthRefreshRequest(refreshProperties)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
                 do {
-                    try AuthKeychain.store(updatedCreds)
-                } catch let error {
-                    PMLog.ET("Error while storing refreshed API token: \(error)")
+                    let response = try RefreshAccessTokenResponse(dic: json)
+                    let updatedCreds = authCreds.updatedWithAccessToken(response: response)
+                    do {
+                        try AuthKeychain.store(updatedCreds)
+                    } catch let error {
+                        PMLog.ET("Error while storing refreshed API token: \(error)")
+                        failure(error)
+                    }
+                    success(updatedCreds)
+                } catch {
+                    PMLog.D("Error occurred during refresh access token parsing", level: .error)
+                    let error = ParseError.refreshTokenParse
                     failure(error)
                 }
-                success(updatedCreds)
-            } catch {
-                PMLog.D("Error occurred during refresh access token parsing", level: .error)
-                let error = ParseError.refreshTokenParse
+            case let .failure(error):
                 failure(error)
             }
         }
-        
-        let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
-        alamofireWrapper.request(AuthRefreshRequest(refreshProperties), success: successWrapper, failure: failure)
     }
 }

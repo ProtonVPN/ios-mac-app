@@ -47,6 +47,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         ApiConstants.apiHost = ObfuscatedConstants.apiHost
         Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
+
+        setupCoreIntegration()
         
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
         PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
@@ -62,8 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
-
-        setupCoreIntegration()
     
         navigationService.launched()
         

@@ -20,28 +20,25 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class AuthenticateRequest: AuthBaseRequest {
+final class AuthenticateRequest: Request {
 
     let properties: AuthenticationProperties
     
     init( _ properties: AuthenticationProperties ) {
         self.properties = properties
-        super.init()
     }
-    
-    // MARK: - Override
-    
-    override var method: HTTPMethod {
+
+    var method: HTTPMethod {
         return .post
     }
-    
-    override var header: [String: String]? {
-        return nonAuthenticatedHeader
+
+    var path: String {
+        return "/auth"
     }
-    
-    override var parameters: [String: Any]? {
+
+    var parameters: [String: Any]? {
         return [
             "ClientSecret": ApiConstants.clientSecret,
             "Username": properties.username,
@@ -49,5 +46,9 @@ class AuthenticateRequest: AuthBaseRequest {
             "ClientProof": properties.clientProof,
             "SRPSession": properties.srpSession
         ]
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }

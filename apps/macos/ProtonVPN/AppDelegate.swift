@@ -24,6 +24,8 @@ import Cocoa
 
 import ServiceManagement
 import vpncore
+import ProtonCore_Services
+import ProtonCore_Log
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -43,6 +45,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
+        setupCoreIntegration()
         self.checkMigration()
         migrateIfNeeded { [unowned self] in
             self.setNSCodingModuleName()
@@ -205,6 +208,23 @@ extension AppDelegate {
             
             appStateManager.disconnect {
                 self.container.makeVpnGateway().quickConnect()
+            }
+        }
+    }
+}
+
+extension AppDelegate {
+    private func setupCoreIntegration() {
+        let trusKitHelper = container.makeTrustKitHelper()
+        PMAPIService.trustKit = trusKitHelper?.trustKit
+        PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
+
+        ProtonCore_Log.PMLog.callback = { (log, level) in
+            switch level {
+            case .debug, .info, .trace, .warn:
+                PMLog.D("[Core] \(log)")
+            case .error, .fatal:
+                PMLog.ET("[Core] \(log)")
             }
         }
     }

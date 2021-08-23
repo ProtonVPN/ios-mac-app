@@ -20,35 +20,32 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class AuthInfoRequest: AuthBaseRequest {
+final class AuthInfoRequest: Request {
     
     let username: String
     
     init( _ username: String) {
         self.username = username
-        super.init()
     }
-    
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/info"
+
+    var path: String {
+        return "/auth/info"
     }
-    
-    override var method: HTTPMethod {
+
+    var method: HTTPMethod {
         return .post
     }
-    
-    override var header: [String: String]? {
-        return nonAuthenticatedHeader
-    }
-    
-    override var parameters: [String: Any]? {
+
+    var parameters: [String: Any]? {
         return [
             "ClientSecret": ApiConstants.clientSecret,
             "Username": username
         ]
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }

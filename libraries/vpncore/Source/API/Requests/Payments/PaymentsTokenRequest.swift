@@ -20,9 +20,9 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class PaymentsTokenRequest: PaymentsBaseRequest {
+final class PaymentsTokenRequest: Request {
     
     let amount: Int
     let receipt: String
@@ -30,18 +30,17 @@ class PaymentsTokenRequest: PaymentsBaseRequest {
     init ( _ amount: Int, receipt: String) {
         self.amount = amount
         self.receipt = receipt
-        super.init()
     }
-    
-    override func path() -> String {
-        return super.path() + "/tokens"
+
+    var path: String {
+        return "/payments/tokens"
     }
-    
-    override var method: HTTPMethod {
+
+    var method: HTTPMethod {
         return .post
     }
-    
-    override var parameters: [String: Any]? {
+
+    var parameters: [String: Any]? {
         return [
             "Amount": amount,
             "Currency": "USD",

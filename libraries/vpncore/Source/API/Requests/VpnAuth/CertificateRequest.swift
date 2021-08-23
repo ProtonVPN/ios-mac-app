@@ -20,10 +20,10 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 import Foundation
 
-final class CertificateRequest: BaseRequest {
+final class CertificateRequest: Request {
 
     let publicKey: PublicKey
     let deviceName: String
@@ -37,21 +37,15 @@ final class CertificateRequest: BaseRequest {
         #endif
     }
 
-    // MARK: - Override
-
-    override func path() -> String {
-        return super.path() + "/vpn/v1/certificate"
+    var path: String {
+        "/vpn/v1/certificate"
     }
 
-    override var method: HTTPMethod {
+    var method: HTTPMethod {
         return .post
     }
 
-    override var header: [String: String]? {
-        return authenticatedHeader
-    }
-
-    override var parameters: [String: Any]? {
+    var parameters: [String: Any]? {
         var params = [
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",

@@ -56,7 +56,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -70,7 +70,7 @@ class AppSessionManagerImplementation: AppSessionManager {
     private lazy var serverStorage: ServerStorage = factory.makeServerStorage()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
-    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
+    private lazy var networking: Networking = factory.makeNetworking()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
@@ -325,7 +325,8 @@ class AppSessionManagerImplementation: AppSessionManager {
         vpnAuthentication.clear()
         
         propertiesManager.logoutCleanup()
-        alamofireWrapper.setHumanVerification(token: nil)
+        fatalError("???")
+        // alamofireWrapper.setHumanVerification(token: nil)
     }
     // End of the logout logic
     // MARK: -

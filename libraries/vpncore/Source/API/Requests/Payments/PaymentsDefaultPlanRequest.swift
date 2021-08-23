@@ -20,10 +20,10 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class PaymentsDefaultPlanRequest: PaymentsBaseRequest {
-    override func path() -> String {
-        return super.path() + "/plans/default"
+final class PaymentsDefaultPlanRequest: Request {
+    var path: String {
+        return "/payments/plans/default"
     }
 }

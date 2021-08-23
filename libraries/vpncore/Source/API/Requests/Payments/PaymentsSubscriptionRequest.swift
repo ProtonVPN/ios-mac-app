@@ -20,8 +20,10 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-class PaymentsSubscriptionRequest: PaymentsBaseRequest {
-    override func path() -> String {
-        return super.path() + "/subscription"
+import ProtonCore_Networking
+
+final class PaymentsSubscriptionRequest: Request {
+    var path: String {
+        return "/payments/subscription"
     }
 }

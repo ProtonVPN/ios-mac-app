@@ -29,7 +29,6 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
-        let alamofireWrapper = AlamofireWrapperImplementation()
         let networking = CoreNetworking()
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
@@ -48,13 +47,13 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                     openVpnFactory: openVpnFactory,
                                     wireguardProtocolFactory: wireguardVpnFactory,
                                     appGroup: appGroup,
-                                    vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain),
+                                    vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain),
                                     vpnKeychain: vpnKeychain,
                                     propertiesManager: propertiesManager,
                                     vpnStateConfiguration: vpnStateConfiguration,
                                     vpnCredentialsConfiguratorFactory: IOSVpnCredentialsConfiguratorFactory(propertiesManager: propertiesManager))
         
-        siriHandlerViewModel = SiriHandlerViewModel(alamofireWrapper: alamofireWrapper,
+        siriHandlerViewModel = SiriHandlerViewModel(networking: networking,
                                                     vpnApiService: VpnApiService(networking: networking),
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,

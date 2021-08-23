@@ -10,6 +10,12 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 
+public typealias SuccessCallback = (() -> Void)
+public typealias GenericCallback<T> = ((T) -> Void)
+public typealias JSONCallback = GenericCallback<JSONDictionary>
+public typealias StringCallback = GenericCallback<String>
+public typealias ErrorCallback = GenericCallback<Error>
+
 public protocol NetworkingFactory {
     func makeNetworking() -> Networking
 }
@@ -17,6 +23,7 @@ public protocol NetworkingFactory {
 public protocol Networking: AnyObject {
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
+    func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void)
 }
 
 public final class CoreNetworking: Networking {
@@ -29,12 +36,14 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
-        PMLog.D("Request: \(route.path)")
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())/\(route.path)".cleanedForLog
+        PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
 
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+
             if let error = error {
-                PMLog.D("Response: \(route.path) - \(error)")
                 completion(.failure(error))
                 return
             }
@@ -46,15 +55,33 @@ public final class CoreNetworking: Networking {
                         result[key] = v
                     }
                 }
-                PMLog.D("Response: \(route.path) - OK")
                 completion(.success(result))
                 return
             }
+
+            completion(.success([:]))
         }
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())/\(route.path)".cleanedForLog
+        PMLog.D("Request started: \(url)", level: .debug)
 
+        apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
+
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            completion(.success(()))
+        }
+    }
+
+    public func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void) {
+        fatalError()
     }
 }
 

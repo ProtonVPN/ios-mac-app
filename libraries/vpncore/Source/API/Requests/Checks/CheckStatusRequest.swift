@@ -20,27 +20,11 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class CheckStatusRequest: BaseRequest {
+final class CheckStatusRequest: Request {
 
-    // MARK: - Override
-    
-    override func path() -> String {
-        return ApiConstants.statusURL + "/vpn_status"
-    }
-    
-    override var header: [String: String]? {
-        return [:]
-    }
-    
-    override func asURLRequest() throws -> URLRequest {
-        let url = URL(string: path())!
-        var urlRequest = URLRequest(url: url)
-        urlRequest.httpMethod = self.method.rawValue
-        urlRequest.allHTTPHeaderFields = header
-        urlRequest.cachePolicy = .reloadIgnoringCacheData
-        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
-        return urlRequest
+    var path: String {
+        return "/vpn_status"
     }
 }

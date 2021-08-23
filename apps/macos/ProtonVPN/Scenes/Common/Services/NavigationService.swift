@@ -34,7 +34,6 @@ class NavigationService {
         & PropertiesManagerFactory
         & WindowServiceFactory
         & VpnKeychainFactory
-        & AlamofireWrapperFactory
         & VpnApiServiceFactory
         & AppStateManagerFactory
         & AppSessionManagerFactory
@@ -55,7 +54,6 @@ class NavigationService {
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
