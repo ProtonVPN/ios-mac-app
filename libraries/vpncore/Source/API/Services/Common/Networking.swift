@@ -98,7 +98,10 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onUpdate(auth: Credential) {
-
+        guard let credentials = AuthKeychain.fetch() else {
+            return
+        }
+        try? AuthKeychain.store(AuthCredentials(version: credentials.VERSION, username: credentials.username, accessToken: auth.accessToken, refreshToken: auth.refreshToken, sessionId: credentials.sessionId, userId: credentials.userId, expiration: auth.expiration, scopes: auth.scope.compactMap({ AuthCredentials.Scope($0) })))
     }
 
     public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
