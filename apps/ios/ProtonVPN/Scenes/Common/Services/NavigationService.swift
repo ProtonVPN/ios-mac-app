@@ -150,7 +150,7 @@ final class NavigationService {
     private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
-    private lazy var loginStoryboard = UIStoryboard(name: "Login", bundle: nil)
+    private lazy var subscriptionsStoryboard = UIStoryboard(name: "Subscriptions", bundle: nil)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
     
     // MARK: Properties
@@ -285,7 +285,7 @@ final class NavigationService {
 extension NavigationService: PlanService {
         
     func makePurchaseCompleteViewController(plan: AccountPlan) -> PurchaseCompleteViewController? {
-        if let signUpCompleteViewController = loginStoryboard.instantiateViewController(withIdentifier: "SignUpCompleteViewController") as? PurchaseCompleteViewController {
+        if let signUpCompleteViewController = subscriptionsStoryboard.instantiateViewController(withIdentifier: "SignUpCompleteViewController") as? PurchaseCompleteViewController {
             signUpCompleteViewController.navigationService = self
             signUpCompleteViewController.plan = plan
             return signUpCompleteViewController
