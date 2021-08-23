@@ -48,10 +48,9 @@ final class DependencyContainer {
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
-    private var alamofireWrapper: AlamofireWrapper?
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(vpnApiService: makeVpnApiService(),
                                                                         vpnManager: makeVpnManager(),
-                                                                        alamofireWrapper: makeAlamofireWrapper(),
+                                                                        networking: makeNetworking(),
                                                                         alertService: makeCoreAlertService(),
                                                                         timerFactory: TimerFactory(),
                                                                         propertiesManager: makePropertiesManager(),
@@ -83,7 +82,7 @@ final class DependencyContainer {
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
-        return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
+        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
     }()
     
     #if TLS_PIN_DISABLE
@@ -155,16 +154,6 @@ extension DependencyContainer: WindowServiceFactory {
     }
 }
 
-// MARK: AlamofireWrapperFactory
-extension DependencyContainer: AlamofireWrapperFactory {
-    func makeAlamofireWrapper() -> AlamofireWrapper {
-        if alamofireWrapper == nil {
-            alamofireWrapper = AlamofireWrapperImplementation(factory: self)
-        }
-        return alamofireWrapper!
-    }
-}
-
 // MARK: VpnApiServiceFactory
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
@@ -176,7 +165,7 @@ extension DependencyContainer: VpnApiServiceFactory {
 extension DependencyContainer: AuthApiServiceFactory {
     func makeAuthApiService() -> AuthApiService {
         if authApiService == nil {
-            authApiService = AuthApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
+            authApiService = AuthApiServiceImplementation(networking: makeNetworking())
         }
         return authApiService
     }
@@ -251,14 +240,14 @@ extension DependencyContainer: ReportBugViewModelFactory {
 // MARK: ReportsApiServiceFactory
 extension DependencyContainer: ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService {
-        return ReportsApiService(alamofireWrapper: makeAlamofireWrapper())
+        return ReportsApiService(networking: makeNetworking())
     }
 }
 
 // MARK: PaymentsApiServiceFactory
 extension DependencyContainer: PaymentsApiServiceFactory {
     func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
+        return PaymentsApiServiceImplementation(networking: makeNetworking())
     }
 }
 

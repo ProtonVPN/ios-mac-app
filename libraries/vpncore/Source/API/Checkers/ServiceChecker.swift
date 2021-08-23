@@ -24,13 +24,13 @@ import Foundation
 class ServiceChecker {
     
     private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     private let alertService: CoreAlertService
     private var timer: Timer?
     private var p2pShown = false
     
-    init(alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService) {
-        self.alamofireWrapper = alamofireWrapper
+    init(networking: Networking, alertService: CoreAlertService) {
+        self.networking = networking
         self.alertService = alertService
         
         checkServices()
@@ -59,18 +59,18 @@ class ServiceChecker {
         }
     }
     
-    private func p2pBlocked() {
-        let success: (String) -> Void = { [weak self] result in
-            if result.contains("<!--P2P_WARNING-->") {
-                self?.alertService.push(alert: P2pBlockedAlert())
-                self?.p2pShown = true
+    private func p2pBlocked() {        
+        networking.request(CheckStatusRequest()) { [weak self] (result: Result<(String), Error>) in
+            switch result {
+            case let .success(text):
+                if text.contains("<!--P2P_WARNING-->") {
+                    self?.alertService.push(alert: P2pBlockedAlert())
+                    self?.p2pShown = true
+                }
+            case let .failure(error):
+                PMLog.ET(error.localizedDescription)
             }
         }
-        let failure: (Error) -> Void = { error in
-            PMLog.ET(error.localizedDescription)
-        }
-        
-        alamofireWrapper.request(CheckStatusRequest(), success: success, failure: failure)
     }
     
     private func trafficForwarded() {

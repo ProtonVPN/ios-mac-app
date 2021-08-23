@@ -20,32 +20,34 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class AuthRefreshRequest: AuthBaseRequest {
+final class AuthRefreshRequest: Request {
     
     let properties: RefreshAccessTokenProperties
     
     init( _ properties: RefreshAccessTokenProperties) {
         self.properties = properties
-        super.init()
     }
-    
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/refresh"
+
+    var path: String {
+        return "/auth/refresh"
     }
-    
-    override var method: HTTPMethod {
+
+    var method: HTTPMethod {
         return .post
     }
-    
-    override var header: [String: String]? {
-        return expiredTokenHeader
+
+    var header: [String: Any] {
+        guard let authCredentials = AuthKeychain.fetch() else {
+            return [:]
+        }
+        return [
+            "x-pm-uid": authCredentials.sessionId
+        ]
     }
-    
-    override var parameters: [String: Any]? {
+
+    var parameters: [String: Any]? {
         return [
             "ResponseType": "token",
             "GrantType": "refresh_token",

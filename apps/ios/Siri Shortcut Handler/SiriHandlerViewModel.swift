@@ -26,7 +26,7 @@ import vpncore
 @available(iOSApplicationExtension 12.0, *)
 class SiriHandlerViewModel {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     private let vpnApiService: VpnApiService
     private let vpnManager: VpnManager
     private let vpnKeychain: VpnKeychainProtocol
@@ -39,7 +39,7 @@ class SiriHandlerViewModel {
     lazy var appStateManager: AppStateManager = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(alamofireWrapper: alamofireWrapper, storage: vpnAuthKeychain))
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain))
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?
@@ -54,11 +54,11 @@ class SiriHandlerViewModel {
         return _vpnGateway
     }
     
-    init(alamofireWrapper: AlamofireWrapper, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
         
-        self.alamofireWrapper = alamofireWrapper
+        self.networking = networking
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.vpnKeychain = vpnKeychain

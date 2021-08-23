@@ -20,23 +20,21 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class GetPaymentsTokenRequest: PaymentsBaseRequest {
+final class GetPaymentsTokenRequest: Request {
     
     let token: PaymentToken
     
     init ( _ token: PaymentToken) {
         self.token = token
-        super.init()
     }
-    
-    override func path() -> String {
-        return super.path() + "/tokens/" + token.token
+
+    var path: String {
+        return "/payments/tokens/" + token.token
     }
-    
-    override var method: HTTPMethod {
-        return .get
+
+    var method: HTTPMethod {
+        return .post
     }
-    
 }

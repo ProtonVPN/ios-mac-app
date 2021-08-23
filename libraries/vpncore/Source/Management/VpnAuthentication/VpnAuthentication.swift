@@ -53,10 +53,10 @@ public protocol VpnAuthentication {
 public final class VpnAuthenticationManager {
     private let queue = OperationQueue()
     private let storage: VpnAuthenticationStorage
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
 
-    public init(alamofireWrapper: AlamofireWrapper, storage: VpnAuthenticationStorage) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking, storage: VpnAuthenticationStorage) {
+        self.networking = networking
         self.storage = storage
         queue.maxConcurrentOperationCount = 1
 
@@ -74,7 +74,7 @@ public final class VpnAuthenticationManager {
         clear()
 
         // and get new certificates
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper))
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking))
     }
 }
 
@@ -89,7 +89,7 @@ extension VpnAuthenticationManager: VpnAuthentication {
     }
 
     public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper, completion: { result in
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, networking: networking, completion: { result in
             executeOnUIThread { completion(result) }
         }))
     }

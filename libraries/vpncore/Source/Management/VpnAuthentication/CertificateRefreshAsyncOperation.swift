@@ -28,13 +28,13 @@ enum CertificateRefreshError: Error {
 
 final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     private let completion: CertificateRefreshCompletion?
     private var isRetry = false
 
-    init(storage: VpnAuthenticationStorage, alamofireWrapper: AlamofireWrapper, completion: CertificateRefreshCompletion? = nil) {
+    init(storage: VpnAuthenticationStorage, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
-        self.alamofireWrapper = alamofireWrapper
+        self.networking = networking
         self.completion = completion
     }
 
@@ -46,18 +46,21 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificate, Error>) -> Void) {
         PMLog.D("Asking backend API for new vpn authentication certificate")
         let request = CertificateRequest(publicKey: keys.publicKey)
-        alamofireWrapper.request(request) { (dict: JSONDictionary) in
-            do {
-                let certificate = try VpnCertificate(dict: dict)
-                PMLog.D("Got new vpn authentication certificate valid until \(certificate.validUntil)")
-                completion(.success(certificate))
-            } catch {
-                PMLog.ET("Failed to decode vpn authentication certificate from backend: \(error)")
+        networking.request(request) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(dict):
+                do {
+                    let certificate = try VpnCertificate(dict: dict)
+                    PMLog.D("Got new vpn authentication certificate valid until \(certificate.validUntil)")
+                    completion(.success(certificate))
+                } catch {
+                    PMLog.ET("Failed to decode vpn authentication certificate from backend: \(error)")
+                    completion(.failure(error))
+                }
+            case let .failure(error):
+                PMLog.ET("Failed to get vpn authentication certificate from backend: \(error)")
                 completion(.failure(error))
             }
-        } failure: { error in
-            PMLog.ET("Failed to get vpn authentication certificate from backend: \(error)")
-            completion(.failure(error))
         }
     }
 

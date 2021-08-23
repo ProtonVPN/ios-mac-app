@@ -51,10 +51,10 @@ public protocol PaymentsApiServiceFactory {
 
 public class PaymentsApiServiceImplementation: PaymentsApiService {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
 
-    public init(alamofireWrapper: AlamofireWrapper) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking) {
+        self.networking = networking
     }
     
     // makes calls asynchronously and returns results if successful else error if any issues
@@ -102,114 +102,148 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
     }
     
     func status(success: @escaping BoolCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            success(json.bool(key: "Apple", or: false))
+        networking.request(PaymentsStatusRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                success(json.bool(key: "Apple", or: false))
+            case let .failure(error):
+                failure(error)
+            }
         }
-        alamofireWrapper.request(PaymentsStatusRequest(), success: successWrapper, failure: failure)
     }
     
     public func methods(success: @escaping PaymentsMethodCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json["PaymentMethods"] as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let methods = try decoder.decode(Array<PaymentMethod>.self, from: data)
-                success(methods)
-            } catch let error {
-                PMLog.D("Failed to parse PaymentMethods: \(error.localizedDescription)", level: .error)
+        networking.request(PaymentsMethodsRequest()) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json["PaymentMethods"] as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let methods = try decoder.decode(Array<PaymentMethod>.self, from: data)
+                    success(methods)
+                } catch let error {
+                    PMLog.D("Failed to parse PaymentMethods: \(error.localizedDescription)", level: .error)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsMethodsRequest(), success: successWrapper, failure: failure)
     }
     
     public func subscription(success: @escaping OptionalSubCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
-            do {
-                guard let `self` = self else { return }
-                success(try self.subscriptionResponse(json))
-            } catch let error {
+        networking.request(PaymentsSubscriptionRequest()) { [weak self] (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    guard let self = self else { return }
+                    success(try self.subscriptionResponse(json))
+                } catch let error {
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsSubscriptionRequest(), success: successWrapper, failure: failure)
     }
     
     func defaultPlan(success: @escaping OptionalPlanDetailsCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
-            do {
-                guard let `self` = self else { return }
-                let servicePlans = try self.plansResponse(json)
-                let defaultPlan = servicePlans.filter({ (details) -> Bool in
-                    return details.title.contains("ProtonVPN Free")
-                }).first
-                success(defaultPlan)
-            } catch let error {
-                PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+        networking.request(PaymentsDefaultPlanRequest()) { [weak self] (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    guard let self = self else { return }
+                    let servicePlans = try self.plansResponse(json)
+                    let defaultPlan = servicePlans.filter({ (details) -> Bool in
+                        return details.title.contains("ProtonVPN Free")
+                    }).first
+                    success(defaultPlan)
+                } catch let error {
+                    PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsDefaultPlanRequest(), success: successWrapper, failure: failure)
     }
     
     func plans(success: @escaping PlansDetailsCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
-            do {
-                guard let `self` = self else { return }
-                let plans = try self.plansResponse(json)
-                success(plans)
-            } catch let error {
-                PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+        networking.request(PaymentsPlansRequest()) { [weak self] (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    guard let self = self else { return }
+                    let plans = try self.plansResponse(json)
+                    success(plans)
+                } catch let error {
+                    PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsPlansRequest(), success: successWrapper, failure: failure)
     }
     
     public func credit(amount: Int, receipt: PaymentAction, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
-        alamofireWrapper.request(PaymentsCreditRequest(amount, payment: receipt), success: success, failure: failure)
+        networking.request(PaymentsCreditRequest(amount, payment: receipt)) { (result: Result<(), Error>) in
+            switch result {
+            case .success:
+                success()
+            case let .failure(error):
+                failure(error)
+            }
+        }
     }
     
     public func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let token = try decoder.decode(PaymentToken.self, from: data)
-                
-                success(token)
-            } catch let error {
+        networking.request(PaymentsTokenRequest(amount, receipt: receipt)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let token = try decoder.decode(PaymentToken.self, from: data)
+
+                    success(token)
+                } catch let error {
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(PaymentsTokenRequest(amount, receipt: receipt), success: successWrapper, failure: failure)
     }
     
     public func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let token = try decoder.decode(PaymentTokenStatusResponse.self, from: data)
-                
-                success(token)
-            } catch let error {
+        networking.request(GetPaymentsTokenRequest(token)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let token = try decoder.decode(PaymentTokenStatusResponse.self, from: data)
+
+                    success(token)
+                } catch let error {
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(GetPaymentsTokenRequest(token), success: successWrapper, failure: failure)
     }
-    
+
     public func buyPlan(id planId: String, price: Int, paymentToken: PaymentAction, success: @escaping SubscriptionCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { [weak self] json in
+        let parse = { (json: JSONDictionary) in
             do {
-                guard let `self` = self else { return }
                 guard let code = json["Code"] as? Int, code == 1000 else {
                     throw ParseError.subscriptionsParse
                 }
@@ -219,39 +253,64 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 failure(error)
             }
         }
-        
+
         self.validateSubscription(id: planId, success: {response in
             // Standard path
             if response.amountDue == price {
-                self.alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
+                self.networking.request(BuyPlanRequest(planId, amount: price, payment: paymentToken)) { (result: Result<JSONDictionary, Error>) in
+                    switch result {
+                    case let .success(json):
+                        parse(json)
+                    case let .failure(error):
+                        failure(error)
+                    }
+                }
                 return
             }
             // User already has credits, so we will first add credits and then buy plan with credits
             self.credit(amount: price, receipt: paymentToken, success: {
-                self.alamofireWrapper.request(BuyPlanRequest(planId, amount: 0, payment: .credits), success: successWrapper, failure: failure)
+                self.networking.request(BuyPlanRequest(planId, amount: 0, payment: .credits)) { (result: Result<JSONDictionary, Error>) in
+                    switch result {
+                    case let .success(json):
+                        parse(json)
+                    case let .failure(error):
+                        failure(error)
+                    }
+                }
                 
             }, failure: failure)
             
-        }, failure: {error in
-            self.alamofireWrapper.request(BuyPlanRequest(planId, amount: price, payment: paymentToken), success: successWrapper, failure: failure)
+        }, failure: { [weak self] error in
+            self?.networking.request(BuyPlanRequest(planId, amount: price, payment: paymentToken)) { (result: Result<JSONDictionary, Error>) in
+                switch result {
+                case let .success(json):
+                    parse(json)
+                case let .failure(error):
+                    failure(error)
+                }
+            }
         })
     }
     
     public func validateSubscription(id planId: String, success: @escaping ValidateSubscriptionResponseCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: JSONCallback = { json in
-            do {
-                let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                let decoder = JSONDecoder()
-                // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                let validateSubscriptionResponse = try decoder.decode(ValidateSubscriptionResponse.self, from: data)
-                
-                success(validateSubscriptionResponse)
-            } catch let error {
+        networking.request(ValidateSubscriptionRequest(planId)) { (result: Result<JSONDictionary, Error>) in
+            switch result {
+            case let .success(json):
+                do {
+                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
+                    let decoder = JSONDecoder()
+                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
+                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    let validateSubscriptionResponse = try decoder.decode(ValidateSubscriptionResponse.self, from: data)
+
+                    success(validateSubscriptionResponse)
+                } catch let error {
+                    failure(error)
+                }
+            case let .failure(error):
                 failure(error)
             }
         }
-        alamofireWrapper.request(ValidateSubscriptionRequest(planId), success: successWrapper, failure: failure)
     }
     
     // MARK: - Private

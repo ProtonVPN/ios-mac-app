@@ -7,26 +7,30 @@
 //
 
 import Foundation
+import ProtonCore_Networking
 
 public enum DomainType: String {
     case login
     case signUp
 }
 
-final class DomainsAvailableRequest: BaseRequest {
+final class DomainsAvailableRequest: Request {
 
     private let domainType: DomainType
     
     init(type: DomainType) {
         self.domainType = type
-        super.init()
     }
-    
-    override var parameters: [String: Any]? {
+
+    var path: String {
+        return "/domains/available"
+    }
+
+    var parameters: [String: Any]? {
         return ["Type": self.domainType.rawValue]
     }
-    
-    override func path() -> String {
-        return super.path() + "/domains/available"
+
+    var isAuth: Bool {
+        return false
     }
 }

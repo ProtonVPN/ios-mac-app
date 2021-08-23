@@ -142,7 +142,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & PaymentsApiServiceFactory & NetworkingFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -163,7 +163,6 @@ final class NavigationService {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private lazy var paymentsApiService: PaymentsApiService = factory.makePaymentsApiService()
-    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var servicePlanDataService: ServicePlanDataService = factory.makeServicePlanDataService()
@@ -171,6 +170,7 @@ final class NavigationService {
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = factory.makeLoginService()
+    private lazy var networking: Networking = factory.makeNetworking()
     
     private var trialChecker: TrialChecker?
     
@@ -452,7 +452,7 @@ extension NavigationService: SettingsService {
     
     func presentReportBug() {
         let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(alamofireWrapper: alamofireWrapper), alertService: alertService, vpnKeychain: vpnKeychain)
+        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain)
         let navigationController = UINavigationController(rootViewController: viewController)
         windowService.present(modal: navigationController)
     }

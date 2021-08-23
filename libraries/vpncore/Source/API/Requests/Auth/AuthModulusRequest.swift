@@ -20,17 +20,15 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class AuthModulusRequest: AuthBaseRequest {
-    
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/modulus"
+final class AuthModulusRequest: Request {
+
+    var path: String {
+        return "/modulus"
     }
-  
-    override var header: [String: String]? {
-        return nonAuthenticatedHeader
+
+    var isAuth: Bool {
+        return false
     }
 }

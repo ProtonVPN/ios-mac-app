@@ -27,10 +27,10 @@ public protocol ReportsApiServiceFactory {
 
 public class ReportsApiService {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     
-    public init(alamofireWrapper: AlamofireWrapper) {
-        self.alamofireWrapper = alamofireWrapper
+    public init(networking: Networking) {
+        self.networking = networking
     }
     
     public func report(bug: ReportBug, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
@@ -45,6 +45,7 @@ public class ReportsApiService {
         let request = ReportsBugRequest(bug)
         let params = (request.parameters as? [String: String]) ?? [:]
         let successWrapper: JSONCallback = { _ in success() }
-        alamofireWrapper.upload(request, parameters: params, files: files, success: successWrapper, failure: failure)
+        fatalError("???")
+//        networking.upload(request, parameters: params, files: files, success: successWrapper, failure: failure)
     }
 }

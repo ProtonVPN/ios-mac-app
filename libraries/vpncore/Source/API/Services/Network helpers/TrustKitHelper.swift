@@ -76,14 +76,10 @@ public final class TrustKitHelper: SessionDelegate {
         return config
     }
     // swiftlint:enable function_body_length
-    
-    public typealias Factory = AlamofireWrapperFactory
-    private var factory: Factory
-    private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
+
     public let trustKit: TrustKit!
     
-    public init(factory: Factory, hardfail: Bool = true) {
-        self.factory = factory
+    public init(hardfail: Bool = true) {
         trustKit = TrustKit(configuration: TrustKitHelper.configuration(hardfail: hardfail))
         super.init()
     }
@@ -93,7 +89,8 @@ public final class TrustKitHelper: SessionDelegate {
     override public func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         let wrappedCompletionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void = { [self, task] disposition, credential in
             if disposition == .cancelAuthenticationChallenge, let request = task.originalRequest {
-                self.alamofireWrapper.markAsFailedTLS(request: request)
+                fatalError("???")
+                // self.alamofireWrapper.markAsFailedTLS(request: request)
             }
             completionHandler(disposition, credential)
         }

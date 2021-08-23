@@ -63,7 +63,7 @@ extension AppStateManager {
 
 public class AppStateManagerImplementation: AppStateManager {
     
-    private let alamofireWrapper: AlamofireWrapper
+    private let networking: Networking
     private let vpnApiService: VpnApiService
     private var vpnManager: VpnManagerProtocol
     private let propertiesManager: PropertiesManagerProtocol
@@ -117,10 +117,10 @@ public class AppStateManagerImplementation: AppStateManager {
 
     private let vpnAuthentication: VpnAuthentication
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, alamofireWrapper: AlamofireWrapper, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
-        self.alamofireWrapper = alamofireWrapper
+        self.networking = networking
         self.alertService = alertService
         self.timerFactory = timerFactory
         self.propertiesManager = propertiesManager
@@ -420,7 +420,7 @@ public class AppStateManagerImplementation: AppStateManager {
             
             serviceChecker?.stop()
             if let alertService = alertService {
-                serviceChecker = ServiceChecker(alamofireWrapper: alamofireWrapper, alertService: alertService)
+                serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
             }
             attemptingConnection = false
             state = .connected(descriptor)

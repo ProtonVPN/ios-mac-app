@@ -54,11 +54,10 @@ final class DependencyContainer {
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(factory: self)
-    private lazy var alamofireWrapper: AlamofireWrapper = AlamofireWrapperImplementation(factory: self)
     private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
         vpnApiService: makeVpnApiService(),
         vpnManager: vpnManager,
-        alamofireWrapper: alamofireWrapper,
+        networking: makeNetworking(),
         alertService: macAlertService,
         timerFactory: TimerFactory(),
         propertiesManager: PropertiesManager(),
@@ -93,8 +92,10 @@ final class DependencyContainer {
 
     private lazy var vpnAuthentication: VpnAuthentication = {
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos")
-        return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
+        return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
     }()
+
+    private lazy var networking = CoreNetworking()
 }
 
 // MARK: NavigationServiceFactory
@@ -139,17 +140,10 @@ extension DependencyContainer: WindowServiceFactory {
     }
 }
 
-// MARK: AlamofireWrapperFactory
-extension DependencyContainer: AlamofireWrapperFactory {
-    func makeAlamofireWrapper() -> AlamofireWrapper {
-        return alamofireWrapper
-    }
-}
-
 // MARK: VpnApiServiceFactory
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(alamofireWrapper: alamofireWrapper)
+        return VpnApiService(networking: makeNetworking())
     }
 }
 
@@ -157,7 +151,7 @@ extension DependencyContainer: VpnApiServiceFactory {
 extension DependencyContainer: AuthApiServiceFactory {
     func makeAuthApiService() -> AuthApiService {
         if authApiService == nil {
-            authApiService = AuthApiServiceImplementation(alamofireWrapper: alamofireWrapper)
+            authApiService = AuthApiServiceImplementation(networking: makeNetworking())
         }
         return authApiService
     }
@@ -242,7 +236,7 @@ extension DependencyContainer: ReportBugViewModelFactory {
 // MARK: ReportsApiServiceFactory
 extension DependencyContainer: ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService {
-        return ReportsApiService(alamofireWrapper: makeAlamofireWrapper())
+        return ReportsApiService(networking: makeNetworking())
     }
 }
 
@@ -328,7 +322,7 @@ extension DependencyContainer: AnnouncementManagerFactory {
 // MARK: - CoreApiServiceFactory
 extension DependencyContainer: CoreApiServiceFactory {
     func makeCoreApiService() -> CoreApiService {
-        return CoreApiServiceImplementation(alamofireWrapper: self.makeAlamofireWrapper())
+        return CoreApiServiceImplementation(networking: makeNetworking())
     }
 }
 
@@ -422,7 +416,7 @@ extension DependencyContainer: ServicePlanDataServiceFactory {
 // MARK: PaymentsApiServiceFactory
 extension DependencyContainer: PaymentsApiServiceFactory {
     func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
+        return PaymentsApiServiceImplementation(networking: makeNetworking())
     }
 }
 
@@ -430,5 +424,12 @@ extension DependencyContainer: PaymentsApiServiceFactory {
 extension DependencyContainer: VpnStateConfigurationFactory {
     func makeVpnStateConfiguration() -> VpnStateConfiguration {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
+    }
+}
+
+// MARK: NetworkingFactory
+extension DependencyContainer: NetworkingFactory {
+    func makeNetworking() -> Networking {
+        return networking
     }
 }
