@@ -47,6 +47,8 @@ def vpn_core
     # Core
     pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
 end    
 
 abstract_target 'Core' do
@@ -94,11 +96,9 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Authentication-KeyGeneration', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-HumanVerification', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Payments', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-PaymentsUI', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-PaymentsUI', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-SRP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
   
