@@ -20,22 +20,25 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-class VPNLogicalServicesRequest: VPNBaseRequest {
+import ProtonCore_Networking
+
+final class VPNLogicalServicesRequest: Request {
     
     let ip: String?
     
     init( _ ip: String? ) {
         self.ip = ip
-        super.init()
     }
     
-    // MARK: - Override
-    
-    override func path() -> String {
-        let endpoint = super.path() + "/logicals"
+    var path: String {
+        let endpoint = "/vpn/logicals"
         guard let ip = ip else {
             return endpoint
         }
         return endpoint + "?IP=\(ip)"
+    }
+    
+    var isAuth: Bool {
+        return false
     }
 }

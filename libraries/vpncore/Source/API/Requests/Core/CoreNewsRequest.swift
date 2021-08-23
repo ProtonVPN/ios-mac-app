@@ -20,10 +20,14 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Foundation
+import ProtonCore_Networking
 
-class CoreApiNotificationsRequest: CoreBaseRequest {
-    override func path() -> String {
-        return super.path() + "v4/notifications"
+final class CoreApiNotificationsRequest: Request {
+    var path: String {
+        return "/core/v4/notifications"
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }

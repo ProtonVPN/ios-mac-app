@@ -20,17 +20,11 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class VPNSessionsRequest: VPNBaseRequest {
+final class VPNSessionsRequest: Request {
     
-    override func path() -> String {
-        return super.path() + "/sessions"
-    }
-    
-    override func asURLRequest() throws -> URLRequest {
-        var request = try super.asURLRequest()
-        request.timeoutInterval = 15
-        return request
+    var path: String {
+        return "/vpn/sessions"
     }
 }

@@ -93,6 +93,7 @@ final class DependencyContainer {
     #endif
 
     private lazy var propertiesManager = PropertiesManager()
+    private lazy var networking = CoreNetworking()
 }
 
 // MARK: NavigationServiceFactory
@@ -167,7 +168,7 @@ extension DependencyContainer: AlamofireWrapperFactory {
 // MARK: VpnApiServiceFactory
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(alamofireWrapper: makeAlamofireWrapper())
+        return VpnApiService(networking: makeNetworking())
     }
 }
 
@@ -251,13 +252,6 @@ extension DependencyContainer: ReportBugViewModelFactory {
 extension DependencyContainer: ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService {
         return ReportsApiService(alamofireWrapper: makeAlamofireWrapper())
-    }
-}
-
-// MARK: UserApiServiceFactory
-extension DependencyContainer: UserApiServiceFactory {
-    func makeUserApiService() -> UserApiService {
-        return UserApiServiceImplementation(alamofireWrapper: makeAlamofireWrapper())
     }
 }
 
@@ -390,7 +384,7 @@ extension DependencyContainer: AnnouncementManagerFactory {
 // MARK: - CoreApiServiceFactory
 extension DependencyContainer: CoreApiServiceFactory {
     func makeCoreApiService() -> CoreApiService {
-        return CoreApiServiceImplementation(alamofireWrapper: self.makeAlamofireWrapper())
+        return CoreApiServiceImplementation(networking: makeNetworking())
     }
 }
 
@@ -447,5 +441,12 @@ extension DependencyContainer: VpnStateConfigurationFactory {
 extension DependencyContainer: LoginServiceFactory {
     func makeLoginService() -> LoginService {
         return CoreLoginService(factory: self)
+    }
+}
+
+// MARK: NetworkingFactory
+extension DependencyContainer: NetworkingFactory {
+    func makeNetworking() -> Networking {
+        return networking
     }
 }

@@ -20,20 +20,25 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-class VPNLoadsRequest: VPNBaseRequest {
+import ProtonCore_Networking
+
+final class VPNLoadsRequest: Request {
     
     let ip: String?
     
     init( _ ip: String? ) {
         self.ip = ip
-        super.init()
     }
     
-    override func path() -> String {
-        let endpoint = super.path() + "/loads"
+    var path: String {
+        let endpoint = "/vpn/loads"
         guard let ip = ip else {
             return endpoint
         }
         return endpoint + "?IP=\(ip)"
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }
