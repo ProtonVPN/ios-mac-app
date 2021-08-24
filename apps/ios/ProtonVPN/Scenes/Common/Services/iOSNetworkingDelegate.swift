@@ -44,35 +44,6 @@ extension iOSNetworkingDelegate {
 }
 
 extension iOSNetworkingDelegate {
-    public func getToken(bySessionUID uid: String) -> AuthCredential? {
-        guard let credentials = AuthKeychain.fetch() else {
-            return nil
-        }
-        return ProtonCore_Networking.AuthCredential(sessionID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, privateKey: nil, passwordKeySalt: nil)
-    }
-
-    public func onLogout(sessionUID uid: String) {
-
-    }
-
-    public func onUpdate(auth: Credential) {
-        guard let credentials = AuthKeychain.fetch() else {
-            return
-        }
-
-        try? AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
-    }
-
-    public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
-        PMLog.D("Implement me")
-    }
-
-    public func onForceUpgrade() {
-
-    }
-}
-
-extension iOSNetworkingDelegate {
     var locale: String {
         return NSLocale.current.languageCode ?? "en_US"
     }
