@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
 import Foundation
 
 final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory {

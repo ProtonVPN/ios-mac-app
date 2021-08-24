@@ -325,8 +325,6 @@ class AppSessionManagerImplementation: AppSessionManager {
         vpnAuthentication.clear()
         
         propertiesManager.logoutCleanup()
-        fatalError("???")
-        // alamofireWrapper.setHumanVerification(token: nil)
     }
     // End of the logout logic
     // MARK: -
