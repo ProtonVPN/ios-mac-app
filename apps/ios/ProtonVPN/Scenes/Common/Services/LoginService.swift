@@ -134,7 +134,7 @@ extension CoreLoginService: LoginService {
         if appSessionManager.loadDataWithoutFetching() {
             appSessionRefresher.refreshData()
         } else { // if no data is stored already, then show spinner and wait for data from the api
-            appSessionManager.attemptDataRefreshWithoutLogin(success: {
+            appSessionManager.attemptSilentLogIn(success: {
                 completion(.loggedIn)
             }, failure: { [appSessionManager] _ in
                 appSessionManager.loadDataWithoutLogin(success: {
