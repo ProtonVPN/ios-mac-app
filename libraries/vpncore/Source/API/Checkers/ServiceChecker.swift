@@ -59,8 +59,12 @@ class ServiceChecker {
         }
     }
     
-    private func p2pBlocked() {        
-        networking.request(CheckStatusRequest()) { [weak self] (result: Result<(String), Error>) in
+    private func p2pBlocked() {
+        var urlRequest = URLRequest(url: URL(string: ApiConstants.statusURL + "/vpn_status")!)
+        urlRequest.cachePolicy = .reloadIgnoringCacheData
+        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
+
+        networking.request(urlRequest) { [weak self] (result: Result<(String), Error>) in
             switch result {
             case let .success(text):
                 if text.contains("<!--P2P_WARNING-->") {
