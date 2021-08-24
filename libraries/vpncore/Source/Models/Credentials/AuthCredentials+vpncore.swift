@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import ProtonCore_Networking
 
 extension AuthCredentials {
     
     public func updatedWithAccessToken(response: RefreshAccessTokenResponse) -> AuthCredentials {
         return AuthCredentials(version: VERSION, username: username, accessToken: response.accessToken, refreshToken: response.refreshToken, sessionId: sessionId, userId: userId, expiration: response.expiration, scopes: scopes)
     }
-    
+
+    public func updatedWithAuth(auth: Credential) -> AuthCredentials {
+        return AuthCredentials(version: VERSION, username: username, accessToken: auth.accessToken, refreshToken: auth.refreshToken, sessionId: sessionId, userId: userId, expiration: auth.expiration, scopes: auth.scope.compactMap({ AuthCredentials.Scope($0) }))
+    }
 }
