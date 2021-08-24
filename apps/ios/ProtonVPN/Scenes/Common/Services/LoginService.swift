@@ -37,12 +37,14 @@ final class CoreLoginService {
         & WindowServiceFactory
         & CoreAlertServiceFactory
         & TrustKitHelperFactory
+        & PropertiesManagerFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
     private let navigationService: NavigationService
     private let windowService: WindowService
     private let alertService: AlertService
+    private let propertiesManager: PropertiesManagerProtocol
 
     private let forceUpgradeService: ForceUpgradeDelegate
     private var login: PMLogin?
@@ -52,7 +54,8 @@ final class CoreLoginService {
         appSessionRefresher = factory.makeAppSessionRefresher()
         navigationService = factory.makeNavigationService()
         windowService = factory.makeWindowService()
-        alertService = factory.makeCoreAlertService()        
+        alertService = factory.makeCoreAlertService()
+        propertiesManager = factory.makePropertiesManager()
 
         forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
     }
@@ -97,6 +100,32 @@ final class CoreLoginService {
             alertService.push(alert: alert)
         }
     }
+
+    private func show() {
+        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: self, forceUpgradeDelegate: forceUpgradeService, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
+        self.login = login
+
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
+            switch result {
+            case .dismissed:
+                PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
+            case let .loggedIn(data):
+                self?.finishLgin(data: data)
+            }
+
+            self?.login = nil
+        }
+
+        windowService.show(viewController: welcomeViewController)
+    }
+
+    #if !RELEASE
+    private func showEnvironmentSelection() {
+        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.liveURL] + ObfuscatedConstants.internalUrls)
+        environmentsViewController.delegate = self
+        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
+    }
+    #endif
 }
 
 // MARK: LoginService
@@ -122,21 +151,11 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome() {
-        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: self, forceUpgradeDelegate: forceUpgradeService, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
-        self.login = login
-
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
-            switch result {
-            case .dismissed:
-                PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
-            case let .loggedIn(data):
-                self?.finishLgin(data: data)
-            }
-
-            self?.login = nil
-        }
-
-        windowService.show(viewController: welcomeViewController)
+        #if !RELEASE
+        showEnvironmentSelection()
+        #else
+        show()
+        #endif
     }
 }
 
@@ -159,3 +178,12 @@ extension CoreLoginService: APIServiceDelegate {
     }
     func onDohTroubleshot() { }
 }
+
+#if !RELEASE
+extension CoreLoginService: EnvironmentsViewControllerDelegate {
+    func userDidSelectEndpoint(endpoint: String) {
+        propertiesManager.apiEndpoint = endpoint
+        show()
+    }
+}
+#endif
