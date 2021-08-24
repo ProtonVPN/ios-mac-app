@@ -1715,7 +1715,7 @@
 /* System exetnsion wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Enter credentials";
 /* System exetnsion wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Enter your credentials to authentificate";
+"_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
 
 /* System exetnsion wizard in mac: Step nr.4 title */
 "_sysex_wizard_step4_title" = "“Details...” button";
