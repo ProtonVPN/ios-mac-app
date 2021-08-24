@@ -92,8 +92,6 @@
 		4242B05F2465A43E0042145A /* UserCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0572465A43D0042145A /* UserCodeRequest.swift */; };
 		4242B0602465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */; };
 		4242B0612465A43E0042145A /* UserCheckUsernameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */; };
-		4242B0622465A43E0042145A /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0592465A43E0042145A /* UserCreateRequest.swift */; };
-		4242B0632465A43E0042145A /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0592465A43E0042145A /* UserCreateRequest.swift */; };
 		4242B0652465A4410042145A /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0642465A4410042145A /* BaseRequest.swift */; };
 		4242B0662465A4410042145A /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0642465A4410042145A /* BaseRequest.swift */; };
 		4242B06E2465A48B0042145A /* AuthApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0692465A48A0042145A /* AuthApiService.swift */; };
@@ -391,7 +389,6 @@
 		D5C2049124866B81004FB58B /* UserCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0572465A43D0042145A /* UserCodeRequest.swift */; };
 		D5C2049224866B81004FB58B /* UserCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0562465A43D0042145A /* UserCheckRequest.swift */; };
 		D5C2049324866B81004FB58B /* UserCheckUsernameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */; };
-		D5C2049424866B81004FB58B /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0592465A43E0042145A /* UserCreateRequest.swift */; };
 		D5C2049524866B81004FB58B /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0642465A4410042145A /* BaseRequest.swift */; };
 		D5C2049624866B81004FB58B /* VpnProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07C2465A4D10042145A /* VpnProperties.swift */; };
 		D5C2049724866B81004FB58B /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07D2465A4D10042145A /* UserProperties.swift */; };
@@ -502,7 +499,6 @@
 		D5C205042487A0CE004FB58B /* UserCodeRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0572465A43D0042145A /* UserCodeRequest.swift */; };
 		D5C205052487A0CE004FB58B /* UserCheckRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0562465A43D0042145A /* UserCheckRequest.swift */; };
 		D5C205062487A0CE004FB58B /* UserCheckUsernameRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */; };
-		D5C205072487A0CE004FB58B /* UserCreateRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0592465A43E0042145A /* UserCreateRequest.swift */; };
 		D5C205082487A0CE004FB58B /* BaseRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0642465A4410042145A /* BaseRequest.swift */; };
 		D5C205092487A0CE004FB58B /* VpnProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07C2465A4D10042145A /* VpnProperties.swift */; };
 		D5C2050A2487A0CE004FB58B /* UserProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B07D2465A4D10042145A /* UserProperties.swift */; };
@@ -1126,7 +1122,6 @@
 		4242B0562465A43D0042145A /* UserCheckRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCheckRequest.swift; sourceTree = "<group>"; };
 		4242B0572465A43D0042145A /* UserCodeRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCodeRequest.swift; sourceTree = "<group>"; };
 		4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCheckUsernameRequest.swift; sourceTree = "<group>"; };
-		4242B0592465A43E0042145A /* UserCreateRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserCreateRequest.swift; sourceTree = "<group>"; };
 		4242B0642465A4410042145A /* BaseRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseRequest.swift; sourceTree = "<group>"; };
 		4242B0692465A48A0042145A /* AuthApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthApiService.swift; sourceTree = "<group>"; };
 		4242B06A2465A48A0042145A /* PaymentsApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PaymentsApiService.swift; sourceTree = "<group>"; };
@@ -2030,7 +2025,6 @@
 				4242B0572465A43D0042145A /* UserCodeRequest.swift */,
 				4242B0562465A43D0042145A /* UserCheckRequest.swift */,
 				4242B0582465A43D0042145A /* UserCheckUsernameRequest.swift */,
-				4242B0592465A43E0042145A /* UserCreateRequest.swift */,
 			);
 			path = User;
 			sourceTree = "<group>";
@@ -2950,7 +2944,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4242B0322465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
-				4242B0622465A43E0042145A /* UserCreateRequest.swift in Sources */,
 				D5B4712324DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
 				E9DC7A07262DBFAA001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				E129C6CD22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
@@ -3253,7 +3246,6 @@
 				F39E71CB26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E9C9FDC8268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				D5D2985C25B58B10000FBD74 /* MemoryPaymentTokenStorageTests.swift in Sources */,
-				D5C205072487A0CE004FB58B /* UserCreateRequest.swift in Sources */,
 				D5C205082487A0CE004FB58B /* BaseRequest.swift in Sources */,
 				D5C205092487A0CE004FB58B /* VpnProperties.swift in Sources */,
 				D5C2050A2487A0CE004FB58B /* UserProperties.swift in Sources */,
@@ -3473,7 +3465,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4242B0332465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
-				4242B0632465A43E0042145A /* UserCreateRequest.swift in Sources */,
 				F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */,
 				D5B4712424DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
 				E129C6CE22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
@@ -3799,7 +3790,6 @@
 				D5C2049324866B81004FB58B /* UserCheckUsernameRequest.swift in Sources */,
 				F320562925E7A2A000566DB7 /* AlternativeRoutingTests.swift in Sources */,
 				D5967209253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
-				D5C2049424866B81004FB58B /* UserCreateRequest.swift in Sources */,
 				D5CC0023256BEF70003FA161 /* TrialCheckerTests.swift in Sources */,
 				D5C2049524866B81004FB58B /* BaseRequest.swift in Sources */,
 				D5C2049624866B81004FB58B /* VpnProperties.swift in Sources */,

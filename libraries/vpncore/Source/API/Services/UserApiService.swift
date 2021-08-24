@@ -33,8 +33,6 @@ public protocol UserApiService {
     func verifyCode(token: HumanVerificationToken, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
     
     func checkAvailability(username: String, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
-    
-    func createUser(userProperties: UserProperties, success: @escaping SuccessCallback, failure: @escaping ErrorCallback)
 }
 
 public class UserApiServiceImplementation: UserApiService {
@@ -55,9 +53,5 @@ public class UserApiServiceImplementation: UserApiService {
     
     public func checkAvailability(username: String, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
         alamofireWrapper.request(UserCheckUsernameRequest(username), success: success, failure: failure)
-    }
-    
-    public func createUser(userProperties: UserProperties, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
-        alamofireWrapper.request(UserCreateRequest(userProperties), success: success, failure: failure)
     }
 }
