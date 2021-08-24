@@ -28,8 +28,7 @@ def keychain_access
 end
 
 def vpn_core
-    use_frameworks!    
-    pod 'Alamofire', '5.3.0'
+    use_frameworks!        
     pod 'Sentry', '5.2.2'
     pod 'ReachabilitySwift', '5.0.0'
     keychain_access
@@ -80,6 +79,7 @@ target 'ProtonVPN' do
 
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'Alamofire', '5.3.0'
   
   pod 'ReachabilitySwift', '5.0.0'
   

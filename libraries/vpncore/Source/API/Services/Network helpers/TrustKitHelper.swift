@@ -8,13 +8,12 @@
 //  See LICENSE for up to date license information.
 
 import TrustKit
-import Alamofire
 
 public protocol TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper?
 }
 
-public final class TrustKitHelper: SessionDelegate {
+public final class TrustKitHelper {
     
     typealias Configuration = [String: Any]
 
@@ -81,24 +80,5 @@ public final class TrustKitHelper: SessionDelegate {
     
     public init(hardfail: Bool = true) {
         trustKit = TrustKit(configuration: TrustKitHelper.configuration(hardfail: hardfail))
-        super.init()
-    }
-        
-    // MARK: - SessionDelegate
-    
-    override public func urlSession(_ session: URLSession, task: URLSessionTask, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
-        let wrappedCompletionHandler: (URLSession.AuthChallengeDisposition, URLCredential?) -> Void = { [self, task] disposition, credential in
-            if disposition == .cancelAuthenticationChallenge, let request = task.originalRequest {
-                fatalError("???")
-                // self.alamofireWrapper.markAsFailedTLS(request: request)
-            }
-            completionHandler(disposition, credential)
-        }
-        
-        if self.trustKit.pinningValidator.handle(challenge, completionHandler: wrappedCompletionHandler) == false {
-            // TrustKit did not handle this challenge: perhaps it was not for server trust
-            // or the domain was not pinned. Fall back to the default behavior
-            completionHandler(.performDefaultHandling, nil)
-        }
     }
 }
