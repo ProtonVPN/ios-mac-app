@@ -9,6 +9,7 @@
 import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
+import ProtonCore_Authentication
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -125,7 +126,8 @@ extension CoreNetworking: AuthDelegate {
         guard let credentials = AuthKeychain.fetch() else {
             return nil
         }
-        return ProtonCore_Networking.AuthCredential(sessionID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, privateKey: nil, passwordKeySalt: nil)
+        // the app stores credentials in an old format for compatibility reasons, conversion is needed
+        return ProtonCore_Networking.AuthCredential(credentials)
     }
 
     public func onLogout(sessionUID uid: String) {
@@ -137,14 +139,35 @@ extension CoreNetworking: AuthDelegate {
             return
         }
 
-        try? AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
+        do {
+            try AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
+        } catch {
+            PMLog.ET("Failed to save updated credentials")
+        }
     }
 
     public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
-        PMLog.D("Implement me")
+        guard let credentials = AuthKeychain.fetch() else {
+            PMLog.ET("Cannot refresh token when credentials are not available")
+            return
+        }
+
+        PMLog.D("Going to refresh the access token")
+        let authenticator = Authenticator(api: apiService)
+        authenticator.refreshCredential(Credential(credentials)) { result in
+            switch result {
+            case .success(let stage):
+                guard case Authenticator.Status.updatedCredential(let updatedCredential) = stage else {
+                    return complete(nil, nil)
+                }
+                PMLog.D("Access token refresh succesfully")
+                complete(updatedCredential, nil)
+            case .failure(let error):
+                PMLog.D("Updating access token failed: \(error)")
+                complete(nil, error)
+            }
+        }
     }
 
-    public func onForceUpgrade() {
-
-    }
+    public func onForceUpgrade() { }
 }
