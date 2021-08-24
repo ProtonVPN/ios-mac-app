@@ -53,7 +53,7 @@ class LoginViewModel {
     
     func logInSilently() {
         logInInProgress?()
-        appSessionManager.attemptRememberLogIn(success: { [silantlyCheckForUpdates] in
+        appSessionManager.attemptSilentLogIn(success: { [silantlyCheckForUpdates] in
             NSApp.setActivationPolicy(.accessory)
             silantlyCheckForUpdates()
         }, failure: { [weak self] error in
@@ -65,7 +65,7 @@ class LoginViewModel {
     
     func logInApperared() {
         logInInProgress?()
-        appSessionManager.attemptRememberLogIn(success: { [silantlyCheckForUpdates] in
+        appSessionManager.attemptSilentLogIn(success: { [silantlyCheckForUpdates] in
             silantlyCheckForUpdates()
         }, failure: { [weak self] error in
             guard let `self` = self else { return }

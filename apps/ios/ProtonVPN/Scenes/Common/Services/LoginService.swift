@@ -32,6 +32,7 @@ final class CoreLoginService {
         & WindowServiceFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
+        & PropertiesManagerFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -41,6 +42,7 @@ final class CoreLoginService {
     // swiftlint:disable weak_delegate
     private let networkingDelegate: NetworkingDelegate
     // swiftlint:enable weak_delegate
+    private let propertiesManager: PropertiesManagerProtocol
 
     private var login: PMLogin?
 
@@ -51,6 +53,7 @@ final class CoreLoginService {
         windowService = factory.makeWindowService()
         alertService = factory.makeCoreAlertService()
         networkingDelegate = factory.makeNetworkingDelegate()
+        propertiesManager = factory.makePropertiesManager()
     }
 
     private func finishLgin(data: LoginData) {
@@ -93,31 +96,8 @@ final class CoreLoginService {
             alertService.push(alert: alert)
         }
     }
-}
 
-// MARK: LoginService
-extension CoreLoginService: LoginService {
-    func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void) {
-        if appSessionManager.loadDataWithoutFetching() {
-            appSessionRefresher.refreshData()
-        } else { // if no data is stored already, then show spinner and wait for data from the api
-            appSessionManager.attemptDataRefreshWithoutLogin(success: {
-                completion(.loggedIn)
-            }, failure: { [appSessionManager] _ in
-                appSessionManager.loadDataWithoutLogin(success: {
-                    completion(.notLoggedIn)
-                }, failure: { _ in
-                    completion(.notLoggedIn)
-                })
-            })
-        }
-
-        if appSessionManager.sessionStatus == .established {
-            completion(.loggedIn)
-        }
-    }
-
-    func showWelcome() {
+    private func show() {
         let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networkingDelegate, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
         self.login = login
 
@@ -134,4 +114,52 @@ extension CoreLoginService: LoginService {
 
         windowService.show(viewController: welcomeViewController)
     }
+
+    #if !RELEASE
+    private func showEnvironmentSelection() {
+        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.liveURL] + ObfuscatedConstants.internalUrls)
+        environmentsViewController.delegate = self
+        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
+    }
+    #endif
 }
+
+// MARK: LoginService
+extension CoreLoginService: LoginService {
+    func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void) {
+        if appSessionManager.loadDataWithoutFetching() {
+            appSessionRefresher.refreshData()
+        } else { // if no data is stored already, then show spinner and wait for data from the api
+            appSessionManager.attemptSilentLogIn(success: {
+                completion(.loggedIn)
+            }, failure: { [appSessionManager] _ in
+                appSessionManager.loadDataWithoutLogin(success: {
+                    completion(.notLoggedIn)
+                }, failure: { _ in
+                    completion(.notLoggedIn)
+                })
+            })
+        }
+
+        if appSessionManager.sessionStatus == .established {
+            completion(.loggedIn)
+        }
+    }
+
+    func showWelcome() {
+        #if !RELEASE
+        showEnvironmentSelection()
+        #else
+        show()
+        #endif
+    }
+}
+
+#if !RELEASE
+extension CoreLoginService: EnvironmentsViewControllerDelegate {
+    func userDidSelectEndpoint(endpoint: String) {
+        propertiesManager.apiEndpoint = endpoint
+        show()
+    }
+}
+#endif

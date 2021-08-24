@@ -66,9 +66,18 @@ class ProtonVPNUITests: XCTestCase {
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Login"], handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
     }
-        
+    
     func waitForElementToDisappear(_ element: XCUIElement) -> Bool {
         let predicate = NSPredicate(format: "exists == false")
+        let expectation = XCTNSPredicateExpectation(predicate: predicate,
+                                                    object: element)
+
+        let result = XCTWaiter().wait(for: [expectation], timeout: 5)
+        return result == .completed
+    }
+    
+    func waitForElementToAppear(_ element: XCUIElement) -> Bool {
+        let predicate = NSPredicate(format: "exists == true")
         let expectation = XCTNSPredicateExpectation(predicate: predicate,
                                                     object: element)
 

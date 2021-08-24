@@ -141,8 +141,8 @@ protocol NavigationServiceFactory {
 
 final class NavigationService {
     
-    typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & PaymentsApiServiceFactory & NetworkingFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory
+    typealias Factory =       
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
     private let factory: Factory
     
     // MARK: Storyboards

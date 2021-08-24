@@ -48,6 +48,7 @@ def vpn_core
     pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Authentication', :git => proton_core_path, :tag => proton_core_version
 end    
 
 abstract_target 'Core' do
@@ -89,7 +90,6 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Crypto', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Authentication', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version

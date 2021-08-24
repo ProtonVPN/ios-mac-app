@@ -1,6 +1,6 @@
 //
-//  SessionModel.swift
-//  vpncore - Created on 26.06.19.
+//  VPNSessionsCountRequest.swift
+//  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
 //
@@ -18,19 +18,13 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
+//
 
-import Foundation
+import ProtonCore_Networking
 
-public class SessionModel: NSObject, Codable {
-
-    public let sessionID: String
-    public let exitIP: String
-    public let `protocol`: String
+final class VPNSessionsCountRequest: Request {
     
-    override public var description: String {
-        return
-            "SessionID: \(self.sessionID)\n" +
-            "ExitIP: \(self.exitIP)\n" +
-            "Protocol: \(self.protocol)"
+    var path: String {
+        return "/vpn/sessioncount"
     }
 }
