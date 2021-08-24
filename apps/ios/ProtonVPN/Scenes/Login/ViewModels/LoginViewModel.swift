@@ -85,7 +85,7 @@ class LoginViewModel {
         if appSessionManager.loadDataWithoutFetching() {
             appSessionRefresher.refreshData()
         } else { // if no data is stored already, then show spinner and wait for data from the api
-            appSessionManager.attemptDataRefreshWithoutLogin(success: { [unowned self] in
+            appSessionManager.attemptSilentLogIn(success: { [unowned self] in
                 self.loginService.presentMainInterface()
             }, failure: { [appSessionManager] error in
                 appSessionManager.loadDataWithoutLogin(success: { [unowned self] in

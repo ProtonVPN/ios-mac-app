@@ -72,7 +72,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var smartProtocol: Bool = false
     public var streamingServices: StreamingDictServices = [:]
     public var excludeLocalNetworks: Bool = true
-    public var sessions: [SessionModel] = []
     public var streamingResourcesUrl: String?
     var earlyAccess: Bool = false
     public var showOnlyWireguardServersAndCountries: Bool = false

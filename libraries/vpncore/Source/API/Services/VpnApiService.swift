@@ -22,7 +22,6 @@
 import Alamofire
 
 public typealias ClientConfigCallback = GenericCallback<ClientConfig>
-public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
 public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
 public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
 public typealias VpnProtocolCallback = GenericCallback<VpnProtocol>
@@ -262,7 +261,7 @@ public class VpnApiService {
         alamofireWrapper.request(VPNLocationRequest(), success: successWrapper, failure: failure)
     }
     
-    public func sessions(success: @escaping SessionModelsCallback, failure: @escaping ErrorCallback) {
+    public func sessionsCount(success: @escaping IntegerCallback, failure: @escaping ErrorCallback) {
         
         let successWrapper: JSONCallback = { response in
             do {
@@ -270,7 +269,7 @@ public class VpnApiService {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
                 let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
-                success(sessionsResponse.sessions)
+                success(sessionsResponse.sessionCount)
             } catch {
                 PMLog.D("Failed to parse load info for json: \(response)", level: .error)
                 let error = ParseError.loadsParse
@@ -279,7 +278,7 @@ public class VpnApiService {
             }
         }
         
-        alamofireWrapper.request(VPNSessionsRequest(), success: successWrapper, failure: failure)
+        alamofireWrapper.request(VPNSessionsCountRequest(), success: successWrapper, failure: failure)
     }
     
     public func loads(lastKnownIp: String?, success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {

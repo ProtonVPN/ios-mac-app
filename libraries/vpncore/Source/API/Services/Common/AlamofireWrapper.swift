@@ -26,6 +26,7 @@ public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
 public typealias JSONCallback = GenericCallback<JSONDictionary>
 public typealias StringCallback = GenericCallback<String>
+public typealias IntegerCallback = GenericCallback<Int>
 public typealias ErrorCallback = GenericCallback<Error>
 
 public protocol AlamofireWrapperFactory {

@@ -21,10 +21,8 @@
 //
 
 import vpncore
-
 import UIKit
 
-// Login state
 enum SessionStatus {
     
     case notEstablished
@@ -41,33 +39,28 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
     
     var sessionChanged: Notification.Name { get }
-    
+
+    func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool)
     
-    func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func loadDataWithoutFetching() -> Bool
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    
     func canPreviewApp() -> Bool
 }
 
-class AppSessionManagerImplementation: AppSessionManager {
+class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
     typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & AlamofireWrapperFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var propertiesManager = factory.makePropertiesManager()
-    private lazy var serverStorage: ServerStorage = factory.makeServerStorage()
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+   
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
@@ -81,21 +74,15 @@ class AppSessionManagerImplementation: AppSessionManager {
     let upgradeRequired = Notification.Name("AppSessionManagerUpgradeRequired")
         
     var sessionStatus: SessionStatus = .notEstablished
-
-    var loggedIn = false
-    
-    // AppSessionRefresher
-    var lastDataRefresh: Date?
-    var lastServerLoadsRefresh: Date?
-    var lastAccountRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
+        super.init(factory: factory)
         NotificationCenter.default.addObserver(self, selector: #selector(paymentTransactionFinished), name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
     // MARK: - Beginning of the login logic.
-    func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    override func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard AuthKeychain.fetch() != nil else {
             failure(ProtonVpnErrorConst.userCredentialsMissing)
             return
@@ -344,47 +331,4 @@ class AppSessionManagerImplementation: AppSessionManager {
         retrievePropertiesAndLogIn(success: {}, failure: { _ in })
     }
     
-}
-
-// MARK: - Refresh - AppSessionRefresher
-
-extension AppSessionManagerImplementation: AppSessionRefresher {
-    
-    func refreshData() {
-        lastDataRefresh = Date()
-        if loggedIn {
-            attemptDataRefreshWithoutLogin(success: {}, failure: { error in
-                PMLog.D("Failed to reestablish vpn credentials: \(error.localizedDescription)", level: .error)
-            })
-        } else {
-            loadDataWithoutLogin(success: {}, failure: { _ in })
-        }
-    }
-    
-    func refreshServerLoads() {
-        guard loggedIn else { return }
-        lastServerLoadsRefresh = Date()
-        
-        vpnApiService.loads(lastKnownIp: propertiesManager.userIp, success: { properties in
-            self.serverStorage.update(continuousServerProperties: properties)
-            
-        }, failure: { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        })
-    }
-    
-    @objc func refreshAccount() {
-        lastAccountRefresh = Date()
-        
-        let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        }
-        
-        vpnApiService.sessions(success: { sessions in
-            self.propertiesManager.sessions = sessions
-            self.vpnApiService.clientCredentials(success: { credentials in
-                self.vpnKeychain.store(vpnCredentials: credentials)
-            }, failure: errorCallback)
-        }, failure: errorCallback)
-    }
 }

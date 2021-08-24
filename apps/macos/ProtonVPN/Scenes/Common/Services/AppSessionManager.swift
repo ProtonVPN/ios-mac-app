@@ -39,49 +39,41 @@ protocol AppSessionManager {
     
     var sessionChanged: Notification.Name { get }
     
-    func attemptRememberLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func logOut(force: Bool)
     func logOut()
+    
     func replyToApplicationShouldTerminate()
 }
 
-class AppSessionManagerImplementation: AppSessionManager {
+class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
 
     typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
-    private lazy var vpnApiService: VpnApiService = factory.makeVpnApiService()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
-    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
-    private lazy var propertiesManager = factory.makePropertiesManager()
-    private lazy var serverStorage: ServerStorage = factory.makeServerStorage()
-    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
-    var loggedIn = false
-    
-    // AppSessionRefresher
-    var lastDataRefresh: Date?
-    var lastServerLoadsRefresh: Date?
-    var lastAccountRefresh: Date?
     
     init(factory: Factory) {
         self.factory = factory
+        super.init(factory: factory)
         self.propertiesManager.restoreStartOnBootStatus()
     }
     
     // MARK: - Beginning of the log in logic.
-    func attemptRememberLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    override func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         guard AuthKeychain.fetch() != nil else {
             failure(ProtonVpnErrorConst.userCredentialsMissing)
             return
@@ -316,50 +308,5 @@ class AppSessionManagerImplementation: AppSessionManager {
         
         let alert = QuitWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
         alertService.push(alert: alert)
-    }
-}
-
-extension AppSessionManagerImplementation: AppSessionRefresher {
-    
-    @objc func refreshData() {
-        lastDataRefresh = Date()
-        attemptRememberLogIn(success: {}, failure: { [unowned self] error in
-            PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
-            
-            let error = error as NSError
-            switch error.code {
-            case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
-            default:
-                break // ignore failures
-            }
-        })
-    }
-    
-    @objc func refreshServerLoads() {
-        guard loggedIn else { return }
-        lastServerLoadsRefresh = Date()
-        
-        vpnApiService.loads(lastKnownIp: propertiesManager.userIp, success: { properties in
-            self.serverStorage.update(continuousServerProperties: properties)
-            
-        }, failure: { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        })
-    }
-    
-    @objc func refreshAccount() {
-        lastAccountRefresh = Date()
-        
-        let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        }
-        
-        vpnApiService.sessions(success: { sessions in
-            self.propertiesManager.sessions = sessions
-            self.vpnApiService.clientCredentials(success: { credentials in
-                self.vpnKeychain.store(vpnCredentials: credentials)
-            }, failure: errorCallback)
-        }, failure: errorCallback)
     }
 }
