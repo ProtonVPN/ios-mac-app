@@ -108,6 +108,10 @@ class LoginTests: ProtonVPNUITests {
         dismissDialogs()
         dismissPopups()
         
+        if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
+            dismissDialogs()
+        }
+        
         window.typeKey(",", modifierFlags:.command)
 
         let preferencesWindow = app.windows["Preferences"]

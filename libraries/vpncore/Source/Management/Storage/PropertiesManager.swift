@@ -63,7 +63,6 @@ public protocol PropertiesManagerProtocol: class {
     var openVpnConfig: OpenVpnConfig { get set }
     var vpnProtocol: VpnProtocol { get set }
     var currentSubscription: Subscription? { get set }
-    var sessions: [SessionModel] { get set }
 
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
@@ -124,7 +123,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let currentSubscription = "currentSubscription"
         static let defaultPlanDetails = "defaultPlanDetails"
         static let isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        static let sessions = "UserOpenedSessions"
         static let customServers = "CustomServers"
         
         // Trial
@@ -614,21 +612,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             if let data = try? JSONEncoder().encode(newValue) {
                 Storage.setValue(data, forKey: Keys.streamingServices)
-            }
-        }
-    }
-    
-    public var sessions: [SessionModel] {
-        get {
-            if let data = Storage.userDefaults().data(forKey: Keys.sessions),
-               let stored = try? JSONDecoder().decode([SessionModel].self, from: data) {
-                return stored
-            }
-            return []
-        }
-        set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                Storage.setValue(data, forKey: Keys.sessions)
             }
         }
     }

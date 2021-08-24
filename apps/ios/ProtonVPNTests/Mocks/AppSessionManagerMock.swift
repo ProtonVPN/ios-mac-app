@@ -63,7 +63,7 @@ class AppSessionManagerMock: AppSessionManager {
 
     }
     
-    func attemptDataRefreshWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         callbackAttemptDataRefreshWithoutLogin?(success, failure)
     }
     

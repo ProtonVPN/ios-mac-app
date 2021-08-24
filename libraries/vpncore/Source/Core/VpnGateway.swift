@@ -400,17 +400,14 @@ fileprivate extension VpnGateway {
         }
         
         self.disconnect {
-            self.vpnApiService.sessions(success: { sessions in
-                self.propertiesManager.sessions = sessions
-                self.vpnApiService.clientCredentials(success: { credentials in
-                    self.vpnKeychain.store(vpnCredentials: credentials)
-                    if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
-                        reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
-                    }
-
-                    let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
-                    self.alertService?.push(alert: alert)
-                }, failure: errorCallback)
+            self.vpnApiService.clientCredentials(success: { credentials in
+                self.vpnKeychain.store(vpnCredentials: credentials)
+                if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+                    reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
+                }
+                
+                let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
+                self.alertService?.push(alert: alert)
             }, failure: errorCallback)
         }
     }

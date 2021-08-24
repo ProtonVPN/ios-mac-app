@@ -64,6 +64,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
+
+        setupCoreIntegration()
     
         navigationService.launched()
         

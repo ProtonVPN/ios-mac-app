@@ -22,7 +22,6 @@
 import ProtonCore_Networking
 
 public typealias ClientConfigCallback = GenericCallback<ClientConfig>
-public typealias SessionModelsCallback = GenericCallback<[SessionModel]>
 public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
 public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
 public typealias VpnProtocolCallback = GenericCallback<VpnProtocol>
@@ -267,9 +266,9 @@ public class VpnApiService {
             }
         }
     }
-    
-    public func sessions(success: @escaping SessionModelsCallback, failure: @escaping ErrorCallback) {
-        networking.request(VPNSessionsRequest()) { (result: Result<JSONDictionary, Error>) in
+
+    public func sessionsCount(success: @escaping IntegerCallback, failure: @escaping ErrorCallback) {
+        networking.request(VPNSessionsCountRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
                 do {
@@ -277,7 +276,7 @@ public class VpnApiService {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
                     let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
-                    success(sessionsResponse.sessions)
+                    success(sessionsResponse.sessionCount)
                 } catch {
                     PMLog.D("Failed to parse load info for json: \(response)", level: .error)
                     let error = ParseError.loadsParse

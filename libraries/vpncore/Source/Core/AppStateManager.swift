@@ -21,6 +21,9 @@
 
 import Foundation
 import Reachability
+#if canImport(AppKit)
+import AppKit
+#endif
 
 public protocol AppStateManagerFactory {
     func makeAppStateManager() -> AppStateManager
@@ -187,8 +190,7 @@ public class AppStateManagerImplementation: AppStateManager {
     public func refreshState() {
         vpnManager.refreshState()
     }
-    
-    // swiftlint:disable cyclomatic_complexity function_body_length
+        
     public func connect(withConfiguration configuration: ConnectionConfiguration) {
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
@@ -205,15 +207,6 @@ public class AppStateManagerImplementation: AppStateManager {
                 alertService?.push(alert: alert)
                 connectionFailed()
                 return
-            }
-            
-            if propertiesManager.sessions.count >= vpnCredentials.maxConnect {
-                if let entryIp = lastAttemptedConfiguration?.serverIp.entryIp, propertiesManager.sessions.first(where: { $0.exitIP == entryIp }) == nil {
-                    let alert = MaxSessionsAlert(userCurrentCredentials: vpnCredentials)
-                    alertService?.push(alert: alert)
-                    connectionFailed()
-                    return
-                }
             }
         } catch {
             connectionFailed()
@@ -249,7 +242,6 @@ public class AppStateManagerImplementation: AppStateManager {
             }
         }
     }
-    // swiftlint:enable cyclomatic_complexity function_body_length
 
     public func disconnect() {
         disconnect {}
@@ -489,8 +481,8 @@ public class AppStateManagerImplementation: AppStateManager {
         }
         
         dispatchGroup.enter()
-        vpnApiService.sessions(success: { sessions in
-            rSessionCount = sessions.count
+        vpnApiService.sessionsCount(success: { sessionsCount in
+            rSessionCount = sessionsCount
             dispatchGroup.leave()
         }, failure: failureClosure)
         
@@ -504,6 +496,10 @@ public class AppStateManagerImplementation: AppStateManager {
             guard let `self` = self, self.state.isDisconnected else { return }
             
             if let sessionCount = rSessionCount, sessionCount >= (rVpnCredentials?.maxConnect ?? vpnCredentials.maxConnect) {
+                #if canImport(AppKit)
+                let notification = Notification(name: NSApplication.didChangeOcclusionStateNotification)
+                NotificationCenter.default.post(notification)
+                #endif
                 let alert = MaxSessionsAlert(userCurrentCredentials: rVpnCredentials ?? vpnCredentials)
                 self.alertService?.push(alert: alert)
                 self.connectionFailed()
