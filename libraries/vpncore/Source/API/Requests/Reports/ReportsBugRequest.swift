@@ -20,23 +20,21 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Alamofire
+import ProtonCore_Networking
 
-class ReportsBugRequest: ReportsBaseRequest {
+final class ReportsBugRequest: Request {
     
     let bug: ReportBug
     
     init( _ bug: ReportBug ) {
         self.bug = bug
     }
-    
-    // MARK: - Override
-    
-    override func path() -> String {
-        return super.path() + "/bug"
+
+    var path: String {
+        return "/reports/bug"
     }
-    
-    override var parameters: [String: Any]? {
+
+    var parameters: [String: Any]? {
         return [
             "OS": bug.os,
             "OSVersion": bug.osVersion,

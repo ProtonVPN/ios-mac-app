@@ -61,8 +61,6 @@ final class DependencyContainer {
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), navigationService: navigationService)
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
-    private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
-    
     // Hold it in memory so it's possible to refresh token any time
     private var authApiService: AuthApiService!
     
@@ -92,7 +90,10 @@ final class DependencyContainer {
     #endif
 
     private lazy var propertiesManager = PropertiesManager()
-    private lazy var networking = CoreNetworking()
+    // swiftlint:disable weak_delegate
+    private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate()
+    // swiftlint:enable weak_delegate
+    private lazy var networking = CoreNetworking(delegate: networkingDelegate)
 }
 
 // MARK: NavigationServiceFactory
@@ -272,20 +273,6 @@ extension DependencyContainer: StoreKitManagerFactory {
     }
 }
 
-// MARK: HumanVerificationHandlerFactory
-extension DependencyContainer: HumanVerificationAdapterFactory {
-    func makeHumanVerificationAdapter() -> HumanVerificationAdapter {
-        return humanVerificationAdapter
-    }
-}
-
-// MARK: GenericRequestRetrierFactory
-extension DependencyContainer: GenericRequestRetrierFactory {
-    func makeGenericRequestRetrier() -> GenericRequestRetrier {
-        return GenericRequestRetrier()
-    }
-}
-
 // MARK: TrustKitHelperFactory
 extension DependencyContainer: TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper? {
@@ -304,13 +291,6 @@ extension DependencyContainer: PaymentTokenStorageFactory {
 extension DependencyContainer: StoreKitStateCheckerFactory {
     func makeStoreKitStateChecker() -> StoreKitStateChecker {
         return StoreKitStateCheckerImplementation(factory: self)
-    }
-}
-
-// MARK: ProtonAPIAuthenticatorFactory
-extension DependencyContainer: ProtonAPIAuthenticatorFactory {
-    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
-        return ProtonAPIAuthenticator(self)
     }
 }
 
@@ -437,5 +417,12 @@ extension DependencyContainer: LoginServiceFactory {
 extension DependencyContainer: NetworkingFactory {
     func makeNetworking() -> Networking {
         return networking
+    }
+}
+
+// MARK: NetworkingDelegateFactory
+extension DependencyContainer: NetworkingDelegateFactory {
+    func makeNetworkingDelegate() -> NetworkingDelegate {
+        return networkingDelegate
     }
 }

@@ -16,6 +16,14 @@ public typealias JSONCallback = GenericCallback<JSONDictionary>
 public typealias StringCallback = GenericCallback<String>
 public typealias ErrorCallback = GenericCallback<Error>
 
+public protocol NetworkingDelegate: AuthDelegate, APIServiceDelegate, ForceUpgradeDelegate, HumanVerifyDelegate {
+    func set(apiService: APIService)
+}
+
+public protocol NetworkingDelegateFactory {
+    func makeNetworkingDelegate() -> NetworkingDelegate
+}
+
 public protocol NetworkingFactory {
     func makeNetworking() -> Networking
 }
@@ -27,12 +35,16 @@ public protocol Networking: AnyObject {
 }
 
 public final class CoreNetworking: Networking {
-    private var apiService: APIService
+    private var apiService: PMAPIService
 
-    public init() {
+    public init(delegate: NetworkingDelegate) {
         apiService = PMAPIService(doh: ApiConstants.doh)
-        apiService.authDelegate = self
-        apiService.serviceDelegate = self
+        apiService.authDelegate = delegate
+        apiService.serviceDelegate = delegate
+        apiService.forceUpgradeDelegate = delegate
+        apiService.humanDelegate = delegate
+
+        delegate.set(apiService: apiService)
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
@@ -83,51 +95,4 @@ public final class CoreNetworking: Networking {
     public func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         fatalError()
     }
-}
-
-extension CoreNetworking: AuthDelegate {
-    public func getToken(bySessionUID uid: String) -> AuthCredential? {
-        guard let credentials = AuthKeychain.fetch() else {
-            return nil
-        }
-        return ProtonCore_Networking.AuthCredential(sessionID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, privateKey: nil, passwordKeySalt: nil)
-    }
-
-    public func onLogout(sessionUID uid: String) {
-
-    }
-
-    public func onUpdate(auth: Credential) {
-        guard let credentials = AuthKeychain.fetch() else {
-            return
-        }
-        try? AuthKeychain.store(AuthCredentials(version: credentials.VERSION, username: credentials.username, accessToken: auth.accessToken, refreshToken: auth.refreshToken, sessionId: credentials.sessionId, userId: credentials.userId, expiration: auth.expiration, scopes: auth.scope.compactMap({ AuthCredentials.Scope($0) })))
-    }
-
-    public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
-
-    }
-
-    public func onForceUpgrade() {
-
-    }
-}
-
-extension CoreNetworking: APIServiceDelegate {
-    public var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
-    }
-    public var appVersion: String {
-        return ApiConstants.appVersion
-    }
-    public var userAgent: String? {
-        return ApiConstants.userAgent
-    }
-    public func onUpdate(serverTime: Int64) {
-        // CryptoUpdateTime(serverTime)
-    }
-    public func isReachable() -> Bool {
-        return true
-    }
-    public func onDohTroubleshot() { }
 }

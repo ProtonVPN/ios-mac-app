@@ -8,12 +8,7 @@
 
 import Foundation
 import vpncore
-import ProtonCore_HumanVerification
 import ProtonCore_Login
-import ProtonCore_ForceUpgrade
-import ProtonCore_Networking
-import ProtonCore_Services
-import Crypto
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -36,17 +31,17 @@ final class CoreLoginService {
         & NavigationServiceFactory
         & WindowServiceFactory
         & CoreAlertServiceFactory
-        & TrustKitHelperFactory
-        & PropertiesManagerFactory
+        & NetworkingDelegateFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
     private let navigationService: NavigationService
     private let windowService: WindowService
     private let alertService: AlertService
-    private let propertiesManager: PropertiesManagerProtocol
+    // swiftlint:disable weak_delegate
+    private let networkingDelegate: NetworkingDelegate
+    // swiftlint:enable weak_delegate
 
-    private let forceUpgradeService: ForceUpgradeDelegate
     private var login: PMLogin?
 
     init(factory: Factory) {
@@ -55,9 +50,7 @@ final class CoreLoginService {
         navigationService = factory.makeNavigationService()
         windowService = factory.makeWindowService()
         alertService = factory.makeCoreAlertService()
-        propertiesManager = factory.makePropertiesManager()
-
-        forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
+        networkingDelegate = factory.makeNetworkingDelegate()
     }
 
     private func finishLgin(data: LoginData) {
@@ -100,32 +93,6 @@ final class CoreLoginService {
             alertService.push(alert: alert)
         }
     }
-
-    private func show() {
-        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: self, forceUpgradeDelegate: forceUpgradeService, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
-        self.login = login
-
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
-            switch result {
-            case .dismissed:
-                PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
-            case let .loggedIn(data):
-                self?.finishLgin(data: data)
-            }
-
-            self?.login = nil
-        }
-
-        windowService.show(viewController: welcomeViewController)
-    }
-
-    #if !RELEASE
-    private func showEnvironmentSelection() {
-        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.liveURL] + ObfuscatedConstants.internalUrls)
-        environmentsViewController.delegate = self
-        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
-    }
-    #endif
 }
 
 // MARK: LoginService
@@ -151,39 +118,20 @@ extension CoreLoginService: LoginService {
     }
 
     func showWelcome() {
-        #if !RELEASE
-        showEnvironmentSelection()
-        #else
-        show()
-        #endif
-    }
-}
+        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networkingDelegate, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
+        self.login = login
 
-// MARK: APIServiceDelegate
-extension CoreLoginService: APIServiceDelegate {
-    var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
-    }
-    var appVersion: String {
-        return ApiConstants.appVersion
-    }
-    var userAgent: String? {
-        return ApiConstants.userAgent
-    }
-    func onUpdate(serverTime: Int64) {
-        CryptoUpdateTime(serverTime)
-    }
-    func isReachable() -> Bool {
-        return true
-    }
-    func onDohTroubleshot() { }
-}
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
+            switch result {
+            case .dismissed:
+                PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
+            case let .loggedIn(data):
+                self?.finishLgin(data: data)
+            }
 
-#if !RELEASE
-extension CoreLoginService: EnvironmentsViewControllerDelegate {
-    func userDidSelectEndpoint(endpoint: String) {
-        propertiesManager.apiEndpoint = endpoint
-        show()
+            self?.login = nil
+        }
+
+        windowService.show(viewController: welcomeViewController)
     }
 }
-#endif

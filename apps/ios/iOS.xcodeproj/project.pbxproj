@@ -327,7 +327,6 @@
 		D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
 		D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
 		D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
-		D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */; };
 		D5BF95042354823F00C7D1E7 /* PaymentsApiServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */; };
 		D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */; };
 		D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
@@ -499,12 +498,14 @@
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E1A264AA40F0070F177 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
 		F3747BE926D3880800EF2F00 /* Subscriptions.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3747BE826D3880800EF2F00 /* Subscriptions.storyboard */; };
-		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
+		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
+		F3747C0126D4DF6B00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
+		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 /* End PBXBuildFile section */
@@ -837,7 +838,6 @@
 		D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
-		D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWrapperMock.swift; sourceTree = "<group>"; };
 		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
 		D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePlanDataServiceMock.swift; sourceTree = "<group>"; };
@@ -1020,7 +1020,7 @@
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		F3747BE826D3880800EF2F00 /* Subscriptions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Subscriptions.storyboard; sourceTree = "<group>"; };
-		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
+		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/LoginService.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1192,7 +1192,6 @@
 				791DE611208E098300A29EA5 /* ProtonQCViewController.swift */,
 				791DE616208E0E5500A29EA5 /* TabBarController.swift */,
 				E185A86423707D1A0039E625 /* TrackedAlertController.swift */,
-				F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1599,7 +1598,6 @@
 			children = (
 				D53E83DE232B6F130031CD49 /* ApiService */,
 				D55B36CE2458002000D8B0B9 /* Coordinator */,
-				D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */,
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
 				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
@@ -2191,6 +2189,7 @@
 				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
 				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
 				F3E87E3026CFF26B00675AD2 /* LoginService.swift */,
+				F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2684,7 +2683,7 @@
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
-				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -3161,7 +3160,6 @@
 				D5F3763C254028E5008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
-				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				D511084E246150090018872A /* PlanSelectionViewModel.swift in Sources */,
@@ -3228,6 +3226,7 @@
 				D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */,
 				793ECF392148DCF900C186A7 /* KeyValueTableViewCell.swift in Sources */,
 				79DE13FD216C8A86007A7161 /* UIDevice+Extension.swift in Sources */,
+				F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */,
 				D511084524614D480018872A /* PlanCardView.swift in Sources */,
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */,
@@ -3285,7 +3284,6 @@
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
-				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				D511085E246189D60018872A /* PlanAdvancedFeaturesView.swift in Sources */,
 				D511085C246189AC0018872A /* PlanSelectionViewModel.swift in Sources */,
@@ -3454,12 +3452,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5136C9722895C3A0002C095 /* ExtensionAlertService.swift in Sources */,
+				F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */,
 				D5209C7226CBBE1900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				D5209C7626CBCB3D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */,
 				D554556222804DF2006574F9 /* SiriHandlerViewModel.swift in Sources */,
 				D5A8CD752456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D55455422280280B006574F9 /* IntentHandler.swift in Sources */,
 				D5209C7A26CBD7C100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
+				F3747C0126D4DF6B00EF2F00 /* iOSNetworkingDelegate.swift in Sources */,
 				E9492EDA2669178100500E7D /* AppConstants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3476,7 +3476,7 @@
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
 				B293D83C2660FC6100E0ECCB /* SettingsRobot.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
-				F3521E1A264AA40F0070F177 /* BuildFile in Sources */,
+				F3521E1A264AA40F0070F177 /* (null) in Sources */,
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
@@ -4666,7 +4666,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4679,12 +4679,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		E98EE34B2671EC2400B86BA0 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
