@@ -52,7 +52,6 @@ public class DoHVPN: DoH, ServerConfig {
         self.customApiHost = apiHost
         try super.init()
 
-        // Setting status to On. The actual usage of alternative routing is directed by the usage of the `AlternativeRoutingInterceptor`
-        status = .on
+        status = propertiesManager.alternativeRouting ? .on : .off
     }
 }
