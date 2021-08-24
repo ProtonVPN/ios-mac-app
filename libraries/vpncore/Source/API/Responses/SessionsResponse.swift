@@ -10,5 +10,6 @@ import Foundation
 
 public struct SessionsResponse: Codable {
     
-    public let sessions: [SessionModel]
+    public let sessionCount: Int
+    
 }

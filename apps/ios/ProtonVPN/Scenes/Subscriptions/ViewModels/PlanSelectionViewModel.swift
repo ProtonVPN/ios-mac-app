@@ -207,7 +207,7 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
 
         storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self, plan] _ in
             PMLog.ET("IAP succeeded", level: .info)
-            self?.appSessionManager.attemptDataRefreshWithoutLogin(success: {
+            self?.appSessionManager.attemptSilentLogIn(success: {
                 self?.planPurchaseCompleted(plan)
             }, failure: { (_) in // ignore failure and continue anyway
                 self?.planPurchaseCompleted(plan)

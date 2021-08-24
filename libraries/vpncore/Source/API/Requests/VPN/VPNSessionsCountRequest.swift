@@ -1,5 +1,5 @@
 //
-//  VPNSessionsRequest.swift
+//  VPNSessionsCountRequest.swift
 //  vpncore - Created on 30/04/2020.
 //
 //  Copyright (c) 2019 Proton Technologies AG
@@ -22,10 +22,10 @@
 
 import Alamofire
 
-class VPNSessionsRequest: VPNBaseRequest {
+class VPNSessionsCountRequest: VPNBaseRequest {
     
     override func path() -> String {
-        return super.path() + "/sessions"
+        return super.path() + "/sessioncount"
     }
     
     override func asURLRequest() throws -> URLRequest {
