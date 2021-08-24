@@ -66,8 +66,6 @@ final class DependencyContainer {
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
     
-    private lazy var humanVerificationAdapter: HumanVerificationAdapter = HumanVerificationAdapter()
-    
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
@@ -95,7 +93,10 @@ final class DependencyContainer {
         return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
     }()
 
-    private lazy var networking = CoreNetworking()
+    // swiftlint:disable weak_delegate
+    private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService)
+    // swiftlint:enable weak_delegate
+    private lazy var networking = CoreNetworking(delegate: networkingDelegate)
 }
 
 // MARK: NavigationServiceFactory
@@ -240,24 +241,10 @@ extension DependencyContainer: ReportsApiServiceFactory {
     }
 }
 
-// MARK: HumanVerificationAdapterFactory
-extension DependencyContainer: HumanVerificationAdapterFactory {
-    func makeHumanVerificationAdapter() -> HumanVerificationAdapter {
-        return humanVerificationAdapter
-    }
-}
-
 // MARK: TrustKitHelperFactory
 extension DependencyContainer: TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper? {
         return trustKitHelper
-    }
-}
-
-// MARK: ProtonAPIAuthenticatorFactory
-extension DependencyContainer: ProtonAPIAuthenticatorFactory {
-    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
-        return ProtonAPIAuthenticator(self)
     }
 }
 
@@ -431,5 +418,12 @@ extension DependencyContainer: VpnStateConfigurationFactory {
 extension DependencyContainer: NetworkingFactory {
     func makeNetworking() -> Networking {
         return networking
+    }
+}
+
+// MARK: NetworkingDelegateFactory
+extension DependencyContainer: NetworkingDelegateFactory {
+    func makeNetworkingDelegate() -> NetworkingDelegate {
+        return networkingDelegate
     }
 }

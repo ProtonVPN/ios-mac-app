@@ -16,7 +16,7 @@ public typealias JSONCallback = GenericCallback<JSONDictionary>
 public typealias StringCallback = GenericCallback<String>
 public typealias ErrorCallback = GenericCallback<Error>
 
-public protocol NetworkingDelegate: AuthDelegate, APIServiceDelegate, ForceUpgradeDelegate, HumanVerifyDelegate {
+public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate, APIServiceDelegate {
     func set(apiService: APIService)
 }
 
@@ -39,7 +39,7 @@ public final class CoreNetworking: Networking {
 
     public init(delegate: NetworkingDelegate) {
         apiService = PMAPIService(doh: ApiConstants.doh)
-        apiService.authDelegate = delegate
+        apiService.authDelegate = self
         apiService.serviceDelegate = delegate
         apiService.forceUpgradeDelegate = delegate
         apiService.humanDelegate = delegate
@@ -94,5 +94,34 @@ public final class CoreNetworking: Networking {
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void) {
         fatalError()
+    }
+}
+
+extension CoreNetworking: AuthDelegate {
+    public func getToken(bySessionUID uid: String) -> AuthCredential? {
+        guard let credentials = AuthKeychain.fetch() else {
+            return nil
+        }
+        return ProtonCore_Networking.AuthCredential(sessionID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, privateKey: nil, passwordKeySalt: nil)
+    }
+
+    public func onLogout(sessionUID uid: String) {
+        AuthKeychain.clear()
+    }
+
+    public func onUpdate(auth: Credential) {
+        guard let credentials = AuthKeychain.fetch() else {
+            return
+        }
+
+        try? AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
+    }
+
+    public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
+        PMLog.D("Implement me")
+    }
+
+    public func onForceUpgrade() {
+
     }
 }
