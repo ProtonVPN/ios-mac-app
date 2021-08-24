@@ -31,7 +31,7 @@ public protocol NetworkingFactory {
 public protocol Networking: AnyObject {
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
-    func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void)
+    func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
 }
 
 public final class CoreNetworking: Networking {
@@ -92,8 +92,30 @@ public final class CoreNetworking: Networking {
         }
     }
 
-    public func request(_ route: Request, completion: @escaping (_ result: Result<String, Error>) -> Void) {
-        fatalError()
+    public func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void) {
+        // there is not Core support for getting response as string so use url session directly
+        // this should be fine as this is only intened to get VPN status
+
+        let url = route.url?.absoluteString.cleanedForLog ?? "empty"
+        PMLog.D("Request started: \(url)", level: .debug)
+
+        let task = URLSession.shared.dataTask(with: route) { data, response, error in
+
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            if let data = data, let string = String(data: data, encoding: .utf8) {
+                completion(.success(string))
+                return
+            }
+
+            completion(.success(""))
+        }
+        task.resume()
     }
 }
 
