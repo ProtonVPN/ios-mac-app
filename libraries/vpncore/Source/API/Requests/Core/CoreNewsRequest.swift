@@ -26,8 +26,4 @@ final class CoreApiNotificationsRequest: Request {
     var path: String {
         return "/core/v4/notifications"
     }
-
-    var isAuth: Bool {
-        return false
-    }
 }
