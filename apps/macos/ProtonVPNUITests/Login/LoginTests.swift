@@ -36,7 +36,7 @@ class LoginTests: ProtonVPNUITests {
         loginButton = window.buttons["Login"]
         fieldUsername = window.textFields["Username"]
         fieldPassword = window.secureTextFields["Password"]
-        errorMessage = app.staticTexts["Wrong username or password"]
+        errorMessage = app.staticTexts["Incorrect login credentials. Please try again"]
         
         logoutIfNeeded()
     }
