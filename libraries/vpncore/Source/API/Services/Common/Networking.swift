@@ -10,6 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
+import Crypto
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -18,7 +19,7 @@ public typealias StringCallback = GenericCallback<String>
 public typealias ErrorCallback = GenericCallback<Error>
 public typealias IntegerCallback = GenericCallback<Int>
 
-public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate, APIServiceDelegate {
+public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func set(apiService: APIService)
 }
 
@@ -30,7 +31,7 @@ public protocol NetworkingFactory {
     func makeNetworking() -> Networking
 }
 
-public protocol Networking: AnyObject {
+public protocol Networking: APIServiceDelegate {
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
@@ -42,7 +43,7 @@ public final class CoreNetworking: Networking {
     public init(delegate: NetworkingDelegate) {
         apiService = PMAPIService(doh: ApiConstants.doh)
         apiService.authDelegate = self
-        apiService.serviceDelegate = delegate
+        apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
         apiService.humanDelegate = delegate
 
@@ -83,7 +84,7 @@ public final class CoreNetworking: Networking {
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
 
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
 
             if let error = error {
                 completion(.failure(error))
@@ -103,7 +104,7 @@ public final class CoreNetworking: Networking {
 
         let task = URLSession.shared.dataTask(with: route) { data, response, error in
 
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
 
             if let error = error {
                 completion(.failure(error))
@@ -119,6 +120,25 @@ public final class CoreNetworking: Networking {
         }
         task.resume()
     }
+}
+
+extension CoreNetworking: APIServiceDelegate {
+    public var locale: String {
+        return NSLocale.current.languageCode ?? "en_US"
+    }
+    public var appVersion: String {
+        return ApiConstants.appVersion
+    }
+    public var userAgent: String? {
+        return ApiConstants.userAgent
+    }
+    public func onUpdate(serverTime: Int64) {
+        CryptoUpdateTime(serverTime)
+    }
+    public func isReachable() -> Bool {
+        return true
+    }
+    public func onDohTroubleshot() { }
 }
 
 extension CoreNetworking: AuthDelegate {

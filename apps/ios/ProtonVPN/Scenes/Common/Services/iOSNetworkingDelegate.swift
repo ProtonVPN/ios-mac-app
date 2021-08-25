@@ -8,7 +8,6 @@
 
 import Foundation
 import vpncore
-import Crypto
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_ForceUpgrade
@@ -41,23 +40,4 @@ extension iOSNetworkingDelegate {
     func onForceUpgrade(message: String) {
         forceUpgradeService.onForceUpgrade(message: message)
     }
-}
-
-extension iOSNetworkingDelegate {
-    var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
-    }
-    var appVersion: String {
-        return ApiConstants.appVersion
-    }
-    var userAgent: String? {
-        return ApiConstants.userAgent
-    }
-    func onUpdate(serverTime: Int64) {
-        CryptoUpdateTime(serverTime)
-    }
-    func isReachable() -> Bool {
-        return true
-    }
-    func onDohTroubleshot() { }
 }

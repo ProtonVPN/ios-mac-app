@@ -33,6 +33,7 @@ final class CoreLoginService {
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
+        & NetworkingFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -42,6 +43,7 @@ final class CoreLoginService {
     // swiftlint:disable weak_delegate
     private let networkingDelegate: NetworkingDelegate
     // swiftlint:enable weak_delegate
+    private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
 
     private var login: PMLogin?
@@ -54,6 +56,7 @@ final class CoreLoginService {
         alertService = factory.makeCoreAlertService()
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
+        networking = factory.makeNetworking()
     }
 
     private func finishLgin(data: LoginData) {
@@ -98,7 +101,7 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networkingDelegate, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
+        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
         self.login = login
 
         let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
