@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 
 enum LocalAgentError: Error {
     case restrictedServer

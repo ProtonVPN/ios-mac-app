@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 
 extension PublicKey {
     init(keyPair: Ed25519KeyPair) {

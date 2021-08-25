@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 
 enum SmartProtocolAvailabilityCheckerResult {
     case unavailable

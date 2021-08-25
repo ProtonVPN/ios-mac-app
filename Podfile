@@ -12,7 +12,8 @@ def proton_core_path
 end
 
 def proton_core_version
-  '2.4.0'
+  # '2.4.0'
+  'wireguardcrypto'
 end
 
 def openvpn
@@ -48,7 +49,8 @@ def vpn_core
     pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
-    pod 'ProtonCore-Authentication', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Authentication/UsingWireguardCrypto', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-WireguardCrypto', :git => proton_core_path, :tag => proton_core_version
 end    
 
 abstract_target 'Core' do
@@ -86,17 +88,16 @@ target 'ProtonVPN' do
   
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Login', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Crypto', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Login/UsingWireguardCrypto', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Authentication-KeyGeneration', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Authentication-KeyGeneration/UsingWireguardCrypto', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-HumanVerification', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-Payments', :git => proton_core_path, :tag => proton_core_version
-  pod 'ProtonCore-PaymentsUI', :git => proton_core_path, :tag => proton_core_version  
+  pod 'ProtonCore-Payments/UsingWireguardCrypto', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-PaymentsUI/UsingWireguardCrypto', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
   pod 'ProtonCore-SRP', :git => proton_core_path, :tag => proton_core_version

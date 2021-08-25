@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 import Reachability
 
 protocol LocalAgentDelegate: AnyObject {
