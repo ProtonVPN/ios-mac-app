@@ -97,7 +97,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
             return nil
         }
-        // Flush logs to file. Async, but should be done before user get's the file.
+        // Flush logs to file. Async, but should be done before user gets the file.
         vpnProviderManager(for: .configuration) { manager, error in 
             guard let manager = manager else { return }
             self.flushLogs(manager)
