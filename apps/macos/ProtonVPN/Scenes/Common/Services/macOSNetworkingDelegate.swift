@@ -26,11 +26,11 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 extension macOSNetworkingDelegate {
     func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: @escaping ((HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
         #warning("Get Core help to implement this properly")
-        alertService.push(alert: UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: methods.compactMap({ HumanVerificationToken.TokenType(rawValue: $0.rawValue) }), captchaToken: startToken), error: NSError(), success: { token in
+/*        alertService.push(alert: UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: methods.compactMap({ HumanVerificationToken.TokenType(rawValue: $0.rawValue) }), captchaToken: startToken), error: ???, success: { token in
             PMLog.ET("No idea how to handle")
         }, failure: { error in
             PMLog.ET("No idea how to handle")
-        }))
+        }))*/
     }
 
     func getSupportURL() -> URL {
