@@ -25,7 +25,7 @@ import XCTest
 class StateAlertTests: XCTestCase {
 
     let vpnConfig = VpnManagerConfiguration(hostname: "", serverId: "", entryServerAddress: "", exitServerAddress: "", username: "", password: "", passwordReference: Data(), authData: nil, vpnProtocol: .ike, netShield: .off, vpnAccelerator: true, bouncing: nil, preferredPorts: nil, serverPublicKey: nil)
-    let alamofireWrapper = AlamofireWrapperImplementation()
+    let networking = NetworkingMock()
     let vpnKeychain = VpnKeychainMock()
     
     var vpnManager: VpnManagerMock!
@@ -40,7 +40,7 @@ class StateAlertTests: XCTestCase {
         timerFactory = TimerFactoryMock()
         propertiesManager = PropertiesManagerMock()
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
-        appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(alamofireWrapper: alamofireWrapper), vpnManager: vpnManager, alamofireWrapper: alamofireWrapper, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock())
+        appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(networking: networking), vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock())
     }
 
     func testDisconnectingAlertFirtTimeConnecting() {
