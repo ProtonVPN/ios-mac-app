@@ -131,7 +131,7 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
     
     var isEnoughData: Bool {
         return email != nil && username != nil && password1 != nil && password2 != nil
-            && !(email?.isEmpty ?? false)
+            && (email?.isEmail ?? false)
             && !(username?.isEmpty ?? false)
             && !(password1?.isEmpty ?? false)
             && !(password2?.isEmpty ?? false)
