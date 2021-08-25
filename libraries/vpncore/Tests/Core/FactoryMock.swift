@@ -22,18 +22,9 @@
 
 import Foundation
 
-final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory {
-
-    private lazy var alamofireWrapper: AlamofireWrapper = {
-        return AlamofireWrapperImplementation(factory: self)
-    }()
-
-    func makeAuthApiService() -> AuthApiService {
-        return AuthApiServiceImplementation(alamofireWrapper: alamofireWrapper)
-    }
-
-    func makeAlamofireWrapper() -> AlamofireWrapper {
-        return alamofireWrapper
+final class FactoryMock: CoreAlertServiceFactory & TrustKitHelperFactory & PropertiesManagerFactory & NetworkingFactory {
+    func makeNetworking() -> Networking {
+        return NetworkingMock()
     }
 
     let propertiesManagerMock = PropertiesManagerMock()
@@ -42,23 +33,11 @@ final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFacto
         return CoreAlertServiceMock()
     }
 
-    func makeHumanVerificationAdapter() -> HumanVerificationAdapter {
-        return HumanVerificationAdapter()
-    }
-
     func makeTrustKitHelper() -> TrustKitHelper? {
-        return TrustKitHelper(factory: self)
+        return TrustKitHelper()
     }
 
     func makePropertiesManager() -> PropertiesManagerProtocol {
         return propertiesManagerMock
-    }
-
-    func makeProtonAPIAuthenticator() -> ProtonAPIAuthenticator {
-        return ProtonAPIAuthenticator(self)
-    }
-
-    func makeAppSpecificRequestAdapter() -> RequestAdapter? {
-        return nil
     }
 }
