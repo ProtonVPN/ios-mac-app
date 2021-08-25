@@ -39,7 +39,7 @@ class ProfilesMenuController: NSObject {
     
     func update(with viewModel: ProfilesMenuViewModel) {
         self.viewModel = viewModel
-        viewModel.contentChanged = { [unowned self] in self.setupEphemeralView() }
+        viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
     
     // MARK: - Private functions

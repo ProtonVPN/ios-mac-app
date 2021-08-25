@@ -73,12 +73,12 @@ class StatusMenuViewController: NSViewController, StatusMenuViewControllerProtoc
             self?.contentChanged()
         }
         
-        viewModel.disconnectWarning = { [unowned self] viewModel in
-            self.disconnectWarning(viewModel)
+        viewModel.disconnectWarning = { [weak self] viewModel in
+            self?.disconnectWarning(viewModel)
         }
 
-        viewModel.unsecureWiFiWarning = { [unowned self] viewModel in
-            self.unsecureWarning(viewModel)
+        viewModel.unsecureWiFiWarning = { [weak self] viewModel in
+            self?.unsecureWarning(viewModel)
         }
         
         viewModel.viewController = self

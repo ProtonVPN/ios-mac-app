@@ -66,7 +66,7 @@ class ProfileSectionViewController: NSViewController {
         
         profileListScrollView.backgroundColor = .protonGrey()
         
-        viewModel.contentChanged = { [unowned self] in self.contentChanged() }
+        viewModel.contentChanged = { [weak self] in self?.contentChanged() }
     }
     
     private func contentChanged() {

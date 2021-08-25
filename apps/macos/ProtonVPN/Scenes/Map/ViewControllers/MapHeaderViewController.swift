@@ -32,8 +32,8 @@ class MapHeaderViewController: NSViewController {
     
     var headerClicked: (() -> Void)? {
         didSet {
-            connectImage.imageClicked = { [unowned self] in self.headerClicked?() }
-            backgroundView.clicked = { [unowned self] in self.headerClicked?() }
+            connectImage.imageClicked = { [weak self] in self?.headerClicked?() }
+            backgroundView.clicked = { [weak self] in self?.headerClicked?() }
         }
     }
     
@@ -44,7 +44,7 @@ class MapHeaderViewController: NSViewController {
     required init(viewModel: MapHeaderViewModel) {
         super.init(nibName: NSNib.Name("MapHeader"), bundle: nil)
         self.viewModel = viewModel
-        viewModel.contentChanged = { [unowned self] in self.setupEphemeralView() }
+        viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
     
     override func viewDidLoad() {

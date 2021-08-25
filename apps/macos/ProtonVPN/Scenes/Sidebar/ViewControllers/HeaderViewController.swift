@@ -63,7 +63,7 @@ final class HeaderViewController: NSViewController {
         viewModel.delegate = self
         setupPersistentView()
         setupEphemeralView()
-        viewModel.contentChanged = { [unowned self] in self.setupEphemeralView() }
+        viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
         
         setupAnnouncements()
         NotificationCenter.default.addObserver(self, selector: #selector(setupAnnouncements), name: AnnouncementStorageNotifications.contentChanged, object: nil)

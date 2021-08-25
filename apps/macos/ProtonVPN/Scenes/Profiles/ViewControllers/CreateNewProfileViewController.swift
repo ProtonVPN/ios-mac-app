@@ -346,10 +346,10 @@ final class CreateNewProfileViewController: NSViewController {
     }
     
     private func startObserving() {
-        viewModel.prefillContent = { [unowned self] information in self.prefillContent(information) }
-        viewModel.contentChanged = { [unowned self] in self.contentChanged() }
-        viewModel.contentWarning = { [unowned self] message in self.presentAlert(message) }
-        viewModel.secureCoreWarning = { [unowned self] in self.secureCoreWarning() }
+        viewModel.prefillContent = { [weak self] information in self?.prefillContent(information) }
+        viewModel.contentChanged = { [weak self] in self?.contentChanged() }
+        viewModel.contentWarning = { [weak self] message in self?.presentAlert(message) }
+        viewModel.secureCoreWarning = { [weak self] in self?.secureCoreWarning() }
         NotificationCenter.default.addObserver(self, selector: #selector(clearContent),
                                                name: viewModel.sessionFinished, object: nil)
     }
