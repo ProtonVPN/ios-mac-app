@@ -43,22 +43,3 @@ extension macOSNetworkingDelegate {
         PMLog.ET("Unexpected force upgrade on macOS")
     }
 }
-
-extension macOSNetworkingDelegate {
-    var locale: String {
-        return NSLocale.current.languageCode ?? "en_US"
-    }
-    var appVersion: String {
-        return ApiConstants.appVersion
-    }
-    var userAgent: String? {
-        return ApiConstants.userAgent
-    }
-    func onUpdate(serverTime: Int64) {
-        PMLog.ET("macOS does not support CryptoUpdateTime")
-    }
-    func isReachable() -> Bool {
-        return true
-    }
-    func onDohTroubleshot() { }
-}
