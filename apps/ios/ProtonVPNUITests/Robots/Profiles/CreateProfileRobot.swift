@@ -8,7 +8,6 @@
 
 import pmtest
 
-fileprivate let profilesNavigationBar = "Create Profile"
 fileprivate let profileSameName = "Profile with same name already exists"
 fileprivate let nameField = "Enter Profile Name"
 fileprivate let countryField = "Select Country"
