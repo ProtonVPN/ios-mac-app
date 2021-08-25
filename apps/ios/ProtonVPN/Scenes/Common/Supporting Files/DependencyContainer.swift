@@ -86,7 +86,7 @@ final class DependencyContainer {
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
     #else
-    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper(factory: self)
+    private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
     #endif
 
     private lazy var propertiesManager = PropertiesManager()

@@ -116,10 +116,11 @@ target 'ProtonVPN' do
   end
 
   target 'ProtonVPNTests' do
+    pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
     inherit! :search_paths
   end
   
-  target 'ProtonVPNUITests' do
+  target 'ProtonVPNUITests' do    
     platform :ios, '11.0'  
     pm_automation
   end

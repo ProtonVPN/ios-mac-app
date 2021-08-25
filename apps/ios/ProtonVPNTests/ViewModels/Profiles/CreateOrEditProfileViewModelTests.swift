@@ -42,9 +42,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     
     let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
     
-    let alamofireWrapper = AlamofireWrapperMock()
+    let networking = CoreNetworking(delegate: iOSNetworkingDelegate())
     var vpnApiService: VpnApiService {
-        return VpnApiService(alamofireWrapper: alamofireWrapper)
+        return VpnApiService(networking: networking)
     }
     
     let configurationPreparer = VpnManagerConfigurationPreparer(
@@ -53,7 +53,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
         propertiesManager: PropertiesManager())
     
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), alamofireWrapper: alamofireWrapper, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock())
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock())
     }
     
     lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
