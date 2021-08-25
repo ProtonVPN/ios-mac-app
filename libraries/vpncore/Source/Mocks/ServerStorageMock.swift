@@ -61,14 +61,22 @@ public class ServerStorageMock: ServerStorage {
             fatalError("Error loading JSON servers")
         }
 
-        fatalError("Implement me")
-        /*let vpnApiService = VpnApiService(networking: CoreNetworking())
-        let successWrapper = vpnApiService.serverInfoSuccessWrapper(success: { [weak self] (serverModels) in
-            self?.servers = serverModels
-        }, failure: { (error) in
-            fatalError("Failed to parse JSON")
-        })
-        
-        successWrapper(jsonDictionary)*/
+        guard let serversJson = jsonDictionary.jsonArray(key: "LogicalServers") else {
+            PMLog.D("'Servers' field not present in server info request's response", level: .error)
+            fatalError()
+        }
+
+        var serverModels: [ServerModel] = []
+        for json in serversJson {
+            do {
+                serverModels.append(try ServerModel(dic: json))
+            } catch {
+                PMLog.D("Failed to parse server info for json: \(json)", level: .error)
+                let error = ParseError.serverParse
+                PMLog.ET(error.localizedDescription)
+            }
+        }
+
+        self.servers = serverModels
     }
 }
