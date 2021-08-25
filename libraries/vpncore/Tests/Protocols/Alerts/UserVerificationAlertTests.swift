@@ -26,27 +26,17 @@ class UserVerificationAlertTests: XCTestCase {
     
     #if os(iOS)
     func testUserVerificationAlertOnIosDoesntHaveMessage() throws {
-        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: ErrorWithMessage("Error mesage text"), success: {_ in }, failure: { _ in })
+        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation), success: {_ in }, failure: { _ in })
         
-        XCTAssert(alert.message == nil)
+        XCTAssertNil(alert.message)
     }
     #endif
     
     #if os(macOS)
     func testUserVerificationAlertOnMacOSHasMessage() throws {
-        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: ErrorWithMessage("Error mesage text"), success: {_ in }, failure: { _ in })
-        
-        XCTAssert(alert.message != nil)
+        let alert = UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: [.captcha], captchaToken: nil), error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation), success: {_ in }, failure: { _ in })
+
+        XCTAssertEqual(alert.message, LocalizedString.errorUserFailedHumanValidation)
     }
     #endif
-
-    class ErrorWithMessage: Error {
-        
-        public let localizedDescription: String
-        
-        public init(_ localizedDescription: String){
-            self.localizedDescription = localizedDescription
-        }
-    }
-        
 }
