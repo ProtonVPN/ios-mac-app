@@ -148,7 +148,7 @@ class CountriesSectionViewController: NSViewController {
         serverListScrollView.contentView.postsBoundsChangedNotifications = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(scrolled(_:)), name: NSView.boundsDidChangeNotification, object: serverListScrollView.contentView)
-        viewModel.contentChanged = { [unowned self] change in self.contentChanged(change) }
+        viewModel.contentChanged = { [weak self] change in self?.contentChanged(change) }
         viewModel.displayPremiumServices = { self.presentAsSheet(FeaturesOverlayViewController(viewModel: FeaturesOverlayViewModel())) }
         viewModel.displayStreamingServices = { self.presentAsSheet(StreamingServicesOverlayViewController(viewModel: StreamingServicesOverlayViewModel(country: $0, streamServices: $1, propertiesManager: $2))) }
     }

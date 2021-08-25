@@ -64,8 +64,8 @@ class TourViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        DispatchQueue.main.async { [unowned self] in
-            self.display(page: 1)
+        DispatchQueue.main.async { [weak self] in
+            self?.display(page: 1)
         }
     }
     

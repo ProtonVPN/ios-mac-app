@@ -44,7 +44,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
         self.checkMigration()
-        migrateIfNeeded { [unowned self] in
+        migrateIfNeeded {
             self.setNSCodingModuleName()
             
             #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
@@ -69,12 +69,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 DistributedNotificationCenter.default().post(name: Notification.Name("killMe"), object: Bundle.main.bundleIdentifier!)
             }
 
-            checkSystemExtension()
+            self.checkSystemExtension()
             
             self.navigationService.launched()
             
             // Update available plans from API
-            servicePlanDataService.updateServicePlans(completion: nil)
+            self.servicePlanDataService.updateServicePlans(completion: nil)
         }
     }
     
