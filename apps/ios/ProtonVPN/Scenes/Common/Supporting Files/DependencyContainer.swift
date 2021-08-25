@@ -61,9 +61,6 @@ final class DependencyContainer {
     private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), navigationService: navigationService)
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
-    // Hold it in memory so it's possible to refresh token any time
-    private var authApiService: AuthApiService!
-    
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
@@ -159,16 +156,6 @@ extension DependencyContainer: WindowServiceFactory {
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
         return VpnApiService(networking: makeNetworking())
-    }
-}
-
-// MARK: AuthApiServiceFactory
-extension DependencyContainer: AuthApiServiceFactory {
-    func makeAuthApiService() -> AuthApiService {
-        if authApiService == nil {
-            authApiService = AuthApiServiceImplementation(networking: makeNetworking())
-        }
-        return authApiService
     }
 }
 

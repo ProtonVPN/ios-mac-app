@@ -142,7 +142,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -161,7 +161,6 @@ final class NavigationService {
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private lazy var paymentsApiService: PaymentsApiService = factory.makePaymentsApiService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
