@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 
 enum LocalAgentState {
     case connecting
@@ -36,7 +36,7 @@ enum LocalAgentState {
 }
 
 extension LocalAgentState {
-    // swiftlint:disable cyclomatic_complexity
+
     static func from(string: String) -> LocalAgentState? {
         guard let consts = LocalAgentConstants() else {
             PMLog.ET("Failed to create local agent constants")
@@ -58,8 +58,9 @@ extension LocalAgentState {
             return .serverUnreachable
         case consts.stateServerCertificateError:
             return .serverCertificateError
-        case consts.stateClientCertificateError:
-            return .clientCertificateError
+        // IMPORTANT: this consts was missing after building WireguardCrypto, why? Wrong Wireguard version used? I've used master
+//        case consts.stateClientCertificateError:
+//            return .clientCertificateError
         case consts.stateSoftJailed:
             return .softJailed
         default:

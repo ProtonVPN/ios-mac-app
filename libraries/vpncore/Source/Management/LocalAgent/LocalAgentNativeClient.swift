@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardSRP
+import WireguardCrypto
 
 protocol LocalAgentNativeClientDelegate: AnyObject {
     func didReceiveError(code: Int)
