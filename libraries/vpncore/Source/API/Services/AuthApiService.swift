@@ -20,9 +20,9 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_Networking
 
 public typealias AuthCredentialsCallback = GenericCallback<AuthCredentials>
-public typealias ModulusResponseCallback = GenericCallback<ModulusResponse>
 
 public protocol AuthApiServiceFactory {
     func makeAuthApiService() -> AuthApiService
@@ -31,8 +31,6 @@ public protocol AuthApiServiceFactory {
 public protocol AuthApiService {
     
     func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
-    func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback)
-    func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
@@ -44,105 +42,23 @@ public class AuthApiServiceImplementation: AuthApiService {
     }
     
     public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
-        networking.request(DomainsAvailableRequest(type: .login)) { (result: Result<(), Error>) in
+        let mapCredentials = { (credentials: Credential) in
+            AuthCredentials(version: 0, username: username, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, sessionId: credentials.UID, userId: nil, expiration: credentials.expiration, scopes: credentials.scope.compactMap({ AuthCredentials.Scope($0) }).filter({ $0 != .unknown }))
+        }
+
+        networking.request(LoginRequest(username: username, password: password)) { result in
             switch result {
-            case .success:
-                self.networking.request(AuthInfoRequest(username)) { (result: Result<JSONDictionary, Error>) in
-                    switch result {
-                    case let .success(json):
-                        let authInfoReponse: AuthenticationInfoResponse
-                        do {
-                            authInfoReponse = try AuthenticationInfoResponse(dictionary: json)
-                        } catch {
-                            PMLog.D("/authInfo response failed parsing", level: .error)
-                            let error = ParseError.authInfoParse
-                            PMLog.ET(error.localizedDescription)
-                            failure(error)
-                            return
-                        }
-
-                        let authProperties: AuthenticationProperties
-                        do {
-                            authProperties = try authInfoReponse.formProperties(for: username, password: password)
-                        } catch let error {
-                            PMLog.D("Authentication properties creation failed", level: .error)
-                            PMLog.ET(error.localizedDescription)
-                            failure(error)
-                            return
-                        }
-
-                        self.networking.request(AuthenticateRequest(authProperties)) { (result: Result<JSONDictionary, Error>) in
-                            switch result {
-                            case let .success(json):
-                                do {
-                                    let authCredentials = try AuthCredentials(username: username, dic: json)
-                                    success(authCredentials)
-                                } catch {
-                                    PMLog.D("/auth response failed parsing", level: .error)
-                                    let error = ParseError.authCredentialsParse
-                                    PMLog.ET(error.localizedDescription)
-                                    failure(error)
-                                }
-                            case let .failure(error):
-                                failure(error)
-                            }
-                        }
-                    case let .failure(error):
-                        failure(error)
-                    }
+            case let .success(status):
+                switch status {
+                case let .newCredential(credentials, _):
+                    success(mapCredentials(credentials))
+                case let .ask2FA(context):
+                    success(mapCredentials(context.credential))
+                default:
+                    break
                 }
             case let .failure(error):
-                failure(error)
-            }
-        }
-    }
-    
-    public func modulus(success: @escaping ModulusResponseCallback, failure: @escaping ErrorCallback) {        
-        networking.request(AuthModulusRequest()) { (result: Result<JSONDictionary, Error>) in
-            switch result {
-            case let .success(json):
-                do {
-                    let response = try ModulusResponse(dic: json)
-                    success(response)
-                } catch {
-                    PMLog.D("Error occurred during modulus parsing", level: .error)
-                    let error = ParseError.modulusParse
-                    failure(error)
-                }
-            case let .failure(error):
-                failure(error)
-            }
-        }
-    }
-
-    public func refreshAccessToken(success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
-        guard let authCreds = AuthKeychain.fetch() else {
-            let error = KeychainError.fetchFailure
-            failure(error)
-            return
-        }
-        
-        let refreshProperties = RefreshAccessTokenProperties(refreshToken: authCreds.refreshToken)
-        networking.request(AuthRefreshRequest(refreshProperties)) { (result: Result<JSONDictionary, Error>) in
-            switch result {
-            case let .success(json):
-                do {
-                    let response = try RefreshAccessTokenResponse(dic: json)
-                    let updatedCreds = authCreds.updatedWithAccessToken(response: response)
-                    do {
-                        try AuthKeychain.store(updatedCreds)
-                    } catch let error {
-                        PMLog.ET("Error while storing refreshed API token: \(error)")
-                        failure(error)
-                    }
-                    success(updatedCreds)
-                } catch {
-                    PMLog.D("Error occurred during refresh access token parsing", level: .error)
-                    let error = ParseError.refreshTokenParse
-                    failure(error)
-                }
-            case let .failure(error):
-                failure(error)
+                failure(error.underlyingError)
             }
         }
     }

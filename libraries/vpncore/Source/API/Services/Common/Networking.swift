@@ -19,6 +19,11 @@ public typealias StringCallback = GenericCallback<String>
 public typealias ErrorCallback = GenericCallback<Error>
 public typealias IntegerCallback = GenericCallback<Int>
 
+public struct LoginRequest {
+    let username: String
+    let password: String
+}
+
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func set(apiService: APIService)
 }
@@ -35,6 +40,7 @@ public protocol Networking: APIServiceDelegate {
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
+    func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void)
 }
 
 public final class CoreNetworking: Networking {
@@ -119,6 +125,13 @@ public final class CoreNetworking: Networking {
             completion(.success(""))
         }
         task.resume()
+    }
+
+    public func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void) {
+        let authenticator = Authenticator(api: apiService)
+        authenticator.authenticate(username: route.username, password: route.password) { result in
+            completion(result)
+        }
     }
 }
 
