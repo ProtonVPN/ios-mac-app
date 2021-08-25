@@ -50,7 +50,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())/\(route.path)".cleanedForLog
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
@@ -78,7 +78,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())/\(route.path)".cleanedForLog
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
