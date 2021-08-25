@@ -42,7 +42,6 @@ protocol AppSessionManager {
 
     func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void)
     func logOut(force: Bool)
     
@@ -53,11 +52,10 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
-    private lazy var authApiService: AuthApiService = factory.makeAuthApiService()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
@@ -111,22 +109,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 comletion(.failure(error))
             })
         }
-    }
-    
-    func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        authApiService.authenticate(username: username, password: password, success: { [weak self] authCredentials in
-            self?.finishLogin(authCredentials: authCredentials) { result in
-                switch result {
-                case .success:
-                    success()
-                case let .failure(error):
-                    failure(error)
-                }
-            }
-        }, failure: { error in
-            PMLog.ET("Failed to obtain user's auth credentials: \(error.localizedDescription)")
-            DispatchQueue.main.async { failure(error) }
-        })
     }
     
     func loadDataWithoutFetching() -> Bool {

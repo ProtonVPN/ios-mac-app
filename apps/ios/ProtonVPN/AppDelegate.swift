@@ -52,9 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
         PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
-        #endif
-        
-        _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
+        #endif        
         
         // get available iap
         propertiesManager.currentSubscription = nil // ensure the upgrade button isn't present until the app receives confirmation of user's plan
