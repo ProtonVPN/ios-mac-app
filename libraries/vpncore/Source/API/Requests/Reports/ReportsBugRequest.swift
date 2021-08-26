@@ -26,12 +26,16 @@ final class ReportsBugRequest: Request {
     
     let bug: ReportBug
     
-    init( _ bug: ReportBug ) {
+    init( _ bug: ReportBug) {
         self.bug = bug
     }
 
     var path: String {
         return "/reports/bug"
+    }
+
+    var method: HTTPMethod {
+        return .post
     }
 
     var parameters: [String: Any]? {
