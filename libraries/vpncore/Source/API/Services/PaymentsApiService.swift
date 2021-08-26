@@ -200,20 +200,10 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
     }
     
     public func createPaymentToken(amount: Int, receipt: String, success: @escaping PaymentTokenCallback, failure: @escaping ErrorCallback) {
-        networking.request(PaymentsTokenRequest(amount, receipt: receipt)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(PaymentsTokenRequest(amount, receipt: receipt)) { (result: Result<PaymentToken, Error>) in
             switch result {
-            case let .success(json):
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                    let decoder = JSONDecoder()
-                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                    let token = try decoder.decode(PaymentToken.self, from: data)
-
-                    success(token)
-                } catch let error {
-                    failure(error)
-                }
+            case let .success(token):
+                success(token)
             case let .failure(error):
                 failure(error)
             }
@@ -221,20 +211,10 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
     }
     
     public func getPaymentTokenStatus(token: PaymentToken, success: @escaping PaymentTokenStatusCallback, failure: @escaping ErrorCallback) {
-        networking.request(GetPaymentsTokenRequest(token)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(GetPaymentsTokenRequest(token)) { (result: Result<PaymentTokenStatusResponse, Error>) in
             switch result {
-            case let .success(json):
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                    let decoder = JSONDecoder()
-                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                    let token = try decoder.decode(PaymentTokenStatusResponse.self, from: data)
-
-                    success(token)
-                } catch let error {
-                    failure(error)
-                }
+            case let .success(token):
+                success(token)
             case let .failure(error):
                 failure(error)
             }
@@ -293,20 +273,10 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
     }
     
     public func validateSubscription(id planId: String, success: @escaping ValidateSubscriptionResponseCallback, failure: @escaping ErrorCallback) {
-        networking.request(ValidateSubscriptionRequest(planId)) { (result: Result<JSONDictionary, Error>) in
+        networking.request(ValidateSubscriptionRequest(planId)) { (result: Result<ValidateSubscriptionResponse, Error>) in
             switch result {
-            case let .success(json):
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
-                    let decoder = JSONDecoder()
-                    // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                    let validateSubscriptionResponse = try decoder.decode(ValidateSubscriptionResponse.self, from: data)
-
-                    success(validateSubscriptionResponse)
-                } catch let error {
-                    failure(error)
-                }
+            case let .success(data):
+                success(data)
             case let .failure(error):
                 failure(error)
             }

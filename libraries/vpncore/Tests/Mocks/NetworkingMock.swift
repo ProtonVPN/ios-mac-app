@@ -27,6 +27,10 @@ final class NetworkingMock: Networking {
     func request(_ route: URLRequest, completion: @escaping (Result<String, Error>) -> Void) {
 
     }
+
+    func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        
+    }
 }
 
 extension NetworkingMock: APIServiceDelegate {

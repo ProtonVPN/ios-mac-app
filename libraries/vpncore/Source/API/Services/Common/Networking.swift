@@ -38,6 +38,7 @@ public protocol NetworkingFactory {
 
 public protocol Networking: APIServiceDelegate {
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
+    func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void)
@@ -62,7 +63,7 @@ public final class CoreNetworking: Networking {
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
 
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? ""))")
+            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
 
             if let error = error {
                 completion(.failure(error))
@@ -98,6 +99,22 @@ public final class CoreNetworking: Networking {
             }
 
             completion(.success(()))
+        }
+    }
+
+    public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        PMLog.D("Request started: \(url)", level: .debug)
+
+        apiService.exec(route: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
+            switch result {
+            case let .failure(error):
+                PMLog.D("Request finished: \(url) (\(error.localizedDescription))")
+                completion(.failure(error))
+            case let .success(data):
+                PMLog.D("Request finished: \(url) (OK)")
+                completion(.success(data))
+            }
         }
     }
 
