@@ -9,7 +9,7 @@
 import Foundation
 import NetworkExtension
 
-public class WireguardProtocolFactory {
+open class WireguardProtocolFactory {
 
     private let bundleId: String
     private let appGroup: String
@@ -21,7 +21,20 @@ public class WireguardProtocolFactory {
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
     }
-
+        
+    open func logs(completion: @escaping (String?) -> Void) {
+        guard let fileUrl = logFile() else {
+            completion(nil)
+            return
+        }
+        do {
+            let log = try String(contentsOf: fileUrl)
+            completion(log)
+        } catch {
+            PMLog.D("Error reading WireGuard log file: \(error)")
+            completion(nil)
+        }
+    }
 }
 
 extension WireguardProtocolFactory: VpnProtocolFactory {
@@ -75,20 +88,6 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
             }) ?? NETunnelProviderManager()
 
             completion(self.vpnManager, nil)
-        }
-    }
-    
-    public func logs(completion: @escaping (String?) -> Void) {
-        guard let fileUrl = logFile() else {
-            completion(nil)
-            return
-        }
-        do {
-            let log = try String(contentsOf: fileUrl)
-            completion(log)
-        } catch {
-            PMLog.D("Error reading WireGuard log file: \(error)")
-            completion(nil)
         }
     }
     

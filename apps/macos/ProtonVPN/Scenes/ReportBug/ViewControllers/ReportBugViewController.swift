@@ -95,7 +95,17 @@ class ReportBugViewController: NSViewController {
                 viewModel.add(files: [url])
             }
         }
-        
+        // Add wireguard log file
+        vpnManager.logsContent(for: .wireGuard) { logs in
+            let filename = AppConstants.Filenames.wireGuardLogFilename
+            if let content = logs {
+                PMLog.dump(logs: content, toFile: filename)
+            }
+            // This is NOT inside the last `if`, because there may already be a log file
+            if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
+                viewModel.add(files: [url])
+            }
+        }
     }
     
     deinit {
@@ -112,8 +122,10 @@ class ReportBugViewController: NSViewController {
         setupButtonActions()
         setupFilesTable()
         
-        viewModel.attachmentsListRefreshed = {[weak self] in
-            self?.filesTableView.reloadData()
+        viewModel.attachmentsListRefreshed = { [weak self] in
+            DispatchQueue.main.async { [weak self] in
+                self?.filesTableView.reloadData()
+            }
         }
     }
     

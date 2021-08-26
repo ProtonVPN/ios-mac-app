@@ -95,8 +95,8 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5CA559426A58F9A001E9284 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559326A58F9A001E9284 /* SwiftPackageProductDependency */; };
-		D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */; };
+		D5CA559426A58F9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559326A58F9A001E9284 /* WireGuardKit */; };
+		D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* WireGuardKit */; };
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
@@ -258,6 +258,9 @@
 		E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */; };
 		E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */; };
 		E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */; };
+		E9BD02F326D77F9000AAE995 /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD02F226D77F9000AAE995 /* LogViewHelper.swift */; };
+		E9BD02F526D78A0B00AAE995 /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD02F426D78A0B00AAE995 /* XPCConnectionsRepository.swift */; };
+		E9BD02F726D7A32300AAE995 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD02F626D7A32300AAE995 /* WireguardMacProtocolFactory.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
@@ -826,6 +829,9 @@
 		E9AF94B826B7CC9400AA1A5F /* IPCWGService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCWGService.swift; path = "../../../macos/ProtonVPN WireGuard/IPC/IPCWGService.swift"; sourceTree = "<group>"; };
 		E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MacVpnCredentialsConfiguratorFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/MacVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WGVpnCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WGVpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
+		E9BD02F226D77F9000AAE995 /* LogViewHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogViewHelper.swift; sourceTree = "<group>"; };
+		E9BD02F426D78A0B00AAE995 /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
+		E9BD02F626D7A32300AAE995 /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
 		EA59C9C32908DDB8FE7B9AC0 /* Pods-ProtonVPNmacOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNmacOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNmacOSTests/Pods-ProtonVPNmacOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED9AB4330114A9F0C8F8B1E5 /* Pods-ProtonVPN WireGuard-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN WireGuard-metadata.plist"; sourceTree = "<group>"; };
@@ -1025,7 +1031,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
-				D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */,
+				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
 				AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,7 +1049,7 @@
 			files = (
 				D5FD4C1E264C1B3A001F26CE /* vpncore.framework in Frameworks */,
 				EE8CA7B11F06F94800BA829F /* ServiceManagement.framework in Frameworks */,
-				D5CA559426A58F9A001E9284 /* BuildFile in Frameworks */,
+				D5CA559426A58F9A001E9284 /* WireGuardKit in Frameworks */,
 				EEFA87661F6170F200DE880D /* MapKit.framework in Frameworks */,
 				7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */,
 				EE182C561F617C0000F3BA4C /* NetworkExtension.framework in Frameworks */,
@@ -1392,6 +1398,7 @@
 				E99799AD26A6FFAC0083D61E /* WireGuardNetworkExtension-Bridging-Header.h */,
 				E99799AE26A6FFAC0083D61E /* Shared */,
 				E99799BA26A6FFAC0083D61E /* ErrorNotifier.swift */,
+				E9BD02F226D77F9000AAE995 /* LogViewHelper.swift */,
 			);
 			path = WG;
 			sourceTree = "<group>";
@@ -1442,6 +1449,7 @@
 				E9AF94C626B7F82D00AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift */,
 				E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */,
 				E9AF94CB26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift */,
+				E9BD02F626D7A32300AAE995 /* WireguardMacProtocolFactory.swift */,
 			);
 			path = VPN;
 			sourceTree = "<group>";
@@ -2395,6 +2403,7 @@
 				42F256EC257E36270033633B /* SystemExtensionManager.swift */,
 				E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */,
 				D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */,
+				E9BD02F426D78A0B00AAE995 /* XPCConnectionsRepository.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -2529,7 +2538,7 @@
 			);
 			name = "ProtonVPN WireGuard";
 			packageProductDependencies = (
-				D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */,
+				D5CA559526A59A9A001E9284 /* WireGuardKit */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -2581,7 +2590,7 @@
 			);
 			name = "ProtonVPN-mac";
 			packageProductDependencies = (
-				D5CA559326A58F9A001E9284 /* SwiftPackageProductDependency */,
+				D5CA559326A58F9A001E9284 /* WireGuardKit */,
 			);
 			productName = ProtonVPN;
 			productReference = EED534811EEC112000013607 /* ProtonVPN.app */;
@@ -2683,7 +2692,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3172,6 +3181,7 @@
 				E997995826A6F5920083D61E /* VpnKeys.swift in Sources */,
 				E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */,
 				E997999026A6FAA00083D61E /* CertificateRefreshManager.swift in Sources */,
+				E9BD02F326D77F9000AAE995 /* LogViewHelper.swift in Sources */,
 				E93D023826A1C90A0098520D /* main.swift in Sources */,
 				E997994E26A6F5740083D61E /* AuthCredentials.swift in Sources */,
 				E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */,
@@ -3319,6 +3329,7 @@
 				42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */,
 				E180D15B2126A89900F4D1C7 /* TourViewController.swift in Sources */,
 				42BEF97826319E39009180A7 /* StreamingServicesOverlayViewModel.swift in Sources */,
+				E9BD02F526D78A0B00AAE995 /* XPCConnectionsRepository.swift in Sources */,
 				EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */,
 				D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */,
 				EE98CFDE1F150FEE000D6688 /* AboutViewController.swift in Sources */,
@@ -3415,6 +3426,7 @@
 				E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */,
 				EE98CFE71F1519D4000D6688 /* NSImage+Extension.swift in Sources */,
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
+				E9BD02F726D7A32300AAE995 /* WireguardMacProtocolFactory.swift in Sources */,
 				D5966FE4253885B00061A75F /* TriangleView.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */,
@@ -3807,6 +3819,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1241;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				EXCLUDED_ARCHS = "";
@@ -4329,6 +4342,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1241;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				EXCLUDED_ARCHS = "";
@@ -4370,6 +4384,7 @@
 				CODE_SIGN_STYLE = Manual;
 				COMBINE_HIDPI_IMAGES = YES;
 				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1241;
 				DEVELOPMENT_TEAM = J6S6Q257EK;
 				ENABLE_HARDENED_RUNTIME = YES;
 				EXCLUDED_ARCHS = "";
@@ -4483,7 +4498,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4494,14 +4509,14 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5CA559326A58F9A001E9284 /* SwiftPackageProductDependency */ = {
+		D5CA559326A58F9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
-		D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */ = {
+		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
