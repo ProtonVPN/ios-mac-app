@@ -90,7 +90,7 @@ class SignUpFormViewModelTests: XCTestCase {
     
     func testDisablesButtonFields() {
         XCTAssertFalse(viewModel.isEnoughData)
-        viewModel.email = "abc"
+        viewModel.email = "abc@abc.abc"
         XCTAssertFalse(viewModel.isEnoughData)
         viewModel.username = "abc"
         XCTAssertFalse(viewModel.isEnoughData)
