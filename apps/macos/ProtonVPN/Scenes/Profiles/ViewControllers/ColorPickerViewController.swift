@@ -81,7 +81,7 @@ class ColorPickerViewController: NSViewController {
         
         setSelection()
         
-        viewModel.colorSelected = { [unowned self] in self.setSelection() }
+        viewModel.colorSelected = { [weak self] in self?.setSelection() }
     }
     
     private func setSelection() {

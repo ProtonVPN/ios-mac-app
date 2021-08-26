@@ -59,16 +59,17 @@ class TourController {
         configureNumber()
         
         // Info window
-        tourViewController = TourViewController(previous: { [unowned self] in
-            self.previous()
-        }, next: { [unowned self] in
-            self.next()
+        tourViewController = TourViewController(previous: { [weak self] in
+            self?.previous()
+        }, next: { [weak self] in
+            self?.next()
         })
         tourWindowController = TourWindowController(viewController: tourViewController)
         mainWindow.addChildWindow(tourWindowController.window!, ordered: .above)
         
         tourWindowController.window?.setFrame(CGRect(x: windowRect.maxX, y: windowRect.midY - cardHeight / 2, width: 0, height: cardHeight), display: false)
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             self.tourWindowController.window?.setFrame(CGRect(x: windowRect.maxX - self.cardWidth, y: windowRect.midY - self.cardHeight / 2, width: self.cardWidth, height: self.cardHeight), display: true, animate: true)
         }
     }

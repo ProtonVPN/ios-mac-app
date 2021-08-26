@@ -43,7 +43,7 @@ class ProtonVpnMenuController: NSObject {
     
     func update(with viewModel: ProtonVpnMenuViewModel) {
         self.viewModel = viewModel
-        viewModel.contentChanged = { [unowned self] in self.setupEphemeralView() }
+        viewModel.contentChanged = { [weak self] in self?.setupEphemeralView() }
     }
     
     // MARK: - Private functions

@@ -201,9 +201,9 @@ class LoginViewController: NSViewController {
     }
     
     private func setupCallbacks() {
-        viewModel.logInInProgress = { [unowned self] in self.presentLoadingScreen() }
-        viewModel.logInFailure = { [unowned self] errorMessage in self.handleLoginFailure(errorMessage) }
-        viewModel.logInFailureWithSupport = { [unowned self] errorMessage in self.handleLoginFailureWithSupport(errorMessage) }
+        viewModel.logInInProgress = { [weak self] in self?.presentLoadingScreen() }
+        viewModel.logInFailure = { [weak self] errorMessage in self?.handleLoginFailure(errorMessage) }
+        viewModel.logInFailureWithSupport = { [weak self] errorMessage in self?.handleLoginFailureWithSupport(errorMessage) }
     }
     
     fileprivate func attemptLogin() {
