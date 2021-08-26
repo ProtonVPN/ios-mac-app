@@ -265,7 +265,7 @@ extension MacAlertService: CoreAlertService {
     }
     
     private func show(_ alert: RefreshTokenExpiredAlert) {
-        let logoutAction = AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { [unowned self] in
+        let logoutAction = AlertAction(title: LocalizedString.ok, style: .confirmative, handler: { 
             self.appSessionManager.logOut(force: true)
         })
         alert.actions.append(logoutAction)

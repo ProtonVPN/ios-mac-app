@@ -67,9 +67,9 @@ class PopUpViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
         
-        viewModel.updateInterface = { [unowned self] in
-            self.setupBodySection()
-            self.setupFooterSection()
+        viewModel.updateInterface = { [weak self] in
+            self?.setupBodySection()
+            self?.setupFooterSection()
         }
     }
     

@@ -103,8 +103,8 @@ class ProfilesContainerViewController: NSViewController {
     }
     
     private func setUpCallbacks(overview viewModel: OverviewViewModel) {
-        viewModel.createNewProfile = { [unowned self] in self.createNewProfile() }
-        viewModel.editProfile = { [unowned self] profile in self.editProfile(profile) }
+        viewModel.createNewProfile = { [weak self] in self?.createNewProfile() }
+        viewModel.editProfile = { [weak self] profile in self?.editProfile(profile) }
     }
     
     private func startObserving(createNewProfile viewModel: CreateNewProfileViewModel) {

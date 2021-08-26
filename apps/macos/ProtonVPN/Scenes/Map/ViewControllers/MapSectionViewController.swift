@@ -96,8 +96,8 @@ class MapSectionViewController: NSViewController {
             self.zoomView.zoom = (((self.mapView.zoom - self.mapView.minZoom) / (self.mapView.maxZoom - self.mapView.minZoom)) * (self.zoomLevels - 1)).rounded(.toNearestOrAwayFromZero)
         }
         
-        mapSectionViewModel.contentChanged = { [unowned self] change in self.setAnnotations(change) }
-        mapSectionViewModel.connectionsChanged = { [unowned self] connections in self.setConnections(connections) }
+        mapSectionViewModel.contentChanged = { [weak self] change in self?.setAnnotations(change) }
+        mapSectionViewModel.connectionsChanged = { [weak self] connections in self?.setConnections(connections) }
         
         NotificationCenter.default.addObserver(self, selector: #selector(mapShouldResize),
                                                name: NSWindow.didChangeBackingPropertiesNotification, object: nil)

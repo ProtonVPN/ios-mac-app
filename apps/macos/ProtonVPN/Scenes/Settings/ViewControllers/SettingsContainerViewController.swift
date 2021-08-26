@@ -33,11 +33,11 @@ final class SettingsContainerViewController: NSViewController {
     private var tabBarViewModel: SettingsTabBarViewModel
     private var activeViewController: NSViewController?
     
-    lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
+    private lazy var generalViewController: GeneralSettingsViewController = { [unowned self] in
         return GeneralSettingsViewController(viewModel: self.viewModel.generalSettingsViewModel)
     }()
     
-    lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
+    private lazy var connectionViewController: ConnectionSettingsViewController = { [unowned self] in
         return ConnectionSettingsViewController(viewModel: viewModel.connectionSettingsViewModel)
     }()
     

@@ -191,7 +191,8 @@ class SCExitCountryAnnotationView: MKAnnotationView {
         let trackingArea = NSTrackingArea(rect: viewModel.state == .idle ? triangleFrame : bounds, options: [NSTrackingArea.Options.mouseEnteredAndExited, NSTrackingArea.Options.mouseMoved, NSTrackingArea.Options.activeInKeyWindow], owner: self, userInfo: nil)
         addTrackingArea(trackingArea)
         
-        DispatchQueue.main.async { [unowned self] in
+        DispatchQueue.main.async { [weak self] in
+            guard let self = self else { return }
             if let window = self.window {
                 let mousePoint = window.mouseLocationOutsideOfEventStream
                 let pointInView = self.convert(mousePoint, from: nil)

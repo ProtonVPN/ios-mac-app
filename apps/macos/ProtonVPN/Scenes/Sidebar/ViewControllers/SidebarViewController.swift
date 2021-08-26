@@ -276,10 +276,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                     }
                 }
                 
-                viewController.fade(over: 0.5, completion: { [unowned self] in
+                viewController.fade(over: 0.5, completion: { [weak self] in
                     window.removeChildWindow(overlayWindow)
                     overlayWindowController.close()
-                    self.overlayWindowController = nil
+                    self?.overlayWindowController = nil
                 })
             } else {
                 connectionOverlay.isHidden = true
