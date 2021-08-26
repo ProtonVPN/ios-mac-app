@@ -61,10 +61,11 @@ enum SystemExtensionStatus {
 
 class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
-    typealias Factory = /*CoreAlertServiceFactory &*/ PropertiesManagerFactory
+    typealias Factory = PropertiesManagerFactory & XPCConnectionsRepositoryFactory
     
     fileprivate let factory: Factory
     fileprivate lazy var propertiesManager: PropertiesManagerProtocol = self.factory.makePropertiesManager()
+    fileprivate lazy var xpcConnectionsRepository: XPCConnectionsRepository = self.factory.makeXPCConnectionsRepository()
         
     private var shouldNotifyInstall = false
     private var completionCallbacks = [String: SystemExtensionManager.FinishedCallback]()
@@ -79,7 +80,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     }
     
     func extenstionStatus(forType type: SystemExtensionType, completion: @escaping StatusCallback) {
-        getXpcConnection(for: type.machServiceName).getVersion(completionHandler: { result in
+        xpcConnectionsRepository.getXpcConnection(for: type.machServiceName).getVersion(completionHandler: { result in
             guard let data = result, let info = try? JSONDecoder().decode(ExtensionInfo.self, from: data) else {
                 PMLog.D("SysEx (\(type)) didn't return its version. Probably not yet installed.")
                 return completion(.notInstalled)
@@ -99,13 +100,6 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
                 completion(.ok)
             }
         })
-    }
-    
-    private func getXpcConnection(for service: String) -> XPCServiceUser {
-        if xpcConnections[service] == nil {
-            xpcConnections[service] = XPCServiceUser(withExtension: service, logger: { PMLog.D($0) })
-        }
-        return xpcConnections[service]!
     }
     
     func requestExtensionInstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {

@@ -11,11 +11,16 @@ extension FileManager {
     }
     
     private static var sharedFolderURL: URL? {
+        #if os(macOS)
+        return FileManager.default.temporaryDirectory
+        
+        #else
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: FileManager.appGroupId) else {
             wg_log(.error, message: "Cannot obtain shared folder URL for appGroupId \(FileManager.appGroupId) ")
             return nil
         }
         return sharedFolderURL
+        #endif
     }
     
     static var logFileURL: URL? {

@@ -62,6 +62,16 @@ class HelpMenuViewModel {
         }
     }
     
+    func openWGVpnLogsFolderAction() {
+        // Save log to file
+        vpnManager.logsContent(for: .wireGuard) { logs in
+            if let content = logs {
+                PMLog.dump(logs: content, toFile: AppConstants.Filenames.wireGuardLogFilename)
+            }
+            self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
+        }
+    }
+    
     func selectClearApplicationData() {
         alertService.push(alert: ClearApplicationDataAlert { [self] in
             self.vpnManager.disconnect { [self] in

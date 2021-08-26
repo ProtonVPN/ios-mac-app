@@ -45,7 +45,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
 
         setupLogging()
         wg_log(.info, message: "Starting tunnel from the " + (activationAttemptId == nil ? "OS directly, rather than the app" : "app"))
-        flushLogsToFile() // Prevents empty logs in the app during the first WG connection
 
         guard let tunnelProviderProtocol = self.protocolConfiguration as? NETunnelProviderProtocol else {
             errorNotifier.notify(PacketTunnelProviderError.savedProtocolConfigurationIsInvalid)
@@ -127,10 +126,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     override func handleAppMessage(_ messageData: Data, completionHandler: ((Data?) -> Void)? = nil) {
         wg_log(.info, message: "Handle App Message size: \(messageData.count)")
         
-        if messageData.count == 1 && messageData[0] == 101 {
-            flushLogsToFile()
-            completionHandler?(nil)
-        } else if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
+        if let completionHandler = completionHandler, messageData.count == 1 && messageData[0] == 0 {
             adapter.getRuntimeConfiguration { settings in
                 var data: Data?
                 if let settings = settings {
@@ -145,18 +141,6 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
     
     private func setupLogging() {
         Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
-    }
-    
-    private func flushLogsToFile() {
-        guard let path = FileManager.logTextFileURL?.path else { return }
-        if Logger.global == nil { // Probably NE was not yet started
-            setupLogging()
-        }
-        if Logger.global?.writeLog(to: path) ?? false {
-            wg_log(.info, message: "flushLogsToFile written to file \(path) ")
-        } else {
-            wg_log(.info, message: "flushLogsToFile error while writing to file \(path) ")
-        }
     }
     
 }
