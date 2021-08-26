@@ -43,9 +43,7 @@ public class ReportsApiService {
         }
         
         let request = ReportsBugRequest(bug)
-        let params = (request.parameters as? [String: String]) ?? [:]
-        let successWrapper: JSONCallback = { _ in success() }
-        fatalError("???")
-//        networking.upload(request, parameters: params, files: files, success: successWrapper, failure: failure)
+        #warning("FIX ME")
+        failure(NSError(code: 0, localizedDescription: "Waiting for Core upload implementation"))
     }
 }
