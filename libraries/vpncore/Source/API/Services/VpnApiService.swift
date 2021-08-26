@@ -268,21 +268,10 @@ public class VpnApiService {
     }
 
     public func sessionsCount(success: @escaping IntegerCallback, failure: @escaping ErrorCallback) {
-        networking.request(VPNSessionsCountRequest()) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNSessionsCountRequest()) { (result: Result<SessionsResponse, Error>) in
             switch result {
             case let .success(response):
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                    let sessionsResponse = try decoder.decode(SessionsResponse.self, from: data)
-                    success(sessionsResponse.sessionCount)
-                } catch {
-                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
-                    let error = ParseError.loadsParse
-                    PMLog.ET(error.localizedDescription)
-                    failure(error)
-                }
+                success(response.sessionCount)
             case let .failure(error):
                 failure(error)
             }
@@ -350,21 +339,10 @@ public class VpnApiService {
     }
     
     public func virtualServices(success: @escaping VpnStreamingResponseCallback, failure: @escaping ErrorCallback) {
-        networking.request(VPNStreamingRequest()) { (result: Result<JSONDictionary, Error>) in
+        networking.request(VPNStreamingRequest()) { (result: Result<VPNStreamingResponse, Error>) in
             switch result {
-            case let .success(response):
-                do {
-                    let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
-                    let parsed = try decoder.decode(VPNStreamingResponse.self, from: data)
-                    success(parsed)
-                } catch {
-                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
-                    let error = ParseError.loadsParse
-                    PMLog.ET(error.localizedDescription)
-                    failure(error)
-                }
+            case let .success(data):
+                success(data)
             case let .failure(error):
                 failure(error)
             }
