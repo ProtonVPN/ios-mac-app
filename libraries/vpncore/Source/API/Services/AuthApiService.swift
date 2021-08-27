@@ -42,20 +42,16 @@ public class AuthApiServiceImplementation: AuthApiService {
     }
     
     public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
-        let mapCredentials = { (credentials: Credential) in
-            AuthCredentials(version: 0, username: username, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, sessionId: credentials.UID, userId: nil, expiration: credentials.expiration, scopes: credentials.scope.compactMap({ AuthCredentials.Scope($0) }).filter({ $0 != .unknown }))
-        }
-
         networking.request(LoginRequest(username: username, password: password)) { result in
             switch result {
             case let .success(status):
                 switch status {
-                case let .newCredential(credentials, _):
-                    success(mapCredentials(credentials))
+                case let .newCredential(credential, _):
+                    success(AuthCredentials(credential))
                 case let .ask2FA(context):
-                    success(mapCredentials(context.credential))
-                default:
-                    break
+                    success(AuthCredentials(context.credential))
+                case let.updatedCredential(credential):
+                    success(AuthCredentials(credential))
                 }
             case let .failure(error):
                 failure(error.underlyingError)

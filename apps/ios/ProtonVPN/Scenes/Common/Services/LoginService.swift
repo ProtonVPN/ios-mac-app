@@ -68,14 +68,7 @@ final class CoreLoginService {
         }
 
         // attempt to uset the login data to log in the app
-        let authCredentials: AuthCredentials
-        switch data {
-        case let .credential(credential):
-            authCredentials = AuthCredentials(version: 0, username: credential.userName, accessToken: credential.accessToken, refreshToken: credential.refreshToken, sessionId: credential.UID, userId: credential.userID, expiration: credential.expiration, scopes: credential.scope.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
-        case let .userData(userData):
-            authCredentials = AuthCredentials(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
-        }
-
+        let authCredentials = AuthCredentials(data)
         appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
             switch result {
             case let .failure(error):
@@ -173,3 +166,14 @@ extension CoreLoginService: EnvironmentsViewControllerDelegate {
     }
 }
 #endif
+
+extension AuthCredentials {
+    convenience init(_ data: LoginData) {
+        switch data {
+        case let .credential(credential):
+            self.init(credential)
+        case let .userData(userData):
+            self.init(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
+        }
+    }
+}
