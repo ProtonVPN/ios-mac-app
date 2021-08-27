@@ -26,6 +26,7 @@ public struct LoginRequest {
 
 public protocol NetworkingDelegate: ForceUpgradeDelegate, HumanVerifyDelegate {
     func set(apiService: APIService)
+    func onLogout()
 }
 
 public protocol NetworkingDelegateFactory {
@@ -46,8 +47,13 @@ public protocol Networking: APIServiceDelegate {
 
 public final class CoreNetworking: Networking {
     private var apiService: PMAPIService
+    // swiftlint:disable weak_delegate
+    private let delegate: NetworkingDelegate
+    // swiftlint:enable weak_delegate
 
     public init(delegate: NetworkingDelegate) {
+        self.delegate = delegate
+
         apiService = PMAPIService(doh: ApiConstants.doh)
         apiService.authDelegate = self
         apiService.serviceDelegate = self
@@ -181,7 +187,8 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onLogout(sessionUID uid: String) {
-        AuthKeychain.clear()
+        PMLog.ET("Logout from Core because of expired token")
+        delegate.onLogout()
     }
 
     public func onUpdate(auth: Credential) {

@@ -73,7 +73,7 @@ class CountryAnnotationViewModelTests: XCTestCase {
             location: ServerLocation(lat: 1, long: 2)
             )
         )
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate())
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
         let vpnApiService = VpnApiService(networking: networking)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),

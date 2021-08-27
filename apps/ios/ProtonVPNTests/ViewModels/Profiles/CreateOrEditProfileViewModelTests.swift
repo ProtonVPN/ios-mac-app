@@ -42,7 +42,7 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     
     let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
     
-    let networking = CoreNetworking(delegate: iOSNetworkingDelegate())
+    let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
     var vpnApiService: VpnApiService {
         return VpnApiService(networking: networking)
     }

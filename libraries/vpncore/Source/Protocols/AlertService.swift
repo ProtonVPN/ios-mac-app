@@ -161,6 +161,8 @@ public class RefreshTokenExpiredAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
+
+    public init() { }
 }
 
 public class UpgradeRequiredAlert: SystemAlert {

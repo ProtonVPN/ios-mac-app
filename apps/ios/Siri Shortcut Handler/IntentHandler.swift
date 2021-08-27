@@ -29,7 +29,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate())
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
