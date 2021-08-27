@@ -26,7 +26,7 @@ import XCTest
 
 class MapViewModelTests: XCTestCase {
 
-    let networking = CoreNetworking(delegate: iOSNetworkingDelegate())
+    let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
     
     var appStateManager: AppStateManager!
     

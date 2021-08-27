@@ -19,6 +19,10 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
         self.alertService = alertService
     }
 
+    func onLogout() {
+        alertService.push(alert: RefreshTokenExpiredAlert())
+    }
+
     func set(apiService: APIService) {}
 }
 // swiftlint:enable type_name

@@ -17,13 +17,19 @@ import ProtonCore_HumanVerification
 final class iOSNetworkingDelegate: NetworkingDelegate {
     private let forceUpgradeService: ForceUpgradeDelegate
     private var humanVerify: HumanVerifyDelegate?
+    private let alertingService: CoreAlertService
 
-    init() {
-        forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
+    init(alertingService: CoreAlertService) {
+        self.forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
+        self.alertingService = alertingService
     }
 
     func set(apiService: APIService) {
         humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL())
+    }
+
+    func onLogout() {
+        alertingService.push(alert: RefreshTokenExpiredAlert())
     }
 }
 
