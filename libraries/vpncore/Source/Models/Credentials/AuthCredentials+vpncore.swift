@@ -20,14 +20,8 @@ extension AuthCredentials {
     }
 }
 
-extension AuthCredential {
-    convenience init(_ credentials: AuthCredentials) {
-        self.init(sessionID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, privateKey: nil, passwordKeySalt: nil)
-    }
-}
-
 extension Credential {
     init(_ credentials: AuthCredentials) {
-        self.init(UID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, scope: credentials.scopes.map({ $0.rawValue }))
+        self.init(UID: credentials.sessionId, accessToken: credentials.accessToken, refreshToken: credentials.refreshToken, expiration: credentials.expiration, userName: credentials.username, userID: credentials.userId ?? "", scope: credentials.scopes.map({ $0.rawValue }))
     }
 }

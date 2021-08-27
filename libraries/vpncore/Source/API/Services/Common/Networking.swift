@@ -183,7 +183,7 @@ extension CoreNetworking: AuthDelegate {
             return nil
         }
         // the app stores credentials in an old format for compatibility reasons, conversion is needed
-        return ProtonCore_Networking.AuthCredential(credentials)
+        return ProtonCore_Networking.AuthCredential(Credential(credentials))
     }
 
     public func onLogout(sessionUID uid: String) {
