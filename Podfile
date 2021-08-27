@@ -13,7 +13,7 @@ end
 
 def proton_core_version
   # '2.4.0'
-  'wireguardcrypto'
+  'wireguardcrypto_updated'
 end
 
 def openvpn
