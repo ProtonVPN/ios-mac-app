@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidBecomeActive(_ notification: Notification) {
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
-        if propertiesManager.featureFlags.pollNotificationAPI {
+        if propertiesManager.featureFlags.pollNotificationAPI, AuthKeychain.fetch() != nil {
             self.container.makeAnnouncementRefresher().refresh()
         }
 
