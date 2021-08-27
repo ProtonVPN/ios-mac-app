@@ -9,6 +9,7 @@
 import Foundation
 import vpncore
 import ProtonCore_Login
+import ProtonCore_Networking
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -66,8 +67,14 @@ final class CoreLoginService {
             windowService.show(viewController: launchViewController)
         }
 
-        // attempt to uset the login data to lg in the app
-        let authCredentials = AuthCredentials(version: 0, username: data.user.name ?? "", accessToken: data.credential.accessToken, refreshToken: data.credential.refreshToken, sessionId: data.credential.sessionID, userId: data.user.ID, expiration: data.credential.expiration, scopes: data.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
+        // attempt to uset the login data to log in the app
+        let authCredentials: AuthCredentials
+        switch data {
+        case let .credential(credential):
+            authCredentials = AuthCredentials(version: 0, username: credential.userName, accessToken: credential.accessToken, refreshToken: credential.refreshToken, sessionId: credential.UID, userId: credential.userID, expiration: credential.expiration, scopes: credential.scope.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
+        case let .userData(userData):
+            authCredentials = AuthCredentials(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
+        }
 
         appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
             switch result {
