@@ -153,27 +153,27 @@ DEPENDENCIES:
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
-  - "ProtonCore-APIClient (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Authentication-KeyGeneration/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Authentication/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-ForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Login/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Networking (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Payments/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-PaymentsUI/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Services (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
-  - "ProtonCore-WireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto`)"
+  - "ProtonCore-APIClient (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Authentication-KeyGeneration/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Authentication/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-ForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Login/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Networking (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Payments/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-PaymentsUI/UsingWireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Services (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
+  - "ProtonCore-WireguardCrypto (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `wireguardcrypto_updated`)"
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (= 5.2.2)
@@ -206,67 +206,67 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-WireguardCrypto:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -280,67 +280,67 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   ProtonCore-WireguardCrypto:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: wireguardcrypto
+    :tag: wireguardcrypto_updated
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -389,6 +389,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: ed341fdf27ff6cb1cf0ac3da85bfc113c63d0e47
+PODFILE CHECKSUM: 66c11a5c3a7ebf0f31dd259e7f50e2a089e6aa11
 
 COCOAPODS: 1.10.1
