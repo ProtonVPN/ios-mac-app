@@ -59,7 +59,7 @@ final class CoreLoginService {
         networking = factory.makeNetworking()
     }
 
-    private func finishLgin(data: LoginData) {
+    private func finishLogin(data: LoginData) {
         // login / signup flow is dismisse dat this point, show the generic loading screen
         if let launchViewController = navigationService.makeLaunchViewController() {
             launchViewController.mode = .immediate
@@ -109,7 +109,7 @@ final class CoreLoginService {
             case .dismissed:
                 PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
             case let .loggedIn(data):
-                self?.finishLgin(data: data)
+                self?.finishLogin(data: data)
             }
 
             self?.login = nil
