@@ -130,19 +130,22 @@ open class ReportBugViewModel {
         return bug.canBeSent
     }
     
-    public func send(success: @escaping () -> Void, error: @escaping (Error) -> Void) {
-        reportsApiService.report(bug: bug, success: {
-            DispatchQueue.main.async {
-                self.propertiesManager.reportBugEmail = self.bug.email
-                self.alertService.push(alert: BugReportSentAlert(confirmHandler: {
-                    success()
-                }))
+    public func send(completion: @escaping (Result<(), Error>) -> Void) {
+        reportsApiService.report(bug: bug) { [weak self] result in
+            switch result {
+            case .success:
+                DispatchQueue.main.async { [weak self] in
+                    self?.propertiesManager.reportBugEmail = self?.bug.email
+                    self?.alertService.push(alert: BugReportSentAlert(confirmHandler: {
+                        completion(.success(()))
+                    }))
+                }
+            case let .failure(apiError):
+                DispatchQueue.main.async {
+                    completion(.failure(apiError))
+                }
             }
-        }, failure: { apiError in
-            DispatchQueue.main.async {
-                error(apiError)
-            }
-        })
+        }
     }
     
 }

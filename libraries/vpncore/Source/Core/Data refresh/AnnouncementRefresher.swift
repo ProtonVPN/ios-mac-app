@@ -56,11 +56,14 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         }
         
         lastRefresh = Date()
-        coreApiService.getApiNotifications(success: { announcementsResponse in
-            self.announcementStorage.store(announcementsResponse.notifications)
-        }, failure: {error in
-            PMLog.ET("Error getting announcements")
-        })
+        coreApiService.getApiNotifications { [weak self] result in
+            switch result {
+            case let .success(announcementsResponse):
+                self?.announcementStorage.store(announcementsResponse.notifications)
+            case .failure:
+                PMLog.ET("Error getting announcements")
+            }
+        }
     }
     
     public func resetTimer() {

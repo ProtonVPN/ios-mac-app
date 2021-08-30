@@ -21,16 +21,6 @@
 
 import ProtonCore_Networking
 
-public typealias ClientConfigCallback = GenericCallback<ClientConfig>
-public typealias ServerModelsCallback = GenericCallback<[ServerModel]>
-public typealias VpnPropertiesCallback = GenericCallback<VpnProperties>
-public typealias VpnProtocolCallback = GenericCallback<VpnProtocol>
-public typealias VpnServerStateCallback = GenericCallback<VpnServerState>
-public typealias VpnCredentialsCallback = GenericCallback<VpnCredentials>
-public typealias OptionalStringCallback = GenericCallback<String?>
-public typealias VpnStreamingResponseCallback = GenericCallback<VPNStreamingResponse>
-public typealias ContinuousServerPropertiesCallback = GenericCallback<ContinuousServerPropertiesDictionary>
-
 public protocol VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService
 }
@@ -43,8 +33,8 @@ public class VpnApiService {
         self.networking = networking
     }
     
-    // swiftlint:disable function_body_length
-    public func vpnProperties(lastKnownIp: String?, success: @escaping VpnPropertiesCallback, failure: @escaping ErrorCallback) {
+    // swiftlint:disable function_body_length cyclomatic_complexity
+    public func vpnProperties(lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         var rCredentials: VpnCredentials?
@@ -63,57 +53,81 @@ public class VpnApiService {
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure: OptionalStringCallback = { [weak self] ip in
+        let ipResolvedClosure = { [weak self] (ip: String?) in
             rUserIp = ip
             
-            self?.serverInfo(for: rUserIp,
-                success: { serverModels in
-                rServerModels = serverModels
-                dispatchGroup.leave()
-            }, failure: failureClosure)
+            self?.serverInfo(for: rUserIp) { result in
+                switch result {
+                case let .success(serverModels):
+                    rServerModels = serverModels
+                    dispatchGroup.leave()
+                case let .failure(error):
+                    failureClosure(error)
+                }
+            }
         }
         
         // Only retrieve IP address when not connected to VPN
         dispatchGroup.enter()
         if appStateManager?.state.isDisconnected ?? true {
             // Just use last known IP if getting new one failed
-            userIp(success: ipResolvedClosure, failure: { _ in
-                ipResolvedClosure(lastKnownIp)
-            })
+            userIp { result in
+                switch result {
+                case let .success(ip):
+                    ipResolvedClosure(ip)
+                case .failure:
+                    ipResolvedClosure(lastKnownIp)
+                }
+            }
         } else {
             ipResolvedClosure(lastKnownIp)
         }
         
         dispatchGroup.enter()
-        clientCredentials(success: { credentials in
-            rCredentials = credentials
-            dispatchGroup.leave()
-        }, failure: silentFailureClosure)
+        clientCredentials { result in
+            switch result {
+            case let .success(credentials):
+                rCredentials = credentials
+                dispatchGroup.leave()
+            case let .failure(error):
+                silentFailureClosure(error)
+            }
+        }
         
         dispatchGroup.enter()
-        virtualServices(success: { response in
-            rStreamingServices = response
-            dispatchGroup.leave()
-        }, failure: silentFailureClosure)
+        virtualServices { result in
+            switch result {
+            case let .success(response):
+                rStreamingServices = response
+                dispatchGroup.leave()
+            case let .failure(error):
+                silentFailureClosure(error)
+            }
+        }
         
         dispatchGroup.enter()
-        clientConfig(success: { client in
-            rClientConfig = client
-            dispatchGroup.leave()
-        }, failure: failureClosure)
+        clientConfig { result in
+            switch result {
+            case let .success(config):
+                rClientConfig = config
+                dispatchGroup.leave()
+            case let .failure(error):
+                failureClosure(error)
+            }
+        }
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices))
+                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: rCredentials, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
             } else if let error = rError {
-                failure(error)
+                completion(.failure(error))
             } else {
-                failure(ProtonVpnError.vpnProperties)
+                completion(.failure(ProtonVpnError.vpnProperties))
             }
         }
     }
     
-    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, success: @escaping VpnPropertiesCallback, failure: @escaping ErrorCallback) {
+    public func refreshServerInfoIfIpChanged(lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         var rServerModels: [ServerModel]?
@@ -127,7 +141,7 @@ public class VpnApiService {
             dispatchGroup.leave()
         }
         
-        let ipResolvedClosure: OptionalStringCallback = { [weak self] ip in
+        let ipResolvedClosure = { [weak self] (ip: String) in
             rUserIp = ip
             
             // Only update servers if the user's IP has changed
@@ -135,69 +149,90 @@ public class VpnApiService {
                 dispatchGroup.leave()
                 return
             }
-            
-            self?.serverInfo(for: rUserIp,
-                success: { serverModels in
-                rServerModels = serverModels
-                dispatchGroup.leave()
-            }, failure: failureClosure)
+
+            self?.serverInfo(for: rUserIp) { result in
+                switch result {
+                case let .success(serverModels):
+                    rServerModels = serverModels
+                    dispatchGroup.leave()
+                case let .failure(error):
+                    failureClosure(error)
+                }
+            }
             
             dispatchGroup.enter()
-            self?.virtualServices(success: { response in
-                rStreamingServices = response
-                dispatchGroup.leave()
-            }, failure: failureClosure)
+            self?.virtualServices { result in
+                switch result {
+                case let .success(response):
+                    rStreamingServices = response
+                    dispatchGroup.leave()
+                case let .failure(error):
+                    failureClosure(error)
+                }
+            }
         }
 
         dispatchGroup.enter()
-        userIp(success: ipResolvedClosure, failure: failureClosure)
+        userIp { result in
+            switch result {
+            case let .success(ip):
+                ipResolvedClosure(ip)
+            case let.failure(error):
+                failureClosure(error)
+            }
+        }
         
         dispatchGroup.enter()
-        clientConfig(success: { client in
-            rClientConfig = client
-            dispatchGroup.leave()
-        }, failure: failureClosure)
+        clientConfig { result in
+            switch result {
+            case let .success(config):
+                rClientConfig = config
+                dispatchGroup.leave()
+            case let .failure(error):
+                failureClosure(error)
+            }
+        }
         
         dispatchGroup.notify(queue: DispatchQueue.main) {
             if let servers = rServerModels {
-                success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices))
+                completion(.success(VpnProperties(serverModels: servers, vpnCredentials: nil, ip: rUserIp, clientConfig: rClientConfig, streamingResponse: rStreamingServices)))
             } else if let error = rError {
-                failure(error)
+                completion(.failure(error))
             } else {
-                failure(ProtonVpnError.vpnProperties)
+                completion(.failure(ProtonVpnError.vpnProperties))
             }
         }
     }
     
     // swiftlint:enable function_body_length
 
-    public func clientCredentials(success: @escaping VpnCredentialsCallback, failure: @escaping ErrorCallback) {        
+    public func clientCredentials(comletion: @escaping (Result<VpnCredentials, Error>) -> Void) {
         networking.request(VPNClientCredentialsRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(json):
                 do {
                     let vpnCredential = try VpnCredentials(dic: json)
-                    success(vpnCredential)
+                    comletion(.success(vpnCredential))
                 } catch {
                     let error = error as NSError
                     if error.code != -1 {
                         PMLog.ET(error.localizedDescription)
-                        failure(error)
+                        comletion(.failure(error))
                     } else {
                         PMLog.D("Error occurred during user's VPN credentials parsing", level: .error)
                         let error = ParseError.vpnCredentialsParse
                         PMLog.ET(error.localizedDescription)
-                        failure(error)
+                        comletion(.failure(error))
                     }
                 }
             case let .failure(error):
-                failure(error)
+                comletion(.failure(error))
             }
         }
     }
     
     // The following route is used to retrieve VPN server information, including scores for the best server to connect to depending on a user's proximity to a server and its load. To provide relevant scores even when connected to VPN, we send a truncated version of the user's public IP address. In keeping with our no-logs policy, this partial IP address is not stored on the server and is only used to fulfill this one-off API request.
-    public func serverInfo(for ip: String?, success: @escaping ServerModelsCallback, failure: @escaping ErrorCallback) {
+    public func serverInfo(for ip: String?, completion: @escaping (Result<[ServerModel], Error>) -> Void) {
         var shortenedIp: String?
         if let ip = ip {
             shortenedIp = truncatedIp(ip)
@@ -210,7 +245,7 @@ public class VpnApiService {
                     PMLog.D("'Servers' field not present in server info request's response", level: .error)
                     let error = ParseError.serverParse
                     PMLog.ET(error.localizedDescription)
-                    failure(error)
+                    completion(.failure(error))
                     return
                 }
 
@@ -224,14 +259,14 @@ public class VpnApiService {
                         PMLog.ET(error.localizedDescription)
                     }
                 }
-                success(serverModels)
+                completion(.success(serverModels))
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
     
-    public func serverState(serverId id: String, success: @escaping VpnServerStateCallback, failure: @escaping ErrorCallback) {
+    public func serverState(serverId id: String, completion: @escaping (Result<VpnServerState, Error>) -> Void) {
         networking.request(VPNServerRequest(id)) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
@@ -239,17 +274,17 @@ public class VpnApiService {
                     let error = ParseError.serverParse
                     PMLog.D("'Server' field not present in server info request's response", level: .error)
                     PMLog.ET(error.localizedDescription)
-                    failure(error)
+                    completion(.failure(error))
                     return
                 }
-                success(serverState)
+                completion(.success(serverState))
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
     
-    public func userIp(success: @escaping StringCallback, failure: @escaping ErrorCallback) {
+    public func userIp(completion: @escaping (Result<String, Error>) -> Void) {
         networking.request(VPNLocationRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
@@ -257,28 +292,28 @@ public class VpnApiService {
                     PMLog.D("'IP' field not present in user's ip location response", level: .error)
                     let error = ParseError.userIpParse
                     PMLog.ET(error.localizedDescription)
-                    failure(error)
+                    completion(.failure(error))
                     return
                 }
-                success(ip)
+                completion(.success(ip))
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
 
-    public func sessionsCount(success: @escaping IntegerCallback, failure: @escaping ErrorCallback) {
+    public func sessionsCount(completion: @escaping (Result<Int, Error>) -> Void) {
         networking.request(VPNSessionsCountRequest()) { (result: Result<SessionsResponse, Error>) in
             switch result {
             case let .success(response):
-                success(response.sessionCount)
+                completion(.success(response.sessionCount))
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
     
-    public func loads(lastKnownIp: String?, success: @escaping ContinuousServerPropertiesCallback, failure: @escaping ErrorCallback) {
+    public func loads(lastKnownIp: String?, completion: @escaping (Result<ContinuousServerPropertiesDictionary, Error>) -> Void) {
         var shortenedIp: String?
         if let ip = lastKnownIp {
             shortenedIp = truncatedIp(ip)
@@ -290,7 +325,7 @@ public class VpnApiService {
                     PMLog.D("'LogicalServers' field not present in loads response", level: .error)
                     let error = ParseError.loadsParse
                     PMLog.ET(error.localizedDescription)
-                    failure(error)
+                    completion(.failure(error))
                     return
                 }
 
@@ -306,15 +341,15 @@ public class VpnApiService {
                     }
                 }
 
-                success(loads)
+                completion(.success(loads))
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
 
         }
     }
     
-    public func clientConfig(success: @escaping ClientConfigCallback, failure: @escaping ErrorCallback) {        
+    public func clientConfig(completion: @escaping (Result<ClientConfig, Error>) -> Void) {
         networking.request(VPNClientConfigRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(response):
@@ -324,30 +359,22 @@ public class VpnApiService {
                     // this strategy is decapitalizing first letter of response's labels to get appropriate name
                     decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
                     let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
-                    success(clientConfigResponse.clientConfig)
+                    completion(.success(clientConfigResponse.clientConfig))
 
                 } catch {
                     PMLog.D("Failed to parse load info for json: \(response)", level: .error)
                     let error = ParseError.loadsParse
                     PMLog.ET(error.localizedDescription)
-                    failure(error)
+                    completion(.failure(error))
                 }
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }
     
-    public func virtualServices(success: @escaping VpnStreamingResponseCallback, failure: @escaping ErrorCallback) {
-        networking.request(VPNStreamingRequest()) { (result: Result<VPNStreamingResponse, Error>) in
-            switch result {
-            case let .success(data):
-                success(data)
-            case let .failure(error):
-                failure(error)
-            }
-
-        }
+    public func virtualServices(completion: @escaping (Result<VPNStreamingResponse, Error>) -> Void) {
+        networking.request(VPNStreamingRequest(), completion: completion)
     }
     
     // MARK: - Private

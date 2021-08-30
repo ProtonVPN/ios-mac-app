@@ -481,16 +481,26 @@ public class AppStateManagerImplementation: AppStateManager {
         }
         
         dispatchGroup.enter()
-        vpnApiService.sessionsCount(success: { sessionsCount in
-            rSessionCount = sessionsCount
-            dispatchGroup.leave()
-        }, failure: failureClosure)
+        vpnApiService.sessionsCount { result in
+            switch result {
+            case let .success(sessionsCount):
+                rSessionCount = sessionsCount
+                dispatchGroup.leave()
+            case let .failure(error):
+                failureClosure(error)
+            }
+        }
         
         dispatchGroup.enter()
-        vpnApiService.clientCredentials(success: { newVpnCredentials in
-            rVpnCredentials = newVpnCredentials
-            dispatchGroup.leave()
-        }, failure: failureClosure)
+        vpnApiService.clientCredentials { result in
+            switch result {
+            case let .success(newVpnCredentials):
+                rVpnCredentials = newVpnCredentials
+                dispatchGroup.leave()
+            case let .failure(error):
+                failureClosure(error)
+            }
+        }
         
         dispatchGroup.notify(queue: DispatchQueue.main) { [weak self] in
             guard let `self` = self, self.state.isDisconnected else { return }

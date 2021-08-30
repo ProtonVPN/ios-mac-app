@@ -101,18 +101,28 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
             failure?(error)
         }
         
-        vpnApiService.serverState(serverId: serverID, success: { vpnServerState in
-            guard vpnServerState.status != 1 else {
-                completion?(false)
-                return
+        vpnApiService.serverState(serverId: serverID) { result in
+            switch result {
+            case let .success(vpnServerState):
+                guard vpnServerState.status != 1 else {
+                    completion?(false)
+                    return
+                }
+
+                self.vpnApiService.serverInfo(for: nil) { result in
+                    switch result {
+                    case let .success(servers):
+                        self.serverStorage.store(servers)
+                        self.alertService.push(alert: VpnServerOnMaintenanceAlert())
+                        self.vpnGateWay.quickConnect()
+                        completion?(true)
+                    case let .failure(error):
+                        failureCallback(error)
+                    }
+                }
+            case let .failure(error):
+                failureCallback(error)
             }
-            
-            self.vpnApiService.serverInfo(for: nil, success: { servers in
-                self.serverStorage.store(servers)
-                self.alertService.push(alert: VpnServerOnMaintenanceAlert())
-                self.vpnGateWay.quickConnect()
-                completion?(true)
-            }, failure: failureCallback)
-        }, failure: failureCallback)
+        }
     }
 }

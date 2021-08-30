@@ -33,7 +33,7 @@ public class ReportsApiService {
         self.networking = networking
     }
     
-    public func report(bug: ReportBug, success: @escaping SuccessCallback, failure: @escaping ErrorCallback) {
+    public func report(bug: ReportBug, completion: @escaping (Result<(), Error>) -> Void) {
         
         var i = 0
         var files = [String: URL]()
@@ -44,6 +44,6 @@ public class ReportsApiService {
         
         let request = ReportsBugRequest(bug)
         #warning("FIX ME")
-        failure(NSError(code: 0, localizedDescription: "Waiting for Core upload implementation"))
+        completion(.failure(NSError(code: 0, localizedDescription: "Waiting for Core upload implementation")))
     }
 }

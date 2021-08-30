@@ -243,14 +243,17 @@ class ReportBugViewController: NSViewController {
     
     @objc func sendButtonPressed() {
         presentLoadingScreen()
-        viewModel.send(success: {
-            self.hideLoadingScreen()
-            self.view.window!.close()
-        }, error: { error in
-            PMLog.ET(error.localizedDescription)
-            self.hideLoadingScreen()            
-            self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
-        })
+        viewModel.send { result in
+            switch result {
+            case .success:
+                self.hideLoadingScreen()
+                self.view.window!.close()
+            case let .failure(error):
+                PMLog.ET(error.localizedDescription)
+                self.hideLoadingScreen()
+                self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
+            }
+        }
     }
     
 }

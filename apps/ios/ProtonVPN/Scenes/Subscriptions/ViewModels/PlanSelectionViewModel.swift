@@ -207,11 +207,14 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
 
         storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self, plan] _ in
             PMLog.ET("IAP succeeded", level: .info)
-            self?.appSessionManager.attemptSilentLogIn(success: {
-                self?.planPurchaseCompleted(plan)
-            }, failure: { (_) in // ignore failure and continue anyway
-                self?.planPurchaseCompleted(plan)
-            })
+            self?.appSessionManager.attemptSilentLogIn { [weak self] result in
+                switch result {
+                case .success:
+                    self?.planPurchaseCompleted(plan)
+                case .failure:
+                    self?.planPurchaseCompleted(plan)
+                }
+            }
         }, errorCompletion: { [weak self, plan] (error) in
             if case StoreKitManagerImplementation.Errors.cancelled = error {
                 PMLog.D("IAP cancelled")
