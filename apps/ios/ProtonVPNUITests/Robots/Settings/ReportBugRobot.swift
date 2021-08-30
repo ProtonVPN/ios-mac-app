@@ -40,6 +40,7 @@ class ReportBugRobot: CoreElements {
     }
     
     private func typeEmailAndMessage(_ email: String, _ message: String) -> ReportBugRobot {
+        textField(contactEmailInput).tap()
         textField(contactEmailInput).tap().typeText(email)
         staticText(yourMessageInput).tap()
         XCUIApplication().typeText(message)

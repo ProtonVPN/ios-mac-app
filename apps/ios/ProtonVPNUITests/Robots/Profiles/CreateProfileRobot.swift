@@ -70,6 +70,7 @@ class CreateProfileRobot: CoreElements {
     }
     
     private func enterProfileName(_ name: String) -> CreateProfileRobot {
+        textField(nameField).tap()
         textField(nameField).tap().typeText(name)
         return self
     }
