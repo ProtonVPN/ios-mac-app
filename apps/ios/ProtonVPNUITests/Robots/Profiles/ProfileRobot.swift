@@ -35,7 +35,6 @@ class ProfileRobot: CoreElements {
     func editProfile(_ name: String) -> CreateProfileRobot {
          edit(name)
         return CreateProfileRobot()
-        
     }
     
     func connectToAProfile(_ name: String) -> ConnectionStatusRobot {
