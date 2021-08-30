@@ -9,7 +9,7 @@
 import Foundation
 import NetworkExtension
 
-public class WireguardProtocolFactory {
+open class WireguardProtocolFactory {
 
     private let bundleId: String
     private let appGroup: String
@@ -21,7 +21,20 @@ public class WireguardProtocolFactory {
         self.appGroup = appGroup
         self.propertiesManager = propertiesManager
     }
-
+        
+    open func logs(completion: @escaping (String?) -> Void) {
+        guard let fileUrl = logFile() else {
+            completion(nil)
+            return
+        }
+        do {
+            let log = try String(contentsOf: fileUrl)
+            completion(log)
+        } catch {
+            PMLog.D("Error reading WireGuard log file: \(error)")
+            completion(nil)
+        }
+    }
 }
 
 extension WireguardProtocolFactory: VpnProtocolFactory {
@@ -78,26 +91,12 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
         }
     }
     
-    public func logs(completion: @escaping (String?) -> Void) {
-        guard let fileUrl = logFile() else {
-            completion(nil)
-            return
-        }
-        do {
-            let log = try String(contentsOf: fileUrl)
-            completion(log)
-        } catch {
-            PMLog.D("Error reading WireGuard log file: \(error)")
-            completion(nil)
-        }
-    }
-    
     public func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
             PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
             return nil
         }
-        // Flush logs to file. Async, but should be done before user get's the file.
+        // Flush logs to file. Async, but should be done before user gets the file.
         vpnProviderManager(for: .configuration) { manager, error in 
             guard let manager = manager else { return }
             self.flushLogs(manager)

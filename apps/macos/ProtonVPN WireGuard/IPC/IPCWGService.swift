@@ -9,9 +9,8 @@
 import Foundation
 
 class IPCWGService: XPCBaseService {
-    
+    private let logViewHelper = LogViewHelper(logFilePath: FileManager.logFileURL?.path)
 }
-
 
 extension IPCWGService { // ProviderCommunication
     
@@ -26,4 +25,23 @@ extension IPCWGService { // ProviderCommunication
             completionHandler(false)
         }
     }
+    
+    override func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
+        log("Got getLogs XPC request")
+        if Logger.global == nil {
+            Logger.configureGlobal(tagged: "PROTON-WG", withFilePath: FileManager.logFileURL?.path)
+        }
+        guard let logViewHelper = logViewHelper else {
+            completionHandler(nil)
+            return
+        }
+        logViewHelper.fetchLogEntriesSinceLastFetch { fetchedLogEntries in
+            var logContent = ""
+            for entry in fetchedLogEntries {
+                logContent += "\(entry.text())\n"
+            }
+            completionHandler(logContent.data(using: .utf8))
+        }
+    }
+    
 }
