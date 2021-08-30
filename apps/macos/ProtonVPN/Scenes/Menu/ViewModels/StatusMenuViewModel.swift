@@ -376,13 +376,13 @@ class StatusMenuViewModel {
         }
         
         if server.isSecureCore {
-            let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14)!
+            let secureCoreIcon = NSAttributedString.imageAttachment(named: "protonvpn-server-sc-available", width: 14, height: 14) ?? NSAttributedString()
             let entryCountry = (" " + server.entryCountry + " ").attributed(withColor: .protonGreen(), fontSize: 14)
             let doubleArrows = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
             let exitCountry = (" " + server.exitCountry + " ").attributed(withColor: .protonWhite(), fontSize: 14)
             return NSAttributedString.concatenate(secureCoreIcon, entryCountry, doubleArrows, exitCountry)
         } else {
-            let flag = NSAttributedString.imageAttachment(named: server.countryCode.lowercased() + "-plain", width: 17, height: 11)!
+            let flag = NSAttributedString.imageAttachment(named: server.countryCode.lowercased() + "-plain", width: 17, height: 11) ?? NSAttributedString()
             let country = ("  " + server.country + " ").attributed(withColor: .protonWhite(), fontSize: 14, bold: true)
             let serverName = server.name.attributed(withColor: .protonWhite(), fontSize: 14)
             return NSAttributedString.concatenate(flag, country, serverName)
