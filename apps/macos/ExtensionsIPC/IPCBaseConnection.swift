@@ -12,6 +12,7 @@ import os.log
 /// App -> Provider IPC
 @objc protocol ProviderCommunication {
     func getVersion(_ completionHandler: @escaping (Data?) -> Void)
+    func getLogs(_ completionHandler: @escaping (Data?) -> Void)
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void)
 }
 
@@ -49,6 +50,10 @@ extension XPCBaseService: ProviderCommunication {
     func getVersion(_ completionHandler: @escaping (Data?) -> Void) {
         log("getVersion: \(ExtensionInfo.current)")
         completionHandler(try? JSONEncoder().encode(ExtensionInfo.current))
+    }
+    
+    func getLogs(_ completionHandler: @escaping (Data?) -> Void) {
+        log("This is just a placeholder! Add `getLogs` in each implementation.")
     }
     
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
@@ -115,6 +120,21 @@ class XPCServiceUser {
         }
         
         providerProxy.getVersion(completionHandler)
+    }
+    
+    func getLogs(completionHandler: @escaping (Data?) -> Void) {
+        guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
+            self.log("Failed to get remote object proxy: \(registerError.localizedDescription)")
+            self.currentConnection?.invalidate()
+            self.currentConnection = nil
+            completionHandler(nil)
+        }) as? ProviderCommunication else {
+            self.log("Failed to create a remote object proxy for the provider: \(machServiceName)")
+            completionHandler(nil)
+            return
+        }
+        
+        providerProxy.getLogs(completionHandler)
     }
     
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {

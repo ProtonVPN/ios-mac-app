@@ -49,7 +49,7 @@ final class DependencyContainer {
                                                                  vpnStateConfiguration: makeVpnStateConfiguration(),
                                                                  alertService: macAlertService,
                                                                  vpnCredentialsConfiguratorFactory: MacVpnCredentialsConfiguratorFactory(propertiesManager: makePropertiesManager()))
-    private lazy var wireguardFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
+    private lazy var wireguardFactory = WireguardMacProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager(), xpcConnectionsRepository: makeXPCConnectionsRepository())
     private lazy var ikeFactory = IkeProtocolFactory()
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
@@ -65,6 +65,8 @@ final class DependencyContainer {
         configurationPreparer: makeVpnManagerConfigurationPreparer(), vpnAuthentication: vpnAuthentication)
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
+   
+    private lazy var xpcConnectionsRepository: XPCConnectionsRepository = XPCConnectionsRepositoryImplementation()
     
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager( factory: self )
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
@@ -425,5 +427,12 @@ extension DependencyContainer: NetworkingFactory {
 extension DependencyContainer: NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate {
         return networkingDelegate
+    }
+}
+
+// MARK: XPCConnectionsRepositoryFactory
+extension DependencyContainer: XPCConnectionsRepositoryFactory {
+    func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
+        return xpcConnectionsRepository
     }
 }
