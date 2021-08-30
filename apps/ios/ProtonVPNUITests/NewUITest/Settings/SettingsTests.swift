@@ -20,7 +20,7 @@ class SettingsTests: ProtonVPNUITests {
             .goToSettingsTab()
             .turnKillSwitchOn()
             .verify.ksIsEnabled()
-            .turnLanCOnnectionhOn()
+            .turnLanConnectionOn()
             .verify.lanConnectionIsEnabled()
     }
     

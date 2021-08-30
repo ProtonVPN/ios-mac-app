@@ -42,11 +42,11 @@ class SettingsRobot: CoreElements {
     }
     
     func turnKillSwitchOn() -> SettingsRobot {
-        return KillSwitchOn()
-            .KillSwitchContinue()
+        return killSwitchOn()
+            .killSwitchContinue()
     }
     
-    func turnLanCOnnectionhOn() -> SettingsRobot {
+    func turnLanConnectionOn() -> SettingsRobot {
         return lanConnectionOn()
             .lanConnectionContinue()
     }
@@ -56,13 +56,13 @@ class SettingsRobot: CoreElements {
             .logOutContinue()
     }
     
-    private func KillSwitchOn() -> SettingsRobot {
+    private func killSwitchOn() -> SettingsRobot {
         XCUIApplication().swipeUp()
         swittch(killSwitchButton).tap()
         return self
     }
     
-    private func KillSwitchContinue() -> SettingsRobot {
+    private func killSwitchContinue() -> SettingsRobot {
         button(continueButton).tap()
         return self
     }
