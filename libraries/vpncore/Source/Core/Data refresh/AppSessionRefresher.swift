@@ -63,46 +63,54 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     
     @objc public func refreshData() {
         lastDataRefresh = Date()
-        attemptSilentLogIn(success: {}, failure: { [unowned self] error in
-            PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
-            
-            let error = error as NSError
-            switch error.code {
-            case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
-                self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
-            default:
-                break // ignore failures
+        attemptSilentLogIn { result in
+            switch result {
+            case .success:
+                break
+            case let .failure(error):
+                PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
+
+                let error = error as NSError
+                switch error.code {
+                case ApiErrorCode.apiVersionBad, ApiErrorCode.appVersionBad:
+                    self.alertService.push(alert: AppUpdateRequiredAlert(error as! ApiError))
+                default:
+                    break // ignore failures
+                }
             }
-        })
+        }
     }
     
     @objc public func refreshServerLoads() {
         guard loggedIn else { return }
         lastServerLoadsRefresh = Date()
         
-        vpnApiService.loads(lastKnownIp: propertiesManager.userIp, success: { properties in
-            self.serverStorage.update(continuousServerProperties: properties)
-            
-        }, failure: { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        })
+        vpnApiService.loads(lastKnownIp: propertiesManager.userIp) { result in
+            switch result {
+            case let .success(properties):
+                self.serverStorage.update(continuousServerProperties: properties)
+            case let .failure(error):
+                PMLog.D("Error received: \(error)", level: .error)
+            }
+        }
     }
     
     @objc public func refreshAccount() {
-        lastAccountRefresh = Date()
+        lastAccountRefresh = Date()        
         
-        let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
+        self.vpnApiService.clientCredentials { result in
+            switch result {
+            case let .success(credentials):
+                self.vpnKeychain.store(vpnCredentials: credentials)
+            case let .failure(error):
+                PMLog.D("Error received: \(error)", level: .error)
+            }
         }
-        
-        self.vpnApiService.clientCredentials(success: { credentials in
-            self.vpnKeychain.store(vpnCredentials: credentials)
-        }, failure: errorCallback)
     }
     
     // MARK: - Override
     
-    open func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    open func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         
     }
 }

@@ -53,31 +53,35 @@ class LoginViewModel {
     
     func logInSilently() {
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn(success: { [silantlyCheckForUpdates] in
-            NSApp.setActivationPolicy(.accessory)
-            silantlyCheckForUpdates()
-        }, failure: { [weak self] error in
-            guard let `self` = self else { return }
-            self.specialErrorCaseNotification(error)
-            self.navService.handleSilentLoginFailure()
-        })
+        appSessionManager.attemptSilentLogIn { [weak self] result in
+            switch result {
+            case .success:
+                NSApp.setActivationPolicy(.accessory)
+                self?.silentlyCheckForUpdates()
+            case let .failure(error):
+                self?.specialErrorCaseNotification(error)
+                self?.navService.handleSilentLoginFailure()
+            }
+        }
     }
     
     func logInApperared() {
         logInInProgress?()
-        appSessionManager.attemptSilentLogIn(success: { [silantlyCheckForUpdates] in
-            silantlyCheckForUpdates()
-        }, failure: { [weak self] error in
-            guard let `self` = self else { return }
-            self.specialErrorCaseNotification(error)
-            self.logInFailure?((error as NSError) == ProtonVpnErrorConst.userCredentialsMissing ? nil : error.localizedDescription)
-        })
+        appSessionManager.attemptSilentLogIn { [weak self] result in
+            switch result {
+            case .success:
+                self?.silentlyCheckForUpdates()
+            case let .failure(error):
+                self?.specialErrorCaseNotification(error)
+                self?.logInFailure?((error as NSError) == ProtonVpnErrorConst.userCredentialsMissing ? nil : error.localizedDescription)
+            }
+        }
     }
     
     func logIn(username: String, password: String) {
         logInInProgress?()
-        appSessionManager.logIn(username: username, password: password, success: { [silantlyCheckForUpdates] in
-            silantlyCheckForUpdates()
+        appSessionManager.logIn(username: username, password: password, success: { [weak self] in
+            self?.silentlyCheckForUpdates()
         }, failure: { [weak self] error in
             guard let `self` = self else { return }
             self.specialErrorCaseNotification(error)
@@ -106,7 +110,7 @@ class LoginViewModel {
         }
     }
     
-    private func silantlyCheckForUpdates() {
+    private func silentlyCheckForUpdates() {
         updateManager.checkForUpdates(appSessionManager, silently: true)
     }
     

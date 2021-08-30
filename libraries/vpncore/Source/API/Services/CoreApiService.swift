@@ -26,10 +26,8 @@ public protocol CoreApiServiceFactory {
     func makeCoreApiService() -> CoreApiService
 }
 
-public typealias GetApiNotificationsCallback = GenericCallback<GetApiNotificationsResponse>
-
 public protocol CoreApiService {
-    func getApiNotifications(success: @escaping GetApiNotificationsCallback, failure: @escaping ErrorCallback)
+    func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void)
 }
 
 public class CoreApiServiceImplementation: CoreApiService {
@@ -40,7 +38,7 @@ public class CoreApiServiceImplementation: CoreApiService {
         self.networking = networking
     }
     
-    public func getApiNotifications(success: @escaping GetApiNotificationsCallback, failure: @escaping ErrorCallback) {
+    public func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void) {
         networking.request(CoreApiNotificationsRequest()) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(json):
@@ -52,12 +50,12 @@ public class CoreApiServiceImplementation: CoreApiService {
                     decoder.dateDecodingStrategy = .secondsSince1970
                     let result = try decoder.decode(GetApiNotificationsResponse.self, from: data)
 
-                    success(result)
+                    completion(.success(result))
                 } catch let error {
-                    failure(error)
+                    completion(.failure(error))
                 }
             case let .failure(error):
-                failure(error)
+                completion(.failure(error))
             }
         }
     }

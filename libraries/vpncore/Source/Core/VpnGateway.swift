@@ -306,15 +306,21 @@ public class VpnGateway: VpnGatewayProtocol {
                 return
             }
             
-            self.vpnApiService.refreshServerInfoIfIpChanged(lastKnownIp: self.propertiesManager.userIp, success: { [weak self] properties in
-                guard let `self` = self else { return }
-                
-                self.propertiesManager.userIp = properties.ip
-                self.serverStorage.store(properties.serverModels)
-                ProfileManager.shared.refreshProfiles()
-            }, failure: { _ in
-                // Ignore failures as this is a non-critical call
-            })
+            self.vpnApiService.refreshServerInfoIfIpChanged(lastKnownIp: self.propertiesManager.userIp) { [weak self] result in
+                guard let self = self else {
+                    return
+                }
+
+                switch result {
+                case let .success(properties):
+                    self.propertiesManager.userIp = properties.ip
+                    self.serverStorage.store(properties.serverModels)
+                    ProfileManager.shared.refreshProfiles()
+                case .failure:
+                    // Ignore failures as this is a non-critical call
+                    break
+                }
+            }
         }
         
         siriHelper?.donateDisconnect()
@@ -395,20 +401,21 @@ fileprivate extension VpnGateway {
         guard let downgradeInfo = notification.object as? VpnDowngradeInfo else { return }
         var reconnectInfo: VpnReconnectInfo?
         
-        let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        }
-        
         self.disconnect {
-            self.vpnApiService.clientCredentials(success: { credentials in
-                self.vpnKeychain.store(vpnCredentials: credentials)
-                if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
-                    reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
+            self.vpnApiService.clientCredentials { result in
+                switch result {
+                case let .success(credentials):
+                    self.vpnKeychain.store(vpnCredentials: credentials)
+                    if case .connected = self.connection, let server = self.appStateManager.activeConnection()?.server, server.tier > downgradeInfo.to.maxTier {
+                        reconnectInfo = self.reconnectServer(downgradeInfo, oldServer: server)
+                    }
+
+                    let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
+                    self.alertService?.push(alert: alert)
+                case let .failure(error):
+                    PMLog.D("Error received: \(error)", level: .error)
                 }
-                
-                let alert = UserBecameDelinquentAlert(reconnectionInfo: reconnectInfo)
-                self.alertService?.push(alert: alert)
-            }, failure: errorCallback)
+            }
         }
     }
     

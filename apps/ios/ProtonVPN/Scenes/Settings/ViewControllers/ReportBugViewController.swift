@@ -126,14 +126,17 @@ class ReportBugViewController: UIViewController {
     
     @IBAction func sendPressed() {
         sendButton.showLoading()
-        viewModel.send(success: {
-            self.sendButton.hideLoading()
-            self.close()
-        }, error: { error in
-            PMLog.ET(error.localizedDescription)
-            self.sendButton.hideLoading()
-            self.showMessage(error.localizedDescription, type: GSMessageType.error, options: UIConstants.messageOptions)
-        })
+        viewModel.send { result in
+            switch result {
+            case .success:
+                self.sendButton.hideLoading()
+                self.close()
+            case let .failure(error):
+                PMLog.ET(error.localizedDescription)
+                self.sendButton.hideLoading()
+                self.showMessage(error.localizedDescription, type: GSMessageType.error, options: UIConstants.messageOptions)
+            }
+        }
     }
     
     // MARK: - Private

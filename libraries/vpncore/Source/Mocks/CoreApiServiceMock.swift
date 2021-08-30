@@ -24,10 +24,14 @@ import Foundation
 
 class CoreApiServiceMock: CoreApiService {
     
-    public var callbackGetApiNotificationsCallback: ((@escaping GetApiNotificationsCallback, @escaping ErrorCallback) -> Void)?
+    public var callbackGetApiNotificationsCallback: ((@escaping GenericCallback<GetApiNotificationsResponse>, @escaping ErrorCallback) -> Void)?
     
-    func getApiNotifications(success: @escaping GetApiNotificationsCallback, failure: @escaping ErrorCallback) {
-        callbackGetApiNotificationsCallback?(success, failure)
+    func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void) {
+        callbackGetApiNotificationsCallback?({ response in
+            completion(.success(response))
+        }, { error in
+            completion(.failure(error))
+        })
     }
     
 }

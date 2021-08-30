@@ -14,10 +14,7 @@ import WireguardCrypto
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
-public typealias JSONCallback = GenericCallback<JSONDictionary>
-public typealias StringCallback = GenericCallback<String>
 public typealias ErrorCallback = GenericCallback<Error>
-public typealias IntegerCallback = GenericCallback<Int>
 
 public struct LoginRequest {
     let username: String

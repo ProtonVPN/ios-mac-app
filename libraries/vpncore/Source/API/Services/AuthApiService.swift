@@ -28,9 +28,8 @@ public protocol AuthApiServiceFactory {
     func makeAuthApiService() -> AuthApiService
 }
 
-public protocol AuthApiService {
-    
-    func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback)
+public protocol AuthApiService {    
+    func authenticate(username: String, password: String, completion: @escaping (Result<AuthCredentials, Error>) -> Void)
 }
 
 public class AuthApiServiceImplementation: AuthApiService {
@@ -41,20 +40,20 @@ public class AuthApiServiceImplementation: AuthApiService {
         self.networking = networking
     }
     
-    public func authenticate(username: String, password: String, success: @escaping AuthCredentialsCallback, failure: @escaping ErrorCallback) {
+    public func authenticate(username: String, password: String, completion: @escaping (Result<AuthCredentials, Error>) -> Void) {
         networking.request(LoginRequest(username: username, password: password)) { result in
             switch result {
             case let .success(status):
                 switch status {
                 case let .newCredential(credential, _):
-                    success(AuthCredentials(credential))
+                    completion(.success(AuthCredentials(credential)))
                 case let .ask2FA(context):
-                    success(AuthCredentials(context.credential))
+                    completion(.success(AuthCredentials(context.credential)))
                 case let.updatedCredential(credential):
-                    success(AuthCredentials(credential))
+                    completion(.success(AuthCredentials(credential)))
                 }
             case let .failure(error):
-                failure(error.underlyingError)
+                completion(.failure(error.underlyingError))
             }
         }
     }

@@ -40,7 +40,7 @@ protocol AppSessionManager {
     
     var sessionChanged: Notification.Name { get }
 
-    func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
+    func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
     func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void)
     func logOut(force: Bool)
@@ -81,14 +81,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     // MARK: - Beginning of the login logic.
-    override func attemptSilentLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    override func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void) {
         guard AuthKeychain.fetch() != nil else {
-            failure(ProtonVpnErrorConst.userCredentialsMissing)
+            completion(.failure(ProtonVpnErrorConst.userCredentialsMissing))
             return
         }
         
-        retrievePropertiesAndLogIn(success: success, failure: { error in
-            DispatchQueue.main.async { failure(error) }
+        retrievePropertiesAndLogIn(success: { completion(.success(())) }, failure: { error in
+            DispatchQueue.main.async { completion(.failure(error)) }
         })
     }
 
@@ -136,35 +136,39 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp, success: { [weak self] properties in
-            guard let `self` = self else { return }
-            
-            if let credentials = properties.vpnCredentials {
-                self.vpnKeychain.store(vpnCredentials: credentials)
+        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+            guard let self = self else {
+                return
             }
-            self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-            self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
-            self.serverStorage.store(properties.serverModels)
-            self.propertiesManager.userIp = properties.ip
-            
-            self.resolveActiveSession(success: {
-                self.refreshVpnAuthCertificate(success: success, failure: failure)
-            }, failure: { error in
-                self.logOutCleanup()
-                failure(error)
-            })
-        }, failure: { [weak self] error in
+
+            switch result {
+            case let .success(properties):
+                if let credentials = properties.vpnCredentials {
+                    self.vpnKeychain.store(vpnCredentials: credentials)
+                }
+                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
+                self.serverStorage.store(properties.serverModels)
+                self.propertiesManager.userIp = properties.ip
+
+                self.resolveActiveSession(success: {
+                    self.refreshVpnAuthCertificate(success: success, failure: failure)
+                }, failure: { error in
+                    self.logOutCleanup()
+                    failure(error)
+                })
+            case let .failure(error):
                 PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
-                guard let `self` = self, // only fail if there is a major reason
-                    !self.serverStorage.fetch().isEmpty,
+                guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
                     self.propertiesManager.userIp != nil,
                     !(error is KeychainError) else {
                         failure(error)
                         return
                 }
-            
+
                 self.refreshVpnAuthCertificate(success: success, failure: failure)
-        })
+            }
+        }
     }
 
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -189,44 +193,48 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             self?.storeKitManager.subscribeToPaymentQueue()
         }
         
-        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp, success: { [weak self] properties in
-            guard let `self` = self else { return }
-            
-            if let credentials = properties.vpnCredentials {
-                self.vpnKeychain.store(vpnCredentials: credentials)
-            }
-            self.serverStorage.store(properties.serverModels)
-            self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
-            self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
-            self.propertiesManager.userIp = properties.ip
-            self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
-            self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
-            self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
-            self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
-            self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
-
-            self.resolveActiveSession(success: { [weak self] in
-                self?.setAndNotify(for: .established)
-                ProfileManager.shared.refreshProfiles()
-                self?.refreshVpnAuthCertificate(success: success, failure: failure)
-            }, failure: { error in
-                self.logOutCleanup()
-                failure(error)
-            })
-        }, failure: { [weak self] error in
-            PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
-            guard let `self` = self, // only fail if there is a major reason
-                  !self.serverStorage.fetch().isEmpty,
-                  self.propertiesManager.userIp != nil,
-                  !(error is KeychainError) else {
-                failure(error)
+        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+            guard let self = self else {
                 return
             }
-            
-            self.setAndNotify(for: .established)
-            ProfileManager.shared.refreshProfiles()
-            self.refreshVpnAuthCertificate(success: success, failure: failure)
-        })
+
+            switch result {
+            case let .success(properties):
+                if let credentials = properties.vpnCredentials {
+                    self.vpnKeychain.store(vpnCredentials: credentials)
+                }
+                self.serverStorage.store(properties.serverModels)
+                self.propertiesManager.streamingServices = properties.streamingResponse?.streamingServices ?? [:]
+                self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
+                self.propertiesManager.userIp = properties.ip
+                self.propertiesManager.openVpnConfig = properties.clientConfig.openVPNConfig
+                self.propertiesManager.wireguardConfig = properties.clientConfig.wireGuardConfig
+                self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
+                self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
+                self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+
+                self.resolveActiveSession(success: { [weak self] in
+                    self?.setAndNotify(for: .established)
+                    ProfileManager.shared.refreshProfiles()
+                    self?.refreshVpnAuthCertificate(success: success, failure: failure)
+                }, failure: { error in
+                    self.logOutCleanup()
+                    failure(error)
+                })
+            case let .failure(error):
+                PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
+                guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
+                      self.propertiesManager.userIp != nil,
+                      !(error is KeychainError) else {
+                    failure(error)
+                    return
+                }
+
+                self.setAndNotify(for: .established)
+                ProfileManager.shared.refreshProfiles()
+                self.refreshVpnAuthCertificate(success: success, failure: failure)
+            }
+        }
         
         if propertiesManager.featureFlags.pollNotificationAPI {
             announcementRefresher.refresh()

@@ -30,11 +30,11 @@ extension VpnManager {
         localAgent?.connect()
     }
 
-    func refreshCertificateWithError(success: @escaping (VpnAuthenticationData) -> Void) {
+    func refreshCertificateWithError(completion: @escaping (VpnAuthenticationData) -> Void) {
         vpnAuthentication.refreshCertificates { [weak self] result in
             switch result {
             case let .success(data):
-                success(data)
+                completion(data)
             case let .failure(error):
                 PMLog.ET("Trying to refresh expired or revoked certificate for current connection failed with \(error), showing error and disconnecting")
                 self?.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
