@@ -309,7 +309,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
 
-        connectLocalAgent(data: authData, configuration: configuration)
+        disconnectLocalAgent()
         
         guard let currentVpnProtocolFactory = currentVpnProtocolFactory else {
             return
@@ -548,9 +548,9 @@ public class VpnManager: VpnManagerProtocol {
         case .disconnected, .invalid:
             self.disconnectCompletion?()
             self.disconnectCompletion = nil
-            self.localAgent?.disconnect()
+            disconnectLocalAgent()
         case .connected:
-            self.localAgent?.connect()
+            self.connectLocalAgent()
         default:
             break
         }
@@ -575,15 +575,8 @@ public class VpnManager: VpnManagerProtocol {
             // connected to a protocol that requires local agent, but local agent is nil and VPN
             // This is connected means the app was started while a VPN connection is already active
             if self.currentVpnProtocol?.authenticationType == .certificate, self.localAgent == nil, case .connected = self.state {
-                // load last authentication data (that should be available)
-                self.vpnAuthentication.loadAuthenticationData { result in
-                    switch result {
-                    case .failure:
-                        PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
-                    case let .success(data):
-                        self.reconnectLocalAgent(data: data)
-                    }
-                }
+                PMLog.D("Connecting Local Agent on app start when VPN tunnel is active")
+                self.connectLocalAgent()
             }
 
             self.setState()

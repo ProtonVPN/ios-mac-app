@@ -10,24 +10,43 @@ import Foundation
 import WireguardSRP
 
 extension VpnManager {
-    func connectLocalAgent(data: VpnAuthenticationData?, configuration: VpnManagerConfiguration) {
-        isLocalAgentConnected = false
-        localAgent?.disconnect()
-        localAgent = data.flatMap({ GoLocalAgent(data: $0, configuration: LocalAgentConfiguration(configuration: configuration)) })
-        localAgent?.delegate = self
+    func connectLocalAgent(data: VpnAuthenticationData? = nil) {
+        let connect = { (data: VpnAuthenticationData) in
+            guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, vpnProtocol: self.currentVpnProtocol) else {
+                PMLog.ET("Cannot reconnect to the local agent with missing configuraton")
+                return
+            }
+
+            self.disconnectLocalAgent()
+            self.localAgent = GoLocalAgent()
+            self.localAgent?.delegate = self
+            self.localAgent?.connect(data: data, configuration: configuration)
+        }
+
+        if let authenticationData = data {
+            connect(authenticationData)
+            return
+        }
+
+        // load last authentication data (that should be available)
+        vpnAuthentication.loadAuthenticationData { result in
+            switch result {
+            case .failure:
+                PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
+            case let .success(data):
+                connect(data)
+            }
+        }
     }
 
-    func reconnectLocalAgent(data: VpnAuthenticationData) {
-        guard let configuration = LocalAgentConfiguration(propertiesManager: propertiesManager, vpnProtocol: currentVpnProtocol) else {
-            PMLog.ET("Cannot reconnect to the local agent with missing configuraton")
-            return
+    func disconnectLocalAgent() {
+        if localAgent != nil {
+            PMLog.D("Disconnecting Local agent")
         }
 
         isLocalAgentConnected = false
         localAgent?.disconnect()
-        localAgent = GoLocalAgent(data: data, configuration: configuration)
-        localAgent?.delegate = self
-        localAgent?.connect()
+        localAgent = nil
     }
 
     func refreshCertificateWithError(success: @escaping (VpnAuthenticationData) -> Void) {
@@ -83,7 +102,7 @@ extension VpnManager: LocalAgentDelegate {
             PMLog.D("Local agent reported expired or missing, trying to refresh and reconnect")
             refreshCertificateWithError { [weak self] data in
                 PMLog.D("Reconnecting to local agent with new certificate")
-                self?.reconnectLocalAgent(data: data)
+                self?.connectLocalAgent(data: data)
             }
         case .badCertificateSignature, .certificateRevoked:
             PMLog.D("Local agent reported invalid certificate signature or revoked certificate, trying to generate new key and certificate and reconnect")
