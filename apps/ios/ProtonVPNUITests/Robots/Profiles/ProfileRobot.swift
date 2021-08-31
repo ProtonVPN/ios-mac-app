@@ -33,7 +33,7 @@ class ProfileRobot: CoreElements {
     }
     
     func editProfile(_ name: String) -> CreateProfileRobot {
-         edit(name)
+        edit(name)
         return CreateProfileRobot()
     }
     
