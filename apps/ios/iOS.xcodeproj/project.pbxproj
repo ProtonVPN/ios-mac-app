@@ -344,6 +344,7 @@
 		D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
+		D92A295D47C56CEE2650AA70 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */; };
 		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -634,6 +635,7 @@
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CBDFC873E416AD23C42323F /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		3FF4A29B042EF36CA906EF26 /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.release.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
+		40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTests.swift; path = ../../../../ios/ProtonVPNUITests/NewUITest/Settings/SettingsTests.swift; sourceTree = "<group>"; };
 		42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableViewCell.swift; sourceTree = "<group>"; };
 		42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureTableViewCell.xib; sourceTree = "<group>"; };
 		42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationVC.swift; sourceTree = "<group>"; };
@@ -1429,6 +1431,7 @@
 			isa = PBXGroup;
 			children = (
 				B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */,
+				40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3498,6 +3501,7 @@
 				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
 				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,
 				B2BA40F426C2A63E00DF04C3 /* MapRobot.swift in Sources */,
+				D92A295D47C56CEE2650AA70 /* SettingsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

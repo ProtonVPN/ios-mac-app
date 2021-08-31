@@ -18,71 +18,100 @@ class ProfilesTests: ProtonVPNUITests {
         super.setUp()
     }
 
-    func testCreateAndDeleteProfileFreeUser() {
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+    func testCreateAndDeleteProfile() {
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
-        loginAsFreeUser()
+        logInIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profilename, countryName)
+            .setProfileDetails(profileName, countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.createdProfile()
-            .deleteProfile(profilename, countryName)
-            .verify.profileIsDeleted(profilename, countryName)
+            .verify.profileIsCreated()
+            .deleteProfile(profileName, countryName)
+            .verify.profileIsDeleted(profileName, countryName)
     }
     
-    func testCreateProfileWithTheSameNameBasicUser() {
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+    func testCreateProfileWithTheSameName() {
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
-    
-        loginAsBasicUser()
+        
+        logInIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setProfileDetails(profilename, countryName)
+            .setProfileDetails(profileName, countryName)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.createdProfile()
+            .verify.profileIsCreated()
             .addNewProfile()
-            .setProfileWithSameName(profilename, countryName)
+            .setProfileWithSameName(profileName, countryName)
             .saveProfile(robot: CreateProfileRobot.self)
             .verify.profileWithSameName()
     }
     
-    func testFreeUserCannotCreateProfileWithSecureCore() {
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+    func testEditProfile() {
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
+        let countryName = "Belgium"
+        let newCountryName = "Australia"
+        
+        logInIfNeeded()
+        mainRobot
+            .goToProfilesTab()
+            .addNewProfile()
+            .setProfileDetails(profileName, countryName)
+            .saveProfile(robot: ProfileRobot.self)
+            .verify.profileIsCreated()
+            .editProfile(profileName)
+            .editProfileDetails(profileName, countryName, newCountryName)
+            .saveProfile(robot: ProfileRobot.self)
+            .verify.profileIsEdited()
+    }
     
+    func testFreeUserCannotCreateProfileWithSecureCore() {
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
+    
+        logoutIfNeeded()
         loginAsFreeUser()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setSecureCoreProfile(profilename)
+            .setSecureCoreProfile(profileName)
             .verify.subscribtionRequiredMessage()
     }
     
     func testBasicUserCannotCreateProfileWithSecureCore() {
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
     
+        logoutIfNeeded()
         loginAsBasicUser()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .setSecureCoreProfile(profilename)
+            .setSecureCoreProfile(profileName)
             .verify.subscribtionRequiredMessage()
     }
     
     func testMakeDefaultAndSecureCoreProfilePlusUser() {
-        let profilename = StringUtils().randomAlphanumericString(length: 10)
+        let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         let serverVia = "Iceland"
         
+        logoutIfNeeded()
         loginAsPlusUser()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
-            .makeDefaultProfileWithSecureCore(profilename, countryName, serverVia)
+            .makeDefaultProfileWithSecureCore(profileName, countryName, serverVia)
             .saveProfile(robot: ProfileRobot.self)
-            .verify.createdProfile()
+            .verify.profileIsCreated()
+    }
+    
+    func testRecommendedProfiles() {
+        
+        logInIfNeeded()
+        mainRobot
+            .goToProfilesTab()
+            .verify.recommendedProfilesAreVisible()
     }
 }
