@@ -133,7 +133,6 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     private var connectionPreparer: VpnConnectionPreparer?
-    private var smartProtocol: SmartProtocol?
     
     public static let connectionChanged = Notification.Name("VpnGatewayConnectionChanged")
     public static let activeServerTypeChanged = Notification.Name("VpnGatewayActiveServerTypeChanged")
@@ -335,24 +334,9 @@ public class VpnGateway: VpnGatewayProtocol {
         propertiesManager.lastPreparedServer = server
         appStateManager.prepareToConnect()
         
-        connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain)
+        connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain, smartProtocolConfig: propertiesManager.smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
 
-        guard let serverIp = connectionPreparer?.selectServerIp(server: server) else {
-            return
-        }
-
-        PMLog.D("Selected \(serverIp.entryIp) as server ip for \(server.domain)")
-
-        switch connectionProtocol {
-        case .smartProtocol:
-            smartProtocol = SmartProtocolImplementation(smartProtocolConfig: propertiesManager.smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
-            smartProtocol?.determineBestProtocol(server: serverIp) { [weak self] (vpnProtocol, ports) in
-                self?.connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, preferredPorts: ports)
-            }
-        case let .vpnProtocol(vpnProtocol):
-            PMLog.D("Connecting with \(vpnProtocol)")
-            connectionPreparer?.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType)
-        }
+        connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType)
     }
     
     @objc private func appStateChanged() {

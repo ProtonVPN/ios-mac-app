@@ -48,13 +48,13 @@ public struct VpnManagerConfiguration {
     public let passwordReference: Data
     public let authData: VpnAuthenticationData?
     public let vpnProtocol: VpnProtocol
-    public let preferredPorts: [Int]?
+    public let ports: [Int]
     public let netShield: NetShieldType
     public let vpnAccelerator: Bool
     public let bouncing: String?
     public let serverPublicKey: String?
     
-    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, preferredPorts: [Int]?, serverPublicKey: String?) {
+    public init(hostname: String, serverId: String, entryServerAddress: String, exitServerAddress: String, username: String, password: String, passwordReference: Data, authData: VpnAuthenticationData?, vpnProtocol: VpnProtocol, netShield: NetShieldType, vpnAccelerator: Bool, bouncing: String?, ports: [Int], serverPublicKey: String?) {
         self.hostname = hostname
         self.serverId = serverId
         self.entryServerAddress = entryServerAddress
@@ -66,7 +66,7 @@ public struct VpnManagerConfiguration {
         self.vpnProtocol = vpnProtocol
         self.netShield = netShield
         self.vpnAccelerator = vpnAccelerator
-        self.preferredPorts = preferredPorts
+        self.ports = ports
         self.bouncing = bouncing
         self.serverPublicKey = serverPublicKey
     }
@@ -108,7 +108,7 @@ public class VpnManagerConfigurationPreparer {
                                            netShield: connectionConfig.netShieldType,
                                            vpnAccelerator: !propertiesManager.featureFlags.vpnAccelerator || propertiesManager.vpnAcceleratorEnabled,
                                            bouncing: connectionConfig.serverIp.label,
-                                           preferredPorts: connectionConfig.preferredPorts,
+                                           ports: connectionConfig.ports,
                                            serverPublicKey: connectionConfig.serverIp.x25519PublicKey
             )
         } catch {

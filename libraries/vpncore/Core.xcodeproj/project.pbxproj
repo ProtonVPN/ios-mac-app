@@ -647,6 +647,10 @@
 		D5E1514D24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */; };
 		D5E1514E24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */; };
 		D5E1514F24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */; };
+		D5E9E03126DD291300FC6E22 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */; };
+		D5E9E03226DD291300FC6E22 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */; };
+		D5E9E03326DD291300FC6E22 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */; };
+		D5E9E03426DD291300FC6E22 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */; };
 		D5EF8FA32293E9B100B713BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		D5EF8FA42293EB0700B713BD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E1C99F4D21C3C56600C54333 /* Localizable.strings */; };
 		D5FFE6DF24A0DF8500F0F4A1 /* PaymentTokenStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5FFE6DE24A0DF8500F0F4A1 /* PaymentTokenStorage.swift */; };
@@ -1286,6 +1290,7 @@
 		D5E1514B24AC92820087ACFF /* PaymentTokenStatusResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentTokenStatusResponse.swift; sourceTree = "<group>"; };
 		D5E853DD2428F863002EBF05 /* Date+Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Misc.swift"; sourceTree = "<group>"; };
 		D5E853E02428FF4E002EBF05 /* PaymentAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentAction.swift; sourceTree = "<group>"; };
+		D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartPortSelector.swift; sourceTree = "<group>"; };
 		D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertServiceMock.swift; sourceTree = "<group>"; };
 		D5EF8F9D2293D59100B713BD /* PropertiesManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertiesManagerMock.swift; sourceTree = "<group>"; };
 		D5EF8FA02293DEED00B713BD /* VpnGatewayMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnGatewayMock.swift; sourceTree = "<group>"; };
@@ -2097,6 +2102,7 @@
 				F3256AB326B98BD2003F073C /* AvailiabilityCheckers */,
 				F3657A8325F66B1D00497451 /* SmartProtocol.swift */,
 				F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */,
+				D5E9E03026DD291300FC6E22 /* SmartPortSelector.swift */,
 			);
 			path = SmartProtocols;
 			sourceTree = "<group>";
@@ -3170,6 +3176,7 @@
 				F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */,
 				4242B02C2465A41A0042145A /* VPNLocationRequest.swift in Sources */,
 				D5E1514C24AC92820087ACFF /* PaymentTokenStatusResponse.swift in Sources */,
+				D5E9E03126DD291300FC6E22 /* SmartPortSelector.swift in Sources */,
 				E123909E227C4E5A004B607A /* ApplicationError.swift in Sources */,
 				E148AE6B21C2A263007AB65A /* LocalizedString.swift in Sources */,
 				E1616BAD21C7B8F000F42D79 /* AuthCredentials.swift in Sources */,
@@ -3291,6 +3298,7 @@
 				D5C205232487A0CF004FB58B /* FormValidationError.swift in Sources */,
 				D5C205242487A0CF004FB58B /* KeychainError.swift in Sources */,
 				D5C205252487A0CF004FB58B /* NetworkError.swift in Sources */,
+				D5E9E03226DD291300FC6E22 /* SmartPortSelector.swift in Sources */,
 				D5C205262487A0CF004FB58B /* ProtonApiError.swift in Sources */,
 				F3021D6A25E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				D5C205272487A0CF004FB58B /* ProtonVpnError.swift in Sources */,
@@ -3567,6 +3575,7 @@
 				E977A7852681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */,
 				E1616B9421C7ADBF00F42D79 /* ServicePlanDataService.swift in Sources */,
 				D52585282507D4DD00657B80 /* FeatureFlags.swift in Sources */,
+				D5E9E03326DD291300FC6E22 /* SmartPortSelector.swift in Sources */,
 				D5D2954725A5BDF6000FBD74 /* UserTierProvider.swift in Sources */,
 				E1B5F65B21B81E4800B558B0 /* CountryModel.swift in Sources */,
 				4242B0182465A40F0042145A /* PaymentsPlansRequest.swift in Sources */,
@@ -3861,6 +3870,7 @@
 				D5C204B524866B81004FB58B /* UserError.swift in Sources */,
 				F30B9E3026285B790094C65E /* CertificateRequest.swift in Sources */,
 				D523F11C24BC52BC007DB086 /* ProtonAPIAuthenticator.swift in Sources */,
+				D5E9E03426DD291300FC6E22 /* SmartPortSelector.swift in Sources */,
 				E9C9FDCA268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				D5C204B624866B81004FB58B /* TimerFactory.swift in Sources */,
 				F31A46FC26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,
