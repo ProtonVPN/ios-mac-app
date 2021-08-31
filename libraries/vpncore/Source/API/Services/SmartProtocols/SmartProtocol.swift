@@ -40,7 +40,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             PMLog.D("IKEv2 will be used for Smart Protocol checks")
             checkers[.ikev2] = IKEv2AvailabilityChecker()
 
-            fallbackCandidates.append((SmartProtocolProtocol.ikev2, [500]))
+            fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
         }
 
         if smartProtocolConfig.openVPN {
@@ -65,7 +65,7 @@ final class SmartProtocolImplementation: SmartProtocol {
             #if os(iOS)
             self.fallback = (SmartProtocolProtocol.openVpnUdp, openVpnConfig.defaultUdpPorts)
             #else
-            self.fallback = (SmartProtocolProtocol.ikev2, [500])
+            self.fallback = (SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports)
             #endif
         }
 
