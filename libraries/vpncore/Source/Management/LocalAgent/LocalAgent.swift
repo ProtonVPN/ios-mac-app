@@ -35,7 +35,7 @@ protocol LocalAgent {
     var state: LocalAgentState? { get }
     var delegate: LocalAgentDelegate? { get set }
 
-    func connect()
+    func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration)
     func disconnect()
     func update(netshield: NetShieldType)
     func update(vpnAccelerator: Bool)
@@ -47,15 +47,9 @@ final class GoLocalAgent: LocalAgent {
     private let client: LocalAgentNativeClient
     private let reachability: Reachability?
 
-    private let data: VpnAuthenticationData
-    private let configuration: LocalAgentConfiguration
-
     private var previousState: LocalAgentState?
 
-    init(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
-        self.data = data
-        self.configuration = configuration
-
+    init() {
         reachability = try? Reachability()
         client = LocalAgentNativeClient()
         client.delegate = self
@@ -80,7 +74,9 @@ final class GoLocalAgent: LocalAgent {
 
     weak var delegate: LocalAgentDelegate?
 
-    func connect() {
+    func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
+        PMLog.D("Local agent connecting to \(configuration.hostname)")
+
         agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.derRepresentation, serverCAsPEM: rootCerts, host: "10.2.0.1:65432", certServerName: configuration.hostname, client: client, features: LocalAgentFeatures()?.with(configuration: configuration), connectivity: true)
     }
 
