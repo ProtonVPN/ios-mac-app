@@ -187,6 +187,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.switchControl.isOn = on
             cell.switchControl.isEnabled = enabled
             cell.toggled = handler
+            cell.switchControl.accessibilityLabel = title
             
             return cell
         case .button(title: let title, accessibilityIdentifier: let accessibilityIdentifier, color: let color, handler: let handler):
