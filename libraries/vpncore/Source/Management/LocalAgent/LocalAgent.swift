@@ -42,10 +42,6 @@ protocol LocalAgent {
     func unjail()
 }
 
-protocol LocalAgentFactory {
-    func createLocalAgent() -> LocalAgent
-}
-
 final class GoLocalAgent: LocalAgent {
     private var agent: LocalAgentAgentConnection?
     private let client: LocalAgentNativeClient
