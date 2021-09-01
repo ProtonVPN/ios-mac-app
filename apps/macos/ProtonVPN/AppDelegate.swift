@@ -39,7 +39,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var systemExtensionManager: SystemExtensionManager = container.makeSystemExtensionManager()
-    private lazy var servicePlanDataService: ServicePlanDataService = container.makeServicePlanDataService()
     
     private var notificationManager: NotificationManagerProtocol!
     
@@ -75,9 +74,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             self.checkSystemExtension()
             
             self.navigationService.launched()
-            
-            // Update available plans from API
-            self.servicePlanDataService.updateServicePlans(completion: nil)
         }
     }
     
