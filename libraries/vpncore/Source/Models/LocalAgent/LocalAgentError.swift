@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 enum LocalAgentError: Error {
     case restrictedServer
