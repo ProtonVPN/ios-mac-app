@@ -101,15 +101,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             }
             return
         }
-
-        #warning("FIXME")
-/*        storeKitManager.processAllTransactions { [weak self] in // this should run after every login
-            self?.retrievePropertiesAndLogIn(success: {
-                comletion(.success(()))
-            }, failure: { error in
-                comletion(.failure(error))
-            })
-        }*/
     }
     
     func loadDataWithoutFetching() -> Bool {
@@ -188,13 +179,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
     
-    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        // update IAPs
-        #warning("FIXME")
-       /* ServicePlanDataServiceImplementation.shared.updateCurrentSubscription { [weak self] in
-            self?.storeKitManager.subscribeToPaymentQueue()
-        }*/
-        
+    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {       
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
             guard let self = self else {
                 return
