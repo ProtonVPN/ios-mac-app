@@ -32,7 +32,7 @@ extension VpnManager {
         vpnAuthentication.loadAuthenticationData { result in
             switch result {
             case .failure:
-                PMLog.ET("Failed to initialized local agent upon app start because of missing authentication data")
+                PMLog.ET("Failed to initialize local agent because of missing authentication data")
             case let .success(data):
                 connect(data)
             }
