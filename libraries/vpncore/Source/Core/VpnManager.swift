@@ -455,7 +455,7 @@ public class VpnManager: VpnManagerProtocol {
             
             vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
             vpnManager.isOnDemandEnabled = enabled
-            PMLog.D("On Demand set: \(enabled ? "On" : "Off")")
+            PMLog.D("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)")
             
             vpnManager.saveToPreferences { [weak self] error in
                 guard let `self` = self else { return }
