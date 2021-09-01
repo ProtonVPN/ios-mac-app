@@ -43,7 +43,13 @@ public class ReportsApiService {
         }
         
         let request = ReportsBugRequest(bug)
-        #warning("FIX ME")
-        completion(.failure(NSError(code: 0, localizedDescription: "Waiting for Core upload implementation")))
+        networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
+            switch result {
+            case .success:
+                completion(.success(()))
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
     }
 }
