@@ -25,26 +25,27 @@ import vpncore
 
 class PlanServiceMock: PlanService {
     
-    var callbackMakePurchaseCompleteViewController: (() -> PurchaseCompleteViewController?)?
     var callbackPresentPlanSelection: (() -> Void)?
-    var callbackPresentSubscriptionManagement: ((AccountPlan) -> Void)?
-    
-    // MARK: PlanService implementation
-    
-    func makePurchaseCompleteViewController(plan: AccountPlan) -> PurchaseCompleteViewController? {
-        return callbackMakePurchaseCompleteViewController?()
+    var callbackPresentSubscriptionManagement: (() -> Void)?
+
+    var allowUpgrade: Bool {
+        return true
     }
-    
-    func presentPlanSelection(viewModel: PlanSelectionViewModel) {
-        callbackPresentPlanSelection?()
+
+    var allowPlanManagement: Bool {
+        return true
+    }
+
+    func updateServicePlans() {
+
     }
     
     func presentPlanSelection() {
         callbackPresentPlanSelection?()
     }
     
-    func presentSubscriptionManagement(plan: AccountPlan) {
-        callbackPresentSubscriptionManagement?(plan)
+    func presentSubscriptionManagement() {
+        callbackPresentSubscriptionManagement?()
     }
     
 }
