@@ -10,6 +10,7 @@
 		02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */; };
 		04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */; };
 		179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2F5ECE24133CF5914BB05 /* Pods_Core_vpncore_ios.framework */; };
+		1BA8184C047AD8822A642AED /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */; };
 		42066EF9263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
 		42066EFA263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
 		42066EFB263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
@@ -118,6 +119,7 @@
 		507B74FDE03E5AFB9ED0A082 /* Pods_Core_vpncore_iosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9E67878BD1357CC3626EE946 /* Pods_Core_vpncore_iosTests.framework */; };
 		50CF7392A9299102BB1EFB0E /* Pods-Core-vpncore-macos-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 75B99C5205690D58E23659F4 /* Pods-Core-vpncore-macos-metadata.plist */; };
 		C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 14B9946CE395EC9A8551017C /* Pods_Core_vpncore_macos.framework */; };
+		D10A05E6CE8FBF1B16CF5BB8 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */; };
 		D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
 		D503F71824FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */; };
 		D51D9507249CDF5600515ED4 /* BuyPlanRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D51D9506249CDF5600515ED4 /* BuyPlanRequest.swift */; };
@@ -929,6 +931,8 @@
 		F3FBB102267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		F3FBB103267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
 		F3FBB104267360F6004490AF /* LocalAgentConfiguration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */; };
+		F6CD3B0391A3D73AE55D5817 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */; };
+		FDD2FDFD9578A5622C465A78 /* SmartPortSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1052,6 +1056,7 @@
 		AE26A503B6B1753094CB6F2E /* Pods-Core-vpncore-iosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.release.xcconfig"; sourceTree = "<group>"; };
 		B9560629DD2CD7F58A2CAC85 /* Pods-Core-vpncore-iosTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-iosTests-metadata.plist"; sourceTree = "<group>"; };
 		BC16534F9F2B242244E936EF /* Pods-Core-vpncore-macosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.staging.xcconfig"; sourceTree = "<group>"; };
+		BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartPortSelector.swift; sourceTree = "<group>"; };
 		C06FA74B404A712CB9FC055D /* Pods-Core-vpncore-macos.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macos.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macos/Pods-Core-vpncore-macos.debug.xcconfig"; sourceTree = "<group>"; };
 		C0B3BBF683E35241139EBB14 /* Pods-Core-vpncore-iosTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-iosTests.staging.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-iosTests/Pods-Core-vpncore-iosTests.staging.xcconfig"; sourceTree = "<group>"; };
 		D503F71624FE820E0079D095 /* AppSessionRefreshTimer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSessionRefreshTimer.swift; sourceTree = "<group>"; };
@@ -1853,6 +1858,7 @@
 				F3256AB326B98BD2003F073C /* AvailiabilityCheckers */,
 				F3657A8325F66B1D00497451 /* SmartProtocol.swift */,
 				F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */,
+				BFC85784D507E57F19C4CC43 /* SmartPortSelector.swift */,
 			);
 			path = SmartProtocols;
 			sourceTree = "<group>";
@@ -2911,6 +2917,7 @@
 				F3021D6925E93DE300EF73A1 /* TroubleshootViewModel.swift in Sources */,
 				E1B5F65D21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
 				D5D606A32292DA6E00394CF9 /* TrialChecker.swift in Sources */,
+				D10A05E6CE8FBF1B16CF5BB8 /* SmartPortSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3156,6 +3163,7 @@
 				423705E2262D9E8100A920CF /* VPNStreamingRequest.swift in Sources */,
 				D5C204242486646F004FB58B /* VpnServerSelectorTests.swift in Sources */,
 				D5ADFBCA23A0CF2E00C28CFF /* URL+Extension.swift in Sources */,
+				FDD2FDFD9578A5622C465A78 /* SmartPortSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3374,6 +3382,7 @@
 				E1B5F66D21B8203200B558B0 /* ServerType.swift in Sources */,
 				E1B5F65E21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
 				D5D606A42292DA6E00394CF9 /* TrialChecker.swift in Sources */,
+				1BA8184C047AD8822A642AED /* SmartPortSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3617,6 +3626,7 @@
 				D5C204542486693B004FB58B /* VpnState.swift in Sources */,
 				D5C204532486692C004FB58B /* ProfileType.swift in Sources */,
 				D5B53ADB25188D7C00625CEC /* MaintenanceManagerHelper.swift in Sources */,
+				F6CD3B0391A3D73AE55D5817 /* SmartPortSelector.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
