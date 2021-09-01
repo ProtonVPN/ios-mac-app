@@ -75,9 +75,9 @@ class CountryItemViewModelTests: XCTestCase {
             appStateManager: appStateManager,
             vpnGateway: nil,
             alertService: AlertServiceEmptyStub(),
-            planService: PlanServiceMock(),
             connectionStatusService: ConnectionStatusServiceMock(),
-            propertiesManager: PropertiesManager()
+            propertiesManager: PropertiesManager(),
+            planService: PlanServiceMock()
             )
 
         return viewModel

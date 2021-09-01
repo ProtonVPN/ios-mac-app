@@ -306,10 +306,7 @@
 		D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
 		D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
 		D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
-		D5BF95042354823F00C7D1E7 /* PaymentsApiServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */; };
-		D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */; };
 		D5BF95082354A07400C7D1E7 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
-		D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */; };
 		D5BF951023559AAF00C7D1E7 /* XCTestExpectation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */; };
 		D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5C137692334A54D00D20514 /* Coordinator.swift */; };
 		D5D4D05422E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */; };
@@ -372,14 +369,12 @@
 		E185A866237157EC0039E625 /* TrackedAlertController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E185A86423707D1A0039E625 /* TrackedAlertController.swift */; };
 		E1973322236893FE0086881F /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E1973321236893FE0086881F /* Settings.bundle */; };
 		E197BD4422C0DFD6004E0FE7 /* PlanServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */; };
-		E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E197BD4522C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift */; };
 		E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E198D6B02163B31A00F2F0E0 /* libc++.tbd */; };
 		E1A28FB021E8F73A00E1C33C /* WidgetFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A28FAF21E8F73A00E1C33C /* WidgetFactory.swift */; };
 		E1A4BF5B21ADBE05004D187F /* LogsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */; };
 		E1A4BF5D21ADBF3D004D187F /* Logs.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1A4BF5C21ADBF3D004D187F /* Logs.xib */; };
 		E1C2EAA121EF931500353A63 /* StandardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */; };
 		E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */; };
-		E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C8705F22BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift */; };
 		E1C983B521E4BBE500C81666 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1C983B421E4BBE500C81666 /* Assets.xcassets */; };
 		E1C983B621E4BBFD00C81666 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E1C983B421E4BBE500C81666 /* Assets.xcassets */; };
 		E1C983B821E4BEB700C81666 /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79C5597B20A5672A00E6D3F6 /* UIColor+Extension.swift */; };
@@ -466,6 +461,7 @@
 		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07526DFBCB600669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
+		F316A07626DFC57D00669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -800,9 +796,6 @@
 		D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
-		D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsApiServiceMock.swift; sourceTree = "<group>"; };
-		D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreKitManagerMock.swift; sourceTree = "<group>"; };
-		D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServicePlanDataServiceMock.swift; sourceTree = "<group>"; };
 		D5BF950F23559AAF00C7D1E7 /* XCTestExpectation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = XCTestExpectation.swift; sourceTree = "<group>"; };
 		D5C137692334A54D00D20514 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D5D4D05322E1AE6B0034389A /* CreateOrEditProfileViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateOrEditProfileViewModelTests.swift; sourceTree = "<group>"; };
@@ -857,14 +850,12 @@
 		E185A86423707D1A0039E625 /* TrackedAlertController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackedAlertController.swift; sourceTree = "<group>"; };
 		E1973321236893FE0086881F /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanServiceMock.swift; sourceTree = "<group>"; };
-		E197BD4522C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanUpgradeCheckerMock.swift; sourceTree = "<group>"; };
 		E198D6B02163B31A00F2F0E0 /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		E1A28FAF21E8F73A00E1C33C /* WidgetFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetFactory.swift; sourceTree = "<group>"; };
 		E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogsViewController.swift; sourceTree = "<group>"; };
 		E1A4BF5C21ADBF3D004D187F /* Logs.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Logs.xib; sourceTree = "<group>"; };
 		E1C2EA9F21EF931500353A63 /* StandardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StandardTableViewCell.swift; sourceTree = "<group>"; };
 		E1C2EAA021EF931500353A63 /* StandardTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StandardTableViewCell.xib; sourceTree = "<group>"; };
-		E1C8705F22BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialWelcomeViewModelTests.swift; sourceTree = "<group>"; };
 		E1C983B421E4BBE500C81666 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolViewController.swift; sourceTree = "<group>"; };
 		E1D187E82301A20700C5F492 /* VpnProtocol.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = VpnProtocol.xib; sourceTree = "<group>"; };
@@ -1491,7 +1482,6 @@
 				D5136C1122858CF00002C095 /* Map */,
 				D5136C8C2285A23F0002C095 /* Profiles */,
 				E9492EE1266A14BC00500E7D /* Settings */,
-				E1C8705E22BA0A87009CF4CE /* Trial */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -1512,14 +1502,10 @@
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
 				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
-				D5BF95032354823F00C7D1E7 /* PaymentsApiServiceMock.swift */,
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
-				E197BD4522C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift */,
 				D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */,
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
-				D5BF95092354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift */,
 				D5D4D05722E1E3E40034389A /* ServerStorageArrayMock.swift */,
-				D5BF950523549EEE00C7D1E7 /* StoreKitManagerMock.swift */,
 				D550A1B1256551F800FE2D54 /* ConnectionStatusServiceMock.swift */,
 				E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */,
 			);
@@ -1784,14 +1770,6 @@
 				E169D52A21E5075100D35312 /* ElectronViewContainer.swift */,
 			);
 			name = Views;
-			sourceTree = "<group>";
-		};
-		E1C8705E22BA0A87009CF4CE /* Trial */ = {
-			isa = PBXGroup;
-			children = (
-				E1C8705F22BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift */,
-			);
-			path = Trial;
 			sourceTree = "<group>";
 		};
 		E1C983B321E4BBCA00C81666 /* Resources */ = {
@@ -3115,7 +3093,6 @@
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
-				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
@@ -3143,7 +3120,6 @@
 				D5136C36228592E80002C095 /* LaunchViewController.swift in Sources */,
 				D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */,
-				D5BF95042354823F00C7D1E7 /* PaymentsApiServiceMock.swift in Sources */,
 				E1D187F623029CE300C5F492 /* LogSelectionViewModel.swift in Sources */,
 				E129C66A22A8E8EA00D8437E /* MapViewModelTests.swift in Sources */,
 				D5136C3F228592E80002C095 /* MapViewController.swift in Sources */,
@@ -3186,7 +3162,6 @@
 				42066FD4263049C0001F86DB /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
 				D5BCDCF925304CA9004BAEE8 /* AnnouncementCell.swift in Sources */,
-				D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */,
 				D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */,
 				D5136C5B228592E80002C095 /* ColorPickerViewModel.swift in Sources */,
 				D5136C5C228592E80002C095 /* DefaultProfileViewModel.swift in Sources */,
@@ -3210,8 +3185,6 @@
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
-				E1C8706022BA0AA7009CF4CE /* TrialWelcomeViewModelTests.swift in Sources */,
-				D5BF950623549EEE00C7D1E7 /* StoreKitManagerMock.swift in Sources */,
 				D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */,
 				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
@@ -3235,6 +3208,7 @@
 				42066FC826304914001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
 				D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */,
+				F316A07626DFC57D00669386 /* PlanService.swift in Sources */,
 				D5136C78228592E80002C095 /* ButtonTableViewCell.swift in Sources */,
 				D5136C79228592E80002C095 /* InstructionStepTableViewCell.swift in Sources */,
 				E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */,
