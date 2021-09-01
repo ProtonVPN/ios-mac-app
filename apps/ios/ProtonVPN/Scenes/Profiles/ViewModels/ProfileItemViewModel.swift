@@ -31,6 +31,7 @@ final class ProfileItemViewModel {
     private let alertService: AlertService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
     private let connectionStatusService: ConnectionStatusService
+    private let planService: PlanService
     
     private let userTier: Int
     private let lowestSeverTier: Int
@@ -102,13 +103,14 @@ final class ProfileItemViewModel {
         return isUsersTierTooLow ? 0.5 : 1.0
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, userTier: Int, netShieldPropertyProvider: NetShieldPropertyProvider, connectionStatusService: ConnectionStatusService, planService: PlanService) {
         self.profile = profile
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.userTier = userTier
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.connectionStatusService = connectionStatusService
+        self.planService = planService
                 
         switch profile.serverOffering {
         case .custom(let serverWrapper):
@@ -155,8 +157,7 @@ final class ProfileItemViewModel {
         }
         
         if isUsersTierTooLow {
-            #warning("FIXME")
-            // planService.presentPlanSelection()
+            planService.presentPlanSelection()
         } else if underMaintenance {
             alertService.push(alert: MaintenanceAlert())
         } else if isConnected {

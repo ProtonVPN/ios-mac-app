@@ -22,8 +22,6 @@
 
 import UIKit
 import vpncore
-import ProtonCore_Payments
-import ProtonCore_PaymentsUI
 
 class SettingsViewModel {
     
@@ -48,14 +46,12 @@ class SettingsViewModel {
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
 
-    private var paymentsUI: PaymentsUI!
-    private var servicePlanDataService: ServicePlanDataService!
-    private var servicePlanDataStorage: ServicePlanDataStorage!
+    private let planService: PlanService
     
     var pushHandler: ((UIViewController) -> Void)?
 
     // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, networkingDelegate: iOSNetworkingDelegate) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, planService: PlanService) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -68,14 +64,7 @@ class SettingsViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.vpnManager = vpnManager
         self.vpnStateConfiguration = vpnStateConfiguration
-
-        self.servicePlanDataStorage = UserCachedStatus(updateSubscriptionBlock: { [weak self] _ in
-            DispatchQueue.main.async { [weak self] in
-                self?.reloadNeeded?()
-            }
-        }, updateCreditsBlock: { _ in })
-        self.servicePlanDataService = ServicePlanDataService(localStorage: servicePlanDataStorage, apiService: networkingDelegate.getAPIService())
-        self.paymentsUI = PaymentsUI(servicePlanDataService: servicePlanDataService, planTypes: PlanTypes.vpn)
+        self.planService = planService
         
         startObserving()
     }
@@ -105,16 +94,12 @@ class SettingsViewModel {
     
     /// Open modal with new plan selection (for free/trial users)
     func buySubscriptionAction() {
-        paymentsUI.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
-            self?.handlePaymentsResponse(response: response)
-        }
+        planService.presentPlanSelection()
     }
 
     /// Open screen with info about current plan
     func manageSubscriptionAction() {
-        paymentsUI.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, completionHandler: { [weak self] response in
-            self?.handlePaymentsResponse(response: response)
-        })
+        planService.presentSubscriptionManagement()
     }
     
     var isSessionEstablished: Bool {
@@ -144,20 +129,6 @@ class SettingsViewModel {
     }
     
     // MARK: - Private functions
-    private func handlePaymentsResponse(response: PaymentsUIResultReason) {
-        switch response {
-        case .close:
-            break
-        case let .purchaseError(error: error):
-            #warning("FIXME")
-            // self?.alertService.push(alert: SystemAlert()
-        case let .purchasedPlan(accountPlan: plan):
-            reloadNeeded?()
-        case .open:
-            break
-        }
-    }
-
     private func startObserving() {
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged),
                                                name: appSessionManager.sessionChanged, object: nil)
@@ -224,17 +195,8 @@ class SettingsViewModel {
 
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
-            allowUpgrade = servicePlanDataService.isIAPUpgradePlanAvailable
-            
-            #warning("FIXME")
-            allowPlanManagement = !servicePlanDataService.isIAPUpgradePlanAvailable
-            /*switch accountPlan {
-            case .basic, .plus:
-                allowPlanManagement = true
-            default:
-                allowPlanManagement = false
-            }*/
-            
+            allowUpgrade = planService.allowUpgrade
+            allowPlanManagement = planService.allowPlanManagement
         } else {
             username = LocalizedString.unavailable
             accountPlanName = LocalizedString.unavailable

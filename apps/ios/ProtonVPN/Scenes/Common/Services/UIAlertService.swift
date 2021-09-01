@@ -26,13 +26,13 @@ import vpncore
 
 class IosUiAlertService: UIAlertService {
     
-    private let navigationService: NavigationService?
+    private let planService: PlanService?
     private let windowService: WindowService
     private var currentAlerts = [SystemAlert]()
     
-    public init(windowService: WindowService, navigationService: NavigationService?) {
+    public init(windowService: WindowService, planService: PlanService?) {
         self.windowService = windowService
-        self.navigationService = navigationService
+        self.planService = planService
     }
     
     func displayAlert(_ alert: SystemAlert) {
@@ -105,7 +105,7 @@ class IosUiAlertService: UIAlertService {
     }
     
     private func displayUserUpdateAlert( alert: UserAccountUpdateAlert ) {
-        let viewController = UserAccountUpdateViewController(alert: alert, navigationService: navigationService)
+        let viewController = UserAccountUpdateViewController(alert: alert, planService: planService)
         viewController.modalPresentationStyle = .overFullScreen
         viewController.dismissCompletion = self.dismissCompletion(alert)
         alert.dismiss = {

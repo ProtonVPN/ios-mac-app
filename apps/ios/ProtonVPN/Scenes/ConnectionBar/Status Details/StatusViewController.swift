@@ -44,10 +44,6 @@ class StatusViewController: UIViewController {
             viewModel?.dismissStatusView = { [weak self] in
                 self?.navigationController?.popViewController(animated: true)
             }
-            viewModel?.planUpgradeRequired = { [weak self] in
-                #warning("FIXME")
-                // self?.planService?.presentPlanSelection()
-            }
         }
     }
     

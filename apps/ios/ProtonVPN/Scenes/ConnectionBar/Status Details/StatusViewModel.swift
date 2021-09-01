@@ -27,7 +27,7 @@ import vpncore
 class StatusViewModel {
     
     // Factory
-    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory
+    typealias Factory = AppSessionManagerFactory & PropertiesManagerFactory & ProfileManagerFactory & AppStateManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & VpnKeychainFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory
     private let factory: Factory
     
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
@@ -40,13 +40,13 @@ class StatusViewModel {
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    private lazy var planService: PlanService = factory.makePlanService()
     
     // Used to send GSMessages to a view controller
     var messageHandler: ((String, GSMessageType, [GSMessageOption]) -> Void)?
     var contentChanged: (() -> Void)?
     var rowsUpdated: (([IndexPath: TableViewCellModel]) -> Void)?
     var dismissStatusView: (() -> Void)?
-    var planUpgradeRequired: (() -> Void)?
     
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
@@ -316,7 +316,7 @@ class StatusViewModel {
             [NetShieldType.level1, NetShieldType.level2].forEach { type in
                 guard !type.isUserTierTooLow(userTier) else {
                     cells.append(.invertedKeyValue(key: type.name, value: LocalizedString.upgrade, handler: { [weak self] in
-                        self?.planUpgradeRequired?()
+                        self?.planService.presentPlanSelection()
                     }))
                     return
                 }
@@ -334,12 +334,12 @@ class StatusViewModel {
         var cells = [TableViewCellModel]()
         
         cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-            self?.planUpgradeRequired?()
+            self?.planService.presentPlanSelection()
         }))
         
         [NetShieldType.level1, NetShieldType.level2].forEach { type in
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in
-                self?.planUpgradeRequired?()
+                self?.planService.presentPlanSelection()
             }))
         }
         

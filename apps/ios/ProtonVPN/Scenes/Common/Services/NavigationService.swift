@@ -123,7 +123,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory & PlanServiceFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -146,10 +146,7 @@ final class NavigationService {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var networking: Networking = factory.makeNetworking()
-    // swiftlint:disable weak_delegate
-    private lazy var networkingDelegate: iOSNetworkingDelegate = factory.makeNetworkingDelegate() as! iOSNetworkingDelegate
-    // swiftlint:enable weak_delegate
-    
+    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = {
         return ProfileManager.shared
     }()
@@ -285,7 +282,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider())
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), planService: planService)
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
@@ -309,7 +306,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration, networkingDelegate: networkingDelegate)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration, planService: planService)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }
