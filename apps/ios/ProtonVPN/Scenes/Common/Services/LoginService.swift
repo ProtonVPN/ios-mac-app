@@ -47,7 +47,7 @@ final class CoreLoginService {
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
 
-    private var login: PMLogin?
+    private var login: LoginAndSignupInterface?
 
     init(factory: Factory) {
         appSessionManager = factory.makeAppSessionManager()
@@ -101,7 +101,7 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let login = PMLogin(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false, isPlanSelectorAvailable: false)
+        let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false)
         self.login = login
 
         let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
