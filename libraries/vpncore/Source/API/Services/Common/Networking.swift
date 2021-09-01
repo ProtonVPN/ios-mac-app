@@ -10,7 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
-import WireguardCrypto
+import Crypto_VPN
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)

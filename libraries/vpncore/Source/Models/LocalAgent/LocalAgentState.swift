@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 enum LocalAgentState {
     case connecting

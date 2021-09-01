@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {

@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 import Reachability
 
 protocol LocalAgentDelegate: AnyObject {
