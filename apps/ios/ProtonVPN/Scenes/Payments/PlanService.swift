@@ -9,6 +9,7 @@
 import Foundation
 import ProtonCore_Payments
 import ProtonCore_PaymentsUI
+import vpncore
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -20,29 +21,34 @@ protocol PlanService {
 
     func presentPlanSelection()
     func presentSubscriptionManagement()
+    func updateServicePlans()
 }
 
 final class CorePlanService: PlanService {
     private var paymentsUI: PaymentsUI!
-    private var servicePlanDataService: ServicePlanDataService!
-    private var servicePlanDataStorage: ServicePlanDataStorage!
+    private var planDataService: ServicePlanDataService!
+    private var planDataStorage: ServicePlanDataStorage!
 
     var allowUpgrade: Bool {
-        return servicePlanDataService.isIAPUpgradePlanAvailable
+        return planDataService.isIAPUpgradePlanAvailable
     }
 
     var allowPlanManagement: Bool {
         return !allowUpgrade
     }
 
-    init(networkingDelegate: iOSNetworkingDelegate) {
-        self.servicePlanDataStorage = UserCachedStatus(updateSubscriptionBlock: { [weak self] _ in
+    init(networking: CoreNetworking) {
+        self.planDataStorage = UserCachedStatus(updateSubscriptionBlock: { [weak self] _ in
             DispatchQueue.main.async { [weak self] in
                 // RELOAD
             }
         }, updateCreditsBlock: { _ in })
-        self.servicePlanDataService = ServicePlanDataService(localStorage: servicePlanDataStorage, apiService: networkingDelegate.getAPIService())
-        self.paymentsUI = PaymentsUI(servicePlanDataService: servicePlanDataService, planTypes: PlanTypes.vpn)
+        self.planDataService = ServicePlanDataService(localStorage: planDataStorage, apiService: networking.apiService)
+        self.paymentsUI = PaymentsUI(servicePlanDataService: planDataService, planTypes: PlanTypes.vpn)
+    }
+
+    func updateServicePlans() {
+        planDataService.updateServicePlans(success: { PMLog.D("Plans updated") }, failure: { error in PMLog.ET("Updating plans failed: \(error)") })
     }
 
     func presentPlanSelection() {

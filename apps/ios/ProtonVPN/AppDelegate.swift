@@ -33,6 +33,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
+    private lazy var planService: PlanService = container.makePlanService()
     
     // MARK: - UIApplicationDelegate
     
@@ -50,6 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
         PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
         #endif
+
+        planService.updateServicePlans()
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
