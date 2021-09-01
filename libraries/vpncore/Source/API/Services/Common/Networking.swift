@@ -40,6 +40,7 @@ public protocol Networking: APIServiceDelegate {
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
     func request(_ route: URLRequest, completion: @escaping (_ result: Result<String, Error>) -> Void)
     func request(_ route: LoginRequest, completion: @escaping (_ result: Result<Authenticator.Status, AuthErrors>) -> Void)
+    func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
 }
 
 public final class CoreNetworking: Networking {
@@ -151,6 +152,22 @@ public final class CoreNetworking: Networking {
         let authenticator = Authenticator(api: apiService)
         authenticator.authenticate(username: route.username, password: route.password) { result in
             completion(result)
+        }
+    }
+
+    public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
+        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        PMLog.D("Request started: \(url)", level: .debug)
+
+        apiService.upload(route: route, files: files, uploadProgress: nil) { (result: Result<T, ResponseError>) -> Void in
+            switch result {
+            case let .failure(error):
+                PMLog.D("Request finished: \(url) (\(error.localizedDescription))")
+                completion(.failure(error.underlyingError ?? error))
+            case let .success(data):
+                PMLog.D("Request finished: \(url) (OK)")
+                completion(.success(data))
+            }
         }
     }
 }
