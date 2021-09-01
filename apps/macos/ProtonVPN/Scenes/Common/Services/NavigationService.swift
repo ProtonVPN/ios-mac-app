@@ -37,7 +37,6 @@ class NavigationService {
         & VpnApiServiceFactory
         & AppStateManagerFactory
         & AppSessionManagerFactory
-        & TrialCheckerFactory
         & CoreAlertServiceFactory
         & ReportBugViewModelFactory
         & NavigationServiceFactory
@@ -58,19 +57,9 @@ class NavigationService {
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
-    
-    private var trialChecker: TrialChecker?
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()    
 
-    var vpnGateway: VpnGatewayProtocol? {
-        didSet {
-            if vpnGateway != nil {
-                trialChecker = factory.makeTrialChecker()
-            } else {
-                trialChecker = nil
-            }
-        }
-    }
+    var vpnGateway: VpnGatewayProtocol?
     
     var appHasPresented = false
     var upsellPresented = false
