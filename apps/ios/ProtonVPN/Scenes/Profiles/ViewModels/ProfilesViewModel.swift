@@ -33,6 +33,7 @@ class ProfilesViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let planService: PlanService
     
     private let sectionTitles = [LocalizedString.recommended, LocalizedString.myProfiles]
         
@@ -48,13 +49,14 @@ class ProfilesViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, planService: PlanService) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.planService = planService
         
         if vpnGateway != nil {
             profileManager = ProfileManager.shared
@@ -104,7 +106,7 @@ class ProfilesViewModel {
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
-            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, connectionStatusService: connectionStatusService)
+            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, connectionStatusService: connectionStatusService, planService: planService)
         }
         return nil
     }

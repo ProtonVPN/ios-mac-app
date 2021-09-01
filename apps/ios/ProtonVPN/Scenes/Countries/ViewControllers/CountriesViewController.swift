@@ -171,8 +171,7 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
-            #warning("FIXME")
-            // planService.presentPlanSelection()
+            viewModel?.presentPlanSelection()
             return
         }
         

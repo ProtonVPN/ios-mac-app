@@ -26,10 +26,11 @@ import UIKit
 
 class NetshieldSelectionViewModel {
     
-    typealias Factory = VpnKeychainFactory
+    typealias Factory = VpnKeychainFactory & PlanServiceFactory
     private var factory: Factory
     
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var planService: PlanService = factory.makePlanService()
     
     /// Type currently selected or that was pre-set during creation
     public var selectedType: NetShieldType {
@@ -64,8 +65,7 @@ class NetshieldSelectionViewModel {
         let cells: [TableViewCellModel] = NetShieldType.allCases.map { type in
             if type.isUserTierTooLow(userTier) {
                 return .attributedKeyValue(key: type.name.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
-                    #warning("FIXME")
-                    // self?.planService.presentPlanSelection()
+                    self?.planService.presentPlanSelection()
                 })
             }
             return .checkmarkStandard(title: type.name, checked: type == selectedType, handler: { [weak self] in

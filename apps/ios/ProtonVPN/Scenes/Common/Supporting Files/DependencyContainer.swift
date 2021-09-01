@@ -58,7 +58,7 @@ final class DependencyContainer {
                                                                         configurationPreparer: makeVpnManagerConfigurationPreparer(),
                                                                         vpnAuthentication: makeVpnAuthentication())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
-    private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), navigationService: navigationService)
+    private lazy var uiAlertService: UIAlertService = IosUiAlertService(windowService: makeWindowService(), planService: makePlanService())
     private lazy var iosAlertService: CoreAlertService = IosAlertService(self)
     
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
@@ -83,9 +83,10 @@ final class DependencyContainer {
 
     private lazy var propertiesManager = PropertiesManager()
     // swiftlint:disable weak_delegate
-    private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService())
+    private lazy var networkingDelegate: iOSNetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService())
     // swiftlint:enable weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate)
+    private lazy var planService = CorePlanService(networkingDelegate: networkingDelegate)
 }
 
 // MARK: NavigationServiceFactory
@@ -350,5 +351,12 @@ extension DependencyContainer: NetworkingFactory {
 extension DependencyContainer: NetworkingDelegateFactory {
     func makeNetworkingDelegate() -> NetworkingDelegate {
         return networkingDelegate
+    }
+}
+
+// MARK: PlanServiceFactory
+extension DependencyContainer: PlanServiceFactory {
+    func makePlanService() -> PlanService {
+        return planService
     }
 }

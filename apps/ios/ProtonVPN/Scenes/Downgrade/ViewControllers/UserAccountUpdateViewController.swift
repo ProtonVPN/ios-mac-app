@@ -54,14 +54,14 @@ class UserAccountUpdateViewController: UIViewController {
     @IBOutlet private weak var toServerLbl: UILabel!
     
     private let alert: UserAccountUpdateAlert
-    private let navigationService: NavigationService?
+    private let planService: PlanService?
     private lazy var serverManager: ServerManager = ServerManagerImplementation.instance(forTier: 2, serverStorage: ServerStorageConcrete())
     
     var dismissCompletion: (() -> Void)?
     
-    init( alert: UserAccountUpdateAlert, navigationService: NavigationService? ) {
+    init(alert: UserAccountUpdateAlert, planService: PlanService?) {
         self.alert = alert
-        self.navigationService = navigationService
+        self.planService = planService
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -139,8 +139,7 @@ class UserAccountUpdateViewController: UIViewController {
     
     @IBAction private func didTapPrimaryAction(_ sender: Any) {
         alert.actions.first?.handler?()
-        #warning("FIXME")
-        // navigationService?.presentPlanSelection()
+        planService?.presentPlanSelection()
         dismissCompletion?()
     }
     
