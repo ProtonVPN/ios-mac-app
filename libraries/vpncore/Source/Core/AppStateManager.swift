@@ -225,14 +225,14 @@ public class AppStateManagerImplementation: AppStateManager {
 
         switch configuration.vpnProtocol.authenticationType {
         case .credentials:
-            PMLog.D("Connect started")
+            PMLog.D("Connect started for \(configuration.vpnProtocol)")
             makeConnection(configuration)
         case .certificate:
             PMLog.D("Checking vpn auth keys and certificates")
             vpnAuthentication.loadAuthenticationData { result in
                 switch result {
                 case let .success(data):
-                    PMLog.D("Connect started")
+                    PMLog.D("Connect started for \(configuration.vpnProtocol)")
                     self.makeConnection(configuration, authData: data)
                 case .failure:
                     PMLog.ET("Failed to load vpn auth data")
