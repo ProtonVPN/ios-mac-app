@@ -49,7 +49,7 @@ class ProtonVPNUITests: XCTestCase {
 
     // MARK: - Helper methods
     
-    private let loginRobot = LoginRobot()
+    private let newLoginRobot = NewLoginRobot()
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
@@ -68,19 +68,32 @@ class ProtonVPNUITests: XCTestCase {
         login(withCredentials: credentials[3])
     }
     
-    private func login(withCredentials credentials: Credentials) {
+    func login(withCredentials credentials: Credentials) {
+        let buttonQuickConnect = app.buttons["Quick Connect"]
         super.setUp()
-        openLoginScreen()
-        loginRobot
+        //openLoginScreen()
+        newLoginRobot
             .loginUser(credentials: credentials)
+        
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
+                waitForExpectations(timeout: 10, handler: nil)
+
+        app.tabBars.buttons["Settings"].tap()
+        XCTAssert(app.staticTexts[credentials.username].exists)
+        XCTAssert(app.staticTexts[credentials.plan].exists)
+
+        switch credentials.plan {
+        case "ProtonVPN Basic", "ProtonVPN Plus":
+            XCTAssert(app.buttons["Manage subscription"].exists)
+        default:
+            XCTAssertFalse(app.buttons["Manage subscription"].exists)
+        }
     }
  
-    private func openLoginScreen(){
-        let skipButton = app.buttons["Skip"]
-        skipButton.tap()
-        assertLastWizardScreen()
-        app.buttons["Log In"].tap()
-        assertLoginScreenOpen()
+     func openLoginScreen(){
+        let apiUrl = app.staticTexts["https://api.protonvpn.ch"]
+         apiUrl.tap()
+         app.buttons["Sign in"].tap()
     }
     
     func logInIfNeeded() {
@@ -106,22 +119,22 @@ class ProtonVPNUITests: XCTestCase {
         logoutButton.tap()
     }
     
-    func assertLastWizardScreen(){
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Log In"], handler: nil)
-        waitForExpectations(timeout: 2, handler: nil)
-        
-        XCTAssert(app.buttons["Log In"].exists)
-        XCTAssert(app.buttons["Sign Up"].exists)
-    }
-    
-    func assertLoginScreenOpen() {
-        let confirmButton = app.buttons["Agree & Continue"]
-        if confirmButton.waitForExistence(timeout: 1) {
-            confirmButton.tap()
-        }
-        
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["Username"], handler: nil)
-        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["Password"], handler: nil)
-        waitForExpectations(timeout: 2, handler: nil)
-    }  
+//    func assertLastWizardScreen(){
+//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Log In"], handler: nil)
+//        waitForExpectations(timeout: 2, handler: nil)
+//
+//        XCTAssert(app.buttons["Log In"].exists)
+//        XCTAssert(app.buttons["Sign Up"].exists)
+//    }
+//
+//    func assertLoginScreenOpen() {
+//        let confirmButton = app.buttons["Agree & Continue"]
+//        if confirmButton.waitForExistence(timeout: 1) {
+//            confirmButton.tap()
+//        }
+//
+//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["Username"], handler: nil)
+//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["Password"], handler: nil)
+//        waitForExpectations(timeout: 2, handler: nil)
+//    }
 }

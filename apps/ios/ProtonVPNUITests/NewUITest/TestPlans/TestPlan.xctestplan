@@ -14,7 +14,10 @@
   "testTargets" : [
     {
       "skippedTests" : [
-        "ConnectionTests"
+        "ConnectionTests",
+        "LoginTests",
+        "SignUpTests",
+        "UnloggedUserTests"
       ],
       "target" : {
         "containerPath" : "container:iOS.xcodeproj",
