@@ -64,11 +64,6 @@ final class DependencyContainer {
     private lazy var maintenanceManager: MaintenanceManagerProtocol = MaintenanceManager(factory: self)
     private lazy var maintenanceManagerHelper: MaintenanceManagerHelper = MaintenanceManagerHelper(factory: self)
     
-    // Holds products available to buy via IAP
-    private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
-    
-    private lazy var paymentTokenStorage = MemoryPaymentTokenStorage(lifetime: AppConstants.Time.paymentTokenLifetime)
-    
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh)
     // Refreshes announements from API
@@ -138,13 +133,6 @@ extension DependencyContainer: PropertiesManagerFactory {
     }
 }
 
-// MARK: ServicePlanDataStorageFactory
-extension DependencyContainer: ServicePlanDataStorageFactory {
-    func makeServicePlanDataStorage() -> ServicePlanDataStorage {
-        return propertiesManager
-    }
-}
-
 // MARK: WindowServiceFactory
 extension DependencyContainer: WindowServiceFactory {
     func makeWindowService() -> WindowService {
@@ -187,20 +175,6 @@ extension DependencyContainer: ServerStorageFactory {
     }
 }
 
-// MARK: TrialServiceFactory
-extension DependencyContainer: TrialServiceFactory {
-    func makeTrialService() -> TrialService {
-        return navigationService
-    }
-}
-
-// MARK: TrialCheckerFactory
-extension DependencyContainer: TrialCheckerFactory {
-    func makeTrialChecker() -> TrialChecker {
-        return TrialChecker(factory: self)
-    }
-}
-
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
@@ -232,13 +206,6 @@ extension DependencyContainer: ReportsApiServiceFactory {
     }
 }
 
-// MARK: PaymentsApiServiceFactory
-extension DependencyContainer: PaymentsApiServiceFactory {
-    func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
 // MARK: UIAlertServiceFactory
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
@@ -246,38 +213,10 @@ extension DependencyContainer: UIAlertServiceFactory {
     }
 }
 
-// MARK: ServicePlanDataServiceFactory
-extension DependencyContainer: ServicePlanDataServiceFactory {
-    func makeServicePlanDataService() -> ServicePlanDataService {
-        return ServicePlanDataServiceImplementation.shared
-    }
-}
-
-// MARK: StoreKitManagerFactory
-extension DependencyContainer: StoreKitManagerFactory {
-    func makeStoreKitManager() -> StoreKitManager {
-        return storeKitManager
-    }
-}
-
 // MARK: TrustKitHelperFactory
 extension DependencyContainer: TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper? {
         return trustKitHelper
-    }
-}
-
-// MARK: PaymentTokenStorageFactory
-extension DependencyContainer: PaymentTokenStorageFactory {
-    func makePaymentTokenStorage() -> PaymentTokenStorage {
-        return paymentTokenStorage
-    }
-}
-
-// MARK: StoreKitStateCheckerFactory
-extension DependencyContainer: StoreKitStateCheckerFactory {
-    func makeStoreKitStateChecker() -> StoreKitStateChecker {
-        return StoreKitStateCheckerImplementation(factory: self)
     }
 }
 

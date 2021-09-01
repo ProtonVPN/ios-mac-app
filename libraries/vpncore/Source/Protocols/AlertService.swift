@@ -425,26 +425,6 @@ public class BugReportSentAlert: SystemAlert {
     }
 }
 
-public class PlanPurchaseErrorAlert: SystemAlert {
-    public var title: String?
-    public var message: String? = ""
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public let error: Error
-    public var dismiss: (() -> Void)?
-    
-    public init(error: Error, planDescription: String) {
-        self.error = error
-                
-        if error is StoreKitManagerImplementation.Errors {
-            title = LocalizedString.errorOccured
-            message = error.localizedDescription
-        } else {
-            message = String(format: error.localizedDescription, planDescription)
-        }
-    }
-}
-
 public class UnknownErrortAlert: SystemAlert {
     public var title: String? = LocalizedString.errorUnknownTitle
     public var message: String?

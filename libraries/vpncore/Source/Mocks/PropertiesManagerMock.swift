@@ -57,7 +57,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var wireguardConfig: WireguardConfig = WireguardConfig()
     public var smartProtocolConfig: SmartProtocolConfig = SmartProtocolConfig()
     public var vpnProtocol: VpnProtocol = .ike
-    public var currentSubscription: Subscription?
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
     public var lastAppVersion = MigrationVersion("0")

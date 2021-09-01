@@ -30,7 +30,6 @@ class ServerItemViewModel {
     fileprivate let appStateManager: AppStateManager
     fileprivate let propertiesManager: PropertiesManagerProtocol
     private let alertService: AlertService
-    private var planService: PlanService
     private let connectionStatusService: ConnectionStatusService
     
     private var userTier: Int = CoreAppConstants.VpnTiers.plus
@@ -134,13 +133,12 @@ class ServerItemViewModel {
         return 1.0
     }
     
-    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol ) {
+    init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol ) {
         self.serverModel = serverModel
         self.vpnGateway = vpnGateway
         self.appStateManager = appStateManager
         self.underMaintenance = serverModel.underMaintenance
         self.alertService = alertService
-        self.planService = planService
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         let activeConnection = appStateManager.activeConnection()
@@ -164,7 +162,8 @@ class ServerItemViewModel {
         if underMaintenance {
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
-            planService.presentPlanSelection()
+            #warning("FIXME")
+            // planService.presentPlanSelection()
         } else if isConnected {
             vpnGateway.disconnect()
         } else if isConnecting {
@@ -209,8 +208,8 @@ class SecureCoreServerItemViewModel: ServerItemViewModel {
         return serverModel.isSecureCore ? (serverModel.entryCountry, serverModel.entryCountryCode) : nil
     }
     
-    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
-        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
+    override init(serverModel: ServerModel, vpnGateway: VpnGatewayProtocol?, appStateManager: AppStateManager, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
+        super.init(serverModel: serverModel, vpnGateway: vpnGateway, appStateManager: appStateManager, alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
         
         let activeConnection = appStateManager.activeConnection()
         

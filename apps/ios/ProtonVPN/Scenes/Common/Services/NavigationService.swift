@@ -24,25 +24,6 @@ import GSMessages
 import UIKit
 import vpncore
 
-// MARK: Plan Service
-
-protocol PlanServiceFactory {
-    func makePlanService() -> PlanService
-}
-
-extension DependencyContainer: PlanServiceFactory {
-    func makePlanService() -> PlanService {
-        return makeNavigationService()
-    }
-}
-
-protocol PlanService {
-    func makePurchaseCompleteViewController(plan: AccountPlan) -> PurchaseCompleteViewController?
-    func presentPlanSelection(viewModel: PlanSelectionViewModel)
-    func presentPlanSelection()
-    func presentSubscriptionManagement(plan: AccountPlan)
-}
-
 // MARK: Country Service
 
 protocol CountryService {
@@ -142,7 +123,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -150,7 +131,6 @@ final class NavigationService {
     private lazy var mainStoryboard = UIStoryboard(name: "Main", bundle: nil)
     private lazy var commonStoryboard = UIStoryboard(name: "Common", bundle: nil)
     private lazy var countriesStoryboard = UIStoryboard(name: "Countries", bundle: nil)
-    private lazy var subscriptionsStoryboard = UIStoryboard(name: "Subscriptions", bundle: nil)
     private lazy var profilesStoryboard = UIStoryboard(name: "Profiles", bundle: nil)
     
     // MARK: Properties
@@ -161,17 +141,14 @@ final class NavigationService {
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var paymentsApiService: PaymentsApiService = factory.makePaymentsApiService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
-    private lazy var servicePlanDataService: ServicePlanDataService = factory.makeServicePlanDataService()
-    private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
-    private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var networking: Networking = factory.makeNetworking()
-    
-    private var trialChecker: TrialChecker?
+    // swiftlint:disable weak_delegate
+    private lazy var networkingDelegate: iOSNetworkingDelegate = factory.makeNetworkingDelegate() as! iOSNetworkingDelegate
+    // swiftlint:enable weak_delegate
     
     private lazy var profileManager = {
         return ProfileManager.shared
@@ -221,11 +198,12 @@ final class NavigationService {
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
-        if appSessionManager.vpnGateway != nil {
+        #warning("FIXME")
+        /* if appSessionManager.vpnGateway != nil {
             trialChecker = factory.makeTrialChecker()
         } else {
             trialChecker = nil
-        }
+        }*/
         
         if appSessionManager.sessionStatus == .notEstablished {
             presentWelcome()
@@ -278,94 +256,11 @@ final class NavigationService {
     }
 }
 
-// MARK: - PlanService
-
-extension NavigationService: PlanService {
-        
-    func makePurchaseCompleteViewController(plan: AccountPlan) -> PurchaseCompleteViewController? {
-        if let signUpCompleteViewController = subscriptionsStoryboard.instantiateViewController(withIdentifier: "SignUpCompleteViewController") as? PurchaseCompleteViewController {
-            signUpCompleteViewController.navigationService = self
-            signUpCompleteViewController.plan = plan
-            return signUpCompleteViewController
-        }
-        return nil
-    }
-    
-    func presentPlanSelection(viewModel: PlanSelectionViewModel) {
-        let planSelectionViewController = PlanSelectionViewController(viewModel)
-        let nc = UINavigationController(rootViewController: planSelectionViewController)
-        
-        nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nc.navigationBar.shadowImage = UIImage()
-        nc.navigationBar.isTranslucent = true
-        nc.modalPresentationStyle = .fullScreen
-        
-        self.windowService.replace(with: nc)
-    }
-    
-    /// Shorthand version for presenting plen selection view controller.
-    /// Additionally, this checks if user can use In App Purchase and if not, presents alert.
-    func presentPlanSelection() {
-        guard servicePlanDataService.isIAPUpgradePlanAvailable else {
-            alertService.push(alert: UpgradeUnavailableAlert())
-            return
-        }
-
-        let viewModel = factory.makePlanSelectionWithPurchaseViewModel()
-        viewModel.cancelled = {
-            self.windowService.dismissModal()
-        }
-        presentPlanSelection(viewModel: viewModel)
-    }
-    
-    func presentSubscriptionManagement(viewModel: SubscriptionInfoViewModel) {
-        let controller = SubscriptionInfoController(viewModel: viewModel, alertService: self.alertService)
-        let nc = UINavigationController(rootViewController: controller)
-        
-        nc.navigationBar.setBackgroundImage(UIImage(), for: UIBarMetrics.default)
-        nc.navigationBar.shadowImage = UIImage()
-        nc.navigationBar.isTranslucent = true
-        nc.modalPresentationStyle = .fullScreen
-        
-        self.windowService.replace(with: nc)
-    }
-    
-    func presentSubscriptionManagement(plan: AccountPlan) {
-        let viewModel = factory.makeSubscriptionInfoViewModel(plan: plan)
-        viewModel.cancelled = {
-            self.windowService.dismissModal()
-        }
-        presentSubscriptionManagement(viewModel: viewModel)
-    }
-    
-}
-
-extension NavigationService: TrialService {
-    func presentTrialWelcomeViewController(expiration: Date) {
-        // Prevents issues with other modals being dismissed
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [windowService, vpnKeychain] in
-            let viewModel = TrialWelcomeViewModel(expiration: expiration, planService: self, planChecker: PlanUpgradeChecker(vpnKeychain: vpnKeychain))
-            let trialWelcomeViewController = TrialWelcomeViewController(viewModel, windowService: windowService)
-            windowService.present(modal: trialWelcomeViewController)
-        }
-    }
-    
-    func presentTrialExpiredViewController() {
-        // FUTUREFIX: should be a custom VC
-        
-        let alert = TrialExpiredAlert(confirmHandler: { [weak self] in
-            self?.presentPlanSelection()
-        }, cancelHandler: {}, planChecker: PlanUpgradeChecker(vpnKeychain: vpnKeychain))
-        alertService.push(alert: alert)
-    }
-}
-
 extension NavigationService: CountryService {
     func makeCountriesViewController() -> CountriesViewController {
         let countriesViewController = countriesStoryboard.instantiateViewController(withIdentifier: String(describing: CountriesViewController.self)) as! CountriesViewController
         countriesViewController.viewModel = CountriesViewModel(factory: factory, vpnGateway: vpnGateway, countryService: self)
         countriesViewController.connectionBarViewController = makeConnectionBarViewController()
-        countriesViewController.planService = self
         
         return countriesViewController
     }
@@ -397,7 +292,7 @@ extension NavigationService: MapService {
 extension NavigationService: ProfileService {
     func makeProfilesViewController() -> ProfilesViewController {
         let profilesViewController = profilesStoryboard.instantiateViewController(withIdentifier: String(describing: ProfilesViewController.self)) as! ProfilesViewController
-        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, planService: self, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider())
+        profilesViewController.viewModel = ProfilesViewModel(vpnGateway: vpnGateway, factory: self, alertService: alertService, propertiesManager: propertiesManager, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider())
         profilesViewController.connectionBarViewController = makeConnectionBarViewController()
         return profilesViewController
     }
@@ -421,7 +316,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration, networkingDelegate: networkingDelegate)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }
@@ -488,7 +383,8 @@ extension NavigationService: ConnectionStatusService {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
-            statusViewController.planService = self
+            #warning("FIXME")
+            // statusViewController.planService = self
             statusViewController.viewModel = StatusViewModel(factory: factory)
             return statusViewController
         }

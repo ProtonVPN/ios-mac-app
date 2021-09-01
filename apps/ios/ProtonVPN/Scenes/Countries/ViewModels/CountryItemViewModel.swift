@@ -29,7 +29,6 @@ class CountryItemViewModel {
     private let serverModels: [ServerModel]
     private let appStateManager: AppStateManager
     private let alertService: AlertService
-    private let planService: PlanService
     private var vpnGateway: VpnGatewayProtocol?
     private var serverType: ServerType
     private let connectionStatusService: ConnectionStatusService
@@ -164,10 +163,10 @@ class CountryItemViewModel {
             switch serverType {
             case .standard, .p2p, .tor, .unspecified:
                 return ServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                           alertService: alertService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
+                                           alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             case .secureCore:
                 return SecureCoreServerItemViewModel(serverModel: server, vpnGateway: vpnGateway, appStateManager: appStateManager,
-                                                     alertService: alertService, planService: planService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
+                                                     alertService: alertService, connectionStatusService: connectionStatusService, propertiesManager: propertiesManager)
             }
         }
     }
@@ -197,14 +196,13 @@ class CountryItemViewModel {
         return serverTypes
     }()
     
-    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
+    init(countryGroup: CountryGroup, serverType: ServerType, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, connectionStatusService: ConnectionStatusService, propertiesManager: PropertiesManagerProtocol) {
         self.countryModel = countryGroup.0
         self.serverModels = countryGroup.1
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
         self.alertService = alertService
         self.serverType = serverType
-        self.planService = planService
         self.connectionStatusService = connectionStatusService
         self.propertiesManager = propertiesManager
         startObserving()
@@ -239,7 +237,8 @@ class CountryItemViewModel {
         updateTier()
         
         if isUsersTierTooLow {
-            planService.presentPlanSelection() 
+            #warning("FIXME")
+            // planService.presentPlanSelection() 
         } else if underMaintenance {
             alertService.push(alert: MaintenanceAlert(countryName: countryName))
         } else if isConnected {

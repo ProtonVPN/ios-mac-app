@@ -54,8 +54,6 @@ public class ProfileManager {
                                                name: ProfileStorage.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
                                                name: serverStorage.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
-                                               name: TrialChecker.trialExpired, object: nil)
         refreshProfiles()
     }
     
