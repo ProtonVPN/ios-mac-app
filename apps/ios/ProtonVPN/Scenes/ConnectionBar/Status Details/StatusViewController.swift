@@ -25,9 +25,7 @@ import UIKit
 import vpncore
 
 class StatusViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView?
-    
-    public var planService: PlanService?
+    @IBOutlet weak var tableView: UITableView?    
     
     var viewModel: StatusViewModel? {
         didSet {
@@ -47,7 +45,8 @@ class StatusViewController: UIViewController {
                 self?.navigationController?.popViewController(animated: true)
             }
             viewModel?.planUpgradeRequired = { [weak self] in
-                self?.planService?.presentPlanSelection()
+                #warning("FIXME")
+                // self?.planService?.presentPlanSelection()
             }
         }
     }

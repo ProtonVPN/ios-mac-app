@@ -89,10 +89,10 @@ public enum AccountPlan: String {
             return nil
         }
     }
-    
+    /*
     public func fetchDetails() -> ServicePlanDetails? {
         return ServicePlanDataServiceImplementation.shared.detailsOfServicePlan(named: self.rawValue)
-    }
+    }*/
     
     public var name: String {
         switch self {
@@ -149,10 +149,11 @@ public enum AccountPlan: String {
     }
     
     public var devicesCount: Int {
-        guard let details = fetchDetails() else {
+        /*guard let details = fetchDetails() else {
             return 0
         }
-        return details.maxVPN
+        return details.maxVPN*/
+        fatalError("FIX ME")
     }
     
     public var speed: String {

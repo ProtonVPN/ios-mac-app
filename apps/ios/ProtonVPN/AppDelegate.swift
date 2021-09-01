@@ -33,8 +33,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
-    private lazy var storeKitManager: StoreKitManager = container.makeStoreKitManager()
-    private lazy var servicePlanDataService: ServicePlanDataServiceImplementation = ServicePlanDataServiceImplementation.shared
     
     // MARK: - UIApplicationDelegate
     
@@ -46,7 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
         ApiConstants.apiHost = ObfuscatedConstants.apiHost
-        Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
+        #warning("FIXME")
+        // Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
 
         setupCoreIntegration()
         
@@ -55,11 +54,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         #endif        
         
         // get available iap
-        propertiesManager.currentSubscription = nil // ensure the upgrade button isn't present until the app receives confirmation of user's plan
+        #warning("FIXME")
+        // propertiesManager.currentSubscription = nil // ensure the upgrade button isn't present until the app receives confirmation of user's plan
         
-        servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
-        storeKitManager.updateAvailableProductsList()
-        _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
+        #warning("FIXME")
+        // servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
+        // storeKitManager.updateAvailableProductsList()
+        // _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 

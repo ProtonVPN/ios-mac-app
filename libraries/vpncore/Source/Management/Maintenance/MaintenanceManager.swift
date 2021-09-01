@@ -26,6 +26,8 @@ public protocol MaintenanceManagerFactory {
     func makeMaintenanceManager() -> MaintenanceManagerProtocol
 }
 
+public typealias BoolCallback = GenericCallback<Bool>
+
 public protocol MaintenanceManagerProtocol {
     func observeCurrentServerState(every timeInterval: TimeInterval, repeats: Bool, completion: BoolCallback?, failure: ErrorCallback?)
     func stopObserving()

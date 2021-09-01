@@ -139,7 +139,8 @@ class UserAccountUpdateViewController: UIViewController {
     
     @IBAction private func didTapPrimaryAction(_ sender: Any) {
         alert.actions.first?.handler?()
-        navigationService?.presentPlanSelection()
+        #warning("FIXME")
+        // navigationService?.presentPlanSelection()
         dismissCompletion?()
     }
     

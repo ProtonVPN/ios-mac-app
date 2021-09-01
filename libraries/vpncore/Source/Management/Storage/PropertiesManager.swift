@@ -62,7 +62,6 @@ public protocol PropertiesManagerProtocol: class {
     
     var openVpnConfig: OpenVpnConfig { get set }
     var vpnProtocol: VpnProtocol { get set }
-    var currentSubscription: Subscription? { get set }
 
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
@@ -662,9 +661,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         smartProtocol = defaultSmartProtocol
         excludeLocalNetworks = true
         killSwitch = false
-        #if !APP_EXTENSION
-        currentSubscription = nil
-        #endif
     }
     
     func postNotificationOnUIThread(_ name: NSNotification.Name, object: Any?, userInfo: [AnyHashable: Any]? = nil) {
@@ -682,56 +678,3 @@ public class PropertiesManager: PropertiesManagerProtocol {
         // swiftlint:enable force_try
     }
 }
-
-#if !APP_EXTENSION
-extension PropertiesManager: ServicePlanDataStorage {
-    
-    public var servicePlansDetails: [ServicePlanDetails]? {
-        get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.servicePlans) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Array<ServicePlanDetails>.self, from: data)
-        }
-        set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.servicePlans)
-        }
-    }
-    
-    public var defaultPlanDetails: ServicePlanDetails? {
-        get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.defaultPlanDetails) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(ServicePlanDetails.self, from: data)
-        }
-        set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.defaultPlanDetails)
-        }
-    }
-    
-    public var currentSubscription: Subscription? {
-        get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.currentSubscription) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Subscription.self, from: data)
-        }
-        set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.currentSubscription)
-        }
-    }
-    
-    public var isIAPUpgradePlanAvailable: Bool {
-        get {
-            return Storage.userDefaults().bool(forKey: Keys.isIAPUpgradePlanAvailable)
-        }
-        set {
-            Storage.setValue(newValue, forKey: Keys.isIAPUpgradePlanAvailable)
-        }
-    }
-}
-#endif

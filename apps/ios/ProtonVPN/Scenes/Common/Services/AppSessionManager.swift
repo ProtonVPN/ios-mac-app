@@ -52,15 +52,14 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & StoreKitManagerFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private var navService: NavigationService? {
         return factory.makeNavigationService()
     }
-   
-    private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
+
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
@@ -77,7 +76,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
-        NotificationCenter.default.addObserver(self, selector: #selector(paymentTransactionFinished), name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
+        #warning("FIX ME")
+//        NotificationCenter.default.addObserver(self, selector: #selector(paymentTransactionFinished), name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
     // MARK: - Beginning of the login logic.
@@ -102,13 +102,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
 
-        storeKitManager.processAllTransactions { [weak self] in // this should run after every login
+        #warning("FIXME")
+/*        storeKitManager.processAllTransactions { [weak self] in // this should run after every login
             self?.retrievePropertiesAndLogIn(success: {
                 comletion(.success(()))
             }, failure: { error in
                 comletion(.failure(error))
             })
-        }
+        }*/
     }
     
     func loadDataWithoutFetching() -> Bool {
@@ -189,9 +190,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     
     private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         // update IAPs
-        ServicePlanDataServiceImplementation.shared.updateCurrentSubscription { [weak self] in
+        #warning("FIXME")
+       /* ServicePlanDataServiceImplementation.shared.updateCurrentSubscription { [weak self] in
             self?.storeKitManager.subscribeToPaymentQueue()
-        }
+        }*/
         
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
             guard let self = self else {

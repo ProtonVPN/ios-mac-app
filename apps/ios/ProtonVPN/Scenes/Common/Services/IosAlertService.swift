@@ -100,22 +100,12 @@ extension IosAlertService: CoreAlertService {
             
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
-                        
-        case is TrialExpiredAlert:
-            showDefaultSystemAlert(alert)
-            
+
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)
             
         case is UnknownErrortAlert:
-            showDefaultSystemAlert(alert)
-            
-        case is PlanPurchaseErrorAlert:
-            if alert.title != nil {
-                showDefaultSystemAlert(alert)
-            } else {
-                showNotificationStyleAlert(message: alert.message ?? "")
-            }
+            showDefaultSystemAlert(alert)            
             
         case is ErrorNotificationAlert:
             showNotificationStyleAlert(message: alert.message ?? "", type: .error, accessibilityIdentifier: (alert as! ErrorNotificationAlert).accessibilityIdentifier)

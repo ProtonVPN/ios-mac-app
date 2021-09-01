@@ -33,7 +33,6 @@ final class CountriesViewController: UIViewController {
     
     var viewModel: CountriesViewModel?
     var connectionBarViewController: ConnectionBarViewController?
-    var planService: PlanService!
     
     var countryControllers: [Weak<CountryViewController>] = []
     
@@ -172,7 +171,8 @@ extension CountriesViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         if viewModel?.isTierTooLow(for: indexPath.section) ?? true { // Premium countries
-            planService.presentPlanSelection()
+            #warning("FIXME")
+            // planService.presentPlanSelection()
             return
         }
         

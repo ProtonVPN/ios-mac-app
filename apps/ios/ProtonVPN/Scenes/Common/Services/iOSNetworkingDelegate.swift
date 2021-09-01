@@ -13,11 +13,14 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_ForceUpgrade
 import ProtonCore_HumanVerification
+import ProtonCore_Payments
+import ProtonCore_PaymentsUI
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     private let forceUpgradeService: ForceUpgradeDelegate
     private var humanVerify: HumanVerifyDelegate?
     private let alertingService: CoreAlertService
+    private var apiService: APIService?
 
     init(alertingService: CoreAlertService) {
         self.forceUpgradeService = ForceUpgradeHelper(config: .mobile(URL(string: URLConstants.appStoreUrl)!))
@@ -26,10 +29,15 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
 
     func set(apiService: APIService) {
         humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL())
+        self.apiService = apiService
     }
 
     func onLogout() {
         alertingService.push(alert: RefreshTokenExpiredAlert())
+    }
+
+    func getAPIService() -> APIService {
+        return apiService!
     }
 }
 
