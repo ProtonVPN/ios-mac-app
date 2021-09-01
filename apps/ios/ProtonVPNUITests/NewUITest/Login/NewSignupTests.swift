@@ -11,7 +11,7 @@ import Foundation
 class NewSignupTests: ProtonVPNUITests {
     
     let mainRobot = MainRobot()
-    let newSignupTests = NewSignupTests()
+    let newSignupRobot = NewSignupRobot()
     
     override func setUp() {
          super.setUp()

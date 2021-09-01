@@ -52,7 +52,7 @@ class NewSignupRobot: CoreElements {
         
         @discardableResult
         func protonmailAccountErrorIsShown() -> NewSignupRobot {
-            staticText(protonmailErrorMessage).wait().checkExists()
+            textView(protonmailErrorMessage).wait().checkExists()
             return NewSignupRobot()
         }
 
