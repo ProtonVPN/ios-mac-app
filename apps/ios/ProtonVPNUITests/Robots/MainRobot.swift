@@ -23,6 +23,9 @@ fileprivate let popUpforBasicUser = "Upgrade Unavailable in App"
 fileprivate let buttonOk = "OK"
 fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
+fileprivate let environmentText = "https://api.protonvpn.ch"
+fileprivate let showLoginButtonLabelText = "Sign in"
+fileprivate let showSignupButtonLabelText = "Create an account"
 
 // MainRobot class contains actions for main app view.
 
@@ -64,6 +67,24 @@ class MainRobot: CoreElements {
     func quickDisconnectViaQCbutton() -> ConnectionStatusRobot {
         button(tabQCActive).tap()
         return ConnectionStatusRobot()
+    }
+    
+    @discardableResult
+    public func showSignup() -> NewSignupRobot {
+        button(showSignupButtonLabelText).wait().tap()
+        return NewSignupRobot()
+    }
+
+    @discardableResult
+     public func changeEnvironmentTo() -> MainRobot {
+        staticText(environmentText).wait().tap()
+         return self
+     }
+    
+    @discardableResult
+    public func showLogin() -> NewLoginRobot {
+        button(showLoginButtonLabelText).wait().tap()
+        return NewLoginRobot()
     }
     
     class Verify: CoreElements {
