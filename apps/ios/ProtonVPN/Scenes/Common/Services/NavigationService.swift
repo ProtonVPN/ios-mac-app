@@ -198,13 +198,6 @@ final class NavigationService {
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
-        #warning("FIXME")
-        /* if appSessionManager.vpnGateway != nil {
-            trialChecker = factory.makeTrialChecker()
-        } else {
-            trialChecker = nil
-        }*/
-        
         if appSessionManager.sessionStatus == .notEstablished {
             presentWelcome()
             return
@@ -383,8 +376,6 @@ extension NavigationService: ConnectionStatusService {
         if let statusViewController =
             self.commonStoryboard.instantiateViewController(withIdentifier:
                 String(describing: StatusViewController.self)) as? StatusViewController {
-            #warning("FIXME")
-            // statusViewController.planService = self
             statusViewController.viewModel = StatusViewModel(factory: factory)
             return statusViewController
         }

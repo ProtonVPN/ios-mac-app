@@ -110,11 +110,12 @@ class SettingsViewModel {
         }
     }
 
-    #warning("FIXME")
     /// Open screen with info about current plan
-    /*func manageSubscriptionAction(plan: AccountPlan) {
-        // planService.presentSubscriptionManagement(plan: plan)
-    }*/
+    func manageSubscriptionAction() {
+        paymentsUI.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, completionHandler: { [weak self] response in
+            self?.handlePaymentsResponse(response: response)
+        })
+    }
     
     var isSessionEstablished: Bool {
         return appSessionManager.sessionStatus == .established
@@ -252,9 +253,7 @@ class SettingsViewModel {
         }
         if allowPlanManagement {
             cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .protonConnectGreen(), handler: { [weak self] in
-                self?.paymentsUI.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, completionHandler: { [weak self] response in
-                    self?.handlePaymentsResponse(response: response)
-                })
+                self?.manageSubscriptionAction()
             }))
         }
         

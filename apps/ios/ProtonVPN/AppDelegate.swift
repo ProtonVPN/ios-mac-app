@@ -44,23 +44,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
         ApiConstants.apiHost = ObfuscatedConstants.apiHost
-        #warning("FIXME")
-        // Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
 
         setupCoreIntegration()
         
         #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
         PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
-        #endif        
-        
-        // get available iap
-        #warning("FIXME")
-        // propertiesManager.currentSubscription = nil // ensure the upgrade button isn't present until the app receives confirmation of user's plan
-        
-        #warning("FIXME")
-        // servicePlanDataService.paymentsService = container.makePaymentsApiService() // FUTUREFIX: should inject
-        // storeKitManager.updateAvailableProductsList()
-        // _ = storeKitManager.readyToPurchaseProduct() // Initial response is always true due to lazy load
+        #endif
         
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
