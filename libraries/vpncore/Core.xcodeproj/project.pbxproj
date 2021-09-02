@@ -833,6 +833,9 @@
 		F31321A925E3AA7A006F414F /* DoH.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31321A625E3AA7A006F414F /* DoH.swift */; };
 		F31321AA25E3AA7A006F414F /* DoH.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31321A625E3AA7A006F414F /* DoH.swift */; };
 		F316A07926E0191400669386 /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07826E0191400669386 /* ReportsBugResponse.swift */; };
+		F316A07A26E0AD9500669386 /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07826E0191400669386 /* ReportsBugResponse.swift */; };
+		F316A07B26E0AD9500669386 /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07826E0191400669386 /* ReportsBugResponse.swift */; };
+		F316A07C26E0AD9600669386 /* ReportsBugResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07826E0191400669386 /* ReportsBugResponse.swift */; };
 		F31A46F926A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31A46F826A56BB2002224CB /* LocalizedString+Fallback.swift */; };
 		F31A46FA26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31A46F826A56BB2002224CB /* LocalizedString+Fallback.swift */; };
 		F31A46FB26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31A46F826A56BB2002224CB /* LocalizedString+Fallback.swift */; };
@@ -3128,6 +3131,7 @@
 				D5BCDC9625303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
 				D585B5142447075D00E901F3 /* Dictionary+Merge.swift in Sources */,
 				F389189226C3E55A006214A8 /* SmartProtocolConfig.swift in Sources */,
+				F316A07B26E0AD9500669386 /* ReportsBugResponse.swift in Sources */,
 				D5C20426248664E1004FB58B /* VpnServerSelector.swift in Sources */,
 				D5C2045B24866976004FB58B /* AlertService.swift in Sources */,
 				D5D2955325A5D551000FBD74 /* NetShieldPropertyProvider.swift in Sources */,
@@ -3395,6 +3399,7 @@
 				E1B5F65E21B81E5800B558B0 /* LocalizationUtility.swift in Sources */,
 				D5D606A42292DA6E00394CF9 /* TrialChecker.swift in Sources */,
 				1BA8184C047AD8822A642AED /* SmartPortSelector.swift in Sources */,
+				F316A07A26E0AD9500669386 /* ReportsBugResponse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3585,6 +3590,7 @@
 				D5C204562486694E004FB58B /* ServerOffering.swift in Sources */,
 				D5DC543E252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				D5C2043D248666FF004FB58B /* Dictionary+Extension.swift in Sources */,
+				F316A07C26E0AD9600669386 /* ReportsBugResponse.swift in Sources */,
 				D5C2044D248668F7004FB58B /* ContinuousServerProperties.swift in Sources */,
 				D585B5132447075C00E901F3 /* Dictionary+Merge.swift in Sources */,
 				D5BCDEAD25359F68004BAEE8 /* Offer.swift in Sources */,
