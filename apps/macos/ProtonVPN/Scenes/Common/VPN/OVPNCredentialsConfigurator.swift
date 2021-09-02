@@ -20,7 +20,7 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
     
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         xpcServiceUser.setCredentials(username: configuration.username, password: configuration.password, completionHandler: { success in
-            PMLog.D("Credentials set result: \(success ? "success" : "failure")")
+            PMLog.D("Credentials set result (ovpn): \(success ? "success" : "failure")")
             completionHandler(protocolConfig)
         })
     }
