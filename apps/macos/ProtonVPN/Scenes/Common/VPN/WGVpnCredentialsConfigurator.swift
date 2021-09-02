@@ -21,6 +21,7 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     }
     
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
+        protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
         
         xpcServiceUser.setCredentials(username: "", password: configuration.asWireguardConfiguration(config: propertiesManager.wireguardConfig), completionHandler: { success in
             PMLog.D("Credentials set result (wg): \(success ? "success" : "failure")")
