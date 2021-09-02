@@ -102,7 +102,7 @@ public final class CoreNetworking: Networking {
                 return
             }
 
-            completion(.success(()))
+            completion(.success)
         }
     }
 

@@ -46,7 +46,7 @@ public class ReportsApiService {
         networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
             switch result {
             case .success:
-                completion(.success(()))
+                completion(.success)
             case let .failure(error):
                 completion(.failure(error))
             }

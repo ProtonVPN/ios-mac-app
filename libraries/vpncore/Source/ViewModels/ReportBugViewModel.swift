@@ -137,7 +137,7 @@ open class ReportBugViewModel {
                 DispatchQueue.main.async { [weak self] in
                     self?.propertiesManager.reportBugEmail = self?.bug.email
                     self?.alertService.push(alert: BugReportSentAlert(confirmHandler: {
-                        completion(.success(()))
+                        completion(.success)
                     }))
                 }
             case let .failure(apiError):
