@@ -60,9 +60,9 @@ class ServiceChecker {
     }
     
     private func p2pBlocked() {
-        var urlRequest = URLRequest(url: URL(string: ApiConstants.statusURL + "/vpn_status")!)
+        var urlRequest = URLRequest(url: URL(string: ApiConstants.doh.statusHost + "/vpn_status")!)
         urlRequest.cachePolicy = .reloadIgnoringCacheData
-        urlRequest.timeoutInterval = ApiConstants.defaultRequestTimeout
+        urlRequest.timeoutInterval = 30
 
         networking.request(urlRequest) { [weak self] (result: Result<(String), Error>) in
             switch result {
