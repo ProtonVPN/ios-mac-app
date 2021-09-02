@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_APIClient
 
 public protocol ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService
@@ -42,7 +43,7 @@ public class ReportsApiService {
             i += 1
         }
         
-        let request = ReportsBugRequest(bug)
+        let request = ReportsBugs(bug)
         networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
             switch result {
             case .success:
