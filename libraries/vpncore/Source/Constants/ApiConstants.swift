@@ -34,30 +34,10 @@ public struct ApiConstants {
             // swiftlint:enable force_try
         }
     }
-
-    public static var baseURL: String {
-        return doh.defaultHost
-    }
     
     public static var liveURL: String {
         return doh.liveURL
     }
-
-    public static var captchaHost: String {
-        return doh.captchaHost
-    }
-
-    internal static var statusURL: String {
-        return doh.statusHost
-    }
-    
-    public static var baseHost: String {
-        return doh.defaultHost.domainWithoutPathAndProtocol
-    }
-
-    internal static let contentType = "application/json;charset=utf-8"
-    internal static let mediaType = "application/vnd.protonmail.v1+json"
-    public static let defaultRequestTimeout: TimeInterval = 30
     
     public static var clientDictionary: NSDictionary {
         guard let file = Bundle.main.path(forResource: "Client", ofType: "plist"),
