@@ -86,7 +86,7 @@ final class DependencyContainer {
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService())
     // swiftlint:enable weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate)
-    private lazy var planService = CorePlanService(networking: networking)
+    private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), appSessionManager: makeAppSessionManager())
 }
 
 // MARK: NavigationServiceFactory

@@ -25,9 +25,12 @@ protocol PlanService {
 }
 
 final class CorePlanService: PlanService {
-    private var paymentsUI: PaymentsUI!
-    private var planDataService: ServicePlanDataService!
-    private var planDataStorage: ServicePlanDataStorage!
+    private let paymentsUI: PaymentsUI
+    private let planDataService: ServicePlanDataService
+    private let planDataStorage: ServicePlanDataStorage
+
+    private let alertService: AlertService
+    private let appSessionManager: AppSessionManager
 
     var allowUpgrade: Bool {
         return planDataService.isIAPUpgradePlanAvailable
@@ -37,12 +40,11 @@ final class CorePlanService: PlanService {
         return !allowUpgrade
     }
 
-    init(networking: CoreNetworking) {
-        self.planDataStorage = UserCachedStatus(updateSubscriptionBlock: { [weak self] _ in
-            DispatchQueue.main.async { [weak self] in
-                // RELOAD
-            }
-        }, updateCreditsBlock: { _ in })
+    init(networking: CoreNetworking, alertService: AlertService, appSessionManager: AppSessionManager) {
+        self.alertService = alertService
+        self.appSessionManager = appSessionManager
+
+        self.planDataStorage = UserCachedStatus()
         self.planDataService = ServicePlanDataService(localStorage: planDataStorage, apiService: networking.apiService)
         self.paymentsUI = PaymentsUI(servicePlanDataService: planDataService, planTypes: PlanTypes.vpn)
     }
@@ -52,6 +54,11 @@ final class CorePlanService: PlanService {
     }
 
     func presentPlanSelection() {
+        guard planDataService.isIAPUpgradePlanAvailable else {
+            alertService.push(alert: UpgradeUnavailableAlert())
+            return
+        }
+
         paymentsUI.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
@@ -65,15 +72,11 @@ final class CorePlanService: PlanService {
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {
         switch response {
-        case .close:
-            break
-        case let .purchaseError(error: error):
-            #warning("FIXME")
-            // self?.alertService.push(alert: SystemAlert()
         case let .purchasedPlan(accountPlan: plan):
-            break
-            // REALOAD reloadNeeded?()
-        case .open:
+            PMLog.D("Purchased plan: \(plan)")
+        case let .open(vc: _, opened: opened):
+            assert(opened == true)
+        default:
             break
         }
     }
