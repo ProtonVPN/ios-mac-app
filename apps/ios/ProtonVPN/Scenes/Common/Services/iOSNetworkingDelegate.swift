@@ -8,7 +8,7 @@
 
 import Foundation
 import vpncore
-import WireguardCrypto
+import Crypto_VPN
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_ForceUpgrade

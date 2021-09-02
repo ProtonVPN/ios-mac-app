@@ -20,7 +20,9 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-struct DefaultConstants { }
+struct DefaultConstants {
+    static let ikeV2Ports = [500]
+}
 
 #if os(iOS)
 extension DefaultConstants {

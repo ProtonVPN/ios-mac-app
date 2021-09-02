@@ -17,17 +17,17 @@ public struct ConnectionConfiguration: Codable {
     public let serverIp: ServerIp
     public let vpnProtocol: VpnProtocol
     public let netShieldType: NetShieldType
-    public let preferredPorts: [Int]?
+    public let ports: [Int]
     
-    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, preferredPorts: [Int]?) {
+    public init(server: ServerModel, serverIp: ServerIp, vpnProtocol: VpnProtocol, netShieldType: NetShieldType, ports: [Int]) {
         self.server = server
         self.serverIp = serverIp
         self.vpnProtocol = vpnProtocol
         self.netShieldType = netShieldType
-        self.preferredPorts = preferredPorts
+        self.ports = ports
     }
 
     public func withChanged(netShieldType: NetShieldType) -> ConnectionConfiguration {
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, preferredPorts: preferredPorts)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, ports: ports)
     }
 }

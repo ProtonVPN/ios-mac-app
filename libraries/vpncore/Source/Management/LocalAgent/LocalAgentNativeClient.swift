@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 protocol LocalAgentNativeClientDelegate: AnyObject {
     func didReceiveError(code: Int)

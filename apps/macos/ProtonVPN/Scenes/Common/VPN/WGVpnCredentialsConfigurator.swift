@@ -23,7 +23,7 @@ final class WGVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
         
         xpcServiceUser.setCredentials(username: "", password: configuration.asWireguardConfiguration(config: propertiesManager.wireguardConfig), completionHandler: { success in
-            PMLog.D("Credentials set result: \(success ? "success" : "failure")")
+            PMLog.D("Credentials set result (wg): \(success ? "success" : "failure")")
             completionHandler(protocolConfig)
         })
     }

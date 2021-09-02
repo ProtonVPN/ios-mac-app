@@ -145,7 +145,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx install request result: \(result.rawValue)")
         
-        completionCallbacks[request.identifier]?(.success(()))
+        completionCallbacks[request.identifier]?(.success)
         completionCallbacks[request.identifier] = nil
         
         NotificationCenter.default.post(name: SystemExtensionManagerNotification.installationSuccess, object: nil)
@@ -179,7 +179,7 @@ class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionReques
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
         PMLog.D("SysEx request finished with result: \(result.rawValue)")
-        completion?(.success(()))
+        completion?(.success)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {

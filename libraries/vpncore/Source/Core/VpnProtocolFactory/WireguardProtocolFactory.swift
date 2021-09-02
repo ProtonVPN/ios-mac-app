@@ -127,15 +127,7 @@ extension VpnManagerConfiguration {
             output.append("PublicKey = \(serverPublicKey)\n")
         }
         output.append("AllowedIPs = \(config.allowedIPs)\n")
-
-        let ports: [Int]
-        if let preferredPorts = preferredPorts, !preferredPorts.isEmpty {
-            ports = preferredPorts
-        } else {
-            ports = config.defaultPorts.shuffled()
-        }
-        let port = ports.first!
-        output.append("Endpoint = \(entryServerAddress):\(port)\n")
+        output.append("Endpoint = \(entryServerAddress):\(ports.first!)\n")
         
         return output
     }

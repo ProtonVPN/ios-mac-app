@@ -87,7 +87,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
         
-        retrievePropertiesAndLogIn(success: { completion(.success(())) }, failure: { error in
+        retrievePropertiesAndLogIn(success: { completion(.success) }, failure: { error in
             DispatchQueue.main.async { completion(.failure(error)) }
         })
     }
@@ -104,7 +104,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         storeKitManager.processAllTransactions { [weak self] in // this should run after every login
             self?.retrievePropertiesAndLogIn(success: {
-                comletion(.success(()))
+                comletion(.success)
             }, failure: { error in
                 comletion(.failure(error))
             })
