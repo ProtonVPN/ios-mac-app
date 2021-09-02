@@ -60,56 +60,29 @@ final class CoreLoginService {
         networking = factory.makeNetworking()
     }
 
-    private func finishLogin(data: LoginData) {
-        // login / signup flow is dismisse dat this point, show the generic loading screen
-        if let launchViewController = navigationService.makeLaunchViewController() {
-            launchViewController.mode = .immediate
-            windowService.show(viewController: launchViewController)
-        }
-
-        // attempt to uset the login data to log in the app
-        let authCredentials = AuthCredentials(data)
-        appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
-            switch result {
-            case let .failure(error):
-                self?.showError(error)
-            case .success:
-                self?.navigationService.presentMainInterface()
-            }
-        }
-    }
-
-    private func showError(_ error: Error) {
-        PMLog.ET(error.localizedDescription)
-
-        if error.isTlsError || error.isNetworkError {
-            let alert = UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
-                self?.alertService.push(alert: ConnectionTroubleshootingAlert())
-            })
-            alert.dismiss = { [weak self] in
-                self?.showWelcome()
-            }
-            alertService.push(alert: alert)
-
-        } else {
-            let alert = ErrorNotificationAlert(error: error)
-            alert.dismiss = { [weak self] in
-                self?.showWelcome()
-            }
-            alertService.push(alert: alert)
-        }
-    }
-
     private func show() {
         let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false)
         self.login = login
 
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))) { [weak self] result in
+        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
+        let finishLogin: WorkBeforeFlowCompletion = { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
+            // attempt to uset the login data to log in the app
+            let authCredentials = AuthCredentials(data)
+            self?.appSessionManager.finishLogin(authCredentials: authCredentials) { result in
+                switch result {
+                case let .failure(error):
+                    completion(.failure(error))
+                case .success:
+                    completion(.success)
+                }
+            }
+        }
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlowCompletion: finishLogin) { [weak self] result in
             switch result {
             case .dismissed:
                 PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
-            case let .loggedIn(data):
-                self?.finishLogin(data: data)
+            case .loggedIn:
+                self?.navigationService.presentMainInterface()
             }
 
             self?.login = nil
