@@ -43,6 +43,7 @@ public protocol Networking: APIServiceDelegate {
     func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
 }
 
+// MARK: CoreNetworking
 public final class CoreNetworking: Networking {
     private var apiService: PMAPIService
     // swiftlint:disable weak_delegate
@@ -90,7 +91,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        let url = cleandUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
@@ -107,7 +108,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        let url = cleandUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.exec(route: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
@@ -156,10 +157,14 @@ public final class CoreNetworking: Networking {
     }
 
     public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        let url = cleandUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
-        apiService.upload(route: route, files: files, uploadProgress: nil) { (result: Result<T, ResponseError>) -> Void in
+        let progress: ProgressCompletion = { (progress: Progress) -> Void in
+            PMLog.D("Upload progress \(progress.fractionCompleted) for \(url)")
+        }
+
+        apiService.upload(route: route, files: files, uploadProgress: progress) { (result: Result<T, ResponseError>) -> Void in
             switch result {
             case let .failure(error):
                 PMLog.D("Request finished: \(url) (\(error.localizedDescription))")
@@ -170,8 +175,13 @@ public final class CoreNetworking: Networking {
             }
         }
     }
+
+    private func cleandUrl(_ route: Request) -> String {
+        return "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+    }
 }
 
+// MARK: APIServiceDelegate
 extension CoreNetworking: APIServiceDelegate {
     public var locale: String {
         return NSLocale.current.languageCode ?? "en_US"
@@ -191,6 +201,7 @@ extension CoreNetworking: APIServiceDelegate {
     public func onDohTroubleshot() { }
 }
 
+// MARK: AuthDelegate
 extension CoreNetworking: AuthDelegate {
     public func getToken(bySessionUID uid: String) -> AuthCredential? {
         guard let credentials = AuthKeychain.fetch() else {
