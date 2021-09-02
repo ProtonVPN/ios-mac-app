@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_APIClient
 
 public protocol ReportsApiServiceFactory {
     func makeReportsApiService() -> ReportsApiService
@@ -42,8 +43,14 @@ public class ReportsApiService {
             i += 1
         }
         
-        let request = ReportsBugRequest(bug)
-        #warning("FIX ME")
-        completion(.failure(NSError(code: 0, localizedDescription: "Waiting for Core upload implementation")))
+        let request = ReportsBugs(bug)
+        networking.request(request, files: files) { (result: Result<ReportsBugResponse, Error>) in
+            switch result {
+            case .success:
+                completion(.success)
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
     }
 }

@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_APIClient
 
 public protocol ReportBugViewModelFactory {
     func makeReportBugViewModel() -> ReportBugViewModel
@@ -137,7 +138,7 @@ open class ReportBugViewModel {
                 DispatchQueue.main.async { [weak self] in
                     self?.propertiesManager.reportBugEmail = self?.bug.email
                     self?.alertService.push(alert: BugReportSentAlert(confirmHandler: {
-                        completion(.success(()))
+                        completion(.success)
                     }))
                 }
             case let .failure(apiError):

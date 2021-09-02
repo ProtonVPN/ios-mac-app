@@ -79,9 +79,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
         
-        completion(.success(()))
+        completion(.success)
         
-        retrievePropertiesAndLogIn(success: { completion(.success(())) }, failure: { error in
+        retrievePropertiesAndLogIn(success: { completion(.success) }, failure: { error in
             DispatchQueue.main.async { completion(.failure(error)) }
         })
     }
