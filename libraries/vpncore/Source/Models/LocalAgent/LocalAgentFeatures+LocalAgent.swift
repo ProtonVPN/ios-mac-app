@@ -21,7 +21,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 enum LocalAgentFeaturesKeys: String {
     case vpnAccelerator = "split-tcp"
