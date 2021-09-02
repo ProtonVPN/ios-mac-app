@@ -2467,7 +2467,6 @@
 			buildConfigurationList = 42EF09EB257A713F00E2EDCA /* Build configuration list for PBXNativeTarget "ProtonVPN OpenVPN" */;
 			buildPhases = (
 				B33F276558A5DA22AEB268BF /* [CP] Check Pods Manifest.lock */,
-				E94EFFF72653E0190024DBFB /* Increment Build Number Script */,
 				42EF09D7257A713F00E2EDCA /* Sources */,
 				42EF09D8257A713F00E2EDCA /* Frameworks */,
 				42EF09D9257A713F00E2EDCA /* Resources */,
@@ -2525,7 +2524,6 @@
 			buildConfigurationList = E93C4F2126A1C1F30006680C /* Build configuration list for PBXNativeTarget "ProtonVPN WireGuard" */;
 			buildPhases = (
 				E93C4F1626A1C1F30006680C /* [CP] Check Pods Manifest.lock */,
-				E93C4F1726A1C1F30006680C /* Increment Build Number Script */,
 				E93C4F1826A1C1F30006680C /* Sources */,
 				E93C4F1B26A1C1F30006680C /* Frameworks */,
 				E93C4F1E26A1C1F30006680C /* Resources */,
@@ -2548,7 +2546,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = EEB404D61F77F639006CF513 /* Build configuration list for PBXNativeTarget "ProtonVPNStarter" */;
 			buildPhases = (
-				75482B271F7EF33F00B0BFFB /* Increment Build Number Script */,
 				EEB404C31F77F639006CF513 /* Sources */,
 				EEB404C41F77F639006CF513 /* Frameworks */,
 				EEB404C51F77F639006CF513 /* Resources */,
@@ -2568,7 +2565,6 @@
 			buildPhases = (
 				EF653936EE2C101EC65FCD60 /* [CP] Check Pods Manifest.lock */,
 				E1144E3822E8D0F30087A685 /* Generate Obfuscated Constants */,
-				75482B261F7EF2E900B0BFFB /* Increment Build Number Script */,
 				EED5347D1EEC112000013607 /* Sources */,
 				EED5347E1EEC112000013607 /* Frameworks */,
 				EED5347F1EEC112000013607 /* Resources */,
@@ -2872,34 +2868,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-ProtonVPN-mac/Pods-ProtonVPN-mac-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		75482B261F7EF2E900B0BFFB /* Increment Build Number Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
-		};
-		75482B271F7EF33F00B0BFFB /* Increment Build Number Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number Script";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
-		};
 		B33F276558A5DA22AEB268BF /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -3051,42 +3019,6 @@
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
-		};
-		E93C4F1726A1C1F30006680C /* Increment Build Number Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
-		};
-		E94EFFF72653E0190024DBFB /* Increment Build Number Script */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-			);
-			name = "Increment Build Number Script";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "if [ ${CONFIGURATION} == \"Release\" ]; then\nbuildNumber=${BUILD_NUMBER:-1234}\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${PROJECT_DIR}/${INFOPLIST_FILE}\"\nfi;\n";
 		};
 		E976592926A862E400E0983B /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
