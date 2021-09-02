@@ -193,6 +193,9 @@ extension MacAlertService: CoreAlertService {
         case is WireguardProfileErrorAlert:
             showDefaultSystemAlert(alert)
             
+        case is VPNAuthCertificateRefreshErrorAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
