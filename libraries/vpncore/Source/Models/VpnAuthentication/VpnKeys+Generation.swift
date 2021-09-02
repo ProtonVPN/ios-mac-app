@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import WireguardCrypto
+import Crypto_VPN
 
 extension PublicKey {
     init(keyPair: Ed25519KeyPair) {
