@@ -19,7 +19,8 @@ final class WGiOSVpnCredentialsConfigurator: VpnCredentialsConfigurator {
     }
     
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
-        
+        protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
+                
         let keychain = VpnKeychain()
         protocolConfig.passwordReference = try? keychain.store(wireguardConfiguration: configuration.asWireguardConfiguration(config: propertiesManager.wireguardConfig))
         
