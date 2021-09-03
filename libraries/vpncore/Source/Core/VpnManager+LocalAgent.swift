@@ -17,7 +17,7 @@ extension VpnManager {
             }
 
             self.disconnectLocalAgent()
-            self.localAgent = GoLocalAgent()
+            self.localAgent = LocalAgentImplementation()
             self.localAgent?.delegate = self
             self.localAgent?.connect(data: data, configuration: configuration)
         }

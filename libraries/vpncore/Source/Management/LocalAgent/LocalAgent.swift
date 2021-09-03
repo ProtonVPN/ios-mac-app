@@ -42,16 +42,16 @@ protocol LocalAgent {
     func unjail()
 }
 
-final class GoLocalAgent: LocalAgent {
+final class LocalAgentImplementation: LocalAgent {
     private var agent: LocalAgentAgentConnection?
-    private let client: LocalAgentNativeClient
+    private let client: LocalAgentNativeClientImplementation
     private let reachability: Reachability?
 
     private var previousState: LocalAgentState?
 
     init() {
         reachability = try? Reachability()
-        client = LocalAgentNativeClient()
+        client = LocalAgentNativeClientImplementation()
         client.delegate = self
 
         try? reachability?.startNotifier()
@@ -105,7 +105,7 @@ final class GoLocalAgent: LocalAgent {
     }
 }
 
-extension GoLocalAgent: LocalAgentNativeClientDelegate {
+extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveError(code: Int) {
         guard let error = LocalAgentError.from(code: code) else {
             PMLog.D("Ignoring unknown local agent error")
