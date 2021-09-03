@@ -32,6 +32,8 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     var isPrevButtonVisible: Bool { get }
     var steps: [SystemExtensionGuideViewModel.Step] { get }
     var step: (Int, SystemExtensionGuideViewModel.Step) { get }
+    /// Callback to allow window to close itself after all sysexes are installed
+    var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback { get set }
 }
 
 class SystemExtensionGuideViewModel: NSObject {
@@ -53,8 +55,10 @@ class SystemExtensionGuideViewModel: NSObject {
     
     weak var viewController: SystemExtensionGuideVCProtocol?
     var acceptedHandler: () -> Void
+    var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback
     
-    init(acceptedHandler: @escaping () -> Void) {
+    init(isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void) {
+        self.isTimeToClose = isTimeToClose
         self.acceptedHandler = acceptedHandler
     }
     
@@ -64,8 +68,14 @@ class SystemExtensionGuideViewModel: NSObject {
         viewController?.render()
     }
     
-    @objc private func closeSelf() {
-        viewController?.closeSelf()
+    @objc private func closeSelfIfNeeded() {
+        isTimeToClose { [weak self] itsTime in
+            if itsTime {
+                DispatchQueue.main.async {
+                    self?.viewController?.closeSelf()
+                }
+            }
+        }
     }
 }
 
@@ -75,8 +85,8 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     
     func viewWillAppear() {
         // Autoclose this window after installation finishes
-        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(closeSelf), name: SystemExtensionManagerNotification.installationError, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelfIfNeeded), name: SystemExtensionManagerNotification.installationSuccess, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(closeSelfIfNeeded), name: SystemExtensionManagerNotification.installationError, object: nil)
         
         currentStep = 0
         updateView()
