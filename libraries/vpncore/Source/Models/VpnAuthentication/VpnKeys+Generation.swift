@@ -27,7 +27,8 @@ extension PrivateKey {
 
 extension VpnKeys {
     init() {
-        let keyPair = Ed25519KeyPair()!
+        var error: NSError?
+        let keyPair = Ed25519NewKeyPair(&error)!
         privateKey = PrivateKey(keyPair: keyPair)
         publicKey = PublicKey(keyPair: keyPair)
     }
