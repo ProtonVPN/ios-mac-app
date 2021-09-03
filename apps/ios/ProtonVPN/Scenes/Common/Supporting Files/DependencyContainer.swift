@@ -67,8 +67,6 @@ final class DependencyContainer {
     // Holds products available to buy via IAP
     private lazy var storeKitManager = StoreKitManagerImplementation(factory: self)
     
-    private lazy var paymentTokenStorage = MemoryPaymentTokenStorage(lifetime: AppConstants.Time.paymentTokenLifetime)
-    
     // Refreshes app data at predefined time intervals
     private lazy var refreshTimer = AppSessionRefreshTimer(factory: self, fullRefresh: AppConstants.Time.fullServerRefresh, serverLoadsRefresh: AppConstants.Time.serverLoadsRefresh, accountRefresh: AppConstants.Time.userAccountRefresh)
     // Refreshes announements from API
@@ -232,13 +230,6 @@ extension DependencyContainer: ReportsApiServiceFactory {
     }
 }
 
-// MARK: PaymentsApiServiceFactory
-extension DependencyContainer: PaymentsApiServiceFactory {
-    func makePaymentsApiService() -> PaymentsApiService {
-        return PaymentsApiServiceImplementation(networking: makeNetworking())
-    }
-}
-
 // MARK: UIAlertServiceFactory
 extension DependencyContainer: UIAlertServiceFactory {
     func makeUIAlertService() -> UIAlertService {
@@ -264,13 +255,6 @@ extension DependencyContainer: StoreKitManagerFactory {
 extension DependencyContainer: TrustKitHelperFactory {
     func makeTrustKitHelper() -> TrustKitHelper? {
         return trustKitHelper
-    }
-}
-
-// MARK: PaymentTokenStorageFactory
-extension DependencyContainer: PaymentTokenStorageFactory {
-    func makePaymentTokenStorage() -> PaymentTokenStorage {
-        return paymentTokenStorage
     }
 }
 
