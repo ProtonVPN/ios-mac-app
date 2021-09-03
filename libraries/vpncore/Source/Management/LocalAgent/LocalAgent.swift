@@ -77,7 +77,12 @@ final class GoLocalAgent: LocalAgent {
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
         PMLog.D("Local agent connecting to \(configuration.hostname)")
 
-        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.derRepresentation, serverCAsPEM: rootCerts, host: "10.2.0.1:65432", certServerName: configuration.hostname, client: client, features: LocalAgentFeatures()?.with(configuration: configuration), connectivity: true)
+        var error: NSError?
+        agent = LocalAgentNewAgentConnection(data.clientCertificate, data.clientKey.derRepresentation, rootCerts, "10.2.0.1:65432", configuration.hostname, client, LocalAgentFeatures()?.with(configuration: configuration), true, &error)
+
+        if let agentInitError = error {
+            PMLog.ET("Creating Go local agent connection failed with \(agentInitError)")
+        }
     }
 
     func disconnect() {
