@@ -1008,10 +1008,10 @@
 		F365355C2638522E001B7E88 /* LocalAgentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355A2638522E001B7E88 /* LocalAgentState.swift */; };
 		F365355D2638522E001B7E88 /* LocalAgentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355A2638522E001B7E88 /* LocalAgentState.swift */; };
 		F365355E2638522E001B7E88 /* LocalAgentState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355A2638522E001B7E88 /* LocalAgentState.swift */; };
-		F36535602638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */; };
-		F36535612638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */; };
-		F36535622638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */; };
-		F36535632638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */; };
+		F36535602638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */; };
+		F36535612638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */; };
+		F36535622638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */; };
+		F36535632638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */ = {isa = PBXBuildFile; fileRef = F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */; };
 		F3653568263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */; };
 		F3653569263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */; };
 		F365356A263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */; };
@@ -1455,7 +1455,7 @@
 		F365355026383DDC001B7E88 /* LocalAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgent.swift; sourceTree = "<group>"; };
 		F365355526384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalAgentFeatures+LocalAgent.swift"; sourceTree = "<group>"; };
 		F365355A2638522E001B7E88 /* LocalAgentState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentState.swift; sourceTree = "<group>"; };
-		F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentNativeClient.swift; sourceTree = "<group>"; };
+		F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentNativeClientImplementation.swift; sourceTree = "<group>"; };
 		F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalAgent+Certs.swift"; sourceTree = "<group>"; };
 		F3657A8325F66B1D00497451 /* SmartProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartProtocol.swift; sourceTree = "<group>"; };
 		F387A2662677625E00F0C3D8 /* VpnManager+LocalAgent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnManager+LocalAgent.swift"; sourceTree = "<group>"; };
@@ -1886,7 +1886,7 @@
 			isa = PBXGroup;
 			children = (
 				F365355026383DDC001B7E88 /* LocalAgent.swift */,
-				F365355F2638563E001B7E88 /* LocalAgentNativeClient.swift */,
+				F365355F2638563E001B7E88 /* LocalAgentNativeClientImplementation.swift */,
 				F3653567263856BB001B7E88 /* LocalAgent+Certs.swift */,
 			);
 			path = LocalAgent;
@@ -2966,7 +2966,7 @@
 				E1616BD121C7DAA500F42D79 /* ServiceChecker.swift in Sources */,
 				D5ADFBC923A0CF2E00C28CFF /* URL+Extension.swift in Sources */,
 				4242B0A72465A7F60042145A /* DataRequest+Validation.swift in Sources */,
-				F36535602638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */,
+				F36535602638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				4242B0512465A4380042145A /* AuthBaseRequest.swift in Sources */,
 				F365355626384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				E151126E22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
@@ -3215,7 +3215,7 @@
 				F30B9CE6262705550094C65E /* VpnAuthentication.swift in Sources */,
 				D5C204EA2487A0CE004FB58B /* PaymentsBaseRequest.swift in Sources */,
 				E9AF94BC26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
-				F36535612638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */,
+				F36535612638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				D5DCCACB252B4E0A004CB353 /* Announcement.swift in Sources */,
 				D5C204EB2487A0CE004FB58B /* PaymentsCreditRequest.swift in Sources */,
 				D5C204EC2487A0CE004FB58B /* PaymentsDefaultPlanRequest.swift in Sources */,
@@ -3609,7 +3609,7 @@
 				E129C6C322A90E6600D8437E /* AlertServiceMock.swift in Sources */,
 				E1B5F67021B8205100B558B0 /* ServerLocation.swift in Sources */,
 				E151126C22F07D3100C9A41F /* VpnManagerConfiguration.swift in Sources */,
-				F36535622638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */,
+				F36535622638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				E1B5F63421B6B19200B558B0 /* VpnState.swift in Sources */,
 				F30B9E87262886D90094C65E /* VpnCertificate.swift in Sources */,
 				4242B0242465A40F0042145A /* PaymentsCreditRequest.swift in Sources */,
@@ -3878,7 +3878,7 @@
 				E952B2A526525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
 				D5C204B724866B81004FB58B /* ProfileManager.swift in Sources */,
 				D5C204B824866B81004FB58B /* ProfileStorage.swift in Sources */,
-				F36535632638563E001B7E88 /* LocalAgentNativeClient.swift in Sources */,
+				F36535632638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				D5C204B924866B81004FB58B /* ProfileUtility.swift in Sources */,
 				D5C204BA24866B81004FB58B /* ServicePlanDataService.swift in Sources */,
 				D5C204BB24866B81004FB58B /* StoreKitManager.swift in Sources */,

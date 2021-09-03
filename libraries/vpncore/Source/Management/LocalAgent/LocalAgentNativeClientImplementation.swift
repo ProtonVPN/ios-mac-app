@@ -23,15 +23,15 @@
 import Foundation
 import WireguardSRP
 
-protocol LocalAgentNativeClientDelegate: AnyObject {
+protocol LocalAgentNativeClientImplementationDelegate: AnyObject {
     func didReceiveError(code: Int)
     func didChangeState(state: LocalAgentState?)
 }
 
-final class LocalAgentNativeClient: NSObject, LocalAgentNativeClientProtocol {
+final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClientProtocol {
     func onStatusUpdate(_ status: LocalAgentStatusMessage?) { }
 
-    weak var delegate: LocalAgentNativeClientDelegate?
+    weak var delegate: LocalAgentNativeClientImplementationDelegate?
 
     func log(_ text: String?) {
         guard let text = text else {
