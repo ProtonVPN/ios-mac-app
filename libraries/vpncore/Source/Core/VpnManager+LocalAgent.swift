@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import WireguardSRP
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
