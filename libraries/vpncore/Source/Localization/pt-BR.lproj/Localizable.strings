@@ -71,7 +71,7 @@
 "_allow_lan_info" = "Permite contornar a VPN e conectar-se a dispositivos na sua rede local, como sua impressora.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Observe que sua conexão precisa ser reiniciada para aplicar esta mudança";
+"_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
 
 /* (No Comment) */
 "_allow_lan_title" = "Permitir conexões LAN";
@@ -83,7 +83,7 @@
 "_always_on_vpn" = "VPN sempre ligada";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "O Kill Switch não é suportado no iOS. A VPN sempre ativa restaura a conexão VPN de forma rápida e automática. Para sua segurança, este recurso está sempre ligado.";
+"_always_on_vpn_tooltip_ios" = "A VPN sempre ativa restaura a conexão VPN de forma rápida e automática. Para sua segurança, este recurso está sempre ligado.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "A VPN sempre ativa irá reconectá-lo automaticamente";
@@ -125,7 +125,7 @@
 "_change_protocol_disconnect_warning" = "Alterar os protocolos irá encerrar sua sessão de VPN atual.";
 
 /* Changing settings title */
-"_change_settings" = "Change settings";
+"_change_settings" = "Mudar configurações";
 
 /* MacOS: About window */
 "_changelog" = "Registro de alterações";
@@ -784,6 +784,12 @@
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Carregar";
 
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Carregando informações de conexão";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Carregando informações de conexão para %@";
+
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Internet segura em qualquer lugar";
 
@@ -1040,7 +1046,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "On maintenance";
+"_on_maintenance" = "Em manutenção";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Abrir ProtonVPN...";
@@ -1050,36 +1056,6 @@
 
 /* (No Comment) */
 "_openvpn" = "OpenVPN";
-
-/* (No Comment) */
-"_openvpn_cannot_enable" = "Não é possível ativar o OpenVPN";
-
-/* (No Comment) */
-"_openvpn_error_description" = "Ocorreu um erro ao instalar o OpenVPN.\nReinstale o ProtonVPN, certifique-se de estar localizado na pasta Aplicativos para corrigir este problema. Alternativamente, entre em contato com nosso suporte.";
-
-/* (No Comment) */
-"_openvpn_settings_description" = "ProtonVPN precisa carregar uma Extensão do Sistema para impulsionar o Smart Protocol e o OpenVPN.";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_description" = "Você habilitou com sucesso a Extensão do Sistema no seu dispositivo. Você pode agora utilizar o Smart Protocol e o OpenVPN";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_title" = "Agora você pode usar o Protocolo Inteligente e o OpenVPN";
-
-/* (No Comment) */
-"_openvpn_settings_step1" = "Na caixa de dialogo que abre ao habilitar o OpenVPN, selecione Abrir Preferências de Segurança. Se essa tela não aparecer automaticamente, clique aqui.";
-
-/* (No Comment) */
-"_openvpn_settings_step1_link" = "clique aqui";
-
-/* (No Comment) */
-"_openvpn_settings_step2" = "Faça as alterações necessárias clicando na fechadura.";
-
-/* (No Comment) */
-"_openvpn_settings_step3" = "Permita que o software do sistema carregue.";
-
-/* OpenVPN */
-"_openvpn_settings_title" = "Extensão do sistema necessária";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Resumo";
@@ -1157,7 +1133,7 @@
 "_plan_speed_fastest" = "Velocidade ultra rápida";
 
 /* Plan speed */
-"_plan_speed_high" = "Velocidade alta";
+"_plan_speed_high" = "Alta velocidade";
 
 /* Plan speed */
 "_plan_speed_medium" = "Velocidade média";
@@ -1196,7 +1172,7 @@
 "_preparing_connection" = "Verificando a disponibilidade do servidor";
 
 /* iOS: link inside text under sign-up form */
-"_privacy_policy" = "Política de privacidade";
+"_privacy_policy" = "Politica de privacidade";
 
 /* MacOS Profiles Overview: Table column header */
 "_profile" = "Perfil";
@@ -1490,7 +1466,7 @@
 "_select_verification_option" = "Por favor, selecione uma opção de verificação para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "Para evitar abusos, você deve verificar se é humano.";
+"_select_verification_option_top_message" = "To prevent abuse, you must verify you are a human.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1642,6 +1618,69 @@
 /* (No Comment) */
 "_switch_side_button_on" = "ON";
 
+/* (No Comment) */
+"_sysex_cannot_enable" = "Cannot enable System Extension";
+
+/* (No Comment) */
+"_sysex_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol, OpenVPN and WireGuard.";
+
+/* (No Comment) */
+"_sysex_enabled_title" = "You can now use Smart Protocol, OpenVPN and WireGuard";
+
+/* (No Comment) */
+"_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+
+/* (No Comment) */
+"_sysex_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
+
+/* OpenVPN /  WireGuard / System Extensions */
+"_sysex_settings_title" = "Extensão do sistema necessária";
+
+/* System exetnsion wizard in mac: Button */
+"_sysex_wizard_button" = "Begin manual configuration";
+
+/* System exetnsion wizard in mac: Step nr.1 description */
+"_sysex_wizard_step1_description" = "Click the “Open Security Preferences” in\n the following dialog boxes (2)";
+
+/* System exetnsion wizard in mac: Step nr.1 title */
+"_sysex_wizard_step1_title" = "“System Extension Blocked” alerts (x2)";
+
+/* System exetnsion wizard in mac: Step nr.2 description */
+"_sysex_wizard_step2_description" = "Click the lock to make changes";
+
+/* System exetnsion wizard in mac: Step nr.2 title */
+"_sysex_wizard_step2_title" = "Unlock to make changes";
+
+/* System exetnsion wizard in mac: Step nr.3 description */
+"_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
+
+/* System exetnsion wizard in mac: Step nr.3 title */
+"_sysex_wizard_step3_title" = "Enter credentials";
+
+/* System exetnsion wizard in mac: Step nr.4 description */
+"_sysex_wizard_step4_description" = "Click the “Details...” button";
+
+/* System exetnsion wizard in mac: Step nr.4 title */
+"_sysex_wizard_step4_title" = "“Details...” button";
+
+/* System exetnsion wizard in mac: Step nr.5 description */
+"_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";
+
+/* System exetnsion wizard in mac: Step nr.5 title */
+"_sysex_wizard_step5_title" = "Selecting ProtonVPN items";
+
+/* System exetnsion wizard in mac: Subtitle */
+"_sysex_wizard_subtitle" = "In order to do so, you have to do a quick manual configuration in the following sequence:";
+
+/* System exetnsion wizard in mac: Text under 5 points */
+"_sysex_wizard_text_under_steps" = "You’re now ready to use ProtonVPN with the latest and fastest VPN technologies available!";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_window_title" = "Enabling custom protocols";
+
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Notificações do sistema";
 
@@ -1679,7 +1718,7 @@
 "_timed_out" = "tempo esgotado";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Outra aplicação pode estar interferindo com o Kill Switch.\nPara resolver este problema mude para o protocolo OpenVPN ou desative o Kill Switch e tente novamente.";
+"_timeout_ks_ike_descritpion" = "Another application might be interfering with Kill Switch. To fix this problem, switch to the OpenVPN protocol or disable Kill Switch and retry.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Troque para o OpenVPN e tente novamente";
@@ -1821,10 +1860,10 @@
 /* (No Comment) */
 "_try_again_without_killswitch" = "Desative o Kill Switch e tente novamente";
 
-/* (No Comment) */
-"_turn_ks_on_description" = "Ao ativar o Kill Switch, você não será capaz de acessar os dispositivos na sua rede local? \n\nContinuar?";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network. \n\nContinue?";
 
-/* (No Comment) */
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "Ativar Kill Switch ligado?";
 
 /* (No Comment) */
@@ -1951,7 +1990,7 @@
 "_vpn_accelerator_change_title" = "Alterar Acelerador de VPN";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "O acelerador de VPN permite um conjunto exclusivo de tecnologias de melhoria de desempenho que podem aumentar as velocidades de VPN em até 400%";
+"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Saiba mais";
