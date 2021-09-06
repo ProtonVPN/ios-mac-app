@@ -49,7 +49,7 @@ class ProtonVPNUITests: XCTestCase {
 
     // MARK: - Helper methods
     
-    private let newLoginRobot = NewLoginRobot()
+    private let loginRobot = LoginRobot()
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
@@ -71,7 +71,7 @@ class ProtonVPNUITests: XCTestCase {
     func login(withCredentials credentials: Credentials) {
         let buttonQuickConnect = app.buttons["Quick Connect"]
         super.setUp()
-        newLoginRobot
+        loginRobot
             .loginUser(credentials: credentials)
         
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
@@ -90,7 +90,7 @@ class ProtonVPNUITests: XCTestCase {
     }
  
      func openLoginScreen(){
-        let apiUrl = app.staticTexts["https://api.protonvpn.ch"]
+         let apiUrl = app.staticTexts["https://api.protonvpn.ch"]
          apiUrl.tap()
          app.buttons["Sign in"].tap()
     }

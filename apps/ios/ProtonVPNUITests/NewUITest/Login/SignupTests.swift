@@ -8,10 +8,10 @@
 
 import Foundation
 
-class NewSignupTests: ProtonVPNUITests {
+class SignupTests: ProtonVPNUITests {
     
     let mainRobot = MainRobot()
-    let newSignupRobot = NewSignupRobot()
+    let signupRobot = SignupRobot()
     
     override func setUp() {
         super.setUp()

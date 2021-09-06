@@ -16,26 +16,26 @@ fileprivate let nextButton = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
 fileprivate let protonmailErrorMessage = "Please use a non-ProtonMail email address"
 
-class NewSignupRobot: CoreElements {
+class SignupRobot: CoreElements {
     
-    func signinButtonTap() -> NewLoginRobot {
+    func signinButtonTap() -> LoginRobot {
         button(signInButtonId).tap()
-        return NewLoginRobot()
+        return LoginRobot()
     }
     
-    func protonmailAccountNotAvailable(_ email: String) -> NewSignupRobot {
+    func protonmailAccountNotAvailable(_ email: String) -> SignupRobot {
         return insertExternalEmail(email)
             .nextVerificationStep()
     }
     
-    private func insertExternalEmail(_ email: String) -> NewSignupRobot {
-         textField(externalEmailTextFieldId).tap().typeText(email)
-         return self
+    private func insertExternalEmail(_ email: String) -> SignupRobot {
+        textField(externalEmailTextFieldId).tap().typeText(email)
+        return self
      }
     
-    private func nextVerificationStep() -> NewSignupRobot {
+    private func nextVerificationStep() -> SignupRobot {
         button(nextButton).tap()
-         return self
+        return self
      }
 
     public let verify = Verify()
@@ -43,18 +43,16 @@ class NewSignupRobot: CoreElements {
     class Verify: CoreElements {
 
         @discardableResult
-        func signupScreenIsShown() -> NewSignupRobot {
+        func signupScreenIsShown() -> SignupRobot {
             staticText(titleId).wait().checkExists()
             staticText(subtitleId).wait().checkExists()
-            return NewSignupRobot()
+            return SignupRobot()
         }
         
         @discardableResult
-        func protonmailAccountErrorIsShown() -> NewSignupRobot {
+        func protonmailAccountErrorIsShown() -> SignupRobot {
             textView(protonmailErrorMessage).wait().checkExists()
-            return NewSignupRobot()
+            return SignupRobot()
         }
-
     }
 }
-
