@@ -34,7 +34,8 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     var step: (Int, SystemExtensionGuideViewModel.Step) { get }
     /// Callback to allow window to close itself after all sysexes are installed
     var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback { get set }
-    var viewController: SystemExtensionGuideVCProtocol? { get set }
+    var close: (() -> Void)? { get set }
+    var contentChanged: (() -> Void)? { get set }
 }
 
 class SystemExtensionGuideViewModel: NSObject {
@@ -54,9 +55,11 @@ class SystemExtensionGuideViewModel: NSObject {
     ]
     private var currentStep = 0
     
-    weak var viewController: SystemExtensionGuideVCProtocol?
     var acceptedHandler: () -> Void
     var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback
+    
+    var contentChanged: (() -> Void)?
+    var close: (() -> Void)?
     
     init(isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void) {
         self.isTimeToClose = isTimeToClose
@@ -66,14 +69,14 @@ class SystemExtensionGuideViewModel: NSObject {
     // MARK: - Private
     
     private func updateView() {
-        viewController?.render()
+        contentChanged?()
     }
     
     @objc private func closeSelfIfNeeded() {
         isTimeToClose { [weak self] itsTime in
             if itsTime {
                 DispatchQueue.main.async {
-                    self?.viewController?.closeSelf()
+                    self?.close?()
                 }
             }
         }
@@ -95,12 +98,12 @@ extension SystemExtensionGuideViewModel: SystemExtensionGuideViewModelProtocol {
     
     func didTapNext() {
         currentStep = min(currentStep + 1, steps.count - 1)
-        viewController?.render()
+        contentChanged?()
     }
     
     func didTapPrevious() {
         currentStep = max(currentStep - 1, 0)
-        viewController?.render()
+        contentChanged?()
     }
     
     func didTapAccept() {

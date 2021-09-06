@@ -29,7 +29,6 @@ class SysexGuideWindowController: WindowController {
         
         window.styleMask.remove(NSWindow.StyleMask.miniaturizable)
         window.styleMask.remove(NSWindow.StyleMask.resizable)
-//        window.title = LocalizedString.about
         window.titlebarAppearsTransparent = true
         window.appearance = NSAppearance(named: NSAppearance.Name.vibrantDark)
         window.backgroundColor = .protonGreyShade()
