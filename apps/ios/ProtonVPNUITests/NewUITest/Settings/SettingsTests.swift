@@ -13,9 +13,13 @@ class SettingsTests: ProtonVPNUITests {
     private let mainRobot = MainRobot()
     private let settingsRobot = SettingsRobot()
     
+    override func setUp() {
+        super.setUp()
+        logInIfNeeded()
+    }
+    
     func testKillSwitchAndLANConnectionOnOff() {
         
-        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .turnKillSwitchOn()
@@ -26,7 +30,6 @@ class SettingsTests: ProtonVPNUITests {
     
     func testSmartProtocolnOffAndOn() {
         
-        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .smartProtocolOff()

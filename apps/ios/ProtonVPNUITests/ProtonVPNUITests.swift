@@ -71,7 +71,6 @@ class ProtonVPNUITests: XCTestCase {
     func login(withCredentials credentials: Credentials) {
         let buttonQuickConnect = app.buttons["Quick Connect"]
         super.setUp()
-        //openLoginScreen()
         newLoginRobot
             .loginUser(credentials: credentials)
         
@@ -102,6 +101,7 @@ class ProtonVPNUITests: XCTestCase {
             return
         }
         else {
+            openLoginScreen()
             loginAsPlusUser()
         }
     }
@@ -118,23 +118,4 @@ class ProtonVPNUITests: XCTestCase {
         app.swipeUp() // For iphone SE small screen
         logoutButton.tap()
     }
-    
-//    func assertLastWizardScreen(){
-//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Log In"], handler: nil)
-//        waitForExpectations(timeout: 2, handler: nil)
-//
-//        XCTAssert(app.buttons["Log In"].exists)
-//        XCTAssert(app.buttons["Sign Up"].exists)
-//    }
-//
-//    func assertLoginScreenOpen() {
-//        let confirmButton = app.buttons["Agree & Continue"]
-//        if confirmButton.waitForExistence(timeout: 1) {
-//            confirmButton.tap()
-//        }
-//
-//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.textFields["Username"], handler: nil)
-//        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.secureTextFields["Password"], handler: nil)
-//        waitForExpectations(timeout: 2, handler: nil)
-//    }
 }
