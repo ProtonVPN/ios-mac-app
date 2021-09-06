@@ -8,10 +8,10 @@
 
 import Foundation
 
-class newLoginTests: ProtonVPNUITests {
+class LoginTests: ProtonVPNUITests {
     
     let mainRobot = MainRobot()
-    let newLoginRobot = NewLoginRobot()
+    let loginRobot = LoginRobot()
     let needHelpRobot = NeedHelpRobot()
     
     override func setUp() {
@@ -28,7 +28,7 @@ class newLoginTests: ProtonVPNUITests {
         let username = "wrong_username"
         let userpassword = "wrong_password"
             
-        newLoginRobot
+        loginRobot
             .loginWrongUser(username, userpassword)
             .verify.incorrectCredentialsErrorDialog()
     }
@@ -45,14 +45,14 @@ class newLoginTests: ProtonVPNUITests {
     
     func testLoginWithEmptyFields() {
             
-        newLoginRobot
+        loginRobot
             .loginEmptyFields()
             .verify.pleaseEnterPasswordAndUsernameErrorIsShown()
     }
     
     func testNeedHelpClosed() {
         
-        newLoginRobot
+        loginRobot
             .needHelp()
             .needHelpOptionsDisplayed()
             .closeNeedHelpScreen()

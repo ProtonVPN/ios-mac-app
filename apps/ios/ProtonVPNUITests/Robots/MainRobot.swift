@@ -70,21 +70,21 @@ class MainRobot: CoreElements {
     }
     
     @discardableResult
-    public func showSignup() -> NewSignupRobot {
+    public func showSignup() -> SignupRobot {
         button(showSignupButtonLabelText).wait().tap()
-        return NewSignupRobot()
+        return SignupRobot()
     }
 
     @discardableResult
-     public func changeEnvironmentTo() -> MainRobot {
+    public func changeEnvironmentTo() -> MainRobot {
         staticText(environmentText).wait().tap()
-         return self
+        return self
      }
     
     @discardableResult
-    public func showLogin() -> NewLoginRobot {
+    public func showLogin() -> LoginRobot {
         button(showLoginButtonLabelText).wait().tap()
-        return NewLoginRobot()
+        return LoginRobot()
     }
     
     class Verify: CoreElements {

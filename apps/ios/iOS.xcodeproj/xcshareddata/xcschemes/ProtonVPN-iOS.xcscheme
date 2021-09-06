@@ -78,9 +78,6 @@
                   Identifier = "ConnectionTests">
                </Test>
                <Test
-                  Identifier = "LoginTests">
-               </Test>
-               <Test
                   Identifier = "SignUpTests">
                </Test>
                <Test

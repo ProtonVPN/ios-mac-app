@@ -18,26 +18,26 @@ fileprivate let helpButtonId = "LoginViewController.helpButton"
 fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account password."
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
 
-class NewLoginRobot: CoreElements {
+class LoginRobot: CoreElements {
     
     public let verify = Verify()
     
     @discardableResult
-    func loginUser(credentials: Credentials) -> NewLoginRobot {
+    func loginUser(credentials: Credentials) -> LoginRobot {
         return typeUsername(username: credentials.username)
             .typePassword(password: credentials.password)
             .signIn()
     }
     
     @discardableResult
-    func loginWrongUser(_ username: String, _ password: String) -> NewLoginRobot {
+    func loginWrongUser(_ username: String, _ password: String) -> LoginRobot {
         return typeUsername(username: username)
             .typePassword(password: password)
             .signIn()
     }
     
     @discardableResult
-    func loginEmptyFields() -> NewLoginRobot {
+    func loginEmptyFields() -> LoginRobot {
         return signIn()
     }
     
@@ -47,18 +47,18 @@ class NewLoginRobot: CoreElements {
     }
 
     
-    private func typeUsername(username: String) -> NewLoginRobot {
+    private func typeUsername(username: String) -> LoginRobot {
         textField(loginTextFieldId).tap().typeText(username)
         return self
     }
     
-    private func typePassword(password: String) -> NewLoginRobot {
+    private func typePassword(password: String) -> LoginRobot {
         secureTextField(passwordTextFieldId).tap()
         secureTextField(passwordTextFieldId).tap().typeText(password)
         return self
     }
     
-    private func signIn() -> NewLoginRobot {
+    private func signIn() -> LoginRobot {
         button(signInButtonId).tap()
         return self
     }
@@ -66,23 +66,23 @@ class NewLoginRobot: CoreElements {
     class Verify: CoreElements {
         
         @discardableResult
-        func loginScreenIsShown() -> NewLoginRobot {
+        func loginScreenIsShown() -> LoginRobot {
             staticText(titleId).wait().checkExists()
             staticText(subtitleId).wait().checkExists()
-            return NewLoginRobot()
+            return LoginRobot()
         }
         
         @discardableResult
-        func incorrectCredentialsErrorDialog() -> NewLoginRobot {
+        func incorrectCredentialsErrorDialog() -> LoginRobot {
             textView(invalidCredentialText).wait().checkExists()
-            return NewLoginRobot()
+            return LoginRobot()
         }
         
         @discardableResult
-        func pleaseEnterPasswordAndUsernameErrorIsShown() -> NewLoginRobot {
+        func pleaseEnterPasswordAndUsernameErrorIsShown() -> LoginRobot {
             staticText(enterPasswordErrorMessage).checkExists()
             staticText(enterUsernameErrorMessage).checkExists()
-            return NewLoginRobot()
+            return LoginRobot()
         }
     }
 }
