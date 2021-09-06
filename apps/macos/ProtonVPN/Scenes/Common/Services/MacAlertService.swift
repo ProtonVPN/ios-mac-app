@@ -245,14 +245,8 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {
-        let viewController = SystemExtensionGuideViewController()
-        guard !windowService.isKeyModalPresent(viewController: viewController) else {
-            return // Don't show wizard twice
-        }
         let viewModel = SystemExtensionGuideViewModel(isTimeToClose: alert.isTimeToClose, acceptedHandler: alert.continueHandler)
-        viewController.viewModel = viewModel
-        viewModel.viewController = viewController
-        windowService.presentKeyModal(viewController: viewController)
+        windowService.openSystemExtencionGuideWindow(viewModel: viewModel)
     }
     
     private func show(_ alert: P2pForwardedAlert) {

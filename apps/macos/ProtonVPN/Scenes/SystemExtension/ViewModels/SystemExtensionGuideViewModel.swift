@@ -34,6 +34,7 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     var step: (Int, SystemExtensionGuideViewModel.Step) { get }
     /// Callback to allow window to close itself after all sysexes are installed
     var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback { get set }
+    var viewController: SystemExtensionGuideVCProtocol? { get set }
 }
 
 class SystemExtensionGuideViewModel: NSObject {
