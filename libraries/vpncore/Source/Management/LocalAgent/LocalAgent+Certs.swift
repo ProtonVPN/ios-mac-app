@@ -22,7 +22,7 @@
 
 import Foundation
 
-extension GoLocalAgent {
+extension LocalAgentImplementation {
     var rootCerts: String {
         return "-----BEGIN CERTIFICATE-----\n" +
         "MIIFozCCA4ugAwIBAgIBATANBgkqhkiG9w0BAQ0FADBAMQswCQYDVQQGEwJDSDEV\n" +
