@@ -43,6 +43,7 @@ protocol WindowService: class {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
+    func openSystemExtencionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
     
     func bringWindowsToForground() -> Bool
     func closeActiveWindows()
@@ -197,6 +198,16 @@ class WindowServiceImplementation: WindowService {
         
         let viewController = ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager)
         let windowController = ReportBugWindowController(viewController: viewController)
+        windowController.delegate = self
+        activeWindowControllers.append(windowController)
+        windowController.showWindow(self)
+    }
+    
+    func openSystemExtencionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
+        let controller = SystemExtensionGuideViewController()
+        controller.viewModel = viewModel
+        viewModel.viewController = controller
+        let windowController = SysexGuideWindowController(viewController: controller)
         windowController.delegate = self
         activeWindowControllers.append(windowController)
         windowController.showWindow(self)
