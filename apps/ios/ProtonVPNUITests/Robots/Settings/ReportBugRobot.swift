@@ -43,6 +43,7 @@ class ReportBugRobot: CoreElements {
         textField(contactEmailInput).tap()
         textField(contactEmailInput).tap().typeText(email)
         staticText(yourMessageInput).tap()
+        staticText(yourMessageInput).tap()
         XCUIApplication().typeText(message)
         return self
     }

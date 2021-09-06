@@ -49,11 +49,11 @@ class CreateProfileRobot: CoreElements {
             .chooseServer()
     }
     
-    func makeDefaultProfileWithSecureCore(_ name: String, _ countryname: String, _ server: String) -> CreateProfileRobot {
+    func makeDefaultProfileWithSecureCore(_ name: String, _ newcountryname: String, _ server: String) -> CreateProfileRobot {
         return enterProfileName(name)
             .secureCoreON()
             .selectCountry()
-            .chooseCountry(" " + " " + countryname)
+            .chooseCountry(" " + " " + newcountryname)
             .selectServer()
             .chooseServerVia(server)
             .defaultProfileON()
@@ -76,7 +76,8 @@ class CreateProfileRobot: CoreElements {
     }
     
     private func editProfileName(_ name: String) -> CreateProfileRobot {
-        textField(name).tap().typeText("_edit")
+        textField(name).tap()
+        textField(name).tap().typeText("edit_")
         return self
     }
     
