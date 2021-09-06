@@ -86,4 +86,3 @@ class NewLoginRobot: CoreElements {
         }
     }
 }
-

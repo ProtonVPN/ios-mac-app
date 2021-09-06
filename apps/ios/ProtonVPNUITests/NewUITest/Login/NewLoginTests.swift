@@ -51,6 +51,7 @@ class newLoginTests: ProtonVPNUITests {
     }
     
     func testNeedHelpClosed() {
+        
         newLoginRobot
             .needHelp()
             .needHelpOptionsDisplayed()
@@ -59,6 +60,7 @@ class newLoginTests: ProtonVPNUITests {
     }
     
     func testNeedHelpOptionsLink() {
+        
         mainRobot.showLogin()
             .needHelp()
             .needHelpOptionsDisplayed()
