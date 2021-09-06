@@ -119,20 +119,7 @@
 		96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */; };
 		A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */; };
 		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
-		B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D82D2660FBC500E0ECCB /* MainRobot.swift */; };
-		B293D8342660FC0A00E0ECCB /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */; };
-		B293D8382660FC3B00E0ECCB /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */; };
-		B293D83C2660FC6100E0ECCB /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D83B2660FC6100E0ECCB /* SettingsRobot.swift */; };
-		B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD69D26540F1600978637 /* ProfileRobot.swift */; };
-		B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6A326540F2700978637 /* CreateProfileRobot.swift */; };
-		B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6A826540F4D00978637 /* ProfilesTests.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
-		B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6B2265410D200978637 /* LoginRobot.swift */; };
-		B2BA40EB26C28C0F00DF04C3 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */; };
-		B2BA40ED26C28C1E00DF04C3 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */; };
-		B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */; };
-		B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */; };
-		B2BA40F426C2A63E00DF04C3 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */; };
 		B8F0BAE6EEFE43932E7D20B1 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */; };
 		C3226764A143E60A9570365C /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8746F5B74BD261EE27AF0E48 /* Pods-ProtonVPNTests-metadata.plist */; };
 		D5110851246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
@@ -267,8 +254,6 @@
 		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
-		D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */; };
-		D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D58874A924F92F640022E438 /* SignUpTests.swift */; };
 		D5924D8A250F853E00DCFF15 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
 		D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
 		D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */; };
@@ -291,7 +276,7 @@
 		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12A229D28E400EA839A /* Credentials.swift */; };
-		D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12D229D337300EA839A /* LoginTests.swift */; };
+		D5AAA12E229D337300EA839A /* (null) in Sources */ = {isa = PBXBuildFile; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5BCDC7E253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */; };
@@ -321,7 +306,7 @@
 		D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
-		D92A295D47C56CEE2650AA70 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */; };
+		D92A295D47C56CEE2650AA70 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -466,13 +451,31 @@
 		F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		F3521E10264A9D300070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
-		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
+		F3B783DD26E6427E006768A8 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D226E6427E006768A8 /* SettingsTests.swift */; };
+		F3B783DE26E6427E006768A8 /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D326E6427E006768A8 /* ReportBugTests.swift */; };
+		F3B783DF26E6427E006768A8 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D526E6427E006768A8 /* ConnectionTests.swift */; };
+		F3B783E026E6427E006768A8 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = F3B783D726E6427E006768A8 /* TestPlan.xctestplan */; };
+		F3B783E126E6427E006768A8 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D926E6427E006768A8 /* ProfilesTests.swift */; };
+		F3B783E226E6427E006768A8 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783DB26E6427E006768A8 /* LoginTests.swift */; };
+		F3B783E326E6427E006768A8 /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783DC26E6427E006768A8 /* SignupTests.swift */; };
+		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
+		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
+		F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E826E6428C006768A8 /* ReportBugRobot.swift */; };
+		F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */; };
+		F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EB26E6428C006768A8 /* MapRobot.swift */; };
+		F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EC26E6428C006768A8 /* CountryListRobot.swift */; };
+		F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783ED26E6428C006768A8 /* ServerListRobot.swift */; };
+		F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783EF26E6428C006768A8 /* ProfileRobot.swift */; };
+		F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F026E6428C006768A8 /* CreateProfileRobot.swift */; };
+		F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */; };
+		F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F326E6428C006768A8 /* SignupRobot.swift */; };
+		F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F426E6428C006768A8 /* LoginRobot.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -602,7 +605,6 @@
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CBDFC873E416AD23C42323F /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		3FF4A29B042EF36CA906EF26 /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.release.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
-		40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTests.swift; path = ../../../../ios/ProtonVPNUITests/NewUITest/Settings/SettingsTests.swift; sourceTree = "<group>"; };
 		42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableViewCell.swift; sourceTree = "<group>"; };
 		42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureTableViewCell.xib; sourceTree = "<group>"; };
 		42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationVC.swift; sourceTree = "<group>"; };
@@ -708,21 +710,7 @@
 		8746F5B74BD261EE27AF0E48 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
 		954D2A931124ECB13F5DE123 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
-		B293D82D2660FBC500E0ECCB /* MainRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/MainRobot.swift; sourceTree = "<group>"; };
-		B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ReportBugRobot.swift; sourceTree = "<group>"; };
-		B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugTests.swift; path = ../../../../ios/ProtonVPNUITests/NewUITest/Settings/ReportBugTests.swift; sourceTree = "<group>"; };
-		B293D83B2660FC6100E0ECCB /* SettingsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/SettingsRobot.swift; sourceTree = "<group>"; };
-		B293D873266104F600E0ECCB /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
-		B29CD69D26540F1600978637 /* ProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/ProfileRobot.swift; sourceTree = "<group>"; };
-		B29CD6A326540F2700978637 /* CreateProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CreateProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/CreateProfileRobot.swift; sourceTree = "<group>"; };
-		B29CD6A826540F4D00978637 /* ProfilesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
-		B29CD6B2265410D200978637 /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/LoginRobot.swift; sourceTree = "<group>"; };
-		B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountryListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/CountryListRobot.swift; sourceTree = "<group>"; };
-		B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionStatusRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ConnectionStatusRobot.swift; sourceTree = "<group>"; };
-		B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ServerListRobot.swift; sourceTree = "<group>"; };
-		B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionTests.swift; path = ../../../../ios/ProtonVPNUITests/NewUITest/Connection/ConnectionTests.swift; sourceTree = "<group>"; };
-		B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/MapRobot.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		BDB268B7C236ED5B1A411ACD /* Pods-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
 		C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -771,8 +759,6 @@
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnloggedUserTests.swift; sourceTree = "<group>"; };
-		D58874A924F92F640022E438 /* SignUpTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpTests.swift; sourceTree = "<group>"; };
 		D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldServiceMock.swift; sourceTree = "<group>"; };
 		D594A957227C0E470041D423 /* UIView+nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+nib.swift"; sourceTree = "<group>"; };
 		D594A960227C3A460041D423 /* LogoWithMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogoWithMapView.swift; sourceTree = "<group>"; };
@@ -788,7 +774,6 @@
 		D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingSwitchCell.xib; sourceTree = "<group>"; };
 		D5AAA127229D23F500EA839A /* credentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
 		D5AAA12A229D28E400EA839A /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
-		D5AAA12D229D337300EA839A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertService.swift; sourceTree = "<group>"; };
 		D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
 		D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
@@ -969,6 +954,25 @@
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
+		F3B783D226E6427E006768A8 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
+		F3B783D326E6427E006768A8 /* ReportBugTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugTests.swift; sourceTree = "<group>"; };
+		F3B783D526E6427E006768A8 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
+		F3B783D726E6427E006768A8 /* TestPlan.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		F3B783D926E6427E006768A8 /* ProfilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
+		F3B783DB26E6427E006768A8 /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		F3B783DC26E6427E006768A8 /* SignupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupTests.swift; sourceTree = "<group>"; };
+		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
+		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
+		F3B783E826E6428C006768A8 /* ReportBugRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugRobot.swift; sourceTree = "<group>"; };
+		F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionStatusRobot.swift; sourceTree = "<group>"; };
+		F3B783EB26E6428C006768A8 /* MapRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapRobot.swift; sourceTree = "<group>"; };
+		F3B783EC26E6428C006768A8 /* CountryListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryListRobot.swift; sourceTree = "<group>"; };
+		F3B783ED26E6428C006768A8 /* ServerListRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ServerListRobot.swift; sourceTree = "<group>"; };
+		F3B783EF26E6428C006768A8 /* ProfileRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileRobot.swift; sourceTree = "<group>"; };
+		F3B783F026E6428C006768A8 /* CreateProfileRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateProfileRobot.swift; sourceTree = "<group>"; };
+		F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeedHelpRobot.swift; sourceTree = "<group>"; };
+		F3B783F326E6428C006768A8 /* SignupRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupRobot.swift; sourceTree = "<group>"; };
+		F3B783F426E6428C006768A8 /* LoginRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/LoginService.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		F613F0A928F442C2F592BBB3 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1362,91 +1366,6 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
-		B293D82B2660FB7100E0ECCB /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */,
-				40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		B293D82C2660FB7F00E0ECCB /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */,
-				B293D83B2660FC6100E0ECCB /* SettingsRobot.swift */,
-			);
-			path = Settings;
-			sourceTree = "<group>";
-		};
-		B293D876266106D700E0ECCB /* TestPlans */ = {
-			isa = PBXGroup;
-			children = (
-				B293D873266104F600E0ECCB /* TestPlan.xctestplan */,
-			);
-			path = TestPlans;
-			sourceTree = "<group>";
-		};
-		B29CD69B26540EEE00978637 /* Robots */ = {
-			isa = PBXGroup;
-			children = (
-				B2BA40E926C28BD000DF04C3 /* Connection */,
-				B293D82C2660FB7F00E0ECCB /* Settings */,
-				B29CD69C26540EF400978637 /* Profiles */,
-				B29CD6B2265410D200978637 /* LoginRobot.swift */,
-				B293D82D2660FBC500E0ECCB /* MainRobot.swift */,
-			);
-			path = Robots;
-			sourceTree = "<group>";
-		};
-		B29CD69C26540EF400978637 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				B29CD69D26540F1600978637 /* ProfileRobot.swift */,
-				B29CD6A326540F2700978637 /* CreateProfileRobot.swift */,
-			);
-			path = Profiles;
-			sourceTree = "<group>";
-		};
-		B29CD6A726540F2D00978637 /* NewUITest */ = {
-			isa = PBXGroup;
-			children = (
-				B2BA40F026C28C3D00DF04C3 /* Connection */,
-				B293D876266106D700E0ECCB /* TestPlans */,
-				B293D82B2660FB7100E0ECCB /* Settings */,
-				B29CD8D1265BB66300978637 /* Profiles */,
-			);
-			path = NewUITest;
-			sourceTree = "<group>";
-		};
-		B29CD8D1265BB66300978637 /* Profiles */ = {
-			isa = PBXGroup;
-			children = (
-				B29CD6A826540F4D00978637 /* ProfilesTests.swift */,
-			);
-			path = Profiles;
-			sourceTree = "<group>";
-		};
-		B2BA40E926C28BD000DF04C3 /* Connection */ = {
-			isa = PBXGroup;
-			children = (
-				B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */,
-				B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */,
-				B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */,
-				B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */,
-			);
-			path = Connection;
-			sourceTree = "<group>";
-		};
-		B2BA40F026C28C3D00DF04C3 /* Connection */ = {
-			isa = PBXGroup;
-			children = (
-				B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */,
-			);
-			path = Connection;
-			sourceTree = "<group>";
-		};
 		D50342602472C82A005F6B90 /* ConnectionBar */ = {
 			isa = PBXGroup;
 			children = (
@@ -1624,10 +1543,8 @@
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B29CD6A726540F2D00978637 /* NewUITest */,
-				B29CD69B26540EEE00978637 /* Robots */,
-				D5811D87229BE20F0087B63A /* Unlogged user */,
-				D5AAA12C229D334900EA839A /* Login */,
+				F3B783D026E6427E006768A8 /* Scenarios */,
+				F3B783E426E6428C006768A8 /* Robots */,
 				D5AAA129229D28CC00EA839A /* Other classes */,
 				D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */,
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
@@ -1635,15 +1552,6 @@
 				D5AAA127229D23F500EA839A /* credentials.plist */,
 			);
 			path = ProtonVPNUITests;
-			sourceTree = "<group>";
-		};
-		D5811D87229BE20F0087B63A /* Unlogged user */ = {
-			isa = PBXGroup;
-			children = (
-				D5811D89229BE24B0087B63A /* UnloggedUserTests.swift */,
-				D58874A924F92F640022E438 /* SignUpTests.swift */,
-			);
-			path = "Unlogged user";
 			sourceTree = "<group>";
 		};
 		D5A8CD7A24570AC700F9B0C9 /* Views */ = {
@@ -1664,14 +1572,6 @@
 				B29CD6AE2654109600978637 /* StringUtils.swift */,
 			);
 			path = "Other classes";
-			sourceTree = "<group>";
-		};
-		D5AAA12C229D334900EA839A /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				D5AAA12D229D337300EA839A /* LoginTests.swift */,
-			);
-			path = Login;
 			sourceTree = "<group>";
 		};
 		D5BCDC7B25303825004BAEE8 /* Announcements */ = {
@@ -2195,6 +2095,113 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
+		F3B783D026E6427E006768A8 /* Scenarios */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783D126E6427E006768A8 /* Settings */,
+				F3B783D426E6427E006768A8 /* Connection */,
+				F3B783D626E6427E006768A8 /* TestPlans */,
+				F3B783D826E6427E006768A8 /* Profiles */,
+				F3B783DA26E6427E006768A8 /* Login */,
+			);
+			name = Scenarios;
+			path = ../../ios/ProtonVPNUITests/Scenarios;
+			sourceTree = "<group>";
+		};
+		F3B783D126E6427E006768A8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783D226E6427E006768A8 /* SettingsTests.swift */,
+				F3B783D326E6427E006768A8 /* ReportBugTests.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F3B783D426E6427E006768A8 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783D526E6427E006768A8 /* ConnectionTests.swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		F3B783D626E6427E006768A8 /* TestPlans */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783D726E6427E006768A8 /* TestPlan.xctestplan */,
+			);
+			path = TestPlans;
+			sourceTree = "<group>";
+		};
+		F3B783D826E6427E006768A8 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783D926E6427E006768A8 /* ProfilesTests.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		F3B783DA26E6427E006768A8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783DB26E6427E006768A8 /* LoginTests.swift */,
+				F3B783DC26E6427E006768A8 /* SignupTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		F3B783E426E6428C006768A8 /* Robots */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783E526E6428C006768A8 /* MainRobot.swift */,
+				F3B783E626E6428C006768A8 /* Settings */,
+				F3B783E926E6428C006768A8 /* Connection */,
+				F3B783EE26E6428C006768A8 /* Profiles */,
+				F3B783F126E6428C006768A8 /* Login */,
+			);
+			name = Robots;
+			path = ../../ios/ProtonVPNUITests/Robots;
+			sourceTree = "<group>";
+		};
+		F3B783E626E6428C006768A8 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783E726E6428C006768A8 /* SettingsRobot.swift */,
+				F3B783E826E6428C006768A8 /* ReportBugRobot.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		F3B783E926E6428C006768A8 /* Connection */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783EA26E6428C006768A8 /* ConnectionStatusRobot.swift */,
+				F3B783EB26E6428C006768A8 /* MapRobot.swift */,
+				F3B783EC26E6428C006768A8 /* CountryListRobot.swift */,
+				F3B783ED26E6428C006768A8 /* ServerListRobot.swift */,
+			);
+			path = Connection;
+			sourceTree = "<group>";
+		};
+		F3B783EE26E6428C006768A8 /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783EF26E6428C006768A8 /* ProfileRobot.swift */,
+				F3B783F026E6428C006768A8 /* CreateProfileRobot.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		F3B783F126E6428C006768A8 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */,
+				F3B783F326E6428C006768A8 /* SignupRobot.swift */,
+				F3B783F426E6428C006768A8 /* LoginRobot.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
 		F3F36CE026DFAAA4008AD48B /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -2608,6 +2615,7 @@
 			files = (
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
+				F3B783E026E6427E006768A8 /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3264,28 +3272,30 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */,
-				B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */,
-				B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */,
+				F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */,
+				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
+				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
+				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
+				F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */,
+				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
-				B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */,
-				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
-				B293D83C2660FC6100E0ECCB /* SettingsRobot.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
-				F3521E1A264AA40F0070F177 /* (null) in Sources */,
-				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
+				F3B783DF26E6427E006768A8 /* ConnectionTests.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
-				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
-				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
-				B2BA40EB26C28C0F00DF04C3 /* CountryListRobot.swift in Sources */,
-				B293D8342660FC0A00E0ECCB /* ReportBugRobot.swift in Sources */,
-				B2BA40ED26C28C1E00DF04C3 /* ConnectionStatusRobot.swift in Sources */,
-				B293D8382660FC3B00E0ECCB /* ReportBugTests.swift in Sources */,
-				D5811D8A229BE24B0087B63A /* UnloggedUserTests.swift in Sources */,
-				D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */,
-				B2BA40F426C2A63E00DF04C3 /* MapRobot.swift in Sources */,
-				D92A295D47C56CEE2650AA70 /* SettingsTests.swift in Sources */,
+				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
+				F3B783E226E6427E006768A8 /* LoginTests.swift in Sources */,
+				F3B783DE26E6427E006768A8 /* ReportBugTests.swift in Sources */,
+				F3B783DD26E6427E006768A8 /* SettingsTests.swift in Sources */,
+				F3B783E126E6427E006768A8 /* ProfilesTests.swift in Sources */,
+				F3B783E326E6427E006768A8 /* SignupTests.swift in Sources */,
+				F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */,
+				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
+				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
+				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
+				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
+				D5AAA12E229D337300EA839A /* (null) in Sources */,
+				D92A295D47C56CEE2650AA70 /* (null) in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

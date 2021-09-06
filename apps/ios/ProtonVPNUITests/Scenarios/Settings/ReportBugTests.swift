@@ -16,6 +16,7 @@ class ReportBugTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
+        logInIfNeeded()
     }
     
     func testSendBugReport() {
@@ -23,7 +24,6 @@ class ReportBugTests: ProtonVPNUITests {
         let message = StringUtils().randomAlphanumericString(length: 10)
         let email = "testemail@automation.com"
         
-        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .openReportBugWindow()
@@ -39,7 +39,6 @@ class ReportBugTests: ProtonVPNUITests {
         let message = StringUtils().randomAlphanumericString(length: 10)
         let email = "testemailautomation.com"
         
-        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .openReportBugWindow()
@@ -53,7 +52,6 @@ class ReportBugTests: ProtonVPNUITests {
         let message = StringUtils().randomAlphanumericString(length: 9)
         let email = "testemail@automation.com"
         
-        logInIfNeeded()
         mainRobot
             .goToSettingsTab()
             .openReportBugWindow()

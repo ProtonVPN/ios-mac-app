@@ -77,6 +77,12 @@
                <Test
                   Identifier = "ConnectionTests">
                </Test>
+               <Test
+                  Identifier = "SignUpTests">
+               </Test>
+               <Test
+                  Identifier = "UnloggedUserTests">
+               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

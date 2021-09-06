@@ -42,16 +42,16 @@ protocol LocalAgent {
     func unjail()
 }
 
-final class GoLocalAgent: LocalAgent {
+final class LocalAgentImplementation: LocalAgent {
     private var agent: LocalAgentAgentConnection?
-    private let client: LocalAgentNativeClient
+    private let client: LocalAgentNativeClientImplementation
     private let reachability: Reachability?
 
     private var previousState: LocalAgentState?
 
     init() {
         reachability = try? Reachability()
-        client = LocalAgentNativeClient()
+        client = LocalAgentNativeClientImplementation()
         client.delegate = self
 
         try? reachability?.startNotifier()
@@ -77,7 +77,12 @@ final class GoLocalAgent: LocalAgent {
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
         PMLog.D("Local agent connecting to \(configuration.hostname)")
 
-        agent = LocalAgentAgentConnection(data.clientCertificate, clientKeyPEM: data.clientKey.derRepresentation, serverCAsPEM: rootCerts, host: "10.2.0.1:65432", certServerName: configuration.hostname, client: client, features: LocalAgentFeatures()?.with(configuration: configuration), connectivity: true)
+        var error: NSError?
+        agent = LocalAgentNewAgentConnection(data.clientCertificate, data.clientKey.derRepresentation, rootCerts, "10.2.0.1:65432", configuration.hostname, client, LocalAgentNewFeatures()?.with(configuration: configuration), true, &error)
+
+        if let agentInitError = error {
+            PMLog.ET("Creating Go local agent connection failed with \(agentInitError)")
+        }
     }
 
     func disconnect() {
@@ -85,22 +90,22 @@ final class GoLocalAgent: LocalAgent {
     }
 
     func update(netshield: NetShieldType) {
-        let features = LocalAgentFeatures()?.with(netshield: netshield)
+        let features = LocalAgentNewFeatures()?.with(netshield: netshield)
         agent?.setFeatures(features)
     }
 
     func update(vpnAccelerator: Bool) {
-        let features = LocalAgentFeatures()?.with(vpnAccelerator: vpnAccelerator)
+        let features = LocalAgentNewFeatures()?.with(vpnAccelerator: vpnAccelerator)
         agent?.setFeatures(features)
     }
 
     func unjail() {
-        let features = LocalAgentFeatures()?.with(jailed: false)
+        let features = LocalAgentNewFeatures()?.with(jailed: false)
         agent?.setFeatures(features)
     }
 }
 
-extension GoLocalAgent: LocalAgentNativeClientDelegate {
+extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveError(code: Int) {
         guard let error = LocalAgentError.from(code: code) else {
             PMLog.D("Ignoring unknown local agent error")

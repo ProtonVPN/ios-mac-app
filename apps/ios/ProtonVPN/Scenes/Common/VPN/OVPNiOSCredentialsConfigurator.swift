@@ -14,7 +14,8 @@ import TunnelKit
 final class OVPNiOSCredentialsConfigurator: VpnCredentialsConfigurator {
     
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
-        
+        protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
+                
         let storage = TunnelKit.Keychain(group: AppConstants.AppGroups.main)
         try? storage.set(password: configuration.password, for: configuration.username, context: AppConstants.NetworkExtensions.openVpn)
         
