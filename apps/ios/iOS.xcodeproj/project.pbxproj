@@ -457,13 +457,13 @@
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
-		F3B783DD26E6427E006768A8 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D226E6427E006768A8 /* SettingsTests.swift */; };
-		F3B783DE26E6427E006768A8 /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D326E6427E006768A8 /* ReportBugTests.swift */; };
-		F3B783DF26E6427E006768A8 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D526E6427E006768A8 /* ConnectionTests.swift */; };
-		F3B783E026E6427E006768A8 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = F3B783D726E6427E006768A8 /* TestPlan.xctestplan */; };
-		F3B783E126E6427E006768A8 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783D926E6427E006768A8 /* ProfilesTests.swift */; };
-		F3B783E226E6427E006768A8 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783DB26E6427E006768A8 /* LoginTests.swift */; };
-		F3B783E326E6427E006768A8 /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783DC26E6427E006768A8 /* SignupTests.swift */; };
+		F377836A26E644BC00392958 /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377835F26E644BC00392958 /* SettingsTests.swift */; };
+		F377836B26E644BC00392958 /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836026E644BC00392958 /* ReportBugTests.swift */; };
+		F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836226E644BC00392958 /* ConnectionTests.swift */; };
+		F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */ = {isa = PBXBuildFile; fileRef = F377836426E644BC00392958 /* TestPlan.xctestplan */; };
+		F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836626E644BC00392958 /* ProfilesTests.swift */; };
+		F377836F26E644BC00392958 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836826E644BC00392958 /* LoginTests.swift */; };
+		F377837026E644BC00392958 /* SignupTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F377836926E644BC00392958 /* SignupTests.swift */; };
 		F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E526E6428C006768A8 /* MainRobot.swift */; };
 		F3B783F626E6428C006768A8 /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E726E6428C006768A8 /* SettingsRobot.swift */; };
 		F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783E826E6428C006768A8 /* ReportBugRobot.swift */; };
@@ -953,14 +953,14 @@
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
+		F377835F26E644BC00392958 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
+		F377836026E644BC00392958 /* ReportBugTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugTests.swift; sourceTree = "<group>"; };
+		F377836226E644BC00392958 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
+		F377836426E644BC00392958 /* TestPlan.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
+		F377836626E644BC00392958 /* ProfilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
+		F377836826E644BC00392958 /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		F377836926E644BC00392958 /* SignupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupTests.swift; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
-		F3B783D226E6427E006768A8 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
-		F3B783D326E6427E006768A8 /* ReportBugTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugTests.swift; sourceTree = "<group>"; };
-		F3B783D526E6427E006768A8 /* ConnectionTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConnectionTests.swift; sourceTree = "<group>"; };
-		F3B783D726E6427E006768A8 /* TestPlan.xctestplan */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
-		F3B783D926E6427E006768A8 /* ProfilesTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilesTests.swift; sourceTree = "<group>"; };
-		F3B783DB26E6427E006768A8 /* LoginTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
-		F3B783DC26E6427E006768A8 /* SignupTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupTests.swift; sourceTree = "<group>"; };
 		F3B783E526E6428C006768A8 /* MainRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainRobot.swift; sourceTree = "<group>"; };
 		F3B783E726E6428C006768A8 /* SettingsRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
 		F3B783E826E6428C006768A8 /* ReportBugRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReportBugRobot.swift; sourceTree = "<group>"; };
@@ -1543,7 +1543,7 @@
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D026E6427E006768A8 /* Scenarios */,
+				F377835D26E644BC00392958 /* Tests */,
 				F3B783E426E6428C006768A8 /* Robots */,
 				D5AAA129229D28CC00EA839A /* Other classes */,
 				D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */,
@@ -2095,57 +2095,57 @@
 			path = Map;
 			sourceTree = "<group>";
 		};
-		F3B783D026E6427E006768A8 /* Scenarios */ = {
+		F377835D26E644BC00392958 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D126E6427E006768A8 /* Settings */,
-				F3B783D426E6427E006768A8 /* Connection */,
-				F3B783D626E6427E006768A8 /* TestPlans */,
-				F3B783D826E6427E006768A8 /* Profiles */,
-				F3B783DA26E6427E006768A8 /* Login */,
+				F377835E26E644BC00392958 /* Settings */,
+				F377836126E644BC00392958 /* Connection */,
+				F377836326E644BC00392958 /* TestPlans */,
+				F377836526E644BC00392958 /* Profiles */,
+				F377836726E644BC00392958 /* Login */,
 			);
-			name = Scenarios;
-			path = ../../ios/ProtonVPNUITests/Scenarios;
+			name = Tests;
+			path = ../../ios/ProtonVPNUITests/Tests;
 			sourceTree = "<group>";
 		};
-		F3B783D126E6427E006768A8 /* Settings */ = {
+		F377835E26E644BC00392958 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D226E6427E006768A8 /* SettingsTests.swift */,
-				F3B783D326E6427E006768A8 /* ReportBugTests.swift */,
+				F377835F26E644BC00392958 /* SettingsTests.swift */,
+				F377836026E644BC00392958 /* ReportBugTests.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
 		};
-		F3B783D426E6427E006768A8 /* Connection */ = {
+		F377836126E644BC00392958 /* Connection */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D526E6427E006768A8 /* ConnectionTests.swift */,
+				F377836226E644BC00392958 /* ConnectionTests.swift */,
 			);
 			path = Connection;
 			sourceTree = "<group>";
 		};
-		F3B783D626E6427E006768A8 /* TestPlans */ = {
+		F377836326E644BC00392958 /* TestPlans */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D726E6427E006768A8 /* TestPlan.xctestplan */,
+				F377836426E644BC00392958 /* TestPlan.xctestplan */,
 			);
 			path = TestPlans;
 			sourceTree = "<group>";
 		};
-		F3B783D826E6427E006768A8 /* Profiles */ = {
+		F377836526E644BC00392958 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783D926E6427E006768A8 /* ProfilesTests.swift */,
+				F377836626E644BC00392958 /* ProfilesTests.swift */,
 			);
 			path = Profiles;
 			sourceTree = "<group>";
 		};
-		F3B783DA26E6427E006768A8 /* Login */ = {
+		F377836726E644BC00392958 /* Login */ = {
 			isa = PBXGroup;
 			children = (
-				F3B783DB26E6427E006768A8 /* LoginTests.swift */,
-				F3B783DC26E6427E006768A8 /* SignupTests.swift */,
+				F377836826E644BC00392958 /* LoginTests.swift */,
+				F377836926E644BC00392958 /* SignupTests.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2615,7 +2615,7 @@
 			files = (
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
-				F3B783E026E6427E006768A8 /* TestPlan.xctestplan in Resources */,
+				F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3273,6 +3273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */,
+				F377836A26E644BC00392958 /* SettingsTests.swift in Sources */,
 				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,
@@ -3280,22 +3281,21 @@
 				F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
-				F3B783DF26E6427E006768A8 /* ConnectionTests.swift in Sources */,
+				F377836F26E644BC00392958 /* LoginTests.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
 				F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */,
-				F3B783E226E6427E006768A8 /* LoginTests.swift in Sources */,
-				F3B783DE26E6427E006768A8 /* ReportBugTests.swift in Sources */,
-				F3B783DD26E6427E006768A8 /* SettingsTests.swift in Sources */,
-				F3B783E126E6427E006768A8 /* ProfilesTests.swift in Sources */,
-				F3B783E326E6427E006768A8 /* SignupTests.swift in Sources */,
+				F377836B26E644BC00392958 /* ReportBugTests.swift in Sources */,
 				F3B783F726E6428C006768A8 /* ReportBugRobot.swift in Sources */,
 				F3B783FD26E6428C006768A8 /* CreateProfileRobot.swift in Sources */,
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
 				D5AAA12E229D337300EA839A /* (null) in Sources */,
+				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
+				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
 				D92A295D47C56CEE2650AA70 /* (null) in Sources */,
+				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
