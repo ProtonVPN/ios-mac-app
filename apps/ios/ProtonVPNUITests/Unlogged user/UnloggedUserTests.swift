@@ -28,22 +28,6 @@ class UnloggedUserTests: ProtonVPNUITests {
         super.setUp()
         logoutIfNeeded()
     }
-
-//    func testWizardCanBeSkipped() {
-//        let skipButton = app.buttons["Skip"]
-//        skipButton.tap()
-//        assertLastWizardScreen()
-//    }
-    
-//    func testWizardHasThreeSteps() {
-//        snapshot("Wizard-1")
-//        let nextButton = app.buttons["Next"]
-//        nextButton.tap()
-//        snapshot("Wizard-2")
-//        nextButton.tap()
-//        snapshot("Wizard-3")
-//        assertLastWizardScreen()
-//    }
     
     func testDiscoverTheApp() {
         let skipButton = app.buttons["Skip"]
@@ -67,7 +51,5 @@ class UnloggedUserTests: ProtonVPNUITests {
         tabBarsQuery.buttons["Profiles"].tap()
         snapshot("Discover-Profiles")
         tabBarsQuery.buttons["Settings"].tap()
-                
-//        assertLoginScreenOpen()
     }
 }

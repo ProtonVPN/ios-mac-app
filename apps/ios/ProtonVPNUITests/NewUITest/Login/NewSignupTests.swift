@@ -14,10 +14,10 @@ class NewSignupTests: ProtonVPNUITests {
     let newSignupRobot = NewSignupRobot()
     
     override func setUp() {
-         super.setUp()
+        super.setUp()
         logoutIfNeeded()
-         mainRobot
-             .changeEnvironmentTo()
+        mainRobot
+            .changeEnvironmentTo()
      }
 
     func testCreateAccountWithProtonmail() {

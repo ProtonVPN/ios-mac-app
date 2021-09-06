@@ -38,7 +38,6 @@ class NewSignupRobot: CoreElements {
          return self
      }
 
-    
     public let verify = Verify()
     
     class Verify: CoreElements {

@@ -20,8 +20,6 @@ private let forgotPasswordPageHeader = "Reset Password"
 private let commonLoginIssuesPageHeader = "Common Login Problems"
 private let customerSupportPageHeader = "Support Form"
 
-
-
 class NeedHelpRobot: CoreElements {
     
     public let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
@@ -68,4 +66,3 @@ class NeedHelpRobot: CoreElements {
          return NewLoginRobot()
      }
 }
-
