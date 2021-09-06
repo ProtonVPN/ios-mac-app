@@ -726,8 +726,11 @@ public class SystemExtensionTourAlert: SystemAlert {
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
     public var continueHandler: () -> Void
+    public typealias CloseConditionCallback = (@escaping (Bool) -> Void) -> Void
+    public var isTimeToClose: CloseConditionCallback
     
-    public init(continueHandler: @escaping () -> Void) {
+    public init(isTimeToClose: @escaping CloseConditionCallback, continueHandler: @escaping () -> Void) {
+        self.isTimeToClose = isTimeToClose
         self.continueHandler = continueHandler
     }
 }
