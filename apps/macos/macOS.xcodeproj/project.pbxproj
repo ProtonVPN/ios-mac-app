@@ -419,7 +419,6 @@
 		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
-		F3DF4D3E2603A7DD0054B678 /* SidebarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -999,7 +998,6 @@
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
-		F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SidebarViewModel.swift; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1958,7 +1956,6 @@
 				F36ECE1E2611DEC30089B898 /* CountriesSection */,
 				E1B9A7D1203ECE9E009677BC /* ConnectingOverlayViewModel.swift */,
 				42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */,
-				F3DF4D3D2603A7DD0054B678 /* SidebarViewModel.swift */,
 				EE5B17441F39CDF700879BE0 /* HeaderViewModel.swift */,
 			);
 			path = ViewModels;
@@ -3418,7 +3415,6 @@
 				EEA556321F1F48780061F43F /* ColorPickerCircle.swift in Sources */,
 				42C1F2B02553086000793A49 /* KillSwitchDropdownPresenter.swift in Sources */,
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
-				F3DF4D3E2603A7DD0054B678 /* SidebarViewModel.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
