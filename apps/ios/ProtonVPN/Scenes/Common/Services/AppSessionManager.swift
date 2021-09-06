@@ -101,6 +101,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             }
             return
         }
+
+        retrievePropertiesAndLogIn(success: { comletion(.success) }, failure: { error in comletion(.failure(error)) })
     }
     
     func loadDataWithoutFetching() -> Bool {
