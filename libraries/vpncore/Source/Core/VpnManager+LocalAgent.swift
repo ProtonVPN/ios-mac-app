@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import Crypto_VPN
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
@@ -18,7 +17,7 @@ extension VpnManager {
             }
 
             self.disconnectLocalAgent()
-            self.localAgent = GoLocalAgent()
+            self.localAgent = LocalAgentImplementation()
             self.localAgent?.delegate = self
             self.localAgent?.connect(data: data, configuration: configuration)
         }

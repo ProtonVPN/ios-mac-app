@@ -62,7 +62,10 @@ class SystemExtensionsStateCheck {
                 return
             }
             
-            self.alertService.push(alert: SystemExtensionTourAlert {
+            self.alertService.push(alert: SystemExtensionTourAlert(isTimeToClose: { [weak self] completion in
+                self?.areAllExtensionsInstalled(completion: completion)
+                
+            }, continueHandler: {
                 let dispatchGroup = DispatchGroup()
                 var errors = [Error]()
                 
@@ -89,7 +92,7 @@ class SystemExtensionsStateCheck {
                     resultHandler(.success(.installed))
                 }
                 
-            })
+            }))
         }
     }
     
@@ -111,6 +114,12 @@ class SystemExtensionsStateCheck {
         }
         dispatchGroup.notify(queue: DispatchQueue.global(qos: .background)) {
             resultHandler(results)
+        }
+    }
+    
+    private func areAllExtensionsInstalled(completion: @escaping (Bool) -> Void) {
+        fetchExtensionStatuses { statuses in
+            completion(!statuses.contains { key, value in value != .ok })
         }
     }
     
