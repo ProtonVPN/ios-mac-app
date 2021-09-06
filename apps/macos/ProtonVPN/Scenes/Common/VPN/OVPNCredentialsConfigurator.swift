@@ -19,6 +19,8 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
     }
     
     func prepareCredentials(for protocolConfig: NEVPNProtocol, configuration: VpnManagerConfiguration, completionHandler: @escaping (NEVPNProtocol) -> Void) {
+        protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
+        
         xpcServiceUser.setCredentials(username: configuration.username, password: configuration.password, completionHandler: { success in
             PMLog.D("Credentials set result (ovpn): \(success ? "success" : "failure")")
             completionHandler(protocolConfig)
