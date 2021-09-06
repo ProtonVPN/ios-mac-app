@@ -636,7 +636,7 @@
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CBDFC873E416AD23C42323F /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 		3FF4A29B042EF36CA906EF26 /* Pods-Siri Shortcut Handler.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.release.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.release.xcconfig"; sourceTree = "<group>"; };
-		40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTests.swift; path = ../../../../ios/ProtonVPNUITests/Scenarios/Settings/SettingsTests.swift; sourceTree = "<group>"; };
+		40C8B451D2515F2E1D9DADC4 /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Settings/SettingsTests.swift; sourceTree = "<group>"; };
 		42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureTableViewCell.swift; sourceTree = "<group>"; };
 		42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FeatureTableViewCell.xib; sourceTree = "<group>"; };
 		42066E8D2630240F001F86DB /* ServersFeaturesInformationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServersFeaturesInformationVC.swift; sourceTree = "<group>"; };
@@ -743,14 +743,14 @@
 		8746F5B74BD261EE27AF0E48 /* Pods-ProtonVPNTests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNTests-metadata.plist"; sourceTree = "<group>"; };
 		954D2A931124ECB13F5DE123 /* Pods-ProtonVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.debug.xcconfig"; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
-		B2249DD126DFA63A00A1466A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginTests.swift; path = ../../../../ios/ProtonVPNUITests/Scenarios/Login/LoginTests.swift; sourceTree = "<group>"; };
-		B2249DD326DFA64B00A1466A /* SignupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupTests.swift; path = ../../../../ios/ProtonVPNUITests/Scenarios/Login/SignupTests.swift; sourceTree = "<group>"; };
+		B2249DD126DFA63A00A1466A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Login/LoginTests.swift; sourceTree = "<group>"; };
+		B2249DD326DFA64B00A1466A /* SignupTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Login/SignupTests.swift; sourceTree = "<group>"; };
 		B2249DD726DFA6DC00A1466A /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/LoginRobot.swift; sourceTree = "<group>"; };
 		B2249DD926DFA70200A1466A /* SignupRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/SignupRobot.swift; sourceTree = "<group>"; };
 		B2249DDB26DFA72500A1466A /* NeedHelpRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NeedHelpRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/NeedHelpRobot.swift; sourceTree = "<group>"; };
 		B293D82D2660FBC500E0ECCB /* MainRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/MainRobot.swift; sourceTree = "<group>"; };
 		B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ReportBugRobot.swift; sourceTree = "<group>"; };
-		B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugTests.swift; path = ../../../../ios/ProtonVPNUITests/Scenarios/Settings/ReportBugTests.swift; sourceTree = "<group>"; };
+		B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Settings/ReportBugTests.swift; sourceTree = "<group>"; };
 		B293D83B2660FC6100E0ECCB /* SettingsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SettingsRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/SettingsRobot.swift; sourceTree = "<group>"; };
 		B293D873266104F600E0ECCB /* TestPlan.xctestplan */ = {isa = PBXFileReference; lastKnownFileType = text; path = TestPlan.xctestplan; sourceTree = "<group>"; };
 		B29CD69D26540F1600978637 /* ProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProfileRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Profiles/ProfileRobot.swift; sourceTree = "<group>"; };
@@ -760,7 +760,7 @@
 		B2BA40EA26C28C0F00DF04C3 /* CountryListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CountryListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/CountryListRobot.swift; sourceTree = "<group>"; };
 		B2BA40EC26C28C1E00DF04C3 /* ConnectionStatusRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionStatusRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ConnectionStatusRobot.swift; sourceTree = "<group>"; };
 		B2BA40EE26C28C3200DF04C3 /* ServerListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ServerListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/ServerListRobot.swift; sourceTree = "<group>"; };
-		B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionTests.swift; path = ../../../../ios/ProtonVPNUITests/Scenarios/Connection/ConnectionTests.swift; sourceTree = "<group>"; };
+		B2BA40F126C28C5200DF04C3 /* ConnectionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ConnectionTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Connection/ConnectionTests.swift; sourceTree = "<group>"; };
 		B2BA40F326C2A63E00DF04C3 /* MapRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MapRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Connection/MapRobot.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		BDB268B7C236ED5B1A411ACD /* Pods-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
@@ -1495,7 +1495,7 @@
 			path = Profiles;
 			sourceTree = "<group>";
 		};
-		B29CD6A726540F2D00978637 /* Scenarios */ = {
+		B29CD6A726540F2D00978637 /* Tests */ = {
 			isa = PBXGroup;
 			children = (
 				B2249DCE26DFA0AE00A1466A /* Login */,
@@ -1504,7 +1504,7 @@
 				B293D82B2660FB7100E0ECCB /* Settings */,
 				B29CD8D1265BB66300978637 /* Profiles */,
 			);
-			path = Scenarios;
+			path = Tests;
 			sourceTree = "<group>";
 		};
 		B29CD8D1265BB66300978637 /* Profiles */ = {
@@ -1765,7 +1765,7 @@
 		D5811D7E229BBD870087B63A /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
-				B29CD6A726540F2D00978637 /* Scenarios */,
+				B29CD6A726540F2D00978637 /* Tests */,
 				B29CD69B26540EEE00978637 /* Robots */,
 				D5AAA129229D28CC00EA839A /* Other classes */,
 				D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */,
