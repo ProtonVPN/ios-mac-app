@@ -91,10 +91,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private lazy var mapSectionViewModel: MapSectionViewModel = {
         return factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
     }()
-
-    private lazy var viewModel: SidebarViewModel = {
-        SidebarViewModel(factory: factory)
-    }()
     
     // MARK: Functions
     override func viewDidLoad() {
@@ -136,9 +132,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
                                                name: AnnouncementStorageNotifications.contentChanged,
                                                object: nil)
 
-        DispatchQueue.main.async { // bit of a delay
-            self.viewModel.showSystemExtensionInstallAlert()
-        }
     }
     
     override func viewDidAppear() {

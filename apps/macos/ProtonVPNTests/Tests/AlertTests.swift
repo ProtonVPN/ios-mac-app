@@ -112,8 +112,6 @@ fileprivate class WindowServiceMock: WindowService {
     func bringWindowsToForground() -> Bool {
         return false
     }
-
-    func closeActiveWindows() {}
     
     func presentKeyModal(viewController: NSViewController) {
         displayCount += 1
@@ -121,6 +119,12 @@ fileprivate class WindowServiceMock: WindowService {
     
     func isKeyModalPresent(viewController: NSViewController) -> Bool {
         return false
+    }
+    
+    func closeActiveWindows(except: [NSWindowController.Type]) {
+    }
+    
+    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
     }
 }
 
