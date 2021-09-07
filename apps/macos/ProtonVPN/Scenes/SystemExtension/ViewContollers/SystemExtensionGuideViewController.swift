@@ -23,11 +23,6 @@
 import Cocoa
 import vpncore
 
-public protocol SystemExtensionGuideVCProtocol: NSViewController {
-    func render()
-    func closeSelf()
-}
-
 final class SystemExtensionGuideViewController: NSViewController {
         
     @IBOutlet private weak var confirmationButton: PrimaryActionButton!
@@ -58,7 +53,23 @@ final class SystemExtensionGuideViewController: NSViewController {
     private lazy var numbers: [NSView] = [step1number, step2number, step3number, step4number, step5number]
     private let images = ["1-step", "2-step", "3-step", "4-step", "5-step"]
     
-    var viewModel: SystemExtensionGuideViewModelProtocol!
+    var viewModel: SystemExtensionGuideViewModelProtocol
+    
+    required init?(coder: NSCoder) {
+        fatalError("Unsupported initializer")
+    }
+    
+    required init(viewModel: SystemExtensionGuideViewModelProtocol) {
+        self.viewModel = viewModel
+        super.init(nibName: NSNib.Name(String(describing: Self.self)), bundle: nil)
+        
+        viewModel.contentChanged = { [weak self] in
+            self?.render()
+        }
+        viewModel.close = { [weak self] in
+            self?.closeSelf()
+        }
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -94,22 +105,18 @@ final class SystemExtensionGuideViewController: NSViewController {
     // MARK: - Actions
     
     @IBAction func nextAction(_ sender: Any) {
-        viewModel?.didTapNext()
+        viewModel.didTapNext()
     }
     
     @IBAction func previousAction(_ sender: Any) {
-        viewModel?.didTapPrevious()
+        viewModel.didTapPrevious()
     }
     
     @IBAction func confirmButtonAction(_ sender: Any) {
-        viewModel?.didTapAccept()
+        viewModel.didTapAccept()
     }
     
-}
-
-// MARK: - SystemExtensionGuideVCProtocol
-
-extension SystemExtensionGuideViewController: SystemExtensionGuideVCProtocol {
+    // MARK: - ViewModel callbacks
     
     func render() {
         // Making buttons invisible throug alpha so other views won't move as in case with changing isHidden
@@ -132,7 +139,7 @@ extension SystemExtensionGuideViewController: SystemExtensionGuideVCProtocol {
     }
     
     func closeSelf() {
-        dismiss(nil)
+        view.window?.close()
     }
     
 }
