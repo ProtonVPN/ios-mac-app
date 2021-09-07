@@ -20,6 +20,16 @@ final class EnvironmentsViewController: UITableViewController {
 
     private let endpoints: [String]
 
+    private lazy var warningLabel: UILabel = {
+        let label = UILabel()
+        label.textColor = .protonRed()
+        label.textAlignment = .center
+        label.numberOfLines = 0
+        label.text = "Switching environments only works after cold start. If you logged out you need to kill the app first."
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
     init(endpoints: [String]) {
         self.endpoints = endpoints
 
@@ -34,6 +44,14 @@ final class EnvironmentsViewController: UITableViewController {
         super.viewDidLoad()
 
         title = "Endpoint"
+        tableView.tableFooterView = UIView()
+
+        view.addSubview(warningLabel)
+        NSLayoutConstraint.activate([
+            warningLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
+            warningLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
+            warningLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+        ])
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
