@@ -43,14 +43,21 @@ protocol WindowService: class {
     func openSettingsWindow(viewModel: SettingsContainerViewModel, tabBarViewModel: SettingsTabBarViewModel)
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
+    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
     
     func bringWindowsToForground() -> Bool
-    func closeActiveWindows()
+    func closeActiveWindows(except: [NSWindowController.Type])
     
     func presentKeyModal(viewController: NSViewController)
     
     /// Check if window with view controller of the same class is already open.
     func isKeyModalPresent(viewController: NSViewController) -> Bool
+}
+
+extension WindowService {
+    func closeActiveWindows() {
+        closeActiveWindows(except: [])
+    }
 }
 
 // this need to abstract class for common functions. for sharing code. ios/mac should have different implementation
@@ -202,6 +209,14 @@ class WindowServiceImplementation: WindowService {
         windowController.showWindow(self)
     }
     
+    func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
+        let controller = SystemExtensionGuideViewController(viewModel: viewModel)
+        let windowController = SysexGuideWindowController(viewController: controller)
+        windowController.delegate = self
+        activeWindowControllers.append(windowController)
+        windowController.showWindow(self)
+    }
+    
     func bringWindowsToForground() -> Bool {
         guard let mainWindowController = mainWindowController else {
             return false
@@ -215,8 +230,10 @@ class WindowServiceImplementation: WindowService {
         return true
     }
     
-    func closeActiveWindows() {
-        activeWindowControllers.forEach { $0.close() }
+    func closeActiveWindows(except: [NSWindowController.Type]) {
+        activeWindowControllers
+            .filter { vc in !except.contains { type in vc.isKind(of: type) } }
+            .forEach { $0.close() }
         activeWindowControllers = []
     }
     
