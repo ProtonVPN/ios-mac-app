@@ -93,7 +93,7 @@ final class CoreLoginService {
 
     #if !RELEASE
     private func showEnvironmentSelection() {
-        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.liveURL] + ObfuscatedConstants.internalUrls)
+        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.doh.liveURL] + ObfuscatedConstants.internalUrls)
         environmentsViewController.delegate = self
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
     }
