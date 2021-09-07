@@ -26,9 +26,7 @@ public typealias CountryGroup = (CountryModel, [ServerModel])
 public protocol ServerManager: AnyObject {
     var contentChanged: Notification.Name { get }
     var servers: [ServerModel] { get }
-    var serversByCode: [String: [ServerModel]]? { get }
     
-    func formGrouping(from serverModels: [ServerModel]) -> [CountryGroup]
     func grouping(for type: ServerType) -> [CountryGroup]
     static func instance(forTier tier: Int, serverStorage: ServerStorage) -> ServerManager
 }
@@ -42,18 +40,14 @@ public class ServerManagerImplementation: ServerManager {
     public let contentChanged: Notification.Name
     
     public var servers: [ServerModel] = []
-    private var standardCountriesServers: [CountryGroup] = []
-    private var secureCoreCountriesServers: [CountryGroup] = []
-    private var p2pServers: [CountryGroup] = []
-    private var torServers: [CountryGroup] = []
-    public var serversByCode: [String: [ServerModel]]?
+    private var sortedGroups: [ServerType: [CountryGroup]] = [:]
     
     private init(tier: Int, serverStorage: ServerStorage) {
         self.userTier = tier
         self.serverStorage = serverStorage
         
         contentChanged = Notification.Name("ServerManagerContentChanged_Tier\(tier)")
-        setupServers()
+        (servers, sortedGroups) = setupServers()
         NotificationCenter.default.addObserver(self, selector: #selector(contentChanged(_:)),
                                                name: serverStorage.contentChanged, object: nil)
     }
@@ -77,7 +71,6 @@ public class ServerManagerImplementation: ServerManager {
             } else {
                 servers[server.countryCode] = [server]
             }
-            serversByCode = servers
         }
         
         return headers.sorted(by: { $0.country < $1.country })
@@ -93,33 +86,32 @@ public class ServerManagerImplementation: ServerManager {
     }
     
     public func grouping(for type: ServerType) -> [CountryGroup] {
-        switch type {
-        case .standard:
-            return standardCountriesServers
-        case .secureCore:
-            return secureCoreCountriesServers
-        case .p2p:
-            return p2pServers
-        case .tor:
-            return torServers
-        default:
-            return [CountryGroup]()
-        }
+        return sortedGroups[type] ?? [CountryGroup]()
     }
     
     // MARK: - Private functions
     @objc private func contentChanged(_ notification: Notification) {
-        setupServers()
-        NotificationCenter.default.post(name: contentChanged, object: nil)
+        DispatchQueue.global(qos: .background).async {
+            let newServers = self.setupServers()
+            DispatchQueue.main.async {
+                (self.servers, self.sortedGroups) = newServers
+                NotificationCenter.default.post(name: self.contentChanged, object: nil)
+            }
+        }
     }
     
-    private func setupServers() {
-        servers = serverStorage.fetch()
+    private func setupServers() -> ([ServerModel], [ServerType: [CountryGroup]]) {
+        let servers = serverStorage.fetch()
         PMLog.D("user's tier \(userTier)")
-        standardCountriesServers = sort(countryGroups: formGrouping(from: servers.filter { !$0.isSecureCore }))
-        secureCoreCountriesServers = sort(countryGroups: formGrouping(from: servers.filter { $0.isSecureCore && $0.tier <= userTier }))
-        p2pServers = formGrouping(from: servers.filter { $0.supportsP2P && $0.tier <= userTier })
-        torServers = formGrouping(from: servers.filter { $0.supportsTor && $0.tier <= userTier })
+        
+        var sortedStorage = [ServerType: [CountryGroup]]()
+        sortedStorage[.standard] = sort(countryGroups: formGrouping(from: servers.filter { !$0.isSecureCore }))
+        sortedStorage[.secureCore] = sort(countryGroups: formGrouping(from: servers.filter { $0.isSecureCore && $0.tier <= userTier }))
+        sortedStorage[.p2p] = formGrouping(from: servers.filter { $0.supportsP2P && $0.tier <= userTier })
+        sortedStorage[.tor] = formGrouping(from: servers.filter { $0.supportsTor && $0.tier <= userTier })
+        sortedStorage[.unspecified] = [CountryGroup]()
+        
+        return (servers, sortedStorage)
     }
     
     private func sort(countryGroups: [CountryGroup]) -> [CountryGroup] {
