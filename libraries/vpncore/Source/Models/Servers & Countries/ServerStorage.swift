@@ -36,7 +36,7 @@ public protocol ServerStorageFactory {
 
 public class ServerStorageConcrete: ServerStorage {
     
-    private let storageVersion = 1
+    private let storageVersion = 2
     private let versionKey     = "serverCacheVersion"
     private let storageKey     = "servers"
     private let ageKey         = "age"
@@ -59,7 +59,7 @@ public class ServerStorageConcrete: ServerStorage {
             let version = Storage.userDefaults().integer(forKey: versionKey)
             if version == storageVersion {
                 if let data = Storage.userDefaults().data(forKey: storageKey),
-                    let servers = NSKeyedUnarchiver.unarchiveObject(with: data) as? [ServerModel] {
+                   let servers = try? JSONDecoder().decode([ServerModel].self, from: data) {
                     ServerStorageConcrete.servers = servers
                 }
             }
@@ -79,13 +79,24 @@ public class ServerStorageConcrete: ServerStorage {
     }
     
     public func store(_ newServers: [ServerModel]) {
-        let age = Date().timeIntervalSince1970
-        ServerStorageConcrete.age = age
-        ServerStorageConcrete.servers = newServers
-        Storage.userDefaults().set(self.storageVersion, forKey: versionKey)
-        Storage.userDefaults().set(age, forKey: ageKey)
-        Storage.userDefaults().set(NSKeyedArchiver.archivedData(withRootObject: newServers), forKey: storageKey)
-        DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: newServers) }
+        DispatchQueue.global(qos: .default).async { [versionKey, ageKey, storageKey, storageVersion] in
+            do {
+                let age = Date().timeIntervalSince1970
+                let serversData = try JSONEncoder().encode(newServers.self)
+                
+                ServerStorageConcrete.age = age
+                ServerStorageConcrete.servers = newServers
+                
+                Storage.userDefaults().set(storageVersion, forKey: versionKey)
+                Storage.userDefaults().set(age, forKey: ageKey)
+                Storage.userDefaults().set(serversData, forKey: storageKey)
+
+            } catch {
+                PMLog.ET(error)
+            }
+            
+            DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: newServers) }
+        }
     }
     
     public func update(continuousServerProperties: ContinuousServerPropertiesDictionary) {

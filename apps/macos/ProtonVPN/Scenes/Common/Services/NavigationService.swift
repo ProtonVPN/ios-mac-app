@@ -99,7 +99,7 @@ class NavigationService {
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
-        windowService.closeActiveWindows()
+        windowService.closeActiveWindows(except: [SysexGuideWindowController.self])
         
         if appSessionManager.sessionStatus == .established, let vpnGateway = notification.object as? VpnGatewayProtocol {
             self.vpnGateway = vpnGateway
