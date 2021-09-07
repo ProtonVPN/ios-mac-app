@@ -28,7 +28,7 @@ class ServerManagerTests: XCTestCase {
     let serverStorage = ServerStorageMock(fileName: "ServerManagerTestServers", bundle: Bundle(for: ServerManagerTests.self))
     
     func testFormGrouping() {
-        let freeTierServerManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage)
+        let freeTierServerManager = ServerManagerImplementation.instance(forTier: 0, serverStorage: serverStorage) as! ServerManagerImplementation
         let grouping = freeTierServerManager.formGrouping(from: serverStorage.fetch())
         
         XCTAssert(grouping.count == 3)
