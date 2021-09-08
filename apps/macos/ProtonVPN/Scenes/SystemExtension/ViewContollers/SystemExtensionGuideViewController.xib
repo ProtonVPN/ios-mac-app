@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -337,7 +337,7 @@
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kS-Qc-9kx">
                                     <rect key="frame" x="0.0" y="70" width="400" height="260"/>
                                     <subviews>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="OvP-Nr-IYl">
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="OvP-Nr-IYl" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="112" width="36" height="36"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="36" id="V4H-Hu-ke5"/>
@@ -355,7 +355,7 @@
                                             <rect key="frame" x="44" y="0.0" width="312" height="260"/>
                                             <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="1-step" id="YtC-Fq-PFz"/>
                                         </imageView>
-                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="jNI-jo-5Gr">
+                                        <button translatesAutoresizingMaskIntoConstraints="NO" id="jNI-jo-5Gr" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
                                             <rect key="frame" x="364" y="112" width="36" height="36"/>
                                             <constraints>
                                                 <constraint firstAttribute="width" constant="36" id="Bmf-3U-51I"/>
