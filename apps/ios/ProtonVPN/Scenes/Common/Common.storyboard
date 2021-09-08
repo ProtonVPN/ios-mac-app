@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Environments View Controller-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="EnvironmentsViewController" id="Y6W-OH-hqX" customClass="EnvironmentsViewController" customModule="ProtonVPN" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Selected environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eDi-Iw-ghK">
+                                <rect key="frame" x="16" y="60" width="382" height="30"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="119-CF-hIG">
+                                <rect key="frame" x="16" y="94" width="382" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dT0-bT-FrO" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="16" y="131" width="382" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="k0w-ys-deK"/>
+                                </constraints>
+                                <state key="normal" title="Use and continue"/>
+                                <connections>
+                                    <action selector="continueTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="JCJ-fa-aRd"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Change environment" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qaa-rD-Lhq">
+                                <rect key="frame" x="16" y="203" width="382" height="23"/>
+                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="https://" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="RGF-Si-OFr">
+                                <rect key="frame" x="16" y="234" width="382" height="34"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NU7-2o-A13" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="16" y="284" width="382" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="aoZ-Gv-mOX"/>
+                                </constraints>
+                                <state key="normal" title="Change and kill the app"/>
+                                <connections>
+                                    <action selector="changeTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="fFK-Xk-I7s"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Y9a-gi-OUU" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                                <rect key="frame" x="16" y="356" width="382" height="48"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="j7G-oy-X2z"/>
+                                </constraints>
+                                <state key="normal" title="Reset to production and kill the app"/>
+                                <connections>
+                                    <action selector="resetTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="WRW-pJ-soJ"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="dT0-bT-FrO" firstAttribute="leading" secondItem="eDi-Iw-ghK" secondAttribute="leading" id="2dg-Zi-GZE"/>
+                            <constraint firstItem="NU7-2o-A13" firstAttribute="top" secondItem="RGF-Si-OFr" secondAttribute="bottom" constant="16" id="6ZM-hU-ubu"/>
+                            <constraint firstItem="119-CF-hIG" firstAttribute="leading" secondItem="eDi-Iw-ghK" secondAttribute="leading" id="92p-ef-vH3"/>
+                            <constraint firstItem="NU7-2o-A13" firstAttribute="leading" secondItem="Qaa-rD-Lhq" secondAttribute="leading" id="LRt-r6-7hq"/>
+                            <constraint firstItem="RGF-Si-OFr" firstAttribute="top" secondItem="Qaa-rD-Lhq" secondAttribute="bottom" constant="8" id="LV9-5G-HsN"/>
+                            <constraint firstItem="eDi-Iw-ghK" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" constant="16" id="Oyz-83-YeL"/>
+                            <constraint firstItem="119-CF-hIG" firstAttribute="trailing" secondItem="eDi-Iw-ghK" secondAttribute="trailing" id="TkX-L5-plu"/>
+                            <constraint firstItem="dT0-bT-FrO" firstAttribute="trailing" secondItem="eDi-Iw-ghK" secondAttribute="trailing" id="Tpr-k5-vBd"/>
+                            <constraint firstItem="Y9a-gi-OUU" firstAttribute="leading" secondItem="Qaa-rD-Lhq" secondAttribute="leading" id="ab5-ZO-TwZ"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="eDi-Iw-ghK" secondAttribute="trailing" constant="16" id="cBA-RA-S2i"/>
+                            <constraint firstItem="RGF-Si-OFr" firstAttribute="trailing" secondItem="Qaa-rD-Lhq" secondAttribute="trailing" id="cVh-Dw-lJk"/>
+                            <constraint firstItem="119-CF-hIG" firstAttribute="top" secondItem="eDi-Iw-ghK" secondAttribute="bottom" constant="4" id="dKd-Zy-YAn"/>
+                            <constraint firstItem="dT0-bT-FrO" firstAttribute="top" secondItem="119-CF-hIG" secondAttribute="bottom" constant="16" id="dLA-nl-dUR"/>
+                            <constraint firstItem="Qaa-rD-Lhq" firstAttribute="leading" secondItem="eDi-Iw-ghK" secondAttribute="leading" id="dsy-3e-0Ls"/>
+                            <constraint firstItem="Qaa-rD-Lhq" firstAttribute="top" secondItem="dT0-bT-FrO" secondAttribute="bottom" constant="24" id="g8r-Kf-Ad2"/>
+                            <constraint firstItem="Y9a-gi-OUU" firstAttribute="trailing" secondItem="Qaa-rD-Lhq" secondAttribute="trailing" id="nk7-be-Rnp"/>
+                            <constraint firstItem="Y9a-gi-OUU" firstAttribute="top" secondItem="NU7-2o-A13" secondAttribute="bottom" constant="24" id="olr-ik-dlf"/>
+                            <constraint firstItem="RGF-Si-OFr" firstAttribute="leading" secondItem="Qaa-rD-Lhq" secondAttribute="leading" id="qVk-hY-LFh"/>
+                            <constraint firstItem="eDi-Iw-ghK" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" constant="16" id="xKJ-aC-f0F"/>
+                            <constraint firstItem="NU7-2o-A13" firstAttribute="trailing" secondItem="Qaa-rD-Lhq" secondAttribute="trailing" id="xOq-Lg-jt3"/>
+                            <constraint firstItem="Qaa-rD-Lhq" firstAttribute="trailing" secondItem="eDi-Iw-ghK" secondAttribute="trailing" id="zKc-ug-LWl"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="customEnvironmentTextField" destination="RGF-Si-OFr" id="sOm-4e-Vnl"/>
+                        <outlet property="environmentLabel" destination="119-CF-hIG" id="b2C-Vq-fPz"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="132" y="82"/>
+        </scene>
+    </scenes>
+    <resources>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+    </resources>
+</document>

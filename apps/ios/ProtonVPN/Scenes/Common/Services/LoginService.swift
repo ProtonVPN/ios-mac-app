@@ -93,7 +93,8 @@ final class CoreLoginService {
 
     #if !RELEASE
     private func showEnvironmentSelection() {
-        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.doh.liveURL] + ObfuscatedConstants.internalUrls)
+        let environmentsViewController = UIStoryboard(name: "Common", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
+        environmentsViewController.propertiesManager = propertiesManager
         environmentsViewController.delegate = self
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
     }
@@ -136,8 +137,7 @@ extension CoreLoginService: LoginService {
 
 #if !RELEASE
 extension CoreLoginService: EnvironmentsViewControllerDelegate {
-    func userDidSelectEndpoint(endpoint: String) {
-        propertiesManager.apiEndpoint = endpoint
+    func userDidSelectContinue() {
         show()
     }
 }
