@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '2.4.0'
+  '2.5.1'
 end
 
 def openvpn
@@ -28,8 +28,7 @@ def keychain_access
 end
 
 def vpn_core
-    use_frameworks!    
-    pod 'Alamofire', '5.3.0'
+    use_frameworks!        
     pod 'Sentry', '5.2.2'
     pod 'ReachabilitySwift', '5.0.0'
     keychain_access
@@ -47,6 +46,10 @@ def vpn_core
     # Core
     pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Services', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Networking', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Authentication/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-Crypto-VPN', :git => proton_core_path, :tag => proton_core_version
 end    
 
 abstract_target 'Core' do
@@ -78,11 +81,26 @@ target 'ProtonVPN' do
 
   pod 'GSMessages', '~> 1.0'
   pod 'AlamofireImage', '~> 4.1'
+  pod 'Alamofire', '5.3.0'
   
   pod 'ReachabilitySwift', '5.0.0'
   
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Login/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-CoreTranslation', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-UIFoundations', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-HumanVerification', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Payments/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-PaymentsUI/UsingCryptoVPN', :git => proton_core_path, :tag => proton_core_version  
+  pod 'ProtonCore-APIClient', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-Utilities', :git => proton_core_path, :tag => proton_core_version  
+  pod 'ProtonCore-SRP', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
   
   target 'OpenVPN Extension' do
     openvpn
@@ -98,10 +116,11 @@ target 'ProtonVPN' do
   end
 
   target 'ProtonVPNTests' do
+    pod 'ProtonCore-ForceUpgrade', :git => proton_core_path, :tag => proton_core_version
     inherit! :search_paths
   end
   
-  target 'ProtonVPNUITests' do
+  target 'ProtonVPNUITests' do    
     platform :ios, '11.0'  
     pm_automation
   end
@@ -159,6 +178,7 @@ post_install do |installer|
   installer.pods_project.targets.each do |target|
     target.build_configurations.each do |config|
       config.build_settings['IPHONEOS_DEPLOYMENT_TARGET'] = '12.1'
+      config.build_settings['ENABLE_BITCODE'] = 'NO'
       
       # Reset deployment targets to use the one we have on the main project
       config.build_settings.delete 'MACOSX_DEPLOYMENT_TARGET'
