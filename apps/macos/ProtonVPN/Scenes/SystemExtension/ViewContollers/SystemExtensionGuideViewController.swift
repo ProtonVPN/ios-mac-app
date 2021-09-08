@@ -51,7 +51,6 @@ final class SystemExtensionGuideViewController: NSViewController {
     
     private lazy var titles: [NSTextField] = [step1title, step2title, step3title, step4title, step5title]
     private lazy var numbers: [NSView] = [step1number, step2number, step3number, step4number, step5number]
-    private let images = ["1-step", "2-step", "3-step", "4-step", "5-step"]
     
     var viewModel: SystemExtensionGuideViewModelProtocol
     
@@ -89,14 +88,24 @@ final class SystemExtensionGuideViewController: NSViewController {
         confirmationButton.actionType = .confirmative
         confirmationButton.isEnabled = true
         
-        for (index, step) in viewModel.steps.enumerated() {
+        let steps = viewModel.steps        
+        for index in titles.indices {
+            guard index < steps.count else {
+                titles[index].isHidden = true
+                numbers[index].isHidden = true
+                continue
+            }
+            let step = steps[index]
             titles[index].stringValue = step.title
             titles[index].textColor = NSColor.protonWhite()
             (numbers[index].subviews.first as? NSTextField)?.textColor = NSColor.protonWhite()
             numbers[index].wantsLayer = true
             numbers[index].layer?.backgroundColor = NSColor.protonLightGrey().cgColor
             numbers[index].layer?.cornerRadius = numbers[index].bounds.width / 2
+            titles[index].isHidden = false
+            numbers[index].isHidden = false
         }
+        
         textUnderSteps.stringValue = LocalizedString.sysexWizardTextUnderSteps
         textUnderSteps.textColor = NSColor.protonGreyUnselectedWhite()
         imageDescription.stringValue = ""
