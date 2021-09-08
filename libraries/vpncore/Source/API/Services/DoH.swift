@@ -48,7 +48,7 @@ public class DoHVPN: DoH, ServerConfig {
 
     private var customApiHost: String
 
-    init(apiHost: String) throws {
+    public init(apiHost: String) throws {
         self.customApiHost = apiHost
         try super.init()
 

@@ -391,7 +391,6 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.apiEndpoint)
-            updateDoH()
         }
     }
     
@@ -586,7 +585,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             Storage.setValue(newValue, forKey: Keys.alternativeRouting)
-            updateDoH()
+            ApiConstants.doh.status = newValue ? .on : .off
         }
     }
 
@@ -667,14 +666,5 @@ public class PropertiesManager: PropertiesManagerProtocol {
         executeOnUIThread {
             NotificationCenter.default.post(name: name, object: object, userInfo: userInfo)
         }
-    }
-
-    func updateDoH() {
-        // only use the real api host (set by the app) on live endpoint
-        let apiHost = apiEndpoint == ApiConstants.liveURL ? ApiConstants.apiHost : ""
-        // DoH needs to be recreated to take the new endpoint into effect
-        // swiftlint:disable force_try
-        ApiConstants.doh = try! DoHVPN(apiHost: apiHost)
-        // swiftlint:enable force_try
     }
 }
