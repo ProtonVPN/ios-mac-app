@@ -83,7 +83,7 @@
 "_always_on_vpn" = "Постоянный VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "«Kill Switch» не поддерживается на iOS. «Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
+"_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "«Постоянный VPN» восстановит ваше подключение автоматически";
@@ -784,6 +784,12 @@
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Загрузить";
 
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Загрузка данных о подключении";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Загрузка данных о подключении для %@";
+
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Безопасный Интернет где угодно";
 
@@ -1051,36 +1057,6 @@
 /* (No Comment) */
 "_openvpn" = "OpenVPN";
 
-/* (No Comment) */
-"_openvpn_cannot_enable" = "Не удается включить OpenVPN";
-
-/* (No Comment) */
-"_openvpn_error_description" = "Произошла ошибка при установке OpenVPN.\nПереустановите ProtonVPN, убедитесь, что он расположен в папке Приложения, чтобы исправить эту проблему. Или свяжитесь с нашей поддержкой.";
-
-/* (No Comment) */
-"_openvpn_settings_description" = "ProtonVPN требует загрузки системного расширения для использования Smart Protocol и OpenVPN.";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_description" = "Вы успешно включили системное расширение на вашем устройстве. Теперь вы можете использовать Smart Protocol и OpenVPN.";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_title" = "Теперь вы можете использовать Smart Protocol и OpenVPN";
-
-/* (No Comment) */
-"_openvpn_settings_step1" = "В диалоговом окне, открывающемся при включении OpenVPN, выберите Открыть параметры безопасности (Open Security Preferences). Если этот экран не появился автоматически, нажмите здесь.";
-
-/* (No Comment) */
-"_openvpn_settings_step1_link" = "нажмите здесь";
-
-/* (No Comment) */
-"_openvpn_settings_step2" = "Внесите необходимые изменения, кликнув на замок.";
-
-/* (No Comment) */
-"_openvpn_settings_step3" = "Позвольте системному программному обеспечению загрузиться.";
-
-/* OpenVPN */
-"_openvpn_settings_title" = "Требуется расширение системы";
-
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Обзор";
 
@@ -1124,7 +1100,7 @@
 "_password" = "Пароль";
 
 /* Sign-up form */
-"_password_confirm" = "Подтвердить пароль";
+"_password_confirm" = "Подтвердите пароль";
 
 /* Per year. Appended to plan price. */
 "_per_year_short" = "/ год";
@@ -1642,6 +1618,69 @@
 /* (No Comment) */
 "_switch_side_button_on" = "ВКЛ";
 
+/* (No Comment) */
+"_sysex_cannot_enable" = "Не могу включить системное расширение";
+
+/* (No Comment) */
+"_sysex_enabled_description" = "Вы успешно включили системное расширение на вашем устройстве. Теперь вы можете использовать Smart Protocol, OpenVPN и WireGuard.";
+
+/* (No Comment) */
+"_sysex_enabled_title" = "Теперь вы можете использовать Smart Protocol, OpenVPN и WireGuard";
+
+/* (No Comment) */
+"_sysex_error_description" = "Произошла ошибка при установке системного расширения.\nПереустановите ProtonVPN, убедитесь, что он расположен в папке Приложения, чтобы исправить эту проблему. Или свяжитесь с нашей поддержкой.";
+
+/* (No Comment) */
+"_sysex_settings_description" = "ProtonVPN требует загрузки системного расширения для использования Smart Protocol, OpenVPN и WireGuard.";
+
+/* OpenVPN /  WireGuard / System Extensions */
+"_sysex_settings_title" = "Требуется расширение системы";
+
+/* System exetnsion wizard in mac: Button */
+"_sysex_wizard_button" = "Начать настройку вручную";
+
+/* System exetnsion wizard in mac: Step nr.1 description */
+"_sysex_wizard_step1_description" = "Щелкните \"Открыть настройки безопасности\" в\n следующих диалоговых окнах (2)";
+
+/* System exetnsion wizard in mac: Step nr.1 title */
+"_sysex_wizard_step1_title" = "Тревоги \"Системные расширения заблокированы\" (x2)";
+
+/* System exetnsion wizard in mac: Step nr.2 description */
+"_sysex_wizard_step2_description" = "Щелкните на значок замка, чтобы можно было вносить изменения";
+
+/* System exetnsion wizard in mac: Step nr.2 title */
+"_sysex_wizard_step2_title" = "Разблокируйте, чтобы внести изменения";
+
+/* System exetnsion wizard in mac: Step nr.3 description */
+"_sysex_wizard_step3_description" = "Введите данные своей учётной записи macOS, чтобы аутентифицироваться";
+
+/* System exetnsion wizard in mac: Step nr.3 title */
+"_sysex_wizard_step3_title" = "Введите данные учётной записи";
+
+/* System exetnsion wizard in mac: Step nr.4 description */
+"_sysex_wizard_step4_description" = "Щелкните по кнопке \"Подробности…\"";
+
+/* System exetnsion wizard in mac: Step nr.4 title */
+"_sysex_wizard_step4_title" = "кнопка \"Подробности…\"";
+
+/* System exetnsion wizard in mac: Step nr.5 description */
+"_sysex_wizard_step5_description" = "Выберите оба пункта ProtonVPN, чтобы разрешить свои протоколы, и щелкните “OK”";
+
+/* System exetnsion wizard in mac: Step nr.5 title */
+"_sysex_wizard_step5_title" = "Выберите элементы ProtonVPN";
+
+/* System exetnsion wizard in mac: Subtitle */
+"_sysex_wizard_subtitle" = "Чтобы это сделать, вы должны будете произвести быструю ручную настройку в следующем порядке:";
+
+/* System exetnsion wizard in mac: Text under 5 points */
+"_sysex_wizard_text_under_steps" = "Теперь Вы готовы использовать ProtonVPN с самыми последними и быстрейшими доступными технологиями VPN!";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_title" = "Насладитесь самыми быстрыми подключениями, разрешив использовать свои протоколы";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_window_title" = "Разрешение своих протоколов";
+
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Системные уведомления";
 
@@ -1821,10 +1860,10 @@
 /* (No Comment) */
 "_try_again_without_killswitch" = "Отключить Kill Switch и повторить попытку";
 
-/* (No Comment) */
-"_turn_ks_on_description" = "При активации Kill Switch, вы не сможете получить доступ к устройствам в вашей локальной сети.\n\nПродолжить?";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "При активации Kill Switch, вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
 
-/* (No Comment) */
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "Включить Kill Switch?";
 
 /* (No Comment) */
@@ -1951,7 +1990,7 @@
 "_vpn_accelerator_change_title" = "Изменить VPN-ускоритель";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%";
+"_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%.\nУзнать больше";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Узнать больше";
