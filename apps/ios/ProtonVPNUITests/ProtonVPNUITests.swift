@@ -90,7 +90,7 @@ class ProtonVPNUITests: XCTestCase {
     }
  
      func openLoginScreen(){
-         let apiUrl = app.staticTexts["https://api.protonvpn.ch"]
+         let apiUrl = app.buttons["Use and continue"]
          apiUrl.tap()
          app.buttons["Sign in"].tap()
     }
