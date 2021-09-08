@@ -245,7 +245,7 @@ extension MacAlertService: CoreAlertService {
     }
 
     private func show(_ alert: SystemExtensionTourAlert) {
-        let viewModel = SystemExtensionGuideViewModel(isTimeToClose: alert.isTimeToClose, acceptedHandler: alert.continueHandler)
+        let viewModel = SystemExtensionGuideViewModel(extensionsCount: alert.extensionsCount, isTimeToClose: alert.isTimeToClose, acceptedHandler: alert.continueHandler)
         windowService.openSystemExtensionGuideWindow(viewModel: viewModel)
     }
     
