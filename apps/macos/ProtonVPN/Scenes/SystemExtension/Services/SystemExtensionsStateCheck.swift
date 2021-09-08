@@ -62,7 +62,7 @@ class SystemExtensionsStateCheck {
                 return
             }
             
-            self.alertService.push(alert: SystemExtensionTourAlert(isTimeToClose: { [weak self] completion in
+            self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: installNeeded.count, isTimeToClose: { [weak self] completion in
                 self?.areAllExtensionsInstalled(completion: completion)
                 
             }, continueHandler: {
