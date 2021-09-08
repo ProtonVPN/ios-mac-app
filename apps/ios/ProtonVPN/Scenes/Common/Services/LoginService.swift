@@ -93,7 +93,7 @@ final class CoreLoginService {
 
     #if !RELEASE
     private func showEnvironmentSelection() {
-        let environmentsViewController = UIStoryboard(name: "Common", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
+        let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
         environmentsViewController.propertiesManager = propertiesManager
         environmentsViewController.delegate = self
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))

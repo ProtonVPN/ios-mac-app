@@ -507,7 +507,7 @@
 		F3747C0126D4DF6B00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
-		F379C1A226E8D8030041CD2D /* Common.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F379C1A126E8D8030041CD2D /* Common.storyboard */; };
+		F379C1A226E8D8030041CD2D /* Environments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F379C1A126E8D8030041CD2D /* Environments.storyboard */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -1027,7 +1027,7 @@
 		F3747BE826D3880800EF2F00 /* Subscriptions.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Subscriptions.storyboard; sourceTree = "<group>"; };
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
-		F379C1A126E8D8030041CD2D /* Common.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Common.storyboard; path = ../../../../ios/ProtonVPN/Scenes/Common/Common.storyboard; sourceTree = "<group>"; };
+		F379C1A126E8D8030041CD2D /* Environments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Environments.storyboard; path = ../../../../ios/ProtonVPN/Scenes/Common/Environments.storyboard; sourceTree = "<group>"; };
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/LoginService.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
@@ -2168,7 +2168,7 @@
 		F36ECC8B2611C5DF0089B898 /* Common */ = {
 			isa = PBXGroup;
 			children = (
-				F379C1A126E8D8030041CD2D /* Common.storyboard */,
+				F379C1A126E8D8030041CD2D /* Environments.storyboard */,
 				791C54F0214A75B600C6F337 /* Views */,
 				7995FCD620908E1E0030E1EB /* Constants */,
 				E169FC392289ABD000FDC933 /* Models */,
@@ -2714,7 +2714,7 @@
 				7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */,
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
 				D5BCDCFA25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */,
-				F379C1A226E8D8030041CD2D /* Common.storyboard in Resources */,
+				F379C1A226E8D8030041CD2D /* Environments.storyboard in Resources */,
 				D511084724614D480018872A /* PlanAdvancedFeaturesView.xib in Resources */,
 				D5BCDC80253038FE004BAEE8 /* AnnouncementsViewController.xib in Resources */,
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
