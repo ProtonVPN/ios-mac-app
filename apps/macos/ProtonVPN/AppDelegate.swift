@@ -55,7 +55,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             AppLaunchRoutine.execute()
 
-            ApiConstants.apiHost = ObfuscatedConstants.apiHost
+            // swiftlint:disable force_try
+            ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost)
+            // swiftlint:enable force_try
             
             _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
             self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())

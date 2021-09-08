@@ -26,18 +26,6 @@ public struct ApiConstants {
     // swiftlint:disable force_try
     public static var doh = try! DoHVPN(apiHost: "")
     // swiftlint:enable force_try
-
-    public static var apiHost: String = "" {
-        didSet {
-            // swiftlint:disable force_try
-            doh = try! DoHVPN(apiHost: apiHost)
-            // swiftlint:enable force_try
-        }
-    }
-    
-    public static var liveURL: String {
-        return doh.liveURL
-    }
     
     public static var clientDictionary: NSDictionary {
         guard let file = Bundle.main.path(forResource: "Client", ofType: "plist"),

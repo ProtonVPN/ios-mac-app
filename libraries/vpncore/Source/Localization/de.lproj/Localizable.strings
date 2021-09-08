@@ -83,7 +83,7 @@
 "_always_on_vpn" = "Durchgängig aktives VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Kill Switch wird nicht auf iOS unterstützt. Eine Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu Ihrer Sicherheit ist diese Option ständig aktiviert.";
+"_always_on_vpn_tooltip_ios" = "Eine Always‐On‐VPN stellt eine sichere VPN‐Verbindung schnell und automatisch wieder her. Zu Ihrer Sicherheit ist diese Option ständig aktiviert.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "Always‐on‐VPN stellt Ihre Verbindung automatisch wieder her";
@@ -107,7 +107,7 @@
 "_basic_servers" = "BASIC-Server";
 
 /* Battery usages screen description */
-"_battery_description" = "Der gesamte Datenverkehr auf Ihrem Smartphone wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Apps ProtonVPN zurechnen.";
+"_battery_description" = "Der gesamte Datenverkehr Ihres Telefons wird über OpenVPN geleitet, daher wird iOS den Akkuverbrauch anderer Anwendungen ProtonVPN zuweisen.";
 
 /* Battery usage More info button text */
 "_battery_more" = "Möchten Sie mehr erfahren?";
@@ -784,6 +784,12 @@
 /* Server load. Used together with actual server load in percents. */
 "_load" = "Laden";
 
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info" = "Verbindungsinformationen werden geladen";
+
+/* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
+"_loading_connection_info_for" = "Verbindungsinformationen für „%@” werden geladen";
+
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Sicheres Internet überall";
 
@@ -1050,36 +1056,6 @@
 
 /* (No Comment) */
 "_openvpn" = "OpenVPN";
-
-/* (No Comment) */
-"_openvpn_cannot_enable" = "OpenVPN konnte nicht aktiviert werden";
-
-/* (No Comment) */
-"_openvpn_error_description" = "Bei der Installation von OpenVPN ist ein Fehler aufgetreten.\nInstallieren Sie ProtonVPN neu und stellen Sie sicher, dass es sich im Ordner „Programme” befindet, um dieses Problem zu beheben. Wenden Sie sich alternativ an unseren Support.";
-
-/* (No Comment) */
-"_openvpn_settings_description" = "ProtonVPN erfordert das Laden einer Systemerweiterung, um das Smart-Protokoll und OpenVPN nutzen zu können.";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_description" = "Sie haben die Systemerweiterung erfolgreich auf Ihrem Gerät aktiviert. Smart-Protokoll und OpenVPN können nun verwendet werden.";
-
-/* (No Comment) */
-"_openvpn_settings_enabled_title" = "Sie können jetzt das Smart-Protokoll und OpenVPN verwenden";
-
-/* (No Comment) */
-"_openvpn_settings_step1" = "Wählen Sie im Dialogfeld (das beim Aktivieren von OpenVPN geöffnet wird) „Sicherheitseinstellungen öffnen”. Wenn dieser Bildschirm nicht automatisch angezeigt wird, klicken Sie hier.";
-
-/* (No Comment) */
-"_openvpn_settings_step1_link" = "klicken Sie hier";
-
-/* (No Comment) */
-"_openvpn_settings_step2" = "Nehmen Sie die erforderlichen Änderungen vor, indem Sie auf das Schloss klicken.";
-
-/* (No Comment) */
-"_openvpn_settings_step3" = "Gestatten Sie dem System, die Erweiterung laden zu dürfen.";
-
-/* OpenVPN */
-"_openvpn_settings_title" = "Systemerweiterung erforderlich";
 
 /* MacOS menu item; MacOS Profiles tab title; */
 "_overview" = "Übersicht";
@@ -1642,6 +1618,69 @@
 /* (No Comment) */
 "_switch_side_button_on" = "EIN";
 
+/* (No Comment) */
+"_sysex_cannot_enable" = "Systemerweiterung konnte nicht aktiviert werden";
+
+/* (No Comment) */
+"_sysex_enabled_description" = "Sie haben die Systemerweiterung auf Ihrem Gerät erfolgreich aktiviert. Sie können nun Smart Protocol, OpenVPN und WireGuard verwenden.";
+
+/* (No Comment) */
+"_sysex_enabled_title" = "Ab sofort können Sie Smart Protocol, OpenVPN und WireGuard verwenden";
+
+/* (No Comment) */
+"_sysex_error_description" = "Bei der Installation der Systemerweiterung ist ein Fehler aufgetreten.\nInstallieren Sie ProtonVPN neu und stellen Sie sicher, dass es sich im Ordner „Programme” befindet, um dieses Problem zu beheben. Wenden Sie sich alternativ an unseren Support.";
+
+/* (No Comment) */
+"_sysex_settings_description" = "ProtonVPN erfordert das Installieren einer Systemerweiterung, um Smart Protocol, OpenVPN und WireGuard nutzen zu können.";
+
+/* OpenVPN /  WireGuard / System Extensions */
+"_sysex_settings_title" = "Systemerweiterung erforderlich";
+
+/* System exetnsion wizard in mac: Button */
+"_sysex_wizard_button" = "Manuelle Konfiguration starten";
+
+/* System exetnsion wizard in mac: Step nr.1 description */
+"_sysex_wizard_step1_description" = "Klicken Sie auf die Schaltfläche \"Sicherheitseinstellungen öffnen\" in den folgenden Dialogfeldern (2)";
+
+/* System exetnsion wizard in mac: Step nr.1 title */
+"_sysex_wizard_step1_title" = "Warnmeldungen „Systemerweiterung gesperrt” (x2)";
+
+/* System exetnsion wizard in mac: Step nr.2 description */
+"_sysex_wizard_step2_description" = "Klicken Sie auf das Schloss, um Änderungen vorzunehmen";
+
+/* System exetnsion wizard in mac: Step nr.2 title */
+"_sysex_wizard_step2_title" = "Entsperren, um Änderungen vorzunehmen";
+
+/* System exetnsion wizard in mac: Step nr.3 description */
+"_sysex_wizard_step3_description" = "Geben Sie Ihre macOS-Anmeldedaten zur Authentifizierung ein";
+
+/* System exetnsion wizard in mac: Step nr.3 title */
+"_sysex_wizard_step3_title" = "Anmeldedaten eingeben";
+
+/* System exetnsion wizard in mac: Step nr.4 description */
+"_sysex_wizard_step4_description" = "Klicken Sie auf die Schaltfläche „Details …”";
+
+/* System exetnsion wizard in mac: Step nr.4 title */
+"_sysex_wizard_step4_title" = "Schaltfläche „Details …”";
+
+/* System exetnsion wizard in mac: Step nr.5 description */
+"_sysex_wizard_step5_description" = "Wählen Sie beide ProtonVPN-Elemente, um benutzerdefinierte Protokolle zu aktivieren, und klicken Sie anschließend auf „OK”";
+
+/* System exetnsion wizard in mac: Step nr.5 title */
+"_sysex_wizard_step5_title" = "ProtonVPN-Elemente auswählen";
+
+/* System exetnsion wizard in mac: Subtitle */
+"_sysex_wizard_subtitle" = "Dazu müssen Sie eine schnelle manuelle Konfiguration in der folgenden Reihenfolge vornehmen:";
+
+/* System exetnsion wizard in mac: Text under 5 points */
+"_sysex_wizard_text_under_steps" = "Sie sind jetzt gerüstet, um ProtonVPN mit den neuesten und schnellsten verfügbaren VPN-Technologien zu nutzen!";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_title" = "Genießen Sie die schnellsten Verbindungen durch Aktivierung benutzerdefinierter Protokolle";
+
+/* System exetnsion wizard in mac: Main title */
+"_sysex_wizard_window_title" = "Benutzerdefinierte Protokolle werden aktiviert";
+
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Systembenachrichtigungen";
 
@@ -1821,10 +1860,10 @@
 /* (No Comment) */
 "_try_again_without_killswitch" = "Kill Switch deaktivieren und erneut versuchen";
 
-/* (No Comment) */
-"_turn_ks_on_description" = "Sie können beim Aktivieren von Kill Switch nicht mehr auf Geräte in Ihrem lokalen Netzwerk zugreifen? ";
+/* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
+"_turn_ks_on_description" = "Wenn Sie Kill Switch aktivieren, können Sie nicht mehr auf Geräte in Ihrem lokalen Netzwerk zugreifen.\n\nWeiter?";
 
-/* (No Comment) */
+/* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "Kill Switch aktivieren?";
 
 /* (No Comment) */
@@ -1846,7 +1885,7 @@
 "_unsecure_wifi" = "Unsichere WLAN‐Verbindung erkannt";
 
 /* (No Comment) */
-"_unsecure_wifi_learn_more" = "Erfahren Sie mehr";
+"_unsecure_wifi_learn_more" = "Mehr erfahren";
 
 /* (No Comment) */
 "_unsecure_wifi_title" = "Unsicheres WLAN erkannt";
@@ -1951,7 +1990,7 @@
 "_vpn_accelerator_change_title" = "VPN-Accelerator ändern";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "„VPN Accelerator“ ermöglicht eine Reihe von einzigartigen leistungssteigernden Technologien, die die VPN-Geschwindigkeit um bis zu 400% erhöhen können";
+"_vpn_accelerator_description" = "VPN Accelerator ermöglicht eine Reihe einzigartiger leistungssteigernder Technologien, die die VPN-Geschwindigkeit um bis zu 400% erhöhen können.\nMehr erfahren";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Mehr erfahren";
