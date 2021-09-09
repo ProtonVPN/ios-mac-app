@@ -26,15 +26,11 @@ final class GetPaymentsTokenRequest: Request {
     
     let token: PaymentToken
     
-    init ( _ token: PaymentToken) {
+    init(_ token: PaymentToken) {
         self.token = token
     }
 
     var path: String {
         return "/payments/tokens/" + token.token
-    }
-
-    var method: HTTPMethod {
-        return .post
     }
 }

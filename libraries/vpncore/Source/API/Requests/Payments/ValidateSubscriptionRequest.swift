@@ -26,7 +26,7 @@ final class ValidateSubscriptionRequest: Request {
     
     let planId: String
     
-    init ( _ planId: String) {
+    init(_ planId: String) {
         self.planId = planId
     }
 
@@ -35,7 +35,7 @@ final class ValidateSubscriptionRequest: Request {
     }
 
     var method: HTTPMethod {
-        return .post
+        return .put
     }
 
     var parameters: [String: Any]? {
