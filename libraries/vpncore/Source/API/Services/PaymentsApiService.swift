@@ -283,22 +283,6 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         }
     }
     
-    // MARK: - Private
-    private struct Key: CodingKey {
-        var stringValue: String
-        var intValue: Int?
-        
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-            self.intValue = nil
-        }
-        
-        init?(intValue: Int) {
-            self.stringValue = "\(intValue)"
-            self.intValue = intValue
-        }
-    }
-    
     private func plansResponse(_ json: JSONDictionary) throws -> [ServicePlanDetails] {
         let data = try JSONSerialization.data(withJSONObject: json["Plans"] as Any, options: [])
         let decoder = JSONDecoder()
