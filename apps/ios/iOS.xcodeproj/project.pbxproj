@@ -35,6 +35,7 @@
 		428DF9B6262F126600944379 /* StreamingServiceCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 428DF9B4262F126600944379 /* StreamingServiceCell.xib */; };
 		42BB5E5E247FFD7F0002DA8A /* TodayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */; };
 		42BB5E5F247FFD7F0002DA8A /* TodayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */; };
+		42BD4E8B26DE4CD200159AF3 /* ProtocolsListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42BD4E8A26DE4CD200159AF3 /* ProtocolsListRobot.swift */; };
 		42C37AFC2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFD2434E54400366B79 /* PlanCardViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */; };
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
@@ -722,6 +723,7 @@
 		428DF9B4262F126600944379 /* StreamingServiceCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StreamingServiceCell.xib; sourceTree = "<group>"; };
 		42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
+		42BD4E8A26DE4CD200159AF3 /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		42C37AFB2434E54400366B79 /* PlanCardViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanCardViewPresenter.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1557,6 +1559,7 @@
 			children = (
 				B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */,
 				B2BA40F726D3CFD100DF04C3 /* SettingsRobot.swift */,
+				42BD4E8A26DE4CD200159AF3 /* ProtocolsListRobot.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -3834,6 +3837,7 @@
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
 				B2BA40F826D3CFD100DF04C3 /* SettingsRobot.swift in Sources */,
+				42BD4E8B26DE4CD200159AF3 /* ProtocolsListRobot.swift in Sources */,
 				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
 				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
