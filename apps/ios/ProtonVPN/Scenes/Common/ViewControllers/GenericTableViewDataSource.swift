@@ -137,7 +137,9 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             }
             
             cell.titleLabel.text = key
+            cell.accessibilityIdentifier = key
             cell.subtitleLabel.text = value
+            cell.subtitleLabel.accessibilityIdentifier = value
             cell.completionHandler = handler
             
             return cell
@@ -219,7 +221,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             guard let cell = tableView.dequeueReusableCell(withIdentifier: CheckmarkTableViewCell.identifier) as? CheckmarkTableViewCell else {
                 return UITableViewCell()
             }
-            
+            cell.accessibilityIdentifier = title
             cell.label.text = title
             if checked {
                 cell.accessoryType = .checkmark

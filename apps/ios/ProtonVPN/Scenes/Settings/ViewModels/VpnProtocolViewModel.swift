@@ -12,91 +12,79 @@ import vpncore
 
 final class VpnProtocolViewModel {
     
-    var protocolChanged: ((VpnProtocol) -> Void)?
+    var protocolChanged: ((ConnectionProtocol) -> Void)?
     var contentChanged: (() -> Void)?
     
-    private var vpnProtocol: VpnProtocol
-    private var openVpnTransportProtocol: VpnProtocol.TransportProtocol // maintains transport protocol selection even when vpn protocol is changed
+    private var vpnProtocol: VpnProtocol = .ike
+    private var connectionProtocol: ConnectionProtocol
     private let featureFlags: FeatureFlags
     private let alertService: AlertService
+    private let displaySmartProtocol: Bool
     
-    init(vpnProtocol: VpnProtocol, featureFlags: FeatureFlags, alertService: AlertService) {
-        self.vpnProtocol = vpnProtocol
+    init(connectionProtocol: ConnectionProtocol, displaySmartProtocol: Bool = true, featureFlags: FeatureFlags, alertService: AlertService) {
+        self.connectionProtocol = connectionProtocol
         self.featureFlags = featureFlags
         self.alertService = alertService
-        
-        if case VpnProtocol.openVpn(let transportProtocol) = vpnProtocol {
-            self.openVpnTransportProtocol = transportProtocol
-        } else {
-            self.openVpnTransportProtocol = .tcp
+        self.displaySmartProtocol = displaySmartProtocol
+        if case ConnectionProtocol.vpnProtocol(let vpnProtocol) = connectionProtocol {
+            self.vpnProtocol = vpnProtocol
         }
     }
     
     var tableViewData: [TableViewSection] {
-        var sections = [TableViewSection]()
-        sections.append(vpnProtocols)
-        
-        if case VpnProtocol.openVpn = vpnProtocol {
-            sections.append(transportProtocols)
-        }
-        
-        return sections
+        return [vpnProtocols]
     }
     
     private var vpnProtocols: TableViewSection {
         var cells = [TableViewCellModel]()
-            
-        cells.append(.checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke, handler: { [switchVpnProtocol] in
-            switchVpnProtocol(.ike)
-            return true
-        }))
         
-        cells.append(
-            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard, handler: { [switchVpnProtocol] in
-                switchVpnProtocol(.wireGuard)
+        if displaySmartProtocol {
+            cells.append(.checkmarkStandard(title: LocalizedString.smartTitle, checked: connectionProtocol == .smartProtocol, handler: {
+                self.switchConnectionProtocol(.smartProtocol)
                 return true
-        }))
-        
-        cells.append(.checkmarkStandard(title: LocalizedString.openvpn, checked: vpnProtocol.isOpenVpn, handler: { [openVpnTransportProtocol, switchVpnProtocol] in
-            switchVpnProtocol(.openVpn(openVpnTransportProtocol))
-            return true
-        }))
-                
-        return TableViewSection(title: "", cells: cells)
-    }
-    
-    private var transportProtocols: TableViewSection {
-        return TableViewSection(title: "", cells: [
-            .checkmarkStandard(title: LocalizedString.tcp, checked: openVpnTransportProtocol == .tcp || openVpnTransportProtocol == .undefined, handler: { [switchTransportProtocol] in
-                switchTransportProtocol(.tcp)
-                return true
-            }),
-            .checkmarkStandard(title: LocalizedString.udp, checked: openVpnTransportProtocol == .udp, handler: { [switchTransportProtocol] in
-                switchTransportProtocol(.udp)
-                return true
-            })
-        ])
-    }
-    
-    private func switchVpnProtocol(_ proto: VpnProtocol) {
-        vpnProtocol = proto
-        
-        stateUpdated()
-    }
-    
-    private func switchTransportProtocol(_ proto: VpnProtocol.TransportProtocol) {
-        if case VpnProtocol.openVpn = vpnProtocol { // don't overwrite the vpn protocol
-            vpnProtocol = .openVpn(proto)
+            }))
         }
         
-        openVpnTransportProtocol = proto
+        let smartDisabled = !displaySmartProtocol || connectionProtocol != .smartProtocol || !featureFlags.smartReconnect
         
+        cells.append(
+            .checkmarkStandard(title: LocalizedString.wireguard, checked: vpnProtocol.isWireGuard && smartDisabled, handler: {
+                self.switchConnectionProtocol(.vpnProtocol(.wireGuard))
+                return true
+            }))
+        
+        let isUDP = vpnProtocol.isOpenVpn(.udp)
+        
+        cells.append(.checkmarkStandard(title: VpnProtocol.openVpn(.udp).localizedString, checked: isUDP && smartDisabled, handler: {
+            self.switchConnectionProtocol(.vpnProtocol(.openVpn(.udp)))
+            return true
+        }))
+        
+        let isTCP = vpnProtocol.isOpenVpn(.tcp)
+        
+        cells.append(.checkmarkStandard(title: VpnProtocol.openVpn(.tcp).localizedString, checked: isTCP && smartDisabled, handler: {
+            self.switchConnectionProtocol(.vpnProtocol(.openVpn(.tcp)))
+            return true
+        }))
+        
+        cells.append(.checkmarkStandard(title: LocalizedString.ikev2, checked: vpnProtocol.isIke && smartDisabled, handler: {
+            self.switchConnectionProtocol(.vpnProtocol(.ike))
+            return true
+        }))
+        
+        return TableViewSection(title: "", showHeader: false, cells: cells)
+    }
+    
+    private func switchConnectionProtocol(_ connectionProtocol: ConnectionProtocol) {
+        if case ConnectionProtocol.vpnProtocol(let proto) = connectionProtocol {
+            self.vpnProtocol = proto
+        }
+        self.connectionProtocol = connectionProtocol
         stateUpdated()
     }
     
     private func stateUpdated() {
-        protocolChanged?(vpnProtocol)
+        protocolChanged?(connectionProtocol)
         contentChanged?()
     }
-    
 }

@@ -90,6 +90,9 @@ public class ServerStorageConcrete: ServerStorage {
                 Storage.userDefaults().set(storageVersion, forKey: versionKey)
                 Storage.userDefaults().set(age, forKey: ageKey)
                 Storage.userDefaults().set(serversData, forKey: storageKey)
+                Storage.userDefaults().synchronize()
+                
+                PMLog.D("Server list saved (count: \(newServers.count))")
 
             } catch {
                 PMLog.ET(error)
