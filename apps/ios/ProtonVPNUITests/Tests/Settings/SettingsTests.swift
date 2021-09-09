@@ -32,9 +32,13 @@ class SettingsTests: ProtonVPNUITests {
         
         mainRobot
             .goToSettingsTab()
-            .smartProtocolOff()
-            .verify.smartProtocolIsDisabled()
+            .goToProtocolsList()
             .smartProtocolOn()
-            .verify.smartProtocolIsEnabled()
+            .returnToSettings()
+            .verify.smartIsEnabled()
+            .goToProtocolsList()
+            .ikeProtocolOn()
+            .returnToSettings()
+            .verify.ikeIsEnabled()
     }
 }
