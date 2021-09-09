@@ -357,7 +357,7 @@ public class VpnApiService {
                     let data = try JSONSerialization.data(withJSONObject: response as Any, options: [])
                     let decoder = JSONDecoder()
                     // this strategy is decapitalizing first letter of response's labels to get appropriate name
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                     let clientConfigResponse = try decoder.decode(ClientConfigResponse.self, from: data)
                     completion(.success(clientConfigResponse.clientConfig))
 
@@ -403,11 +403,5 @@ public class VpnApiService {
             self.stringValue = "\(intValue)"
             self.intValue = intValue
         }
-    }
-    
-    private func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
-        let original: String = path.last!.stringValue
-        let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
-        return Key(stringValue: uncapitalized) ?? path.last!
     }
 }
