@@ -120,7 +120,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                     let data = try JSONSerialization.data(withJSONObject: json["PaymentMethods"] as Any, options: [])
                     let decoder = JSONDecoder()
                     // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                     let methods = try decoder.decode(Array<PaymentMethod>.self, from: data)
                     success(methods)
                 } catch let error {
@@ -299,17 +299,11 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
         }
     }
     
-    private func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
-        let original: String = path.last!.stringValue
-        let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
-        return Key(stringValue: uncapitalized) ?? path.last!
-    }
-    
     private func plansResponse(_ json: JSONDictionary) throws -> [ServicePlanDetails] {
         let data = try JSONSerialization.data(withJSONObject: json["Plans"] as Any, options: [])
         let decoder = JSONDecoder()
         // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-        decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+        decoder.keyDecodingStrategy = .decapitaliseFirstLetter
         let plans = try decoder.decode(Array<ServicePlanDetails>.self, from: data)
         return plans
     }
