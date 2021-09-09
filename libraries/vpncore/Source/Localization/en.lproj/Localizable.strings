@@ -1673,8 +1673,11 @@
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
 
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Reconnection required";

@@ -69,9 +69,9 @@ public enum VpnProtocol {
             string = LocalizedString.openvpn
             switch transportProtocol {
             case .tcp:
-                string += " / " + LocalizedString.tcp
+                string += " (\(LocalizedString.tcp))"
             case .udp:
-                string += " / " + LocalizedString.udp
+                string += " (\(LocalizedString.udp))"
             case .undefined:
                 break
             }
@@ -93,6 +93,14 @@ public enum VpnProtocol {
     public var isOpenVpn: Bool {
         if case .openVpn = self {
             return true
+        } else {
+            return false
+        }
+    }
+    
+    public func isOpenVpn(_ transportProtocol: TransportProtocol) -> Bool {
+        if case .openVpn(let transport) = self {
+            return transportProtocol == transport
         } else {
             return false
         }
@@ -124,7 +132,6 @@ public enum VpnProtocol {
             return .undefined
         }
     }
-    
 }
 
 extension VpnProtocol: Codable {
