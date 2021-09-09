@@ -87,3 +87,15 @@ public class QuitWarningAlert: SystemAlert {
         actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
     }
 }
+
+public class ForceUpgradeAlert: SystemAlert {
+    public var title: String? = LocalizedString.vpnConnectionActive
+    public var message: String? = LocalizedString.quitWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = false
+    public var dismiss: (() -> Void)?
+
+    public init() {
+        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+    }
+}
