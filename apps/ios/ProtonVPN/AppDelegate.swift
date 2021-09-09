@@ -45,9 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
-        // swiftlint:disable force_try
-        ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost)
-        // swiftlint:enable force_try
+        ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost) // swiftlint:disable:this force_try
         Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
 
         setupCoreIntegration()

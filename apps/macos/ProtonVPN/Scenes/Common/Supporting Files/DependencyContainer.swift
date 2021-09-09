@@ -95,9 +95,7 @@ final class DependencyContainer {
         return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
     }()
 
-    // swiftlint:disable weak_delegate
-    private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService)
-    // swiftlint:enable weak_delegate
+    private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate)
 }
 

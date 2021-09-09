@@ -41,9 +41,7 @@ final class CoreLoginService {
     private let navigationService: NavigationService
     private let windowService: WindowService
     private let alertService: AlertService
-    // swiftlint:disable weak_delegate
-    private let networkingDelegate: NetworkingDelegate
-    // swiftlint:enable weak_delegate
+    private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
 

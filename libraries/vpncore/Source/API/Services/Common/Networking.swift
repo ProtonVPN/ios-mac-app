@@ -46,9 +46,7 @@ public protocol Networking: APIServiceDelegate {
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
     private var apiService: PMAPIService
-    // swiftlint:disable weak_delegate
-    private let delegate: NetworkingDelegate
-    // swiftlint:enable weak_delegate
+    private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
 
     public init(delegate: NetworkingDelegate) {
         self.delegate = delegate
