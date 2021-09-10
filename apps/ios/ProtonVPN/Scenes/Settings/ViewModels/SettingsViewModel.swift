@@ -227,36 +227,12 @@ class SettingsViewModel {
         
         var cells: [TableViewCellModel] = []
 
-        cells.append(.toggle(title: LocalizedString.smartProtocolTitle, on: propertiesManager.smartProtocol, enabled: true) { [unowned self] (toggleOn, callback) in
-            let update = { (shouldReconnect: Bool) in
-                self.propertiesManager.smartProtocol.toggle()
-                callback(self.propertiesManager.smartProtocol)
-                self.reloadNeeded?()
-
-                if shouldReconnect {
-                    self.vpnGateway?.reconnect(with: self.propertiesManager.connectionProtocol)
-                }
-            }
-
-            switch self.appStateManager.state {
-            case .connected, .connecting:
-                alertService.push(alert: ReconnectOnSmartProtocolChangeAlert(confirmHandler: {
-                    update(true)
-                }, cancelHandler: {
-                    callback(self.propertiesManager.smartProtocol)
-                }))
-            default:
-                update(false)
-            }
-        })
+        let protocolValue = propertiesManager.smartProtocol ? LocalizedString.smartTitle : vpnProtocol.localizedString
+        cells.append(.pushKeyValue(key: LocalizedString.protocol, value: protocolValue, handler: { [protocolCellAction] in
+            protocolCellAction()
+        }))
         cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
 
-        if !propertiesManager.smartProtocol {
-            cells.append(.pushKeyValue(key: LocalizedString.protocol, value: vpnProtocol.localizedString, handler: { [protocolCellAction] in
-                protocolCellAction()
-            }))
-        }
-        
         let netShieldAvailable = propertiesManager.featureFlags.netShield
         if netShieldAvailable {
             cells.append(.pushKeyValue(key: LocalizedString.netshieldTitle, value: netShieldPropertyProvider.netShieldType.name, handler: { [pushNetshieldSelectionViewController] in
@@ -486,9 +462,15 @@ class SettingsViewModel {
     }
     
     private func pushProtocolViewController() {
-        let vpnProtocolViewModel = VpnProtocolViewModel(vpnProtocol: propertiesManager.vpnProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService)
-        vpnProtocolViewModel.protocolChanged = { [self] vpnProtocol in
-            self.propertiesManager.vpnProtocol = vpnProtocol
+        let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService)
+        vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol in
+            switch connectionProtocol {
+            case .smartProtocol:
+                self.propertiesManager.smartProtocol = true
+            case .vpnProtocol(let vpnProtocol):
+                self.propertiesManager.smartProtocol = false
+                self.propertiesManager.vpnProtocol = vpnProtocol
+            }
         }
         pushHandler?(protocolService.makeVpnProtocolViewController(viewModel: vpnProtocolViewModel))
     }

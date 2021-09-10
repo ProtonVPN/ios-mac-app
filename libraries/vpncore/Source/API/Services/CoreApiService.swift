@@ -46,7 +46,7 @@ public class CoreApiServiceImplementation: CoreApiService {
                     let data = try JSONSerialization.data(withJSONObject: json as Any, options: [])
                     let decoder = JSONDecoder()
                     // this strategy is decapitalizing first letter of response's labels to get appropriate name of the ServicePlanDetails object
-                    decoder.keyDecodingStrategy = .custom(self.decapitalizeFirstLetter)
+                    decoder.keyDecodingStrategy = .decapitaliseFirstLetter
                     decoder.dateDecodingStrategy = .secondsSince1970
                     let result = try decoder.decode(GetApiNotificationsResponse.self, from: data)
 
@@ -59,27 +59,4 @@ public class CoreApiServiceImplementation: CoreApiService {
             }
         }
     }
-    
-    // MARK: - Private
-    private struct Key: CodingKey {
-        var stringValue: String
-        var intValue: Int?
-        
-        init?(stringValue: String) {
-            self.stringValue = stringValue
-            self.intValue = nil
-        }
-        
-        init?(intValue: Int) {
-            self.stringValue = "\(intValue)"
-            self.intValue = intValue
-        }
-    }
-    
-    private func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
-        let original: String = path.last!.stringValue
-        let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
-        return Key(stringValue: uncapitalized) ?? path.last!
-    }
-    
 }

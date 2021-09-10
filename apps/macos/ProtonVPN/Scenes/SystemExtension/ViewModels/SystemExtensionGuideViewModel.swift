@@ -28,6 +28,7 @@ protocol SystemExtensionGuideViewModelProtocol: NSObject {
     func didTapPrevious()
     func didTapAccept()
     func viewWillAppear()
+    var extensionsCount: Int { get set }
     var isNextButtonVisible: Bool { get }
     var isPrevButtonVisible: Bool { get }
     var steps: [SystemExtensionGuideViewModel.Step] { get }
@@ -46,7 +47,15 @@ class SystemExtensionGuideViewModel: NSObject {
         let imageName: String
     }
     
-    let steps: [Step] = [
+    var steps: [Step] { return extensionsCount == 1 ? stepsOne : stepsMany }
+    
+    private let stepsOne: [Step] = [
+        Step(title: LocalizedString.sysexWizardStep1Title1, description: LocalizedString.sysexWizardStep1Description1, imageName: "1-step-1"),
+        Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, imageName: "2-step"),
+        Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, imageName: "3-step"),
+        Step(title: LocalizedString.sysexWizardStep4Title1, description: LocalizedString.sysexWizardStep4Description1, imageName: "4-step-1"),
+    ]
+    private let stepsMany: [Step] = [
         Step(title: LocalizedString.sysexWizardStep1Title, description: LocalizedString.sysexWizardStep1Description, imageName: "1-step"),
         Step(title: LocalizedString.sysexWizardStep2Title, description: LocalizedString.sysexWizardStep2Description, imageName: "2-step"),
         Step(title: LocalizedString.sysexWizardStep3Title, description: LocalizedString.sysexWizardStep3Description, imageName: "3-step"),
@@ -55,13 +64,15 @@ class SystemExtensionGuideViewModel: NSObject {
     ]
     private var currentStep = 0
     
+    var extensionsCount: Int
     var acceptedHandler: () -> Void
     var isTimeToClose: SystemExtensionTourAlert.CloseConditionCallback
     
     var contentChanged: (() -> Void)?
     var close: (() -> Void)?
     
-    init(isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void) {
+    init(extensionsCount: Int, isTimeToClose: @escaping SystemExtensionTourAlert.CloseConditionCallback, acceptedHandler: @escaping () -> Void) {
+        self.extensionsCount = extensionsCount
         self.isTimeToClose = isTimeToClose
         self.acceptedHandler = acceptedHandler
     }

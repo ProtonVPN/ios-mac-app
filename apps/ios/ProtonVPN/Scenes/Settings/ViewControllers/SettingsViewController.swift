@@ -50,7 +50,7 @@ class SettingsViewController: UIViewController {
         let unselectedImage = UIImage(named: "settings-inactive")
         tabBarItem = UITabBarItem(title: LocalizedString.settings, image: unselectedImage, tag: 4)
         tabBarItem.selectedImage = selectedImage
-        tabBarItem.accessibilityIdentifier = "Settings"
+        tabBarItem.accessibilityIdentifier = "Settings back btn"
     }
     
     override func viewDidLoad() {

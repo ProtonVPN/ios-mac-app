@@ -43,10 +43,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
-        
-        // swiftlint:disable force_try
-        ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost)
-        // swiftlint:enable force_try
+
+        ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost) // swiftlint:disable:this force_try
 
         setupCoreIntegration()
         

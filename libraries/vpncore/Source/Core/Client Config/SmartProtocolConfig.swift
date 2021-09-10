@@ -13,6 +13,12 @@ public struct SmartProtocolConfig: Codable {
     public let iKEv2: Bool
     public let wireGuard: Bool
 
+    enum CodingKeys: String, CodingKey {
+        case openVPN
+        case iKEv2 = "IKEv2"
+        case wireGuard
+    }
+
     public init(openVPN: Bool, iKEv2: Bool, wireGuard: Bool) {
         self.openVPN = openVPN
         self.iKEv2 = iKEv2

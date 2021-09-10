@@ -45,10 +45,8 @@ public protocol Networking: APIServiceDelegate {
 
 // MARK: CoreNetworking
 public final class CoreNetworking: Networking {
-    public private(set) var apiService: PMAPIService
-    // swiftlint:disable weak_delegate
-    private let delegate: NetworkingDelegate
-    // swiftlint:enable weak_delegate
+    public private(set) var apiService: PMAPIService    
+    private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
 
     public init(delegate: NetworkingDelegate) {
         self.delegate = delegate
@@ -63,7 +61,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
-        let url = "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
+        let url = cleanedUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
@@ -91,7 +89,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
-        let url = cleandUrl(route)
+        let url = cleanedUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
@@ -108,7 +106,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        let url = cleandUrl(route)
+        let url = cleanedUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         apiService.exec(route: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
@@ -157,7 +155,7 @@ public final class CoreNetworking: Networking {
     }
 
     public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
-        let url = cleandUrl(route)
+        let url = cleanedUrl(route)
         PMLog.D("Request started: \(url)", level: .debug)
 
         let progress: ProgressCompletion = { (progress: Progress) -> Void in
@@ -176,7 +174,7 @@ public final class CoreNetworking: Networking {
         }
     }
 
-    private func cleandUrl(_ route: Request) -> String {
+    private func cleanedUrl(_ route: Request) -> String {
         return "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)".cleanedForLog
     }
 }

@@ -11,7 +11,6 @@ import XCTest
 
 fileprivate let headerTitle = "Settings"
 fileprivate let reportBugtButton = "Report Bug"
-fileprivate let smartProtocolButton = "Smart Protocol"
 fileprivate let protocolButton = "Protocol"
 fileprivate let killSwitchButton = "Kill Switch"
 fileprivate let killSwitchAlert = "Turn Kill Switch on?"
@@ -31,14 +30,9 @@ class SettingsRobot: CoreElements {
         return ReportBugRobot()
     }
     
-    func smartProtocolOff() -> SettingsRobot {
-        swittch(smartProtocolButton).tap()
-        return SettingsRobot()
-    }
-    
-    func smartProtocolOn() -> SettingsRobot {
-        swittch(smartProtocolButton).tap()
-        return SettingsRobot()
+    func goToProtocolsList() -> ProtocolsListRobot {
+        cell(protocolButton).tap()
+        return ProtocolsListRobot()
     }
     
     func turnKillSwitchOn() -> SettingsRobot {
@@ -96,20 +90,6 @@ class SettingsRobot: CoreElements {
         }
         
         @discardableResult
-        func smartProtocolIsDisabled() -> SettingsRobot {
-            swittch(smartProtocolButton).checkHasValue("0")
-            staticText(protocolButton).checkExists()
-            return SettingsRobot()
-        }
-        
-        @discardableResult
-        func smartProtocolIsEnabled() -> SettingsRobot {
-            swittch(smartProtocolButton).checkHasValue("1")
-            staticText(protocolButton).checkDoesNotExist()
-            return SettingsRobot()
-        }
-        
-        @discardableResult
         func ksIsEnabled() -> SettingsRobot {
             swittch(killSwitchButton).checkHasValue("1")
             swittch(allowLanConnectionsButton).checkHasValue("0")
@@ -126,6 +106,18 @@ class SettingsRobot: CoreElements {
         @discardableResult
         func logOutSuccessfully() -> SettingsRobot {
             staticText(firstWizardScreen).wait().checkExists()
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func smartIsEnabled() -> SettingsRobot {
+            staticText("Smart").checkExists()
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func ikeIsEnabled() -> SettingsRobot {
+            staticText("IKEv2").checkExists()
             return SettingsRobot()
         }
     }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		060D071625D34599002B98B8 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D071525D34599002B98B8 /* AppSessionManager.swift */; };
 		060D071725D34599002B98B8 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D071525D34599002B98B8 /* AppSessionManager.swift */; };
+		132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */; };
 		257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */; };
 		42066E8626301BF8001F86DB /* FeatureTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066E8426301BF8001F86DB /* FeatureTableViewCell.swift */; };
 		42066E8726301BF8001F86DB /* FeatureTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 42066E8526301BF8001F86DB /* FeatureTableViewCell.xib */; };
@@ -276,7 +277,7 @@
 		D5A8CD792456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A8CD772456D8AE00F9B0C9 /* TroubleshootingSwitchCell.xib */; };
 		D5AAA128229D23F500EA839A /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5AAA127229D23F500EA839A /* credentials.plist */; };
 		D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12A229D28E400EA839A /* Credentials.swift */; };
-		D5AAA12E229D337300EA839A /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D5AAA12E229D337300EA839A /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5BCDC7E253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */; };
@@ -306,7 +307,8 @@
 		D5F568A32327833100795953 /* AppSessionManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F568A22327833100795953 /* AppSessionManagerMock.swift */; };
 		D5F568A52327858C00795953 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F56898232620C600795953 /* DependencyContainer.swift */; };
 		D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5F5689A23263C7D00795953 /* IosAlertService.swift */; };
-		D92A295D47C56CEE2650AA70 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		D92A295D47C56CEE2650AA70 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
+		DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2087AA9678CFB84779ED67E7 /* Environments.storyboard */; };
 		E109118E2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E109118D2295A111001F6A0B /* UIViewController+Extension.swift */; };
 		E10EA9CA21DA8162006D5F0E /* Quick Connect Widget.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E148AE3E21C141B0007AB65A /* Quick Connect Widget.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -424,7 +426,7 @@
 		E98630A5269889DD00F56B87 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = E986305C269835E500F56B87 /* Localizable.strings */; };
 		E98630A6269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
 		E98630A7269889E200F56B87 /* Localizable.stringsdict in Resources */ = {isa = PBXBuildFile; fileRef = E986305E269835E500F56B87 /* Localizable.stringsdict */; };
-		E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* WireGuardKit */; };
+		E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */; };
 		E997998226A6FA870083D61E /* VpnKeys+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997C26A6FA870083D61E /* VpnKeys+init.swift */; };
 		E997998326A6FA870083D61E /* CertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997D26A6FA870083D61E /* CertificateRefreshManager.swift */; };
 		E997998426A6FA870083D61E /* CertificateRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997997E26A6FA870083D61E /* CertificateRefreshRequest.swift */; };
@@ -601,6 +603,7 @@
 		144DDB28DA09A1DD0A1BDCC9 /* Pods-ProtonVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-metadata.plist"; sourceTree = "<group>"; };
 		1592C416B79CC0A5AF42A83F /* Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-WireGuardiOS Extension/Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		1A063186CCF6A5B988603C52 /* Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-WireGuardiOS Extension/Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
+		2087AA9678CFB84779ED67E7 /* Environments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Environments.storyboard; path = ../../../../ios/ProtonVPN/Scenes/Common/Environments.storyboard; sourceTree = "<group>"; };
 		31EA49C928662F450C8B22DD /* Pods-OpenVPN Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.release.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.release.xcconfig"; sourceTree = "<group>"; };
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		3CBDFC873E416AD23C42323F /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -623,6 +626,7 @@
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		552A60268108D0F8C395145D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
+		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		595518BE20B6AFF39944C7C4 /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.debug.xcconfig"; path = "Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
 		5D60C4144ED4B0B5FB054F50 /* Pods_ProtonVPNTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Siri_Shortcut_Handler.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -1044,7 +1048,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E98EE34E2671EDD200B86BA0 /* WireGuardKit in Frameworks */,
+				E98EE34E2671EDD200B86BA0 /* BuildFile in Frameworks */,
 				E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */,
 				F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */,
 			);
@@ -1909,6 +1913,7 @@
 				791C54EF214A759900C6F337 /* ViewControllers */,
 				791C54F3214A775900C6F337 /* ViewModels */,
 				D5209C6E26CBBCDD00AD14EA /* VPN */,
+				2087AA9678CFB84779ED67E7 /* Environments.storyboard */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -2168,6 +2173,7 @@
 			children = (
 				F3B783E726E6428C006768A8 /* SettingsRobot.swift */,
 				F3B783E826E6428C006768A8 /* ReportBugRobot.swift */,
+				588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -2374,7 +2380,7 @@
 			);
 			name = "WireGuardiOS Extension";
 			packageProductDependencies = (
-				E98EE34D2671EDD200B86BA0 /* WireGuardKit */,
+				E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */,
 			);
 			productName = "WireGuardiOS Extension";
 			productReference = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */;
@@ -2500,7 +2506,7 @@
 			);
 			mainGroup = 791DE5D0208DDA3000A29EA5;
 			packageReferences = (
-				E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = 791DE5DA208DDA3000A29EA5 /* Products */;
 			projectDirPath = "";
@@ -2581,6 +2587,7 @@
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */,
 				8CE611B08C0E5F102ECF4E3A /* Pods-ProtonVPN-metadata.plist in Resources */,
+				DE0AD1BB435AE75C8DD9BDB4 /* Environments.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3291,11 +3298,12 @@
 				F3B783F926E6428C006768A8 /* MapRobot.swift in Sources */,
 				F3B783FC26E6428C006768A8 /* ProfileRobot.swift in Sources */,
 				F3B783FA26E6428C006768A8 /* CountryListRobot.swift in Sources */,
-				D5AAA12E229D337300EA839A /* (null) in Sources */,
+				D5AAA12E229D337300EA839A /* BuildFile in Sources */,
 				F377836E26E644BC00392958 /* ProfilesTests.swift in Sources */,
 				F377837026E644BC00392958 /* SignupTests.swift in Sources */,
-				D92A295D47C56CEE2650AA70 /* (null) in Sources */,
+				D92A295D47C56CEE2650AA70 /* BuildFile in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
+				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4473,7 +4481,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+		E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4484,9 +4492,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E98EE34D2671EDD200B86BA0 /* WireGuardKit */ = {
+		E98EE34D2671EDD200B86BA0 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = E98EE34A2671EC2400B86BA0 /* RemoteSwiftPackageReference */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
