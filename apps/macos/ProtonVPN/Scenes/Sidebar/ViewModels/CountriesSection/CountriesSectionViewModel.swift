@@ -98,7 +98,11 @@ class CountriesSectionViewModel {
     private var countries: [CountryGroup] = []
     private var data: [CellModel] = []
     private var servers: [String: [CellModel]] = [:]
-    private var userTier: Int = CoreAppConstants.VpnTiers.free
+    private var userTier: Int = CoreAppConstants.VpnTiers.free {
+        didSet {
+            NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
+        }
+    }
 
     private var serverManager: ServerManager {
         return ServerManagerImplementation.instance(forTier: userTier, serverStorage: ServerStorageConcrete())
@@ -140,6 +144,7 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
         updateState(nil)
     }
         
@@ -194,6 +199,7 @@ class CountriesSectionViewModel {
     
     // MARK: - Private functions
     private func setTier() {
+        NotificationCenter.default.removeObserver(self, name: serverManager.contentChanged, object: nil) // Resubscription happens after userTier is set
         do {
             if (try vpnKeychain.fetch()).isDelinquent {
                 userTier = CoreAppConstants.VpnTiers.free

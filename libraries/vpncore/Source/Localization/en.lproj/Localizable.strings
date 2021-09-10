@@ -1673,8 +1673,11 @@
 /* Title for Smart Protocol in Settings */
 "_smart_protocol_title" = "Smart Protocol";
 
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Smart";
+
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
 
 /* Title for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_title" = "Reconnection required";
@@ -1702,10 +1705,15 @@
 /* System exetnsion wizard in mac: Subtitle */
 "_sysex_wizard_subtitle" = "In order to do so, you have to do a quick manual configuration in the following sequence:";
 
-/* System exetnsion wizard in mac: Step nr.1 title */
+/* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
 "_sysex_wizard_step1_title" = "“System Extension Blocked” alerts (x2)";
-/* System exetnsion wizard in mac: Step nr.1 description */
+/* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
 "_sysex_wizard_step1_description" = "Click the “Open Security Preferences” in\n the following dialog boxes (2)";
+
+/* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
+"_sysex_wizard_step1_title_1" = "“System Extension Blocked” alert";
+/* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
+"_sysex_wizard_step1_description_1" = "Click the “Open Security Preferences” in\n the following dialog box";
 
 /* System exetnsion wizard in mac: Step nr.2 title */
 "_sysex_wizard_step2_title" = "Unlock to make changes";
@@ -1717,10 +1725,15 @@
 /* System exetnsion wizard in mac: Step nr.3 description */
 "_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
 
-/* System exetnsion wizard in mac: Step nr.4 title */
+/* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "“Details...” button";
-/* System exetnsion wizard in mac: Step nr.4 description */
+/* System exetnsion wizard in mac: Step nr.4 description (for case with more than one system extension) */
 "_sysex_wizard_step4_description" = "Click the “Details...” button";
+
+/* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
+"_sysex_wizard_step4_title_1" = "“Allow” button";
+/* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
+"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
 
 /* System exetnsion wizard in mac: Step nr.5 title */
 "_sysex_wizard_step5_title" = "Selecting ProtonVPN items";
@@ -1836,3 +1849,6 @@
 
 /* Shown on the Welcome screen as the longer screen text */
 "_welcome_body" = "I know you've been hurt by someone else. I can tell by the way you carry yourself. But if you let me, here's what I'll do: I'll take care of you";
+
+"_force_upgrade_title" = "Application upgrade needed";
+"_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";

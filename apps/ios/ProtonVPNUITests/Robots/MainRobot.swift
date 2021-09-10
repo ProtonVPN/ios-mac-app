@@ -24,6 +24,7 @@ fileprivate let buttonOk = "OK"
 fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
 fileprivate let environmentText = "https://api.protonvpn.ch"
+fileprivate let useAndContinueButton = "Use and continue"
 fileprivate let showLoginButtonLabelText = "Sign in"
 fileprivate let showSignupButtonLabelText = "Create an account"
 
@@ -77,7 +78,7 @@ class MainRobot: CoreElements {
 
     @discardableResult
     public func changeEnvironmentTo() -> MainRobot {
-        staticText(environmentText).wait().tap()
+        button(useAndContinueButton).tap()
         return self
      }
     

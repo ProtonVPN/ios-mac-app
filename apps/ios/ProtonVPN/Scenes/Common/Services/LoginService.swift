@@ -41,9 +41,7 @@ final class CoreLoginService {
     private let navigationService: NavigationService
     private let windowService: WindowService
     private let alertService: AlertService
-    // swiftlint:disable weak_delegate
-    private let networkingDelegate: NetworkingDelegate
-    // swiftlint:enable weak_delegate
+    private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
 
@@ -93,7 +91,8 @@ final class CoreLoginService {
 
     #if !RELEASE
     private func showEnvironmentSelection() {
-        let environmentsViewController = EnvironmentsViewController(endpoints: [ApiConstants.doh.liveURL] + ObfuscatedConstants.internalUrls)
+        let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
+        environmentsViewController.propertiesManager = propertiesManager
         environmentsViewController.delegate = self
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
     }
@@ -136,8 +135,7 @@ extension CoreLoginService: LoginService {
 
 #if !RELEASE
 extension CoreLoginService: EnvironmentsViewControllerDelegate {
-    func userDidSelectEndpoint(endpoint: String) {
-        propertiesManager.apiEndpoint = endpoint
+    func userDidSelectContinue() {
         show()
     }
 }

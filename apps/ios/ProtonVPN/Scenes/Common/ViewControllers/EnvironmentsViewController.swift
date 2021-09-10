@@ -10,63 +10,54 @@ import Foundation
 import UIKit
 import vpncore
 
-#if !RELEASE
 protocol EnvironmentsViewControllerDelegate: AnyObject {
-    func userDidSelectEndpoint(endpoint: String)
+    func userDidSelectContinue()
 }
 
-final class EnvironmentsViewController: UITableViewController {
+final class EnvironmentsViewController: UIViewController {
+
+    @IBOutlet private weak var environmentLabel: UILabel!
+    @IBOutlet private weak var customEnvironmentTextField: UITextField!
+
     weak var delegate: EnvironmentsViewControllerDelegate?
-
-    private let endpoints: [String]
-
-    private lazy var warningLabel: UILabel = {
-        let label = UILabel()
-        label.textColor = .protonRed()
-        label.textAlignment = .center
-        label.numberOfLines = 0
-        label.text = "Switching environments only works after cold start. If you logged out you need to kill the app first."
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
-
-    init(endpoints: [String]) {
-        self.endpoints = endpoints
-
-        super.init(nibName: nil, bundle: nil)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    var propertiesManager: PropertiesManagerProtocol!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Endpoint"
-        tableView.tableFooterView = UIView()
-
-        view.addSubview(warningLabel)
-        NSLayoutConstraint.activate([
-            warningLabel.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16),
-            warningLabel.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16),
-            warningLabel.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-        ])
+        environmentLabel.text = propertiesManager.apiEndpoint ?? ApiConstants.doh.liveURL
+        customEnvironmentTextField.delegate = self
     }
 
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return endpoints.count
+    @IBAction func resetTapped(_ sender: Any) {
+        propertiesManager.apiEndpoint = nil
+        showAlert(environment: ApiConstants.doh.liveURL)
     }
 
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell") ?? UITableViewCell(style: UITableViewCell.CellStyle.default, reuseIdentifier: "Cell")
-        cell.textLabel?.text = endpoints[indexPath.row]
-        return cell
+    @IBAction func changeTapped(_ sender: Any) {
+        guard let text = customEnvironmentTextField.text, !text.isEmpty else {
+            return
+        }
+
+        propertiesManager.apiEndpoint = text
+        showAlert(environment: text)
     }
 
-    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        delegate?.userDidSelectEndpoint(endpoint: endpoints[indexPath.row])
+    @IBAction func continueTapped(_ sender: Any) {
+        delegate?.userDidSelectContinue()
+    }
+
+    private func showAlert(environment: String) {
+        let alert = UIAlertController(title: "Environment changed", message: "Environment has been changed to \(environment)\n\nYou need to KILL THE APP and start it again for the change to take effect.", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        present(alert, animated: true)
     }
 }
-#endif
+
+extension EnvironmentsViewController: UITextFieldDelegate {
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        _ = textField.resignFirstResponder()
+        return true
+    }
+}
