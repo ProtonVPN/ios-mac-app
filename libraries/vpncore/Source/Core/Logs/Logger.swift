@@ -20,7 +20,6 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import Sentry
 import OSLog
 
 public class PMLog {
@@ -44,35 +43,11 @@ public class PMLog {
                 return "TRACE"
             }
         }
-        
-        fileprivate var sentryLevel: SentryLevel {
-            switch self {
-            case .fatal:
-                return .fatal
-            case .error:
-                return .error
-            case .warn:
-                return .warning
-            case .info:
-                return .info
-            case .debug, .trace:
-                return .debug
-            }
-        }
     }
     
     public static let logsDirectory = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true)
     
     private static let maxLogLines = 2000
-    
-    public static func setupSentry(dsn: String) {
-        SentrySDK.start { (options) in
-            options.dsn = dsn
-            #if DEBUG
-            options.debug = true
-            #endif
-        }        
-    }
     
     public static func logFile(_ filename: String = "ProtonVPN.log") -> URL? {
         do {
@@ -121,17 +96,6 @@ public class PMLog {
     
     public static func ET(_ message: String, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
         PMLog.D(message, level: .error, file: file, function: function, line: line, column: column)
-        
-        let event = Event(level: level.sentryLevel)
-        event.message = message
-        event.extra = [
-            "file": file,
-            "function": function,
-            "line": line,
-            "column": column,
-        ]
-        SentrySDK.capture(event: event)
-        
     }
     
     public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {

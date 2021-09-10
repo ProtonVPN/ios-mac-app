@@ -905,6 +905,10 @@
 		E9DC7A27262DC011001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */; };
 		E9DC7A2B262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
 		E9DC7A2F262DC032001A0FC0 /* ServerIpMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */; };
+		E9FC534F26EB820F0062BAC1 /* SentryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */; };
+		E9FC535026EB820F0062BAC1 /* SentryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */; };
+		E9FC535126EB820F0062BAC1 /* SentryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */; };
+		E9FC535226EB820F0062BAC1 /* SentryHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */; };
 		E9FF41FD266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
 		E9FF41FE266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
 		E9FF41FF266A6F6900F29180 /* LogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */; };
@@ -1425,6 +1429,7 @@
 		E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+ModelName.swift"; sourceTree = "<group>"; };
 		E9ECF998261C8B81004501AE /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = "Pods/OpenSSL-Apple/frameworks/openssl.xcframework"; sourceTree = "<group>"; };
+		E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryHelper.swift; sourceTree = "<group>"; };
 		E9FF41FC266A6F6900F29180 /* LogFilesProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogFilesProvider.swift; sourceTree = "<group>"; };
 		EA4DEB81BCB1EC4098C3F10E /* Pods-Core-vpncore-macosTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.release.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.release.xcconfig"; sourceTree = "<group>"; };
 		F3021D6825E93DE300EF73A1 /* TroubleshootViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootViewModel.swift; sourceTree = "<group>"; };
@@ -1831,6 +1836,15 @@
 				E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */,
 			);
 			path = VpnCredentials;
+			sourceTree = "<group>";
+		};
+		E9FC534D26EB81E80062BAC1 /* Logs */ = {
+			isa = PBXGroup;
+			children = (
+				E1B5F64321B6BAF100B558B0 /* Logger.swift */,
+				E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */,
+			);
+			path = Logs;
 			sourceTree = "<group>";
 		};
 		F30B9CD42626F5CB0094C65E /* VpnAuthentication */ = {
@@ -2255,12 +2269,12 @@
 			children = (
 				F36ECB752610A98B0089B898 /* Client Config */,
 				F36ECB742610A9820089B898 /* Data refresh */,
+				E9FC534D26EB81E80062BAC1 /* Logs */,
 				F36ECB732610A9780089B898 /* VpnProtocolFactory */,
 				E1B5F63021B6B18C00B558B0 /* AppState.swift */,
 				F3A05A3326C14223004D9E18 /* AppDisplayState.swift */,
 				E1616B8021C7AA9E00F42D79 /* AppStateManager.swift */,
 				E13791B72313D3B300D7B1FA /* ConnectionConfiguration.swift */,
-				E1B5F64321B6BAF100B558B0 /* Logger.swift */,
 				E15367E522663FA7009BB1D2 /* ServerTierChecker.swift */,
 				E15367DF22662E65009BB1D2 /* VpnConnectionPreparer.swift */,
 				E1616BE421C9392600F42D79 /* VpnGateway.swift */,
@@ -3093,6 +3107,7 @@
 				4242B0652465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
+				E9FC534F26EB820F0062BAC1 /* SentryHelper.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
 				E1828573236C74D400E397A5 /* Intents.intentdefinition in Sources */,
 				D503F71724FE820E0079D095 /* AppSessionRefreshTimer.swift in Sources */,
@@ -3371,6 +3386,7 @@
 				D5DC52C4252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
 				D5C205482487A0CF004FB58B /* AuthCredentials.swift in Sources */,
 				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
+				E9FC535026EB820F0062BAC1 /* SentryHelper.swift in Sources */,
 				D5C205492487A0CF004FB58B /* AuthKeychain.swift in Sources */,
 				D5C2054A2487A0CF004FB58B /* VpnCredentials.swift in Sources */,
 				D5C2054B2487A0CF004FB58B /* VpnKeychain.swift in Sources */,
@@ -3651,6 +3667,7 @@
 				4242B0802465A4D10042145A /* RequestItem.swift in Sources */,
 				E1B5F66121B81E7800B558B0 /* LocationUtility.swift in Sources */,
 				4242B0372465A41A0042145A /* VPNBaseRequest.swift in Sources */,
+				E9FC535126EB820F0062BAC1 /* SentryHelper.swift in Sources */,
 				E1616BF021C951DB00F42D79 /* HexColor.swift in Sources */,
 				E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */,
 				4242B0752465A48B0042145A /* VpnApiService.swift in Sources */,
@@ -3954,6 +3971,7 @@
 				D5966F3E2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D5C2045124866927004FB58B /* ProfileIcon.swift in Sources */,
 				D5C2046A24866AFC004FB58B /* ConnectionConfiguration.swift in Sources */,
+				E9FC535226EB820F0062BAC1 /* SentryHelper.swift in Sources */,
 				E1B5F62721B6A24D00B558B0 /* AppStateTests.swift in Sources */,
 				D55D791C2498F65B009669E0 /* StringCleanup.swift in Sources */,
 				F32F2BFD2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */,
