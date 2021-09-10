@@ -47,9 +47,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         migrateIfNeeded {
             self.setNSCodingModuleName()
             
-            #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
-            PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
-            #endif
+            SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
             
             AppLaunchRoutine.execute()
 

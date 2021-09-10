@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Sentry
 import UIKit
 import vpncore
 
@@ -46,9 +45,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ApiConstants.apiHost = ObfuscatedConstants.apiHost
         Subscription.specialCoupons = ObfuscatedConstants.specialCoupons
         
-        #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
-        PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
-        #endif
+        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
         _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
         
