@@ -31,7 +31,7 @@ public protocol VpnManagerProtocol {
     
     func isOnDemandEnabled(handler: @escaping (Bool) -> Void)
     func setOnDemand(_ enabled: Bool)
-    func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void)
+    func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void)
     func disconnect(completion: @escaping () -> Void)
     func connectedDate(completion: @escaping (Date?) -> Void)
     func refreshState()
@@ -165,13 +165,13 @@ public class VpnManager: VpnManagerProtocol {
         }
     }
     
-    public func connect(configuration: VpnManagerConfiguration, authData: VpnAuthenticationData?, completion: @escaping () -> Void) {
+    public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
             PMLog.D("About to start connection process")
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
-                self?.prepareConnection(forConfiguration: configuration, authData: authData, completion: completion)
+                self?.prepareConnection(forConfiguration: configuration, completion: completion)
             }
         }
     }
@@ -302,7 +302,6 @@ public class VpnManager: VpnManagerProtocol {
 
     // MARK: - Connecting
     private func prepareConnection(forConfiguration configuration: VpnManagerConfiguration,
-                                   authData: VpnAuthenticationData?,
                                    completion: @escaping () -> Void) {
         if state.volatileConnection {
             setState()
