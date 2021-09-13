@@ -10,6 +10,10 @@ import Foundation
 
 extension VpnManager {
     func connectLocalAgent(data: VpnAuthenticationData? = nil) {
+        guard self.currentVpnProtocol?.authenticationType == .certificate else {
+            return
+        }
+
         let connect = { (data: VpnAuthenticationData) in
             guard let configuration = LocalAgentConfiguration(propertiesManager: self.propertiesManager, vpnProtocol: self.currentVpnProtocol) else {
                 PMLog.ET("Cannot reconnect to the local agent with missing configuraton")
