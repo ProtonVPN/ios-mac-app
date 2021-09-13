@@ -115,8 +115,10 @@ lane :ios_internal_beta do |options|
 
   if !options[:scheme]
     SCHEME = "ProtonVPN-iOS"
+    BUNDLE_ID = "ch.protonmail.vpn"
   else
     SCHEME = options[:scheme]
+    BUNDLE_ID = "ch.protonmail.vpn.debug" # Refactor this if more app versions are added
   end
   
   clear_derived_data
@@ -144,8 +146,27 @@ lane :ios_internal_beta do |options|
   )
 
   # Updload dSYMs to Sentry
+  appVersion = get_version_number(xcodeproj: "./apps/ios/iOS.xcodeproj", target: "ProtonVPN")
+  appBuild = get_build_number(xcodeproj: "./apps/ios/iOS.xcodeproj")
+  
+  sentry_create_release(
+    app_identifier: BUNDLE_ID,
+    build: appBuild,
+    version: appVersion
+  )
+  sentry_set_commits(
+    app_identifier: BUNDLE_ID,
+    build: appBuild,
+    version: appVersion
+  )
+  sentry_create_deploy(
+    app_identifier: BUNDLE_ID,
+    version: appVersion,
+    build: appBuild,
+    env: 'testflight'
+  )
   sentry_upload_dsym
-  # Enable back when sentry dsym uploads start working again
+  
   
   upload_to_testflight(
       team_name: "Proton Technologies AG",
