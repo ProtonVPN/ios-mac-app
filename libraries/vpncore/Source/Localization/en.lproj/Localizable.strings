@@ -1114,7 +1114,7 @@
 "_kill_switch" = "Kill Switch";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost. Note that your VPN connection will be terminated when you switch Mac accounts.";
+"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost.";
 
 /* iOS Settings: toggle name */
 "_always_on_vpn" = "Always-on VPN";
