@@ -571,14 +571,6 @@ public class VpnManager: VpnManagerProtocol {
             }
 
             self.currentVpnProtocol = vpnProtocol
-
-            // connected to a protocol that requires local agent, but local agent is nil and VPN
-            // This is connected means the app was started while a VPN connection is already active
-            if self.currentVpnProtocol?.authenticationType == .certificate, self.localAgent == nil, case .connected = self.state {
-                PMLog.D("Connecting Local Agent on app start when VPN tunnel is active")
-                self.connectLocalAgent()
-            }
-
             self.setState()
 
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
