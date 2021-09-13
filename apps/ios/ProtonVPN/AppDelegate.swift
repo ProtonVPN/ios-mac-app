@@ -20,7 +20,6 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Sentry
 import UIKit
 import vpncore
 import ProtonCore_Services
@@ -50,9 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         setupCoreIntegration()
         
-        #if RELEASE // to avoid issues with bitcode uploads not being reliable during development
-        PMLog.setupSentry(dsn: ObfuscatedConstants.sentryDsn)
-        #endif        
+        SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
         // get available iap
         propertiesManager.currentSubscription = nil // ensure the upgrade button isn't present until the app receives confirmation of user's plan
