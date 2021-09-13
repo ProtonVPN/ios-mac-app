@@ -334,7 +334,7 @@ public class AppStateManagerImplementation: AppStateManager {
             self.propertiesManager.lastWireguardConnection = connectionConfiguration
         }
         
-        vpnManager.connect(configuration: vpnManagerConfiguration, authData: authData, completion: {
+        vpnManager.connect(configuration: vpnManagerConfiguration, completion: {
             // COMPLETION
         })
     }
