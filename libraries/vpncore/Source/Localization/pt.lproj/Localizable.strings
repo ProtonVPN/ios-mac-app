@@ -1526,7 +1526,7 @@
 "_skip" = "Saltar";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Utilizar automaticamente o protocolo e porta que ofereçam a melhor ligação.";
+"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "A ligação será reiniciada para alterar o modo do Smart Protocol.";
@@ -1539,6 +1539,9 @@
 
 /* (No Comment) */
 "_smart_routing_title" = "Smart Routing";
+
+/* Shortened title for Smart Protocol on Settings configuration */
+"_smart_title" = "Inteligente";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "Velocidade: %@";
@@ -1639,11 +1642,17 @@
 /* System exetnsion wizard in mac: Button */
 "_sysex_wizard_button" = "Iniciar a configuração manual";
 
-/* System exetnsion wizard in mac: Step nr.1 description */
+/* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
 "_sysex_wizard_step1_description" = "Clique em \"Abrir preferências de segurança\" nas\nduas caixas de diálogo que se seguem";
 
-/* System exetnsion wizard in mac: Step nr.1 title */
+/* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
+"_sysex_wizard_step1_description_1" = "Click the “Open Security Preferences” in\n the following dialog box";
+
+/* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
 "_sysex_wizard_step1_title" = "Aviso \"Extensão de sistema bloqueada (x2)";
+
+/* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
+"_sysex_wizard_step1_title_1" = "“System Extension Blocked” alert";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Clique no cadeado para alterar";
@@ -1657,11 +1666,17 @@
 /* System exetnsion wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Insira as credenciais";
 
-/* System exetnsion wizard in mac: Step nr.4 description */
+/* System exetnsion wizard in mac: Step nr.4 description (for case with more than one system extension) */
 "_sysex_wizard_step4_description" = "Clique em \"Detalhes...\"";
 
-/* System exetnsion wizard in mac: Step nr.4 title */
+/* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
+"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
+
+/* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "Botão \"Detalhes...\"";
+
+/* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
+"_sysex_wizard_step4_title_1" = "“Allow” button";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Seleccione os itens do ProtonVPN para activar protocolos personalizados e clique em \"Aceitar\"";
