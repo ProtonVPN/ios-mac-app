@@ -57,7 +57,7 @@ class NavigationService {
     lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()    
+    private lazy var updateManager: UpdateManager = factory.makeUpdateManager()
 
     var vpnGateway: VpnGatewayProtocol?
     
@@ -115,23 +115,15 @@ class NavigationService {
             
             if appHasPresented {
                 showSidebar()
-                
-                do {
-                    let vpnCredentials = try vpnKeychain.fetch()
-                    // show upsell advert 15% of launches if no other models have been shown and account is free tier
-                    if vpnCredentials.accountPlan == .free && !upsellPresented && arc4random() % 100 < 15 {
-                        showUpsell()
-                    }
-                } catch {} // ignore vpn fetch error
             }
         } else {
             self.vpnGateway = nil
             showLogIn()
         }
     }
-    
+
     func sessionRefreshed() {
-        upsell()
+        showWelcomeDialog()
     }
     
     private func showLogIn() {
@@ -277,92 +269,19 @@ extension NavigationService {
 // MARK: - Modals extension
 
 extension NavigationService {
-    
     func presentGuidedTour() {
         windowService.showTour()
     }
-    
-    private func presentPopUp(_ viewModel: PopUpViewModel) {
-        // Close the previous popup attached to this viewModel before attaching it to a new one
-        viewModel.close()
-        windowService.presentKeyModal(viewController: PopUpViewController(viewModel: viewModel))
-    }
-    
-    private func upsell() {
-        do {
-            let vpnCredentials = try vpnKeychain.fetch()
-            if vpnCredentials.accountPlan == .trial {
-                let expiration = vpnCredentials.expirationTime
-                if expiration.timeIntervalSince1970 < 0.1 && !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.trialWelcomed) { // trial hasn't started and haven't welcomed user yet
-                    showTrialDialog()
-                } else if expiration > Date() && expiration < Date(timeInterval: 60 * 60 * 24 * 2, since: Date()) && // trial has less than 2 days remaining
-                    !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.warnedTrialExpiring) && // not shown before
-                     Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.trialWelcomed) { // to prevent showing popups on every device the user has our apps
-                    showTrialOngoingDialog()
-                } else if !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed) { // if all else fails and the user hasn't been welcomed, show the standard welcome
-                    showWelcomeDialog()
-                }
-            } else if vpnCredentials.accountPlan == .free &&
-              !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.warnedTrialExpired) && // not shown before
-              Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.trialWelcomed) { // to prevent showing popups on every device the user has our apps{
-                showTrialExpired()
-            } else if !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed) {
-                showWelcomeDialog()
-            }
-        } catch {
-            alertService.push(alert: CannotAccessVpnCredentialsAlert())
-        }
-    }
-    
+
     private func showWelcomeDialog() {
+        guard !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.welcomed) else {
+            return
+        }
+
         let welcomeViewController = WelcomeViewController(navService: self)
         windowService.presentKeyModal(viewController: welcomeViewController)
         upsellPresented = true
 
         Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
-    }
-    
-    private func showTrialDialog() {
-        let trialWelcomeViewController = TrialWelcomeViewController(navService: self)
-        windowService.presentKeyModal(viewController: trialWelcomeViewController)
-        upsellPresented = true
-        
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.trialWelcomed)
-    }
-    
-    private func showTrialOngoingDialog() {
-        let trialAboutToExpireViewController = TrialAboutToExpireViewController()
-        windowService.presentKeyModal(viewController: trialAboutToExpireViewController)
-        upsellPresented = true
-        
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.warnedTrialExpiring)
-    }
-    
-    private func showTrialExpired() {
-        let trialExpiredViewController = TrialExpiredViewController()
-        windowService.presentKeyModal(viewController: trialExpiredViewController)
-        upsellPresented = true
-        
-        Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.warnedTrialExpired)
-    }
-    
-    private func showUpsell() {
-        let upsellViewController = UpsellViewController()
-        windowService.presentKeyModal(viewController: upsellViewController)
-        upsellPresented = true
-    }
-    
-    private func planName(for tier: Int) -> String {
-        switch tier {
-        case 0:
-            return "Free"
-        case 1:
-            return "Basic"
-        case 2:
-            return "Plus"
-        default:
-            return LocalizedString.unavailable
-        }
     }
 }

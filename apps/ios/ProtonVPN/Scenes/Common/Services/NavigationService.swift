@@ -147,6 +147,7 @@ final class NavigationService {
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
+    
     private lazy var profileManager = {
         return ProfileManager.shared
     }()
