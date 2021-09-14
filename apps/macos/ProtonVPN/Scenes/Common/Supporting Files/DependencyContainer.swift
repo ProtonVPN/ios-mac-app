@@ -193,20 +193,6 @@ extension DependencyContainer: ServerStorageFactory {
     }
 }
 
-// MARK: TrialServiceFactory
-extension DependencyContainer: TrialServiceFactory {
-    func makeTrialService() -> TrialService {
-        return TrialServiceMock() // MacOS app doesnt show any trial screens
-    }
-}
-
-// MARK: TrialCheckerFactory
-extension DependencyContainer: TrialCheckerFactory {
-    func makeTrialChecker() -> TrialChecker {
-        return TrialChecker(factory: self)
-    }
-}
-
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {

@@ -144,11 +144,6 @@
 		E1616C0F21CA67CB00F42D79 /* ProfileIcon+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */; };
 		E1661BA521B92A36005DB438 /* MapCoordinateTranslator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */; };
 		E1683FFA2372DCBD00992E75 /* AlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1683FF92372DCBD00992E75 /* AlertTests.swift */; };
-		E170A92921240F940036326B /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170A92721240F940036326B /* WelcomeViewController.swift */; };
-		E170A92A21240F940036326B /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = E170A92821240F940036326B /* Welcome.xib */; };
-		E170A92F2124313A0036326B /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170A92E2124313A0036326B /* UpsellGradientView.swift */; };
-		E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E170A93521245DF70036326B /* TrialWelcomeViewController.swift */; };
-		E170A93821245DF70036326B /* TrialWelcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = E170A93621245DF70036326B /* TrialWelcome.xib */; };
 		E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */; };
 		E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CDE20E61D7F00DCC687 /* QuitApplicationButton.swift */; };
 		E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE020E6217E00DCC687 /* ShowApplicationButton.swift */; };
@@ -156,24 +151,8 @@
 		E17C1CE520EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */; };
 		E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */; };
 		E17DE10921FB630C008CCC13 /* AppProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = E17DE10821FB630C008CCC13 /* AppProtocol.swift */; };
-		E180D1462124689600F4D1C7 /* MapGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1452124689600F4D1C7 /* MapGradientView.swift */; };
 		E180D1482124955B00F4D1C7 /* UpsellPrimaryActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */; };
 		E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */; };
-		E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D14B2125457200F4D1C7 /* TrialExpiredViewController.swift */; };
-		E180D14E2125457200F4D1C7 /* TrialExpired.xib in Resources */ = {isa = PBXBuildFile; fileRef = E180D14C2125457200F4D1C7 /* TrialExpired.xib */; };
-		E180D1512125621300F4D1C7 /* UpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D14F2125621300F4D1C7 /* UpsellViewController.swift */; };
-		E180D1522125621300F4D1C7 /* Upsell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E180D1502125621300F4D1C7 /* Upsell.xib */; };
-		E180D15521258EF500F4D1C7 /* TrialAboutToExpireViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D15321258EF500F4D1C7 /* TrialAboutToExpireViewController.swift */; };
-		E180D15621258EF500F4D1C7 /* TrialAboutToExpire.xib in Resources */ = {isa = PBXBuildFile; fileRef = E180D15421258EF500F4D1C7 /* TrialAboutToExpire.xib */; };
-		E180D1582125CB8300F4D1C7 /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1572125CB8300F4D1C7 /* TourWindowController.swift */; };
-		E180D15B2126A89900F4D1C7 /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1592126A89900F4D1C7 /* TourViewController.swift */; };
-		E180D15C2126A89900F4D1C7 /* Tour.xib in Resources */ = {isa = PBXBuildFile; fileRef = E180D15A2126A89900F4D1C7 /* Tour.xib */; };
-		E180D15E2126AD5400F4D1C7 /* TourDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D15D2126AD5400F4D1C7 /* TourDescriptionView.swift */; };
-		E180D1602126B55F00F4D1C7 /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D15F2126B55F00F4D1C7 /* TourNumberView.swift */; };
-		E180D1622126C4C500F4D1C7 /* TourController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1612126C4C500F4D1C7 /* TourController.swift */; };
-		E180D1652126C9D300F4D1C7 /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1632126C9D300F4D1C7 /* TourNumberViewController.swift */; };
-		E180D1662126C9D300F4D1C7 /* TourNumber.xib in Resources */ = {isa = PBXBuildFile; fileRef = E180D1642126C9D300F4D1C7 /* TourNumber.xib */; };
-		E180D1682126F6EE00F4D1C7 /* TourNumberRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1672126F6EE00F4D1C7 /* TourNumberRingView.swift */; };
 		E180D16A2126FCE500F4D1C7 /* TourPreviousButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */; };
 		E180D16C2126FCF700F4D1C7 /* TourNextButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */; };
 		E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = E18262AE21302ED100A6A48F /* dsa_pub.pem */; };
@@ -417,6 +396,17 @@
 		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
+		F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02526F08D7A00336F7A /* WelcomeViewController.swift */; };
+		F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02626F08D7A00336F7A /* TourViewController.swift */; };
+		F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02726F08D7A00336F7A /* TourNumberViewController.swift */; };
+		F320E03026F08D7A00336F7A /* TourController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02926F08D7A00336F7A /* TourController.swift */; };
+		F320E03126F08D7A00336F7A /* TourWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02A26F08D7A00336F7A /* TourWindowController.swift */; };
+		F320E03226F08D7A00336F7A /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E02C26F08D7A00336F7A /* Welcome.xib */; };
+		F320E03426F08DBD00336F7A /* TourNumber.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03326F08DBD00336F7A /* TourNumber.xib */; };
+		F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03526F08DEC00336F7A /* TourNumberRingView.swift */; };
+		F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03626F08DEC00336F7A /* TourDescriptionView.swift */; };
+		F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03926F08E1400336F7A /* TourNumberView.swift */; };
+		F320E03C26F08FAB00336F7A /* Tour.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03B26F08FAB00336F7A /* Tour.xib */; };
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
 		FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C16264DDB60F80353FA5CA /* LogViewHelper.swift */; };
 /* End PBXBuildFile section */
@@ -719,11 +709,6 @@
 		E1616C0E21CA67CB00F42D79 /* ProfileIcon+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileIcon+Extension.swift"; sourceTree = "<group>"; };
 		E1661BA421B92A36005DB438 /* MapCoordinateTranslator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapCoordinateTranslator.swift; sourceTree = "<group>"; };
 		E1683FF92372DCBD00992E75 /* AlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertTests.swift; sourceTree = "<group>"; };
-		E170A92721240F940036326B /* WelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
-		E170A92821240F940036326B /* Welcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
-		E170A92E2124313A0036326B /* UpsellGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellGradientView.swift; sourceTree = "<group>"; };
-		E170A93521245DF70036326B /* TrialWelcomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialWelcomeViewController.swift; sourceTree = "<group>"; };
-		E170A93621245DF70036326B /* TrialWelcome.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialWelcome.xib; sourceTree = "<group>"; };
 		E17C1CDC20E5297400DCC687 /* StatusMenuWindowModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusMenuWindowModel.swift; sourceTree = "<group>"; };
 		E17C1CDE20E61D7F00DCC687 /* QuitApplicationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = QuitApplicationButton.swift; sourceTree = "<group>"; };
 		E17C1CE020E6217E00DCC687 /* ShowApplicationButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShowApplicationButton.swift; sourceTree = "<group>"; };
@@ -731,24 +716,8 @@
 		E17C1CE420EA2C6500DCC687 /* StatusMenuCountryItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryItemViewModel.swift; sourceTree = "<group>"; };
 		E17C1D0620EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HoverDetectionButtonAdvanced.swift; sourceTree = "<group>"; };
 		E17DE10821FB630C008CCC13 /* AppProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProtocol.swift; sourceTree = "<group>"; };
-		E180D1452124689600F4D1C7 /* MapGradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapGradientView.swift; sourceTree = "<group>"; };
 		E180D1472124955B00F4D1C7 /* UpsellPrimaryActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellPrimaryActionButton.swift; sourceTree = "<group>"; };
 		E180D149212497CC00F4D1C7 /* ClearCancellationButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearCancellationButton.swift; sourceTree = "<group>"; };
-		E180D14B2125457200F4D1C7 /* TrialExpiredViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialExpiredViewController.swift; sourceTree = "<group>"; };
-		E180D14C2125457200F4D1C7 /* TrialExpired.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialExpired.xib; sourceTree = "<group>"; };
-		E180D14F2125621300F4D1C7 /* UpsellViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpsellViewController.swift; sourceTree = "<group>"; };
-		E180D1502125621300F4D1C7 /* Upsell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Upsell.xib; sourceTree = "<group>"; };
-		E180D15321258EF500F4D1C7 /* TrialAboutToExpireViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrialAboutToExpireViewController.swift; sourceTree = "<group>"; };
-		E180D15421258EF500F4D1C7 /* TrialAboutToExpire.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TrialAboutToExpire.xib; sourceTree = "<group>"; };
-		E180D1572125CB8300F4D1C7 /* TourWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourWindowController.swift; sourceTree = "<group>"; };
-		E180D1592126A89900F4D1C7 /* TourViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourViewController.swift; sourceTree = "<group>"; };
-		E180D15A2126A89900F4D1C7 /* Tour.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Tour.xib; sourceTree = "<group>"; };
-		E180D15D2126AD5400F4D1C7 /* TourDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourDescriptionView.swift; sourceTree = "<group>"; };
-		E180D15F2126B55F00F4D1C7 /* TourNumberView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNumberView.swift; sourceTree = "<group>"; };
-		E180D1612126C4C500F4D1C7 /* TourController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourController.swift; sourceTree = "<group>"; };
-		E180D1632126C9D300F4D1C7 /* TourNumberViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNumberViewController.swift; sourceTree = "<group>"; };
-		E180D1642126C9D300F4D1C7 /* TourNumber.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TourNumber.xib; sourceTree = "<group>"; };
-		E180D1672126F6EE00F4D1C7 /* TourNumberRingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNumberRingView.swift; sourceTree = "<group>"; };
 		E180D1692126FCE500F4D1C7 /* TourPreviousButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourPreviousButton.swift; sourceTree = "<group>"; };
 		E180D16B2126FCF700F4D1C7 /* TourNextButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourNextButton.swift; sourceTree = "<group>"; };
 		E18262AE21302ED100A6A48F /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
@@ -997,6 +966,17 @@
 		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
+		F320E02526F08D7A00336F7A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
+		F320E02626F08D7A00336F7A /* TourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourViewController.swift; sourceTree = "<group>"; };
+		F320E02726F08D7A00336F7A /* TourNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberViewController.swift; sourceTree = "<group>"; };
+		F320E02926F08D7A00336F7A /* TourController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourController.swift; sourceTree = "<group>"; };
+		F320E02A26F08D7A00336F7A /* TourWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourWindowController.swift; sourceTree = "<group>"; };
+		F320E02C26F08D7A00336F7A /* Welcome.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Welcome.xib; sourceTree = "<group>"; };
+		F320E03326F08DBD00336F7A /* TourNumber.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = TourNumber.xib; sourceTree = "<group>"; };
+		F320E03526F08DEC00336F7A /* TourNumberRingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberRingView.swift; sourceTree = "<group>"; };
+		F320E03626F08DEC00336F7A /* TourDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourDescriptionView.swift; sourceTree = "<group>"; };
+		F320E03926F08E1400336F7A /* TourNumberView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberView.swift; sourceTree = "<group>"; };
+		F320E03B26F08FAB00336F7A /* Tour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tour.xib; sourceTree = "<group>"; };
 		F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = macOSNetworkingDelegate.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/macOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1557,6 +1537,49 @@
 			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		F320E02326F08D7A00336F7A /* Upsell & Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				F320E02426F08D7A00336F7A /* ViewControllers */,
+				F320E02826F08D7A00336F7A /* Windows */,
+				F320E02B26F08D7A00336F7A /* Views */,
+			);
+			name = "Upsell & Onboarding";
+			path = "../../../macos/ProtonVPN/Scenes/Upsell & Onboarding";
+			sourceTree = "<group>";
+		};
+		F320E02426F08D7A00336F7A /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F320E02526F08D7A00336F7A /* WelcomeViewController.swift */,
+				F320E02626F08D7A00336F7A /* TourViewController.swift */,
+				F320E02726F08D7A00336F7A /* TourNumberViewController.swift */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F320E02826F08D7A00336F7A /* Windows */ = {
+			isa = PBXGroup;
+			children = (
+				F320E02926F08D7A00336F7A /* TourController.swift */,
+				F320E02A26F08D7A00336F7A /* TourWindowController.swift */,
+			);
+			path = Windows;
+			sourceTree = "<group>";
+		};
+		F320E02B26F08D7A00336F7A /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F320E03B26F08FAB00336F7A /* Tour.xib */,
+				F320E03626F08DEC00336F7A /* TourDescriptionView.swift */,
+				F320E03326F08DBD00336F7A /* TourNumber.xib */,
+				F320E03526F08DEC00336F7A /* TourNumberRingView.swift */,
+				F320E03926F08E1400336F7A /* TourNumberView.swift */,
+				F320E02C26F08D7A00336F7A /* Welcome.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
@@ -1572,7 +1595,7 @@
 				F36ECE0A2611DC6F0089B898 /* Settings */,
 				F36ECE1B2611DE940089B898 /* Sidebar */,
 				F36ECE142611DD900089B898 /* SystemExtension */,
-				F36ECE2C2611E0090089B898 /* Upsell & Onboarding */,
+				F320E02326F08D7A00336F7A /* Upsell & Onboarding */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -2097,49 +2120,6 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		F36ECE2C2611E0090089B898 /* Upsell & Onboarding */ = {
-			isa = PBXGroup;
-			children = (
-				F36ECE2E2611E01D0089B898 /* ViewControllers */,
-				F36ECE2D2611E00E0089B898 /* Views */,
-				F36ECE3C2611E1CA0089B898 /* Windows */,
-			);
-			path = "Upsell & Onboarding";
-			sourceTree = "<group>";
-		};
-		F36ECE2D2611E00E0089B898 /* Views */ = {
-			isa = PBXGroup;
-			children = (
-				E180D1452124689600F4D1C7 /* MapGradientView.swift */,
-				E180D15A2126A89900F4D1C7 /* Tour.xib */,
-				E180D15D2126AD5400F4D1C7 /* TourDescriptionView.swift */,
-				E180D1642126C9D300F4D1C7 /* TourNumber.xib */,
-				E180D1672126F6EE00F4D1C7 /* TourNumberRingView.swift */,
-				E180D15F2126B55F00F4D1C7 /* TourNumberView.swift */,
-				E180D15421258EF500F4D1C7 /* TrialAboutToExpire.xib */,
-				E180D14C2125457200F4D1C7 /* TrialExpired.xib */,
-				E170A93621245DF70036326B /* TrialWelcome.xib */,
-				E180D1502125621300F4D1C7 /* Upsell.xib */,
-				E170A92E2124313A0036326B /* UpsellGradientView.swift */,
-				E170A92821240F940036326B /* Welcome.xib */,
-			);
-			path = Views;
-			sourceTree = "<group>";
-		};
-		F36ECE2E2611E01D0089B898 /* ViewControllers */ = {
-			isa = PBXGroup;
-			children = (
-				E180D15321258EF500F4D1C7 /* TrialAboutToExpireViewController.swift */,
-				E180D14B2125457200F4D1C7 /* TrialExpiredViewController.swift */,
-				E170A93521245DF70036326B /* TrialWelcomeViewController.swift */,
-				E180D1632126C9D300F4D1C7 /* TourNumberViewController.swift */,
-				E180D1592126A89900F4D1C7 /* TourViewController.swift */,
-				E180D14F2125621300F4D1C7 /* UpsellViewController.swift */,
-				E170A92721240F940036326B /* WelcomeViewController.swift */,
-			);
-			path = ViewControllers;
-			sourceTree = "<group>";
-		};
 		F36ECE312611E0530089B898 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -2249,15 +2229,6 @@
 			isa = PBXGroup;
 			children = (
 				EE69C8DA1F5D9F8500C3065C /* SidebarWindowController.swift */,
-			);
-			path = Windows;
-			sourceTree = "<group>";
-		};
-		F36ECE3C2611E1CA0089B898 /* Windows */ = {
-			isa = PBXGroup;
-			children = (
-				E180D1612126C4C500F4D1C7 /* TourController.swift */,
-				E180D1572125CB8300F4D1C7 /* TourWindowController.swift */,
 			);
 			path = Windows;
 			sourceTree = "<group>";
@@ -2694,7 +2665,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -2764,20 +2735,20 @@
 				EEFE81CD1F3F361A0052A7A6 /* MapHeader.xib in Resources */,
 				D557D58A264AC352007E4396 /* country-names.plist in Resources */,
 				42BEF9812631AB1A009180A7 /* StreamOptionCVItem.xib in Resources */,
+				F320E03426F08DBD00336F7A /* TourNumber.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
 				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
+				F320E03226F08D7A00336F7A /* Welcome.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
-				E180D1522125621300F4D1C7 /* Upsell.xib in Resources */,
 				EECEF3DB1F169A0500A16606 /* ServerItemCellView.xib in Resources */,
 				42742F982478205E00E389C8 /* KillSwitchSwift5Popup.xib in Resources */,
+				F320E03C26F08FAB00336F7A /* Tour.xib in Resources */,
 				EEBB82DB1F1DE8890041432A /* ProfilesContainer.xib in Resources */,
 				0663E3BA259DCB960059E88D /* SystemExtensionGuideViewController.xib in Resources */,
 				EEE113261F2CF19800C8221C /* Client.plist in Resources */,
 				D557D57F264AC337007E4396 /* Localizable.stringsdict in Resources */,
 				EE27DB4F1F47187600D2FF2B /* SettingsTabBar.xib in Resources */,
-				E180D15C2126A89900F4D1C7 /* Tour.xib in Resources */,
-				E180D14E2125457200F4D1C7 /* TrialExpired.xib in Resources */,
 				EE11F9251F39B3E6006C389C /* Header.xib in Resources */,
 				D5A8813D22CF28F5009B63D1 /* ReportBugViewController.xib in Resources */,
 				D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */,
@@ -2789,12 +2760,9 @@
 				E187021A20E23815000521AC /* StatusMenuProfilesList.xib in Resources */,
 				EEA5562F1F1F48020061F43F /* ColorPickerItem.xib in Resources */,
 				D5AC137A23794B2900244066 /* text-template.html in Resources */,
-				E170A92A21240F940036326B /* Welcome.xib in Resources */,
 				EE24A3941F1BC7A700B70949 /* ProfileItem.xib in Resources */,
-				E180D1662126C9D300F4D1C7 /* TourNumber.xib in Resources */,
 				42498A522518E96B00ACB7EC /* ExpandableContentPopup.xib in Resources */,
 				EE27DB3D1F4706E400D2FF2B /* SettingsContainer.xib in Resources */,
-				E170A93821245DF70036326B /* TrialWelcome.xib in Resources */,
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				D557D580264AC337007E4396 /* Intents.strings in Resources */,
@@ -2825,7 +2793,6 @@
 				EE74FCAA1F5DD23400E266BC /* SCUpgradePopup.xib in Resources */,
 				D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */,
 				E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */,
-				E180D15621258EF500F4D1C7 /* TrialAboutToExpire.xib in Resources */,
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
 				851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */,
@@ -3181,6 +3148,7 @@
 				EE6E61D81F4C4F5300638F9B /* ExpandCellButton.swift in Sources */,
 				EE4FCF641F21FA5300B04EF8 /* SecureTextFieldWithFocus.swift in Sources */,
 				EE9589DE1F5938B2005E7495 /* SCExitCountryAnnotationView.swift in Sources */,
+				F320E03026F08D7A00336F7A /* TourController.swift in Sources */,
 				E156C19F20BE901A0054E935 /* StatusMenuWindowController.swift in Sources */,
 				F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */,
 				EE78749F1F3B4993001E261E /* OverviewItemViewModel+Descriptors.swift in Sources */,
@@ -3188,6 +3156,7 @@
 				EE74FCB41F5DE99B00E266BC /* SCUpgradePopUpViewModel.swift in Sources */,
 				E148458020CAB64900DFDAA4 /* HelpMenuViewModel.swift in Sources */,
 				EE98CFC91F14D62F000D6688 /* NSView+Extension.swift in Sources */,
+				F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */,
 				EE4FCF621F21FA2800B04EF8 /* TextFieldWithFocus.swift in Sources */,
 				E1FFCF81202DAF17001B8108 /* ServerInfoViewController.swift in Sources */,
 				D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */,
@@ -3196,10 +3165,9 @@
 				E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */,
 				42CF073B256FD1F60042CD47 /* NSFont+Extension.swift in Sources */,
 				E1E0E3132059775200599F42 /* PVPNHyperlinkTextField.swift in Sources */,
+				F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */,
 				E180D14A212497CC00F4D1C7 /* ClearCancellationButton.swift in Sources */,
-				E180D1462124689600F4D1C7 /* MapGradientView.swift in Sources */,
 				EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */,
-				E170A92F2124313A0036326B /* UpsellGradientView.swift in Sources */,
 				E928093626B445A4008C9F2C /* ExtensionInfo+comparison.swift in Sources */,
 				EE68DD511F49F4BE00F218B8 /* TabBarView.swift in Sources */,
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
@@ -3232,7 +3200,6 @@
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
 				EEDC30B61EFB18DC00279A3A /* Bundle+Extension.swift in Sources */,
-				E180D1602126B55F00F4D1C7 /* TourNumberView.swift in Sources */,
 				EE46A08E1F2E1BD5008B435C /* StatusMenuViewModel.swift in Sources */,
 				E14475322093A52A00F4C641 /* NeagentHelpPopUpViewController.swift in Sources */,
 				EECEF3E01F169EC300A16606 /* ServerItemCellView.swift in Sources */,
@@ -3242,6 +3209,7 @@
 				EE24A39B1F1BCA0D00B70949 /* ProfileItemView.swift in Sources */,
 				E1616C0F21CA67CB00F42D79 /* ProfileIcon+Extension.swift in Sources */,
 				E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */,
+				F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */,
 				EE5B17451F39CDF700879BE0 /* HeaderViewModel.swift in Sources */,
 				EE4E7DF71F62909A000F7D5E /* ProfilesWindowController.swift in Sources */,
 				E13464AB2033780300C0DB7D /* LoadCircle.swift in Sources */,
@@ -3256,7 +3224,6 @@
 				D5906F1222D36035001BC074 /* AccountPlan+Extension.swift in Sources */,
 				EE8EF1F21F1FC71F0057CD94 /* OverviewItemViewModel.swift in Sources */,
 				EEFE81DB1F3F6D150052A7A6 /* NavigationService.swift in Sources */,
-				E180D15521258EF500F4D1C7 /* TrialAboutToExpireViewController.swift in Sources */,
 				42082671256BC3B900A621EC /* BlockeableScrollView.swift in Sources */,
 				E1B9A7D2203ECE9E009677BC /* ConnectingOverlayViewModel.swift in Sources */,
 				E13BDF492062912300CF5383 /* TransparentBackedScroller.swift in Sources */,
@@ -3266,7 +3233,6 @@
 				EEB493D31F2145CE00A979DC /* CreateNewProfileViewModel.swift in Sources */,
 				42C1F2A22553083300793A49 /* NetshieldDropdownPresenter.swift in Sources */,
 				42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */,
-				E180D15B2126A89900F4D1C7 /* TourViewController.swift in Sources */,
 				42BEF97826319E39009180A7 /* StreamingServicesOverlayViewModel.swift in Sources */,
 				EE69C8D91F5D9EB300C3065C /* LoginWindowController.swift in Sources */,
 				D5AC137C23795B8100244066 /* AcknowledgementsWindowController.swift in Sources */,
@@ -3295,7 +3261,6 @@
 				EEE3B5F51F53F8EC00E86CFA /* CountryAnnotationView.swift in Sources */,
 				EE5B174F1F39E4E100879BE0 /* LargeConnectButton.swift in Sources */,
 				EE4E7DF91F629195000F7D5E /* WindowController.swift in Sources */,
-				E180D1582125CB8300F4D1C7 /* TourWindowController.swift in Sources */,
 				EE27DB3C1F4706E400D2FF2B /* SettingsContainerViewController.swift in Sources */,
 				EE9BFBCA1F30DD5200EDA295 /* GeneralSettingsViewModel.swift in Sources */,
 				EE7874A71F3B8F6F001E261E /* FlagView.swift in Sources */,
@@ -3307,7 +3272,7 @@
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
 				42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */,
-				E170A93721245DF70036326B /* TrialWelcomeViewController.swift in Sources */,
+				F320E03826F08DED00336F7A /* TourDescriptionView.swift in Sources */,
 				E1420A77209C78CE00697461 /* ConnectionSettingsViewModel.swift in Sources */,
 				42BDA8B0251A40A4009A0C96 /* NSTextField+RealSizing.swift in Sources */,
 				E1FFCF7A202DA24A001B8108 /* ServerInfoViewModel.swift in Sources */,
@@ -3318,14 +3283,13 @@
 				E9AF94CC26BD6E6800AA1A5F /* WGVpnCredentialsConfigurator.swift in Sources */,
 				E1261FB9202CA45C005E9880 /* ColoredLoadButton.swift in Sources */,
 				EE98CFCB1F14D697000D6688 /* NSColor+Extension.swift in Sources */,
-				E180D15E2126AD5400F4D1C7 /* TourDescriptionView.swift in Sources */,
 				E928092C26B16FA8008C9F2C /* IPCBaseConnection.swift in Sources */,
 				E1B3B6402024FEF00093A8FF /* ButtonImageView.swift in Sources */,
 				EE2FE5931F5ECD6B00ABA7DE /* ConnectionOverlay.swift in Sources */,
+				F320E03126F08D7A00336F7A /* TourWindowController.swift in Sources */,
 				D5F45D7C262EC16A00FB13E4 /* NSStackView+Children.swift in Sources */,
 				EE3FDC2B1F44853300E5C1CE /* ServerUtility.swift in Sources */,
 				EE98CFD51F14F7C1000D6688 /* GeneralSettingsViewController.swift in Sources */,
-				E180D1512125621300F4D1C7 /* UpsellViewController.swift in Sources */,
 				EE01DD131F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift in Sources */,
 				E1346F7D203B16B800F511FD /* LoadingAnimationView.swift in Sources */,
 				42BEF9802631AB1A009180A7 /* StreamOptionCVItem.swift in Sources */,
@@ -3342,6 +3306,7 @@
 				42BEF96326318875009180A7 /* FeaturesOverlayViewModel.swift in Sources */,
 				E17C1CE120E6217E00DCC687 /* ShowApplicationButton.swift in Sources */,
 				D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */,
+				F320E03726F08DED00336F7A /* TourNumberRingView.swift in Sources */,
 				D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */,
 				EEAF7FF11EF30169006771DA /* Dictionary+Extension.swift in Sources */,
 				0663E44D259E22CD0059E88D /* SystemExtensionGuideViewModel.swift in Sources */,
@@ -3356,7 +3321,6 @@
 				EE24A39F1F1BCF6000B70949 /* ConnectButton.swift in Sources */,
 				EEFE81D21F3F3AE30052A7A6 /* MapSectionViewController.swift in Sources */,
 				EEBB82EF1F1DF6230041432A /* CreateNewProfileViewController.swift in Sources */,
-				E180D1652126C9D300F4D1C7 /* TourNumberViewController.swift in Sources */,
 				EE98CFE51F15199C000D6688 /* WhiteHoverLinkButton.swift in Sources */,
 				D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */,
 				E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */,
@@ -3366,7 +3330,6 @@
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				D5966FE4253885B00061A75F /* TriangleView.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
-				E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */,
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
@@ -3389,8 +3352,6 @@
 				E17C1CDF20E61D7F00DCC687 /* QuitApplicationButton.swift in Sources */,
 				EE8EF1F01F1FC4D00057CD94 /* OverviewViewModel.swift in Sources */,
 				D5DE76AB257635F70077C610 /* SwiftChecker.swift in Sources */,
-				E170A92921240F940036326B /* WelcomeViewController.swift in Sources */,
-				E180D1622126C4C500F4D1C7 /* TourController.swift in Sources */,
 				EECF30711F17A188006F819F /* ServerItemViewModel.swift in Sources */,
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
@@ -3413,10 +3374,10 @@
 				EE11F92C1F39B7D8006C389C /* HeaderViewController.swift in Sources */,
 				E187021C20E2616C000521AC /* StatusMenuProfileViewItem.swift in Sources */,
 				EE068DC21F23E7E30006C2D0 /* ProfilesSectionViewModel.swift in Sources */,
+				F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */,
 				EEF7814F1F1A78B800E77B59 /* CountriesSectionViewController.swift in Sources */,
 				42C1F28C2553017D00793A49 /* QuickSettingsDropdownOption.swift in Sources */,
 				E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */,
-				E180D1682126F6EE00F4D1C7 /* TourNumberRingView.swift in Sources */,
 				EEA556341F1F48F20061F43F /* ColorPickerItemView.swift in Sources */,
 				E187022220E27801000521AC /* StatusMenuProfilesListViewModel.swift in Sources */,
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
@@ -4437,7 +4398,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4450,7 +4411,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -87,7 +87,7 @@ class WindowServiceImplementation: WindowService {
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
     fileprivate var activeWindowControllers: [WindowController] = []
-    
+
     fileprivate var tourController: TourController?
     
     init(factory: Factory) {
@@ -154,7 +154,7 @@ class WindowServiceImplementation: WindowService {
         
         mainWindowController = windowController
     }
-    
+
     func showTour() {
         guard let sidebarController = (mainWindowController as? SidebarWindowController)?.contentViewController as? SidebarViewController, let window = mainWindowController?.window else { return }
         if let tourController = tourController {
