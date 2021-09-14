@@ -128,8 +128,4 @@ public class ProfileManager {
             NotificationCenter.default.post(name: contentChanged, object: customProfiles)
         }
     }
-    
-    @objc private func trialExpired(_ notification: Notification) {
-        NotificationCenter.default.post(name: contentChanged, object: customProfiles)
-    }
 }
