@@ -100,9 +100,6 @@ extension IosAlertService: CoreAlertService {
             
         case is LogoutWarningAlert:
             showDefaultSystemAlert(alert)
-                        
-        case is TrialExpiredAlert:
-            showDefaultSystemAlert(alert)
             
         case is BugReportSentAlert:
             showDefaultSystemAlert(alert)

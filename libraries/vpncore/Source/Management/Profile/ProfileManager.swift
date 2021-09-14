@@ -54,8 +54,6 @@ public class ProfileManager {
                                                name: ProfileStorage.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
                                                name: serverStorage.contentChanged, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
-                                               name: TrialChecker.trialExpired, object: nil)
         refreshProfiles()
     }
     
@@ -129,9 +127,5 @@ public class ProfileManager {
             servers = newServers
             NotificationCenter.default.post(name: contentChanged, object: customProfiles)
         }
-    }
-    
-    @objc private func trialExpired(_ notification: Notification) {
-        NotificationCenter.default.post(name: contentChanged, object: customProfiles)
     }
 }
