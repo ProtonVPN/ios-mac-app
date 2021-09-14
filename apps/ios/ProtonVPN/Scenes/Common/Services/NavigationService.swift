@@ -142,7 +142,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & PaymentsApiServiceFactory & VpnManagerFactory & UIAlertServiceFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -170,8 +170,6 @@ final class NavigationService {
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var networking: Networking = factory.makeNetworking()
-    
-    private var trialChecker: TrialChecker?
     
     private lazy var profileManager = {
         return ProfileManager.shared
@@ -221,12 +219,6 @@ final class NavigationService {
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
-        if appSessionManager.vpnGateway != nil {
-            trialChecker = factory.makeTrialChecker()
-        } else {
-            trialChecker = nil
-        }
-        
         if appSessionManager.sessionStatus == .notEstablished {
             presentWelcome()
             return
@@ -338,26 +330,6 @@ extension NavigationService: PlanService {
         presentSubscriptionManagement(viewModel: viewModel)
     }
     
-}
-
-extension NavigationService: TrialService {
-    func presentTrialWelcomeViewController(expiration: Date) {
-        // Prevents issues with other modals being dismissed
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) { [windowService, vpnKeychain] in
-            let viewModel = TrialWelcomeViewModel(expiration: expiration, planService: self, planChecker: PlanUpgradeChecker(vpnKeychain: vpnKeychain))
-            let trialWelcomeViewController = TrialWelcomeViewController(viewModel, windowService: windowService)
-            windowService.present(modal: trialWelcomeViewController)
-        }
-    }
-    
-    func presentTrialExpiredViewController() {
-        // FUTUREFIX: should be a custom VC
-        
-        let alert = TrialExpiredAlert(confirmHandler: { [weak self] in
-            self?.presentPlanSelection()
-        }, cancelHandler: {}, planChecker: PlanUpgradeChecker(vpnKeychain: vpnKeychain))
-        alertService.push(alert: alert)
-    }
 }
 
 extension NavigationService: CountryService {

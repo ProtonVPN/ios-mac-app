@@ -176,7 +176,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         DispatchQueue.main.async { [weak self] in
             self?.navService?.sessionRefreshed()
         }
-        
+
         guard appStateManager.state.isConnected else {
             success()
             return
