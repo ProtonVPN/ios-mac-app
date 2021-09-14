@@ -240,7 +240,7 @@ extension CoreNetworking: AuthDelegate {
                 guard case Authenticator.Status.updatedCredential(let updatedCredential) = stage else {
                     return complete(nil, nil)
                 }
-                PMLog.D("Access token refresh succesfully")
+                PMLog.D("Access token refreshed successfully")
                 complete(updatedCredential, nil)
             case .failure(let error):
                 PMLog.D("Updating access token failed: \(error)")
