@@ -139,7 +139,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-        PMLog.D("SysEx install requestNeedsUserApproval (\(request.identifier)")
+        PMLog.D("SysEx install requestNeedsUserApproval (\(request.identifier))")
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
