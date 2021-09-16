@@ -16,7 +16,7 @@ class ReportBugTests: ProtonVPNUITests {
     
     override func setUp() {
         super.setUp()
-        logInIfNeeded()
+        logInToProdIfNeeded()
     }
     
     func testSendBugReport() {
