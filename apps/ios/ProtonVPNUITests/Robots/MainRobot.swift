@@ -25,8 +25,10 @@ fileprivate let buttonCancel = "Cancel"
 fileprivate let buttonAccount = "Account"
 fileprivate let environmentText = "https://api.protonvpn.ch"
 fileprivate let useAndContinueButton = "Use and continue"
+fileprivate let resetToProductionButton = "Reset to production and kill the app"
 fileprivate let showLoginButtonLabelText = "Sign in"
 fileprivate let showSignupButtonLabelText = "Create an account"
+fileprivate let completeTitle = "CompleteViewController.completeTitleLabel"
 
 // MainRobot class contains actions for main app view.
 
@@ -75,12 +77,6 @@ class MainRobot: CoreElements {
         button(showSignupButtonLabelText).wait().tap()
         return SignupRobot()
     }
-
-    @discardableResult
-    public func changeEnvironmentTo() -> MainRobot {
-        button(useAndContinueButton).tap()
-        return self
-     }
     
     @discardableResult
     public func showLogin() -> LoginRobot {
@@ -123,6 +119,11 @@ class MainRobot: CoreElements {
         @discardableResult
         func upgradeSubscribtionIsOpenBasicUser() -> MainRobot {
             staticText(popUpforBasicUser).checkExists()
+            return MainRobot()
+        }
+        
+        func completeTitleIsShown() -> MainRobot {
+            staticText(completeTitle).wait(time: 15).checkExists()
             return MainRobot()
         }
     }

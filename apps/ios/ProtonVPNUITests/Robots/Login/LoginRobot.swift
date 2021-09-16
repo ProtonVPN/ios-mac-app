@@ -17,6 +17,7 @@ fileprivate let invalidCredentialText = "Incorrect login credentials. Please try
 fileprivate let helpButtonId = "LoginViewController.helpButton"
 fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account password."
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
+private let errorBannerMessage = "Email address already used."
 
 class LoginRobot: CoreElements {
     
@@ -46,7 +47,6 @@ class LoginRobot: CoreElements {
         return NeedHelpRobot()
     }
 
-    
     private func typeUsername(username: String) -> LoginRobot {
         textField(loginTextFieldId).tap().typeText(username)
         return self
@@ -75,6 +75,7 @@ class LoginRobot: CoreElements {
         @discardableResult
         func incorrectCredentialsErrorDialog() -> LoginRobot {
             textView(invalidCredentialText).wait().checkExists()
+            button("OK").wait().checkExists().tap()
             return LoginRobot()
         }
         
@@ -82,6 +83,13 @@ class LoginRobot: CoreElements {
         func pleaseEnterPasswordAndUsernameErrorIsShown() -> LoginRobot {
             staticText(enterPasswordErrorMessage).checkExists()
             staticText(enterUsernameErrorMessage).checkExists()
+            return LoginRobot()
+        }
+        
+        @discardableResult
+        public func emailAddresAlreadyExists() -> LoginRobot {
+            textView(errorBannerMessage).wait().checkExists()
+            button("OK").wait().checkExists().tap()
             return LoginRobot()
         }
     }

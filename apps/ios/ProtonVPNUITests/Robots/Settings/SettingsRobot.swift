@@ -120,5 +120,12 @@ class SettingsRobot: CoreElements {
             staticText("IKEv2").checkExists()
             return SettingsRobot()
         }
+        
+        @discardableResult
+        func userIsCreated(_ name: String, _ plan: String) -> SettingsRobot {
+            staticText(name).checkExists()
+            staticText(plan).checkExists()
+            return SettingsRobot()
+        }
     }
 }

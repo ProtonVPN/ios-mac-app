@@ -127,6 +127,8 @@
 		B2249DD826DFA6DC00A1466A /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2249DD726DFA6DC00A1466A /* LoginRobot.swift */; };
 		B2249DDA26DFA70200A1466A /* SignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2249DD926DFA70200A1466A /* SignupRobot.swift */; };
 		B2249DDC26DFA72500A1466A /* NeedHelpRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2249DDB26DFA72500A1466A /* NeedHelpRobot.swift */; };
+		B22D502E26F221E700328D02 /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D502D26F221E700328D02 /* AccountVerificationRobot.swift */; };
+		B22D503026F2242F00328D02 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22D502F26F2242F00328D02 /* PasswordRobot.swift */; };
 		B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D82D2660FBC500E0ECCB /* MainRobot.swift */; };
 		B293D8342660FC0A00E0ECCB /* ReportBugRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */; };
 		B293D8382660FC3B00E0ECCB /* ReportBugTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */; };
@@ -743,6 +745,8 @@
 		B2249DD726DFA6DC00A1466A /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LoginRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/LoginRobot.swift; sourceTree = "<group>"; };
 		B2249DD926DFA70200A1466A /* SignupRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SignupRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/SignupRobot.swift; sourceTree = "<group>"; };
 		B2249DDB26DFA72500A1466A /* NeedHelpRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = NeedHelpRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/NeedHelpRobot.swift; sourceTree = "<group>"; };
+		B22D502D26F221E700328D02 /* AccountVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountVerificationRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/AccountVerificationRobot.swift; sourceTree = "<group>"; };
+		B22D502F26F2242F00328D02 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/PasswordRobot.swift; sourceTree = "<group>"; };
 		B293D82D2660FBC500E0ECCB /* MainRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainRobot.swift; path = ../../../ios/ProtonVPNUITests/Robots/MainRobot.swift; sourceTree = "<group>"; };
 		B293D8332660FC0A00E0ECCB /* ReportBugRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ReportBugRobot.swift; sourceTree = "<group>"; };
 		B293D8372660FC3B00E0ECCB /* ReportBugTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ReportBugTests.swift; path = ../../../../ios/ProtonVPNUITests/Tests/Settings/ReportBugTests.swift; sourceTree = "<group>"; };
@@ -1435,6 +1439,8 @@
 				B2249DD726DFA6DC00A1466A /* LoginRobot.swift */,
 				B2249DD926DFA70200A1466A /* SignupRobot.swift */,
 				B2249DDB26DFA72500A1466A /* NeedHelpRobot.swift */,
+				B22D502D26F221E700328D02 /* AccountVerificationRobot.swift */,
+				B22D502F26F2242F00328D02 /* PasswordRobot.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -3422,6 +3428,7 @@
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				B2249DD826DFA6DC00A1466A /* LoginRobot.swift in Sources */,
 				B2249DDA26DFA70200A1466A /* SignupRobot.swift in Sources */,
+				B22D502E26F221E700328D02 /* AccountVerificationRobot.swift in Sources */,
 				B293D83C2660FC6100E0ECCB /* SettingsRobot.swift in Sources */,
 				F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */,
 				B2249DD226DFA63A00A1466A /* LoginTests.swift in Sources */,
@@ -3432,6 +3439,7 @@
 				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
 				B29CD6A926540F4D00978637 /* ProfilesTests.swift in Sources */,
 				B29CD6AF2654109600978637 /* StringUtils.swift in Sources */,
+				B22D503026F2242F00328D02 /* PasswordRobot.swift in Sources */,
 				B2BA40EB26C28C0F00DF04C3 /* CountryListRobot.swift in Sources */,
 				B293D8342660FC0A00E0ECCB /* ReportBugRobot.swift in Sources */,
 				B2BA40ED26C28C1E00DF04C3 /* ConnectionStatusRobot.swift in Sources */,

@@ -12,20 +12,21 @@ fileprivate let titleId = "SignupViewController.createAccountTitleLabel"
 fileprivate let subtitleId = "SignupViewController.createAccountDescriptionLabel"
 fileprivate let externalEmailTextFieldId = "SignupViewController.externalEmailTextField.textField"
 fileprivate let externamlEmailErrorDialog = "Email verification temporarily disabled"
-fileprivate let nextButton = "SignupViewController.nextButton"
+fileprivate let nextButtonId = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
 fileprivate let protonmailErrorMessage = "Please use a non-ProtonMail email address"
 
 class SignupRobot: CoreElements {
+    
+    public let verify = Verify()
     
     func signinButtonTap() -> LoginRobot {
         button(signInButtonId).tap()
         return LoginRobot()
     }
     
-    func protonmailAccountNotAvailable(_ email: String) -> SignupRobot {
+    func enterEmail(_ email: String) -> SignupRobot {
         return insertExternalEmail(email)
-            .nextVerificationStep()
     }
     
     private func insertExternalEmail(_ email: String) -> SignupRobot {
@@ -33,12 +34,10 @@ class SignupRobot: CoreElements {
         return self
      }
     
-    private func nextVerificationStep() -> SignupRobot {
-        button(nextButton).tap()
-        return self
-     }
-
-    public let verify = Verify()
+    func nextButtonTap<T: CoreElements>(robot _: T.Type) -> T {
+        button(nextButtonId).tap()
+        return T()
+    }
     
     class Verify: CoreElements {
 
@@ -52,6 +51,7 @@ class SignupRobot: CoreElements {
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
             textView(protonmailErrorMessage).wait().checkExists()
+            button("OK").wait().checkExists().tap()
             return SignupRobot()
         }
     }
