@@ -64,13 +64,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var allowLANButton: SwitchButton!
     @IBOutlet private weak var allowLANSeparator: NSBox!
     @IBOutlet private weak var allowLANIcon: NSImageView!
-
-    @IBOutlet private weak var smartProtocolLabel: PVPNTextField!
-    @IBOutlet private weak var smartProtocolButton: SwitchButton!
-    @IBOutlet private weak var smartProtocolSeparator: NSBox!
-    @IBOutlet private weak var smartProtocolInfoIncon: NSImageView!
-    @IBOutlet private weak var smartProtocolSectionView: NSView!
-
+    
     private var viewModel: ConnectionSettingsViewModel
     
     required init?(coder: NSCoder) {
@@ -176,20 +170,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
 
         alternativeRoutingSeparator.fillColor = .protonLightGrey()
     }
-
-    private func setupSmartProtocolItem() {
-        smartProtocolLabel.attributedStringValue = LocalizedString.smartProtocolTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-
-        smartProtocolInfoIncon.image = NSImage(named: NSImage.Name("info_green"))
-        smartProtocolInfoIncon.toolTip = LocalizedString.smartProtocolDescription
-
-        smartProtocolButton.setState(viewModel.smartProtocol ? .on : .off)
-        smartProtocolButton.delegate = self
-
-        smartProtocolSeparator.fillColor = .protonLightGrey()
-
-        protocolView.isHidden = viewModel.smartProtocol
-    }
     
     private func setupAllowLANItem() {
         allowLANLabel.attributedStringValue = LocalizedString.allowLanTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
@@ -250,7 +230,6 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
-        setupSmartProtocolItem()
         setupAllowLANItem()
     }
     
@@ -284,9 +263,6 @@ extension ConnectionSettingsViewController: SwitchButtonDelegate {
         
         case allowLANButton:
             viewModel.setAllowLANAccess(value == .on, completion: completion)
-
-        case smartProtocolButton:
-            viewModel.setSmartProtocol(value == .on, completion: completion)
             
         case vpnAcceleratorButton:
             viewModel.setVpnAccelerator(value == .on, completion: completion)
