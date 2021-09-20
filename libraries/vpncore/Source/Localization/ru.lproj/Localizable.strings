@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокирует весь сетевой трафик при потере VPN-туннеля. Обратите внимание, что ваше VPN подключение будет прервано при переключении между пользователями на Mac.";
+"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Не спрашивать меня снова";
@@ -1625,10 +1625,10 @@
 "_sysex_cannot_enable" = "Не могу включить системное расширение";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Вы успешно включили системное расширение на вашем устройстве. Теперь вы можете использовать Smart Protocol, OpenVPN и WireGuard.";
+"_sysex_enabled_description" = "Настройка завершена. Теперь Вы можете просматривать Интернет быстрее с лучшими технологиями VPN.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Теперь вы можете использовать Smart Protocol, OpenVPN и WireGuard";
+"_sysex_enabled_title" = "Настройка завершена";
 
 /* (No Comment) */
 "_sysex_error_description" = "Произошла ошибка при установке системного расширения.\nПереустановите ProtonVPN, убедитесь, что он расположен в папке Приложения, чтобы исправить эту проблему. Или свяжитесь с нашей поддержкой.";
@@ -1676,7 +1676,7 @@
 "_sysex_wizard_step4_title" = "кнопка \"Подробности…\"";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "“Allow” button";
+"_sysex_wizard_step4_title_1" = "кнопку \"Разрешить\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Выберите оба пункта ProtonVPN, чтобы разрешить свои протоколы, и щелкните “OK”";

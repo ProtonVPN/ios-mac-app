@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch (Not‐Trennung) schützt Ihre IP-Adresse";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Sperrt den Netzwerkverkehr, wenn der VPN‐Tunnel verloren geht. Beachten Sie, dass beim Wechseln der Mac‐Konten die aktive Verbindung abgebrochen wird.";
+"_kill_switch_tooltip" = "Sperrt den gesamten Netzwerkverkehr, sobald der VPN-Tunnel unterbrochen werden sollte.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Nicht erneut nachfragen";
@@ -1625,10 +1625,10 @@
 "_sysex_cannot_enable" = "Systemerweiterung konnte nicht aktiviert werden";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Sie haben die Systemerweiterung auf Ihrem Gerät erfolgreich aktiviert. Sie können nun Smart Protocol, OpenVPN und WireGuard verwenden.";
+"_sysex_enabled_description" = "Konfiguration abgeschlossen. Ab jetzt können Sie mit den besten VPN-Technologien schneller im Internet surfen.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Ab sofort können Sie Smart Protocol, OpenVPN und WireGuard verwenden";
+"_sysex_enabled_title" = "Konfiguration abgeschlossen";
 
 /* (No Comment) */
 "_sysex_error_description" = "Bei der Installation der Systemerweiterung ist ein Fehler aufgetreten.\nInstallieren Sie ProtonVPN neu und stellen Sie sicher, dass es sich im Ordner „Programme” befindet, um dieses Problem zu beheben. Wenden Sie sich alternativ an unseren Support.";
