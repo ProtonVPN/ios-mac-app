@@ -95,17 +95,8 @@ class ProtonVPNUITests: XCTestCase {
          app.buttons["Sign in"].tap()
     }
     
-    func logInIfNeeded() {
-        let tabBarsQuery = app.tabBars
-        if tabBarsQuery.allElementsBoundByIndex.count > 0  {
-            return
-        }
-        else {
-            changeEnvToProdIfNedded()
-            app.launch()
-            openLoginScreen()
-            loginAsPlusUser()
-        }
+    func useAndContinueTap() {
+        app.buttons["Use and continue"].tap()
     }
     
     func logInToProdIfNeeded() {
@@ -145,10 +136,6 @@ class ProtonVPNUITests: XCTestCase {
         resetToProd.tap()
         app.buttons["OK"].tap()
      }
-    
-    func useAndContinueTap() {
-        app.buttons["Use and continue"].tap()
-    }
     
     func changeEnvToBlackIfNedded() {
         let env = app.staticTexts["https://vpn.proton.black/api"]
