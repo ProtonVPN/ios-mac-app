@@ -125,7 +125,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolList.target = self
         protocolList.action = #selector(protocolItemSelected)
         protocolInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
-        protocolInfoIcon.toolTip = LocalizedString.protocolTooltip
+        protocolInfoIcon.toolTip = LocalizedString.smartProtocolDescription
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
     }
