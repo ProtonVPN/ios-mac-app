@@ -1219,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocolo";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Alterar o protocolo da sua conexão VPN";
-
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN para macOS";
 

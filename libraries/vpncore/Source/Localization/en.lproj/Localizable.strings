@@ -1128,9 +1128,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Change the protocol of your VPN connection";
-
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
 
