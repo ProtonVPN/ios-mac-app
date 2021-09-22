@@ -109,7 +109,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     }
     
     private var authInterceptor: AuthenticationInterceptor<ProtonAPIAuthenticator>?
-    private let alternativeRoutingInterceptor = AlternativeRoutingInterceptor()
+    private lazy var alternativeRoutingInterceptor = AlternativeRoutingInterceptor(delegate: self)
     
     private func interceptor(for request: URLRequestConvertible) -> Interceptor? {
         let altInterceptor: AlternativeRoutingInterceptor? = propertiesManager?.alternativeRouting == true ? alternativeRoutingInterceptor : nil
@@ -234,6 +234,13 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             failure(error)
             return false
         }
+    }
+}
+
+extension AlamofireWrapperImplementation: AlternativeRoutingInterceptorDelegate {
+    func requestFailedOnTLS(_ url: URL) -> Bool {
+        let absoluteUrl = url.absoluteString
+        return tlsFailedRequests.contains(where: { $0.url?.absoluteString == absoluteUrl })
     }
 }
 
