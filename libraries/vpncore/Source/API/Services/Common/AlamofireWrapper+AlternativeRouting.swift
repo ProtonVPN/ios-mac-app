@@ -34,12 +34,23 @@ final class AlamofireSessionDelegate: SessionDelegate {
     }
 }
 
+protocol AlternativeRoutingInterceptorDelegate: AnyObject {
+    func requestFailedOnTLS(_ url: URL) -> Bool
+}
+
 /**
  Checks if the request to given URL should be retried using alternative routing when the response fails with a specific Alamofire error.
 
  If the request should be retried it also gets the next alternative route and sets it as base url for all the requests so the caller can just retry the request without any modification
  */
 final class AlternativeRoutingInterceptor: RequestInterceptor {
+    
+    weak var delegate: AlternativeRoutingInterceptorDelegate?
+    
+    public init(delegate: AlternativeRoutingInterceptorDelegate?) {
+        self.delegate = delegate
+    }
+    
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         // Resolve the current base URL
         let baseUrl = ApiConstants.doh.getHostUrl()
@@ -83,7 +94,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         // First we need to extract the underlying networking error from the Alamofire error recieved, because `DoH.handleError(:)` does not know about Alamofire.
         // Then check if `DoH` can handle the networking error. If yes the DoH.handleError(:)` call also immediatelly resolves alternative routes internally so the request can be just retried
         // The URL of this retried request will be modified in the `adapt(:)` method to use the new alternative route
-        if let networkingError = extractNetworkingError(error: error as? AFError), ApiConstants.doh.handleError(host: requestUrl.absoluteString, error: networkingError) {
+        if let networkingError = extractNetworkingError(error: error as? AFError, forUrl: requestUrl), ApiConstants.doh.handleError(host: requestUrl.absoluteString, error: networkingError) {
             PMLog.D("Retrying request \(request) with alternative route")
             completion(.retry)
             return
@@ -98,13 +109,16 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
      - Parameter error: Alamofire error from request response
      - Returns URLSession error if found
      */
-    private func extractNetworkingError(error: AFError?) -> NSError? {
+    private func extractNetworkingError(error: AFError?, forUrl url: URL) -> NSError? {
         var currentError: Error? = error
 
         while currentError != nil {
             if let nextAfError = currentError?.asAFError?.underlyingError {
                 currentError = nextAfError
             } else {
+                if (currentError as NSError?)?.code == -999, self.delegate?.requestFailedOnTLS(url) ?? false {
+                    return NSError(domain: "TLSFailed", code: -1200, userInfo: nil)
+                }
                 return currentError as NSError?
             }
         }
