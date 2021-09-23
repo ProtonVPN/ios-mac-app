@@ -47,7 +47,7 @@ final class SystemExtensionGuideViewController: NSViewController {
     @IBOutlet private weak var previousBtn: NSButton!
     
     @IBOutlet private weak var imageView: NSImageView!
-    @IBOutlet private weak var imageDescription: NSTextField!
+    @IBOutlet private weak var imageDescription: PVPNTextViewLink!
     
     private lazy var titles: [NSTextField] = [step1title, step2title, step3title, step4title, step5title]
     private lazy var numbers: [NSView] = [step1number, step2number, step3number, step4number, step5number]
@@ -108,13 +108,20 @@ final class SystemExtensionGuideViewController: NSViewController {
         
         textUnderSteps.stringValue = LocalizedString.sysexWizardTextUnderSteps
         textUnderSteps.textColor = NSColor.protonGreyUnselectedWhite()
-        imageDescription.stringValue = ""
+        imageDescription.defaultStyle.alignment = .center
+        imageDescription.textViewFont = NSFont.boldSystemFont(ofSize: 14.0)
+        imageDescription.textStorage?.setAttributedString(NSAttributedString(string: ""))
+        
+        nextBtn.wantsLayer = true
+        CABasicAnimation.addPulseAnimation(nextBtn.layer)
+        
     }
     
     // MARK: - Actions
     
     @IBAction func nextAction(_ sender: Any) {
         viewModel.didTapNext()
+        nextBtn.layer?.removeAllAnimations()
     }
     
     @IBAction func previousAction(_ sender: Any) {
@@ -143,8 +150,7 @@ final class SystemExtensionGuideViewController: NSViewController {
         }
         
         imageView.image = NSImage(named: step.imageName)
-        imageDescription.stringValue = step.description
-        
+        imageDescription.hyperLink(originalText: step.description, hyperLink: "here", urlString: "x-apple.systempreferences:com.apple.preference.security")
     }
     
     func closeSelf() {
