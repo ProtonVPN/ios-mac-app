@@ -263,6 +263,7 @@
 		E9BD02F526D78A0B00AAE995 /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD02F426D78A0B00AAE995 /* XPCConnectionsRepository.swift */; };
 		E9BD02F726D7A32300AAE995 /* WireguardMacProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9BD02F626D7A32300AAE995 /* WireguardMacProtocolFactory.swift */; };
 		E9F8B6CF26206DE900B72549 /* VpnProtocolChangeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */; };
+		E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */; };
 		EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */; };
 		EE01DD011F5C2658003D62ED /* SCCoreCircleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD001F5C2658003D62ED /* SCCoreCircleButton.swift */; };
 		EE01DD131F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EE01DD121F5C5285003D62ED /* VerticallyCenteredTextFieldCell.swift */; };
@@ -834,6 +835,7 @@
 		E9BD02F426D78A0B00AAE995 /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		E9BD02F626D7A32300AAE995 /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
 		E9F8B6CE26206DE900B72549 /* VpnProtocolChangeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManager.swift; sourceTree = "<group>"; };
+		E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "CABasicAnimation+Pulse.swift"; path = "../../macos/ProtonVPN/CABasicAnimation+Pulse.swift"; sourceTree = "<group>"; };
 		EA59C9C32908DDB8FE7B9AC0 /* Pods-ProtonVPNmacOSTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNmacOSTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNmacOSTests/Pods-ProtonVPNmacOSTests.debug.xcconfig"; sourceTree = "<group>"; };
 		ED9AB4330114A9F0C8F8B1E5 /* Pods-ProtonVPN WireGuard-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN WireGuard-metadata.plist"; sourceTree = "<group>"; };
 		EE01DCFE1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SCEntryCountryAnnotationView.swift; sourceTree = "<group>"; };
@@ -1462,6 +1464,14 @@
 			path = VPN;
 			sourceTree = "<group>";
 		};
+		E9FE72E926FC993E00966404 /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				E9FE72EA26FC995A00966404 /* CABasicAnimation+Pulse.swift */,
+			);
+			name = Animations;
+			sourceTree = "<group>";
+		};
 		EE46A0671F2DE2F2008B435C /* Properties */ = {
 			isa = PBXGroup;
 			children = (
@@ -1482,6 +1492,7 @@
 		EE98CFD81F150639000D6688 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				E9FE72E926FC993E00966404 /* Animations */,
 				D557D4EB264AC2E5007E4396 /* vpncore */,
 				E18262AE21302ED100A6A48F /* dsa_pub.pem */,
 				D5AC137923794B2900244066 /* text-template.html */,
@@ -3277,6 +3288,7 @@
 				EE9589E41F596DFC005E7495 /* PVPNTextField.swift in Sources */,
 				D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */,
 				EE2C46321F5570A700BA34B8 /* CellSurfaceButton.swift in Sources */,
+				E9FE72EB26FC995A00966404 /* CABasicAnimation+Pulse.swift in Sources */,
 				D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */,
 				E13C63FA2038A08400D9E40C /* ExpandMapButton.swift in Sources */,
 				42918CF2263836410065992E /* CountriesSectionHeaderView.swift in Sources */,

@@ -77,7 +77,7 @@ class LoginTests: ProtonVPNUITests {
             trialButton.tap()
         }
         
-        let extensionsButton = app.buttons["Begin manual configuration"]
+        let extensionsButton = app.buttons["Begin configuration"]
         if extensionsButton.waitForExistence(timeout: 5) {
             extensionsButton.tap()
         }
