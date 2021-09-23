@@ -35,7 +35,12 @@ extension DependencyContainer: HelpMenuViewModelFactory {
 
 class HelpMenuViewModel {
     
-    typealias Factory = VpnManagerFactory & NavigationServiceFactory & VpnKeychainFactory & CoreAlertServiceFactory & SystemExtensionManagerFactory
+    typealias Factory = VpnManagerFactory
+                        & NavigationServiceFactory
+                        & VpnKeychainFactory
+                        & CoreAlertServiceFactory
+                        & SystemExtensionManagerFactory
+                        & PropertiesManagerFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -43,6 +48,7 @@ class HelpMenuViewModel {
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     init(factory: Factory) {
         self.factory = factory
@@ -87,6 +93,8 @@ class HelpMenuViewModel {
     private func clearAllDataAndTerminate() {
         
         // System Extension
+        propertiesManager.sysexSuccessWasShown = false
+        
         systemExtensionManager.requestExtensionUninstall(forType: .openVPN) { error in
             self.systemExtensionManager.requestExtensionUninstall(forType: .wireGuard) { error in
                 // keychain
