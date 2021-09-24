@@ -24,16 +24,19 @@ import Cocoa
 
 class PVPNTextViewLink: NSTextView {
 
-    public var lineSpacing: CGFloat = 14
-    public var textViewFont = NSFont.systemFont(ofSize: 14)
-    public var textViewTextColor = NSColor.protonWhite()
+    var lineSpacing: CGFloat = 14
+    var textViewFont = NSFont.systemFont(ofSize: 14)
+    var textViewTextColor = NSColor.protonWhite()
+    var defaultStyle: NSMutableParagraphStyle
 
     override public init(frame: CGRect, textContainer: NSTextContainer?) {
+        defaultStyle = NSMutableParagraphStyle()
         super.init(frame: frame, textContainer: textContainer)
         setup()
     }
 
     public required init?(coder aDecoder: NSCoder) {
+        defaultStyle = NSMutableParagraphStyle()
         super.init(coder: aDecoder)
         setup()
     }
@@ -58,25 +61,22 @@ class PVPNTextViewLink: NSTextView {
     }
 
     // MARK: - Private
-    private var defaultStyle: NSMutableParagraphStyle {
-        let style = NSMutableParagraphStyle()
-        style.lineSpacing = self.lineSpacing / self.textViewFont.pointSize
-        style.alignment = .left
-        return style
-    }
 
     private func setup() {
         isEditable = false
         isSelectable = true
         isAutomaticLinkDetectionEnabled = true
-
-        guard let text = self.textStorage?.string, !text.isEmpty else { return }
+        
+        guard let text = textStorage?.string, !text.isEmpty else { return }
         let titleAttributes = [NSAttributedString.Key.font: self.textViewFont,
                                NSAttributedString.Key.foregroundColor: self.textColor ?? textViewTextColor,
                                NSAttributedString.Key.paragraphStyle: defaultStyle]
 
         let titleString = NSAttributedString(string: text, attributes: titleAttributes)
-        self.textStorage?.setAttributedString(titleString)
+        textStorage?.setAttributedString(titleString)
+        
+        defaultStyle.lineSpacing = self.lineSpacing / self.textViewFont.pointSize
+        defaultStyle.alignment = .left
     }
     
 }

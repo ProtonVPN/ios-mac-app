@@ -92,6 +92,15 @@ extension PropertiesManagerProtocol {
         }
     }
     
+    var sysexSuccessWasShown: Bool {
+        get {
+            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
+        }
+        set {
+            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
+        }
+    }
+    
     func restoreStartOnBootStatus() {
         let enabled = self.startOnBoot
         self.setLoginItem(enabled: enabled)

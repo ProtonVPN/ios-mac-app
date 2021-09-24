@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "El interruptor de apagado está protegiendo su IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Tome en cuenta que su conexión VPN finalizará cuando cambie las cuenta de Mac.";
+"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando el túnel VPN se pierde.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "No volver a preguntarme";
@@ -1219,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocolo";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Cambiar el protocolo de su conexión VPN";
-
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN macOS";
 
@@ -1625,10 +1622,10 @@
 "_sysex_cannot_enable" = "No se puede habilitar la extensión del sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Ha habilitado exitosamente la extensión del sistema en su dispositivo. Ahora puede usar Smart Protocol, OpenVPN y WireGuard.";
+"_sysex_enabled_description" = "Configuración completada. Ahora puede navegar más rápido por internet con las mejores tecnologías VPN.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Ahora puede usar Smart Protocol, OpenVPN y WireGuard";
+"_sysex_enabled_title" = "Configuración completada";
 
 /* (No Comment) */
 "_sysex_error_description" = "Ocurrió un error al instalar la extensión del sistema. Reinstale ProtonVPN, asegurándose de que esté ubicado en la carpeta de aplicaciones, para corregir este problema. Alternativamente, contacte con nuestro soporte.";
