@@ -93,7 +93,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
                 completion(.outdated)
                 
             case .orderedDescending:
-                PMLog.D("SysEx version (\(info)) is higher that apps version (\(appVersion)")
+                PMLog.D("SysEx version (\(info)) is higher than apps version (\(appVersion)")
                 completion(.outdated)
                 
             case .orderedSame:
@@ -105,7 +105,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     func requestExtensionInstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
         shouldNotifyInstall = false
 
-        PMLog.D("requestExtensionInstall")
+        PMLog.D("requestExtensionInstall for \(type)")
         completionCallbacks.updateValue(completion, forKey: type.rawValue)
         
         let request = OSSystemExtensionRequest.activationRequest(
@@ -118,7 +118,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
     /// Ask OS to uninstall our Network Extension
     func requestExtensionUninstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
-        PMLog.D("requestExtensionUninstall")
+        PMLog.D("requestExtensionUninstall for \(type)")
         let request = OSSystemExtensionRequest.deactivationRequest(
             forExtensionWithIdentifier: type.rawValue,
             queue: .main
@@ -143,7 +143,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        PMLog.D("SysEx install request result: \(result.rawValue)")
+        PMLog.D("SysEx (\(request.identifier)) install request result: \(result.rawValue)")
         
         completionCallbacks[request.identifier]?(.success)
         completionCallbacks[request.identifier] = nil
@@ -178,12 +178,12 @@ class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionReques
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        PMLog.D("SysEx request finished with result: \(result.rawValue)")
+        PMLog.D("SysEx (\(request.identifier)) request finished with result: \(result.rawValue)")
         completion?(.success)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        PMLog.D("SysEx failed with error: \(error)")
+        PMLog.D("SysEx (\(request.identifier)) failed with error: \(error)")
         completion?(.failure(error))
     }
     

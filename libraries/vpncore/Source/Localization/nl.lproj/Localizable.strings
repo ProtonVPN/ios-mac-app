@@ -125,7 +125,7 @@
 "_change_protocol_disconnect_warning" = "Het wijzigen van protocollen zal uw huidige VPN-sessie beëindigen.";
 
 /* Changing settings title */
-"_change_settings" = "Change settings";
+"_change_settings" = "Instellingen wijzigen";
 
 /* MacOS: About window */
 "_changelog" = "Wat is er veranderd";
@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch beschermt uw IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blokkeert alle netwerkverkeer wanneer VPN-tunnel verbroken is. Let er op dat uw VPN-verbinding wordt beëindigd wanneer u van Mac account wisselt.";
+"_kill_switch_tooltip" = "Blokkeert al het netwerkverkeer als de VPN-tunnel is weggevallen.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Niet opnieuw vragen";
@@ -785,10 +785,10 @@
 "_load" = "Laad";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info" = "Loading connection info";
+"_loading_connection_info" = "Verbindingsinformatie laden";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
-"_loading_connection_info_for" = "Loading connection info for %@";
+"_loading_connection_info_for" = "Verbindingsinformatie voor %@ laden";
 
 /* Slogan text under the logo in may places in iOS and MacOS apps */
 "_loading_screen_slogan" = "Overal veilig internet";
@@ -1004,7 +1004,7 @@
 "_netshield_off" = "Uit";
 
 /* Netshield section title in iOS connection screen */
-"_netshield_section_title" = "MALWARE & ADS BLOKER";
+"_netshield_section_title" = "MALWARE & ADS BLOCKER";
 
 /* Settings -> Netshield: name of field. */
 "_netshield_title" = "NetShield";
@@ -1046,7 +1046,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "On maintenance";
+"_on_maintenance" = "In onderhoud";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Toon ProtonVPN om in te loggen...";
@@ -1218,9 +1218,6 @@
 
 /* (No Comment) */
 "_protocol" = "Protocol";
-
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Het protocol van uw VPN-verbinding wijzigen";
 
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN macOS";
@@ -1625,10 +1622,10 @@
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol, OpenVPN and WireGuard.";
+"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "You can now use Smart Protocol, OpenVPN and WireGuard";
+"_sysex_enabled_title" = "Configuratie voltooid";
 
 /* (No Comment) */
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
@@ -1640,7 +1637,7 @@
 "_sysex_settings_title" = "Systeemextensie vereist";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Begin manual configuration";
+"_sysex_wizard_button" = "Handmatige configuratie starten";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
 "_sysex_wizard_step1_description" = "Click the “Open Security Preferences” in\n the following dialog boxes (2)";
@@ -1664,19 +1661,19 @@
 "_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
 
 /* System exetnsion wizard in mac: Step nr.3 title */
-"_sysex_wizard_step3_title" = "Enter credentials";
+"_sysex_wizard_step3_title" = "Inloggegevens invoeren";
 
 /* System exetnsion wizard in mac: Step nr.4 description (for case with more than one system extension) */
-"_sysex_wizard_step4_description" = "Click the “Details...” button";
+"_sysex_wizard_step4_description" = "Klik op de knop \"Details...\"";
 
 /* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
+"_sysex_wizard_step4_description_1" = "Klik op de knop \"Toestaan\"";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
-"_sysex_wizard_step4_title" = "“Details...” button";
+"_sysex_wizard_step4_title" = "Knop \"Details...\"";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "“Allow” button";
+"_sysex_wizard_step4_title_1" = "Knop \"Toestaan\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";

@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch sta proteggendo il tuo IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blocca tutto il traffico di rete quando il tunnel VPN viene perso. La connessione VPN verrà terminata quando si cambia account Mac.";
+"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Non chiedermelo più";
@@ -1219,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocollo";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Cambia il protocollo della tua connessione VPN";
-
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN macOS";
 
@@ -1526,7 +1523,7 @@
 "_skip" = "Salta";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Abilita il Protocollo Smart per usare automaticamente il protocollo e la porta che offrono la connettività migliore.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "La tua connessione sarà riavviata per modificare la modalità Smart Protocol.";
@@ -1625,10 +1622,10 @@
 "_sysex_cannot_enable" = "Impossibile abilitare l'Estensione del Sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Hai abilitato correttamente l'Estensione del Sistema sul tuo dispositivo. Puoi ora usare lo Smart Protocol, OpenVPN e WireGuard.";
+"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Puoi ora usare lo Smart Protocol, Open Vpn e WireGuard";
+"_sysex_enabled_title" = "Configurazione completata";
 
 /* (No Comment) */
 "_sysex_error_description" = "Si è verificato un errore installando l'Estensione del Sistema.\nReinstalla ProtonVPN, assicurandoti che sia situata nella cartella delle Applicazioni, per risolvere questo problema. Altrimenti, contatta il nostro supporto.";
@@ -1646,13 +1643,13 @@
 "_sysex_wizard_step1_description" = "Clicca \"Apri Preferenze di Sicurezza\" nelle\n seguenti caselle di dialogo (2)";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click the “Open Security Preferences” in\n the following dialog box";
+"_sysex_wizard_step1_description_1" = "Clicca \"Apri Preferenze di Sicurezza\" nella\n seguente casella di dialogo";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
 "_sysex_wizard_step1_title" = "Avvisi di “Estensione di Sistema Bloccata” (x2)";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "“System Extension Blocked” alert";
+"_sysex_wizard_step1_title_1" = "Avviso di “Estensione di Sistema Bloccata”";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Clicca il lucchetto per effettuare le modifiche";
@@ -1670,13 +1667,13 @@
 "_sysex_wizard_step4_description" = "Clicca il pulsante “Dettagli...”";
 
 /* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
+"_sysex_wizard_step4_description_1" = "Clicca il pulsante \"Consenti\"";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "Pulsante “Dettagli...”";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with only one system extension) */
-"_sysex_wizard_step4_title_1" = "“Allow” button";
+"_sysex_wizard_step4_title_1" = "pulsante \"Consenti\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
 "_sysex_wizard_step5_description" = "Seleziona entrambi gli oggetti di ProtonVPN per consentire i protocolli personalizzati e clicca “OK”";
