@@ -1637,19 +1637,22 @@
 "_sysex_settings_title" = "Estensione del sistema richiesta";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Inizia la configurazione manuale";
+"_sysex_wizard_button" = "Inizia la configurazione";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Clicca \"Apri Preferenze di Sicurezza\" nelle\n seguenti caselle di dialogo (2)";
+"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Clicca \"Apri Preferenze di Sicurezza\" nella\n seguente casella di dialogo";
+"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+
+/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
+"_sysex_wizard_step1_description_link" = "qui";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Avvisi di “Estensione di Sistema Bloccata” (x2)";
+"_sysex_wizard_step1_title" = "Open Security Preferences";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Avviso di “Estensione di Sistema Bloccata”";
+"_sysex_wizard_step1_title_1" = "Open Security Preferences";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Clicca il lucchetto per effettuare le modifiche";
@@ -1682,7 +1685,7 @@
 "_sysex_wizard_step5_title" = "Selezione di elementi ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Per poterlo fare, devi effettuare una configurazione manuale rapida nella seguente sequenza:";
+"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Sei ora pronto a usare ProtonVPN con le ultime e più veloci tecnologie VPN disponibili!";

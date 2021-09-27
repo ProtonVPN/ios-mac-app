@@ -165,6 +165,12 @@ class CountriesSectionViewController: NSViewController {
             button?.toolTip = presenter.title
             button?.callback = { _ in self.didTapSettingButton(index) }
             button?.detailOpened = false
+            presenter.dismiss = {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                    button?.detailOpened = false
+                    container?.isHidden = true
+                }
+            }
             self.addChild(vc)
         }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
@@ -326,9 +332,7 @@ extension CountriesSectionViewController: CountriesSettingsDelegate {
         killSwitchBtn.switchState(killSwitch ? #imageLiteral(resourceName: "qs_killswitch_on") : #imageLiteral(resourceName: "qs_killswitch_off"), enabled: killSwitch)
         netShieldBtn.switchState(netshield == .off ? #imageLiteral(resourceName: "qs_netshield_off") : ( netshield == .level1 ? #imageLiteral(resourceName: "qs_netshield_level1") : #imageLiteral(resourceName: "qs_netshield_level2") ), enabled: netshield != .off)
         children
-            .map { $0 as? QuickSettingsDetailViewControllerProtocol }
-            .filter { $0 != nil }
-            .map { $0! }
+            .compactMap { $0 as? QuickSettingsDetailViewControllerProtocol }
             .forEach { $0.reloadOptions() }
     }
 }
