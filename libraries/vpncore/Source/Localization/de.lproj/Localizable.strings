@@ -1637,19 +1637,22 @@
 "_sysex_settings_title" = "Systemerweiterung erforderlich";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Manuelle Konfiguration starten";
+"_sysex_wizard_button" = "Konfiguration starten";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Klicken Sie auf die Schaltfläche \"Sicherheitseinstellungen öffnen\" in den folgenden Dialogfeldern (2)";
+"_sysex_wizard_step1_description" = "Klicken Sie auf „Konfiguration starten”. Es werden zwei Dialogfenster geöffnet. Klicken Sie dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ können Sie auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Klicken Sie auf die Schaltfläche „Sicherheitseinstellungen öffnen” in folgendem Dialogfeld";
+"_sysex_wizard_step1_description_1" = "Klicken Sie auf „Konfiguration starten”. Es wird ein Dialog angezeigt. Klicken Sie dort auf „Sicherheitseinstellungen öffnen”.\nAlternativ können Sie auch hier klicken, um die entsprechenden Einstellungen zu öffnen.";
+
+/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
+"_sysex_wizard_step1_description_link" = "hier";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Warnmeldungen „Systemerweiterung gesperrt” (x2)";
+"_sysex_wizard_step1_title" = "Sicherheitseinstellungen öffnen";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Meldung „Systemerweiterung gesperrt”";
+"_sysex_wizard_step1_title_1" = "Sicherheitseinstellungen öffnen";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Klicken Sie auf das Schloss, um Änderungen vorzunehmen";
@@ -1682,7 +1685,7 @@
 "_sysex_wizard_step5_title" = "ProtonVPN-Elemente auswählen";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Dazu müssen Sie eine schnelle manuelle Konfiguration in der folgenden Reihenfolge vornehmen:";
+"_sysex_wizard_subtitle" = "Gehen Sie dazu wie folgt vor:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Sie sind jetzt gerüstet, um ProtonVPN mit den neuesten und schnellsten verfügbaren VPN-Technologien zu nutzen!";
