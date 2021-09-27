@@ -109,6 +109,13 @@ class CountriesSectionViewController: NSViewController {
         didDisplayQuickSetting(.secureCoreDisplay, appear: false)
     }
     
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        netShieldBtn.applyTrackingArea()
+        secureCoreBtn.applyTrackingArea()
+        killSwitchBtn.applyTrackingArea()
+    }
+    
     private func setupView() {
         view.wantsLayer = true
         view.layer?.backgroundColor = NSColor.protonGrey().cgColor
