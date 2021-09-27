@@ -28,6 +28,7 @@ public protocol ServerManager: AnyObject {
     var servers: [ServerModel] { get }
     
     func grouping(for type: ServerType) -> [CountryGroup]
+    func grouping(for type: ServerType, query: String?) -> [CountryGroup]
     static func instance(forTier tier: Int, serverStorage: ServerStorage) -> ServerManager
 }
 
@@ -87,6 +88,24 @@ public class ServerManagerImplementation: ServerManager {
     
     public func grouping(for type: ServerType) -> [CountryGroup] {
         return sortedGroups[type] ?? [CountryGroup]()
+    }
+    
+    public func grouping(for type: ServerType, query: String?) -> [CountryGroup] {
+        let group = grouping(for: type)
+        guard let query = query, !query.isEmpty else { return group }
+        return group.compactMap { (country, servers) in
+            if country.matches(searchQuery: query) {
+                return (country, servers)
+            }
+            
+            let filteredServers = servers.filter { $0.matches(searchQuery: query) }
+            
+            if filteredServers.isEmpty {
+                return nil
+            }
+            
+            return (country, filteredServers)
+        }
     }
     
     // MARK: - Private functions

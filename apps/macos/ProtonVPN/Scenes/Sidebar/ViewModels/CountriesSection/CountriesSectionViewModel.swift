@@ -66,8 +66,10 @@ class CountriesSectionViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let vpnKeychain: VpnKeychainProtocol
     private var expandedCountries: Set<String> = []
+    private var currentQuery: String?
     
     weak var delegate: CountriesSettingsDelegate?
+
     var contentChanged: ((ContentChange) -> Void)?
     var secureCoreChange: ((Bool) -> Void)?
     var displayStreamingServices: ((String, [VpnStreamingOption], PropertiesManagerProtocol) -> Void)?
@@ -145,7 +147,7 @@ class CountriesSectionViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: type(of: propertiesManager).vpnProtocolNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDataOnChange), name: serverManager.contentChanged, object: nil)
-        updateState(nil)
+        updateState()
     }
         
     func displayUpgradeMessage( _ serverModel: ServerModel? ) {
@@ -177,7 +179,8 @@ class CountriesSectionViewModel {
     func filterContent(forQuery query: String) {
         let pastCount = totalRowCount
         expandedCountries.removeAll()
-        updateState(query)
+        currentQuery = query
+        updateState()
         let newCount = totalRowCount
         let contentChange = ContentChange(insertedRows: IndexSet(integersIn: 0..<newCount), removedRows: IndexSet(integersIn: 0..<pastCount))
         contentChanged?(contentChange)
@@ -262,14 +265,14 @@ class CountriesSectionViewModel {
     
     @objc private func reloadDataOnChange() {
         expandedCountries = []
-        updateState(nil)
+        updateState()
         let contentChange = ContentChange(reset: true)
         self.contentChanged?(contentChange)
     }
 
     private func updateSecureCoreState() {
         expandedCountries = []
-        updateState(nil)
+        updateState()
         let contentChange = ContentChange(reset: true)
         self.contentChanged?(contentChange)
         self.secureCoreChange?(propertiesManager.secureCoreToggle)
@@ -318,11 +321,11 @@ class CountriesSectionViewModel {
         return data.count
     }
     
-    private func updateState( _ filter: String? ) {
+    private func updateState() {
         setTier()
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
         self.countries = serverManager.grouping(for: serverType)
-        if let query = filter, !query.isEmpty {
+        if let query = currentQuery, !query.isEmpty {
             countries = countries.filter { $0.0.matches(searchQuery: query) }
         }
         data = groupServersIntoSections(self.countries.filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
