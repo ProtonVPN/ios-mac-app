@@ -24,6 +24,8 @@ import Cocoa
 
 class QuickSettingButton: NSButton {
     
+    private var hovered = false
+    
     var detailOpened: Bool = false {
         didSet {
             if detailOpened {
@@ -46,18 +48,13 @@ class QuickSettingButton: NSButton {
         
     }
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        applyTrackingArea()
-    }
-    
     override func updateLayer() {
         layer?.shadowRadius = 3
         layer?.cornerRadius = 3
         layer?.masksToBounds = false
         layer?.shadowOffset = CGSize(width: 0, height: 2)
         layer?.shadowOpacity = currentStyle.shadow ? 1 : 0
-        layer?.backgroundColor = currentStyle.color
+        layer?.backgroundColor = hovered ? currentStyle.hoveredColor : currentStyle.color
     }
     
     override func mouseDown(with event: NSEvent) {
@@ -72,9 +69,7 @@ class QuickSettingButton: NSButton {
         self.image = image.colored( enabled ? .protonGreen() : .protonWhite() )
     }
     
-    // MARK: - Private
-    
-    private func applyTrackingArea() {
+    func applyTrackingArea() {
         let trackingArea = NSTrackingArea(rect: bounds, options: [
                                         NSTrackingArea.Options.mouseEnteredAndExited,
                                         NSTrackingArea.Options.mouseMoved,
@@ -109,6 +104,13 @@ class QuickSettingButton: NSButton {
             }
         }
         
+        var hoveredColor: CGColor {
+            switch self {
+            case .enabled: return NSColor.protonHoverEnabled().cgColor
+            case .disabled: return NSColor.protonHoverDisabled().cgColor
+            }
+        }
+        
         var shadow: Bool {
             switch self {
             case .enabled: return false
@@ -120,10 +122,14 @@ class QuickSettingButton: NSButton {
     // MARK: - Mouse
     
     override func mouseMoved(with event: NSEvent) {
+        hovered = true
         addCursorRect(bounds, cursor: .pointingHand)
+        layer?.backgroundColor = currentStyle.hoveredColor
     }
     
     override func mouseExited(with event: NSEvent) {
+        hovered = false
         removeCursorRect(bounds, cursor: .pointingHand)
+        layer?.backgroundColor = currentStyle.color
     }
 }
