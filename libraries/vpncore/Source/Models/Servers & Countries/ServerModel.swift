@@ -137,7 +137,25 @@ public class ServerModel: NSObject, NSCoding, Codable {
     }
     
     public func matches(searchQuery: String) -> Bool {
-        return country.lowercased().contains(searchQuery) || (self.isSecureCore ? self.entryCountry.contains(searchQuery) : false)
+        let query = searchQuery.lowercased()
+        
+        if isSecureCore {
+            return self.entryCountry.lowercased().contains(query)
+        }
+        
+        if name.lowercased().contains(query) {
+            return true
+        }
+        
+        if country.lowercased().contains(query) {
+            return true
+        }
+        
+        if let city = self.city, city.lowercased().contains(query) {
+            return true
+        }
+        
+        return false
     }
     
     private func setupIps(fromArray array: [JSONDictionary]) throws {
