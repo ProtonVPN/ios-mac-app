@@ -324,7 +324,7 @@ class CountriesSectionViewModel {
     private func updateState() {
         setTier()
         let serverType: ServerType = isSecureCoreEnabled ? .secureCore : .standard
-        self.countries = serverManager.grouping(for: serverType, query: currentQuery)
+        self.countries = serverManager.grouping(for: serverType, query: currentQuery) 
         data = groupServersIntoSections(self.countries.filter(onlyWireguardServersAndCountries: propertiesManager.showOnlyWireguardServersAndCountries), serverType: serverType)
         setupServers()
     }

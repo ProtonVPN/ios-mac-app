@@ -24,9 +24,7 @@ import Cocoa
 import vpncore
 
 class QuickSettingsDropdownOption: NSView {
-    
-    var selectedColor: NSColor = .protonGreen()
-    
+        
     @IBOutlet weak var titleLabel: NSTextField!
     @IBOutlet weak var containerView: NSView!
     @IBOutlet weak var optionIconIV: NSImageView!
@@ -35,6 +33,8 @@ class QuickSettingsDropdownOption: NSView {
     @IBOutlet var plusAndTitleConstraint: NSLayoutConstraint!
     
     var action: SuccessCallback?
+    
+    private var state: State = .blocked
     
     @IBAction func didTapActionBtn(_ sender: Any) {
         action?()
@@ -58,40 +58,67 @@ class QuickSettingsDropdownOption: NSView {
     
     // MARK: - Styles
     
+    private enum State {
+        case selected
+        case unselected
+        case blocked
+        
+        var color: CGColor {
+            switch self {
+            case .selected: return NSColor.protonDarkBlueButton().cgColor
+            case .unselected, .blocked: return NSColor.protonGrey().cgColor
+            }
+        }
+        
+        var hoveredColor: CGColor {
+            switch self {
+            case .selected: return NSColor.protonHoverEnabled().cgColor
+            case .unselected: return NSColor.protonHoverDisabled().cgColor
+            case .blocked: return NSColor.protonGrey().cgColor
+            }
+        }
+        
+        var labelColor: NSColor {
+            switch self {
+            case .selected: return .protonGreen()
+            case .unselected: return .white
+            case .blocked: return .protonGreyUnselectedWhite()
+            }
+        }
+    }
+    
     func selectedStyle() {
+        state = .selected
         containerView.shadow = nil
-        containerView.layer?.backgroundColor = NSColor.protonDarkBlueButton().cgColor
-        optionIconIV.image = optionIconIV.image?.colored(selectedColor)
-        titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
-            withColor: selectedColor,
-            fontSize: 14,
-            alignment: .left)
+        applyState()
     }
     
     func disabledStyle() {
-        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
+        state = .unselected
         applyShadow()
-        optionIconIV.image = optionIconIV.image?.colored(.protonWhite())
-        titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
-            withColor: .protonWhite(),
-            fontSize: 14,
-            alignment: .left)
+        applyState()
+
     }
     
     func blockedStyle() {
-        containerView.layer?.backgroundColor = NSColor.protonGrey().cgColor
-        applyShadow()
-        
+        state = .blocked
         plusBox.isHidden = false
         plusAndTitleConstraint.isActive = true
-        optionIconIV.image = optionIconIV.image?.colored(.protonGreyUnselectedWhite())
-        titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
-            withColor: .protonGreyUnselectedWhite(),
-            fontSize: 14,
-            alignment: .left)
+        applyShadow()
+        applyState()
+
     }
     
     // MARK: - Private
+    
+    private func applyState() {
+        containerView.layer?.backgroundColor = state.color
+        optionIconIV.image = optionIconIV.image?.colored(state.labelColor)
+        titleLabel.attributedStringValue = titleLabel.stringValue.attributed(
+            withColor: state.labelColor,
+            fontSize: 14,
+            alignment: .left)
+    }
     
     private func applyShadow() {
         let addShadow = NSShadow()
@@ -114,9 +141,11 @@ class QuickSettingsDropdownOption: NSView {
     
     override func mouseMoved(with event: NSEvent) {
         addCursorRect(bounds, cursor: .pointingHand)
+        containerView.layer?.backgroundColor = state.hoveredColor
     }
     
     override func mouseExited(with event: NSEvent) {
         removeCursorRect(bounds, cursor: .pointingHand)
+        containerView.layer?.backgroundColor = state.color
     }
 }

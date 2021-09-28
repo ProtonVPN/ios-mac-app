@@ -68,7 +68,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         let active = propertiesManager.killSwitch
         let text = LocalizedString.killSwitch + " " + LocalizedString.switchSideButtonOff.capitalized
         let icon = #imageLiteral(resourceName: "qs_killswitch_off")
-        return QuickSettingGenericOption(text, icon: icon, selectedColor: .protonWhite(), active: !active, selectCallback: {
+        return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
             if self.vpnGateway.connection == .connected {
                 self.vpnGateway.retryConnection()
