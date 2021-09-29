@@ -24,7 +24,7 @@ import UIKit
 
 class BadgedBarButtonItem: UIBarButtonItem {
     
-    public var badgeColor: UIColor = .protonGreen()
+    public var badgeColor: UIColor = .brandColor()
     public var showBadge: Bool = false {
         didSet {
             badgeView.isHidden = !showBadge

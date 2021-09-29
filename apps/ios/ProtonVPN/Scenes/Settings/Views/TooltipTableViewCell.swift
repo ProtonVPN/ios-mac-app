@@ -29,11 +29,11 @@ class TooltipTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonDarkGrey()
-        tooltipLabel.textColor = UIColor.protonFontHeader()
-        tooltipLabel.tintColor = .protonGreen()
+        backgroundColor = .backgroundColor()
+        tooltipLabel.textColor = UIColor.weakTextColor()
+        tooltipLabel.tintColor = .brandColor()
         tooltipLabel.linkTextAttributes = [
-            .foregroundColor: UIColor.protonGreen(),
+            .foregroundColor: UIColor.brandColor(),
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
         
@@ -46,7 +46,7 @@ class TooltipTableViewCell: UITableViewCell {
     }
     
     static func attributedText(for text: String) -> NSAttributedString {
-        return text.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)
+        return text.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)
     }
     
 }

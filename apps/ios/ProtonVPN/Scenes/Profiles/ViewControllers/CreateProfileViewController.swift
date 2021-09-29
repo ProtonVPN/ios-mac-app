@@ -77,8 +77,8 @@ class CreateProfileViewController: UITableViewController {
     private func setupTableView() {
         updateTableView()
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = .normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
     

@@ -48,15 +48,15 @@ final class VpnProtocolViewController: UIViewController {
     
     private func setupView() {
         navigationItem.title = LocalizedString.vpnProtocol
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.backgroundColor = .backgroundColor()
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func setupTableView() {
         updateTableView()
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = .normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
     

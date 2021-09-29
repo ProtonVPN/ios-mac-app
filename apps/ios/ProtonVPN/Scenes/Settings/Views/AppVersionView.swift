@@ -28,8 +28,8 @@ class AppVersionView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonDarkGrey()
-        appVersionLabel.textColor = .protonFontDark()
+        backgroundColor = .backgroundColor()
+        appVersionLabel.textColor = .weakTextColor()
         
     }
 

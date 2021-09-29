@@ -69,7 +69,7 @@ class ServerItemViewModel {
         return !isUsersTierTooLow && !underMaintenance
     }
     
-    let backgroundColor = UIColor.protonGrey()
+    let backgroundColor = UIColor.backgroundColor()
     
     fileprivate(set) var isCountryConnected: Bool = false
     var connectionChanged: (() -> Void)?
@@ -89,11 +89,11 @@ class ServerItemViewModel {
     
     var loadColor: UIColor {
         if serverModel.load > 90 {
-            return .protonRed()
+            return .notificationErrorColor()
         } else if serverModel.load > 75 {
-            return .protonYellow()
+            return .notificationWarningColor()
         } else {
-            return .protonGreen()
+            return .notificationOKColor()
         }
     }
 

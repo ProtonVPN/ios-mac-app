@@ -39,7 +39,7 @@ class CountryViewController: UIViewController {
     }
     
     private func setupView() {
-        view.layer.backgroundColor = UIColor.protonDarkGrey().cgColor
+        view.layer.backgroundColor = UIColor.secondaryBackgroundColor().cgColor
         self.title = viewModel?.countryName
     }
     
@@ -55,8 +55,8 @@ class CountryViewController: UIViewController {
         
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? 61
-        tableView.separatorColor = UIColor.protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = UIColor.normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.register(ServerViewCell.nib, forCellReuseIdentifier: ServerViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }

@@ -103,19 +103,19 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     var outlineColor: UIColor {
         if requiresUpgrade || underMaintenance {
-            return .protonMapGrey()
+            return .weakInteractionColor()
         } else if connectedUiState {
-            return .protonConnectGreen()
+            return .brandColor()
         } else {
-            return .protonWhite()
+            return .normalTextColor()
         }
     }
     
     var labelColor: UIColor {
         if connectedUiState {
-            return UIColor.protonConnectGreen().withAlphaComponent(0.75)
+            return UIColor.brandColor().withAlphaComponent(0.75)
         } else {
-            return UIColor.protonMapGrey().withAlphaComponent(0.75)
+            return UIColor.weakInteractionColor().withAlphaComponent(0.75)
         }
     }
     
@@ -134,9 +134,9 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     var connectIconTint: UIColor {
         if connectedUiState {
-            return .protonConnectGreen()
+            return .brandColor()
         } else {
-            return .protonWhite()
+            return .normalTextColor()
         }
     }
     
@@ -213,7 +213,7 @@ class CountryAnnotationViewModel: AnnotationViewModel {
     
     private func formDescription() -> NSAttributedString {
         let country = LocalizationUtility.default.countryName(forCode: countryCode) ?? LocalizedString.unavailable
-        return country.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return country.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
     }
     
     @objc fileprivate func stateChanged() {

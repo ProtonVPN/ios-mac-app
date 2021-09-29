@@ -64,7 +64,7 @@ class NetshieldSelectionViewModel {
     var tableViewData: [TableViewSection] {
         let cells: [TableViewCellModel] = NetShieldType.allCases.map { type in
             if type.isUserTierTooLow(userTier) {
-                return .attributedKeyValue(key: type.name.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+                return .attributedKeyValue(key: type.name.attributed(withColor: .normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
                     self?.planService.presentPlanSelection()
                 })
             }
@@ -73,7 +73,7 @@ class NetshieldSelectionViewModel {
                 return true
             })
         }
-        return [TableViewSection(title: "", cells: cells)]
+        return [TableViewSection(title: "", showHeader: false, cells: cells)]
     }
  
     private func userSelected(type: NetShieldType) {

@@ -59,13 +59,13 @@ class TroubleshootViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .protonGrey()
-        tableView.backgroundColor = .protonGrey()
+        view.backgroundColor = .backgroundColor()
+        tableView.backgroundColor = .backgroundColor()
         
-        headerView.backgroundColor = .protonLightGrey()
-        titleLabel.attributedText = LocalizedString.troubleshootTitle.attributed(withColor: .protonWhite(), fontSize: 24)
+        headerView.backgroundColor = .secondaryBackgroundColor()
+        titleLabel.attributedText = LocalizedString.troubleshootTitle.attributed(withColor: .normalTextColor(), fontSize: 24)
         closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = .protonWhite()
+        closeButton.tintColor = .normalTextColor()
     }
     
     // MARK: User actions

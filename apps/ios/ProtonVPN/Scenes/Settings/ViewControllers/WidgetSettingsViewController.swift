@@ -55,8 +55,8 @@ class WidgetSettingsViewController: UIViewController {
     
     private func setupView() {
         navigationItem.title = LocalizedString.widget
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.backgroundColor = .backgroundColor()
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func setupTableView() {
@@ -64,8 +64,8 @@ class WidgetSettingsViewController: UIViewController {
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = .normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
 }

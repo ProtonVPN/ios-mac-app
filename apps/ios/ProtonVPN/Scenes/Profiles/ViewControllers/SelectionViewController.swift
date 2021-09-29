@@ -69,10 +69,10 @@ class SelectionViewController: UIViewController {
         tableView.delegate = self
         
         tableView.cellLayoutMarginsFollowReadableWidth = true
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.backgroundColor = .backgroundColor()
         tableView.rowHeight = UIConstants.cellHeight
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = .protonBlack()
+        tableView.separatorColor = .normalSeparatorColor()
         tableView.register(SelectionTableViewCell.nib, forCellReuseIdentifier: SelectionTableViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }

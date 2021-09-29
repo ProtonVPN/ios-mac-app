@@ -70,15 +70,14 @@ class StatusViewController: UIViewController {
     func setupView() {
         navigationItem.title = LocalizedString.status
         
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonDarkGrey().cgColor
+        view.backgroundColor = .backgroundColor()
     }
     
     private func setupTableView() {
         updateTableView()
         
-        tableView?.separatorColor = .protonBlack()
-        tableView?.backgroundColor = UIColor.protonDarkGrey()
+        tableView?.separatorColor = .normalSeparatorColor()
+        tableView?.backgroundColor = UIColor.backgroundColor()
         tableView?.cellLayoutMarginsFollowReadableWidth = true
     }
     

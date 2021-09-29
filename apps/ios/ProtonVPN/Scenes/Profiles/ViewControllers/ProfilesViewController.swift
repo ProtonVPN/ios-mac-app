@@ -71,8 +71,8 @@ class ProfilesViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(createProfile))
         renderEditButton()
         
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.backgroundColor = .backgroundColor()
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func renderEditButton() {
@@ -94,9 +94,9 @@ class ProfilesViewController: UIViewController {
 
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? UIConstants.cellHeight
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.backgroundColor = .backgroundColor()
         tableView.allowsSelectionDuringEditing = true
-        tableView.separatorColor = .protonBlack()
+        tableView.separatorColor = .clear
         tableView.register(CreateProfileTableViewCell.nib, forCellReuseIdentifier: CreateProfileTableViewCell.identifier)
         tableView.register(DefaultProfileTableViewCell.nib, forCellReuseIdentifier: DefaultProfileTableViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)

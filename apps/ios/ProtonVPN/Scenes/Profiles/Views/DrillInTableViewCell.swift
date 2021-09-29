@@ -30,9 +30,9 @@ class DrillInTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        keyLabel.textColor = .protonWhite()
-        valueLabel.textColor = .protonFontLightGrey()
+        backgroundColor = .secondaryBackgroundColor()
+        keyLabel.textColor = .normalTextColor()
+        valueLabel.textColor = .weakTextColor()
         selectionStyle = .none
     }
     

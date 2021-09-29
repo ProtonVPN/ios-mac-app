@@ -89,7 +89,7 @@ extension AnnotationViewModel {
     }
     
     var labelString: NSAttributedString {
-        return (LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .protonWhite(), fontSize: 18, alignment: .center)
+        return (LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
     
     var labelHeight: CGFloat {

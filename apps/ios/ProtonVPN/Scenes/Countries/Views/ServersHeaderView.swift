@@ -44,7 +44,8 @@ class ServersHeaderView: UITableViewHeaderFooterView {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        colorView.backgroundColor = .protonDarkGrey()
+        colorView.backgroundColor = .backgroundColor()
+        serversName.textColor = .weakTextColor()
     }
 
     @IBAction private func didTapInfoBtn(_ sender: Any) {
