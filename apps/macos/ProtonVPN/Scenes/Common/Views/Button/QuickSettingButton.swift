@@ -25,6 +25,7 @@ import Cocoa
 class QuickSettingButton: NSButton {
     
     private var hovered = false
+    private var trackingArea: NSTrackingArea?
     
     var detailOpened: Bool = false {
         didSet {
@@ -69,14 +70,15 @@ class QuickSettingButton: NSButton {
         self.image = image.colored( enabled ? .protonGreen() : .protonWhite() )
     }
     
-    func applyTrackingArea() {
-        let trackingArea = NSTrackingArea(rect: bounds, options: [
+    override func layoutSubtreeIfNeeded() {
+        if let area = self.trackingArea { removeTrackingArea(area) }
+        trackingArea = NSTrackingArea(rect: bounds, options: [
                                         NSTrackingArea.Options.mouseEnteredAndExited,
                                         NSTrackingArea.Options.mouseMoved,
                                         NSTrackingArea.Options.activeInKeyWindow],
                                           owner: self,
                                           userInfo: nil)
-        addTrackingArea(trackingArea)
+        addTrackingArea(trackingArea!)
     }
     
     // MARK: - Styles

@@ -109,11 +109,10 @@ class CountriesSectionViewController: NSViewController {
         didDisplayQuickSetting(.secureCoreDisplay, appear: false)
     }
     
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        netShieldBtn.applyTrackingArea()
-        secureCoreBtn.applyTrackingArea()
-        killSwitchBtn.applyTrackingArea()
+    override func viewDidLayout() {
+        netShieldBtn.layoutSubtreeIfNeeded()
+        secureCoreBtn.layoutSubtreeIfNeeded()
+        killSwitchBtn.layoutSubtreeIfNeeded()
     }
     
     private func setupView() {
@@ -179,7 +178,7 @@ class CountriesSectionViewController: NSViewController {
                 }
             }
             self.addChild(vc)
-        }
+          }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
     }
