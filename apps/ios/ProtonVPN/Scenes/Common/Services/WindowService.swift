@@ -71,27 +71,27 @@ class WindowServiceImplementation: WindowService {
     }
     
     func setupAppearance() {
-        window.tintColor = .protonGreen()
+        window.tintColor = .brandColor()
         
-        UINavigationBar.appearance().barTintColor = .protonLightGrey()
-        UINavigationBar.appearance().tintColor = .protonWhite()
-        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.protonWhite()]
+        UINavigationBar.appearance().barTintColor = .backgroundColor()
+        UINavigationBar.appearance().tintColor = .normalTextColor()
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()]
         UINavigationBar.appearance().isTranslucent = false
         
-        UITabBar.appearance().backgroundColor = .protonGreen()
-        UITabBar.appearance().barTintColor = .protonLightGrey()
-        UITabBar.appearance().tintColor = .protonWhite()
+        UITabBar.appearance().backgroundColor = .brandColor()
+        UITabBar.appearance().barTintColor = .secondaryBackgroundColor()
+        UITabBar.appearance().tintColor = .normalTextColor()
         UITabBar.appearance().isTranslucent = false
         
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.protonWhite()], for: .selected)
-        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.protonUnavailableGrey()], for: .normal)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.normalTextColor()], for: .selected)
+        UITabBarItem.appearance().setTitleTextAttributes([NSAttributedString.Key.foregroundColor: UIColor.weakTextColor()], for: .normal)
         
-        UIPageControl.appearance().pageIndicatorTintColor = UIColor.protonLightGrey()
-        UIPageControl.appearance().currentPageIndicatorTintColor = .protonGreen()
+        UIPageControl.appearance().pageIndicatorTintColor = UIColor.secondaryBackgroundColor()
+        UIPageControl.appearance().currentPageIndicatorTintColor = .brandColor()
         
-        GSMessage.successBackgroundColor = UIColor.protonGreen()
-        GSMessage.warningBackgroundColor = UIColor.protonYellow()
-        GSMessage.errorBackgroundColor = UIColor.protonRed()
+        GSMessage.successBackgroundColor = UIColor.brandColor()
+        GSMessage.warningBackgroundColor = UIColor.notificationWarningColor()
+        GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()
     }
     
     // MARK: - Presentation
@@ -151,7 +151,7 @@ class WindowServiceImplementation: WindowService {
         if let rootViewController = window.rootViewController {
             if let topViewController = rootViewController.presentedViewController {
                 let hider = LogoWithMapView.loadViewFromNib() as LogoWithMapView
-                hider.backgroundColor = .protonBlack()
+                hider.backgroundColor = .backgroundColor()
                 rootViewController.view.addFillingSubview(hider)
                 
                 topViewController.dismiss(animated: true) {

@@ -42,7 +42,7 @@ class FeatureTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        backgroundColor = .protonWidgetBackground
+        backgroundColor = .backgroundColor()
     }
     
     var viewModel: FeatureCellViewModel! {
@@ -56,11 +56,11 @@ class FeatureTableViewCell: UITableViewCell {
                 loadView.isHidden = false
                 loadViewHeightConstraint.constant = 32
                 loadLowLbl.text = LocalizedString.performanceLoadLow
-                loadLowView.backgroundColor = .protonGreen()
+                loadLowView.backgroundColor = .notificationOKColor()
                 loadMediumLbl.text = LocalizedString.performanceLoadMedium
-                loadMediumView.backgroundColor = .protonYellow()
+                loadMediumView.backgroundColor = .notificationWarningColor()
                 loadHighLbl.text = LocalizedString.performanceLoadHigh
-                loadHighView.backgroundColor = .protonRed()
+                loadHighView.backgroundColor = .notificationErrorColor()
             } else {
                 loadView.isHidden = true
                 loadViewHeightConstraint.constant = 0

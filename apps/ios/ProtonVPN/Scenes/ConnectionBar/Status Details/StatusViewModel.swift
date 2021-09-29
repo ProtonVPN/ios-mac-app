@@ -120,15 +120,15 @@ class StatusViewModel {
 
         switch appStateManager.displayState {
         case .connected:
-            cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: false)
+            cell = .textWithActivityCell(title: LocalizedString.connectedToVpn(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: false)
         case .connecting:
-            cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+            cell = .textWithActivityCell(title: LocalizedString.connectingTo(connectionCountryString), textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .loadingConnectionInfo:
-            cell = .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .protonWhite(), backgroundColor: .protonGreen(), showActivity: true)
+            cell = .textWithActivityCell(title: LocalizedString.loadingConnectionInfoFor(connectionCountryString), textColor: .normalTextColor(), backgroundColor: .brandColor(), showActivity: true)
         case .disconnecting:
-            cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .protonYellow(), backgroundColor: .protonGrey(), showActivity: true)
+            cell = .textWithActivityCell(title: LocalizedString.disconnecting, textColor: .notificationWarningColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: true)
         case .disconnected:
-            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .protonRed(), backgroundColor: .protonGrey(), showActivity: false)
+            cell = .textWithActivityCell(title: LocalizedString.notConnected, textColor: .notificationErrorColor(), backgroundColor: .secondaryBackgroundColor(), showActivity: false)
         }
         
         return TableViewSection(title: "", showHeader: false, cells: [cell])
@@ -196,11 +196,11 @@ class StatusViewModel {
         let cell: TableViewCellModel
         // same condition as on the Profiles screen to be consistent
         if profileManager.customProfiles.first(where: { $0.connectionRequest(withDefaultNetshield: propertiesManager.netShieldType ?? .off) == vpnGateway?.lastConnectionRequest }) != nil {
-            cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .protonRed(), handler: { [deleteProfile] in
+            cell = .button(title: LocalizedString.deleteProfile, accessibilityIdentifier: "Delete Profile", color: .notificationErrorColor(), handler: { [deleteProfile] in
                 deleteProfile()
             })
         } else {
-            cell = .button(title: LocalizedString.saveAsProfile, accessibilityIdentifier: "Save as Profile", color: .protonWhite(), handler: { [saveAsProfile] in
+            cell = .button(title: LocalizedString.saveAsProfile, accessibilityIdentifier: "Save as Profile", color: .normalTextColor(), handler: { [saveAsProfile] in
                 saveAsProfile()
             })
         }
@@ -333,7 +333,7 @@ class StatusViewModel {
     private var netshieldUnavailableSection: TableViewSection {
         var cells = [TableViewCellModel]()
         
-        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .protonGreen(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
             self?.planUpgradeRequired?()
         }))
         

@@ -91,11 +91,11 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
                 
         guard let productId = plan.storeKitProductId, let price = storeKitManager.priceLabelForProduct(id: productId) else {
             var text = LocalizedString.unavailable
-            var textColor = UIColor.protonFontLightGrey()
+            var textColor = UIColor.weakTextColor()
 
             if [.free, .trial].contains(plan) {
                 text = LocalizedString.free
-                textColor = .protonGreen()
+                textColor = .brandColor()
             }
             view.priceLabel.attributedText = text.attributed(withColor: textColor, fontSize: pricePrimarySize, bold: true, alignment: .center)
             organizeLayout()
@@ -113,7 +113,7 @@ class PlanCardViewPresenterImplementation: PlanCardViewPresenter {
             let textFont = UIFont.systemFont(ofSize: priceSecondarySize)
             priceString.append(LocalizedString.perYearShort)
             view.priceLabel.attributedText = priceString
-                .attributedCurrency(withNumberColor: .protonGreen(), numberFont: numberFont, withTextColor: .protonFontHeader(), textFont: textFont )
+                .attributedCurrency(withNumberColor: .brandColor(), numberFont: numberFont, withTextColor: .weakTextColor(), textFont: textFont )
         } else {
             view.priceLabel.attributedText = NSAttributedString(string: "")
         }

@@ -29,10 +29,10 @@ class SelectionTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        tintColor = .protonWhite()
+        backgroundColor = .secondaryBackgroundColor()
+        tintColor = .normalTextColor()
         
-        nameLabel.textColor = .white
+        nameLabel.textColor = .normalTextColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -66,7 +66,7 @@ final class CountriesViewController: UIViewController {
     
     private func setupView() {
         navigationItem.title = LocalizedString.countries
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func setupConnectionBar() {
@@ -76,10 +76,10 @@ final class CountriesViewController: UIViewController {
     }
     
     private func setupSecureCoreBar() {
-        secureCoreBar.backgroundColor = .protonDarkGrey()
-        secureCoreLabel.textColor = .protonWhite()
+        secureCoreBar.backgroundColor = .backgroundColor()
+        secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = LocalizedString.useSecureCore
-        secureCoreSwitch.onTintColor = .protonConnectGreen()
+        secureCoreSwitch.onTintColor = .brandColor()
         if let viewModel = viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn
@@ -106,7 +106,7 @@ final class CountriesViewController: UIViewController {
         tableView.delegate = self
         tableView.cellLayoutMarginsFollowReadableWidth = true
         tableView.rowHeight = viewModel?.cellHeight ?? 61
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.backgroundColor = .backgroundColor()
         tableView.register(CountryViewCell.nib, forCellReuseIdentifier: CountryViewCell.identifier)
         tableView.register(ServersHeaderView.nib, forHeaderFooterViewReuseIdentifier: ServersHeaderView.identifier)
     }

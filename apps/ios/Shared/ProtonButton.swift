@@ -63,9 +63,9 @@ class ProtonButton: UIButton {
     
     private func setUpView() {
         clipsToBounds = true
-        tintColor = .protonWhite()
+        tintColor = .normalTextColor()
         
-        setTitleColor(.protonWhite(), for: .normal)
+        setTitleColor(.normalTextColor(), for: .normal)
         
         update()
     }
@@ -73,22 +73,21 @@ class ProtonButton: UIButton {
     private func update() {
         switch customState {
         case .primary:
-            backgroundColor = .protonGreen()
+            backgroundColor = .brandColor()
             layer.borderWidth = 0.0
-            setTitleColor(.protonWhite(), for: .normal)
+            setTitleColor(.normalTextColor(), for: .normal)
         case .secondary:
-            backgroundColor = .clear
-            layer.borderWidth = 1.0
-            layer.borderColor = UIColor.protonUnavailableGrey().cgColor
-            setTitleColor(.protonWhite(), for: .normal)
+            backgroundColor = .weakInteractionColor()
+            layer.borderWidth = 0.0
+            setTitleColor(.normalTextColor(), for: .normal)
         case .destructive:
-            backgroundColor = .protonUnavailableGrey()
+            backgroundColor = .weakTextColor()
             layer.borderWidth = 0.0
-            setTitleColor(.protonBlack(), for: .normal)
+            setTitleColor(.normalSeparatorColor(), for: .normal)
         case .disabled:
-            backgroundColor = .protonUnavailableGrey()
+            backgroundColor = .weakTextColor()
             layer.borderWidth = 0.0
-            setTitleColor(.protonWhite(), for: .normal)
+            setTitleColor(.normalTextColor(), for: .normal)
         }
     }
     
@@ -109,7 +108,7 @@ class ProtonButton: UIButton {
     private func createActivityIndicator() -> UIActivityIndicatorView {
         let activityIndicator = UIActivityIndicatorView()
         activityIndicator.hidesWhenStopped = true
-        activityIndicator.color = .protonWhite()
+        activityIndicator.color = .normalTextColor()
         return activityIndicator
     }
     

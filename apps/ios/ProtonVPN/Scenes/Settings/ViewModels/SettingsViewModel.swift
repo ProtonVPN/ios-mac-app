@@ -218,12 +218,12 @@ class SettingsViewModel {
             .staticKeyValue(key: LocalizedString.subscriptionPlan, value: accountPlanName)
         ]
         if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .protonConnectGreen(), handler: { [buySubscriptionAction] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .brandColor(), handler: { [buySubscriptionAction] in
                 buySubscriptionAction()
             }))
         }
         if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .protonConnectGreen(), handler: { [weak self, accountPlan] in
+            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .brandColor(), handler: { [weak self, accountPlan] in
                 self?.manageSubscriptionAction(plan: accountPlan!)
             }))
         }
@@ -280,7 +280,7 @@ class SettingsViewModel {
             self.propertiesManager.alternativeRouting.toggle()
             callback(self.propertiesManager.alternativeRouting)
         })
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.troubleshootItemAltDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.troubleshootItemAltLink1, withUrl: CoreAppConstants.ProtonVpnLinks.alternativeRouting)))
         
         return TableViewSection(title: LocalizedString.securityOptions.uppercased(), cells: cells)
     }
@@ -308,7 +308,7 @@ class SettingsViewModel {
             })
         ]
 
-        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.protonFontLightGrey(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator)))
+        cells.append(.attributedTooltip(text: NSMutableAttributedString(attributedString: LocalizedString.vpnAcceleratorDescription.attributed(withColor: UIColor.weakTextColor(), fontSize: 13)).add(link: LocalizedString.vpnAcceleratorDescriptionAltLink, withUrl: CoreAppConstants.ProtonVpnLinks.vpnAccelerator)))
         
         if #available(iOS 14.2, *) {
             cells.append(.toggle(title: LocalizedString.allowLanTitle, on: propertiesManager.excludeLocalNetworks, enabled: true, handler: self.switchLANCallback()))
@@ -433,10 +433,10 @@ class SettingsViewModel {
     
     private var bottomSection: TableViewSection {
         let cells: [TableViewCellModel] = [
-            .button(title: LocalizedString.reportBug, accessibilityIdentifier: "Report Bug", color: .protonWhite(), handler: { [reportBug] in
+            .button(title: LocalizedString.reportBug, accessibilityIdentifier: "Report Bug", color: .normalTextColor(), handler: { [reportBug] in
                 reportBug()
             }),
-            .button(title: LocalizedString.logOut, accessibilityIdentifier: "Log Out", color: .protonRed(), handler: { [logOut] in
+            .button(title: LocalizedString.logOut, accessibilityIdentifier: "Log Out", color: .notificationErrorColor(), handler: { [logOut] in
                 logOut()
             })
         ]

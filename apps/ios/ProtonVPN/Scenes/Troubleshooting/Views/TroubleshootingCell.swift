@@ -31,8 +31,8 @@ class TroubleshootingCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        titleLabel.textColor = .protonWhite()
+        backgroundColor = .backgroundColor()
+        titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
         
         descriptionLabel.isScrollEnabled = false // Enables auto-height
@@ -42,9 +42,9 @@ class TroubleshootingCell: UITableViewCell {
         
         descriptionLabel.textContainer.lineFragmentPadding = 0
         descriptionLabel.backgroundColor = backgroundColor
-        descriptionLabel.tintColor = .protonGreen()
+        descriptionLabel.tintColor = .brandColor()
         descriptionLabel.linkTextAttributes = [
-            .foregroundColor: UIColor.protonGreen(),
+            .foregroundColor: UIColor.brandColor(),
             .underlineStyle: NSUnderlineStyle.single.rawValue,
         ]
     }
@@ -71,7 +71,7 @@ class TroubleshootingCell: UITableViewCell {
         }
         set {
             let string = NSMutableAttributedString(attributedString: newValue)
-            string.addTextAttributes(withColor: .protonFontLightGrey(), font: UIFont.systemFont(ofSize: 17), alignment: .left)
+            string.addTextAttributes(withColor: .weakTextColor(), font: UIFont.systemFont(ofSize: 17), alignment: .left)
             descriptionLabel.attributedText = string
             descriptionLabel.sizeToFit()
         }

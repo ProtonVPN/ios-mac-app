@@ -42,11 +42,11 @@ class LogsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .protonBlack()
+        view.backgroundColor = .backgroundColor()
         textView.layoutManager.allowsNonContiguousLayout = false
         textView.backgroundColor = .clear
         textView.font = UIFont.systemFont(ofSize: 12)
-        textView.textColor = .protonWhite()
+        textView.textColor = .normalTextColor()
         textView.text = viewModel.logs
         textView.setContentOffset(CGPoint(x: 0, y: textView.contentSize.height), animated: true)
         

@@ -19,35 +19,8 @@
                             <stackView opaque="NO" contentMode="scaleToFill" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="JGL-Z5-wKS">
                                 <rect key="frame" x="0.0" y="44" width="320" height="66"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="XpW-e6-n86">
-                                        <rect key="frame" x="0.0" y="0.0" width="66" height="66"/>
-                                        <subviews>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="pE6-gs-k9n">
-                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
-                                                <constraints>
-                                                    <constraint firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="height" multiplier="69:76" id="icq-9a-DQU"/>
-                                                    <constraint firstAttribute="width" constant="50" id="ofH-qU-pfl"/>
-                                                </constraints>
-                                            </imageView>
-                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xFs-vG-rdO" userLabel="electron" customClass="ElectronViewContainer" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                                <rect key="frame" x="16" y="5.5" width="50" height="55"/>
-                                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <color key="tintColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                            </view>
-                                        </subviews>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="height" secondItem="pE6-gs-k9n" secondAttribute="height" id="4j4-YI-HI7"/>
-                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="centerY" secondItem="pE6-gs-k9n" secondAttribute="centerY" id="CNn-1u-VHJ"/>
-                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="centerX" secondItem="pE6-gs-k9n" secondAttribute="centerX" id="SX8-lS-LSs"/>
-                                            <constraint firstItem="pE6-gs-k9n" firstAttribute="leading" secondItem="XpW-e6-n86" secondAttribute="leading" constant="16" id="Xs0-rU-PIa"/>
-                                            <constraint firstItem="xFs-vG-rdO" firstAttribute="width" secondItem="pE6-gs-k9n" secondAttribute="width" id="kbi-JQ-1as"/>
-                                            <constraint firstItem="pE6-gs-k9n" firstAttribute="centerY" secondItem="XpW-e6-n86" secondAttribute="centerY" id="xDg-Y0-bF0"/>
-                                            <constraint firstAttribute="trailing" secondItem="pE6-gs-k9n" secondAttribute="trailing" id="xDr-Bs-pc7"/>
-                                        </constraints>
-                                    </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y49-sb-fwc">
-                                        <rect key="frame" x="74" y="0.0" width="112.5" height="66"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="112.5" height="66"/>
                                         <subviews>
                                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="8" baselineRelativeArrangement="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qcx-0u-h3u">
                                                 <rect key="frame" x="16" y="8" width="88.5" height="50"/>
@@ -82,10 +55,10 @@
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zN2-ME-QzW" userLabel="Button Container">
-                                        <rect key="frame" x="194.5" y="0.0" width="125.5" height="66"/>
+                                        <rect key="frame" x="120.5" y="0.0" width="199.5" height="66"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" horizontalCompressionResistancePriority="1000" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9mC-03-j2D" customClass="ProtonButton" customModule="Quick_Connect_Widget" customModuleProvider="target">
-                                                <rect key="frame" x="18.5" y="16" width="91" height="34"/>
+                                                <rect key="frame" x="92.5" y="16" width="91" height="34"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="34" id="Y6E-NM-iog"/>
                                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="60" id="fnW-Pj-sDN"/>
@@ -121,11 +94,8 @@
                     <connections>
                         <outlet property="buttonContainerView" destination="zN2-ME-QzW" id="cOb-yT-U3M"/>
                         <outlet property="connectButton" destination="9mC-03-j2D" id="bWQ-9p-Suc"/>
-                        <outlet property="connectionIcon" destination="pE6-gs-k9n" id="xYl-hV-phA"/>
                         <outlet property="connectionLabel" destination="GcN-lo-r42" id="Bn2-Jm-U8w"/>
                         <outlet property="countryLabel" destination="wOd-SV-ui6" id="pRi-Ww-guj"/>
-                        <outlet property="electronContainer" destination="xFs-vG-rdO" id="DRc-l9-FmL"/>
-                        <outlet property="electronContainerView" destination="XpW-e6-n86" id="Icp-nJ-x5y"/>
                         <outlet property="ipLabel" destination="rzr-7N-SlG" id="mX9-JI-qM9"/>
                     </connections>
                 </viewController>
@@ -135,7 +105,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="185" height="202"/>
         <systemColor name="lightTextColor">
             <color white="1" alpha="0.59999999999999998" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

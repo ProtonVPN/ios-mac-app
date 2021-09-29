@@ -172,7 +172,7 @@ final class ProfileItemViewModel {
     
     // MARK: Descriptors
     internal func attributedName(forProfile profile: Profile) -> NSAttributedString {
-        var textColor: UIColor = .protonWhite()
+        var textColor: UIColor = .normalTextColor()
         if case let ProfileIcon.circle(color) = profile.profileIcon {
             textColor = UIColor(rgbHex: color)
         }
@@ -204,24 +204,24 @@ final class ProfileItemViewModel {
     
     private func systemProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .system else {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
         
         let description: NSAttributedString
         switch profile.serverOffering {
         case .fastest:
-            description = LocalizedString.fastestAvailableServer.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.fastestAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .random:
-            description = LocalizedString.randomAvailableServer.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.randomAvailableServer.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         case .custom:
-            description = LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            description = LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
         return description
     }
     
     private func userProfileDescriptor(forProfile profile: Profile) -> NSAttributedString {
         guard profile.profileType == .user else {
-            return LocalizedString.unavailable.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.unavailable.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
         
         let description: NSAttributedString
@@ -238,13 +238,13 @@ final class ProfileItemViewModel {
     
     private func defaultServerDescriptor(_ serverType: ServerType, forCountry countryCode: String?, description: String) -> NSAttributedString {
         guard let countryCode = countryCode else {
-            return description.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         }
         
-        let buffer = "  ".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-        let profileDescription = description.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let buffer = "  ".attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+        let profileDescription = description.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let countryName = LocalizationUtility.default.countryName(forCode: countryCode) ?? ""
-        let attributedCountryName = countryName.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let attributedCountryName = countryName.attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
         
         let description: NSAttributedString
@@ -260,12 +260,12 @@ final class ProfileItemViewModel {
         let doubleArrow = NSAttributedString.imageAttachment(named: "double-arrow-right-white", width: 10, height: 10)!
         
         if serverModel.isSecureCore {
-            let entryCountry = (serverModel.entryCountry + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            let exitCountry = ("  " + serverModel.exitCountry + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let entryCountry = (serverModel.entryCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            let exitCountry = ("  " + serverModel.exitCountry + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(entryCountry, doubleArrow, exitCountry)
         } else {
-            let countryName = (serverModel.country + "  ").attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
-            let serverName = ("  " + serverModel.name).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let countryName = (serverModel.country + "  ").attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
+            let serverName = ("  " + serverModel.name).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(countryName, doubleArrow, serverName)
         }
     }

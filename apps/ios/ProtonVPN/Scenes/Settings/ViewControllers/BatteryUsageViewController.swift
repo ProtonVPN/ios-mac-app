@@ -42,12 +42,12 @@ class BatteryUsageViewController: UIViewController {
     }
 
     private func setupViews() {
-        view.backgroundColor = .protonDarkGrey()
+        view.backgroundColor = .backgroundColor()
         
         descriptionLabel.font = UIFont.systemFont(ofSize: textFontSize)
-        descriptionLabel.textColor = .protonWhite()
+        descriptionLabel.textColor = .normalTextColor()
         
-        moreButton.tintColor = .protonGreen()
+        moreButton.tintColor = .brandColor()
         moreButton.titleLabel?.font = UIFont.systemFont(ofSize: textFontSize)
     }
     

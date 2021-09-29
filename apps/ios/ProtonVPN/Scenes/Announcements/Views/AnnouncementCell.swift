@@ -31,8 +31,8 @@ class AnnouncementCell: UITableViewCell {
         
         var textColor: UIColor {
             switch self {
-            case .read: return .protonWhite()
-            case .unread: return .protonGreen()
+            case .read: return .normalTextColor()
+            case .unread: return .brandColor()
             }
         }
     }
@@ -44,8 +44,8 @@ class AnnouncementCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        titleLabel.textColor = .protonWhite()
+        backgroundColor = .backgroundColor()
+        titleLabel.textColor = .normalTextColor()
         titleLabel.font = UIFont.boldSystemFont(ofSize: 16)
         
     }

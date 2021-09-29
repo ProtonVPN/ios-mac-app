@@ -160,7 +160,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             
             cell.titleLabel.text = title
             cell.textField.text = textFieldText
-            cell.textField.attributedPlaceholder = textFieldPlaceholder.attributed(withColor: .protonFontLightGrey(), fontSize: 17)
+            cell.textField.attributedPlaceholder = textFieldPlaceholder.attributed(withColor: .weakTextColor(), fontSize: 17)
             cell.textField.delegate = delegate
             
             return cell
@@ -185,7 +185,7 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
                 return UITableViewCell()
             }
             cell.label.text = title
-            cell.switchControl.onTintColor = enabled ? .protonConnectGreen() : .protonGreen()
+            cell.switchControl.onTintColor = .brandColor()
             cell.switchControl.isOn = on
             cell.switchControl.isEnabled = enabled
             cell.toggled = handler

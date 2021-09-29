@@ -42,7 +42,7 @@ class ExpandCellButton: HoverDetectionButton {
         
     private func configureButton() {
         wantsLayer = true
-        contentTintColor = .white
+        contentTintColor = .protonWhite()
         layer?.backgroundColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGrey().cgColor
         layer?.borderColor = isHovered && isEnabled ? NSColor.protonGreen().cgColor : NSColor.protonGreyOutOfFocus().cgColor
     }

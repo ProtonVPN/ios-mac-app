@@ -55,6 +55,6 @@ class SecureCoreEntryAnnotation: AnnotationView {
         super.init(frame: frame)
         
         layer.cornerRadius = maxHeight * 0.5
-        backgroundColor = .protonConnectGreen()
+        backgroundColor = .brandColor()
     }
 }

@@ -68,10 +68,10 @@ class AnnouncementsViewController: UIViewController {
     
     private func setupView() {
         title = LocalizedString.newsTitle
-        view.backgroundColor = .protonDarkGrey()
-        tableView.backgroundColor = .protonDarkGrey()
+        view.backgroundColor = .backgroundColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.separatorStyle = .singleLine
-        tableView.separatorColor = UIColor.protonBlack()
+        tableView.separatorColor = UIColor.normalSeparatorColor()
     }
     
     private func refreshView() {

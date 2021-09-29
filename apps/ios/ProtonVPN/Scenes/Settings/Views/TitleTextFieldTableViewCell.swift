@@ -17,12 +17,12 @@ class TitleTextFieldTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
+        backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
-        titleLabel.textColor = .protonWhite()
+        titleLabel.textColor = .normalTextColor()
         
         textField.font = UIFont.systemFont(ofSize: 17)
-        textField.textColor = .protonWhite()
+        textField.textColor = .normalTextColor()
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {

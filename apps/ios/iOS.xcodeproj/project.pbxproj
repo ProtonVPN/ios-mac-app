@@ -260,11 +260,8 @@
 		D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
 		D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */; };
 		D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
-		D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
-		D53E83D5232A11400031CD49 /* ProtonTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53E83D4232A11400031CD49 /* ProtonTextField.xib */; };
 		D53E83D7232A5F4D0031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
 		D53E83E4232B76540031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
-		D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
 		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
 		D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
@@ -792,8 +789,6 @@
 		D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewController.swift; sourceTree = "<group>"; };
 		D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetshieldSelectionViewController.xib; sourceTree = "<group>"; };
 		D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewModel.swift; sourceTree = "<group>"; };
-		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
-		D53E83D4232A11400031CD49 /* ProtonTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProtonTextField.xib; sourceTree = "<group>"; };
 		D53E83D6232A5F4D0031CD49 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		D54D331D264A97CB000BEF04 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Render.swift"; sourceTree = "<group>"; };
@@ -1199,7 +1194,6 @@
 		791C54F0214A75B600C6F337 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D53E83D1232A110E0031CD49 /* Form */,
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
 				D55131762319427900784ED0 /* RoundCheckboxView.swift */,
@@ -1678,15 +1672,6 @@
 				D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */,
 			);
 			path = VPN;
-			sourceTree = "<group>";
-		};
-		D53E83D1232A110E0031CD49 /* Form */ = {
-			isa = PBXGroup;
-			children = (
-				D53E83D2232A11380031CD49 /* ProtonTextField.swift */,
-				D53E83D4232A11400031CD49 /* ProtonTextField.xib */,
-			);
-			path = Form;
 			sourceTree = "<group>";
 		};
 		D550A1A425651B5000FE2D54 /* Extensions */ = {
@@ -2676,7 +2661,6 @@
 				79DEE90D2111E5EA00C354EF /* ServerTypeHeader.xib in Resources */,
 				D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */,
 				D5110856246153500018872A /* SubscriptionInfoController.xib in Resources */,
-				D53E83D5232A11400031CD49 /* ProtonTextField.xib in Resources */,
 				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
@@ -3087,7 +3071,6 @@
 				D5110854246151330018872A /* SubscriptionInfoController.swift in Sources */,
 				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
-				D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */,
 				79848BB220D2012B00EF6F9F /* MapViewModel.swift in Sources */,
 				792B58C22150E278000BB3A3 /* StatusViewModel.swift in Sources */,
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
@@ -3392,7 +3375,6 @@
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
-				D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,

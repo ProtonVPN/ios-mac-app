@@ -40,9 +40,9 @@ class KeyValueTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        keyLabel.textColor = .protonFontLightGrey()
-        valueLabel.textColor = .protonWhite()
+        backgroundColor = .secondaryBackgroundColor()
+        keyLabel.textColor = .weakTextColor()
+        valueLabel.textColor = .normalTextColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
