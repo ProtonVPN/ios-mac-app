@@ -20,20 +20,22 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-class VPNLoadsRequest: VPNBaseRequest {
+final class VPNLoadsRequest: VPNBaseRequest {
     
     let ip: String?
     
-    init( _ ip: String? ) {
+    init(_ ip: String?) {
         self.ip = ip
         super.init()
     }
     
     override func path() -> String {
-        let endpoint = super.path() + "/loads"
-        guard let ip = ip else {
-            return endpoint
-        }
-        return endpoint + "?IP=\(ip)"
+        return super.path() + "/loads"
+    }
+
+    override var header: [String: String]? {
+        var defaultHeader = super.header ?? [:]
+        defaultHeader["x-pm-netzone"] = ip
+        return defaultHeader
     }
 }

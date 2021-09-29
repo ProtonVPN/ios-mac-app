@@ -20,11 +20,11 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-class VPNLogicalServicesRequest: VPNBaseRequest {
+final class VPNLogicalServicesRequest: VPNBaseRequest {
     
     let ip: String?
     
-    init( _ ip: String? ) {
+    init(_ ip: String?) {
         self.ip = ip
         super.init()
     }
@@ -32,10 +32,12 @@ class VPNLogicalServicesRequest: VPNBaseRequest {
     // MARK: - Override
     
     override func path() -> String {
-        let endpoint = super.path() + "/logicals"
-        guard let ip = ip else {
-            return endpoint
-        }
-        return endpoint + "?IP=\(ip)"
+        return super.path() + "/logicals"
+    }
+
+    override var header: [String: String]? {
+        var defaultHeader = super.header ?? [:]
+        defaultHeader["x-pm-netzone"] = ip
+        return defaultHeader
     }
 }
