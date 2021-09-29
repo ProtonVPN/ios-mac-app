@@ -36,8 +36,12 @@ final class VPNLogicalServicesRequest: VPNBaseRequest {
     }
 
     override var header: [String: String]? {
+        guard let netzone = ip else {
+            return super.header
+        }
+
         var defaultHeader = super.header ?? [:]
-        defaultHeader["x-pm-netzone"] = ip
+        defaultHeader["x-pm-netzone"] = netzone
         return defaultHeader
     }
 }
