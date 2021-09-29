@@ -178,7 +178,7 @@ class CountriesSectionViewController: NSViewController {
                 }
             }
             self.addChild(vc)
-          }
+        }
         netShieldBox.isHidden = !viewModel.isNetShieldEnabled
         viewModel.updateSettings()
     }
