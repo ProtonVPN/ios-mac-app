@@ -173,7 +173,7 @@ class CountriesSectionViewController: NSViewController {
             button?.detailOpened = false
             presenter.dismiss = {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    self.didDisplayQuickSetting(.secureCoreDisplay, appear: false)
+                    self.didDisplayQuickSetting(appear: false)
                 }
             }
             self.addChild(vc)
