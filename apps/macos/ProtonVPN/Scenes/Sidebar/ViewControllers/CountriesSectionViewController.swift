@@ -106,7 +106,7 @@ class CountriesSectionViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        didDisplayQuickSetting(.secureCoreDisplay, appear: false)
+        didDisplayQuickSetting(appear: false)
     }
     
     override func viewDidLayout() {
@@ -173,8 +173,7 @@ class CountriesSectionViewController: NSViewController {
             button?.detailOpened = false
             presenter.dismiss = {
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                    button?.detailOpened = false
-                    container?.isHidden = true
+                    self.didDisplayQuickSetting(.secureCoreDisplay, appear: false)
                 }
             }
             self.addChild(vc)
@@ -230,7 +229,7 @@ class CountriesSectionViewController: NSViewController {
         }
     }
     
-    private func didDisplayQuickSetting ( _ quickSettingItem: QuickSettingType, appear: Bool ) {
+    private func didDisplayQuickSetting ( _ quickSettingItem: QuickSettingType? = nil, appear: Bool ) {
         
         let secureCoreDisplay = (quickSettingItem == .secureCoreDisplay) && appear
         let netShieldDisplay = (quickSettingItem == .netShieldDisplay) && appear
