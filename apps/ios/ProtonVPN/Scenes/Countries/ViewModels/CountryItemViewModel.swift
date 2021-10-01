@@ -104,7 +104,7 @@ class CountryItemViewModel {
     }
     
     var smartAvailable: Bool {
-        return false
+        return serverModels.allSatisfy { $0.isVirtual }
     }
     
     var streamingAvailable: Bool {
