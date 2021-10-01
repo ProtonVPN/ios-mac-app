@@ -107,7 +107,7 @@ class ServerItemViewModel {
     }
     
     var smartAvailable: Bool {
-        return false
+        return serverModel.isVirtual
     }
     
     var streamingAvailable: Bool {
