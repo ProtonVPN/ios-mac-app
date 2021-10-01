@@ -70,7 +70,8 @@ class CountryAnnotationViewModelTests: XCTestCase {
             ips: [],
             score: 11,
             status: 2,
-            location: ServerLocation(lat: 1, long: 2)
+            location: ServerLocation(lat: 1, long: 2),
+            hostCountry: nil
             )
         )
         let alamofireWrapper = AlamofireWrapperImplementation()
@@ -99,7 +100,8 @@ class CountryAnnotationViewModelTests: XCTestCase {
             ips: [],
             score: 11,
             status: status,
-            location: ServerLocation(lat: 1, long: 2)
+            location: ServerLocation(lat: 1, long: 2),
+            hostCountry: nil
         )
     }
     

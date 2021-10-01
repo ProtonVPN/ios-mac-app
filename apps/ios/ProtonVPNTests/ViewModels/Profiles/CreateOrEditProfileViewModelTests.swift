@@ -134,7 +134,8 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             ips: [],
             score: 11,
             status: 1,
-            location: ServerLocation(lat: 1, long: 2)
+            location: ServerLocation(lat: 1, long: 2),
+            hostCountry: nil
         )
     }
     
