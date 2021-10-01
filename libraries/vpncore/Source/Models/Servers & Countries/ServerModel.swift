@@ -36,22 +36,24 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public let city: String?
     public var ips: [ServerIp] = []
     public var location: ServerLocation
+    public let hostCountry: String?
     
     override public var description: String {
         return
             "ID: \(id)\n" +
-                "Name: \(name)\n" +
-                "Domain: \(domain)\n" +
-                "Load: \(load)\n" +
-                "EntryCountry: \(entryCountryCode)\n" +
-                "ExitCountry: \(exitCountryCode)\n" +
-                "Tier: \(tier)\n" +
-                "Score: \(score)\n" +
-                "Status: \(status)\n" +
-                "Feature: \(feature)\n" +
-                "City: \(String(describing: city))\n" +
-                "IPs: \(ips)\n" +
-        "Location: \(location)\n"
+            "Name: \(name)\n" +
+            "Domain: \(domain)\n" +
+            "Load: \(load)\n" +
+            "EntryCountry: \(entryCountryCode)\n" +
+            "ExitCountry: \(exitCountryCode)\n" +
+            "Tier: \(tier)\n" +
+            "Score: \(score)\n" +
+            "Status: \(status)\n" +
+            "Feature: \(feature)\n" +
+            "City: \(String(describing: city))\n" +
+            "IPs: \(ips)\n" +
+            "Location: \(location)\n" +
+            "HostCountry: \(String(describing: hostCountry))\n"
     }
     
     public var hasCluster: Bool {
@@ -101,8 +103,16 @@ public class ServerModel: NSObject, NSCoding, Codable {
     public var countryCode: String {
         return self.exitCountryCode
     }
+
+    public var isVirtual: Bool {
+        if let hostCountry = hostCountry, !hostCountry.isEmpty {
+            return true
+        }
+
+        return false
+    }
     
-    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation) {
+    public init(id: String, name: String, domain: String, load: Int, entryCountryCode: String, exitCountryCode: String, tier: Int, feature: ServerFeature, city: String?, ips: [ServerIp], score: Double, status: Int, location: ServerLocation, hostCountry: String?) {
         self.id = id
         self.name = name
         self.domain = domain
@@ -116,6 +126,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.score = score
         self.status = status
         self.location = location
+        self.hostCountry = hostCountry
         super.init()
     }
     
@@ -132,6 +143,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         self.feature = try ServerFeature(rawValue: dic.intOrThrow(key: "Features")) // "Features": 12
         city = dic.string("City") // "City": "Zurich"
         self.location = try ServerLocation(dic: dic.jsonDictionaryOrThrow(key: "Location")) // "Location"
+        hostCountry = dic.string("HostCountry")
         super.init()
         try setupIps(fromArray: try dic.jsonArrayOrThrow(key: "Servers"))
     }
@@ -197,6 +209,7 @@ public class ServerModel: NSObject, NSCoding, Codable {
         case status = "status"
         case features = "features"
         case city = "city"
+        case hostCountry = "hostCountry"
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
@@ -225,7 +238,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   ips: ips,
                   score: aDecoder.decodeDouble(forKey: CoderKey.score.rawValue),
                   status: aDecoder.decodeInteger(forKey: CoderKey.status.rawValue),
-                  location: location)
+                  location: location,
+                  hostCountry: aDecoder.decodeObject(forKey: CoderKey.hostCountry.rawValue) as? String)
     }
     
     public func encode(with aCoder: NSCoder) {
@@ -246,6 +260,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         
         aCoder.encode(ipsData, forKey: CoderKey.ips.rawValue)
         aCoder.encode(locationData, forKey: CoderKey.location.rawValue)
+
+        aCoder.encode(hostCountry, forKey: CoderKey.hostCountry.rawValue)
     }
     
     // MARK: - Codable
@@ -273,7 +289,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
                   ips: ips,
                   score: try container.decode(Double.self, forKey: CoderKey.score),
                   status: try container.decode(Int.self, forKey: CoderKey.status),
-                  location: location)
+                  location: location,
+                  hostCountry: try container.decodeIfPresent(String.self, forKey: CoderKey.hostCountry))
     }
     
     public func encode(to encoder: Encoder) throws {
@@ -296,6 +313,8 @@ public class ServerModel: NSObject, NSCoding, Codable {
         
         try container.encode(ipsData, forKey: .ips)
         try container.encode(locationData, forKey: .location)
+
+        try container.encode(hostCountry, forKey: .hostCountry)
     }
     
     // MARK: - Static functions
