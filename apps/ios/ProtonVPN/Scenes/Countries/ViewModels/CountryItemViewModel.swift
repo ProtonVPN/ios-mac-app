@@ -103,7 +103,7 @@ class CountryItemViewModel {
         return countryModel.feature.contains(.p2p)
     }
     
-    var smartAvailable: Bool {
+    var isSmartAvailable: Bool {
         return serverModels.allSatisfy { $0.isVirtual }
     }
     
