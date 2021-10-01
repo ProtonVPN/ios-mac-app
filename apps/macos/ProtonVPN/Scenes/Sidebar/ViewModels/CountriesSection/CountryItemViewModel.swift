@@ -33,7 +33,7 @@ class CountryItemViewModel {
     
     private let countriesSectionViewModel: CountriesSectionViewModel
         
-    var isSmartAvailable: Bool { false }
+    var isSmartAvailable: Bool { countryGroup.1.allSatisfy({ $0.isVirtual }) }
     var isTorAvailable: Bool { countryModel.feature.contains(.tor) }
     var isP2PAvailable: Bool { countryModel.feature.contains(.p2p) }
     var isStreamingAvailable: Bool {
