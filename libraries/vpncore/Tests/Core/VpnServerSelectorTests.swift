@@ -209,7 +209,7 @@ class VpnServerSelectorTests: XCTestCase {
     // MARK: - Helpers
     
     private func getServerModel(id: String, countryCode: String, tier: Int, score: Double, feature: ServerFeature = .zero, status: Int = 1) -> ServerModel {
-        return ServerModel(id: id, name: "", domain: "", load: 0, entryCountryCode: countryCode, exitCountryCode: countryCode, tier: tier, feature: feature, city: nil, ips: [ServerIp](), score: score, status: status, location: ServerLocation(lat: 0, long: 0))
+        return ServerModel(id: id, name: "", domain: "", load: 0, entryCountryCode: countryCode, exitCountryCode: countryCode, tier: tier, feature: feature, city: nil, ips: [ServerIp](), score: score, status: status, location: ServerLocation(lat: 0, long: 0), hostCountry: nil)
     }
     
 }

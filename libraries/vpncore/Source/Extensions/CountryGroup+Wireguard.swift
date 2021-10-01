@@ -23,7 +23,7 @@ extension Array where Element == CountryGroup {
                 let wireguardIps = server.ips.filter({ $0.supportsWireguard })
 
                 if !wireguardIps.isEmpty {
-                    wireguardServers.append(ServerModel(id: server.id, name: server.name, domain: server.domain, load: server.load, entryCountryCode: server.entryCountryCode, exitCountryCode: server.exitCountryCode, tier: server.tier, feature: server.feature, city: server.city, ips: wireguardIps, score: server.score, status: server.status, location: server.location))
+                    wireguardServers.append(ServerModel(id: server.id, name: server.name, domain: server.domain, load: server.load, entryCountryCode: server.entryCountryCode, exitCountryCode: server.exitCountryCode, tier: server.tier, feature: server.feature, city: server.city, ips: wireguardIps, score: server.score, status: server.status, location: server.location, hostCountry: server.hostCountry))
                 }
             }
 
