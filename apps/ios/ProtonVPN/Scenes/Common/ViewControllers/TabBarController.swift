@@ -51,6 +51,7 @@ class TabBarController: UITabBarController {
     }
 
     func setupView() {
+        view.backgroundColor = .protonLightGrey()
         removeLoginBox()
         if let viewModel = viewModel, viewModel.sessionManager.loggedIn {
             // logged in
