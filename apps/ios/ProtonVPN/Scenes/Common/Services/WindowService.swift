@@ -78,7 +78,7 @@ class WindowServiceImplementation: WindowService {
         UINavigationBar.appearance().titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.protonWhite()]
         UINavigationBar.appearance().isTranslucent = false
         
-        UITabBar.appearance().backgroundColor = .protonGreen()
+        UITabBar.appearance().backgroundColor = .protonLightGrey()
         UITabBar.appearance().barTintColor = .protonLightGrey()
         UITabBar.appearance().tintColor = .protonWhite()
         UITabBar.appearance().isTranslucent = false
