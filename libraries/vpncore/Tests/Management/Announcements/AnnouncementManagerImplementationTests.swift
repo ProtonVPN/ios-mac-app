@@ -33,9 +33,9 @@ class AnnouncementManagerImplementationTests: XCTestCase {
         
         storage.store([
             Announcement(notificationID: "1-no-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: nil),
-            Announcement(notificationID: "2-with-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: "")),
-            Announcement(notificationID: "3-ended", startTime: Date(), endTime: Date(timeIntervalSinceNow: -1), type: 0, offer: Offer(label: "", url: "", icon: "")),
-            Announcement(notificationID: "3-future", startTime: Date(timeIntervalSinceNow: 888), endTime: Date(timeIntervalSinceNow: 8889), type: 0, offer: Offer(label: "", url: "", icon: "")),
+            Announcement(notificationID: "2-with-offer", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: "", panel: nil)),
+            Announcement(notificationID: "3-ended", startTime: Date(), endTime: Date(timeIntervalSinceNow: -1), type: 0, offer: Offer(label: "", url: "", icon: "", panel: nil)),
+            Announcement(notificationID: "3-future", startTime: Date(timeIntervalSinceNow: 888), endTime: Date(timeIntervalSinceNow: 8889), type: 0, offer: Offer(label: "", url: "", icon: "", panel: nil)),
         ])
         
         manager = AnnouncementManagerImplementation(factory: AnnouncementStorageFactoryMock(storage))
