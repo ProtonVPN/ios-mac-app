@@ -36,7 +36,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage = AnnouncementStorageMock()
         manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
         safariService = SafariServiceMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService))
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock()))
         
     }
     
@@ -81,10 +81,12 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
 
     public var announcementManager: AnnouncementManager
     public var safariService: SafariServiceProtocol
+    public var coreAlertService: CoreAlertService
     
-    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol) {
+    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService) {
         self.announcementManager = announcementManager
         self.safariService = safariService
+        self.coreAlertService = coreAlertService
     }
     
     func makeAnnouncementManager() -> AnnouncementManager {
@@ -94,7 +96,10 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
     func makeSafariService() -> SafariServiceProtocol {
         return safariService
     }
-    
+
+    func makeCoreAlertService() -> CoreAlertService {
+        return coreAlertService
+    }
 }
 
 fileprivate class AnnouncementManagerImplementationFactoryMock: AnnouncementManagerImplementation.Factory {
