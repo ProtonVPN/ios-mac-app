@@ -349,10 +349,6 @@
 		D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12D229D337300EA839A /* LoginTests.swift */; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
-		D5BCDCF825304CA9004BAEE8 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */; };
-		D5BCDCF925304CA9004BAEE8 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */; };
-		D5BCDCFA25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */; };
-		D5BCDCFB25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */; };
 		D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
 		D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */; };
 		D5BCDD2B25307681004BAEE8 /* CountryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDD2825307681004BAEE8 /* CountryViewController.swift */; };
@@ -581,6 +577,7 @@
 		F3BBB87A25DD56A300E700B5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB87925DD56A300E700B5 /* Challenge.swift */; };
 		F3BBB8AE25DD6DBE00E700B5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB87925DD56A300E700B5 /* Challenge.swift */; };
 		F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */; };
+		F3E20128270CDDD100FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -921,8 +918,6 @@
 		D5AAA12A229D28E400EA839A /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5AAA12D229D337300EA839A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertService.swift; sourceTree = "<group>"; };
-		D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
-		D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
 		D5BCDD2825307681004BAEE8 /* CountryViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountryViewController.swift; sourceTree = "<group>"; };
 		D5BF95012354817800C7D1E7 /* AlamofireWrapperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlamofireWrapperMock.swift; sourceTree = "<group>"; };
@@ -1140,6 +1135,7 @@
 		F38BB450265C0CF600329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../ios/Config.xcconfig; sourceTree = "<group>"; };
 		F3BBB87925DD56A300E700B5 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMock.swift; sourceTree = "<group>"; };
+		F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		F613F0A928F442C2F592BBB3 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9379B9662554832634B2FF0 /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1949,8 +1945,7 @@
 		D5BCDCF525304C83004BAEE8 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */,
-				D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */,
+				F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2996,7 +2991,6 @@
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
 				7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */,
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
-				D5BCDCFA25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */,
 				D511084724614D480018872A /* PlanAdvancedFeaturesView.xib in Resources */,
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
 				79C559A220AEC73A00E6D3F6 /* CountryViewCell.xib in Resources */,
@@ -3069,7 +3063,6 @@
 				F35D281E270C8B8F00003391 /* AnnouncementDetailViewController.xib in Resources */,
 				E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
 				E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
-				D5BCDCFB25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3436,7 +3429,6 @@
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
-				D5BCDCF825304CA9004BAEE8 /* AnnouncementCell.swift in Sources */,
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				79FF145320C41ECE00BA3623 /* ProfilesViewController.swift in Sources */,
@@ -3553,6 +3545,7 @@
 				793ECF462149045400C186A7 /* AppVersionView.swift in Sources */,
 				79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */,
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
+				F3E20128270CDDD100FA20E1 /* RoundedCornersView.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
 				421B3BD8261B2C2200670A7C /* UserAccountUpdateViewController.swift in Sources */,
@@ -3702,7 +3695,6 @@
 				42066FD4263049C0001F86DB /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */,
 				D5F568A123277F5700795953 /* SignUpCoordinator.swift in Sources */,
-				D5BCDCF925304CA9004BAEE8 /* AnnouncementCell.swift in Sources */,
 				D5BF950A2354A7C800C7D1E7 /* ServicePlanDataServiceMock.swift in Sources */,
 				D5A8813022CE2702009B63D1 /* LogsViewController.swift in Sources */,
 				D5136C5B228592E80002C095 /* ColorPickerViewModel.swift in Sources */,
