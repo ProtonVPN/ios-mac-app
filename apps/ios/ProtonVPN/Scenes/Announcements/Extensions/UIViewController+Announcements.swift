@@ -53,9 +53,7 @@ extension UIViewController {
     
     @IBAction func announcementsButtonTapped() {
         let viewModel = AnnouncementButtonViewModel.shared
-        if let controller = viewModel?.announcementsViewController() {
-            self.navigationController?.pushViewController(controller, animated: true)
-        }
+        viewModel?.showAnnouncement()
     }
     
 }
