@@ -25,18 +25,18 @@ import vpncore
 
 class IosAlertService {
     
-    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & HumanVerificationCoordinatorFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory
+    typealias Factory = UIAlertServiceFactory & AppSessionManagerFactory & HumanVerificationCoordinatorFactory & WindowServiceFactory & SettingsServiceFactory & TroubleshootCoordinatorFactory & SafariServiceFactory
     private let factory: Factory
     
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
     private lazy var windowService: WindowService = factory.makeWindowService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
+    private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     
     init(_ factory: Factory) {
         self.factory = factory
     }
-    
 }
 
 extension IosAlertService: CoreAlertService {
@@ -266,6 +266,9 @@ extension IosAlertService: CoreAlertService {
         let vc = AnnouncementDetailViewController(alert.data)
         vc.cancelled = { [weak self] in
             self?.windowService.dismissModal()
+        }
+        vc.urlRequested = { [weak self] url in
+            self?.safariService.open(url: url)
         }
         windowService.present(modal: vc)
     }
