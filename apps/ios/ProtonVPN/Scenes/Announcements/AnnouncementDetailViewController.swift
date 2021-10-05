@@ -13,6 +13,9 @@ import vpncore
 final class AnnouncementDetailViewController: UIViewController {
 
     @IBOutlet private weak var closeButton: UIButton!
+    @IBOutlet private weak var actionButton: UIButton!
+    @IBOutlet private weak var pageFooterLabel: UILabel!
+    @IBOutlet private weak var footerView: UIView!
 
     var cancelled: (() -> Void)?
 
@@ -31,8 +34,13 @@ final class AnnouncementDetailViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .protonGrey()
+        footerView.backgroundColor = .protonGrey()
         closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
         closeButton.tintColor = .protonWhite()
+
+        pageFooterLabel.textColor = .protonUnavailableGrey()
+        pageFooterLabel.text = data.pageFooter
+        actionButton.setTitle(data.button.text, for: .normal)
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {

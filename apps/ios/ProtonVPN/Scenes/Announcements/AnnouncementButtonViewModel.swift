@@ -37,12 +37,12 @@ class AnnouncementButtonViewModel {
     // Must be pre-set in AppDelegate!
     public static var shared: AnnouncementButtonViewModel!
     
-    public typealias Factory = AnnouncementsServiceFactory & PropertiesManagerFactory & AnnouncementManagerFactory
+    public typealias Factory = PropertiesManagerFactory & AnnouncementManagerFactory & AnnouncementsViewModelFactory
     private let factory: Factory
-    
-    private lazy var announcementsService: AnnouncementsService = factory.makeAnnouncementsService()
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     
     public init(factory: Factory) {
         self.factory = factory
@@ -60,8 +60,18 @@ class AnnouncementButtonViewModel {
     public var hasUnreadAnnouncements: Bool {
         return announcementManager.hasUnreadAnnouncements
     }
-    
-    func announcementsViewController() -> AnnouncementsViewController {
-        return announcementsService.makeAnnouncementsViewController()
+
+    public func showAnnouncement() {
+        let sorted = announcementsViewModel.items.sorted(by: { (lhs, rhs) -> Bool in
+            if let lhsRead = lhs.isRead {
+                return !lhsRead
+            }
+            return false
+        })
+        guard let best = sorted.first else {
+            return
+        }
+
+        announcementsViewModel.open(announcement: best)
     }
 }

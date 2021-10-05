@@ -349,10 +349,6 @@
 		D5AAA12E229D337300EA839A /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AAA12D229D337300EA839A /* LoginTests.swift */; };
 		D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
 		D5ADA9CA228C30B5004B0891 /* UIAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */; };
-		D5BCDC7E253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */; };
-		D5BCDC7F253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */; };
-		D5BCDC80253038FE004BAEE8 /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */; };
-		D5BCDC81253038FE004BAEE8 /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */; };
 		D5BCDCF825304CA9004BAEE8 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */; };
 		D5BCDCF925304CA9004BAEE8 /* AnnouncementCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */; };
 		D5BCDCFA25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */; };
@@ -925,8 +921,6 @@
 		D5AAA12A229D28E400EA839A /* Credentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5AAA12D229D337300EA839A /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIAlertService.swift; sourceTree = "<group>"; };
-		D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
-		D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
 		D5BCDCF625304CA9004BAEE8 /* AnnouncementCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementCell.swift; sourceTree = "<group>"; };
 		D5BCDCF725304CA9004BAEE8 /* AnnouncementCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementCell.xib; sourceTree = "<group>"; };
 		D5BCDD2725307681004BAEE8 /* CountriesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountriesViewController.swift; sourceTree = "<group>"; };
@@ -1945,8 +1939,6 @@
 			children = (
 				D5F37633254010C7008C7207 /* Extensions */,
 				D5BCDCF525304C83004BAEE8 /* Views */,
-				D5BCDC7C253038FE004BAEE8 /* AnnouncementsViewController.swift */,
-				D5BCDC7D253038FE004BAEE8 /* AnnouncementsViewController.xib */,
 				F35D281C270C8B8F00003391 /* AnnouncementDetailViewController.xib */,
 				D5F3763B254028E5008C7207 /* AnnouncementButtonViewModel.swift */,
 				F35D2819270C8B6D00003391 /* AnnouncementDetailViewController.swift */,
@@ -3006,7 +2998,6 @@
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
 				D5BCDCFA25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */,
 				D511084724614D480018872A /* PlanAdvancedFeaturesView.xib in Resources */,
-				D5BCDC80253038FE004BAEE8 /* AnnouncementsViewController.xib in Resources */,
 				E13EDF6F21F0C1CD00030CE7 /* InstructionStepTableViewCell.xib in Resources */,
 				79C559A220AEC73A00E6D3F6 /* CountryViewCell.xib in Resources */,
 				79FD80E221107378003B16E2 /* Assets.xcassets in Resources */,
@@ -3079,7 +3070,6 @@
 				E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
 				E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
 				D5BCDCFB25304CA9004BAEE8 /* AnnouncementCell.xib in Resources */,
-				D5BCDC81253038FE004BAEE8 /* AnnouncementsViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3494,7 +3484,6 @@
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
-				D5BCDC7E253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */,
 				79DD19F420BD6F0B00505906 /* LoginViewModel.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				E16F562021F87201007BAB77 /* OnboardingViewController.swift in Sources */,
@@ -3602,7 +3591,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5BCDC7F253038FE004BAEE8 /* AnnouncementsViewController.swift in Sources */,
 				D5136C22228592E80002C095 /* AppConstants.swift in Sources */,
 				D5136C23228592E80002C095 /* UIConstants.swift in Sources */,
 				E14CC341233E723600306EAD /* ProtocolServiceMock.swift in Sources */,

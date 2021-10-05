@@ -10,7 +10,10 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="AnnouncementDetailViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
+                <outlet property="actionButton" destination="IJc-VT-yuj" id="YkP-qg-qw4"/>
                 <outlet property="closeButton" destination="RZQ-nD-A6j" id="h5K-ID-FdJ"/>
+                <outlet property="footerView" destination="ZGy-R0-PBh" id="yiz-UF-pTj"/>
+                <outlet property="pageFooterLabel" destination="ESB-eI-YwG" id="itx-ML-IqS"/>
                 <outlet property="view" destination="iN0-l3-epB" id="jzZ-Qj-CHr"/>
             </connections>
         </placeholder>
@@ -33,13 +36,44 @@
                         <action selector="closeButtonTapped:" destination="-1" eventType="touchUpInside" id="rdV-Es-EEr"/>
                     </connections>
                 </button>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZGy-R0-PBh">
+                    <rect key="frame" x="0.0" y="778" width="414" height="84"/>
+                    <subviews>
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IJc-VT-yuj" customClass="ProtonButton" customModule="ProtonVPN" customModuleProvider="target">
+                            <rect key="frame" x="24" y="8" width="366" height="44"/>
+                            <constraints>
+                                <constraint firstAttribute="height" constant="44" id="Yfr-d6-ffb"/>
+                            </constraints>
+                            <state key="normal" title="Button"/>
+                        </button>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ESB-eI-YwG">
+                            <rect key="frame" x="16" y="60" width="382" height="16"/>
+                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                            <nil key="textColor"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <constraints>
+                        <constraint firstItem="ESB-eI-YwG" firstAttribute="top" secondItem="IJc-VT-yuj" secondAttribute="bottom" constant="8" id="3WZ-Bi-1U2"/>
+                        <constraint firstAttribute="bottom" secondItem="ESB-eI-YwG" secondAttribute="bottom" constant="8" id="5Qi-iK-85i"/>
+                        <constraint firstAttribute="trailing" secondItem="ESB-eI-YwG" secondAttribute="trailing" constant="16" id="Gun-PA-8p1"/>
+                        <constraint firstItem="ESB-eI-YwG" firstAttribute="leading" secondItem="ZGy-R0-PBh" secondAttribute="leading" constant="16" id="Vc5-9M-8gX"/>
+                        <constraint firstItem="IJc-VT-yuj" firstAttribute="top" secondItem="ZGy-R0-PBh" secondAttribute="topMargin" id="aTk-ND-Q6k"/>
+                        <constraint firstItem="IJc-VT-yuj" firstAttribute="leading" secondItem="ZGy-R0-PBh" secondAttribute="leadingMargin" constant="16" id="jcH-Tn-kX2"/>
+                        <constraint firstAttribute="trailingMargin" secondItem="IJc-VT-yuj" secondAttribute="trailing" constant="16" id="v8Y-DE-ao6"/>
+                    </constraints>
+                </view>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" systemColor="systemBackgroundColor"/>
             <constraints>
                 <constraint firstItem="RZQ-nD-A6j" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="8EU-yU-lfQ"/>
                 <constraint firstItem="RZQ-nD-A6j" firstAttribute="top" secondItem="vUN-kp-3ea" secondAttribute="top" id="KUp-3L-NYy"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="ZGy-R0-PBh" secondAttribute="bottom" id="SeN-Oe-wy6"/>
+                <constraint firstItem="ZGy-R0-PBh" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="g7z-rw-zys"/>
                 <constraint firstItem="RZQ-nD-A6j" firstAttribute="width" secondItem="RZQ-nD-A6j" secondAttribute="height" multiplier="1:1" id="uI9-3s-JS0"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="trailing" secondItem="ZGy-R0-PBh" secondAttribute="trailing" id="ueB-qC-sqQ"/>
                 <constraint firstItem="RZQ-nD-A6j" firstAttribute="width" secondItem="RZQ-nD-A6j" secondAttribute="height" multiplier="1:1" id="xAQ-dD-GCz"/>
             </constraints>
             <point key="canvasLocation" x="132" y="98"/>

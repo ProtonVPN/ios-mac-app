@@ -96,21 +96,6 @@ protocol CountryService {
     func makeCountryViewController(country: CountryItemViewModel) -> CountryViewController
 }
 
-// MARK: Announcements Service
-
-protocol AnnouncementsServiceFactory {
-    func makeAnnouncementsService() -> AnnouncementsService
-}
-
-extension DependencyContainer: AnnouncementsServiceFactory {
-    func makeAnnouncementsService() -> AnnouncementsService {
-        return makeNavigationService()
-    }
-}
-protocol AnnouncementsService {
-    func makeAnnouncementsViewController() -> AnnouncementsViewController
-}
-
 // MARK: Map Service
 
 protocol MapService {
@@ -573,13 +558,6 @@ extension NavigationService: CountryService {
         countryViewController.viewModel = country
         countryViewController.connectionBarViewController = makeConnectionBarViewController()
         return countryViewController
-    }
-}
-
-extension NavigationService: AnnouncementsService {
-    func makeAnnouncementsViewController() -> AnnouncementsViewController {
-        let controller = AnnouncementsViewController(factory.makeAnnouncementsViewModel())
-        return controller
     }
 }
 
