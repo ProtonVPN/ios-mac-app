@@ -45,6 +45,7 @@ public struct OfferPanel: Codable {
     public let title: String
     public let features: [OfferFeature]
     public let featuresFooter: String
+    public let button: OfferButton
     public let pageFooter: String
 }
 
