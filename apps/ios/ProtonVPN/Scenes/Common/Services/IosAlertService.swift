@@ -184,6 +184,9 @@ extension IosAlertService: CoreAlertService {
             
         case is ReconnectOnSettingsChangeAlert:
             showDefaultSystemAlert(alert)
+
+        case let announcementOfferAlert as AnnouncmentOfferAlert:
+            show(announcementOfferAlert)
             
         default:
             #if DEBUG
@@ -255,7 +258,15 @@ extension IosAlertService: CoreAlertService {
         factory.makeTroubleshootCoordinator().start()
     }
  
-    private func show( _ alert: VpnServerOnMaintenanceAlert ) {
+    private func show(_ alert: VpnServerOnMaintenanceAlert ) {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
+    }
+
+    private func show(_ alert: AnnouncmentOfferAlert ) {
+        let vc = AnnouncementDetailViewController(alert.data)
+        vc.cancelled = { [weak self] in
+            self?.windowService.dismissModal()
+        }
+        windowService.present(modal: vc)
     }
 }
