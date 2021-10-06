@@ -37,7 +37,7 @@ public class AnnouncementsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     // Data
-    public var items: [Announcement] = [Announcement]()
+    private var items: [Announcement] = [Announcement]()
     
     // Callbacks
     public var refreshView: (() -> Void)?
@@ -49,7 +49,17 @@ public class AnnouncementsViewModel {
     }
     
     /// Navigate to announcement screen
-    public func open(announcement: Announcement) {
+    public func open() {
+        let sorted = items.sorted(by: { (lhs, rhs) -> Bool in
+            if let lhsRead = lhs.isRead {
+                return !lhsRead
+            }
+            return false
+        })
+        guard let announcement = sorted.first else {
+            return
+        }
+
         announcementManager.markAsRead(announcement: announcement)
 
         if let data = announcement.offer?.panel {

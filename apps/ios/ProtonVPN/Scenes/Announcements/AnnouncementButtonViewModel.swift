@@ -62,16 +62,6 @@ class AnnouncementButtonViewModel {
     }
 
     public func showAnnouncement() {
-        let sorted = announcementsViewModel.items.sorted(by: { (lhs, rhs) -> Bool in
-            if let lhsRead = lhs.isRead {
-                return !lhsRead
-            }
-            return false
-        })
-        guard let best = sorted.first else {
-            return
-        }
-
-        announcementsViewModel.open(announcement: best)
+        announcementsViewModel.open()
     }
 }
