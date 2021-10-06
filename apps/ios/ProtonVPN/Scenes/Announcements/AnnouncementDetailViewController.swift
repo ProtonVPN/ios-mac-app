@@ -93,7 +93,6 @@ final class AnnouncementDetailViewController: UIViewController {
 
     @IBAction private func actionButtonTapped(_ sender: Any) {
         urlRequested?(data.button.url)
-        cancelled?()
     }
 
     @IBAction private func closeButtonTapped(_ sender: Any) {
