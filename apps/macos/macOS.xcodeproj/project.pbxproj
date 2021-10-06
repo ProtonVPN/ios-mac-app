@@ -81,8 +81,6 @@
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
 		D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5906F1722D379C9001BC074 /* AttachedFileView.xib */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
-		D5966F2625382DAA0061A75F /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */; };
-		D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */; };
 		D5966FD0253855B30061A75F /* AnnouncementItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FCF253855B30061A75F /* AnnouncementItemView.swift */; };
 		D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5966FD725385B890061A75F /* AnnouncementItemView.xib */; };
 		D5966FE4253885B00061A75F /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FE3253885B00061A75F /* TriangleView.swift */; };
@@ -656,8 +654,6 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
-		D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
 		D5966FCF253855B30061A75F /* AnnouncementItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementItemView.swift; sourceTree = "<group>"; };
 		D5966FD725385B890061A75F /* AnnouncementItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementItemView.xib; sourceTree = "<group>"; };
 		D5966FE3253885B00061A75F /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
@@ -1944,8 +1940,6 @@
 		F36ECE1C2611DE9B0089B898 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */,
-				D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */,
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
 				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */,
@@ -2818,7 +2812,6 @@
 				F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
-				D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */,
 				42BEF94926317670009180A7 /* FeaturesOverlayViewController.xib in Resources */,
 				EE24A3981F1BC7D000B70949 /* FooterItem.xib in Resources */,
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
@@ -3411,7 +3404,6 @@
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
-				D5966F2625382DAA0061A75F /* AnnouncementsViewController.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
