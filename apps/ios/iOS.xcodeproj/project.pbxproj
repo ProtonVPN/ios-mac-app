@@ -578,6 +578,11 @@
 		F3BBB8AE25DD6DBE00E700B5 /* Challenge.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB87925DD56A300E700B5 /* Challenge.swift */; };
 		F3BBB8B525DD6E8600E700B5 /* ChallengeMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */; };
 		F3E20128270CDDD100FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
+		F3E2012A270D81C300FA20E1 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */; };
+		F3E2012C270D81D700FA20E1 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */; };
+		F3E2012D270D8A0C00FA20E1 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */; };
+		F3E2012E270D8A0F00FA20E1 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */; };
+		F3E2012F270D8A1200FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1136,6 +1141,8 @@
 		F3BBB87925DD56A300E700B5 /* Challenge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Challenge.swift; sourceTree = "<group>"; };
 		F3BBB8B425DD6E8600E700B5 /* ChallengeMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChallengeMock.swift; sourceTree = "<group>"; };
 		F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
+		F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
+		F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		F613F0A928F442C2F592BBB3 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9379B9662554832634B2FF0 /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1946,6 +1953,8 @@
 			isa = PBXGroup;
 			children = (
 				F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */,
+				F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */,
+				F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -2988,6 +2997,7 @@
 				D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */,
 				E1D187F32301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
 				791DE5E9208DDA3200A29EA5 /* LaunchScreen.storyboard in Resources */,
+				F3E2012C270D81D700FA20E1 /* AnnouncementFeatureView.xib in Resources */,
 				79312B792118823B00E79D09 /* SwitchTableViewCell.xib in Resources */,
 				7950441D211850710022ED35 /* ColorPickerItem.xib in Resources */,
 				E13EDF6821F0A14400030CE7 /* WidgetSettings.xib in Resources */,
@@ -3083,6 +3093,7 @@
 			files = (
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
+				F3E2012D270D8A0C00FA20E1 /* AnnouncementFeatureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3477,6 +3488,7 @@
 				D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79DD19F420BD6F0B00505906 /* LoginViewModel.swift in Sources */,
+				F3E2012A270D81C300FA20E1 /* AnnouncementFeatureView.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				E16F562021F87201007BAB77 /* OnboardingViewController.swift in Sources */,
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
@@ -3815,6 +3827,7 @@
 				B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */,
 				B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */,
 				B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */,
+				F3E2012F270D8A1200FA20E1 /* RoundedCornersView.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */,
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
@@ -3822,6 +3835,7 @@
 				F3521E1A264AA40F0070F177 /* (null) in Sources */,
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
+				F3E2012E270D8A0F00FA20E1 /* AnnouncementFeatureView.swift in Sources */,
 				B2BA40F826D3CFD100DF04C3 /* SettingsRobot.swift in Sources */,
 				42BD4E8B26DE4CD200159AF3 /* ProtocolsListRobot.swift in Sources */,
 				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,

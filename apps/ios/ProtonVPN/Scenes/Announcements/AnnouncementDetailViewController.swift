@@ -59,10 +59,10 @@ final class AnnouncementDetailViewController: UIViewController {
         if parts.count != 3 {
             incentiveLabel.text = data.incentive.replacingOccurrences(of: "%IncentivePrice%", with: "\n\(data.incentivePrice)")
         } else {
-            let attributed = NSMutableAttributedString(string: String(parts[0]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)])
+            let attributed = NSMutableAttributedString(string: String(parts[0]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .semibold)])
             attributed.append(NSAttributedString(string: "\n"))
             attributed.append(NSAttributedString(string: data.incentivePrice, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28, weight: .bold)]))
-            attributed.append(NSAttributedString(string: String(parts[2]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .regular)]))
+            attributed.append(NSAttributedString(string: String(parts[2]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .semibold)]))
             incentiveLabel.attributedText = attributed
         }
 
@@ -77,6 +77,17 @@ final class AnnouncementDetailViewController: UIViewController {
         if let pictureUrl = URL(string: data.pictureURL) {
             pictureView.af.cancelImageRequest()
             pictureView.af.setImage(withURLRequest: URLRequest(url: pictureUrl))
+        }
+
+        for view in featuresStackView.arrangedSubviews {
+            view.removeFromSuperview()
+            featuresStackView.removeArrangedSubview(view)
+        }
+
+        for feature in data.features {
+            let featureView = AnnouncementFeatureView()
+            featureView.model = feature
+            featuresStackView.addArrangedSubview(featureView)
         }
     }
 
