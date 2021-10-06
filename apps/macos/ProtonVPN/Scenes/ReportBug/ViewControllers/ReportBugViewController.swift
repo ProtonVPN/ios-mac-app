@@ -29,32 +29,16 @@ class ReportBugViewController: NSViewController {
     private let alertService: CoreAlertService
     
     @IBOutlet weak var horizontalLineEmail: NSBox!
-    @IBOutlet weak var horizontalLineCountry: NSBox!
-    @IBOutlet weak var horizontalLineIsp: NSBox!
     
-    @IBOutlet weak var descriptionLabel: PVPNTextField!
     @IBOutlet weak var emailLabel: PVPNTextField!
-    @IBOutlet weak var contryLabel: PVPNTextField!
-    @IBOutlet weak var fileSizeLabel: PVPNTextField!
-    @IBOutlet weak var ispLabel: PVPNTextField!
-    @IBOutlet weak var accountLabel: PVPNTextField!
-    @IBOutlet weak var accountValueLabel: PVPNTextField!
-    @IBOutlet weak var planLabel: PVPNTextField!
-    @IBOutlet weak var planValueLabel: PVPNTextField!
-    @IBOutlet weak var versionLabel: PVPNTextField!
-    @IBOutlet weak var versionValueLabel: PVPNTextField!
-    @IBOutlet weak var feedbackLabel: PVPNTextField!
-    @IBOutlet weak var feedbackPlaceholderLabel: PVPNTextField!
-    
     @IBOutlet weak var emailField: TextFieldWithFocus!
-    @IBOutlet weak var countryField: TextFieldWithFocus!
-    @IBOutlet weak var ispField: TextFieldWithFocus!
-    @IBOutlet weak var feedbackField: NSTextView!
-    @IBOutlet weak var feedbackContainer: NSScrollView!
     
-    @IBOutlet weak var filesTableView: NSTableView!
+    @IBOutlet weak var feedbackLabel: PVPNTextField!
+//    @IBOutlet weak var feedbackPlaceholderLabel: PVPNTextField!
     
-    @IBOutlet weak var attachmentButton: NSButton!
+//    @IBOutlet weak var feedbackField: NSTextView!
+//    @IBOutlet weak var feedbackContainer: NSScrollView!
+
     @IBOutlet weak var cancelButton: ClearCancellationButton!
     @IBOutlet weak var sendButton: PrimaryActionButton!
     
@@ -122,64 +106,64 @@ class ReportBugViewController: NSViewController {
         setupButtonActions()
         setupFilesTable()
         
-        viewModel.attachmentsListRefreshed = { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.filesTableView.reloadData()
-            }
-        }
+//        viewModel.attachmentsListRefreshed = { [weak self] in
+//            DispatchQueue.main.async { [weak self] in
+//                self?.filesTableView.reloadData()
+//            }
+//        }
     }
     
     private func setupDesign() {
-        [horizontalLineEmail, horizontalLineCountry, horizontalLineIsp].forEach { view in 
-            view.fillColor = .protonLightGrey()
-        }
+//        [horizontalLineEmail, horizontalLineCountry, horizontalLineIsp].forEach { view in
+//            view.fillColor = .protonLightGrey()
+//        }
         
         sendButton.actionType = .confirmative
-        fileSizeLabel.textColor = .protonLightGrey()
-        feedbackPlaceholderLabel.textColor = .protonLightGrey()
-        feedbackField.backgroundColor = NSColor.protonGrey()
-        feedbackField.textColor = NSColor.protonWhite()
-        feedbackContainer.backgroundColor = NSColor.protonGrey()
-        
-        feedbackField.font = fieldFont
-        [emailField, countryField, ispField].forEach({ element in
-            element?.font = fieldFont
-        })
-        
-        if #available(OSX 10.14, *) {
-            attachmentButton.contentTintColor = .protonGreen()
-        }
+//        fileSizeLabel.textColor = .protonLightGrey()
+//        feedbackPlaceholderLabel.textColor = .protonLightGrey()
+//        feedbackField.backgroundColor = NSColor.protonGrey()
+//        feedbackField.textColor = NSColor.protonWhite()
+//        feedbackContainer.backgroundColor = NSColor.protonGrey()
+//
+//        feedbackField.font = fieldFont
+//        [emailField, countryField, ispField].forEach({ element in
+//            element?.font = fieldFont
+//        })
+//
+//        if #available(OSX 10.14, *) {
+//            attachmentButton.contentTintColor = .protonGreen()
+//        }
     }
     
     private func setupFilesTable() {
-        filesTableView.dataSource = self
-        filesTableView.delegate = self
-        filesTableView.ignoresMultiClick = true
-        filesTableView.selectionHighlightStyle = .none
-        filesTableView.backgroundColor = .protonGrey()
-        filesTableView.register(NSNib(nibNamed: NSNib.Name(String(describing: AttachedFileView.self)), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)))
+//        filesTableView.dataSource = self
+//        filesTableView.delegate = self
+//        filesTableView.ignoresMultiClick = true
+//        filesTableView.selectionHighlightStyle = .none
+//        filesTableView.backgroundColor = .protonGrey()
+//        filesTableView.register(NSNib(nibNamed: NSNib.Name(String(describing: AttachedFileView.self)), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)))
     }
     
     private func setupTranslations() {
-        descriptionLabel.stringValue = LocalizedString.reportDescription
+//        descriptionLabel.stringValue = LocalizedString.reportDescription
         emailLabel.stringValue = LocalizedString.reportFieldEmail
-        contryLabel.stringValue = LocalizedString.reportFieldCountry
-        fileSizeLabel.stringValue = LocalizedString.reportMaxFileSize
-        ispLabel.stringValue = LocalizedString.reportFieldIsp
-        accountLabel.stringValue = LocalizedString.reportFieldAccount
-        planLabel.stringValue = LocalizedString.reportFieldPlan
-        versionLabel.stringValue = LocalizedString.reportFieldVersion
+//        contryLabel.stringValue = LocalizedString.reportFieldCountry
+//        fileSizeLabel.stringValue = LocalizedString.reportMaxFileSize
+//        ispLabel.stringValue = LocalizedString.reportFieldIsp
+//        accountLabel.stringValue = LocalizedString.reportFieldAccount
+//        planLabel.stringValue = LocalizedString.reportFieldPlan
+//        versionLabel.stringValue = LocalizedString.reportFieldVersion
         feedbackLabel.stringValue = LocalizedString.reportFieldFeedback
-        feedbackPlaceholderLabel.stringValue = LocalizedString.reportPlaceholderMessage
+//        feedbackPlaceholderLabel.stringValue = LocalizedString.reportPlaceholderMessage
         
         cancelButton.title = LocalizedString.cancel
         sendButton.title = LocalizedString.reportSend
-        attachmentButton.attributedTitle = LocalizedString.reportAddFile.attributed(withColor: .protonGreen(), font: borderlessButtonFont)
+//        attachmentButton.attributedTitle = LocalizedString.reportAddFile.attributed(withColor: .protonGreen(), font: borderlessButtonFont)
     }
     
     private func setupButtonActions() {
-        attachmentButton.target = self
-        attachmentButton.action = #selector(addFilePressed)
+//        attachmentButton.target = self
+//        attachmentButton.action = #selector(addFilePressed)
         
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonPressed)
@@ -190,19 +174,19 @@ class ReportBugViewController: NSViewController {
     
     private func fillDataFromModel() {
         emailField.stringValue = viewModel.getEmail() ?? ""
-        countryField.stringValue = viewModel.getCountry() ?? ""
-        ispField.stringValue = viewModel.getISP() ?? ""
+//        countryField.stringValue = viewModel.getCountry() ?? ""
+//        ispField.stringValue = viewModel.getISP() ?? ""
         
-        accountValueLabel.stringValue = viewModel.getUsername() ?? ""
-        versionValueLabel.stringValue = viewModel.getClientVersion() ?? ""
-        
-        if let accountPlan = viewModel.getAccountPlan() {
-            planValueLabel.textColor = accountPlan.colorForUI
-            planValueLabel.stringValue = accountPlan.description
-        } else {
-            planValueLabel.textColor = .protonGreyOutOfFocus()
-            planValueLabel.stringValue = LocalizedString.unavailable
-        }
+//        accountValueLabel.stringValue = viewModel.getUsername() ?? ""
+//        versionValueLabel.stringValue = viewModel.getClientVersion() ?? ""
+//
+//        if let accountPlan = viewModel.getAccountPlan() {
+//            planValueLabel.textColor = accountPlan.colorForUI
+//            planValueLabel.stringValue = accountPlan.description
+//        } else {
+//            planValueLabel.textColor = .protonGreyOutOfFocus()
+//            planValueLabel.stringValue = LocalizedString.unavailable
+//        }
         renderFeedbackPlaceholder()
     }
     
@@ -298,13 +282,13 @@ extension ReportBugViewController: NSTableViewDelegate {
 extension ReportBugViewController: NSTextViewDelegate {
     
     func textDidChange(_ notification: Notification) {
-        viewModel.set(description: feedbackField.string)
+//        viewModel.set(description: feedbackField.string)
         renderFeedbackPlaceholder()
         renderSendButton()
     }
     
     func renderFeedbackPlaceholder() {
-        feedbackPlaceholderLabel.isHidden = !feedbackField.string.isEmpty
+//        feedbackPlaceholderLabel.isHidden = !feedbackField.string.isEmpty
     }
     
 }
@@ -314,13 +298,13 @@ extension ReportBugViewController: NSTextFieldDelegate {
     func controlTextDidChange(_ obj: Notification) {
         guard let field = obj.object as? NSTextField else { return }
         
-        if field == emailField {
-            viewModel.set(email: field.stringValue)
-        } else if field == countryField {
-            viewModel.set(country: field.stringValue)
-        } else if field == ispField {
-            viewModel.set(isp: field.stringValue)
-        }
+//        if field == emailField {
+//            viewModel.set(email: field.stringValue)
+//        } else if field == countryField {
+//            viewModel.set(country: field.stringValue)
+//        } else if field == ispField {
+//            viewModel.set(isp: field.stringValue)
+//        }
         renderSendButton()
     }
     
