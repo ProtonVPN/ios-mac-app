@@ -22,8 +22,7 @@ final class AnnouncementFeatureView: UIView {
             titleLabel.text = model?.text
 
             if let iconUrl = model?.iconURL, let url = URL(string: iconUrl) {
-                iconImageView.af.cancelImageRequest()
-                iconImageView.af.setImage(withURLRequest: URLRequest(url: url))
+                iconImageView.af.setImage(withURLRequest: URLRequest(url: url), imageTransition: .crossDissolve(0.2))
             }
         }
     }
