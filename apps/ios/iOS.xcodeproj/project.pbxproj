@@ -568,7 +568,6 @@
 		F3521E13264A9D340070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
 		F3521E1A264AA40F0070F177 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		F35D281A270C8B6D00003391 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D2819270C8B6D00003391 /* AnnouncementDetailViewController.swift */; };
-		F35D281B270C8B6D00003391 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D2819270C8B6D00003391 /* AnnouncementDetailViewController.swift */; };
 		F35D281D270C8B8F00003391 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F35D281C270C8B8F00003391 /* AnnouncementDetailViewController.xib */; };
 		F35D281E270C8B8F00003391 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F35D281C270C8B8F00003391 /* AnnouncementDetailViewController.xib */; };
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
@@ -580,9 +579,10 @@
 		F3E20128270CDDD100FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
 		F3E2012A270D81C300FA20E1 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */; };
 		F3E2012C270D81D700FA20E1 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */; };
-		F3E2012D270D8A0C00FA20E1 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */; };
-		F3E2012E270D8A0F00FA20E1 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */; };
-		F3E2012F270D8A1200FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
+		F3E20131270DA6BE00FA20E1 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35D2819270C8B6D00003391 /* AnnouncementDetailViewController.swift */; };
+		F3E20132270DA6C100FA20E1 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3E2012B270D81D700FA20E1 /* AnnouncementFeatureView.xib */; };
+		F3E20133270DA6C100FA20E1 /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20129270D81C300FA20E1 /* AnnouncementFeatureView.swift */; };
+		F3E20134270DA6C100FA20E1 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E20127270CDDD100FA20E1 /* RoundedCornersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3070,6 +3070,7 @@
 			files = (
 				E129C6D422A933F200D8437E /* LiveServers.json in Resources */,
 				E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */,
+				F3E20132270DA6C100FA20E1 /* AnnouncementFeatureView.xib in Resources */,
 				F35D281E270C8B8F00003391 /* AnnouncementDetailViewController.xib in Resources */,
 				E1FB547E230C001E00153F4D /* TitleTextFieldTableViewCell.xib in Resources */,
 				E1D187F42301AB2E00C5F492 /* CheckmarkTableViewCell.xib in Resources */,
@@ -3093,7 +3094,6 @@
 			files = (
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
-				F3E2012D270D8A0C00FA20E1 /* AnnouncementFeatureView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3601,6 +3601,7 @@
 				E14CC341233E723600306EAD /* ProtocolServiceMock.swift in Sources */,
 				E169FC45228B15E800FDC933 /* VerificationSmsViewController.swift in Sources */,
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
+				F3E20134270DA6C100FA20E1 /* RoundedCornersView.swift in Sources */,
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
@@ -3641,7 +3642,6 @@
 				D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				D5136C37228592E80002C095 /* OnboardingContentViewController.swift in Sources */,
 				D5136C38228592E80002C095 /* OnboardingPageViewController.swift in Sources */,
-				F35D281B270C8B6D00003391 /* AnnouncementDetailViewController.swift in Sources */,
 				D5F568A6232785BF00795953 /* IosAlertService.swift in Sources */,
 				D5BF95042354823F00C7D1E7 /* PaymentsApiServiceMock.swift in Sources */,
 				D5136C39228592E80002C095 /* OnboardingViewController.swift in Sources */,
@@ -3673,6 +3673,7 @@
 				D5136C4B228592E80002C095 /* TabBarViewModel.swift in Sources */,
 				D55B36CC2457FF0A00D8B0B9 /* TroubleshootingSwitchCell.swift in Sources */,
 				D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */,
+				F3E20131270DA6BE00FA20E1 /* AnnouncementDetailViewController.swift in Sources */,
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
 				D5110860246189F30018872A /* PlanInfoView.swift in Sources */,
@@ -3717,6 +3718,7 @@
 				D5136C5E228592E80002C095 /* ProfileItemViewModel.swift in Sources */,
 				D51DA69B2541B68500B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				42066FE626304A0C001F86DB /* FeatureTableViewCell.swift in Sources */,
+				F3E20133270DA6C100FA20E1 /* AnnouncementFeatureView.swift in Sources */,
 				D5136C5F228592E80002C095 /* PrefillInformation.swift in Sources */,
 				D5136C60228592E80002C095 /* WidgetSettingsViewModel.swift in Sources */,
 				D5F3765E25402E0A008C7207 /* AnnouncementButtonViewModel.swift in Sources */,
@@ -3827,7 +3829,6 @@
 				B293D82E2660FBC500E0ECCB /* MainRobot.swift in Sources */,
 				B29CD6A426540F2700978637 /* CreateProfileRobot.swift in Sources */,
 				B2BA40EF26C28C3200DF04C3 /* ServerListRobot.swift in Sources */,
-				F3E2012F270D8A1200FA20E1 /* RoundedCornersView.swift in Sources */,
 				D5AAA12B229D28E400EA839A /* Credentials.swift in Sources */,
 				B29CD6B3265410D200978637 /* LoginRobot.swift in Sources */,
 				D58874AA24F92F640022E438 /* SignUpTests.swift in Sources */,
@@ -3835,7 +3836,6 @@
 				F3521E1A264AA40F0070F177 /* (null) in Sources */,
 				B29CD69E26540F1600978637 /* ProfileRobot.swift in Sources */,
 				D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */,
-				F3E2012E270D8A0F00FA20E1 /* AnnouncementFeatureView.swift in Sources */,
 				B2BA40F826D3CFD100DF04C3 /* SettingsRobot.swift in Sources */,
 				42BD4E8B26DE4CD200159AF3 /* ProtocolsListRobot.swift in Sources */,
 				B2BA40F226C28C5200DF04C3 /* ConnectionTests.swift in Sources */,
