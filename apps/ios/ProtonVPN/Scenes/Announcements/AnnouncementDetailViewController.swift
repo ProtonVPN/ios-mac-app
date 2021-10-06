@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 import vpncore
-import AlamofireImage
+import Alamofire
 
 final class AnnouncementDetailViewController: UIViewController {
 
@@ -75,8 +75,7 @@ final class AnnouncementDetailViewController: UIViewController {
         titleLabel.text = data.title
 
         if let pictureUrl = URL(string: data.pictureURL) {
-            pictureView.af.cancelImageRequest()
-            pictureView.af.setImage(withURLRequest: URLRequest(url: pictureUrl))
+            pictureView.af.setImage(withURLRequest: URLRequest(url: pictureUrl), imageTransition: .crossDissolve(0.2))
         }
 
         for view in featuresStackView.arrangedSubviews {
