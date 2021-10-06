@@ -28,16 +28,16 @@ class ReportBugViewController: NSViewController {
     let viewModel: ReportBugViewModel
     private let alertService: CoreAlertService
     
-    @IBOutlet weak var horizontalLineEmail: NSBox!
+    @IBOutlet weak var horizontalLineEmail: NSView!
     
     @IBOutlet weak var emailLabel: PVPNTextField!
     @IBOutlet weak var emailField: TextFieldWithFocus!
     
     @IBOutlet weak var feedbackLabel: PVPNTextField!
-//    @IBOutlet weak var feedbackPlaceholderLabel: PVPNTextField!
+    @IBOutlet weak var feedbackTextField: NSTextField!
     
-//    @IBOutlet weak var feedbackField: NSTextView!
-//    @IBOutlet weak var feedbackContainer: NSScrollView!
+    @IBOutlet weak var stepsLabel: PVPNTextField!
+    @IBOutlet weak var stepsTextField: NSTextField!
 
     @IBOutlet weak var cancelButton: ClearCancellationButton!
     @IBOutlet weak var sendButton: PrimaryActionButton!
@@ -114,25 +114,23 @@ class ReportBugViewController: NSViewController {
     }
     
     private func setupDesign() {
-//        [horizontalLineEmail, horizontalLineCountry, horizontalLineIsp].forEach { view in
-//            view.fillColor = .protonLightGrey()
-//        }
-        
+        horizontalLineEmail.wantsLayer = true
+        horizontalLineEmail.layer?.backgroundColor = NSColor.protonLightGrey().cgColor
         sendButton.actionType = .confirmative
-//        fileSizeLabel.textColor = .protonLightGrey()
-//        feedbackPlaceholderLabel.textColor = .protonLightGrey()
-//        feedbackField.backgroundColor = NSColor.protonGrey()
-//        feedbackField.textColor = NSColor.protonWhite()
-//        feedbackContainer.backgroundColor = NSColor.protonGrey()
-//
-//        feedbackField.font = fieldFont
-//        [emailField, countryField, ispField].forEach({ element in
-//            element?.font = fieldFont
-//        })
-//
-//        if #available(OSX 10.14, *) {
-//            attachmentButton.contentTintColor = .protonGreen()
-//        }
+        //        fileSizeLabel.textColor = .protonLightGrey()
+        //        feedbackPlaceholderLabel.textColor = .protonLightGrey()
+        //        feedbackField.backgroundColor = NSColor.protonGrey()
+        //        feedbackField.textColor = NSColor.protonWhite()
+        //        feedbackContainer.backgroundColor = NSColor.protonGrey()
+        //
+        //        feedbackField.font = fieldFont
+        //        [emailField, countryField, ispField].forEach({ element in
+        //            element?.font = fieldFont
+        //        })
+        //
+        //        if #available(OSX 10.14, *) {
+        //            attachmentButton.contentTintColor = .protonGreen()
+        //        }
     }
     
     private func setupFilesTable() {
