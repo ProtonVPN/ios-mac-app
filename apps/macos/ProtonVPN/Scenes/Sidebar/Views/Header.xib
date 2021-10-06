@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -40,7 +40,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="340" height="170"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
-                                            <rect key="frame" x="38" y="134" width="211" height="16"/>
+                                            <rect key="frame" x="38" y="134" width="206" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -97,8 +97,8 @@
                                             </buttonCell>
                                         </button>
                                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="125" width="45" height="32"/>
-                                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="bell" imagePosition="only" alignment="center" state="on" borderStyle="border" transparent="YES" inset="2" id="ghW-7A-Ie1">
+                                            <rect key="frame" x="255" y="125" width="50" height="32"/>
+                                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="bell" imagePosition="only" alignment="center" state="on" borderStyle="border" inset="2" id="ghW-7A-Ie1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -159,6 +159,6 @@
         </customView>
     </objects>
     <resources>
-        <image name="bell" width="15" height="17"/>
+        <image name="bell" width="20" height="20"/>
     </resources>
 </document>
