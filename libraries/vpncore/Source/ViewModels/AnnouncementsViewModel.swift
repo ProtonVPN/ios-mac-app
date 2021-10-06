@@ -37,7 +37,7 @@ public class AnnouncementsViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     // Data
-    private var items: [Announcement] = [Announcement]()
+    private(set) var items: [Announcement] = [Announcement]()
     
     // Callbacks
     public var refreshView: (() -> Void)?

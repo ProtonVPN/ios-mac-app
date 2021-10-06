@@ -67,9 +67,9 @@ class AnnouncementsViewModelTests: XCTestCase {
         XCTAssert(safariService.lastUrl == nil)
         
         let url = "http://link.url"
-        let announcement = Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: url, icon: "", panel: nil))
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: url, icon: "", panel: nil))])
         
-        viewModel.open(announcement: announcement)
+        viewModel.open()
         
         XCTAssert(safariService.openCount == 1)
         XCTAssert(safariService.lastUrl?.starts(with: url) ?? false)
