@@ -24,17 +24,17 @@
         <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
         <customObject id="-3" userLabel="Application" customClass="NSObject"/>
         <customView id="Hz6-mo-xeY">
-            <rect key="frame" x="0.0" y="0.0" width="409" height="356"/>
+            <rect key="frame" x="0.0" y="0.0" width="409" height="548"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="4sn-hB-7GZ">
-                    <rect key="frame" x="0.0" y="0.0" width="409" height="356"/>
+                    <rect key="frame" x="0.0" y="0.0" width="409" height="548"/>
                     <subviews>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="vPW-B0-7XG">
-                            <rect key="frame" x="0.0" y="70" width="409" height="286"/>
+                            <rect key="frame" x="0.0" y="70" width="409" height="478"/>
                             <subviews>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xCN-TA-CG0">
-                                    <rect key="frame" x="62" y="240" width="11" height="16"/>
+                                    <rect key="frame" x="76" y="432" width="11" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="*" id="DTk-tz-P4r">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
@@ -42,10 +42,10 @@
                                     </textFieldCell>
                                 </textField>
                                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="xCf-Ep-Jsw" userLabel="Email holder">
-                                    <rect key="frame" x="75" y="233" width="304" height="31"/>
+                                    <rect key="frame" x="89" y="425" width="290" height="31"/>
                                     <subviews>
                                         <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="TGQ-qt-jkO" customClass="TextFieldWithFocus" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="9" width="304" height="22"/>
+                                            <rect key="frame" x="0.0" y="9" width="290" height="22"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="Hqx-43-BkU">
                                                 <font key="font" metaFont="menu" size="14"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -56,9 +56,9 @@
                                             </connections>
                                         </textField>
                                         <box boxType="custom" borderType="none" borderWidth="0.0" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="aF9-kS-xHg">
-                                            <rect key="frame" x="0.0" y="0.0" width="304" height="1"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="290" height="1"/>
                                             <view key="contentView" id="sWx-em-9iI">
-                                                <rect key="frame" x="0.0" y="0.0" width="304" height="1"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="290" height="1"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             </view>
                                             <constraints>
@@ -77,7 +77,7 @@
                                     </constraints>
                                 </customView>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SwG-VF-4sO" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="14" y="240" width="48" height="16"/>
+                                    <rect key="frame" x="28" y="432" width="48" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="_Email:" id="fd1-Q4-c70">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -85,7 +85,7 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bds-41-CUw" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
-                                    <rect key="frame" x="14" y="136" width="71" height="16"/>
+                                    <rect key="frame" x="28" y="400" width="71" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="_Feedback" id="N4M-cn-m0Z">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -93,19 +93,46 @@
                                     </textFieldCell>
                                 </textField>
                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="J31-FE-eo8">
-                                    <rect key="frame" x="85" y="136" width="11" height="16"/>
+                                    <rect key="frame" x="99" y="400" width="11" height="16"/>
                                     <textFieldCell key="cell" lineBreakMode="clipping" title="*" id="P0t-Az-2gi">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                     </textFieldCell>
                                 </textField>
-                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIP-uR-P39">
-                                    <rect key="frame" x="16" y="8" width="363" height="120"/>
+                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nIP-uR-P39" userLabel="Feedback">
+                                    <rect key="frame" x="30" y="220" width="349" height="172"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="120" id="One-ym-imr"/>
+                                        <constraint firstAttribute="height" constant="172" id="One-ym-imr"/>
                                     </constraints>
                                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Start typing" drawsBackground="YES" id="6OK-A2-cuf">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zOn-aQ-uMv" userLabel="_Steps" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="28" y="188" width="71" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="_Feedback" id="NCx-Hl-XXK">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="FRm-do-wO1">
+                                    <rect key="frame" x="99" y="188" width="11" height="16"/>
+                                    <textFieldCell key="cell" lineBreakMode="clipping" title="*" id="gck-LV-4rk">
+                                        <font key="font" metaFont="system"/>
+                                        <color key="textColor" name="systemRedColor" catalog="System" colorSpace="catalog"/>
+                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                    </textFieldCell>
+                                </textField>
+                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="vyA-Ro-Oid" userLabel="Steps">
+                                    <rect key="frame" x="30" y="8" width="349" height="172"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="172" id="mUF-0Y-gbT"/>
+                                    </constraints>
+                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" borderStyle="bezel" placeholderString="Start typing" drawsBackground="YES" id="u8T-Lc-cU0">
                                         <font key="font" metaFont="system"/>
                                         <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -114,18 +141,25 @@
                             </subviews>
                             <constraints>
                                 <constraint firstItem="xCf-Ep-Jsw" firstAttribute="centerY" secondItem="SwG-VF-4sO" secondAttribute="centerY" id="4hK-uY-m5P"/>
+                                <constraint firstItem="FRm-do-wO1" firstAttribute="centerY" secondItem="zOn-aQ-uMv" secondAttribute="centerY" id="9mf-rB-Xmi"/>
+                                <constraint firstItem="zOn-aQ-uMv" firstAttribute="leading" secondItem="SwG-VF-4sO" secondAttribute="leading" id="AEi-5E-eBP"/>
+                                <constraint firstItem="FRm-do-wO1" firstAttribute="leading" secondItem="zOn-aQ-uMv" secondAttribute="trailing" constant="4" id="DvD-9s-sGS"/>
+                                <constraint firstAttribute="bottom" secondItem="vyA-Ro-Oid" secondAttribute="bottom" constant="8" id="Dvw-K2-81S"/>
                                 <constraint firstItem="SwG-VF-4sO" firstAttribute="centerY" secondItem="xCN-TA-CG0" secondAttribute="centerY" id="ECu-X7-CXS"/>
                                 <constraint firstItem="nIP-uR-P39" firstAttribute="top" secondItem="bds-41-CUw" secondAttribute="bottom" constant="8" id="FGH-A2-Qny"/>
                                 <constraint firstItem="bds-41-CUw" firstAttribute="leading" secondItem="SwG-VF-4sO" secondAttribute="leading" id="FdK-EL-kZj"/>
                                 <constraint firstItem="J31-FE-eo8" firstAttribute="leading" secondItem="bds-41-CUw" secondAttribute="trailing" constant="4" id="Tuj-cv-Snc"/>
+                                <constraint firstItem="vyA-Ro-Oid" firstAttribute="top" secondItem="zOn-aQ-uMv" secondAttribute="bottom" constant="8" id="VWm-2P-45r"/>
                                 <constraint firstItem="J31-FE-eo8" firstAttribute="centerY" secondItem="bds-41-CUw" secondAttribute="centerY" id="VYm-mF-iy5"/>
                                 <constraint firstItem="SwG-VF-4sO" firstAttribute="top" secondItem="vPW-B0-7XG" secondAttribute="top" constant="30" id="Yhc-Ub-ELc"/>
-                                <constraint firstAttribute="bottom" secondItem="nIP-uR-P39" secondAttribute="bottom" constant="8" id="ZzI-DE-z5U"/>
                                 <constraint firstItem="xCf-Ep-Jsw" firstAttribute="leading" secondItem="xCN-TA-CG0" secondAttribute="trailing" constant="4" id="bxQ-Qg-a2A"/>
+                                <constraint firstItem="vyA-Ro-Oid" firstAttribute="leading" secondItem="zOn-aQ-uMv" secondAttribute="leading" id="ebp-jE-Djf"/>
                                 <constraint firstItem="xCN-TA-CG0" firstAttribute="leading" secondItem="SwG-VF-4sO" secondAttribute="trailing" constant="4" id="gp5-n3-lCS"/>
+                                <constraint firstItem="zOn-aQ-uMv" firstAttribute="top" secondItem="nIP-uR-P39" secondAttribute="bottom" constant="16" id="iEr-Ow-InL"/>
                                 <constraint firstAttribute="trailing" secondItem="xCf-Ep-Jsw" secondAttribute="trailing" constant="30" id="jgS-Ae-MrK"/>
-                                <constraint firstItem="bds-41-CUw" firstAttribute="top" secondItem="SwG-VF-4sO" secondAttribute="bottom" constant="88" id="p6M-l4-JTd"/>
-                                <constraint firstItem="SwG-VF-4sO" firstAttribute="leading" secondItem="vPW-B0-7XG" secondAttribute="leading" constant="16" id="t8Y-GO-e15"/>
+                                <constraint firstItem="vyA-Ro-Oid" firstAttribute="trailing" secondItem="nIP-uR-P39" secondAttribute="trailing" id="nsb-xU-igL"/>
+                                <constraint firstItem="bds-41-CUw" firstAttribute="top" secondItem="SwG-VF-4sO" secondAttribute="bottom" constant="16" id="p6M-l4-JTd"/>
+                                <constraint firstItem="SwG-VF-4sO" firstAttribute="leading" secondItem="vPW-B0-7XG" secondAttribute="leading" constant="30" id="t8Y-GO-e15"/>
                                 <constraint firstItem="nIP-uR-P39" firstAttribute="trailing" secondItem="xCf-Ep-Jsw" secondAttribute="trailing" id="uP6-0U-D6T"/>
                                 <constraint firstItem="nIP-uR-P39" firstAttribute="leading" secondItem="bds-41-CUw" secondAttribute="leading" id="vIv-te-PXj"/>
                             </constraints>
@@ -147,7 +181,7 @@
                             </userDefinedRuntimeAttributes>
                         </button>
                         <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qdv-jc-KAZ" customClass="ClearCancellationButton" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="89" y="15" width="130" height="40"/>
+                            <rect key="frame" x="103" y="15" width="130" height="40"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="40" id="coO-OR-Odz"/>
                                 <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="130" id="hVU-Vv-7vP"/>
@@ -164,7 +198,7 @@
                         </button>
                     </subviews>
                     <constraints>
-                        <constraint firstItem="6Hl-tc-aEX" firstAttribute="leading" secondItem="qdv-jc-KAZ" secondAttribute="trailing" constant="30" id="0MM-nm-WdU"/>
+                        <constraint firstItem="6Hl-tc-aEX" firstAttribute="leading" secondItem="qdv-jc-KAZ" secondAttribute="trailing" constant="16" id="0MM-nm-WdU"/>
                         <constraint firstItem="vPW-B0-7XG" firstAttribute="leading" secondItem="4sn-hB-7GZ" secondAttribute="leading" id="43H-z5-S5L"/>
                         <constraint firstAttribute="trailing" secondItem="vPW-B0-7XG" secondAttribute="trailing" id="78x-FI-jod"/>
                         <constraint firstAttribute="bottom" secondItem="6Hl-tc-aEX" secondAttribute="bottom" constant="15" id="8cS-Rx-1lY"/>
@@ -175,7 +209,7 @@
                     </constraints>
                 </customView>
                 <customView translatesAutoresizingMaskIntoConstraints="NO" id="sl1-5k-ouX">
-                    <rect key="frame" x="0.0" y="0.0" width="409" height="356"/>
+                    <rect key="frame" x="0.0" y="0.0" width="409" height="548"/>
                     <subviews>
                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xpC-hG-u95" customClass="PVPNTextField" customModule="ProtonVPN" customModuleProvider="target">
                             <rect key="frame" x="186" y="100" width="37" height="16"/>
@@ -186,7 +220,7 @@
                             </textFieldCell>
                         </textField>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="s9u-uH-4cD" customClass="LoadingAnimationView" customModule="ProtonVPN" customModuleProvider="target">
-                            <rect key="frame" x="145" y="118" width="120" height="120"/>
+                            <rect key="frame" x="145" y="214" width="120" height="120"/>
                             <constraints>
                                 <constraint firstAttribute="width" secondItem="s9u-uH-4cD" secondAttribute="height" multiplier="1:1" id="GYs-Mv-9Pn"/>
                                 <constraint firstAttribute="height" constant="120" id="Vzc-DV-AwJ"/>
