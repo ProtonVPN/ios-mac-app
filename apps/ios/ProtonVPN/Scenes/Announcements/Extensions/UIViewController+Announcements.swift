@@ -29,7 +29,7 @@ extension UIViewController {
     
     @objc func setupAnnouncements() {
         guard let viewModel = AnnouncementButtonViewModel.shared, viewModel.showAnnouncements else {
-            navigationItem.leftBarButtonItem = nil
+            navigationItem.rightBarButtonItems?.removeAll(where: { $0 is BadgedBarButtonItem })
             return
         }
 
@@ -45,10 +45,10 @@ extension UIViewController {
             button.onTouchUpInside = { [weak self] in
                 self?.announcementsButtonTapped()
             }
-            self?.navigationItem.setLeftBarButton(button, animated: false)
+            self?.navigationItem.rightBarButtonItems?.insert(button, at: 1)
         }
         
-        if navigationItem.leftBarButtonItem == nil {
+        if navigationItem.rightBarButtonItems?.count == 1 {
             if let iconUrl = viewModel.iconUrl {
                 let downloader = ImageDownloader()
                 let urlRequest = URLRequest(url: iconUrl)
