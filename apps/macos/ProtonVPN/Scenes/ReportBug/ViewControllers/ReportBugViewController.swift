@@ -53,7 +53,7 @@ class ReportBugViewController: NSViewController {
     
     private var fieldFont = NSFont.systemFont(ofSize: 14)
     private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
-    
+    private var logs: [URL] = []
     private var logFileUrl: URL? {
         return PMLog.logFile()
     }
@@ -69,7 +69,7 @@ class ReportBugViewController: NSViewController {
         
         // Add app log file
         if let url = logFileUrl {
-            viewModel.add(files: [url])
+            self.logs.append(url)
         }
         // Add ovpn log file
         vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
@@ -79,7 +79,7 @@ class ReportBugViewController: NSViewController {
             }
             // This is NOT inside the last `if`, because there may already be a log file
             if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                viewModel.add(files: [url])
+                self.logs.append(url)
             }
         }
         // Add wireguard log file
@@ -90,7 +90,7 @@ class ReportBugViewController: NSViewController {
             }
             // This is NOT inside the last `if`, because there may already be a log file
             if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                viewModel.add(files: [url])
+                self.logs.append(url)
             }
         }
     }
@@ -170,26 +170,19 @@ class ReportBugViewController: NSViewController {
     }
     
     // MARK: - Button actions
-    
-    @IBAction func didTapIncludeFiles(_ sender: NSButton) {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = true
-        panel.canChooseDirectories = false
-        panel.allowsMultipleSelection = true
-        panel.directoryURL = logFileUrl
-        PMLog.D("\(viewModel.filesCount)")
-        panel.beginSheetModal(for: self.view.window!) { (result) in
-            if result == NSApplication.ModalResponse.OK {
-                self.viewModel.add(files: panel.urls)
-            }
-        }
-    }
-    
+
     @objc func cancelButtonPressed() {
         self.view.window!.performClose(nil)
     }
     
     @objc func sendButtonPressed() {
+        
+        if attachFilesCheckBox.state == .on {
+            viewModel.add(files: logs)
+        } else {
+            viewModel.removeAllFiles()
+        }
+        
         presentLoadingScreen()
         viewModel.send(success: {
             self.hideLoadingScreen()
