@@ -53,7 +53,7 @@ extension UIViewController {
                 let downloader = ImageDownloader()
                 let urlRequest = URLRequest(url: iconUrl)
 
-                downloader.download(urlRequest, completion: { (response: AFIDataResponse<Image>) in
+                downloader.download(urlRequest, filter: AspectScaledToFillSizeFilter(size: CGSize(width: 24, height: 24)), completion: { (response: AFIDataResponse<Image>) in
                     switch response.result {
                     case let .success(image):
                         assign(BadgedBarButtonItem(withImage: image))
