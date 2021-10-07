@@ -1497,31 +1497,19 @@
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
 
-/* Mac bug report: country field label */
-"_report_field_country" = "Country:";
-"_report_field_isp" = "ISP:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "What went wrong?";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Account:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "What are the exact steps you performed?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Plan:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Start typing...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Version:";
-
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Feedback";
-
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Add file";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Max file size limit: 488 KB";
-
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Include app logs and system details";
 
 // Mac main menu
-
 
 /* Main mac app menu item */
 "_menu_about" = "About ProtonVPN";

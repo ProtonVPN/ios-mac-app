@@ -1354,9 +1354,6 @@
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
 
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Обратная связь";
-
 /* (No Comment) */
 "_report_field_isp" = "Интернет-провайдер:";
 

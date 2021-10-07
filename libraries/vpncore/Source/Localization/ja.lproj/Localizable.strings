@@ -1045,9 +1045,6 @@
 /* Mac bug report: email field label */
 "_report_field_email" = "メールアドレス:";
 
-/* Mac bug report: message field label */
-"_report_field_feedback" = "ご意見";
-
 /* Mac bug report: Internet Service Provider field label */
 "_report_field_isp" = "ISP:";
 

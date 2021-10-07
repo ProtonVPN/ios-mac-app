@@ -98,14 +98,11 @@ class ReportBugViewController: NSViewController {
  
     override func viewWillAppear() {
         super.viewWillAppear()
-        
         setupDesign()
         setupTranslations()
         setupLoadingView()
         fillDataFromModel()
         setupButtonActions()
-        setupFilesTable()
-        
 //        viewModel.attachmentsListRefreshed = { [weak self] in
 //            DispatchQueue.main.async { [weak self] in
 //                self?.filesTableView.reloadData()
@@ -117,46 +114,17 @@ class ReportBugViewController: NSViewController {
         horizontalLineEmail.wantsLayer = true
         horizontalLineEmail.layer?.backgroundColor = NSColor.protonLightGrey().cgColor
         sendButton.actionType = .confirmative
-        //        fileSizeLabel.textColor = .protonLightGrey()
-        //        feedbackPlaceholderLabel.textColor = .protonLightGrey()
-        //        feedbackField.backgroundColor = NSColor.protonGrey()
-        //        feedbackField.textColor = NSColor.protonWhite()
-        //        feedbackContainer.backgroundColor = NSColor.protonGrey()
-        //
-        //        feedbackField.font = fieldFont
-        //        [emailField, countryField, ispField].forEach({ element in
-        //            element?.font = fieldFont
-        //        })
-        //
-        //        if #available(OSX 10.14, *) {
-        //            attachmentButton.contentTintColor = .protonGreen()
-        //        }
-    }
-    
-    private func setupFilesTable() {
-//        filesTableView.dataSource = self
-//        filesTableView.delegate = self
-//        filesTableView.ignoresMultiClick = true
-//        filesTableView.selectionHighlightStyle = .none
-//        filesTableView.backgroundColor = .protonGrey()
-//        filesTableView.register(NSNib(nibNamed: NSNib.Name(String(describing: AttachedFileView.self)), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)))
     }
     
     private func setupTranslations() {
-//        descriptionLabel.stringValue = LocalizedString.reportDescription
         emailLabel.stringValue = LocalizedString.reportFieldEmail
-//        contryLabel.stringValue = LocalizedString.reportFieldCountry
-//        fileSizeLabel.stringValue = LocalizedString.reportMaxFileSize
-//        ispLabel.stringValue = LocalizedString.reportFieldIsp
-//        accountLabel.stringValue = LocalizedString.reportFieldAccount
-//        planLabel.stringValue = LocalizedString.reportFieldPlan
-//        versionLabel.stringValue = LocalizedString.reportFieldVersion
         feedbackLabel.stringValue = LocalizedString.reportFieldFeedback
-//        feedbackPlaceholderLabel.stringValue = LocalizedString.reportPlaceholderMessage
+        stepsLabel.stringValue = LocalizedString.reportFieldSteps
+        stepsTextField.placeholderString = LocalizedString.reportFieldPlaceholder
+        feedbackTextField.placeholderString = LocalizedString.reportFieldPlaceholder
         
         cancelButton.title = LocalizedString.cancel
         sendButton.title = LocalizedString.reportSend
-//        attachmentButton.attributedTitle = LocalizedString.reportAddFile.attributed(withColor: .protonGreen(), font: borderlessButtonFont)
     }
     
     private func setupButtonActions() {
@@ -185,7 +153,6 @@ class ReportBugViewController: NSViewController {
 //            planValueLabel.textColor = .protonGreyOutOfFocus()
 //            planValueLabel.stringValue = LocalizedString.unavailable
 //        }
-        renderFeedbackPlaceholder()
     }
     
     private func renderSendButton() {
@@ -246,64 +213,4 @@ class ReportBugViewController: NSViewController {
             self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
         })
     }
-    
-}
-
-// MARK: - Attachments Table
-
-extension ReportBugViewController: NSTableViewDataSource {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.filesCount
-    }
-}
-
-extension ReportBugViewController: NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 30.0
-    }
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)), owner: nil) as! AttachedFileView
-        
-        let rowViewModel = viewModel.fileAttachment(atRow: row)
-        cellView.updateView(viewModel: rowViewModel)
-        
-        return cellView
-    }
-    
-}
-
-// MARK: - Feedback placeholder
-
-extension ReportBugViewController: NSTextViewDelegate {
-    
-    func textDidChange(_ notification: Notification) {
-//        viewModel.set(description: feedbackField.string)
-        renderFeedbackPlaceholder()
-        renderSendButton()
-    }
-    
-    func renderFeedbackPlaceholder() {
-//        feedbackPlaceholderLabel.isHidden = !feedbackField.string.isEmpty
-    }
-    
-}
-
-extension ReportBugViewController: NSTextFieldDelegate {
-    
-    func controlTextDidChange(_ obj: Notification) {
-        guard let field = obj.object as? NSTextField else { return }
-        
-//        if field == emailField {
-//            viewModel.set(email: field.stringValue)
-//        } else if field == countryField {
-//            viewModel.set(country: field.stringValue)
-//        } else if field == ispField {
-//            viewModel.set(isp: field.stringValue)
-//        }
-        renderSendButton()
-    }
-    
 }
