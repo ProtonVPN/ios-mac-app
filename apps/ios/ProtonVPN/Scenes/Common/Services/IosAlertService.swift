@@ -262,8 +262,9 @@ extension IosAlertService: CoreAlertService {
         showNotificationStyleAlert(message: alert.title ?? "", type: .success)
     }
 
-    private func show(_ alert: AnnouncmentOfferAlert ) {
+    private func show(_ alert: AnnouncmentOfferAlert) {
         let vc = AnnouncementDetailViewController(alert.data)
+        vc.modalPresentationStyle = .fullScreen
         vc.cancelled = { [weak self] in
             self?.windowService.dismissModal()
         }
