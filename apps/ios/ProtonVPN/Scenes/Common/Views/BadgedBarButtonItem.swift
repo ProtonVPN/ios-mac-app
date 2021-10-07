@@ -22,16 +22,16 @@
 
 import UIKit
 
-class BadgedBarButtonItem: UIBarButtonItem {
+final class BadgedBarButtonItem: UIBarButtonItem {
     
-    public var badgeColor: UIColor = .protonGreen()
-    public var showBadge: Bool = false {
+    var badgeColor: UIColor = .protonRed()
+    var showBadge: Bool = false {
         didSet {
             badgeView.isHidden = !showBadge
         }
     }
     
-    public var onTouchUpInside: (() -> Void)?
+    var onTouchUpInside: (() -> Void)?
     
     private var button = UIButton()
     private var badgeView = UIView()
@@ -49,7 +49,7 @@ class BadgedBarButtonItem: UIBarButtonItem {
         button.addTarget(self, action: #selector(buttonPressed), for: .touchUpInside)
         button.setImage(image, for: .normal)
         
-        badgeView.frame = CGRect(x: 12, y: 0, width: 10, height: 10)
+        badgeView.frame = CGRect(x: 16, y: 0, width: 5, height: 5)
         badgeView.backgroundColor = badgeColor
         badgeView.clipsToBounds = true
         badgeView.layer.cornerRadius = badgeView.frame.width / 2
@@ -58,7 +58,7 @@ class BadgedBarButtonItem: UIBarButtonItem {
         self.customView = button
     }
     
-    @objc func buttonPressed() {
+    @objc private func buttonPressed() {
         onTouchUpInside?()
     }
     
