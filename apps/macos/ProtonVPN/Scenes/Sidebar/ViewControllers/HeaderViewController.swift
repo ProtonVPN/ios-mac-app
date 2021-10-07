@@ -39,6 +39,7 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
     @IBOutlet private weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
     @IBOutlet private weak var protocolLabel: NSTextField!
+    @IBOutlet private weak var badgeView: NSView!
 
     var announcementsButtonPressed: (() -> Void)?
     
@@ -146,18 +147,20 @@ final class HeaderViewController: NSViewController {
     // MARK: Announcements
     
     @objc func setupAnnouncements() {
+        badgeView.wantsLayer = true
+        badgeView.layer?.cornerRadius = 3
+        badgeView.layer?.backgroundColor = NSColor.protonRed().cgColor
+        badgeView.isHidden = true
+
         guard let viewModel = viewModel, viewModel.showAnnouncements else {
             announcementsButton.isHidden = true
             return
         }
         
         announcementsButton.isHidden = false
-        
-        if viewModel.hasUnreadAnnouncements {
-            announcementsButton.image = NSImage(named: "bell-badge")
-        } else {
-            announcementsButton.image = NSImage(named: "bell")
-        }
+        announcementsButton.image = NSImage(named: "bell")
+
+        badgeView.isHidden = false // !viewModel.hasUnreadAnnouncements
     }
     
     @IBAction private func announcementsButtonTapped(_ sender: Any) {
