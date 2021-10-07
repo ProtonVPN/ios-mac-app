@@ -81,9 +81,6 @@
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
 		D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5906F1722D379C9001BC074 /* AttachedFileView.xib */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
-		D5966FD0253855B30061A75F /* AnnouncementItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FCF253855B30061A75F /* AnnouncementItemView.swift */; };
-		D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5966FD725385B890061A75F /* AnnouncementItemView.xib */; };
-		D5966FE4253885B00061A75F /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FE3253885B00061A75F /* TriangleView.swift */; };
 		D59DC45026C296C700C6A694 /* SystemExtensionsStateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
 		D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */; };
@@ -418,6 +415,10 @@
 		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
+		F352C155270ED5300032C1F6 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F352C153270ED5300032C1F6 /* AnnouncementDetailViewController.swift */; };
+		F352C156270ED5300032C1F6 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = F352C154270ED5300032C1F6 /* AnnouncementDetailViewController.xib */; };
+		F3F6BAB8270F1EB1004D137C /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3F6BAB7270F1EB1004D137C /* AnnouncementFeatureView.swift */; };
+		F3F6BABA270F1ED8004D137C /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3F6BAB9270F1ED8004D137C /* AnnouncementFeatureView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -654,9 +655,6 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5966FCF253855B30061A75F /* AnnouncementItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementItemView.swift; sourceTree = "<group>"; };
-		D5966FD725385B890061A75F /* AnnouncementItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementItemView.xib; sourceTree = "<group>"; };
-		D5966FE3253885B00061A75F /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemExtensionsStateCheck.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/SystemExtensionsStateCheck.swift; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
 		D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
@@ -995,7 +993,11 @@
 		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
+		F352C153270ED5300032C1F6 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
+		F352C154270ED5300032C1F6 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
+		F3F6BAB7270F1EB1004D137C /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
+		F3F6BAB9270F1ED8004D137C /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1564,9 +1566,19 @@
 			name = SupportingFiles;
 			sourceTree = "<group>";
 		};
+		F352C14C270ED3870032C1F6 /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				F3F6BAB6270F1E9D004D137C /* Views */,
+				F3F6BAB5270F1E93004D137C /* ViewControllers */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F352C14C270ED3870032C1F6 /* Announcement */,
 				42BEF9442631760E009180A7 /* Features */,
 				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
@@ -1991,7 +2003,6 @@
 		F36ECE202611DEE00089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F36ECE252611DF260089B898 /* Announcements */,
 				F36ECE242611DF190089B898 /* CountriesSection */,
 				F36ECE262611DF330089B898 /* ProfilesSection */,
 				F36ECE232611DF080089B898 /* QuickSettings */,
@@ -2049,16 +2060,6 @@
 				42918CF1263836410065992E /* CountriesSectionHeaderView.swift */,
 			);
 			path = CountriesSection;
-			sourceTree = "<group>";
-		};
-		F36ECE252611DF260089B898 /* Announcements */ = {
-			isa = PBXGroup;
-			children = (
-				D5966FCF253855B30061A75F /* AnnouncementItemView.swift */,
-				D5966FD725385B890061A75F /* AnnouncementItemView.xib */,
-				D5966FE3253885B00061A75F /* TriangleView.swift */,
-			);
-			path = Announcements;
 			sourceTree = "<group>";
 		};
 		F36ECE262611DF330089B898 /* ProfilesSection */ = {
@@ -2455,6 +2456,24 @@
 			path = Utilities;
 			sourceTree = "<group>";
 		};
+		F3F6BAB5270F1E93004D137C /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				F352C153270ED5300032C1F6 /* AnnouncementDetailViewController.swift */,
+				F352C154270ED5300032C1F6 /* AnnouncementDetailViewController.xib */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		F3F6BAB6270F1E9D004D137C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F3F6BAB7270F1EB1004D137C /* AnnouncementFeatureView.swift */,
+				F3F6BAB9270F1ED8004D137C /* AnnouncementFeatureView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXLegacyTarget section */
@@ -2772,6 +2791,7 @@
 				D557D58A264AC352007E4396 /* country-names.plist in Resources */,
 				42BEF9812631AB1A009180A7 /* StreamOptionCVItem.xib in Resources */,
 				E1454CEE206FC6A900E6D396 /* HelpPopover.xib in Resources */,
+				F3F6BABA270F1ED8004D137C /* AnnouncementFeatureView.xib in Resources */,
 				EEBB82E81F1DF5A60041432A /* Overview.xib in Resources */,
 				423467C8261CEAAF00A73773 /* UserAccountUpdateViewController.xib in Resources */,
 				EEBB82F31F1E0BCF0041432A /* OverviewItem.xib in Resources */,
@@ -2824,12 +2844,12 @@
 				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
 				EE876E0E1F1381C100C9B9C2 /* Main.storyboard in Resources */,
 				D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */,
+				F352C156270ED5300032C1F6 /* AnnouncementDetailViewController.xib in Resources */,
 				EE98CFD21F14E247000D6688 /* GeneralSettings.xib in Resources */,
 				E1B80FE3203E003D00F1D76C /* ConnectingOverlay.xib in Resources */,
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
 				E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */,
 				EE74FCAA1F5DD23400E266BC /* SCUpgradePopup.xib in Resources */,
-				D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */,
 				E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */,
 				E180D15621258EF500F4D1C7 /* TrialAboutToExpire.xib in Resources */,
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
@@ -3176,6 +3196,7 @@
 				EE01DCFF1F5C1CED003D62ED /* SCEntryCountryAnnotationView.swift in Sources */,
 				E1B31815224D23A6004D8171 /* InAppLinkManager.swift in Sources */,
 				42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */,
+				F352C155270ED5300032C1F6 /* AnnouncementDetailViewController.swift in Sources */,
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
 				E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
@@ -3232,7 +3253,6 @@
 				E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
-				D5966FD0253855B30061A75F /* AnnouncementItemView.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
@@ -3365,6 +3385,7 @@
 				EEFE81D21F3F3AE30052A7A6 /* MapSectionViewController.swift in Sources */,
 				EEBB82EF1F1DF6230041432A /* CreateNewProfileViewController.swift in Sources */,
 				E180D1652126C9D300F4D1C7 /* TourNumberViewController.swift in Sources */,
+				F3F6BAB8270F1EB1004D137C /* AnnouncementFeatureView.swift in Sources */,
 				EE98CFE51F15199C000D6688 /* WhiteHoverLinkButton.swift in Sources */,
 				D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */,
 				E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */,
@@ -3373,7 +3394,6 @@
 				EE98CFE71F1519D4000D6688 /* NSImage+Extension.swift in Sources */,
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
 				E9BD02F726D7A32300AAE995 /* WireguardMacProtocolFactory.swift in Sources */,
-				D5966FE4253885B00061A75F /* TriangleView.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				E180D14D2125457200F4D1C7 /* TrialExpiredViewController.swift in Sources */,
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
