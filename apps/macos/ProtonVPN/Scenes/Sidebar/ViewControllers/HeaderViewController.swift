@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SDWebImage
 import vpncore
 
 final class HeaderViewController: NSViewController {
@@ -156,11 +157,22 @@ final class HeaderViewController: NSViewController {
             announcementsButton.isHidden = true
             return
         }
-        
-        announcementsButton.isHidden = false
-        announcementsButton.image = NSImage(named: "bell")
 
-        badgeView.isHidden = false // !viewModel.hasUnreadAnnouncements
+        announcementsButton.isHidden = false
+        announcementsButton.sd_cancelCurrentImageLoad()
+        if let iconUrl = viewModel.announcementIconUrl {
+            announcementsButton.sd_setImage(with: iconUrl) { [weak self] (image, _, _, _) in
+                if let icon = image {
+                    self?.announcementsButton.image = icon
+                } else {
+                    self?.announcementsButton.image = NSImage(named: "bell")
+                }
+                self?.badgeView.isHidden = !viewModel.hasUnreadAnnouncements
+            }
+        } else {
+            announcementsButton.image = NSImage(named: "bell")
+            badgeView.isHidden = !viewModel.hasUnreadAnnouncements
+        }
     }
     
     @IBAction private func announcementsButtonTapped(_ sender: Any) {
