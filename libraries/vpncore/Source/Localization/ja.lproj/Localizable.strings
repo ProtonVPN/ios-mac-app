@@ -1033,9 +1033,6 @@
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "バグの報告";
 
-/* Mac bug report: description text before bug report form */
-"_report_description" = "発生した問題の状況をできるだけ詳細にお知らせください。画面コピーなどのファイルを添付いただくと問題の再現に役立ちます。また、さらに詳細な情報をお伺いする場合もあるため、連絡方法も併せてお知らせください。";
-
 /* Mac bug report: label before username */
 "_report_field_account" = "アカウント:";
 

@@ -1342,9 +1342,6 @@
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Bug melden";
 
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Stellen Sie sicher, de­tail­reiche Informationen sowie Dateien über das Problem mit anzugeben, die uns bei der Reproduktion des Problems hilfreich sein könnten. Geben Sie uns auch eine Möglichkeit, Sie zu kontaktieren, wenn noch weitere Informationen benötigt werden.";
-
 /* Mac bug report: label before username */
 "_report_field_account" = "Konto:";
 
