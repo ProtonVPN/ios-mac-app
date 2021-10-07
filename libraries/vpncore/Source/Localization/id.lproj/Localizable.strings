@@ -1045,9 +1045,6 @@
 /* Mac bug report: email field label */
 "_report_field_email" = "Surel:";
 
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Umpan balik";
-
 /* Mac bug report: Internet Service Provider field label */
 "_report_field_isp" = "ISP:";
 

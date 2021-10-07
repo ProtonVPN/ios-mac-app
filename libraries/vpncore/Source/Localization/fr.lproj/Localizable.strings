@@ -1354,9 +1354,6 @@
 /* Mac bug report: email field label */
 "_report_field_email" = "Adresse électronique :";
 
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Vos commentaires";
-
 /* (No Comment) */
 "_report_field_isp" = "FAI :";
 
