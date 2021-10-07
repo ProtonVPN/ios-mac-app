@@ -9,6 +9,7 @@
         <customObject id="-2" userLabel="File's Owner" customClass="ReportBugViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="attachFilesCheckBox" destination="M4X-e6-EcB" id="gnX-Ev-oMz"/>
+                <outlet property="attachFilesImage" destination="LDc-Mf-wgH" id="pNy-bg-rDq"/>
                 <outlet property="cancelButton" destination="qdv-jc-KAZ" id="XcH-dJ-flN"/>
                 <outlet property="contentContainerView" destination="4sn-hB-7GZ" id="DTx-OJ-4DN"/>
                 <outlet property="emailField" destination="TGQ-qt-jkO" id="etB-jB-urs"/>
@@ -141,6 +142,14 @@
                                         <action selector="didTapIncludeFiles:" target="-2" id="hqG-2H-sG0"/>
                                     </connections>
                                 </button>
+                                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="LDc-Mf-wgH" userLabel="AllowLAN Info Icon">
+                                    <rect key="frame" x="101" y="17" width="15" height="15"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="15" id="EoA-M2-bTR"/>
+                                        <constraint firstAttribute="width" constant="15" id="xWK-kk-k7M"/>
+                                    </constraints>
+                                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="EuB-JN-8kh"/>
+                                </imageView>
                             </subviews>
                             <constraints>
                                 <constraint firstItem="M4X-e6-EcB" firstAttribute="leading" secondItem="vyA-Ro-Oid" secondAttribute="leading" id="8AC-dr-myx"/>
@@ -165,6 +174,8 @@
                                 <constraint firstItem="TGQ-qt-jkO" firstAttribute="leading" secondItem="xCN-TA-CG0" secondAttribute="trailing" constant="8" id="g7h-fT-AUI"/>
                                 <constraint firstItem="xCN-TA-CG0" firstAttribute="leading" secondItem="SwG-VF-4sO" secondAttribute="trailing" constant="4" id="gp5-n3-lCS"/>
                                 <constraint firstItem="zOn-aQ-uMv" firstAttribute="top" secondItem="nIP-uR-P39" secondAttribute="bottom" constant="16" id="iEr-Ow-InL"/>
+                                <constraint firstItem="M4X-e6-EcB" firstAttribute="centerY" secondItem="LDc-Mf-wgH" secondAttribute="centerY" id="iYK-b9-UFh"/>
+                                <constraint firstItem="LDc-Mf-wgH" firstAttribute="leading" secondItem="M4X-e6-EcB" secondAttribute="trailing" constant="8" id="nF9-3g-5UF"/>
                                 <constraint firstItem="vyA-Ro-Oid" firstAttribute="trailing" secondItem="nIP-uR-P39" secondAttribute="trailing" id="nsb-xU-igL"/>
                                 <constraint firstItem="bds-41-CUw" firstAttribute="top" secondItem="SwG-VF-4sO" secondAttribute="bottom" constant="32" id="p6M-l4-JTd"/>
                                 <constraint firstItem="sMK-5C-WQP" firstAttribute="leading" secondItem="TGQ-qt-jkO" secondAttribute="leading" constant="-8" id="pe0-ie-ACk"/>

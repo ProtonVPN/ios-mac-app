@@ -49,7 +49,8 @@ class ReportBugViewController: NSViewController {
     @IBOutlet weak var loadingLabel: PVPNTextField!
     
     @IBOutlet weak var attachFilesCheckBox: NSButton!
-
+    @IBOutlet weak var attachFilesImage: NSImageView!
+    
     private var fieldFont = NSFont.systemFont(ofSize: 14)
     private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
     
@@ -111,6 +112,8 @@ class ReportBugViewController: NSViewController {
         horizontalLineEmail.wantsLayer = true
         horizontalLineEmail.layer?.backgroundColor = NSColor.protonLightGrey().cgColor
         sendButton.actionType = .confirmative
+        attachFilesImage.image = NSImage(named: NSImage.Name("info_green"))
+        attachFilesImage.toolTip = LocalizedString.reportDescription
     }
     
     private func setupTranslations() {
@@ -175,11 +178,11 @@ class ReportBugViewController: NSViewController {
         panel.allowsMultipleSelection = true
         panel.directoryURL = logFileUrl
         PMLog.D("\(viewModel.filesCount)")
-//        panel.beginSheetModal(for: self.view.window!) { (result) in
-//            if result == NSApplication.ModalResponse.OK {
-//                self.viewModel.add(files: panel.urls)
-//            }
-//        }
+        panel.beginSheetModal(for: self.view.window!) { (result) in
+            if result == NSApplication.ModalResponse.OK {
+                self.viewModel.add(files: panel.urls)
+            }
+        }
     }
     
     @objc func cancelButtonPressed() {

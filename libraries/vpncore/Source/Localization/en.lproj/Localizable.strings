@@ -1492,7 +1492,7 @@
 "_report_success" = "Thank you for your report";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Please provide detailed information about the problem that you encountered, and attach any files that will help us reproduce the issue. Also provide us with a way to contact you for more information.";
+"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• Drivers installation log\n• List of installed applications\n• ProtonVPN app and ProtonVPN service logs\n• List of network adapters\n• Routing table information";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";

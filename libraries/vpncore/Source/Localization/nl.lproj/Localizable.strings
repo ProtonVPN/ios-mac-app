@@ -1342,9 +1342,6 @@
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Bug melden";
 
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Geef gedetailleerde informatie over het probleem dat u bent tegengekomen en voeg bestanden toe die ons kunnen helpen het probleem te reproduceren. Geef ons ook een manier om contact met u op te nemen voor meer informatie.";
-
 /* Mac bug report: label before username */
 "_report_field_account" = "Account:";
 
