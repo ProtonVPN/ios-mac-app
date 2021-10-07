@@ -137,7 +137,10 @@ class ReportBugViewController: NSViewController {
     }
     
     private func renderSendButton() {
-        sendButton.isEnabled = viewModel.isSendingPossible && !feedbackTextField.stringValue.isEmpty && !stepsTextField.stringValue.isEmpty
+        sendButton.isEnabled = viewModel.isSendingPossible
+            && emailField.stringValue.isEmail
+            && !feedbackTextField.stringValue.isEmpty
+            && !stepsTextField.stringValue.isEmpty
     }
     
     // MARK: - Loading screen

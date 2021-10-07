@@ -27,13 +27,13 @@ let __regexEmailDomain = "([A-Z0-9a-z]([A-Z0-9a-z-]{0,30}[A-Z0-9a-z])?\\.){1,5}"
 let __regexEmail = __regexEmailUser + "@" + __regexEmailDomain + "[A-Za-z]{2,8}"
 let __emailPredicate = NSPredicate(format: "SELF MATCHES %@", __regexEmail)
 
-extension String {
+public extension String {
     var isEmail: Bool {
         return __emailPredicate.evaluate(with: self)
     }
 }
 
-extension Optional where Wrapped == String {
+public extension Optional where Wrapped == String {
     
     var isEmpty: Bool {
         return self?.isEmpty ?? true
@@ -44,7 +44,7 @@ extension Optional where Wrapped == String {
     }
 
     /// Check if strings are equal. If either of them is null, returns false
-    public func elementsEqual(_ other: String?) -> Bool {
+    func elementsEqual(_ other: String?) -> Bool {
         guard let a = self, let b = other else {
             return false
         }
