@@ -38,6 +38,17 @@ public class AnnouncementsViewModel {
     
     // Data
     private(set) var items: [Announcement] = [Announcement]()
+
+    public var currentItem: Announcement? {
+        let sorted = items.sorted(by: { (lhs, rhs) -> Bool in
+            if let lhsRead = lhs.isRead {
+                return !lhsRead
+            }
+            return false
+        })
+
+        return sorted.first
+    }
     
     // Callbacks
     public var refreshView: (() -> Void)?
@@ -50,13 +61,7 @@ public class AnnouncementsViewModel {
     
     /// Navigate to announcement screen
     public func open() {
-        let sorted = items.sorted(by: { (lhs, rhs) -> Bool in
-            if let lhsRead = lhs.isRead {
-                return !lhsRead
-            }
-            return false
-        })
-        guard let announcement = sorted.first else {
+        guard let announcement = currentItem else {
             return
         }
 
