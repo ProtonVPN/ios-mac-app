@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AnnouncementFeatureView" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="contentView" destination="c22-O7-iKe" id="4XE-r0-BgL"/>
+                <outlet property="iconImageView" destination="Ne1-Bh-hWT" id="gUf-Am-drI"/>
+                <outlet property="titleLabel" destination="x5E-dO-NwT" id="igg-AT-eU2"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="480" height="28"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Ne1-Bh-hWT">
+                    <rect key="frame" x="0.0" y="4" width="24" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="24" id="Nbb-Il-fBi"/>
+                        <constraint firstAttribute="width" constant="24" id="icZ-ku-7rN"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="qev-lP-ZMh"/>
+                </imageView>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="x5E-dO-NwT">
+                    <rect key="frame" x="30" y="2" width="452" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="24" id="63m-dX-39H"/>
+                    </constraints>
+                    <textFieldCell key="cell" allowsUndo="NO" title="Multiline Label" id="BH1-ux-rY5">
+                        <font key="font" metaFont="system" size="14"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="x5E-dO-NwT" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="2" id="10X-7G-wof"/>
+                <constraint firstAttribute="bottom" secondItem="x5E-dO-NwT" secondAttribute="bottom" constant="2" id="KH4-mH-n35"/>
+                <constraint firstAttribute="trailing" secondItem="x5E-dO-NwT" secondAttribute="trailing" id="M67-Vc-0lt"/>
+                <constraint firstItem="Ne1-Bh-hWT" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" id="QFg-0U-6WA"/>
+                <constraint firstItem="Ne1-Bh-hWT" firstAttribute="top" secondItem="x5E-dO-NwT" secondAttribute="top" constant="-2" id="eeE-Bf-obs"/>
+                <constraint firstItem="x5E-dO-NwT" firstAttribute="leading" secondItem="Ne1-Bh-hWT" secondAttribute="trailing" constant="8" id="ky7-j3-7zd"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="144"/>
+        </customView>
+    </objects>
+</document>
