@@ -41,7 +41,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="340" height="170"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
-                                            <rect key="frame" x="38" y="134" width="206" height="16"/>
+                                            <rect key="frame" x="38" y="134" width="218" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -98,8 +98,12 @@
                                             </buttonCell>
                                         </button>
                                         <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="255" y="125" width="50" height="32"/>
-                                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="bell" imagePosition="only" alignment="center" state="on" borderStyle="border" inset="2" id="ghW-7A-Ie1">
+                                            <rect key="frame" x="267" y="123" width="38" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="SXN-7w-IkL"/>
+                                                <constraint firstAttribute="width" constant="24" id="Uno-Zf-iU5"/>
+                                            </constraints>
+                                            <buttonCell key="cell" type="push" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ghW-7A-Ie1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -108,7 +112,7 @@
                                             </connections>
                                         </button>
                                         <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCw-cC-csI">
-                                            <rect key="frame" x="292" y="146" width="6" height="6"/>
+                                            <rect key="frame" x="292" y="148" width="6" height="6"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="6" id="VKy-PG-iXE"/>
                                                 <constraint firstAttribute="width" constant="6" id="k6U-nK-p7Q"/>
@@ -168,7 +172,4 @@
             <point key="canvasLocation" x="140" y="154"/>
         </customView>
     </objects>
-    <resources>
-        <image name="bell" width="20" height="20"/>
-    </resources>
 </document>

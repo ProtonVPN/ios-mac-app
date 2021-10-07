@@ -158,20 +158,31 @@ final class HeaderViewController: NSViewController {
             return
         }
 
-        announcementsButton.isHidden = false
-        announcementsButton.sd_cancelCurrentImageLoad()
-        if let iconUrl = viewModel.announcementIconUrl {
-            announcementsButton.sd_setImage(with: iconUrl) { [weak self] (image, _, _, _) in
-                if let icon = image {
-                    self?.announcementsButton.image = icon
-                } else {
-                    self?.announcementsButton.image = NSImage(named: "bell")
-                }
-                self?.badgeView.isHidden = !viewModel.hasUnreadAnnouncements
+        let setup = { [weak self] (image: NSImage?) in
+            self?.announcementsButton.image = image
+            self?.announcementsButton.isHidden = false
+            self?.badgeView.isHidden = self?.viewModel.hasUnreadAnnouncements != true
+        }
+
+        announcementsButton.isHidden = true
+        guard let iconUrl = viewModel.announcementIconUrl else {
+            setup(NSImage(named: "bell"))
+            return
+        }
+
+        if let cached = SDImageCache.shared.imageFromCache(forKey: iconUrl.absoluteString) {
+            setup(cached)
+            return
+        }
+
+        let downloader = SDWebImageDownloader()
+        downloader.downloadImage(with: iconUrl) { [weak self] (image, _, _, _) in
+            if let icon = image {
+                SDImageCache.shared.store(icon, forKey: iconUrl.absoluteString, completion: nil)
+                setup(icon)
+            } else if self?.announcementsButton.image == nil {
+                setup(NSImage(named: "bell"))
             }
-        } else {
-            announcementsButton.image = NSImage(named: "bell")
-            badgeView.isHidden = !viewModel.hasUnreadAnnouncements
         }
     }
     
