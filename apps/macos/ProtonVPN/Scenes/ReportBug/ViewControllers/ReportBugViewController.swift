@@ -48,6 +48,8 @@ class ReportBugViewController: NSViewController {
     @IBOutlet weak var loadingSymbol: LoadingAnimationView!
     @IBOutlet weak var loadingLabel: PVPNTextField!
     
+    @IBOutlet weak var attachFilesCheckBox: NSButton!
+
     private var fieldFont = NSFont.systemFont(ofSize: 14)
     private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
     
@@ -103,11 +105,6 @@ class ReportBugViewController: NSViewController {
         setupLoadingView()
         fillDataFromModel()
         setupButtonActions()
-//        viewModel.attachmentsListRefreshed = { [weak self] in
-//            DispatchQueue.main.async { [weak self] in
-//                self?.filesTableView.reloadData()
-//            }
-//        }
     }
     
     private func setupDesign() {
@@ -122,15 +119,12 @@ class ReportBugViewController: NSViewController {
         stepsLabel.stringValue = LocalizedString.reportFieldSteps
         stepsTextField.placeholderString = LocalizedString.reportFieldPlaceholder
         feedbackTextField.placeholderString = LocalizedString.reportFieldPlaceholder
-        
+        attachFilesCheckBox.title = LocalizedString.reportAttachmentsCheckbox
         cancelButton.title = LocalizedString.cancel
-        sendButton.title = LocalizedString.reportSend
+        sendButton.title = LocalizedString.submitVerificationCode
     }
     
     private func setupButtonActions() {
-//        attachmentButton.target = self
-//        attachmentButton.action = #selector(addFilePressed)
-        
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonPressed)
         
@@ -140,23 +134,10 @@ class ReportBugViewController: NSViewController {
     
     private func fillDataFromModel() {
         emailField.stringValue = viewModel.getEmail() ?? ""
-//        countryField.stringValue = viewModel.getCountry() ?? ""
-//        ispField.stringValue = viewModel.getISP() ?? ""
-        
-//        accountValueLabel.stringValue = viewModel.getUsername() ?? ""
-//        versionValueLabel.stringValue = viewModel.getClientVersion() ?? ""
-//
-//        if let accountPlan = viewModel.getAccountPlan() {
-//            planValueLabel.textColor = accountPlan.colorForUI
-//            planValueLabel.stringValue = accountPlan.description
-//        } else {
-//            planValueLabel.textColor = .protonGreyOutOfFocus()
-//            planValueLabel.stringValue = LocalizedString.unavailable
-//        }
     }
     
     private func renderSendButton() {
-        sendButton.isEnabled = viewModel.isSendingPossible
+        sendButton.isEnabled = viewModel.isSendingPossible && !feedbackTextField.stringValue.isEmpty && !stepsTextField.stringValue.isEmpty
     }
     
     // MARK: - Loading screen
@@ -184,18 +165,18 @@ class ReportBugViewController: NSViewController {
     
     // MARK: - Button actions
     
-    @objc func addFilePressed() {
+    @IBAction func didTapIncludeFiles(_ sender: NSButton) {
         let panel = NSOpenPanel()
         panel.canChooseFiles = true
         panel.canChooseDirectories = false
         panel.allowsMultipleSelection = true
         panel.directoryURL = logFileUrl
-        
-        panel.beginSheetModal(for: self.view.window!) { (result) in
-            if result == NSApplication.ModalResponse.OK {
-                self.viewModel.add(files: panel.urls)
-            }
-        }
+        PMLog.D("\(viewModel.filesCount)")
+//        panel.beginSheetModal(for: self.view.window!) { (result) in
+//            if result == NSApplication.ModalResponse.OK {
+//                self.viewModel.add(files: panel.urls)
+//            }
+//        }
     }
     
     @objc func cancelButtonPressed() {
@@ -212,5 +193,26 @@ class ReportBugViewController: NSViewController {
             self.hideLoadingScreen()            
             self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
         })
+    }
+}
+
+// MARK: - Feedback placeholder
+
+extension ReportBugViewController: NSTextFieldDelegate {
+
+    func controlTextDidChange(_ obj: Notification) {
+        guard let field = obj.object as? NSTextField else { return }
+        
+        switch field {
+        case emailField:
+            viewModel.set(email: field.stringValue)
+            
+        case stepsTextField, feedbackTextField:
+            let format = LocalizedString.reportFieldFeedback + "\n\n%@\n\n" + LocalizedString.reportFieldSteps + "\n\n%@"
+            viewModel.set(description: String(format: format, feedbackTextField.stringValue, stepsTextField.stringValue))
+        default:
+            return
+        }
+        renderSendButton()
     }
 }
