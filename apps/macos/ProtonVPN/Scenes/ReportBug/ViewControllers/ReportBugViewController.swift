@@ -25,28 +25,21 @@ import vpncore
 
 class ReportBugViewController: NSViewController {
     
-    let viewModel: ReportBugViewModel
+    private let viewModel: ReportBugViewModel
     private let alertService: CoreAlertService
-    
-    @IBOutlet weak var horizontalLineEmail: NSView!
-    
-    @IBOutlet weak var emailLabel: PVPNTextField!
-    @IBOutlet weak var emailField: TextFieldWithFocus!
-    
-    @IBOutlet weak var feedbackLabel: PVPNTextField!
-    @IBOutlet weak var feedbackTextField: NSTextField!
-    
-    @IBOutlet weak var stepsLabel: PVPNTextField!
-    @IBOutlet weak var stepsTextField: NSTextField!
-
-    @IBOutlet weak var cancelButton: ClearCancellationButton!
-    @IBOutlet weak var sendButton: PrimaryActionButton!
-    
-    @IBOutlet weak var contentContainerView: NSView!
-    
-    @IBOutlet weak var loadingView: NSView!
-    @IBOutlet weak var loadingSymbol: LoadingAnimationView!
-    @IBOutlet weak var loadingLabel: PVPNTextField!
+    @IBOutlet private weak var horizontalLineEmail: NSView!
+    @IBOutlet private weak var emailLabel: PVPNTextField!
+    @IBOutlet private weak var emailField: TextFieldWithFocus!
+    @IBOutlet private weak var feedbackLabel: PVPNTextField!
+    @IBOutlet private weak var feedbackTextField: NSTextField!
+    @IBOutlet private weak var stepsLabel: PVPNTextField!
+    @IBOutlet private weak var stepsTextField: NSTextField!
+    @IBOutlet private weak var cancelButton: ClearCancellationButton!
+    @IBOutlet private weak var sendButton: PrimaryActionButton!
+    @IBOutlet private weak var contentContainerView: NSView!
+    @IBOutlet private weak var loadingView: NSView!
+    @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
+    @IBOutlet private weak var loadingLabel: PVPNTextField!
     
     @IBOutlet weak var attachFilesCheckBox: NSButton!
     @IBOutlet weak var attachFilesImage: NSImageView!
