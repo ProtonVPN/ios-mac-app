@@ -200,8 +200,15 @@ extension ReportBugViewController: NSTextFieldDelegate {
             viewModel.set(email: field.stringValue)
             
         case stepsTextField, feedbackTextField:
-            let format = LocalizedString.reportFieldFeedback + "\n\n%@\n\n" + LocalizedString.reportFieldSteps + "\n\n%@"
-            viewModel.set(description: String(format: format, feedbackTextField.stringValue, stepsTextField.stringValue))
+            let description = LocalizedString.reportFieldFeedback
+                + "\n\n"
+                + feedbackTextField.stringValue
+                + "\n\n"
+                + LocalizedString.reportFieldSteps
+                + "\n\n"
+                + stepsTextField.stringValue
+            
+            viewModel.set(description: description)
         default:
             return
         }
