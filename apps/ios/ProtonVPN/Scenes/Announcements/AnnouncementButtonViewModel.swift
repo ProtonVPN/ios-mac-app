@@ -32,36 +32,43 @@ extension DependencyContainer: AnnouncementButtonViewModelFactory {
     }
 }
 
-class AnnouncementButtonViewModel {
+final class AnnouncementButtonViewModel {
     
     // Must be pre-set in AppDelegate!
-    public static var shared: AnnouncementButtonViewModel!
+    static var shared: AnnouncementButtonViewModel!
     
-    public typealias Factory = AnnouncementsServiceFactory & PropertiesManagerFactory & AnnouncementManagerFactory
+    typealias Factory = PropertiesManagerFactory & AnnouncementManagerFactory & AnnouncementsViewModelFactory
     private let factory: Factory
-    
-    private lazy var announcementsService: AnnouncementsService = factory.makeAnnouncementsService()
+
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     
-    public init(factory: Factory) {
+    init(factory: Factory) {
         self.factory = factory
     }
     
     // MARK: Main part
+
+    var iconUrl: URL? {
+        if let icon = announcementsViewModel.currentItem?.offer?.icon, let url = URL(string: icon) {
+            return url
+        }
+        return nil
+    }
     
-    public var showAnnouncements: Bool {
+    var showAnnouncements: Bool {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return !announcementManager.fetchCurrentAnnouncements().isEmpty
     }
     
-    public var hasUnreadAnnouncements: Bool {
+    var hasUnreadAnnouncements: Bool {
         return announcementManager.hasUnreadAnnouncements
     }
-    
-    func announcementsViewController() -> AnnouncementsViewController {
-        return announcementsService.makeAnnouncementsViewController()
+
+    func showAnnouncement() {
+        announcementsViewModel.open()
     }
 }

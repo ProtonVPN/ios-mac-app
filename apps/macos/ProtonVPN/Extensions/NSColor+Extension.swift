@@ -280,6 +280,19 @@ extension NSColor {
                        blue: 85/255,
                        alpha: 1)
     }
+    class func protonHoverEnabled() -> NSColor {
+        return NSColor(red: 37/255,
+                       green: 39/255,
+                       blue: 44/255,
+                       alpha: 1)
+    }
+    
+    class func protonHoverDisabled() -> NSColor {
+        return NSColor(red: 43/255,
+                       green: 43/255,
+                       blue: 49/255,
+                       alpha: 1)
+    }
     
     class func protonBlack() -> NSColor {
         return .black

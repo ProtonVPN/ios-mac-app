@@ -26,19 +26,23 @@ final class VPNLoadsRequest: Request {
     
     let ip: String?
     
-    init( _ ip: String? ) {
+    init(_ ip: String?) {
         self.ip = ip
     }
     
     var path: String {
-        let endpoint = "/vpn/loads"
-        guard let ip = ip else {
-            return endpoint
-        }
-        return endpoint + "?IP=\(ip)"
+        return "/vpn/loads"
     }
 
     var isAuth: Bool {
         return false
+    }
+
+    var header: [String: Any] {
+        if let ip = ip {
+            return ["x-pm-netzone": ip]
+        }
+
+        return [:]
     }
 }

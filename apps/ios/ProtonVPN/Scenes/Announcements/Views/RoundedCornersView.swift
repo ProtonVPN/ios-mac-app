@@ -1,8 +1,8 @@
 //
-//  TriangleView.swift
-//  ProtonVPN - Created on 2020-10-15.
+//  RoundedCornersView.swift
+//  ProtonVPN - Created on 2020-10-21.
 //
-//  Copyright (c) 2019 Proton Technologies AG
+//  Copyright (c) 2021 Proton Technologies AG
 //
 //  This file is part of ProtonVPN.
 //
@@ -20,14 +20,13 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import Cocoa
+import Foundation
+import UIKit
 
-class TriangleView: NSView {
-
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-
-        // Drawing code here.
+final class RoundedCornersView: UIView {
+    override var bounds: CGRect {
+        didSet {
+            layer.cornerRadius = bounds.height / 2
+        }
     }
-    
 }

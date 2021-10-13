@@ -21,6 +21,7 @@
 //
 
 import Cocoa
+import SDWebImage
 import vpncore
 
 final class HeaderViewController: NSViewController {
@@ -39,6 +40,7 @@ final class HeaderViewController: NSViewController {
     @IBOutlet private weak var loadLineHorizontalConstraint3: NSLayoutConstraint!
     @IBOutlet private weak var loadLineHorizontalConstraint4: NSLayoutConstraint!
     @IBOutlet private weak var protocolLabel: NSTextField!
+    @IBOutlet private weak var badgeView: NSView!
 
     var announcementsButtonPressed: (() -> Void)?
     
@@ -146,17 +148,41 @@ final class HeaderViewController: NSViewController {
     // MARK: Announcements
     
     @objc func setupAnnouncements() {
+        badgeView.wantsLayer = true
+        badgeView.layer?.cornerRadius = 3
+        badgeView.layer?.backgroundColor = NSColor.protonRed().cgColor
+        badgeView.isHidden = true
+
         guard let viewModel = viewModel, viewModel.showAnnouncements else {
             announcementsButton.isHidden = true
             return
         }
-        
-        announcementsButton.isHidden = false
-        
-        if viewModel.hasUnreadAnnouncements {
-            announcementsButton.image = NSImage(named: "bell-badge")
-        } else {
-            announcementsButton.image = NSImage(named: "bell")
+
+        let setup = { [weak self] (image: NSImage?) in
+            self?.announcementsButton.image = image
+            self?.announcementsButton.isHidden = false
+            self?.badgeView.isHidden = self?.viewModel.hasUnreadAnnouncements != true
+        }
+
+        announcementsButton.isHidden = true
+        guard let iconUrl = viewModel.announcementIconUrl else {
+            setup(NSImage(named: "bell"))
+            return
+        }
+
+        if let cached = SDImageCache.shared.imageFromCache(forKey: iconUrl.absoluteString) {
+            setup(cached)
+            return
+        }
+
+        let downloader = SDWebImageDownloader()
+        downloader.downloadImage(with: iconUrl) { [weak self] (image, _, _, _) in
+            if let icon = image {
+                SDImageCache.shared.store(icon, forKey: iconUrl.absoluteString, completion: nil)
+                setup(icon)
+            } else if self?.announcementsButton.image == nil {
+                setup(NSImage(named: "bell"))
+            }
         }
     }
     

@@ -56,12 +56,16 @@
 		42F256ED257E36270033633B /* SystemExtensionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F256EC257E36270033633B /* SystemExtensionManager.swift */; };
 		42F63FE92566B66000DE60B2 /* ReconnectingOverlayViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42F63FE82566B66000DE60B2 /* ReconnectingOverlayViewModel.swift */; };
 		42FFE07C255C519100686DB5 /* TextFieldWithPadding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */; };
+		5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */; };
+		5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */; };
+		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
 		7F6A56B3DF09B9572A2FB05E /* Pods_ProtonVPN_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */; };
 		844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */; };
 		851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */; };
 		8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */; };
 		AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */; };
+		BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */; };
 		CCEFA9F416993B0624BEE7E5 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */; };
 		D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
 		D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25B5CBA24583E7C00A3AFB5 /* WrenchIcon.swift */; };
@@ -84,11 +88,6 @@
 		D5906F1522D3795C001BC074 /* AttachedFileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5906F1422D3795C001BC074 /* AttachedFileView.swift */; };
 		D5906F1822D379C9001BC074 /* AttachedFileView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5906F1722D379C9001BC074 /* AttachedFileView.xib */; };
 		D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5911708229F9574005829DA /* ProtonVPNUITests.swift */; };
-		D5966F2625382DAA0061A75F /* AnnouncementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */; };
-		D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */; };
-		D5966FD0253855B30061A75F /* AnnouncementItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FCF253855B30061A75F /* AnnouncementItemView.swift */; };
-		D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5966FD725385B890061A75F /* AnnouncementItemView.xib */; };
-		D5966FE4253885B00061A75F /* TriangleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5966FE3253885B00061A75F /* TriangleView.swift */; };
 		D59DC45026C296C700C6A694 /* SystemExtensionsStateCheck.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */; };
 		D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */; };
 		D5A8813C22CF28F5009B63D1 /* ReportBugViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */; };
@@ -98,7 +97,7 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* WireGuardKit */; };
+		D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */; };
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
@@ -519,6 +518,7 @@
 		10FD08319E3414E8FB8C87CA /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN_WireGuard.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		175C87E18CDDBF7273E34B29 /* Pods-ProtonVPN-mac.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-mac.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-mac/Pods-ProtonVPN-mac.debug.xcconfig"; sourceTree = "<group>"; };
+		17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementDetailViewController.xib; sourceTree = "<group>"; };
 		351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = XPCConnectionsRepository.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/XPCConnectionsRepository.swift; sourceTree = "<group>"; };
 		42082650256BB78600A621EC /* NSView+Children.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSView+Children.swift"; sourceTree = "<group>"; };
 		42082670256BC3B900A621EC /* BlockeableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockeableScrollView.swift; sourceTree = "<group>"; };
@@ -565,6 +565,7 @@
 		42FFE07B255C519100686DB5 /* TextFieldWithPadding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldWithPadding.swift; sourceTree = "<group>"; };
 		45F03F9B62B304014D9F07D2 /* Pods-ProtonVPNTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.release.xcconfig"; sourceTree = "<group>"; };
 		4A0223FF1859E2F464D0A3F7 /* Pods-ProtonVPN WireGuard.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.staging.xcconfig"; sourceTree = "<group>"; };
+		65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementDetailViewController.swift; sourceTree = "<group>"; };
 		65A71CB6D31F355FD456BA35 /* Pods-ProtonVPN OpenVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.release.xcconfig"; sourceTree = "<group>"; };
 		7518A5EF1EEF362900E1EB2B /* libc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libc++.tbd"; path = "usr/lib/libc++.tbd"; sourceTree = SDKROOT; };
 		757322F36CBECB430091B1E5 /* Pods-ProtonVPN OpenVPN.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.debug.xcconfig"; sourceTree = "<group>"; };
@@ -573,6 +574,7 @@
 		8CC9B1E8D9D414B23D1AAAD9 /* Pods-ProtonVPN-mac.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-mac.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-mac/Pods-ProtonVPN-mac.staging.xcconfig"; sourceTree = "<group>"; };
 		8EADC60F8DA3F42CF288EDAE /* Pods-ProtonVPNmacOSTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNmacOSTests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNmacOSTests/Pods-ProtonVPNmacOSTests.release.xcconfig"; sourceTree = "<group>"; };
 		9284811B4C31B0BCAC0918BC /* WireguardMacProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WireguardMacProtocolFactory.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/WireguardMacProtocolFactory.swift; sourceTree = "<group>"; };
+		9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AnnouncementFeatureView.swift; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.swift; sourceTree = "<group>"; };
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A5E7ACED174F96942750130A /* Pods-ProtonVPN OpenVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.staging.xcconfig"; sourceTree = "<group>"; };
 		AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNmacOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -650,11 +652,6 @@
 		D5911706229F9574005829DA /* ProtonVPNmacOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNmacOSUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5911708229F9574005829DA /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D591170A229F9574005829DA /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementsViewController.swift; sourceTree = "<group>"; };
-		D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementsViewController.xib; sourceTree = "<group>"; };
-		D5966FCF253855B30061A75F /* AnnouncementItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnouncementItemView.swift; sourceTree = "<group>"; };
-		D5966FD725385B890061A75F /* AnnouncementItemView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = AnnouncementItemView.xib; sourceTree = "<group>"; };
-		D5966FE3253885B00061A75F /* TriangleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleView.swift; sourceTree = "<group>"; };
 		D59DC44F26C296C700C6A694 /* SystemExtensionsStateCheck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SystemExtensionsStateCheck.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Services/SystemExtensionsStateCheck.swift; sourceTree = "<group>"; };
 		D5A8813522CF282E009B63D1 /* ReportBugWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugWindowController.swift; sourceTree = "<group>"; };
 		D5A8813A22CF28F5009B63D1 /* ReportBugViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportBugViewController.swift; sourceTree = "<group>"; };
@@ -672,6 +669,7 @@
 		D5FD4C1C264C1B30001F26CE /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D70C6E940EE6AF87FD04B1BA /* Pods-ProtonVPN OpenVPN-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN OpenVPN-metadata.plist"; sourceTree = "<group>"; };
 		DADD68E395D8B5C68618B61D /* Pods-ProtonVPN WireGuard.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.release.xcconfig"; sourceTree = "<group>"; };
+		DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../macos/ProtonVPN/Scenes/Announcement/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		E1144E3B22E8D4460087A685 /* ObfuscatedConstants.example.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.example.swift; sourceTree = "<group>"; };
 		E1144E3D22E8D4770087A685 /* ObfuscatedConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ObfuscatedConstants.swift; sourceTree = "<group>"; };
 		E1248884220A18D2005B9A9E /* CodeSignatureComparitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodeSignatureComparitor.swift; sourceTree = "<group>"; };
@@ -1014,7 +1012,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
-				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
+				D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */,
 				AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1107,6 +1105,15 @@
 			path = "ProtonVPN OpenVPN";
 			sourceTree = "<group>";
 		};
+		59FDE4B3A2A3BC26BD32FAE2 /* Announcement */ = {
+			isa = PBXGroup;
+			children = (
+				91CA1173E5C488025F0435F9 /* Views */,
+				9FABC4C1D0FF795FEBC2D1A8 /* ViewControllers */,
+			);
+			path = Announcement;
+			sourceTree = "<group>";
+		};
 		6E59328A6167356242BBBD90 /* Windows */ = {
 			isa = PBXGroup;
 			children = (
@@ -1131,6 +1138,24 @@
 				1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		91CA1173E5C488025F0435F9 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9FDB93D66CF4A7DB23EE7AA8 /* AnnouncementFeatureView.swift */,
+				DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9FABC4C1D0FF795FEBC2D1A8 /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				65229530CD3C602EE8E33CB0 /* AnnouncementDetailViewController.swift */,
+				17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */,
+			);
+			path = ViewControllers;
 			sourceTree = "<group>";
 		};
 		CF4CBD52B87483E7CE0F1406 /* Pods */ = {
@@ -1607,6 +1632,7 @@
 				F36ECE1B2611DE940089B898 /* Sidebar */,
 				F36ECE142611DD900089B898 /* SystemExtension */,
 				F320E02326F08D7A00336F7A /* Upsell & Onboarding */,
+				59FDE4B3A2A3BC26BD32FAE2 /* Announcement */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -1968,8 +1994,6 @@
 		F36ECE1C2611DE9B0089B898 /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				D5966F2425382DAA0061A75F /* AnnouncementsViewController.swift */,
-				D5966F2525382DAA0061A75F /* AnnouncementsViewController.xib */,
 				E1B80FE0203E000100F1D76C /* ConnectingViewController.swift */,
 				E1B80FE4203E109E00F1D76C /* ConnectingWindowController.swift */,
 				EEF7814E1F1A78B800E77B59 /* CountriesSectionViewController.swift */,
@@ -2021,7 +2045,6 @@
 		F36ECE202611DEE00089B898 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				F36ECE252611DF260089B898 /* Announcements */,
 				F36ECE242611DF190089B898 /* CountriesSection */,
 				F36ECE262611DF330089B898 /* ProfilesSection */,
 				F36ECE232611DF080089B898 /* QuickSettings */,
@@ -2079,16 +2102,6 @@
 				42918CF1263836410065992E /* CountriesSectionHeaderView.swift */,
 			);
 			path = CountriesSection;
-			sourceTree = "<group>";
-		};
-		F36ECE252611DF260089B898 /* Announcements */ = {
-			isa = PBXGroup;
-			children = (
-				D5966FCF253855B30061A75F /* AnnouncementItemView.swift */,
-				D5966FD725385B890061A75F /* AnnouncementItemView.xib */,
-				D5966FE3253885B00061A75F /* TriangleView.swift */,
-			);
-			path = Announcements;
 			sourceTree = "<group>";
 		};
 		F36ECE262611DF330089B898 /* ProfilesSection */ = {
@@ -2527,7 +2540,7 @@
 			);
 			name = "ProtonVPN WireGuard";
 			packageProductDependencies = (
-				D5CA559526A59A9A001E9284 /* WireGuardKit */,
+				D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -2676,7 +2689,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
+				D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -2784,7 +2797,6 @@
 				F3021D5B25E932FA00EF73A1 /* TroubleshootingPopup.xib in Resources */,
 				EE3B38011F436E14008DF9E7 /* ProfilesTabBar.xib in Resources */,
 				EEA556371F1F4E100061F43F /* ColorPicker.xib in Resources */,
-				D5966F2725382DAA0061A75F /* AnnouncementsViewController.xib in Resources */,
 				42BEF94926317670009180A7 /* FeaturesOverlayViewController.xib in Resources */,
 				EE24A3981F1BC7D000B70949 /* FooterItem.xib in Resources */,
 				E156C19C20BDA5920054E935 /* StatusMenu.xib in Resources */,
@@ -2802,11 +2814,12 @@
 				EE98CFE11F15100F000D6688 /* About.xib in Resources */,
 				E18262AF21302ED100A6A48F /* dsa_pub.pem in Resources */,
 				EE74FCAA1F5DD23400E266BC /* SCUpgradePopup.xib in Resources */,
-				D5966FD825385B890061A75F /* AnnouncementItemView.xib in Resources */,
 				E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */,
 				EE7874A21F3B63C7001E261E /* WarningPopup.xib in Resources */,
 				EE4943EC1F29BE3600CF980F /* Login.xib in Resources */,
 				851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */,
+				BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */,
+				62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3206,7 +3219,6 @@
 				E12657A220ED01E6004A21C4 /* GreenHighlightButton.swift in Sources */,
 				D25B5CBB24583E7C00A3AFB5 /* WrenchIcon.swift in Sources */,
 				E1420A71209B56A600697461 /* ConnectionSettingsViewController.swift in Sources */,
-				D5966FD0253855B30061A75F /* AnnouncementItemView.swift in Sources */,
 				EE5CF7721F4DE7E80002BBF3 /* FirstLaunchRoutine.swift in Sources */,
 				D5A8813722CF282E009B63D1 /* ReportBugWindowController.swift in Sources */,
 				EE2FE5951F5ED5BF00ABA7DE /* DisablingView.swift in Sources */,
@@ -3340,7 +3352,6 @@
 				E17C1D0720EB6DF000DCC687 /* HoverDetectionButtonAdvanced.swift in Sources */,
 				EE98CFE71F1519D4000D6688 /* NSImage+Extension.swift in Sources */,
 				EE7275501F29E7D4002748C6 /* LoginViewModel.swift in Sources */,
-				D5966FE4253885B00061A75F /* TriangleView.swift in Sources */,
 				EE24A39D1F1BCA1A00B70949 /* FooterItemView.swift in Sources */,
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
@@ -3368,7 +3379,6 @@
 				E1B9A7D0203EBD30009677BC /* ConnectingOverlayButton.swift in Sources */,
 				423467C7261CEAAF00A73773 /* UserAccountUpdateViewController.swift in Sources */,
 				EEFE81D71F3F41B10052A7A6 /* MapHeaderViewModel.swift in Sources */,
-				D5966F2625382DAA0061A75F /* AnnouncementsViewController.swift in Sources */,
 				E9AF94C826B7F8E000AA1A5F /* MacVpnCredentialsConfiguratorFactory.swift in Sources */,
 				E13464DC2035BA5C00C0DB7D /* NetworkStatistics.swift in Sources */,
 				EE27DB581F4759A600D2FF2B /* AppSessionManager.swift in Sources */,
@@ -3395,6 +3405,8 @@
 				3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */,
 				09A7611B37870D3AFF300CF6 /* WireguardMacProtocolFactory.swift in Sources */,
 				00812A4F085892E5DCCEE741 /* SysexGuideWindowController.swift in Sources */,
+				5553CE25D76277AC1F78D477 /* AnnouncementDetailViewController.swift in Sources */,
+				5AD7615A4525DAA15F6ED3BF /* AnnouncementFeatureView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4410,7 +4422,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
+		D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4421,9 +4433,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
+		D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
+			package = D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
