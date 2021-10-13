@@ -36,7 +36,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage = AnnouncementStorageMock()
         manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
         safariService = SafariServiceMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService))
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock()))
         
     }
     
@@ -46,7 +46,7 @@ class AnnouncementsViewModelTests: XCTestCase {
     func testTakesDataFromTheStorage(){
         XCTAssert(viewModel.items.count == 0)
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: ""))])
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: "", panel: nil))])
         
         XCTAssert(viewModel.items.count == 1)
     }
@@ -57,7 +57,7 @@ class AnnouncementsViewModelTests: XCTestCase {
             expectationViewRefreshed.fulfill()
         }
         
-        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: ""))])
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: "", icon: "", panel: nil))])
         
         wait(for: [expectationViewRefreshed], timeout:0.2)
     }
@@ -67,9 +67,9 @@ class AnnouncementsViewModelTests: XCTestCase {
         XCTAssert(safariService.lastUrl == nil)
         
         let url = "http://link.url"
-        let announcement = Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: url, icon: ""))
+        storage.store([Announcement(notificationID: "1", startTime: Date(), endTime: Date(timeIntervalSinceNow: 888), type: 0, offer: Offer(label: "", url: url, icon: "", panel: nil))])
         
-        viewModel.open(announcement: announcement)
+        viewModel.open()
         
         XCTAssert(safariService.openCount == 1)
         XCTAssert(safariService.lastUrl?.starts(with: url) ?? false)
@@ -81,10 +81,12 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
 
     public var announcementManager: AnnouncementManager
     public var safariService: SafariServiceProtocol
+    public var coreAlertService: CoreAlertService
     
-    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol) {
+    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService) {
         self.announcementManager = announcementManager
         self.safariService = safariService
+        self.coreAlertService = coreAlertService
     }
     
     func makeAnnouncementManager() -> AnnouncementManager {
@@ -94,7 +96,10 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
     func makeSafariService() -> SafariServiceProtocol {
         return safariService
     }
-    
+
+    func makeCoreAlertService() -> CoreAlertService {
+        return coreAlertService
+    }
 }
 
 fileprivate class AnnouncementManagerImplementationFactoryMock: AnnouncementManagerImplementation.Factory {

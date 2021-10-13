@@ -33,7 +33,7 @@ protocol HeaderViewModelFactory {
 
 final class HeaderViewModel {
     
-    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory
+    public typealias Factory = AnnouncementManagerFactory & AppStateManagerFactory & PropertiesManagerFactory & CoreAlertServiceFactory & ProfileManagerFactory & NavigationServiceFactory & VpnGatewayFactory & AnnouncementsViewModelFactory
     private let factory: Factory
     
     private let serverStorage = ServerStorageConcrete()
@@ -44,6 +44,7 @@ final class HeaderViewModel {
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
+    private lazy var announcementsViewModel: AnnouncementsViewModel = factory.makeAnnouncementsViewModel()
     
     var contentChanged: (() -> Void)?
     
@@ -120,15 +121,22 @@ final class HeaderViewModel {
     
     // MARK: - Announcements bell
     
-    public var showAnnouncements: Bool {
+    var showAnnouncements: Bool {
         guard propertiesManager.featureFlags.pollNotificationAPI else {
             return false
         }
         return !announcementManager.fetchCurrentAnnouncements().isEmpty
     }
     
-    public var hasUnreadAnnouncements: Bool {
+    var hasUnreadAnnouncements: Bool {
         return announcementManager.hasUnreadAnnouncements
+    }
+
+    var announcementIconUrl: URL? {
+        if let icon = announcementsViewModel.currentItem?.offer?.icon, let url = URL(string: icon) {
+            return url
+        }
+        return nil
     }
     
     // MARK: - Private functions

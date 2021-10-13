@@ -61,7 +61,7 @@ final class ServerViewCell: UITableViewCell {
             cityNameLabel.isHidden = viewModel.viaCountry != nil
             secureView.isHidden = viewModel.viaCountry == nil
             
-            smartIV.isHidden = !viewModel.smartAvailable
+            smartIV.isHidden = !viewModel.isSmartAvailable
             torIV.isHidden = !viewModel.torAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
             streamingIV.isHidden = !viewModel.streamingAvailable

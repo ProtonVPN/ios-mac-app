@@ -45,8 +45,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private var activeController: NSViewController!
     private var viewToggle: NSNotification.Name!
     
-    private var announcementsViewController: AnnouncementsViewController!
-    
     private var overlayWindowController: ConnectingWindowController?
     private var fadeOutOverlayTask: DispatchWorkItem?
     private var loading = false
@@ -65,6 +63,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & CoreAlertServiceFactory
         & SystemExtensionsStateCheckFactory
         & CoreAlertServiceFactory
+        & AnnouncementsViewModelFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
@@ -91,6 +90,10 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     private lazy var mapSectionViewModel: MapSectionViewModel = {
         return factory.makeMapSectionViewModel(viewToggle: self.viewToggle)
     }()
+
+    private lazy var announcementsViewModel: AnnouncementsViewModel = {
+        return factory.makeAnnouncementsViewModel()
+    }()
     
     // MARK: Functions
     override func viewDidLoad() {
@@ -98,7 +101,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         
         setupMainView()
         setupHeader()
-        setupAnnouncements()
         setupTabBar()
         tabBarViewController.activeTab = .countries
         
@@ -126,10 +128,6 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(occlusionStateChanged(_:)),
                                                name: NSApplication.didChangeOcclusionStateNotification,
-                                               object: nil)
-        NotificationCenter.default.addObserver(self,
-                                               selector: #selector(checkAnnouncementsRendering),
-                                               name: AnnouncementStorageNotifications.contentChanged,
                                                object: nil)
 
     }
@@ -314,35 +312,14 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     
     private func setupHeader() {
         headerViewController = HeaderViewController(viewModel: factory.makeHeaderViewModel())
-        headerViewController.announcementsButtonPressed = { [weak self] in self?.announcementsButtonPressed() }
+        headerViewController.announcementsButtonPressed = { [weak self] in
+            self?.announcementsViewModel.open()
+        }
         headerControllerViewContainer.pin(viewController: headerViewController)
         
         expandButton.target = self
         expandButton.action = #selector(expandButtonAction(_:))
         expandButton.expandState = .compact
-    }
-    
-    private func setupAnnouncements() {
-        announcementsViewController = AnnouncementsViewController(viewModel: factory.makeAnnouncementsViewModel())
-        announcementsViewController.closeCallback = { [weak self] in
-            self?.announcementsControllerViewContainer.isHidden = true
-        }
-        announcementsControllerViewContainer.translatesAutoresizingMaskIntoConstraints = false
-        announcementsControllerViewContainer.pin(viewController: announcementsViewController)
-        announcementsControllerViewContainer.isHidden = true
-        announcementsControllerViewContainer.wantsLayer = true
-        announcementsControllerViewContainer.layer?.masksToBounds = false
-    }
-    
-    private func announcementsButtonPressed() {
-        announcementsControllerViewContainer.isHidden = !announcementsControllerViewContainer.isHidden
-    }
-    
-    @objc private func checkAnnouncementsRendering(notification: NSNotification) {
-        guard let array = notification.object as? [Any] else { return }
-        if array.isEmpty {
-            announcementsControllerViewContainer.isHidden = true
-        }
     }
     
     private func setupTabBar() {

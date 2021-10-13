@@ -23,14 +23,6 @@
 import XCTest
 
 class StringCleanup: XCTestCase {
-
-    func testRemovesIPFromUrl() throws {
-        let startPart = "https://protonmail.com/api/vpn/logicals?IP="
-        let string = "\(startPart)10.10.10.10"
-        let clean = string.cleanedForLog
-        XCTAssert(clean == "\(startPart)X.X.X.X")
-    }
-    
     func testRemoveSubstring() throws {
         let string = "username+f1+pm"
         let clean = string.removeSubstring(startingWithCharacter: "+")
