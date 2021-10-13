@@ -43,8 +43,9 @@ class DefaultProfileTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        label.textColor = .protonWhite()    }
+        backgroundColor = .backgroundColor()
+        label.textColor = .normalTextColor()
+    }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)

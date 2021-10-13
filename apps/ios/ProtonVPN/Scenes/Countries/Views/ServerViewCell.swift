@@ -114,7 +114,7 @@ final class ServerViewCell: UITableViewCell {
     private func renderConnectButton() {
         let isConnected = viewModel?.connectedUiState ?? false
         let maintenance = viewModel?.underMaintenance ?? false
-        connectButton.backgroundColor = isConnected ? .protonGreen() : (maintenance ? .protonDarkGrey() :  .protonLightGrey())
+        connectButton.backgroundColor = isConnected ? .brandColor() : (maintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
         
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)

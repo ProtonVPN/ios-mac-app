@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch protège votre adresse IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu. Notez que votre connexion VPN sera interrompue lorsque vous changerez de compte Mac.";
+"_kill_switch_tooltip" = "Bloque tout le trafic réseau lorsque le tunnel VPN est perdu.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Ne plus me demander";
@@ -1219,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocole";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Modifiez le protocole de votre connexion VPN";
-
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN macOS";
 
@@ -1625,10 +1622,10 @@
 "_sysex_cannot_enable" = "Impossible d'activer l'extension système";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Vous avez correctement activé l'extension système sur votre appareil. Vous pouvez maintenant utiliser Smart Protocol, OpenVPN et Wireguard.";
+"_sysex_enabled_description" = "Configuration terminée. Vous pouvez désormais naviguer sur Internet plus rapidement avec les meilleures technologies VPN.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Vous pouvez maintenant utiliser Smart Protocol, OpenVPN et Wireguard";
+"_sysex_enabled_title" = "Configuration terminée";
 
 /* (No Comment) */
 "_sysex_error_description" = "Une erreur s'est produite lors de l'installation de l'extension système.\nRéinstallez ProtonVPN, assurez-vous qu'il se trouve dans le dossier Applications pour résoudre ce problème. Sinon, contactez notre assistance.";
@@ -1640,19 +1637,22 @@
 "_sysex_settings_title" = "Extension système requise";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Commencer la configuration manuelle";
+"_sysex_wizard_button" = "Begin configuration";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Cliquez sur « Ouvrir les préférences de sécurité » dans\n les boîtes de dialogue suivantes (2)";
+"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Cliquez sur « Ouvrir les préférences de sécurité » dans\n la boîte de dialogue suivante";
+"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+
+/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
+"_sysex_wizard_step1_description_link" = "ici";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Alertes « Extension système bloquée » (x2)";
+"_sysex_wizard_step1_title" = "Open Security Preferences";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Alerte « Extension système bloquée »";
+"_sysex_wizard_step1_title_1" = "Open Security Preferences";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Cliquez sur le cadenas pour apporter des modifications";
@@ -1685,7 +1685,7 @@
 "_sysex_wizard_step5_title" = "Sélection d'éléments ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Pour ce faire, vous devez effectuer une configuration manuelle rapide dans l'ordre suivant :";
+"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Vous êtes maintenant prêt pour utiliser ProtonVPN avec les technologies VPN les plus récentes et rapides disponibles !";

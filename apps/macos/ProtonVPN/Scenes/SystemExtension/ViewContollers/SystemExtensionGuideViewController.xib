@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19158" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19162" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19158"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19162"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="SystemExtensionGuideViewController" customModule="ProtonVPN" customModuleProvider="target">
             <connections>
                 <outlet property="confirmationButton" destination="MBG-X6-r1F" id="iFy-kP-tUD"/>
-                <outlet property="imageDescription" destination="W6k-52-GHM" id="jzB-It-WcU"/>
+                <outlet property="imageDescription" destination="LEN-6y-HxU" id="4KU-Fc-blr"/>
                 <outlet property="imageView" destination="2Sf-nP-nbc" id="ULA-hD-GxI"/>
                 <outlet property="nextBtn" destination="jNI-jo-5Gr" id="zXm-0d-y8p"/>
                 <outlet property="previousBtn" destination="OvP-Nr-IYl" id="cSD-pj-pfY"/>
@@ -24,7 +24,7 @@
                 <outlet property="step5number" destination="rQH-ah-4pu" id="C4b-Id-eKy"/>
                 <outlet property="step5title" destination="gO3-5M-Jqx" id="7Lt-7t-6kD"/>
                 <outlet property="subtitleView" destination="dCG-LN-UNb" id="lR0-5H-1ML"/>
-                <outlet property="textUnderSteps" destination="c9S-mg-1qE" id="T1M-dD-PFZ"/>
+                <outlet property="textUnderSteps" destination="c9S-mg-1qE" id="01z-nO-QOo"/>
                 <outlet property="titleView" destination="hNx-Tb-i5F" id="0bZ-sO-tma"/>
                 <outlet property="view" destination="N7u-Y1-vHg" id="stT-Un-kGS"/>
             </connections>
@@ -332,10 +332,10 @@
                             </customSpacing>
                         </stackView>
                         <customView translatesAutoresizingMaskIntoConstraints="NO" id="7rs-Su-G9W">
-                            <rect key="frame" x="486" y="152" width="400" height="330"/>
+                            <rect key="frame" x="486" y="110" width="400" height="372"/>
                             <subviews>
                                 <stackView distribution="fill" orientation="horizontal" alignment="centerY" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="9kS-Qc-9kx">
-                                    <rect key="frame" x="0.0" y="70" width="400" height="260"/>
+                                    <rect key="frame" x="0.0" y="112" width="400" height="260"/>
                                     <subviews>
                                         <button translatesAutoresizingMaskIntoConstraints="NO" id="OvP-Nr-IYl" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="112" width="36" height="36"/>
@@ -384,26 +384,57 @@
                                         <real value="3.4028234663852886e+38"/>
                                     </customSpacing>
                                 </stackView>
-                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="W6k-52-GHM">
-                                    <rect key="frame" x="-2" y="0.0" width="404" height="38"/>
-                                    <textFieldCell key="cell" alignment="center" id="k8d-9u-tAF">
-                                        <font key="font" metaFont="systemBold" size="14"/>
-                                        <string key="title">_Click the “Open Security Preferences” in
-the following dialog boxes (2)_</string>
-                                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
+                                <scrollView borderType="none" horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MJl-iW-elh">
+                                    <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                    <clipView key="contentView" drawsBackground="NO" id="5cG-08-uS5">
+                                        <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                        <subviews>
+                                            <textView importsGraphics="NO" richText="NO" verticallyResizable="YES" smartInsertDelete="YES" id="LEN-6y-HxU" customClass="PVPNTextViewLink" customModule="ProtonVPN" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="0.0" width="400" height="80"/>
+                                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" red="0.1176470588" green="0.1176470588" blue="0.1176470588" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <size key="minSize" width="400" height="80"/>
+                                                <size key="maxSize" width="400" height="10000000"/>
+                                                <attributedString key="textStorage">
+                                                    <fragment>
+                                                        <string key="content">_Click on "Begin configuration". Two dialogs will appear, then click on "Open Security Preferences".
+Alternatively, click here to open the same settings._</string>
+                                                        <attributes>
+                                                            <color key="NSColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <font key="NSFont" metaFont="systemBold" size="14"/>
+                                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                                        </attributes>
+                                                    </fragment>
+                                                </attributedString>
+                                                <color key="insertionPointColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                            </textView>
+                                        </subviews>
+                                        <color key="backgroundColor" red="0.11764705882352941" green="0.11764705882352941" blue="0.11764705882352941" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
+                                    </clipView>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="80" id="nfG-H0-mLp"/>
+                                    </constraints>
+                                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" horizontal="YES" id="jRb-ys-xjV">
+                                        <rect key="frame" x="-100" y="-100" width="240" height="16"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </scroller>
+                                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="KCM-gD-B6M">
+                                        <rect key="frame" x="384" y="0.0" width="16" height="80"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                    </scroller>
+                                </scrollView>
                             </subviews>
                             <constraints>
-                                <constraint firstItem="W6k-52-GHM" firstAttribute="leading" secondItem="7rs-Su-G9W" secondAttribute="leading" id="DwS-eH-2Tv"/>
-                                <constraint firstAttribute="height" constant="330" id="Pqn-u4-Ms0"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="330" id="Pqn-u4-Ms0"/>
                                 <constraint firstItem="9kS-Qc-9kx" firstAttribute="leading" secondItem="7rs-Su-G9W" secondAttribute="leading" id="RPs-Jh-6b2"/>
-                                <constraint firstAttribute="trailing" secondItem="W6k-52-GHM" secondAttribute="trailing" id="Twt-ri-clo"/>
-                                <constraint firstItem="W6k-52-GHM" firstAttribute="top" secondItem="9kS-Qc-9kx" secondAttribute="bottom" constant="32" id="cYI-uy-QQQ"/>
                                 <constraint firstItem="9kS-Qc-9kx" firstAttribute="top" secondItem="7rs-Su-G9W" secondAttribute="top" id="duB-He-Ug0"/>
-                                <constraint firstAttribute="bottom" secondItem="W6k-52-GHM" secondAttribute="bottom" id="f9k-gW-y78"/>
+                                <constraint firstAttribute="bottom" secondItem="MJl-iW-elh" secondAttribute="bottom" id="eT0-e6-OGO"/>
                                 <constraint firstAttribute="trailing" secondItem="9kS-Qc-9kx" secondAttribute="trailing" id="fNq-0g-j74"/>
+                                <constraint firstItem="MJl-iW-elh" firstAttribute="top" secondItem="9kS-Qc-9kx" secondAttribute="bottom" constant="32" id="fd5-Ij-DFH"/>
+                                <constraint firstItem="MJl-iW-elh" firstAttribute="leading" secondItem="7rs-Su-G9W" secondAttribute="leading" id="lbo-Jg-hVE"/>
+                                <constraint firstAttribute="trailing" secondItem="MJl-iW-elh" secondAttribute="trailing" id="ttI-cG-UKM"/>
                                 <constraint firstAttribute="width" constant="400" id="uLN-eO-NxB"/>
                             </constraints>
                         </customView>
@@ -429,8 +460,8 @@ the following dialog boxes (2)_</string>
                     </subviews>
                     <constraints>
                         <constraint firstAttribute="height" constant="740" id="2Rr-Pb-hlQ"/>
+                        <constraint firstAttribute="bottom" secondItem="MBG-X6-r1F" secondAttribute="bottom" constant="48" id="3bA-Lt-4ao"/>
                         <constraint firstItem="MBG-X6-r1F" firstAttribute="centerX" secondItem="jNA-mD-boC" secondAttribute="centerX" id="BFx-La-qb4"/>
-                        <constraint firstItem="MBG-X6-r1F" firstAttribute="top" secondItem="7rs-Su-G9W" secondAttribute="bottom" constant="64" id="CQ5-co-iiv"/>
                         <constraint firstItem="hNx-Tb-i5F" firstAttribute="top" secondItem="jNA-mD-boC" secondAttribute="top" constant="64" id="ER7-FW-kQg"/>
                         <constraint firstAttribute="trailing" secondItem="hNx-Tb-i5F" secondAttribute="trailing" constant="240" id="Si8-gY-0C8"/>
                         <constraint firstItem="7rs-Su-G9W" firstAttribute="leading" secondItem="7D2-Jt-e4J" secondAttribute="trailing" constant="16" id="Y4c-0Q-Z2K"/>
@@ -454,7 +485,7 @@ the following dialog boxes (2)_</string>
                 <constraint firstAttribute="trailing" secondItem="jNA-mD-boC" secondAttribute="trailing" id="U0z-0K-eAl"/>
                 <constraint firstItem="jNA-mD-boC" firstAttribute="leading" secondItem="N7u-Y1-vHg" secondAttribute="leading" id="unm-Ka-3WB"/>
             </constraints>
-            <point key="canvasLocation" x="174.5" y="49"/>
+            <point key="canvasLocation" x="174.5" y="63"/>
         </customView>
     </objects>
     <resources>

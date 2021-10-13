@@ -30,7 +30,7 @@ class ButtonTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
+        backgroundColor = .secondaryBackgroundColor()
         button.titleLabel?.font = UIFont.systemFont(ofSize: 17)
     }
     

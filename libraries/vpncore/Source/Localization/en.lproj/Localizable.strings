@@ -1128,9 +1128,6 @@
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "On app start, you are connected to the selected profile";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Change the protocol of your VPN connection";
-
 /* MacOS: Settings -> Connection: description. */
 "_quick_connect_tooltip" = "Quick Connect button will connect you to the selected profile";
 
@@ -1690,8 +1687,8 @@
 "_sysex_settings_title" = "System Extension required";
 "_sysex_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
 
-"_sysex_enabled_title" = "You can now use Smart Protocol, OpenVPN and WireGuard";
-"_sysex_enabled_description" = "You have successfully enabled the System Extension on your device. You can now use Smart Protocol, OpenVPN and WireGuard.";
+"_sysex_enabled_title" = "Configuration completed";
+"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
 
 "_sysex_cannot_enable" = "Cannot enable System Extension";
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
@@ -1703,17 +1700,20 @@
 /* System exetnsion wizard in mac: Main title */
 "_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, you have to do a quick manual configuration in the following sequence:";
+"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "“System Extension Blocked” alerts (x2)";
+"_sysex_wizard_step1_title" = "Open Security Preferences";
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click the “Open Security Preferences” in\n the following dialog boxes (2)";
+"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "“System Extension Blocked” alert";
+"_sysex_wizard_step1_title_1" = "Open Security Preferences";
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click the “Open Security Preferences” in\n the following dialog box";
+"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+
+/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
+"_sysex_wizard_step1_description_link" = "here";
 
 /* System exetnsion wizard in mac: Step nr.2 title */
 "_sysex_wizard_step2_title" = "Unlock to make changes";
@@ -1743,7 +1743,7 @@
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "You’re now ready to use ProtonVPN with the latest and fastest VPN technologies available!";
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Begin manual configuration";
+"_sysex_wizard_button" = "Begin configuration";
 
 
 

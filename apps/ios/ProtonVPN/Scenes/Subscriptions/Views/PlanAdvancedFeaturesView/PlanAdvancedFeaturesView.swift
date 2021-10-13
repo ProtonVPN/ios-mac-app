@@ -66,16 +66,16 @@ class PlanAdvancedFeaturesView: UIView {
  
     private func setupDesign() {
         ticks.forEach { tickImageView in
-            tickImageView.tintColor = .protonGreen()
+            tickImageView.tintColor = .brandColor()
         }
         
         [titleLabel, serversValueLabel, speedValueLabel, connectionsValueLabel].forEach { label in
-            label?.textColor = .protonGreen()
+            label?.textColor = .brandColor()
         }
         
-        popularHolder.backgroundColor = .protonGreen()
+        popularHolder.backgroundColor = .brandColor()
         
-        backgroundView.backgroundColor = .protonGrey()
+        backgroundView.backgroundColor = .backgroundColor()
         backgroundView.clipsToBounds = true
         backgroundView.layer.cornerRadius = 10
         

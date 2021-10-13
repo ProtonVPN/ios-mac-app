@@ -45,12 +45,12 @@ class RoundCheckboxView: UIView {
     }
     
     private func setupView() {
-        self.backgroundColor = .protonTransparent()
+        self.backgroundColor = .clear
         switch state {
         case .on:
-            backgroundView.backgroundColor = .protonGreen()
+            backgroundView.backgroundColor = .brandColor()
         case .off:
-            backgroundView.backgroundColor = .protonWhite()
+            backgroundView.backgroundColor = .normalTextColor()
         }
     }
     

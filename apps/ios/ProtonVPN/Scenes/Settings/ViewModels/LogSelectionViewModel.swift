@@ -27,7 +27,7 @@ class LogSelectionViewModel {
     
     var tableViewData: [TableViewSection] {
         let sections: [TableViewSection] = [
-            TableViewSection(title: "", cells: logCells)
+            TableViewSection(title: "", showHeader: false, cells: logCells)
         ]
         return sections
     }

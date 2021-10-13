@@ -49,16 +49,16 @@ class StandardTableViewCell: UITableViewCell {
     }
     
     private func setupViews(inverted: Bool = false) {
-        backgroundColor = .protonGrey()
+        backgroundColor = .secondaryBackgroundColor()
         titleLabel.font = UIFont.systemFont(ofSize: 17)
         subtitleLabel.font = UIFont.systemFont(ofSize: 17)
         
         if !inverted {
-            titleLabel.textColor = .protonWhite()
-            subtitleLabel.textColor = .protonFontLightGrey()
+            titleLabel.textColor = .normalTextColor()
+            subtitleLabel.textColor = .weakTextColor()
         } else {
-            titleLabel.textColor = .protonFontLightGrey()
-            subtitleLabel.textColor = .protonWhite()
+            titleLabel.textColor = .weakTextColor()
+            subtitleLabel.textColor = .normalTextColor()
         }
         
     }

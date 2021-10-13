@@ -39,6 +39,7 @@
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
+		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
 		7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4420E57BA3008A4FCB /* ServerUtility.swift */; };
@@ -114,6 +115,7 @@
 		79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79FF145420C41EE200BA3623 /* SettingsViewController.swift */; };
 		80392CA76D20B620739FAA5D /* Pods_ProtonVPNTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D60C4144ED4B0B5FB054F50 /* Pods_ProtonVPNTests.framework */; };
 		85FDAD4CC9FABA90456AD643 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */; };
+		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8AF7BD84DE94054428A9E26C /* Pods_ProtonVPNUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140E14E39523B1D45E15E9BF /* Pods_ProtonVPNUITests.framework */; };
 		8CE611B08C0E5F102ECF4E3A /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 144DDB28DA09A1DD0A1BDCC9 /* Pods-ProtonVPN-metadata.plist */; };
 		921E3680E612A1D8F1A969F2 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E73DB36971335A429DF2C4 /* Pods_Quick_Connect_Widget.framework */; };
@@ -221,11 +223,8 @@
 		D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
 		D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */; };
 		D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
-		D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
-		D53E83D5232A11400031CD49 /* ProtonTextField.xib in Resources */ = {isa = PBXBuildFile; fileRef = D53E83D4232A11400031CD49 /* ProtonTextField.xib */; };
 		D53E83D7232A5F4D0031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
 		D53E83E4232B76540031CD49 /* String+Validation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D6232A5F4D0031CD49 /* String+Validation.swift */; };
-		D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D53E83D2232A11380031CD49 /* ProtonTextField.swift */; };
 		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
 		D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
@@ -624,6 +623,7 @@
 		42BB5E5B247FFD7F0002DA8A /* TodayViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewModel.swift; sourceTree = "<group>"; };
 		42BB5E5D247FFD7F0002DA8A /* TodayViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayViewController.swift; sourceTree = "<group>"; };
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
+		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/PasswordRobot.swift; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		552A60268108D0F8C395145D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
@@ -722,6 +722,7 @@
 		C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
 		CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_OpenVPN_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPNUITests-metadata.plist"; sourceTree = "<group>"; };
+		D32078B0341D91947B720055 /* AccountVerificationRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = AccountVerificationRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/AccountVerificationRobot.swift; sourceTree = "<group>"; };
 		D5110850246150DE0018872A /* Date+Formatters.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Date+Formatters.swift"; sourceTree = "<group>"; };
 		D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAnnotationViewModelTests.swift; sourceTree = "<group>"; };
 		D5136C182285918C0002C095 /* AlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertService.swift; sourceTree = "<group>"; };
@@ -736,8 +737,6 @@
 		D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewController.swift; sourceTree = "<group>"; };
 		D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetshieldSelectionViewController.xib; sourceTree = "<group>"; };
 		D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewModel.swift; sourceTree = "<group>"; };
-		D53E83D2232A11380031CD49 /* ProtonTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonTextField.swift; sourceTree = "<group>"; };
-		D53E83D4232A11400031CD49 /* ProtonTextField.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ProtonTextField.xib; sourceTree = "<group>"; };
 		D53E83D6232A5F4D0031CD49 /* String+Validation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Validation.swift"; sourceTree = "<group>"; };
 		D54D331D264A97CB000BEF04 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Render.swift"; sourceTree = "<group>"; };
@@ -1146,7 +1145,6 @@
 		791C54F0214A75B600C6F337 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				D53E83D1232A110E0031CD49 /* Form */,
 				D51DA68F2541A66900B4A421 /* BadgedBarButtonItem.swift */,
 				F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */,
 				D55131762319427900784ED0 /* RoundCheckboxView.swift */,
@@ -1476,15 +1474,6 @@
 				D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */,
 			);
 			path = VPN;
-			sourceTree = "<group>";
-		};
-		D53E83D1232A110E0031CD49 /* Form */ = {
-			isa = PBXGroup;
-			children = (
-				D53E83D2232A11380031CD49 /* ProtonTextField.swift */,
-				D53E83D4232A11400031CD49 /* ProtonTextField.xib */,
-			);
-			path = Form;
 			sourceTree = "<group>";
 		};
 		D550A1A425651B5000FE2D54 /* Extensions */ = {
@@ -2204,6 +2193,8 @@
 				F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */,
 				F3B783F326E6428C006768A8 /* SignupRobot.swift */,
 				F3B783F426E6428C006768A8 /* LoginRobot.swift */,
+				D32078B0341D91947B720055 /* AccountVerificationRobot.swift */,
+				4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2554,7 +2545,6 @@
 				D594A963227C3A500041D423 /* LogoWithMapView.xib in Resources */,
 				79DEE90D2111E5EA00C354EF /* ServerTypeHeader.xib in Resources */,
 				D55131732319425900784ED0 /* RoundCheckboxView.xib in Resources */,
-				D53E83D5232A11400031CD49 /* ProtonTextField.xib in Resources */,
 				796BD1D621146B68003D6B8D /* Profiles.storyboard in Resources */,
 				E1973322236893FE0086881F /* Settings.bundle in Resources */,
 				E1C2EAA221EF931500353A63 /* StandardTableViewCell.xib in Resources */,
@@ -2962,7 +2952,6 @@
 			files = (
 				42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				7980ECD620F70C0800D5432B /* TabBarViewModel.swift in Sources */,
-				D53E83D3232A11380031CD49 /* ProtonTextField.swift in Sources */,
 				79848BB220D2012B00EF6F9F /* MapViewModel.swift in Sources */,
 				792B58C22150E278000BB3A3 /* StatusViewModel.swift in Sources */,
 				E14EE2DB217E18E2004AF568 /* SecureCoreEntryAnnotation.swift in Sources */,
@@ -3248,7 +3237,6 @@
 				D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */,
 				D5136C1C228592470002C095 /* NavigationService.swift in Sources */,
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
-				D53E83E6232B80CF0031CD49 /* ProtonTextField.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,
@@ -3304,6 +3292,8 @@
 				D92A295D47C56CEE2650AA70 /* BuildFile in Sources */,
 				F377836C26E644BC00392958 /* ConnectionTests.swift in Sources */,
 				132DF0198C25BE40665CB22E /* ProtocolsListRobot.swift in Sources */,
+				67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */,
+				89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

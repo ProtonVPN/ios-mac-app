@@ -95,12 +95,17 @@ class ProtonVPNUITests: XCTestCase {
          app.buttons["Sign in"].tap()
     }
     
-    func logInIfNeeded() {
+    func useAndContinueTap() {
+        app.buttons["Use and continue"].tap()
+    }
+    
+    func logInToProdIfNeeded() {
         let tabBarsQuery = app.tabBars
         if tabBarsQuery.allElementsBoundByIndex.count > 0  {
             return
         }
         else {
+            changeEnvToProdIfNedded()
             openLoginScreen()
             loginAsPlusUser()
         }
@@ -113,9 +118,46 @@ class ProtonVPNUITests: XCTestCase {
         }
         
         tabBarsQuery.buttons["Settings"].tap()
-        
         let logoutButton = app.buttons["Log Out"]
         app.swipeUp() // For iphone SE small screen
         logoutButton.tap()
+    }
+    
+    func changeEnvToBlack() {
+        let textFielfs = app.textFields["https://"]
+        textFielfs.tap()
+        textFielfs.typeText("vpn.proton.black/api")
+        app.buttons["Change and kill the app"].tap()
+        app.buttons["OK"].tap()
+     }
+    
+    func changeEnvToProduction() {
+        let resetToProd = app.buttons["Reset to production and kill the app"]
+        resetToProd.tap()
+        app.buttons["OK"].tap()
+     }
+    
+    func changeEnvToBlackIfNedded() {
+        let env = app.staticTexts["https://vpn.proton.black/api"]
+        
+        if env.waitForExistence(timeout: 1){
+            return
+        }
+        else {
+            changeEnvToBlack()
+            app.launch()
+        }
+    }
+    
+    func changeEnvToProdIfNedded() {
+        let env = app.staticTexts["https://api.protonvpn.ch"]
+        
+        if env.waitForExistence(timeout: 1){
+            return
+        }
+        else {
+            changeEnvToProduction()
+            app.launch()
+        }
     }
 }

@@ -44,9 +44,9 @@ class InstructionStepView: UIView {
         contentView.backgroundColor = .clear
         
         layer.cornerRadius = bounds.width * 0.5
-        backgroundColor = .protonLightGrey()
+        backgroundColor = .backgroundColor()
         
         label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .protonWhite()
+        label.textColor = .normalTextColor()
     }
 }

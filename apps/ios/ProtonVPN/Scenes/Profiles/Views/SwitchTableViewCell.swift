@@ -34,8 +34,8 @@ final class SwitchTableViewCell: UITableViewCell {
         
         self.isSelected = false
         
-        backgroundColor = .protonGrey()
-        label.textColor = .white 
+        backgroundColor = .secondaryBackgroundColor()
+        label.textColor = .normalTextColor()
         selectionStyle = .none
 
         let update = { (on: Bool) -> Void in

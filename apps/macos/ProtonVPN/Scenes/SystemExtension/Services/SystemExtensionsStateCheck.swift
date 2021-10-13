@@ -15,7 +15,7 @@ protocol SystemExtensionsStateCheckFactory {
 
 extension DependencyContainer: SystemExtensionsStateCheckFactory {
     func makeSystemExtensionsStateCheck() -> SystemExtensionsStateCheck {
-        return SystemExtensionsStateCheck(systemExtensionManager: makeSystemExtensionManager(), alertService: makeCoreAlertService())
+        return SystemExtensionsStateCheck(systemExtensionManager: makeSystemExtensionManager(), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager())
     }
 }
 
@@ -29,10 +29,12 @@ class SystemExtensionsStateCheck {
     
     private let systemExtensionManager: SystemExtensionManager
     private let alertService: CoreAlertService
+    private let propertiesManager: PropertiesManagerProtocol
     
-    init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService) {
+    init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
         self.systemExtensionManager = systemExtensionManager
         self.alertService = alertService
+        self.propertiesManager = propertiesManager
     }
     
     func startCheckAndInstallIfNeeded(resultHandler: @escaping (Result<SuccessResultType, Error>) -> Void) {
@@ -60,6 +62,10 @@ class SystemExtensionsStateCheck {
             guard !installNeeded.isEmpty else {
                 resultHandler(.success(updateWasNeeded ? .updated : .nothing))
                 return
+            }
+            
+            guard !self.propertiesManager.sysexSuccessWasShown else {
+                return // Dirty workaround for a problem where after restart macos doesn't want to give us XPC connection on the first try and app thinks sysex is not yet installed.
             }
             
             self.alertService.push(alert: SystemExtensionTourAlert(extensionsCount: installNeeded.count, isTimeToClose: { [weak self] completion in

@@ -67,8 +67,8 @@ class CustomServersViewController: UIViewController {
         searchBar.autocorrectionType = .no
         searchBar.delegate = self
         
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.backgroundColor = .backgroundColor()
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func setupTableView() {
@@ -77,8 +77,8 @@ class CustomServersViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = .normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
     }
     

@@ -46,7 +46,7 @@ class CountryViewCell: UITableViewCell {
             countryName.text = viewModel.description
             countryName.numberOfLines = 2
             countryName.lineBreakMode = .byTruncatingTail
-            countryName.tintColor = .protonWhite()
+            countryName.tintColor = .normalTextColor()
             
             torIV.isHidden = !viewModel.torAvailable
             smartIV.isHidden = !viewModel.smartAvailable
@@ -80,7 +80,7 @@ class CountryViewCell: UITableViewCell {
     private func renderConnectButton() {
         let isConnected = viewModel?.isCurrentlyConnected ?? false
         let maintenance = viewModel?.underMaintenance ?? false
-        connectButton.backgroundColor = isConnected ? .protonGreen() : (maintenance ? .protonDarkGrey() :  .protonLightGrey())
+        connectButton.backgroundColor = isConnected ? .brandColor() : (maintenance ? .weakInteractionColor() :  .secondaryBackgroundColor())
 
         if let text = viewModel?.textInPlaceOfConnectIcon {
             connectButton.setImage(nil, for: .normal)

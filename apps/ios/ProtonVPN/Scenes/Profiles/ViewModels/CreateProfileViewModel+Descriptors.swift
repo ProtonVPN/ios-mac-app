@@ -30,27 +30,27 @@ extension CreateOrEditProfileViewModel {
         let countryString = ("  " + country.country)
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
-            nameAttributedString = countryString.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
+            nameAttributedString = countryString.attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
         } else {
-            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .left)
+            nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .weakTextColor(), fontSize: 17, alignment: .left)
         }
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
-            let via = "\(LocalizedString.via)  ".attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
+            let via = "\(LocalizedString.via)  ".attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
             let entryCountryFlag = embededImageIcon(named: server.entryCountryCode.lowercased() + "-plain")
-            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
             let countryFlag = embededImageIcon(named: server.countryCode.lowercased() + "-plain")
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
-                serverDescriptor = serverString.attributed(withColor: .protonWhite(), fontSize: 17, alignment: .left)
+                serverDescriptor = serverString.attributed(withColor: .normalTextColor(), fontSize: 17, alignment: .left)
             } else {
-                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonFontLightGrey(), fontSize: 17, alignment: .left)
+                serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .weakTextColor(), fontSize: 17, alignment: .left)
             }
             return NSAttributedString.concatenate(countryFlag, serverDescriptor)
         }
@@ -73,7 +73,7 @@ extension CreateOrEditProfileViewModel {
         imageAttributedString.addAttributes([NSAttributedString.Key.baselineOffset: -3],
                                             range: NSRange(location: 0, length: 1))
         
-        let nameAttributedString = ("  " + name).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let nameAttributedString = ("  " + name).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     

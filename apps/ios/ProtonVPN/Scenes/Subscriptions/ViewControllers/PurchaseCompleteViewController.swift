@@ -40,7 +40,7 @@ class PurchaseCompleteViewController: UIViewController {
     }
     
     private func setupView() {
-        titleLabel.attributedText = LocalizedString.setupComplete.attributed(withColor: .protonGreen(), fontSize: 24, alignment: .center)
+        titleLabel.attributedText = LocalizedString.setupComplete.attributed(withColor: .brandColor(), fontSize: 24, alignment: .center)
         
         if let plan = plan {
             let planText: String
@@ -55,7 +55,7 @@ class PurchaseCompleteViewController: UIViewController {
                 planText = ""
             }
             
-            let descriptionAttributedText = NSMutableAttributedString(attributedString: planText.attributed(withColor: .protonWhite(), fontSize: 18, alignment: .center))
+            let descriptionAttributedText = NSMutableAttributedString(attributedString: planText.attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center))
             let fullRange = (planText as NSString).range(of: planText)
             let paragraphStyle = NSMutableParagraphStyle()
             paragraphStyle.alignment = .center

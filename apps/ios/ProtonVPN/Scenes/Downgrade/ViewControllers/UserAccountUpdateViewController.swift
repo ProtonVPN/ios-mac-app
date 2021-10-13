@@ -75,7 +75,7 @@ class UserAccountUpdateViewController: UIViewController {
         super.viewDidLoad()
         serversView.layer.cornerRadius = 8
         serversView.layer.borderWidth = 1
-        serversView.layer.borderColor = UIColor.protonLightGrey().cgColor
+        serversView.layer.borderColor = UIColor.secondaryBackgroundColor().cgColor
         titleLbl.text = alert.title
         descriptionLbl.text = alert.message
         

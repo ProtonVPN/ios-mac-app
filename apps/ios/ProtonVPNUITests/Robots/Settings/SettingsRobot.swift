@@ -19,7 +19,7 @@ fileprivate let allowLanConnectionsAlert = "Allow LAN connections"
 fileprivate let continueButton = "Continue"
 fileprivate let logOutButton = "Log Out"
 fileprivate let vpnConnectionActiveAlert = "VPN Connection Active"
-fileprivate let firstWizardScreen = "Welcome to a better Internet"
+fileprivate let firstAppScreen = "Selected environment"
 
 class SettingsRobot: CoreElements {
     
@@ -105,7 +105,7 @@ class SettingsRobot: CoreElements {
         
         @discardableResult
         func logOutSuccessfully() -> SettingsRobot {
-            staticText(firstWizardScreen).wait().checkExists()
+            staticText(firstAppScreen).wait().checkExists()
             return SettingsRobot()
         }
         
@@ -118,6 +118,13 @@ class SettingsRobot: CoreElements {
         @discardableResult
         func ikeIsEnabled() -> SettingsRobot {
             staticText("IKEv2").checkExists()
+            return SettingsRobot()
+        }
+        
+        @discardableResult
+        func userIsCreated(_ name: String, _ plan: String) -> SettingsRobot {
+            staticText(name).checkExists()
+            staticText(plan).checkExists()
             return SettingsRobot()
         }
     }

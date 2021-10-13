@@ -72,8 +72,8 @@ class SettingsViewController: UIViewController {
     
     private func setupView() {
         navigationItem.title = LocalizedString.settings
-        view.backgroundColor = .protonGrey()
-        view.layer.backgroundColor = UIColor.protonGrey().cgColor
+        view.backgroundColor = .backgroundColor()
+        view.layer.backgroundColor = UIColor.backgroundColor().cgColor
     }
     
     private func setupTableView() {
@@ -83,8 +83,8 @@ class SettingsViewController: UIViewController {
         tableView.dataSource = genericDataSource
         tableView.delegate = genericDataSource
         
-        tableView.separatorColor = .protonBlack()
-        tableView.backgroundColor = .protonDarkGrey()
+        tableView.separatorColor = .normalSeparatorColor()
+        tableView.backgroundColor = .backgroundColor()
         tableView.cellLayoutMarginsFollowReadableWidth = true
         
         tableView.tableFooterView = viewModel.viewForFooter()
