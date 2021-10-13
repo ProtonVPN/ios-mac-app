@@ -43,7 +43,7 @@ final class AnnouncementDetailViewController: NSViewController {
 
     init(_ data: OfferPanel) {
         self.data = data
-        super.init(nibName: NSNib.Name("AnnouncementDetailViewController"), bundle: nil)
+        super.init(nibName: NSNib.Name(String(describing: AnnouncementDetailViewController.self)), bundle: nil)
     }
 
     override func viewWillAppear() {
