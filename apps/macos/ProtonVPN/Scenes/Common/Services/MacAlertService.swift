@@ -195,6 +195,9 @@ extension MacAlertService: CoreAlertService {
             
         case is VPNAuthCertificateRefreshErrorAlert:
             showDefaultSystemAlert(alert)
+
+        case let announcmentOfferAlert as AnnouncmentOfferAlert:
+            show(announcmentOfferAlert)
             
         default:
             #if DEBUG
@@ -318,5 +321,10 @@ extension MacAlertService: CoreAlertService {
             alert.failure(alert.error)
         }))
         showDefaultSystemAlert(alert)
+    }
+
+    private func show(_ alert: AnnouncmentOfferAlert) {
+        let vc = AnnouncementDetailViewController(alert.data)
+        windowService.presentKeyModal(viewController: vc)
     }
 }

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="17701" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="17701"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="announcementsButton" destination="fAR-4v-fna" id="kns-tF-12g"/>
                 <outlet property="backgroundView" destination="DrJ-qH-FYo" id="TpY-7s-kjP"/>
+                <outlet property="badgeView" destination="xCw-cC-csI" id="FRC-SR-dwo"/>
                 <outlet property="connectButton" destination="SOe-d7-1zi" id="QuI-N9-rEP"/>
                 <outlet property="flagView" destination="vZZ-88-17K" id="WiM-sj-Klm"/>
                 <outlet property="headerLabel" destination="8Rp-H8-tLg" id="3oY-yH-QrC"/>
@@ -40,7 +41,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="340" height="170"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="248" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="8Rp-H8-tLg">
-                                            <rect key="frame" x="38" y="134" width="211" height="16"/>
+                                            <rect key="frame" x="38" y="134" width="218" height="16"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Header label" id="C8N-wC-xAL">
                                                 <font key="font" metaFont="system"/>
                                                 <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -96,9 +97,13 @@
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
                                         </button>
-                                        <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
-                                            <rect key="frame" x="260" y="125" width="45" height="32"/>
-                                            <buttonCell key="cell" type="push" bezelStyle="rounded" image="bell" imagePosition="only" alignment="center" state="on" borderStyle="border" transparent="YES" inset="2" id="ghW-7A-Ie1">
+                                        <button hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fAR-4v-fna" customClass="HoverDetectionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                            <rect key="frame" x="267" y="123" width="38" height="36"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="24" id="SXN-7w-IkL"/>
+                                                <constraint firstAttribute="width" constant="24" id="Uno-Zf-iU5"/>
+                                            </constraints>
+                                            <buttonCell key="cell" type="push" bezelStyle="rounded" imagePosition="only" alignment="center" state="on" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ghW-7A-Ie1">
                                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                                 <font key="font" metaFont="system"/>
                                             </buttonCell>
@@ -106,9 +111,17 @@
                                                 <action selector="announcementsButtonTapped:" target="-2" id="U92-dZ-uNt"/>
                                             </connections>
                                         </button>
+                                        <customView hidden="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xCw-cC-csI">
+                                            <rect key="frame" x="292" y="148" width="6" height="6"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" constant="6" id="VKy-PG-iXE"/>
+                                                <constraint firstAttribute="width" constant="6" id="k6U-nK-p7Q"/>
+                                            </constraints>
+                                        </customView>
                                     </subviews>
                                     <constraints>
                                         <constraint firstItem="SOe-d7-1zi" firstAttribute="centerX" secondItem="lCW-hX-bS7" secondAttribute="centerX" id="197-NE-qNj"/>
+                                        <constraint firstItem="xCw-cC-csI" firstAttribute="top" secondItem="fAR-4v-fna" secondAttribute="top" id="3B7-xc-bI6"/>
                                         <constraint firstItem="OVs-pX-cwh" firstAttribute="centerY" secondItem="6Yt-JV-yHv" secondAttribute="centerY" id="3zp-b3-6YK"/>
                                         <constraint firstItem="fcs-WH-EAh" firstAttribute="top" secondItem="OVs-pX-cwh" secondAttribute="bottom" constant="12" id="6N3-m3-ac2"/>
                                         <constraint firstItem="7kf-gM-FN1" firstAttribute="centerY" secondItem="fcs-WH-EAh" secondAttribute="centerY" id="6j3-n3-g09"/>
@@ -128,6 +141,7 @@
                                         <constraint firstItem="8Rp-H8-tLg" firstAttribute="top" secondItem="lCW-hX-bS7" secondAttribute="top" constant="20" id="mbb-Ev-QQp"/>
                                         <constraint firstItem="6Yt-JV-yHv" firstAttribute="centerY" secondItem="pHx-RQ-OMh" secondAttribute="centerY" id="sro-hK-daz"/>
                                         <constraint firstAttribute="trailing" secondItem="fAR-4v-fna" secondAttribute="trailing" constant="42" id="vL9-Em-rHF"/>
+                                        <constraint firstItem="xCw-cC-csI" firstAttribute="trailing" secondItem="fAR-4v-fna" secondAttribute="trailing" id="zyA-MX-m1Z"/>
                                     </constraints>
                                 </customView>
                             </subviews>
@@ -158,7 +172,4 @@
             <point key="canvasLocation" x="140" y="154"/>
         </customView>
     </objects>
-    <resources>
-        <image name="bell" width="15" height="17"/>
-    </resources>
 </document>

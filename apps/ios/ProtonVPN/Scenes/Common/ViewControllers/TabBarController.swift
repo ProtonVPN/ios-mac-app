@@ -50,6 +50,7 @@ final class TabBarController: UITabBarController {
     }
 
     func setupView() {
+        view.backgroundColor = .backgroundColor()
         selectedIndex = 0
         
         tabBar.items?.forEach { item in

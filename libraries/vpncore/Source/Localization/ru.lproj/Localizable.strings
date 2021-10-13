@@ -1342,9 +1342,6 @@
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Сообщить об ошибке";
 
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Пожалуйста, предоставьте подробную информацию о проблеме, с которой вы столкнулись, и приложите все файлы, которые помогут нам воспроизвести проблему. Также, предоставьте нам способ связаться с вами для получения дополнительной информации.";
-
 /* Mac bug report: label before username */
 "_report_field_account" = "Аккаунт:";
 
@@ -1353,9 +1350,6 @@
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
-
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Обратная связь";
 
 /* (No Comment) */
 "_report_field_isp" = "Интернет-провайдер:";

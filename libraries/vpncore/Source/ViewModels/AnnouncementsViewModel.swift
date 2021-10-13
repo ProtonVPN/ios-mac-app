@@ -29,14 +29,26 @@ public protocol AnnouncementsViewModelFactory {
 /// Controll view showing the list of announcements
 public class AnnouncementsViewModel {
     
-    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory
+    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory
     private let factory: Factory
     
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
+    private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     
     // Data
-    public var items: [Announcement] = [Announcement]()
+    private(set) var items: [Announcement] = [Announcement]()
+
+    public var currentItem: Announcement? {
+        let sorted = items.sorted(by: { (lhs, rhs) -> Bool in
+            if let lhsRead = lhs.isRead {
+                return !lhsRead
+            }
+            return false
+        })
+
+        return sorted.first
+    }
     
     // Callbacks
     public var refreshView: (() -> Void)?
@@ -48,11 +60,21 @@ public class AnnouncementsViewModel {
     }
     
     /// Navigate to announcement screen
-    public func open(announcement: Announcement) {
+    public func open() {
+        guard let announcement = currentItem else {
+            return
+        }
+
         announcementManager.markAsRead(announcement: announcement)
+
+        if let data = announcement.offer?.panel {
+            alertService.push(alert: AnnouncmentOfferAlert(data: data))
+            return
+        }
         
         if let url = announcement.offer?.url.urlWithAdded(utmSource: ApiConstants.clientId.lowercased()) {
             safariService.open(url: url)
+            return
         }
     }
         

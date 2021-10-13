@@ -49,7 +49,7 @@ class CountryViewCell: UITableViewCell {
             countryName.tintColor = .normalTextColor()
             
             torIV.isHidden = !viewModel.torAvailable
-            smartIV.isHidden = !viewModel.smartAvailable
+            smartIV.isHidden = !viewModel.isSmartAvailable
             p2pIV.isHidden = !viewModel.p2pAvailable
             
             backgroundColor = viewModel.backgroundColor
