@@ -59,11 +59,10 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, signupMode: SignupMode.external, isCloseButtonAvailable: false)
+        let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton))))
         self.login = login
 
-        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
-        let finishLogin: WorkBeforeFlowCompletion = { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
+        let finishFlow = WorkBeforeFlow(waitingStepName: LocalizedString.loginFetchVpnData, doneStepName: LocalizedString.loginFetchVpnDataFinished) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to uset the login data to log in the app
             let authCredentials = AuthCredentials(data)
             self?.appSessionManager.finishLogin(authCredentials: authCredentials) { result in
@@ -75,7 +74,9 @@ final class CoreLoginService {
                 }
             }
         }
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlowCompletion: finishLogin) { [weak self] result in
+
+        let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlow: finishFlow) { [weak self] (result: LoginResult) -> Void in
             switch result {
             case .dismissed:
                 PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")

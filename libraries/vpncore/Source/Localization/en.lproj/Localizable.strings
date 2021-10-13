@@ -1840,3 +1840,7 @@
 
 "_force_upgrade_title" = "Application upgrade needed";
 "_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
+
+"login_fetch_vpn_data" = "Loading VPN account data";
+"login_fetch_vpn_data_finished" = "Loading VPN account data finished";
+"login_summary_button" = "Start using ProtonVPN";
