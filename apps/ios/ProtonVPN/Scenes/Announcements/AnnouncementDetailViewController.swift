@@ -50,7 +50,7 @@ final class AnnouncementDetailViewController: UIViewController {
 
     init(_ data: OfferPanel) {
         self.data = data
-        super.init(nibName: "AnnouncementDetailViewController", bundle: nil)
+        super.init(nibName: String(describing: AnnouncementDetailViewController.self), bundle: nil)
     }
 
     override func viewDidLoad() {
