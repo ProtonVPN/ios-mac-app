@@ -1033,9 +1033,6 @@
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Αναφορά Σφάλματος";
 
-/* Mac bug report: description text before bug report form */
-"_report_description" = "Δώστε λεπτομερείς πληροφορίες σχετικά με το πρόβλημα που αντιμετωπίσατε και επισυνάψτε τυχόν αρχεία που θα μας βοηθήσουν να αναπαράγουμε το πρόβλημα. Επίσης, μας δώστε μας έναν τρόπο να επικοινωνήσουμε μαζί σας για περισσότερες πληροφορίες.";
-
 /* Mac bug report: label before username */
 "_report_field_account" = "Λογαριασμός:";
 
@@ -1044,9 +1041,6 @@
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
-
-/* Mac bug report: message field label */
-"_report_field_feedback" = "Αξιολόγηση";
 
 /* Mac bug report: Internet Service Provider field label */
 "_report_field_isp" = "ISP:";

@@ -22,21 +22,7 @@
 
 import Foundation
 
-extension String {
-    
-    /// String cleaned up from the info that should not go to logs
-    var cleanedForLog: String {
-        do {
-            let regex = try NSRegularExpression(pattern: "IP=(?:[0-9]{1,3}\\.){3}[0-9]{1,3}", options: NSRegularExpression.Options.caseInsensitive)
-            let range = NSRange(location: 0, length: self.count)
-            let cleanString = regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: "IP=X.X.X.X")
-            return cleanString
-            
-        } catch {
-            return self
-        }
-    }
-    
+extension String {    
     /// Returns the first characters in the string until the startingChacater
     public func removeSubstring(startingWithCharacter char: Character) -> String {
         guard let last = self.index(of: char) else {

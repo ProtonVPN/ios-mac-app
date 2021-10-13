@@ -99,7 +99,6 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
             let view: QuickSettingsDropdownOption? = QuickSettingsDropdownOption.loadViewFromNib()
             view?.titleLabel.stringValue = presenter.title
             view?.optionIconIV.image = presenter.icon
-            view?.selectedColor = presenter.selectedColor
             if presenter.requiresUpdate {
                 view?.blockedStyle()
                 view?.action = {

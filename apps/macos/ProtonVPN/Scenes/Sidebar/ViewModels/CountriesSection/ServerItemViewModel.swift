@@ -33,7 +33,7 @@ class ServerItemViewModel {
     
     let serverModel: ServerModel
     
-    var isSmartAvailable: Bool { false }
+    var isSmartAvailable: Bool { serverModel.isVirtual }
     var isTorAvailable: Bool { serverModel.feature.contains(.tor) }
     var isP2PAvailable: Bool { serverModel.feature.contains(.p2p) }
     var isStreamingAvailable: Bool {

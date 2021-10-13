@@ -25,48 +25,28 @@ import vpncore
 
 class ReportBugViewController: NSViewController {
     
-    let viewModel: ReportBugViewModel
+    private let viewModel: ReportBugViewModel
     private let alertService: CoreAlertService
+    @IBOutlet private weak var horizontalLineEmail: NSView!
+    @IBOutlet private weak var emailLabel: PVPNTextField!
+    @IBOutlet private weak var emailField: TextFieldWithFocus!
+    @IBOutlet private weak var feedbackLabel: PVPNTextField!
+    @IBOutlet private weak var feedbackTextField: NSTextField!
+    @IBOutlet private weak var stepsLabel: PVPNTextField!
+    @IBOutlet private weak var stepsTextField: NSTextField!
+    @IBOutlet private weak var cancelButton: ClearCancellationButton!
+    @IBOutlet private weak var sendButton: PrimaryActionButton!
+    @IBOutlet private weak var contentContainerView: NSView!
+    @IBOutlet private weak var loadingView: NSView!
+    @IBOutlet private weak var loadingSymbol: LoadingAnimationView!
+    @IBOutlet private weak var loadingLabel: PVPNTextField!
     
-    @IBOutlet weak var horizontalLineEmail: NSBox!
-    @IBOutlet weak var horizontalLineCountry: NSBox!
-    @IBOutlet weak var horizontalLineIsp: NSBox!
-    
-    @IBOutlet weak var descriptionLabel: PVPNTextField!
-    @IBOutlet weak var emailLabel: PVPNTextField!
-    @IBOutlet weak var contryLabel: PVPNTextField!
-    @IBOutlet weak var fileSizeLabel: PVPNTextField!
-    @IBOutlet weak var ispLabel: PVPNTextField!
-    @IBOutlet weak var accountLabel: PVPNTextField!
-    @IBOutlet weak var accountValueLabel: PVPNTextField!
-    @IBOutlet weak var planLabel: PVPNTextField!
-    @IBOutlet weak var planValueLabel: PVPNTextField!
-    @IBOutlet weak var versionLabel: PVPNTextField!
-    @IBOutlet weak var versionValueLabel: PVPNTextField!
-    @IBOutlet weak var feedbackLabel: PVPNTextField!
-    @IBOutlet weak var feedbackPlaceholderLabel: PVPNTextField!
-    
-    @IBOutlet weak var emailField: TextFieldWithFocus!
-    @IBOutlet weak var countryField: TextFieldWithFocus!
-    @IBOutlet weak var ispField: TextFieldWithFocus!
-    @IBOutlet weak var feedbackField: NSTextView!
-    @IBOutlet weak var feedbackContainer: NSScrollView!
-    
-    @IBOutlet weak var filesTableView: NSTableView!
-    
-    @IBOutlet weak var attachmentButton: NSButton!
-    @IBOutlet weak var cancelButton: ClearCancellationButton!
-    @IBOutlet weak var sendButton: PrimaryActionButton!
-    
-    @IBOutlet weak var contentContainerView: NSView!
-    
-    @IBOutlet weak var loadingView: NSView!
-    @IBOutlet weak var loadingSymbol: LoadingAnimationView!
-    @IBOutlet weak var loadingLabel: PVPNTextField!
+    @IBOutlet weak var attachFilesCheckBox: NSButton!
+    @IBOutlet weak var attachFilesImage: NSImageView!
     
     private var fieldFont = NSFont.systemFont(ofSize: 14)
     private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
-    
+    private var logs: [URL] = []
     private var logFileUrl: URL? {
         return PMLog.logFile()
     }
@@ -82,7 +62,7 @@ class ReportBugViewController: NSViewController {
         
         // Add app log file
         if let url = logFileUrl {
-            viewModel.add(files: [url])
+            self.logs.append(url)
         }
         // Add ovpn log file
         vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
@@ -92,7 +72,7 @@ class ReportBugViewController: NSViewController {
             }
             // This is NOT inside the last `if`, because there may already be a log file
             if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                viewModel.add(files: [url])
+                self.logs.append(url)
             }
         }
         // Add wireguard log file
@@ -103,7 +83,7 @@ class ReportBugViewController: NSViewController {
             }
             // This is NOT inside the last `if`, because there may already be a log file
             if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                viewModel.add(files: [url])
+                self.logs.append(url)
             }
         }
     }
@@ -114,73 +94,33 @@ class ReportBugViewController: NSViewController {
  
     override func viewWillAppear() {
         super.viewWillAppear()
-        
         setupDesign()
         setupTranslations()
         setupLoadingView()
         fillDataFromModel()
         setupButtonActions()
-        setupFilesTable()
-        
-        viewModel.attachmentsListRefreshed = { [weak self] in
-            DispatchQueue.main.async { [weak self] in
-                self?.filesTableView.reloadData()
-            }
-        }
     }
     
     private func setupDesign() {
-        [horizontalLineEmail, horizontalLineCountry, horizontalLineIsp].forEach { view in 
-            view.fillColor = .protonLightGrey()
-        }
-        
+        horizontalLineEmail.wantsLayer = true
+        horizontalLineEmail.layer?.backgroundColor = NSColor.protonLightGrey().cgColor
         sendButton.actionType = .confirmative
-        fileSizeLabel.textColor = .protonLightGrey()
-        feedbackPlaceholderLabel.textColor = .protonLightGrey()
-        feedbackField.backgroundColor = NSColor.protonGrey()
-        feedbackField.textColor = NSColor.protonWhite()
-        feedbackContainer.backgroundColor = NSColor.protonGrey()
-        
-        feedbackField.font = fieldFont
-        [emailField, countryField, ispField].forEach({ element in
-            element?.font = fieldFont
-        })
-        
-        if #available(OSX 10.14, *) {
-            attachmentButton.contentTintColor = .protonGreen()
-        }
-    }
-    
-    private func setupFilesTable() {
-        filesTableView.dataSource = self
-        filesTableView.delegate = self
-        filesTableView.ignoresMultiClick = true
-        filesTableView.selectionHighlightStyle = .none
-        filesTableView.backgroundColor = .protonGrey()
-        filesTableView.register(NSNib(nibNamed: NSNib.Name(String(describing: AttachedFileView.self)), bundle: nil), forIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)))
+        attachFilesImage.image = NSImage(named: NSImage.Name("info_green"))
+        attachFilesImage.toolTip = LocalizedString.reportDescription
     }
     
     private func setupTranslations() {
-        descriptionLabel.stringValue = LocalizedString.reportDescription
         emailLabel.stringValue = LocalizedString.reportFieldEmail
-        contryLabel.stringValue = LocalizedString.reportFieldCountry
-        fileSizeLabel.stringValue = LocalizedString.reportMaxFileSize
-        ispLabel.stringValue = LocalizedString.reportFieldIsp
-        accountLabel.stringValue = LocalizedString.reportFieldAccount
-        planLabel.stringValue = LocalizedString.reportFieldPlan
-        versionLabel.stringValue = LocalizedString.reportFieldVersion
         feedbackLabel.stringValue = LocalizedString.reportFieldFeedback
-        feedbackPlaceholderLabel.stringValue = LocalizedString.reportPlaceholderMessage
-        
+        stepsLabel.stringValue = LocalizedString.reportFieldSteps
+        stepsTextField.placeholderString = LocalizedString.reportFieldPlaceholder
+        feedbackTextField.placeholderString = LocalizedString.reportFieldPlaceholder
+        attachFilesCheckBox.title = LocalizedString.reportAttachmentsCheckbox
         cancelButton.title = LocalizedString.cancel
-        sendButton.title = LocalizedString.reportSend
-        attachmentButton.attributedTitle = LocalizedString.reportAddFile.attributed(withColor: .protonGreen(), font: borderlessButtonFont)
+        sendButton.title = LocalizedString.submitVerificationCode
     }
     
     private func setupButtonActions() {
-        attachmentButton.target = self
-        attachmentButton.action = #selector(addFilePressed)
-        
         cancelButton.target = self
         cancelButton.action = #selector(cancelButtonPressed)
         
@@ -190,24 +130,13 @@ class ReportBugViewController: NSViewController {
     
     private func fillDataFromModel() {
         emailField.stringValue = viewModel.getEmail() ?? ""
-        countryField.stringValue = viewModel.getCountry() ?? ""
-        ispField.stringValue = viewModel.getISP() ?? ""
-        
-        accountValueLabel.stringValue = viewModel.getUsername() ?? ""
-        versionValueLabel.stringValue = viewModel.getClientVersion() ?? ""
-        
-        if let accountPlan = viewModel.getAccountPlan() {
-            planValueLabel.textColor = accountPlan.colorForUI
-            planValueLabel.stringValue = accountPlan.description
-        } else {
-            planValueLabel.textColor = .protonGreyOutOfFocus()
-            planValueLabel.stringValue = LocalizedString.unavailable
-        }
-        renderFeedbackPlaceholder()
     }
     
     private func renderSendButton() {
         sendButton.isEnabled = viewModel.isSendingPossible
+            && emailField.stringValue.isEmail
+            && !feedbackTextField.stringValue.isEmpty
+            && !stepsTextField.stringValue.isEmpty
     }
     
     // MARK: - Loading screen
@@ -234,26 +163,19 @@ class ReportBugViewController: NSViewController {
     }
     
     // MARK: - Button actions
-    
-    @objc func addFilePressed() {
-        let panel = NSOpenPanel()
-        panel.canChooseFiles = true
-        panel.canChooseDirectories = false
-        panel.allowsMultipleSelection = true
-        panel.directoryURL = logFileUrl
-        
-        panel.beginSheetModal(for: self.view.window!) { (result) in
-            if result == NSApplication.ModalResponse.OK {
-                self.viewModel.add(files: panel.urls)
-            }
-        }
-    }
-    
+
     @objc func cancelButtonPressed() {
         self.view.window!.performClose(nil)
     }
     
     @objc func sendButtonPressed() {
+        
+        if attachFilesCheckBox.state == .on {
+            viewModel.add(files: logs)
+        } else {
+            viewModel.removeAllFiles()
+        }
+        
         presentLoadingScreen()
         viewModel.send { result in
             switch result {
@@ -267,64 +189,32 @@ class ReportBugViewController: NSViewController {
             }
         }
     }
-    
-}
-
-// MARK: - Attachments Table
-
-extension ReportBugViewController: NSTableViewDataSource {
-    
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        return viewModel.filesCount
-    }
-}
-
-extension ReportBugViewController: NSTableViewDelegate {
-    
-    func tableView(_ tableView: NSTableView, heightOfRow row: Int) -> CGFloat {
-        return 30.0
-    }
-    
-    func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
-        let cellView = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: String(describing: AttachedFileView.self)), owner: nil) as! AttachedFileView
-        
-        let rowViewModel = viewModel.fileAttachment(atRow: row)
-        cellView.updateView(viewModel: rowViewModel)
-        
-        return cellView
-    }
-    
 }
 
 // MARK: - Feedback placeholder
 
-extension ReportBugViewController: NSTextViewDelegate {
-    
-    func textDidChange(_ notification: Notification) {
-        viewModel.set(description: feedbackField.string)
-        renderFeedbackPlaceholder()
-        renderSendButton()
-    }
-    
-    func renderFeedbackPlaceholder() {
-        feedbackPlaceholderLabel.isHidden = !feedbackField.string.isEmpty
-    }
-    
-}
-
 extension ReportBugViewController: NSTextFieldDelegate {
-    
+
     func controlTextDidChange(_ obj: Notification) {
         guard let field = obj.object as? NSTextField else { return }
         
-        if field == emailField {
+        switch field {
+        case emailField:
             viewModel.set(email: field.stringValue)
-        } else if field == countryField {
-            viewModel.set(country: field.stringValue)
-        } else if field == ispField {
-            viewModel.set(isp: field.stringValue)
+            
+        case stepsTextField, feedbackTextField:
+            let description = LocalizedString.reportFieldFeedback
+                + "\n\n"
+                + feedbackTextField.stringValue
+                + "\n\n"
+                + LocalizedString.reportFieldSteps
+                + "\n\n"
+                + stepsTextField.stringValue
+            
+            viewModel.set(description: description)
+        default:
+            return
         }
         renderSendButton()
     }
-    
 }

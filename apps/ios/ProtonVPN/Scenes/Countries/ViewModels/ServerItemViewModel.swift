@@ -105,8 +105,8 @@ class ServerItemViewModel {
         return serverModel.feature.contains(.p2p)
     }
     
-    var smartAvailable: Bool {
-        return false
+    var isSmartAvailable: Bool {
+        return serverModel.isVirtual
     }
     
     var streamingAvailable: Bool {

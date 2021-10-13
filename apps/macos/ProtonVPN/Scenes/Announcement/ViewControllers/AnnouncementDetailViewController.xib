@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="18122" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="18122"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="AnnouncementDetailViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="actionButton" destination="OMu-Ug-cCw" id="2Sb-MI-9b6"/>
+                <outlet property="featuresFooterLabel" destination="sDn-gl-A96" id="3AU-DU-ogG"/>
+                <outlet property="featuresStackView" destination="2Vg-01-Aa2" id="RLM-FD-exh"/>
+                <outlet property="incentiveLabel" destination="JHg-Ff-dHG" id="4mE-Iu-nMa"/>
+                <outlet property="pageFooterLabel" destination="4eW-2t-JSK" id="dc7-LQ-1xm"/>
+                <outlet property="pictureView" destination="KVd-11-Bkl" id="vu5-2x-Bgh"/>
+                <outlet property="pillLabel" destination="rkm-1C-JJT" id="f7O-kr-rMv"/>
+                <outlet property="pillView" destination="qdG-Ip-TPY" id="d1b-Zb-NLH"/>
+                <outlet property="titleLabel" destination="rXL-ro-orj" id="hUo-K9-Sz1"/>
+                <outlet property="view" destination="Hz6-mo-xeY" id="0bl-1N-x8E"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="Hz6-mo-xeY">
+            <rect key="frame" x="0.0" y="0.0" width="378" height="439"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JHg-Ff-dHG">
+                    <rect key="frame" x="78" y="375" width="222" height="16"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="IjC-S0-GlA">
+                        <font key="font" usesAppearanceFont="YES"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="qdG-Ip-TPY">
+                    <rect key="frame" x="163" y="348" width="53" height="23"/>
+                    <subviews>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rkm-1C-JJT">
+                            <rect key="frame" x="6" y="4" width="41" height="15"/>
+                            <textFieldCell key="cell" lineBreakMode="clipping" alignment="center" title="Label" id="Vma-0K-u8U">
+                                <font key="font" metaFont="systemSemibold" size="12"/>
+                                <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="rkm-1C-JJT" firstAttribute="top" secondItem="qdG-Ip-TPY" secondAttribute="top" constant="4" id="TpE-Yx-wIx"/>
+                        <constraint firstAttribute="bottom" secondItem="rkm-1C-JJT" secondAttribute="bottom" constant="4" id="eBh-Dw-xbl"/>
+                        <constraint firstAttribute="trailing" secondItem="rkm-1C-JJT" secondAttribute="trailing" constant="8" id="iPH-ew-3GC"/>
+                        <constraint firstItem="rkm-1C-JJT" firstAttribute="leading" secondItem="qdG-Ip-TPY" secondAttribute="leading" constant="8" id="kHy-Me-nFC"/>
+                    </constraints>
+                </customView>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KVd-11-Bkl">
+                    <rect key="frame" x="0.0" y="196" width="378" height="140"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="140" id="TEt-3P-DMi"/>
+                    </constraints>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" id="ie6-or-qlX"/>
+                </imageView>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rXL-ro-orj">
+                    <rect key="frame" x="62" y="165" width="254" height="19"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="eJb-jZ-yxU">
+                        <font key="font" metaFont="systemBold" size="16"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="2" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2Vg-01-Aa2">
+                    <rect key="frame" x="64" y="139" width="250" height="14"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="250" id="PO2-qE-F1V"/>
+                    </constraints>
+                </stackView>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="sDn-gl-A96">
+                    <rect key="frame" x="94" y="114" width="222" height="17"/>
+                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="Q7F-u5-chb">
+                        <font key="font" metaFont="system" size="14"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OMu-Ug-cCw" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                    <rect key="frame" x="152" y="48" width="75" height="47"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="35" id="jmO-Cz-CIK"/>
+                    </constraints>
+                    <buttonCell key="cell" type="push" title="Button" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="nyi-pc-Qd4">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4eW-2t-JSK">
+                    <rect key="frame" x="62" y="32" width="254" height="15"/>
+                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="ju7-U6-eul">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstItem="KVd-11-Bkl" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" id="1aQ-35-UQI"/>
+                <constraint firstItem="sDn-gl-A96" firstAttribute="leading" secondItem="2Vg-01-Aa2" secondAttribute="leading" constant="32" id="4hg-v8-6kh"/>
+                <constraint firstAttribute="bottom" secondItem="4eW-2t-JSK" secondAttribute="bottom" constant="32" id="B17-3g-95r"/>
+                <constraint firstItem="OMu-Ug-cCw" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="Egf-cg-Ul1"/>
+                <constraint firstItem="2Vg-01-Aa2" firstAttribute="top" secondItem="rXL-ro-orj" secondAttribute="bottom" constant="12" id="KSm-v5-XDr"/>
+                <constraint firstItem="rkm-1C-JJT" firstAttribute="centerX" secondItem="Hz6-mo-xeY" secondAttribute="centerX" id="LO4-xw-EMC"/>
+                <constraint firstItem="2Vg-01-Aa2" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="64" id="NQx-fe-gks"/>
+                <constraint firstItem="4eW-2t-JSK" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="64" id="Ofj-Rf-ZJK"/>
+                <constraint firstAttribute="trailing" secondItem="JHg-Ff-dHG" secondAttribute="trailing" constant="80" id="RjJ-kp-3bB"/>
+                <constraint firstItem="OMu-Ug-cCw" firstAttribute="top" secondItem="sDn-gl-A96" secondAttribute="bottom" constant="24" id="TrL-oM-STY"/>
+                <constraint firstAttribute="trailing" secondItem="rXL-ro-orj" secondAttribute="trailing" constant="64" id="WoR-Ju-Mc1"/>
+                <constraint firstItem="sDn-gl-A96" firstAttribute="top" secondItem="2Vg-01-Aa2" secondAttribute="bottom" constant="8" id="b7l-Mb-Om7"/>
+                <constraint firstItem="rXL-ro-orj" firstAttribute="top" secondItem="KVd-11-Bkl" secondAttribute="bottom" constant="12" id="bOp-9j-UI5"/>
+                <constraint firstItem="JHg-Ff-dHG" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="80" id="dBp-DD-rqd"/>
+                <constraint firstItem="rXL-ro-orj" firstAttribute="leading" secondItem="Hz6-mo-xeY" secondAttribute="leading" constant="64" id="eXK-CC-qHD"/>
+                <constraint firstAttribute="trailing" secondItem="KVd-11-Bkl" secondAttribute="trailing" id="jDW-nK-OYQ"/>
+                <constraint firstAttribute="trailing" secondItem="2Vg-01-Aa2" secondAttribute="trailing" constant="64" id="pTx-IE-A5e"/>
+                <constraint firstItem="qdG-Ip-TPY" firstAttribute="top" secondItem="JHg-Ff-dHG" secondAttribute="bottom" constant="4" id="pZH-DN-Cbo"/>
+                <constraint firstItem="JHg-Ff-dHG" firstAttribute="top" secondItem="Hz6-mo-xeY" secondAttribute="top" constant="48" id="qW6-Fe-1Ru"/>
+                <constraint firstItem="4eW-2t-JSK" firstAttribute="top" secondItem="OMu-Ug-cCw" secondAttribute="bottom" constant="8" id="qpO-2Q-YJP"/>
+                <constraint firstItem="KVd-11-Bkl" firstAttribute="top" secondItem="qdG-Ip-TPY" secondAttribute="bottom" constant="12" id="sGs-DP-oeR"/>
+                <constraint firstAttribute="trailing" secondItem="4eW-2t-JSK" secondAttribute="trailing" constant="64" id="uJC-LL-QGe"/>
+                <constraint firstItem="sDn-gl-A96" firstAttribute="trailing" secondItem="2Vg-01-Aa2" secondAttribute="trailing" id="w3q-nu-olx"/>
+            </constraints>
+            <point key="canvasLocation" x="139" y="227.5"/>
+        </customView>
+    </objects>
+</document>

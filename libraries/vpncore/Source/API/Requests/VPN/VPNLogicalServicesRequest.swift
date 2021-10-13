@@ -26,19 +26,23 @@ final class VPNLogicalServicesRequest: Request {
     
     let ip: String?
     
-    init( _ ip: String? ) {
+    init(_ ip: String?) {
         self.ip = ip
     }
     
     var path: String {
-        let endpoint = "/vpn/logicals"
-        guard let ip = ip else {
-            return endpoint
-        }
-        return endpoint + "?IP=\(ip)"
+        return "/vpn/logicals"
     }
     
     var isAuth: Bool {
         return false
+    }
+
+    var header: [String: Any] {
+        if let ip = ip {
+            return ["x-pm-netzone": ip]
+        }
+
+        return [:]
     }
 }

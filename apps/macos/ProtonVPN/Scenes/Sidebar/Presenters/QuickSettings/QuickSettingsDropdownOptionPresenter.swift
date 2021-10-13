@@ -24,7 +24,6 @@ import Cocoa
 import vpncore
 
 protocol QuickSettingsDropdownOptionPresenter {
-    var selectedColor: NSColor! { get }
     var title: String! { get }
     var icon: NSImage! { get }
     var active: Bool! { get }
@@ -35,17 +34,15 @@ protocol QuickSettingsDropdownOptionPresenter {
 
 class QuickSettingGenericOption: QuickSettingsDropdownOptionPresenter {
     
-    let selectedColor: NSColor!
     let title: String!
     let active: Bool!
     var icon: NSImage! = #imageLiteral(resourceName: "protonvpn-server-tor-list")
     var requiresUpdate: Bool!
     var selectCallback: (() -> Void)?
     
-    init( _ title: String, icon: NSImage, selectedColor: NSColor = .protonGreen(), active: Bool, requiresUpdate: Bool = false, selectCallback: SuccessCallback? = nil ) {
+    init( _ title: String, icon: NSImage, active: Bool, requiresUpdate: Bool = false, selectCallback: SuccessCallback? = nil ) {
         self.title = title
         self.active = active
-        self.selectedColor = selectedColor
         self.icon = icon
         self.requiresUpdate = requiresUpdate
         self.selectCallback = selectCallback
