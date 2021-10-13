@@ -45,10 +45,12 @@ extension UIViewController {
             button.onTouchUpInside = { [weak self] in
                 self?.announcementsButtonTapped()
             }
-            self?.navigationItem.rightBarButtonItems?.insert(button, at: 1)
+            if self?.navigationItem.rightBarButtonItems?.contains(where: { $0 is BadgedBarButtonItem }) == false {
+                self?.navigationItem.rightBarButtonItems?.insert(button, at: 1)
+            }
         }
         
-        if navigationItem.rightBarButtonItems?.count == 1 {
+        if navigationItem.rightBarButtonItems?.contains(where: { $0 is BadgedBarButtonItem }) == false {
             if let iconUrl = viewModel.iconUrl {
                 let downloader = ImageDownloader()
                 let urlRequest = URLRequest(url: iconUrl)
