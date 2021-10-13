@@ -56,7 +56,7 @@ final class AnnouncementFeatureView: UIView {
         contentView.frame = bounds
         addSubview(contentView)
 
-        contentView.backgroundColor = .protonGrey()
-        titleLabel.textColor = .protonWhite()
+        contentView.backgroundColor = .backgroundColor()
+        titleLabel.textColor = .normalTextColor()
     }
 }
