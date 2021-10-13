@@ -38,8 +38,7 @@ final class AnnouncementFeatureView: UIView {
     }
 
     private func setup() {
-        let nib = UINib(nibName: "AnnouncementFeatureView", bundle: nil)
-        nib.instantiate(withOwner: self, options: nil)
+        AnnouncementFeatureView.nib.instantiate(withOwner: self, options: nil)
         contentView.frame = bounds
         addSubview(contentView)
 
