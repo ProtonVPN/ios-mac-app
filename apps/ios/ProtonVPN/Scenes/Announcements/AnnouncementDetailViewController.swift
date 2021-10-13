@@ -56,19 +56,19 @@ final class AnnouncementDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        view.backgroundColor = .protonGrey()
-        footerView.backgroundColor = .protonGrey()
+        view.backgroundColor = .backgroundColor()
+        footerView.backgroundColor = .backgroundColor()
         closeButton.setImage(closeButton.imageView?.image?.withRenderingMode(.alwaysTemplate), for: .normal)
-        closeButton.tintColor = .protonWhite()
+        closeButton.tintColor = .normalTextColor()
 
-        featuresFooterLabel.textColor = .protonUnavailableGrey()
+        featuresFooterLabel.textColor = .weakTextColor()
         featuresFooterLabel.text = data.featuresFooter
 
-        pageFooterLabel.textColor = .protonUnavailableGrey()
+        pageFooterLabel.textColor = .weakTextColor()
         pageFooterLabel.text = data.pageFooter
         actionButton.setTitle(data.button.text, for: .normal)
 
-        incentiveLabel.textColor = .protonWhite()
+        incentiveLabel.textColor = .normalTextColor()
         let parts = data.incentive.split(separator: "%")
         if parts.count != 3 {
             incentiveLabel.text = data.incentive.replacingOccurrences(of: "%IncentivePrice%", with: "\n\(data.incentivePrice)")
@@ -80,12 +80,12 @@ final class AnnouncementDetailViewController: UIViewController {
             incentiveLabel.attributedText = attributed
         }
 
-        pillLabel.textColor = .protonWhite()
+        pillLabel.textColor = .normalTextColor()
         pillLabel.text = data.pill
 
-        pillView.backgroundColor = .protonRed()
+        pillView.backgroundColor = .notificationErrorColor()
 
-        titleLabel.textColor = .protonWhite()
+        titleLabel.textColor = .normalTextColor()
         titleLabel.text = data.title
 
         if let pictureUrl = URL(string: data.pictureURL) {
