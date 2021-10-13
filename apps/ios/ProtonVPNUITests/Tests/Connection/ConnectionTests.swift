@@ -25,6 +25,9 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Netherlands"
 
+        logoutIfNeeded()
+        changeEnvToProdIfNedded()
+        openLoginScreen()
         loginAsFreeUser()
         mainRobot
             .quickConnectViaQCbutton()
@@ -33,12 +36,12 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.disconnectedFromAServer()
     }
     
-    func testConnectAndDisconnectViaCountryBasicUser() {
+    func testConnectAndDisconnectViaCountry() {
         
         let countryName = "Australia"
         let back = "Countries"
         
-        loginAsBasicUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToCountriesTab()
             .connectToAserver()
@@ -48,11 +51,11 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaServerPlusUser() {
+    func testConnectAndDisconnectViaServer() {
         
         let countryName = "Australia"
         
-        loginAsPlusUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToCountriesTab()
             .openServerList(countryName)
@@ -65,29 +68,28 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaMapVisionaryUser() {
+    func testConnectAndDisconnectViaMap() {
         
         let countryName = "Netherlands"
         let map = "Map"
         
-        loginAsVisionaryUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToMapTab()
             .selectCountryAndConnect()
             .verify.connectedToAServer(countryName)
             .backToPreviouseTab(robot: MapRobot.self, map)
-            //.backToMapTab()
             .selectCountryAndDisconnect()
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaProfileVisionaryUser() {
+    func testConnectAndDisconnectViaProfile() {
         
         let profilename = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Argentina"
         let back = "Profiles"
         
-        loginAsVisionaryUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -101,11 +103,11 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.connectionStatusNotConnected()
     }
     
-    func testConnectAndDisconnectViaFastestAndRandomProfileFreeUser() {
+    func testConnectAndDisconnectViaFastestAndRandomProfile() {
         
         let back = "Profiles"
         
-        loginAsFreeUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .connectToAFastesServer()
@@ -121,14 +123,14 @@ class ConnectionTests: ProtonVPNUITests {
             .verify.qcButtonDisconnected()
     }
     
-    func testConnectionWithDefaultAndSecureCoreProfilePlusUser() {
+    func testConnectionWithDefaultAndSecureCoreProfile() {
         
         let profilename = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Ukraine"
         let serverVia = "Switzerland"
         let status = "Switzerland >> Ukraine"
     
-        loginAsVisionaryUser()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -146,6 +148,9 @@ class ConnectionTests: ProtonVPNUITests {
 
         let countryName = "Ukraine"
         
+        logoutIfNeeded()
+        changeEnvToProdIfNedded()
+        openLoginScreen()
         loginAsFreeUser()
         mainRobot
             .goToCountriesTab()
@@ -158,6 +163,9 @@ class ConnectionTests: ProtonVPNUITests {
         let countryName = "Ukraine"
         let serverName = "UA#12"
         
+        logoutIfNeeded()
+        changeEnvToProdIfNedded()
+        openLoginScreen()
         loginAsBasicUser()
         mainRobot
             .goToCountriesTab()
@@ -170,7 +178,7 @@ class ConnectionTests: ProtonVPNUITests {
         
         let countryName = "Australia"
         
-        logInIfNeeded()
+        logInToProdIfNeeded()
         mainRobot
             .goToCountriesTab()
             .connectToAserver()

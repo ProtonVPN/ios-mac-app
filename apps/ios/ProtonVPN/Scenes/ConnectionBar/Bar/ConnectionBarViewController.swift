@@ -39,9 +39,9 @@ class ConnectionBarViewController: UIViewController {
         tap = UITapGestureRecognizer(target: self, action: #selector(handleTap))
         self.view.addGestureRecognizer(tap)
         
-        view.backgroundColor = .protonBlack()
-        connectedLabel.textColor = .protonWhite()
-        timerLabel.textColor = .protonWhite()
+        view.backgroundColor = .secondaryBackgroundColor()
+        connectedLabel.textColor = .normalTextColor()
+        timerLabel.textColor = .normalTextColor()
         
         connectedLabel.text = LocalizedString.connected
         
@@ -77,27 +77,27 @@ class ConnectionBarViewController: UIViewController {
     }
 
     private func setLoadingConnectionInfo() {
-        self.view.backgroundColor = .protonGreen()
+        self.view.backgroundColor = .brandColor()
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
         self.notConnectedLabel.text = LocalizedString.loadingConnectionInfo
-        self.notConnectedLabel.textColor = .protonWhite()
+        self.notConnectedLabel.textColor = .normalTextColor()
         self.view.setNeedsDisplay()
     }
     
     private func setConnecting() {
-        self.view.backgroundColor = .protonBlack()
+        self.view.backgroundColor = .secondaryBackgroundColor()
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
         self.notConnectedLabel.text = LocalizedString.connectingDotDotDot
-        self.notConnectedLabel.textColor = .protonYellow()
+        self.notConnectedLabel.textColor = .notificationWarningColor()
         self.view.setNeedsDisplay()
     }
     
     private func setConnected() {
-        self.view.backgroundColor = .protonGreen()
+        self.view.backgroundColor = .brandColor()
         self.connectedLabel.isHidden = false
         self.timerLabel.isHidden = false
         self.notConnectedLabel.isHidden = true
@@ -113,12 +113,12 @@ class ConnectionBarViewController: UIViewController {
     }
     
     private func setDisconnected() {
-        self.view.backgroundColor = .protonBlack()
+        self.view.backgroundColor = .secondaryBackgroundColor()
         self.connectedLabel.isHidden = true
         self.timerLabel.isHidden = true
         self.notConnectedLabel.isHidden = false
         self.notConnectedLabel.text = LocalizedString.notConnected
-        self.notConnectedLabel.textColor = .protonRed()
+        self.notConnectedLabel.textColor = .notificationErrorColor()
         self.arrowImage.isHidden = false
         
         self.view.setNeedsDisplay()

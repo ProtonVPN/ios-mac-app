@@ -29,8 +29,8 @@ class CreateProfileTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        createProfileLabel.textColor = .protonWhite()
+        backgroundColor = .secondaryBackgroundColor()
+        createProfileLabel.textColor = .normalTextColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

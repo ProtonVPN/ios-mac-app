@@ -30,8 +30,8 @@ class InstructionStepTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        label.textColor = .protonWhite()
+        backgroundColor = .secondaryBackgroundColor()
+        label.textColor = .normalTextColor()
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

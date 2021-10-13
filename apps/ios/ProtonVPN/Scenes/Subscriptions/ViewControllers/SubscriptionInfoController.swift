@@ -65,9 +65,9 @@ class SubscriptionInfoController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .protonPlansGrey()
+        view.backgroundColor = .backgroundColor()
         
-        titleLabel.attributedText = LocalizedString.manageSubscription.attributed(withColor: .protonWhite(), fontSize: 24)
+        titleLabel.attributedText = LocalizedString.manageSubscription.attributed(withColor: .normalTextColor(), fontSize: 24)
         
         let closeImage = UIImage(named: "close-nav-bar")
         navCloseButton = UIBarButtonItem(image: closeImage, style: .done, target: self, action: #selector(closeButtonTapped(_:)))
@@ -138,7 +138,7 @@ class SubscriptionInfoController: UIViewController {
         label.textAlignment = .justified
         label.font = UIFont.systemFont(ofSize: textFontSize)
         label.text = text
-        label.textColor = .protonFontLightGrey()
+        label.textColor = .weakTextColor()
         label.numberOfLines = 0
         
         scrollViewBody.add(subView: label, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: 0)
@@ -165,7 +165,7 @@ class SubscriptionInfoController: UIViewController {
         label.textAlignment = .justified
         label.font = UIFont.systemFont(ofSize: textFontSize)
         label.text = text
-        label.textColor = .protonFontLightGrey()
+        label.textColor = .weakTextColor()
         label.numberOfLines = 0
         
         scrollViewBody.add(subView: label, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: 0)

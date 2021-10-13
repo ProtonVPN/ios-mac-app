@@ -18,11 +18,11 @@ class CheckmarkTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        tintColor = .protonWhite()
+        backgroundColor = .secondaryBackgroundColor()
+        tintColor = .normalTextColor()
         
         label.font = UIFont.systemFont(ofSize: 17)
-        label.textColor = .protonWhite()
+        label.textColor = .normalTextColor()
         
         accessoryType = .none
     }

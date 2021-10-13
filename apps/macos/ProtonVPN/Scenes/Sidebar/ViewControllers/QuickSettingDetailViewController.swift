@@ -104,6 +104,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                 view?.blockedStyle()
                 view?.action = {
                     presenter.selectCallback?()
+                    self.presenter.dismiss?()
                 }
             } else {
                 if presenter.active {
@@ -112,6 +113,7 @@ class QuickSettingDetailViewController: NSViewController, QuickSettingsDetailVie
                     view?.disabledStyle()
                     view?.action = {
                         presenter.selectCallback?()
+                        self.presenter.dismiss?()
                     }
                 }
             }

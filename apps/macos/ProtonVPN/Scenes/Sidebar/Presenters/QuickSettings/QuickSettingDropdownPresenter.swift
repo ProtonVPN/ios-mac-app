@@ -29,6 +29,7 @@ protocol QuickSettingDropdownPresenterProtocol: class {
     
     var viewController: QuickSettingsDetailViewControllerProtocol? { get set }
     var options: [QuickSettingsDropdownOptionPresenter] { get }
+    var dismiss: (() -> Void)? { get set }
     
     func viewDidLoad()
     func displayReconnectionFeedback()
@@ -48,6 +49,8 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     let vpnGateway: VpnGatewayProtocol
     let appStateManager: AppStateManager
+    
+    var dismiss: (() -> Void)?
     
     init( _ vpnGateway: VpnGatewayProtocol, appStateManager: AppStateManager ) {
         self.vpnGateway = vpnGateway

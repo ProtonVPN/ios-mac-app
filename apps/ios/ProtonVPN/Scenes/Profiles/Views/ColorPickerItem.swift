@@ -27,19 +27,19 @@ class ColorPickerItem: UICollectionViewCell {
     @IBOutlet weak var spaceBackgroundView: UIView!
     @IBOutlet weak var colorCircleView: UIView!
     
-    var color: UIColor = .protonGrey() {
+    var color: UIColor = .backgroundColor() {
         didSet {
             colorCircleView.backgroundColor = color
-            backgroundColor = .protonGrey()
+            backgroundColor = .backgroundColor()
         }
     }
 
     override var isSelected: Bool {
         didSet {
             if self.isSelected {
-                backgroundColor = .protonWhite()
+                backgroundColor = .normalTextColor()
             } else {
-                backgroundColor = .protonGrey()
+                backgroundColor = .backgroundColor()
             }
         }
     }
@@ -64,7 +64,7 @@ class ColorPickerItem: UICollectionViewCell {
         colorCircleView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         colorCircleView.translatesAutoresizingMaskIntoConstraints = true
         
-        backgroundColor = isSelected ? .protonWhite() : .protonGrey()
-        spaceBackgroundView.backgroundColor = .protonGrey()
+        backgroundColor = isSelected ? .normalTextColor() : .backgroundColor()
+        spaceBackgroundView.backgroundColor = .backgroundColor()
     }
 }

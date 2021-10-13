@@ -65,8 +65,9 @@ class ReportBugViewController: UIViewController {
         super.viewDidLoad()
 
         logsSwitch.accessibilityIdentifier = "vpn logs"
-        view.backgroundColor = .protonGrey()
-        lineView.backgroundColor = .protonDarkGrey()
+        logsSwitch.onTintColor = .brandColor()
+        view.backgroundColor = .backgroundColor()
+        lineView.backgroundColor = .secondaryBackgroundColor()
         
         let closeButton = UIButton.closeButton()
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -150,28 +151,28 @@ class ReportBugViewController: UIViewController {
     }
     
     private func setupInputHolder(view: UIView, placeholder: String) {
-        view.backgroundColor = .protonDarkGrey()
+        view.backgroundColor = .backgroundColor()
         
         for subView in view.subviews where subView is UITextField {
             let textField = subView as! UITextField
-            textField.textColor = .protonWhite()
+            textField.textColor = .normalTextColor()
             textField.font = UIFont.systemFont(ofSize: fieldFontSize)
-            textField.attributedPlaceholder = placeholder.attributed(withColor: .protonUnavailableGrey(), fontSize: fieldFontSize)
+            textField.attributedPlaceholder = placeholder.attributed(withColor: .weakTextColor(), fontSize: fieldFontSize)
             textField.minimumFontSize = fieldFontSize
         }
         
         for subView in view.subviews where subView is UITextView {
             let textField = subView as! UITextView
             textField.font = UIFont.systemFont(ofSize: fieldFontSize)
-            textField.textColor = .protonWhite()
-            textField.backgroundColor = .protonDarkGrey()
+            textField.textColor = .normalTextColor()
+            textField.backgroundColor = .backgroundColor()
         }
         
         // Placeholder
         for subView in view.subviews where subView is UILabel {
             let label = subView as! UILabel
             label.font = UIFont.systemFont(ofSize: fieldFontSize)
-            label.textColor = .protonUnavailableGrey()
+            label.textColor = .weakTextColor()
             label.text = placeholder
         }
     }
@@ -179,18 +180,18 @@ class ReportBugViewController: UIViewController {
     private func setupHeader(label: UILabel, text: String) {
         label.font = UIFont.systemFont(ofSize: textFontSize)
         label.text = text.uppercased()
-        label.textColor = .protonUnavailableGrey()
+        label.textColor = .weakTextColor()
     }
     
     private func setupSubHeader(label: UILabel, text: String) {
         label.font = UIFont.systemFont(ofSize: textFontSize)
-        label.textColor = .protonWhite()
+        label.textColor = .normalTextColor()
         label.text = text
     }
     
     private func setupDescription(label: UILabel, text: String) {
         label.font = UIFont.systemFont(ofSize: textFontSize)
-        label.textColor = .protonUnavailableGrey()
+        label.textColor = .weakTextColor()
         label.text = text
     }
     

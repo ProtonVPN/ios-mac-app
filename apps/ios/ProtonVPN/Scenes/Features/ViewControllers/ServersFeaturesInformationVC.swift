@@ -43,7 +43,7 @@ class ServersFeaturesInformationVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .protonWidgetBackground
+        view.backgroundColor = .backgroundColor()
         titleLbl.text = LocalizedString.informationTitle
         featuresTableView.register(FeatureTableViewCell.nib, forCellReuseIdentifier: FeatureTableViewCell.identifier)
         featuresTableView.dataSource = self
@@ -81,7 +81,7 @@ extension ServersFeaturesInformationVC: UITableViewDelegate {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = ServersHeaderView.loadViewFromNib() as ServersHeaderView
         headerView.setName(name: viewModel.titleFor(section))
-        headerView.setColor(color: .protonWidgetBackground)
+        headerView.setColor(color: .backgroundColor())
         return headerView
     }
 }

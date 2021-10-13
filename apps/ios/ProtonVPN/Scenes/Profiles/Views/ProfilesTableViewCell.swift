@@ -59,8 +59,8 @@ class ProfilesTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         selectionStyle = .none
-        backgroundColor = .protonGrey()
-        tintColor = .protonWhite()
+        backgroundColor = .backgroundColor()
+        tintColor = .normalTextColor()
     }
     
     override func setEditing(_ editing: Bool, animated: Bool) {

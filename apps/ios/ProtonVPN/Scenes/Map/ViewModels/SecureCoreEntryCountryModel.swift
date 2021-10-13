@@ -59,7 +59,7 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
         }
     }
     
-    let outlineColor: UIColor = .protonConnectGreen()
+    let outlineColor: UIColor = .brandColor()
     let connectIconTint: UIColor = .clear
     let connectIcon: UIImage? = nil
     
@@ -75,15 +75,15 @@ class SecureCoreEntryCountryModel: AnnotationViewModel, Hashable {
     }
     
     var labelString: NSAttributedString {
-        return LocalizedString.viaCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .protonWhite(), fontSize: 18, alignment: .center)
+        return LocalizedString.viaCountry(LocalizationUtility.default.countryName(forCode: countryCode) ?? "").attributed(withColor: .normalTextColor(), fontSize: 18, alignment: .center)
     }
     
     var labelColor: UIColor {
-        return UIColor.protonConnectGreen().withAlphaComponent(0.75)
+        return UIColor.brandColor().withAlphaComponent(0.75)
     }
     
     var flagOverlayColor: UIColor {
-        return UIColor.protonConnectGreen().withAlphaComponent(0.25)
+        return UIColor.brandColor().withAlphaComponent(0.25)
     }
     
     let showAnchor: Bool = false

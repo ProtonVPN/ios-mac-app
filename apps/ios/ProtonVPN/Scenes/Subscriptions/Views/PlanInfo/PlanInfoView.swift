@@ -43,11 +43,11 @@ class PlanInfoView: UIView {
         super.awakeFromNib()
         setupRoundedCorners()
         
-        titleLabel.textColor = .protonGreen()
+        titleLabel.textColor = .brandColor()
     }
     
     private func setupRoundedCorners() {
-        backgroundView.backgroundColor = .protonGrey()
+        backgroundView.backgroundColor = .backgroundColor()
         backgroundView.clipsToBounds = true
         backgroundView.layer.cornerRadius = 10
         
@@ -102,7 +102,7 @@ class PlanInfoView: UIView {
             
             let tickView = UIImageView(image: UIImage(named: "checkbox_tick"))
             tickView.translatesAutoresizingMaskIntoConstraints = false
-            tickView.tintColor = UIColor.protonGreen()
+            tickView.tintColor = UIColor.brandColor()
             
             holderView.add(subView: titleView, withTopMargin: 0, rightMargin: nil, bottomMargin: 0, leftMargin: 0)
             holderView.add(subView: tickView, withTopMargin: nil, rightMargin: 0, bottomMargin: nil, leftMargin: nil)

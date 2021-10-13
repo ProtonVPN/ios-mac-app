@@ -87,7 +87,7 @@ class CountryItemViewModel {
     }
     
     var backgroundColor: UIColor {
-        return .protonGrey()
+        return .backgroundColor()
     }
     
     var cellHeight: CGFloat {

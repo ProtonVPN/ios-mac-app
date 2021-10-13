@@ -52,12 +52,12 @@ class PlanCardView: UIView {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundView.backgroundColor = .protonGrey()
-        mostPopularView.backgroundColor = .protonGreen()
+        backgroundView.backgroundColor = .backgroundColor()
+        mostPopularView.backgroundColor = .brandColor()
         
         popularLabel.text = LocalizedString.mostPopular
-        titleLabel.textColor = .protonGreen()
-        moreFeaturesButton.tintColor = .protonGreen()
+        titleLabel.textColor = .brandColor()
+        moreFeaturesButton.tintColor = .brandColor()
         moreFeaturesButton.setTitle(LocalizedString.advancedFeatures, for: .normal)
         
         let checkboxView = RoundCheckboxView.loadViewFromNib() as RoundCheckboxView

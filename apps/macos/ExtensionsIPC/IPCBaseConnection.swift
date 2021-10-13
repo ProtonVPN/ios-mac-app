@@ -109,7 +109,7 @@ class XPCServiceUser {
     
     func getVersion(completionHandler: @escaping (Data?) -> Void) {
         guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy: \(registerError.localizedDescription)")
+            self.log("Failed to get remote object proxy for \(self.machServiceName): \(registerError.localizedDescription)")
             self.currentConnection?.invalidate()
             self.currentConnection = nil
             completionHandler(nil)
@@ -124,7 +124,7 @@ class XPCServiceUser {
     
     func getLogs(completionHandler: @escaping (Data?) -> Void) {
         guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy: \(registerError.localizedDescription)")
+            self.log("Failed to get remote object proxy \(self.machServiceName): \(registerError.localizedDescription)")
             self.currentConnection?.invalidate()
             self.currentConnection = nil
             completionHandler(nil)
@@ -139,7 +139,7 @@ class XPCServiceUser {
     
     func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         guard let providerProxy = connection.remoteObjectProxyWithErrorHandler({ registerError in
-            self.log("Failed to get remote object proxy: \(registerError.localizedDescription)")
+            self.log("Failed to get remote object proxy \(self.machServiceName): \(registerError.localizedDescription)")
             self.currentConnection?.invalidate()
             self.currentConnection = nil
             completionHandler(false)

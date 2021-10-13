@@ -16,8 +16,8 @@ class ColorPickerTableViewCell: UITableViewCell {
     override func awakeFromNib() {
         super.awakeFromNib()
         
-        backgroundColor = .protonGrey()
-        collectionView.backgroundColor = .protonGrey()
+        backgroundColor = .secondaryBackgroundColor()
+        collectionView.backgroundColor = .secondaryBackgroundColor()
         
         collectionView.register(ColorPickerItem.nib,
                                 forCellWithReuseIdentifier: ColorPickerItem.identifier)

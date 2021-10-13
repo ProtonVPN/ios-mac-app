@@ -22,7 +22,7 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
-        logInIfNeeded()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -37,7 +37,7 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
         let countryName = "Netherlands"
         
-        logInIfNeeded()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -55,7 +55,7 @@ class ProfilesTests: ProtonVPNUITests {
         let countryName = "Belgium"
         let newCountryName = "Australia"
         
-        logInIfNeeded()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .addNewProfile()
@@ -72,6 +72,7 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
     
         logoutIfNeeded()
+        changeEnvToProdIfNedded()
         openLoginScreen()
         loginAsFreeUser()
         mainRobot
@@ -85,6 +86,7 @@ class ProfilesTests: ProtonVPNUITests {
         let profileName = StringUtils().randomAlphanumericString(length: 10)
     
         logoutIfNeeded()
+        changeEnvToProdIfNedded()
         openLoginScreen()
         loginAsBasicUser()
         mainRobot
@@ -100,6 +102,7 @@ class ProfilesTests: ProtonVPNUITests {
         let serverVia = "Iceland"
         
         logoutIfNeeded()
+        changeEnvToProdIfNedded()
         openLoginScreen()
         loginAsPlusUser()
         mainRobot
@@ -112,7 +115,7 @@ class ProfilesTests: ProtonVPNUITests {
     
     func testRecommendedProfiles() {
         
-        logInIfNeeded()
+        logInToProdIfNeeded()
         mainRobot
             .goToProfilesTab()
             .verify.recommendedProfilesAreVisible()

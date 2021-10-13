@@ -81,7 +81,7 @@ final class MapViewController: UIViewController {
     
     private func setupView() {
         navigationItem.title = LocalizedString.map
-        view.backgroundColor = .protonGrey()
+        view.backgroundColor = .backgroundColor()
         
         scrollView.decelerationRate = UIScrollView.DecelerationRate.normal
         scrollView.bouncesZoom = false
@@ -107,10 +107,10 @@ final class MapViewController: UIViewController {
     }
     
     private func setupSecureCoreBar() {
-        secureCoreBar.backgroundColor = .protonDarkGrey()
-        secureCoreLabel.textColor = .protonWhite()
+        secureCoreBar.backgroundColor = .backgroundColor()
+        secureCoreLabel.textColor = .normalTextColor()
         secureCoreLabel.text = LocalizedString.useSecureCore
-        secureCoreSwitch.onTintColor = .protonConnectGreen()
+        secureCoreSwitch.onTintColor = .brandColor()
         if let viewModel = viewModel {
             secureCoreSwitch.isEnabled = viewModel.enableViewToggle
             secureCoreSwitch.isOn = viewModel.secureCoreOn

@@ -17,8 +17,9 @@ class LoginTests: ProtonVPNUITests {
     override func setUp() {
         super.setUp()
         logoutIfNeeded()
+        changeEnvToProdIfNedded()
+        useAndContinueTap()
         mainRobot
-            .changeEnvironmentTo()
             .showLogin()
             .verify.loginScreenIsShown()
     }
@@ -61,7 +62,8 @@ class LoginTests: ProtonVPNUITests {
     
     func testNeedHelpOptionsLink() {
         
-        mainRobot.showLogin()
+        mainRobot
+            .showLogin()
             .needHelp()
             .needHelpOptionsDisplayed()
             .forgotUsernameLink()

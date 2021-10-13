@@ -38,7 +38,7 @@ final class LaunchViewController: UIViewController {
         super.viewDidLoad()
         
         underLogoLabel.text = LocalizedString.loadingScreenSlogan
-        self.view.backgroundColor = .protonBlack()
+        self.view.backgroundColor = .backgroundColor()
     }
     
     override func viewWillAppear(_ animated: Bool) {

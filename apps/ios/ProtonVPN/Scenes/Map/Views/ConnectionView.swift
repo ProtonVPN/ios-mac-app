@@ -39,7 +39,7 @@ class ConnectionView: UIView {
         
         super.init(frame: frame)
         
-        layer.borderColor = UIColor.protonConnectGreen().cgColor
+        layer.borderColor = UIColor.brandColor().cgColor
         layer.cornerRadius = width * 0.5
         layer.borderWidth = width * 0.5
     }

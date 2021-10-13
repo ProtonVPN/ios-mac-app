@@ -82,7 +82,7 @@ class PlanSelectionViewController: UIViewController {
     }
     
     private func setupView() {
-        view.backgroundColor = .protonPlansGrey()
+        view.backgroundColor = .backgroundColor()
         selectButton.accessibilityIdentifier = "Select plan"
         if !viewModel.allowDismissal {
             closeButton.isHidden = true
@@ -94,15 +94,15 @@ class PlanSelectionViewController: UIViewController {
                 navCloseButton.accessibilityIdentifier = "close"
                 self.navigationItem.setLeftBarButton(navCloseButton, animated: false)
             } else {
-                closeButton.tintColor = .protonWhite()
+                closeButton.tintColor = .normalTextColor()
                 closeButton.isHidden = !viewModel.allowDismissal
             }
         }
         
-        upgradeLabel.attributedText = viewModel.headingString.attributed(withColor: .protonWhite(), fontSize: 24)
+        upgradeLabel.attributedText = viewModel.headingString.attributed(withColor: .normalTextColor(), fontSize: 24)
         
         footerLabel.text = LocalizedString.plansFooter
-        footerLabel.textColor = .protonFontDark()
+        footerLabel.textColor = .weakTextColor()
         
         selectButton.setTitle(LocalizedString.selectPlan, for: .normal)
         

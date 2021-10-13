@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "El interruptor de apagado está protegiendo su IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando se pierde el túnel VPN. Tome en cuenta que su conexión VPN finalizará cuando cambie las cuenta de Mac.";
+"_kill_switch_tooltip" = "Bloquea todo el tráfico de red cuando el túnel VPN se pierde.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "No volver a preguntarme";
@@ -1219,9 +1219,6 @@
 /* (No Comment) */
 "_protocol" = "Protocolo";
 
-/* MacOS: Settings -> Protocol: description. */
-"_protocol_tooltip" = "Cambiar el protocolo de su conexión VPN";
-
 /* (No Comment) */
 "_protonvpn_macos" = "ProtonVPN macOS";
 
@@ -1625,10 +1622,10 @@
 "_sysex_cannot_enable" = "No se puede habilitar la extensión del sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Ha habilitado exitosamente la extensión del sistema en su dispositivo. Ahora puede usar Smart Protocol, OpenVPN y WireGuard.";
+"_sysex_enabled_description" = "Configuración completada. Ahora puede navegar más rápido por internet con las mejores tecnologías VPN.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Ahora puede usar Smart Protocol, OpenVPN y WireGuard";
+"_sysex_enabled_title" = "Configuración completada";
 
 /* (No Comment) */
 "_sysex_error_description" = "Ocurrió un error al instalar la extensión del sistema. Reinstale ProtonVPN, asegurándose de que esté ubicado en la carpeta de aplicaciones, para corregir este problema. Alternativamente, contacte con nuestro soporte.";
@@ -1640,19 +1637,22 @@
 "_sysex_settings_title" = "Extensión del sistema requerida";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Comenzar la configuración manual";
+"_sysex_wizard_button" = "Iniciar configuración";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Haga clic en \"Abrir preferencias de seguridad\" en\n los siguientes cuadros de diálogo (2)";
+"_sysex_wizard_step1_description" = "Haga clic en \"Iniciar configuración\". Aparecerán dos cuadros de diálogo, luego haga clic en \"Abrir preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir la misma configuración.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Haga clic en \"Abrir preferencias de seguridad\" en\n el siguiente cuadro de diálogo";
+"_sysex_wizard_step1_description_1" = "Haga clic en \"Iniciar configuración\". Aparecerá un cuadro de diálogo, luego haga clic en \"Abrir preferencias de seguridad\".\nAlternativamente, haga clic aquí para abrir la misma configuración.";
+
+/* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
+"_sysex_wizard_step1_description_link" = "aquí";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Alertas de \"Extensión del sistema bloqueada\" (x2)";
+"_sysex_wizard_step1_title" = "Abrir preferencias de seguridad";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Alerta \"Extensión del sistema bloqueada\"";
+"_sysex_wizard_step1_title_1" = "Abrir preferencias de seguridad";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Haga clic en el candado para hacer cambios";
@@ -1685,7 +1685,7 @@
 "_sysex_wizard_step5_title" = "Selección de elementos de ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "Para ello, debe realizar una rápida configuración manual en la siguiente secuencia:";
+"_sysex_wizard_subtitle" = "Para hacerlo, siga los pasos a continuación:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "¡Ahora está listo para usar ProtonVPN con las últimas y más rápidas tecnologías VPN disponibles!";

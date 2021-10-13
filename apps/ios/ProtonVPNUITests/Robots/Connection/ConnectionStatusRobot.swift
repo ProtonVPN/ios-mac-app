@@ -54,7 +54,7 @@ class ConnectionStatusRobot: CoreElements {
         
         @discardableResult
         func connectedToAServer(_ name: String) -> MainRobot {
-            staticText(statusConnected + name).wait(time: 15).checkExists()
+            staticText(statusConnected + name).wait(time: 20).checkExists()
             button(tabQCActive).wait().checkExists()
             return MainRobot()
         }
