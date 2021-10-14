@@ -91,6 +91,9 @@
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
+                    <connections>
+                        <action selector="didTapActionButton:" target="-2" id="Yuk-X0-vmJ"/>
+                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4eW-2t-JSK">
                     <rect key="frame" x="62" y="32" width="254" height="15"/>

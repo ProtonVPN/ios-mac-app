@@ -103,4 +103,8 @@ final class AnnouncementDetailViewController: NSViewController {
 
         pillView.layer?.cornerRadius = pillView.frame.height / 2
     }
+
+    @IBAction private func didTapActionButton(_ sender: Any) {
+        SafariService.openLink(url: data.button.url)
+    }
 }
