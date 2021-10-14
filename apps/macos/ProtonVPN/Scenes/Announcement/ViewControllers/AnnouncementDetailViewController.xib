@@ -28,7 +28,7 @@
             <subviews>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="JHg-Ff-dHG">
                     <rect key="frame" x="78" y="375" width="372" height="16"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="IjC-S0-GlA">
+                    <textFieldCell key="cell" alignment="center" title="Multiline Label" id="IjC-S0-GlA">
                         <font key="font" metaFont="systemSemibold" size="13"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -62,7 +62,7 @@
                 </imageView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="rXL-ro-orj">
                     <rect key="frame" x="62" y="165" width="404" height="19"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="eJb-jZ-yxU">
+                    <textFieldCell key="cell" alignment="center" title="Multiline Label" id="eJb-jZ-yxU">
                         <font key="font" metaFont="systemBold" size="16"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -83,7 +83,7 @@
                 </stackView>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="sDn-gl-A96">
                     <rect key="frame" x="231" y="114" width="98" height="17"/>
-                    <textFieldCell key="cell" selectable="YES" title="Multiline Label" id="Q7F-u5-chb">
+                    <textFieldCell key="cell" title="Multiline Label" id="Q7F-u5-chb">
                         <font key="font" metaFont="system" size="14"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -104,7 +104,7 @@
                 </button>
                 <textField verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="4eW-2t-JSK">
                     <rect key="frame" x="62" y="32" width="404" height="15"/>
-                    <textFieldCell key="cell" selectable="YES" alignment="center" title="Multiline Label" id="ju7-U6-eul">
+                    <textFieldCell key="cell" alignment="center" title="Multiline Label" id="ju7-U6-eul">
                         <font key="font" metaFont="cellTitle"/>
                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
