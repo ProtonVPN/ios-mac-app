@@ -26,9 +26,7 @@ import os
 import WireGuardKit
 
 class PacketTunnelProvider: NEPacketTunnelProvider {
-    
-    private let certificateRefreshManager = CertificateRefreshManager()
-    
+        
     deinit {
         wg_log(.info, message: "PacketTunnelProvider deinited")
     }
@@ -66,9 +64,7 @@ class PacketTunnelProvider: NEPacketTunnelProvider {
                 wg_log(.info, message: "Tunnel interface is \(interfaceName)")
 
                 completionHandler(nil)
-                
-                self.certificateRefreshManager.planNextRefresh()
-                
+                                
                 return
             }
 
