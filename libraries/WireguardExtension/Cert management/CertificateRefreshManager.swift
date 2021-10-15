@@ -20,7 +20,7 @@ final class CertificateRefreshManager {
     
     private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup)
     private let certificateRefreshRequest = CertificateRefreshRequest()
-    private var timer: Timer?
+    private var timer: BackgroundTimer?
     
     func planNextRefresh() {
         guard let certificate = vpnAuthenticationStorage.getStoredCertificate() else {
@@ -32,7 +32,7 @@ final class CertificateRefreshManager {
         var nextRefreshTime = certificate.refreshTime.addingTimeInterval(refreshEarlierBy)
 
         if nextRefreshTime < Date() {
-            wg_log(.info, message: "Current certificate should've been refreshed at \(certificate.refreshTime) (\(refreshEarlierBy)s). Starting refresh right now.")
+            wg_log(.info, message: "Current certificate should've been refreshed at \(nextRefreshTime) (\(certificate.refreshTime) - \(refreshEarlierBy)s). Starting refresh right now.")
             nextRefreshTime = Date()
         }
         
@@ -42,9 +42,9 @@ final class CertificateRefreshManager {
     // MARK: -
     
     private func startTimer(at nextRunTime: Date) {
-        timer?.invalidate()
-        let timer = Timer(fireAt: nextRunTime, interval: 0, target: self, selector: #selector(timerFired), userInfo: nil, repeats: false)
-        RunLoop.main.add(timer, forMode: RunLoop.Mode.common)
+        timer = BackgroundTimer(runAt: nextRunTime) { [weak self] in
+            self?.timerFired()
+        }
         wg_log(.info, message: "Timer setup for \(nextRunTime)")
     }
     
@@ -54,7 +54,7 @@ final class CertificateRefreshManager {
             
             let nextRefreshTime = certificate.refreshTime.addingTimeInterval(refreshEarlierBy)
             guard nextRefreshTime <= Date() else {
-                wg_log(.info, message: "Current certificate should be refreshed not earlier than  \(certificate.refreshTime) (\(refreshEarlierBy)s). Postponing refresh until that time.")
+                wg_log(.info, message: "Current certificate should be refreshed not earlier than \(nextRefreshTime) (\(certificate.refreshTime) - \(refreshEarlierBy)s). Postponing refresh until that time.")
                 planNextRefresh()
                 return
             }
@@ -93,6 +93,41 @@ final class CertificateRefreshManager {
     private func nextRetryBackoff() -> TimeInterval {
         lastRetryInterval *= 2
         return lastRetryInterval
+    }
+    
+}
+
+private final class BackgroundTimer {
+    
+    private let timerSource: DispatchSourceTimer
+    private let closure: () -> Void
+    
+    private enum State {
+        case suspended
+        case resumed
+    }
+    private var state: State = .resumed
+    
+    init(runAt nextRunTime: Date, _ closure: @escaping () -> Void) {
+        self.closure = closure
+        timerSource = DispatchSource.makeTimerSource()
+        
+        timerSource.schedule(deadline: .now() + .seconds(Int(nextRunTime.timeIntervalSinceNow)), repeating: .infinity, leeway: .seconds(10)) // We have at least minute before app (if in foreground) may start refreshing cert. So 10 seconds later is ok.
+        timerSource.setEventHandler { [weak self] in
+            self?.timerSource.suspend()
+            self?.state = .suspended
+            self?.closure()
+        }
+        timerSource.resume()
+        state = .resumed
+    }
+    
+    deinit {
+        timerSource.setEventHandler {}
+        timerSource.cancel()
+        if state == .suspended {
+            timerSource.resume()
+        }
     }
     
 }
