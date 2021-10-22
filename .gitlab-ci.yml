@@ -179,7 +179,15 @@ ios_testflight_internal:
     - iOS-deploy
   environment:
     name: deployment
-  when: manual
+  rules:
+    # No release on TAGs
+    - if: $CI_COMMIT_TAG
+      when: never
+    # Release after each push to develop
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    # Otherwise allow manual release
+    - when: manual
   variables:
     CI_KEYCHAIN_NAME: "IOS_RELEASE"
   artifacts:
