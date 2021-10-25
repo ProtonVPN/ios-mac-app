@@ -203,6 +203,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             self.propertiesManager.smartProtocolConfig = properties.clientConfig.smartProtocolConfig
             self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
             self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
+            if self.propertiesManager.featureFlags.pollNotificationAPI {
+                self.announcementRefresher.refresh()
+            }
 
             self.resolveActiveSession(success: { [weak self] in
                 self?.setAndNotify(for: .established)
@@ -226,11 +229,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             ProfileManager.shared.refreshProfiles()
             self.refreshVpnAuthCertificate(success: success, failure: failure)
         })
-        
-        if propertiesManager.featureFlags.pollNotificationAPI {
-            announcementRefresher.refresh()
-        }
-        
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
