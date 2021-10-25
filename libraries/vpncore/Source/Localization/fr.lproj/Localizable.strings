@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Signaler";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Ajouter un fichier";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Signaler un problème...";
 
 /* Bug report attachments */
 "_report_attachments" = "Pièces jointes";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Inclure les journaux des applications et les détails du système";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Signaler une erreur";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Compte :";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "Pays :";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "En fournissant les détails suivants, notre équipe a plus de chances d’identifier rapidement votre problème et une solution possible :\n• Journal d'installation des pilotes\n• Liste des applications installées\n• Application ProtonVPN et journaux de service ProtonVPN\n• Liste des adaptateurs réseau\n• Informations sur la table de routage";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Adresse électronique :";
 
-/* (No Comment) */
-"_report_field_isp" = "FAI :";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Qu'est-ce qui n'allait pas ?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Offre :";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Commencer à écrire...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Version :";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Quelles sont les étapes exactes que vous avez réalisées ?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Journaux VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Activer ceci ajoutera les logs de votre client VPN à ce rapport";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Poids maximal du fichier : 488 Ko";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Adresse électronique de contact";
@@ -1631,22 +1625,22 @@
 "_sysex_settings_title" = "Extension système requise";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Begin configuration";
+"_sysex_wizard_button" = "Commencer la configuration";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Cliquez sur « Commencer la configuration ». Deux boîtes de dialogue apparaîtront, puis cliquez sur « Ouvrir les préférences de sécurité ».\nSinon, cliquez ici pour ouvrir les mêmes paramètres.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Cliquez sur « Commencer la configuration ». Une boîte de dialogue apparaîtra, puis cliquez sur « Ouvrir les préférences de sécurité ».\nSinon, cliquez ici pour ouvrir les mêmes paramètres.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "ici";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Open Security Preferences";
+"_sysex_wizard_step1_title" = "Ouvrir les préférences de sécurité";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Open Security Preferences";
+"_sysex_wizard_step1_title_1" = "Ouvrir les préférences de sécurité";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Cliquez sur le cadenas pour apporter des modifications";
@@ -1679,7 +1673,7 @@
 "_sysex_wizard_step5_title" = "Sélection d'éléments ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Pour ce faire, suivez les étapes ci-dessous :";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Vous êtes maintenant prêt pour utiliser ProtonVPN avec les technologies VPN les plus récentes et rapides disponibles !";
