@@ -25,7 +25,7 @@ import Foundation
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
     func refresh()
-    func resetTimer()
+    func clear()
 }
 
 public protocol AnnouncementRefresherFactory {
@@ -54,9 +54,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if lastRefresh != nil && Date().timeIntervalSince(lastRefresh!) < minRefreshTime {
             return
         }
-        
-        lastRefresh = Date()
+
         coreApiService.getApiNotifications(success: { announcementsResponse in
+            self.lastRefresh = Date()
             self.announcementStorage.store(announcementsResponse.notifications)
         }, failure: {error in
             PMLog.ET("Error getting announcements")
