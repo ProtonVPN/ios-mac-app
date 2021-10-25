@@ -63,12 +63,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         })
     }
     
-    public func resetTimer() {
+    public func clear() {
         lastRefresh = nil
-    }
-    
-    private func clean() {
-        self.announcementStorage.store([])
+        self.announcementStorage.clear()
     }
     
     @objc func featureFlagsChanged(_ notification: NSNotification) {
@@ -76,8 +73,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if featureFlags.pollNotificationAPI {
             refresh()
         } else { // Hide announcements
-            resetTimer()
-            clean()
+            clear()
         }
     }
     
