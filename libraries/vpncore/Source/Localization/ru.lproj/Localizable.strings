@@ -65,7 +65,7 @@
 "_allow" = "Разрешить";
 
 /* (No Comment) */
-"_allow_lan_description" = "Чтобы разрешить доступ к локальной сети, Kill Switch должен быть выключен.\n\nПродолжить?";
+"_allow_lan_description" = "Чтобы разрешить доступ к локальной сети, Аварийный Стоп должен быть выключен.\n\nПродолжить?";
 
 /* (No Comment) */
 "_allow_lan_info" = "Позволяет обойти VPN и подключиться к устройствам в вашей локальной сети, например принтеру.";
@@ -80,7 +80,7 @@
 "_already_have_account" = "У меня уже есть аккаунт";
 
 /* iOS Settings: toggle name */
-"_always_on_vpn" = "Постоянный VPN";
+"_always_on_vpn" = "Постоянная VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
 "_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
@@ -707,7 +707,7 @@
 "_ip_will_not_be_exposed" = "Ваш IP-адрес не будет раскрыт.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Kill Switch";
+"_kill_switch" = "Аварийный Стоп";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_body" = "Kill Switch защищает ваш IP\n\nВаше подключение к Интернету возобновится, как только ProtonVPN переподключится к серверу. Чтобы возобновить его без VPN, отключите Kill Switch.";
@@ -716,10 +716,10 @@
 "_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Kill Switch";
+"_kill_switch_blocking_title" = "Аварийный Стоп";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Отключить Kill Switch";
+"_kill_switch_disable" = "Отключить Аварийный Стоп";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Завершите эти приложения, чтобы исправить проблему.\nЧтобы продолжить без Kill Switch, нажмите Продолжить.";
@@ -794,7 +794,7 @@
 "_loading_screen_slogan" = "Безопасный Интернет где угодно";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Вам не разрешено подключаться к серверу. Выберите другой сервер или обновите план.";
+"_local_agent_policy_violation_error_message" = "Вам не разрешено подключаться к серверу. Выберите другой сервер или улучшите ваш тариф.";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_title" = "Нарушение правил";
@@ -1247,7 +1247,7 @@
 "_quick_settings_killSwitch_description" = "Отключает Интернет для предотвращения случайной утечки IP, если VPN-соединение разрывается.";
 
 /* (No Comment) */
-"_quick_settings_killSwitch_note" = "Если вы не можете подключиться к устройствам в вашей локальной сети, попробуйте отключить Kill Switch.";
+"_quick_settings_killSwitch_note" = "Если вы не можете подключиться к устройствам в вашей локальной сети, попробуйте отключить Аварийный Стоп.";
 
 /* (No Comment) */
 "_quick_settings_netShield_description" = "Просматривайте страницы в Интернете без рекламы и вредоносных программ.";
@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Пожаловаться";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Добавить файл";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Сообщить о проблеме...";
 
 /* Bug report attachments */
 "_report_attachments" = "Вложения";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Включить журналы и системные данные";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Сообщить об ошибке";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Аккаунт:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "Страна:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Наша команда сможет с большим шансом и быстрее определить вашу проблему и возможное решение, если вы предоставите следующую информацию:\n• Журнал установки драйверов\n• Список установленных приложений\n• Логи приложения и службы ProtonVPN\n• Список сетевых адаптеров\n• Информация о таблице маршрутизации";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
 
-/* (No Comment) */
-"_report_field_isp" = "Интернет-провайдер:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Что пошло не так?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Тариф:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Начинайте вводить текст...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Версия:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Какие именно шаги вы выполняли?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Журналы VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Включение этого параметра добавит журналы работы VPN на стороне клиента в этот отчет";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Ограничение на максимальный размер файла: 488 КБ";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Контактная эл. почта";
@@ -1631,22 +1625,22 @@
 "_sysex_settings_title" = "Требуется расширение системы";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Begin configuration";
+"_sysex_wizard_button" = "Начать настройку";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Нажмите \"Начать настройку\". Появятся два диалоговых окна, затем нажмите \"Открыть настройки безопасности\".\nИли же нажмите здесь, чтобы открыть те же настройки.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Нажмите \"Начать настройку\". Появится диалог, затем нажмите \"Открыть настройки безопасности\".\nИли же нажмите здесь, чтобы открыть те же настройки.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "здесь";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Open Security Preferences";
+"_sysex_wizard_step1_title" = "Открыть Параметры безопасности";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Open Security Preferences";
+"_sysex_wizard_step1_title_1" = "Открыть Параметры безопасности";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
 "_sysex_wizard_step2_description" = "Щелкните на значок замка, чтобы можно было вносить изменения";
@@ -1664,7 +1658,7 @@
 "_sysex_wizard_step4_description" = "Щелкните по кнопке \"Подробности…\"";
 
 /* System exetnsion wizard in mac: Step nr.4 description (for case with only one system extension) */
-"_sysex_wizard_step4_description_1" = "Click the “Allow” button";
+"_sysex_wizard_step4_description_1" = "Нажмите на кнопку \"Разрешить\"";
 
 /* System exetnsion wizard in mac: Step nr.4 title (for case with more than one system extension) */
 "_sysex_wizard_step4_title" = "кнопка \"Подробности…\"";
@@ -1679,7 +1673,7 @@
 "_sysex_wizard_step5_title" = "Выберите элементы ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Для этого выполните следующие действия:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Теперь Вы готовы использовать ProtonVPN с самыми последними и быстрейшими доступными технологиями VPN!";
@@ -1870,10 +1864,10 @@
 "_try_again_without_killswitch" = "Отключить Kill Switch и повторить попытку";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "При активации Kill Switch, вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
+"_turn_ks_on_description" = "При активации Аварийного Стопа вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Включить Kill Switch?";
+"_turn_ks_on_title" = "Включить Аварийный Стоп?";
 
 /* (No Comment) */
 "_turn_on" = "Включить";

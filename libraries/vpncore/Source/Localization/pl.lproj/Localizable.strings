@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Zgłoś";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Dodaj plik";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Zgłoś problem...";
 
 /* Bug report attachments */
 "_report_attachments" = "Załączniki";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Dołącz logi aplikacji i szczegóły systemu operacyjnego";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Zgłoś błąd";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Konto:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "Kraj:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi instalacji sterowników\n• Lista zainstalowanych aplikacji\n• Logi aplikacji i usługi ProtonVPN\n• Lista adapterów sieciowych\n• Informacja o tablicy routingu";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
 
-/* (No Comment) */
-"_report_field_isp" = "Dostawca Internetu:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Co poszło nie tak?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Plan:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Rozpocznij pisanie...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Wersja:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Jakie dokładnie kroki wykonałeś?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Logi VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Włączenie tej opcji spowoduje dodanie Twoich logów VPN do raportu";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Maksymalny rozmiar pliku: 488 KB";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "E-mail kontaktowy";
@@ -1634,10 +1628,10 @@
 "_sysex_wizard_button" = "Rozpocznij konfigurację";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Kliknij przycisk \"Rozpocznij konfigurację\". W wyświetlonych oknach kliknij \"Otwórz ustawienia bezpieczeństwa\".\nAlternatywnie, kliknij tutaj, aby otworzyć te ustawienia.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Kliknij przycisk \"Rozpocznij konfigurację\". W wyświetlonym oknie kliknij \"Otwórz ustawienia bezpieczeństwa\".\nAlternatywnie, kliknij tutaj, aby otworzyć te ustawienia.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "tutaj";
@@ -1673,19 +1667,19 @@
 "_sysex_wizard_step4_title_1" = "Przycisk “Zezwalaj”";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";
+"_sysex_wizard_step5_description" = "Zaznacz dwa elementy aplikacji ProtonVPN, aby włączyć niestandardowe protokoły i kliknij przycisk \"OK\"";
 
 /* System exetnsion wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Selecting ProtonVPN items";
+"_sysex_wizard_step5_title" = "Zaznaczenie elementów aplikacji ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Aby to zrobić, wykonaj poniższe kroki:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "You’re now ready to use ProtonVPN with the latest and fastest VPN technologies available!";
+"_sysex_wizard_text_under_steps" = "Jesteś gotowy do używania aplikacji ProtonVPN z najnowszymi i najszybszymi technologiami VPN!";
 
 /* System exetnsion wizard in mac: Main title */
-"_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
+"_sysex_wizard_title" = "Ciesz się najszybszymi połączeniami dzięki włączeniu niestandardowych protokołów";
 
 /* System exetnsion wizard in mac: Main title */
 "_sysex_wizard_window_title" = "Włączenie niestandardowych protokołów";

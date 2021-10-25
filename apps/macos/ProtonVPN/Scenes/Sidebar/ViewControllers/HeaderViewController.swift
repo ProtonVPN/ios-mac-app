@@ -164,6 +164,7 @@ final class HeaderViewController: NSViewController {
             self?.badgeView.isHidden = self?.viewModel.hasUnreadAnnouncements != true
         }
 
+        announcementsButton.toolTip = viewModel.announcementTooltip
         announcementsButton.isHidden = true
         guard let iconUrl = viewModel.announcementIconUrl else {
             setup(NSImage(named: "bell"))
