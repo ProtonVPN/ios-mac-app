@@ -286,11 +286,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private func logOutCleanup() {
         refreshTimer.stop()
         loggedIn = false
-        announcementRefresher.resetTimer()
         
         AuthKeychain.clear()
         vpnKeychain.clear()
         vpnAuthentication.clear()
+        announcementRefresher.clear()
         
         propertiesManager.logoutCleanup()
         alamofireWrapper.setHumanVerification(token: nil)

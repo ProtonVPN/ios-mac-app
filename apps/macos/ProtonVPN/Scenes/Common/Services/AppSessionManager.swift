@@ -252,6 +252,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         AuthKeychain.clear()
         vpnKeychain.clear()
         vpnAuthentication.clear()
+        announcementRefresher.clear()
         
         propertiesManager.logoutCleanup()
     }
