@@ -138,6 +138,10 @@ final class HeaderViewModel {
         }
         return nil
     }
+
+    var announcementTooltip: String? {
+        return announcementsViewModel.currentItem?.offer?.panel?.title ?? announcementsViewModel.currentItem?.offer?.label
+    }
     
     // MARK: - Private functions
     

@@ -169,11 +169,12 @@ lane :ios_internal_beta do |options|
   
   
   upload_to_testflight(
-      team_name: "Proton Technologies AG",
-      groups: ["Internal Members"],
-      changelog: options[:changelog],
-      distribute_external: true,
-      demo_account_required: true
+    app_identifier: BUNDLE_ID,
+    team_name: "Proton AG",
+    groups: ["Internal Members"],
+    changelog: options[:changelog],
+    distribute_external: true,
+    demo_account_required: true
   )
 
 end

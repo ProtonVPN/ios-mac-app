@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="18122" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19162" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="18093"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19144"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -72,18 +72,21 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="4" translatesAutoresizingMaskIntoConstraints="NO" id="hGv-Rf-DEo">
-                                    <rect key="frame" x="54" y="391" width="306" height="20.5"/>
+                                    <rect key="frame" x="178.5" y="391" width="57" height="20.5"/>
                                     <subviews>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CaM-Cu-Z4D">
-                                            <rect key="frame" x="0.0" y="0.0" width="306" height="20.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="57" height="20.5"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                     </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="yRt-8R-L8h"/>
+                                    </constraints>
                                 </stackView>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Ka-za-LLU">
-                                    <rect key="frame" x="78" y="415.5" width="282" height="16"/>
+                                    <rect key="frame" x="202.5" y="415.5" width="33" height="16"/>
                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                     <nil key="textColor"/>
                                     <nil key="highlightedColor"/>
@@ -99,12 +102,13 @@
                                 <constraint firstItem="hGv-Rf-DEo" firstAttribute="top" secondItem="GbC-hZ-kUS" secondAttribute="bottom" constant="24" id="Fen-Zn-N0A"/>
                                 <constraint firstItem="GbC-hZ-kUS" firstAttribute="top" secondItem="Nt8-S2-DKa" secondAttribute="bottom" constant="24" id="Ggl-a0-H9o"/>
                                 <constraint firstItem="GbC-hZ-kUS" firstAttribute="leading" secondItem="rkI-Ic-kQ8" secondAttribute="leading" constant="16" id="IJh-Ov-6gN"/>
-                                <constraint firstItem="hGv-Rf-DEo" firstAttribute="leading" secondItem="rkI-Ic-kQ8" secondAttribute="leading" constant="54" id="Lnl-F3-aeK"/>
+                                <constraint firstItem="hGv-Rf-DEo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="rkI-Ic-kQ8" secondAttribute="leading" constant="54" id="Lnl-F3-aeK"/>
                                 <constraint firstItem="6Ka-za-LLU" firstAttribute="leading" secondItem="hGv-Rf-DEo" secondAttribute="leading" constant="24" id="Qjl-Ax-gSL"/>
                                 <constraint firstItem="6Ka-za-LLU" firstAttribute="top" secondItem="hGv-Rf-DEo" secondAttribute="bottom" constant="4" id="SeP-dC-RTW"/>
                                 <constraint firstItem="hGv-Rf-DEo" firstAttribute="trailing" secondItem="6Ka-za-LLU" secondAttribute="trailing" id="h48-j7-q88"/>
+                                <constraint firstItem="hGv-Rf-DEo" firstAttribute="centerX" secondItem="rkI-Ic-kQ8" secondAttribute="centerX" id="mJM-x4-Yib"/>
                                 <constraint firstAttribute="bottom" secondItem="6Ka-za-LLU" secondAttribute="bottom" constant="16" id="pE9-RT-AtI"/>
-                                <constraint firstAttribute="trailing" secondItem="hGv-Rf-DEo" secondAttribute="trailing" constant="54" id="qxI-zM-KvM"/>
+                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="hGv-Rf-DEo" secondAttribute="trailing" constant="54" id="qxI-zM-KvM"/>
                                 <constraint firstItem="Nt8-S2-DKa" firstAttribute="leading" secondItem="rkI-Ic-kQ8" secondAttribute="leading" constant="16" id="uQV-P6-OIN"/>
                                 <constraint firstAttribute="trailingMargin" secondItem="sI4-Td-tAz" secondAttribute="trailing" constant="16" id="w3A-jB-KEN"/>
                                 <constraint firstAttribute="trailing" secondItem="Nt8-S2-DKa" secondAttribute="trailing" constant="16" id="yBr-R2-mw5"/>

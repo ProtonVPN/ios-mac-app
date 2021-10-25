@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Melden";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Bestand toevoegen";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Een probleem melden...";
 
 /* Bug report attachments */
 "_report_attachments" = "Bijlagen";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Inclusief app logs en systeemdetails";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Bug melden";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Account:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "Land:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Door de volgende gegevens te verstrekken kan ons team uw probleem bekijken en in korte tijd samen met u tot een oplossing komen:\n• Overzicht van onlangs geïnstalleerde drivers\n• Lijst met geïnstalleerde programma's\n• Informatie over de ProtonVPN app en de logboeken\n• Overzicht van netwerkadapters\n• Routing table";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mailadres:";
 
-/* (No Comment) */
-"_report_field_isp" = "Internetprovider:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Wat is er misgegaan?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Abonnement:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Begin met typen...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Versie:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Wat zijn de exacte stappen die u hebt uitgevoerd?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "VPN logs";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Deze optie inschakelen zorgt ervoor dat de VPN logs van uw client toegevoegd worden aan dit rapport";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Maximale bestandsgrootte: 488 KB";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Contact e-mail";

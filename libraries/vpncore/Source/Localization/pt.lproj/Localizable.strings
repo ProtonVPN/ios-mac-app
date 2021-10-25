@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Relatar";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Adicionar ficheiro";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Relatar um problema...";
 
 /* Bug report attachments */
 "_report_attachments" = "Anexos";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Incluir registos da aplicação e detalhes do sistema";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Comunicar erro";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Conta:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "País:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Ao fornecer os seguintes detalhes, temos mais hipóteses de identificar o seu problema e arranjar uma possível solução mais rapidamente:\n- registo de instalação dos controladores;\n- lista de aplicações instaladas;\n- diários de serviço da aplicação ProtonVPN;\n- lista de adaptadores de rede;\n- informações da tabela de encaminhamento";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
 
-/* (No Comment) */
-"_report_field_isp" = "ISP:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "O que correu mal?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Plano:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Começar a escrever...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Versão:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Quais são exactamente os passos que deu?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Diários VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Activar isto adiciona os diários VPN do seu lado a este relatório";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Tamanho máximo do ficheiro: 488 KB";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Email de contacto";

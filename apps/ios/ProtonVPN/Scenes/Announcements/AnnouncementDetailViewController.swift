@@ -69,14 +69,14 @@ final class AnnouncementDetailViewController: UIViewController {
         actionButton.setTitle(data.button.text, for: .normal)
 
         incentiveLabel.textColor = .normalTextColor()
-        let parts = data.incentive.split(separator: "%")
-        if parts.count != 3 {
-            incentiveLabel.text = data.incentive.replacingOccurrences(of: "%IncentivePrice%", with: "\n\(data.incentivePrice)")
+        let parts = data.incentive.components(separatedBy: "%IncentivePrice%")
+        if parts.count == 1 {
+            incentiveLabel.text = data.incentive
         } else {
             let attributed = NSMutableAttributedString(string: String(parts[0]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .semibold)])
             attributed.append(NSAttributedString(string: "\n"))
             attributed.append(NSAttributedString(string: data.incentivePrice, attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 28, weight: .bold)]))
-            attributed.append(NSAttributedString(string: String(parts[2]), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .semibold)]))
+            attributed.append(NSAttributedString(string: parts.dropFirst().joined(separator: ""), attributes: [NSAttributedString.Key.font: UIFont.systemFont(ofSize: 13, weight: .semibold)]))
             incentiveLabel.attributedText = attributed
         }
 
