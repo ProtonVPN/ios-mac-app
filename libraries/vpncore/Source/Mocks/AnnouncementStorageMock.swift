@@ -38,7 +38,10 @@ class AnnouncementStorageMock: AnnouncementStorage {
         self.announcements = objects
         NotificationCenter.default.post(name: AnnouncementStorageNotifications.contentChanged, object: objects)
     }
-    
+
+    func clear() {
+        announcements = []
+    }
 }
 
 class AnnouncementStorageFactoryMock: AnnouncementStorageFactory {
