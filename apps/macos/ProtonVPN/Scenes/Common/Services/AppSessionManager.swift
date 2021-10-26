@@ -143,6 +143,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.propertiesManager.streamingResourcesUrl = properties.streamingResponse?.resourceBaseURL
                 self.propertiesManager.featureFlags = properties.clientConfig.featureFlags
                 self.propertiesManager.maintenanceServerRefreshIntereval = properties.clientConfig.serverRefreshInterval
+                if propertiesManager.featureFlags.pollNotificationAPI {
+                    announcementRefresher.refresh()
+                }
                 self.resolveActiveSession(success: { [weak self] in
                     self?.setAndNotify(for: .established)
                     ProfileManager.shared.refreshProfiles()
@@ -164,10 +167,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 ProfileManager.shared.refreshProfiles()
                 self.refreshVpnAuthCertificate(success: success, failure: failure)
             }
-        }
-        
-        if propertiesManager.featureFlags.pollNotificationAPI {
-            announcementRefresher.refresh()
         }
     }
     
@@ -258,6 +257,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         AuthKeychain.clear()
         vpnKeychain.clear()
         vpnAuthentication.clear()
+        announcementRefresher.clear()
         
         propertiesManager.logoutCleanup()
     }

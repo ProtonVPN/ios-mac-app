@@ -45,21 +45,24 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         wait(for: [expectationApiWasCalled], timeout:0.2)
     }
     
-    func testDoesntRefreshTooOfter() {
+    func testDoNotRefreshTooOften() {
         let expectationApiWasCalled = XCTestExpectation(description: "API was called")
         expectationApiWasCalled.expectedFulfillmentCount = 1
         expectationApiWasCalled.assertForOverFulfill = true
         
         let coreApiService = CoreApiServiceMock()
-        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
-            expectationApiWasCalled.fulfill()
-        }
         let factory = AnnouncementRefresherImplementationFactory(coreApiService: coreApiService, announcementStorage: storage)
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 888)
-        refresher.refresh()
+
+        coreApiService.callbackGetApiNotificationsCallback = { success, failure in
+            expectationApiWasCalled.fulfill()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                refresher.refresh()
+            }
+        }
         refresher.refresh()
         
-        wait(for: [expectationApiWasCalled], timeout:0.2)
+        wait(for: [expectationApiWasCalled], timeout: 1)
     }
     
     func testRefreshesAfterMinTimePassed() {

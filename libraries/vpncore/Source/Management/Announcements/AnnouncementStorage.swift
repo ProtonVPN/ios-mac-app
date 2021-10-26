@@ -25,6 +25,7 @@ import Foundation
 public protocol AnnouncementStorage {
     func fetch() -> [Announcement]
     func store(_ objects: [Announcement])
+    func clear()
 }
 
 public protocol KeyNameProvider {
@@ -76,6 +77,10 @@ public class AnnouncementStorageUserDefaults: AnnouncementStorage {
         } catch let error {
             PMLog.ET(error)
         }
+    }
+
+    public func clear() {
+        userDefaults.removeObject(forKey: storageKey)
     }
  
     // MARK: - Private

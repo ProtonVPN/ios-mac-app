@@ -25,7 +25,7 @@ import Foundation
 /// Class that can refresh announcements from API
 public protocol AnnouncementRefresher {
     func refresh()
-    func resetTimer()
+    func clear()
 }
 
 public protocol AnnouncementRefresherFactory {
@@ -54,11 +54,11 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if lastRefresh != nil && Date().timeIntervalSince(lastRefresh!) < minRefreshTime {
             return
         }
-        
-        lastRefresh = Date()
+    
         coreApiService.getApiNotifications { [weak self] result in
             switch result {
             case let .success(announcementsResponse):
+                self?.lastRefresh = Date()
                 self?.announcementStorage.store(announcementsResponse.notifications)
             case .failure:
                 PMLog.ET("Error getting announcements")
@@ -66,12 +66,9 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         }
     }
     
-    public func resetTimer() {
+    public func clear() {
         lastRefresh = nil
-    }
-    
-    private func clean() {
-        self.announcementStorage.store([])
+        self.announcementStorage.clear()
     }
     
     @objc func featureFlagsChanged(_ notification: NSNotification) {
@@ -79,8 +76,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
         if featureFlags.pollNotificationAPI {
             refresh()
         } else { // Hide announcements
-            resetTimer()
-            clean()
+            clear()
         }
     }
     
