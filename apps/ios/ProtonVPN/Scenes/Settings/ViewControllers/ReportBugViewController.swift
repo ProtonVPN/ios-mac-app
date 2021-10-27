@@ -67,6 +67,7 @@ class ReportBugViewController: UIViewController {
         logsSwitch.accessibilityIdentifier = "vpn logs"
         view.backgroundColor = .protonGrey()
         lineView.backgroundColor = .protonDarkGrey()
+        navigationController?.navigationBar.backgroundColor = .protonLightGrey()
         
         let closeButton = UIButton.closeButton()
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
