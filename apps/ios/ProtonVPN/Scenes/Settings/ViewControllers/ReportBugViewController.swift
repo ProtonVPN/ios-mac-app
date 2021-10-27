@@ -90,6 +90,8 @@ class ReportBugViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        logsSwitch.isOn = true
+        logsSwitchChanged()
         renderButton()
         emailField.text = viewModel.getEmail()
         
