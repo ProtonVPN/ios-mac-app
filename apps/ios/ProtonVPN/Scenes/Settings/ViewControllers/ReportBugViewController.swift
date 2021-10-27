@@ -68,6 +68,7 @@ class ReportBugViewController: UIViewController {
         logsSwitch.onTintColor = .brandColor()
         view.backgroundColor = .backgroundColor()
         lineView.backgroundColor = .secondaryBackgroundColor()
+        navigationController?.navigationBar.backgroundColor = .secondaryBackgroundColor()
         
         let closeButton = UIButton.closeButton()
         closeButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -91,6 +92,8 @@ class ReportBugViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        logsSwitch.isOn = true
+        logsSwitchChanged()
         renderButton()
         emailField.text = viewModel.getEmail()
         
