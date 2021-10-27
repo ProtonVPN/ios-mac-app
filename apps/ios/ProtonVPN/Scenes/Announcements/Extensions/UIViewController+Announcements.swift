@@ -75,7 +75,7 @@ extension UIViewController {
     }
     
     func renderAnnouncementsButtonBadge() {
-        let button = self.navigationItem.leftBarButtonItem as? BadgedBarButtonItem
+        let button = navigationItem.rightBarButtonItems?.compactMap({ $0 as? BadgedBarButtonItem }).first
         button?.showBadge = AnnouncementButtonViewModel.shared.hasUnreadAnnouncements
     }
     

@@ -55,10 +55,9 @@ class AnnouncementRefresherImplementationTests: XCTestCase {
         let refresher = AnnouncementRefresherImplementation(factory: factory, minRefreshTime: 888)
 
         coreApiService.callbackGetApiNotificationsCallback = { success, failure in
+            success(GetApiNotificationsResponse(notifications: []))
             expectationApiWasCalled.fulfill()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                refresher.refresh()
-            }
+            refresher.refresh()
         }
         refresher.refresh()
         
