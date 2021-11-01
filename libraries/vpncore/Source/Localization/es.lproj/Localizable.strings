@@ -98,7 +98,7 @@
 "_auto_assigned" = "Asignado automáticamente";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Conectar Automáticamente";
+"_auto_connect" = "Conexión automática";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "Al iniciar la app, estarás conectado al perfil seleccionado";
@@ -1343,7 +1343,7 @@
 "_report_bug" = "Reportar Error";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Proporcionando los siguientes detalles, nuestro equipo puede identificar su problema y una posible solución con mayores posibilidades y menor tiempo:\n• Registro de instalación de controladores\n• Lista de aplicaciones instaladas\n• Aplicación ProtonVPN y registros de servicio ProtonVPN\n• Lista de adaptadores de red\n• Información de la tabla de enrutamiento";
+"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo electrónico:";

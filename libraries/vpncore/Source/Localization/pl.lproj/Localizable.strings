@@ -1343,7 +1343,7 @@
 "_report_bug" = "Zgłoś błąd";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi instalacji sterowników\n• Lista zainstalowanych aplikacji\n• Logi aplikacji i usługi ProtonVPN\n• Lista adapterów sieciowych\n• Informacja o tablicy routingu";
+"_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi aplikacji ProtonVPN\n• Logi protokołu OpenVPN\n• Logi protokołu WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
@@ -1792,7 +1792,7 @@
 "_troubleshoot_item_alt_link1" = "Dowiedz się więcej";
 
 /* (No Comment) */
-"_troubleshoot_item_alt_title" = "Zezwalaj na alternatywne przekierowanie połączenia";
+"_troubleshoot_item_alt_title" = "Alternatywne przekierowanie połączenia";
 
 /* (No Comment) */
 "_troubleshoot_item_antivirus_description" = "Tymczasowo wyłącz lub usuń oprogramowanie antywirusowe.";

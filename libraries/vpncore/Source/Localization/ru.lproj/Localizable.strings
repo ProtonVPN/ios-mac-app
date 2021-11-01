@@ -98,7 +98,7 @@
 "_auto_assigned" = "Назначается автоматически";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_auto_connect" = "Автоматическое подключение";
+"_auto_connect" = "Автоподключение";
 
 /* MacOS: Settings -> Connection: description. */
 "_auto_connect_tooltip" = "При запуске приложения, вы подключаетесь к выбранному профилю";
@@ -1343,7 +1343,7 @@
 "_report_bug" = "Сообщить об ошибке";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Наша команда сможет с большим шансом и быстрее определить вашу проблему и возможное решение, если вы предоставите следующую информацию:\n• Журнал установки драйверов\n• Список установленных приложений\n• Логи приложения и службы ProtonVPN\n• Список сетевых адаптеров\n• Информация о таблице маршрутизации";
+"_report_description" = "Наша команда сможет определить проблему и найти возможное решение с большей вероятностью и за более короткий срок, если вы предоставите следующую нформацию:\n• логи ProtonVPN\n• логи OpenVPN\n• логи WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Эл. почта:";
