@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Reportar";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Añadir archivo";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Reportar un problema...";
 
 /* Bug report attachments */
 "_report_attachments" = "Archivos adjuntos";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "Incluye registros de aplicaciones y detalles del sistema";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Reportar Error";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Cuenta:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "País:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Proporcionando los siguientes detalles, nuestro equipo puede identificar su problema y una posible solución con mayores posibilidades y menor tiempo:\n• Registro de instalación de controladores\n• Lista de aplicaciones instaladas\n• Aplicación ProtonVPN y registros de servicio ProtonVPN\n• Lista de adaptadores de red\n• Información de la tabla de enrutamiento";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Correo electrónico:";
 
-/* (No Comment) */
-"_report_field_isp" = "ISP:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "¿Qué salió mal?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Plan:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Empiece a escribir...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Versión:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "¿Cuáles son los pasos exactos que realizó?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "Registros VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Habilitar esto añadirá los registros VPN de la parte del cliente a este informe";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Límite máximo de tamaño de archivo: 488 KB";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Correo electrónico de contacto";

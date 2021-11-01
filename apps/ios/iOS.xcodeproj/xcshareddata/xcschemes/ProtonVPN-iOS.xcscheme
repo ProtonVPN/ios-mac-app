@@ -81,6 +81,9 @@
                   Identifier = "SignUpTests">
                </Test>
                <Test
+                  Identifier = "SignupTests">
+               </Test>
+               <Test
                   Identifier = "UnloggedUserTests">
                </Test>
             </SkippedTests>

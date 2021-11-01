@@ -13,8 +13,6 @@ import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_ForceUpgrade
 import ProtonCore_HumanVerification
-import ProtonCore_Payments
-import ProtonCore_PaymentsUI
 
 final class iOSNetworkingDelegate: NetworkingDelegate {
     private let forceUpgradeService: ForceUpgradeDelegate

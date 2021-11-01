@@ -155,6 +155,7 @@ macos_unit_tests:
       junit:
         - fastlane/test_output/report.junit
 
+# --- Deployment ---
 
 ios_testflight_internal:
   stage: release
@@ -167,11 +168,14 @@ ios_testflight_internal:
     - fastlane sigh download_all --download_xcode_profiles
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - export NEW_BUILD_NUMBER=$(./fastlane/generate_build_number.sh)
-    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build"
+    - echo $NEW_BUILD_NUMBER
+    - export CHANGELOG=$(git log $(git tag -l 'ios/beta/*' --sort=-version:refname:strip=2 | head -n 1)..HEAD --pretty="format:- %s" -- . ':(exclude)apps/macos*')
+    - echo $CHANGELOG
+    - fastlane ios_internal_beta changelog:"$CHANGELOG"
     - ./fastlane/add_git_tag.sh
     - fastlane delete_ios_keychain ## Re-create keychain to have less problems
     - fastlane create_ios_keychain
-    - fastlane ios_internal_beta changelog:"Latest $CI_COMMIT_REF_NAME build" scheme:"ProtonVPN-iOS-Staging"
+    - fastlane ios_internal_beta changelog:"$CHANGELOG" scheme:"ProtonVPN-iOS-Staging"
   after_script: # Cleanup
     - rm -f Certificates.p12
     - fastlane delete_ios_keychain
@@ -179,7 +183,18 @@ ios_testflight_internal:
     - iOS-deploy
   environment:
     name: deployment
-  when: manual
+  rules:
+    # No release on TAGs
+    - if: $CI_COMMIT_TAG
+      when: never
+    # Prevent pipeline on MR creation
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    # Release after each push to develop
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    # Otherwise allow manual release
+    - when: manual
   variables:
     CI_KEYCHAIN_NAME: "IOS_RELEASE"
   artifacts:
@@ -191,6 +206,25 @@ ios_testflight_internal:
     exclude:
       - build/*.ipa
     expire_in: 60 days
+
+mac_release_internal:
+  stage: release
+  rules:
+    # No release on TAGs
+    - if: $CI_COMMIT_TAG
+      when: never
+    # Prevent pipeline on MR creation
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      when: never
+    # Release after each push to develop
+    - if: $CI_COMMIT_BRANCH == "develop"
+      when: on_success
+    # Otherwise allow manual release
+    - when: manual
+  trigger:
+    project: apple/vpn/mac-ci
+    branch: mac-v2
+    strategy: depend
 
 # --- Translation related tasks ---
 # Jobs comes from the generator inside gitlab translations/generator

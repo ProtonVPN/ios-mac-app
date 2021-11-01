@@ -18,95 +18,95 @@ PODS:
     - PromiseKit/CorePromise
   - PromiseKit/UIKit (6.15.3):
     - PromiseKit/CorePromise
-  - ProtonCore-APIClient (3.0.0):
-    - ProtonCore-DataModel (= 3.0.0)
-    - ProtonCore-Networking (= 3.0.0)
-    - ProtonCore-Services (= 3.0.0)
-  - ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (3.0.0):
-    - ProtonCore-Authentication/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-Crypto-VPN (= 3.0.0)
-    - ProtonCore-OpenPGP (= 3.0.0)
-  - ProtonCore-Authentication/UsingCryptoVPN (3.0.0):
-    - ProtonCore-APIClient (= 3.0.0)
-    - ProtonCore-Crypto-VPN (= 3.0.0)
-    - ProtonCore-Services (= 3.0.0)
-  - ProtonCore-Challenge (3.0.0):
-    - ProtonCore-Foundations (= 3.0.0)
-  - ProtonCore-CoreTranslation (3.0.0)
-  - ProtonCore-Crypto-VPN (3.0.0)
-  - ProtonCore-DataModel (3.0.0):
-    - ProtonCore-Utilities (= 3.0.0)
-  - ProtonCore-Doh (3.0.0):
-    - ProtonCore-Log (= 3.0.0)
-  - ProtonCore-ForceUpgrade (3.0.0):
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Networking (= 3.0.0)
-    - ProtonCore-UIFoundations (= 3.0.0)
-  - ProtonCore-Foundations (3.0.0)
-  - ProtonCore-HumanVerification (3.0.0):
-    - ProtonCore-APIClient (= 3.0.0)
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Foundations (= 3.0.0)
-    - ProtonCore-UIFoundations (= 3.0.0)
-    - ProtonCore-Utilities (= 3.0.0)
-  - ProtonCore-Log (3.0.0)
-  - ProtonCore-Login/UsingCryptoVPN (3.0.0):
+  - ProtonCore-APIClient (3.2.1):
+    - ProtonCore-DataModel (= 3.2.1)
+    - ProtonCore-Networking (= 3.2.1)
+    - ProtonCore-Services (= 3.2.1)
+  - ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (3.2.1):
+    - ProtonCore-Authentication/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-Crypto-VPN (= 3.2.1)
+    - ProtonCore-OpenPGP (= 3.2.1)
+  - ProtonCore-Authentication/UsingCryptoVPN (3.2.1):
+    - ProtonCore-APIClient (= 3.2.1)
+    - ProtonCore-Crypto-VPN (= 3.2.1)
+    - ProtonCore-Services (= 3.2.1)
+  - ProtonCore-Challenge (3.2.1):
+    - ProtonCore-Foundations (= 3.2.1)
+  - ProtonCore-CoreTranslation (3.2.1)
+  - ProtonCore-Crypto-VPN (3.2.1)
+  - ProtonCore-DataModel (3.2.1):
+    - ProtonCore-Utilities (= 3.2.1)
+  - ProtonCore-Doh (3.2.1):
+    - ProtonCore-Log (= 3.2.1)
+  - ProtonCore-ForceUpgrade (3.2.1):
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Networking (= 3.2.1)
+    - ProtonCore-UIFoundations (= 3.2.1)
+  - ProtonCore-Foundations (3.2.1)
+  - ProtonCore-HumanVerification (3.2.1):
+    - ProtonCore-APIClient (= 3.2.1)
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Foundations (= 3.2.1)
+    - ProtonCore-UIFoundations (= 3.2.1)
+    - ProtonCore-Utilities (= 3.2.1)
+  - ProtonCore-Log (3.2.1)
+  - ProtonCore-Login/UsingCryptoVPN (3.2.1):
     - lottie-ios
-    - ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-Authentication/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-Challenge (= 3.0.0)
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Crypto-VPN (= 3.0.0)
-    - ProtonCore-DataModel (= 3.0.0)
-    - ProtonCore-Foundations (= 3.0.0)
-    - ProtonCore-HumanVerification (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-    - ProtonCore-OpenPGP (= 3.0.0)
-    - ProtonCore-Payments/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-PaymentsUI/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-UIFoundations (= 3.0.0)
+    - ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-Authentication/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-Challenge (= 3.2.1)
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Crypto-VPN (= 3.2.1)
+    - ProtonCore-DataModel (= 3.2.1)
+    - ProtonCore-Foundations (= 3.2.1)
+    - ProtonCore-HumanVerification (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+    - ProtonCore-OpenPGP (= 3.2.1)
+    - ProtonCore-Payments/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-PaymentsUI/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-UIFoundations (= 3.2.1)
     - TrustKit
-  - ProtonCore-Networking (3.0.0):
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-    - ProtonCore-Networking/Alamofire (= 3.0.0)
-  - ProtonCore-Networking/Alamofire (3.0.0):
+  - ProtonCore-Networking (3.2.1):
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+    - ProtonCore-Networking/Alamofire (= 3.2.1)
+  - ProtonCore-Networking/Alamofire (3.2.1):
     - Alamofire (~> 5.2)
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
     - TrustKit
-  - ProtonCore-OpenPGP (3.0.0)
-  - ProtonCore-Payments/UsingCryptoVPN (3.0.0):
+  - ProtonCore-OpenPGP (3.2.1)
+  - ProtonCore-Payments/UsingCryptoVPN (3.2.1):
     - AwaitKit (~> 5.2.0)
-    - ProtonCore-Authentication/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Foundations (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-    - ProtonCore-Services (= 3.0.0)
-    - ProtonCore-SRP (= 3.0.0)
+    - ProtonCore-Authentication/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Foundations (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+    - ProtonCore-Services (= 3.2.1)
+    - ProtonCore-SRP (= 3.2.1)
     - ReachabilitySwift (~> 5.0.0)
-  - ProtonCore-PaymentsUI/UsingCryptoVPN (3.0.0):
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Foundations (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-    - ProtonCore-Payments/UsingCryptoVPN (= 3.0.0)
-    - ProtonCore-UIFoundations (= 3.0.0)
-  - ProtonCore-Services (3.0.0):
+  - ProtonCore-PaymentsUI/UsingCryptoVPN (3.2.1):
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Foundations (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+    - ProtonCore-Payments/UsingCryptoVPN (= 3.2.1)
+    - ProtonCore-UIFoundations (= 3.2.1)
+  - ProtonCore-Services (3.2.1):
     - AwaitKit (~> 5.2.0)
     - PromiseKit (~> 6.0)
-    - ProtonCore-DataModel (= 3.0.0)
-    - ProtonCore-Doh (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-    - ProtonCore-Networking (= 3.0.0)
-    - ProtonCore-Utilities (= 3.0.0)
+    - ProtonCore-DataModel (= 3.2.1)
+    - ProtonCore-Doh (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+    - ProtonCore-Networking (= 3.2.1)
+    - ProtonCore-Utilities (= 3.2.1)
     - TrustKit
-  - ProtonCore-SRP (3.0.0)
-  - ProtonCore-UIFoundations (3.0.0):
-    - ProtonCore-CoreTranslation (= 3.0.0)
-    - ProtonCore-Foundations (= 3.0.0)
-    - ProtonCore-Log (= 3.0.0)
-  - ProtonCore-Utilities (3.0.0):
-    - ProtonCore-Log (= 3.0.0)
+  - ProtonCore-SRP (3.2.1)
+  - ProtonCore-UIFoundations (3.2.1):
+    - ProtonCore-CoreTranslation (= 3.2.1)
+    - ProtonCore-Foundations (= 3.2.1)
+    - ProtonCore-Log (= 3.2.1)
+  - ProtonCore-Utilities (3.2.1):
+    - ProtonCore-Log (= 3.2.1)
   - ReachabilitySwift (5.0.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
@@ -139,27 +139,27 @@ DEPENDENCIES:
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
-  - "ProtonCore-APIClient (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Authentication/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Crypto-VPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-ForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Login/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Networking (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Payments/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-PaymentsUI/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Services (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
-  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.0.0`)"
+  - "ProtonCore-APIClient (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Authentication/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Crypto-VPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-ForceUpgrade (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Login/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Networking (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Payments/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-PaymentsUI/UsingCryptoVPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Services (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
+  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.2.1`)"
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (= 5.2.2)
@@ -191,67 +191,67 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Crypto-VPN:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -265,67 +265,67 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Crypto-VPN:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.0.0
+    :tag: 3.2.1
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -343,27 +343,27 @@ SPEC CHECKSUMS:
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
   PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
-  ProtonCore-APIClient: d1150d8fbe9264b4be5436cbb2173d05a9864dde
-  ProtonCore-Authentication: 001556239e0d06462439b1e842a0a50497e2c3cf
-  ProtonCore-Authentication-KeyGeneration: fe4db8c0bd9aa19b87c274441e81ff781cd876c8
-  ProtonCore-Challenge: 5c8f5e78c72474b1f7b8391d8da2658713f65ae0
-  ProtonCore-CoreTranslation: 3b65d49e8b4b646e6aaaf169b9782b03c6598946
-  ProtonCore-Crypto-VPN: 888c71fc7d6075a4e7f5c77f84f1fb1614630379
-  ProtonCore-DataModel: 3c20801e772deee4783b74f6c83e44ddeae41091
-  ProtonCore-Doh: 7f245acc0482347d94eb8832d32d52697c2ab5eb
-  ProtonCore-ForceUpgrade: 894a3dacb4a2dbb9efdedc043686a7c6fd546c25
-  ProtonCore-Foundations: 09c902006503106f58cd8b1117325c84477e2792
-  ProtonCore-HumanVerification: a3331e7bdb5c2d836259c28c6d6850a471c1ec36
-  ProtonCore-Log: 58361381febf756f39c66726626b8b3ffde3a1ee
-  ProtonCore-Login: 72de7efbe602d96178d6a6f253b33e277f5e1550
-  ProtonCore-Networking: d9636e34fa65a61920ccc582f0cb5620b2cf24b2
-  ProtonCore-OpenPGP: 5c59a3cbeb8c0befca29fe1d0aa0e1875001266d
-  ProtonCore-Payments: 1fb99dffee90cf7c8868ad0b66d5d5a7f44b75d8
-  ProtonCore-PaymentsUI: 58cf849b0aebb953f9968f9f763acfcc54985779
-  ProtonCore-Services: 26e9839f67654523fa0acef87544019ec4ead0b9
-  ProtonCore-SRP: 974d468d221a9b7059fcbdbbc9324444b2d16aef
-  ProtonCore-UIFoundations: de649e595279ac25a828ee9ac98437be48001daf
-  ProtonCore-Utilities: 129f95c1031fcc651cff6d2bb050e7398bbba148
+  ProtonCore-APIClient: 460709dd815f76eb4f59090e13108cf6e84be8c7
+  ProtonCore-Authentication: 62aa9a092dd8296105c0a397689b61609109737c
+  ProtonCore-Authentication-KeyGeneration: 5c9f5ff13ed8cfc8705e11a7d6431352fddb1bb7
+  ProtonCore-Challenge: 45826ee02bf166a0266ba30620434267aaba907e
+  ProtonCore-CoreTranslation: 9cd93474df7f3d84218db92b14bd47b5915a62f5
+  ProtonCore-Crypto-VPN: 4400630ba920e143bc7be931f5ac92af86e34cdd
+  ProtonCore-DataModel: 9f31bb364ec53074af7cb92af09942868215b97c
+  ProtonCore-Doh: 3af2dfd07700997dfac8644204db8a26457e426c
+  ProtonCore-ForceUpgrade: c6dda018e456fb35b2d51377632ebe6b7fbf92c5
+  ProtonCore-Foundations: 95ffe5a3efbe9c2382d69f9e5b07ed346d3dab2c
+  ProtonCore-HumanVerification: 332150c98cbd6fe201938cc59671e76519e5a4a8
+  ProtonCore-Log: a2c60b95ff02d92a4aed0d28e10e586d55835302
+  ProtonCore-Login: 1dc0e8a38a5c3c3cc0df8f99203695c8d81f4fb3
+  ProtonCore-Networking: c8c6001f658eb6a4dfd9cfc3b6045afbc1dbdeda
+  ProtonCore-OpenPGP: 20452feeb3e337d4e44155b3eb4c36a870edd3b0
+  ProtonCore-Payments: 27704717f71db58a2e2a2cb8a2b467223db9607b
+  ProtonCore-PaymentsUI: d30bb9f64e4d1651c30c40a38146c908d2275d7c
+  ProtonCore-Services: 7007db33316937577874d0687c24b53b6d1af3c5
+  ProtonCore-SRP: abd6c3c74aba488edd045fd17ee67134210baeb7
+  ProtonCore-UIFoundations: a9cbbc7ab40b1d0e55b54f44547eebb86f94b4c5
+  ProtonCore-Utilities: 62202460b098dade5a0698d0dbb6aaf5b0889908
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
@@ -373,6 +373,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: 86b163a51202e43ed3c15b144cb11060bd215175
+PODFILE CHECKSUM: 3d6e6c159464fe2e78ea5dbba08dbfa791fc35d0
 
 COCOAPODS: 1.11.2
