@@ -218,7 +218,7 @@ fileprivate extension AppDelegate {
 
 extension AppDelegate {
     private func setupCoreIntegration() {
-        UIColorManager.brand = .vpn
+        ColorProvider.brand = .vpn
 
         let trusKitHelper = container.makeTrustKitHelper()
         PMAPIService.trustKit = trusKitHelper?.trustKit
