@@ -11,66 +11,79 @@ import ProtonCore_Payments
 import ProtonCore_PaymentsUI
 
 final class UserCachedStatus: ServicePlanDataStorage {
-    var updateSubscriptionBlock: ((ServicePlanSubscription?) -> Void)?
+    enum UserCachedStatusKeys: String, CaseIterable {
+        case servicePlansDetails
+        case defaultPlanDetails
+        case currentSubscription
+        case isIAPUpgradePlanAvailable
+    }
+
+    var updateSubscriptionBlock: ((Subscription?) -> Void)?
     var updateCreditsBlock: ((Credits?) -> Void)?
 
-    init(updateSubscriptionBlock: ((ServicePlanSubscription?) -> Void)? = nil, updateCreditsBlock: ((Credits?) -> Void)? = nil) {
+    init(updateSubscriptionBlock: ((Subscription?) -> Void)? = nil, updateCreditsBlock: ((Credits?) -> Void)? = nil) {
         self.updateSubscriptionBlock = updateSubscriptionBlock
         self.updateCreditsBlock = updateCreditsBlock
     }
 
-    var servicePlansDetails: [ServicePlanDetails]? {
+    var servicePlansDetails: [Plan]? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: "servicePlansDetails") else {
+            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.servicePlansDetails.rawValue) else {
                 return nil
             }
-            return try? PropertyListDecoder().decode(Array<ServicePlanDetails>.self, from: data)
+            return try? PropertyListDecoder().decode(Array<Plan>.self, from: data)
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: "servicePlansDetails")
+            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
     }
 
-    var defaultPlanDetails: ServicePlanDetails? {
+    var defaultPlanDetails: Plan? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: "defaultPlanDetails") else {
+            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue) else {
                 return nil
             }
-            return try? PropertyListDecoder().decode(ServicePlanDetails.self, from: data)
+            return try? PropertyListDecoder().decode(Plan.self, from: data)
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: "defaultPlanDetails")
+            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
     }
 
-    var currentSubscription: ServicePlanSubscription? {
+    var currentSubscription: Subscription? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: "currentSubscription") else {
+            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.currentSubscription.rawValue) else {
                 return nil
             }
-            return try? PropertyListDecoder().decode(ServicePlanSubscription.self, from: data)
+            return try? PropertyListDecoder().decode(Subscription.self, from: data)
         }
         set {
             let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: "currentSubscription")
+            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
             self.updateSubscriptionBlock?(newValue)
         }
     }
 
     var isIAPUpgradePlanAvailable: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: "isIAPUpgradePlanAvailable")
+            return UserDefaults.standard.bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: "isIAPUpgradePlanAvailable")
+            UserDefaults.standard.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
     }
 
     var credits: Credits? {
         didSet {
             self.updateCreditsBlock?(credits)
+        }
+    }
+
+    func clear() {
+        for key in UserCachedStatusKeys.allCases {
+            UserDefaults.standard.removeObject(forKey: key.rawValue)
         }
     }
 }

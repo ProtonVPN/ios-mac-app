@@ -52,7 +52,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -64,6 +64,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
+    private lazy var planService: PlanService = factory.makePlanService()
     var vpnGateway: VpnGatewayProtocol?
     
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -76,8 +77,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
-        #warning("FIX ME")
-//        NotificationCenter.default.addObserver(self, selector: #selector(paymentTransactionFinished), name: StoreKitManagerImplementation.transactionFinishedNotification, object: nil)
     }
     
     // MARK: - Beginning of the login logic.
