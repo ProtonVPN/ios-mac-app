@@ -23,6 +23,7 @@
 import Foundation
 import GSMessages
 import vpncore
+import UIKit
 
 class StatusViewModel {
     
@@ -333,9 +334,9 @@ class StatusViewModel {
     private var netshieldUnavailableSection: TableViewSection {
         var cells = [TableViewCellModel]()
         
-        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: .protonWhite(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
+        cells.append(.attributedKeyValue(key: LocalizedString.netshieldTitle.attributed(withColor: UIColor.normalTextColor(), font: UIFont.systemFont(ofSize: 17)), value: LocalizedString.upgrade.attributed(withColor: .brandColor(), font: UIFont.systemFont(ofSize: 17)), handler: { [weak self] in
             self?.planService.presentPlanSelection()
-        }
+        }))
         
         [NetShieldType.level1, NetShieldType.level2].forEach { type in
             cells.append(.invertedKeyValue(key: type.name, value: "", handler: { [weak self] in

@@ -71,7 +71,7 @@
 "_allow_lan_info" = "اجازه می‌دهد که از VPN عبور کند و به دستگاه‌های موجود در شبکه محلی، مانند چاپگرتان متصل شود.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
+"_allow_lan_note" = "توجه کنید که برای اعمال این تغییر، اتصال شما نیاز به راه‌اندازی مجدد دارد";
 
 /* (No Comment) */
 "_allow_lan_title" = "اجازهٔ اتصال به شبکه‌های LAN";
@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "گزارش";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "افزودن پرونده";
-
 /* Main mac app menu item */
 "_report_an_issue" = "گزارش یک ایراد...";
 
 /* Bug report attachments */
 "_report_attachments" = "پیوست‎ها";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "شامل لاگ برنامه و جزئیات سیستم";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "گزارش اشکال";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "حساب کاربری:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "کشور:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "با ارائه جزئیات زیر، تیم ما می‌تواند مشکل و یک راه‌ حل ممکن را با شانس بالاتر و زمان کمتر شناسایی کند:\nرکورد نصب درایورها\nفهرست برنامه‌های نصب شده\nرکوردهای برنامه ProtonVPN و سرویس ProtonVPN\nفهرست آداپتورهای شبکه\nاطلاعات جدول مسیریابی";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "ایمیل:";
 
-/* (No Comment) */
-"_report_field_isp" = "ISP:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "مشکل چه بود؟";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "طرح:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "شروع کنید به نوشتن...";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "نسخه:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "شما دقیقاً چه مراحلی را انجام دادید؟";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "گزارش‌های VPN";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "فعال کردن این گزینه لاگ‌های VPN سمت کاربر را به این گزارش می‌افزاید";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "حداکثر سایز مجاز فایل: ۴۴۸ کیلوبایت";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "ایمیل";
@@ -1532,7 +1526,7 @@
 "_smart_routing_title" = "مسیریابی هوشمند";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Smart";
+"_smart_title" = "هوشمند";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "سرعت %@";
@@ -1613,13 +1607,13 @@
 "_switch_side_button_on" = "روشن";
 
 /* (No Comment) */
-"_sysex_cannot_enable" = "Cannot enable System Extension";
+"_sysex_cannot_enable" = "امکان فعال کردن افزونهٔ سیستم وجود ندارد";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
+"_sysex_enabled_description" = "پیکربندی کامل شد. حالا شما می‌توانید اینترنت را سریع‌تر با بهترین فناوری‌های VPN مرور کنید.";
 
 /* (No Comment) */
-"_sysex_enabled_title" = "Configuration completed";
+"_sysex_enabled_title" = "پیکربندی کامل شد";
 
 /* (No Comment) */
 "_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";

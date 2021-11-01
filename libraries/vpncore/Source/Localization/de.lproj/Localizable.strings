@@ -275,7 +275,7 @@
 "_delinquent_user_title" = "Unbezahlte Rechnung";
 
 /* Profile create/change form */
-"_different_server_each_time" = "Anderer Server jedes Mal";
+"_different_server_each_time" = "Jedes Mal ein anderer Server";
 
 /* Button in some alerts */
 "_disable" = "Deaktivieren";
@@ -551,7 +551,7 @@
 "_failed_to_access_vpn_credentials_title" = "VPN‐Anmeldedaten fehlen";
 
 /* Used for both profile description when fastest server option is selected and Plan speed description */
-"_fastest" = "Schnellster";
+"_fastest" = "Schnellster Server";
 
 /* Profile create/change form */
 "_fastest_available_server" = "Schnellster verfügbarer Server";
@@ -1076,10 +1076,10 @@
 "_p2p_forwarded_popup_body" = "Ihre Verbindung wurde automatisch durch einen anderen Server umgeleitet, da einige Server kein P2P‐Verkehr unterstützen. Dies könnte zur möglichen Verlangsamung Ihrer Verbindung führen. Bitte verwenden Sie Server mit dem P2P‐Symbol, um Umleitungen in Zukunft zu vermeiden.";
 
 /* (No Comment) */
-"_p2p_forwarded_popup_body_p1" = "Ihre Verbindung wurde automatisch über einen anderen Server umgeleitet, da bestimmte Server den P2P‐Verkehr nicht unterstützen. Dies könnte Ihre Verbindungsgeschwindigkeit verringern. Bitte verwenden Sie Server mit";
+"_p2p_forwarded_popup_body_p1" = "Ihre Verbindung wurde automatisch über einen anderen Server umgeleitet, da bestimmte Server keinen P2P-Verkehr unterstützen. Dadurch kann sich Ihre Verbindungsgeschwindigkeit verringern. Bitte verwenden Sie Server mit dem";
 
 /* (No Comment) */
-"_p2p_forwarded_popup_body_p2" = "‐Symbol, um Umleitungen in Zukunft zu vermeiden.";
+"_p2p_forwarded_popup_body_p2" = "-Symbol, um zukünftig eine Umleitung des Datenverkehrs zu vermeiden.";
 
 /* (No Comment) */
 "_p2p_forwarded_popup_title" = "Verbindung umgeleitet";
@@ -1330,44 +1330,38 @@
 /* Button in Kill switch error alert */
 "_report" = "Bericht";
 
-/* Mac bug report: button to add new attachment. Also acts as a title for attachment list table. */
-"_report_add_file" = "Datei hinzufügen";
-
 /* Main mac app menu item */
 "_report_an_issue" = "Problem melden …";
 
 /* Bug report attachments */
 "_report_attachments" = "Anhänge";
 
+/* Mag bug report: attach logs checkbox */
+"_report_attachments_checkbox" = "App-Protokolle und Systemdetails einbeziehen";
+
 /* Report bug screen title; iOS settings screen: item; */
 "_report_bug" = "Bug melden";
 
-/* Mac bug report: label before username */
-"_report_field_account" = "Konto:";
-
-/* Mac bug report: country field label */
-"_report_field_country" = "Land:";
+/* Mac bug report: description text before bug report form */
+"_report_description" = "Wenn Sie die folgenden Angaben machen, kann unser Team Ihr Problem und eine mögliche Lösung mit höheren Chancen und kürzerer Zeit ermitteln:\n• Installationsprotokoll des Treibers\n• Liste der installierten Anwendungen\n• ProtonVPN-Anwendung und ProtonVPN-Dienstprotokolle\n• Liste der Netzwerkadapter\n• Informationen zur Routingtabelle";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E‐Mail-Adresse:";
 
-/* (No Comment) */
-"_report_field_isp" = "Internetanbieter:";
+/* Mac bug report: feedback field label */
+"_report_field_feedback" = "Welche Probleme sind aufgetreten?";
 
-/* Mac bug report: label before users protonvpn plan */
-"_report_field_plan" = "Paket:";
+/* Mag bug report: textfields placeholder */
+"_report_field_placeholder" = "Beginnen Sie mit der Eingabe …";
 
-/* Mac bug report: label before app version number */
-"_report_field_version" = "Version:";
+/* Mac bug report: steps field label */
+"_report_field_steps" = "Was waren die genauen Schritte, die Sie durchgeführt haben?";
 
 /* iOS bug report: header before logs description */
 "_report_logs" = "VPN‐Protokolle";
 
 /* iOS bug report: description of log selection switch */
 "_report_logs_description" = "Durch das Aktivieren, werden Ihre clientseitigen VPN-Protokolle in diesen Bericht aufgenommen.";
-
-/* Mac bug report: info text */
-"_report_max_file_size" = "Max. Dateigröße: 488 KB";
 
 /* iOS bug report: Placeholder for email form field */
 "_report_placeholder_email" = "Kontakt‐E‐Mail‐Adresse";
