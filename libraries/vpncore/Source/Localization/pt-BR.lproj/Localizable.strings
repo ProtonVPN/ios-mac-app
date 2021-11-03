@@ -1343,7 +1343,7 @@
 "_report_bug" = "Reportar Erro";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Fornecendo os seguintes detalhes, nossa equipe pode identificar seu problema e uma possível solução com maiores chances e menor tempo:\nRegistro de instalação dos drivers\nLista de aplicativos instalados\nRegistros de serviço do ProtonVPN e ProtonVPN\nLista de adaptadores de rede\nInformações sobre a tabela de roteamento";
+"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mail:";
