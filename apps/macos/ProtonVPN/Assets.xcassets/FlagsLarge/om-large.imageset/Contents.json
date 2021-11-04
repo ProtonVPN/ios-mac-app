@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "om-large.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}
