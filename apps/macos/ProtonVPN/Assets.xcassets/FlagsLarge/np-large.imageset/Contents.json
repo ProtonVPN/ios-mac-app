@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "np-large.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

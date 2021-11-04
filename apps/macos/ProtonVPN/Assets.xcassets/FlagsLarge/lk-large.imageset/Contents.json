@@ -1,0 +1,12 @@
+{
+  "images" : [
+    {
+      "filename" : "lk-large.jpg",
+      "idiom" : "universal"
+    }
+  ],
+  "info" : {
+    "author" : "xcode",
+    "version" : 1
+  }
+}

@@ -41,23 +41,23 @@ extension UIColor {
     }
     
     class func brandColor() -> UIColor {
-        return UIColorManager.BrandNorm
+        return ColorProvider.BrandNorm
     }
 
     class func secondaryBackgroundColor() -> UIColor {
-        return UIColorManager.BackgroundSecondary
+        return ColorProvider.BackgroundSecondary
     }
 
     class func backgroundColor() -> UIColor {
-        return UIColorManager.BackgroundNorm
+        return ColorProvider.BackgroundNorm
     }
 
     class func weakTextColor() -> UIColor {
-        return UIColorManager.TextWeak
+        return ColorProvider.TextWeak
     }
 
     class func weakInteractionColor() -> UIColor {
-        return UIColorManager.InteractionWeak
+        return ColorProvider.InteractionWeak
     }
     
     class func normalSeparatorColor() -> UIColor {
@@ -73,7 +73,7 @@ extension UIColor {
     }
     
     class func normalTextColor() -> UIColor {
-        return UIColorManager.TextNorm
+        return ColorProvider.TextNorm
     }
     
     class func notificationErrorColor() -> UIColor {
