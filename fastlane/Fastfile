@@ -154,11 +154,12 @@ lane :ios_internal_beta do |options|
     build: appBuild,
     version: appVersion
   )
-  sentry_set_commits(
-    app_identifier: BUNDLE_ID,
-    build: appBuild,
-    version: appVersion
-  )
+# Uncomment when sentry starts working...
+#  sentry_set_commits(
+#    app_identifier: BUNDLE_ID,
+#    build: appBuild,
+#    version: appVersion
+#  )
   sentry_create_deploy(
     app_identifier: BUNDLE_ID,
     version: appVersion,
