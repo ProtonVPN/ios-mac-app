@@ -1831,3 +1831,11 @@
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info_for" = "Loading connection info for %@";
+
+// Subuser alert
+
+"_subuser_alert_title" = "Thanks for upgrading to\nPROFESSIONAL/VISIONARY";
+"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+"_subuser_alert_assign_connections_button" = "Assign VPN connections";
+"_subuser_alert_login_button" = "Login again";

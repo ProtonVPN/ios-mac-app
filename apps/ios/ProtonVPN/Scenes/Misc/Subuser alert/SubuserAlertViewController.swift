@@ -1,0 +1,75 @@
+//
+//  Created on 2021-11-08.
+//
+//  Copyright (c) 2021 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import UIKit
+import vpncore
+
+class SubuserAlertViewController: UIViewController {
+    
+    @IBOutlet private weak var imageView: UIImageView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var description1Label: UILabel!
+    @IBOutlet private weak var description2Label: UILabel!
+    @IBOutlet private weak var assignConnectionsButton: ProtonButton!
+    @IBOutlet private weak var loginButton: ProtonButton!
+    
+    public var safariServiceFactory: SafariServiceFactory?
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setupTranslations()
+        setupViews()
+    }
+    
+    private func setupTranslations() {
+        titleLabel.text = LocalizedString.subuserAlertTitle
+        description1Label.text = LocalizedString.subuserAlertDescription1
+        description2Label.text = LocalizedString.subuserAlertDescription2
+        assignConnectionsButton.setTitle(LocalizedString.subuserAlertAssignConnectionsButton, for: .normal)
+        loginButton.setTitle(LocalizedString.subuserAlertLoginButton, for: .normal)
+    }
+    
+    private func setupViews() {
+        view.backgroundColor = .protonBlack()
+        
+        imageView.image = UIImage(named: "alert-pro-account", in: Bundle.vpnCore, compatibleWith: nil)
+        
+        titleLabel.textColor = .protonWhite()
+        titleLabel.font = UIFont.systemFont(ofSize: 20, weight: .bold)
+        
+        description1Label.textColor = .protonWhite()
+        description1Label.font = UIFont.systemFont(ofSize: 16)
+        
+        description2Label.textColor = .protonFontLightGrey()
+        description2Label.font = UIFont.systemFont(ofSize: 14)
+        
+        assignConnectionsButton.customState = .primary
+        loginButton.customState = .secondary
+    }
+    
+    // MARK: - Actions
+    
+    @IBAction private func assignConnectionsTapped() {
+        safariServiceFactory?.makeSafariService().open(url: CoreAppConstants.ProtonVpnLinks.assignVPNConnections)
+    }
+    
+    @IBAction private func loginTapped() {
+        self.dismiss(animated: true, completion: {})
+    }
+}

@@ -38,6 +38,7 @@ class LoginViewModel {
     & AppSessionRefresherFactory
     & LoginServiceFactory
     & CoreAlertServiceFactory
+    & SafariServiceFactory
     
     private let factory: Factory
     
@@ -47,6 +48,7 @@ class LoginViewModel {
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     public lazy var alertService: AlertService = factory.makeCoreAlertService()
+    public lazy var safariServiceFactory: SafariServiceFactory = factory
     
     let dismissible: Bool
     

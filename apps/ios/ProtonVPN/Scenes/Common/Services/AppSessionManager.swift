@@ -265,6 +265,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
         
         PMLog.D("User with insufficient sessions detected. Throwing and error insted of login.")
+        logOutCleanup()
         failure(ProtonVpnError.subuserWithoutSessions)
     }
     

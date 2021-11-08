@@ -516,6 +516,8 @@
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
 		E9445D6226528A790075FD31 /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */; };
 		E9445D6726528A790075FD31 /* WireGuardiOS Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = E9445D5E26528A790075FD31 /* WireGuardiOS Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		E945C55C27391EC700506DC2 /* SubuserAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E945C55B27391EC700506DC2 /* SubuserAlertViewController.swift */; };
+		E945C55E27391F1700506DC2 /* SubuserAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E945C55D27391F1700506DC2 /* SubuserAlertViewController.xib */; };
 		E9492ED72669177D00500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492ED82669178000500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
 		E9492ED92669178100500E7D /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7995FCDA20908E6F0030E1EB /* AppConstants.swift */; };
@@ -1052,6 +1054,8 @@
 		E9445D6126528A790075FD31 /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PacketTunnelProvider.swift; sourceTree = "<group>"; };
 		E9445D6326528A790075FD31 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E9445D6426528A790075FD31 /* WireGuardiOS_Extension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = WireGuardiOS_Extension.entitlements; sourceTree = "<group>"; };
+		E945C55B27391EC700506DC2 /* SubuserAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubuserAlertViewController.swift; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.swift"; sourceTree = "<group>"; };
+		E945C55D27391F1700506DC2 /* SubuserAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserAlertViewController.xib; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.xib"; sourceTree = "<group>"; };
 		E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogSelectionViewModelTests.swift; path = ../../../../ios/ProtonVPNTests/ViewModels/Settings/LogSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockLogFilesProvider.swift; path = ../../../ios/ProtonVPNTests/Mocks/MockLogFilesProvider.swift; sourceTree = "<group>"; };
 		E95E8E782696F822001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
@@ -1876,6 +1880,7 @@
 				F36ECCC62611C7F10089B898 /* Launch */,
 				F36ECC872611C5420089B898 /* Login */,
 				F36ECD3B2611C9A40089B898 /* Map */,
+				E945C5592739145F00506DC2 /* Misc */,
 				F36ECCD12611C8260089B898 /* Onboarding */,
 				F36ECCAA2611C6CD0089B898 /* Profiles */,
 				F36ECCAE2611C73B0089B898 /* Settings */,
@@ -2145,6 +2150,23 @@
 				E977A77D2681DABB0013495A /* vpncore */,
 			);
 			path = "WireGuardiOS Extension";
+			sourceTree = "<group>";
+		};
+		E945C5592739145F00506DC2 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				E945C55A2739147300506DC2 /* Subuser alert */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		E945C55A2739147300506DC2 /* Subuser alert */ = {
+			isa = PBXGroup;
+			children = (
+				E945C55B27391EC700506DC2 /* SubuserAlertViewController.swift */,
+				E945C55D27391F1700506DC2 /* SubuserAlertViewController.xib */,
+			);
+			path = "Subuser alert";
 			sourceTree = "<group>";
 		};
 		E9492EE1266A14BC00500E7D /* Settings */ = {
@@ -3049,6 +3071,7 @@
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				E986309C269835E500F56B87 /* Intents.strings in Resources */,
 				E12DF61C223124DA006EC61F /* Onboarding.xib in Resources */,
+				E945C55E27391F1700506DC2 /* SubuserAlertViewController.xib in Resources */,
 				79DD19EE20BD681A00505906 /* Login.storyboard in Resources */,
 				E16F562421F89F72007BAB77 /* OnboardingContent.xib in Resources */,
 				E986309A269835E500F56B87 /* Localizable.strings in Resources */,
@@ -3440,6 +3463,7 @@
 				E169FC402289B87F00FDC933 /* PhoneCountryCodeTableViewCell.swift in Sources */,
 				E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				E169FC3622898B8E00FDC933 /* SmsCountryCodeViewController.swift in Sources */,
+				E945C55C27391EC700506DC2 /* SubuserAlertViewController.swift in Sources */,
 				E19D11AE22B97C8100D41C23 /* TrialWelcomeViewController.swift in Sources */,
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,

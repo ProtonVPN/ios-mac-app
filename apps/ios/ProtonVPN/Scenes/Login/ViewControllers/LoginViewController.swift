@@ -273,6 +273,11 @@ extension LoginViewController: LoginViewModelDelegate {
                 self?.alertService.push(alert: ConnectionTroubleshootingAlert())
             }))
             
+        } else if case ProtonVpnError.subuserWithoutSessions = error {
+            let controller = SubuserAlertViewController()
+            controller.safariServiceFactory = viewModel?.safariServiceFactory
+            self.present(controller, animated: true, completion: {})
+            
         } else {
             alertService.push(alert: ErrorNotificationAlert(error: error))
             usernameIcon.tintColor = .protonRed()
