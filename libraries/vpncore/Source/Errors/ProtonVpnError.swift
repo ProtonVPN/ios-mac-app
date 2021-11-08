@@ -46,6 +46,9 @@ public enum ProtonVpnError: LocalizedError {
     // Keychain
     case keychainWriteFailed
     
+    // User
+    case subuserWithoutSessions
+    
     // MARK: -
     
     public var errorDescription: String? {
@@ -74,6 +77,8 @@ public enum ProtonVpnError: LocalizedError {
             return LocalizedString.errorTlsServerVerification
         case .keychainWriteFailed:
             return LocalizedString.errorKeychainWrite
+        case .subuserWithoutSessions:
+            return LocalizedString.subuserAlertDescription1
         }
     }
 }

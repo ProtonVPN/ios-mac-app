@@ -75,7 +75,8 @@ public class VpnKeychainMock: VpnKeychainProtocol {
             delinquent: 0,
             credit: 0,
             currency: "",
-            hasPaymentMethod: false
+            hasPaymentMethod: false,
+            planName: accountPlan.rawValue
         )
     }
     
