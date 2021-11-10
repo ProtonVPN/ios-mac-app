@@ -562,6 +562,7 @@
 		E99799A926A6FE0C0083D61E /* ringlogger.c in Sources */ = {isa = PBXBuildFile; fileRef = E997999F26A6FE0C0083D61E /* ringlogger.c */; };
 		E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A026A6FE0C0083D61E /* Logger.swift */; };
 		E99799AB26A6FE0C0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799A226A6FE0C0083D61E /* ErrorNotifier.swift */; };
+		E9A72418273C0538004FC115 /* SubuserAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E945C55B27391EC700506DC2 /* SubuserAlertViewController.swift */; };
 		E9C9FDD3268CB94F005665C6 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9FDD2268CB94F005665C6 /* UIDevice+ModelName.swift */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
 		F3521E0D264A9D2B0070F177 /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D54D331D264A97CB000BEF04 /* vpncore.framework */; };
@@ -3635,6 +3636,7 @@
 				E197BD4622C0E3D0004E0FE7 /* PlanUpgradeCheckerMock.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5BF95022354817800C7D1E7 /* AlamofireWrapperMock.swift in Sources */,
+				E9A72418273C0538004FC115 /* SubuserAlertViewController.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				D511085E246189D60018872A /* PlanAdvancedFeaturesView.swift in Sources */,
 				D511085C246189AC0018872A /* PlanSelectionViewModel.swift in Sources */,
