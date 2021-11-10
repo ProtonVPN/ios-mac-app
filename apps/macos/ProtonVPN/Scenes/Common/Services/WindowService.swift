@@ -44,6 +44,7 @@ protocol WindowService: class {
     func openProfilesWindow(viewModel: ProfilesContainerViewModel)
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService)
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol)
+    func openSubuserAlertWindow()
     
     func bringWindowsToForground() -> Bool
     func closeActiveWindows(except: [NSWindowController.Type])
@@ -78,6 +79,7 @@ class WindowServiceImplementation: WindowService {
         & NetShieldPropertyProviderFactory
         & ProfileManagerFactory
         & VpnManagerFactory
+        & SafariServiceFactory
 
     private let factory: Factory
     
@@ -212,6 +214,15 @@ class WindowServiceImplementation: WindowService {
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
         let controller = SystemExtensionGuideViewController(viewModel: viewModel)
         let windowController = SysexGuideWindowController(viewController: controller)
+        windowController.delegate = self
+        activeWindowControllers.append(windowController)
+        windowController.showWindow(self)
+    }
+    
+    func openSubuserAlertWindow() {
+        let controller = SubuserMacAlertViewController()
+        controller.safariServiceFactory = factory
+        let windowController = SubuserAlertWindowController(viewController: controller)
         windowController.delegate = self
         activeWindowControllers.append(windowController)
         windowController.showWindow(self)
