@@ -254,11 +254,11 @@ class LoginViewController: UIViewController {
     }
     
     @IBAction func forgotPassword(_ sender: Any) {
-        SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
+        viewModel?.forgotPassword()
     }
     
     @IBAction func signUp(_ sender: Any) {
-        viewModel?.signUpTapped()
+        viewModel?.signUp()
     }
 }
 
@@ -274,9 +274,7 @@ extension LoginViewController: LoginViewModelDelegate {
             }))
             
         } else if case ProtonVpnError.subuserWithoutSessions = error {
-            let controller = SubuserAlertViewController()
-            controller.safariServiceFactory = viewModel?.safariServiceFactory
-            self.present(controller, animated: true, completion: {})
+            alertService.push(alert: SubuserWithoutConnectionsAlert())
             
         } else {
             alertService.push(alert: ErrorNotificationAlert(error: error))
