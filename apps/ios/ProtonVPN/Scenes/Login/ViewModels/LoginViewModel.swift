@@ -48,7 +48,7 @@ class LoginViewModel {
     private lazy var loginService: LoginService = factory.makeLoginService()
     private lazy var alamofireWrapper: AlamofireWrapper = factory.makeAlamofireWrapper()
     public lazy var alertService: AlertService = factory.makeCoreAlertService()
-    public lazy var safariServiceFactory: SafariServiceFactory = factory
+    private lazy var safariServiceFactory: SafariServiceFactory = factory
     
     let dismissible: Bool
     
@@ -103,7 +103,11 @@ class LoginViewModel {
         }
     }
     
-    func signUpTapped() {
+    func signUp() {
         loginService.presentSignup(dismissible: dismissible)
+    }
+    
+    func forgotPassword() {
+        factory.makeSafariService().open(url: CoreAppConstants.ProtonVpnLinks.resetPassword)
     }
 }
