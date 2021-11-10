@@ -216,6 +216,9 @@
 		E93D023626A1C90A0098520D /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E93D023126A1C90A0098520D /* Info.plist */; };
 		E93D023726A1C90A0098520D /* PacketTunnelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */; };
 		E93D023826A1C90A0098520D /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93D023526A1C90A0098520D /* main.swift */; };
+		E945C56C273BC37500506DC2 /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E945C56B273BC37500506DC2 /* SubuserAlertWindowController.swift */; };
+		E945C56E273BC46E00506DC2 /* SubuserMacAlertViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E945C56D273BC46E00506DC2 /* SubuserMacAlertViewController.swift */; };
+		E945C572273BC69800506DC2 /* SubuserMacAlertViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E945C571273BC69800506DC2 /* SubuserMacAlertViewController.xib */; };
 		E94EFFF02653D0A60024DBFB /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E94EFFEF2653D0A60024DBFB /* Sparkle.framework */; };
 		E94EFFF32653D10D0024DBFB /* Sparkle.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E94EFFEF2653D0A60024DBFB /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E94EFFF62653D2260024DBFB /* org.sparkle-project.InstallerLauncher.xpc in Copy Sparkle XPC */ = {isa = PBXBuildFile; fileRef = E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -796,6 +799,9 @@
 		E93D023326A1C90A0098520D /* WireGuard-release.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; name = "WireGuard-release.entitlements"; path = "../../macos/ProtonVPN WireGuard/WireGuard-release.entitlements"; sourceTree = "<group>"; };
 		E93D023426A1C90A0098520D /* PacketTunnelProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PacketTunnelProvider.swift; path = "../../macos/ProtonVPN WireGuard/PacketTunnelProvider.swift"; sourceTree = "<group>"; };
 		E93D023526A1C90A0098520D /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = main.swift; path = "../../macos/ProtonVPN WireGuard/main.swift"; sourceTree = "<group>"; };
+		E945C56B273BC37500506DC2 /* SubuserAlertWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubuserAlertWindowController.swift; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertWindowController.swift"; sourceTree = "<group>"; };
+		E945C56D273BC46E00506DC2 /* SubuserMacAlertViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SubuserMacAlertViewController.swift; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.swift"; sourceTree = "<group>"; };
+		E945C571273BC69800506DC2 /* SubuserMacAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserMacAlertViewController.xib; path = "../../../../../macos/ProtonVPN/Scenes/Misc/Subuser alert/SubuserMacAlertViewController.xib"; sourceTree = "<group>"; };
 		E94EFFEF2653D0A60024DBFB /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../macos/ProtonVPN/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		E94EFFF12653D0D60024DBFB /* org.sparkle-project.InstallerLauncher.xpc */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.xpc-service"; name = "org.sparkle-project.InstallerLauncher.xpc"; path = "../macos/ProtonVPN/Frameworks/org.sparkle-project.InstallerLauncher.xpc"; sourceTree = "<group>"; };
 		E960522026E5F1000004C6DE /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
@@ -1351,6 +1357,24 @@
 			path = "ProtonVPN WireGuard";
 			sourceTree = "<group>";
 		};
+		E945C569273BC32300506DC2 /* Misc */ = {
+			isa = PBXGroup;
+			children = (
+				E945C56A273BC32D00506DC2 /* Subuser alert */,
+			);
+			path = Misc;
+			sourceTree = "<group>";
+		};
+		E945C56A273BC32D00506DC2 /* Subuser alert */ = {
+			isa = PBXGroup;
+			children = (
+				E945C56B273BC37500506DC2 /* SubuserAlertWindowController.swift */,
+				E945C56D273BC46E00506DC2 /* SubuserMacAlertViewController.swift */,
+				E945C571273BC69800506DC2 /* SubuserMacAlertViewController.xib */,
+			);
+			path = "Subuser alert";
+			sourceTree = "<group>";
+		};
 		E960521F26E5F0D10004C6DE /* Windows */ = {
 			isa = PBXGroup;
 			children = (
@@ -1584,14 +1608,15 @@
 		F36ECDF62611D9B10089B898 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
-				F352C14C270ED3870032C1F6 /* Announcement */,
-				42BEF9442631760E009180A7 /* Features */,
-				423467C4261CEA9400A73773 /* Downgrade */,
 				F36ECDF72611D9BD0089B898 /* About */,
+				F352C14C270ED3870032C1F6 /* Announcement */,
 				F36ECDFE2611D9EC0089B898 /* Common */,
+				423467C4261CEA9400A73773 /* Downgrade */,
+				42BEF9442631760E009180A7 /* Features */,
 				F36ECE032611DBAC0089B898 /* Login */,
 				F36ECE062611DC2E0089B898 /* Map */,
 				F36ECE182611DE4B0089B898 /* Menu */,
+				E945C569273BC32300506DC2 /* Misc */,
 				F36ECE112611DD150089B898 /* Profiles */,
 				F36ECE292611DFD70089B898 /* ReportBug */,
 				F36ECE0A2611DC6F0089B898 /* Settings */,
@@ -2847,6 +2872,7 @@
 				E1420A73209B57B100697461 /* ConnectionSettings.xib in Resources */,
 				EEBB82EA1F1DF5B40041432A /* CreateNewProfile.xib in Resources */,
 				EE27DB491F47095300D2FF2B /* Account.xib in Resources */,
+				E945C572273BC69800506DC2 /* SubuserMacAlertViewController.xib in Resources */,
 				EE74FCB21F5DD9E500E266BC /* PopUp.xib in Resources */,
 				42918CF9263836530065992E /* CountriesSectionHeaderView.xib in Resources */,
 				E14475302093A10700F4C641 /* NeagentHelpPopUp.xib in Resources */,
@@ -3236,6 +3262,7 @@
 				EE343B7B1F33B03D0052C6C4 /* SecureCoreWarningViewController.swift in Sources */,
 				E170A92F2124313A0036326B /* UpsellGradientView.swift in Sources */,
 				E928093626B445A4008C9F2C /* ExtensionInfo+comparison.swift in Sources */,
+				E945C56C273BC37500506DC2 /* SubuserAlertWindowController.swift in Sources */,
 				EE68DD511F49F4BE00F218B8 /* TabBarView.swift in Sources */,
 				42BEF95626317F29009180A7 /* FeatureRowView.swift in Sources */,
 				E187022620E3A567000521AC /* StatusMenuSurfaceButton.swift in Sources */,
@@ -3250,6 +3277,7 @@
 				EE4E7E051F62B27A000F7D5E /* ProfilesContainerViewModel.swift in Sources */,
 				E195C0D9204301900002021B /* ButtonMask.swift in Sources */,
 				E18AF44B20223DD10067799A /* ConnectionViewModel.swift in Sources */,
+				E945C56E273BC46E00506DC2 /* SubuserMacAlertViewController.swift in Sources */,
 				E17C1CDD20E5297400DCC687 /* StatusMenuWindowModel.swift in Sources */,
 				EE3B38001F436E14008DF9E7 /* ProfilesTabBarViewController.swift in Sources */,
 				EE35FC451F1CD70700CFE26F /* TabBarButton.swift in Sources */,
