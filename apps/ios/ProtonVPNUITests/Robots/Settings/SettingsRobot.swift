@@ -51,8 +51,9 @@ class SettingsRobot: CoreElements {
     }
     
     private func killSwitchOn() -> SettingsRobot {
-        XCUIApplication().swipeUp()
-        swittch(killSwitchButton).tap()
+        swittch(killSwitchButton)
+            .swipeUpUntilVisible()
+            .tap()
         return self
     }
     
