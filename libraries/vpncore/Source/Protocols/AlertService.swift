@@ -857,3 +857,21 @@ public class AnnouncmentOfferAlert: SystemAlert {
         self.data = data
     }
 }
+
+public class DNSNotEnabledAlert: SystemAlert {
+    public var title: String? = LocalizedString.secureDnsNotEnabledTitle
+    #if os(macOS)
+    public var message: String? = LocalizedString.secureDnsNotEnabledMessageMacos
+    #else
+    public var message: String? = LocalizedString.secureDnsNotEnabledMessageIos
+    #endif
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init(continueHandler: @escaping (() -> Void)) {
+        actions.append(.confirm(title: LocalizedString.ok,
+                                handler: continueHandler))
+        actions.append(.cancel())
+    }
+}

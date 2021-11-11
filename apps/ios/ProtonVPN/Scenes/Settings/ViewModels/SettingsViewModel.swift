@@ -39,6 +39,9 @@ class SettingsViewModel {
     private var netShieldPropertyProvider: NetShieldPropertyProvider
     private let vpnManager: VpnManagerProtocol
     private let vpnStateConfiguration: VpnStateConfiguration
+    private let safariService: SafariServiceProtocol
+    private let secureDnsService: SecureDNSService
+    private var dnsSettingsManager: DNSSettingsManagerProtocol?
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
@@ -50,7 +53,7 @@ class SettingsViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration) {
+    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, planService: PlanService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, safariService: SafariServiceProtocol, secureDnsService: SecureDNSService, dnsSettingsManager: DNSSettingsManagerProtocol?) {
         self.appStateManager = appStateManager
         self.appSessionManager = appSessionManager
         self.vpnGateway = vpnGateway
@@ -64,6 +67,9 @@ class SettingsViewModel {
         self.netShieldPropertyProvider = netShieldPropertyProvider
         self.vpnManager = vpnManager
         self.vpnStateConfiguration = vpnStateConfiguration
+        self.safariService = safariService
+        self.secureDnsService = secureDnsService
+        self.dnsSettingsManager = dnsSettingsManager
         
         startObserving()
     }
@@ -274,6 +280,12 @@ class SettingsViewModel {
         if #available(iOS 14, *) {
             cells.append(.toggle(title: LocalizedString.killSwitch, on: propertiesManager.killSwitch, enabled: true, handler: ksSwitchCallback()))
             cells.append(.tooltip(text: LocalizedString.killSwitchTooltip))
+
+            cells.append(.pushKeyValue(key: LocalizedString.secureDnsTitle, value: propertiesManager.secureDnsProtocol.localizedString, handler: {
+                [pushSecureDNSProtocolViewController] in
+                pushSecureDNSProtocolViewController()
+            }))
+            cells.append(.tooltip(text: LocalizedString.secureDnsTitleTooltip))
         }
         
         cells.append(.toggle(title: LocalizedString.troubleshootItemAltTitle, on: propertiesManager.alternativeRouting, enabled: true) { [unowned self] (toggleOn, callback) in
@@ -502,6 +514,22 @@ class SettingsViewModel {
     
     private func pushNetshieldSelectionViewController(selectedType: NetShieldType, callback: @escaping NetshieldSelectionViewModel.ApproveCallback, onChange: @escaping NetshieldSelectionViewModel.TypeChangeCallback) {
         pushHandler?(netshieldService.makeNetshieldSelectionViewController(selectedType: selectedType, approve: callback, onChange: onChange))
+    }
+
+    @available(iOS 14, *)
+    private func pushSecureDNSProtocolViewController() {
+        guard let manager = dnsSettingsManager else { return }
+
+        let secureDNSViewModel = SecureDNSViewModel(dnsProtocol: propertiesManager.secureDnsProtocol,
+                                                    featureFlags: propertiesManager.featureFlags,
+                                                    alertService: alertService,
+                                                    safariService: safariService,
+                                                    dnsManager: manager)
+
+        secureDNSViewModel.protocolChanged = { [self] dnsProtocol in
+            self.propertiesManager.secureDnsProtocol = dnsProtocol
+        }
+        pushHandler?(secureDnsService.makeSecureDNSProtocolViewController(viewModel: secureDNSViewModel))
     }
 
     private func reportBug() {

@@ -64,6 +64,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags()
     public var netShieldType: NetShieldType? = .off
+    public var secureDnsProtocol: SecureDNSProtocol = .off
     public var maintenanceServerRefreshIntereval: Int = 1
     public var vpnAcceleratorEnabled: Bool = false
     public var killSwitch: Bool = false

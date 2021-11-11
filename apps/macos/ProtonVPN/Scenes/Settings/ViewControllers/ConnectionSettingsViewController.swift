@@ -43,6 +43,12 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     @IBOutlet private weak var protocolList: HoverDetectionPopUpButton!
     @IBOutlet private weak var protocolSeparator: NSBox!
     @IBOutlet private weak var protocolInfoIcon: NSImageView!
+
+    @IBOutlet private weak var secureDNSView: NSView!
+    @IBOutlet private weak var secureDNSLabel: PVPNTextField!
+    @IBOutlet private weak var secureDNSList: HoverDetectionPopUpButton!
+    @IBOutlet private weak var secureDNSSeparator: NSBox!
+    @IBOutlet private weak var secureDNSInfoIcon: NSImageView!
     
     @IBOutlet private weak var vpnAcceleratorView: NSView!
     @IBOutlet private weak var vpnAcceleratorLabel: PVPNTextField!
@@ -128,6 +134,19 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         protocolInfoIcon.toolTip = LocalizedString.smartProtocolDescription
         protocolSeparator.fillColor = .protonLightGrey()
         refreshProtocol()
+    }
+
+    private func setupSecureDNSItem() {
+        secureDNSLabel.attributedStringValue = LocalizedString
+            .secureDnsTitle
+            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        secureDNSList.isBordered = false
+        secureDNSList.target = self
+        secureDNSList.action = #selector(secureDNSItemSelected)
+        secureDNSInfoIcon.image = NSImage(named: NSImage.Name("info_green"))
+        secureDNSInfoIcon.toolTip = LocalizedString.secureDnsTitleTooltip
+        secureDNSSeparator.fillColor = .protonLightGrey()
+        refreshSecureDNS()
     }
     
     private func setupVpnAcceleratorItem() {
@@ -219,6 +238,16 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         }
         protocolList.selectItem(at: viewModel.protocolProfileIndex)
     }
+
+    private func refreshSecureDNS() {
+        secureDNSList.removeAllItems()
+        let count = viewModel.secureDnsItemCount
+        (0..<count).forEach { index in
+            let menuItem = NSMenuItem()
+            menuItem.attributedTitle = viewModel.secureDnsItem(for: index)
+            secureDNSList.menu?.addItem(menuItem)
+        }
+    }
     
     // MARK: - ReloadableViewController
     
@@ -227,6 +256,7 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
         setupAutoConnectItem()
         setupQuickConnectItem()
         setupVpnAcceleratorItem()
+        setupSecureDNSItem()
         setupProtocolItem()
         setupDnsLeakProtectionItem()
         setupAlternativeRoutingItem()
@@ -253,6 +283,10 @@ final class ConnectionSettingsViewController: NSViewController, ReloadableViewCo
     
     @objc private func protocolItemSelected() {
         viewModel.setProtocol(protocolList.indexOfSelectedItem)
+    }
+
+    @objc private func secureDNSItemSelected() {
+        viewModel.setSecureDNS(secureDNSList.indexOfSelectedItem)
     }
 }
 

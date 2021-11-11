@@ -1614,6 +1614,18 @@
 /* Netshield section title in iOS connection screen */
 "_netshield_section_title" = "MALWARE & ADS BLOCKER";
 
+// Secure DNS
+"_secure_dns_title" = "Secure DNS";
+"_secure_dns_title_tooltip" = "Tunnel DNS requests through an encrypted connection";
+"_secure_dns_protocol" = "Secure DNS Protocol";
+"_secure_dns_off" = "Off";
+"_secure_dns_over_https" = "DNS over HTTPS";
+"_secure_dns_over_tls" = "DNS over TLS";
+"_secure_dns_not_enabled_title" = "Enable Secure DNS in Settings";
+"_secure_dns_not_enabled_message_ios" = "In the Settings app, navigate to General > VPN & Device Management > DNS and select ProtonVPN.";
+// This is terrible UX. It can be made less terrible if users downloaded iOS/macOS configuration profiles from the VPN/DNS provider, since for whatever reason Apple has made that experience far more painless.
+"_secure_dns_not_enabled_message_macos" = "Navigate to your Network Settings in System Preferences. Select the inactive 'ProtonVPN' service, select 'Make Service Active' from the options menu, and then click 'Apply'.";
+
 // Announcements
 
 /* Title of the screen with news and offers. */

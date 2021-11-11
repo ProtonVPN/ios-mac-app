@@ -24,6 +24,7 @@ import Cocoa
 import vpncore
 
 final class ConnectionSettingsViewModel {
+    static let dnsPrefpaneURLString: String = "file:///System/Library/PreferencePanes/Network.prefPane"
     
     typealias Factory = PropertiesManagerFactory
         & VpnGatewayFactory
@@ -33,6 +34,8 @@ final class ConnectionSettingsViewModel {
         & VpnProtocolChangeManagerFactory
         & VpnManagerFactory
         & VpnStateConfigurationFactory
+        & DNSSettingsManagerFactory
+        & SafariServiceFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -43,6 +46,9 @@ final class ConnectionSettingsViewModel {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnProtocolChangeManager: VpnProtocolChangeManager = factory.makeVpnProtocolChangeManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    private lazy var dnsSettingsManager: DNSSettingsManagerProtocol? = factory.makeDNSSettingsManager()
+    private lazy var safariService: SafariServiceProtocol =
+        factory.makeSafariService()
     
     private var featureFlags: FeatureFlags {
         return propertiesManager.featureFlags
@@ -131,6 +137,10 @@ final class ConnectionSettingsViewModel {
     var protocolItemCount: Int {
         return 5
     }
+
+    var secureDnsItemCount: Int {
+        return SecureDNSProtocol.allCases.count
+    }
         
     // MARK: - Setters
     
@@ -187,6 +197,46 @@ final class ConnectionSettingsViewModel {
             self.viewController?.reloadView()
         })
         
+    }
+
+    func setSecureDNS(_ index: Int) {
+        let dnsProtocol = SecureDNSProtocol(rawValue: index) ?? .off
+        propertiesManager.secureDnsProtocol = dnsProtocol
+
+        dnsSettingsManager?.loadFromPreferences(completionHandler: { [weak self] maybeErr in
+            guard let `self` = self else { return }
+            if let err = maybeErr {
+                PMLog.printToConsole("Could not load from preferences: \(err)")
+                return
+            }
+
+            switch dnsProtocol {
+            case .off:
+                self.dnsSettingsManager?.removeFromPreferences(completionHandler: { maybeErr in
+                    if let err = maybeErr {
+                        PMLog.printToConsole("Couldn't remove item from preferences: \(err)")
+                    }
+                })
+            default:
+                guard #available(macOS 11, *) else {
+                    return
+                }
+
+                self.dnsSettingsManager?.dnsSettings = dnsProtocol.dnsSettings
+                self.dnsSettingsManager?.saveToPreferences(completionHandler: { maybeErr in
+                    if let err = maybeErr {
+                        PMLog.printToConsole("Couldn't save configuration to preferences: \(err)")
+                        return
+                    }
+
+                    if self.dnsSettingsManager?.isEnabled != true {
+                        self.alertService.push(alert: DNSNotEnabledAlert {
+                            self.safariService.open(url: Self.dnsPrefpaneURLString)
+                        })
+                    }
+                })
+            }
+        })
     }
         
     @objc func settingsChanged() {
@@ -318,6 +368,12 @@ final class ConnectionSettingsViewModel {
             return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
         }
         return (LocalizedString.openvpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+    }
+
+    func secureDnsItem(for index: Int) -> NSAttributedString {
+        let proto = SecureDNSProtocol(rawValue: index) ?? .off
+        return proto.localizedString
+            .attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
     }
     
     // MARK: - Values

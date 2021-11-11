@@ -25,6 +25,10 @@ import Foundation
 import vpncore
 import KeychainAccess
 
+#if canImport(NetworkExtension)
+import NetworkExtension
+#endif
+
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
 final class DependencyContainer {
@@ -465,5 +469,19 @@ extension DependencyContainer: VpnAuthenticationFactory {
 extension DependencyContainer: VpnStateConfigurationFactory {
     func makeVpnStateConfiguration() -> VpnStateConfiguration {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
+    }
+}
+
+// MARK: DNSSettingsManagerFactory
+extension DependencyContainer: DNSSettingsManagerFactory {
+    func makeDNSSettingsManager() -> DNSSettingsManagerProtocol? {
+        guard #available(iOS 14, *) else {
+            return nil
+        }
+        #if canImport(NetworkExtension)
+        return NEDNSSettingsManager.shared()
+        #else
+        return nil
+        #endif
     }
 }

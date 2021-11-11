@@ -148,6 +148,21 @@ extension DependencyContainer: NetshieldServiceFactory {
     }
 }
 
+// MARK: Secure DNS Service
+protocol SecureDNSService {
+    func makeSecureDNSProtocolViewController(viewModel: SecureDNSViewModel) -> SecureDNSViewController
+}
+
+protocol SecureDNSServiceFactory {
+    func makeSecureDNSService() -> SecureDNSService
+}
+
+extension DependencyContainer: SecureDNSServiceFactory {
+    func makeSecureDNSService() -> SecureDNSService {
+       return makeNavigationService()
+   }
+}
+
 // MARK: Connection status Service
 
 protocol ConnectionStatusServiceFactory {
@@ -173,7 +188,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & SafariServiceFactory & DNSSettingsManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -202,7 +217,15 @@ class NavigationService {
     private lazy var servicePlanDataStorage: ServicePlanDataStorage = factory.makeServicePlanDataStorage()
     private lazy var storeKitManager: StoreKitManager = factory.makeStoreKitManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    
+    private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
+    private lazy var dnsSettingsManager: DNSSettingsManagerProtocol? = {
+        if #available(iOS 14, *) {
+            return factory.makeDNSSettingsManager()
+        } else {
+            return nil
+        }
+    }()
+
     private var trialChecker: TrialChecker?
     
     private lazy var profileManager = {
@@ -597,7 +620,7 @@ extension NavigationService: ProfileService {
 extension NavigationService: SettingsService {
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
-            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration)
+            settingsViewController.viewModel = SettingsViewModel(appStateManager: appStateManager, appSessionManager: appSessionManager, vpnGateway: vpnGateway, alertService: alertService, planService: self, settingsService: self, protocolService: self, vpnKeychain: vpnKeychain, netshieldService: self, connectionStatusService: self, netShieldPropertyProvider: factory.makeNetShieldPropertyProvider(), vpnManager: vpnManager, vpnStateConfiguration: vpnStateConfiguration, safariService: safariService, secureDnsService: self, dnsSettingsManager: dnsSettingsManager)
             settingsViewController.connectionBarViewController = makeConnectionBarViewController()
             return settingsViewController
         }
@@ -678,4 +701,10 @@ extension NavigationService: ConnectionStatusService {
         self.windowService.addToStack(viewController, checkForDuplicates: true)
     }
     
+}
+
+extension NavigationService: SecureDNSService {
+    func makeSecureDNSProtocolViewController(viewModel: SecureDNSViewModel) -> SecureDNSViewController {
+        SecureDNSViewController(viewModel: viewModel)
+    }
 }

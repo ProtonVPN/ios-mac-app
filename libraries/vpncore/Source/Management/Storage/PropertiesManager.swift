@@ -66,6 +66,7 @@ public protocol PropertiesManagerProtocol: class {
 
     var featureFlags: FeatureFlags { get set }
     var netShieldType: NetShieldType? { get set }
+    var secureDnsProtocol: SecureDNSProtocol { get set }
     var maintenanceServerRefreshIntereval: Int { get set }
     var killSwitch: Bool { get set }
     var excludeLocalNetworks: Bool { get set }
@@ -151,6 +152,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         static let netshield = "NetShield"
         static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
         static let vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
+        static let secureDNSConfig = "SecureDNSConfig"
         
         static let humanValidationFailed: String = "humanValidationFailed"
         static let alternativeRouting: String = "alternativeRouting"
@@ -172,6 +174,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
+    public static let secureDNSNotification: Notification.Name = Notification.Name("SecureDNSChanged")
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -510,6 +513,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
             guard let authCredentials = AuthKeychain.fetch() else { return }
             Storage.setValue(newValue?.rawValue, forKey: Keys.netshield + authCredentials.username)
             postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
+        }
+    }
+
+    public var secureDnsProtocol: SecureDNSProtocol {
+        get {
+            guard let val = Storage.userDefaults().value(forKey: Keys.secureDNSConfig) as? Int, let type = SecureDNSProtocol(rawValue: val) else {
+                return .off
+            }
+            return type
+        }
+
+        set {
+            Storage.setValue(newValue.rawValue, forKey: Keys.secureDNSConfig)
+            postNotificationOnUIThread(PropertiesManager.secureDNSNotification, object: newValue)
         }
     }
     

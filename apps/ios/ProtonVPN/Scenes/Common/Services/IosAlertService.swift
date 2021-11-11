@@ -187,6 +187,9 @@ extension IosAlertService: CoreAlertService {
 
         case let announcementOfferAlert as AnnouncmentOfferAlert:
             show(announcementOfferAlert)
+
+        case is DNSNotEnabledAlert:
+            showDefaultSystemAlert(alert)
             
         default:
             #if DEBUG

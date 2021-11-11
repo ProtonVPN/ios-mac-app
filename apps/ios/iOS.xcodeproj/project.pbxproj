@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		043DA1A5273467E100A0A392 /* SecureDNSViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA1A4273467E100A0A392 /* SecureDNSViewModel.swift */; };
+		043DA1AD27346B9800A0A392 /* SecureDNSViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA1AC27346B9800A0A392 /* SecureDNSViewController.swift */; };
+		043DA1B527347A9900A0A392 /* SecureDNS.xib in Resources */ = {isa = PBXBuildFile; fileRef = 043DA1B427347A9900A0A392 /* SecureDNS.xib */; };
 		060D071625D34599002B98B8 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D071525D34599002B98B8 /* AppSessionManager.swift */; };
 		060D071725D34599002B98B8 /* AppSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 060D071525D34599002B98B8 /* AppSessionManager.swift */; };
 		257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */; };
@@ -697,6 +700,10 @@
 
 /* Begin PBXFileReference section */
 		01FCB81E3FA2FA599C00E5F7 /* Pods-ProtonVPNUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.release.xcconfig"; sourceTree = "<group>"; };
+		043DA1A4273467E100A0A392 /* SecureDNSViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SecureDNSViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/SecureDNSViewModel.swift; sourceTree = "<group>"; };
+		043DA1AC27346B9800A0A392 /* SecureDNSViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SecureDNSViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/SecureDNSViewController.swift; sourceTree = "<group>"; };
+		043DA1B427347A9900A0A392 /* SecureDNS.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = SecureDNS.xib; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Views/SecureDNS.xib; sourceTree = "<group>"; };
+		043DA1E42734940400A0A392 /* ProtonVPNDebug.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ProtonVPNDebug.entitlements; sourceTree = "<group>"; };
 		054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_WireGuardiOS_Extension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		060D071525D34599002B98B8 /* AppSessionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AppSessionManager.swift; path = ProtonVPN/Scenes/Common/Services/AppSessionManager.swift; sourceTree = SOURCE_ROOT; };
 		0961C0A8305365E4DA39FD8E /* Pods-WireGuardiOS Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.debug.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.debug.xcconfig"; sourceTree = "<group>"; };
@@ -1423,6 +1430,7 @@
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
+				043DA1AC27346B9800A0A392 /* SecureDNSViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -2517,6 +2525,7 @@
 				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
 				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
 				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
+				043DA1A4273467E100A0A392 /* SecureDNSViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -2584,6 +2593,7 @@
 				E1EB9E7522FF096A009E704F /* LogSelection.xib */,
 				E1A4BF5C21ADBF3D004D187F /* Logs.xib */,
 				E1D187E82301A20700C5F492 /* VpnProtocol.xib */,
+				043DA1B427347A9900A0A392 /* SecureDNS.xib */,
 				E13EDF6621F0A14400030CE7 /* WidgetSettings.xib */,
 				793ECF452149045400C186A7 /* AppVersionView.swift */,
 				793ECF432149041A00C186A7 /* AppVersionView.xib */,
@@ -2854,7 +2864,7 @@
 		791DE5D1208DDA3000A29EA5 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 1250;
+				LastSwiftUpdateCheck = 1310;
 				LastUpgradeCheck = 0930;
 				ORGANIZATIONNAME = "Proton Technologies AG";
 				TargetAttributes = {
@@ -3056,6 +3066,7 @@
 				D554789F22C601CE00AD3C5B /* ReportBugViewController.xib in Resources */,
 				E1EB9E7722FF096A009E704F /* LogSelection.xib in Resources */,
 				428DF979262EFCDE00944379 /* ServersStreamingFeaturesVC.xib in Resources */,
+				043DA1B527347A9900A0A392 /* SecureDNS.xib in Resources */,
 				79312B7D2118852D00E79D09 /* DrillInTableViewCell.xib in Resources */,
 				E986309B269835E500F56B87 /* Localizable.stringsdict in Resources */,
 				E101CB99219363CD001D7A76 /* DataDisclaimer.xib in Resources */,
@@ -3457,6 +3468,7 @@
 				E17BE41522819B7F00D0F652 /* VerificationSmsViewController.swift in Sources */,
 				D5A8CD782456D8AE00F9B0C9 /* TroubleshootingSwitchCell.swift in Sources */,
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
+				043DA1A5273467E100A0A392 /* SecureDNSViewModel.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				F35D281A270C8B6D00003391 /* AnnouncementDetailViewController.swift in Sources */,
@@ -3504,6 +3516,7 @@
 				791DE612208E098300A29EA5 /* ProtonQCViewController.swift in Sources */,
 				E1C8705C22BA06C3009CF4CE /* TrialWelcomeViewModel.swift in Sources */,
 				7995FCFC2090A4820030E1EB /* UIKitString+Extension.swift in Sources */,
+				043DA1AD27346B9800A0A392 /* SecureDNSViewController.swift in Sources */,
 				E1A15A9B215905A90068A5EF /* GradientSeparator.swift in Sources */,
 				D5BCDD2925307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5F5689B23263C7D00795953 /* IosAlertService.swift in Sources */,

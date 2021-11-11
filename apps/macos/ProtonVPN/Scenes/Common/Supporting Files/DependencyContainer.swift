@@ -23,6 +23,7 @@
 import Alamofire
 import Foundation
 import vpncore
+import NetworkExtension
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -446,5 +447,19 @@ extension DependencyContainer: VpnStateConfigurationFactory {
 extension DependencyContainer: XPCConnectionsRepositoryFactory {
     func makeXPCConnectionsRepository() -> XPCConnectionsRepository {
         return xpcConnectionsRepository
+    }
+}
+
+// MARK: DNSSettingsManagerFactory
+extension DependencyContainer: DNSSettingsManagerFactory {
+    func makeDNSSettingsManager() -> DNSSettingsManagerProtocol? {
+        guard #available(macOS 11, *) else {
+            return nil
+        }
+        #if canImport(NetworkExtension)
+        return NEDNSSettingsManager.shared()
+        #else
+        return nil
+        #endif
     }
 }

@@ -8,6 +8,14 @@
 
 /* Begin PBXBuildFile section */
 		02F7A6D217873B23BFE512F1 /* Pods_Core_vpncore_macosTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F0112A1878C3C8F142EEB7F /* Pods_Core_vpncore_macosTests.framework */; };
+		043DA18F27345D6A00A0A392 /* DNSSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */; };
+		043DA19027345D6A00A0A392 /* DNSSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */; };
+		043DA19127345D6A00A0A392 /* DNSSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */; };
+		043DA19227345D6A00A0A392 /* DNSSettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */; };
+		043DA19727345E7700A0A392 /* SecureDNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA19627345E7700A0A392 /* SecureDNS.swift */; };
+		043DA19827345E7700A0A392 /* SecureDNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA19627345E7700A0A392 /* SecureDNS.swift */; };
+		043DA19927345E7700A0A392 /* SecureDNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA19627345E7700A0A392 /* SecureDNS.swift */; };
+		043DA19A27345E7700A0A392 /* SecureDNS.swift in Sources */ = {isa = PBXBuildFile; fileRef = 043DA19627345E7700A0A392 /* SecureDNS.swift */; };
 		04F14CFDA91FF552B57D0677 /* Pods-Core-vpncore-ios-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */; };
 		179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42B2F5ECE24133CF5914BB05 /* Pods_Core_vpncore_ios.framework */; };
 		42066EF9263040E0001F86DB /* FeatureCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42066EF8263040E0001F86DB /* FeatureCellViewModel.swift */; };
@@ -1099,6 +1107,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNSSettingsManager.swift; sourceTree = "<group>"; };
+		043DA19627345E7700A0A392 /* SecureDNS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecureDNS.swift; sourceTree = "<group>"; };
 		0F13A722882A004DC3D0509A /* Pods-Core-vpncore-ios-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-Core-vpncore-ios-metadata.plist"; sourceTree = "<group>"; };
 		14B9946CE395EC9A8551017C /* Pods_Core_vpncore_macos.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Core_vpncore_macos.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1985A7A2814D3A45F2314A67 /* Pods-Core-vpncore-macosTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Core-vpncore-macosTests.debug.xcconfig"; path = "Target Support Files/Pods-Core-vpncore-macosTests/Pods-Core-vpncore-macosTests.debug.xcconfig"; sourceTree = "<group>"; };
@@ -2243,6 +2253,7 @@
 				E160845821DE1E9100E34D04 /* SafariService.swift */,
 				E1616BFB21C95C5C00F42D79 /* Weak.swift */,
 				F3EF4ECB2670C22300109CA3 /* Threading.swift */,
+				043DA18E27345D6A00A0A392 /* DNSSettingsManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -2299,6 +2310,7 @@
 				E151126A22F07D3100C9A41F /* VpnManagerConfiguration.swift */,
 				D57A656E2485330700079E82 /* VpnServerSelector.swift */,
 				E1B5F62D21B6B18C00B558B0 /* VpnState.swift */,
+				043DA19627345E7700A0A392 /* SecureDNS.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2997,6 +3009,7 @@
 				F36535602638563E001B7E88 /* LocalAgentNativeClientImplementation.swift in Sources */,
 				4242B0512465A4380042145A /* AuthBaseRequest.swift in Sources */,
 				F365355626384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
+				043DA19727345E7700A0A392 /* SecureDNS.swift in Sources */,
 				E151126E22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
 				4242B05E2465A43E0042145A /* UserCodeRequest.swift in Sources */,
 				E1A9A68322BA74EE0073711B /* TrialServiceMock.swift in Sources */,
@@ -3175,6 +3188,7 @@
 				E13791B82313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */,
 				D5FFE6E924A1E28100F0F4A1 /* StoreKitStateChecker.swift in Sources */,
 				D585B5112447074200E901F3 /* Date+Misc.swift in Sources */,
+				043DA18F27345D6A00A0A392 /* DNSSettingsManager.swift in Sources */,
 				E1616BFC21C95C5C00F42D79 /* Weak.swift in Sources */,
 				F30B9EAF2629B1BC0094C65E /* AsyncOperation.swift in Sources */,
 				E148AE7621C2B12C007AB65A /* NSError+Extension.swift in Sources */,
@@ -3282,6 +3296,7 @@
 				D5C205022487A0CE004FB58B /* AuthRefreshRequest.swift in Sources */,
 				4243632026555D590027EAEE /* SessionsResponse.swift in Sources */,
 				D5C205032487A0CE004FB58B /* UserBaseRequest.swift in Sources */,
+				043DA19027345D6A00A0A392 /* DNSSettingsManager.swift in Sources */,
 				D5C205042487A0CE004FB58B /* UserCodeRequest.swift in Sources */,
 				D5C205052487A0CE004FB58B /* UserCheckRequest.swift in Sources */,
 				F38BB44D265B893F00329619 /* LocalAgentError.swift in Sources */,
@@ -3400,6 +3415,7 @@
 				D5D2958825A5DEB6000FBD74 /* UserTierProviderMock.swift in Sources */,
 				D5C205472487A0CF004FB58B /* PaymentToken.swift in Sources */,
 				D5DC52C4252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
+				043DA19827345E7700A0A392 /* SecureDNS.swift in Sources */,
 				D5C205482487A0CF004FB58B /* AuthCredentials.swift in Sources */,
 				D5D2946225A45BB1000FBD74 /* SemanticVersionTests.swift in Sources */,
 				E9FC535026EB820F0062BAC1 /* SentryHelper.swift in Sources */,
@@ -3576,6 +3592,7 @@
 				F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */,
 				E1A9A67D22BA501E0073711B /* TrialService.swift in Sources */,
 				4242B01C2465A40F0042145A /* PaymentsMethodsRequest.swift in Sources */,
+				043DA19127345D6A00A0A392 /* DNSSettingsManager.swift in Sources */,
 				E1B5F65521B81E3A00B558B0 /* ServerFeature.swift in Sources */,
 				4242B0882465A4D10042145A /* UserProperties.swift in Sources */,
 				F31321A925E3AA7A006F414F /* DoH.swift in Sources */,
@@ -3681,6 +3698,7 @@
 				F349B1F62680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E1B5F65821B81E4000B558B0 /* ServerModel.swift in Sources */,
 				4242B06F2465A48B0042145A /* AuthApiService.swift in Sources */,
+				043DA19927345E7700A0A392 /* SecureDNS.swift in Sources */,
 				4242B0802465A4D10042145A /* RequestItem.swift in Sources */,
 				E1B5F66121B81E7800B558B0 /* LocationUtility.swift in Sources */,
 				4242B0372465A41A0042145A /* VPNBaseRequest.swift in Sources */,
@@ -3863,6 +3881,7 @@
 				F365356B263856BB001B7E88 /* LocalAgent+Certs.swift in Sources */,
 				D5C204A024866B81004FB58B /* UserApiService.swift in Sources */,
 				D523F11424B7543C007DB086 /* String+Url.swift in Sources */,
+				043DA19A27345E7700A0A392 /* SecureDNS.swift in Sources */,
 				D5C204A124866B81004FB58B /* ApiConstants.swift in Sources */,
 				D5C204A224866B81004FB58B /* CoreAppConstants.swift in Sources */,
 				D5DCCACD252B4E0A004CB353 /* Announcement.swift in Sources */,
@@ -3953,6 +3972,7 @@
 				423705E4262D9E8100A920CF /* VPNStreamingRequest.swift in Sources */,
 				D5C204E424866BC2004FB58B /* SiriHelperProtocol.swift in Sources */,
 				D5C2047324866B37004FB58B /* ServiceChecker.swift in Sources */,
+				043DA19227345D6A00A0A392 /* DNSSettingsManager.swift in Sources */,
 				D5C2043B248666EC004FB58B /* ServerLocation.swift in Sources */,
 				E977A79A268215A70013495A /* KeychainConstants.swift in Sources */,
 				E98763E0260DCE78002E06E1 /* PMLogTests.swift in Sources */,
