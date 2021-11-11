@@ -67,6 +67,14 @@ public struct AlertAction {
         self.style = style
         self.handler = handler
     }
+
+    public static func confirm(title: String = LocalizedString.continue, handler: (() -> Void)? = nil) -> Self {
+        Self(title: title, style: .confirmative, handler: handler)
+    }
+
+    public static func cancel(title: String = LocalizedString.cancel, handler: (() -> Void)? = nil) -> Self {
+        Self(title: title, style: .cancel, handler: handler)
+    }
 }
 
 public protocol SystemAlert: AnyObject {
@@ -196,7 +204,7 @@ public class UpgradeUnavailableAlert: SystemAlert {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
         }
         actions.append(AlertAction(title: LocalizedString.account, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.cancel())
     }
 }
 
@@ -257,8 +265,8 @@ public class StoreKitUserValidationByPassAlert: SystemAlert {
     
     public init(withMessage: String?, confirmHandler: @escaping () -> Void) {
         self.message = withMessage
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.confirm(title: LocalizedString.ok, handler: confirmHandler))
+        actions.append(.cancel())
     }
 }
 
@@ -304,8 +312,8 @@ public class SecureCoreToggleDisconnectAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }    
 }
 
@@ -317,8 +325,8 @@ public class ChangeProtocolDisconnectAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel())
     }
 }
 
@@ -330,8 +338,8 @@ public class ReconnectOnSettingsChangeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }
 }
 
@@ -344,8 +352,8 @@ public class ReconnectOnActionAlert: SystemAlert {
     
     public init(actionTitle: String, confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         title = actionTitle
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }
 }
 
@@ -357,8 +365,8 @@ public class TurnOnKillSwitchAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(title: LocalizedString.notNow, handler: cancelHandler))
     }
 }
 
@@ -373,8 +381,8 @@ public class AllowLANConnectionsAlert: SystemAlert {
         if connected {
             message! += "\n\n" + LocalizedString.allowLanNote
         }
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.notNow, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(title: LocalizedString.notNow, handler: cancelHandler))
     }
 }
 
@@ -386,8 +394,8 @@ public class ReconnectOnSmartProtocolChangeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
 
     public init(confirmHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }
 }
 
@@ -399,8 +407,8 @@ public class LogoutWarningAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.confirm(handler: confirmHandler))
+        actions.append(.cancel())
     }
 }
 
@@ -419,7 +427,7 @@ public class BugReportSentAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(confirmHandler: @escaping () -> Void) {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+        actions.append(.confirm(title: LocalizedString.ok, handler: confirmHandler))
     }
 }
 
@@ -452,7 +460,7 @@ public class UnknownErrortAlert: SystemAlert {
     
     public init(error: Error, confirmHandler: (() -> Void)?) {
         message = error.localizedDescription
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: confirmHandler))
+        actions.append(.confirm(title: LocalizedString.ok, handler: confirmHandler))
     }
 }
 
@@ -587,7 +595,7 @@ public class UnreachableNetworkAlert: SystemAlert {
     
     public init(error: Error, troubleshoot: @escaping () -> Void) {
         message = error.localizedDescription
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.cancel())
         actions.append(AlertAction(title: LocalizedString.neTroubleshoot, style: .confirmative, handler: troubleshoot))
     }
 }
@@ -613,7 +621,7 @@ public class RegistrationUserAlreadyExistsAlert: SystemAlert {
         message = error.localizedDescription
         actions.append(AlertAction(title: LocalizedString.forgotUsername, style: .confirmative, handler: forgotCallback))
         actions.append(AlertAction(title: LocalizedString.resetPassword, style: .confirmative, handler: resetCallback))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: nil))
+        actions.append(.cancel())
     }
 }
 
@@ -649,8 +657,8 @@ public class ReconnectOnNetshieldChangeAlert: SystemAlert {
     
     public init(isOn: Bool, continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
         message = isOn ? LocalizedString.netshieldAlertReconnectDescriptionOn : LocalizedString.netshieldAlertReconnectDescriptionOff
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(handler: continueHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }
 }
 
@@ -662,8 +670,8 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(title: LocalizedString.upgrade, handler: continueHandler))
+        actions.append(.cancel(handler: cancelHandler))
     }
 }
 
@@ -675,8 +683,8 @@ public class SecureCoreRequiresUpgradeAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancelHandler: (() -> Void)? = nil) {
-        actions.append(AlertAction(title: LocalizedString.upgrade, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.maybeLater, style: .cancel, handler: cancelHandler))
+        actions.append(.confirm(title: LocalizedString.upgrade, handler: continueHandler))
+        actions.append(.cancel(title: LocalizedString.maybeLater, handler: cancelHandler))
     }
 }
 
@@ -688,8 +696,8 @@ public class SysexInstallationRequiredAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init(continueHandler: @escaping () -> Void, cancel: (() -> Void)? = nil, dismiss: (() -> Void)? = nil ) {
-        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: continueHandler))
-        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancel))
+        actions.append(.confirm(handler: continueHandler))
+        actions.append(.cancel(handler: cancel))
     }
 }
 
@@ -701,7 +709,7 @@ public class SysexEnabledAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .confirmative, handler: nil))
+        actions.append(.confirm(title: LocalizedString.ok))
     }
 }
 
@@ -713,7 +721,7 @@ public class SysexInstallingErrorAlert: SystemAlert {
     public var dismiss: (() -> Void)?
     
     public init() {
-        actions.append(AlertAction(title: LocalizedString.ok, style: .cancel, handler: nil))
+        actions.append(.cancel(title: LocalizedString.ok))
     }
 }
 
@@ -762,9 +770,9 @@ public class MaxSessionsAlert: UserAccountUpdateAlert {
         default:
             message = LocalizedString.maximumDeviceReachedDescription
         }
-        
-        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+
+        actions.append(.confirm(title: LocalizedString.upgradeAgain))
+        actions.append(.cancel(title: LocalizedString.noThanks))
     }
 }
 
@@ -778,9 +786,8 @@ public class UserPlanDowngradedAlert: UserAccountUpdateAlert {
     public var isError: Bool = false
     public var dismiss: (() -> Void)?
     
-    public init(accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo?) {
-        actions.append(AlertAction(title: LocalizedString.upgradeAgain, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+    public init(accountUpdate: VpnDowngradeInfo, reconnectionInfo: VpnReconnectInfo?) {        actions.append(.confirm(title: LocalizedString.upgradeAgain))
+        actions.append(.cancel(title: LocalizedString.noThanks))
         self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.subscriptionExpiredReconnectionDescription
@@ -799,8 +806,8 @@ public class UserBecameDelinquentAlert: UserAccountUpdateAlert {
     public var dismiss: (() -> Void)?
     
     public init(reconnectionInfo: VpnReconnectInfo?) {
-        actions.append(AlertAction(title: LocalizedString.updateBilling, style: .confirmative, handler: nil))
-        actions.append(AlertAction(title: LocalizedString.noThanks, style: .cancel, handler: nil))
+        actions.append(.confirm(title: LocalizedString.updateBilling))
+        actions.append(.cancel(title: LocalizedString.noThanks))
         self.reconnectionInfo = reconnectionInfo
         if reconnectionInfo?.to != nil {
             message = LocalizedString.delinquentReconnectionDescription
