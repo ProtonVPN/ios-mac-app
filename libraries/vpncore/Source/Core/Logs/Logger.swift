@@ -21,6 +21,7 @@
 
 import Foundation
 import OSLog
+import Logging
 
 public class PMLog {
     
@@ -130,8 +131,78 @@ public class PMLog {
     // swiftlint:disable no_print
     public static func printToConsole(_ text: String) {
         #if DEBUG
-        os_log("%@", text)
+//        os_log("%@", text)
         #endif
     }
     // swiftlint:enable no_print
+}
+
+public class PVPNLogHelper {
+    
+    public enum MetaKey: String {
+        case category
+        case event
+    }
+    
+    public enum Category: String {
+        case connection = "conn"
+        case connectionConnect = "conn.connect"
+        case connectionDisconnect = "conn.disconnect"
+        case localAgent = "local_agent"
+        case ui
+        case user
+        case userCert = "user_cert"
+        case userPlan = "user_plan"
+        case api
+        case net
+        case `protocol`
+        case app
+        case os
+        case settings
+    }
+
+    public enum Event: String {
+        case currentState = "current_state"
+        case stateChange = "state_change"
+        case error
+        case trigger
+        case scan
+        case scanFailed = "scan_failed"
+        case scanResult = "scan_result"
+        case start
+        case connected
+        case serverSelected = "server_selected"
+        case switchFailed = "switch_failed"
+        case log
+        case status
+        case connect
+        case disconnect
+        case currentCertificate = "current_cert"
+        case refresh
+        case revoked
+        case newCertificate = "new_cert"
+        case refreshError = "refresh_error"
+        case scheduleRefresh = "schedule_refresh"
+        case currentPlan = "current_plan"
+        case change
+        case maxSessionsReached = "max_sessions_reached"
+        case request
+        case response
+        case currentNetwork = "current_network"
+        case networkUnavailable = "network_unavailable"
+        case networkChanged = "network_changed"
+        case processStart = "process_start"
+        case crash
+        case updateCheck = "update_check"
+        case info
+        case currentSettings = "current_settings"
+    }
+    
+    public static func setupLogsForApp() {
+        LoggingSystem.bootstrap {_ in
+            return ConsoleLogHandler()
+        }
+
+    }
+    
 }

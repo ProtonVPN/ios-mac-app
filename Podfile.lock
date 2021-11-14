@@ -4,6 +4,7 @@ PODS:
     - Alamofire (~> 5.1)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
+  - Logging (1.4.0)
   - OpenSSL-Apple (1.1.1k.11)
   - pmtest (1.0.0)
   - ProtonCore-Challenge (2.4.0):
@@ -43,6 +44,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
+  - Logging (= 1.4.0)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
   - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `2.4.0`)"
   - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `2.4.0`)"
@@ -62,6 +64,7 @@ SPEC REPOS:
     - AlamofireImage
     - GSMessages
     - KeychainAccess
+    - Logging
     - OpenSSL-Apple
     - ReachabilitySwift
     - SDWebImage
@@ -121,6 +124,7 @@ SPEC CHECKSUMS:
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
   ProtonCore-Challenge: ea4b2541e9c9678182bf201245525d76c5583686
@@ -136,6 +140,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: ad05b3f5d206d654401b03ff13f931c52feb0441
+PODFILE CHECKSUM: 43802e2e2749ba13cf3f13c7702ce20ce6433643
 
 COCOAPODS: 1.10.1
