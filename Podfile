@@ -47,6 +47,10 @@ def vpn_core
     # Core
     pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-Doh', :git => proton_core_path, :tag => proton_core_version
+    
+    # Logs
+    pod 'Logging', '1.4.0'
+    
 end    
 
 abstract_target 'Core' do
