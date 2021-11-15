@@ -62,7 +62,7 @@ final class CoreLoginService {
         let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton))))
         self.login = login
 
-        let finishFlow = WorkBeforeFlow(waitingStepName: LocalizedString.loginFetchVpnData, doneStepName: LocalizedString.loginFetchVpnDataFinished) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
+        let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to uset the login data to log in the app
             let authCredentials = AuthCredentials(data)
             self?.appSessionManager.finishLogin(authCredentials: authCredentials) { result in
