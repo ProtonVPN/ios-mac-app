@@ -47,5 +47,8 @@ class PlanServiceMock: PlanService {
     func presentSubscriptionManagement() {
         callbackPresentSubscriptionManagement?()
     }
-    
+
+    func clear() {
+
+    }
 }
