@@ -8,17 +8,8 @@
 
 import Logging
 
+// Only levels that we actually use are added here
 extension Logger {
-    
-    public func trace(_ message: @autoclosure () -> Logger.Message,
-                      category: PVPNLogHelper.Category,
-                      event: PVPNLogHelper.Event? = nil,
-                      metadata: @autoclosure @escaping () -> Logger.Metadata? = nil,
-                      source: @autoclosure () -> String? = nil,
-                      file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .trace, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
-    }
     
     public func debug(_ message: @autoclosure () -> Logger.Message,
                       category: PVPNLogHelper.Category,
@@ -40,16 +31,6 @@ extension Logger {
         self.log(level: .info, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
     }
     
-    public func notice(_ message: @autoclosure () -> Logger.Message,
-                       category: PVPNLogHelper.Category,
-                       event: PVPNLogHelper.Event? = nil,
-                       metadata: @autoclosure @escaping () -> Logger.Metadata? = nil,
-                       source: @autoclosure () -> String? = nil,
-                       file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .notice, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
-    }
-    
     public func warning(_ message: @autoclosure () -> Logger.Message,
                         category: PVPNLogHelper.Category,
                         event: PVPNLogHelper.Event? = nil,
@@ -68,16 +49,6 @@ extension Logger {
                       file: String = #file, function: String = #function, line: UInt = #line) {
         
         self.log(level: .error, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
-    }
-    
-    public func critical(_ message: @autoclosure () -> Logger.Message,
-                         category: PVPNLogHelper.Category,
-                         event: PVPNLogHelper.Event? = nil,
-                         metadata: @autoclosure @escaping () -> Logger.Metadata? = nil,
-                         source: @autoclosure () -> String? = nil,
-                         file: String = #file, function: String = #function, line: UInt = #line) {
-        
-        self.log(level: .critical, message(), metadata: getMeta(metadata, category: category, event: event)(), source: source(), file: file, function: function, line: line)
     }
     
     /// Add our own category and event into metada data
