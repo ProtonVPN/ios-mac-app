@@ -37,4 +37,6 @@ class ObfuscatedConstants {
     static let specialCoupons: [String] = [String]()
 
     static let apiHost: String = ""
+
+    static let vpnIAPIdentifiers: Set<String> = []
 }
