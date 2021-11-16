@@ -79,11 +79,13 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
         
-        completion(.success)
-        
-        retrievePropertiesAndLogIn(success: { completion(.success) }, failure: { error in
+        let failureWrapper = { error in
             DispatchQueue.main.async { completion(.failure(error)) }
-        })
+        }
+        
+        retrieveProperties(success: { [weak self] in
+            self?.finishLogin(success: { completion(.success) }, failure: failureWrapper)
+        }, failure: failureWrapper)
     }
     
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -96,7 +98,11 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     DispatchQueue.main.async { failure(ProtonVpnError.keychainWriteFailed) }
                     return
                 }
-                self?.retrievePropertiesAndLogIn(success: success, failure: failure)
+                self?.retrieveProperties(success: {
+                    self?.checkForSubuserWithoutSessions(success: { [weak self] in
+                        self?.finishLogin(success: success, failure: failure)
+                    }, failure: failure)
+                }, failure: failure)
             case let .failure(error):
                 PMLog.ET("Failed to obtain user's auth credentials: \(error)")
                 DispatchQueue.main.async { failure(error) }
@@ -120,14 +126,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
     
-    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+    private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
-            guard let self = self else {
-                return
-            }
-
             switch result {
             case let .success(properties):
+                guard let self = self else {
+                    return
+                }
+
                 if let credentials = properties.vpnCredentials {
                     self.vpnKeychain.store(vpnCredentials: credentials)
                 }
@@ -146,28 +152,38 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 if self.propertiesManager.featureFlags.pollNotificationAPI {
                     self.announcementRefresher.refresh()
                 }
-                self.resolveActiveSession(success: { [weak self] in
-                    self?.setAndNotify(for: .established)
-                    ProfileManager.shared.refreshProfiles()
-                    self?.refreshVpnAuthCertificate(success: success, failure: failure)
-                }, failure: { error in
+
+                self.resolveActiveSession(success: success, failure: { error in
                     self.logOutCleanup()
                     failure(error)
                 })
             case let .failure(error):
                 PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
-                guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
+                guard let self = self, // only fail if there is a major reason
+                      !self.serverStorage.fetch().isEmpty,
                       self.propertiesManager.userIp != nil,
                       !(error is KeychainError) else {
+
+                    self?.logOutCleanup()
                     failure(error)
                     return
                 }
 
-                self.setAndNotify(for: .established)
-                ProfileManager.shared.refreshProfiles()
-                self.refreshVpnAuthCertificate(success: success, failure: failure)
+                success()
             }
         }
+    }
+    
+    private func finishLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        refreshVpnAuthCertificate(success: { [weak self] in
+            self?.setAndNotify(for: .established)
+            ProfileManager.shared.refreshProfiles()
+            success()
+            
+        }, failure: { [weak self] error in
+            self?.logOutCleanup()
+            failure(error)
+        })
     }
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
@@ -194,28 +210,38 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 success()
                 return
             }
-            
-            let confirmationClosure: () -> Void = { [weak self] in
+                        
+            alertService.push(alert: ActiveSessionWarningAlert(confirmHandler: { [weak self] in
                 guard let `self` = self else { return }
                 if self.appStateManager.state.isConnected {
                     self.appStateManager.disconnect { success() }
                     return
                 }
                 success()
-            }
-            
-            let cancelationClosure: () -> Void = {
+            }, cancelHandler: {
                 failure(ProtonVpnErrorConst.vpnSessionInProgress)
-            }
-            
-            let alert = ActiveSessionWarningAlert(confirmHandler: confirmationClosure, cancelHandler: cancelationClosure)
-            alertService.push(alert: alert)
+            }))
         } catch {
             alertService.push(alert: CannotAccessVpnCredentialsAlert(confirmHandler: {
                 failure(ProtonVpnError.fetchSession)
             }))
             return
         }
+    }
+    
+    private func checkForSubuserWithoutSessions(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        guard let credentials = try? self.vpnKeychain.fetch() else {
+            success()
+            return
+        }
+        guard credentials.isSubuserWithoutSessions else {
+            success()
+            return
+        }
+        
+        PMLog.D("User with insufficient sessions detected. Throwing an error insted of login.")
+        logOutCleanup()
+        failure(ProtonVpnError.subuserWithoutSessions)
     }
     
     // MARK: - Log out

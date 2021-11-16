@@ -55,6 +55,7 @@ public class CoreAppConstants {
         public static let batteryOpenVpn = "https://protonvpn.com/support/openvpn-battery-usage/"
         public static let alternativeRouting = "http://protonmail.com/blog/anti-censorship-alternative-routing"
         public static let vpnAccelerator = "https://protonvpn.com/support/how-to-use-vpn-accelerator/"
+        public static let assignVPNConnections = "https://protonvpn.com/support/assign-vpn-connection"
         
         public static let learnMoreSmartRouting = "https://protonvpn.com/support/smart-routing"
         public static let learnMoreStreaming = "https://protonvpn.com/support/streaming-guide/"
