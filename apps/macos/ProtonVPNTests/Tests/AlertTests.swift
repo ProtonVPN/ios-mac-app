@@ -126,6 +126,9 @@ fileprivate class WindowServiceMock: WindowService {
     
     func openSystemExtensionGuideWindow(viewModel: SystemExtensionGuideViewModelProtocol) {
     }
+    
+    func openSubuserAlertWindow() {
+    }
 }
 
 fileprivate class OsxUiAlertServiceFactoryMock: OsxUiAlertService.Factory {

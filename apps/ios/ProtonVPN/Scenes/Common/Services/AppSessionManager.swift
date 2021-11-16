@@ -100,8 +100,12 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             }
             return
         }
-
-        retrievePropertiesAndLogIn(success: { comletion(.success) }, failure: { error in comletion(.failure(error)) })
+        
+        retrievePropertiesAndLogIn(success: { [weak self] in
+            self?.checkForSubuserWithoutSessions(comletion: comletion)
+        }, failure: { error in
+            comletion(.failure(error))
+        })
     }
     
     func loadDataWithoutFetching() -> Bool {
@@ -247,6 +251,21 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             success()
             return
         }
+    }
+    
+    private func checkForSubuserWithoutSessions(comletion: @escaping (Result<(), Error>) -> Void) {
+        guard let credentials = try? self.vpnKeychain.fetch() else {
+            comletion(.success)
+            return
+        }
+        guard credentials.isSubuserWithoutSessions else {
+            comletion(.success)
+            return
+        }
+        
+        PMLog.D("User with insufficient sessions detected. Throwing and error insted of login.")
+        logOutCleanup()
+        comletion(.failure(ProtonVpnError.subuserWithoutSessions))
     }
     
     // MARK: - Log out

@@ -832,3 +832,14 @@ public class AnnouncmentOfferAlert: SystemAlert {
         self.data = data
     }
 }
+
+public class SubuserWithoutConnectionsAlert: SystemAlert {
+    public var title: String?
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+
+    public init() {
+    }
+}

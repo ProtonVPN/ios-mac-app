@@ -25,6 +25,7 @@ public class VpnCredentials: NSObject, NSCoding {
     public let status: Int
     public let expirationTime: Date
     public let accountPlan: AccountPlan
+    public let planName: String?
     public let maxConnect: Int
     public let maxTier: Int
     public let services: Int
@@ -40,7 +41,7 @@ public class VpnCredentials: NSObject, NSCoding {
         return
             "Status: \(status)\n" +
             "Expiration time: \(String(describing: expirationTime))\n" +
-            "Account plan: \(accountPlan.description)\n" +
+            "Account plan: \(accountPlan.description) (\(planName)\n" +
             "Max connect: \(maxConnect)\n" +
             "Max tier: \(maxTier)\n" +
             "Services: \(services)\n" +
@@ -49,14 +50,6 @@ public class VpnCredentials: NSObject, NSCoding {
             "Password: \(password)\n" +
             "Delinquent: \(delinquent)\n" +
             "Has Payment Method: \(hasPaymentMethod)"
-    }
-    
-    public var hasExpired: Bool {
-        return Date().compare(expirationTime) != .orderedAscending
-    }
-    
-    public var isDelinquent: Bool {
-        return delinquent > 2
     }
     
     public var serviceName: String {
@@ -69,7 +62,7 @@ public class VpnCredentials: NSObject, NSCoding {
         return name
     }
     
-    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool) {
+    public init(status: Int, expirationTime: Date, accountPlan: AccountPlan, maxConnect: Int, maxTier: Int, services: Int, groupId: String, name: String, password: String, delinquent: Int, credit: Int, currency: String, hasPaymentMethod: Bool, planName: String?) {
         self.status = status
         self.expirationTime = expirationTime
         self.accountPlan = accountPlan
@@ -83,28 +76,25 @@ public class VpnCredentials: NSObject, NSCoding {
         self.credit = credit
         self.currency = currency
         self.hasPaymentMethod = hasPaymentMethod
+        self.planName = planName // Saving original string we got from API, because we need to know if it was null
         super.init()
     }
     
     init(dic: JSONDictionary) throws {
         let vpnDic = try dic.jsonDictionaryOrThrow(key: "VPN")
-        
-        status = try vpnDic.intOrThrow(key: "Status")
-        
-        if status != 1 {
-            if status == 0 {
-                throw ProtonVpnErrorConst.userHasNoVpnAccess
-            } else if status == 2 {
-                throw ProtonVpnErrorConst.userHasNotSignedUp
-            } else {
-                throw ProtonVpnErrorConst.userIsOnWaitlist
-            }
+                
+        if let planName = vpnDic.string("PlanName") {
+            accountPlan = AccountPlan(planName: planName)
+            self.planName = planName
+        } else {
+            accountPlan = AccountPlan.free
+            self.planName = nil
         }
         
+        status = try vpnDic.intOrThrow(key: "Status")
         expirationTime = try vpnDic.unixTimestampOrThrow(key: "ExpirationTime")
-        accountPlan = AccountPlan(planName: try vpnDic.stringOrThrow(key: "PlanName"))
         maxConnect = try vpnDic.intOrThrow(key: "MaxConnect")
-        maxTier = try vpnDic.intOrThrow(key: "MaxTier")
+        maxTier = vpnDic.int(key: "MaxTier") ?? 0
         services = try dic.intOrThrow(key: "Services")
         groupId = try vpnDic.stringOrThrow(key: "GroupID")
         name = try vpnDic.stringOrThrow(key: "Name")
@@ -121,6 +111,7 @@ public class VpnCredentials: NSObject, NSCoding {
         static let status = "status"
         static let expirationTime = "expirationTime"
         static let accountPlan = "accountPlan"
+        static let planName = "planName"
         static let maxConnect = "maxConnect"
         static let maxTier = "maxTier"
         static let services = "services"
@@ -134,9 +125,10 @@ public class VpnCredentials: NSObject, NSCoding {
     }
     
     public required convenience init(coder aDecoder: NSCoder) {
+        let plan = AccountPlan(coder: aDecoder)
         self.init(status: aDecoder.decodeInteger(forKey: CoderKey.status),
                   expirationTime: aDecoder.decodeObject(forKey: CoderKey.expirationTime) as! Date,
-                  accountPlan: AccountPlan(coder: aDecoder),
+                  accountPlan: plan,
                   maxConnect: aDecoder.decodeInteger(forKey: CoderKey.maxConnect),
                   maxTier: aDecoder.decodeInteger(forKey: CoderKey.maxTier),
                   services: aDecoder.decodeInteger(forKey: CoderKey.services),
@@ -146,7 +138,8 @@ public class VpnCredentials: NSObject, NSCoding {
                   delinquent: aDecoder.decodeInteger(forKey: CoderKey.delinquent),
                   credit: aDecoder.decodeInteger(forKey: CoderKey.credit),
                   currency: aDecoder.decodeObject(forKey: CoderKey.currency) as? String ?? "",
-                  hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod)
+                  hasPaymentMethod: aDecoder.decodeBool(forKey: CoderKey.hasPaymentMethod),
+                  planName: aDecoder.decodeObject(forKey: CoderKey.planName) as? String
         )
     }
 
@@ -164,5 +157,23 @@ public class VpnCredentials: NSObject, NSCoding {
         aCoder.encode(credit, forKey: CoderKey.credit)
         aCoder.encode(currency, forKey: CoderKey.currency)
         aCoder.encode(hasPaymentMethod, forKey: CoderKey.hasPaymentMethod)
+        aCoder.encode(planName, forKey: CoderKey.planName)
+    }
+}
+
+// MARK: - Checks performed on VpnCredentials
+
+extension VpnCredentials {
+    
+    public var hasExpired: Bool {
+        return Date().compare(expirationTime) != .orderedAscending
+    }
+    
+    public var isDelinquent: Bool {
+        return delinquent > 2
+    }
+    
+    public var isSubuserWithoutSessions: Bool {
+        return planName == nil && maxConnect <= 1
     }
 }

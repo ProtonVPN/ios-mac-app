@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="19455" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19455"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="SubuserMacAlertViewController" customModule="ProtonVPN" customModuleProvider="target">
+            <connections>
+                <outlet property="assignConnectionsButton" destination="xt5-gO-TXQ" id="hLj-Kf-pZS"/>
+                <outlet property="description1Label" destination="rd1-qZ-ZMc" id="n1A-D8-aAi"/>
+                <outlet property="description2Label" destination="38P-5J-hGx" id="M3l-Qj-Jxa"/>
+                <outlet property="imageView" destination="9cM-vB-OgS" id="zyL-8q-0Rd"/>
+                <outlet property="loginButton" destination="F4d-TP-Rdq" id="0Fx-Hg-PYm"/>
+                <outlet property="titleView" destination="ij0-OK-XFk" id="yQ4-Hg-Bfl"/>
+                <outlet property="view" destination="c22-O7-iKe" id="jBB-zW-Ms4"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="570" height="622"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <customView translatesAutoresizingMaskIntoConstraints="NO" id="zpx-6v-mfZ">
+                    <rect key="frame" x="80" y="0.0" width="410" height="622"/>
+                    <subviews>
+                        <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="9cM-vB-OgS">
+                            <rect key="frame" x="136" y="375" width="139" height="167"/>
+                            <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="alert-pro-account" id="VGD-BG-z7x"/>
+                        </imageView>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ij0-OK-XFk">
+                            <rect key="frame" x="-2" y="259" width="414" height="76"/>
+                            <textFieldCell key="cell" alignment="center" title="_Thanks for upgrading to Professional / Visionary_" id="jzi-4b-Hzh">
+                                <font key="font" metaFont="system" size="32"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="rd1-qZ-ZMc">
+                            <rect key="frame" x="-2" y="194" width="414" height="57"/>
+                            <textFieldCell key="cell" alignment="center" title="_To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account._" id="2O3-Tf-nVU">
+                                <font key="font" metaFont="system" size="16"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="38P-5J-hGx">
+                            <rect key="frame" x="-2" y="144" width="414" height="34"/>
+                            <textFieldCell key="cell" alignment="center" title="_This step will take just a few minutes. After that you will be able to log in and protect all your devices._" id="GEG-GC-fd8">
+                                <font key="font" metaFont="system" size="14"/>
+                                <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            </textFieldCell>
+                        </textField>
+                        <customView translatesAutoresizingMaskIntoConstraints="NO" id="BpP-nj-n5T" userLabel="Buttons">
+                            <rect key="frame" x="0.0" y="72" width="410" height="40"/>
+                            <subviews>
+                                <button horizontalHuggingPriority="252" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="F4d-TP-Rdq" customClass="WhiteCancelationButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="0.0" y="0.0" width="90" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="RF8-XQ-Lli"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="bevel" title="_Login again_" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="6f6-6K-35i">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                            <real key="value" value="30"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="loginTapped" target="-2" id="ECp-S6-wue"/>
+                                    </connections>
+                                </button>
+                                <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="xt5-gO-TXQ" customClass="PrimaryActionButton" customModule="ProtonVPN" customModuleProvider="target">
+                                    <rect key="frame" x="106" y="0.0" width="304" height="40"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="40" id="jGQ-0T-vhZ"/>
+                                    </constraints>
+                                    <buttonCell key="cell" type="bevel" title="_Assign VPN connections_" bezelStyle="rounded" alignment="center" enabled="NO" imageScaling="proportionallyDown" inset="2" id="rIK-8x-SZI">
+                                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                        <font key="font" metaFont="system"/>
+                                    </buttonCell>
+                                    <userDefinedRuntimeAttributes>
+                                        <userDefinedRuntimeAttribute type="number" keyPath="horizontalPadding">
+                                            <real key="value" value="30"/>
+                                        </userDefinedRuntimeAttribute>
+                                    </userDefinedRuntimeAttributes>
+                                    <connections>
+                                        <action selector="assignConnectionsTapped" target="-2" id="EiJ-1s-yKn"/>
+                                    </connections>
+                                </button>
+                            </subviews>
+                            <constraints>
+                                <constraint firstItem="xt5-gO-TXQ" firstAttribute="top" secondItem="BpP-nj-n5T" secondAttribute="top" id="6aG-Vo-rU2"/>
+                                <constraint firstItem="xt5-gO-TXQ" firstAttribute="leading" secondItem="F4d-TP-Rdq" secondAttribute="trailing" constant="16" id="Fpc-s0-onV"/>
+                                <constraint firstAttribute="bottom" secondItem="F4d-TP-Rdq" secondAttribute="bottom" id="MUq-ic-Xpm"/>
+                                <constraint firstAttribute="bottom" secondItem="xt5-gO-TXQ" secondAttribute="bottom" id="MdR-DE-Ijv"/>
+                                <constraint firstAttribute="trailing" secondItem="xt5-gO-TXQ" secondAttribute="trailing" id="hn3-Bb-tkq"/>
+                                <constraint firstItem="F4d-TP-Rdq" firstAttribute="top" secondItem="BpP-nj-n5T" secondAttribute="top" id="m0B-4u-2ZK"/>
+                                <constraint firstItem="F4d-TP-Rdq" firstAttribute="leading" secondItem="BpP-nj-n5T" secondAttribute="leading" id="v2B-IE-y0X"/>
+                            </constraints>
+                        </customView>
+                    </subviews>
+                    <constraints>
+                        <constraint firstItem="9cM-vB-OgS" firstAttribute="top" secondItem="zpx-6v-mfZ" secondAttribute="top" constant="80" id="2Eb-S9-dYx"/>
+                        <constraint firstItem="rd1-qZ-ZMc" firstAttribute="top" secondItem="ij0-OK-XFk" secondAttribute="bottom" constant="8" id="3sW-Yg-Ocp"/>
+                        <constraint firstAttribute="bottom" secondItem="BpP-nj-n5T" secondAttribute="bottom" constant="72" id="ARp-A4-8xC"/>
+                        <constraint firstItem="ij0-OK-XFk" firstAttribute="top" secondItem="9cM-vB-OgS" secondAttribute="bottom" constant="40" id="Afr-uw-4On"/>
+                        <constraint firstItem="ij0-OK-XFk" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="DFU-6r-av6"/>
+                        <constraint firstItem="38P-5J-hGx" firstAttribute="top" secondItem="rd1-qZ-ZMc" secondAttribute="bottom" constant="16" id="DhG-HK-QBp"/>
+                        <constraint firstItem="38P-5J-hGx" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="GNk-KK-FFa"/>
+                        <constraint firstAttribute="trailing" secondItem="rd1-qZ-ZMc" secondAttribute="trailing" id="GWB-f5-0eA"/>
+                        <constraint firstItem="BpP-nj-n5T" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="LIN-Vd-V25"/>
+                        <constraint firstAttribute="trailing" secondItem="ij0-OK-XFk" secondAttribute="trailing" id="QdB-yF-mYf"/>
+                        <constraint firstAttribute="trailing" secondItem="38P-5J-hGx" secondAttribute="trailing" id="QlO-Nf-tEa"/>
+                        <constraint firstItem="9cM-vB-OgS" firstAttribute="centerX" secondItem="zpx-6v-mfZ" secondAttribute="centerX" id="ZU7-qv-YYh"/>
+                        <constraint firstAttribute="trailing" secondItem="BpP-nj-n5T" secondAttribute="trailing" id="ecA-Il-Rhu"/>
+                        <constraint firstItem="BpP-nj-n5T" firstAttribute="top" secondItem="38P-5J-hGx" secondAttribute="bottom" constant="32" id="mZH-7A-cil"/>
+                        <constraint firstItem="rd1-qZ-ZMc" firstAttribute="leading" secondItem="zpx-6v-mfZ" secondAttribute="leading" id="mq5-aI-PDu"/>
+                        <constraint firstAttribute="width" constant="410" id="wJe-Xv-2lS"/>
+                    </constraints>
+                </customView>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="trailing" secondItem="zpx-6v-mfZ" secondAttribute="trailing" constant="80" id="5Uh-Wh-Ulj"/>
+                <constraint firstAttribute="bottom" secondItem="zpx-6v-mfZ" secondAttribute="bottom" id="CWq-aN-pwR"/>
+                <constraint firstItem="zpx-6v-mfZ" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" id="feP-io-Ly1"/>
+                <constraint firstItem="zpx-6v-mfZ" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="80" id="yna-eE-n5c"/>
+            </constraints>
+            <point key="canvasLocation" x="216" y="138"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="alert-pro-account" width="139" height="149"/>
+    </resources>
+</document>
