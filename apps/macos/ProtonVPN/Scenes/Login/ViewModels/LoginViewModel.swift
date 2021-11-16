@@ -95,6 +95,9 @@ class LoginViewModel {
                 self.logInFailure?(nil)
             } else if error as? UserError == UserError.failedHumanValidation {
                 self.logInFailure?(nil)
+            } else if case ProtonVpnError.subuserWithoutSessions = error {
+                self.alertService.push(alert: SubuserWithoutConnectionsAlert())
+                self.logInFailure?(nil)
             } else {
                 self.logInFailure?(error.localizedDescription)
             }

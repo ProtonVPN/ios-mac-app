@@ -199,6 +199,9 @@ extension MacAlertService: CoreAlertService {
         case let announcmentOfferAlert as AnnouncmentOfferAlert:
             show(announcmentOfferAlert)
             
+        case let subuserAlert as SubuserWithoutConnectionsAlert:
+            show(subuserAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -326,5 +329,9 @@ extension MacAlertService: CoreAlertService {
     private func show(_ alert: AnnouncmentOfferAlert) {
         let vc = AnnouncementDetailViewController(alert.data)
         windowService.presentKeyModal(viewController: vc)
+    }
+    
+    private func show(_ alert: SubuserWithoutConnectionsAlert) {
+        windowService.openSubuserAlertWindow()
     }
 }

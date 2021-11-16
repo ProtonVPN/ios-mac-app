@@ -103,8 +103,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
 
         storeKitManager.processAllTransactions { [weak self] in // this should run after every login
-            self?.retrievePropertiesAndLogIn(success: {
-                comletion(.success)
+            self?.retrievePropertiesAndLogIn(success: { [weak self] in
+                self?.checkForSubuserWithoutSessions(comletion: comletion)
             }, failure: { error in
                 comletion(.failure(error))
             })
@@ -259,6 +259,21 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             success()
             return
         }
+    }
+    
+    private func checkForSubuserWithoutSessions(comletion: @escaping (Result<(), Error>) -> Void) {
+        guard let credentials = try? self.vpnKeychain.fetch() else {
+            comletion(.success)
+            return
+        }
+        guard credentials.isSubuserWithoutSessions else {
+            comletion(.success)
+            return
+        }
+        
+        PMLog.D("User with insufficient sessions detected. Throwing and error insted of login.")
+        logOutCleanup()
+        comletion(.failure(ProtonVpnError.subuserWithoutSessions))
     }
     
     // MARK: - Log out
