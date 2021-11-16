@@ -297,4 +297,11 @@ extension NSColor {
     class func protonBlack() -> NSColor {
         return .black
     }
+    
+    class func protonFontLightGrey() -> NSColor {
+        return NSColor(red: 142/255,
+                       green: 142/255,
+                       blue: 147/255,
+                       alpha: 1.0)
+    }
 }

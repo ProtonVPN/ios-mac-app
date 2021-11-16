@@ -35,7 +35,7 @@ final class VPNLogicalServicesRequest: Request {
     }
     
     var isAuth: Bool {
-        return false
+        return true
     }
 
     var header: [String: Any] {

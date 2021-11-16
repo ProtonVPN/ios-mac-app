@@ -261,6 +261,8 @@ github-push-commits:
 
 github-push-tag:
   extends: .release-sync-tags-shared
+  variables:
+    RELEASE_SYNC_FROM_BRANCH: 'develop'
   only:
     <<: *onlyTagsFilterOpenSource
 

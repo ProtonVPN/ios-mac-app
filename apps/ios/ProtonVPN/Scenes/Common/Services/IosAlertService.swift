@@ -176,6 +176,9 @@ extension IosAlertService: CoreAlertService {
         case let announcementOfferAlert as AnnouncmentOfferAlert:
             show(announcementOfferAlert)
             
+        case let subuserAlert as SubuserWithoutConnectionsAlert:
+            show(subuserAlert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")
@@ -252,5 +255,11 @@ extension IosAlertService: CoreAlertService {
             self?.safariService.open(url: url)
         }
         windowService.present(modal: vc)
+    }
+    
+    private func show(_ alert: SubuserWithoutConnectionsAlert) {
+        let controller = SubuserAlertViewController()
+        controller.safariServiceFactory = factory
+        windowService.present(modal: controller)
     }
 }
