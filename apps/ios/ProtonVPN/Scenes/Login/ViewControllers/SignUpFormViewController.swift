@@ -243,7 +243,7 @@ final class SignUpFormViewController: UIViewController {
     }
     
     private func showError(_ error: Error) {
-        PMLog.ET(error.localizedDescription)
+        log.error("\(error)", category: .ui)
         self.showMessage(error.localizedDescription, type: GSMessageType.error, options: UIConstants.messageOptions)
     }
     

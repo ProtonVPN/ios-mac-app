@@ -118,7 +118,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 let methods = try decoder.decode(Array<PaymentMethod>.self, from: data)
                 success(methods)
             } catch let error {
-                PMLog.D("Failed to parse PaymentMethods: \(error.localizedDescription)", level: .error)
+                log.error("Failed to parse PaymentMethods", category: .api, event: .response, metadata: ["error": "\(error)"])
                 failure(error)
             }
         }
@@ -147,7 +147,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 }).first
                 success(defaultPlan)
             } catch let error {
-                PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+                log.error("Failed to parse ServicePlans", category: .api, event: .response, metadata: ["error": "\(error)"])
                 failure(error)
             }
         }
@@ -161,7 +161,7 @@ public class PaymentsApiServiceImplementation: PaymentsApiService {
                 let plans = try self.plansResponse(json)
                 success(plans)
             } catch let error {
-                PMLog.D("Failed to parse ServicePlans: \(error.localizedDescription)", level: .error)
+                log.error("Failed to parse ServicePlans", category: .api, event: .response, metadata: ["error": "\(error)"])
                 failure(error)
             }
         }

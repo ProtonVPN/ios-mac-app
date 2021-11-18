@@ -213,7 +213,7 @@ final class MapViewController: UIViewController {
     
     private func pointInMap(_ coordinate: CLLocationCoordinate2D) -> CGPoint {
         let latInRad = coordinate.latitude * .pi / 180
-        let projectedLat = CGFloat(log(tan((.pi / 4) + (latInRad / 2))))
+        let projectedLat = CGFloat(Foundation.log(tan((.pi / 4) + (latInRad / 2))))
         return CGPoint(x: (CGFloat((coordinate.longitude + 180) / 360) * mapFrame.width - mapFrame.minX) + mapView.bounds.origin.x, y: ((mapFrame.height / 2) - (mapFrame.width * projectedLat / (2 * .pi)) + mapFrame.minY) + mapView.bounds.origin.y)
     }
     

@@ -56,7 +56,7 @@ public class StoreKitStateCheckerImplementation: StoreKitStateChecker {
             return nil
         }
         guard let plan = AccountPlan(storeKitProductId: transaction.payment.productIdentifier) else {
-            PMLog.ET("Can't find AccountPlan in a transaction")
+            log.error("Can't find AccountPlan in a transaction", category: .iap)
             return nil
         }
         return plan

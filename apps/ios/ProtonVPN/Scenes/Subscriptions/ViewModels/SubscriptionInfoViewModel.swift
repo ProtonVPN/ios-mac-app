@@ -171,7 +171,7 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
     
     public func startBuy() {
         guard plan.paid, let productId = plan.storeKitProductId else {
-            PMLog.ET("IAP errored", level: .error)
+            log.error("IAP errored", category: .iap)
             self.failed(withError: nil)
             return
         }
@@ -179,20 +179,20 @@ class SubscriptionInfoViewModelImplementation: SubscriptionInfoViewModel {
 
         storeKitManager.subscribeToPaymentQueue()
         storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self] _ in
-            PMLog.ET("IAP succeeded", level: .info)
+            log.debug("IAP succeeded", category: .iap)
             self?.reload()
             
         }, errorCompletion: { [weak self] (error) in
             if case StoreKitManagerImplementation.Errors.cancelled = error {
-                PMLog.D("IAP cancelled")
+                log.debug("IAP cancelled", category: .iap)
                 self?.failed(withError: nil)
                 return
             }
-            PMLog.ET("IAP errored: \(error.localizedDescription)")
+            log.error("IAP errored: \(error.localizedDescription)", category: .iap)
             self?.failed(withError: error)
 
         }, deferredCompletion: {
-            PMLog.ET("IAP deferred", level: .warn)
+            log.debug("IAP deferred", category: .iap)
 
         })
     }

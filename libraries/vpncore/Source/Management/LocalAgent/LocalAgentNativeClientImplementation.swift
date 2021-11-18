@@ -38,21 +38,21 @@ final class LocalAgentNativeClientImplementation: NSObject, LocalAgentNativeClie
             return
         }
 
-        PMLog.D(text)
+        vpncore.log.info("\(text)", category: .localAgent, event: .log)
     }
 
     func onError(_ code: Int, description: String?) {
-        PMLog.D("Received error \(code): \(description ?? "(empty)") from local agent shared library")
+        vpncore.log.error("Received error \(code): \(description ?? "(empty)") from local agent shared library", category: .localAgent, event: .error)
         delegate?.didReceiveError(code: code)
     }
 
     func onState(_ state: String?) {
         guard let state = state else {
-            PMLog.ET("Received empty state from local agent shared library")
+            vpncore.log.error("Received empty state from local agent shared library", category: .localAgent, event: .stateChange)
             return
         }
-
-        PMLog.D("Local agent shared library state reported as changed to \(state)")
+        
+        vpncore.log.info("Local agent shared library state reported as changed to \(state)", category: .localAgent, event: .stateChange)
         delegate?.didChangeState(state: LocalAgentState.from(string: state))
     }
 }

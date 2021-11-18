@@ -67,7 +67,7 @@ class ServiceChecker {
             }
         }
         let failure: (Error) -> Void = { error in
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
         }
         
         alamofireWrapper.request(CheckStatusRequest(), success: success, failure: failure)

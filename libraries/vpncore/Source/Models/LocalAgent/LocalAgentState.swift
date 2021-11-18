@@ -39,7 +39,7 @@ extension LocalAgentState {
     // swiftlint:disable cyclomatic_complexity
     static func from(string: String) -> LocalAgentState? {
         guard let consts = LocalAgentConstants() else {
-            PMLog.ET("Failed to create local agent constants")
+            log.error("Failed to create local agent constants", category: .localAgent)
             return nil
         }
 
@@ -63,7 +63,7 @@ extension LocalAgentState {
         case consts.stateSoftJailed:
             return .softJailed
         default:
-            PMLog.ET("Trying to parse unknown local agent state \(string)")
+            log.error("Trying to parse unknown local agent state \(string)", category: .localAgent)
             return nil
         }
     }

@@ -92,10 +92,10 @@ public class ServerStorageConcrete: ServerStorage {
                 Storage.userDefaults().set(serversData, forKey: storageKey)
                 Storage.userDefaults().synchronize()
                 
-                PMLog.D("Server list saved (count: \(newServers.count))")
+                log.debug("Server list saved (count: \(newServers.count))", category: .app)
 
             } catch {
-                PMLog.ET(error)
+                log.error("\(error)", category: .app)
             }
             
             DispatchQueue.main.async { NotificationCenter.default.post(name: self.contentChanged, object: newServers) }

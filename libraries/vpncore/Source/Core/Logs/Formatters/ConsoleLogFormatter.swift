@@ -1,10 +1,20 @@
 //
-//  ConsoleLogFormatter.swift
-//  Core
+//  Copyright (c) 2021 Proton AG
 //
-//  Created by Jaroslav on 2021-11-12.
-//  Copyright © 2021 Proton Technologies AG. All rights reserved.
+//  This file is part of vpncore.
 //
+//  vpncore is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  vpncore is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Logging
 
@@ -22,15 +32,4 @@ public class ConsoleLogFormatter: PMLogFormatter {
         return "\(level.emoji) \(dateTime) \(level)\(category)\(event) \(message)\(meta)"
     }
     
-    /// Extract category and  event from metada. Return metadata without extracted elements.
-    private func extract(metadata: [String: String]) -> (String, String, String) { // swiftlint:disable:this large_tuple
-        let category = metadata[PVPNLogHelper.MetaKey.category.rawValue] != nil ? " [\(metadata[PVPNLogHelper.MetaKey.category.rawValue]!)]" : ""
-        let event = metadata[PVPNLogHelper.MetaKey.event.rawValue] != nil ? " [\(metadata[PVPNLogHelper.MetaKey.event.rawValue]!)]" : ""
-        
-        let keysToRemove = [PVPNLogHelper.MetaKey.category.rawValue, PVPNLogHelper.MetaKey.event.rawValue]
-        let metaClean = metadata.filter { key, value in !keysToRemove.contains(key) }
-        
-        let metaString = !metaClean.isEmpty ? " \(metaClean)" : ""
-        return (category, event, metaString)
-    }
 }

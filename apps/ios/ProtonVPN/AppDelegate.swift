@@ -22,6 +22,7 @@
 
 import UIKit
 import vpncore
+import Logging
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -37,6 +38,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        setupLogsForApp()
+        
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults
@@ -84,7 +88,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let action = url.host else {
-            PMLog.printToConsole("Invalid URL")
+            log.error("Invalid URL", category: .app)
             return false
         }
         
@@ -123,6 +127,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             completionHandler(.failed)
         })
     }
+    
+    private func setupLogsForApp() {
+        LoggingSystem.bootstrap {_ in
+            return ConsoleLogHandler()
+        }
+    }
 }
 
 fileprivate extension AppDelegate {
@@ -150,7 +160,7 @@ fileprivate extension AppDelegate {
                 }
             }
         default:
-            PMLog.printToConsole("Invalid url action: \(action)")
+            log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
             return false
         }
         

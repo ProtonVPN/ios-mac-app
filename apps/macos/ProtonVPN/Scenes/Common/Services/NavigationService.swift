@@ -100,12 +100,12 @@ class NavigationService {
     }
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
-        PMLog.D("User session did resign active", level: .trace)
+        log.debug("User session did resign active", category: .app)
         vpnGateway?.disconnect()
     }
     
     @objc private func sessionBecameActive(_ notification: NSNotification) {
-        PMLog.D("User session did become active", level: .trace)
+        log.debug("User session did become active", category: .app)
         if let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected, propertiesManager.autoConnect.enabled {
             vpnGateway.autoConnect()
         }
@@ -226,7 +226,7 @@ extension NavigationService {
     }
     
     @objc private func powerOff(_ notification: Notification) {
-        PMLog.D("System user is being logged off", level: .trace)
+        log.debug("System user is being logged off", category: .os)
         isSystemLoggingOff = true
     }
     

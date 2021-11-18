@@ -38,7 +38,7 @@ public class SiriHelper: SiriHelperProtocol {
         let interaction = INInteraction(intent: intent, response: nil)
         interaction.donate(completion: {error in
             if let error = error {
-                PMLog.D("Error on QuickConnectIntent donation: \(error)")
+                log.error("Error on QuickConnectIntent donation: \(error)", category: .app)
             }
         })
         #endif
@@ -50,7 +50,7 @@ public class SiriHelper: SiriHelperProtocol {
         let interaction = INInteraction(intent: intent, response: nil)
         interaction.donate(completion: {error in
             if let error = error {
-                PMLog.D("Error on DisconnectIntent donation: \(error)")
+                log.error("Error on DisconnectIntent donation: \(error)", category: .app)
             }
         })
         #endif

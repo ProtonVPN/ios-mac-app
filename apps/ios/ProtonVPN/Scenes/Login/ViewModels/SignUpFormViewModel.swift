@@ -219,20 +219,20 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
         
         storeKitManager.subscribeToPaymentQueue()
         storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self] token in
-            PMLog.ET("IAP succeeded", level: .info)
+            log.debug("IAP succeeded", category: .iap)
             self?.paymentToken = token
             self?.step3modulus()
             
         }, errorCompletion: { [weak self] (error) in
             if case StoreKitManagerImplementation.Errors.cancelled = error {
-                PMLog.D("IAP cancelled")
+                log.debug("IAP cancelled", category: .iap)
                 self?.failed(withError: nil)
                 return
             }
             
-            PMLog.ET("IAP errored: \(error.localizedDescription)")
+            log.error("IAP errored: \(error.localizedDescription)", category: .iap)
             if 22916 == (error as NSError).code && self?.paymentToken != nil { // 22916 - apple receipt already used
-                PMLog.D("Ignoring IAP error because we already have a token")
+                log.debug("Ignoring IAP error because we already have a token", category: .iap)
                 self?.step3modulus()
             } else {
                 self?.alertService.push(alert: PaymentFailedAlert(retryHandler: {
@@ -243,7 +243,7 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
             }
                 
         }, deferredCompletion: {
-            PMLog.D("IAP deferred", level: .debug)
+            log.debug("IAP deferred", category: .iap)
         })
     }
         
@@ -251,7 +251,7 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
         authApiService.modulus(success: { [weak self] (modulusResponse) in
             self?.step4getDeviceToken(modulusResponse: modulusResponse)
         }, failure: { [weak self] (error) in
-            PMLog.ET("Modulus call failed with error: \(error)")
+            log.error("Modulus call failed with error: \(error)", category: .ui)
             self?.failed(withError: error)
         })
     }
@@ -279,7 +279,7 @@ final class SignUpFormViewModelImplementation: SignUpFormViewModel {
                 self?.failed(withError: error)
             })
         } catch {
-            PMLog.ET("Modulus creation failed")
+            log.error("Modulus creation failed", category: .ui)
             failed(withError: error)
         }
     }

@@ -47,7 +47,7 @@ class ColorPickerCircle: NSView {
         }
         
         if bounds.width <= 2 * radiusIndentation {
-            PMLog.D("Unable to draw color picker circle with given bounds.", level: .debug)
+            log.error("Unable to draw color picker circle with given bounds.", category: .ui)
             return
         }
         

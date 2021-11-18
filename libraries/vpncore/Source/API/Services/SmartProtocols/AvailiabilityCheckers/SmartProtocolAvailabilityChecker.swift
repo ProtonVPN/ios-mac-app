@@ -48,7 +48,7 @@ extension SmartProtocolAvailabilityChecker {
         var availablePorts: [Int] = []
         let lockQueue = DispatchQueue(label: "\(protocolName)AvailabilityCheckerQueue")
 
-        PMLog.D("Checking \(protocolName) availability for \(server.entryIp)")
+        log.debug("Checking \(protocolName) availability for \(server.entryIp)", category: .connectionConnect, event: .scan)
 
         for port in ports {
             group.enter()
@@ -72,10 +72,10 @@ protocol SharedLibraryUDPAvailabilityChecker: SmartProtocolAvailabilityChecker {
 
 extension SharedLibraryUDPAvailabilityChecker {
     func ping(protocolName: String, server: ServerIp, port: Int, timeout: TimeInterval, completion: @escaping (Bool) -> Void) {
-        PMLog.D("Checking \(protocolName) availability for \(server.entryIp) on port \(port)")
+        log.debug("Checking \(protocolName) availability for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
 
         guard let key = server.x25519PublicKey else {
-            PMLog.D("Cannot check \(protocolName) availability for \(server.entryIp) on port \(port) because of missing public key")
+            log.error("Cannot check \(protocolName) availability for \(server.entryIp) on port \(port) because of missing public key", category: .connectionConnect, event: .scan)
             completion(false)
             return
         }
@@ -86,12 +86,12 @@ extension SharedLibraryUDPAvailabilityChecker {
             let result = VpnPingPingSyncWithError(server.entryIp, port, key, Int(timeout * 1000), &ret, &error)
 
             if let error = error {
-                PMLog.D("\(protocolName) NOT available for \(server.entryIp) on port \(port) (Error: \(error)")
+                log.error("\(protocolName) NOT available for \(server.entryIp) on port \(port) (Error: \(error))", category: .connectionConnect, event: .scan)
                 completion(false)
                 return
             }
 
-            PMLog.D("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)")
+            log.debug("\(protocolName)\(result ? "" : " NOT") available for \(server.entryIp) on port \(port)", category: .connectionConnect, event: .scan)
             completion(result)
         }
     }

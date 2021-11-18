@@ -59,7 +59,7 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             self.lastRefresh = Date()
             self.announcementStorage.store(announcementsResponse.notifications)
         }, failure: {error in
-            PMLog.ET("Error getting announcements")
+            log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
         })
     }
     

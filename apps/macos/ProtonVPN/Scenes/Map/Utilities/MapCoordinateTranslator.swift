@@ -35,7 +35,7 @@ struct MapCoordinateTranslator {
         let latRadians = (coordinate.latitude) / 180 * .pi
         
         // Miller cylindrical projection formula
-        let latMillerRadians = 1.25 * log(tan(0.25 * .pi + 0.4 * latRadians))
+        let latMillerRadians = 1.25 * Foundation.log(tan(0.25 * .pi + 0.4 * latRadians))
         let latMillerDegrees = (latMillerRadians / .pi) * 180
         
         // MARK: Offset for the incomplete map

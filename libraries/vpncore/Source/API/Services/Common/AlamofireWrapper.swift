@@ -21,6 +21,7 @@
 
 import Alamofire
 import Foundation
+import Logging
 
 public typealias SuccessCallback = (() -> Void)
 public typealias GenericCallback<T> = ((T) -> Void)
@@ -60,6 +61,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
     private var alertService: CoreAlertService?
     private var trustKitHelper: TrustKitHelper?
     private var tlsFailedRequests = [URLRequest]()
+    private let log = Logger.instance(withCategory: .api)
 
     private var humanVerificationHandler: HumanVerificationAdapter?
     
@@ -230,7 +232,7 @@ public class AlamofireWrapperImplementation: NSObject, AlamofireWrapper {
             _ = try request.asURLRequest()
             return true
         } catch let error {
-            PMLog.D("Network request failed with error: \(error)", level: .error)
+            log.error("Network request failed with error", event: .response, metadata: ["path": "\((request.urlRequest?.url).stringOrEmpty)", "error": "\(error)"])
             failure(error)
             return false
         }
@@ -265,7 +267,7 @@ extension AlamofireWrapperImplementation {
             return didReceiveTokenRefreshError(request, error: error, success: success, failure: failure)
         }
         
-        PMLog.D("Network request failed with error: \(apiError)", level: .error)
+        log.error("Network request failed with error", event: .response, metadata: ["path": "\((request.urlRequest?.url).stringOrEmpty)", "error": "\(apiError)"])
         failure(apiError)
     }
     
@@ -274,7 +276,7 @@ extension AlamofireWrapperImplementation {
         
         switch apiError.httpStatusCode {
         case HttpStatusCode.invalidRefreshToken, HttpStatusCode.badRequest:
-            PMLog.ET("User logged out due to refresh token failure with error: \(error)")
+            log.error("User logged out due to refresh token failure with error", event: .response, metadata: ["path": "\((request.urlRequest?.url).stringOrEmpty)", "error": "\(apiError)"])
             DispatchQueue.main.async { [weak self] in
                 guard let alertService = self?.alertService else { return }
                 alertService.push(alert: RefreshTokenExpiredAlert())
@@ -283,7 +285,7 @@ extension AlamofireWrapperImplementation {
             return
             
         default:
-            PMLog.D("Network request failed with error: \(apiError)", level: .error)
+            log.error("Network request (for token refresh) failed with error", event: .response, metadata: ["path": "\((request.urlRequest?.url).stringOrEmpty)", "error": "\(apiError)"])
             failure(apiError)
         }
     }

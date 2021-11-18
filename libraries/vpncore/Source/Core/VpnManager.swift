@@ -168,7 +168,7 @@ public class VpnManager: VpnManagerProtocol {
     public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
-            PMLog.D("About to start connection process")
+            log.info("About to start connection process", category: .connectionConnect)
             self?.connectAllowed = true
             self?.connectionQueue.async { [weak self] in
                 self?.prepareConnection(forConfiguration: configuration, completion: completion)
@@ -280,7 +280,7 @@ public class VpnManager: VpnManagerProtocol {
 
     public func set(vpnAccelerator: Bool) {
         guard let localAgent = localAgent else {
-            PMLog.ET("Trying to change vpn accelerator via local agent when local agent instance does not exist")
+            log.error("Trying to change vpn accelerator via local agent when local agent instance does not exist", category: .settings)
             return
         }
 
@@ -289,7 +289,7 @@ public class VpnManager: VpnManagerProtocol {
 
     public func set(netShieldType: NetShieldType) {
         guard let localAgent = localAgent else {
-            PMLog.ET("Trying to change netshield via local agent when local agent instance does not exist")
+            log.error("Trying to change netshield via local agent when local agent instance does not exist", category: .settings)
             return
         }
 
@@ -314,7 +314,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
         
-        PMLog.D("Creating connection configuration")
+        log.info("Creating connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
             guard let `self` = self else { return }
             if let error = error {
@@ -334,7 +334,7 @@ public class VpnManager: VpnManagerProtocol {
                 }
                 
             } catch {
-                PMLog.ET(error)
+                log.error("\(error)", category: .ui)
             }
         }
     }
@@ -344,7 +344,7 @@ public class VpnManager: VpnManagerProtocol {
                                      completion: @escaping () -> Void) {
         guard connectAllowed else { return }
         
-        PMLog.D("Configuring connection")
+        log.info("Configuring connection", category: .connectionConnect)
         
         // MARK: - KillSwitch configuration
         #if os(OSX)
@@ -394,7 +394,7 @@ public class VpnManager: VpnManagerProtocol {
             return
         }
         
-        PMLog.D("Loading connection configuration")
+        log.info("Loading connection configuration", category: .connectionConnect)
         currentVpnProtocolFactory.vpnProviderManager(for: .configuration) { [weak self] vpnManager, error in
             guard let `self` = self else { return }
             if let error = error {
@@ -404,7 +404,7 @@ public class VpnManager: VpnManagerProtocol {
             guard let vpnManager = vpnManager else { return }
             guard self.connectAllowed else { return }
             do {
-                PMLog.D("Starting VPN tunnel")
+                log.info("Starting VPN tunnel", category: .connectionConnect)
                 try vpnManager.connection.startVPNTunnel()
                 completion()
             } catch {
@@ -415,7 +415,7 @@ public class VpnManager: VpnManagerProtocol {
     
     // MARK: - Disconnecting
     private func startDisconnect(completion: @escaping (() -> Void)) {
-        PMLog.D("Closing VPN tunnel")
+        log.info("Closing VPN tunnel", category: .connectionDisconnect)
 
         localAgent?.disconnect()
         disconnectCompletion = completion
@@ -454,7 +454,7 @@ public class VpnManager: VpnManagerProtocol {
             
             vpnManager.onDemandRules = [NEOnDemandRuleConnect()]
             vpnManager.isOnDemandEnabled = enabled
-            PMLog.D("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)")
+            log.info("On Demand set: \(enabled ? "On" : "Off") for \(currentVpnProtocolFactory.self)", category: .connectionConnect)
             
             vpnManager.saveToPreferences { [weak self] error in
                 guard let `self` = self else { return }
@@ -470,7 +470,7 @@ public class VpnManager: VpnManagerProtocol {
     
     private func setState(withError error: Error? = nil) {
         if let error = error {
-            PMLog.ET("VPN error: \(error.localizedDescription)")
+            log.error("VPN error: \(error)", category: .connection)
             state = .error(error)
             disconnectCompletion?()
             disconnectCompletion = nil
@@ -521,7 +521,7 @@ public class VpnManager: VpnManagerProtocol {
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
         self.state = newState
-        PMLog.D(self.state.logDescription)
+        log.info("VPN update state to \(self.state.logDescription)", category: .connection)
         
         switch self.state {
         case .connecting:
@@ -585,7 +585,7 @@ public class VpnManager: VpnManagerProtocol {
     private func removeConfiguration(_ protocolFactory: VpnProtocolFactory, completionHandler: ((Error?) -> Void)?) {
         protocolFactory.vpnProviderManager(for: .configuration) { vpnManager, error in
             if let error = error {
-                PMLog.ET(error)
+                log.error("\(error)", category: .ui)
                 completionHandler?(ProtonVpnError.removeVpnProfileFailed)
                 return
             }

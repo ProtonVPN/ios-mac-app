@@ -206,7 +206,7 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
         }
 
         storeKitManager.purchaseProduct(withId: productId, successCompletion: { [weak self, plan] _ in
-            PMLog.ET("IAP succeeded", level: .info)
+            log.debug("IAP succeeded", category: .iap)
             self?.appSessionManager.attemptSilentLogIn(success: {
                 self?.planPurchaseCompleted(plan)
             }, failure: { (_) in // ignore failure and continue anyway
@@ -214,15 +214,15 @@ class PlanSelectionWithPurchaseViewModel: AbstractPlanSelectionViewModel {
             })
         }, errorCompletion: { [weak self, plan] (error) in
             if case StoreKitManagerImplementation.Errors.cancelled = error {
-                PMLog.D("IAP cancelled")
+                log.debug("IAP cancelled", category: .iap)
                 self?.planPurchaseFailed(plan, error: nil)
                 return
             }
-            PMLog.ET("IAP errored: \(error.localizedDescription)")
+            log.error("IAP errored: \(error.localizedDescription)", category: .iap)
             self?.planPurchaseFailed(plan, error: error)
             
         }, deferredCompletion: {
-            PMLog.ET("IAP deferred", level: .warn)
+            log.debug("IAP deferred", category: .iap)
         })
 
     }

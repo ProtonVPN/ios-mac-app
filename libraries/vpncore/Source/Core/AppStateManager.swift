@@ -220,22 +220,22 @@ public class AppStateManagerImplementation: AppStateManager {
         let serverAge = ServerStorageConcrete().fetchAge()
         if Date().timeIntervalSince1970 - serverAge > (2 * 60 * 60) {
             // if this is too common, then we should pick a random server instead of using really old score values
-            PMLog.ET("Connecting with scores older than 2 hours", level: .warn)
+            log.warning("Connecting with scores older than 2 hours", category: .app, metadata: ["serverAge": "\(serverAge)"])
         }
-
+                
         switch configuration.vpnProtocol.authenticationType {
         case .credentials:
-            PMLog.D("Connect started for \(configuration.vpnProtocol)")
+            log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
             makeConnection(configuration)
         case .certificate:
-            PMLog.D("Checking vpn auth keys and certificates")
+            log.info("Checking vpn auth keys and certificates", category: .connectionConnect)
             vpnAuthentication.loadAuthenticationData { result in
                 switch result {
                 case let .success(data):
-                    PMLog.D("Connect started for \(configuration.vpnProtocol)")
+                    log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
                     self.makeConnection(configuration, authData: data)
                 case .failure:
-                    PMLog.ET("Failed to load vpn auth data")
+                    log.error("Failed to load vpn auth data", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
                     self.connectionFailed()
                     self.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
                 }
@@ -248,7 +248,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     public func disconnect(completion: @escaping () -> Void) {
-        PMLog.D("Disconnect started")
+        log.info("VPN disconnect started", category: .connectionDisconnect)
         propertiesManager.intentionallyDisconnected = true
         vpnManager.disconnect(completion: completion)
     }
@@ -296,7 +296,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     @objc private func timeout() {
-        PMLog.D("Connection attempt timed out")
+        log.info("Connection attempt timed out", category: .connectionConnect)
         state = .aborted(userInitiated: false)
         attemptingConnection = false
         cancelTimout()
@@ -305,7 +305,7 @@ public class AppStateManagerImplementation: AppStateManager {
     }
     
     private func stopAttemptingConnection() {
-        PMLog.D("Stop preparing connection")
+        log.info("Stop preparing connection", category: .connectionConnect)
         cancelTimout()
         handleVpnError(vpnState)
         disconnect()
@@ -454,7 +454,7 @@ public class AppStateManagerImplementation: AppStateManager {
     private func handleVpnError(_ vpnState: VpnState) {
         // In the rare event that the vpn is stuck not disconnecting, show a helpful alert
         if case VpnState.disconnecting(_) = vpnState, stuckDisconnecting {
-            PMLog.D("Stale VPN connection failing to disconnect")
+            log.error("Stale VPN connection failing to disconnect", category: .connectionConnect)
             vpnStuck()
             return
         }
@@ -511,7 +511,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 if self.state.isDisconnected {
                     self.isOnDemandEnabled { enabled in
                         guard !enabled else { return }
-                        PMLog.D("Attempt connection after handling error")
+                        log.info("Attempt connection after retrieving new credentials", category: .connectionConnect, event: .trigger)
                         self.connect(withConfiguration: lastConfiguration)
                     }
                 }
@@ -561,7 +561,7 @@ public class AppStateManagerImplementation: AppStateManager {
         // connected to VPN tunnel but the local agent is not connected yet, pretend the VPN is still connecting
         // this is not only for local agent being in connected state but also in disconnected, etc when we do not have a good state to show to the user so we show loading connection info
         if !isLocalAgentConnected, case AppState.connected = state, !propertiesManager.intentionallyDisconnected {
-            PMLog.D("Showing state as Loading connection info because local agent not connected yet")
+            log.debug("Showing state as Loading connection info because local agent not connected yet", category: .connectionConnect)
             displayState = .loadingConnectionInfo
             return
         }

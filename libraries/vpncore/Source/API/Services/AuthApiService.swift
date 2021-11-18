@@ -52,9 +52,8 @@ public class AuthApiServiceImplementation: AuthApiService {
             do {
                 authInfoReponse = try AuthenticationInfoResponse(dictionary: json)
             } catch {
-                PMLog.D("/authInfo response failed parsing", level: .error)
+                log.error("/authInfo response failed parsing", category: .api, event: .response)
                 let error = ParseError.authInfoParse
-                PMLog.ET(error.localizedDescription)
                 failure(error)
                 return
             }
@@ -63,8 +62,7 @@ public class AuthApiServiceImplementation: AuthApiService {
             do {
                 authProperties = try authInfoReponse.formProperties(for: username, password: password)
             } catch let error {
-                PMLog.D("Authentication properties creation failed", level: .error)
-                PMLog.ET(error.localizedDescription)
+                log.error("Authentication properties creation failed", category: .api, event: .response, metadata: ["error": "\(error)"])
                 failure(error)
                 return
             }
@@ -74,9 +72,8 @@ public class AuthApiServiceImplementation: AuthApiService {
                     let authCredentials = try AuthCredentials(username: username, dic: json)
                     success(authCredentials)
                 } catch {
-                    PMLog.D("/auth response failed parsing", level: .error)
+                    log.error("/auth response failed parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
                     let error = ParseError.authCredentialsParse
-                    PMLog.ET(error.localizedDescription)
                     failure(error)
                 }
             }
@@ -97,7 +94,7 @@ public class AuthApiServiceImplementation: AuthApiService {
                 let response = try ModulusResponse(dic: json)
                 success(response)
             } catch {
-                PMLog.D("Error occurred during modulus parsing", level: .error)
+                log.error("Error occurred during modulus parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
                 let error = ParseError.modulusParse
                 failure(error)
             }
@@ -120,12 +117,12 @@ public class AuthApiServiceImplementation: AuthApiService {
                 do {
                     try AuthKeychain.store(updatedCreds)
                 } catch let error {
-                    PMLog.ET("Error while storing refreshed API token: \(error)")
+                    log.error("Error while storing refreshed API token", category: .api, event: .response, metadata: ["error": "\(error)"])
                     failure(error)
                 }
                 success(updatedCreds)
             } catch {
-                PMLog.D("Error occurred during refresh access token parsing", level: .error)
+                log.error("Error occurred during refresh access token parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
                 let error = ParseError.refreshTokenParse
                 failure(error)
             }

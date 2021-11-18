@@ -31,7 +31,7 @@ final class WireguardAvailabilityChecker {
     
     /// Pings all the ports and returns on the first successfull try.
     func getFirtToRespondPort(server: ServerIp, completion: @escaping (Int?) -> Void) {
-        PMLog.D("Getting best port for \(server.entryIp) on Wireguard")
+        log.debug("Getting best port for \(server.entryIp) on Wireguard", category: .connectionConnect, event: .scan)
         
         let group = DispatchGroup()
         let lockQueue = DispatchQueue(label: "\(protocolName)PortCheckerQueue")
@@ -46,7 +46,7 @@ final class WireguardAvailabilityChecker {
                         return
                     }
                     portAlreadyFound = true
-                    PMLog.D("First port to respond is \(port). Returning this port to be used on Wireguard.")
+                    log.debug("First port to respond is \(port). Returning this port to be used on Wireguard.", category: .connectionConnect, event: .scan)
                     completion(port)
                     group.leave()
                 }
@@ -54,7 +54,7 @@ final class WireguardAvailabilityChecker {
         }
         group.notify(queue: .global()) {
             if !portAlreadyFound {
-                PMLog.D("No working port found on Wireguard")
+                log.error("No working port found on Wireguard", category: .connectionConnect, event: .scan)
                 completion(nil)
             }
         }

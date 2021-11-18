@@ -43,7 +43,7 @@ final class HumanVerificationHelper {
             self.alamofireWrapper.setHumanVerification(token: token)
             self.alamofireWrapper.request(request, success: success, failure: failure)
         }, failure: { error in
-            PMLog.ET("Getting human verification token failed with error: \(error)")
+            log.error("Getting human verification token failed with error", category: .api, event: .error, metadata: ["error": "\(error)"])
             
             switch (error as NSError).code {
             case NSURLErrorTimedOut, NSURLErrorNotConnectedToInternet, NSURLErrorNetworkConnectionLost,

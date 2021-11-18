@@ -288,7 +288,7 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     public func stopConnecting(userInitiated: Bool) {
-        PMLog.D("Connecting cancelled, userInitiated: \(userInitiated)")
+        log.info("Connecting cancelled, userInitiated: \(userInitiated)", category: .connectionConnect)
         connectionPreparer = nil
         appStateManager.cancelConnectionAttempt()
     }
@@ -380,7 +380,7 @@ fileprivate extension VpnGateway {
         var reconnectInfo: VpnReconnectInfo?
         
         let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
+            log.error("Error received: \(error)", category: .connectionConnect)
         }
         
         self.disconnect {

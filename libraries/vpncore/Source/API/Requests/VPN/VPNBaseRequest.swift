@@ -33,7 +33,7 @@ class VPNBaseRequest: BaseRequest {
     override func asURLRequest() throws -> URLRequest {
         guard let header = header else {
             let error = KeychainError.fetchFailure
-            PMLog.ET("Error during header creation: \(error.localizedDescription)")
+            log.error("Error during header creation", category: .api, metadata: ["error": "\(error)"])
             throw error
         }
         

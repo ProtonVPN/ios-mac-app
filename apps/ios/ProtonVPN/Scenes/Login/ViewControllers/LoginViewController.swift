@@ -265,7 +265,7 @@ class LoginViewController: UIViewController {
 extension LoginViewController: LoginViewModelDelegate {
     
     func showError(_ error: Error) {
-        PMLog.ET(error.localizedDescription)
+        log.error("\(error)", category: .ui)
         loginButton.hideLoading()
         
         if error.isTlsError || error.isNetworkError {
