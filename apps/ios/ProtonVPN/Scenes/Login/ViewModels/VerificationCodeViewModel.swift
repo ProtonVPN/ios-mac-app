@@ -128,7 +128,7 @@ class VerificationCodeViewModel {
                 self?.alertService.push(alert: SuccessNotificationAlert(message: LocalizedString.resendSuccess))
             }
         }, failure: { [weak self] (error) in
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
             self?.resendState = .normal
             self?.verificationButtonEnabled?(true)
             self?.alertService.push(alert: ErrorNotificationAlert(error: error))
@@ -146,7 +146,7 @@ class VerificationCodeViewModel {
     private func show(error: Error) {
         DispatchQueue.main.async {
             self.verificationButtonEnabled?(true)
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
             self.alertService.push(alert: ErrorNotificationAlert(error: error))
         }
     }
@@ -154,7 +154,7 @@ class VerificationCodeViewModel {
     private func showAlreadyRegisterdUserError(error: Error) {
         DispatchQueue.main.async {
             self.verificationButtonEnabled?(true)
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
             self.alertService.push(alert: RegistrationUserAlreadyExistsAlert(error: error, forgotCallback: {
                 SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.forgotUsername)
             }, resetCallback: {

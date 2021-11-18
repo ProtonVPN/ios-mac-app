@@ -22,7 +22,7 @@ final class OVPNCredentialsConfigurator: VpnCredentialsConfigurator {
         protocolConfig.username = configuration.username // Needed to detect connections started from another user (see AppSessionManager.resolveActiveSession)
         
         xpcServiceUser.setCredentials(username: configuration.username, password: configuration.password, completionHandler: { success in
-            PMLog.D("Credentials set result (ovpn): \(success ? "success" : "failure")")
+            log.info("Credentials set result (ovpn): \(success ? "success" : "failure")", category: .sysex)
             completionHandler(protocolConfig)
         })
     }

@@ -181,7 +181,7 @@ class ReportBugViewController: NSViewController {
             self.hideLoadingScreen()
             self.view.window!.close()
         }, error: { error in
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
             self.hideLoadingScreen()            
             self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
         })

@@ -27,13 +27,13 @@ final class APILogger: EventMonitor {
         
     /// Event called when a final `URLRequest` is created for a `Request`.
     func request(_ request: Request, didCreateURLRequest urlRequest: URLRequest) {
-        PMLog.D("Request started: \(request) ", level: .debug)
+        log.debug("Request started: \(request)", category: .api, event: .request, metadata: ["id": "\(request.id)"])
     }
       
     /// Event called when a `DataRequest` calls a `ResponseSerializer` and creates a generic `DataResponse<Value, AFError>`.
     func request<Value>(_ request: DataRequest, didParseResponse response: DataResponse<Value, AFError>) {
         let internalCode = (response.value as? NSDictionary)?.value(forKey: "Code")
-        PMLog.D("Request finished: \(request); Internal response code: \(internalCode ?? "n/a");", level: .debug)
+        log.debug("Request finished: \(request); Internal response code: \(internalCode ?? "n/a");", category: .api, event: .request, metadata: ["id": "\(request.id)"])
     }
     
 }

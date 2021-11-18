@@ -71,7 +71,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         // This is needed for the case when the `AlamofireWrapper` is used with a generic `URLRequestConvertible` instead of a `BaseRequest` subclass
         // Every `BaseRequest` subclass handles this automatically because it calls `DoH.getHostUrl()` when forming the URL
         var urlRequest = urlRequest
-        PMLog.D("Switching request \(urlRequest) to \(baseUrl)")
+        log.info("Switching request \(urlRequest) to \(baseUrl)", category: .api, event: .request)
         urlRequest.url = URL(string: url.absoluteString.replacingOccurrences(of: requestUrlHost, with: baseUrlHost))
         completion(.success(urlRequest))
     }
@@ -79,7 +79,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
     func retry(_ request: Request, for session: Session, dueTo error: Error, completion: @escaping (RetryResult) -> Void) {
         // Check for a valid `URLRequest` and get its URL
         guard let requestUrl = request.request?.url else {
-            PMLog.D("Not retrying an invalid request without an URL")
+            log.debug("Not retrying an invalid request without an URL", category: .api, event: .request)
             completion(.doNotRetry)
             return
         }
@@ -95,7 +95,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         // Then check if `DoH` can handle the networking error. If yes the DoH.handleError(:)` call also immediatelly resolves alternative routes internally so the request can be just retried
         // The URL of this retried request will be modified in the `adapt(:)` method to use the new alternative route
         if let networkingError = extractNetworkingError(error: error as? AFError, forUrl: requestUrl), ApiConstants.doh.handleError(host: requestUrl.absoluteString, error: networkingError) {
-            PMLog.D("Retrying request \(request) with alternative route")
+            log.debug("Retrying request \(request) with alternative route", category: .api, event: .request)
             completion(.retry)
             return
         }

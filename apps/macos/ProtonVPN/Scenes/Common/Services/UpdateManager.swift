@@ -139,7 +139,7 @@ extension UpdateManager: SPUUpdaterDelegate {
     
     func feedURLString(for updater: SPUUpdater) -> String? {
         let url = updateFileSelector.updateFileUrl
-        PMLog.D("FeedURL is \(url)")
+        log.info("FeedURL is \(url)", category: .appUpdate)
         return url
     }
     

@@ -52,7 +52,7 @@ public class MemoryPaymentTokenStorage: PaymentTokenStorage {
     public func add(_ token: PaymentToken) {
         self.token = token
         self.validUntil = Date() + lifetime
-        PMLog.D("MemoryPaymentTokenStorage new token set. Valid until \(String(describing: self.validUntil)).")
+        log.info("MemoryPaymentTokenStorage new token set. Valid until \(String(describing: self.validUntil)).", category: .iap)
     }
     
     public func get() -> PaymentToken? {
@@ -65,7 +65,7 @@ public class MemoryPaymentTokenStorage: PaymentTokenStorage {
     public func clear() {
         token = nil
         validUntil = nil
-        PMLog.D("MemoryPaymentTokenStorage cleared")
+        log.info("MemoryPaymentTokenStorage cleared", category: .iap)
     }
     
 }

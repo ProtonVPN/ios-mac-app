@@ -133,7 +133,7 @@ class ReportBugViewController: UIViewController {
             self.sendButton.hideLoading()
             self.close()
         }, error: { error in
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error.localizedDescription)", category: .ui)
             self.sendButton.hideLoading()
             self.showMessage(error.localizedDescription, type: GSMessageType.error, options: UIConstants.messageOptions)
         })

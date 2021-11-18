@@ -101,7 +101,7 @@ class VerificationSmsViewModel {
     
     private func codeSendFailed(error: Error) {
         DispatchQueue.main.async {
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
             self.alertService.push(alert: ErrorNotificationAlert(error: error))
         }
     }    

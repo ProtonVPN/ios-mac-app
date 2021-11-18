@@ -64,7 +64,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
     @objc public func refreshData() {
         lastDataRefresh = Date()
         attemptSilentLogIn(success: {}, failure: { [unowned self] error in
-            PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
+            log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
             
             let error = error as NSError
             switch error.code {
@@ -84,20 +84,18 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             self.serverStorage.update(continuousServerProperties: properties)
             
         }, failure: { error in
-            PMLog.D("Error received: \(error)", level: .error)
+            log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
         })
     }
     
     @objc public func refreshAccount() {
         lastAccountRefresh = Date()
-        
-        let errorCallback: ErrorCallback = { error in
-            PMLog.D("Error received: \(error)", level: .error)
-        }
-        
+                
         self.vpnApiService.clientCredentials(success: { credentials in
             self.vpnKeychain.store(vpnCredentials: credentials)
-        }, failure: errorCallback)
+        }, failure: { error in
+            log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
+        })
     }
     
     // MARK: - Override

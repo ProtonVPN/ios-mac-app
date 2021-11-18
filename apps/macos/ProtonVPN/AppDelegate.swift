@@ -24,6 +24,7 @@ import Cocoa
 
 import ServiceManagement
 import vpncore
+import Logging
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -42,7 +43,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManagerProtocol!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
+        log.info("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion))", category: .app, event: .processStart)
         self.checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
@@ -104,11 +105,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch let error as NSError {
             switch error.code {
             case NSFileReadNoSuchFileError:
-                PMLog.D("No file to migrate")
+                log.info("No file to migrate", category: .app)
             case NSFileWriteFileExistsError:
-                PMLog.D("Migration not required")
+                log.info("Migration not required", category: .app)
             default:
-                PMLog.ET("Migration error code: \((error as NSError).code)", level: .error) // don't show full error text because it can contain system username
+                log.error("Migration error code: \((error as NSError).code)", category: .app) // don't show full error text because it can contain system username
             }
             
             DispatchQueue.main.async {
@@ -175,12 +176,19 @@ extension AppDelegate {
             
         }.addCheck("2.0.0") { version, completion in
             // Restart the connection, to enable native KS (if needed)
-            PMLog.D("App was updated to version 2.0.0 from version " + version)
+            log.info("App was updated to version 2.0.0 from version \(version)", category: .appUpdate)
             
             guard self.container.makePropertiesManager().killSwitch else {
                 completion(nil)
                 return
             }
+            
+            self.reconnectWhenPossible()
+            completion(nil)
+            
+        }.addCheck("1.7.1") { version, completion in
+            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
+            log.info("App was updated to version 1.7.1 from version \(version)", category: .appUpdate)
             
             self.reconnectWhenPossible()
             completion(nil)

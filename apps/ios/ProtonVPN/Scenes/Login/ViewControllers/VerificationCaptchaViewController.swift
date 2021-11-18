@@ -63,7 +63,7 @@ class VerificationCaptchaViewController: UIViewController {
 extension VerificationCaptchaViewController: UIWebViewDelegate {
     
     func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebView.NavigationType) -> Bool {
-        PMLog.D("\(request)")
+        log.error("WebView shouldStartLoadWith request: \(request)", category: .ui)
         let urlString = request.url?.absoluteString
 
         activityIndicator.startAnimating()

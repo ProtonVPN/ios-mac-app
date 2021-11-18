@@ -60,7 +60,7 @@ class ProfilesTabBarView: NSView {
         }
         
         if bounds.width < 2.5 * tabWidth {
-            PMLog.D("Unable to draw tab bar under given constraints: \(bounds)", level: .debug)
+            log.error("Unable to draw tab bar under given constraints: \(bounds)", category: .ui)
             return
         }
         

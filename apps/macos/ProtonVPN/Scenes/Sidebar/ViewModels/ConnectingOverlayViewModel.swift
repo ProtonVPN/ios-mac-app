@@ -304,7 +304,7 @@ class ConnectingOverlayViewModel {
             guard let newProtocol = notification.object as? VpnProtocol else {
                 return
             }
-            PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
+            log.error("New protocol set to \(newProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
             self?.retryConnection(withProtocol: newProtocol)
         }
         

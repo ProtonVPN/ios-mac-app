@@ -54,7 +54,7 @@ class VpnConnectionPreparer {
         }
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
-            PMLog.D("Connecting with \(vpnProtocol) to \(server.name) via \(serverIp.entryIp):\(ports)")
+            log.info("Connecting with \(vpnProtocol) to \(server.name) via \(serverIp.entryIp):\(ports)", category: .connectionConnect)
             self.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, ports: ports)
         }
     }
@@ -76,7 +76,7 @@ class VpnConnectionPreparer {
         }
 
         let serverIp = availableServerIps[Int(arc4random_uniform(UInt32(availableServerIps.count)))]
-        PMLog.D("Selected \(serverIp.entryIp) as server ip for \(server.domain)")
+        log.info("Selected \(serverIp.entryIp) as server ip for \(server.domain)", category: .connectionConnect)
         return serverIp
     }
     

@@ -47,7 +47,7 @@ reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, em
 custom_rules:
   no_print:
     name: "Printing to console"
-    message: "No direct printing to console is allowed. Please use PMLog class from vpncore library."
+    message: "No direct printing to console is allowed. Please use `log` from vpncore library."
     regex: "(^\\s*print\\()|(NSLog)"
     match_kinds:
       - identifier

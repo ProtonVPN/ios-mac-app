@@ -37,14 +37,14 @@ final class SmartProtocolImplementation: SmartProtocol {
         var fallbackCandidates: [(SmartProtocolProtocol, [Int])] = []
 
         if smartProtocolConfig.iKEv2 {
-            PMLog.D("IKEv2 will be used for Smart Protocol checks")
+            log.debug("IKEv2 will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.ikev2] = IKEv2AvailabilityChecker()
 
             fallbackCandidates.append((SmartProtocolProtocol.ikev2, DefaultConstants.ikeV2Ports))
         }
 
         if smartProtocolConfig.openVPN {
-            PMLog.D("OpenVPN will be used for Smart Protocol checks")
+            log.debug("OpenVPN will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.openVpnUdp] = OpenVPNUDPAvailabilityChecker(config: openVpnConfig)
             checkers[.openVpnTcp] = OpenVPNTCPAvailabilityChecker(config: openVpnConfig)
 
@@ -53,7 +53,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         }
 
         if smartProtocolConfig.wireGuard {
-            PMLog.D("Wireguard will be used for Smart Protocol checks")
+            log.debug("Wireguard will be used for Smart Protocol checks", category: .connectionConnect, event: .scan)
             checkers[.wireguard] = WireguardAvailabilityChecker(config: wireguardConfig)
 
             fallbackCandidates.append((SmartProtocolProtocol.wireguard, wireguardConfig.defaultPorts))
@@ -74,7 +74,7 @@ final class SmartProtocolImplementation: SmartProtocol {
 
     func determineBestProtocol(server: ServerIp, completion: @escaping SmartProtocolCompletion) {
         guard !checkers.isEmpty else {
-            PMLog.ET("Client config received from backend has all the VPN procols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)")
+            log.error("Client config received from backend has all the VPN procols disabled for Smart Protocol, fallback to \(fallback.0.vpnProtocol)", category: .connectionConnect, event: .scan)
             completion(fallback.0.vpnProtocol, fallback.1)
             return
         }
@@ -83,7 +83,7 @@ final class SmartProtocolImplementation: SmartProtocol {
         let lockQueue = DispatchQueue(label: "SmartProtocolQueue")
         var availablePorts: [SmartProtocolProtocol: [Int]] = [:]
 
-        PMLog.D("Determining best protocol for \(server.entryIp)")
+        log.debug("Determining best protocol for \(server.entryIp)", category: .connectionConnect, event: .scan)
 
         for (proto, checker) in checkers {
             group.enter()
@@ -104,12 +104,12 @@ final class SmartProtocolImplementation: SmartProtocol {
             let sorted = availablePorts.keys.sorted(by: { lhs, rhs in lhs.priority < rhs.priority })
 
             guard let best = sorted.first, let ports = availablePorts[best], !ports.isEmpty else {
-                PMLog.D("No best protocol determined, fallback to \(fallback.0.vpnProtocol)")
+                log.debug("No best protocol determined, fallback to \(fallback.0.vpnProtocol)", category: .connectionConnect, event: .scan)
                 completion(fallback.0.vpnProtocol, fallback.1)
                 return
             }
 
-            PMLog.D("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)")
+            log.debug("Best protocol for \(server.entryIp) is \(best.vpnProtocol) with ports \(ports)", category: .connectionConnect, event: .scan)
             completion(best.vpnProtocol, ports)
         }
     }

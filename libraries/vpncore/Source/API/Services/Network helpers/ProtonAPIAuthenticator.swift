@@ -49,7 +49,7 @@ extension ProtonAPIAuthenticator: Authenticator {
     }
     
     public func refresh(_ credential: AuthCredentials, for session: Session, completion: @escaping (Result<AuthCredentials, Error>) -> Void) {
-        PMLog.D("Will refresh API token")
+        log.debug("Will refresh API token", category: .api)
         authApiService.refreshAccessToken(success: { credentials in
             completion(.success(credentials))
         }, failure: { error in
@@ -60,7 +60,7 @@ extension ProtonAPIAuthenticator: Authenticator {
     public func didRequest(_ urlRequest: URLRequest, with response: HTTPURLResponse, failDueToAuthenticationError error: Error) -> Bool {
         let result = response.statusCode == HttpStatusCode.invalidAccessToken
         if result {
-            PMLog.D("Request failed due to authentication error: \(urlRequest) status code: \(response.statusCode)", level: .debug)
+            log.debug("Request failed due to authentication error: \(urlRequest) status code: \(response.statusCode)", category: .api)
         }
         return result
     }

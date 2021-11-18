@@ -185,7 +185,7 @@ class StatusMenuViewModel {
     
     func countryViewModel(at index: IndexPath) -> StatusMenuCountryItemViewModel? {
         guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]), let vpnGateway = vpnGateway else {
-            PMLog.ET(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())")
+            log.error(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
             return nil
         }
         
@@ -265,7 +265,7 @@ class StatusMenuViewModel {
     // MARK: - Present unsecure connection
     private func presentUnsecureWiFiWarning() {
         let confirmationClosure: () -> Void = {
-            PMLog.D("User accepted unsecure option")
+            log.info("User accepted unsecure option", category: .ui)
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),

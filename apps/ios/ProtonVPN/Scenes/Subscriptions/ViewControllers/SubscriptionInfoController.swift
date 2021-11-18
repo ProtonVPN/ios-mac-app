@@ -174,7 +174,7 @@ class SubscriptionInfoController: UIViewController {
     }
     
     private func showError(_ error: Error) {
-        PMLog.ET(error.localizedDescription)
+        log.error("\(error.localizedDescription)", category: .ui)
         alertService.push(alert: ErrorNotificationAlert(error: error))
     }
     

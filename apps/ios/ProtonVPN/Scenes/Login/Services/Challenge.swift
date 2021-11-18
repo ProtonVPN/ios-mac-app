@@ -66,7 +66,7 @@ final class CoreChallenge: Challenge {
         do {
             try challenge.verificationFinish()
         } catch {
-            PMLog.ET("Finishing challenge verification failed: \(error.localizedDescription)")
+            log.error("Finishing challenge verification failed", category: .ui, metadata: ["error": "\(error)"])
         }
     }
 
@@ -91,7 +91,7 @@ final class CoreChallenge: Challenge {
             }
             try challenge.observeTextField(textField, type: textFieldType)
         } catch {
-            PMLog.ET("Observing text for challenge field failed: \(error.localizedDescription)")
+            log.error("Observing text for challenge field failed", category: .ui, metadata: ["error": "\(error)"])
         }
     }
 
@@ -119,7 +119,7 @@ final class ChallengeAppSpecificRequestAdapter: RequestAdapter {
             return
         }
 
-        PMLog.D("Modifying request with latest challenge data")
+        log.debug("Modifying request with latest challenge data")
 
         var urlRequest = urlRequest
         payload["vpn-ios-challenge"] = try? challenge.export()

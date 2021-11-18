@@ -16,25 +16,17 @@
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
+import Foundation
+import OSLog
 import Logging
 
-extension Logging.Logger.Level {
-    public var emoji: String {
-        switch self {
-        case .trace:
-            return "⚪"
-        case .debug:
-            return "🟢"
-        case .info:
-            return "🔵"
-        case .notice:
-            return "🟠"
-        case .warning:
-            return "🟡"
-        case .error:
-            return "🔴"
-        case .critical:
-            return "💥"
-        }
+/// Main logger instance that should be used
+public let log: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger")
+
+extension Logging.Logger {
+    public static func instance(withCategory category: Logging.Logger.Category) -> Logging.Logger {
+        var logger: Logging.Logger = Logging.Logger(label: "ProtonVPN.logger.\(category.rawValue)")
+        logger[metadataKey: Logging.Logger.MetaKey.category.rawValue] = .string(category.rawValue)
+        return logger
     }
 }
