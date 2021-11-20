@@ -50,8 +50,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)
         
-        planService.updateServicePlans()
-        
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
         setupCoreIntegration()
