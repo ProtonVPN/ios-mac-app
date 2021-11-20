@@ -42,7 +42,7 @@ protocol AppSessionManager {
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
-    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void)
+    func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void)
     func logOut(force: Bool)
     
     func loadDataWithoutFetching() -> Bool
@@ -85,26 +85,35 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             completion(.failure(ProtonVpnErrorConst.userCredentialsMissing))
             return
         }
+
+        let fail = { (error: Error) in DispatchQueue.main.async { completion(.failure(error)) } }
         
-        retrievePropertiesAndLogIn(success: { completion(.success) }, failure: { error in
-            DispatchQueue.main.async { completion(.failure(error)) }
-        })
+        retrievePropertiesAndLogIn(success: { [weak self] in
+            self?.planService.updateServicePlans(completion: completion)
+        }, failure: fail)
     }
 
-    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void) {
+    func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
         do {
             try AuthKeychain.store(authCredentials)
         } catch {
             DispatchQueue.main.async {
-                comletion(.failure(ProtonVpnError.keychainWriteFailed))
+                completion(.failure(ProtonVpnError.keychainWriteFailed))
             }
             return
         }
-        
+       
         retrievePropertiesAndLogIn(success: { [weak self] in
-            self?.checkForSubuserWithoutSessions(comletion: comletion)
+            self?.checkForSubuserWithoutSessions { [weak self] result in
+                switch result {
+                case let .failure(error):
+                    completion(.failure(error))
+                case .success:
+                    self?.planService.updateServicePlans(completion: completion)
+                }
+            }
         }, failure: { error in
-            comletion(.failure(error))
+            completion(.failure(error))
         })
     }
     
@@ -253,19 +262,19 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
     }
     
-    private func checkForSubuserWithoutSessions(comletion: @escaping (Result<(), Error>) -> Void) {
+    private func checkForSubuserWithoutSessions(completion: @escaping (Result<(), Error>) -> Void) {
         guard let credentials = try? self.vpnKeychain.fetch() else {
-            comletion(.success)
+            completion(.success)
             return
         }
         guard credentials.isSubuserWithoutSessions else {
-            comletion(.success)
+            completion(.success)
             return
         }
         
         PMLog.D("User with insufficient sessions detected. Throwing and error insted of login.")
         logOutCleanup()
-        comletion(.failure(ProtonVpnError.subuserWithoutSessions))
+        completion(.failure(ProtonVpnError.subuserWithoutSessions))
     }
     
     // MARK: - Log out

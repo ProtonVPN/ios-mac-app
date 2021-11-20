@@ -21,7 +21,7 @@ protocol PlanService {
 
     func presentPlanSelection()
     func presentSubscriptionManagement()
-    func updateServicePlans()
+    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void)
 
     func clear()
 }
@@ -60,16 +60,16 @@ final class CorePlanService: PlanService {
         paymentsUI = PaymentsUI(payments: payments)
     }
 
-    func updateServicePlans() {
+    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
         payments.storeKitManager.delegate = self
         payments.storeKitManager.subscribeToPaymentQueue()
-        payments.storeKitManager.updateAvailableProductsList { error in
+        payments.storeKitManager.updateAvailableProductsList { [weak self] error in
             if let error = error {
-                PMLog.ET("Updating plans failed: \(error)")
+                completion(.failure(error))
                 return
             }
 
-            PMLog.D("Plans updated")
+            self?.payments.planService.updateServicePlans(success: { completion(.success) }, failure: { error in completion(.failure(error)) })
         }
     }
 
