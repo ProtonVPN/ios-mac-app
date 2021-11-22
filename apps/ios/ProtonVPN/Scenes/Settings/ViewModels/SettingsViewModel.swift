@@ -193,10 +193,17 @@ class SettingsViewModel {
         if let authCredentials = AuthKeychain.fetch(),
             let vpnCredentials = try? vpnKeychain.fetch() {
 
+            let accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
             allowUpgrade = planService.allowUpgrade
-            allowPlanManagement = planService.allowPlanManagement
+
+            switch accountPlan {
+            case .basic, .plus:
+                allowPlanManagement = true
+            default:
+                allowPlanManagement = false
+            }
         } else {
             username = LocalizedString.unavailable
             accountPlanName = LocalizedString.unavailable

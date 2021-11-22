@@ -33,10 +33,6 @@ class PlanServiceMock: PlanService {
         return true
     }
 
-    var allowPlanManagement: Bool {
-        return true
-    }
-
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
 
     }
