@@ -21,7 +21,6 @@ protocol PlanServiceDelegate: AnyObject {
 
 protocol PlanService {
     var allowUpgrade: Bool { get }
-    var allowPlanManagement: Bool { get }
 
     var delegate: PlanServiceDelegate? { get set }
 
@@ -44,10 +43,6 @@ final class CorePlanService: PlanService {
 
     var allowUpgrade: Bool {
         return userCachedStatus.isIAPUpgradePlanAvailable
-    }
-
-    var allowPlanManagement: Bool {
-        return !allowUpgrade
     }
 
     init(networking: CoreNetworking, alertService: AlertService) {
