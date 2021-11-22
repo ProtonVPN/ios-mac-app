@@ -77,6 +77,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     init(factory: Factory) {
         self.factory = factory
         super.init(factory: factory)
+
+        planService.delegate = self
     }
     
     // MARK: - Beginning of the login logic.
@@ -346,12 +348,14 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         refreshTimer.start()
     }
     
+}
+
+extension AppSessionManagerImplementation: PlanServiceDelegate {
     /// If user is already logged in, we have to reload his plan/subscription data
-    @objc func paymentTransactionFinished() {
+    func paymentTransactionDidFinish() {
         guard AuthKeychain.fetch() != nil else {
             return
         }
         retrievePropertiesAndLogIn(success: {}, failure: { _ in })
     }
-    
 }

@@ -15,9 +15,15 @@ protocol PlanServiceFactory {
     func makePlanService() -> PlanService
 }
 
+protocol PlanServiceDelegate: AnyObject {
+    func paymentTransactionDidFinish()
+}
+
 protocol PlanService {
     var allowUpgrade: Bool { get }
     var allowPlanManagement: Bool { get }
+
+    var delegate: PlanServiceDelegate? { get set }
 
     func presentPlanSelection()
     func presentSubscriptionManagement()
@@ -34,6 +40,8 @@ final class CorePlanService: PlanService {
     private let userCachedStatus: UserCachedStatus
 
     let tokenStorage: PaymentTokenStorage?
+
+    weak var delegate: PlanServiceDelegate?
 
     var allowUpgrade: Bool {
         return userCachedStatus.isIAPUpgradePlanAvailable
@@ -99,6 +107,7 @@ final class CorePlanService: PlanService {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             PMLog.D("Purchased plan: \(plan)")
+            delegate?.paymentTransactionDidFinish()
         case let .open(vc: _, opened: opened):
             assert(opened == true)
         default:
