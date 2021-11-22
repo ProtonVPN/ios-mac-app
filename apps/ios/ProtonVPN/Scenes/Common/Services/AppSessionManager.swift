@@ -86,11 +86,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
 
-        let fail = { (error: Error) in DispatchQueue.main.async { completion(.failure(error)) } }
-        
-        retrievePropertiesAndLogIn(success: { [weak self] in
-            self?.planService.updateServicePlans(completion: completion)
-        }, failure: fail)
+        retrievePropertiesAndLogIn(success: { completion(.success) }, failure: { error in
+            DispatchQueue.main.async { completion(.failure(error)) }
+        })
     }
 
     func finishLogin(authCredentials: AuthCredentials, completion: @escaping (Result<(), Error>) -> Void) {
@@ -104,14 +102,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         }
        
         retrievePropertiesAndLogIn(success: { [weak self] in
-            self?.checkForSubuserWithoutSessions { [weak self] result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    self?.planService.updateServicePlans(completion: completion)
-                }
-            }
+            self?.checkForSubuserWithoutSessions(completion: completion)
         }, failure: { error in
             completion(.failure(error))
         })
@@ -220,7 +211,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.resolveActiveSession(success: { [weak self] in
                     self?.setAndNotify(for: .established)
                     ProfileManager.shared.refreshProfiles()
-                    self?.refreshVpnAuthCertificate(success: success, failure: failure)
+                    self?.refreshVpnAuthCertificate(success: { [weak self] in self?.planService.updateServicePlans { $0.invoke(success: success, failure: failure) } }, failure: failure)
                 }, failure: { error in
                     self.logOutCleanup()
                     failure(error)
@@ -236,7 +227,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
                 self.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
-                self.refreshVpnAuthCertificate(success: success, failure: failure)
+                self.refreshVpnAuthCertificate(success: { [weak self] in
+                    self?.planService.updateServicePlans { $0.invoke(success: success, failure: failure) }
+                }, failure: failure)
             }
         }        
     }

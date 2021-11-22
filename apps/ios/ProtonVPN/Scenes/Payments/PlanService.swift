@@ -36,7 +36,6 @@ final class CorePlanService: PlanService {
     private let paymentsUI: PaymentsUI
     private let payments: Payments
     private let alertService: AlertService
-    private let appSessionManager: AppSessionManager
     private let userCachedStatus: UserCachedStatus
 
     let tokenStorage: PaymentTokenStorage?
@@ -51,9 +50,8 @@ final class CorePlanService: PlanService {
         return !allowUpgrade
     }
 
-    init(networking: CoreNetworking, alertService: AlertService, appSessionManager: AppSessionManager) {
+    init(networking: CoreNetworking, alertService: AlertService) {
         self.alertService = alertService
-        self.appSessionManager = appSessionManager
 
         tokenStorage = TokenStorage()
         userCachedStatus = UserCachedStatus()
