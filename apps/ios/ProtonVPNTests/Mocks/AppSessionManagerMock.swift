@@ -59,7 +59,7 @@ class AppSessionManagerMock: AppSessionManager {
         callbackLogOut?()
     }
 
-    func finishLogin(authCredentials: AuthCredentials, comletion: @escaping (Result<(), Error>) -> Void) {
+    func finishLogin(authCredentials: AuthCredentials, completion comletion: @escaping (Result<(), Error>) -> Void) {
 
     }
     
