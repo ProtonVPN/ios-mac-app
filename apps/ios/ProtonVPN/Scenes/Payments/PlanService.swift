@@ -104,12 +104,16 @@ final class CorePlanService: PlanService {
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
-            PMLog.D("Purchased plan: \(plan)")
+            PMLog.D("Purchased plan: \(plan.protonName)")
             delegate?.paymentTransactionDidFinish()
         case let .open(vc: _, opened: opened):
             assert(opened == true)
-        default:
-            break
+        case let .planPurchaseProcessingInProgress(accountPlan: plan):
+            PMLog.D("Purchasing \(plan.protonName)")
+        case .close:
+            PMLog.D("Payments closed")
+        case let .purchaseError(error: error):
+            PMLog.ET("Purchase failed with \(error)")
         }
     }
 }
