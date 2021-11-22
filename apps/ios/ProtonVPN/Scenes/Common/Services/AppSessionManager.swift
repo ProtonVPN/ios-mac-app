@@ -66,11 +66,9 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
     var vpnGateway: VpnGatewayProtocol?
-    
+
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
-    let logInWarning = Notification.Name("AppSessionManagerLogInWarning")
-    let upgradeRequired = Notification.Name("AppSessionManagerUpgradeRequired")
         
     var sessionStatus: SessionStatus = .notEstablished
     
