@@ -233,7 +233,7 @@
 "_data_disclaimer_text" = "ProtonVPN berkomitmen melindungi dan menghargai privasi Anda. Ini adalah kebijakan utama kami untuk mengoleksi sekecil mungkin data pengguna untuk memastikan pengalaman pengguna yang anonim dan pribadi dalam penggunaan aplikasi, khususnya:\n\n%@ – untuk masuk, membantu Anda memulihkan kata sandi yang hilang, dan mengirim pembaruan layanan penting.\n\n%@ – hanya untuk melaporkan aplikasi mogok dan eror.\n\nAplikasi ProtonVPN tidak memproses segala informasi pengguna di luar data ini. Kami tidak mencatat aktivitas daring Anda maupun informasi pribadi. Semua data di atas disimpan dan diproses oleh sistem milik ProtonVPN, tanpa satu pun pihak ke-3 yang dapat mengaksesnya.";
 
 /* iOS: data disclaimer screen */
-"_data_disclaimer_title" = "Lindungi diri Anda saat daring";
+"_data_disclaimer_title" = "Lindungi diri Anda saat online";
 
 /* iOS: data disclaimer screen */
 "_data_disclaimer_user_details" = "Nama pengguna, alamat email";
@@ -1596,6 +1596,21 @@
 
 /* (No Comment) */
 "_subscription_will_renew" = "Paket saat ini akan diperpanjang secara otomatis pada %@.";
+
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Tetapkan koneksi VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Untuk memulai perjalanan Anda di ProtonVPN, harap tetapkan koneksi VPN ke akun Anda atau sub-akun lainnya.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Langkah ini perlu beberapa menit. Setelah itu Anda akan bisa masuk dan melindungi semua perangkat Anda.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Masuk lagi";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Terima kasih telah meningkatkan jenis akun anda ke PROFESSIONAL/VISIONARY";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Berhasil Tersambung";

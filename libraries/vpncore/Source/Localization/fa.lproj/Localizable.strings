@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "طرح فعلی بطور خودکار در %@ تمدید خواهد شد.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "اختصاص اتصالات VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "ورود دوباره";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Thanks for upgrading to PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "با موفقیت وصل شدید";
 

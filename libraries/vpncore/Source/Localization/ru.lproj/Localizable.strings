@@ -707,7 +707,7 @@
 "_ip_will_not_be_exposed" = "Ваш IP-адрес не будет раскрыт.";
 
 /* MacOS: Settings -> Connection: name of field. */
-"_kill_switch" = "Аварийный Стоп";
+"_kill_switch" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert */
 "_kill_switch_blocking_body" = "Kill Switch защищает ваш IP\n\nВаше подключение к Интернету возобновится, как только ProtonVPN переподключится к серверу. Чтобы возобновить его без VPN, отключите Kill Switch.";
@@ -716,10 +716,10 @@
 "_kill_switch_blocking_connection" = "Kill Switch блокирует все соединения";
 
 /* MacOS: killswitch blocking alert */
-"_kill_switch_blocking_title" = "Аварийный Стоп";
+"_kill_switch_blocking_title" = "Kill Switch";
 
 /* MacOS: killswitch blocking alert button */
-"_kill_switch_disable" = "Отключить Аварийный Стоп";
+"_kill_switch_disable" = "Отключить Kill Switch";
 
 /* MacOS: killswitch error alert */
 "_kill_switch_error_foot" = "Завершите эти приложения, чтобы исправить проблему.\nЧтобы продолжить без Kill Switch, нажмите Продолжить.";
@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Назначить VPN соединения";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Чтобы начать свое путешествие в ProtonVPN, пожалуйста, назначьте подключения VPN для своего аккаунта или любого другого субаккаунта.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Этот шаг займет всего несколько минут. После этого вы сможете войти в систему и защитить все свои устройства.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Войти снова";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Спасибо за улучшение до PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Успешное подключение";
 
@@ -1703,7 +1718,7 @@
 "_terms_and_conditions_disclaimer" = "Используя ProtonVPN, вы соглашаетесь с нашими\n%@ и %@";
 
 /* iOS: section header in countries list */
-"_test_servers" = "Тестовые серверы";
+"_test_servers" = "ТЕСТОВЫЕ серверы";
 
 /* (No Comment) */
 "_tier_basic" = "BASIC";
@@ -1990,7 +2005,7 @@
 "_view_toggle_will_cause_disconnect" = "Переключение Secure Core завершит ваше текущее подключение.";
 
 /* (No Comment) */
-"_vpn_accelerator_change_title" = "Изменить VPN-ускоритель";
+"_vpn_accelerator_change_title" = "Изменить VPN Accelerator";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
 "_vpn_accelerator_description" = "VPN Accelerator позволяет использовать набор уникальных технологий для улучшения производительности, которые могут увеличить скорость VPN до 400%%.\nУзнать больше";
