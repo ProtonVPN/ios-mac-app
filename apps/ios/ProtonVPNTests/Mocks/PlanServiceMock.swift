@@ -24,6 +24,7 @@ import Foundation
 import vpncore
 
 class PlanServiceMock: PlanService {
+    weak var delegate: PlanServiceDelegate?
     
     var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?
@@ -36,7 +37,7 @@ class PlanServiceMock: PlanService {
         return true
     }
 
-    func updateServicePlans() {
+    func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
 
     }
     
