@@ -21,7 +21,7 @@
 //
 
 import XCTest
-import vpncore
+@testable import vpncore
 
 class URLArrayTests: XCTestCase {
 

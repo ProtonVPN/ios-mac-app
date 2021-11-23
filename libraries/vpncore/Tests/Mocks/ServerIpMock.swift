@@ -21,6 +21,7 @@
 //
 
 import Foundation
+@testable import vpncore
 
 final class ServerIpMock: ServerIp {
     convenience init(entryIp: String) {

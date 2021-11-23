@@ -23,6 +23,7 @@
 import UIKit
 import vpncore
 import Logging
+import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -130,7 +131,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in
-            return ConsoleLogHandler()
+            var handlers: [LogHandler] = [ConsoleLogHandler()]
+            let logFile = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true).appendingPathComponent("ProtonVPN.log", isDirectory: false)
+            if let fileHandler = try? FileLogHandler(logFile) {
+                handlers.append(fileHandler)
+            }
+            return MultiplexLogHandler(handlers)
         }
     }
 }

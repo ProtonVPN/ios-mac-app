@@ -19,7 +19,7 @@
 import Foundation
 import Logging
 
-class FileLogFormatter: PMLogFormatter {
+public class FileLogFormatter: PMLogFormatter {
     
     private let dateFormatter = ISO8601DateFormatter()
 
