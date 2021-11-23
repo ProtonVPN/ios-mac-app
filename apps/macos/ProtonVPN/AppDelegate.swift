@@ -43,7 +43,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private var notificationManager: NotificationManagerProtocol!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        setupLogsForApp()
         log.info("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion))", category: .app, event: .processStart)
+        
         self.checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
@@ -160,6 +162,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 self.propertiesManager.vpnProtocol = .ike
                 self.propertiesManager.smartProtocol = false
             }
+        }
+    }
+    
+    private func setupLogsForApp() {
+        LoggingSystem.bootstrap {_ in
+            var handlers: [LogHandler] = [ConsoleLogHandler()]
+            let logFile = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true).appendingPathComponent("ProtonVPN.log", isDirectory: false)
+            if let fileHandler = try? FileLogHandler(logFile) {
+                handlers.append(fileHandler)
+            }
+            return MultiplexLogHandler(handlers)
         }
     }
 }

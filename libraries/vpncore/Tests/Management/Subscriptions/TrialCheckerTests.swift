@@ -19,7 +19,7 @@
 //  You should have received a copy of the GNU General Public License
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
-import vpncore
+@testable import vpncore
 import XCTest
 
 class TrialCheckerTests: XCTestCase {

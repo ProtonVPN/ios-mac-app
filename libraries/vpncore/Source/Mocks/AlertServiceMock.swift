@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import vpncore
 
 public class CoreAlertServiceMock: CoreAlertService {
     

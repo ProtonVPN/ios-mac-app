@@ -73,31 +73,31 @@ public class PMLog {
         }
     }
     
-    public static func D(_ message: String, level: LogLevel = .info, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
-        let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
-        printToConsole(log)
-        
-        guard let logPath = logFile(filename) else { return }
-        
-        pruneLogs()
-        
-        do {
-            let fileHandle = try FileHandle(forWritingTo: logPath)
-            fileHandle.seekToEndOfFile()
-            fileHandle.write("\(log)\n".data(using: .utf8)!)
-            fileHandle.closeFile()
-        } catch {
-            dump(logs: log, toFile: filename)
-        }
-    }
-    
-    public static func ET(_ message: String, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
-        PMLog.D(message, level: .error, file: file, function: function, line: line, column: column)
-    }
-    
-    public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
-        ET(error.localizedDescription, level: level)
-    }
+//    public static func D(_ message: String, level: LogLevel = .info, filename: String = "ProtonVPN.log", file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+//        let log = "\(Date()) : \(level.description) : \((file as NSString).lastPathComponent) : \(function) : \(line) : \(column) - \(message)"
+//        printToConsole(log)
+//
+//        guard let logPath = logFile(filename) else { return }
+//
+//        pruneLogs()
+//
+//        do {
+//            let fileHandle = try FileHandle(forWritingTo: logPath)
+//            fileHandle.seekToEndOfFile()
+//            fileHandle.write("\(log)\n".data(using: .utf8)!)
+//            fileHandle.closeFile()
+//        } catch {
+//            dump(logs: log, toFile: filename)
+//        }
+//    }
+//
+//    public static func ET(_ message: String, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+//        PMLog.D(message, level: .error, file: file, function: function, line: line, column: column)
+//    }
+//
+//    public static func ET(_ error: Error, level: LogLevel = .error, file: String = #file, function: String = #function, line: Int = #line, column: Int = #column) {
+//        ET(error.localizedDescription, level: level)
+//    }
     
     /// Dumps given string into a log file.
     /// Will overwrite the file if it's present.

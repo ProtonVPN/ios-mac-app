@@ -22,6 +22,7 @@
 
 import Alamofire
 import Foundation
+@testable import vpncore
 
 final class FactoryMock: CoreAlertServiceFactory & HumanVerificationAdapterFactory & TrustKitHelperFactory & PropertiesManagerFactory & ProtonAPIAuthenticatorFactory & AuthApiServiceFactory & AlamofireWrapperFactory & AppSpecificRequestAdapterFatory {
 

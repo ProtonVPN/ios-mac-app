@@ -63,6 +63,17 @@
                BlueprintName = "vpncore-iosTests"
                ReferencedContainer = "container:Core.xcodeproj">
             </BuildableReference>
+            <SkippedTests>
+               <Test
+                  Identifier = "AlternativeRoutingTests">
+               </Test>
+               <Test
+                  Identifier = "AppStateManagerImplementationTests">
+               </Test>
+               <Test
+                  Identifier = "StateAlertTests">
+               </Test>
+            </SkippedTests>
          </TestableReference>
       </Testables>
    </TestAction>

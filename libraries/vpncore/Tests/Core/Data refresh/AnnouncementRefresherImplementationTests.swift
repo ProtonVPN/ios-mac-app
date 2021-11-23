@@ -21,6 +21,7 @@
 //
 
 import XCTest
+@testable import vpncore
 
 class AnnouncementRefresherImplementationTests: XCTestCase {
     
