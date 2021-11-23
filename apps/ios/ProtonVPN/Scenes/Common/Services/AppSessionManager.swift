@@ -76,7 +76,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         self.factory = factory
         super.init(factory: factory)
 
-        planService.delegate = self
+        NotificationCenter.default.addObserver(self, selector: #selector(planPurchased), name: planService.planPurchased, object: nil)
     }
     
     // MARK: - Beginning of the login logic.
@@ -338,12 +338,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         
         refreshTimer.start()
     }
-    
-}
 
-extension AppSessionManagerImplementation: PlanServiceDelegate {
-    /// If user is already logged in, we have to reload his plan/subscription data
-    func paymentTransactionDidFinish() {
+    @objc private func planPurchased() {
         guard AuthKeychain.fetch() != nil else {
             return
         }

@@ -136,6 +136,8 @@ class SettingsViewModel {
                                                name: type(of: propertiesManager).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(planPurchased),
+                                               name: planService.planPurchased, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -509,5 +511,8 @@ class SettingsViewModel {
     private func logOut() {
         appSessionManager.logOut(force: false)
     }
-    
+
+    @objc private func planPurchased() {
+        reloadNeeded?()
+    }
 }
