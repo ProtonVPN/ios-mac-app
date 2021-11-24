@@ -551,6 +551,8 @@
 		E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
 		E9AF94C326B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
+		E9C5D91F274E79680017E51B /* FileHandler+New.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D91E274E79680017E51B /* FileHandler+New.swift */; };
+		E9C5D920274E79680017E51B /* FileHandler+New.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C5D91E274E79680017E51B /* FileHandler+New.swift */; };
 		E9C9FDC7268C8755005665C6 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */; };
 		E9C9FDC9268C8755005665C6 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */; };
 		E9DC79B9262DBEDC001A0FC0 /* SmartProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3657A8325F66B1D00497451 /* SmartProtocol.swift */; };
@@ -1023,6 +1025,7 @@
 		E98763DE260DCE78002E06E1 /* LogFileManagerImplementationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogFileManagerImplementationTests.swift; sourceTree = "<group>"; };
 		E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
+		E9C5D91E274E79680017E51B /* FileHandler+New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FileHandler+New.swift"; sourceTree = "<group>"; };
 		E9C9FDC6268C8755005665C6 /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+ModelName.swift"; sourceTree = "<group>"; };
 		E9ECF998261C8B81004501AE /* openssl.xcframework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcframework; name = openssl.xcframework; path = "Pods/OpenSSL-Apple/frameworks/openssl.xcframework"; sourceTree = "<group>"; };
 		E9FC534E26EB820F0062BAC1 /* SentryHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SentryHelper.swift; sourceTree = "<group>"; };
@@ -1462,6 +1465,7 @@
 				E975E4C0273EC3030003087F /* Logger+Callers.swift */,
 				E975E4D32747FEB40003087F /* Logger+Categories.swift */,
 				E91BDD9D274D2DB4005F370C /* LogHandler+Metadata.swift */,
+				E9C5D91E274E79680017E51B /* FileHandler+New.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -2612,6 +2616,7 @@
 				4242B0322465A41A0042145A /* VPNLoadsRequest.swift in Sources */,
 				4242B0622465A43E0042145A /* UserCreateRequest.swift in Sources */,
 				D5B4712324DD7C5F0041D122 /* ValidateSubscriptionRequest.swift in Sources */,
+				E9C5D91F274E79680017E51B /* FileHandler+New.swift in Sources */,
 				E9DC7A07262DBFAA001A0FC0 /* OpenVPNTCPAvailabilityChecker.swift in Sources */,
 				E129C6CD22A9205700D8437E /* TimerFactoryMock.swift in Sources */,
 				4242B0342465A41A0042145A /* VPNLogicalServicesRequest.swift in Sources */,
@@ -3403,6 +3408,7 @@
 				E148AE6321C29818007AB65A /* ErrorCodes.swift in Sources */,
 				D5DCCADE252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				E1B5F64221B6B86200B558B0 /* CoreAppConstants.swift in Sources */,
+				E9C5D920274E79680017E51B /* FileHandler+New.swift in Sources */,
 				D5D2948925A46B8D000FBD74 /* String+SemVer.swift in Sources */,
 				E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				E129C6C822A9101B00D8437E /* ServerStorageMock.swift in Sources */,
