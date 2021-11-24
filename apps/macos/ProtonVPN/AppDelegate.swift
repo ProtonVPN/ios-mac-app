@@ -168,8 +168,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in
             var handlers: [LogHandler] = [ConsoleLogHandler()]
-            let logFile = FileManager.default.urls(for: .libraryDirectory, in: .userDomainMask).first!.appendingPathComponent("Logs", isDirectory: true).appendingPathComponent("ProtonVPN.log", isDirectory: false)
-            if let fileHandler = try? FileLogHandler(logFile) {
+            if let fileHandler = try? FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)) {
                 handlers.append(fileHandler)
             }
             return MultiplexLogHandler(handlers)

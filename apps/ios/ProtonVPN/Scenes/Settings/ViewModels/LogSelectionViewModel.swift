@@ -14,7 +14,7 @@ class LogSelectionViewModel {
     
     var pushHandler: ((LogsViewModel) -> Void)?
     
-    init(logFileProvider: LogsFilesProvider) {
+    init(logFileProvider: LogFilesProvider) {
         let fileManager = FileManager()
         logCells = logFileProvider.logFiles.compactMap { (title, url) -> TableViewCellModel? in
             guard let url = url, fileManager.fileExists(atPath: url.path) else { return nil }

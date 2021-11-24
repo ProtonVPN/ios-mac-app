@@ -50,6 +50,7 @@ class NavigationService {
         & VpnManagerFactory
         & VpnStateConfigurationFactory
         & SystemExtensionsStateCheckFactory
+        & LogFileManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -197,10 +198,9 @@ extension NavigationService {
     }
     
     func openLogsFolder(filename: String? = nil) {
-        guard let logUrl = filename.flatMap({ PMLog.logFile($0) }) ?? PMLog.logFile() else {
-            return
-        }
-        NSWorkspace.shared.activateFileViewerSelecting([logUrl])
+        let logFileManager = factory.makeLogFileManager()
+        let filename = filename ?? AppConstants.Filenames.appLogFilename
+        NSWorkspace.shared.activateFileViewerSelecting([logFileManager.getFileUrl(named: filename)])
     }
     
     func openSettings(to tab: SettingsTab) {        
