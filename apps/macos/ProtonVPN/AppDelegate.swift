@@ -167,11 +167,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private func setupLogsForApp() {
         LoggingSystem.bootstrap {_ in
-            var handlers: [LogHandler] = [ConsoleLogHandler()]
-            if let fileHandler = try? FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)) {
-                handlers.append(fileHandler)
-            }
-            return MultiplexLogHandler(handlers)
+            return MultiplexLogHandler([
+                ConsoleLogHandler(),
+                FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
+            ])
         }
     }
 }
