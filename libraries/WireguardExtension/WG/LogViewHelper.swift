@@ -6,9 +6,7 @@ import Foundation
 public class LogViewHelper {
     var log: OpaquePointer
     static let formatOptions: ISO8601DateFormatter.Options = [
-        .withYear, .withMonth, .withDay, .withTime,
-        .withDashSeparatorInDate, .withColonSeparatorInTime, .withSpaceBetweenDateAndTime,
-        .withFractionalSeconds
+        .withInternetDateTime, .withFractionalSeconds
     ]
 
     struct LogEntry {
@@ -42,7 +40,7 @@ public class LogViewHelper {
             _ = view_lines_from_cursor(self.log, UINT32_MAX, &logEntries) { cStr, timestamp, ctx in
                 let message = cStr != nil ? String(cString: cStr!) : ""
                 let date = Date(timeIntervalSince1970: Double(timestamp) / 1000000000)
-                let dateString = ISO8601DateFormatter.string(from: date, timeZone: TimeZone.current, formatOptions: LogViewHelper.formatOptions)
+                let dateString = ISO8601DateFormatter.string(from: date, timeZone: TimeZone(secondsFromGMT: 0)!, formatOptions: LogViewHelper.formatOptions)
                 if let logEntries = ctx?.bindMemory(to: LogEntries.self, capacity: 1) {
                     logEntries.pointee.entries.append(LogEntry(timestamp: dateString, message: message))
                 }
