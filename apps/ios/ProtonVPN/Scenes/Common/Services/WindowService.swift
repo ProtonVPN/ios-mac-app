@@ -36,7 +36,6 @@ protocol WindowService: AnyObject {
     var navigationStackAvailable: Bool { get }
     
     func present(modal: UIViewController)
-    func replace(with modal: UIViewController)
     func dismissModal()
     
     func present(alert: UIAlertController)
@@ -143,24 +142,6 @@ class WindowServiceImplementation: WindowService {
                 } else {
                     rootViewController.dismiss(animated: true)
                 }
-            }
-        }
-    }
-    
-    func replace(with modal: UIViewController) {
-        if let rootViewController = window.rootViewController {
-            if let topViewController = rootViewController.presentedViewController {
-                let hider = LogoWithMapView.loadViewFromNib() as LogoWithMapView
-                hider.backgroundColor = .backgroundColor()
-                rootViewController.view.addFillingSubview(hider)
-                
-                topViewController.dismiss(animated: true) {
-                    rootViewController.present(modal, animated: true) {
-                        hider.removeFromSuperview()
-                    }
-                }
-            } else {
-                rootViewController.present(modal, animated: true, completion: nil)
             }
         }
     }
