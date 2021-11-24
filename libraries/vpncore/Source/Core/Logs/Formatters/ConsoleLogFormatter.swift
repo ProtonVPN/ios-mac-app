@@ -18,18 +18,11 @@
 
 import Logging
 
-public class ConsoleLogFormatter: PMLogFormatter {
-    
-    private let dateFormatter = ISO8601DateFormatter()
-
-    public init() {
-        dateFormatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-    }
-    
-    public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {// swiftlint:disable:this function_parameter_count
-        let dateTime = dateFormatter.string(from: date)
-        let (category, event, meta) = extract(metadata: metadata)
-        return "\(level.emoji) \(dateTime) \(level)\(category)\(event) \(message)\(meta)"
+public class ConsoleLogFormatter: FileLogFormatter {
+        
+    override public func formatMessage(_ level: Logging.Logger.Level, message: String, function: String, file: String, line: UInt, metadata: [String: String], date: Date) -> String {
+        let message = super.formatMessage(level, message: message, function: function, file: file, line: line, metadata: metadata, date: date)
+        return "\(level.emoji) \(message)"
     }
     
 }
