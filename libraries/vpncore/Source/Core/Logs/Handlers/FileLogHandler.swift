@@ -22,11 +22,15 @@ import Logging
 // swiftlint:disable no_print
 public class FileLogHandler: LogHandler {
     
+    /// After log file size reaches 50kb in size it is moved to archive and new log file is created
+    public var maxFileSize = 1024 * 50
+    
+    /// Maximum number of log files that were rotated. This number doesn't include the main log file where app is writing it's logs.
+    public var maxArchivedFilesCount = 1
+    
     public let formatter: PMLogFormatter
     public var logLevel: Logging.Logger.Level = .trace
     public var metadata = Logging.Logger.Metadata()
-    public var maxFileSize = 1024 * 50
-    public var maxArchivedFilesCount = 2
     
     private let fileUrl: URL
     private var fileHandle: FileHandle?

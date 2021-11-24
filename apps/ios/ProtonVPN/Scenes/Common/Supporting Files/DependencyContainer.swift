@@ -467,3 +467,17 @@ extension DependencyContainer: VpnStateConfigurationFactory {
         return VpnStateConfigurationManager(ikeProtocolFactory: ikeFactory, openVpnProtocolFactory: openVpnFactory, wireguardProtocolFactory: wireguardFactory, propertiesManager: makePropertiesManager(), appGroup: appGroup)
     }
 }
+
+// MARK: LogFileManagerFactory
+extension DependencyContainer: LogFileManagerFactory {
+    func makeLogFileManager() -> LogFileManager {
+        return LogFileManagerImplementation()
+    }
+}
+
+// MARK: LogFilesProviderFactory
+extension DependencyContainer: LogFilesProviderFactory {
+    func makeLogFilesProvider() -> LogFilesProvider {
+        return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
+    }
+}

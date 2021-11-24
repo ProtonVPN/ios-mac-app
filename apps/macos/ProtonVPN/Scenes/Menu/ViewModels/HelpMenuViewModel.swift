@@ -41,6 +41,7 @@ class HelpMenuViewModel {
                         & CoreAlertServiceFactory
                         & SystemExtensionManagerFactory
                         & PropertiesManagerFactory
+                        & LogFileManagerFactory
     private var factory: Factory
     
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
@@ -49,6 +50,7 @@ class HelpMenuViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var logFileManager: LogFileManager = factory.makeLogFileManager()
     
     init(factory: Factory) {
         self.factory = factory
@@ -62,7 +64,7 @@ class HelpMenuViewModel {
         // Save log to file
         vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
             if let content = logs {
-                PMLog.dump(logs: content, toFile: AppConstants.Filenames.openVpnLogFilename)
+                self.logFileManager.dump(logs: content, toFile: AppConstants.Filenames.openVpnLogFilename)
             }
             self.navService.openLogsFolder(filename: AppConstants.Filenames.openVpnLogFilename)
         }
@@ -72,7 +74,7 @@ class HelpMenuViewModel {
         // Save log to file
         vpnManager.logsContent(for: .wireGuard) { logs in
             if let content = logs {
-                PMLog.dump(logs: content, toFile: AppConstants.Filenames.wireGuardLogFilename)
+                self.logFileManager.dump(logs: content, toFile: AppConstants.Filenames.wireGuardLogFilename)
             }
             self.navService.openLogsFolder(filename: AppConstants.Filenames.wireGuardLogFilename)
         }

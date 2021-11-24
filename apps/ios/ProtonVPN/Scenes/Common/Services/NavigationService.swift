@@ -173,7 +173,7 @@ protocol NavigationServiceFactory {
 class NavigationService {
     
     typealias Factory =
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & SafariServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & AlamofireWrapperFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & TrialCheckerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & AuthApiServiceFactory & UserApiServiceFactory & PaymentsApiServiceFactory & AlamofireWrapperFactory & VpnManagerFactory & UIAlertServiceFactory & SignUpCoordinatorFactory & SignUpFormViewModelFactory & PlanSelectionViewModelFactory & ServicePlanDataServiceFactory & LoginServiceFactory & SubscriptionInfoViewModelFactory & ServicePlanDataStorageFactory & StoreKitManagerFactory & AppSessionRefresherFactory & PlanServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & SafariServiceFactory & LogFileManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -610,7 +610,7 @@ extension NavigationService: SettingsService {
     }
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: DefaultLogFilesProvider(vpnManager: vpnManager)), settingsService: self)
+        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: DefaultLogFilesProvider(vpnManager: vpnManager, logFileManager: factory.makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)), settingsService: self)
     }
     
     func makeBatteryUsageViewController() -> BatteryUsageViewController {
@@ -628,6 +628,7 @@ extension NavigationService: SettingsService {
     func presentReportBug() {
         let viewController = ReportBugViewController(vpnManager: vpnManager)
         viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(alamofireWrapper: alamofireWrapper), alertService: alertService, vpnKeychain: vpnKeychain)
+        viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
         let navigationController = UINavigationController(rootViewController: viewController)
         windowService.present(modal: navigationController)
     }

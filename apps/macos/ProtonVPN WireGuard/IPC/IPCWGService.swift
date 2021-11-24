@@ -16,7 +16,7 @@ extension IPCWGService { // ProviderCommunication
     
     override func setCredentials(username: String, password: String, completionHandler: @escaping (Bool) -> Void) {
         let wgConfig = password
-        log("Will save wg config: \(wgConfig)")
+        log("Will save wg config ")
         if Keychain.saveWgConfig(value: wgConfig) {
             log("New config saved.")
             completionHandler(true)

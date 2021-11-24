@@ -9,17 +9,21 @@
 import Foundation
 
 /// Provides all available log files together with their names
-public protocol LogsFilesProvider {
+public protocol LogFilesProvider {
     var logFiles: [(String, URL?)] { get }
 }
 
+public protocol LogFilesProviderFactory {
+    func makeLogFilesProvider() -> LogFilesProvider
+}
+
 /// Default implementation that lists all possible log files
-public class DefaultLogFilesProvider: LogsFilesProvider {
+public class DefaultLogFilesProvider: LogFilesProvider {
     public var logFiles: [(String, URL?)]
     
-    public init(vpnManager: VpnManagerProtocol) {
+    public init(vpnManager: VpnManagerProtocol, logFileManager: LogFileManager, appLogFilename: String) {
         logFiles = [
-            (LocalizedString.applicationLogs, PMLog.logFile()), // Application logs
+            (LocalizedString.applicationLogs, logFileManager.getFileUrl(named: appLogFilename)), // Application logs
             (LocalizedString.applicationLogs, vpnManager.logFile(for: .ike)), // Empty for apple's ikev2 implementation
             (LocalizedString.openVpnLogs, vpnManager.logFile(for: .openVpn(.undefined))),
             (LocalizedString.wireguardLogs, vpnManager.logFile(for: .wireGuard))
