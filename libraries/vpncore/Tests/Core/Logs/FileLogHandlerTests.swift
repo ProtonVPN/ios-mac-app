@@ -35,16 +35,21 @@ class FileLogHandlerTests: XCTestCase {
         try manager.removeItem(at: folder)
     }
 
-    func testCreatesFile() throws {
-        let handler = try FileLogHandler(file)
+    func testCreatesFile() {
+        let handler = FileLogHandler(file)
         handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
-        
-        XCTAssert(manager.fileExists(atPath: folder.path))
-        XCTAssert(manager.fileExists(atPath: file.path))
+                
+        let expectation = XCTestExpectation(description: "File created")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if self.manager.fileExists(atPath: self.folder.path), self.manager.fileExists(atPath: self.file.path) {
+                expectation.fulfill()
+            }
+        })
+        wait(for: [expectation], timeout:0.2)
     }
     
-    func testRotatesFiles() throws {
-        let handler = try FileLogHandler(file)
+    func testRotatesFiles() {
+        let handler = FileLogHandler(file)
         handler.maxFileSize = 50
         handler.maxArchivedFilesCount = 50
         
@@ -52,12 +57,17 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let files = try manager.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        XCTAssert(files.count == 3)
+        let expectation = XCTestExpectation(description: "3 Files are created")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 3 {
+                expectation.fulfill()
+            }
+        })
+        wait(for: [expectation], timeout:0.2)
     }
     
-    func testDeletesOldFiles() throws {
-        let handler = try FileLogHandler(file)
+    func testDeletesOldFiles() {
+        let handler = FileLogHandler(file)
         handler.maxFileSize = 50
         handler.maxArchivedFilesCount = 1
         
@@ -65,8 +75,13 @@ class FileLogHandlerTests: XCTestCase {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let files = try manager.contentsOfDirectory(at: folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles)
-        XCTAssert(files.count == 2) // maxArchivedFilesCount + current logfile
+        let expectation = XCTestExpectation(description: "3 Files are created")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
+                expectation.fulfill()
+            }
+        })
+        wait(for: [expectation], timeout:0.2)
     }
 
 }

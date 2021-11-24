@@ -41,11 +41,11 @@ public class FileLogHandler: LogHandler {
         return fileUrl.deletingLastPathComponent()
     }
     
-    public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter()) throws {
+    private var queue: DispatchQueue = DispatchQueue.init(label: "FileLogHandler", qos: .background)
+    
+    public init(_ fileUrl: URL, formatter: PMLogFormatter = FileLogFormatter()) {
         self.fileUrl = fileUrl
         self.formatter = formatter
-                
-        try openFile()
     }
     
     deinit {
@@ -54,12 +54,18 @@ public class FileLogHandler: LogHandler {
     
     public func log(level: Logging.Logger.Level, message: Logging.Logger.Message, metadata: Logging.Logger.Metadata?, source: String, file: String, function: String, line: UInt) { // swiftlint:disable:this function_parameter_count
         let text = formatter.formatMessage(level, message: message.description, function: function, file: file, line: line, metadata: convert(metadata: metadata), date: Date())
-                
-        if let data = (text + "\r\n").data(using: .utf8) {
-            getFileHandleAtTheEndOfFile()?.write(data)
+             
+        queue.async {
+            if let data = (text + "\r\n").data(using: .utf8) {
+                do {
+                    try self.getFileHandleAtTheEndOfFile()?.writeCustom(contentsOf: data)
+                } catch {
+                    self.debugLog("🔴🔴 Error writing to file: \(error)")
+                }
+            }
+            
+            self.rotate()
         }
-        
-        rotate()
     }
     
     // MARK: - File
@@ -128,8 +134,9 @@ public class FileLogHandler: LogHandler {
         
         do {
             try fileManager.moveItem(at: fileUrl, to: nextFileURL)
+            debugLog("🟢🟢 File rotated \(nextFileURL.lastPathComponent)")
         } catch {
-            print("Error while moving file: \(error)")
+            debugLog("🔴🔴 Error while moving file: \(error)")
         }
     }
     
@@ -153,7 +160,7 @@ public class FileLogHandler: LogHandler {
             }
         
         } catch {
-            print("Error while removing old logfiles: \(error)")
+            debugLog("🔴🔴 Error while removing old logfiles: \(error)")
         }
     }
     
@@ -166,6 +173,14 @@ public class FileLogHandler: LogHandler {
         set(newValue) {
             metadata[key] = newValue
         }
+    }
+    
+    // MARK: - Debugging
+    
+    public func debugLog(_ message: String) {
+        #if DEBUG
+        print(message)
+        #endif
     }
     
 }
