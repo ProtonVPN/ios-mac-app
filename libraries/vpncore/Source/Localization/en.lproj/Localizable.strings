@@ -1836,7 +1836,7 @@
 "_welcome_headline" = "Protect yourself online";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "I know you've been hurt by someone else. I can tell by the way you carry yourself. But if you let me, here's what I'll do: I'll take care of you";
+"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.";
 
 "_force_upgrade_title" = "Application upgrade needed";
 "_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
