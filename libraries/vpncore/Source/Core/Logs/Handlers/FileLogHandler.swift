@@ -82,8 +82,9 @@ public class FileLogHandler: LogHandler {
         guard let fileHandle = fileHandle else {
             return
         }
-        fileHandle.synchronizeFile()
-        fileHandle.closeFile()
+        try? fileHandle.synchronizeCustom()
+        try? fileHandle.closeCustom()
+        
         self.fileHandle = nil
     }
     
@@ -95,13 +96,21 @@ public class FileLogHandler: LogHandler {
                 return nil
             }
         }
-        currentSize = fileHandle?.seekToEndOfFile() ?? 0
+        do {
+            currentSize = try fileHandle?.seekToEndCustom() ?? 0
+        } catch {
+            currentSize = 0
+        }
         return fileHandle
     }
     
     private func rotate() {
         if currentSize < 1 {
-            currentSize = fileHandle?.seekToEndOfFile() ?? 0
+            do {
+                currentSize = try fileHandle?.seekToEndCustom() ?? 0
+            } catch {
+                currentSize = 0
+            }
         }
         guard currentSize > maxFileSize else {
             return
