@@ -95,7 +95,6 @@ fileprivate class WindowServiceMock: WindowService {
     func show(viewController: UIViewController) {}
     func addToStack(_ controller: UIViewController, checkForDuplicates: Bool) {}
     func present(modal: UIViewController) {}
-    func replace(with modal: UIViewController) {}
     func dismissModal() {}
     
     func present(alert: UIAlertController) {
