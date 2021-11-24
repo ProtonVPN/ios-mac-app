@@ -30,16 +30,8 @@ final class LaunchViewController: UIViewController {
     }
 
     @IBOutlet private weak var loadingIndicator: UIActivityIndicatorView!
-    @IBOutlet private weak var underLogoLabel: UILabel!
 
     var mode: AnimationMode = .delayed
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        underLogoLabel.text = LocalizedString.loadingScreenSlogan
-        self.view.backgroundColor = .backgroundColor()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
