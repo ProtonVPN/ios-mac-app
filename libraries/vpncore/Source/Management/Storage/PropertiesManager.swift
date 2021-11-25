@@ -97,71 +97,75 @@ public protocol PropertiesManagerProtocol: class {
     
     func getValue(forKey: String) -> Bool
     func setValue(_ value: Bool, forKey: String)
+
+    /// Logs all the properties with their current values
+    func logCurrentState()
 }
 
 public class PropertiesManager: PropertiesManagerProtocol {
+    
+    internal enum Keys: String, CaseIterable {
         
-    private struct Keys {
-      
-        static let autoConnect = "AutoConnect"
-        static let autoConnectProfile = "AutoConnect_"
-        static let connectOnDemand = "ConnectOnDemand"
-        static let lastIkeConnection = "LastIkeConnection"
-        static let lastOpenVpnConnection = "LastOpenVPNConnection"
-        static let lastWireguardConnection = "LastWireguardConnection"
-        static let lastPreparingServer = "LastPreparingServer"
-        static let lastConnectedTimeStamp = "LastConnectedTimeStamp"
-        static let lastConnectionRequest = "LastConnectionRequest"
-        static let lastUserAccountPlan = "LastUserAccountPlan"
-        static let quickConnectProfile = "QuickConnect_"
-        static let secureCoreToggle = "SecureCoreToggle"
-        static let intentionallyDisconnected = "IntentionallyDisconnected"
-        static let userIp = "UserIp"
-        static let userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
-        static let lastBugReportEmail = "LastBugReportEmail"
+        case autoConnect = "AutoConnect"
+        case autoConnectProfile = "AutoConnect_"
+        case connectOnDemand = "ConnectOnDemand"
+        case lastIkeConnection = "LastIkeConnection"
+        case lastOpenVpnConnection = "LastOpenVPNConnection"
+        case lastWireguardConnection = "LastWireguardConnection"
+        case lastPreparingServer = "LastPreparingServer"
+        case lastConnectedTimeStamp = "LastConnectedTimeStamp"
+        case lastConnectionRequest = "LastConnectionRequest"
+        case lastUserAccountPlan = "LastUserAccountPlan"
+        case quickConnectProfile = "QuickConnect_"
+        case secureCoreToggle = "SecureCoreToggle"
+        case intentionallyDisconnected = "IntentionallyDisconnected"
+        case userIp = "UserIp"
+        case userDataDisclaimerAgreed = "UserDataDisclaimerAgreed"
+        case lastBugReportEmail = "LastBugReportEmail"
 
         // Subscriptions
-        static let servicePlans = "servicePlans"
-        static let currentSubscription = "currentSubscription"
-        static let defaultPlanDetails = "defaultPlanDetails"
-        static let isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
-        static let customServers = "CustomServers"
+        case servicePlans = "servicePlans"
+        case currentSubscription = "currentSubscription"
+        case defaultPlanDetails = "defaultPlanDetails"
+        case isIAPUpgradePlanAvailable = "isIAPUpgradePlanAvailable" // Old name is left for backwards compatibility
+        case customServers = "CustomServers"
         
         // Trial
-        static let trialWelcomed = "TrialWelcomed"
-        static let warnedTrialExpiring = "WarnedTrialExpiring"
-        static let warnedTrialExpired = "WarnedTrialExpired"
+        case trialWelcomed = "TrialWelcomed"
+        case warnedTrialExpiring = "WarnedTrialExpiring"
+        case warnedTrialExpired = "WarnedTrialExpired"
         
         // OpenVPN
-        static let openVpnConfig = "OpenVpnConfig"
-        static let vpnProtocol = "VpnProtocol"
+        case openVpnConfig = "OpenVpnConfig"
+        case vpnProtocol = "VpnProtocol"
         
-        static let apiEndpoint = "ApiEndpoint"
+        case apiEndpoint = "ApiEndpoint"
         
         // Migration
-        static let lastAppVersion = "LastAppVersion"
+        case lastAppVersion = "LastAppVersion"
         
         // AppState
-        static let lastTimeForeground = "LastTimeForeground"
+        case lastTimeForeground = "LastTimeForeground"
         
         // Kill Switch
-        static let killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
-        static let excludeLocalNetworks = "excludeLocalNetworks"
+        case killSwitch = "Firewall" // kill switch is a legacy name in the user's preferences
+        case excludeLocalNetworks = "excludeLocalNetworks"
         
         // Features
-        static let featureFlags = "FeatureFlags"
-        static let netshield = "NetShield"
-        static let maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
-        static let vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
+        case featureFlags = "FeatureFlags"
+        case netshield = "NetShield"
+        case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
+        case vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
         
-        static let humanValidationFailed: String = "humanValidationFailed"
-        static let alternativeRouting: String = "alternativeRouting"
-        static let smartProtocol: String = "smartProtocol"
-        static let streamingServices: String = "streamingServices"
-        static let streamingResourcesUrl: String = "streamingResourcesUrl"
+        case humanValidationFailed = "humanValidationFailed"
+        case alternativeRouting = "alternativeRouting"
+        case smartProtocol = "smartProtocol"
+        case streamingServices = "streamingServices"
+        case streamingResourcesUrl = "streamingResourcesUrl"
 
-        static let wireguardConfig = "WireguardConfig"
-        static let smartProtocolConfig = "SmartProtocolConfig"
+        case wireguardConfig = "WireguardConfig"
+        case smartProtocolConfig = "SmartProtocolConfig"
+        
     }
     
     public static let hasConnectedNotification = Notification.Name("HasConnectedChanged")
@@ -177,20 +181,20 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
-            let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect)
+            let autoConnectEnabled = storage.defaults.bool(forKey: Keys.autoConnect.rawValue)
             if autoConnectEnabled {
                 guard let authCredentials = AuthKeychain.fetch() else { return (autoConnectEnabled, nil) }
-                let profileId = storage.defaults.string(forKey: Keys.autoConnectProfile + authCredentials.username)
+                let profileId = storage.defaults.string(forKey: Keys.autoConnectProfile.rawValue + authCredentials.username)
                 return (autoConnectEnabled, profileId)
             } else {
                 return (false, nil)
             }
         }
         set {
-            storage.setValue(newValue.enabled, forKey: Keys.autoConnect)
+            storage.setValue(newValue.enabled, forKey: Keys.autoConnect.rawValue)
             
             if let profileId = newValue.profileId, let authCredentials = AuthKeychain.fetch() {
-                storage.setValue(profileId, forKey: Keys.autoConnectProfile + authCredentials.username)
+                storage.setValue(profileId, forKey: Keys.autoConnectProfile.rawValue + authCredentials.username)
             }
         }
     }
@@ -198,97 +202,97 @@ public class PropertiesManager: PropertiesManagerProtocol {
     // Use to do first time connecting stuff if needed
     public var hasConnected: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.connectOnDemand)
+            return storage.defaults.bool(forKey: Keys.connectOnDemand.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.connectOnDemand)
+            storage.setValue(newValue, forKey: Keys.connectOnDemand.rawValue)
             postNotificationOnUIThread(type(of: self).hasConnectedNotification, object: newValue)
         }
     }
     
     public var lastIkeConnection: ConnectionConfiguration? {
         get {
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastIkeConnection)
+            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastIkeConnection.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection)
+            storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection.rawValue)
         }
     }
     
     public var lastOpenVpnConnection: ConnectionConfiguration? {
         get {
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastOpenVpnConnection)
+            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastOpenVpnConnection.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection)
+            storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection.rawValue)
         }
     }
     
     public var lastWireguardConnection: ConnectionConfiguration? {
         get {
-            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastWireguardConnection)
+            return storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastWireguardConnection.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection)
+            storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection.rawValue)
         }
     }
 
     public var lastPreparedServer: ServerModel? {
         get {
-            return storage.getDecodableValue(ServerModel.self, forKey: Keys.lastPreparingServer)
+            return storage.getDecodableValue(ServerModel.self, forKey: Keys.lastPreparingServer.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastPreparingServer)
+            storage.setEncodableValue(newValue, forKey: Keys.lastPreparingServer.rawValue)
         }
     }
 
     public var lastConnectedTimeStamp: Double {
         get {
-            return storage.defaults.double(forKey: Keys.lastConnectedTimeStamp)
+            return storage.defaults.double(forKey: Keys.lastConnectedTimeStamp.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.lastConnectedTimeStamp)
+            storage.setValue(newValue, forKey: Keys.lastConnectedTimeStamp.rawValue)
         }
     }
     
     public var lastConnectionRequest: ConnectionRequest? {
         get {
-            return storage.getDecodableValue(ConnectionRequest.self, forKey: Keys.lastConnectionRequest)
+            return storage.getDecodableValue(ConnectionRequest.self, forKey: Keys.lastConnectionRequest.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest)
+            storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest.rawValue)
         }
     }
     
     public var lastUserAccountPlan: AccountPlan? {
         get {
             guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan + authCredentials.username)
+            let result = storage.defaults.string(forKey: Keys.lastUserAccountPlan.rawValue + authCredentials.username)
             return result != nil ? AccountPlan(rawValue: result!) : nil
         }
         set {
             guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue?.rawValue, forKey: Keys.lastUserAccountPlan + authCredentials.username)
+            storage.setValue(newValue?.rawValue, forKey: Keys.lastUserAccountPlan.rawValue + authCredentials.username)
         }
     }
     
     public var quickConnect: String? {
         get {
             guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            return storage.defaults.string(forKey: Keys.quickConnectProfile + authCredentials.username)
+            return storage.defaults.string(forKey: Keys.quickConnectProfile.rawValue + authCredentials.username)
         }
         set {
             guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue, forKey: Keys.quickConnectProfile + authCredentials.username)
+            storage.setValue(newValue, forKey: Keys.quickConnectProfile.rawValue + authCredentials.username)
         }
     }
     
     public var secureCoreToggle: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.secureCoreToggle)
+            return storage.defaults.bool(forKey: Keys.secureCoreToggle.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.secureCoreToggle)
+            storage.setValue(newValue, forKey: Keys.secureCoreToggle.rawValue)
         }
     }
     
@@ -298,75 +302,75 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var reportBugEmail: String? {
         get {
-            return storage.defaults.string(forKey: Keys.lastBugReportEmail)
+            return storage.defaults.string(forKey: Keys.lastBugReportEmail.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.lastBugReportEmail)
+            storage.setValue(newValue, forKey: Keys.lastBugReportEmail.rawValue)
         }
     }
     
     // Destinguishes if kill switch should be disabled
     public var intentionallyDisconnected: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.intentionallyDisconnected)
+            return storage.defaults.bool(forKey: Keys.intentionallyDisconnected.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.intentionallyDisconnected)
+            storage.setValue(newValue, forKey: Keys.intentionallyDisconnected.rawValue)
         }
     }
     
     public var userIp: String? {
         get {
-            return storage.defaults.object(forKey: Keys.userIp) as? String
+            return storage.defaults.object(forKey: Keys.userIp.rawValue) as? String
         }
         set {
-            storage.setValue(newValue, forKey: Keys.userIp)
+            storage.setValue(newValue, forKey: Keys.userIp.rawValue)
             postNotificationOnUIThread(type(of: self).userIpNotification, object: userIp)
         }
     }
     
     public var userDataDisclaimerAgreed: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.userDataDisclaimerAgreed)
+            return storage.defaults.bool(forKey: Keys.userDataDisclaimerAgreed.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.userDataDisclaimerAgreed)
+            storage.setValue(newValue, forKey: Keys.userDataDisclaimerAgreed.rawValue)
         }
     }
     
     public var trialWelcomed: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.trialWelcomed)
+            return storage.defaults.bool(forKey: Keys.trialWelcomed.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.trialWelcomed)
+            storage.setValue(newValue, forKey: Keys.trialWelcomed.rawValue)
         }
     }
     
     public var warnedTrialExpiring: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.warnedTrialExpiring)
+            return storage.defaults.bool(forKey: Keys.warnedTrialExpiring.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.warnedTrialExpiring)
+            storage.setValue(newValue, forKey: Keys.warnedTrialExpiring.rawValue)
         }
     }
     
     public var warnedTrialExpired: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.warnedTrialExpired)
+            return storage.defaults.bool(forKey: Keys.warnedTrialExpired.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.warnedTrialExpired)
+            storage.setValue(newValue, forKey: Keys.warnedTrialExpired.rawValue)
         }
     }
 
     public var apiEndpoint: String? {
         get {
-            return storage.defaults.string(forKey: Keys.apiEndpoint)
+            return storage.defaults.string(forKey: Keys.apiEndpoint.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.apiEndpoint)
+            storage.setValue(newValue, forKey: Keys.apiEndpoint.rawValue)
 
             // only use the real api host (set by the app) on live endpoint
             let apiHost = newValue == ApiConstants.liveURL ? ApiConstants.apiHost : ""
@@ -379,113 +383,113 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var customServers: [ServerModel]? {
         get {
-            return storage.getDecodableValue(Array<ServerModel>.self, forKey: Keys.customServers)
+            return storage.getDecodableValue(Array<ServerModel>.self, forKey: Keys.customServers.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.customServers)
+            storage.setEncodableValue(newValue, forKey: Keys.customServers.rawValue)
         }
     }
     
     public var openVpnConfig: OpenVpnConfig {
         get {
-            return storage.getDecodableValue(OpenVpnConfig.self, forKey: Keys.openVpnConfig) ?? OpenVpnConfig()
+            return storage.getDecodableValue(OpenVpnConfig.self, forKey: Keys.openVpnConfig.rawValue) ?? OpenVpnConfig()
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.openVpnConfig)
+            storage.setEncodableValue(newValue, forKey: Keys.openVpnConfig.rawValue)
         }
     }
 
     public var wireguardConfig: WireguardConfig {
         get {
-            return storage.getDecodableValue(WireguardConfig.self, forKey: Keys.wireguardConfig) ?? WireguardConfig()
+            return storage.getDecodableValue(WireguardConfig.self, forKey: Keys.wireguardConfig.rawValue) ?? WireguardConfig()
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.wireguardConfig)
+            storage.setEncodableValue(newValue, forKey: Keys.wireguardConfig.rawValue)
         }
     }
 
     public var smartProtocolConfig: SmartProtocolConfig {
         get {
-            return storage.getDecodableValue(SmartProtocolConfig.self, forKey: Keys.smartProtocolConfig) ?? SmartProtocolConfig()
+            return storage.getDecodableValue(SmartProtocolConfig.self, forKey: Keys.smartProtocolConfig.rawValue) ?? SmartProtocolConfig()
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.smartProtocolConfig)
+            storage.setEncodableValue(newValue, forKey: Keys.smartProtocolConfig.rawValue)
         }
     }
     
     public var vpnProtocol: VpnProtocol {
         get {
-            return storage.getDecodableValue(VpnProtocol.self, forKey: Keys.vpnProtocol) ?? DefaultConstants.vpnProtocol
+            return storage.getDecodableValue(VpnProtocol.self, forKey: Keys.vpnProtocol.rawValue) ?? DefaultConstants.vpnProtocol
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.vpnProtocol)
+            storage.setEncodableValue(newValue, forKey: Keys.vpnProtocol.rawValue)
             postNotificationOnUIThread(PropertiesManager.vpnProtocolNotification, object: newValue)
         }
     }
     
     public var lastAppVersion: String {
         get {
-            return storage.defaults.string(forKey: Keys.lastAppVersion) ?? "0.0.0"
+            return storage.defaults.string(forKey: Keys.lastAppVersion.rawValue) ?? "0.0.0"
         }
         set {
-            storage.setValue(newValue, forKey: Keys.lastAppVersion)
+            storage.setValue(newValue, forKey: Keys.lastAppVersion.rawValue)
         }
     }
     
     public var lastTimeForeground: Date? {
         get {
-            guard let timeSince1970 = storage.defaults.value(forKey: Keys.lastTimeForeground) as? Double else { return nil }
+            guard let timeSince1970 = storage.defaults.value(forKey: Keys.lastTimeForeground.rawValue) as? Double else { return nil }
             return Date(timeIntervalSince1970: timeSince1970)
         }
         set {
-            storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground)
+            storage.setValue(newValue?.timeIntervalSince1970, forKey: Keys.lastTimeForeground.rawValue)
         }
     }
     
     public var netShieldType: NetShieldType? {
         get {
             guard let authCredentials = AuthKeychain.fetch() else { return nil }
-            guard let current = storage.defaults.value(forKey: Keys.netshield + authCredentials.username) as? Int, let type = NetShieldType.init(rawValue: current) else {
+            guard let current = storage.defaults.value(forKey: Keys.netshield.rawValue + authCredentials.username) as? Int, let type = NetShieldType.init(rawValue: current) else {
                 return nil
             }
             return type
         }
         set {
             guard let authCredentials = AuthKeychain.fetch() else { return }
-            storage.setValue(newValue?.rawValue, forKey: Keys.netshield + authCredentials.username)
+            storage.setValue(newValue?.rawValue, forKey: Keys.netshield.rawValue + authCredentials.username)
             postNotificationOnUIThread(PropertiesManager.netShieldNotification, object: newValue)
         }
     }
     
     public var featureFlags: FeatureFlags {
         get {
-            return storage.getDecodableValue(FeatureFlags.self, forKey: Keys.featureFlags) ?? FeatureFlags()
+            return storage.getDecodableValue(FeatureFlags.self, forKey: Keys.featureFlags.rawValue) ?? FeatureFlags()
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.featureFlags)
+            storage.setEncodableValue(newValue, forKey: Keys.featureFlags.rawValue)
             postNotificationOnUIThread(type(of: self).featureFlagsNotification, object: newValue)
         }
     }
     
     public var maintenanceServerRefreshIntereval: Int {
         get {
-            if storage.contains(Keys.maintenanceServerRefreshIntereval) {
-                return storage.defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval)
+            if storage.contains(Keys.maintenanceServerRefreshIntereval.rawValue) {
+                return storage.defaults.integer(forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
             } else {
                 return CoreAppConstants.Maintenance.defaultMaintenanceCheckTime
             }
         }
         set {
-            storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval)
+            storage.setValue(newValue, forKey: Keys.maintenanceServerRefreshIntereval.rawValue)
         }
     }
     
     public var vpnAcceleratorEnabled: Bool {
         get {
-            return storage.defaults.object(forKey: Keys.vpnAcceleratorEnabled) as? Bool ?? true
+            return storage.defaults.object(forKey: Keys.vpnAcceleratorEnabled.rawValue) as? Bool ?? true
         }
         set {
-            storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled)
+            storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled.rawValue)
             postNotificationOnUIThread(type(of: self).vpnAcceleratorNotification, object: newValue)
         }
     }
@@ -495,10 +499,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
             #if os(iOS)
             guard #available(iOS 14, *) else { return false }
             #endif
-            return storage.defaults.bool(forKey: Keys.killSwitch)
+            return storage.defaults.bool(forKey: Keys.killSwitch.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.killSwitch)
+            storage.setValue(newValue, forKey: Keys.killSwitch.rawValue)
             postNotificationOnUIThread(type(of: self).killSwitchNotification, object: newValue)
         }
     }
@@ -508,57 +512,57 @@ public class PropertiesManager: PropertiesManagerProtocol {
             #if os(iOS)
             guard #available(iOS 14.2, *) else { return false }
             #endif
-            return storage.defaults.bool(forKey: Keys.excludeLocalNetworks)
+            return storage.defaults.bool(forKey: Keys.excludeLocalNetworks.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.excludeLocalNetworks)
+            storage.setValue(newValue, forKey: Keys.excludeLocalNetworks.rawValue)
             postNotificationOnUIThread(type(of: self).excludeLocalNetworksNotification, object: newValue)
         }
     }
         
     public var humanValidationFailed: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.humanValidationFailed)
+            return storage.defaults.bool(forKey: Keys.humanValidationFailed.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.humanValidationFailed)
+            storage.setValue(newValue, forKey: Keys.humanValidationFailed.rawValue)
         }
     }
 
     public var alternativeRouting: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.alternativeRouting)
+            return storage.defaults.bool(forKey: Keys.alternativeRouting.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.alternativeRouting)
+            storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
         }
     }
 
     public var smartProtocol: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.smartProtocol)
+            return storage.defaults.bool(forKey: Keys.smartProtocol.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.smartProtocol)
+            storage.setValue(newValue, forKey: Keys.smartProtocol.rawValue)
             postNotificationOnUIThread(type(of: self).smartProtocolNotification, object: newValue)
         }
     }
     
     public var streamingServices: StreamingDictServices {
         get {
-            return storage.getDecodableValue(StreamingDictServices.self, forKey: Keys.streamingServices) ?? StreamingDictServices()
+            return storage.getDecodableValue(StreamingDictServices.self, forKey: Keys.streamingServices.rawValue) ?? StreamingDictServices()
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.streamingServices)
+            storage.setEncodableValue(newValue, forKey: Keys.streamingServices.rawValue)
         }
     }
     
     public var streamingResourcesUrl: String? {
         get {
-            return storage.defaults.string(forKey: Keys.streamingResourcesUrl)
+            return storage.defaults.string(forKey: Keys.streamingResourcesUrl.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.streamingResourcesUrl)
+            storage.setValue(newValue, forKey: Keys.streamingResourcesUrl.rawValue)
         }
     }
 
@@ -581,9 +585,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public init(storage: Storage = Storage()) {
         self.storage = storage
         storage.defaults.register(defaults: [
-            Keys.alternativeRouting: true,
-            Keys.excludeLocalNetworks: true,
-            Keys.smartProtocol: defaultSmartProtocol
+            Keys.alternativeRouting.rawValue: true,
+            Keys.excludeLocalNetworks.rawValue: true,
+            Keys.smartProtocol.rawValue: defaultSmartProtocol
         ])
     }
     
@@ -627,37 +631,37 @@ extension PropertiesManager: ServicePlanDataStorage {
     
     public var servicePlansDetails: [ServicePlanDetails]? {
         get {
-            return storage.getDecodableValue(Array<ServicePlanDetails>.self, forKey: Keys.servicePlans)
+            return storage.getDecodableValue(Array<ServicePlanDetails>.self, forKey: Keys.servicePlans.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.servicePlans)
+            storage.setEncodableValue(newValue, forKey: Keys.servicePlans.rawValue)
         }
     }
     
     public var defaultPlanDetails: ServicePlanDetails? {
         get {
-            return storage.getDecodableValue(ServicePlanDetails.self, forKey: Keys.defaultPlanDetails)
+            return storage.getDecodableValue(ServicePlanDetails.self, forKey: Keys.defaultPlanDetails.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.defaultPlanDetails)
+            storage.setEncodableValue(newValue, forKey: Keys.defaultPlanDetails.rawValue)
         }
     }
     
     public var currentSubscription: Subscription? {
         get {
-            return storage.getDecodableValue(Subscription.self, forKey: Keys.currentSubscription)
+            return storage.getDecodableValue(Subscription.self, forKey: Keys.currentSubscription.rawValue)
         }
         set {
-            storage.setEncodableValue(newValue, forKey: Keys.currentSubscription)
+            storage.setEncodableValue(newValue, forKey: Keys.currentSubscription.rawValue)
         }
     }
     
     public var isIAPUpgradePlanAvailable: Bool {
         get {
-            return storage.defaults.bool(forKey: Keys.isIAPUpgradePlanAvailable)
+            return storage.defaults.bool(forKey: Keys.isIAPUpgradePlanAvailable.rawValue)
         }
         set {
-            storage.setValue(newValue, forKey: Keys.isIAPUpgradePlanAvailable)
+            storage.setValue(newValue, forKey: Keys.isIAPUpgradePlanAvailable.rawValue)
         }
     }
 }

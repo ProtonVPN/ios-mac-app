@@ -131,6 +131,9 @@ open class ReportBugViewModel {
     }
     
     public func send(success: @escaping () -> Void, error: @escaping (Error) -> Void) {
+        
+        propertiesManager.logCurrentState()
+        
         reportsApiService.report(bug: bug, success: {
             DispatchQueue.main.async {
                 self.propertiesManager.reportBugEmail = self.bug.email
