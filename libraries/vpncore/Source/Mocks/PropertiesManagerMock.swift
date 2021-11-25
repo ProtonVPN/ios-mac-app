@@ -103,4 +103,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         reportBugEmail = nil
     }
     
+    public func logCurrentState() {
+    }
 }
