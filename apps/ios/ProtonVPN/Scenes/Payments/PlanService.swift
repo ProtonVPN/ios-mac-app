@@ -95,7 +95,9 @@ final class CorePlanService: PlanService {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             PMLog.D("Purchased plan: \(plan.protonName)")
-            NotificationCenter.default.post(name: planPurchased, object: plan)
+            DispatchQueue.main.async {
+                NotificationCenter.default.post(name: self.planPurchased, object: plan)
+            }
         case let .open(vc: _, opened: opened):
             assert(opened == true)
         case let .planPurchaseProcessingInProgress(accountPlan: plan):
