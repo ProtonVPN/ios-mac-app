@@ -54,6 +54,22 @@ public class Storage {
         Storage.userDefaults().setValue(value, forKey: key)
     }
     
+    public static func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {
+        Storage.userDefaults().setValue(try? JSONEncoder().encode(value), forKey: key)
+    }
+    
+    public static func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
+        guard let data = Storage.userDefaults().data(forKey: key) else {
+            return nil
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch { // Backup for data saved in older app versions (ios: <=2.7.1, macos: <=2.2.2)
+            return try? PropertyListDecoder().decode(T.self, from: data)
+        }
+    }
+    
     public static func contains(_ key: String) -> Bool {
         return Storage.userDefaults().object(forKey: key) != nil
     }
