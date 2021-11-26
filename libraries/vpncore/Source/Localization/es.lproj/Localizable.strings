@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "El plan actual se renovará automáticamente el %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Asignar conexiones VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Iniciar sesión de nuevo";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Thanks for upgrading to PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Conectado con éxito";
 
@@ -1864,7 +1879,7 @@
 "_try_again_without_killswitch" = "Desactivar Kill Switch y reintentar";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network. \n\nContinue?";
+"_turn_ks_on_description" = "Al activar Kill Switch, no podrás acceder a los dispositivos en tu red local. \n\n¿Continuar?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "¿Activar Kill Switch?";

@@ -22,11 +22,13 @@
 
 import Foundation
 
-public struct SemanticVersion {
+public struct SemanticVersion: CustomStringConvertible {
     
     public let metadataComponents: [String]
     public let releaseComponents: [String]
     public let versionComponents: [Int]
+    
+    public var description: String
     
     public var major: Int {
         return versionComponents[0]
@@ -41,6 +43,7 @@ public struct SemanticVersion {
     }
     
     public init(_ version: String) throws {
+        description = version
         metadataComponents = version.components(separatedBy: "+")
         releaseComponents = metadataComponents[0].components(separatedBy: "-")
         let versionStringComponents = releaseComponents[0].components(separatedBy: ".")

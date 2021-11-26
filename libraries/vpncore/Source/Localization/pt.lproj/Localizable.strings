@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "O plano actual renova automaticamente em %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Atribuir ligações VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Iniciar sessão novamente";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Thanks for upgrading to PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Ligado com sucesso";
 
@@ -1786,7 +1801,7 @@
 "_trial_welcome_heading_iOS" = "Boas-vindas a bordo";
 
 /* (No Comment) */
-"_troubleshoot_item_alt_description" = "Caso as páginas do Proton estejam bloqueadas, esta definição permite à aplicação tentar redireccionar o tráfego para ligar ao Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos que mantenha esta definição para maior confiança. [Saiba mais]";
+"_troubleshoot_item_alt_description" = "Caso as páginas do Proton estejam bloqueadas, esta definição permite à aplicação tentar redireccionar o tráfego para ligar ao Proton, o que pode ser útil para contornar firewalls ou problemas de rede. Recomendamos que mantenha esta definição para maior confiança. Saiba mais";
 
 /* (No Comment) */
 "_troubleshoot_item_alt_link1" = "Saiba mais";

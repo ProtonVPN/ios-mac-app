@@ -758,7 +758,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch sta proteggendo il tuo IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Blocks all network traffic when VPN tunnel is lost.";
+"_kill_switch_tooltip" = "Blocca tutto il traffico di rete in caso di perdita del tunnel VPN.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Non chiedermelo più";
@@ -1343,7 +1343,7 @@
 "_report_bug" = "Segnala un bug";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Registri dell'app ProtonVPN\n• Registri OpenVPN\n• Registri WireGuard";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "Email:";
@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "Il piano attuale si rinnoverà automaticamente il %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Assegna connessioni VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Accedi di nuovo";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Grazie per l'aggiornamento a PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Connessione avvenuta con successo";
 
@@ -1610,7 +1625,7 @@
 "_sysex_cannot_enable" = "Impossibile abilitare l'Estensione del Sistema";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
+"_sysex_enabled_description" = "Configurazione completata. Ora puoi navigare in Internet più velocemente con le migliori tecnologie VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configurazione completata";
@@ -1628,10 +1643,10 @@
 "_sysex_wizard_button" = "Inizia la configurazione";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Fare clic su \"Inizia configurazione\". Appariranno due finestre di dialogo, quindi fare clic su \"Apri preferenze di sicurezza\".\nIn alternativa, clicca qui per aprire le stesse impostazioni.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Fare clic su \"Inizia configurazione\". Apparirà una finestra di dialogo, quindi fare clic su \"Apri preferenze di sicurezza\".\nIn alternativa, clicca qui per aprire le stesse impostazioni.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "qui";
@@ -1673,7 +1688,7 @@
 "_sysex_wizard_step5_title" = "Selezione di elementi ProtonVPN";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Per fare ciò, segui i passaggi seguenti:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
 "_sysex_wizard_text_under_steps" = "Sei ora pronto a usare ProtonVPN con le ultime e più veloci tecnologie VPN disponibili!";
