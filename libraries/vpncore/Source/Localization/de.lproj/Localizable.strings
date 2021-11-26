@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "Das aktuelle Abonnement verlängert sich automatisch am %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "VPN-Verbindungen zuweisen";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Um Ihre Nutzung von ProtonVPN zu beginnen, weisen Sie bitte Ihrem Konto oder einem anderen Unterkonto VPN-Verbindungen zu.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Dieser Schritt dauert nur wenige Minuten. Danach können Sie sich anmelden und alle Ihre Geräte schützen.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Erneut anmelden";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Danke für den Umstieg auf Professional/Visionary";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Erfolgreich verbunden";
 
