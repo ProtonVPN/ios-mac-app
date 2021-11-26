@@ -22,6 +22,7 @@
 
 import vpncore
 import UIKit
+import Foundation
 
 enum SessionStatus {
     
@@ -39,6 +40,7 @@ protocol AppSessionManager {
     var loggedIn: Bool { get }
     
     var sessionChanged: Notification.Name { get }
+    var dataReloaded: Notification.Name { get }
 
     func attemptSilentLogIn(completion: @escaping (Result<(), Error>) -> Void)
     func refreshVpnAuthCertificate(success: @escaping () -> Void, failure: @escaping (Error) -> Void)
@@ -69,6 +71,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     let sessionRefreshed = Notification.Name("AppSessionManagerSessionRefreshed")
+    let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
         
     var sessionStatus: SessionStatus = .notEstablished
     
@@ -379,6 +382,12 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
         guard AuthKeychain.fetch() != nil else {
             return
         }
-        retrievePropertiesAndLogIn(success: {}, failure: { _ in })
+
+        PMLog.D("Reloading data after plan purchase")
+        retrievePropertiesAndLogIn(success: { [dataReloaded] in
+            NotificationCenter.default.post(name: dataReloaded, object: nil)
+        }, failure: { error in
+            PMLog.D("Data reload failed after plan purchase with \(error)")            
+        })
     }
 }
