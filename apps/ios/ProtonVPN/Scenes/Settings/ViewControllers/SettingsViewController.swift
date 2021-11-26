@@ -23,13 +23,12 @@
 import UIKit
 import vpncore
 
-class SettingsViewController: UIViewController {
+final class SettingsViewController: UIViewController {
 
-    @IBOutlet weak var tableView: UITableView!
-    
-    @IBOutlet weak var connectionBarContainerView: UIView!
-    public var connectionBarViewController: ConnectionBarViewController?
+    @IBOutlet private weak var tableView: UITableView!
+    @IBOutlet private weak var connectionBarContainerView: UIView!
 
+    var connectionBarViewController: ConnectionBarViewController?
     var genericDataSource: GenericTableViewDataSource?
     var viewModel: SettingsViewModel? {
         didSet {
@@ -37,8 +36,12 @@ class SettingsViewController: UIViewController {
                 pushViewController(viewController)
             }
             viewModel?.reloadNeeded = { [weak self] in
-                self?.setupTableView()
-                self?.tableView.reloadData()
+                guard let self = self, self.isViewLoaded else {
+                    return
+                }
+
+                self.setupTableView()
+                self.tableView.reloadData()
             }
         }
     }
