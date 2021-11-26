@@ -183,10 +183,24 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             }
         }
     }
-    
-    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {       
+
+    // swiftlint:disable function_body_length
+    private func retrievePropertiesAndLogIn(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
+        let group = DispatchGroup()
+
+        var vpnPropertiesError: Error?
+        group.enter()
         vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+            let fail = { (error: Error) in
+                vpnPropertiesError = error
+                group.leave()
+            }
+            let ok = {
+                group.leave()
+            }
+
             guard let self = self else {
+                ok()
                 return
             }
 
@@ -211,28 +225,48 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 self.resolveActiveSession(success: { [weak self] in
                     self?.setAndNotify(for: .established)
                     ProfileManager.shared.refreshProfiles()
-                    self?.refreshVpnAuthCertificate(success: { [weak self] in self?.planService.updateServicePlans { $0.invoke(success: success, failure: failure) } }, failure: failure)
+                    self?.refreshVpnAuthCertificate(success: ok, failure: fail)
                 }, failure: { error in
+                    fail(error)
                     self.logOutCleanup()
-                    failure(error)
                 })
             case let .failure(error):
                 PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
                 guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
                       self.propertiesManager.userIp != nil,
                       !(error is KeychainError) else {
-                    failure(error)
-                    return
+                          fail(error)
+                          return
                 }
 
                 self.setAndNotify(for: .established)
                 ProfileManager.shared.refreshProfiles()
-                self.refreshVpnAuthCertificate(success: { [weak self] in
-                    self?.planService.updateServicePlans { $0.invoke(success: success, failure: failure) }
-                }, failure: failure)
+                self.refreshVpnAuthCertificate(success: ok, failure: fail)
             }
-        }        
+        }
+
+        var plansError: Error?
+        group.enter()
+        planService.updateServicePlans { result in
+            switch result {
+            case .success:
+                break
+            case let .failure(error):
+                plansError = error
+            }
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            if let error = vpnPropertiesError ?? plansError {
+                failure(error)
+                return
+            }
+
+            success()
+        }
     }
+    // swiftlint:enable function_body_length
     
     private func resolveActiveSession(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         let refreshNotification = Notification(name: sessionRefreshed, object: nil)
