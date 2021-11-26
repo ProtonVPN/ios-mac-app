@@ -89,10 +89,6 @@ public enum AccountPlan: String {
             return nil
         }
     }
-    /*
-    public func fetchDetails() -> ServicePlanDetails? {
-        return ServicePlanDataServiceImplementation.shared.detailsOfServicePlan(named: self.rawValue)
-    }*/
     
     public var name: String {
         switch self {
