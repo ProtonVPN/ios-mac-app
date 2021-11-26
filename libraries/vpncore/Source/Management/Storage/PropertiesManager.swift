@@ -206,60 +206,37 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var lastIkeConnection: ConnectionConfiguration? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.lastIkeConnection) else { return nil }
-            
-            do {
-                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
-            } catch {
-                return nil
-            }
+            return Storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastIkeConnection)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastIkeConnection)
+            Storage.setEncodableValue(newValue, forKey: Keys.lastIkeConnection)
         }
     }
     
     public var lastOpenVpnConnection: ConnectionConfiguration? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.lastOpenVpnConnection) else { return nil }
-            
-            do {
-                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
-            } catch {
-                return nil
-            }
+            return Storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastOpenVpnConnection)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastOpenVpnConnection)
+            Storage.setEncodableValue(newValue, forKey: Keys.lastOpenVpnConnection)
         }
     }
     
     public var lastWireguardConnection: ConnectionConfiguration? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.lastWireguardConnection) else { return nil }
-            
-            do {
-                return try PropertyListDecoder().decode(ConnectionConfiguration.self, from: data)
-            } catch {
-                return nil
-            }
+            return Storage.getDecodableValue(ConnectionConfiguration.self, forKey: Keys.lastWireguardConnection)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastWireguardConnection)
+            Storage.setEncodableValue(newValue, forKey: Keys.lastWireguardConnection)
         }
     }
 
     public var lastPreparedServer: ServerModel? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.lastPreparingServer) else { return nil }
-            return try? PropertyListDecoder().decode(ServerModel.self, from: data)
+            return Storage.getDecodableValue(ServerModel.self, forKey: Keys.lastPreparingServer)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastPreparingServer)
+            Storage.setEncodableValue(newValue, forKey: Keys.lastPreparingServer)
         }
     }
 
@@ -274,14 +251,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var lastConnectionRequest: ConnectionRequest? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.lastConnectionRequest) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(ConnectionRequest.self, from: data)
+            return Storage.getDecodableValue(ConnectionRequest.self, forKey: Keys.lastConnectionRequest)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastConnectionRequest)
+            Storage.setEncodableValue(newValue, forKey: Keys.lastConnectionRequest)
         }
     }
     
@@ -404,72 +377,46 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var customServers: [ServerModel]? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.customServers) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Array<ServerModel>.self, from: data)
+            return Storage.getDecodableValue(Array<ServerModel>.self, forKey: Keys.customServers)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.customServers)
+            Storage.setEncodableValue(newValue, forKey: Keys.customServers)
         }
     }
     
     public var openVpnConfig: OpenVpnConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.openVpnConfig), let config = try? PropertyListDecoder().decode(OpenVpnConfig.self, from: data)  else {
-                return OpenVpnConfig()
-            }
-            return config
+            return Storage.getDecodableValue(OpenVpnConfig.self, forKey: Keys.openVpnConfig) ?? OpenVpnConfig()
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.openVpnConfig)
+            Storage.setEncodableValue(newValue, forKey: Keys.openVpnConfig)
         }
     }
 
     public var wireguardConfig: WireguardConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.wireguardConfig), let config = try? PropertyListDecoder().decode(WireguardConfig.self, from: data) else {
-                return WireguardConfig()
-            }
-            return config
+            return Storage.getDecodableValue(WireguardConfig.self, forKey: Keys.wireguardConfig) ?? WireguardConfig()
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.wireguardConfig)
+            Storage.setEncodableValue(newValue, forKey: Keys.wireguardConfig)
         }
     }
 
     public var smartProtocolConfig: SmartProtocolConfig {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.smartProtocolConfig), let config = try? PropertyListDecoder().decode(SmartProtocolConfig.self, from: data) else {
-                return SmartProtocolConfig()
-            }
-            return config
+            return Storage.getDecodableValue(SmartProtocolConfig.self, forKey: Keys.smartProtocolConfig) ?? SmartProtocolConfig()
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.smartProtocolConfig)
+            Storage.setEncodableValue(newValue, forKey: Keys.smartProtocolConfig)
         }
     }
     
     public var vpnProtocol: VpnProtocol {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.vpnProtocol) else {
-                return DefaultConstants.vpnProtocol
-            }
-            
-            do {
-                return try PropertyListDecoder().decode(VpnProtocol.self, from: data)
-            } catch {
-                return DefaultConstants.vpnProtocol
-                
-            }
+            return Storage.getDecodableValue(VpnProtocol.self, forKey: Keys.vpnProtocol) ?? DefaultConstants.vpnProtocol
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.vpnProtocol)
+            Storage.setEncodableValue(newValue, forKey: Keys.vpnProtocol)
             postNotificationOnUIThread(PropertiesManager.vpnProtocolNotification, object: newValue)
         }
     }
@@ -510,17 +457,11 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var featureFlags: FeatureFlags {
         get {
-            var current: FeatureFlags?
-            if let data = Storage.userDefaults().data(forKey: Keys.featureFlags) {
-                current = try? JSONDecoder().decode(FeatureFlags.self, from: data)
-            }
-            return current ?? FeatureFlags()
+            return Storage.getDecodableValue(FeatureFlags.self, forKey: Keys.featureFlags) ?? FeatureFlags()
         }
         set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                Storage.setValue(data, forKey: Keys.featureFlags)
-                postNotificationOnUIThread(type(of: self).featureFlagsNotification, object: newValue)
-            }
+            Storage.setEncodableValue(newValue, forKey: Keys.featureFlags)
+            postNotificationOnUIThread(type(of: self).featureFlagsNotification, object: newValue)
         }
     }
     
@@ -603,16 +544,10 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     public var streamingServices: StreamingDictServices {
         get {
-            if let data = Storage.userDefaults().data(forKey: Keys.streamingServices),
-               let stored = try? JSONDecoder().decode(StreamingDictServices.self, from: data) {
-                return stored
-            }
-            return [:]
+            return Storage.getDecodableValue(StreamingDictServices.self, forKey: Keys.streamingServices) ?? StreamingDictServices()
         }
         set {
-            if let data = try? JSONEncoder().encode(newValue) {
-                Storage.setValue(data, forKey: Keys.streamingServices)
-            }
+            Storage.setEncodableValue(newValue, forKey: Keys.streamingServices)
         }
     }
     
@@ -679,40 +614,28 @@ extension PropertiesManager: ServicePlanDataStorage {
     
     public var servicePlansDetails: [ServicePlanDetails]? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.servicePlans) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Array<ServicePlanDetails>.self, from: data)
+            return Storage.getDecodableValue(Array<ServicePlanDetails>.self, forKey: Keys.servicePlans)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.servicePlans)
+            Storage.setEncodableValue(newValue, forKey: Keys.servicePlans)
         }
     }
     
     public var defaultPlanDetails: ServicePlanDetails? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.defaultPlanDetails) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(ServicePlanDetails.self, from: data)
+            return Storage.getDecodableValue(ServicePlanDetails.self, forKey: Keys.defaultPlanDetails)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.defaultPlanDetails)
+            Storage.setEncodableValue(newValue, forKey: Keys.defaultPlanDetails)
         }
     }
     
     public var currentSubscription: Subscription? {
         get {
-            guard let data = Storage.userDefaults().data(forKey: Keys.currentSubscription) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Subscription.self, from: data)
+            return Storage.getDecodableValue(Subscription.self, forKey: Keys.currentSubscription)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.currentSubscription)
+            Storage.setEncodableValue(newValue, forKey: Keys.currentSubscription)
         }
     }
     
