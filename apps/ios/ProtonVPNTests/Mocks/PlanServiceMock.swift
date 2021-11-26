@@ -24,7 +24,7 @@ import Foundation
 import vpncore
 
 class PlanServiceMock: PlanService {
-    let planPurchased = Notification.Name("PlanServicePlanPurchased")
+    weak var delegate: PlanServiceDelegate?
     
     var callbackPresentPlanSelection: (() -> Void)?
     var callbackPresentSubscriptionManagement: (() -> Void)?

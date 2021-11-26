@@ -76,7 +76,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         self.factory = factory
         super.init(factory: factory)
 
-        NotificationCenter.default.addObserver(self, selector: #selector(planPurchased), name: planService.planPurchased, object: nil)
+        planService.delegate = self
     }
     
     // MARK: - Beginning of the login logic.
@@ -338,8 +338,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         
         refreshTimer.start()
     }
+}
 
-    @objc private func planPurchased() {
+extension AppSessionManagerImplementation: PlanServiceDelegate {
+    func paymentTransactionDidFinish() {
         guard AuthKeychain.fetch() != nil else {
             return
         }
