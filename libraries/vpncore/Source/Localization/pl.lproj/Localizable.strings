@@ -344,7 +344,7 @@
 "_error_apply_payment_failed_message" = "Płatność nie została przetworzona. Aby spróbować ponownie, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz.\nAby kontynuować darmową subskrypcję, kliknij przycisk Kontynuuj z darmowym kontem. Możesz ulepszyć swoje konto w późniejszym czasie.";
 
 /* (No Comment) */
-"_error_apply_payment_failed_on_registration_message" = "Zarejestrowałeś się pomyślnie, ale Twoja płatność nie została przetworzona. Aby ponownie wysłać informację dotyczącą płatności, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz. Jeśli ten problem się powtarza, skontaktuj się ze wsparciem klienta.";
+"_error_apply_payment_failed_on_registration_message" = "Rejestracja przebiegła pomyślnie, ale Twoja płatność nie została przetworzona. Aby ponownie wysłać informację dotyczącą płatności, kliknij przycisk Ponów próbę. Twoje konto zostanie obciążone tylko raz. Jeśli ten problem się powtarza, skontaktuj się ze wsparciem klienta.";
 
 /* (No Comment) */
 "_error_apply_payment_failed_on_registration_support" = "Skontaktuj się ze wsparciem klienta";
@@ -1385,10 +1385,10 @@
 "_resend_code" = "Poproś o nowy kod";
 
 /* iOS: button in human verification code form */
-"_resend_no_code" = "Nie otrzymałeś kodu?";
+"_resend_no_code" = "Nie otrzymano kodu?";
 
 /* iOS: message after human verification code resending */
-"_resend_success" = "Poprosiłeś o nowy kod";
+"_resend_success" = "Poproszono o nowy kod";
 
 /* MacOS: button in login screen */
 "_reset_password" = "Zresetuj hasło";
@@ -1596,6 +1596,21 @@
 
 /* (No Comment) */
 "_subscription_will_renew" = "Obecny plan zostanie automatycznie odnowiony w dniu %@.";
+
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "Przypisz połączenia VPN";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Przypisz połączenia VPN do swojego konta ProtonVPN.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Ten krok zajmie tylko kilka minut. Po tym kroku, będziesz mógł zalogować się i chronić wszystkie swoje urządzenia.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Zaloguj się ponownie";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Dziękujemy za ulepszenie planu do wersji PROFESSIONAL/VISIONARY";
 
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Połączono";

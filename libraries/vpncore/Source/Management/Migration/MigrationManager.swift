@@ -43,7 +43,7 @@ public protocol MigrationManagerFactory {
 
 public class MigrationManager: NSObject, MigrationManagerProtocol {
     
-    private let currentVersion: MigrationVersion
+    private let currentVersion: SemanticVersion
     private let propertiesManager: PropertiesManagerProtocol
     
     private var migrationBlocks: [(String, MigrationBlock)] = []
@@ -52,7 +52,9 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     
     public required init(_ propertiesManager: PropertiesManagerProtocol, currentAppVersion: String) {
         self.propertiesManager = propertiesManager
-        self.currentVersion = MigrationVersion(currentAppVersion)
+        // swiftlint:disable force_try
+        self.currentVersion = try! SemanticVersion(currentAppVersion) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
+        // swiftlint:enable force_try
         super.init()
     }
     
@@ -72,21 +74,25 @@ public class MigrationManager: NSObject, MigrationManagerProtocol {
     
     private func migrate( _ completion: @escaping OptionalErrorBlock, step: Int ) {
         if step >= migrationBlocks.count {
-            propertiesManager.lastAppVersion = currentVersion
+            propertiesManager.lastAppVersion = currentVersion.description
             completion(nil)
             return
         }
         
-        let migrationVersion = MigrationVersion( migrationBlocks[step].0 )
+        // swiftlint:disable force_try
+        let migrationVersion = try! SemanticVersion(migrationBlocks[step].0) // String with app version comes from AppDelegate if it's in wrong format, blame yourself
+        let lastAppVersion = try! SemanticVersion(self.propertiesManager.lastAppVersion) // If no last version is set 0.0.0 is returned, so no crash here
+        // swiftlint:enable force_try
         let block = migrationBlocks[step].1
         
-        if migrationVersion > self.propertiesManager.lastAppVersion {
-            block( self.propertiesManager.lastAppVersion.versionString ) { error in
-                guard let error = error else {
-                    self.migrate(completion, step: step + 1)
+        if migrationVersion > lastAppVersion {
+            block( self.propertiesManager.lastAppVersion ) { error in
+                if let error = error {
+                    completion(error)
                     return
                 }
-                completion(error)
+                self.propertiesManager.lastAppVersion = migrationVersion.description
+                self.migrate(completion, step: step + 1)
             }
         } else {
             self.migrate(completion, step: step + 1)
