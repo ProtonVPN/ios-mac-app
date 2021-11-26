@@ -149,11 +149,14 @@ public enum AccountPlan: String {
     }
     
     public var devicesCount: Int {
-        /*guard let details = fetchDetails() else {
-            return 0
+        switch self {
+        case .plus:
+            return 10
+        case .basic:
+            return 2
+        default:
+            return 1
         }
-        return details.maxVPN*/
-        fatalError("FIX ME")
     }
     
     public var speed: String {
