@@ -60,7 +60,7 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var currentSubscription: Subscription?
     public var apiEndpoint: String?
     public var customServers: [ServerModel]?
-    public var lastAppVersion = MigrationVersion("0")
+    public var lastAppVersion = "0.0.0"
     public var lastTimeForeground: Date?
     public var featureFlags: FeatureFlags = FeatureFlags()
     public var netShieldType: NetShieldType? = .off
