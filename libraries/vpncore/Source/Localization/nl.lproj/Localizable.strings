@@ -1343,7 +1343,7 @@
 "_report_bug" = "Bug melden";
 
 /* Mac bug report: description text before bug report form */
-"_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
+"_report_description" = "Door de volgende details te verstrekken, kan ons team uw probleem identificeren en een mogelijke oplossing met hogere kansen en kortere tijd vinden:\n• ProtonVPN app logs\n• OpenVPN logboeken\n• WireGuard logboeken";
 
 /* Mac bug report: email field label */
 "_report_field_email" = "E-mailadres:";
@@ -1511,7 +1511,7 @@
 "_skip" = "Overslaan";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Enable Smart Protocol to automatically use the protocol and port that offers the best connectivity.";
+"_smart_protocol_description" = "Schakel Smart Protocol in om automatisch het protocol en de poort te gebruiken die de beste connectiviteit bieden.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Uw verbinding wordt opnieuw gestart om de Smart Protocol modus te wijzigen.";
@@ -1597,6 +1597,21 @@
 /* (No Comment) */
 "_subscription_will_renew" = "Huidige abonnement wordt automatisch verlengd op %@.";
 
+/* (No Comment) */
+"_subuser_alert_assign_connections_button" = "VPN-verbindingen toewijzen";
+
+/* (No Comment) */
+"_subuser_alert_description1" = "Om uw reis met ProtonVPN te beginnen wijst u VPN-verbindingen toe aan uw account of een ander sub-account.";
+
+/* (No Comment) */
+"_subuser_alert_description2" = "Deze stap duurt slechts een paar minuten. Daarna kunt u zich aanmelden en al uw apparaten beveiligen.";
+
+/* (No Comment) */
+"_subuser_alert_login_button" = "Opnieuw inloggen";
+
+/* Subuser alert */
+"_subuser_alert_title" = "Bedankt voor het upgraden naar PROFESSIONAL/VISIONARY";
+
 /* MacOS: connecting overlay */
 "_successfully_connected" = "Succesvol verbonden";
 
@@ -1607,49 +1622,49 @@
 "_switch_side_button_on" = "AAN";
 
 /* (No Comment) */
-"_sysex_cannot_enable" = "Cannot enable System Extension";
+"_sysex_cannot_enable" = "Kan systeemuitbreiding niet inschakelen";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Configuration completed. Now you can browse the Internet faster with the best VPN technologies.";
+"_sysex_enabled_description" = "Configuratie voltooid. Nu kunt u sneller op het internet surfen met de beste VPN-technologieën.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Configuratie voltooid";
 
 /* (No Comment) */
-"_sysex_error_description" = "An error occurred while installing System Extension.\nReinstall ProtonVPN, making sure it is located in the Applications folder, to fix this problem. Alternatively, contact our support.";
+"_sysex_error_description" = "Er is een fout opgetreden tijdens de installatie van Systeemuitbreiding.\nInstalleer ProtonVPN opnieuw en zorg ervoor dat het zich in de map Toepassingen bevindt om dit probleem op te lossen. U kunt ook contact opnemen met onze ondersteuning.";
 
 /* (No Comment) */
-"_sysex_settings_description" = "ProtonVPN requires to load a System Extension to leverage Smart Protocol, OpenVPN and WireGuard.";
+"_sysex_settings_description" = "ProtonVPN vereist het laden van een Systeem Extensie om gebruik te maken van Smart Protocol, OpenVPN en WireGuard.";
 
 /* OpenVPN /  WireGuard / System Extensions */
 "_sysex_settings_title" = "Systeemextensie vereist";
 
 /* System exetnsion wizard in mac: Button */
-"_sysex_wizard_button" = "Begin configuration";
+"_sysex_wizard_button" = "Begin configuratie";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with more than one system extension) */
-"_sysex_wizard_step1_description" = "Click on \"Begin configuration\". Two dialogs will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description" = "Klik op \"Begin configuratie\". Er verschijnen twee dialoogvensters, klik dan op \"Open Security Preferences\".\nAls alternatief kunt u hier klikken om dezelfde instellingen te openen. uration.";
 
 /* System exetnsion wizard in mac: Step nr.1 description (for case with only one system extension) */
-"_sysex_wizard_step1_description_1" = "Click on \"Begin configuration\". Dialog will appear, then click on \"Open Security Preferences\".\nAlternatively, click here to open the same settings.";
+"_sysex_wizard_step1_description_1" = "Klik op \"Begin configuratie\". Dialoog zal verschijnen, klik dan op \"Open Security Preferences\".\nU kunt ook hier klikken om dezelfde instellingen te openen.";
 
 /* System exetnsion wizard in mac: Step nr.1 text that will have a link to System Preferences system app */
 "_sysex_wizard_step1_description_link" = "hier";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with more than one system extension) */
-"_sysex_wizard_step1_title" = "Open Security Preferences";
+"_sysex_wizard_step1_title" = "Open Veiligheid Voorkeuren";
 
 /* System exetnsion wizard in mac: Step nr.1 title (for case with only one system extension) */
-"_sysex_wizard_step1_title_1" = "Open Security Preferences";
+"_sysex_wizard_step1_title_1" = "Open Veiligheid Voorkeuren";
 
 /* System exetnsion wizard in mac: Step nr.2 description */
-"_sysex_wizard_step2_description" = "Click the lock to make changes";
+"_sysex_wizard_step2_description" = "Klik op het slotje om wijzigingen aan te brengen";
 
 /* System exetnsion wizard in mac: Step nr.2 title */
-"_sysex_wizard_step2_title" = "Unlock to make changes";
+"_sysex_wizard_step2_title" = "Ontgrendelen om veranderingen aan te brengen";
 
 /* System exetnsion wizard in mac: Step nr.3 description */
-"_sysex_wizard_step3_description" = "Enter your macOS credentials to authenticate";
+"_sysex_wizard_step3_description" = "Voer uw macOS-gegevens in om te verifiëren";
 
 /* System exetnsion wizard in mac: Step nr.3 title */
 "_sysex_wizard_step3_title" = "Inloggegevens invoeren";
@@ -1667,22 +1682,22 @@
 "_sysex_wizard_step4_title_1" = "Knop \"Toestaan\"";
 
 /* System exetnsion wizard in mac: Step nr.5 description */
-"_sysex_wizard_step5_description" = "Select both ProtonVPN items to enable custom protocols and click “OK”";
+"_sysex_wizard_step5_description" = "Selecteer beide ProtonVPN items om aangepaste protocollen in te schakelen en klik op \"OK\"";
 
 /* System exetnsion wizard in mac: Step nr.5 title */
-"_sysex_wizard_step5_title" = "Selecting ProtonVPN items";
+"_sysex_wizard_step5_title" = "ProtonVPN items selecteren";
 
 /* System exetnsion wizard in mac: Subtitle */
-"_sysex_wizard_subtitle" = "In order to do so, follow the steps below:";
+"_sysex_wizard_subtitle" = "Volg de onderstaande stappen om dit te doen:";
 
 /* System exetnsion wizard in mac: Text under 5 points */
-"_sysex_wizard_text_under_steps" = "You’re now ready to use ProtonVPN with the latest and fastest VPN technologies available!";
+"_sysex_wizard_text_under_steps" = "U bent nu klaar om ProtonVPN te gebruiken met de nieuwste en snelste VPN-technologieën die beschikbaar zijn!";
 
 /* System exetnsion wizard in mac: Main title */
-"_sysex_wizard_title" = "Enjoy the fastest connections by enabling custom protocols";
+"_sysex_wizard_title" = "Geniet van de snelste verbindingen door aangepaste protocollen in te schakelen";
 
 /* System exetnsion wizard in mac: Main title */
-"_sysex_wizard_window_title" = "Enabling custom protocols";
+"_sysex_wizard_window_title" = "Aangepaste protocollen inschakelen";
 
 /* MacOS: Settings -> General: name of field. */
 "_system_notifications" = "Systeemnotificaties";
@@ -1721,7 +1736,7 @@
 "_timed_out" = "verlopen";
 
 /* MacOS: shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on */
-"_timeout_ks_ike_descritpion" = "Another application might be interfering with Kill Switch. To fix this problem, switch to the OpenVPN protocol or disable Kill Switch and retry.";
+"_timeout_ks_ike_descritpion" = "Een andere toepassing kan interfereren met Kill Switch. Om dit probleem op te lossen, schakelt u over naar het OpenVPN-protocol of schakelt u Kill Switch uit en probeert u het opnieuw.";
 
 /* MacOS: button shown when connection timed out and user has problematic setup involving ikev2 and Kill Switch on. Don't make this text longer than in english. */
 "_timeout_ks_ike_switch_protocol" = "Overschakelen naar OpenVPN en probeer het opnieuw";
@@ -1864,7 +1879,7 @@
 "_try_again_without_killswitch" = "Schakel Kill Switch uit en probeer het opnieuw";
 
 /* Description text of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_description" = "By activating Kill Switch, you won't be able to access devices on your local network. \n\nContinue?";
+"_turn_ks_on_description" = "Door het activeren van de Kill Switch, bent u niet in staat om toegang te krijgen tot apparaten op uw lokale netwerk. \n\nDoorgaan?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
 "_turn_ks_on_title" = "De Kill Switch inschakelen?";
@@ -1993,7 +2008,7 @@
 "_vpn_accelerator_change_title" = "Wijzig VPN Versneller";
 
 /* Tooltip on Connection Settings for Accelerator toggle, we temporary added a second % at the end of the string to avoid a SwiftGen error that removes single % characters, should be replaced in all languages */
-"_vpn_accelerator_description" = "VPN Accelerator enables a set of unique performance enhancing technologies which can increase VPN speeds by up to 400%%.\nLearn more";
+"_vpn_accelerator_description" = "VPN Accelerator maakt gebruik van een reeks unieke prestatieverbeterende technologieën die de VPN-snelheden kunnen opdrijven tot 400%.\nLeer meer";
 
 /* Link with more info in the VPN Accelerator description */
 "_vpn_accelerator_description_alt_link" = "Meer informatie";

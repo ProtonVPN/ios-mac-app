@@ -165,20 +165,21 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 // MARK: - Migration
 extension AppDelegate {
     fileprivate func checkMigration() {
-        container.makeMigrationManager().addCheck("2.0.0") { version, completion in
-            // Restart the connection, to enable native KS (if needed)
-            PMLog.D("App was updated to version 2.0.0 from version " + version)
-            
-            guard self.container.makePropertiesManager().killSwitch else {
-                return
-            }
+        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
+            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
+            PMLog.D("App was updated to version 1.7.1 from version " + version)
             
             self.reconnectWhenPossible()
             completion(nil)
             
-        }.addCheck("1.7.1") { version, completion in
-            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
-            PMLog.D("App was updated to version 1.7.1 from version " + version)
+        }.addCheck("2.0.0") { version, completion in
+            // Restart the connection, to enable native KS (if needed)
+            PMLog.D("App was updated to version 2.0.0 from version " + version)
+            
+            guard self.container.makePropertiesManager().killSwitch else {
+                completion(nil)
+                return
+            }
             
             self.reconnectWhenPossible()
             completion(nil)

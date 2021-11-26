@@ -74,7 +74,7 @@ public protocol PropertiesManagerProtocol: class {
     var apiEndpoint: String? { get set }
     var customServers: [ServerModel]? { get set }
     
-    var lastAppVersion: MigrationVersion { get set }
+    var lastAppVersion: String { get set }
     var lastTimeForeground: Date? { get set }
     
     var humanValidationFailed: Bool { get set }
@@ -466,17 +466,12 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
     }
     
-    public var lastAppVersion: MigrationVersion {
+    public var lastAppVersion: String {
         get {
-            if let data = Storage.userDefaults().data(forKey: Keys.lastAppVersion),
-                let version = try? PropertyListDecoder().decode(MigrationVersion.self, from: data) {
-                return version
-            }
-            return MigrationVersion("0.0.0")
+            return Storage.userDefaults().string(forKey: Keys.lastAppVersion) ?? "0.0.0"
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            Storage.setValue(data, forKey: Keys.lastAppVersion)
+            Storage.setValue(newValue, forKey: Keys.lastAppVersion)
         }
     }
     
