@@ -59,20 +59,17 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton))))
+        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton)))
+        let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, reportBugAlertHandler: { receipt in
+            PMLog.ET("Error from payments?")
+        }))
+        let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
         self.login = login
 
         let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to uset the login data to log in the app
             let authCredentials = AuthCredentials(data)
-            self?.appSessionManager.finishLogin(authCredentials: authCredentials) { result in
-                switch result {
-                case let .failure(error):
-                    completion(.failure(error))
-                case .success:
-                    completion(.success)
-                }
-            }
+            self?.appSessionManager.finishLogin(authCredentials: authCredentials, completion: completion)
         }
 
         let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
