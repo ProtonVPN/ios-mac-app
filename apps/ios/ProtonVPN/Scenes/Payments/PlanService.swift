@@ -15,9 +15,13 @@ protocol PlanServiceFactory {
     func makePlanService() -> PlanService
 }
 
+protocol PlanServiceDelegate: AnyObject {
+    func paymentTransactionDidFinish()
+}
+
 protocol PlanService {
     var allowUpgrade: Bool { get }
-    var planPurchased: Notification.Name { get }
+    var delegate: PlanServiceDelegate? { get set }
 
     func presentPlanSelection()
     func presentSubscriptionManagement()
@@ -34,7 +38,7 @@ final class CorePlanService: PlanService {
 
     let tokenStorage: PaymentTokenStorage?
 
-    let planPurchased = Notification.Name("PlanServicePlanPurchased")
+    weak var delegate: PlanServiceDelegate?
 
     var allowUpgrade: Bool {
         return userCachedStatus.isIAPUpgradePlanAvailable
@@ -95,8 +99,8 @@ final class CorePlanService: PlanService {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
             PMLog.D("Purchased plan: \(plan.protonName)")
-            DispatchQueue.main.async {
-                NotificationCenter.default.post(name: self.planPurchased, object: plan)
+            DispatchQueue.main.async { [weak self] in
+                self?.delegate?.paymentTransactionDidFinish()
             }
         case let .open(vc: _, opened: opened):
             assert(opened == true)
