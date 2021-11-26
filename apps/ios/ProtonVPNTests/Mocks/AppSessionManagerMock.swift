@@ -50,6 +50,7 @@ class AppSessionManagerMock: AppSessionManager {
     var loggedIn: Bool
     
     var sessionChanged: Notification.Name
+    let dataReloaded = Notification.Name("AppSessionManagerDataReloaded")
     
     func logIn(username: String, password: String, success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         callbackLogIn?(username, password, success, failure)

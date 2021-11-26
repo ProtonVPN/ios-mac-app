@@ -23,7 +23,7 @@
 import UIKit
 import vpncore
 
-class SettingsViewModel {
+final class SettingsViewModel {
     
     private let maxCharCount = 20
     private let propertiesManager = PropertiesManager()
@@ -135,7 +135,9 @@ class SettingsViewModel {
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: type(of: propertiesManager).netShieldNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
-                                               name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)        
+                                               name: type(of: propertiesManager).vpnAcceleratorNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(reload),
+                                               name: appSessionManager.dataReloaded, object: nil)
     }
     
     @objc private func sessionChanged(_ notification: Notification) {
@@ -182,6 +184,10 @@ class SettingsViewModel {
     
     @objc private func handleChange() {
         NotificationCenter.default.post(name: contentChanged, object: nil)
+    }
+
+    @objc private func reload() {
+        reloadNeeded?()
     }
     
     private var accountSection: TableViewSection {
@@ -508,9 +514,5 @@ class SettingsViewModel {
     
     private func logOut() {
         appSessionManager.logOut(force: false)
-    }
-
-    @objc private func planPurchased() {
-        reloadNeeded?()
     }
 }
