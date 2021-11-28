@@ -9,6 +9,7 @@
 import Foundation
 import ProtonCore_Payments
 import ProtonCore_PaymentsUI
+import vpncore
 
 final class UserCachedStatus: ServicePlanDataStorage {
     enum UserCachedStatusKeys: String, CaseIterable {
@@ -28,50 +29,38 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     var servicePlansDetails: [Plan]? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.servicePlansDetails.rawValue) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Array<Plan>.self, from: data)
+            getData(key: .servicePlansDetails)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
+            setData(key: .servicePlansDetails, value: newValue)
         }
     }
 
     var defaultPlanDetails: Plan? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Plan.self, from: data)
+            getData(key: .defaultPlanDetails)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
+            setData(key: .defaultPlanDetails, value: newValue)
         }
     }
 
     var currentSubscription: Subscription? {
         get {
-            guard let data = UserDefaults.standard.data(forKey: UserCachedStatusKeys.currentSubscription.rawValue) else {
-                return nil
-            }
-            return try? PropertyListDecoder().decode(Subscription.self, from: data)
+            getData(key: .currentSubscription)
         }
         set {
-            let data = try? PropertyListEncoder().encode(newValue)
-            UserDefaults.standard.setValue(data, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
-            self.updateSubscriptionBlock?(newValue)
+            setData(key: .currentSubscription, value: newValue)
+            updateSubscriptionBlock?(newValue)
         }
     }
 
     var isIAPUpgradePlanAvailable: Bool {
         get {
-            return UserDefaults.standard.bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
+            return Storage.userDefaults().bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
+            Storage.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
     }
 
@@ -83,7 +72,19 @@ final class UserCachedStatus: ServicePlanDataStorage {
 
     func clear() {
         for key in UserCachedStatusKeys.allCases {
-            UserDefaults.standard.removeObject(forKey: key.rawValue)
+            Storage.userDefaults().removeObject(forKey: key.rawValue)
         }
+    }
+
+    private func getData<A: Decodable>(key: UserCachedStatusKeys) -> A? {
+        guard let data = Storage.userDefaults().data(forKey: key.rawValue) else {
+            return nil
+        }
+        return try? JSONDecoder().decode(A.self, from: data)
+    }
+
+    private func setData<A: Encodable>(key: UserCachedStatusKeys, value: A) {
+        let data = try? JSONEncoder().encode(value)
+        Storage.setValue(data, forKey: key.rawValue)
     }
 }
