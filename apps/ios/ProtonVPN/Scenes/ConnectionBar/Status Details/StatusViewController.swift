@@ -24,8 +24,8 @@ import GSMessages
 import UIKit
 import vpncore
 
-class StatusViewController: UIViewController {
-    @IBOutlet weak var tableView: UITableView?    
+final class StatusViewController: UIViewController {
+    @IBOutlet private weak var tableView: UITableView?
     
     var viewModel: StatusViewModel? {
         didSet {
