@@ -60,8 +60,9 @@ final class CoreLoginService {
 
     private func show() {
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton)))
-        let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, reportBugAlertHandler: { receipt in
-            PMLog.ET("Error from payments?")
+        let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, reportBugAlertHandler: { [weak self] receipt in
+            PMLog.ET("Error from payments, showing bug report")
+            self?.alertService.push(alert: ReportBugAlert())
         }))
         let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
         self.login = login
