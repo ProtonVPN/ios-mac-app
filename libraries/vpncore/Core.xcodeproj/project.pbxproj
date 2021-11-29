@@ -745,6 +745,10 @@
 		F32F2BFB2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */; };
 		F32F2BFC2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */; };
 		F32F2BFD2689F8B10071FE6E /* CountryGroup+Wireguard.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */; };
+		F331EA2A2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
+		F331EA2B2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
+		F331EA2C2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
+		F331EA2D2754C1A200BA0C04 /* ReportsBugs.swift in Sources */ = {isa = PBXBuildFile; fileRef = F331EA292754C1A200BA0C04 /* ReportsBugs.swift */; };
 		F34808AC266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */; };
 		F34808AD266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */; };
 		F34808AE266BC20100600A48 /* VpnFeatureChangeState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */; };
@@ -1155,6 +1159,7 @@
 		F3256ABE26B98EF4003F073C /* WireguardAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardAvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3256AC326B993C2003F073C /* SmartProtocol+Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SmartProtocol+Priority.swift"; sourceTree = "<group>"; };
 		F32F2BF92689F8B10071FE6E /* CountryGroup+Wireguard.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CountryGroup+Wireguard.swift"; sourceTree = "<group>"; };
+		F331EA292754C1A200BA0C04 /* ReportsBugs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReportsBugs.swift; sourceTree = "<group>"; };
 		F34808AB266BC20100600A48 /* VpnFeatureChangeState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnFeatureChangeState.swift; sourceTree = "<group>"; };
 		F349B1F32680B23E002C7A16 /* VpnKeys+Generation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "VpnKeys+Generation.swift"; sourceTree = "<group>"; };
 		F352FDA625F3970E005E83A2 /* OpenVPNTCPAvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVPNTCPAvailabilityChecker.swift; sourceTree = "<group>"; };
@@ -1633,6 +1638,7 @@
 			isa = PBXGroup;
 			children = (
 				D5DCCAB6252B4AEB004CB353 /* CoreNewsRequest.swift */,
+				F331EA292754C1A200BA0C04 /* ReportsBugs.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2587,6 +2593,7 @@
 				E1616C1421CBF5EE00F42D79 /* Storage.swift in Sources */,
 				D523F11124B7543C007DB086 /* String+Url.swift in Sources */,
 				F3256AC426B993C2003F073C /* SmartProtocol+Priority.swift in Sources */,
+				F331EA2A2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
 				E1B5F66921B81F8500B558B0 /* Dictionary+Extension.swift in Sources */,
 				E1616BB321C7BCD100F42D79 /* KeychainError.swift in Sources */,
 				D5BCDC9525303E56004BAEE8 /* AnnouncementManager.swift in Sources */,
@@ -2890,6 +2897,7 @@
 				D5967208253D79A80061A75F /* AnnouncementStorageUserDefaultsTests.swift in Sources */,
 				F365355726384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				D5C204E524866BD0004FB58B /* AttachmentRowViewModel.swift in Sources */,
+				F331EA2B2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
 				D5ADFBD023A0D09600C28CFF /* URLArrayTests.swift in Sources */,
 				D5C204402486671F004FB58B /* ServerStorage.swift in Sources */,
 				E9DC7A23262DC011001A0FC0 /* IKEv2AvailabilityChecker.swift in Sources */,
@@ -3029,6 +3037,7 @@
 				E1B5F67A21B824A500B558B0 /* Arithmetic.swift in Sources */,
 				F365355D2638522E001B7E88 /* LocalAgentState.swift in Sources */,
 				E151127222F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
+				F331EA2C2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
 				E1616BEA21C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5D2955425A5D551000FBD74 /* NetShieldPropertyProvider.swift in Sources */,
 				F30B9E7B262886C90094C65E /* VpnKeys.swift in Sources */,
@@ -3215,6 +3224,7 @@
 				F30B9E3026285B790094C65E /* CertificateRequest.swift in Sources */,
 				E9C9FDCA268C8755005665C6 /* UIDevice+ModelName.swift in Sources */,
 				D5C204B624866B81004FB58B /* TimerFactory.swift in Sources */,
+				F331EA2D2754C1A200BA0C04 /* ReportsBugs.swift in Sources */,
 				F31A46FC26A56BB2002224CB /* LocalizedString+Fallback.swift in Sources */,
 				42878E4324EE6B09001B35BE /* MaintenanceManager.swift in Sources */,
 				E952B2A526525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */,
