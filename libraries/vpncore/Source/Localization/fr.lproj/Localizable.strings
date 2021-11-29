@@ -641,7 +641,7 @@
 "_get_plus_for_feature" = "Obtenez ProtonVPN PLUS pour débloquer ceci et d'autres fonctionnalités.";
 
 /* iOS: Button in email verification screen */
-"_get_verification_email" = "Recevoir le courriel de vérification";
+"_get_verification_email" = "Recevoir l’e-mail de vérification";
 
 /* iOS: Button in SMS verification screen */
 "_get_verification_sms" = "Recevoir le SMS de vérification";
@@ -1840,7 +1840,7 @@
 "_troubleshoot_item_nointernet_title" = "Aucune connexion Internet";
 
 /* (No Comment) */
-"_troubleshoot_item_other_description" = "Contactez-nous directement via notre formulaire d'assistance, par courriel (%@) ou via Twitter.";
+"_troubleshoot_item_other_description" = "Contactez-nous directement via notre formulaire d'assistance, par e-mail (%@) ou via Twitter.";
 
 /* (No Comment) */
 "_troubleshoot_item_other_link1" = "formulaire d’assistance";
@@ -1972,7 +1972,7 @@
 "_use_captcha_verification" = "Vérifier avec CAPTCHA";
 
 /* iOS: human verification option select button */
-"_use_other_email_address" = "Vérifier par courriel";
+"_use_other_email_address" = "Vérifier par e-mail";
 
 /* Profile create/change form */
 "_use_secure_core" = "Secure Core";
