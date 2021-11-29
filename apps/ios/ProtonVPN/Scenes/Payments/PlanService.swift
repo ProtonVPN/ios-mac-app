@@ -67,7 +67,8 @@ final class CorePlanService: PlanService {
             apiService: networking.apiService,
             localStorage: userCachedStatus,
             reportBugAlertHandler: { receipt in
-                PMLog.ET("Error from payments?")
+                PMLog.ET("Error from payments, showing bug report")
+                alertService.push(alert: ReportBugAlert())
             }
         )
         paymentsUI = PaymentsUI(payments: payments)
