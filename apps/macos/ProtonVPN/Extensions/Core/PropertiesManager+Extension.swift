@@ -27,10 +27,10 @@ import vpncore
 extension PropertiesManagerProtocol {
     var earlyAccess: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.earlyAccess)
+            return getValue(forKey: AppConstants.UserDefaults.earlyAccess)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
+            setValue(newValue, forKey: AppConstants.UserDefaults.earlyAccess)
             DispatchQueue.main.async {
                 NotificationCenter.default.post(name: PropertiesManager.earlyAccessNotification, object: newValue)
             }
@@ -39,65 +39,56 @@ extension PropertiesManagerProtocol {
     
     var unprotectedNetworkNotifications: Bool {
         get {
-            return (Storage.userDefaults().object(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications) as? Bool) ?? true
+            return getValue(forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
-        }
-    }
-    
-    var dontAskAboutSwift5: Bool {
-        get {
-            return (Storage.userDefaults().object(forKey: AppConstants.UserDefaults.dontAskAboutSwift5) as? Bool) ?? false
-        }
-        set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.dontAskAboutSwift5)
+            setValue(newValue, forKey: AppConstants.UserDefaults.unprotectedNetworkNotifications)
         }
     }
     
     var rememberLoginAfterUpdate: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
+            return getValue(forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
+            setValue(newValue, forKey: AppConstants.UserDefaults.rememberLoginAfterUpdate)
         }
     }
     
     var startMinimized: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.startMinimized)
+            return getValue(forKey: AppConstants.UserDefaults.startMinimized)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.startMinimized)
+            setValue(newValue, forKey: AppConstants.UserDefaults.startMinimized)
         }
     }
     
     var startOnBoot: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.startOnBoot)
+            return getValue(forKey: AppConstants.UserDefaults.startOnBoot)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.startOnBoot)
+            setValue(newValue, forKey: AppConstants.UserDefaults.startOnBoot)
             self.setLoginItem(enabled: newValue)
         }
     }
     
     var systemNotifications: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.systemNotifications)
+            return getValue(forKey: AppConstants.UserDefaults.systemNotifications)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.systemNotifications)
+            setValue(newValue, forKey: AppConstants.UserDefaults.systemNotifications)
         }
     }
     
     var sysexSuccessWasShown: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
+            return getValue(forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
         }
         set {
-            Storage.setValue(newValue, forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
+            setValue(newValue, forKey: AppConstants.UserDefaults.sysexSuccessWasShown)
         }
     }
     
