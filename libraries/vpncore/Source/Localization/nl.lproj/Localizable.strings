@@ -608,7 +608,7 @@
 "_forgot_username" = "Gebruikersnaam vergeten";
 
 /* Used instead of price for free plans. */
-"_free" = "Gratis";
+"_free" = "Free";
 
 /* Account plan description */
 "_free_countries" = "3 Landen";
@@ -1490,7 +1490,7 @@
 "_setup_complete_basic" = "Uw aankoop was succesvol. Uw ProtonVPN Basic-abonnement is nu actief.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "U bent nu aangemeld voor een ProtonVPN Gratis abonnement. Om u op weg te helpen, geniet u zeven dagen gratis van ons ProtonVPN Plus-plan.";
+"_setup_complete_free" = "U bent nu aangemeld voor een ProtonVPN Free abonnement. Om u op weg te helpen, geniet u zeven dagen gratis van ons ProtonVPN Plus-plan.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Uw aankoop was succesvol. Uw ProtonVPN Plus abonnement is nu actief.";
@@ -1757,7 +1757,7 @@
 "_tor_title" = "Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Uw 7 dagen gratis proefperiode van ProtonVPN Plus is verlopen. U kunt ProtonVPN gratis blijven gebruiken, maar als u het project wilt steunen en toegang wilt hebben tot meer landen en functies, upgrade dan naar een betaald abonnement.";
+"_trial_expired_alert_body_iOS" = "Uw 7 dagen gratis proefperiode van ProtonVPN Plus is verlopen. U kunt ProtonVPN Free blijven gebruiken, maar als u het project wilt steunen en toegang wilt hebben tot meer landen en functies, upgrade dan naar een betaald abonnement.";
 
 /* iOS trial expired screen */
 "_trial_expired_alert_title_iOS" = "ProtonVPN Plus proefperiode verlopen";

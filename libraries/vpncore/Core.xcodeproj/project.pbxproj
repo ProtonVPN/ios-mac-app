@@ -35,8 +35,8 @@
 		42370650262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4237064C262DA3BE00A920CF /* VpnStreamingOption.swift */; };
 		4241A8D824C9EEA1005412FB /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
 		4241A8D924C9EEA2005412FB /* MigrationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFF824C9D65600EF1A92 /* MigrationManager.swift */; };
-		4241A8DA24C9EEA9005412FB /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
-		4241A8DB24C9EEAA005412FB /* MigrationVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4295DFFB24C9D6C200EF1A92 /* MigrationVersion.swift */; };
+		4241A8DA24C9EEA9005412FB /* (null) in Sources */ = {isa = PBXBuildFile; };
+		4241A8DB24C9EEAA005412FB /* (null) in Sources */ = {isa = PBXBuildFile; };
 		4241A8DD24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241A8DC24C9EEDA005412FB /* MigrationVersionTest.swift */; };
 		4241A8DE24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4241A8DC24C9EEDA005412FB /* MigrationVersionTest.swift */; };
 		4242B0132465A40F0042145A /* PaymentsStatusRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4242B0062465A40E0042145A /* PaymentsStatusRequest.swift */; };
@@ -2784,7 +2784,6 @@
 				E129C6C122A90E6500D8437E /* PropertiesManagerMock.swift in Sources */,
 				D5DCCAC0252B4BAF004CB353 /* CoreApiService.swift in Sources */,
 				F30B9D8926281F840094C65E /* VpnCertificate.swift in Sources */,
-				E975E4E1274805350003087F /* FileLogFormatter.swift in Sources */,
 				E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */,
 				F30B9D8E26281F990094C65E /* VpnKeys.swift in Sources */,
 				E1B5F67321B8241B00B558B0 /* MapConstants.swift in Sources */,
@@ -2979,7 +2978,7 @@
 				4241A8DD24C9EEDA005412FB /* MigrationVersionTest.swift in Sources */,
 				D5DCCADD252B5C2B004CB353 /* GetApiNotificationsResponse.swift in Sources */,
 				424A012D24AA013500F3EEE4 /* DefaultConstants.swift in Sources */,
-				4241A8DB24C9EEAA005412FB /* MigrationVersion.swift in Sources */,
+				4241A8DB24C9EEAA005412FB /* (null) in Sources */,
 				D5C2052A2487A0CF004FB58B /* CLLocationCoordinate2D+Extension.swift in Sources */,
 				D5C2052B2487A0CF004FB58B /* Date+Misc.swift in Sources */,
 				D596720F253D84260061A75F /* AnnouncementsViewModelTests.swift in Sources */,
@@ -3535,7 +3534,7 @@
 				D5625925274271B600315277 /* Bundle+vpncore.swift in Sources */,
 				D5C2045C24866977004FB58B /* AlertService.swift in Sources */,
 				D5DC52C6252DD9F000889B5A /* AnnouncementStorage.swift in Sources */,
-				4241A8DA24C9EEA9005412FB /* MigrationVersion.swift in Sources */,
+				4241A8DA24C9EEA9005412FB /* (null) in Sources */,
 				D5966F3E2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D5C2045124866927004FB58B /* ProfileIcon.swift in Sources */,
 				D5C2046A24866AFC004FB58B /* ConnectionConfiguration.swift in Sources */,
