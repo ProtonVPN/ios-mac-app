@@ -50,16 +50,24 @@ public class Storage {
         }
     }
     
-    public static func setValue(_ value: Any?, forKey key: String) {
-        Storage.userDefaults().setValue(value, forKey: key)
+    public init() {
+        
     }
     
-    public static func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {
-        Storage.userDefaults().setValue(try? JSONEncoder().encode(value), forKey: key)
+    public var defaults: UserDefaults {
+        return Self.userDefaults()
     }
     
-    public static func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
-        guard let data = Storage.userDefaults().data(forKey: key) else {
+    public func setValue(_ value: Any?, forKey key: String) {
+        defaults.setValue(value, forKey: key)
+    }
+    
+    public func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {
+        defaults.setValue(try? JSONEncoder().encode(value), forKey: key)
+    }
+    
+    public func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
+        guard let data = defaults.data(forKey: key) else {
             return nil
         }
         
@@ -70,7 +78,7 @@ public class Storage {
         }
     }
     
-    public static func contains(_ key: String) -> Bool {
-        return Storage.userDefaults().object(forKey: key) != nil
+    public func contains(_ key: String) -> Bool {
+        return defaults.object(forKey: key) != nil
     }
 }
