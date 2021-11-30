@@ -19,72 +19,53 @@ final class UserCachedStatus: ServicePlanDataStorage {
         case isIAPUpgradePlanAvailable
     }
 
-    var updateSubscriptionBlock: ((Subscription?) -> Void)?
-    var updateCreditsBlock: ((Credits?) -> Void)?
+    private let storage: Storage
 
-    init(updateSubscriptionBlock: ((Subscription?) -> Void)? = nil, updateCreditsBlock: ((Credits?) -> Void)? = nil) {
-        self.updateSubscriptionBlock = updateSubscriptionBlock
-        self.updateCreditsBlock = updateCreditsBlock
+    init(storage: Storage) {
+        self.storage = storage
     }
 
     var servicePlansDetails: [Plan]? {
         get {
-            getData(key: .servicePlansDetails)
+            return storage.getDecodableValue([Plan].self, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
         set {
-            setData(key: .servicePlansDetails, value: newValue)
+            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.servicePlansDetails.rawValue)
         }
     }
 
     var defaultPlanDetails: Plan? {
         get {
-            getData(key: .defaultPlanDetails)
+            return storage.getDecodableValue(Plan.self, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
         set {
-            setData(key: .defaultPlanDetails, value: newValue)
+            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.defaultPlanDetails.rawValue)
         }
     }
 
     var currentSubscription: Subscription? {
         get {
-            getData(key: .currentSubscription)
+            return storage.getDecodableValue(Subscription.self, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
         }
         set {
-            setData(key: .currentSubscription, value: newValue)
-            updateSubscriptionBlock?(newValue)
+            storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
         }
     }
 
     var isIAPUpgradePlanAvailable: Bool {
         get {
-            return Storage.userDefaults().bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
+            return storage.defaults.bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
         set {
-            Storage.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
+            storage.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
     }
 
-    var credits: Credits? {
-        didSet {
-            self.updateCreditsBlock?(credits)
-        }
-    }
+    var credits: Credits?
 
     func clear() {
         for key in UserCachedStatusKeys.allCases {
-            Storage.userDefaults().removeObject(forKey: key.rawValue)
+            storage.defaults.removeObject(forKey: key.rawValue)
         }
-    }
-
-    private func getData<A: Decodable>(key: UserCachedStatusKeys) -> A? {
-        guard let data = Storage.userDefaults().data(forKey: key.rawValue) else {
-            return nil
-        }
-        return try? JSONDecoder().decode(A.self, from: data)
-    }
-
-    private func setData<A: Encodable>(key: UserCachedStatusKeys, value: A) {
-        let data = try? JSONEncoder().encode(value)
-        Storage.setValue(data, forKey: key.rawValue)
     }
 }

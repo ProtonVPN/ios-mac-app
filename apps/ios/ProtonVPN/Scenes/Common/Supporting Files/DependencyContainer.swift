@@ -81,10 +81,11 @@ final class DependencyContainer {
     private lazy var trustKitHelper: TrustKitHelper? = TrustKitHelper()
     #endif
 
-    private lazy var propertiesManager = PropertiesManager()
+    private lazy var storage = Storage()
+    private lazy var propertiesManager = PropertiesManager(storage: storage)
     private lazy var networkingDelegate: NetworkingDelegate = iOSNetworkingDelegate(alertingService: makeCoreAlertService()) // swiftlint:disable:this weak_delegate
     private lazy var networking = CoreNetworking(delegate: networkingDelegate)
-    private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService())
+    private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage)
 }
 
 // MARK: NavigationServiceFactory

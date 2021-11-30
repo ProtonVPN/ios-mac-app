@@ -40,7 +40,6 @@ class AppConstants {
         static let systemNotifications = "SystemNotifications"
         static let earlyAccess = "EarlyAccess"
         static let unprotectedNetworkNotifications = "UnprotectedNetwork"
-        static let dontAskAboutSwift5 = "DontAskAboutSwift5"
         static let mapWidth = "MapWidth"
         static let welcomed = "Welcomed"
         static let trialWelcomed = "TrialWelcomed"

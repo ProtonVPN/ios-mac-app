@@ -57,11 +57,11 @@ final class CorePlanService: PlanService {
         return userCachedStatus.isIAPUpgradePlanAvailable
     }
 
-    init(networking: CoreNetworking, alertService: AlertService) {
+    init(networking: CoreNetworking, alertService: AlertService, storage: Storage) {
         self.alertService = alertService
 
         tokenStorage = TokenStorage()
-        userCachedStatus = UserCachedStatus()
+        userCachedStatus = UserCachedStatus(storage: storage)
         payments = Payments(
             inAppPurchaseIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers,
             apiService: networking.apiService,
