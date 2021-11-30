@@ -50,11 +50,35 @@ public class Storage {
         }
     }
     
-    public static func setValue(_ value: Any?, forKey key: String) {
-        Storage.userDefaults().setValue(value, forKey: key)
+    public init() {
+        
     }
     
-    public static func contains(_ key: String) -> Bool {
-        return Storage.userDefaults().object(forKey: key) != nil
+    public var defaults: UserDefaults {
+        return Self.userDefaults()
+    }
+    
+    public func setValue(_ value: Any?, forKey key: String) {
+        defaults.setValue(value, forKey: key)
+    }
+    
+    public func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {
+        defaults.setValue(try? JSONEncoder().encode(value), forKey: key)
+    }
+    
+    public func getDecodableValue<T>(_ type: T.Type, forKey key: String) -> T? where T: Decodable {
+        guard let data = defaults.data(forKey: key) else {
+            return nil
+        }
+        
+        do {
+            return try JSONDecoder().decode(T.self, from: data)
+        } catch { // Backup for data saved in older app versions (ios: <=2.7.1, macos: <=2.2.2)
+            return try? PropertyListDecoder().decode(T.self, from: data)
+        }
+    }
+    
+    public func contains(_ key: String) -> Bool {
+        return defaults.object(forKey: key) != nil
     }
 }

@@ -1601,10 +1601,10 @@
 "_subuser_alert_assign_connections_button" = "Assegna connessioni VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+"_subuser_alert_description1" = "Per iniziare il tuo viaggio in ProtonVPN, assegna le connessioni VPN al tuo account o a qualsiasi altro account secondario.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+"_subuser_alert_description2" = "Questo passaggio richiederà solo pochi minuti. Dopodiché sarai in grado di accedere e proteggere tutti i tuoi dispositivi.";
 
 /* (No Comment) */
 "_subuser_alert_login_button" = "Accedi di nuovo";

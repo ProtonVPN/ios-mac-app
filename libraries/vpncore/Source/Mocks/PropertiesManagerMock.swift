@@ -22,6 +22,7 @@
 import Foundation
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
+    
     public static var killSwitchNotification: Notification.Name = Notification.Name("")
     public static var hasConnectedNotification: Notification.Name = Notification.Name("")
     public static var userIpNotification: Notification.Name = Notification.Name("")
@@ -76,6 +77,17 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var showOnlyWireguardServersAndCountries: Bool = false
     public var connectionProtocol: ConnectionProtocol {
         return smartProtocol ? .smartProtocol : .vpnProtocol(vpnProtocol)
+    }
+    
+    private var customBools: [String: Bool] = [:]
+    private var defaultCustomBoolValue = false
+    
+    public func getValue(forKey key: String) -> Bool {
+        return customBools[key] ?? defaultCustomBoolValue
+    }
+    
+    public func setValue(_ value: Bool, forKey key: String) {
+        customBools[key] = value
     }
     
     public init() {}
