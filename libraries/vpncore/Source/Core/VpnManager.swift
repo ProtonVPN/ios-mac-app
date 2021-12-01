@@ -521,11 +521,12 @@ public class VpnManager: VpnManagerProtocol {
         let newState = vpnStateConfiguration.determineNewState(vpnManager: vpnManager)
         guard newState != self.state else { return }
         self.state = newState
-        log.info("VPN update state to \(self.state.logDescription)", category: .connection)
+        log.info("VPN update state to \(self.state.logDescription)", category: .connection, event: .change)
         
         switch self.state {
         case .connecting:
             if !self.connectAllowed {
+                log.info("VPN connection not allowed, will disconnect now.", category: .connection)
                 self.disconnect {}
                 return // prevent UI from updating with the connecting state
             }

@@ -84,6 +84,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
+        log.info("applicationDidBecomeActive", category: .os)
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI {
@@ -94,6 +95,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        log.info("applicationShouldTerminate", category: .os)
         Storage.userDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
@@ -121,6 +123,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func restartApp() {
+        log.info("Restart app", category: .os)
         let appPath = Bundle.main.bundleURL.absoluteString
         let relaunchAppProcess = Process()
         relaunchAppProcess.launchPath = "/usr/bin/open"

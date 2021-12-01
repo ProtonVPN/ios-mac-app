@@ -51,6 +51,7 @@ extension SecureCoreToggleHandler {
         
         let disconnectCompletion = { [weak self] in
             completionWrapper(true)
+            log.debug("Disconnect requested after changing SecureCore", category: .connectionDisconnect, event: .trigger)
             self?.vpnGateway?.disconnect()
         }
         

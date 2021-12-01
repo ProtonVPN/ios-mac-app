@@ -225,12 +225,16 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgain, .main, { self.retryConnection() })
+        return (LocalizedString.tryAgain, .main, {
+            log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
+            self.retryConnection()
+        })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
         return (LocalizedString.tryAgainWithoutKillswitch, .colorGreen, {
             self.disableKillSwitch()
+            log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }

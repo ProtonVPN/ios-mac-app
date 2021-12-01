@@ -146,8 +146,10 @@ final class ConnectionSettingsViewModel {
         if index > 0 {
             let selectedProfile = profileManager.allProfiles[index - 1]
             propertiesManager.autoConnect = (enabled: true, profileId: selectedProfile.id)
+            log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
         } else {
             propertiesManager.autoConnect = (enabled: false, profileId: nil)
+            log.debug("Autoconnect profile changed", category: .settings, event: .change, metadata: ["profile": "nil"])
         }
     }
     
@@ -158,6 +160,7 @@ final class ConnectionSettingsViewModel {
         
         let selectedProfile = profileManager.allProfiles[index]
         propertiesManager.quickConnect = selectedProfile.id
+        log.debug("Quick connect profiles changed", category: .settings, event: .change, metadata: ["profile": "\(selectedProfile.logDescription)"])
     }
     
     func setProtocol(_ index: Int) {
@@ -205,7 +208,10 @@ final class ConnectionSettingsViewModel {
                     case .success:
                         self.propertiesManager.smartProtocol = true
                         completion?(true)
-                        if shouldReconnect { self.vpnGateway.retryConnection() }
+                        if shouldReconnect {
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "smartProtocol"])
+                            self.vpnGateway.retryConnection()
+                        }
                     case .failure:
                         completion?(false)
                     }
@@ -240,6 +246,7 @@ final class ConnectionSettingsViewModel {
             case .withReconnect:
                 self?.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnProtocol, confirmHandler: { [weak self] in
                     self?.propertiesManager.vpnAcceleratorEnabled = enabled
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
                     self?.vpnGateway.retryConnection()
                     completion(true)
                 }, cancelHandler: {
@@ -261,6 +268,7 @@ final class ConnectionSettingsViewModel {
                 self.propertiesManager.excludeLocalNetworks = enabled
                 self.propertiesManager.killSwitch = false
                 if isConnected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
                     self.vpnGateway.retryConnection()
                 }
                 completion(true)
@@ -280,6 +288,7 @@ final class ConnectionSettingsViewModel {
         
         alertService.push(alert: ReconnectOnSettingsChangeAlert(confirmHandler: {
             self.propertiesManager.excludeLocalNetworks = enabled
+            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
             self.vpnGateway.retryConnection()
             completion(true)
         }, cancelHandler: {

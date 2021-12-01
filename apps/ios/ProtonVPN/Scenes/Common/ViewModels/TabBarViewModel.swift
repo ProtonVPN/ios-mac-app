@@ -68,7 +68,10 @@ class TabBarViewModel {
     }
     
     func quickConnectTapped() {
+        log.debug("Connect requested by clicking on Quick connect", category: .connectionConnect, event: .trigger)
+                
         guard let vpnGateway = vpnGateway else {
+            log.debug("Will not connect because user is not logged in", category: .connectionConnect, event: .trigger)
             navigationService.presentSignup()
             return
         }
@@ -78,9 +81,11 @@ class TabBarViewModel {
             connectionStatusService.presentStatusViewController()
             
         } else if vpnGateway.connection == .connecting {
+            log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
             
         } else {
+            log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         }
     }
