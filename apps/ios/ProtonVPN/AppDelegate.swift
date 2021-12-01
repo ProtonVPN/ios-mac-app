@@ -97,10 +97,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        log.info("applicationDidEnterBackground", category: .os)
         container.makePropertiesManager().lastTimeForeground = Date()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        log.info("applicationDidBecomeActive", category: .os)
         var appStateManager = container.makeAppStateManager()
         // If the app was on a closed state, we'll have to wait for the configuration to be established
         appStateManager.onVpnStateChanged = { state in

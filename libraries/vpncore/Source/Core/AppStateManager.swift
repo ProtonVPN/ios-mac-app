@@ -547,6 +547,7 @@ public class AppStateManagerImplementation: AppStateManager {
                 return
             }
             self.reconnectingAfterStuckDisconnecting = true
+            log.info("Attempt connection after vpn stuck", category: .connectionConnect, event: .trigger)
             self.connect(withConfiguration: lastConfig) // Retry connection
         })
     }

@@ -89,7 +89,14 @@ class CountryItemViewModel {
     }
     
     func connectAction() {
-        isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(country: countryCode, ofType: .standard)
+        if isConnected {
+            log.debug("Disconnect requested by selecting country in the list.", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            let serverType = ServerType.standard
+            log.debug("Connect requested by selecting country in the list. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(country: countryCode, ofType: serverType)
+        }
     }
     
     func upgradeAction() {

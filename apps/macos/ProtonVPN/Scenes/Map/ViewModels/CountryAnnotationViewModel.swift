@@ -124,7 +124,14 @@ class StandardCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     }
     
     func countryConnectAction() {
-        isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(country: countryCode, ofType: .standard)
+        if isConnected {
+            log.debug("Disconnect requested by pressing on country on the map.", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            let serverType = ServerType.standard
+            log.debug("Connect requested by pressing on a country on the map. Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(country: countryCode, ofType: serverType)
+        }
     }
 }
 
@@ -161,7 +168,13 @@ class SCExitCountryAnnotationViewModel: ConnectableAnnotationViewModel {
     }
     
     func serverConnectAction(forRow row: Int) {
-        serverIsConnected(for: row) ? vpnGateway.disconnect() : vpnGateway.connectTo(server: servers[row])
+        if serverIsConnected(for: row) {
+            log.debug("Server on the map clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            log.debug("Server on the map clicked. Will connect to \(servers[row].logDescription)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(server: servers[row])
+        }
     }
     
     func matches(_ code: String) -> Bool {

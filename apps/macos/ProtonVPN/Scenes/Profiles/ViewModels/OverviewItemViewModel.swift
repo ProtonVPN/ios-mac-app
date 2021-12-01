@@ -68,12 +68,16 @@ class OverviewItemViewModel: AbstractProfileViewModel {
     }
     
     func connectAction(completion: () -> Void) {
+        log.debug("Connect requested by pressing Connect button on a profile.", category: .connectionConnect, event: .trigger)
+        
         guard !isUsersTierTooLow else {
+            log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
             completion()
             return
         }
         
+        log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
         vpnGateway.connectTo(profile: profile)
         completion()
     }

@@ -56,6 +56,10 @@ public class ServerModel: NSObject, NSCoding, Codable {
             "HostCountry: \(String(describing: hostCountry))\n"
     }
     
+    public var logDescription: String {
+        return "\(name) (\(domain), load: \(load))"
+    }
+    
     public var hasCluster: Bool {
         return ips.count > 1
     }

@@ -279,7 +279,9 @@ public class VpnGateway: VpnGatewayProtocol {
                 self.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
             }
             
-            return selector.selectServer(connectionRequest: connectionRequest)
+            let selected = selector.selectServer(connectionRequest: connectionRequest)
+            log.debug("Server selected: \(selected?.logDescription ?? "-")", category: .connectionConnect)
+            return selected
             
         } catch {
             alertService?.push(alert: CannotAccessVpnCredentialsAlert())
@@ -323,6 +325,7 @@ public class VpnGateway: VpnGatewayProtocol {
     // MARK: - Private functions
     
     private func notifyResolutionUnavailable(forSpecificCountry: Bool, type: ServerType, reason: ResolutionUnavailableReason) {
+        log.warning("Server resolution unavailable", category: .connectionConnect, metadata: ["forSpecificCountry": "\(forSpecificCountry)", "type": "\(type)", "reason": "\(reason)"])
         stopConnecting(userInitiated: false)
         serverTierChecker.notifyResolutionUnavailable(forSpecificCountry: forSpecificCountry, type: type, reason: reason)
     }

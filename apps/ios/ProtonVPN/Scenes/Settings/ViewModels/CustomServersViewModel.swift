@@ -67,6 +67,7 @@ struct CustomServersViewModel {
         
         let cells: [TableViewCellModel] = servers.map { (server) -> TableViewCellModel in
             .pushStandard(title: server.ips.first?.exitIp ?? "") {
+                log.debug("Requested custom server connection. Will connect to \(server.logDescription)", category: .connectionConnect, event: .trigger)
                 self.vpnGateway?.connectTo(server: server)
             }
         }

@@ -357,6 +357,7 @@ class StatusViewModel {
                 self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
                     // Save to general settings
                     self.netShieldPropertyProvider.netShieldType = newValue
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     self.vpnGateway?.reconnect(with: newValue)
 
                 }, cancelHandler: {

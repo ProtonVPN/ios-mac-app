@@ -164,15 +164,22 @@ class ServerItemViewModel {
         
         updateTier()
         
+        log.debug("Connect requested by clicking on Server item", category: .connectionConnect, event: .trigger)
+        
         if underMaintenance {
+            log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(forSpecificCountry: nil))
         } else if isUsersTierTooLow {
+            log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             planService.presentPlanSelection()
         } else if isConnected {
+            log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
+            log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
+            log.debug("Will connect to \(serverModel.logDescription)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(server: serverModel)
             connectionStatusService.presentStatusViewController()
         }

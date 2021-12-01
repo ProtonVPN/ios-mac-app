@@ -86,6 +86,7 @@ final class QuickSettingNetshieldOption: QuickSettingGenericOption {
                     vpnManager.set(netShieldType: level)
                 case .withReconnect:
                     netShieldPropertyProvider.netShieldType = level
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     vpnGateway.reconnect(with: netShieldPropertyProvider.netShieldType)
                 case .immediately:
                     netShieldPropertyProvider.netShieldType = level
