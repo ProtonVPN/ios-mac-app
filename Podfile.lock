@@ -6,6 +6,7 @@ PODS:
     - PromiseKit (~> 6)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
+  - Logging (1.4.0)
   - lottie-ios (3.2.3)
   - OpenSSL-Apple (1.1.1k.11)
   - pmtest (1.0.0)
@@ -134,6 +135,7 @@ DEPENDENCIES:
   - AlamofireImage (~> 4.1)
   - GSMessages (~> 1.0)
   - KeychainAccess (= 3.2.1)
+  - Logging (= 1.4.0)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
   - "ProtonCore-APIClient/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.3.2`)"
   - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.3.2`)"
@@ -171,6 +173,7 @@ SPEC REPOS:
     - AwaitKit
     - GSMessages
     - KeychainAccess
+    - Logging
     - lottie-ios
     - OpenSSL-Apple
     - PromiseKit
@@ -335,6 +338,7 @@ SPEC CHECKSUMS:
   AwaitKit: 512626cd12c82b1fbffddc8f414d0364cb456004
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
+  Logging: beeb016c9c80cf77042d62e83495816847ef108b
   lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
@@ -369,6 +373,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: f9563f92bb5308482323756c765398193e9478d7
+PODFILE CHECKSUM: ab11e0ea2f9b572c008c1bf87f4b8ae11f060cc3
 
 COCOAPODS: 1.11.2

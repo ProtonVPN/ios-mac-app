@@ -38,7 +38,7 @@ class SystemExtensionsStateCheck {
     }
     
     func startCheckAndInstallIfNeeded(resultHandler: @escaping (Result<SuccessResultType, Error>) -> Void) {
-        PMLog.D("Checking status of system extensions...")
+        log.debug("Checking status of system extensions...", category: .sysex)
 
         fetchExtensionStatuses { statuses in
             var updateWasNeeded = false
@@ -46,16 +46,16 @@ class SystemExtensionsStateCheck {
             statuses.forEach { type, status in
                 switch status {
                 case .notInstalled:
-                    PMLog.D("SysEx \(type) is not installed")
+                    log.info("SysEx \(type) is not installed", category: .sysex)
                     installNeeded.append(type)
                     
                 case .outdated:
-                    PMLog.D("SysEx \(type) is outdated. Requesting install update.")
+                    log.info("SysEx \(type) is outdated. Requesting install update.", category: .sysex)
                     updateWasNeeded = true
                     self.systemExtensionManager.requestExtensionInstall(forType: type, completion: { _ in })
                     
                 case .ok:
-                    PMLog.D("SysEx \(type) is up to date")
+                    log.info("SysEx \(type) is up to date", category: .sysex)
                 }
             }
             

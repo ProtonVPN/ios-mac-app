@@ -184,13 +184,19 @@ class CountryAnnotationViewModel: AnnotationViewModel {
                 return
             }
             
+            log.debug("Connect requested by clicking on Country in the map", category: .connectionConnect, event: .trigger)
+            
             if underMaintenance {
+                log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
                 alertService.push(alert: MaintenanceAlert(countryName: labelString.string))
             } else if isConnected {
+                log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
                 vpnGateway.disconnect()
             } else if isConnecting {
+                log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
                 vpnGateway.stopConnecting(userInitiated: true)
             } else {
+                log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
                 vpnGateway.connectTo(country: countryCode, ofType: serverType)
                 connectionStatusService.presentStatusViewController()
             }

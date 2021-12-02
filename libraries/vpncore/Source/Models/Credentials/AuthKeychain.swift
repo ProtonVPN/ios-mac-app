@@ -42,7 +42,7 @@ public class AuthKeychain {
                 }
             }
         } catch let error {
-            PMLog.D("Keychain (auth) read error: \(error)", level: .error)
+            log.error("Keychain (auth) read error: \(error)", category: .keychain)
         }
         
         return nil
@@ -54,22 +54,22 @@ public class AuthKeychain {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
         } catch let error {
-            PMLog.D("Keychain (auth) write error: \(error). Will clean and retry.", level: .error)
+            log.error("Keychain (auth) write error: \(error). Will clean and retry.", category: .keychain, metadata: ["error": "\(error)"])
             do { // In case of error try to clean keychain and retry with storing data
                 clear()
                 try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
             } catch let error2 {
                 #if os(macOS)
-                    PMLog.D("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", level: .error)
+                    log.error("Keychain (auth) write error: \(error2). Will lock keychain to try to recover from this error.", category: .keychain, metadata: ["error": "\(error2)"])
                     do { // Last chance. Locking/unlocking keychain sometimes helps.
-                        SecKeychainLock(nil)
+                        SecKeychainLock(nil) 
                         try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: credentials), key: StorageKey.authCredentials)
                     } catch let error3 {
-                        PMLog.ET("Keychain (auth) write error: \(error3). Giving up.", level: .error)
+                        log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error3)"])
                         throw error3
                     }
                 #else
-                    PMLog.ET("Keychain (auth) write error: \(error2).", level: .error)
+                log.error("Keychain (auth) write error. Giving up.", category: .keychain, metadata: ["error": "\(error2)"])
                     throw error2
                 #endif
             }

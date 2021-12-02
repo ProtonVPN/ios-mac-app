@@ -21,6 +21,7 @@
 //
 
 import Foundation
+@testable import vpncore
 
 class CoreApiServiceMock: CoreApiService {
     

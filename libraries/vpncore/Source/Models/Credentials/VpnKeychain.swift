@@ -21,6 +21,7 @@
 
 import Foundation
 import KeychainAccess
+import Logging
 
 public typealias VpnDowngradeInfo = (from: VpnCredentials, to: VpnCredentials)
 public typealias VpnReconnectInfo = (from: ServerModel, to: ServerModel)
@@ -69,6 +70,8 @@ public class VpnKeychain: VpnKeychainProtocol {
     public static let vpnUserDelinquent = Notification.Name("VpnUserDelinquent")
     public static let vpnMaxDevicesReached = Notification.Name("VpnMaxDevicesReached")
         
+    private let log = Logger.instance(withCategory: .keychain)
+    
     public init() {}
     
     public func fetch() throws -> VpnCredentials {
@@ -80,11 +83,11 @@ public class VpnKeychain: VpnKeychainProtocol {
                 }
             }
         } catch let error {
-            PMLog.D("Keychain (vpn) read error: \(error)", level: .error)
+            log.error("Keychain (vpn) read error", metadata: ["error": "\(error)"])
         }
         
         let error = ProtonVpnErrorConst.vpnCredentialsMissing
-        PMLog.D(error.localizedDescription, level: .error)
+        log.error("Error while fetching open vpn credentials from the keychain", metadata: ["error": "\(error)"])
         throw error
     }
     
@@ -93,7 +96,7 @@ public class VpnKeychain: VpnKeychainProtocol {
             let password = try getPasswordRefference(forKey: StorageKey.vpnServerPassword)
             return password
         } catch let error {
-            PMLog.D(error.localizedDescription, level: .error)
+            log.error("Error while fetching open vpn password from the keychain", metadata: ["error": "\(error)"])
             throw ProtonVpnErrorConst.vpnCredentialsMissing
         }
     }
@@ -116,13 +119,13 @@ public class VpnKeychain: VpnKeychainProtocol {
         do {
             try appKeychain.set(NSKeyedArchiver.archivedData(withRootObject: vpnCredentials), key: StorageKey.vpnCredentials)
         } catch let error {
-            PMLog.D("Keychain (vpn) write error: \(error)", level: .error)
+            log.error("Keychain (vpn) write error", metadata: ["error": "\(error)"])
         }
         
         do {
             try setPassword(vpnCredentials.password, forKey: StorageKey.vpnServerPassword)
         } catch let error {
-            PMLog.ET("Error occurred during OpenVPN password storage: \(error.localizedDescription)")
+            log.error("Error occurred during OpenVPN password storage", metadata: ["error": "\(error)"])
         }
         
         DispatchQueue.main.async { NotificationCenter.default.post(name: VpnKeychain.vpnCredentialsChanged, object: vpnCredentials) }
@@ -302,17 +305,17 @@ public class VpnKeychain: VpnKeychainProtocol {
         var secItem: AnyObject?
         let result = SecItemCopyMatching(query as CFDictionary, &secItem)
         if result != errSecSuccess {
-            PMLog.D("Keychain error: \(result)")
+            log.error("Keychain error", metadata: ["SecItemCopyMatching": "\(result)"])
             return nil
         }
         
         if let item = secItem as? Data {
             let config = String(data: item, encoding: String.Encoding.utf8)
-            PMLog.D("Config read: \(config ?? "-")")
+            log.debug("Config read", metadata: ["config": "\(config ?? "-")"])
             return config
             
         } else {
-            PMLog.D("Keychain error: can't read data")
+            log.error("Keychain error: can't read data")
             return nil
         }
     }

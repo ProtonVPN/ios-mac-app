@@ -62,16 +62,17 @@ public final class CoreNetworking: Networking {
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void) {
         let url = fullUrl(route)
-        PMLog.D("Request started: \(url)", level: .debug)
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
 
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
-
             if let error = error {
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.failure(error))
                 return
             }
+
+            log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
             if let data = data {
                 var result = [String: AnyObject]()
@@ -90,32 +91,32 @@ public final class CoreNetworking: Networking {
 
     public func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void) {
         let url = fullUrl(route)
-        PMLog.D("Request started: \(url)", level: .debug)
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
         apiService.request(method: route.method, path: route.path, parameters: route.parameters, headers: route.header, authenticated: route.isAuth, autoRetry: route.autoRetry, customAuthCredential: route.authCredential) { (task, data, error) in
 
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
-
             if let error = error {
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.failure(error))
                 return
             }
 
+            log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
             completion(.success)
         }
     }
 
     public func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         let url = fullUrl(route)
-        PMLog.D("Request started: \(url)", level: .debug)
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
         apiService.exec(route: route) { (task: URLSessionDataTask?, result: Result<T, ResponseError>) in
             switch result {
             case let .failure(error):
-                PMLog.D("Request finished: \(url) (\(error.localizedDescription))")
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.failure(error))
             case let .success(data):
-                PMLog.D("Request finished: \(url) (OK)")
+                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.success(data))
             }
         }
@@ -126,16 +127,17 @@ public final class CoreNetworking: Networking {
         // this should be fine as this is only intened to get VPN status
 
         let url = route.url?.absoluteString ?? "empty"
-        PMLog.D("Request started: \(url)", level: .debug)
+        let method = route.httpMethod?.uppercased() ?? "GET"
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
         let task = URLSession.shared.dataTask(with: route) { data, response, error in
-
-            PMLog.D("Request finished: \(url) (\(error?.localizedDescription ?? "OK"))")
-
             if let error = error {
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(method)"])
                 completion(.failure(error))
                 return
             }
+
+            log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(method)"])
 
             if let data = data, let string = String(data: data, encoding: .utf8) {
                 completion(.success(string))
@@ -156,26 +158,26 @@ public final class CoreNetworking: Networking {
 
     public func request<T>(_ route: Request, files: [String: URL], completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable {
         let url = fullUrl(route)
-        PMLog.D("Request started: \(url)", level: .debug)
+        log.debug("Request started", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
 
         let progress: ProgressCompletion = { (progress: Progress) -> Void in
-            PMLog.D("Upload progress \(progress.fractionCompleted) for \(url)")
+            log.debug("Upload progress \(progress.fractionCompleted) for \(url)", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
         }
 
         apiService.upload(route: route, files: files, uploadProgress: progress) { (result: Result<T, ResponseError>) -> Void in
             switch result {
             case let .failure(error):
-                PMLog.D("Request finished: \(url) (\(error.localizedDescription))")
+                log.error("Request failed", category: .net, event: .response, metadata: ["error": "\(error)", "url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.failure(error.underlyingError ?? error))
             case let .success(data):
-                PMLog.D("Request finished: \(url) (OK)")
+                log.debug("Request finished OK", category: .net, metadata: ["url": "\(url)", "method": "\(route.method.toString().uppercased())"])
                 completion(.success(data))
             }
         }
     }
 
     private func fullUrl(_ route: Request) -> String {
-        return "\(route.method.toString().uppercased()): \(apiService.doh.getHostUrl())\(route.path)"
+        return "\(apiService.doh.getHostUrl())\(route.path)"
     }
 }
 
@@ -210,7 +212,7 @@ extension CoreNetworking: AuthDelegate {
     }
 
     public func onLogout(sessionUID uid: String) {
-        PMLog.ET("Logout from Core because of expired token")
+        log.error("Logout from Core because of expired token", category: .app, event: .trigger)
         delegate.onLogout()
     }
 
@@ -222,17 +224,17 @@ extension CoreNetworking: AuthDelegate {
         do {
             try AuthKeychain.store(credentials.updatedWithAuth(auth: auth))
         } catch {
-            PMLog.ET("Failed to save updated credentials")
+            log.error("Failed to save updated credentials", category: .keychain, event: .change)
         }
     }
 
     public func onRefresh(bySessionUID uid: String, complete: @escaping AuthRefreshComplete) {
         guard let credentials = AuthKeychain.fetch() else {
-            PMLog.ET("Cannot refresh token when credentials are not available")
+            log.error("Cannot refresh token when credentials are not available", category: .keychain, event: .change)
             return
         }
 
-        PMLog.D("Going to refresh the access token")
+        log.debug("Going to refresh the access token", category: .net)
         let authenticator = Authenticator(api: apiService)
         authenticator.refreshCredential(Credential(credentials)) { result in
             switch result {
@@ -240,10 +242,10 @@ extension CoreNetworking: AuthDelegate {
                 guard case Authenticator.Status.updatedCredential(let updatedCredential) = stage else {
                     return complete(nil, nil)
                 }
-                PMLog.D("Access token refreshed successfully")
+                log.debug("Access token refreshed successfully", category: .net)
                 complete(updatedCredential, nil)
             case .failure(let error):
-                PMLog.D("Updating access token failed: \(error)")
+                log.error("Updating access token failed", category: .net, event: .response, metadata: ["error": "\(error)"])
                 complete(nil, error)
             }
         }

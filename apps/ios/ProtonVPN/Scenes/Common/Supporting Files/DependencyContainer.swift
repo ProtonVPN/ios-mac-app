@@ -359,3 +359,17 @@ extension DependencyContainer: PlanServiceFactory {
         return planService
     }
 }
+
+// MARK: LogFileManagerFactory
+extension DependencyContainer: LogFileManagerFactory {
+    func makeLogFileManager() -> LogFileManager {
+        return LogFileManagerImplementation()
+    }
+}
+
+// MARK: LogFilesProviderFactory
+extension DependencyContainer: LogFilesProviderFactory {
+    func makeLogFilesProvider() -> LogFilesProvider {
+        return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
+    }
+}

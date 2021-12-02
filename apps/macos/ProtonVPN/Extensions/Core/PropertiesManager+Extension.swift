@@ -102,12 +102,12 @@ extension PropertiesManagerProtocol {
         let launcherAppIdentifier = "ch.protonvpn.ProtonVPNStarter"
         if SMLoginItemSetEnabled(launcherAppIdentifier as CFString, enabled) {
             if enabled {
-                PMLog.printToConsole("Successfully add login item.")
+                log.info("Successfully add login item.", category: .app)
             } else {
-                PMLog.printToConsole("Successfully remove login item.")
+                log.info("Successfully remove login item.", category: .app)
             }
         } else {
-            PMLog.printToConsole("Failed to add login item.")
+            log.error("Failed to add login item.", category: .app)
         }
     }
 }

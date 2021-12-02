@@ -72,7 +72,7 @@ class ServiceChecker {
                     self?.p2pShown = true
                 }
             case let .failure(error):
-                PMLog.ET(error.localizedDescription)
+                log.error("\(error)", category: .ui)
             }
         }
     }

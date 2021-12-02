@@ -21,6 +21,7 @@
 //
 
 import Foundation
+@testable import vpncore
 
 public final class VpnAuthenticationMock: VpnAuthentication {
     public init() { }

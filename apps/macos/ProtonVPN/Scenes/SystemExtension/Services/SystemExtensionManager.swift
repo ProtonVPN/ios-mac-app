@@ -82,10 +82,10 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     func extenstionStatus(forType type: SystemExtensionType, completion: @escaping StatusCallback) {
         xpcConnectionsRepository.getXpcConnection(for: type.machServiceName).getVersion(completionHandler: { result in
             guard let data = result, let info = try? JSONDecoder().decode(ExtensionInfo.self, from: data) else {
-                PMLog.D("SysEx (\(type)) didn't return its version. Probably not yet installed.")
+                log.info("SysEx (\(type)) didn't return its version. Probably not yet installed.", category: .sysex)
                 return completion(.notInstalled)
             }
-            PMLog.D("Got sysex (\(type)) version from extension: \(info)")
+            log.info("Got sysex (\(type)) version from extension: \(info)", category: .sysex)
             
             let appVersion = ExtensionInfo.current
             switch info.compare(to: appVersion) {
@@ -93,7 +93,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
                 completion(.outdated)
                 
             case .orderedDescending:
-                PMLog.D("SysEx version (\(info)) is higher than apps version (\(appVersion)")
+                log.info("SysEx version (\(info)) is higher than apps version (\(appVersion)", category: .sysex)
                 completion(.outdated)
                 
             case .orderedSame:
@@ -105,7 +105,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     func requestExtensionInstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
         shouldNotifyInstall = false
 
-        PMLog.D("requestExtensionInstall for \(type)")
+        log.info("requestExtensionInstall for \(type)")
         completionCallbacks.updateValue(completion, forKey: type.rawValue)
         
         let request = OSSystemExtensionRequest.activationRequest(
@@ -118,7 +118,7 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     
     /// Ask OS to uninstall our Network Extension
     func requestExtensionUninstall(forType type: SystemExtensionType, completion: @escaping SystemExtensionManager.FinishedCallback) {
-        PMLog.D("requestExtensionUninstall for \(type)")
+        log.info("requestExtensionUninstall for \(type)")
         let request = OSSystemExtensionRequest.deactivationRequest(
             forExtensionWithIdentifier: type.rawValue,
             queue: .main
@@ -139,11 +139,11 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     }
     
     func requestNeedsUserApproval(_ request: OSSystemExtensionRequest) {
-        PMLog.D("SysEx install requestNeedsUserApproval (\(request.identifier))")
+        log.info("SysEx install requestNeedsUserApproval (\(request.identifier))")
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        PMLog.D("SysEx (\(request.identifier)) install request result: \(result.rawValue)")
+        log.info("SysEx (\(request.identifier)) install request result: \(result.rawValue)")
         
         completionCallbacks[request.identifier]?(.success)
         completionCallbacks[request.identifier] = nil
@@ -152,7 +152,7 @@ extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        PMLog.D("SysEx (\(request.identifier)) install request failed with error: \(error)")
+        log.error("SysEx (\(request.identifier)) install request failed with error: \(error)")
         guard completionCallbacks[request.identifier] != nil else { return }
         
         if let typedError = error as? OSSystemExtensionError, typedError.code == OSSystemExtensionError.requestSuperseded {
@@ -178,12 +178,12 @@ class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionReques
     }
     
     func request(_ request: OSSystemExtensionRequest, didFinishWithResult result: OSSystemExtensionRequest.Result) {
-        PMLog.D("SysEx (\(request.identifier)) request finished with result: \(result.rawValue)")
+        log.info("SysEx (\(request.identifier)) request finished with result: \(result.rawValue)", category: .sysex)
         completion?(.success)
     }
     
     func request(_ request: OSSystemExtensionRequest, didFailWithError error: Error) {
-        PMLog.D("SysEx (\(request.identifier)) failed with error: \(error)")
+        log.error("SysEx (\(request.identifier)) failed with error: \(error)", category: .sysex)
         completion?(.failure(error))
     }
     

@@ -68,7 +68,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case .success:
                 break
             case let .failure(error):
-                PMLog.D("Failed to refresh vpn credentials: \(error.localizedDescription)", level: .error)
+                log.error("Failed to refresh vpn credentials", category: .app, metadata: ["error": "\(error)"])
 
                 let error = error as NSError
                 switch error.code {
@@ -90,7 +90,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case let .success(properties):
                 self.serverStorage.update(continuousServerProperties: properties)
             case let .failure(error):
-                PMLog.D("Error received: \(error)", level: .error)
+                log.error("RefreshServerLoads error", category: .app, metadata: ["error": "\(error)"])
             }
         }
     }
@@ -103,7 +103,7 @@ open class AppSessionRefresherImplementation: AppSessionRefresher {
             case let .success(credentials):
                 self.vpnKeychain.store(vpnCredentials: credentials)
             case let .failure(error):
-                PMLog.D("Error received: \(error)", level: .error)
+                log.error("RefreshAccount error", category: .app, metadata: ["error": "\(error)"])
             }
         }
     }

@@ -20,7 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 //
 
-import vpncore
+@testable import vpncore
 import XCTest
 
 class AnnouncementsViewModelTests: XCTestCase {

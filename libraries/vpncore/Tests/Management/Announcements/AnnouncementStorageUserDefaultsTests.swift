@@ -22,6 +22,7 @@
 
 import vpncore
 import XCTest
+@testable import vpncore
 
 class AnnouncementStorageUserDefaultsTests: XCTestCase {
     

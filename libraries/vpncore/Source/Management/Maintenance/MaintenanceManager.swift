@@ -81,7 +81,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
     
     private func checkServer(_ completion: BoolCallback?, failure: ErrorCallback?) {
         guard let activeConnection = appStateManager.activeConnection() else {
-            PMLog.D("No active connection", level: .info)
+            log.info("No active connection", category: .app)
             completion?(false)
             return
         }
@@ -90,7 +90,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         case .connected, .connecting:
             break
         default:
-            PMLog.D("VPN Not connected", level: .info)
+            log.info("VPN Not connected", category: .app)
             completion?(false)
             return
         }
@@ -98,7 +98,7 @@ public class MaintenanceManager: MaintenanceManagerProtocol {
         let serverID = activeConnection.serverIp.id
         
         let failureCallback: ErrorCallback = { error in
-            PMLog.D("Server check request failed with error: \(error)", level: .error)
+            log.error("Server check request failed with error. Requesting Quick Connect.", category: .connectionConnect, event: .connect, metadata: ["error": "\(error)"])
             self.vpnGateWay.quickConnect()
             failure?(error)
         }

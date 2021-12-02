@@ -225,12 +225,16 @@ class ConnectingOverlayViewModel {
     }
     
     private var retryButton: ButtonInfo {
-        return (LocalizedString.tryAgain, .main, { self.retryConnection() })
+        return (LocalizedString.tryAgain, .main, {
+            log.info("Connection restart requested by pressing Retry button", category: .connectionConnect, event: .trigger)
+            self.retryConnection()
+        })
     }
     
     private var retryWithoutKSButton: ButtonInfo {
         return (LocalizedString.tryAgainWithoutKillswitch, .colorGreen, {
             self.disableKillSwitch()
+            log.info("Connection restart requested by pressing Retry Without KS button", category: .connectionConnect, event: .trigger)
             self.retryConnection()
         })
     }
@@ -304,7 +308,7 @@ class ConnectingOverlayViewModel {
             guard let newProtocol = notification.object as? VpnProtocol else {
                 return
             }
-            PMLog.D("New protocol set to \(newProtocol). VPN will reconnect.")
+            log.error("New protocol set to \(newProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
             self?.retryConnection(withProtocol: newProtocol)
         }
         

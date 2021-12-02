@@ -212,7 +212,7 @@ class StatusViewModel {
     private func saveAsProfile() {
         guard let server = appStateManager.activeConnection()?.server,
               profileManager.profile(withServer: server) == nil else {
-            PMLog.ET("Could not create profile because matching profile already exists")
+            log.error("Could not create profile because matching profile already exists", category: .ui)
             messageHandler?(LocalizedString.profileCreatedSuccessfully,
                             GSMessageType.success,
                             UIConstants.messageOptions)
@@ -231,7 +231,7 @@ class StatusViewModel {
     private func deleteProfile() {
         guard let server = appStateManager.activeConnection()?.server,
               let existingProfile = profileManager.profile(withServer: server) else {
-            PMLog.ET("Could not find profile to delete")
+            log.error("Could not find profile to delete", category: .ui)
             messageHandler?(LocalizedString.profileDeletionFailed,
                             GSMessageType.error,
                             UIConstants.messageOptions)
@@ -358,6 +358,7 @@ class StatusViewModel {
                 self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: newValue != .off, continueHandler: {
                     // Save to general settings
                     self.netShieldPropertyProvider.netShieldType = newValue
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                     self.vpnGateway?.reconnect(with: newValue)
 
                 }, cancelHandler: {

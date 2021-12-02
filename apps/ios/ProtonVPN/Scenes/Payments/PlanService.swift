@@ -67,7 +67,7 @@ final class CorePlanService: PlanService {
             apiService: networking.apiService,
             localStorage: userCachedStatus,
             reportBugAlertHandler: { receipt in
-                PMLog.ET("Error from payments, showing bug report")
+                log.error("Error from payments, showing bug report", category: .iap)
                 alertService.push(alert: ReportBugAlert())
             }
         )
@@ -112,18 +112,18 @@ final class CorePlanService: PlanService {
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {
         switch response {
         case let .purchasedPlan(accountPlan: plan):
-            PMLog.D("Purchased plan: \(plan.protonName)")
+            log.debug("Purchased plan: \(plan.protonName)", category: .iap)
             DispatchQueue.main.async { [weak self] in
                 self?.delegate?.paymentTransactionDidFinish()
             }
         case let .open(vc: _, opened: opened):
             assert(opened == true)
         case let .planPurchaseProcessingInProgress(accountPlan: plan):
-            PMLog.D("Purchasing \(plan.protonName)")
+            log.debug("Purchasing \(plan.protonName)", category: .iap)
         case .close:
-            PMLog.D("Payments closed")
+            log.debug("Payments closed", category: .iap)
         case let .purchaseError(error: error):
-            PMLog.ET("Purchase failed with \(error)")
+            log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
         }
     }
 }

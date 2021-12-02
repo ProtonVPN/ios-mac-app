@@ -104,7 +104,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     }, failure: failure)
                 }, failure: failure)
             case let .failure(error):
-                PMLog.ET("Failed to obtain user's auth credentials: \(error)")
+                log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
                 DispatchQueue.main.async { failure(error) }
             }
         }
@@ -158,7 +158,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     failure(error)
                 })
             case let .failure(error):
-                PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
+                log.error("Failed to obtain user's VPN properties: \(error.localizedDescription)", category: .app)
                 guard let self = self, // only fail if there is a major reason
                       !self.serverStorage.fetch().isEmpty,
                       self.propertiesManager.userIp != nil,
@@ -239,7 +239,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
         
-        PMLog.D("User with insufficient sessions detected. Throwing an error insted of login.")
+        log.error("User with insufficient sessions detected. Throwing an error insted of login.", category: .app)
         logOutCleanup()
         failure(ProtonVpnError.subuserWithoutSessions)
     }

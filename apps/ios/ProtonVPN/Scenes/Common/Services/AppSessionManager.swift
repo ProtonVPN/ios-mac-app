@@ -23,6 +23,7 @@
 import vpncore
 import UIKit
 import Foundation
+import TunnelKit
 
 enum SessionStatus {
     
@@ -107,6 +108,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         retrievePropertiesAndLogIn(success: { [weak self] in
             self?.checkForSubuserWithoutSessions(completion: completion)
         }, failure: { error in
+            log.error("Failed to obtain user's auth credentials", category: .user, metadata: ["error": "\(error)"])
             completion(.failure(error))
         })
     }
@@ -158,10 +160,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     failure(error)
                 })
             case let .failure(error):
-                PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
+                log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
                 guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
                     self.propertiesManager.userIp != nil,
-                    !(error is KeychainError) else {
+                      !(error is vpncore.KeychainError) else {
                         failure(error)
                         return
                 }
@@ -234,10 +236,10 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                     self.logOutCleanup()
                 })
             case let .failure(error):
-                PMLog.D("Failed to obtain user's VPN properties: \(error.localizedDescription)", level: .error)
+                log.error("Failed to obtain user's VPN properties", category: .app, metadata: ["error": "\(error)"])
                 guard !self.serverStorage.fetch().isEmpty, // only fail if there is a major reason
                       self.propertiesManager.userIp != nil,
-                      !(error is KeychainError) else {
+                      !(error is vpncore.KeychainError) else {
                           fail(error)
                           return
                 }
@@ -302,7 +304,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             return
         }
         
-        PMLog.D("User with insufficient sessions detected. Throwing and error insted of login.")
+        log.error("User with insufficient sessions detected. Throwing and error insted of login.", category: .app)
         logOutCleanup()
         completion(.failure(ProtonVpnError.subuserWithoutSessions))
     }
@@ -383,11 +385,11 @@ extension AppSessionManagerImplementation: PlanServiceDelegate {
             return
         }
 
-        PMLog.D("Reloading data after plan purchase")
+        log.debug("Reloading data after plan purchase", category: .app)
         retrievePropertiesAndLogIn(success: { [dataReloaded] in
             NotificationCenter.default.post(name: dataReloaded, object: nil)
         }, failure: { error in
-            PMLog.D("Data reload failed after plan purchase with \(error)")            
+            log.error("Data reload failed after plan purchase", category: .app, metadata: ["error": "\(error)"])
         })
     }
 }

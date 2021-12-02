@@ -60,6 +60,7 @@ public class Storage {
     
     public func setValue(_ value: Any?, forKey key: String) {
         defaults.setValue(value, forKey: key)
+        log.info("Setting was changed", category: .settings, event: .change, metadata: ["key": "\(key)", "value": "\(value.stringForLog)"])
     }
     
     public func setEncodableValue<Value>(_ value: Value, forKey key: String) where Value: Encodable {

@@ -121,6 +121,12 @@ class ServerItemViewModel {
     }
     
     func connectAction() {
-        isConnected ? vpnGateway.disconnect() : vpnGateway.connectTo(server: serverModel)
+        if isConnected {
+            log.debug("Country server in main window clicked. Already connected, so will disconnect from VPN. ", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            log.debug("Country server in main window clicked.  Will connect to \(serverModel)", category: .connectionConnect, event: .trigger)
+            vpnGateway.connectTo(server: serverModel)
+        }
     }
 }

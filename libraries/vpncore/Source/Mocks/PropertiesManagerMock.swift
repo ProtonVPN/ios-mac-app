@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import vpncore
 
 public class PropertiesManagerMock: PropertiesManagerProtocol {
     
@@ -101,4 +102,6 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
         reportBugEmail = nil
     }
     
+    public func logCurrentState() {
+    }
 }

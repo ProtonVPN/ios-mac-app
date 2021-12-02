@@ -46,6 +46,18 @@ public class Profile: NSObject, NSCoding {
             "Protocol: \(connectionProtocol)\n"
     }
     
+    public var logDescription: String {
+        return
+            "ID: \(id) " +
+            "Access tier: \(accessTier) " +
+            "Profile icon: \(profileIcon.description) " +
+            "Profile type: \(profileType.description) " +
+            "Server type: \(serverType.description) " +
+            "Server offering: \(serverOffering.description) " +
+            "Name: \(name) " +
+            "Protocol: \(connectionProtocol) "
+    }
+    
     public func connectionRequest(withDefaultNetshield netShield: NetShieldType) -> ConnectionRequest {
         switch serverOffering {
         case let .fastest(countryCode):

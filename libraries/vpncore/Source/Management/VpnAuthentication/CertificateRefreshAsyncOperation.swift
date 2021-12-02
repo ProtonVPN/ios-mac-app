@@ -44,21 +44,21 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     }
 
     private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificate, Error>) -> Void) {
-        PMLog.D("Asking backend API for new vpn authentication certificate")
+        log.debug("Asking backend API for new vpn authentication certificate", category: .userCert, event: .newCertificate)
         let request = CertificateRequest(publicKey: keys.publicKey)
         networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(dict):
                 do {
                     let certificate = try VpnCertificate(dict: dict)
-                    PMLog.D("Got new vpn authentication certificate valid until \(certificate.validUntil)")
+                    log.debug("Got new vpn authentication certificate valid until \(certificate.validUntil)", category: .userCert, event: .newCertificate)
                     completion(.success(certificate))
                 } catch {
-                    PMLog.ET("Failed to decode vpn authentication certificate from backend: \(error)")
+                    log.error("Failed to decode vpn authentication certificate from backend: \(error)", category: .userCert, event: .refreshError)
                     completion(.failure(error))
                 }
             case let .failure(error):
-                PMLog.ET("Failed to get vpn authentication certificate from backend: \(error)")
+                log.error("Failed to get vpn authentication certificate from backend: \(error)", category: .userCert, event: .refreshError)
                 completion(.failure(error))
             }
         }
@@ -70,7 +70,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             return
         }
 
-        PMLog.D("Checking if vpn authentication certificate refresh is needed")
+        log.debug("Checking if vpn authentication certificate refresh is needed", category: .userCert)
 
         let keys = storage.getKeys()
         let existingCertificate = storage.getStoredCertificate()
@@ -80,13 +80,13 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
             // check if we are past the refresh time recommended by the backend or expired
             needsRefresh = certificate.isExpired || certificate.shouldBeRefreshed
         } else {
-            PMLog.D("No stored vpn authentication certificate found")
+            log.debug("No stored vpn authentication certificate found", category: .userCert)
             // no certificate exists, refresh is definitely needed
             needsRefresh = true
         }
 
         guard needsRefresh else {
-            PMLog.D("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil))")
+            log.debug("Stored vpn authentication certificate does not need refreshing (valid until \(existingCertificate!.validUntil))", category: .userCert)
             finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate!.certificate)))
             return
         }
@@ -108,7 +108,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 let nsError = error as NSError
                 switch nsError.code {
                 case 2500 where !self.isRetry: // error ClientPublicKey fingerprint conflict, please regenerate a new key
-                    PMLog.D("Trying to recover by generating new keys and trying again")
+                    log.error("Trying to recover by generating new keys and trying again", category: .userCert, event: .refreshError)
                     self.storage.deleteKeys()
                     self.storage.deleteCertificate()
                     self.isRetry = true

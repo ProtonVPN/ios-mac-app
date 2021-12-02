@@ -48,4 +48,8 @@ class AppConstants {
         // Payments
         static let paymentTokenLifetime: TimeInterval = 60 * 59 // 59 minutes
     }
+    
+    struct Filenames {
+        static let appLogFilename = "ProtonVPN.log"
+    }
 }

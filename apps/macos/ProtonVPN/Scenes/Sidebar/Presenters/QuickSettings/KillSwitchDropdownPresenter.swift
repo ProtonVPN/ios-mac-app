@@ -71,6 +71,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
         return QuickSettingGenericOption(text, icon: icon, active: !active, selectCallback: {
             self.propertiesManager.killSwitch = false
             if self.vpnGateway.connection == .connected {
+                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                 self.vpnGateway.retryConnection()
             }
         })
@@ -85,6 +86,7 @@ class KillSwitchDropdownPresenter: QuickSettingDropdownPresenter {
                 self.propertiesManager.killSwitch = true
                 self.propertiesManager.excludeLocalNetworks = false
                 if self.vpnGateway.connection == .connected {
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                     self.vpnGateway.retryConnection()
                 }
             }

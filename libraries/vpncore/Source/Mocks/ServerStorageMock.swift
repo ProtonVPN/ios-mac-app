@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+@testable import vpncore
 
 public class ServerStorageMock: ServerStorage {
     
@@ -62,7 +63,6 @@ public class ServerStorageMock: ServerStorage {
         }
 
         guard let serversJson = jsonDictionary.jsonArray(key: "LogicalServers") else {
-            PMLog.D("'Servers' field not present in server info request's response", level: .error)
             fatalError()
         }
 
@@ -71,9 +71,8 @@ public class ServerStorageMock: ServerStorage {
             do {
                 serverModels.append(try ServerModel(dic: json))
             } catch {
-                PMLog.D("Failed to parse server info for json: \(json)", level: .error)
                 let error = ParseError.serverParse
-                PMLog.ET(error.localizedDescription)
+                log.error("Failed to parse serves in mock with \(error)")
             }
         }
 

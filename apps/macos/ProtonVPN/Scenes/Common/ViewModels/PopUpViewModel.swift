@@ -105,7 +105,7 @@ extension PopUpViewModel: NSTextViewDelegate {
             try inAppLinkManager.openLink(link)
             close()
         } catch {
-            PMLog.ET("Failed to open internal link: \(error)")
+            log.error("Failed to open internal link", category: .user, metadata: ["error": "\(error)"])
         }
         
         return true

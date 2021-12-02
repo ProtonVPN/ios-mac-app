@@ -34,7 +34,7 @@ public extension String {
             let results = regex.matches(in: self, range: NSRange(location: 0, length: nsString.length))
             return results.map { nsString.substring(with: $0.range) }
         } catch let error {
-            PMLog.D("Invalid regex: \(error.localizedDescription)", level: .debug)
+            log.error("Invalid regex", category: .app, metadata: ["error": "\(error)"])
             return []
         }
     }
@@ -43,11 +43,11 @@ public extension String {
         return !matches(for: regex).isEmpty
     }
     
-    func preg_replace_none_regex (_ partten: String, replaceto: String) -> String {
+    func preg_replace_none_regex(_ partten: String, replaceto: String) -> String {
         return self.replacingOccurrences(of: partten, with: replaceto, options: NSString.CompareOptions.caseInsensitive, range: nil)
     }
     
-    func preg_replace (_ partten: String, replaceto: String) -> String {
+    func preg_replace(_ partten: String, replaceto: String) -> String {
         let options: NSRegularExpression.Options = [.caseInsensitive, .dotMatchesLineSeparators]
         do {
             let regex = try NSRegularExpression(pattern: partten, options: options)
@@ -55,8 +55,8 @@ public extension String {
             if !replacedString.isEmpty {
                 return replacedString
             }
-        } catch let ex as NSError {
-            PMLog.D("\(ex)", level: .debug)
+        } catch let error as NSError {
+            log.error("Invalid regex", category: .app, metadata: ["error": "\(error)"])
         }
         return self
     }

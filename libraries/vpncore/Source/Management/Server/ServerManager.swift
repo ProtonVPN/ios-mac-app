@@ -121,7 +121,6 @@ public class ServerManagerImplementation: ServerManager {
     
     private func setupServers() -> ([ServerModel], [ServerType: [CountryGroup]]) {
         let servers = serverStorage.fetch()
-        PMLog.D("user's tier \(userTier)")
         
         var sortedStorage = [ServerType: [CountryGroup]]()
         sortedStorage[.standard] = sort(countryGroups: formGrouping(from: servers.filter { !$0.isSecureCore }))

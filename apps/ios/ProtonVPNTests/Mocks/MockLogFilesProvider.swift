@@ -9,6 +9,6 @@
 import Foundation
 @testable import vpncore
 
-class MockLogFilesProvider: LogsFilesProvider {
+class MockLogFilesProvider: LogFilesProvider {
     public var logFiles = [(String, URL?)]()
 }

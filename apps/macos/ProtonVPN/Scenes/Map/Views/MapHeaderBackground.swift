@@ -71,7 +71,7 @@ class MapHeaderBackground: NSView {
     
     override func draw(_ dirtyRect: NSRect) {
         guard let context = NSGraphicsContext.current?.cgContext, let isConnected = isConnected else {
-            PMLog.D("Unable to obtain context for drawing.", level: .debug)
+            log.error("Unable to obtain context for drawing.", category: .ui)
             return
         }
         
