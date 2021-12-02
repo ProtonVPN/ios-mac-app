@@ -68,9 +68,6 @@
                   Identifier = "AlternativeRoutingTests">
                </Test>
                <Test
-                  Identifier = "AppStateManagerImplementationTests">
-               </Test>
-               <Test
                   Identifier = "IKEv2AvailabilityTests">
                </Test>
                <Test
@@ -81,12 +78,6 @@
                </Test>
                <Test
                   Identifier = "SmartProtocolImplementationTests">
-               </Test>
-               <Test
-                  Identifier = "StateAlertTests">
-               </Test>
-               <Test
-                  Identifier = "StateAlertTests/testDisconnectingAlertPreviouslyConnected()">
                </Test>
             </SkippedTests>
          </TestableReference>

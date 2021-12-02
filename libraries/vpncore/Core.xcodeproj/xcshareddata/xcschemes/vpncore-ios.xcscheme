@@ -67,12 +67,6 @@
                <Test
                   Identifier = "AlternativeRoutingTests">
                </Test>
-               <Test
-                  Identifier = "AppStateManagerImplementationTests">
-               </Test>
-               <Test
-                  Identifier = "StateAlertTests">
-               </Test>
             </SkippedTests>
          </TestableReference>
       </Testables>

@@ -24,6 +24,11 @@ import Foundation
 
 public class VpnKeychainMock: VpnKeychainProtocol {
     
+    public enum KeychainMockError: Error {
+        case fetchError
+        case getCertificateError
+    }
+    
     public var throwsOnFetch: Bool = false
     
     public static var vpnCredentialsChanged = Notification.Name("")
@@ -39,7 +44,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     
     public func fetch() throws -> VpnCredentials {
         if throwsOnFetch {
-            throw NSError(domain: "error", code: 11, userInfo: nil)
+            throw KeychainMockError.fetchError
         }
         return credentials
     }
@@ -51,7 +56,7 @@ public class VpnKeychainMock: VpnKeychainProtocol {
     public func store(vpnCredentials: VpnCredentials) {}
     
     public func getServerCertificate() throws -> SecCertificate {
-        throw NSError()
+        throw KeychainMockError.getCertificateError
     }
     
     public func storeServerCertificate() throws {}
