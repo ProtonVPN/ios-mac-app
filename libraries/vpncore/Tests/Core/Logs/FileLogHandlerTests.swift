@@ -45,7 +45,7 @@ class FileLogHandlerTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        wait(for: [expectation], timeout:0.2)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testRotatesFiles() {
@@ -63,7 +63,7 @@ class FileLogHandlerTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        wait(for: [expectation], timeout:0.2)
+        wait(for: [expectation], timeout: 1)
     }
     
     func testDeletesOldFiles() {
@@ -81,7 +81,7 @@ class FileLogHandlerTests: XCTestCase {
                 expectation.fulfill()
             }
         })
-        wait(for: [expectation], timeout:0.2)
+        wait(for: [expectation], timeout: 1)
     }
 
 }
