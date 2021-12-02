@@ -57,10 +57,10 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     public func getKeys() -> VpnKeys {
         let keys: VpnKeys
         if let existingKeys = self.getStoredKeys() {
-            PMLog.D("Using existing vpn authentication keys")
+            log.info("Using existing vpn authentication keys", category: .userCert)
             keys = existingKeys
         } else {
-            PMLog.D("No vpn auth keys, generating and storing")
+            log.info("No vpn auth keys, generating and storing", category: .userCert)
             keys = VpnKeys()
             self.store(keys: keys)
         }
@@ -77,7 +77,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             let certificate = try JSONDecoder().decode(VpnCertificate.self, from: json)
             return certificate
         } catch {
-            PMLog.D("Keychain (vpn) read error: \(error)", level: .error)
+            log.error("Keychain (vpn) read error: \(error)", category: .userCert)
             return nil
         }
     }
@@ -91,8 +91,8 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             let keys = try JSONDecoder().decode(VpnKeys.self, from: json)
             return keys
         } catch {
-            PMLog.D("Keychain (vpn) read error: \(error)", level: .error)
-            // If keys are broken then the certificate is also unsable, so just delete everything and start again
+            log.error("Keychain (vpn) read error: \(error)", category: .userCert)
+            // If keys are broken then the certificate is also unusable, so just delete everything and start again
             deleteKeys()
             deleteCertificate()
             return nil
@@ -104,7 +104,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             let data = try JSONEncoder().encode(keys)
             try appKeychain.set(data, key: StorageKey.vpnKeys)
         } catch {
-            PMLog.D("Saving generated vpn auth keyes failed \(error)", level: .error)
+            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
         }
     }
 
@@ -113,7 +113,7 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             let data = try JSONEncoder().encode(certificate)
             try appKeychain.set(data, key: StorageKey.vpnCertificate)
         } catch {
-            PMLog.D("Saving generated vpn auth keyes failed \(error)", level: .error)
+            log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
         }
     }
 }

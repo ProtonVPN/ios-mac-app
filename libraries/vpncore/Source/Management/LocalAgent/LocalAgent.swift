@@ -75,13 +75,13 @@ final class LocalAgentImplementation: LocalAgent {
     weak var delegate: LocalAgentDelegate?
 
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
-        PMLog.D("Local agent connecting to \(configuration.hostname)")
+        log.debug("Local agent connecting to \(configuration.hostname)")
 
         var error: NSError?
         agent = LocalAgentNewAgentConnection(data.clientCertificate, data.clientKey.derRepresentation, rootCerts, "10.2.0.1:65432", configuration.hostname, client, LocalAgentNewFeatures()?.with(configuration: configuration), true, &error)
 
         if let agentInitError = error {
-            PMLog.ET("Creating Go local agent connection failed with \(agentInitError)")
+            log.error("Creating Go local agent connection failed with \(agentInitError)")
         }
     }
 
@@ -108,7 +108,7 @@ final class LocalAgentImplementation: LocalAgent {
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveError(code: Int) {
         guard let error = LocalAgentError.from(code: code) else {
-            PMLog.D("Ignoring unknown local agent error")
+            log.error("Ignoring unknown local agent error")
             return
         }
 
@@ -137,14 +137,14 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // only check received features in Connected state
         // the problem here is that states like HardJailed reset Netshield in features to off
         guard state == .connected else {
-            PMLog.D("Not checking features in \(state) state")
+            log.debug("Not checking features in \(state) state")
             return
         }
 
         // ignore the first time the features are received right after connecting
         // in this state the local agent shared library reports features from previous connection
         if previousState == .connecting, state == .connected {
-            PMLog.D("Not checking features right after connecting")
+            log.debug("Not checking features right after connecting")
             return
         }
 

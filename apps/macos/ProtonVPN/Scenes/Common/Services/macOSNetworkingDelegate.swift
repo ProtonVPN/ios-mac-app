@@ -44,7 +44,7 @@ extension macOSNetworkingDelegate {
 
 extension macOSNetworkingDelegate {
     func onForceUpgrade(message: String) {
-        PMLog.D("Force upgrade requested")
+        log.debug("Force upgrade required", category: .appUpdate, metadata: ["message": "\(message)"])
         alertService.push(alert: ForceUpgradeAlert())
     }
 }

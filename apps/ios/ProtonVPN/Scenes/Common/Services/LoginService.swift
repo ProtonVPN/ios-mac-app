@@ -61,7 +61,7 @@ final class CoreLoginService {
     private func show() {
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton)))
         let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, reportBugAlertHandler: { [weak self] receipt in
-            PMLog.ET("Error from payments, showing bug report")
+            log.error("Error from payments, showing bug report", category: .iap)
             self?.alertService.push(alert: ReportBugAlert())
         }))
         let login = LoginAndSignup(appName: "ProtonVPN", doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
@@ -77,7 +77,7 @@ final class CoreLoginService {
         let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlow: finishFlow) { [weak self] (result: LoginResult) -> Void in
             switch result {
             case .dismissed:
-                PMLog.ET("Dismissing the Welcome screen without login or signup should not be possible")
+                log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
             case .loggedIn:
                 self?.navigationService.presentMainInterface()
             }

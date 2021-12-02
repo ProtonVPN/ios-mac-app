@@ -216,12 +216,11 @@ public class VpnApiService {
                 } catch {
                     let error = error as NSError
                     if error.code != -1 {
-                        PMLog.ET(error.localizedDescription)
+                        log.error("clientCredentials error", category: .api, event: .response, metadata: ["error": "\(error)"])
                         comletion(.failure(error))
                     } else {
-                        PMLog.D("Error occurred during user's VPN credentials parsing", level: .error)
+                        log.error("Error occurred during user's VPN credentials parsing", category: .api, event: .response, metadata: ["error": "\(error)"])
                         let error = ParseError.vpnCredentialsParse
-                        PMLog.ET(error.localizedDescription)
                         comletion(.failure(error))
                     }
                 }
@@ -242,9 +241,8 @@ public class VpnApiService {
             switch result {
             case let .success(json):
                 guard let serversJson = json.jsonArray(key: "LogicalServers") else {
-                    PMLog.D("'Servers' field not present in server info request's response", level: .error)
+                    log.error("'Servers' field not present in server info request's response", category: .api, event: .response)
                     let error = ParseError.serverParse
-                    PMLog.ET(error.localizedDescription)
                     completion(.failure(error))
                     return
                 }
@@ -254,9 +252,7 @@ public class VpnApiService {
                     do {
                         serverModels.append(try ServerModel(dic: json))
                     } catch {
-                        PMLog.D("Failed to parse server info for json: \(json)", level: .error)
-                        let error = ParseError.serverParse
-                        PMLog.ET(error.localizedDescription)
+                        log.error("Failed to parse server info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
                     }
                 }
                 completion(.success(serverModels))
@@ -272,8 +268,7 @@ public class VpnApiService {
             case let .success(response):
                 guard let json = response.jsonDictionary(key: "Server"), let serverState = try? VpnServerState(dictionary: json)  else {
                     let error = ParseError.serverParse
-                    PMLog.D("'Server' field not present in server info request's response", level: .error)
-                    PMLog.ET(error.localizedDescription)
+                    log.error("'Server' field not present in server info request's response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))
                     return
                 }
@@ -289,9 +284,8 @@ public class VpnApiService {
             switch result {
             case let .success(response):
                 guard let ip = response.string("IP") else {
-                    PMLog.D("'IP' field not present in user's ip location response", level: .error)
                     let error = ParseError.userIpParse
-                    PMLog.ET(error.localizedDescription)
+                    log.error("'IP' field not present in user's ip location response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))
                     return
                 }
@@ -322,9 +316,8 @@ public class VpnApiService {
             switch result {
             case let .success(response):
                 guard let loadsJson = response.jsonArray(key: "LogicalServers") else {
-                    PMLog.D("'LogicalServers' field not present in loads response", level: .error)
                     let error = ParseError.loadsParse
-                    PMLog.ET(error.localizedDescription)
+                    log.error("'LogicalServers' field not present in loads response", category: .api, event: .response, metadata: ["error": "\(error)"])
                     completion(.failure(error))
                     return
                 }
@@ -335,9 +328,7 @@ public class VpnApiService {
                         let load = try ContinuousServerProperties(dic: json)
                         loads[load.serverId] = load
                     } catch {
-                        PMLog.D("Failed to parse load info for json: \(json)", level: .error)
-                        let error = ParseError.loadsParse
-                        PMLog.ET(error.localizedDescription)
+                        log.error("Failed to parse load info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(json)"])
                     }
                 }
 
@@ -362,9 +353,8 @@ public class VpnApiService {
                     completion(.success(clientConfigResponse.clientConfig))
 
                 } catch {
-                    PMLog.D("Failed to parse load info for json: \(response)", level: .error)
+                    log.error("Failed to parse load info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(response)"])
                     let error = ParseError.loadsParse
-                    PMLog.ET(error.localizedDescription)
                     completion(.failure(error))
                 }
             case let .failure(error):

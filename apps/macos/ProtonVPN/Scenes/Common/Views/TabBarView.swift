@@ -42,32 +42,32 @@ class TabBarView: NSView {
         super.draw(dirtyRect)
         
         guard let context = NSGraphicsContext.current?.cgContext else {
-            PMLog.D("Unable to obtain drawing context for tab bar view", level: .debug)
+            log.error("Unable to obtain drawing context for tab bar view", category: .ui)
             return
         }
         
         guard let tabCount = tabCount, tabCount >= 1 else {
-            PMLog.D("Tab count not properly set in tab bar view", level: .debug)
+            log.error("Tab count not properly set in tab bar view", category: .ui)
             return
         }
         
         guard let focusedTabIndex = focusedTabIndex, focusedTabIndex >= 0, focusedTabIndex < tabCount else {
-            PMLog.D("Focused tab index not properly set in tab bar view", level: .debug)
+            log.error("Focused tab index not properly set in tab bar view", category: .ui)
             return
         }
         
         guard let tabWidth = tabWidth, tabWidth >= minimumTabWidth else {
-            PMLog.D("Tab width property does not satisfy necessary requirements", level: .debug)
+            log.error("Tab width property does not satisfy necessary requirements", category: .ui)
             return
         }
         
         guard let tabHeight = tabHeight, tabHeight >= minimumTabHeight else {
-            PMLog.D("Tab height property does not satisfy necessary requirements", level: .debug)
+            log.error("Tab height property does not satisfy necessary requirements", category: .ui)
             return
         }
         
         guard bounds.width > CGFloat(tabCount) * tabWidth else {
-            PMLog.D("Unable to draw tab bar under given constraints: \(bounds)", level: .debug)
+            log.error("Unable to draw tab bar under given constraints: \(bounds)", category: .ui)
             return
         }
         

@@ -60,8 +60,8 @@ public class AnnouncementRefresherImplementation: AnnouncementRefresher {
             case let .success(announcementsResponse):
                 self?.lastRefresh = Date()
                 self?.announcementStorage.store(announcementsResponse.notifications)
-            case .failure:
-                PMLog.ET("Error getting announcements")
+            case let .failure(error):
+                log.error("Error getting announcements", category: .api, metadata: ["error": "\(error)"])
             }
         }
     }

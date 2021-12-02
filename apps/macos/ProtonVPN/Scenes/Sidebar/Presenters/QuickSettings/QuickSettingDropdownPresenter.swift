@@ -74,6 +74,7 @@ class QuickSettingDropdownPresenter: NSObject, QuickSettingDropdownPresenterProt
     
     func displayReconnectionFeedback() {
         guard vpnGateway.connection == .connected else { return }
+        log.debug("Reconnection requested by changing quick setting", category: .connectionConnect, event: .trigger)
         guard let countryCode = appStateManager.activeConnection()?.server.countryCode else {
             vpnGateway.quickConnect()
             return

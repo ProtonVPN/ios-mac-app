@@ -50,7 +50,7 @@ open class ReportBugViewModel {
         do {
             plan = try vpnKeychain.fetch().accountPlan
         } catch let error {
-            PMLog.ET(error.localizedDescription)
+            log.error("\(error)", category: .ui)
         }
         
         let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""

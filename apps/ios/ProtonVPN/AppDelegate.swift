@@ -25,6 +25,8 @@ import vpncore
 import ProtonCore_Services
 import ProtonCore_Log
 import ProtonCore_UIFoundations
+import Logging
+import Foundation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -39,6 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        
+        setupLogsForApp()
+        
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
         // Use shared defaults
@@ -58,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
-        
+                
         return true
     }
     
@@ -80,7 +85,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey: Any] = [:]) -> Bool {
         guard let action = url.host else {
-            PMLog.D("Invalid URL")
+            log.error("Invalid URL", category: .app)
             return false
         }
         
@@ -88,10 +93,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
     func applicationDidEnterBackground(_ application: UIApplication) {
+        log.info("applicationDidEnterBackground", category: .os)
         container.makePropertiesManager().lastTimeForeground = Date()
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
+        log.info("applicationDidBecomeActive", category: .os)
         var appStateManager = container.makeAppStateManager()
         // If the app was on a closed state, we'll have to wait for the configuration to be established
         appStateManager.onVpnStateChanged = { state in
@@ -118,6 +125,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }, failure: { _ in
             completionHandler(.failed)
         })
+    }
+    
+    private func setupLogsForApp() {
+        LoggingSystem.bootstrap {_ in
+            return MultiplexLogHandler([
+                ConsoleLogHandler(),
+                FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
+            ])
+        }
     }
 }
 
@@ -146,7 +162,7 @@ fileprivate extension AppDelegate {
                 }
             }
         default:
-            PMLog.D("Invalid url action: \(action)")
+            log.error("Invalid url action", category: .app, metadata: ["action": "\(action)"])
             return false
         }
         
@@ -215,12 +231,12 @@ extension AppDelegate {
         PMAPIService.trustKit = trusKitHelper?.trustKit
         PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
 
-        ProtonCore_Log.PMLog.callback = { (log, level) in
+        ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
-                PMLog.D("[Core] \(log)")
+                log.debug("[Core] \(message)", category: .app)
             case .error, .fatal:
-                PMLog.ET("[Core] \(log)")
+                log.error("[Core] \(message)", category: .app, source: "Core")
             }
         }
     }

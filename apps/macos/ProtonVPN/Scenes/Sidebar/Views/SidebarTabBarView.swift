@@ -44,12 +44,12 @@ class SidebarTabBarView: NSView {
     
     override func draw(_ dirtyRect: NSRect) {
         guard activeTab != nil else {
-            PMLog.D("Active tab not properly configured for sidebar tab bar view.", level: .debug)
+            log.error("Active tab not properly configured for sidebar tab bar view.", category: .ui)
             return
         }
         
         guard let context = NSGraphicsContext.current?.cgContext else {
-            PMLog.D("Unable to obtain context for drawing.", level: .debug)
+            log.error("Unable to obtain context for drawing.", category: .ui)
             return
         }
         

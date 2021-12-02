@@ -63,15 +63,15 @@ public class AppSessionRefreshTimer {
     
     public func start(now: Bool = false) {
         if timerFullRefresh == nil || !timerFullRefresh!.isValid {
-            PMLog.D("Data refresh timer started (\(fullServerRefreshTimeout))", level: .trace)
+            log.debug("Data refresh timer started", category: .app, metadata: ["interval": "\(fullServerRefreshTimeout)"])
             timerFullRefresh = Timer.scheduledTimer(timeInterval: fullServerRefreshTimeout, target: self, selector: #selector(refreshFull), userInfo: nil, repeats: true)
         }
         if timerLoadsRefresh == nil || !timerLoadsRefresh!.isValid {
-            PMLog.D("Server loads refresh timer started (\(serverLoadsRefreshTimeout))", level: .trace)
+            log.debug("Server loads refresh timer started", category: .app, metadata: ["interval": "\(serverLoadsRefreshTimeout)"])
             timerLoadsRefresh = Timer.scheduledTimer(timeInterval: serverLoadsRefreshTimeout, target: self, selector: #selector(refreshLoads), userInfo: nil, repeats: true)
         }
         if timerAccountRefresh == nil || !timerAccountRefresh!.isValid {
-            PMLog.D("Account refresh timer started (\(accountRefreshTimeout))", level: .trace)
+            log.debug("Account refresh timer started", category: .app, metadata: ["interval": "\(accountRefreshTimeout)"])
             timerAccountRefresh = Timer.scheduledTimer(timeInterval: accountRefreshTimeout, target: self, selector: #selector(refreshAccount), userInfo: nil, repeats: true)
         }
         if now {

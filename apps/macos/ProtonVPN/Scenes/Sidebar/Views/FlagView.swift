@@ -37,7 +37,7 @@ class FlagView: NSView {
         super.draw(dirtyRect)
 
         guard let context = NSGraphicsContext.current?.cgContext else {
-            PMLog.D("Flag view could not obtain drawing context.", level: .debug)
+            log.error("Flag view could not obtain drawing context.", category: .ui)
             return
         }
         

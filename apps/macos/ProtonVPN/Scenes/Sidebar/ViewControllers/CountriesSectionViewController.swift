@@ -300,7 +300,7 @@ extension CountriesSectionViewController: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView? {
         guard let cellWrapper = viewModel.cellModel(forRow: row) else {
-            PMLog.D("Countries section failed to load cell for row \(row).", level: .error)
+            log.error("Countries section failed to load cell for row \(row).", category: .ui)
             return nil
         }
         

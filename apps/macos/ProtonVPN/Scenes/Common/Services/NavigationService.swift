@@ -48,6 +48,7 @@ class NavigationService {
         & VpnManagerFactory
         & VpnStateConfigurationFactory
         & SystemExtensionsStateCheckFactory
+        & LogFileManagerFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
@@ -87,12 +88,12 @@ class NavigationService {
     }
     
     @objc private func sessionSwitchedOut(_ notification: NSNotification) {
-        PMLog.D("User session did resign active", level: .trace)
+        log.debug("User session did resign active", category: .app)
         vpnGateway?.disconnect()
     }
     
     @objc private func sessionBecameActive(_ notification: NSNotification) {
-        PMLog.D("User session did become active", level: .trace)
+        log.debug("User session did become active", category: .app)
         if let vpnGateway = vpnGateway, vpnGateway.connection == .disconnected, propertiesManager.autoConnect.enabled {
             vpnGateway.autoConnect()
         }
@@ -176,10 +177,9 @@ extension NavigationService {
     }
     
     func openLogsFolder(filename: String? = nil) {
-        guard let logUrl = filename.flatMap({ PMLog.logFile($0) }) ?? PMLog.logFile() else {
-            return
-        }
-        NSWorkspace.shared.activateFileViewerSelecting([logUrl])
+        let logFileManager = factory.makeLogFileManager()
+        let filename = filename ?? AppConstants.Filenames.appLogFilename
+        NSWorkspace.shared.activateFileViewerSelecting([logFileManager.getFileUrl(named: filename)])
     }
     
     func openSettings(to tab: SettingsTab) {        
@@ -205,7 +205,7 @@ extension NavigationService {
     }
     
     @objc private func powerOff(_ notification: Notification) {
-        PMLog.D("System user is being logged off", level: .trace)
+        log.debug("System user is being logged off", category: .os)
         isSystemLoggingOff = true
     }
     

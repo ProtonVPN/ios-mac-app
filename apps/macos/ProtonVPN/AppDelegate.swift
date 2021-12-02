@@ -26,6 +26,7 @@ import ServiceManagement
 import vpncore
 import ProtonCore_Services
 import ProtonCore_Log
+import Logging
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -42,9 +43,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     private var notificationManager: NotificationManagerProtocol!
     
-    func applicationDidFinishLaunching(_ aNotification: Notification) {
-        PMLog.D("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion)) ")
+    func applicationDidFinishLaunching(_ aNotification: Notification) {        
         setupCoreIntegration()
+        setupLogsForApp()
+        log.info("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion))", category: .app, event: .processStart)
+        
         self.checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
@@ -80,6 +83,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationDidBecomeActive(_ notification: Notification) {
+        log.info("applicationDidBecomeActive", category: .os)
         container.makeAppSessionRefreshTimer().start(now: true) // refresh data if time passed
         // Refresh API announcements
         if propertiesManager.featureFlags.pollNotificationAPI, AuthKeychain.fetch() != nil {
@@ -90,6 +94,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
+        log.info("applicationShouldTerminate", category: .os)
         Storage.userDefaults().set(500, forKey: "NSInitialToolTipDelay")
         return navigationService.handleApplicationShouldTerminate()
     }
@@ -103,11 +108,11 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         } catch let error as NSError {
             switch error.code {
             case NSFileReadNoSuchFileError:
-                PMLog.D("No file to migrate")
+                log.info("No file to migrate", category: .app)
             case NSFileWriteFileExistsError:
-                PMLog.D("Migration not required")
+                log.info("Migration not required", category: .app)
             default:
-                PMLog.ET("Migration error code: \((error as NSError).code)", level: .error) // don't show full error text because it can contain system username
+                log.error("Migration error code: \((error as NSError).code)", category: .app) // don't show full error text because it can contain system username
             }
             
             DispatchQueue.main.async {
@@ -117,6 +122,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     }
     
     private func restartApp() {
+        log.info("Restart app", category: .os)
         let appPath = Bundle.main.bundleURL.absoluteString
         let relaunchAppProcess = Process()
         relaunchAppProcess.launchPath = "/usr/bin/open"
@@ -160,33 +166,43 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
         }
     }
+    
+    private func setupLogsForApp() {
+        LoggingSystem.bootstrap {_ in
+            return MultiplexLogHandler([
+                ConsoleLogHandler(),
+                FileLogHandler(self.container.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename))
+            ])
+        }
+    }
 }
 
 // MARK: - Migration
 extension AppDelegate {
     fileprivate func checkMigration() {
-        container.makeMigrationManager().addCheck("1.7.1") { version, completion in
-            // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
-            PMLog.D("App was updated to version 1.7.1 from version " + version)
-            
-            self.reconnectWhenPossible()
-            completion(nil)
-            
-        }.addCheck("2.0.0") { version, completion in
-            // Restart the connection, to enable native KS (if needed)
-            PMLog.D("App was updated to version 2.0.0 from version " + version)
-            
-            guard self.container.makePropertiesManager().killSwitch else {
+        container.makeMigrationManager()
+            .addCheck("1.7.1") { version, completion in
+                // Restart the connection, because whole vpncore was upgraded between version 1.6.0 and 1.7.0
+                log.info("App was updated to version 1.7.1 from version \(version)", category: .appUpdate)
+                
+                self.reconnectWhenPossible()
                 completion(nil)
-                return
             }
-            
-            self.reconnectWhenPossible()
-            completion(nil)
-            
-        }.migrate { _ in
-            // Migration complete
-        }
+            .addCheck("2.0.0") { version, completion in
+                // Restart the connection, to enable native KS (if needed)
+                log.info("App was updated to version 2.0.0 from version \(version)", category: .appUpdate)
+                
+                guard self.container.makePropertiesManager().killSwitch else {
+                    completion(nil)
+                    return
+                }
+                
+                self.reconnectWhenPossible()
+                completion(nil)                
+            }
+            .migrate { _ in
+                // Migration complete
+            }
     }
     
     private func reconnectWhenPossible() {
@@ -214,12 +230,12 @@ extension AppDelegate {
         PMAPIService.trustKit = trusKitHelper?.trustKit
         PMAPIService.noTrustKit = trusKitHelper?.trustKit == nil
 
-        ProtonCore_Log.PMLog.callback = { (log, level) in
+        ProtonCore_Log.PMLog.callback = { (message, level) in
             switch level {
             case .debug, .info, .trace, .warn:
-                PMLog.D("[Core] \(log)")
+                log.debug("[Core] \(message)", category: .app)
             case .error, .fatal:
-                PMLog.ET("[Core] \(log)")
+                log.error("[Core] \(message)", category: .app, source: "Core")
             }
         }
     }

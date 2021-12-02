@@ -19,7 +19,7 @@ struct LogsViewModel {
         do {
             return try String(contentsOf: logFile, encoding: .ascii)
         } catch {
-            PMLog.D("Error reading log file (\(logFile): \(error)")
+            log.error("Error reading log file (\(logFile): \(error)", category: .ui)
             return ""
         }
     }

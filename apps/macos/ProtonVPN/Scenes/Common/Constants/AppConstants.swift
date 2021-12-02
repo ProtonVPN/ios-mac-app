@@ -55,6 +55,7 @@ class AppConstants {
     }
     
     struct Filenames {
+        static let appLogFilename = "ProtonVPN.log"
         static let openVpnLogFilename = "OpenVPN.log"
         static let wireGuardLogFilename = "WireGuard.log"
     }

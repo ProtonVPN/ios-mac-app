@@ -27,6 +27,7 @@ import GSMessages
 class ReportBugViewController: UIViewController {
     
     public var viewModel: ReportBugViewModel!
+    public var appLogFileUrl: URL?
     
     private let vpnManager: VpnManagerProtocol
     
@@ -106,7 +107,7 @@ class ReportBugViewController: UIViewController {
     
     @IBAction func logsSwitchChanged() {
         if logsSwitch.isOn {
-            if let applicationLogFile = PMLog.logFile() {
+            if let applicationLogFile = appLogFileUrl {
                 viewModel.add(files: [applicationLogFile])
             }
             
@@ -136,7 +137,7 @@ class ReportBugViewController: UIViewController {
                 self.sendButton.hideLoading()
                 self.close()
             case let .failure(error):
-                PMLog.ET(error.localizedDescription)
+                log.error("\(error.localizedDescription)", category: .ui)
                 self.sendButton.hideLoading()
                 self.showMessage(error.localizedDescription, type: GSMessageType.error, options: UIConstants.messageOptions)
             }

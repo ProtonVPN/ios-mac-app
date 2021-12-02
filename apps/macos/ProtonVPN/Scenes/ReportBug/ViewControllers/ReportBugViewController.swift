@@ -27,6 +27,8 @@ class ReportBugViewController: NSViewController {
     
     private let viewModel: ReportBugViewModel
     private let alertService: CoreAlertService
+    private let logFileManager: LogFileManager
+    
     @IBOutlet private weak var horizontalLineEmail: NSView!
     @IBOutlet private weak var emailLabel: PVPNTextField!
     @IBOutlet private weak var emailField: TextFieldWithFocus!
@@ -47,43 +49,40 @@ class ReportBugViewController: NSViewController {
     private var fieldFont = NSFont.systemFont(ofSize: 14)
     private var borderlessButtonFont = NSFont.systemFont(ofSize: 14, weight: .bold)
     private var logs: [URL] = []
-    private var logFileUrl: URL? {
-        return PMLog.logFile()
-    }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("Unsupported initializer")
     }
     
-    init(viewModel: ReportBugViewModel, alertService: CoreAlertService, vpnManager: VpnManagerProtocol) {
+    init(viewModel: ReportBugViewModel, alertService: CoreAlertService, vpnManager: VpnManagerProtocol, logFileManager: LogFileManager) {
         self.viewModel = viewModel
         self.alertService = alertService
+        self.logFileManager = logFileManager
         super.init(nibName: NSNib.Name("ReportBugViewController"), bundle: nil)
         
         // Add app log file
-        if let url = logFileUrl {
-            self.logs.append(url)
-        }
+        self.logs.append(logFileManager.getFileUrl(named: AppConstants.Filenames.appLogFilename))
+        
         // Add ovpn log file
         vpnManager.logsContent(for: .openVpn(.undefined)) { logs in
-            let filename = AppConstants.Filenames.openVpnLogFilename
+            let file = logFileManager.getFileUrl(named: AppConstants.Filenames.openVpnLogFilename)
             if let content = logs {
-                PMLog.dump(logs: content, toFile: filename)
+                self.logFileManager.dump(logs: content, toFile: file.path)
             }
             // This is NOT inside the last `if`, because there may already be a log file
-            if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                self.logs.append(url)
+            if FileManager.default.fileExists(atPath: file.path) {
+                self.logs.append(file)
             }
         }
         // Add wireguard log file
         vpnManager.logsContent(for: .wireGuard) { logs in
-            let filename = AppConstants.Filenames.wireGuardLogFilename
+            let file = logFileManager.getFileUrl(named: AppConstants.Filenames.wireGuardLogFilename)
             if let content = logs {
-                PMLog.dump(logs: content, toFile: filename)
+                self.logFileManager.dump(logs: content, toFile: file.path)
             }
             // This is NOT inside the last `if`, because there may already be a log file
-            if let url = PMLog.logFile(filename), FileManager.default.fileExists(atPath: url.path) {
-                self.logs.append(url)
+            if FileManager.default.fileExists(atPath: file.path) {
+                self.logs.append(file)
             }
         }
     }
@@ -183,7 +182,7 @@ class ReportBugViewController: NSViewController {
                 self.hideLoadingScreen()
                 self.view.window!.close()
             case let .failure(error):
-                PMLog.ET(error.localizedDescription)
+                log.error("\(error)", category: .ui)
                 self.hideLoadingScreen()
                 self.alertService.push(alert: UnknownErrortAlert(error: error, confirmHandler: nil))
             }

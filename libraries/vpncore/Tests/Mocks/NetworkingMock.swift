@@ -10,6 +10,7 @@ import Foundation
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_Authentication
+@testable import vpncore
 
 final class NetworkingMock: Networking {
     func request(_ route: LoginRequest, completion: @escaping (Result<Authenticator.Status, AuthErrors>) -> Void) {

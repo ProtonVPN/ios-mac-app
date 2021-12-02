@@ -118,6 +118,8 @@ class StatusMenuViewModel {
     }
     
     func disconnectAction() {
+        log.debug("Disconnect requested by clicking on Cancel", category: .connectionDisconnect, event: .trigger)
+        
         guard let vpnGateway = vpnGateway else {
             return
         }
@@ -165,7 +167,13 @@ class StatusMenuViewModel {
         guard let vpnGateway = vpnGateway else {
             return
         }
-        isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
+        if isConnected {
+            log.debug("Disconnect requested by pressing Quick connect", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            log.debug("Connect requested by pressing Quick connect", category: .connectionConnect, event: .trigger)
+            vpnGateway.quickConnect()
+        }
     }
 
     // MARK: - General section
@@ -185,7 +193,7 @@ class StatusMenuViewModel {
     
     func countryViewModel(at index: IndexPath) -> StatusMenuCountryItemViewModel? {
         guard let countryGroup = ((serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item]), let vpnGateway = vpnGateway else {
-            PMLog.ET(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())")
+            log.error(self.vpnGateway == nil ? "VpnGateway is nil" : "index.item: \(index.item), countryCount: \(countryCount())", category: .ui)
             return nil
         }
         
@@ -193,11 +201,6 @@ class StatusMenuViewModel {
     }
     
     // MARK: - Connect section - Inputs
-    func connectToCountry(at index: IndexPath) {
-        guard let countryCode = (serverType == .secureCore ? secureCoreCountries : standardCountries)?[index.item].0.countryCode else { return }
-        
-        vpnGateway?.connectTo(country: countryCode, ofType: serverType)
-    }
     
     func toggleSecureCore(_ state: ButtonState) {
         if state == .on, let userTier = (try? vpnGateway?.userTier()) ?? CoreAppConstants.VpnTiers.free, userTier < CoreAppConstants.VpnTiers.plus {
@@ -251,6 +254,7 @@ class StatusMenuViewModel {
     
     private func presentDisconnectOnStateToggleWarning() {
         let confirmationClosure: () -> Void = { [weak self] in
+            log.debug("Disconnect requested by changing SecureCore", category: .connectionDisconnect, event: .trigger)
             self?.vpnGateway?.disconnect()
             self?.vpnGateway?.changeActiveServerType(self?.serverType == .standard ? .secureCore : .standard)
         }
@@ -265,7 +269,7 @@ class StatusMenuViewModel {
     // MARK: - Present unsecure connection
     private func presentUnsecureWiFiWarning() {
         let confirmationClosure: () -> Void = {
-            PMLog.D("User accepted unsecure option")
+            log.info("User accepted unsecure WiFi option", category: .net)
         }
         guard let wifiName = wifiSecurityMonitor.wifiName else { return }
         let viewModel = WarningPopupViewModel(image: #imageLiteral(resourceName: "temp"),

@@ -100,7 +100,7 @@
 		D5AC137E23795BD100244066 /* AcknowledgementsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5AC137D23795BD100244066 /* AcknowledgementsViewController.swift */; };
 		D5AC138023796B8800244066 /* Acknowledgements.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5AC137F23796B8800244066 /* Acknowledgements.xib */; };
 		D5ADA9CC228C4325004B0891 /* OsxUiAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5ADA9CB228C4325004B0891 /* OsxUiAlertService.swift */; };
-		D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */; };
+		D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */ = {isa = PBXBuildFile; productRef = D5CA559526A59A9A001E9284 /* WireGuardKit */; };
 		D5D298AC25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298AB25B5BC1D000FBD74 /* UpdateFileSelectorImplementationTests.swift */; };
 		D5D298B825B5BD27000FBD74 /* UpdateFileSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D298B725B5BD27000FBD74 /* UpdateFileSelector.swift */; };
 		D5D6A94A230D296400A432D1 /* DependencyContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5D6A949230D296400A432D1 /* DependencyContainer.swift */; };
@@ -192,6 +192,11 @@
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
+		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
+		E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD39274BC9C1005F370C /* Logger+Callers.swift */; };
+		E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */; };
+		E91BDD3F274BC9D0005F370C /* FileLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3D274BC9D0005F370C /* FileLogFormatter.swift */; };
+		E91BDD40274BC9D0005F370C /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3E274BC9D0005F370C /* PMLogFormatter.swift */; };
 		E9200ED826612F4200BBAB9C /* vpncore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D5FD4C1C264C1B30001F26CE /* vpncore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
 		E928092C26B16FA8008C9F2C /* IPCBaseConnection.swift in Sources */ = {isa = PBXBuildFile; fileRef = E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */; };
@@ -221,7 +226,6 @@
 		E997998F26A6FAA00083D61E /* VpnKeys+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998926A6FAA00083D61E /* VpnKeys+init.swift */; };
 		E997999026A6FAA00083D61E /* CertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998A26A6FAA00083D61E /* CertificateRefreshManager.swift */; };
 		E997999126A6FAA00083D61E /* CertificateRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998B26A6FAA00083D61E /* CertificateRefreshRequest.swift */; };
-		E997999226A6FAA00083D61E /* PMLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998D26A6FAA00083D61E /* PMLog.swift */; };
 		E997999326A6FAA00083D61E /* WGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998E26A6FAA00083D61E /* WGConstants.swift */; };
 		E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */; };
 		E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B026A6FFAC0083D61E /* Keychain.swift */; };
@@ -768,6 +772,11 @@
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		E911B93CDEDAEACCA61CA0A0 /* Pods-ProtonVPN WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
+		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
+		E91BDD39274BC9C1005F370C /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
+		E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Categories.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Categories.swift"; sourceTree = "<group>"; };
+		E91BDD3D274BC9D0005F370C /* FileLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = FileLogFormatter.swift; path = ../../../../libraries/vpncore/Source/Core/Logs/Formatters/FileLogFormatter.swift; sourceTree = "<group>"; };
+		E91BDD3E274BC9D0005F370C /* PMLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PMLogFormatter.swift; path = ../../../../libraries/vpncore/Source/Core/Logs/Formatters/PMLogFormatter.swift; sourceTree = "<group>"; };
 		E928092A26B147E0008C9F2C /* IPCBaseConnection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPCBaseConnection.swift; sourceTree = "<group>"; };
 		E928092E26B42739008C9F2C /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../../macos/ExtensionsIPC/README.md; sourceTree = "<group>"; };
 		E928092F26B42B63008C9F2C /* IPCHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCHelper.swift; path = ../../macos/ExtensionsIPC/IPCHelper.swift; sourceTree = "<group>"; };
@@ -794,7 +803,6 @@
 		E997998926A6FAA00083D61E /* VpnKeys+init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VpnKeys+init.swift"; sourceTree = "<group>"; };
 		E997998A26A6FAA00083D61E /* CertificateRefreshManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateRefreshManager.swift; sourceTree = "<group>"; };
 		E997998B26A6FAA00083D61E /* CertificateRefreshRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateRefreshRequest.swift; sourceTree = "<group>"; };
-		E997998D26A6FAA00083D61E /* PMLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PMLog.swift; sourceTree = "<group>"; };
 		E997998E26A6FAA00083D61E /* WGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGConstants.swift; sourceTree = "<group>"; };
 		E99799AD26A6FFAC0083D61E /* WireGuardNetworkExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireGuardNetworkExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -1024,7 +1032,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E93C4F1C26A1C1F30006680C /* NetworkExtension.framework in Frameworks */,
-				D5CA559626A59A9A001E9284 /* BuildFile in Frameworks */,
+				D5CA559626A59A9A001E9284 /* WireGuardKit in Frameworks */,
 				AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1390,6 +1398,10 @@
 				E997994426A6F50F0083D61E /* Data+JSONDictionary.swift */,
 				E997994526A6F50F0083D61E /* Dictionary+Extension.swift */,
 				E997994626A6F50F0083D61E /* KeychainConstants.swift */,
+				E91BDD39274BC9C1005F370C /* Logger+Callers.swift */,
+				E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */,
+				E91BDD3D274BC9D0005F370C /* FileLogFormatter.swift */,
+				E91BDD3E274BC9D0005F370C /* PMLogFormatter.swift */,
 				E997994726A6F50F0083D61E /* CertificateConstants.swift */,
 				E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */,
 				E997994A26A6F50F0083D61E /* VpnAuthenticationStorage.swift */,
@@ -1424,7 +1436,7 @@
 		E997998C26A6FAA00083D61E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
-				E997998D26A6FAA00083D61E /* PMLog.swift */,
+				E91BDD37274BC89A005F370C /* WGLogger.swift */,
 			);
 			path = vpncore;
 			sourceTree = "<group>";
@@ -2571,7 +2583,7 @@
 			);
 			name = "ProtonVPN WireGuard";
 			packageProductDependencies = (
-				D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */,
+				D5CA559526A59A9A001E9284 /* WireGuardKit */,
 			);
 			productName = "ProtonVPN OpenVPN";
 			productReference = E93C4F2526A1C1F30006680C /* ch.protonvpn.mac.WireGuard-Extension.systemextension */;
@@ -2722,7 +2734,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3139,21 +3151,23 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */,
 				E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */,
 				E997998F26A6FAA00083D61E /* VpnKeys+init.swift in Sources */,
 				E997995826A6F5920083D61E /* VpnKeys.swift in Sources */,
 				E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */,
+				E91BDD3F274BC9D0005F370C /* FileLogFormatter.swift in Sources */,
 				E997999026A6FAA00083D61E /* CertificateRefreshManager.swift in Sources */,
 				E93D023826A1C90A0098520D /* main.swift in Sources */,
 				E997994E26A6F5740083D61E /* AuthCredentials.swift in Sources */,
 				E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */,
 				E997999126A6FAA00083D61E /* CertificateRefreshRequest.swift in Sources */,
+				E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */,
 				E99799BD26A6FFAC0083D61E /* NotificationToken.swift in Sources */,
 				E928093426B43704008C9F2C /* ExtensionInfo.swift in Sources */,
 				E928093126B42B63008C9F2C /* IPCHelper.swift in Sources */,
 				E997995726A6F58F0083D61E /* VpnCertificate.swift in Sources */,
 				E997999326A6FAA00083D61E /* WGConstants.swift in Sources */,
-				E997999226A6FAA00083D61E /* PMLog.swift in Sources */,
 				E997995026A6F57B0083D61E /* Data+JSONDictionary.swift in Sources */,
 				E99799BF26A6FFAC0083D61E /* NETunnelProviderProtocol+Extension.swift in Sources */,
 				E9AF94B926B7CC9400AA1A5F /* IPCWGService.swift in Sources */,
@@ -3166,8 +3180,10 @@
 				E997995626A6F58C0083D61E /* VpnAuthenticationStorage.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
 				E997995126A6F57E0083D61E /* Dictionary+Extension.swift in Sources */,
+				E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */,
 				E997995526A6F5890083D61E /* UIDevice+ModelName.swift in Sources */,
 				E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */,
+				E91BDD40274BC9D0005F370C /* PMLogFormatter.swift in Sources */,
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 				FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */,
 			);
@@ -4467,7 +4483,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4478,9 +4494,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D5CA559526A59A9A001E9284 /* SwiftPackageProductDependency */ = {
+		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* RemoteSwiftPackageReference */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */

@@ -116,7 +116,13 @@ final class HeaderViewModel {
     }
     
     func quickConnectAction() {
-        isConnected ? vpnGateway.disconnect() : vpnGateway.quickConnect()
+        if isConnected {
+            log.debug("Disconnect requested by selecting Quick connect", category: .connectionDisconnect, event: .trigger)
+            vpnGateway.disconnect()
+        } else {
+            log.debug("Connect requested by selecting Quick connect", category: .connectionConnect, event: .trigger)
+            vpnGateway.quickConnect()
+        }
     }
     
     // MARK: - Announcements bell

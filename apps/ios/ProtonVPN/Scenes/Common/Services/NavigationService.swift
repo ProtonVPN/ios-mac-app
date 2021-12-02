@@ -108,7 +108,7 @@ protocol NavigationServiceFactory {
 final class NavigationService {
     
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory & PlanServiceFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory & PlanServiceFactory & LogFileManagerFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -298,7 +298,7 @@ extension NavigationService: SettingsService {
     }
     
     func makeLogSelectionViewController() -> LogSelectionViewController {
-        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: DefaultLogFilesProvider(vpnManager: vpnManager)), settingsService: self)
+        return LogSelectionViewController(viewModel: LogSelectionViewModel(logFileProvider: DefaultLogFilesProvider(vpnManager: vpnManager, logFileManager: factory.makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)), settingsService: self)
     }
     
     func makeBatteryUsageViewController() -> BatteryUsageViewController {
@@ -315,7 +315,8 @@ extension NavigationService: SettingsService {
     
     func presentReportBug() {
         let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain)
+        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain)        
+        viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
         let navigationController = UINavigationController(rootViewController: viewController)
         windowService.present(modal: navigationController)
     }

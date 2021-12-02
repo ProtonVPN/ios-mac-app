@@ -258,6 +258,7 @@ final class SettingsViewModel {
                         case .withReconnect:
                             self.alertService.push(alert: ReconnectOnNetshieldChangeAlert(isOn: type != .off, continueHandler: {
                                 approve()
+                                log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "netShieldType"])
                                 self.vpnGateway?.reconnect(with: type)
                                 self.connectionStatusService.presentStatusViewController()
                             }))
@@ -302,6 +303,7 @@ final class SettingsViewModel {
                         self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.vpnAcceleratorChangeTitle, confirmHandler: {
                             self.propertiesManager.vpnAcceleratorEnabled.toggle()
                             callback(self.propertiesManager.vpnAcceleratorEnabled)
+                            log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "vpnAccelerator"])
                             self.vpnGateway?.retryConnection()
                         }))
                     case .immediately:
@@ -332,7 +334,10 @@ final class SettingsViewModel {
                 alert = AllowLANConnectionsAlert(connected: isConnected) {
                     self.propertiesManager.excludeLocalNetworks = true
                     self.propertiesManager.killSwitch = false
-                    if isConnected { self.vpnGateway?.retryConnection() }
+                    if isConnected {
+                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks", "feature_additional": "killSwitch"])
+                        self.vpnGateway?.retryConnection()
+                    }
                     self.reloadNeeded?()
                     callback(true)
                 } cancelHandler: {
@@ -341,6 +346,7 @@ final class SettingsViewModel {
             } else if isConnected {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.propertiesManager.excludeLocalNetworks.toggle()
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "excludeLocalNetworks"])
                     self.vpnGateway?.retryConnection()
                     callback(self.propertiesManager.excludeLocalNetworks)
                 }, cancelHandler: {
@@ -366,7 +372,10 @@ final class SettingsViewModel {
                 alert = TurnOnKillSwitchAlert {
                     self.propertiesManager.excludeLocalNetworks = false
                     self.propertiesManager.killSwitch = true
-                    if isConnected { self.vpnGateway?.retryConnection() }
+                    if isConnected {
+                        log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch", "feature_additional": "excludeLocalNetworks"])
+                        self.vpnGateway?.retryConnection()
+                    }
                     self.reloadNeeded?()
                     callback(true)
                 } cancelHandler: {
@@ -375,6 +384,7 @@ final class SettingsViewModel {
             } else if isConnected {
                 alert = ReconnectOnSettingsChangeAlert(confirmHandler: {
                     self.propertiesManager.killSwitch.toggle()
+                    log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "killSwitch"])
                     self.vpnGateway?.retryConnection()
                     callback(self.propertiesManager.killSwitch)
                 }, cancelHandler: {
@@ -468,6 +478,7 @@ final class SettingsViewModel {
             pushProtocolViewController()
         } else {
             alertService.push(alert: ChangeProtocolDisconnectAlert { [weak self] in
+                log.debug("Disconnect requested after changing protocol", category: .connectionDisconnect, event: .trigger)
                 self?.appStateManager.disconnect()
                 self?.pushProtocolViewController()
             })

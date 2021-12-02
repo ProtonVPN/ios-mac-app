@@ -31,7 +31,7 @@ open class WireguardProtocolFactory {
             let log = try String(contentsOf: fileUrl)
             completion(log)
         } catch {
-            PMLog.D("Error reading WireGuard log file: \(error)")
+            log.error("Error reading WireGuard log file", category: .app, metadata: ["error": "\(error)"])
             completion(nil)
         }
     }
@@ -93,7 +93,7 @@ extension WireguardProtocolFactory: VpnProtocolFactory {
     
     public func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
-            PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
+            log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "WireGuard"])
             return nil
         }
         // Flush logs to file. Async, but should be done before user gets the file.

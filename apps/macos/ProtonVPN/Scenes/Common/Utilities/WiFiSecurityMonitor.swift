@@ -64,7 +64,7 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
         do {
             try reachability.startNotifier()
         } catch {
-            PMLog.D("Could not start reachability notifier")
+            log.error("Could not start reachability notifier", category: .net)
         }
     }
 
@@ -75,20 +75,21 @@ public final class WiFiSecurityMonitor: CWNetworkProfile {
 
         switch reachability.connection {
         case .wifi:
-            PMLog.D("Reachable via WiFi")
+            log.info("Reachable via WiFi", category: .net)
             // just check all available wifi connections and if at least one of them is insecure we call the delegate and stop the loop
             for interface in interfaces {
                 let security: CWSecurity = interface.security()
                 if security.rawValue == 0 || security.rawValue == 1 {
                     wifiName = interface.ssid()
+                    log.info("Unsecure WiFi detected", category: .net)
                     delegate?.unsecureWiFiDetected()
                     break
                 }
             }
         case .cellular:
-            PMLog.D("Reachable via Cellular")
+            log.info("Reachable via Cellular", category: .net)
         case .unavailable, .none:
-            PMLog.D("Network not reachable")
+            log.info("Network not reachable", category: .net)
         }
     }
 }

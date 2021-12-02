@@ -72,7 +72,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     private func set(vpnProtocol: VpnProtocol, reconnect: Bool) {
         let reconnectIfNeeded = { [weak self] in
             if reconnect {
-                PMLog.D("New protocol set to \(vpnProtocol). VPN will reconnect.")
+                log.info("New protocol set to \(vpnProtocol). VPN will reconnect.", category: .connectionConnect, event: .trigger)
                 self?.vpnGateway.reconnect(with: ConnectionProtocol.vpnProtocol(vpnProtocol))
             }
         }
@@ -90,7 +90,7 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
                     reconnectIfNeeded()
                     
                 case .failure:
-                    PMLog.D("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed")
+                    log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed", category: .connectionConnect)
                 }
             }
             

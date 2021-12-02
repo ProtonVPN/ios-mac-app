@@ -21,6 +21,7 @@
 //
 
 import Foundation
+@testable import vpncore
 
 final class FactoryMock: CoreAlertServiceFactory & TrustKitHelperFactory & PropertiesManagerFactory & NetworkingFactory {
     func makeNetworking() -> Networking {

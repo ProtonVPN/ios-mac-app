@@ -48,7 +48,7 @@ extension LocalAgentError {
     // swiftlint:disable cyclomatic_complexity function_body_length
     static func from(code: Int) -> LocalAgentError? {
         guard let consts = LocalAgentConstants() else {
-            PMLog.ET("Failed to create local agent constants")
+            log.error("Failed to create local agent constants", category: .localAgent)
             return nil
         }
 
@@ -90,7 +90,7 @@ extension LocalAgentError {
         case consts.errorCodeCertNotProvided:
             return .certificateNotProvided
         default:
-            PMLog.ET("Trying to parse unknown local agent error \(code)")
+            log.error("Trying to parse unknown local agent error \(code)", category: .localAgent)
             return nil
         }
     }

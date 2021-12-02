@@ -22,9 +22,9 @@ final class MacVpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFact
         case .ike:
             return KeychainRefVpnCredentialsConfigurator()
         case .openVpn:
-            return OVPNCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.openVPN.machServiceName, logger: { PMLog.D($0) }))
+            return OVPNCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.openVPN.machServiceName, logger: { log.debug("\($0)", category: .protocol) }))
         case .wireGuard:
-            return WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { PMLog.D($0) }),
+            return WGVpnCredentialsConfigurator(xpcServiceUser: XPCServiceUser(withExtension: SystemExtensionType.wireGuard.machServiceName, logger: { log.debug("\($0)", category: .protocol) }),
                                                 propertiesManager: propertiesManager)
         }
         

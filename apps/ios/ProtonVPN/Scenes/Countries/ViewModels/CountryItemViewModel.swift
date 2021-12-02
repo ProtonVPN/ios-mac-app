@@ -238,15 +238,22 @@ class CountryItemViewModel {
         
         updateTier()
         
+        log.debug("Connect requested by clicking on Country item", category: .connectionConnect, event: .trigger)
+        
         if isUsersTierTooLow {
+            log.debug("Connect rejected because user plan is too low", category: .connectionConnect, event: .trigger)
             planService.presentPlanSelection() 
         } else if underMaintenance {
+            log.debug("Connect rejected because server is in maintenance", category: .connectionConnect, event: .trigger)
             alertService.push(alert: MaintenanceAlert(countryName: countryName))
         } else if isConnected {
+            log.debug("VPN is connected already. Will be disconnected.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.disconnect()
         } else if isConnecting {
+            log.debug("VPN is connecting. Will stop connecting.", category: .connectionDisconnect, event: .trigger)
             vpnGateway.stopConnecting(userInitiated: true)
         } else {
+            log.debug("Will connect to country: \(countryCode) serverType: \(serverType)", category: .connectionConnect, event: .trigger)
             vpnGateway.connectTo(country: countryCode, ofType: serverType)
             connectionStatusService.presentStatusViewController()
         }

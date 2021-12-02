@@ -65,7 +65,7 @@ public final class VpnAuthenticationManager {
     }
 
     @objc private func userDowngradedPlanOrBecameDelinquent(_ notification: NSNotification) {
-        PMLog.D("User plan downgraded or delinquent, deleting keys and certificate and getting one ones")
+        log.info("User plan downgraded or delinquent, deleting keys and certificate and getting one ones", category: .userCert)
 
         // certificate refresh requests might be in progress so first cancel all fo them
         queue.cancelAllOperations()
@@ -97,9 +97,9 @@ extension VpnAuthenticationManager: VpnAuthentication {
     public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
         if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate() {
-            PMLog.D("Loading stored vpn authentication data")
+            log.debug("Loading stored vpn authentication data", category: .userCert)
             if !existingCertificate.isExpired {
-                PMLog.D("Stored vpn authentication certificate is expired, the local agent will connect but certificate refresh will be needed")
+                log.debug("Stored vpn authentication certificate is expired, the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
             }
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return

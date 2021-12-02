@@ -76,10 +76,13 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     private let propertiesManager: PropertiesManagerProtocol
     private var vpnManager: NETunnelProviderManager?
     
+    private let debugLogFormat = "$Dyyyy-MM-dd'T'HH:mm:ss.SSSZ$d $L protocol $N.$F:$l - $M"
+    
     private lazy var emptyTunnelConfiguration: OpenVPNTunnelProvider.Configuration = {
         let emptyOpenVpnConfiguration = OpenVPN.ConfigurationBuilder().build()
         var emptyTunnelBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: emptyOpenVpnConfiguration)
         emptyTunnelBuilder.shouldDebug = true // can always be true, since this object is only used to read/delete logs, not create any
+        emptyTunnelBuilder.debugLogFormat = debugLogFormat
         
         return emptyTunnelBuilder.build()
     }()
@@ -118,7 +121,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
     
     public func logFile() -> URL? {
         guard let sharedFolderURL = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup) else {
-            PMLog.D("Cannot obtain shared folder URL for appGroupId \(appGroup) ")
+            log.error("Cannot obtain shared folder URL for appGroup", category: .app, metadata: ["appGroupId": "\(appGroup)", "protocol": "OpenVPN"])
             return nil
         }
         return sharedFolderURL.appendingPathComponent("debug.log")
@@ -191,6 +194,7 @@ aeb893d9a96d1f15519bb3c4dcb40ee3
         var configurationBuilder = OpenVPNTunnelProvider.ConfigurationBuilder(sessionConfiguration: openVpnConfiguration)
         configurationBuilder.shouldDebug = true // FUTURETODO: set based on the user's preference
         configurationBuilder.masksPrivateData = true
+        configurationBuilder.debugLogFormat = debugLogFormat
         
         return configurationBuilder.build()
     }
