@@ -31,7 +31,7 @@ public struct Offer: Codable {
     // Our decoding strategy changes first letter to lowercase
     enum CodingKeys: String, CodingKey {
         case label
-        case url = "uRL"
+        case url = "URL"
         case icon
         case panel
     }
@@ -60,6 +60,6 @@ public struct OfferButton: Codable {
 
     enum CodingKeys: String, CodingKey {
         case text
-        case url = "uRL"
+        case url = "URL"
     }
 }
