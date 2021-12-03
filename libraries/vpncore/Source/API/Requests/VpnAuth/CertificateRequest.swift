@@ -23,13 +23,17 @@
 import Alamofire
 import Foundation
 
+// Important! If changing this request, don't forget there is `CertificateRefreshRequest` class that does the same request, but in WireGuard iOS extension.
+
 final class CertificateRequest: BaseRequest {
 
     let publicKey: PublicKey
     let deviceName: String
+    let config: LocalAgentConfiguration
 
-    init(publicKey: PublicKey) {
+    init(publicKey: PublicKey, config: LocalAgentConfiguration) {
         self.publicKey = publicKey
+        self.config = config
         #if os(iOS)
         deviceName = UIDevice.current.name
         #else
@@ -56,11 +60,28 @@ final class CertificateRequest: BaseRequest {
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
-            "Mode": "session"
-        ]
+            "Mode": "session",
+            "Features": config.params
+        ] as [String : Any]
+        
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
         }
+        
         return params
     }
+}
+
+extension LocalAgentConfiguration {
+
+    var params: [String: Any] {
+        var result: [String: Any] = [:]
+        result["netshield-level"] = netshield.rawValue
+        result["split-tcp"] = vpnAccelerator
+        if let bouncing = bouncing {
+            result["bouncing"] = bouncing
+        }
+        return result
+    }
+
 }
