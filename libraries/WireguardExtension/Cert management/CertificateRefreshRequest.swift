@@ -11,6 +11,8 @@ import Foundation
 import UIKit
 #endif
 
+// Important! If changing this request, don't forget there is `CertificateRequest` class that does the same request, but in vpncore.
+
 class CertificateRefreshRequest {
         
     private let url = URL(string: "https://api.protonvpn.ch/vpn/v1/certificate")!
