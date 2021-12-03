@@ -21,7 +21,7 @@ import Logging
 
 public class FileLogFormatter: PMLogFormatter {
     
-    private let dateFormatter = ISO8601DateFormatter()
+    internal let dateFormatter = ISO8601DateFormatter()
     private let jsonEncoder = JSONEncoder()
 
     public init() {
