@@ -202,7 +202,6 @@ final class SettingsViewModel {
             let accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
-            allowUpgrade = planService.allowUpgrade
 
             switch accountPlan {
             case .basic, .plus:
@@ -210,6 +209,9 @@ final class SettingsViewModel {
             default:
                 allowPlanManagement = false
             }
+
+            allowUpgrade = planService.allowUpgrade && !allowPlanManagement
+
         } else {
             username = LocalizedString.unavailable
             accountPlanName = LocalizedString.unavailable
