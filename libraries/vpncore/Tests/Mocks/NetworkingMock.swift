@@ -13,6 +13,10 @@ import ProtonCore_Authentication
 @testable import vpncore
 
 final class NetworkingMock: Networking {
+    var apiService: PMAPIService {
+        fatalError()
+    }
+
     func request(_ route: LoginRequest, completion: @escaping (Result<Authenticator.Status, AuthErrors>) -> Void) {
 
     }
