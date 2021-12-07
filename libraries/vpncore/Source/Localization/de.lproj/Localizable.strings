@@ -782,7 +782,7 @@
 "_less_info" = "Weniger Informationen";
 
 /* Server load. Used together with actual server load in percents. */
-"_load" = "Laden";
+"_load" = "Auslastung";
 
 /* Shown when VPN is connected but not yet usable because not all the required data is yet set up */
 "_loading_connection_info" = "Verbindungsinformationen werden geladen";
