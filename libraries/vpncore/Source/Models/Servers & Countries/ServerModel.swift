@@ -330,10 +330,18 @@ public class ServerModel: NSObject, NSCoding, Codable {
     // swiftlint:enable nsobject_prefer_isequal
     
     public static func < (lhs: ServerModel, rhs: ServerModel) -> Bool {
-        // Servers whose name contains word free come
+        // Servers whose name contains word FREE come
         // first in the ordering.
-        if let order = orderForMatch("FREE", lhs: lhs.name, rhs: rhs.name) {
-            return order
+        let lhsIsFree = lhs.name.contains("FREE")
+        let rhsIsFree = rhs.name.contains("FREE")
+        if lhsIsFree, rhsIsFree {
+            return lhs.name < rhs.name
+        }
+        if lhsIsFree, !rhsIsFree {
+            return true
+        }
+        if !lhsIsFree, rhsIsFree {
+            return false
         }
         
         // we split the name into the server name and the sequence number
@@ -353,20 +361,5 @@ public class ServerModel: NSObject, NSCoding, Codable {
         } else {
             return lhs.name < rhs.name
         }
-    }
-    
-    // MARK: - Private static functions
-    private static func orderForMatch(_ regex: String, lhs: String, rhs: String) -> Bool? {
-        let leftMatches = lhs.hasMatches(for: regex)
-        let rightMatches = rhs.hasMatches(for: regex)
-        
-        if leftMatches, rightMatches {
-            return lhs < rhs
-        } else if leftMatches, !rightMatches {
-            return true
-        } else if !leftMatches, rightMatches {
-            return false
-        }
-        return nil
     }
 }
