@@ -46,7 +46,7 @@ protocol PlanService {
 final class CorePlanService: PlanService {
     private let paymentsUI: PaymentsUI
     private let payments: Payments
-    private let alertService: AlertService
+    private let alertService: CoreAlertService
     private let userCachedStatus: UserCachedStatus
 
     let tokenStorage: PaymentTokenStorage?
@@ -57,7 +57,7 @@ final class CorePlanService: PlanService {
         return userCachedStatus.isIAPUpgradePlanAvailable
     }
 
-    init(networking: CoreNetworking, alertService: AlertService, storage: Storage) {
+    init(networking: Networking, alertService: CoreAlertService, storage: Storage) {
         self.alertService = alertService
 
         tokenStorage = TokenStorage()

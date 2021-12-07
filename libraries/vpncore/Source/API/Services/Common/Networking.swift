@@ -35,6 +35,8 @@ public protocol NetworkingFactory {
 }
 
 public protocol Networking: APIServiceDelegate {
+    var apiService: PMAPIService { get }
+
     func request(_ route: Request, completion: @escaping (_ result: Result<JSONDictionary, Error>) -> Void)
     func request<T>(_ route: Request, completion: @escaping (_ result: Result<T, Error>) -> Void) where T: Codable
     func request(_ route: Request, completion: @escaping (_ result: Result<(), Error>) -> Void)
