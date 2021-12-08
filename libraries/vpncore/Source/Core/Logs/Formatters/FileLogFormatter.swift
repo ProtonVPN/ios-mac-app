@@ -35,7 +35,29 @@ public class FileLogFormatter: PMLogFormatter {
         if !meta.isEmpty, let metaJsonData = try? jsonEncoder.encode(meta) {
             metaString = String(data: metaJsonData, encoding: .utf8) ?? ""
         }
-        return "\(dateTime) \(level) \(category)\(event) \(message) \(metaString)"
+        return "\(dateTime) | \(level.stringValue) | \(category.uppercased())\(event.uppercased()) | \(message) | \(metaString)"
     }
     
+}
+
+extension Logging.Logger.Level {
+    
+    var stringValue: String {
+        switch self {
+        case .trace:
+            return "TRACE"
+        case .debug:
+            return "DEBUG"
+        case .info:
+            return "INFO "
+        case .notice:
+            return "NOTIC"
+        case .warning:
+            return "WARN "
+        case .error:
+            return "ERROR"
+        case .critical:
+            return "FATAL"
+        }
+    }
 }
