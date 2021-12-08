@@ -23,6 +23,8 @@
 import GSMessages
 import UIKit
 import vpncore
+import BugReport
+import SwiftUI
 
 // MARK: Country Service
 
@@ -320,11 +322,16 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        let viewController = ReportBugViewController(vpnManager: vpnManager)
-        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(networking: networking), alertService: alertService, vpnKeychain: vpnKeychain)        
-        viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
-        let navigationController = UINavigationController(rootViewController: viewController)
-        windowService.present(modal: navigationController)
+        if #available(iOS 13.0.0, *) {
+            let viewController = UIHostingController(rootView: BugReportView())
+            windowService.present(modal: viewController)
+        } else {
+            let viewController = ReportBugViewController(vpnManager: vpnManager)
+            viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(alamofireWrapper: alamofireWrapper), alertService: alertService, vpnKeychain: vpnKeychain)
+            viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+            let navigationController = UINavigationController(rootViewController: viewController)
+            windowService.present(modal: navigationController)
+        }
     }
 }
 
