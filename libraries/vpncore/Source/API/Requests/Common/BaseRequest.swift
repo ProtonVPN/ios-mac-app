@@ -27,7 +27,7 @@ class BaseRequest: URLRequestConvertible {
     // MARK: - Override
     
     func path() -> String {
-        return ApiConstants.doh.getHostUrl()
+        return ApiConstants.doh.getCurrentlyUsedHostUrl()
     }
     
     // MARK: - Computed
