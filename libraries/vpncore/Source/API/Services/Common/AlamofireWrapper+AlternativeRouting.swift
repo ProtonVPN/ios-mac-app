@@ -53,7 +53,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
     
     func adapt(_ urlRequest: URLRequest, for session: Session, completion: @escaping (Result<URLRequest, Error>) -> Void) {
         // Resolve the current base URL
-        let baseUrl = ApiConstants.doh.getHostUrl()
+        let baseUrl = ApiConstants.doh.getCurrentlyUsedHostUrl()
 
         // If the request is being made to the current API base URL then no need to modify it
         guard let baseUrlHost = URL(string: baseUrl)?.host, let url = urlRequest.url, let requestUrlHost = url.host, requestUrlHost != baseUrlHost else {
@@ -69,7 +69,7 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
 
         // If the request is being made to a different base URL, switch to the new base URL changed by alternative routing
         // This is needed for the case when the `AlamofireWrapper` is used with a generic `URLRequestConvertible` instead of a `BaseRequest` subclass
-        // Every `BaseRequest` subclass handles this automatically because it calls `DoH.getHostUrl()` when forming the URL
+        // Every `BaseRequest` subclass handles this automatically because it calls `DoH.getCurrentlyUsedHostUrl()` when forming the URL
         var urlRequest = urlRequest
         log.info("Switching request \(urlRequest) to \(baseUrl)", category: .api, event: .request)
         urlRequest.url = URL(string: url.absoluteString.replacingOccurrences(of: requestUrlHost, with: baseUrlHost))
@@ -94,13 +94,16 @@ final class AlternativeRoutingInterceptor: RequestInterceptor {
         // First we need to extract the underlying networking error from the Alamofire error recieved, because `DoH.handleError(:)` does not know about Alamofire.
         // Then check if `DoH` can handle the networking error. If yes the DoH.handleError(:)` call also immediatelly resolves alternative routes internally so the request can be just retried
         // The URL of this retried request will be modified in the `adapt(:)` method to use the new alternative route
-        if let networkingError = extractNetworkingError(error: error as? AFError, forUrl: requestUrl), ApiConstants.doh.handleError(host: requestUrl.absoluteString, error: networkingError) {
-            log.debug("Retrying request \(request) with alternative route", category: .api, event: .request)
-            completion(.retry)
+        guard let networkingError = extractNetworkingError(error: error as? AFError, forUrl: requestUrl) else {
+            completion(.doNotRetry)
             return
         }
 
-        completion(.doNotRetry)
+        ApiConstants.doh.handleErrorResolvingProxyDomainIfNeeded(
+            host: requestUrl.absoluteString, error: networkingError
+        ) { shouldRetry in
+            completion(shouldRetry ? .retry : .doNotRetry)
+        }
     }
 
     /**
