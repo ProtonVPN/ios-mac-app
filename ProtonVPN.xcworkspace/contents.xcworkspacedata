@@ -12,6 +12,9 @@
       location = "group:libraries/Onboarding">
    </FileRef>
    <FileRef
+      location = "group:libraries/BugReport/BugReport.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:apps/iOS/iOS.xcodeproj">
    </FileRef>
    <FileRef

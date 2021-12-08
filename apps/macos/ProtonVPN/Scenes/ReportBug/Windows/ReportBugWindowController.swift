@@ -29,7 +29,7 @@ class ReportBugWindowController: WindowController {
         fatalError("Unsupported initializer")
     }
     
-    required init(viewController: ReportBugViewController) {
+    required init(viewController: NSViewController) {
         let window = NSWindow(contentViewController: viewController)
         super.init(window: window)
         
