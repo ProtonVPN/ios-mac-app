@@ -40,17 +40,17 @@ class FileLogHandlerTests: XCTestCase {
         handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
                 
         let expectation = XCTestExpectation(description: "File created")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if self.manager.fileExists(atPath: self.folder.path), self.manager.fileExists(atPath: self.file.path) {
                 expectation.fulfill()
             }
-        })
-        wait(for: [expectation], timeout:0.2)
+        }
+        wait(for: [expectation], timeout: 2)
     }
     
     func testRotatesFiles() {
         let handler = FileLogHandler(file)
-        handler.maxFileSize = 50
+        handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 50
         
         for i in 1 ... 7 {
@@ -58,30 +58,30 @@ class FileLogHandlerTests: XCTestCase {
         }
         
         let expectation = XCTestExpectation(description: "3 Files are created")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 3 {
                 expectation.fulfill()
             }
-        })
-        wait(for: [expectation], timeout:0.2)
+        }
+        wait(for: [expectation], timeout: 2)
     }
     
     func testDeletesOldFiles() {
         let handler = FileLogHandler(file)
-        handler.maxFileSize = 50
+        handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 1
         
         for i in 1 ... 7 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let expectation = XCTestExpectation(description: "3 Files are created")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1, execute: {
+        let expectation = XCTestExpectation(description: "2 Files are created")
+        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
                 expectation.fulfill()
             }
-        })
-        wait(for: [expectation], timeout:0.2)
+        }
+        wait(for: [expectation], timeout: 2)
     }
 
 }
