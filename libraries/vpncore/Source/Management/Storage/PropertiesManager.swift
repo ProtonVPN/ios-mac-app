@@ -36,6 +36,8 @@ public protocol PropertiesManagerProtocol: class {
     static var vpnAcceleratorNotification: Notification.Name { get }
     static var killSwitchNotification: Notification.Name { get }
     static var smartProtocolNotification: Notification.Name { get }
+
+    var onAlternativeRoutingChange: ((Bool) -> Void)? { get set }
     
     var autoConnect: (enabled: Bool, profileId: String?) { get set }
     var hasConnected: Bool { get set }
@@ -177,6 +179,8 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
+
+    public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
     public var autoConnect: (enabled: Bool, profileId: String?) {
         get {
@@ -527,7 +531,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
-            // doh.status = newValue ? .on : .off
+            onAlternativeRoutingChange?(newValue)
         }
     }
 

@@ -33,6 +33,8 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public static var excludeLocalNetworksNotification: Notification.Name = Notification.Name("")
     public static var vpnAcceleratorNotification: Notification.Name = Notification.Name("")
     public static var smartProtocolNotification: Notification.Name = Notification.Name("")
+
+    public var onAlternativeRoutingChange: ((Bool) -> Void)?
     
     public var autoConnect: (enabled: Bool, profileId: String?) = (true, nil)
     public var hasConnected: Bool = false
@@ -69,7 +71,11 @@ public class PropertiesManagerMock: PropertiesManagerProtocol {
     public var vpnAcceleratorEnabled: Bool = false
     public var killSwitch: Bool = false
     public var humanValidationFailed: Bool = false
-    public var alternativeRouting: Bool = false
+    public var alternativeRouting: Bool = false {
+        didSet {
+            onAlternativeRoutingChange?(alternativeRouting)
+        }
+    }
     public var smartProtocol: Bool = false
     public var streamingServices: StreamingDictServices = [:]
     public var excludeLocalNetworks: Bool = true

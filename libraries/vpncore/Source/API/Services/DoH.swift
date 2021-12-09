@@ -60,6 +60,15 @@ public class DoHVPN: DoH, ServerConfig {
         return "https://verify.\(host)"
     }
 
+    public var alternativeRouting: Bool {
+        get {
+            return status == .on
+        }
+        set {
+            status = newValue ? .on : .off            
+        }
+    }
+
     private let customApiHost: String
     private let verifyHost: String
     private let customHost: String?
