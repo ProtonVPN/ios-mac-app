@@ -60,9 +60,11 @@ final class DependencyContainer {
         networking: makeNetworking(),
         alertService: macAlertService,
         timerFactory: TimerFactory(),
-        propertiesManager: PropertiesManager(),
+        propertiesManager: makePropertiesManager(),
         vpnKeychain: vpnKeychain,
-        configurationPreparer: makeVpnManagerConfigurationPreparer(), vpnAuthentication: vpnAuthentication)
+        configurationPreparer: makeVpnManagerConfigurationPreparer(),
+        vpnAuthentication: vpnAuthentication,
+        doh: makeDoHVPN())
     private lazy var appSessionManager: AppSessionManagerImplementation = AppSessionManagerImplementation(factory: self)
     private lazy var macAlertService: MacAlertService = MacAlertService(factory: self)
    
@@ -95,11 +97,13 @@ final class DependencyContainer {
         return VpnAuthenticationManager(networking: makeNetworking(), storage: vpnAuthKeychain)
     }()
 
+    private lazy var storage = Storage()
+    private lazy var propertiesManager = PropertiesManager(storage: storage)
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
-    private lazy var networking = CoreNetworking(delegate: makeNetworkingDelegate(), appInfo: makeAppInfo(), doh: makeDoHVPN())
-    private lazy var propertiesManager = PropertiesManager(doh: makeDoHVPN(), storage: Storage())
+    private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
+    private lazy var appInfo = AppInfoImplementation()
     private lazy var doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host)
-    private lazy var appInfo = AppInfo()
+    private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
 }
 
 // MARK: NavigationServiceFactory
@@ -199,7 +203,7 @@ extension DependencyContainer: ServerStorageFactory {
 // MARK: VpnGatewayFactory
 extension DependencyContainer: VpnGatewayFactory {
     func makeVpnGateway() -> VpnGatewayProtocol {
-        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider())
+        return VpnGateway(vpnApiService: makeVpnApiService(), appStateManager: makeAppStateManager(), alertService: makeCoreAlertService(), vpnKeychain: makeVpnKeychain(), siriHelper: SiriHelper(), netShieldPropertyProvider: makeNetShieldPropertyProvider(), propertiesManager: makePropertiesManager(), profileManager: makeProfileManager())
     }
 }
 
@@ -305,7 +309,7 @@ extension DependencyContainer: CoreApiServiceFactory {
 // MARK: - ProfileManagerFactory
 extension DependencyContainer: ProfileManagerFactory {
     func makeProfileManager() -> ProfileManager {
-        return ProfileManager.shared
+        return profileManager
     }
 }
 

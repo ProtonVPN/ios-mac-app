@@ -64,6 +64,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
         & SystemExtensionsStateCheckFactory
         & CoreAlertServiceFactory
         & AnnouncementsViewModelFactory
+        & ProfileManagerFactory
     public var factory: Factory!
     
     private lazy var tabBarViewController: SidebarTabBarViewController = {
@@ -79,7 +80,7 @@ final class SidebarViewController: NSViewController, NSWindowDelegate {
     }()
     
     private lazy var profileSectionViewController: ProfileSectionViewController = { [unowned self] in
-        let viewModel = ProfilesSectionViewModel(vpnGateway: self.vpnGateway, navService: navService, alertService: factory.makeCoreAlertService(), protocolChangeNotifications: [PropertiesManager.vpnProtocolNotification, PropertiesManager.smartProtocolNotification])
+        let viewModel = ProfilesSectionViewModel(vpnGateway: self.vpnGateway, navService: navService, alertService: factory.makeCoreAlertService(), profileManager: factory.makeProfileManager(), protocolChangeNotifications: [PropertiesManager.vpnProtocolNotification, PropertiesManager.smartProtocolNotification])
         return ProfileSectionViewController(viewModel: viewModel)
     }()
     

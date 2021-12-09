@@ -42,6 +42,7 @@ class StatusMenuViewModel {
         & CoreAlertServiceFactory
         & AppStateManagerFactory
         & WiFiSecurityMonitorFactory
+        & ProfileManagerFactory
 
     private let factory: Factory
     
@@ -53,6 +54,7 @@ class StatusMenuViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var wifiSecurityMonitor: WiFiSecurityMonitor = factory.makeWiFiSecurityMonitor()
+    private lazy var profileManger: ProfileManager = factory.makeProfileManager()
 
     var contentChanged: (() -> Void)?
     var disconnectWarning: ((WarningPopupViewModel) -> Void)?
@@ -94,7 +96,7 @@ class StatusMenuViewModel {
     }
     
     var profileListViewModel: StatusMenuProfilesListViewModel {
-        return StatusMenuProfilesListViewModel(vpnGateway: vpnGateway)
+        return StatusMenuProfilesListViewModel(vpnGateway: vpnGateway, profileManager: profileManger)
     }
     
     // MARK: - Connecting screen
@@ -309,8 +311,7 @@ class StatusMenuViewModel {
         
         do {
             let tier = try vpnKeychain.fetch().maxTier
-        
-            profileManager = ProfileManager.shared
+
             serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
             
             updateCountryList()

@@ -182,7 +182,6 @@
 		E1C2032A2027191100F4D375 /* ZoomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1C203292027191100F4D375 /* ZoomView.swift */; };
 		E1E0E3132059775200599F42 /* PVPNHyperlinkTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1E0E3122059775200599F42 /* PVPNHyperlinkTextField.swift */; };
 		E1EA77FB2294366A007B9C2F /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1EA77FA2294366A007B9C2F /* Alerts.swift */; };
-		E1F2621921D68BDB003A4401 /* ProfileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */; };
 		E1F59B5620DCF26A00798435 /* StatusMenuCountryViewItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */; };
 		E1F59B5720DCF26A00798435 /* StatusMenuCountryViewItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */; };
 		E1F59B5920E11B7600798435 /* StatusBarAppConnectButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */; };
@@ -761,7 +760,6 @@
 		E1E0E3122059775200599F42 /* PVPNHyperlinkTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PVPNHyperlinkTextField.swift; sourceTree = "<group>"; };
 		E1E7462622C5201B00BFDC90 /* ProtonVPN-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ProtonVPN-Bridging-Header.h"; sourceTree = "<group>"; };
 		E1EA77FA2294366A007B9C2F /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
-		E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ProfileManager+Extension.swift"; sourceTree = "<group>"; };
 		E1F59B5420DCF26A00798435 /* StatusMenuCountryViewItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusMenuCountryViewItem.swift; sourceTree = "<group>"; };
 		E1F59B5520DCF26A00798435 /* StatusMenuCountryViewItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusMenuCountryViewItem.xib; sourceTree = "<group>"; };
 		E1F59B5820E11B7600798435 /* StatusBarAppConnectButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarAppConnectButton.swift; sourceTree = "<group>"; };
@@ -1888,7 +1886,6 @@
 		F36ECE112611DD150089B898 /* Profiles */ = {
 			isa = PBXGroup;
 			children = (
-				F36ECE502611E3090089B898 /* Services */,
 				F36ECE122611DD1B0089B898 /* ViewControllers */,
 				F36ECE132611DD280089B898 /* ViewModels */,
 				F36ECE172611DDC00089B898 /* Views */,
@@ -2447,14 +2444,6 @@
 			path = Services;
 			sourceTree = "<group>";
 		};
-		F36ECE502611E3090089B898 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				E1F2621821D68BDB003A4401 /* ProfileManager+Extension.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		F36ECE512611E3220089B898 /* Services */ = {
 			isa = PBXGroup;
 			children = (
@@ -2734,7 +2723,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -3342,7 +3331,6 @@
 				E928093326B43704008C9F2C /* ExtensionInfo.swift in Sources */,
 				EE69C8D31F5D89FF00C3065C /* AboutWindowController.swift in Sources */,
 				EE876E0C1F137D0C00C9B9C2 /* SidebarViewController.swift in Sources */,
-				E1F2621921D68BDB003A4401 /* ProfileManager+Extension.swift in Sources */,
 				E15A8691202738A1009B9C83 /* ZoomButton.swift in Sources */,
 				E1454CF0206FD37300E6D396 /* HelpPopoverViewModel.swift in Sources */,
 				42742F972478205E00E389C8 /* KillSwitchSwift5Popup.swift in Sources */,
@@ -4483,7 +4471,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4496,7 +4484,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */

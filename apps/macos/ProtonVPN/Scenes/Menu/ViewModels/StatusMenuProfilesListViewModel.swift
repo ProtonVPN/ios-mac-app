@@ -24,9 +24,9 @@ import Foundation
 import vpncore
 
 class StatusMenuProfilesListViewModel {
-    
-    private let profileManager: ProfileManager
+
     private let vpnGateway: VpnGatewayProtocol?
+    private let profileManager: ProfileManager
     
     var contentChanged: (() -> Void)?
     
@@ -49,9 +49,10 @@ class StatusMenuProfilesListViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?) {
+    init(vpnGateway: VpnGatewayProtocol?, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
-        profileManager = ProfileManager.shared
+        self.profileManager = profileManager
+
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
                                                name: profileManager.contentChanged, object: nil)
     }
