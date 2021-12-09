@@ -50,7 +50,7 @@ class FileLogHandlerTests: XCTestCase {
     
     func testRotatesFiles() {
         let handler = FileLogHandler(file)
-        handler.maxFileSize = 50
+        handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 50
         
         for i in 1 ... 7 {
@@ -68,14 +68,14 @@ class FileLogHandlerTests: XCTestCase {
     
     func testDeletesOldFiles() {
         let handler = FileLogHandler(file)
-        handler.maxFileSize = 50
+        handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 1
         
         for i in 1 ... 7 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let expectation = XCTestExpectation(description: "3 Files are created")
+        let expectation = XCTestExpectation(description: "2 Files are created")
         DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
             if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
                 expectation.fulfill()
