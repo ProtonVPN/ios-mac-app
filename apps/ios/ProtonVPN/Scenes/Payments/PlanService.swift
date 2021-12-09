@@ -20,6 +20,7 @@
 //  along with vpncore.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_DataModel
 import ProtonCore_Payments
 import ProtonCore_PaymentsUI
 import vpncore
@@ -71,7 +72,7 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
-        paymentsUI = PaymentsUI(payments: payments)
+        paymentsUI = PaymentsUI(payments: payments, clientApp: ClientApp.vpn)
     }
 
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
