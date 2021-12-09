@@ -21,18 +21,19 @@ final class EnvironmentsViewController: UIViewController {
 
     weak var delegate: EnvironmentsViewControllerDelegate?
     var propertiesManager: PropertiesManagerProtocol!
+    var doh: DoHVPN!
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
         title = "Endpoint"
-        environmentLabel.text = propertiesManager.apiEndpoint ?? ApiConstants.doh.liveURL
+        environmentLabel.text = propertiesManager.apiEndpoint ?? doh.liveURL
         customEnvironmentTextField.delegate = self
     }
 
     @IBAction func resetTapped(_ sender: Any) {
         propertiesManager.apiEndpoint = nil
-        showAlert(environment: ApiConstants.doh.liveURL)
+        showAlert(environment: doh.liveURL)
     }
 
     @IBAction func changeTapped(_ sender: Any) {

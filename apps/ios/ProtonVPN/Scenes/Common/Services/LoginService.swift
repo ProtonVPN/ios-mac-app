@@ -37,6 +37,7 @@ final class CoreLoginService {
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
+        & DoHVPNFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -46,6 +47,7 @@ final class CoreLoginService {
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
+    private let doh: DoHVPN
 
     private var login: LoginAndSignupInterface?
 
@@ -58,6 +60,7 @@ final class CoreLoginService {
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
+        doh = factory.makeDoHVPN()
     }
 
     private func show() {
@@ -66,7 +69,7 @@ final class CoreLoginService {
             log.error("Error from payments, showing bug report", category: .iap)
             self?.alertService.push(alert: ReportBugAlert())
         }))
-        let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: ApiConstants.doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
+        let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
         self.login = login
 
         let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
@@ -94,6 +97,7 @@ final class CoreLoginService {
     private func showEnvironmentSelection() {
         let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
         environmentsViewController.propertiesManager = propertiesManager
+        environmentsViewController.doh = doh
         environmentsViewController.delegate = self
         windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
     }

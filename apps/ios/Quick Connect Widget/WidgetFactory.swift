@@ -29,7 +29,7 @@ final class WidgetFactory {
     private let appGroup = AppConstants.AppGroups.main
 
     private let alertService = ExtensionAlertService()
-    private let propertiesManager = PropertiesManager()
+    private let propertiesManager = PropertiesManager(storage: Storage())
     
     init() {
         setUpNSCoding(withModuleName: "ProtonVPN")

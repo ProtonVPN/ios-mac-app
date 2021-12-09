@@ -49,7 +49,7 @@ class ProfilesViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, planService: PlanService) {
+    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, planService: PlanService, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
@@ -59,7 +59,7 @@ class ProfilesViewModel {
         self.planService = planService
         
         if vpnGateway != nil {
-            profileManager = ProfileManager.shared
+            self.profileManager = profileManager
         }
     }
     

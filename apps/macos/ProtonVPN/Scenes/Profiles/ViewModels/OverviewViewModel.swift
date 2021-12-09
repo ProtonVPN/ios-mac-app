@@ -32,10 +32,9 @@ class OverviewViewModel {
     var createNewProfile: (() -> Void)?
     var editProfile: ((Profile) -> Void)?
     
-    init(vpnGateway: VpnGatewayProtocol) {
+    init(vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
-        
-        profileManager = ProfileManager.shared
+        self.profileManager = profileManager
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged),
                                                name: profileManager.contentChanged, object: nil)
     }

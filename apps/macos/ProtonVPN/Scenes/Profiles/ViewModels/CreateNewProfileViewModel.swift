@@ -61,7 +61,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -76,8 +76,9 @@ class CreateNewProfileViewModel {
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
-    private lazy var appStateManager: AppStateManager = self.factory.makeAppStateManager()
-    private lazy var vpnGateway: VpnGatewayProtocol = self.factory.makeVpnGateway()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
     
@@ -86,7 +87,6 @@ class CreateNewProfileViewModel {
     
     init(editProfile: Notification.Name, factory: Factory) {
         serverManager = ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.visionary, serverStorage: ServerStorageConcrete())
-        profileManager = ProfileManager.shared
         self.factory = factory
         
         NotificationCenter.default.addObserver(self, selector: #selector(editProfile(_:)), name: editProfile, object: nil)

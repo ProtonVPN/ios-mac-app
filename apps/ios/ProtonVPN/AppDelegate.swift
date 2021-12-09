@@ -49,8 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
-        ApiConstants.doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host)
-
         setupCoreIntegration()
         
         SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsniOS)

@@ -33,13 +33,15 @@ class SiriHandlerViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let configurationPreparer: VpnManagerConfigurationPreparer
     private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let profileManager: ProfileManager
+    private let doh: DoHVPN
     
     private let alertService = ExtensionAlertService()
     
     lazy var appStateManager: AppStateManager = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain))
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: TimerFactory(), propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationManager(networking: networking, storage: vpnAuthKeychain), doh: doh)
         }()
     
     private var _vpnGateway: VpnGatewayProtocol?
@@ -49,15 +51,17 @@ class SiriHandlerViewModel {
             return nil
         }
         if _vpnGateway == nil {
-            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider)
+            _vpnGateway = VpnGateway(vpnApiService: vpnApiService, appStateManager: appStateManager, alertService: alertService, vpnKeychain: vpnKeychain, siriHelper: SiriHelper(), netShieldPropertyProvider: netShieldPropertyProvider, propertiesManager: propertiesManager, profileManager: profileManager)
         }
         return _vpnGateway
     }
     
-    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(networking: Networking, vpnApiService: VpnApiService, vpnManager: VpnManager, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, netShieldPropertyProvider: NetShieldPropertyProvider, profileManager: ProfileManager, doh: DoHVPN) {
         setUpNSCoding(withModuleName: "ProtonVPN")
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
-        
+
+        self.doh = doh
+        self.profileManager = profileManager
         self.networking = networking
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
@@ -77,7 +81,7 @@ class SiriHandlerViewModel {
         }
         
         // Without refresh, from time to time it doesn't see newest default profile
-        ProfileManager.shared.refreshProfiles()
+        profileManager.refreshProfiles()
         
         propertiesManager.lastConnectionRequest = vpnGateway.quickConnectConnectionRequest()
         

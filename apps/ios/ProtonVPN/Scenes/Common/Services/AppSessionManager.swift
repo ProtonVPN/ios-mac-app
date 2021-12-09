@@ -55,7 +55,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
     
-    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory
+    typealias Factory = VpnApiServiceFactory & AppStateManagerFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & NavigationServiceFactory & NetworkingFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & PlanServiceFactory & ProfileManagerFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -68,6 +68,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
     private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
     var vpnGateway: VpnGatewayProtocol?
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
@@ -229,7 +230,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
                 self.resolveActiveSession(success: { [weak self] in
                     self?.setAndNotify(for: .established)
-                    ProfileManager.shared.refreshProfiles()
+                    self?.profileManager.refreshProfiles()
                     self?.refreshVpnAuthCertificate(success: ok, failure: fail)
                 }, failure: { error in
                     fail(error)
@@ -245,7 +246,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                 }
 
                 self.setAndNotify(for: .established)
-                ProfileManager.shared.refreshProfiles()
+                self.profileManager.refreshProfiles()
                 self.refreshVpnAuthCertificate(success: ok, failure: fail)
             }
         }
