@@ -88,7 +88,7 @@ final class DependencyContainer {
     private lazy var networking = CoreNetworking(delegate: networkingDelegate, appInfo: makeAppInfo(), doh: makeDoHVPN())
     private lazy var planService = CorePlanService(networking: networking, alertService: makeCoreAlertService(), storage: storage)
     private lazy var appInfo = AppInfoImplementation()
-    private lazy var doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, customHost: propertiesManager.apiEndpoint)
+    private lazy var doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host, alternativeRouting: propertiesManager.alternativeRouting, customHost: propertiesManager.apiEndpoint)
     private lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: makePropertiesManager())
 }
 
