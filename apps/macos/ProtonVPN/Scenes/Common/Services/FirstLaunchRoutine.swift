@@ -27,12 +27,12 @@ class AppLaunchRoutine {
     
     static var launchedBefore = true
     
-    static func execute() {
+    static func execute(propertiesManager: PropertiesManagerProtocol) {
         if !Storage.userDefaults().bool(forKey: AppConstants.UserDefaults.launchedBefore) {
             launchedBefore = false
             Storage.userDefaults().set(false, forKey: AppConstants.UserDefaults.startOnBoot)
             Storage.userDefaults().set(false, forKey: AppConstants.UserDefaults.startMinimized)
-            PropertiesManager().hasConnected = false
+            propertiesManager.hasConnected = false
             Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.systemNotifications)
             Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.launchedBefore)
         }

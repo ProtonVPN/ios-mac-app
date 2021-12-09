@@ -30,7 +30,7 @@ protocol UpdateManagerFactory {
 
 class UpdateManager: NSObject {
     
-    public typealias Factory = UpdateFileSelectorFactory
+    public typealias Factory = UpdateFileSelectorFactory & PropertiesManagerFactory
     private let factory: Factory
     
     private lazy var updateFileSelector: UpdateFileSelector = factory.makeUpdateFileSelector()
@@ -39,7 +39,7 @@ class UpdateManager: NSObject {
     public var stateUpdated: (() -> Void)?
     
     private var appSessionManager: AppSessionManager?
-    private let propertiesManager = PropertiesManager()
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     
     private var updater: SPUStandardUpdaterController?
     private var appcast: SUAppcast?

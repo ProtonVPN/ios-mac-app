@@ -47,6 +47,10 @@ public class ProfileManager {
     public var customProfiles: [Profile] = []
     private var servers: [ServerModel] = []
     private let propertiesManager: PropertiesManagerProtocol
+
+    public var allProfiles: [Profile] {
+        return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol) + customProfiles
+    }
     
     public init(serverStorage: ServerStorage, propertiesManager: PropertiesManagerProtocol) {
         self.propertiesManager = propertiesManager

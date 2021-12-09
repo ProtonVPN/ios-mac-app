@@ -40,13 +40,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     lazy var navigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var systemExtensionManager: SystemExtensionManager = container.makeSystemExtensionManager()
+    private lazy var appInfo: AppInfo = container.makeAppInfo()
     
     private var notificationManager: NotificationManagerProtocol!
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {        
         setupCoreIntegration()
         setupLogsForApp()
-        log.info("Starting app version \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion))", category: .app, event: .processStart)
+        log.info("Starting app version \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))", category: .app, event: .processStart)
         
         self.checkMigration()
         migrateIfNeeded {
@@ -54,9 +55,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             
             SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
             
-            AppLaunchRoutine.execute()
-
-            ApiConstants.doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host)
+            AppLaunchRoutine.execute(propertiesManager: self.propertiesManager)
             
             _ = self.container.makeAuthApiService() // Prepare auth service for 401 response on the first request
             self.protonVpnMenu.update(with: self.container.makeProtonVpnMenuViewModel())

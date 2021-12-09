@@ -72,7 +72,6 @@ class CreateNewProfileViewModel {
     let sessionFinished = NSNotification.Name("CreateNewProfileViewModelSessionFinished") // two observers
 
     private let serverManager: ServerManager
-    private let profileManager: ProfileManager
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
