@@ -24,9 +24,10 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & NetshieldServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory
     
     private let maxCharCount = 20
-    private let propertiesManager = PropertiesManager()
+    private let propertiesManager: PropertiesManagerProtocol
     private let appSessionManager: AppSessionManager
     private let appStateManager: AppStateManager
     private let alertService: AlertService
@@ -47,24 +48,26 @@ final class SettingsViewModel {
     private var serverManager: ServerManager?
 
     private let planService: PlanService
+    private let appInfo: AppInfo
     
     var pushHandler: ((UIViewController) -> Void)?
 
-    // FUTUREDO: Use Factory
-    init(appStateManager: AppStateManager, appSessionManager: AppSessionManager, vpnGateway: VpnGatewayProtocol?, alertService: AlertService, settingsService: SettingsService, protocolService: ProtocolService, vpnKeychain: VpnKeychainProtocol, netshieldService: NetshieldService, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, vpnManager: VpnManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, planService: PlanService) {
-        self.appStateManager = appStateManager
-        self.appSessionManager = appSessionManager
-        self.vpnGateway = vpnGateway
-        self.alertService = alertService
-        self.settingsService = settingsService
+    init(factory: Factory, protocolService: ProtocolService) {
+        self.appStateManager = factory.makeAppStateManager()
+        self.appSessionManager = factory.makeAppSessionManager()
+        self.vpnGateway = factory.makeVpnGateway()
+        self.alertService = factory.makeCoreAlertService()
+        self.settingsService = factory.makeSettingsService()
         self.protocolService = protocolService
-        self.vpnKeychain = vpnKeychain
-        self.netshieldService = netshieldService
-        self.connectionStatusService = connectionStatusService
-        self.netShieldPropertyProvider = netShieldPropertyProvider
-        self.vpnManager = vpnManager
-        self.vpnStateConfiguration = vpnStateConfiguration
-        self.planService = planService
+        self.vpnKeychain = factory.makeVpnKeychain()
+        self.netshieldService = factory.makeNetshieldService()
+        self.connectionStatusService = factory.makeConnectionStatusService()
+        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+        self.vpnManager = factory.makeVpnManager()
+        self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
+        self.planService = factory.makePlanService()
+        self.propertiesManager = factory.makePropertiesManager()
+        self.appInfo = factory.makeAppInfo()
         
         startObserving()
     }
@@ -124,7 +127,7 @@ final class SettingsViewModel {
     func viewForFooter() -> UIView {
         let view = AppVersionView.loadViewFromNib() as AppVersionView
         view.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50)
-        view.appVersionLabel.text = LocalizedString.version + " \(ApiConstants.bundleShortVersion) (\(ApiConstants.bundleVersion))"
+        view.appVersionLabel.text = LocalizedString.version + " \(appInfo.bundleShortVersion) (\(appInfo.bundleVersion))"
         return view
     }
     
@@ -154,8 +157,7 @@ final class SettingsViewModel {
         self.vpnGateway = vpnGateway
         
         guard let tier = try? vpnKeychain.fetch().maxTier else { return }
-        
-        profileManager = ProfileManager.shared
+
         serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),

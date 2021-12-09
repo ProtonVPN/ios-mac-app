@@ -96,7 +96,10 @@ final class DependencyContainer {
     }()
 
     private lazy var networkingDelegate: NetworkingDelegate = macOSNetworkingDelegate(alertService: macAlertService) // swiftlint:disable:this weak_delegate
-    private lazy var networking = CoreNetworking(delegate: networkingDelegate)
+    private lazy var networking = CoreNetworking(delegate: makeNetworkingDelegate(), appInfo: makeAppInfo(), doh: makeDoHVPN())
+    private lazy var propertiesManager = PropertiesManager(doh: makeDoHVPN(), storage: Storage())
+    private lazy var doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host)
+    private lazy var appInfo = AppInfo()
 }
 
 // MARK: NavigationServiceFactory
@@ -130,7 +133,7 @@ extension DependencyContainer: VpnKeychainFactory {
 // MARK: PropertiesManagerFactory
 extension DependencyContainer: PropertiesManagerFactory {
     func makePropertiesManager() -> PropertiesManagerProtocol {
-        return PropertiesManager()
+        return propertiesManager
     }
 }
 
@@ -415,5 +418,18 @@ extension DependencyContainer: LogFileManagerFactory {
 extension DependencyContainer: LogFilesProviderFactory {
     func makeLogFilesProvider() -> LogFilesProvider {
         return DefaultLogFilesProvider(vpnManager: makeVpnManager(), logFileManager: makeLogFileManager(), appLogFilename: AppConstants.Filenames.appLogFilename)
+    }
+}
+
+// MARK: AppInfoFactory
+extension DependencyContainer: AppInfoFactory {
+    func makeAppInfo() -> AppInfo {
+        return appInfo
+    }
+}
+
+extension DependencyContainer: DoHVPNFactory {
+    func makeDoHVPN() -> DoHVPN {
+        return doh
     }
 }

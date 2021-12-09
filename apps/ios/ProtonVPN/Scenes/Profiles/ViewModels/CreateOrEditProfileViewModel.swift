@@ -76,7 +76,7 @@ class CreateOrEditProfileViewModel: NSObject {
         return editedProfile != nil
     }
     
-    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol) {
+    init(for profile: Profile?, profileService: ProfileService, protocolSelectionService: ProtocolService, alertService: AlertService, vpnKeychain: VpnKeychainProtocol, serverManager: ServerManager, appStateManager: AppStateManager, vpnGateway: VpnGatewayProtocol, profileManager: ProfileManager, propertiesManager: PropertiesManagerProtocol) {
         self.editedProfile = profile
         self.profileService = profileService
         self.protocolService = protocolSelectionService
@@ -85,9 +85,8 @@ class CreateOrEditProfileViewModel: NSObject {
         self.serverManager = serverManager
         self.appStateManager = appStateManager
         self.vpnGateway = vpnGateway
-        
-        self.profileManager = ProfileManager.shared
-        self.propertiesManager = PropertiesManager()
+        self.profileManager = profileManager
+        self.propertiesManager = propertiesManager
         
         self.vpnProtocol = propertiesManager.vpnProtocol
         

@@ -29,11 +29,12 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
+        let doh = DoHVPN(apiHost: "", verifyHost: "")
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(), doh: doh)
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard
         let appGroup = AppConstants.AppGroups.main
-        let propertiesManager = PropertiesManager()
+        let propertiesManager = PropertiesManager(storage: Storage())
         let vpnKeychain = VpnKeychain()
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN")
@@ -58,7 +59,9 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     vpnManager: vpnManager,
                                                     vpnKeychain: vpnKeychain,
                                                     propertiesManager: propertiesManager,
-                                                    netShieldPropertyProvider: netShieldPropertyProvider)
+                                                    netShieldPropertyProvider: netShieldPropertyProvider,
+                                                    profileManager: ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager),
+                                                    doh: doh)
         
         super.init()
     }

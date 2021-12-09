@@ -50,7 +50,7 @@ protocol AppSessionManager {
 
 class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSessionManager {
 
-    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory
+    typealias Factory = VpnApiServiceFactory & AuthApiServiceFactory & AppStateManagerFactory & NavigationServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & ServerStorageFactory & VpnGatewayFactory & CoreAlertServiceFactory & AppSessionRefreshTimerFactory & AnnouncementRefresherFactory & VpnAuthenticationFactory & ProfileManagerFactory
     private let factory: Factory
     
     internal lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
@@ -62,6 +62,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private lazy var refreshTimer: AppSessionRefreshTimer = factory.makeAppSessionRefreshTimer()
     private lazy var announcementRefresher: AnnouncementRefresher = factory.makeAnnouncementRefresher()
     private lazy var vpnAuthentication: VpnAuthentication = factory.makeVpnAuthentication()
+    private lazy var profileManager: ProfileManager = factory.makeProfileManager()
 
     let sessionChanged = Notification.Name("AppSessionManagerSessionChanged")
     var sessionStatus: SessionStatus = .notEstablished
@@ -177,7 +178,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     private func finishLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
         refreshVpnAuthCertificate(success: { [weak self] in
             self?.setAndNotify(for: .established)
-            ProfileManager.shared.refreshProfiles()
+            self?.profileManager.refreshProfiles()
             success()
             
         }, failure: { [weak self] error in
@@ -302,7 +303,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             
             // No need to connect twice on macOS 10.15+
             if #available(OSX 10.15, *) {
-                PropertiesManager().hasConnected = true
+                propertiesManager.hasConnected = true
             }
         }
         
