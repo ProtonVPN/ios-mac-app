@@ -24,7 +24,8 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & NetshieldServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & NetshieldServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory
+    private let factory: Factory
     
     private let maxCharCount = 20
     private let propertiesManager: PropertiesManagerProtocol
@@ -53,6 +54,8 @@ final class SettingsViewModel {
     var pushHandler: ((UIViewController) -> Void)?
 
     init(factory: Factory, protocolService: ProtocolService) {
+        self.factory = factory
+
         self.appStateManager = factory.makeAppStateManager()
         self.appSessionManager = factory.makeAppSessionManager()
         self.vpnGateway = factory.makeVpnGateway()
@@ -159,6 +162,7 @@ final class SettingsViewModel {
         guard let tier = try? vpnKeychain.fetch().maxTier else { return }
 
         serverManager = ServerManagerImplementation.instance(forTier: tier, serverStorage: ServerStorageConcrete())
+        profileManager = factory.makeProfileManager()
         
         NotificationCenter.default.addObserver(self, selector: #selector(handleChange),
                                                name: VpnGateway.connectionChanged, object: nil)
