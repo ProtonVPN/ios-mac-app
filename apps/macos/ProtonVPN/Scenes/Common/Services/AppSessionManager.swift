@@ -301,10 +301,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         if state == .established {
             object = factory.makeVpnGateway()
             
-            // No need to connect twice on macOS 10.15+
-            if #available(OSX 10.15, *) {
-                propertiesManager.hasConnected = true
-            }
+            // No need to connect twice
+            propertiesManager.hasConnected = true
         }
         
         DispatchQueue.main.async { [weak self] in
