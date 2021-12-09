@@ -29,7 +29,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     let siriHandlerViewModel: SiriHandlerViewModel
     
     override init() {
-        let doh = DoHVPN(apiHost: "", verifyHost: "")
+        let doh = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false)
         let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(), doh: doh)
         let openVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.openVpn
         let wireguardVpnExtensionBundleIdentifier = AppConstants.NetworkExtensions.wireguard

@@ -64,10 +64,16 @@ public class DoHVPN: DoH, ServerConfig {
     private let verifyHost: String
     private let customHost: String?
 
-    public init(apiHost: String, verifyHost: String, customHost: String? = nil) {
+    public init(apiHost: String, verifyHost: String, alternativeRouting: Bool, customHost: String? = nil) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
         self.customHost = customHost
         super.init()
+
+        status = alternativeRouting ? .on : .off
     }
+}
+
+public extension DoHVPN {
+    static let mock = DoHVPN(apiHost: "", verifyHost: "", alternativeRouting: false)
 }

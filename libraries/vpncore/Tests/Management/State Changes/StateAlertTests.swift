@@ -40,7 +40,7 @@ class StateAlertTests: XCTestCase {
         timerFactory = TimerFactoryMock()
         propertiesManager = PropertiesManagerMock()
         let preparer = VpnManagerConfigurationPreparer(vpnKeychain: vpnKeychain, alertService: alertService, propertiesManager: propertiesManager)
-        appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(networking: networking), vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock(), doh: DoHVPN(apiHost: "", verifyHost: ""))
+        appStateManager = AppStateManagerImplementation(vpnApiService: VpnApiService(networking: networking), vpnManager: vpnManager, networking: networking, alertService: alertService, timerFactory: timerFactory, propertiesManager: propertiesManager, vpnKeychain: vpnKeychain, configurationPreparer: preparer, vpnAuthentication: VpnAuthenticationMock(), doh: .mock)
     }
 
     func testDisconnectingAlertFirtTimeConnecting() {
