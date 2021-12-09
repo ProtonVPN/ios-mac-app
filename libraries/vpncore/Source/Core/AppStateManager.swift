@@ -119,8 +119,9 @@ public class AppStateManagerImplementation: AppStateManager {
     private var serviceChecker: ServiceChecker?
 
     private let vpnAuthentication: VpnAuthentication
+    private let doh: DoHVPN
     
-    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication) {
+    public init(vpnApiService: VpnApiService, vpnManager: VpnManagerProtocol, networking: Networking, alertService: CoreAlertService, timerFactory: TimerFactoryProtocol, propertiesManager: PropertiesManagerProtocol, vpnKeychain: VpnKeychainProtocol, configurationPreparer: VpnManagerConfigurationPreparer, vpnAuthentication: VpnAuthentication, doh: DoHVPN) {
         self.vpnApiService = vpnApiService
         self.vpnManager = vpnManager
         self.networking = networking
@@ -130,6 +131,7 @@ public class AppStateManagerImplementation: AppStateManager {
         self.vpnKeychain = vpnKeychain
         self.configurationPreparer = configurationPreparer
         self.vpnAuthentication = vpnAuthentication
+        self.doh = doh
         
         handleVpnStateChange(vpnManager.state)
         reachability = try? Reachability()
@@ -412,7 +414,7 @@ public class AppStateManagerImplementation: AppStateManager {
             
             serviceChecker?.stop()
             if let alertService = alertService {
-                serviceChecker = ServiceChecker(networking: networking, alertService: alertService)
+                serviceChecker = ServiceChecker(networking: networking, alertService: alertService, doh: doh)
             }
             attemptingConnection = false
             state = .connected(descriptor)

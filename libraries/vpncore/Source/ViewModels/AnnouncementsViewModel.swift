@@ -29,12 +29,13 @@ public protocol AnnouncementsViewModelFactory {
 /// Controll view showing the list of announcements
 public class AnnouncementsViewModel {
     
-    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory
+    public typealias Factory = AnnouncementManagerFactory & SafariServiceFactory & CoreAlertServiceFactory & AppInfoFactory
     private let factory: Factory
     
     private lazy var announcementManager: AnnouncementManager = factory.makeAnnouncementManager()
     private lazy var safariService: SafariServiceProtocol = factory.makeSafariService()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
+    private lazy var appInfo: AppInfo = factory.makeAppInfo()
     
     // Data
     private(set) var items: [Announcement] = [Announcement]()
@@ -72,7 +73,7 @@ public class AnnouncementsViewModel {
             return
         }
         
-        if let url = announcement.offer?.url.urlWithAdded(utmSource: ApiConstants.clientId.lowercased()) {
+        if let url = announcement.offer?.url.urlWithAdded(utmSource: appInfo.clientId.lowercased()) {
             safariService.open(url: url)
             return
         }

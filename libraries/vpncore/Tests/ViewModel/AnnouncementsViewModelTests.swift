@@ -36,7 +36,7 @@ class AnnouncementsViewModelTests: XCTestCase {
         storage = AnnouncementStorageMock()
         manager = AnnouncementManagerImplementation(factory: AnnouncementManagerImplementationFactoryMock(announcementStorage: storage))
         safariService = SafariServiceMock()
-        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock()))
+        viewModel = AnnouncementsViewModel(factory: AnnouncementsViewModelFactoryMock(announcementManager: manager, safariService: safariService, coreAlertService: CoreAlertServiceMock(), appInfo: AppInfoImplementation()))
         
     }
     
@@ -79,14 +79,16 @@ class AnnouncementsViewModelTests: XCTestCase {
 
 fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Factory {
 
-    public var announcementManager: AnnouncementManager
-    public var safariService: SafariServiceProtocol
-    public var coreAlertService: CoreAlertService
+    public let announcementManager: AnnouncementManager
+    public let safariService: SafariServiceProtocol
+    public let coreAlertService: CoreAlertService
+    public let appInfo: AppInfo
     
-    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService) {
+    init(announcementManager: AnnouncementManager, safariService: SafariServiceProtocol, coreAlertService: CoreAlertService, appInfo: AppInfo) {
         self.announcementManager = announcementManager
         self.safariService = safariService
         self.coreAlertService = coreAlertService
+        self.appInfo = appInfo
     }
     
     func makeAnnouncementManager() -> AnnouncementManager {
@@ -99,6 +101,10 @@ fileprivate class AnnouncementsViewModelFactoryMock: AnnouncementsViewModel.Fact
 
     func makeCoreAlertService() -> CoreAlertService {
         return coreAlertService
+    }
+
+    func makeAppInfo() -> AppInfo {
+        return appInfo
     }
 }
 

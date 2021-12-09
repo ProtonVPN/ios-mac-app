@@ -47,10 +47,10 @@ extension NetworkingMock: APIServiceDelegate {
         return NSLocale.current.languageCode ?? "en_US"
     }
     public var appVersion: String {
-        return ApiConstants.appVersion
+        return "3.0.0"
     }
     public var userAgent: String? {
-        return ApiConstants.userAgent
+        return "iOS VPN 3.0.0"
     }
     public func onUpdate(serverTime: Int64) {
 

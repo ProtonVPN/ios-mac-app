@@ -108,7 +108,7 @@ public class VpnGateway: VpnGatewayProtocol {
     private let vpnKeychain: VpnKeychainProtocol
     
     private let serverStorage: ServerStorage = ServerStorageConcrete()
-    private let propertiesManager = PropertiesManager()
+    private let propertiesManager: PropertiesManagerProtocol
     
     private let siriHelper: SiriHelperProtocol?
     
@@ -158,15 +158,15 @@ public class VpnGateway: VpnGatewayProtocol {
     }
     
     // FUTUREDO: Use factory
-    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    public init(vpnApiService: VpnApiService, appStateManager: AppStateManager, alertService: CoreAlertService, vpnKeychain: VpnKeychainProtocol, siriHelper: SiriHelperProtocol? = nil, netShieldPropertyProvider: NetShieldPropertyProvider, propertiesManager: PropertiesManagerProtocol, profileManager: ProfileManager) {
         self.vpnApiService = vpnApiService
         self.appStateManager = appStateManager
         self.alertService = alertService
         self.vpnKeychain = vpnKeychain
         self.siriHelper = siriHelper
         self.netShieldPropertyProvider = netShieldPropertyProvider
-        
-        profileManager = ProfileManager.shared
+        self.propertiesManager = propertiesManager
+        self.profileManager = profileManager
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
         
         if case AppState.connected(_) = appStateManager.state, let activeServer = appStateManager.activeConnection()?.server {
@@ -316,7 +316,7 @@ public class VpnGateway: VpnGatewayProtocol {
                 case let .success(properties):
                     self.propertiesManager.userIp = properties.ip
                     self.serverStorage.store(properties.serverModels)
-                    ProfileManager.shared.refreshProfiles()
+                    self.profileManager.refreshProfiles()
                 case .failure:
                     // Ignore failures as this is a non-critical call
                     break

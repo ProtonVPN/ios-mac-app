@@ -49,11 +49,13 @@ public protocol Networking: APIServiceDelegate {
 public final class CoreNetworking: Networking {
     public private(set) var apiService: PMAPIService    
     private let delegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
+    private let appInfo: AppInfo
 
-    public init(delegate: NetworkingDelegate) {
+    public init(delegate: NetworkingDelegate, appInfo: AppInfo, doh: DoHVPN) {
         self.delegate = delegate
+        self.appInfo = appInfo
 
-        apiService = PMAPIService(doh: ApiConstants.doh)
+        apiService = PMAPIService(doh: doh)
         apiService.authDelegate = self
         apiService.serviceDelegate = self
         apiService.forceUpgradeDelegate = delegate
@@ -179,7 +181,7 @@ public final class CoreNetworking: Networking {
     }
 
     private func fullUrl(_ route: Request) -> String {
-        return "\(apiService.doh.getHostUrl())\(route.path)"
+        return "\(apiService.doh.getCurrentlyUsedHostUrl())\(route.path)"
     }
 }
 
@@ -189,10 +191,10 @@ extension CoreNetworking: APIServiceDelegate {
         return NSLocale.current.languageCode ?? "en_US"
     }
     public var appVersion: String {
-        return ApiConstants.appVersion
+        return appInfo.appVersion
     }
     public var userAgent: String? {
-        return ApiConstants.userAgent
+        return appInfo.userAgent
     }
     public func onUpdate(serverTime: Int64) {
         CryptoUpdateTime(serverTime)

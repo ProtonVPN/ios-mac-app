@@ -23,10 +23,12 @@
 import Foundation
 import ProtonCore_Doh
 
-public class DoHVPN: DoH, ServerConfig {
-    private let propertiesManager = PropertiesManager()
+public protocol DoHVPNFactory {
+    func makeDoHVPN() -> DoHVPN
+}
 
-    public let liveURL: String = "https://api.protonvpn.ch" // do not change to development url due to IAP restriction
+public class DoHVPN: DoH, ServerConfig {
+    public let liveURL: String = "https://api.protonvpn.ch"
     public let signupDomain: String = "protonmail.com"
     public let defaultPath: String = ""
     public var defaultHost: String {
@@ -34,7 +36,7 @@ public class DoHVPN: DoH, ServerConfig {
         return liveURL
         #endif
 
-        return propertiesManager.apiEndpoint ?? liveURL
+        return customHost ?? liveURL
     }
     public var captchaHost: String {
         return defaultHost
@@ -58,14 +60,23 @@ public class DoHVPN: DoH, ServerConfig {
         return "https://verify.\(host)"
     }
 
+    public var alternativeRouting: Bool {
+        get {
+            return status == .on
+        }
+        set {
+            status = newValue ? .on : .off
+        }
+    }
+
     private let customApiHost: String
     private let verifyHost: String
+    private let customHost: String?
 
     public init(apiHost: String, verifyHost: String) {
         self.customApiHost = apiHost
         self.verifyHost = verifyHost
+        self.customHost = nil
         super.init()
-
-        status = propertiesManager.alternativeRouting ? .on : .off
     }
 }

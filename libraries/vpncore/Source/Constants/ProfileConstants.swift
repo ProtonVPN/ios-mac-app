@@ -28,12 +28,12 @@ import Cocoa
 public class ProfileConstants {
     
     // WARNING: consuming client must contain "fastest" and "random" image assets
-    public static var defaultProfiles: [Profile] {
+    public static func defaultProfiles(connectionProtocol: ConnectionProtocol) -> [Profile] {
         return
             [ Profile(id: "st_f", accessTier: 0, profileIcon: .image("fastest"), profileType: .system,
-                      serverType: .unspecified, serverOffering: .fastest(nil), name: LocalizedString.fastest, connectionProtocol: PropertiesManager().connectionProtocol),
+                      serverType: .unspecified, serverOffering: .fastest(nil), name: LocalizedString.fastest, connectionProtocol: connectionProtocol),
               Profile(id: "st_r", accessTier: 0, profileIcon: .image("random"), profileType: .system,
-                      serverType: .unspecified, serverOffering: .random(nil), name: LocalizedString.random, connectionProtocol: PropertiesManager().connectionProtocol) ]
+                      serverType: .unspecified, serverOffering: .random(nil), name: LocalizedString.random, connectionProtocol: connectionProtocol) ]
     }
 
     #if canImport(UIKit)

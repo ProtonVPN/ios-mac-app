@@ -527,7 +527,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         }
         set {
             storage.setValue(newValue, forKey: Keys.alternativeRouting.rawValue)
-            ApiConstants.doh.status = newValue ? .on : .off
+            // doh.status = newValue ? .on : .off
         }
     }
 
@@ -575,8 +575,9 @@ public class PropertiesManager: PropertiesManagerProtocol {
     
     private let storage: Storage
         
-    public init(storage: Storage = Storage()) {
+    public init(storage: Storage) {
         self.storage = storage
+
         storage.defaults.register(defaults: [
             Keys.alternativeRouting.rawValue: true,
             Keys.excludeLocalNetworks.rawValue: true,
