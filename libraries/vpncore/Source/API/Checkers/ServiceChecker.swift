@@ -26,12 +26,14 @@ class ServiceChecker {
     private let trafficCheckerQueue = DispatchQueue(label: "ch.protonvpn.traffic")
     private let networking: Networking
     private let alertService: CoreAlertService
+    private let doh: DoHVPN
     private var timer: Timer?
     private var p2pShown = false
     
-    init(networking: Networking, alertService: CoreAlertService) {
+    init(networking: Networking, alertService: CoreAlertService, doh: DoHVPN) {
         self.networking = networking
         self.alertService = alertService
+        self.doh = doh
         
         checkServices()
         
@@ -60,7 +62,7 @@ class ServiceChecker {
     }
     
     private func p2pBlocked() {
-        var urlRequest = URLRequest(url: URL(string: ApiConstants.doh.statusHost + "/vpn_status")!)
+        var urlRequest = URLRequest(url: URL(string: doh.statusHost + "/vpn_status")!)
         urlRequest.cachePolicy = .reloadIgnoringCacheData
         urlRequest.timeoutInterval = 30
 

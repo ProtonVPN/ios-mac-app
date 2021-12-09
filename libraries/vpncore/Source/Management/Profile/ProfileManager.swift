@@ -42,14 +42,15 @@ public protocol ProfileManagerFactory {
 
 public class ProfileManager {
     
-    public static var shared = ProfileManager(serverStorage: ServerStorageConcrete())
-    
     public let contentChanged = Notification.Name("ProfileManagerContentChanged")
     
     public var customProfiles: [Profile] = []
     private var servers: [ServerModel] = []
+    private let propertiesManager: PropertiesManagerProtocol
     
-    private init(serverStorage: ServerStorage) {
+    public init(serverStorage: ServerStorage, propertiesManager: PropertiesManagerProtocol) {
+        self.propertiesManager = propertiesManager
+
         NotificationCenter.default.addObserver(self, selector: #selector(profilesChanged(_:)),
                                                name: ProfileStorage.contentChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(serversChanged(_:)),
@@ -66,7 +67,7 @@ public class ProfileManager {
     }
     
     public func profile(withId id: String) -> Profile? {
-        return ProfileConstants.defaultProfiles.first {
+        return ProfileConstants.defaultProfiles(connectionProtocol: propertiesManager.connectionProtocol).first {
             id == $0.id
         } ?? ProfileUtility.profile(withId: id, in: customProfiles)
     }

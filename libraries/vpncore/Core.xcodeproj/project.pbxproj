@@ -295,8 +295,6 @@
 		E1616BAB21C7B8DD00F42D79 /* AuthKeychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BA921C7B8DD00F42D79 /* AuthKeychain.swift */; };
 		E1616BAD21C7B8F000F42D79 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BAC21C7B8F000F42D79 /* AuthCredentials.swift */; };
 		E1616BAE21C7B8F000F42D79 /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BAC21C7B8F000F42D79 /* AuthCredentials.swift */; };
-		E1616BB021C7BC9B00F42D79 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BAF21C7BC9B00F42D79 /* ApiConstants.swift */; };
-		E1616BB121C7BC9B00F42D79 /* ApiConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BAF21C7BC9B00F42D79 /* ApiConstants.swift */; };
 		E1616BB321C7BCD100F42D79 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BB221C7BCD000F42D79 /* KeychainError.swift */; };
 		E1616BB421C7BCD100F42D79 /* KeychainError.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BB221C7BCD000F42D79 /* KeychainError.swift */; };
 		E1616BBE21C7D24E00F42D79 /* Responses.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1616BBD21C7D24E00F42D79 /* Responses.swift */; };
@@ -500,6 +498,8 @@
 		F39E71CC26CBBED000BFB061 /* ClientConfigResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = F39E71C926CBBED000BFB061 /* ClientConfigResponse.swift */; };
 		F3A05A3426C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
 		F3A05A3626C14223004D9E18 /* AppDisplayState.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A05A3326C14223004D9E18 /* AppDisplayState.swift */; };
+		F3B2AB1527622CCC0081D65F /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2AB1427622CCC0081D65F /* AppInfo.swift */; };
+		F3B2AB1627622CCC0081D65F /* AppInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B2AB1427622CCC0081D65F /* AppInfo.swift */; };
 		F3D4DA0D263015400032B752 /* VpnAuthenticationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9EE12629BDC60094C65E /* VpnAuthenticationData.swift */; };
 		F3D4DA11263015C40032B752 /* VpnAuthenticationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = F30B9CF2262705B50094C65E /* VpnAuthenticationMock.swift */; };
 		F3EF4ECC2670C22300109CA3 /* Threading.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3EF4ECB2670C22300109CA3 /* Threading.swift */; };
@@ -747,7 +747,6 @@
 		E1616B9C21C7B5D900F42D79 /* ProtonVpnError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProtonVpnError.swift; sourceTree = "<group>"; };
 		E1616BA921C7B8DD00F42D79 /* AuthKeychain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthKeychain.swift; sourceTree = "<group>"; };
 		E1616BAC21C7B8F000F42D79 /* AuthCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthCredentials.swift; sourceTree = "<group>"; };
-		E1616BAF21C7BC9B00F42D79 /* ApiConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ApiConstants.swift; sourceTree = "<group>"; };
 		E1616BB221C7BCD000F42D79 /* KeychainError.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeychainError.swift; sourceTree = "<group>"; };
 		E1616BBD21C7D24E00F42D79 /* Responses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Responses.swift; sourceTree = "<group>"; };
 		E1616BC621C7D53D00F42D79 /* PropertiesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PropertiesManager.swift; sourceTree = "<group>"; };
@@ -876,6 +875,7 @@
 		F3A05A3326C14223004D9E18 /* AppDisplayState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDisplayState.swift; sourceTree = "<group>"; };
 		F3AF15DF25F26F250025CDEE /* IKEv2AvailabilityChecker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IKEv2AvailabilityChecker.swift; sourceTree = "<group>"; };
 		F3AFC0E525FA0E90005FF4D7 /* ServerIpMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServerIpMock.swift; sourceTree = "<group>"; };
+		F3B2AB1427622CCC0081D65F /* AppInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfo.swift; sourceTree = "<group>"; };
 		F3EF4ECB2670C22300109CA3 /* Threading.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Threading.swift; sourceTree = "<group>"; };
 		F3F36C4826D669BA008AD48B /* Hash.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hash.swift; sourceTree = "<group>"; };
 		F3FBB100267360F6004490AF /* LocalAgentConfiguration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalAgentConfiguration.swift; sourceTree = "<group>"; };
@@ -1458,7 +1458,6 @@
 		F36ECB632610A8540089B898 /* Constants */ = {
 			isa = PBXGroup;
 			children = (
-				E1616BAF21C7BC9B00F42D79 /* ApiConstants.swift */,
 				E1B5F64021B6B86200B558B0 /* CoreAppConstants.swift */,
 				E1B5F67221B8241B00B558B0 /* MapConstants.swift */,
 				E1616C0821C95E1800F42D79 /* ProfileConstants.swift */,
@@ -1599,6 +1598,7 @@
 				D57A656E2485330700079E82 /* VpnServerSelector.swift */,
 				E1B5F62D21B6B18C00B558B0 /* VpnState.swift */,
 				15625170A69D95C5DBA7C332 /* Logs */,
+				F3B2AB1427622CCC0081D65F /* AppInfo.swift */,
 			);
 			path = Core;
 			sourceTree = "<group>";
@@ -2277,7 +2277,6 @@
 				F365355626384FBD001B7E88 /* LocalAgentFeatures+LocalAgent.swift in Sources */,
 				E151126E22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
 				D5D2954525A5BDF6000FBD74 /* UserTierProvider.swift in Sources */,
-				E1616BB021C7BC9B00F42D79 /* ApiConstants.swift in Sources */,
 				F3021D8025E93E8C00EF73A1 /* NSMutableAttributedString+Extensions.swift in Sources */,
 				D55D79142498F63C009669E0 /* String+Cleanup.swift in Sources */,
 				F3256ABF26B98EF4003F073C /* WireguardAvailabilityChecker.swift in Sources */,
@@ -2454,6 +2453,7 @@
 				963AC1AED691DDAF9BA69AC0 /* Bundle+vpncore.swift in Sources */,
 				88C647B5CB54C5F17ECDCEF6 /* FileLogFormatter.swift in Sources */,
 				C109A49B74792CEE3B79D9D3 /* FileHandler+New.swift in Sources */,
+				F3B2AB1527622CCC0081D65F /* AppInfo.swift in Sources */,
 				2B08815511366A3226FB58B2 /* URLArray+Extension.swift in Sources */,
 				30286CAD085C66549A6EEBEF /* LogHandler+Metadata.swift in Sources */,
 				248FB9E2C6B4BCFEB0B350E5 /* Optional+stringForLog.swift in Sources */,
@@ -2531,7 +2531,6 @@
 				4237064F262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */,
 				E151126F22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
 				D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
-				E1616BB121C7BC9B00F42D79 /* ApiConstants.swift in Sources */,
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
 				D563B26F2345DA5800F98797 /* UserError.swift in Sources */,
 				D56B68E02507A1CF00796E0C /* NetShieldType.swift in Sources */,
@@ -2669,6 +2668,7 @@
 				D5DC543D252EF7AB00889B5A /* AnnouncementRefresher.swift in Sources */,
 				E1616B8221C7AA9E00F42D79 /* AppStateManager.swift in Sources */,
 				E1B5F67721B8247000B558B0 /* ContinuousServerProperties.swift in Sources */,
+				F3B2AB1627622CCC0081D65F /* AppInfo.swift in Sources */,
 				D5ADF51A2281975E0062367C /* SiriHelperProtocol.swift in Sources */,
 				4257B21624EC150000C4E4AC /* VpnServerState.swift in Sources */,
 				E148AE6621C29A20007AB65A /* ProtonApiError.swift in Sources */,
