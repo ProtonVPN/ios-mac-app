@@ -46,11 +46,25 @@ public class DoHVPN: DoH, ServerConfig {
         return "http://protonstatus.com"
     }
 
-    private var customApiHost: String
+    public var humanVerificationV3Host: String {
+        if defaultHost == liveURL {
+            return verifyHost
+        }
 
-    public init(apiHost: String) throws {
+        guard let url = URL(string: defaultHost), let host = url.host else {
+            return ""
+        }
+
+        return "https://verify.\(host)"
+    }
+
+    private let customApiHost: String
+    private let verifyHost: String
+
+    public init(apiHost: String, verifyHost: String) {
         self.customApiHost = apiHost
-        try super.init()
+        self.verifyHost = verifyHost
+        super.init()
 
         status = propertiesManager.alternativeRouting ? .on : .off
     }

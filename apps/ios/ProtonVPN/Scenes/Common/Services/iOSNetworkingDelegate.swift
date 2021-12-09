@@ -9,6 +9,7 @@
 import Foundation
 import vpncore
 import Crypto_VPN
+import ProtonCore_DataModel
 import ProtonCore_Networking
 import ProtonCore_Services
 import ProtonCore_ForceUpgrade
@@ -25,7 +26,7 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
     }
 
     func set(apiService: APIService) {
-        humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL())
+        humanVerify = HumanCheckHelper(apiService: apiService, supportURL: getSupportURL(), clientApp: ClientApp.vpn)
     }
 
     func onLogout() {

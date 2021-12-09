@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.3.2'
+  '3.4.0'
 end
 
 def openvpn
@@ -95,6 +95,7 @@ target 'ProtonVPN' do
   pod 'ProtonCore-Challenge', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Foundations', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Login/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
+  pod 'ProtonCore-LoginUI/UsingCryptoVPN+Alamofire', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-Log', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-OpenPGP', :git => proton_core_path, :tag => proton_core_version
   pod 'ProtonCore-DataModel', :git => proton_core_path, :tag => proton_core_version

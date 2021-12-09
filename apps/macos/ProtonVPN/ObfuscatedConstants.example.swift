@@ -33,4 +33,5 @@ class ObfuscatedConstants {
     static let sentryDsniOS: String = ""
 
     static let apiHost: String = ""
+    static let humanVerificationV3Host = ""
 }

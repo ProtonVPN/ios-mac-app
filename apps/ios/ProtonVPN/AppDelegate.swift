@@ -49,7 +49,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use shared defaults
         Storage.setSpecificDefaults(defaults: UserDefaults(suiteName: AppConstants.AppGroups.main)!)
 
-        ApiConstants.doh = try! DoHVPN(apiHost: ObfuscatedConstants.apiHost) // swiftlint:disable:this force_try
+        ApiConstants.doh = DoHVPN(apiHost: ObfuscatedConstants.apiHost, verifyHost: ObfuscatedConstants.humanVerificationV3Host)
 
         setupCoreIntegration()
         

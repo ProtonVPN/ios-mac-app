@@ -23,9 +23,7 @@ import Foundation
 import ProtonCore_Doh
 
 public struct ApiConstants {
-    // swiftlint:disable force_try
-    public static var doh = try! DoHVPN(apiHost: "")
-    // swiftlint:enable force_try
+    public static var doh = DoHVPN(apiHost: "", verifyHost: "")
     
     public static var clientDictionary: NSDictionary {
         guard let file = Bundle.main.path(forResource: "Client", ofType: "plist"),
