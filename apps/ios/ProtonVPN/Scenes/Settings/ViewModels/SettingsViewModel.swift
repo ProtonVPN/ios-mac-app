@@ -28,18 +28,20 @@ final class SettingsViewModel {
     private let factory: Factory
     
     private let maxCharCount = 20
-    private let propertiesManager: PropertiesManagerProtocol
-    private let appSessionManager: AppSessionManager
-    private let appStateManager: AppStateManager
-    private let alertService: AlertService
-    private let settingsService: SettingsService
-    private let netshieldService: NetshieldService
+    private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
+    private lazy var appSessionManager: AppSessionManager = factory.makeAppSessionManager()
+    private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
+    private lazy var alertService: AlertService = factory.makeCoreAlertService()
+    private lazy var settingsService: SettingsService = factory.makeSettingsService()
+    private lazy var netshieldService: NetshieldService = factory.makeNetshieldService()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
+    private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
+    private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
+    private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
+    private lazy var planService: PlanService = factory.makePlanService()
+    private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private let protocolService: ProtocolService
-    private let vpnKeychain: VpnKeychainProtocol
-    private let connectionStatusService: ConnectionStatusService
-    private var netShieldPropertyProvider: NetShieldPropertyProvider
-    private let vpnManager: VpnManagerProtocol
-    private let vpnStateConfiguration: VpnStateConfiguration
     
     let contentChanged = Notification.Name("StatusMenuViewModelContentChanged")
     var reloadNeeded: (() -> Void)?
@@ -47,30 +49,12 @@ final class SettingsViewModel {
     private var vpnGateway: VpnGatewayProtocol?
     private var profileManager: ProfileManager?
     private var serverManager: ServerManager?
-
-    private let planService: PlanService
-    private let appInfo: AppInfo
     
     var pushHandler: ((UIViewController) -> Void)?
 
     init(factory: Factory, protocolService: ProtocolService) {
         self.factory = factory
-
-        self.appStateManager = factory.makeAppStateManager()
-        self.appSessionManager = factory.makeAppSessionManager()
-        self.vpnGateway = factory.makeVpnGateway()
-        self.alertService = factory.makeCoreAlertService()
-        self.settingsService = factory.makeSettingsService()
         self.protocolService = protocolService
-        self.vpnKeychain = factory.makeVpnKeychain()
-        self.netshieldService = factory.makeNetshieldService()
-        self.connectionStatusService = factory.makeConnectionStatusService()
-        self.netShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
-        self.vpnManager = factory.makeVpnManager()
-        self.vpnStateConfiguration = factory.makeVpnStateConfiguration()
-        self.planService = factory.makePlanService()
-        self.propertiesManager = factory.makePropertiesManager()
-        self.appInfo = factory.makeAppInfo()
         
         startObserving()
     }
