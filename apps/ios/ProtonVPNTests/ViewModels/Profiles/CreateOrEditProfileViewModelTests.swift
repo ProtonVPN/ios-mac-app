@@ -41,20 +41,26 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     
     let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
+
+    lazy var appInfo = AppInfoImplementation()
+    lazy var doh = DoHVPN(apiHost: "", verifyHost: "")
     
-    let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
+    lazy var networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: appInfo, doh: doh)
     var vpnApiService: VpnApiService {
         return VpnApiService(networking: networking)
     }
     
-    let configurationPreparer = VpnManagerConfigurationPreparer(
+    lazy var configurationPreparer = VpnManagerConfigurationPreparer(
         vpnKeychain: VpnKeychainMock(),
         alertService: AlertServiceEmptyStub(),
-        propertiesManager: PropertiesManager())
+        propertiesManager: propertiesManager)
     
     var appStateManager: AppStateManager {
-        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock())
+        return AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: propertiesManager, vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: doh)
     }
+
+    lazy var profileManager = ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager)
+    lazy var propertiesManager = PropertiesManagerMock()
     
     lazy var standardViewModel = CreateOrEditProfileViewModel(for: standardProfile,
                                                               profileService: profileService,
@@ -63,7 +69,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
                                                               serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage),
                                                               appStateManager: appStateManager,
-                                                              vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
+                                                              vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
+                                                              profileManager: profileManager,
+                                                              propertiesManager: propertiesManager)
     lazy var secureCoreViewModel = CreateOrEditProfileViewModel(for: secureCoreProfile,
                                                               profileService: profileService,
                                                               protocolSelectionService: ProtocolServiceMock(),
@@ -71,7 +79,9 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
                                                               vpnKeychain: VpnKeychainMock(accountPlan: .visionary, maxTier: 4),
                                                               serverManager: ServerManagerImplementation.instance(forTier: CoreAppConstants.VpnTiers.plus, serverStorage: serverStorage), 
                                                               appStateManager: appStateManager,
-                                                              vpnGateway: VpnGatewayMock(propertiesManager: PropertiesManagerMock(), activeServerType: .unspecified, connection: .disconnected))
+                                                              vpnGateway: VpnGatewayMock(propertiesManager: propertiesManager, activeServerType: .unspecified, connection: .disconnected),
+                                                              profileManager: profileManager,
+                                                              propertiesManager: propertiesManager)
     
     var profileService: ProfileServiceMock!
     

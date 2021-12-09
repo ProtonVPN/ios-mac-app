@@ -74,13 +74,14 @@ class CountryAnnotationViewModelTests: XCTestCase {
             hostCountry: nil
             )
         )
-        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()))
+        let doh = DoHVPN(apiHost: "", verifyHost: "")
+        let networking = CoreNetworking(delegate: iOSNetworkingDelegate(alertingService: CoreAlertServiceMock()), appInfo: AppInfoImplementation(), doh: doh)
         let vpnApiService = VpnApiService(networking: networking)
         let configurationPreparer = VpnManagerConfigurationPreparer(
             vpnKeychain: VpnKeychainMock(),
             alertService: AlertServiceEmptyStub(),
-            propertiesManager: PropertiesManager())
-        let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock())
+            propertiesManager: PropertiesManagerMock())
+        let appStateManager = AppStateManagerImplementation(vpnApiService: vpnApiService, vpnManager: VpnManagerMock(), networking: networking, alertService: AlertServiceEmptyStub(), timerFactory: TimerFactoryMock(), propertiesManager: PropertiesManagerMock(), vpnKeychain: VpnKeychainMock(), configurationPreparer: configurationPreparer, vpnAuthentication: VpnAuthenticationMock(), doh: doh)
         let viewModel = CountryAnnotationViewModel(countryModel: country, servers: servers, serverType: ServerType.standard, vpnGateway: nil, appStateManager: appStateManager, enabled: true, alertService: AlertServiceEmptyStub(), connectionStatusService: ConnectionStatusServiceMock())
         
         return viewModel
