@@ -92,6 +92,10 @@ class WindowServiceImplementation: WindowService {
         GSMessage.successBackgroundColor = UIColor.protonGreen()
         GSMessage.warningBackgroundColor = UIColor.protonYellow()
         GSMessage.errorBackgroundColor = UIColor.protonRed()
+        
+        if #available(iOS 15.0, *) { // Removes unnecessary padding at the top of tables
+            UITableView.appearance().sectionHeaderTopPadding = 0.0
+        }
     }
     
     // MARK: - Presentation
