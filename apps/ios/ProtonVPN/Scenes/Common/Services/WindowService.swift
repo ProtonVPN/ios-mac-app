@@ -90,7 +90,11 @@ class WindowServiceImplementation: WindowService {
         
         GSMessage.successBackgroundColor = UIColor.brandColor()
         GSMessage.warningBackgroundColor = UIColor.notificationWarningColor()
-        GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()
+        GSMessage.errorBackgroundColor = UIColor.notificationErrorColor()        
+        
+        if #available(iOS 15.0, *) { // Removes unnecessary padding at the top of tables
+            UITableView.appearance().sectionHeaderTopPadding = 0.0
+        }
     }
     
     // MARK: - Presentation
