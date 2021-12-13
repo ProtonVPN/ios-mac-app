@@ -166,11 +166,12 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     public func connect(configuration: VpnManagerConfiguration, completion: @escaping () -> Void) {
+        let pause = state != .disconnected && propertiesManager.killSwitch ? 0.2 : 0 // Magical fix for strange crash of go mobile and/or LocagAgent lib + KS
         disconnect { [weak self] in
             self?.currentVpnProtocol = configuration.vpnProtocol
             log.info("About to start connection process", category: .connectionConnect)
             self?.connectAllowed = true
-            self?.connectionQueue.async { [weak self] in
+            self?.connectionQueue.asyncAfter(deadline: .now() + pause) { [weak self] in
                 self?.prepareConnection(forConfiguration: configuration, completion: completion)
             }
         }
