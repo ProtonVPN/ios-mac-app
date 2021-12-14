@@ -48,8 +48,12 @@ extension VpnManager {
         // load last authentication data (that should be available)
         vpnAuthentication.loadAuthenticationData { result in
             switch result {
-            case .failure:
+            case .failure(let error):
                 log.error("Failed to initialize local agent because of missing authentication data", category: .localAgent, event: .error)
+                let nsError = error as NSError
+                if nsError.code == 429 || nsError.code == 85092 {
+                    self.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                }
             case let .success(data):
                 connect(data)
             }
@@ -174,7 +178,17 @@ extension VpnManager: LocalAgentDelegate {
         didReceiveFeature(netshield: features.netshield)
         didReceiveFeature(vpnAccelerator: features.vpnAccelerator)
         // Try refreshing certificate in case features are different from the ones we have in current certificate
-        vpnAuthentication.refreshCertificates(features: features, completion: { _ in })
+        vpnAuthentication.refreshCertificates(features: features, completion: { result in
+            switch result {
+            case .failure(let error):
+                let nsError = error as NSError
+                if nsError.code == 429 || nsError.code == 85092 {
+                    self.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                }
+            case .success(_):
+                break
+            }
+        })
     }
     
     private func didReceiveFeature(vpnAccelerator: Bool) {

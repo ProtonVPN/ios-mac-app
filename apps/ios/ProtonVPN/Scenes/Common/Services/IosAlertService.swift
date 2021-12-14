@@ -197,6 +197,9 @@ extension IosAlertService: CoreAlertService {
         case let subuserAlert as SubuserWithoutConnectionsAlert:
             show(subuserAlert)
             
+        case is TooManyCertificateRequestsAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

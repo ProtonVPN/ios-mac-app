@@ -191,7 +191,7 @@ public class AppStateManagerImplementation: AppStateManager {
         vpnManager.refreshState()
     }
         
-    public func connect(withConfiguration configuration: ConnectionConfiguration) {
+    public func connect(withConfiguration configuration: ConnectionConfiguration) { // swiftlint:disable:this cyclomatic_complexity
         guard let reachability = reachability else { return }
         if case AppState.aborted = state { return }
         
@@ -234,10 +234,16 @@ public class AppStateManagerImplementation: AppStateManager {
                 case let .success(data):
                     log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
                     self.makeConnection(configuration, authData: data)
-                case .failure:
+                case .failure(let error):
                     log.error("Failed to load vpn auth data", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
                     self.connectionFailed()
-                    self.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                    
+                    let nsError = error as NSError
+                    if nsError.code == 429 || nsError.code == 85092 {
+                        self.alertService?.push(alert: TooManyCertificateRequestsAlert())
+                    } else {
+                        self.alertService?.push(alert: VPNAuthCertificateRefreshErrorAlert())
+                    }
                 }
             }
         }
