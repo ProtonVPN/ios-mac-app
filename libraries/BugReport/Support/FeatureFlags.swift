@@ -1,5 +1,5 @@
 //
-//  Created on 08.12.2021.
+//  Created on 14.12.2021.
 //
 //  Copyright (c) 2021 Proton AG
 //
@@ -16,18 +16,6 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import Foundation
 
-@available(iOS 13.0.0, macOS 10.15, *)
-struct BugReportView: View {
-    var body: some View {
-        Text("Hello from SwiftUI!")
-    }
-}
-
-@available(iOS 13.0.0, macOS 10.15, *)
-struct BugReportView_Previews: PreviewProvider {
-    static var previews: some View {
-        BugReportView()
-    }
-}
+let isNewBugReportEnabled = true

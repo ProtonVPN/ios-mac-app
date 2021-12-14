@@ -322,16 +322,16 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        if #available(iOS 13.0.0, *) {
-            let viewController = UIHostingController(rootView: BugReportView())
+        if let viewController = createBugReportViewController() {
             windowService.present(modal: viewController)
-        } else {
-            let viewController = ReportBugViewController(vpnManager: vpnManager)
-            viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(alamofireWrapper: alamofireWrapper), alertService: alertService, vpnKeychain: vpnKeychain)
-            viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
-            let navigationController = UINavigationController(rootViewController: viewController)
-            windowService.present(modal: navigationController)
+            return
         }
+
+        let viewController = ReportBugViewController(vpnManager: vpnManager)
+        viewController.viewModel = ReportBugViewModel(os: "iOS", osVersion: UIDevice.current.systemVersion, propertiesManager: propertiesManager, reportsApiService: ReportsApiService(alamofireWrapper: alamofireWrapper), alertService: alertService, vpnKeychain: vpnKeychain)
+        viewController.appLogFileUrl = factory.makeLogFileManager().getFileUrl(named: AppConstants.Filenames.appLogFilename)
+        let navigationController = UINavigationController(rootViewController: viewController)
+        windowService.present(modal: navigationController)
     }
 }
 

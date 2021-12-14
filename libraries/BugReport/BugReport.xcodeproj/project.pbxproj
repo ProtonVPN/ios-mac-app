@@ -7,12 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F32D4D452768B37D00914CCF /* Support+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D442768B37D00914CCF /* Support+iOS.swift */; };
+		F32D4D492768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
+		F32D4D4A2768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
+		F32D4D4C2768B5F200914CCF /* Support+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D4B2768B5F200914CCF /* Support+macOS.swift */; };
 		F38DF8542760BB5700DA10CB /* BugReport.h in Headers */ = {isa = PBXBuildFile; fileRef = F38DF8532760BB5700DA10CB /* BugReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F38DF85B2760BB7200DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
 		F38DF8742760C21D00DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F32D4D442768B37D00914CCF /* Support+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+iOS.swift"; sourceTree = "<group>"; };
+		F32D4D482768B5A300914CCF /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
+		F32D4D4B2768B5F200914CCF /* Support+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+macOS.swift"; sourceTree = "<group>"; };
 		F38DF8502760BB5700DA10CB /* BugReport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BugReport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F38DF8532760BB5700DA10CB /* BugReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BugReport.h; sourceTree = "<group>"; };
 		F38DF85A2760BB7200DA10CB /* BugReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportView.swift; sourceTree = "<group>"; };
@@ -37,11 +44,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F32D4D472768B57600914CCF /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				F32D4D442768B37D00914CCF /* Support+iOS.swift */,
+				F32D4D4B2768B5F200914CCF /* Support+macOS.swift */,
+				F32D4D482768B5A300914CCF /* FeatureFlags.swift */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
 		F38DF8462760BB5700DA10CB = {
 			isa = PBXGroup;
 			children = (
 				F38DF85A2760BB7200DA10CB /* BugReportView.swift */,
-				F38DF8522760BB5700DA10CB /* BugReport */,
+				F32D4D472768B57600914CCF /* Support */,
+				F38DF8532760BB5700DA10CB /* BugReport.h */,
 				F38DF8512760BB5700DA10CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -53,14 +71,6 @@
 				F38DF86D2760C1F100DA10CB /* BugReport.framework */,
 			);
 			name = Products;
-			sourceTree = "<group>";
-		};
-		F38DF8522760BB5700DA10CB /* BugReport */ = {
-			isa = PBXGroup;
-			children = (
-				F38DF8532760BB5700DA10CB /* BugReport.h */,
-			);
-			path = BugReport;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -179,7 +189,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F32D4D492768B5A300914CCF /* FeatureFlags.swift in Sources */,
 				F38DF85B2760BB7200DA10CB /* BugReportView.swift in Sources */,
+				F32D4D452768B37D00914CCF /* Support+iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -187,7 +199,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F32D4D4A2768B5A300914CCF /* FeatureFlags.swift in Sources */,
 				F38DF8742760C21D00DA10CB /* BugReportView.swift in Sources */,
+				F32D4D4C2768B5F200914CCF /* Support+macOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
