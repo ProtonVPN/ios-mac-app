@@ -11,6 +11,13 @@
 		F32D4D492768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
 		F32D4D4A2768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
 		F32D4D4C2768B5F200914CCF /* Support+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D4B2768B5F200914CCF /* Support+macOS.swift */; };
+		F32D4DB92768CA2900914CCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DB82768CA2900914CCF /* AppDelegate.swift */; };
+		F32D4DBB2768CA2900914CCF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DBA2768CA2900914CCF /* SceneDelegate.swift */; };
+		F32D4DBD2768CA2900914CCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DBC2768CA2900914CCF /* ViewController.swift */; };
+		F32D4DC02768CA2900914CCF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F32D4DBE2768CA2900914CCF /* Main.storyboard */; };
+		F32D4DC22768CA2B00914CCF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F32D4DC12768CA2B00914CCF /* Assets.xcassets */; };
+		F32D4DC52768CA2B00914CCF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F32D4DC32768CA2B00914CCF /* LaunchScreen.storyboard */; };
+		F32D4DCC2768CAC500914CCF /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
 		F38DF8542760BB5700DA10CB /* BugReport.h in Headers */ = {isa = PBXBuildFile; fileRef = F38DF8532760BB5700DA10CB /* BugReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F38DF85B2760BB7200DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
 		F38DF8742760C21D00DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
@@ -20,6 +27,14 @@
 		F32D4D442768B37D00914CCF /* Support+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+iOS.swift"; sourceTree = "<group>"; };
 		F32D4D482768B5A300914CCF /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
 		F32D4D4B2768B5F200914CCF /* Support+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+macOS.swift"; sourceTree = "<group>"; };
+		F32D4DB62768CA2900914CCF /* BugReportiOSSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugReportiOSSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F32D4DB82768CA2900914CCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		F32D4DBA2768CA2900914CCF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		F32D4DBC2768CA2900914CCF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		F32D4DBF2768CA2900914CCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		F32D4DC12768CA2B00914CCF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		F32D4DC42768CA2B00914CCF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		F32D4DC62768CA2B00914CCF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F38DF8502760BB5700DA10CB /* BugReport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BugReport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F38DF8532760BB5700DA10CB /* BugReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BugReport.h; sourceTree = "<group>"; };
 		F38DF85A2760BB7200DA10CB /* BugReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportView.swift; sourceTree = "<group>"; };
@@ -27,6 +42,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		F32D4DB32768CA2900914CCF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F38DF84D2760BB5700DA10CB /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -54,12 +76,35 @@
 			path = Support;
 			sourceTree = "<group>";
 		};
+		F32D4DB72768CA2900914CCF /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				F32D4DB82768CA2900914CCF /* AppDelegate.swift */,
+				F32D4DBA2768CA2900914CCF /* SceneDelegate.swift */,
+				F32D4DBC2768CA2900914CCF /* ViewController.swift */,
+				F32D4DBE2768CA2900914CCF /* Main.storyboard */,
+				F32D4DC12768CA2B00914CCF /* Assets.xcassets */,
+				F32D4DC32768CA2B00914CCF /* LaunchScreen.storyboard */,
+				F32D4DC62768CA2B00914CCF /* Info.plist */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		F32D4DCB2768CA5F00914CCF /* SampleApps */ = {
+			isa = PBXGroup;
+			children = (
+				F32D4DB72768CA2900914CCF /* iOS */,
+			);
+			path = SampleApps;
+			sourceTree = "<group>";
+		};
 		F38DF8462760BB5700DA10CB = {
 			isa = PBXGroup;
 			children = (
+				F32D4DCB2768CA5F00914CCF /* SampleApps */,
 				F38DF85A2760BB7200DA10CB /* BugReportView.swift */,
-				F32D4D472768B57600914CCF /* Support */,
 				F38DF8532760BB5700DA10CB /* BugReport.h */,
+				F32D4D472768B57600914CCF /* Support */,
 				F38DF8512760BB5700DA10CB /* Products */,
 			);
 			sourceTree = "<group>";
@@ -69,6 +114,7 @@
 			children = (
 				F38DF8502760BB5700DA10CB /* BugReport.framework */,
 				F38DF86D2760C1F100DA10CB /* BugReport.framework */,
+				F32D4DB62768CA2900914CCF /* BugReportiOSSampleApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +140,23 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		F32D4DB52768CA2900914CCF /* BugReportiOSSampleApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = F32D4DC92768CA2B00914CCF /* Build configuration list for PBXNativeTarget "BugReportiOSSampleApp" */;
+			buildPhases = (
+				F32D4DB22768CA2900914CCF /* Sources */,
+				F32D4DB32768CA2900914CCF /* Frameworks */,
+				F32D4DB42768CA2900914CCF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BugReportiOSSampleApp;
+			productName = BugReportiOSSampleApp;
+			productReference = F32D4DB62768CA2900914CCF /* BugReportiOSSampleApp.app */;
+			productType = "com.apple.product-type.application";
+		};
 		F38DF84F2760BB5700DA10CB /* BugReport-iOS */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = F38DF8572760BB5700DA10CB /* Build configuration list for PBXNativeTarget "BugReport-iOS" */;
@@ -137,8 +200,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1320;
 				LastUpgradeCheck = 1310;
 				TargetAttributes = {
+					F32D4DB52768CA2900914CCF = {
+						CreatedOnToolsVersion = 13.2;
+					};
 					F38DF84F2760BB5700DA10CB = {
 						CreatedOnToolsVersion = 13.1;
 						LastSwiftMigration = 1310;
@@ -163,11 +230,22 @@
 			targets = (
 				F38DF84F2760BB5700DA10CB /* BugReport-iOS */,
 				F38DF86C2760C1F100DA10CB /* BugReport-macOS */,
+				F32D4DB52768CA2900914CCF /* BugReportiOSSampleApp */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		F32D4DB42768CA2900914CCF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F32D4DC52768CA2B00914CCF /* LaunchScreen.storyboard in Resources */,
+				F32D4DC22768CA2B00914CCF /* Assets.xcassets in Resources */,
+				F32D4DC02768CA2900914CCF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F38DF84E2760BB5700DA10CB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -185,6 +263,17 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		F32D4DB22768CA2900914CCF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F32D4DBD2768CA2900914CCF /* ViewController.swift in Sources */,
+				F32D4DB92768CA2900914CCF /* AppDelegate.swift in Sources */,
+				F32D4DBB2768CA2900914CCF /* SceneDelegate.swift in Sources */,
+				F32D4DCC2768CAC500914CCF /* BugReportView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		F38DF84C2760BB5700DA10CB /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -207,7 +296,84 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXVariantGroup section */
+		F32D4DBE2768CA2900914CCF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F32D4DBF2768CA2900914CCF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		F32D4DC32768CA2B00914CCF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				F32D4DC42768CA2B00914CCF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
 /* Begin XCBuildConfiguration section */
+		F32D4DC72768CA2B00914CCF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApps/iOS/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.BugReportiOSSampleApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		F32D4DC82768CA2B00914CCF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SB5Z68H26;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SampleApps/iOS/Info.plist;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UIMainStoryboardFile = Main;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.BugReportiOSSampleApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		F38DF8552760BB5700DA10CB /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -460,6 +626,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		F32D4DC92768CA2B00914CCF /* Build configuration list for PBXNativeTarget "BugReportiOSSampleApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F32D4DC72768CA2B00914CCF /* Debug */,
+				F32D4DC82768CA2B00914CCF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		F38DF84A2760BB5700DA10CB /* Build configuration list for PBXProject "BugReport" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
