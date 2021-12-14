@@ -207,7 +207,7 @@ class WindowServiceImplementation: WindowService {
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = NSHostingController(rootView: BugReportView().frame(width: 600, height: 600, alignment: .center)) /*ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())*/
+        let viewController = createBugReportViewController() ?? ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.append(windowController)

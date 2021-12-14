@@ -19,10 +19,8 @@
 import SwiftUI
 
 @available(iOS 13.0.0, macOS 10.15, *)
-public struct BugReportView: View {
-    public init() { }
-
-    public var body: some View {
+struct BugReportView: View {
+    var body: some View {
         Text("Hello from SwiftUI!")
     }
 }
