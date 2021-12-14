@@ -27,8 +27,7 @@ import Reachability
 protocol LocalAgentDelegate: AnyObject {
     func didReceiveError(error: LocalAgentError)
     func didChangeState(state: LocalAgentState)
-    func didReceiveFeature(netshield: NetShieldType)
-    func didReceiveFeature(vpnAccelerator: Bool)
+    func didReceiveFeatures(_ features: VPNConnectionFeatures)
 }
 
 protocol LocalAgent {
@@ -75,13 +74,13 @@ final class LocalAgentImplementation: LocalAgent {
     weak var delegate: LocalAgentDelegate?
 
     func connect(data: VpnAuthenticationData, configuration: LocalAgentConfiguration) {
-        log.debug("Local agent connecting to \(configuration.hostname)")
+        log.debug("Local agent connecting to \(configuration.hostname)", category: .localAgent, metadata: ["config": "\(configuration)"])
 
         var error: NSError?
         agent = LocalAgentNewAgentConnection(data.clientCertificate, data.clientKey.derRepresentation, rootCerts, "10.2.0.1:65432", configuration.hostname, client, LocalAgentNewFeatures()?.with(configuration: configuration), true, &error)
 
         if let agentInitError = error {
-            log.error("Creating Go local agent connection failed with \(agentInitError)")
+            log.error("Creating Go local agent connection failed with \(agentInitError)", category: .localAgent)
         }
     }
 
@@ -108,7 +107,7 @@ final class LocalAgentImplementation: LocalAgent {
 extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate {
     func didReceiveError(code: Int) {
         guard let error = LocalAgentError.from(code: code) else {
-            log.error("Ignoring unknown local agent error")
+            log.error("Ignoring unknown local agent error", category: .localAgent, event: .error)
             return
         }
 
@@ -144,7 +143,7 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // ignore the first time the features are received right after connecting
         // in this state the local agent shared library reports features from previous connection
         if previousState == .connecting, state == .connected {
-            log.debug("Not checking features right after connecting")
+            log.debug("Not checking features right after connecting", category: .localAgent, event: .stateChange)
             return
         }
 
@@ -156,12 +155,9 @@ extension LocalAgentImplementation: LocalAgentNativeClientImplementationDelegate
         // the features are just reported, the local agent does not know what the current values in the app are
         // it is up to the app to compare them and decide what to do
 
-        if let netshield = features.netshield {
-            delegate?.didReceiveFeature(netshield: netshield)
+        if let vpnFeatures = features.vpnFeatures {
+            delegate?.didReceiveFeatures(vpnFeatures)
         }
-
-        if let vpnAccelerator = features.vpnAccelerator {
-            delegate?.didReceiveFeature(vpnAccelerator: vpnAccelerator)
-        }
+        
     }
 }

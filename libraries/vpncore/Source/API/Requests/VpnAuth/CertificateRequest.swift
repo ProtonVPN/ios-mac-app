@@ -29,11 +29,11 @@ final class CertificateRequest: BaseRequest {
 
     let publicKey: PublicKey
     let deviceName: String
-    let config: LocalAgentConfiguration
+    let features: VPNConnectionFeatures?
 
-    init(publicKey: PublicKey, config: LocalAgentConfiguration) {
+    init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
         self.publicKey = publicKey
-        self.config = config
+        self.features = features
         #if os(iOS)
         deviceName = UIDevice.current.name
         #else
@@ -60,9 +60,13 @@ final class CertificateRequest: BaseRequest {
             "ClientPublicKey": publicKey.derRepresentation,
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
-            "Mode": "session",
-            "Features": config.params
-        ] as [String : Any]
+            "Mode": "session"
+        ] as [String: Any]
+        
+        // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
+        if let features = features {
+            params["Features"] = features.asDict
+        }
         
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
@@ -70,18 +74,4 @@ final class CertificateRequest: BaseRequest {
         
         return params
     }
-}
-
-extension LocalAgentConfiguration {
-
-    var params: [String: Any] {
-        var result: [String: Any] = [:]
-        result["netshield-level"] = netshield.rawValue
-        result["split-tcp"] = vpnAccelerator
-        if let bouncing = bouncing {
-            result["bouncing"] = bouncing
-        }
-        return result
-    }
-
 }

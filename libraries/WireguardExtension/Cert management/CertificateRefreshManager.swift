@@ -18,7 +18,7 @@ final class CertificateRefreshManager {
     /// Certificate will be refreshed this number of seconds earlier than requested to lessen the possibility of refreshing it by both app and extension.
     private var refreshEarlierBy: TimeInterval = -60
     
-    private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup)
+    private let vpnAuthenticationStorage: VpnAuthenticationStorage = VpnAuthenticationKeychain(accessGroup: WGConstants.keychainAccessGroup, storage: Storage())
     private let certificateRefreshRequest = CertificateRefreshRequest()
     private var timer: BackgroundTimer?
     
@@ -72,11 +72,12 @@ final class CertificateRefreshManager {
             return
         }
         
-        certificateRefreshRequest.refresh(publicKey: currentKeys.publicKey.derRepresentation) { result in
+        let features = vpnAuthenticationStorage.getStoredCertificateFeatures()
+        certificateRefreshRequest.refresh(publicKey: currentKeys.publicKey.derRepresentation, features: features) { result in
             switch result {
             case .success(let certificate):
                 wg_log(.info, message: "Certificate refreshed. Saving to keychain.")
-                self.vpnAuthenticationStorage.store(certificate: certificate)
+                self.vpnAuthenticationStorage.store(certificate: VpnCertificateWithFeatures(certificate: certificate, features: features))
                 self.planNextRefresh()
                 
             case .failure(let error):

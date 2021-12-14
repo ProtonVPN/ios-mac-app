@@ -33,7 +33,7 @@ public protocol VpnAuthentication {
     /**
      Refreshes the client certificate if needed
      */
-    func refreshCertificates(completion: @escaping CertificateRefreshCompletion)
+    func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion)
 
     /**
      Loads authentication data consisting of private key and client certificate that is needed to connect with a certificate base protocol
@@ -42,12 +42,25 @@ public protocol VpnAuthentication {
 
      Takes care of generating the keys if they are missing and refreshing the client certificate if needed.
      */
-    func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion)
+    func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion)
+    
+    /// Deletes current certificate
+    func clearCertificate()
+    
+    /// Deletes all the generated and stored data, so keys and certificate
+    func clearEverything()
+}
 
-    /**
-     Deletes all the generated and stored data, so keys and certificate
-     */
-    func clear()
+public extension VpnAuthentication {
+    
+    func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
+        refreshCertificates(features: nil, completion: completion)
+    }
+    
+    func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
+        loadAuthenticationData(features: nil, completion: completion)
+    }
+    
 }
 
 public final class VpnAuthenticationManager {
@@ -69,44 +82,58 @@ public final class VpnAuthenticationManager {
 
         // certificate refresh requests might be in progress so first cancel all fo them
         queue.cancelAllOperations()
+        
+        // Save last used features before cleanup
+        let features = storage.getStoredCertificateFeatures()
 
         // then delete evertyhing
-        clear()
+        clearEverything()
 
         // and get new certificates
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper))
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: features, alamofireWrapper: alamofireWrapper))
     }
 }
 
 extension VpnAuthenticationManager: VpnAuthentication {
-    public func clear() {
-        // first cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
+    public func clearEverything() {
+        // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
         queue.cancelAllOperations()
 
-        // delete everything from the keychain
+        // Delete everything from the keychain
         storage.deleteKeys()
         storage.deleteCertificate()
     }
+    
+    public func clearCertificate() {
+        // First cancel all pending certificate refreshes so a certificate is not fetched from the backend and stored after deleting keychain in this call
+        queue.cancelAllOperations()
+        
+        // Felete only certificate
+        storage.deleteCertificate()
+    }
 
-    public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) {
-        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, alamofireWrapper: alamofireWrapper, completion: { result in
+    public func refreshCertificates(features: VPNConnectionFeatures? = nil, completion: @escaping CertificateRefreshCompletion) {
+        // If new ferature set is given, use it, otherwise try to get certificate with the same features as previous
+        let newFeatures = features ?? storage.getStoredCertificateFeatures()
+        
+        queue.addOperation(CertificateRefreshAsyncOperation(storage: storage, features: newFeatures, alamofireWrapper: alamofireWrapper, completion: { result in
             executeOnUIThread { completion(result) }
         }))
     }
 
-    public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) {
+    public func loadAuthenticationData(features: VPNConnectionFeatures? = nil, completion: @escaping AuthenticationDataCompletion) {
         // keys are generated, certificate is stored, use it
-        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate() {
+        if let keys = storage.getStoredKeys(), let existingCertificate = storage.getStoredCertificate(), features == nil || features == storage.getStoredCertificateFeatures() {
             log.debug("Loading stored vpn authentication data", category: .userCert)
-            if !existingCertificate.isExpired {
-                log.debug("Stored vpn authentication certificate is expired, the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
+            if existingCertificate.isExpired {
+                log.info("Stored vpn authentication certificate is expired (\(existingCertificate.validUntil)), the local agent will connect but certificate refresh will be needed", category: .userCert, event: .newCertificate)
             }
             completion(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: existingCertificate.certificate)))
             return
         }
 
         // certificate is missing or no longer valid, refresh it and use
-        refreshCertificates(completion: { result in
+        refreshCertificates(features: features, completion: { result in
             executeOnUIThread { completion(result) }
         })
     }

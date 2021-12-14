@@ -236,12 +236,8 @@
 		E997995226A6F5810083D61E /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994626A6F50F0083D61E /* KeychainConstants.swift */; };
 		E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994726A6F50F0083D61E /* CertificateConstants.swift */; };
 		E997995526A6F5890083D61E /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */; };
-		E997995626A6F58C0083D61E /* VpnAuthenticationStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994A26A6F50F0083D61E /* VpnAuthenticationStorage.swift */; };
 		E997995726A6F58F0083D61E /* VpnCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994B26A6F50F0083D61E /* VpnCertificate.swift */; };
 		E997995826A6F5920083D61E /* VpnKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997994C26A6F50F0083D61E /* VpnKeys.swift */; };
-		E997998F26A6FAA00083D61E /* VpnKeys+init.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998926A6FAA00083D61E /* VpnKeys+init.swift */; };
-		E997999026A6FAA00083D61E /* CertificateRefreshManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998A26A6FAA00083D61E /* CertificateRefreshManager.swift */; };
-		E997999126A6FAA00083D61E /* CertificateRefreshRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998B26A6FAA00083D61E /* CertificateRefreshRequest.swift */; };
 		E997999326A6FAA00083D61E /* WGConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E997998E26A6FAA00083D61E /* WGConstants.swift */; };
 		E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */; };
 		E99799BC26A6FFAC0083D61E /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B026A6FFAC0083D61E /* Keychain.swift */; };
@@ -252,6 +248,8 @@
 		E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */ = {isa = PBXBuildFile; fileRef = E99799B726A6FFAC0083D61E /* ringlogger.c */; };
 		E99799C226A6FFAC0083D61E /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799B826A6FFAC0083D61E /* Logger.swift */; };
 		E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = E99799BA26A6FFAC0083D61E /* ErrorNotifier.swift */; };
+		E9A82EC0276237B9002C59A4 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A82EBF276237B9002C59A4 /* VPNConnectionFeatures.swift */; };
+		E9A82EC2276237D9002C59A4 /* NetShieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9A82EC1276237D9002C59A4 /* NetShieldType.swift */; };
 		E9AB88E7262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */; };
 		E9AB8952262D77CD00AFB12F /* AppStateManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */; };
 		E9AF94B426B450E600AA1A5F /* ExtensionInfoComparisonTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */; };
@@ -821,12 +819,8 @@
 		E997994626A6F50F0083D61E /* KeychainConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = KeychainConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/KeychainConstants.swift; sourceTree = "<group>"; };
 		E997994726A6F50F0083D61E /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
 		E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "UIDevice+ModelName.swift"; path = "../../../../libraries/vpncore/Source/Extensions/UIDevice+ModelName.swift"; sourceTree = "<group>"; };
-		E997994A26A6F50F0083D61E /* VpnAuthenticationStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnAuthenticationStorage.swift; path = ../../../../libraries/vpncore/Source/Management/VpnAuthentication/VpnAuthenticationStorage.swift; sourceTree = "<group>"; };
 		E997994B26A6F50F0083D61E /* VpnCertificate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnCertificate.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnCertificate.swift; sourceTree = "<group>"; };
 		E997994C26A6F50F0083D61E /* VpnKeys.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnKeys.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnKeys.swift; sourceTree = "<group>"; };
-		E997998926A6FAA00083D61E /* VpnKeys+init.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "VpnKeys+init.swift"; sourceTree = "<group>"; };
-		E997998A26A6FAA00083D61E /* CertificateRefreshManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateRefreshManager.swift; sourceTree = "<group>"; };
-		E997998B26A6FAA00083D61E /* CertificateRefreshRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CertificateRefreshRequest.swift; sourceTree = "<group>"; };
 		E997998E26A6FAA00083D61E /* WGConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGConstants.swift; sourceTree = "<group>"; };
 		E99799AD26A6FFAC0083D61E /* WireGuardNetworkExtension-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WireGuardNetworkExtension-Bridging-Header.h"; sourceTree = "<group>"; };
 		E99799AF26A6FFAC0083D61E /* FileManager+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "FileManager+Extension.swift"; sourceTree = "<group>"; };
@@ -839,6 +833,8 @@
 		E99799B826A6FFAC0083D61E /* Logger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E99799B926A6FFAC0083D61E /* ringlogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ringlogger.h; sourceTree = "<group>"; };
 		E99799BA26A6FFAC0083D61E /* ErrorNotifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ErrorNotifier.swift; sourceTree = "<group>"; };
+		E9A82EBF276237B9002C59A4 /* VPNConnectionFeatures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPNConnectionFeatures.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VPNConnectionFeatures.swift; sourceTree = "<group>"; };
+		E9A82EC1276237D9002C59A4 /* NetShieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetShieldType.swift; path = ../../../../libraries/vpncore/Source/Models/Profiles/NetShieldType.swift; sourceTree = "<group>"; };
 		E9AB88E6262D67E500AFB12F /* VpnProtocolChangeManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VpnProtocolChangeManagerMock.swift; sourceTree = "<group>"; };
 		E9AB8951262D77CD00AFB12F /* AppStateManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManagerMock.swift; sourceTree = "<group>"; };
 		E9AF94B326B450E600AA1A5F /* ExtensionInfoComparisonTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ExtensionInfoComparisonTests.swift; path = ../../../macos/ProtonVPNTests/Extensions/ExtensionInfoComparisonTests.swift; sourceTree = "<group>"; };
@@ -1405,8 +1401,9 @@
 				E91BDD3E274BC9D0005F370C /* PMLogFormatter.swift */,
 				E997994726A6F50F0083D61E /* CertificateConstants.swift */,
 				E997994926A6F50F0083D61E /* UIDevice+ModelName.swift */,
-				E997994A26A6F50F0083D61E /* VpnAuthenticationStorage.swift */,
 				E997994B26A6F50F0083D61E /* VpnCertificate.swift */,
+				E9A82EBF276237B9002C59A4 /* VPNConnectionFeatures.swift */,
+				E9A82EC1276237D9002C59A4 /* NetShieldType.swift */,
 				E997994C26A6F50F0083D61E /* VpnKeys.swift */,
 			);
 			path = vpncore;
@@ -1415,23 +1412,12 @@
 		E997998726A6FAA00083D61E /* WireguardExtension */ = {
 			isa = PBXGroup;
 			children = (
-				E997998826A6FAA00083D61E /* Cert management */,
 				E997998C26A6FAA00083D61E /* vpncore */,
 				E99799AC26A6FFAC0083D61E /* WG */,
 				E997998E26A6FAA00083D61E /* WGConstants.swift */,
 			);
 			name = WireguardExtension;
 			path = ../../../libraries/WireguardExtension;
-			sourceTree = "<group>";
-		};
-		E997998826A6FAA00083D61E /* Cert management */ = {
-			isa = PBXGroup;
-			children = (
-				E997998926A6FAA00083D61E /* VpnKeys+init.swift */,
-				E997998A26A6FAA00083D61E /* CertificateRefreshManager.swift */,
-				E997998B26A6FAA00083D61E /* CertificateRefreshRequest.swift */,
-			);
-			path = "Cert management";
 			sourceTree = "<group>";
 		};
 		E997998C26A6FAA00083D61E /* vpncore */ = {
@@ -3188,16 +3174,14 @@
 			files = (
 				E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */,
 				E928092B26B147E0008C9F2C /* IPCBaseConnection.swift in Sources */,
-				E997998F26A6FAA00083D61E /* VpnKeys+init.swift in Sources */,
 				E997995826A6F5920083D61E /* VpnKeys.swift in Sources */,
 				E99799C326A6FFAC0083D61E /* ErrorNotifier.swift in Sources */,
 				E91BDD3F274BC9D0005F370C /* FileLogFormatter.swift in Sources */,
-				E997999026A6FAA00083D61E /* CertificateRefreshManager.swift in Sources */,
 				E9BD02F326D77F9000AAE995 /* LogViewHelper.swift in Sources */,
 				E93D023826A1C90A0098520D /* main.swift in Sources */,
 				E997994E26A6F5740083D61E /* AuthCredentials.swift in Sources */,
 				E99799C126A6FFAC0083D61E /* ringlogger.c in Sources */,
-				E997999126A6FAA00083D61E /* CertificateRefreshRequest.swift in Sources */,
+				E9A82EC2276237D9002C59A4 /* NetShieldType.swift in Sources */,
 				E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */,
 				E99799BD26A6FFAC0083D61E /* NotificationToken.swift in Sources */,
 				E928093426B43704008C9F2C /* ExtensionInfo.swift in Sources */,
@@ -3213,12 +3197,12 @@
 				E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */,
 				E99799BE26A6FFAC0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E997994F26A6F5780083D61E /* AuthKeychain.swift in Sources */,
-				E997995626A6F58C0083D61E /* VpnAuthenticationStorage.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
 				E997995126A6F57E0083D61E /* Dictionary+Extension.swift in Sources */,
 				E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */,
 				E997995526A6F5890083D61E /* UIDevice+ModelName.swift in Sources */,
 				E99799BB26A6FFAC0083D61E /* FileManager+Extension.swift in Sources */,
+				E9A82EC0276237B9002C59A4 /* VPNConnectionFeatures.swift in Sources */,
 				E91BDD40274BC9D0005F370C /* PMLogFormatter.swift in Sources */,
 				E99799C026A6FFAC0083D61E /* String+ArrayConversion.swift in Sources */,
 			);

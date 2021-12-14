@@ -229,7 +229,7 @@ public class AppStateManagerImplementation: AppStateManager {
             makeConnection(configuration)
         case .certificate:
             log.info("Checking vpn auth keys and certificates", category: .connectionConnect)
-            vpnAuthentication.loadAuthenticationData { result in
+            vpnAuthentication.loadAuthenticationData(features: VPNConnectionFeatures(propertiesManager: propertiesManager, vpnProtocol: configuration.vpnProtocol)) { result in
                 switch result {
                 case let .success(data):
                     log.info("VPN connect started", category: .connectionConnect, metadata: ["protocol": "\(configuration.vpnProtocol)", "authenticationType": "\(configuration.vpnProtocol.authenticationType)"])
