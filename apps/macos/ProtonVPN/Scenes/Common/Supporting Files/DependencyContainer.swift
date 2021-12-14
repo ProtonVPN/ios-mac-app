@@ -94,7 +94,7 @@ final class DependencyContainer {
     private lazy var updateManager = UpdateManager(self)
 
     private lazy var vpnAuthentication: VpnAuthentication = {
-        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos")
+        let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(teamId)ch.protonvpn.macos", storage: Storage())
         return VpnAuthenticationManager(alamofireWrapper: makeAlamofireWrapper(), storage: vpnAuthKeychain)
     }()
 }

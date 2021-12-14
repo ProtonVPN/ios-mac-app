@@ -82,7 +82,7 @@ extension VpnManager {
     }
 
     func reconnectWithNewKeyAndCertificate() {
-        vpnAuthentication.clear()
+        vpnAuthentication.clearEverything()
         refreshCertificateWithError { _ in
             log.debug("Generated new keys and got new certificate, asking to reconnect", category: .localAgent)
             executeOnUIThread {
@@ -117,8 +117,9 @@ extension VpnManager: LocalAgentDelegate {
         switch error {
         case .certificateExpired, .certificateNotProvided:
             log.error("Local agent reported expired or missing, trying to refresh and reconnect", category: .localAgent, event: .error)
+            vpnAuthentication.clearCertificate()
             refreshCertificateWithError { [weak self] data in
-                log.error("Reconnecting to local agent with new certificate", category: .localAgent)
+                log.info("Reconnecting to local agent with new certificate", category: .localAgent)
                 self?.connectLocalAgent(data: data)
             }
         case .badCertificateSignature, .certificateRevoked:
@@ -169,7 +170,14 @@ extension VpnManager: LocalAgentDelegate {
         }
     }
 
-    func didReceiveFeature(vpnAccelerator: Bool) {
+    func didReceiveFeatures(_ features: VPNConnectionFeatures) {
+        didReceiveFeature(netshield: features.netshield)
+        didReceiveFeature(vpnAccelerator: features.vpnAccelerator)
+        // Try refreshing certificate in case features are different from the ones we have in current certificate
+        vpnAuthentication.refreshCertificates(features: features, completion: { _ in })
+    }
+    
+    private func didReceiveFeature(vpnAccelerator: Bool) {
         guard propertiesManager.vpnAcceleratorEnabled != vpnAccelerator else {
             return
         }
@@ -178,7 +186,7 @@ extension VpnManager: LocalAgentDelegate {
         propertiesManager.vpnAcceleratorEnabled = vpnAccelerator
     }
 
-    func didReceiveFeature(netshield: NetShieldType) {
+    private func didReceiveFeature(netshield: NetShieldType) {
         let currentNetshield = propertiesManager.netShieldType ?? NetShieldType.off
         guard currentNetshield != netshield else {
             return
