@@ -49,6 +49,7 @@
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
 		5159CDEF329B705491152AE6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552536E9D3C3A3ED5F3D2677 /* Storage.swift */; };
 		590028A871E7DBEB4E962B52 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
+		611034A9B8BBBA37832E7C07 /* BugReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74568593579C719298744C /* BugReport.framework */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
 		7904DA4220E57A9B008A4FCB /* CreateOrEditProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA4020E57A9A008A4FCB /* CreateOrEditProfileViewModel.swift */; };
@@ -400,6 +401,7 @@
 		E1FB5482230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1FB547F230C2DD000153F4D /* ColorPickerTableViewCell.swift */; };
 		E1FB5483230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
 		E1FB5484230C2DD000153F4D /* ColorPickerTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FB5480230C2DD000153F4D /* ColorPickerTableViewCell.xib */; };
+		E3D8412E15979D36BB405DEB /* BugReport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 4B74568593579C719298744C /* BugReport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E90AAE2527A0407400FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2427A0407400FDAEC6 /* subusercredentials.plist */; };
 		E9200ED72660CC0F00BBAB9C /* vpncore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9200ED62660CC0F00BBAB9C /* vpncore.framework */; };
 		E9445D5F26528A790075FD31 /* NetworkExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E148AE5221C1683D007AB65A /* NetworkExtension.framework */; };
@@ -581,6 +583,7 @@
 			dstSubfolderSpec = 10;
 			files = (
 				F3521E0E264A9D2B0070F177 /* vpncore.framework in Embed Frameworks */,
+				E3D8412E15979D36BB405DEB /* BugReport.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1043,6 +1046,7 @@
 				F3BC534B278598CE009E49B4 /* BuildFile in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
+				611034A9B8BBBA37832E7C07 /* BugReport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

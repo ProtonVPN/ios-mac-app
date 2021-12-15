@@ -23,7 +23,6 @@
 import GSMessages
 import UIKit
 import vpncore
-import BugReport
 import SwiftUI
 
 // MARK: Country Service
@@ -143,6 +142,8 @@ final class NavigationService {
         onboardingService.delegate = self
         return onboardingService
     }()
+
+    private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
 
     private lazy var connectionBarViewController = { 
         return makeConnectionBarViewController()
@@ -322,7 +323,7 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        if let viewController = createBugReportViewController() {
+        if let viewController = bugReportCreator.createBugReportViewController(model: BugReportModel()) {
             windowService.present(modal: viewController)
             return
         }

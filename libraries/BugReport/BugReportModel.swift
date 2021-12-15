@@ -1,5 +1,5 @@
 //
-//  Created on 14.12.2021.
+//  Created on 15.12.2021.
 //
 //  Copyright (c) 2021 Proton AG
 //
@@ -17,13 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import AppKit
-import SwiftUI
 
-public func createBugReportViewController() -> NSViewController? {
-    guard isNewBugReportEnabled, #available(macOS 10.15, *) else {
-        return nil
-    }
-
-    return NSHostingController(rootView: BugReportView().frame(width: 600, height: 600, alignment: .center))
+public struct BugReportModel {
+    public init() { }
 }
