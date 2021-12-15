@@ -41,3 +41,8 @@ public struct VpnCertificate: Codable {
         refreshTime = try dict.unixTimestampOrThrow(key: "RefreshTime")
     }
 }
+
+public struct VpnCertificateWithFeatures {
+    let certificate: VpnCertificate
+    let features: VPNConnectionFeatures?
+}

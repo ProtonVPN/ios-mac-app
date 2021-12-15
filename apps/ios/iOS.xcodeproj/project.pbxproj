@@ -46,6 +46,7 @@
 		42C37AFF2434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */; };
 		47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = D0621B577842515BF2198993 /* Pods-ProtonVPNUITests-metadata.plist */; };
+		5159CDEF329B705491152AE6 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 552536E9D3C3A3ED5F3D2677 /* Storage.swift */; };
 		590028A871E7DBEB4E962B52 /* RoundedCornersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */; };
 		67504506DC030516B8556F8E /* AccountVerificationRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = D32078B0341D91947B720055 /* AccountVerificationRobot.swift */; };
 		7904DA3F20E47F47008A4FCB /* CreateProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7904DA3E20E47F47008A4FCB /* CreateProfileViewController.swift */; };
@@ -126,15 +127,18 @@
 		89926E3756CED95AB662D371 /* PasswordRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */; };
 		8AF7BD84DE94054428A9E26C /* Pods_ProtonVPNUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 140E14E39523B1D45E15E9BF /* Pods_ProtonVPNUITests.framework */; };
 		8CE611B08C0E5F102ECF4E3A /* Pods-ProtonVPN-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 144DDB28DA09A1DD0A1BDCC9 /* Pods-ProtonVPN-metadata.plist */; };
+		9095709C9FC23FD93F9E6504 /* NetShieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B322C18D0C4176A8BA5417F5 /* NetShieldType.swift */; };
 		921E3680E612A1D8F1A969F2 /* Pods_Quick_Connect_Widget.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83E73DB36971335A429DF2C4 /* Pods_Quick_Connect_Widget.framework */; };
 		96BEBF321E33B229DE18022A /* Pods-OpenVPN Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */; };
 		A01D7C58C3C1AEBA17A6C5AF /* AnnouncementDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E128E9975D2A268D9FB56F0 /* AnnouncementDetailViewController.swift */; };
 		A264F1C92E772DA03634D8A8 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */; };
 		A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */; };
 		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
+		B16BE0B49F9E0CCCF9804853 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E5DFDCF6801E41EA22CF47 /* VPNConnectionFeatures.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
 		B8F0BAE6EEFE43932E7D20B1 /* Pods_OpenVPN_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD5E9BC97AE79F269ED539A0 /* Pods_OpenVPN_Extension.framework */; };
 		C3226764A143E60A9570365C /* Pods-ProtonVPNTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8746F5B74BD261EE27AF0E48 /* Pods-ProtonVPNTests-metadata.plist */; };
+		D3F838D8C2F03CB1FE1C72C2 /* Optional+stringForLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B508BF2E5156C4F29C009F7 /* Optional+stringForLog.swift */; };
 		D5110851246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
 		D5110852246150DF0018872A /* Date+Formatters.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5110850246150DE0018872A /* Date+Formatters.swift */; };
 		D5136C1322858D0B0002C095 /* CountryAnnotationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5136C1222858D0B0002C095 /* CountryAnnotationViewModelTests.swift */; };
@@ -607,6 +611,8 @@
 		1592C416B79CC0A5AF42A83F /* Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-WireGuardiOS Extension/Pods-ProtonVPN-WireGuardiOS Extension.debug.xcconfig"; sourceTree = "<group>"; };
 		1A063186CCF6A5B988603C52 /* Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-WireGuardiOS Extension/Pods-ProtonVPN-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
 		2087AA9678CFB84779ED67E7 /* Environments.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Environments.storyboard; path = ../../../../ios/ProtonVPN/Scenes/Common/Environments.storyboard; sourceTree = "<group>"; };
+		2B508BF2E5156C4F29C009F7 /* Optional+stringForLog.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Optional+stringForLog.swift"; path = "../../../../libraries/vpncore/Source/Extensions/Optional+stringForLog.swift"; sourceTree = "<group>"; };
+		30E5DFDCF6801E41EA22CF47 /* VPNConnectionFeatures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VPNConnectionFeatures.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VPNConnectionFeatures.swift; sourceTree = "<group>"; };
 		31EA49C928662F450C8B22DD /* Pods-OpenVPN Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.release.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.release.xcconfig"; sourceTree = "<group>"; };
 		3282E4753260F985B918AC2F /* Pods-ProtonVPNTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.debug.xcconfig"; sourceTree = "<group>"; };
 		34F98FB76399EEFC9BFFCD8B /* SubuserAlertViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = SubuserAlertViewController.xib; path = "../../../../../ios/ProtonVPN/Scenes/Misc/Subuser alert/SubuserAlertViewController.xib"; sourceTree = "<group>"; };
@@ -630,6 +636,7 @@
 		42C37AFE2434E62C00366B79 /* UILabel+realSize.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+realSize.swift"; sourceTree = "<group>"; };
 		4AA87D85BE947E3118D6F583 /* PasswordRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PasswordRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Login/PasswordRobot.swift; sourceTree = "<group>"; };
 		5265E792D15A89F3F9F8FCC0 /* Pods-WireGuardiOS Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.staging.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.staging.xcconfig"; sourceTree = "<group>"; };
+		552536E9D3C3A3ED5F3D2677 /* Storage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Storage.swift; path = ../../../../libraries/vpncore/Source/Management/Storage/Storage.swift; sourceTree = "<group>"; };
 		552A60268108D0F8C395145D /* Pods-ProtonVPN.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.release.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.release.xcconfig"; sourceTree = "<group>"; };
 		588875B805CC4143DA2C515E /* ProtocolsListRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = ProtocolsListRobot.swift; path = ../../../../ios/ProtonVPNUITests/Robots/Settings/ProtocolsListRobot.swift; sourceTree = "<group>"; };
 		595518BE20B6AFF39944C7C4 /* Pods-Quick Connect Widget.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Quick Connect Widget.debug.xcconfig"; path = "Target Support Files/Pods-Quick Connect Widget/Pods-Quick Connect Widget.debug.xcconfig"; sourceTree = "<group>"; };
@@ -723,6 +730,7 @@
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
+		B322C18D0C4176A8BA5417F5 /* NetShieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetShieldType.swift; path = ../../../../libraries/vpncore/Source/Models/Profiles/NetShieldType.swift; sourceTree = "<group>"; };
 		BA19D4B07C7F4CCE4459E73B /* Pods-Siri Shortcut Handler.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Siri Shortcut Handler.staging.xcconfig"; path = "Target Support Files/Pods-Siri Shortcut Handler/Pods-Siri Shortcut Handler.staging.xcconfig"; sourceTree = "<group>"; };
 		BDB268B7C236ED5B1A411ACD /* Pods-WireGuardiOS Extension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-WireGuardiOS Extension.release.xcconfig"; path = "Target Support Files/Pods-WireGuardiOS Extension/Pods-WireGuardiOS Extension.release.xcconfig"; sourceTree = "<group>"; };
 		C0E910E5C3CE68C69236B82D /* Pods-OpenVPN Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-OpenVPN Extension-metadata.plist"; sourceTree = "<group>"; };
@@ -1755,6 +1763,10 @@
 				E977A790268211950013495A /* VpnAuthenticationStorage.swift */,
 				E977A77E2681DADA0013495A /* VpnCertificate.swift */,
 				E977A792268211C10013495A /* VpnKeys.swift */,
+				B322C18D0C4176A8BA5417F5 /* NetShieldType.swift */,
+				2B508BF2E5156C4F29C009F7 /* Optional+stringForLog.swift */,
+				552536E9D3C3A3ED5F3D2677 /* Storage.swift */,
+				30E5DFDCF6801E41EA22CF47 /* VPNConnectionFeatures.swift */,
 			);
 			name = vpncore;
 			path = "../../macOS/ProtonVPN WireGuard/vpncore";
@@ -3390,6 +3402,10 @@
 				E977A79C2682171D0013495A /* KeychainConstants.swift in Sources */,
 				E99799A326A6FE0C0083D61E /* FileManager+Extension.swift in Sources */,
 				E99799A826A6FE0C0083D61E /* String+ArrayConversion.swift in Sources */,
+				B16BE0B49F9E0CCCF9804853 /* VPNConnectionFeatures.swift in Sources */,
+				5159CDEF329B705491152AE6 /* Storage.swift in Sources */,
+				9095709C9FC23FD93F9E6504 /* NetShieldType.swift in Sources */,
+				D3F838D8C2F03CB1FE1C72C2 /* Optional+stringForLog.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -4008,7 +4024,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = ch.protonmail.vpn.debug;
 				PRODUCT_NAME = "$(TARGET_NAME) Test";
 				PROVISIONING_PROFILE_SPECIFIER = "ProtonVPN Debug";
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG TLS_PIN_DISABLE FREQUENT_AUTH_CERT_REFRESH";
 				SWIFT_INCLUDE_PATHS = CommonCrypto;
 				SWIFT_OBJC_BRIDGING_HEADER = "ProtonVPN/SupportingFiles/SwiftObjC-Bridging-Header.h";
 				SWIFT_VERSION = 4.2;

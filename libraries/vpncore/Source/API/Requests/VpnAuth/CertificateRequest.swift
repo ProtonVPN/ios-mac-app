@@ -24,12 +24,13 @@ import ProtonCore_Networking
 import Foundation
 
 final class CertificateRequest: Request {
-
     let publicKey: PublicKey
     let deviceName: String
+    let features: VPNConnectionFeatures?
 
-    init(publicKey: PublicKey) {
+    init(publicKey: PublicKey, features: VPNConnectionFeatures?) {
         self.publicKey = publicKey
+        self.features = features
         #if os(iOS)
         deviceName = UIDevice.current.name
         #else
@@ -51,10 +52,17 @@ final class CertificateRequest: Request {
             "ClientPublicKeyMode": "EC",
             "DeviceName": deviceName,
             "Mode": "session"
-        ]
+        ] as [String: Any]
+        
+        // Saving features in certificate on ios only, because on macOS LocalAgent is available at all times
+        if let features = features {
+            params["Features"] = features.asDict
+        }
+        
         if let duration = CertificateConstants.certificateDuration {
             params["Duration"] = duration
         }
+        
         return params
     }
 }

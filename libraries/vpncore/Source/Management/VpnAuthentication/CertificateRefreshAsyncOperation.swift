@@ -30,12 +30,20 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
     private let storage: VpnAuthenticationStorage
     private let networking: Networking
     private let completion: CertificateRefreshCompletion?
+    private let features: VPNConnectionFeatures?
     private var isRetry = false
 
-    init(storage: VpnAuthenticationStorage, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
+    init(storage: VpnAuthenticationStorage, features: VPNConnectionFeatures?, networking: Networking, completion: CertificateRefreshCompletion? = nil) {
         self.storage = storage
         self.networking = networking
         self.completion = completion
+        
+        // On macOS this will effectively disable creation of new certificates on each feature change because those are set in LocalAgent
+        #if os(iOS)
+        self.features = features
+        #else
+        self.features = nil
+        #endif
     }
 
     private func finish(_ result: Result<(VpnAuthenticationData), Error>) {
@@ -43,16 +51,16 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         finish()
     }
 
-    private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificate, Error>) -> Void) {
+    private func getCertificate(keys: VpnKeys, completion: @escaping (Result<VpnCertificateWithFeatures, Error>) -> Void) {
         log.debug("Asking backend API for new vpn authentication certificate", category: .userCert, event: .newCertificate)
-        let request = CertificateRequest(publicKey: keys.publicKey)
+        let request = CertificateRequest(publicKey: keys.publicKey, features: features)
         networking.request(request) { (result: Result<JSONDictionary, Error>) in
             switch result {
             case let .success(dict):
                 do {
                     let certificate = try VpnCertificate(dict: dict)
                     log.debug("Got new vpn authentication certificate valid until \(certificate.validUntil)", category: .userCert, event: .newCertificate)
-                    completion(.success(certificate))
+                    completion(.success(VpnCertificateWithFeatures(certificate: certificate, features: self.features)))
                 } catch {
                     log.error("Failed to decode vpn authentication certificate from backend: \(error)", category: .userCert, event: .refreshError)
                     completion(.failure(error))
@@ -64,7 +72,7 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
         }
     }
 
-    override func main() {
+    override func main() { // swiftlint:disable:this function_body_length
         guard !isCancelled else {
             finish(.failure(CertificateRefreshError.canceled))
             return
@@ -74,11 +82,16 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
 
         let keys = storage.getKeys()
         let existingCertificate = storage.getStoredCertificate()
+        let currentFeatures = storage.getStoredCertificateFeatures()
 
-        let needsRefresh: Bool
+        var needsRefresh: Bool = false
+        if features != nil, currentFeatures != features {
+            log.debug("Stored certificate has different set of features. New certificate is needed.", category: .userCert, metadata: ["current": "\(String(describing: currentFeatures))", "new": "\(String(describing: features))"])
+            needsRefresh = true
+        }
         if let certificate = existingCertificate {
             // check if we are past the refresh time recommended by the backend or expired
-            needsRefresh = certificate.isExpired || certificate.shouldBeRefreshed
+            needsRefresh = needsRefresh || certificate.isExpired || certificate.shouldBeRefreshed
         } else {
             log.debug("No stored vpn authentication certificate found", category: .userCert)
             // no certificate exists, refresh is definitely needed
@@ -116,10 +129,10 @@ final class CertificateRefreshAsyncOperation: AsyncOperation {
                 default:
                     self.finish(.failure(error))
                 }
-            case let .success(certificate):
+            case let .success(certificateWithFeatures):
                 // store it
-                self.storage.store(certificate: certificate)
-                self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificate.certificate)))
+                self.storage.store(certificate: certificateWithFeatures)
+                self.finish(.success(VpnAuthenticationData(clientKey: keys.privateKey, clientCertificate: certificateWithFeatures.certificate.certificate)))
             }
         }
     }

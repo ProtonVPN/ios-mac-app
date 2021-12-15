@@ -26,7 +26,8 @@ import Foundation
 public final class VpnAuthenticationMock: VpnAuthentication {
     public init() { }
 
-    public func loadAuthenticationData(completion: @escaping AuthenticationDataCompletion) { }
-    public func refreshCertificates(completion: @escaping CertificateRefreshCompletion) { }
-    public func clear() { }
+    public func loadAuthenticationData(features: VPNConnectionFeatures?, completion: @escaping AuthenticationDataCompletion) { }
+    public func refreshCertificates(features: VPNConnectionFeatures?, completion: @escaping CertificateRefreshCompletion) { }
+    public func clearCertificate() { }
+    public func clearEverything() { }
 }

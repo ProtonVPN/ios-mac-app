@@ -1741,6 +1741,9 @@
 "_vpnauth_certfail_title" = "Authentication error";
 "_vpnauth_certfail_description" = "Failed to refresh VPN certificate. Please check your connection";
 
+"_vpnauth_too_many_certs_title" = "Authentication error";
+"_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
+
 // Downgrade
 
 "_from_server_title" = "From %@ Server:";
