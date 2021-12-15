@@ -37,10 +37,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // MARK: - UIApplicationDelegate
     
-    func application(_ application: UIApplication,
-                     didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         setupLogsForApp()
+        setupDebugHelpers()
         
         // Force all encoded objects to be decoded and recoded using the ProtonVPN module name
         setUpNSCoding(withModuleName: "ProtonVPN")
@@ -69,6 +68,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
                 
         return true
+    }
+        
+    private func setupDebugHelpers() {
+        #if FREQUENT_AUTH_CERT_REFRESH
+        CertificateConstants.certificateDuration = "15 minutes"
+        #endif
     }
     
     func applicationWillEnterForeground(_ application: UIApplication) {

@@ -49,6 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.checkMigration()
         migrateIfNeeded {
             self.setNSCodingModuleName()
+            self.setupDebugHelpers()
             
             SentryHelper.setupSentry(dsn: ObfuscatedConstants.sentryDsnmacOS)
             
@@ -77,6 +78,12 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             // Update available plans from API
             self.servicePlanDataService.updateServicePlans(completion: nil)
         }
+    }
+    
+    private func setupDebugHelpers() {
+        #if FREQUENT_AUTH_CERT_REFRESH
+        CertificateConstants.certificateDuration = "15 minutes"
+        #endif
     }
     
     func applicationShouldHandleReopen(_ theApplication: NSApplication, hasVisibleWindows flag: Bool) -> Bool {
