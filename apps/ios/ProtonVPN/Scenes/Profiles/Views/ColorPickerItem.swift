@@ -22,15 +22,14 @@
 
 import UIKit
 
-class ColorPickerItem: UICollectionViewCell {
-    
-    @IBOutlet weak var spaceBackgroundView: UIView!
-    @IBOutlet weak var colorCircleView: UIView!
+final class ColorPickerItem: UICollectionViewCell {
+
+    @IBOutlet private weak var colorCircleView: UIView!
     
     var color: UIColor = .backgroundColor() {
         didSet {
             colorCircleView.backgroundColor = color
-            backgroundColor = .backgroundColor()
+            backgroundColor = .clear
         }
     }
 
@@ -39,7 +38,7 @@ class ColorPickerItem: UICollectionViewCell {
             if self.isSelected {
                 backgroundColor = .normalTextColor()
             } else {
-                backgroundColor = .backgroundColor()
+                backgroundColor = .clear
             }
         }
     }
@@ -48,7 +47,6 @@ class ColorPickerItem: UICollectionViewCell {
         super.layoutSubviews()
         
         layer.cornerRadius = layer.frame.size.height / 2
-        spaceBackgroundView.layer.cornerRadius = spaceBackgroundView.layer.frame.size.height / 2
         colorCircleView.layer.cornerRadius = colorCircleView.layer.frame.size.height / 2
     }
     
@@ -58,13 +56,9 @@ class ColorPickerItem: UICollectionViewCell {
         autoresizingMask = [.flexibleHeight, .flexibleWidth]
         translatesAutoresizingMaskIntoConstraints = true
 
-        spaceBackgroundView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
-        spaceBackgroundView.translatesAutoresizingMaskIntoConstraints = true
-
         colorCircleView.autoresizingMask = [.flexibleHeight, .flexibleWidth]
         colorCircleView.translatesAutoresizingMaskIntoConstraints = true
         
-        backgroundColor = isSelected ? .normalTextColor() : .backgroundColor()
-        spaceBackgroundView.backgroundColor = .backgroundColor()
+        backgroundColor = isSelected ? .normalTextColor() : .clear
     }
 }
