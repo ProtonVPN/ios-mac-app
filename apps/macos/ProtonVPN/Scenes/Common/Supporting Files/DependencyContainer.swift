@@ -23,6 +23,7 @@
 import AppKit
 import Foundation
 import vpncore
+import BugReport
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -441,5 +442,12 @@ extension DependencyContainer: AppInfoFactory {
 extension DependencyContainer: DoHVPNFactory {
     func makeDoHVPN() -> DoHVPN {
         return doh
+    }
+}
+
+// MARK: BugReportCreatorFactory
+extension DependencyContainer: BugReportCreatorFactory {
+    func makeBugReportCreator() -> BugReportCreator {
+        return macOSBugReportCreator()
     }
 }

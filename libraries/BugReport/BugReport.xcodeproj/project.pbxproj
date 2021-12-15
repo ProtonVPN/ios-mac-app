@@ -7,10 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		F32D4D452768B37D00914CCF /* Support+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D442768B37D00914CCF /* Support+iOS.swift */; };
 		F32D4D492768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
 		F32D4D4A2768B5A300914CCF /* FeatureFlags.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D482768B5A300914CCF /* FeatureFlags.swift */; };
-		F32D4D4C2768B5F200914CCF /* Support+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4D4B2768B5F200914CCF /* Support+macOS.swift */; };
 		F32D4DB92768CA2900914CCF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DB82768CA2900914CCF /* AppDelegate.swift */; };
 		F32D4DBB2768CA2900914CCF /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DBA2768CA2900914CCF /* SceneDelegate.swift */; };
 		F32D4DBD2768CA2900914CCF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F32D4DBC2768CA2900914CCF /* ViewController.swift */; };
@@ -26,12 +24,14 @@
 		F38DF8542760BB5700DA10CB /* BugReport.h in Headers */ = {isa = PBXBuildFile; fileRef = F38DF8532760BB5700DA10CB /* BugReport.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		F38DF85B2760BB7200DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
 		F38DF8742760C21D00DA10CB /* BugReportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38DF85A2760BB7200DA10CB /* BugReportView.swift */; };
+		F3ECCF452769D9C900ED574B /* BugReportCreator+iOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ECCF442769D9C900ED574B /* BugReportCreator+iOS.swift */; };
+		F3ECCF482769DA3800ED574B /* BugReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ECCF472769DA3800ED574B /* BugReportModel.swift */; };
+		F3ECCF492769DA3800ED574B /* BugReportModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ECCF472769DA3800ED574B /* BugReportModel.swift */; };
+		F3ECCF4B2769DA6F00ED574B /* BugReportCreator+macOS.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3ECCF4A2769DA6F00ED574B /* BugReportCreator+macOS.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		F32D4D442768B37D00914CCF /* Support+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+iOS.swift"; sourceTree = "<group>"; };
 		F32D4D482768B5A300914CCF /* FeatureFlags.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeatureFlags.swift; sourceTree = "<group>"; };
-		F32D4D4B2768B5F200914CCF /* Support+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Support+macOS.swift"; sourceTree = "<group>"; };
 		F32D4DB62768CA2900914CCF /* BugReportiOSSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugReportiOSSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F32D4DB82768CA2900914CCF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F32D4DBA2768CA2900914CCF /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +50,9 @@
 		F38DF8532760BB5700DA10CB /* BugReport.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BugReport.h; sourceTree = "<group>"; };
 		F38DF85A2760BB7200DA10CB /* BugReportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportView.swift; sourceTree = "<group>"; };
 		F38DF86D2760C1F100DA10CB /* BugReport.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = BugReport.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		F3ECCF442769D9C900ED574B /* BugReportCreator+iOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BugReportCreator+iOS.swift"; sourceTree = "<group>"; };
+		F3ECCF472769DA3800ED574B /* BugReportModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportModel.swift; sourceTree = "<group>"; };
+		F3ECCF4A2769DA6F00ED574B /* BugReportCreator+macOS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BugReportCreator+macOS.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,8 +90,8 @@
 		F32D4D472768B57600914CCF /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				F32D4D442768B37D00914CCF /* Support+iOS.swift */,
-				F32D4D4B2768B5F200914CCF /* Support+macOS.swift */,
+				F3ECCF442769D9C900ED574B /* BugReportCreator+iOS.swift */,
+				F3ECCF4A2769DA6F00ED574B /* BugReportCreator+macOS.swift */,
 				F32D4D482768B5A300914CCF /* FeatureFlags.swift */,
 			);
 			path = Support;
@@ -132,6 +135,7 @@
 		F38DF8462760BB5700DA10CB = {
 			isa = PBXGroup;
 			children = (
+				F3ECCF472769DA3800ED574B /* BugReportModel.swift */,
 				F38DF85A2760BB7200DA10CB /* BugReportView.swift */,
 				F38DF8532760BB5700DA10CB /* BugReport.h */,
 				F32D4D472768B57600914CCF /* Support */,
@@ -352,7 +356,8 @@
 			files = (
 				F32D4D492768B5A300914CCF /* FeatureFlags.swift in Sources */,
 				F38DF85B2760BB7200DA10CB /* BugReportView.swift in Sources */,
-				F32D4D452768B37D00914CCF /* Support+iOS.swift in Sources */,
+				F3ECCF482769DA3800ED574B /* BugReportModel.swift in Sources */,
+				F3ECCF452769D9C900ED574B /* BugReportCreator+iOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,7 +367,8 @@
 			files = (
 				F32D4D4A2768B5A300914CCF /* FeatureFlags.swift in Sources */,
 				F38DF8742760C21D00DA10CB /* BugReportView.swift in Sources */,
-				F32D4D4C2768B5F200914CCF /* Support+macOS.swift in Sources */,
+				F3ECCF492769DA3800ED574B /* BugReportModel.swift in Sources */,
+				F3ECCF4B2769DA6F00ED574B /* BugReportCreator+macOS.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

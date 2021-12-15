@@ -83,11 +83,13 @@ class WindowServiceImplementation: WindowService {
         & VpnManagerFactory
         & SafariServiceFactory
         & LogFileManagerFactory
+        & BugReportCreatorFactory
 
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
+    private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
     
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
@@ -207,7 +209,7 @@ class WindowServiceImplementation: WindowService {
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = createBugReportViewController() ?? ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
+        let viewController = bugReportCreator.createBugReportViewController(model: BugReportModel()) ?? ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.append(windowController)

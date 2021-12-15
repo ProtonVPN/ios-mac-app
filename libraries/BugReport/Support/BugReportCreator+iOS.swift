@@ -1,5 +1,5 @@
 //
-//  Created on 14.12.2021.
+//  Created on 15.12.2021.
 //
 //  Copyright (c) 2021 Proton AG
 //
@@ -17,13 +17,25 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import SwiftUI
 import UIKit
+import SwiftUI
 
-public func createBugReportViewController() -> UIViewController? {
-    guard isNewBugReportEnabled, #available(iOS 13.0.0, *) else {
-        return nil
+public protocol BugReportCreatorFactory {
+    func makeBugReportCreator() -> BugReportCreator
+}
+
+public protocol BugReportCreator {
+    func createBugReportViewController(model: BugReportModel) -> UIViewController?
+}
+
+public final class iOSBugReportCreator: BugReportCreator {
+    public init() { }
+
+    public func createBugReportViewController(model: BugReportModel) -> UIViewController? {
+        guard isNewBugReportEnabled, #available(iOS 13.0.0, *) else {
+            return nil
+        }
+
+        return UIHostingController(rootView: BugReportView())
     }
-
-    return UIHostingController(rootView: BugReportView())
 }

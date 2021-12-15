@@ -23,6 +23,7 @@
 import Foundation
 import vpncore
 import KeychainAccess
+import BugReport
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -404,5 +405,12 @@ extension DependencyContainer: DoHVPNFactory {
 extension DependencyContainer: OnboardingServiceFactory {
     func makeOnboardingService() -> OnboardingService {
         return OnboardingModuleService(factory: self)
+    }
+}
+
+// MARK: BugReportCreatorFactory
+extension DependencyContainer: BugReportCreatorFactory {
+    func makeBugReportCreator() -> BugReportCreator {
+        return iOSBugReportCreator()
     }
 }
