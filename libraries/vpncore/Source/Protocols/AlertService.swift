@@ -843,3 +843,11 @@ public class SubuserWithoutConnectionsAlert: SystemAlert {
     public init() {
     }
 }
+
+public class TooManyCertificateRequestsAlert: SystemAlert {
+    public var title: String? = LocalizedString.vpnauthTooManyCertsTitle
+    public var message: String? = LocalizedString.vpnauthTooManyCertsDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+}

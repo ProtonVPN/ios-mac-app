@@ -345,7 +345,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
         
         AuthKeychain.clear()
         vpnKeychain.clear()
-        vpnAuthentication.clear()
+        vpnAuthentication.clearEverything()
         announcementRefresher.clear()
         planService.clear()
         

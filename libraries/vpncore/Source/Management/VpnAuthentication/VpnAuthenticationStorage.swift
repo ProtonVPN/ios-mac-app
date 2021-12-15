@@ -28,30 +28,39 @@ public protocol VpnAuthenticationStorage {
     func deleteCertificate()
     func getKeys() -> VpnKeys
     func getStoredCertificate() -> VpnCertificate?
+    func getStoredCertificateFeatures() -> VPNConnectionFeatures?
     func getStoredKeys() -> VpnKeys?
     func store(keys: VpnKeys)
-    func store(certificate: VpnCertificate)
+    func store(certificate: VpnCertificateWithFeatures)
 }
 
 public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
-    private struct StorageKey {
+    private struct KeychainStorageKey {
         static let vpnKeys = "vpnKeys"
         static let vpnCertificate = "vpnCertificate"
     }
+    
+    private struct DefaultsStorageKey {
+        static let vpnCertificateFeatures = "vpnCertificateFeatures"
+    }
 
     private let appKeychain: KeychainAccess.Keychain
+    private var storage: Storage
 
-    public init(accessGroup: String) {
+    public init(accessGroup: String, storage: Storage) {
         appKeychain = KeychainAccess.Keychain(service: KeychainConstants.appKeychain, accessGroup: accessGroup).accessibility(.afterFirstUnlockThisDeviceOnly)
+        self.storage = storage
     }
 
     public func deleteKeys() {
-        appKeychain[StorageKey.vpnKeys] = nil
+        log.info("Deleting existing vpn authentication keys", category: .userCert)
+        appKeychain[KeychainStorageKey.vpnKeys] = nil
         deleteCertificate()
     }
 
     public func deleteCertificate() {
-        appKeychain[StorageKey.vpnCertificate] = nil
+        log.info("Deleting existing vpn authentication certificate", category: .userCert)
+        appKeychain[KeychainStorageKey.vpnCertificate] = nil
     }
 
     public func getKeys() -> VpnKeys {
@@ -67,10 +76,10 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
 
         return keys
     }
-
+    
     public func getStoredCertificate() -> VpnCertificate? {
        do {
-            guard let json = try appKeychain.getData(StorageKey.vpnCertificate) else {
+            guard let json = try appKeychain.getData(KeychainStorageKey.vpnCertificate) else {
                 return nil
             }
 
@@ -81,10 +90,14 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
             return nil
         }
     }
+    
+    public func getStoredCertificateFeatures() -> VPNConnectionFeatures? {
+        return storage.getDecodableValue(VPNConnectionFeatures.self, forKey: DefaultsStorageKey.vpnCertificateFeatures)
+    }
 
     public func getStoredKeys() -> VpnKeys? {
         do {
-            guard let json = try appKeychain.getData(StorageKey.vpnKeys) else {
+            guard let json = try appKeychain.getData(KeychainStorageKey.vpnKeys) else {
                 return nil
             }
 
@@ -102,18 +115,24 @@ public final class VpnAuthenticationKeychain: VpnAuthenticationStorage {
     public func store(keys: VpnKeys) {
         do {
             let data = try JSONEncoder().encode(keys)
-            try appKeychain.set(data, key: StorageKey.vpnKeys)
+            try appKeychain.set(data, key: KeychainStorageKey.vpnKeys)
         } catch {
             log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
         }
     }
 
-    public func store(certificate: VpnCertificate) {
+    public func store(certificate: VpnCertificateWithFeatures) {
         do {
-            let data = try JSONEncoder().encode(certificate)
-            try appKeychain.set(data, key: StorageKey.vpnCertificate)
+            let data = try JSONEncoder().encode(certificate.certificate)
+            try appKeychain.set(data, key: KeychainStorageKey.vpnCertificate)
+            storage.setEncodableValue(certificate.features, forKey: DefaultsStorageKey.vpnCertificateFeatures)
+            log.debug("Cert with features saved: \(String(describing: certificate.features))", category: .userCert)
         } catch {
             log.error("Saving generated vpn auth keyes failed \(error)", category: .userCert)
         }
     }
+}
+
+public protocol VpnAuthenticationStorageUserDefaults {
+    var vpnCertificateFeatures: VPNConnectionFeatures? { get set }
 }
