@@ -205,6 +205,9 @@ extension MacAlertService: CoreAlertService {
         case is TooManyCertificateRequestsAlert:
             showDefaultSystemAlert(alert)
             
+        case is WireguardKSOnCatalinaAlert:
+            showDefaultSystemAlert(alert)
+            
         default:
             #if DEBUG
             fatalError("Alert type handling not implemented: \(String(describing: alert))")

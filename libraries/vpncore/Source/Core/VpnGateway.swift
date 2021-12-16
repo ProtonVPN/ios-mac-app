@@ -334,10 +334,41 @@ public class VpnGateway: VpnGatewayProtocol {
         guard let server = server else {
             return
         }
+        var smartProtocolConfig = propertiesManager.smartProtocolConfig
+        
+        // WG + KS is not working on Catalina. Let's prevent users from having troubles.
+        #if os(macOS)
+        if propertiesManager.killSwitch, #available(macOS 10.15, *) {
+            if #available(macOS 11, *) { } else {
+                switch connectionProtocol {
+                    
+                // If WireGuard is selected, let's ask user to change it
+                case .vpnProtocol(.wireGuard):
+                    log.debug("WireGuard + KillSwitch on Catalina detected. Asking user to change one or another.", category: .connectionConnect, event: .scan)
+                    alertService?.push(alert: WireguardKSOnCatalinaAlert(killswiftOffHandler: {
+                        self.propertiesManager.killSwitch = false
+                        self.connect(with: connectionProtocol, server: server, netShieldType: netShieldType)
+                    }, openVpnHandler: {
+                        self.connect(with: .vpnProtocol(.openVpn(.tcp)), server: server, netShieldType: netShieldType)
+                    }))
+                    return
+                    
+                // If SmartProtocol is used, let's make it smart enough to not select WireGuard if we know it won't work
+                case .smartProtocol:
+                    log.debug("SmartProtocol + KillSwitch on Catalina detected. Disabling WireGuard in SmartProtocol.", category: .connectionConnect, event: .scan)
+                    smartProtocolConfig = smartProtocolConfig.configWithWireGuard(enabled: false)
+                    
+                default:
+                    break
+                }
+            }
+        }
+        #endif
+        
         propertiesManager.lastPreparedServer = server
         appStateManager.prepareToConnect()
         
-        connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain, smartProtocolConfig: propertiesManager.smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
+        connectionPreparer = VpnConnectionPreparer(appStateManager: appStateManager, vpnApiService: vpnApiService, alertService: alertService, serverTierChecker: serverTierChecker, vpnKeychain: vpnKeychain, smartProtocolConfig: smartProtocolConfig, openVpnConfig: propertiesManager.openVpnConfig, wireguardConfig: propertiesManager.wireguardConfig)
 
         connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType)
     }
