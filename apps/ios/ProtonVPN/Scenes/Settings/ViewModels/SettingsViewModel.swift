@@ -194,7 +194,7 @@ final class SettingsViewModel {
             accountPlanName = vpnCredentials.accountPlan.description
 
             switch accountPlan {
-            case .basic, .plus:
+            case .basic, .plus, .visionary:
                 allowPlanManagement = true
             default:
                 allowPlanManagement = false
