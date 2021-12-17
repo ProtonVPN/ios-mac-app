@@ -42,4 +42,8 @@ public struct SmartProtocolConfig: Codable {
     public init() {
         self.init(openVPN: true, iKEv2: true, wireGuard: true)
     }
+    
+    public func configWithWireGuard(enabled: Bool) -> SmartProtocolConfig {
+        return SmartProtocolConfig(openVPN: openVPN, iKEv2: iKEv2, wireGuard: enabled)
+    }
 }
