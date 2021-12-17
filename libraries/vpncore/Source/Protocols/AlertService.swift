@@ -651,7 +651,7 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
 
 public class SecureCoreRequiresUpgradeAlert: SystemAlert {
     public var title: String? = LocalizedString.upgradeRequired
-    public var message: String? = LocalizedString.upgradeForSecureCore
+    public var message: String? = LocalizedString.upgradeRequiredSecurecoreDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
@@ -850,4 +850,17 @@ public class TooManyCertificateRequestsAlert: SystemAlert {
     public var actions = [AlertAction]()
     public let isError: Bool = true
     public var dismiss: (() -> Void)?
+}
+
+public class WireguardKSOnCatalinaAlert: SystemAlert {
+    public var title: String? = LocalizedString.wgksTitle
+    public var message: String? = LocalizedString.wgksDescription
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(killswiftOffHandler: @escaping () -> Void, openVpnHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.wgksKsOff, style: .confirmative, handler: killswiftOffHandler))
+        actions.append(AlertAction(title: LocalizedString.wgksOvpn, style: .confirmative, handler: openVpnHandler))
+    }
 }

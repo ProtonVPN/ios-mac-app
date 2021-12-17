@@ -76,8 +76,12 @@ class OsxUiAlertService: UIAlertService {
             alert.dismiss = { expandableViewModel.close() }
             modalVC = ExpandableContentPopupViewController(viewModel: expandableViewModel)
         default:
-            let popUp = message == nil ? PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService)) :
-            PopUpViewModel(alert: alert, attributedDescription: message!, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+            let popUp: PopUpViewModel
+            if let message = message {
+                popUp = PopUpViewModel(alert: alert, attributedDescription: message, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+            } else {
+                popUp = PopUpViewModel(alert: alert, inAppLinkManager: InAppLinkManager(navigationService: navigationService))
+            }
             popUp.dismissCompletion = dismissCompletion(alert)
             alert.dismiss = { popUp.close() }
             modalVC = PopUpViewController(viewModel: popUp)
