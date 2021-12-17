@@ -669,7 +669,7 @@ public class NetShieldRequiresUpgradeAlert: SystemAlert {
 
 public class SecureCoreRequiresUpgradeAlert: SystemAlert {
     public var title: String? = LocalizedString.upgradeRequired
-    public var message: String? = LocalizedString.upgradeForSecureCore
+    public var message: String? = LocalizedString.upgradeRequiredSecurecoreDescription
     public var actions = [AlertAction]()
     public let isError: Bool = false
     public var dismiss: (() -> Void)?
