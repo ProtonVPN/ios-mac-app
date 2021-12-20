@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Error de autenticación";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Ha alcanzado el número máximo cambios de ajustes. Intente de nuevo en unos minutos.";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Error de autenticación";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "No ha iniciado sesión en ProtonVPN. Abra la app de ProtonVPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "¡BIENVENIDO A BORDO!";
+
+/* (No Comment) */
+"_wgks_description" = "El interruptor de apagado evita que la VPN se conecte a Internet. Esto puede deberse a una incompatibilidad con su sistema operativo (macOS Catalina 10.15).\n\nPara resolver este problema, actualice su sistema operativo a la última versión.\n\nAlternativamente, puede cambiar al protocolo OpenVPN o deshabilitar el interruptor de apagado.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Deshabilitar el interruptor de apagado";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Cambiar a OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "El interruptor de apagado está evitando que la VPN se conecte a Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";

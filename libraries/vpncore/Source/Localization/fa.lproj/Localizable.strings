@@ -1601,10 +1601,10 @@
 "_subuser_alert_assign_connections_button" = "اختصاص اتصالات VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+"_subuser_alert_description1" = "برای آغاز سفر خود در ProtonVPN لطفاً اتصال‌های VPN خود را به حساب کاربری خود یا هر حساب-فرعی دیگری اختصاص دهید.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+"_subuser_alert_description2" = "این کار چند دقیقه طول می‌کشد. پس از آن شما قادر خواهید بود تا وارد شوید و از همهٔ دستگاه‌های خود حفاظت کنید.";
 
 /* (No Comment) */
 "_subuser_alert_login_button" = "ورود دوباره";
@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "خطای احراز هویت";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "خطای احراز هویت";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "شما وارد حساب ProtonVPN نشده‌اید. اپ ProtonVPN را باز نموده و وارد شوید.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "خوش آمدید!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "غیرفعال کردن Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Switch to OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "ویجت iOS";

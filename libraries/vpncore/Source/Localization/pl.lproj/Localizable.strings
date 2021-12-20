@@ -887,7 +887,7 @@
 "_maximum_device_reached_description" = "Aby połączyć się, rozłącz inne urządzenie.";
 
 /* (No Comment) */
-"_maximum_device_title" = "Wykorzystałeś limit liczby podłączonych urządzeń";
+"_maximum_device_title" = "Wykorzystano limit liczby podłączonych urządzeń";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Może później";
@@ -1472,7 +1472,7 @@
 "_server_under_maintenance" = "Serwer jest w trakcie przerwy technicznej";
 
 /* Session count limit alert */
-"_session_count_reached_description" = "Osiągnąłeś maksymalną liczbę jednoczesnych połączeń, dozwolonych dla Twojego konta. Aby zwiększyć liczbę połączeń, ulepsz swój plan ProtonVPN.";
+"_session_count_reached_description" = "Osiągnięto maksymalną liczbę jednoczesnych połączeń, dozwolonych dla Twojego konta. Aby zwiększyć liczbę połączeń, ulepsz swój plan ProtonVPN.";
 
 /* Session count limit alert */
 "_session_count_reached_title" = "Limit połączeń został osiągnięty";
@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Błąd uwierzytelniania";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Wykorzystano limit liczby zmian ustawień. Spróbuj ponownie za kilka minut";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Błąd uwierzytelniania";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "Nie jesteś zalogowany do usługi ProtonVPN. Otwórz aplikację i zaloguj się.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WITAJ NA POKŁADZIE!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Wyłącz Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Switch to OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widżet iOS";
