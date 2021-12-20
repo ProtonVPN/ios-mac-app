@@ -72,7 +72,7 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
-        paymentsUI = PaymentsUI(payments: payments, clientApp: ClientApp.vpn)
+        paymentsUI = PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: ObfuscatedConstants.planNames)
     }
 
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {

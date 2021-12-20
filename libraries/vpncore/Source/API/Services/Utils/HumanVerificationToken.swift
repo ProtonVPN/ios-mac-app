@@ -52,7 +52,7 @@ public struct HumanVerificationToken {
         case captcha
         //    case coupon // Since this isn't compatible with IAP, this option can be safely ignored
         
-        static func type(fromString: String) -> TokenType? {
+        public static func type(fromString: String) -> TokenType? {
             for value in TokenType.allCases where value.rawValue == fromString {
                 return value
             }

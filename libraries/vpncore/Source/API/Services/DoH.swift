@@ -69,6 +69,18 @@ public class DoHVPN: DoH, ServerConfig {
         }
     }
 
+    public var accountHost: String {
+        if defaultHost == liveURL {
+            return "https://account.protonvpn.com"
+        }
+
+        guard let url = URL(string: defaultHost), let host = url.host else {
+            return ""
+        }
+
+        return "https://account.\(host)"
+    }
+
     private let customApiHost: String
     private let verifyHost: String
     private let customHost: String?
