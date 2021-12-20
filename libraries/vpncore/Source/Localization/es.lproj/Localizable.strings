@@ -977,7 +977,7 @@
 "_neagent_first_step" = "(1)";
 
 /* Mac: neagent help screen */
-"_neagent_password" = "contraseña de cuenta de ordenador";
+"_neagent_password" = "contraseña de la cuenta del ordenador";
 
 /* Mac: neagent help screen */
 "_neagent_second_step" = "(2)";
@@ -1046,7 +1046,7 @@
 "_ok" = "OK";
 
 /* MacOS: voice over indication for a country or server on maintenance */
-"_on_maintenance" = "Bajo mantenimiento";
+"_on_maintenance" = "En mantenimiento";
 
 /* Main mac app menu item */
 "_open_app_to_log_in" = "Mostrar ProtonVPN para iniciar sesión...";
@@ -1328,10 +1328,10 @@
 "_remember_login" = "Recordar inicio de sesión";
 
 /* Button in Kill switch error alert */
-"_report" = "Reportar";
+"_report" = "Notificar";
 
 /* Main mac app menu item */
-"_report_an_issue" = "Reportar un problema...";
+"_report_an_issue" = "Notificar un problema...";
 
 /* Bug report attachments */
 "_report_attachments" = "Archivos adjuntos";
@@ -1340,7 +1340,7 @@
 "_report_attachments_checkbox" = "Incluye registros de aplicaciones y detalles del sistema";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Reportar Error";
+"_report_bug" = "Notificar error";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Providing the following details, our team can identify your problem and a possible solution with higher chances and shorter time:\n• ProtonVPN app logs\n• OpenVPN logs\n• WireGuard logs";
@@ -1526,7 +1526,7 @@
 "_smart_routing_title" = "Smart Routing";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Inteligente";
+"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ velocidad";
@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Error de autenticación";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Error de autenticación";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "No has iniciado sesión en ProtonVPN. Abra la aplicación de ProtonVPN e inicie sesión.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "¡BIENVENIDO/A A BORDO!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Deshabilitar Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Switch to OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "widget de iOS";

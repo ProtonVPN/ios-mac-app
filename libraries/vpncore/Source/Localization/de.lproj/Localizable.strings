@@ -1843,7 +1843,7 @@
 "_troubleshoot_item_other_description" = "Kontaktieren Sie uns direkt über unser Support-Formular, per E-Mail (%@) oder Twitter.";
 
 /* (No Comment) */
-"_troubleshoot_item_other_link1" = "Supportformular";
+"_troubleshoot_item_other_link1" = "support-formular";
 
 /* (No Comment) */
 "_troubleshoot_item_other_link2" = "E‐Mail";
@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Authentifizierungsfehler";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Du hast die maximale Anzahl an Einstellungsänderungen erreicht. Bitte versuche es in ein paar Minuten erneut";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Authentifizierungsfehler";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "Sie sind nicht bei ProtonVPN angemeldet. Öffnen Sie die App ProtonVPN und melden Sie sich an.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WILLKOMMEN AN BOARD!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch verhindert, dass sich das VPN mit dem Internet verbindet. Dies könnte auf eine Inkompatibilität mit deinem Betriebssystem (macOS Catalina 10.15) zurückzuführen sein.\n\nUm dieses Problem zu beheben, aktualisiere dein Betriebssystem auf die neueste Version.\n\nAlternativ kannst du auf das OpenVPN-Protokoll umsteigen oder Kill Switch deaktivieren.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Kill Switch (Not‐Trennung) deaktivieren";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Zu OpenVPN wechseln";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch verhindert, dass sich das VPN mit dem Internet verbindet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS‐Widget";
