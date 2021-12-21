@@ -55,6 +55,10 @@ final class SettingsViewModel {
     init(factory: Factory, protocolService: ProtocolService) {
         self.factory = factory
         self.protocolService = protocolService
+
+        if appSessionManager.sessionStatus == .established {
+            sessionEstablished(vpnGateway: factory.makeVpnGateway())
+        }
         
         startObserving()
     }
