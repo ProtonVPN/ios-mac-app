@@ -1526,7 +1526,7 @@
 "_smart_routing_title" = "Smart маршрутизация";
 
 /* Shortened title for Smart Protocol on Settings configuration */
-"_smart_title" = "Умный";
+"_smart_title" = "Smart";
 
 /* %@ is a speed description e.g. Speed: Highest */
 "_speed" = "%@ скорость";
@@ -1882,7 +1882,7 @@
 "_turn_ks_on_description" = "При активации Аварийного Стопа вы не сможете получить доступ к устройствам в вашей локальной сети. \n\nПродолжить?";
 
 /* Title of alert shown if user tries to enable both KillSwitch and Allow LAN */
-"_turn_ks_on_title" = "Включить Аварийный Стоп?";
+"_turn_ks_on_title" = "Включить Kill Switch?";
 
 /* (No Comment) */
 "_turn_on" = "Включить";
@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Ошибка аутентификации";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Вы достигли максимального количества изменений настройки. Пожалуйста, попробуйте снова через несколько минут";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Ошибка аутентификации";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "Вы не вошли в ProtonVPN. Откройте приложение ProtonVPN и войдите.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
+
+/* (No Comment) */
+"_wgks_description" = "Аварийный стоп препятствует подключению VPN к Интернету. Это может быть связано с несовместимостью с вашей операционной системой (macOS Catalina 10.15).\n\nЧтобы решить эту проблему, обновите операционную систему до последней версии.\n\nТакже вы можете перейти на протокол OpenVPN или отключить аварийный стоп.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Отключить Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Переключитесь на OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Аварийный стоп не позволяет VPN подключиться к Интернету";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS виджет";

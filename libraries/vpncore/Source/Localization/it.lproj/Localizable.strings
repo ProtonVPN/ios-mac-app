@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Errore di autenticazione";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Hai raggiunto il numero massimo di modifiche alle impostazioni. Riprova tra qualche minuto";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Errore di autenticazione";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "Non hai effettuato l'accesso a ProtonVPN. Apri l'app ProtonVPN e accedi.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "BENVENUTO A BORDO!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch impedisce alla VPN di connettersi a Internet. Ciò potrebbe essere dovuto a un'incompatibilità con il sistema operativo (macOS Catalina 10.15).\n\nPer risolvere questo problema, aggiorna il tuo sistema operativo all'ultima versione.\n\nIn alternativa, puoi passare al protocollo OpenVPN o disabilitare Kill Switch.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Disabilita Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Passa a OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch impedisce alla VPN di connettersi a Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
