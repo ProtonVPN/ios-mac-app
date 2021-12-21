@@ -2035,6 +2035,12 @@
 "_vpnauth_certfail_title" = "Kesalahan autentikasi";
 
 /* (No Comment) */
+"_vpnauth_too_many_certs_description" = "Anda telah mencapai batas jumlah perubahan yang diperkenankan. Harap coba lagi dalam beberapa menit";
+
+/* (No Comment) */
+"_vpnauth_too_many_certs_title" = "Kesalahan otentikasi";
+
+/* (No Comment) */
 "_vpnstatus_not_loggedin" = "Anda belum masuk ke ProtonVPN. Buka aplikasinya dan masuk di sana.";
 
 /* Used as a title in alerts/modals */
@@ -2051,6 +2057,18 @@
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "SELAMAT DATANG!";
+
+/* (No Comment) */
+"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+
+/* (No Comment) */
+"_wgks_ks_off" = "Nonaktifkan Kill Switch";
+
+/* (No Comment) */
+"_wgks_ovpn" = "Switch to OpenVPN";
+
+/* Wireguard + KillSwitch alert on Catalina */
+"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widget iOS";
