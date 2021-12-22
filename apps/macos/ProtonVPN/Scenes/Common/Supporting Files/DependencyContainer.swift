@@ -23,7 +23,7 @@
 import AppKit
 import Foundation
 import vpncore
-import BugReport
+import BugReportUI
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 

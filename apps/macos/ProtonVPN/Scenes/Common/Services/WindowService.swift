@@ -23,7 +23,7 @@
 import Cocoa
 import vpncore
 import SwiftUI
-import BugReport
+import BugReportUI
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService

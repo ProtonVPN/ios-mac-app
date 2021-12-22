@@ -8,6 +8,8 @@
 
 import Foundation
 
+let isNewBugReportEnabled = true
+
 class ReportBugTests: ProtonVPNUITests {
     
     private let mainRobot = MainRobot()

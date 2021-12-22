@@ -1,0 +1,58 @@
+{
+  "Categories": [
+    {
+      "Label": "Slow speed",
+      "SubmitLabel": "Slow speed",
+      "Suggestions": [
+        {
+          "Text": "Secure Core slows down your connection. Use it only when necessary."
+        },
+        {
+          "Text": "Select a server closer to your location.",
+          "Link": "https://protonvpn.com/faq/choosing_best_server"
+        }
+      ],
+      "InputFields": [
+        {
+          "Label": "Network type",
+          "SubmitLabel": "Network type",
+          "Type": "TextMultiLine",
+          "Placeholder": "Home WiFi, Work WiFi, Mobile etc."
+        },
+        {
+          "Label": "What is the speed you are getting?",
+          "SubmitLabel": "What is the speed you are getting?",
+          "Type": "TextMultiLine",
+          "Placeholder": "Speed measured while using VPN"
+        },
+        {
+          "Label": "What is your connection speed without VPN?",
+          "SubmitLabel": "What is your connection speed without VPN?",
+          "Type": "TextMultiLine"
+        }
+      ]
+    },
+    {
+      "Label": "Streaming issue",
+      "SubmitLabel": "Streaming issue",
+      "Suggestions": [
+        {
+          "Text": "Try using a different server"
+        }
+      ],
+      "InputFields": [
+        {
+          "Label": "Which streaming service are you using?",
+          "SubmitLabel": "Which streaming service are you using?",
+          "Type": "TextSingleLine",
+          "Placeholder": "Netflix, Disney etc."
+        },
+        {
+          "Label": "Which servers have you tried using?",
+          "SubmitLabel": "Which servers have you tried using?",
+          "Type": "TextMultiLine"
+        }
+      ]
+    }
+  ]
+}
