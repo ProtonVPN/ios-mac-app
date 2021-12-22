@@ -15,7 +15,6 @@
 		119C351666130ADA97AB491F /* SubuserAlertWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C8C9A83FB783483559C8FE68 /* SubuserAlertWindowController.swift */; };
 		1AB2B04FC95F7F16FE21C0C5 /* Pods-ProtonVPN WireGuard-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = ED9AB4330114A9F0C8F8B1E5 /* Pods-ProtonVPN WireGuard-metadata.plist */; };
 		2588824982D58F78156243F9 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A10940E60F666D60A950D73 /* VPNConnectionFeatures.swift */; };
-		2F2BD3C601FCAC9A1F7B86D4 /* BugReport.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 35FE677279B498F084C3D798 /* BugReport.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		3328A24484BCAA8F674140DC /* XPCConnectionsRepository.swift in Sources */ = {isa = PBXBuildFile; fileRef = 351BB7FC660BD3A61E44211E /* XPCConnectionsRepository.swift */; };
 		42082651256BB78600A621EC /* NSView+Children.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082650256BB78600A621EC /* NSView+Children.swift */; };
 		42082671256BC3B900A621EC /* BlockeableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 42082670256BC3B900A621EC /* BlockeableScrollView.swift */; };
@@ -66,7 +65,6 @@
 		62A4D59A5CDFD51355EAEA8B /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 17F6646170F7CB52D5A45560 /* AnnouncementDetailViewController.xib */; };
 		6F89C9FD0905FFC295B4A9AC /* NetShieldType.swift in Sources */ = {isa = PBXBuildFile; fileRef = C77BDD50C752FDC9115636D8 /* NetShieldType.swift */; };
 		7518A5F01EEF362900E1EB2B /* libc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 7518A5EF1EEF362900E1EB2B /* libc++.tbd */; };
-		760753E689C6950F32D90821 /* BugReport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 35FE677279B498F084C3D798 /* BugReport.framework */; };
 		7F6A56B3DF09B9572A2FB05E /* Pods_ProtonVPN_OpenVPN.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */; };
 		844917000A1F005A8397AB8E /* Pods-ProtonVPNmacOSTests-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 07F7C64DBBB069F876B146B0 /* Pods-ProtonVPNmacOSTests-metadata.plist */; };
 		851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */; };
@@ -489,7 +487,6 @@
 			files = (
 				E9200ED826612F4200BBAB9C /* vpncore.framework in Embed Frameworks */,
 				E94EFFF32653D10D0024DBFB /* Sparkle.framework in Embed Frameworks */,
-				2F2BD3C601FCAC9A1F7B86D4 /* BugReport.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1083,7 +1080,6 @@
 				8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */,
 				D5FD4C1F264C1E6E001F26CE /* vpncore.framework in Frameworks */,
 				E94EFFF02653D0A60024DBFB /* Sparkle.framework in Frameworks */,
-				760753E689C6950F32D90821 /* BugReport.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

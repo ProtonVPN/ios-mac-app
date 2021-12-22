@@ -323,9 +323,12 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        if let viewController = bugReportCreator.createBugReportViewController(model: BugReportModel()) {
-            windowService.present(modal: viewController)
-            return
+        
+        if #available(iOS 14.0.0, *) {
+            if let viewController = bugReportCreator.createBugReportViewController(delegate: BugReportCoordinator(), colors: nil) {
+                windowService.present(modal: viewController)
+                return
+            }
         }
 
         let viewController = ReportBugViewController(vpnManager: vpnManager)
