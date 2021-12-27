@@ -2059,16 +2059,16 @@
 "_welcome_title" = "WITAJ NA POKŁADZIE!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+"_wgks_description" = "Funkcja Kill Switch zapobiega nawiązywaniu połączenia internetowego bez ochrony VPN. Może to być spowodowane niekompatybilną aplikacją z systemem operacyjnym (macOS Catalina 10.15).\n\nZaktualizuj system operacyjny do najnowszej wersji, aby rozwiązać problem.\n\nOpcjonalnie możesz zmienić protokół na OpenVPN lub wyłączyć funkcję Kill Switch.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Wyłącz Kill Switch";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Switch to OpenVPN";
+"_wgks_ovpn" = "Zmień na OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
+"_wgks_title" = "Funkcja Kill Switch zapobiega nawiązywaniu połączenia internetowego bez ochrony VPN";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "Widżet iOS";
