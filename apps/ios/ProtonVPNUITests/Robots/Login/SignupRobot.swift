@@ -50,7 +50,7 @@ class SignupRobot: CoreElements {
         
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
-            textView(protonmailErrorMessage).wait().checkExists()
+            textView(protonmailErrorMessage).wait(time: 10).checkExists()
             button("OK").wait().checkExists().tap()
             return SignupRobot()
         }

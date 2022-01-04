@@ -126,7 +126,7 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToBlack() {
         let textFielfs = app.textFields["https://"]
         textFielfs.tap()
-        textFielfs.typeText("vpn.proton.black/api")
+        textFielfs.typeText(ObfuscatedConstants.blackDefaultHostWithoutHttps + ObfuscatedConstants.blackDefaultPath)
         app.buttons["Change and kill the app"].tap()
         app.buttons["OK"].tap()
      }
@@ -138,9 +138,9 @@ class ProtonVPNUITests: XCTestCase {
      }
     
     func changeEnvToBlackIfNedded() {
-        let env = app.staticTexts["https://vpn.proton.black/api"]
+        let env = app.staticTexts[ObfuscatedConstants.blackDefaultHost + ObfuscatedConstants.blackDefaultPath]
         
-        if env.waitForExistence(timeout: 1){
+        if env.waitForExistence(timeout: 4){
             return
         }
         else {
@@ -152,7 +152,7 @@ class ProtonVPNUITests: XCTestCase {
     func changeEnvToProdIfNedded() {
         let env = app.staticTexts["https://api.protonvpn.ch"]
         
-        if env.waitForExistence(timeout: 1){
+        if env.waitForExistence(timeout: 4){
             return
         }
         else {

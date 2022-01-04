@@ -129,8 +129,9 @@ target 'ProtonVPN' do
   end
   
   target 'ProtonVPNUITests' do    
-    platform :ios, '11.0'  
+    platform :ios, '12.1'
     pm_automation
+    pod 'ProtonCore-TestingToolkit/UITests/Core/Alamofire', :git => proton_core_path, :tag => proton_core_version
   end
 
 end

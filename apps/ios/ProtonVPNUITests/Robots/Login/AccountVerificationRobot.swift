@@ -56,20 +56,20 @@ class AccountVerificationRobot: CoreElements {
 
         @discardableResult
         func accountVerificationScreenIsShown() -> AccountVerificationRobot {
-            staticText(accountVerificationTitle).wait(time: 5).checkExists()
+            staticText(accountVerificationTitle).wait(time: 20).checkExists()
             return AccountVerificationRobot()
         }
         
         @discardableResult
         func requestNewCodeDialogIsShown(_ email: String) -> AccountVerificationRobot {
-            staticText(requestNewCodeDialogTitle).wait(time: 2).checkExists()
+            staticText(requestNewCodeDialogTitle).wait(time: 5).checkExists()
             staticText(requestNewCodeDialogSubtitle + email + ".").wait().checkExists()
             return AccountVerificationRobot()
         }
         
         @discardableResult
         func codeVerificationErrorIsShown() -> AccountVerificationRobot {
-            staticText(invalidVwerifiactionCodedialog).wait().checkExists()
+            staticText(invalidVwerifiactionCodedialog).wait(time: 10).checkExists()
             return AccountVerificationRobot()
         }
     }

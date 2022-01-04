@@ -28,7 +28,6 @@ fileprivate let useAndContinueButton = "Use and continue"
 fileprivate let resetToProductionButton = "Reset to production and kill the app"
 fileprivate let showLoginButtonLabelText = "Sign in"
 fileprivate let showSignupButtonLabelText = "Create an account"
-fileprivate let completeTitle = "CompleteViewController.completeTitleLabel"
 
 // MainRobot class contains actions for main app view.
 
@@ -119,11 +118,6 @@ class MainRobot: CoreElements {
         @discardableResult
         func upgradeSubscribtionIsOpenBasicUser() -> MainRobot {
             staticText(popUpforBasicUser).checkExists()
-            return MainRobot()
-        }
-        
-        func completeTitleIsShown() -> MainRobot {
-            staticText(completeTitle).wait(time: 15).checkExists()
             return MainRobot()
         }
     }

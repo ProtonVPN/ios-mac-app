@@ -43,4 +43,13 @@ class ObfuscatedConstants {
     static let humanVerificationV3Host = ""
 
     static let planNames: Set<String> = []
+    
+    static let blackSignupDomain: String = ""
+    static let blackDefaultHostWithoutHttps: String = ""
+    static let blackDefaultHost: String = ""
+    static let blackCaptchaHost: String = ""
+    static let blackHumanVerificationV3Host = ""
+    static let blackAccountHost = ""
+    static let blackApiHost: String = ""
+    static let blackDefaultPath: String = ""
 }
