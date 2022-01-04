@@ -24,6 +24,13 @@ public struct Colors {
     public let text: UIColor
     public let brand: UIColor
     public let weakText: UIColor
+
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor) {
+        self.background = background
+        self.text = text
+        self.brand = brand
+        self.weakText = weakText
+    }
 }
 
 public struct Configuration {

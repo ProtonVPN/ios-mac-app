@@ -12,7 +12,7 @@
         <!--Welcome View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="Welcome" id="Y6W-OH-hqX" customClass="WelcomeViewController" customModule="Onboarding" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Welcome" id="Y6W-OH-hqX" customClass="WelcomeViewController" customModule="Onboarding" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -89,7 +89,7 @@
         <!--Tour View Controller-->
         <scene sceneID="oV8-he-Scb">
             <objects>
-                <viewController storyboardIdentifier="Tour" id="vdj-QW-HHE" customClass="TourViewController" customModule="Onboarding" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Tour" id="vdj-QW-HHE" customClass="TourViewController" customModule="Onboarding" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="n3X-tg-nMO">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -145,7 +145,7 @@
         <!--Connection View Controller-->
         <scene sceneID="Fxl-Q6-vel">
             <objects>
-                <viewController storyboardIdentifier="Connection" id="cZU-yD-5FX" customClass="ConnectionViewController" customModule="Onboarding" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Connection" id="cZU-yD-5FX" customClass="ConnectionViewController" customModule="Onboarding" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0SO-N4-naA">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,7 +188,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="et3-f9-Kbl">
-                                <rect key="frame" x="16" y="488" width="288" height="64"/>
+                                <rect key="frame" x="16" y="521" width="288" height="31"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5fX-xH-Rp6">
                                         <rect key="frame" x="0.0" y="0.0" width="288" height="31"/>
@@ -198,8 +198,8 @@
                                             <action selector="connectTapped:" destination="cZU-yD-5FX" eventType="touchUpInside" id="iuW-xy-jM5"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SEb-J4-sxd">
-                                        <rect key="frame" x="0.0" y="33" width="288" height="31"/>
+                                    <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SEb-J4-sxd">
+                                        <rect key="frame" x="0.0" y="0.0" width="288" height="0.0"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Button"/>
                                         <connections>
@@ -242,7 +242,7 @@
         <!--Connected View Controller-->
         <scene sceneID="rdE-EO-W52">
             <objects>
-                <viewController storyboardIdentifier="Connected" id="Hep-ky-Hi3" customClass="ConnectedViewController" customModule="Onboarding" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="Connected" id="Hep-ky-Hi3" customClass="ConnectedViewController" customModule="Onboarding" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="4HI-GR-Ggb">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
