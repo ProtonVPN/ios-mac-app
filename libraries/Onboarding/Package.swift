@@ -17,6 +17,11 @@ let package = Package(
     targets: [
         .target(
             name: "Onboarding",
-            dependencies: [])
+            dependencies: [],
+        resources: [
+            .process("Storyboard.storyboard"),
+            .process("Views/TourStepView.xib"),
+            .process("Resources")
+        ])
     ]
 )

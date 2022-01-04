@@ -1,3 +1,3 @@
 # Onboarding
 
-A description of this package.
+Onboarding module used in the iOS app.

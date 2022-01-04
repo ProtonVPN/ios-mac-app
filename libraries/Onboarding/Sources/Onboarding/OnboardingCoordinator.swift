@@ -58,6 +58,7 @@ public final class OnboardingCoordinator {
 
     private func showConnected() {
         let connectedViewController = storyboard.instantiateViewController(withIdentifier: "Connected") as! ConnectedViewController
+        connectedViewController.delegate = self
         navigationController.pushViewController(connectedViewController, animated: true)
     }
 }
@@ -71,6 +72,12 @@ extension OnboardingCoordinator: WelcomeViewControllerDelegate {
 extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
         showConnectionSetup()
+    }
+}
+
+extension OnboardingCoordinator: ConnectedViewControllerDelegate {
+    func userDidFinish() {
+        delegate?.onboardingCoordinatorDidFinish()
     }
 }
 

@@ -19,8 +19,14 @@
 import Foundation
 import UIKit
 
+protocol ConnectedViewControllerDelegate: AnyObject {
+    func userDidFinish()
+}
+
 final class ConnectedViewController: UIViewController {
     @IBOutlet private weak var doneButton: UIButton!
+
+    weak var delegate: ConnectedViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,9 +36,10 @@ final class ConnectedViewController: UIViewController {
 
     private func setupUI() {
         baseViewStyle(view)
+        actionButtonStyle(doneButton)
     }
 
     @IBAction private func doneTapped(_ sender: Any) {
-
+        delegate?.userDidFinish()
     }
 }
