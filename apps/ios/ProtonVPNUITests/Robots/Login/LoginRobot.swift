@@ -88,7 +88,7 @@ class LoginRobot: CoreElements {
         
         @discardableResult
         public func emailAddresAlreadyExists() -> LoginRobot {
-            textView(errorBannerMessage).wait().checkExists()
+            textView(errorBannerMessage).wait(time: 5).checkExists()
             button("OK").wait().checkExists().tap()
             return LoginRobot()
         }

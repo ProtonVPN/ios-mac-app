@@ -109,6 +109,13 @@ PODS:
     - ProtonCore-Utilities (= 3.5.0)
     - TrustKit
   - ProtonCore-SRP (3.5.0)
+  - ProtonCore-TestingToolkit/UITests/Core/Alamofire (3.5.0):
+    - pmtest
+    - ProtonCore-CoreTranslation (= 3.5.0)
+    - ProtonCore-Doh (= 3.5.0)
+    - ProtonCore-Log (= 3.5.0)
+    - ProtonCore-Networking/Alamofire (= 3.5.0)
+    - ProtonCore-Services/Alamofire (= 3.5.0)
   - ProtonCore-UIFoundations (3.5.0):
     - ProtonCore-CoreTranslation (= 3.5.0)
     - ProtonCore-Foundations (= 3.5.0)
@@ -168,6 +175,7 @@ DEPENDENCIES:
   - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
   - "ProtonCore-Services/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
   - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
+  - "ProtonCore-TestingToolkit/UITests/Core/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
   - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
   - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
   - ReachabilitySwift (= 5.0.0)
@@ -260,6 +268,9 @@ EXTERNAL SOURCES:
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.5.0
+  ProtonCore-TestingToolkit:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.5.0
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.5.0
@@ -337,6 +348,9 @@ CHECKOUT OPTIONS:
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.5.0
+  ProtonCore-TestingToolkit:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.5.0
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
     :tag: 3.5.0
@@ -381,6 +395,7 @@ SPEC CHECKSUMS:
   ProtonCore-PaymentsUI: f1a16db069c34a6638d8129a80096be96aa404e4
   ProtonCore-Services: 8566c895a8c71f6e02acfdd56577a4924aeb55b7
   ProtonCore-SRP: cd56623b5921e63b5de1417222254142e7791a75
+  ProtonCore-TestingToolkit: 46187b01469e94b4335390670e2f59c38fad6b7f
   ProtonCore-UIFoundations: 9d51651a51083b93e0f96b8f2b9d0e24784264cc
   ProtonCore-Utilities: 3d9702a4c3d1ae7baee692929a1de94401d513e4
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
@@ -392,6 +407,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: d44c20b92b5637e5bc20ec8fa9db1ba8883515ee
+PODFILE CHECKSUM: c8623f61c6a65347f452853eae26548e4791bcb7
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.10.1

@@ -81,7 +81,7 @@
                   Identifier = "SignUpTests">
                </Test>
                <Test
-                  Identifier = "SignupTests">
+                  Identifier = "SignupTests/testSignupNewAccountSuccess()">
                </Test>
                <Test
                   Identifier = "UnloggedUserTests">

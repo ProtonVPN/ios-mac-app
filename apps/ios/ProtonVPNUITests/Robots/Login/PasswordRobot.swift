@@ -12,7 +12,7 @@ fileprivate let backButton = "UINavigationItem.leftBarButtonItem"
 fileprivate let accountVerificationTitle = "PasswordViewController.createPasswordTitleLabel"
 fileprivate let passwordNameTextFieldId = "PasswordViewController.passwordTextField.textField"
 fileprivate let repeatPasswordNameTextFieldId = "PasswordViewController.repeatPasswordTextField.textField"
-fileprivate let nextButtonId = "Next"
+fileprivate let nextButtonId = "PasswordViewController.nextButton"
 fileprivate let errorBannerButton = "OK"
 fileprivate let errorBannerPassNotEqual = "Passwords do not match."
 fileprivate let errorBannerPassTooShort = "Password must contain at least 8 characters."
@@ -24,7 +24,7 @@ class PasswordRobot: CoreElements {
     public let verify = Verify()
     
     func enterPassword(_ password1: String) -> PasswordRobot {
-        secureTextField(passwordNameTextFieldId).tap().typeText(password1)
+        secureTextField(passwordNameTextFieldId).typeText(password1)
         return PasswordRobot()
     }
     
@@ -42,28 +42,28 @@ class PasswordRobot: CoreElements {
 
         @discardableResult
         func passwordScreenIsShown() -> PasswordRobot {
-            staticText(accountVerificationTitle).wait(time: 5).checkExists()
+            staticText(accountVerificationTitle).wait(time: 20).checkExists()
             return PasswordRobot()
         }
         
         @discardableResult
         func passwordTooShort() -> PasswordRobot {
-            textView(errorBannerPassTooShort).wait().checkExists()
+            textView(errorBannerPassTooShort).wait(time: 10).checkExists()
             button(errorBannerButton).tap()
             return PasswordRobot()
         }
         
         @discardableResult
         func passwordNotEqual() -> PasswordRobot {
-            textView(errorBannerPassNotEqual).wait().checkExists()
+            textView(errorBannerPassNotEqual).wait(time: 10).checkExists()
             button(errorBannerButton).tap()
             return PasswordRobot()
         }
         
         @discardableResult
         func passwordEmpty() -> PasswordRobot {
-            textView(errorBannerPassEmpty).wait().checkExists()
-            textView(errorBannerTryAgain).wait().checkExists()
+            textView(errorBannerPassEmpty).wait(time: 10).checkExists()
+            textView(errorBannerTryAgain).wait(time: 10).checkExists()
             button(errorBannerButton).tap()
             return PasswordRobot()
         }
