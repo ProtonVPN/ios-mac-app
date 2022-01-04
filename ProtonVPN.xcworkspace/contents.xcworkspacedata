@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:libraries/Onboarding">
+   </FileRef>
+   <FileRef
       location = "group:apps/iOS/iOS.xcodeproj">
    </FileRef>
    <FileRef
