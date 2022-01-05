@@ -19,9 +19,11 @@
 import Foundation
 import UIKit
 
+public typealias OnboardingConnectionRequestCompletion = (Country?) -> Void
+
 public protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish()
-    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void)
+    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
 }
 
 public final class OnboardingCoordinator {
@@ -100,17 +102,10 @@ extension OnboardingCoordinator: ConnectedViewControllerDelegate {
 // MARK: Connection screen delegate
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
-    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void) {
-        delegate?.userDidRequestConnection { result in
-            switch result {
-            case let .failure(error):
-                executeOnUIThread {
-                    completion(.failure(error))
-                }
-            case let .success(county: country):
-                executeOnUIThread {
-                    self.showConnected(country: country)
-                }
+    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
+        delegate?.userDidRequestConnection { country in
+            if let country = country {
+                self.showConnected(country: country)
             }
         }
     }

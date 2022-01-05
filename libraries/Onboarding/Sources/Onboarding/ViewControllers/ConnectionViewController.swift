@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectionViewControllerDelegate: AnyObject {
-    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void)
+    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
 }
 
 final class ConnectionViewController: UIViewController {

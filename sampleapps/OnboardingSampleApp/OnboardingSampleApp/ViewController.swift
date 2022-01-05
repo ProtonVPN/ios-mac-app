@@ -31,9 +31,9 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: OnboardingCoordinatorDelegate {
-    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void) {
+    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            completion(.success(Country(name: "United States", flag: UIImage(named: "Flag")!)))
+            completion(Country(name: "United States", flag: UIImage(named: "Flag")!))
         }
     }
 
