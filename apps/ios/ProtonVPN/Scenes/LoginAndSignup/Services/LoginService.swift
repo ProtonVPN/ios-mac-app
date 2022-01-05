@@ -22,7 +22,13 @@ enum SilengLoginResult {
     case notLoggedIn
 }
 
+protocol LoginServiceDelegate: AnyObject {
+    func loginServiceDidFinish()
+}
+
 protocol LoginService: AnyObject {
+    var delegate: LoginServiceDelegate? { get set }
+
     func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void)
     func showWelcome()
 }
@@ -32,39 +38,35 @@ protocol LoginService: AnyObject {
 final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
-        & NavigationServiceFactory
         & WindowServiceFactory
         & CoreAlertServiceFactory
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
         & DoHVPNFactory
-        & OnboardingServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
-    private let navigationService: NavigationService
     private let windowService: WindowService
     private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
-    private let onboardingService: OnboardingService
 
     private var login: LoginAndSignupInterface?
+
+    weak var delegate: LoginServiceDelegate?
 
     init(factory: Factory) {
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
-        navigationService = factory.makeNavigationService()
         windowService = factory.makeWindowService()
         alertService = factory.makeCoreAlertService()
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
         doh = factory.makeDoHVPN()
-        onboardingService = factory.makeOnboardingService()
     }
 
     private func show() {
@@ -88,8 +90,7 @@ final class CoreLoginService {
             case .dismissed:
                 log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
             case .loggedIn:
-                #warning("Decide if onboarding is really needed")
-                self?.onboardingService.showOnboarding()
+                self?.delegate?.loginServiceDidFinish()
             }
 
             self?.login = nil
