@@ -94,9 +94,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLO-mI-CP1">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aLO-mI-CP1">
                                 <rect key="frame" x="40" y="147" width="240" height="128"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="CvN-3S-PLS"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="6h0-iU-o4F"/>
                             </scrollView>
@@ -127,9 +126,13 @@
                         <constraints>
                             <constraint firstItem="Lsr-cC-9xE" firstAttribute="trailing" secondItem="eh8-zn-sfN" secondAttribute="trailing" constant="16" id="1Se-jR-L4P"/>
                             <constraint firstItem="Lsr-cC-9xE" firstAttribute="trailing" secondItem="heN-6S-v7e" secondAttribute="trailing" constant="16" id="CJc-yl-nZo"/>
+                            <constraint firstAttribute="trailing" secondItem="aLO-mI-CP1" secondAttribute="trailing" id="PLz-fr-SlY"/>
                             <constraint firstItem="heN-6S-v7e" firstAttribute="top" secondItem="Lsr-cC-9xE" secondAttribute="top" constant="12" id="QhL-Uk-g23"/>
+                            <constraint firstAttribute="bottom" secondItem="aLO-mI-CP1" secondAttribute="bottom" id="VUc-Sh-qDG"/>
                             <constraint firstItem="eh8-zn-sfN" firstAttribute="leading" secondItem="Lsr-cC-9xE" secondAttribute="leading" constant="16" id="cJV-uG-KeY"/>
                             <constraint firstItem="Lsr-cC-9xE" firstAttribute="bottom" secondItem="eh8-zn-sfN" secondAttribute="bottom" constant="16" id="mF9-xK-59T"/>
+                            <constraint firstItem="aLO-mI-CP1" firstAttribute="leading" secondItem="n3X-tg-nMO" secondAttribute="leading" id="vmI-ez-n1b"/>
+                            <constraint firstItem="aLO-mI-CP1" firstAttribute="top" secondItem="n3X-tg-nMO" secondAttribute="top" id="xvh-Mk-feD"/>
                         </constraints>
                     </view>
                     <connections>
