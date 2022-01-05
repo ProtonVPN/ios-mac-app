@@ -399,3 +399,10 @@ extension DependencyContainer: DoHVPNFactory {
         return doh
     }
 }
+
+// MARK: OnboardingServiceFactory
+extension DependencyContainer: OnboardingServiceFactory {
+    func makeOnboardingService() -> OnboardingService {
+        return OnboardingModuleService(factory: self)
+    }
+}

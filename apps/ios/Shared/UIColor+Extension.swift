@@ -44,6 +44,10 @@ extension UIColor {
         return ColorProvider.BrandNorm
     }
 
+    class func activeBrandColor() -> UIColor {
+        return #colorLiteral(red: 0.5215686275, green: 0.7098039216, blue: 0.4745098039, alpha: 1)
+    }
+
     class func secondaryBackgroundColor() -> UIColor {
         return ColorProvider.BackgroundSecondary
     }
