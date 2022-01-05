@@ -42,6 +42,7 @@ final class TourStepView: UIView {
             pageControlView.currentPage = TourStep.allCases.firstIndex(of: step) ?? 0
             titleLabel.text = step.title
             subtitleLabel.text = step.subtitle
+            plusOnlyView.isHidden = !step.requiresPlus
         }
     }
 
