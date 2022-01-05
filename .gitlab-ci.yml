@@ -76,6 +76,23 @@ macos_lint:
         - swiftlint.xml
     expire_in: 90 days
 
+onboarding_lint:
+  stage: linting
+  tags:
+    - iOS_ARM
+  script:
+    - cd libraries/Onboarding
+    - ../../Pods/SwiftLint/swiftlint --strict --reporter junit > ../../swiftlint.xml
+  allow_failure: false
+  artifacts:
+    name: "onboarding-lint-$CI_COMMIT_TAG"
+    paths:
+      - swiftlint.xml
+    reports:
+      junit:
+        - swiftlint.xml
+    expire_in: 90 days    
+
 core_ios_unit_tests:
   stage: core_unit_tests
   tags:
