@@ -15,3 +15,8 @@
 "onboarding_establish_note" = "We will connect you to the fastest and most stable server depending on your location.";
 "onboarding_establish_connect_now" = "Connect now";
 "onboarding_establish_access_all" = "Access all countries with PLUS";
+"onboarding_done" = "Done";
+"onboarding_connected_title" = "Congratulations";
+"onboarding_connected_subtitle" = "Your connection is protected and you’re ready to browse the web.";
+"onboarding_connected_note" = "Safely.";
+"onboarding_connected_connected_to" = "Connected to:";

@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectionViewControllerDelegate: AnyObject {
-    func userDidRequestConnection(completion: @escaping (Result<(), Error>) -> Void)
+    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void)
 }
 
 final class ConnectionViewController: UIViewController {
@@ -31,6 +31,26 @@ final class ConnectionViewController: UIViewController {
     @IBOutlet private weak var purchaseButon: UIButton!
 
     weak var delegate: ConnectionViewControllerDelegate?
+
+    private lazy var activityView: UIActivityIndicatorView = {
+        let activityView = UIActivityIndicatorView()
+        activityView.translatesAutoresizingMaskIntoConstraints = false
+        activityView.color = colors.text
+        activityView.hidesWhenStopped = true
+        return activityView
+    }()
+
+    private var isConnecting: Bool = false {
+        didSet {
+            if isConnecting {
+                activityView.startAnimating()
+            } else {
+                activityView.stopAnimating()
+            }
+            view.isUserInteractionEnabled = !isConnecting
+            connectButton.backgroundColor = isConnecting ? colors.activeBrandButton : colors.brand
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,11 +71,19 @@ final class ConnectionViewController: UIViewController {
         noteLabel.text = LocalizedString.onboardingEstablishNote
         connectButton.setTitle(LocalizedString.onboardingEstablishConnectNow, for: .normal)
         purchaseButon.setTitle(LocalizedString.onboardingEstablishAccessAll, for: .normal)
+
+        connectButton.addSubview(activityView)
+        NSLayoutConstraint.activate([
+            activityView.trailingAnchor.constraint(equalTo: connectButton.trailingAnchor, constant: -16),
+            activityView.centerYAnchor.constraint(equalTo: connectButton.centerYAnchor)
+        ])
     }
 
     @IBAction private func connectTapped(_ sender: Any) {
-        delegate?.userDidRequestConnection { result in
+        isConnecting = true
 
+        delegate?.userDidRequestConnection { [weak self] _ in
+            self?.isConnecting = false
         }
     }
 

@@ -105,3 +105,25 @@ let textNoteStyle =
         $0.font = .systemFont(ofSize: 15)
         $0.textColor = colors.weakText
 }
+
+let textSubNoteStyle =
+    textNoteStyle
+    <> {
+        $0.font = .systemFont(ofSize: 13, weight: .semibold)
+}
+
+let countryTextStyle =
+    baseTextStyle
+    <> {
+        $0.font = .systemFont(ofSize: 15, weight: .semibold)
+}
+
+let secondaryViewStyle: (UIView) -> Void = {
+    $0.backgroundColor = colors.secondaryBackground
+}
+
+let countryViewStyle =
+    secondaryViewStyle
+    <> {
+        $0.layer.cornerRadius = 8
+}
