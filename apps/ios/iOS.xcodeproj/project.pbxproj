@@ -489,6 +489,11 @@
 		F3B783FE26E6428C006768A8 /* NeedHelpRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */; };
 		F3B783FF26E6428C006768A8 /* SignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F326E6428C006768A8 /* SignupRobot.swift */; };
 		F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B783F426E6428C006768A8 /* LoginRobot.swift */; };
+		F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */ = {isa = PBXBuildFile; productRef = F3BC534A278598CE009E49B4 /* Onboarding */; };
+		F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534C278598E4009E49B4 /* OnboardingService.swift */; };
+		F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
+		F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */; };
+		F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */; };
 		F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3E87E3026CFF26B00675AD2 /* LoginService.swift */; };
 		F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -1004,7 +1009,10 @@
 		F3B783F226E6428C006768A8 /* NeedHelpRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NeedHelpRobot.swift; sourceTree = "<group>"; };
 		F3B783F326E6428C006768A8 /* SignupRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignupRobot.swift; sourceTree = "<group>"; };
 		F3B783F426E6428C006768A8 /* LoginRobot.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
-		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LoginService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/LoginService.swift; sourceTree = "<group>"; };
+		F3BC534C278598E4009E49B4 /* OnboardingService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OnboardingService.swift; path = ../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Services/OnboardingService.swift; sourceTree = "<group>"; };
+		F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "AuthCredentials+Login.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/AuthCredentials+Login.swift"; sourceTree = "<group>"; };
+		F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "Onboarding+Configuration.swift"; path = "../../../../../ios/ProtonVPN/Scenes/LoginAndSignup/Extensions/Onboarding+Configuration.swift"; sourceTree = "<group>"; };
+		F3E87E3026CFF26B00675AD2 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
 		F5D790793DF1BD9191BC5B7B /* Pods-OpenVPN Extension.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-OpenVPN Extension.staging.xcconfig"; path = "Target Support Files/Pods-OpenVPN Extension/Pods-OpenVPN Extension.staging.xcconfig"; sourceTree = "<group>"; };
 		F613F0A928F442C2F592BBB3 /* Pods-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		F9379B9662554832634B2FF0 /* Pods-ProtonVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN/Pods-ProtonVPN.staging.xcconfig"; sourceTree = "<group>"; };
@@ -1019,6 +1027,7 @@
 				D573D114264A70980033CE19 /* UIKit.framework in Frameworks */,
 				E198D6B12163B31A00F2F0E0 /* libc++.tbd in Frameworks */,
 				E18006E7218B0B7B009E01E3 /* StoreKit.framework in Frameworks */,
+				F3BC534B278598CE009E49B4 /* Onboarding in Frameworks */,
 				E148AE5321C1683D007AB65A /* NetworkExtension.framework in Frameworks */,
 				257C90332E8EB77D46C645E6 /* Pods_ProtonVPN.framework in Frameworks */,
 			);
@@ -1550,6 +1559,7 @@
 		D580AB8F2452CA08003C34B9 /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
+				F3BC5348278598A5009E49B4 /* LoginAndSignup */,
 				F3F36CE026DFAAA4008AD48B /* Payments */,
 				791DE5E2208DDA3000A29EA5 /* Main.storyboard */,
 				D5BCDC7B25303825004BAEE8 /* Announcements */,
@@ -1969,7 +1979,6 @@
 				79C5598520AB181000E6D3F6 /* NavigationService.swift */,
 				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
 				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
-				F3E87E3026CFF26B00675AD2 /* LoginService.swift */,
 				F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */,
 			);
 			path = Services;
@@ -2256,6 +2265,33 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		F3BC5348278598A5009E49B4 /* LoginAndSignup */ = {
+			isa = PBXGroup;
+			children = (
+				F3BC534E27859CEC009E49B4 /* Extensions */,
+				F3BC5349278598B1009E49B4 /* Services */,
+			);
+			path = LoginAndSignup;
+			sourceTree = "<group>";
+		};
+		F3BC5349278598B1009E49B4 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F3E87E3026CFF26B00675AD2 /* LoginService.swift */,
+				F3BC534C278598E4009E49B4 /* OnboardingService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		F3BC534E27859CEC009E49B4 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				F3BC534F27859CF6009E49B4 /* AuthCredentials+Login.swift */,
+				F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		F3F36CE026DFAAA4008AD48B /* Payments */ = {
 			isa = PBXGroup;
 			children = (
@@ -2309,6 +2345,9 @@
 				E9445D6626528A790075FD31 /* PBXTargetDependency */,
 			);
 			name = ProtonVPN;
+			packageProductDependencies = (
+				F3BC534A278598CE009E49B4 /* Onboarding */,
+			);
 			productName = ProtonVPN;
 			productReference = 791DE5D9208DDA3000A29EA5 /* ProtonVPN.app */;
 			productType = "com.apple.product-type.application";
@@ -3063,6 +3102,7 @@
 				7905995F212AE0A400C0E401 /* DefaultProfileTableViewCell.swift in Sources */,
 				F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */,
 				79C559A820B3B93100E6D3F6 /* ServerViewCell.swift in Sources */,
+				F3BC534D278598E4009E49B4 /* OnboardingService.swift in Sources */,
 				79312B782118823B00E79D09 /* SwitchTableViewCell.swift in Sources */,
 				E1EB9E7B23015FF2009E704F /* LogsViewModel.swift in Sources */,
 				E16C2926239E673500E7B61D /* CustomServersViewController.swift in Sources */,
@@ -3123,6 +3163,7 @@
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */,
 				F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */,
+				F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */,
 				D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				E1FB547B230C000E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				E13EDF7521F1D07700030CE7 /* WidgetSettingsViewController.swift in Sources */,
@@ -3142,6 +3183,7 @@
 				D554789E22C601CE00AD3C5B /* ReportBugViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
+				F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */,
 				D580AB8D2452C798003C34B9 /* TroubleshootingCell.swift in Sources */,
 				D5C1376A2334A54D00D20514 /* Coordinator.swift in Sources */,
@@ -3175,6 +3217,7 @@
 				E1D187F523029CDE00C5F492 /* LogSelectionViewController.swift in Sources */,
 				D5BCDD2A25307681004BAEE8 /* CountriesViewController.swift in Sources */,
 				D5136C29228592E80002C095 /* Compare+Extension.swift in Sources */,
+				F3BC535227859CFD009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				D5136C2A228592E80002C095 /* Data+Extension.swift in Sources */,
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
@@ -4578,6 +4621,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = E98EE34A2671EC2400B86BA0 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
+		};
+		F3BC534A278598CE009E49B4 /* Onboarding */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Onboarding;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

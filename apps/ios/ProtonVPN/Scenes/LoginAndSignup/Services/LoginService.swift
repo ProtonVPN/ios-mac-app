@@ -28,8 +28,9 @@ protocol LoginService: AnyObject {
 }
 
 // MARK: CoreLoginService
+
 final class CoreLoginService {
-    public typealias Factory = AppSessionManagerFactory
+    typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
         & NavigationServiceFactory
         & WindowServiceFactory
@@ -38,6 +39,7 @@ final class CoreLoginService {
         & PropertiesManagerFactory
         & NetworkingFactory
         & DoHVPNFactory
+        & OnboardingServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -48,6 +50,7 @@ final class CoreLoginService {
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
+    private let onboardingService: OnboardingService
 
     private var login: LoginAndSignupInterface?
 
@@ -61,6 +64,7 @@ final class CoreLoginService {
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
         doh = factory.makeDoHVPN()
+        onboardingService = factory.makeOnboardingService()
     }
 
     private func show() {
@@ -84,7 +88,8 @@ final class CoreLoginService {
             case .dismissed:
                 log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
             case .loggedIn:
-                self?.navigationService.presentMainInterface()
+                #warning("Decide if onboarding is really needed")
+                self?.onboardingService.showOnboarding()
             }
 
             self?.login = nil
@@ -92,19 +97,10 @@ final class CoreLoginService {
 
         windowService.show(viewController: welcomeViewController)
     }
-
-    #if !RELEASE
-    private func showEnvironmentSelection() {
-        let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
-        environmentsViewController.propertiesManager = propertiesManager
-        environmentsViewController.doh = doh
-        environmentsViewController.delegate = self
-        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
-    }
-    #endif
 }
 
 // MARK: LoginService
+
 extension CoreLoginService: LoginService {
     func attemptSilentLogIn(completion: @escaping (SilengLoginResult) -> Void) {
         if appSessionManager.loadDataWithoutFetching() {
@@ -138,21 +134,20 @@ extension CoreLoginService: LoginService {
     }
 }
 
+// MARK: Environment selection
+
 #if !RELEASE
 extension CoreLoginService: EnvironmentsViewControllerDelegate {
+    private func showEnvironmentSelection() {
+        let environmentsViewController = UIStoryboard(name: "Environments", bundle: nil).instantiateViewController(withIdentifier: "EnvironmentsViewController") as! EnvironmentsViewController
+        environmentsViewController.propertiesManager = propertiesManager
+        environmentsViewController.doh = doh
+        environmentsViewController.delegate = self
+        windowService.show(viewController: UINavigationController(rootViewController: environmentsViewController))
+    }
+
     func userDidSelectContinue() {
         show()
     }
 }
 #endif
-
-extension AuthCredentials {
-    convenience init(_ data: LoginData) {
-        switch data {
-        case let .credential(credential):
-            self.init(credential)
-        case let .userData(userData):
-            self.init(version: 0, username: userData.credential.userName, accessToken: userData.credential.accessToken, refreshToken: userData.credential.refreshToken, sessionId: userData.credential.sessionID, userId: userData.credential.userID, expiration: userData.credential.expiration, scopes: userData.scopes.compactMap({ AuthCredentials.Scope(rawValue: $0) }))
-        }
-    }
-}
