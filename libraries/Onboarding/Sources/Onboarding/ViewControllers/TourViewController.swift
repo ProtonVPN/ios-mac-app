@@ -61,12 +61,10 @@ final class TourViewController: UIViewController {
     }
 
     private func setupScrollView(steps: [UIView]) {
-        scrollView.frame = CGRect(x: 0, y: 0, width: view.frame.width, height: view.frame.height)
-        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(steps.count), height: scrollView.frame.height - 2 * view.safeAreaInsets.bottom)
-        scrollView.isPagingEnabled = true
+        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(steps.count), height: 0)
 
         for i in 0 ..< steps.count {
-            steps[i].frame = CGRect(x: scrollView.frame.width * CGFloat(i), y: 0, width: scrollView.frame.width, height: scrollView.frame.height - view.safeAreaInsets.bottom)
+            steps[i].frame = CGRect(x: scrollView.frame.width * CGFloat(i), y: 0, width: scrollView.frame.width, height: scrollView.frame.size.height)
             if steps[i].superview == nil {
                 scrollView.addSubview(steps[i])
             }
