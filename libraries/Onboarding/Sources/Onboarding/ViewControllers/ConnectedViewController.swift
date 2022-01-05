@@ -24,6 +24,9 @@ protocol ConnectedViewControllerDelegate: AnyObject {
 }
 
 final class ConnectedViewController: UIViewController {
+
+    // MARK: Outlets
+
     @IBOutlet private weak var doneButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
@@ -32,6 +35,8 @@ final class ConnectedViewController: UIViewController {
     @IBOutlet private weak var connectedToLabel: UILabel!
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var countryImage: UIImageView!
+
+    // MARK: Properties
 
     weak var delegate: ConnectedViewControllerDelegate?
 
@@ -45,6 +50,8 @@ final class ConnectedViewController: UIViewController {
             countryImage.image = country?.flag
         }
     }
+
+    // MARK: Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,6 +77,8 @@ final class ConnectedViewController: UIViewController {
         countryLabel.text = country?.name
         countryImage.image = country?.flag
     }
+
+    // MARK: Actions
 
     @IBAction private func doneTapped(_ sender: Any) {
         delegate?.userDidFinish()
