@@ -24,11 +24,18 @@ protocol TourViewControllerDelegate: AnyObject {
 }
 
 final class TourViewController: UIViewController {
+
+    // MARK: Outlets
+
     @IBOutlet private weak var skipButton: UIButton!
     @IBOutlet private weak var actionButton: UIButton!
     @IBOutlet weak var scrollView: UIScrollView!
 
+    // MARK: Properties
+
     weak var delegate: TourViewControllerDelegate?
+
+    // MARK: Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -77,6 +84,8 @@ final class TourViewController: UIViewController {
         let pageIndex = round(scrollView.contentOffset.x / view.frame.width)
         scrollToIndex(index: pageIndex, animated: true)
     }
+
+    // MARK: Actions
 
     @IBAction private func skipTapped(_ sender: Any) {
         delegate?.userDidRequestSkipTour()

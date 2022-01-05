@@ -19,26 +19,21 @@
 import Foundation
 import UIKit
 
-public struct Country {
-    public let name: String
-    public let flag: UIImage
-
-    public init(name: String, flag: UIImage) {
-        self.name = name
-        self.flag = flag
-    }
-}
-
 public protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish()
     func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void)
 }
 
 public final class OnboardingCoordinator {
+
+    // MARK: Properties
+
     private let storyboard: UIStoryboard
     private let navigationController: UINavigationController
 
     public weak var delegate: OnboardingCoordinatorDelegate?
+
+    // MARK: Setup
 
     public init(configuration: Configuration) {
         colors = configuration.colors
@@ -47,12 +42,16 @@ public final class OnboardingCoordinator {
         navigationController.setNavigationBarHidden(true, animated: false)
     }
 
+    // MARK: Actions
+
     public func start() -> UIViewController {
         let welcomeViewController = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
         welcomeViewController.delegate = self
         navigationController.pushViewController(welcomeViewController, animated: false)
         return navigationController
     }
+
+    // MARK: Internal
 
     private func showTour() {
         let tourViewController = storyboard.instantiateViewController(withIdentifier: "Tour") as! TourViewController
@@ -74,11 +73,15 @@ public final class OnboardingCoordinator {
     }
 }
 
+// MARK: Welcome screen delegate
+
 extension OnboardingCoordinator: WelcomeViewControllerDelegate {
     func userDidRequestTakeTour() {
         showTour()
     }
 }
+
+// MARK: Tour screen delegate
 
 extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
@@ -86,11 +89,15 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
     }
 }
 
+// MARK: Connected screen delegate
+
 extension OnboardingCoordinator: ConnectedViewControllerDelegate {
     func userDidFinish() {
         delegate?.onboardingCoordinatorDidFinish()
     }
 }
+
+// MARK: Connection screen delegate
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
     func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void) {

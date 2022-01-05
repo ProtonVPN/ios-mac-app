@@ -19,6 +19,9 @@
 import UIKit
 
 final class TourStepView: UIView {
+
+    // MARK: Outlets
+
     @IBOutlet private weak var topView: UIView!
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var titleLabel: UILabel!
@@ -26,6 +29,8 @@ final class TourStepView: UIView {
     @IBOutlet private weak var plusOnlyView: UIView!
     @IBOutlet private weak var plusOnlyLabel: UILabel!
     @IBOutlet private weak var pageControlView: UIPageControl!
+
+    // MARK: Properties
 
     var step: TourStep? {
         didSet {
@@ -39,6 +44,8 @@ final class TourStepView: UIView {
             subtitleLabel.text = step.subtitle
         }
     }
+
+    // MARK: Setup
 
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -72,13 +72,13 @@ let baseViewStyle: (UIView) -> Void = {
 }
 
 let tourStepHeaderStyle: (UIView) -> Void = {
-    $0.backgroundColor = UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1)
+    $0.backgroundColor = UIColor(red: 37 / 255, green: 39 / 255, blue: 44 / 255, alpha: 1)
 }
 
 let tourPagerStyle: (UIPageControl) -> Void = {
     $0.numberOfPages = TourStep.allCases.count
     $0.currentPageIndicatorTintColor = colors.brand
-    $0.pageIndicatorTintColor = UIColor(red: 48/255, green: 50/255, blue: 57/255, alpha: 1)
+    $0.pageIndicatorTintColor = UIColor(red: 48 / 255, green: 50 / 255, blue: 57 / 255, alpha: 1)
 }
 
 let titleStyle =

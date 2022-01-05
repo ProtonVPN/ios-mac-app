@@ -25,12 +25,19 @@ protocol WelcomeViewControllerDelegate: AnyObject {
 }
 
 final class WelcomeViewController: UIViewController {
+
+    // MARK: Outlets
+
     @IBOutlet private weak var actionButton: UIButton!
     @IBOutlet private weak var skipButton: UIButton!
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
 
+    // MARK: Properties
+
     weak var delegate: WelcomeViewControllerDelegate?
+
+    // MARK: Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +57,8 @@ final class WelcomeViewController: UIViewController {
         centeredTextStyle(subtitleLabel)
         welcomeTitleStyle(titleLabel)
     }
+
+    // MARK: Actions
 
     @IBAction private func skipTapped(_ sender: Any) {
         delegate?.userDidRequestSkipTour()

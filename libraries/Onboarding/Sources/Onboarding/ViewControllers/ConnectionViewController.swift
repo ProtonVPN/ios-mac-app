@@ -24,11 +24,16 @@ protocol ConnectionViewControllerDelegate: AnyObject {
 }
 
 final class ConnectionViewController: UIViewController {
+
+    // MARK: Outlets
+
     @IBOutlet private weak var titleLabel: UILabel!
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var noteLabel: UILabel!
     @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private weak var purchaseButon: UIButton!
+
+    // MARK: Properties
 
     weak var delegate: ConnectionViewControllerDelegate?
 
@@ -51,6 +56,8 @@ final class ConnectionViewController: UIViewController {
             connectButton.backgroundColor = isConnecting ? colors.activeBrandButton : colors.brand
         }
     }
+
+    // MARK: Setup
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -78,6 +85,8 @@ final class ConnectionViewController: UIViewController {
             activityView.centerYAnchor.constraint(equalTo: connectButton.centerYAnchor)
         ])
     }
+
+    // MARK: Actions
 
     @IBAction private func connectTapped(_ sender: Any) {
         isConnecting = true
