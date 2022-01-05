@@ -107,7 +107,7 @@ protocol NavigationServiceFactory {
 
 final class NavigationService {
     typealias Factory =       
-        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory & PlanServiceFactory & LogFileManagerFactory & AppSessionManagerFactory & SettingsServiceFactory & AppInfoFactory
+        PropertiesManagerFactory & WindowServiceFactory & VpnKeychainFactory & VpnApiServiceFactory & AppStateManagerFactory & AppSessionManagerFactory & CoreAlertServiceFactory & ReportBugViewModelFactory & VpnManagerFactory & UIAlertServiceFactory & VpnGatewayFactory & ProfileManagerFactory & NetshieldServiceFactory & AnnouncementsViewModelFactory & AnnouncementManagerFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnStateConfigurationFactory & LoginServiceFactory & NetworkingFactory & NetworkingDelegateFactory & PlanServiceFactory & LogFileManagerFactory & AppSessionManagerFactory & SettingsServiceFactory & AppInfoFactory & OnboardingServiceFactory
     private let factory: Factory
     
     // MARK: Storyboards
@@ -128,10 +128,19 @@ final class NavigationService {
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var uiAlertService: UIAlertService = factory.makeUIAlertService()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var loginService: LoginService = factory.makeLoginService()
+    private lazy var loginService: LoginService = {
+        let loginService = factory.makeLoginService()
+        loginService.delegate = self
+        return loginService
+    }()
     private lazy var networking: Networking = factory.makeNetworking()
     private lazy var planService: PlanService = factory.makePlanService()
     private lazy var profileManager = factory.makeProfileManager()
+    private lazy var onboardingService: OnboardingService = {
+        let onboardingService = factory.makeOnboardingService()
+        onboardingService.delegate = self
+        return onboardingService
+    }()
 
     private lazy var connectionBarViewController = { 
         return makeConnectionBarViewController()
@@ -173,7 +182,7 @@ final class NavigationService {
         loginService.showWelcome()
     }
 
-    func presentMainInterface() {
+    private func presentMainInterface() {
         setupTabs()
     }
     
@@ -362,4 +371,26 @@ extension NavigationService: ConnectionStatusService {
         }
         self.windowService.addToStack(viewController, checkForDuplicates: true)
     }    
+}
+
+// MARK: Login delegate
+
+extension NavigationService: LoginServiceDelegate {
+    func loginServiceDidFinish() {
+        #warning("Only start onboarding for signup, not also for login!")
+        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.accountPlan == .free {
+            onboardingService.showOnboarding()
+            return
+        }
+
+        presentMainInterface()
+    }
+}
+
+// MARK: Onboarding delegate
+
+extension NavigationService: OnboardingServiceDelegate {
+    func onboardingServiceDidFinish() {
+        presentMainInterface()
+    }
 }

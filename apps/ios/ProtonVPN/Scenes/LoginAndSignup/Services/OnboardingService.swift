@@ -25,27 +25,32 @@ protocol OnboardingServiceFactory: AnyObject {
     func makeOnboardingService() -> OnboardingService
 }
 
+protocol OnboardingServiceDelegate: AnyObject {
+    func onboardingServiceDidFinish()
+}
+
 protocol OnboardingService: AnyObject {
+    var delegate: OnboardingServiceDelegate? { get set }
+
     func showOnboarding()
 }
 
 final class OnboardingModuleService {
     typealias Factory = WindowServiceFactory
-        & NavigationServiceFactory
         & VpnGatewayFactory
         & AppStateManagerFactory
 
     private let windowService: WindowService
-    private let navigationService: NavigationService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
 
     private var onboardingCoordinator: OnboardingCoordinator?
     private var completion: OnboardingConnectionRequestCompletion?
 
+    weak var delegate: OnboardingServiceDelegate?
+
     init(factory: Factory) {
         windowService = factory.makeWindowService()
-        navigationService = factory.makeNavigationService()
         vpnGateway = factory.makeVpnGateway()
         appStateManager = factory.makeAppStateManager()
 
@@ -89,7 +94,7 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
     func onboardingCoordinatorDidFinish() {
         log.debug("Onboarding finished", category: .app)
 
-        navigationService.presentMainInterface()
+        delegate?.onboardingServiceDidFinish()
     }
 
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {

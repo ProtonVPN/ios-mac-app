@@ -454,6 +454,8 @@
 		F316A07326DFB0E900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07526DFBCB600669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
 		F316A07626DFC57D00669386 /* PlanService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A07426DFBCB600669386 /* PlanService.swift */; };
+		F31E0AEE2786DC8A0048FA38 /* OnboardingService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC534C278598E4009E49B4 /* OnboardingService.swift */; };
+		F31E0AEF2786DC910048FA38 /* Onboarding+Configuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC535327859EB9009E49B4 /* Onboarding+Configuration.swift */; };
 		F31E91192758F5C600140B2E /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E91182758F5C600140B2E /* PMLogFormatter.swift */; };
 		F31E911C2758F5CF00140B2E /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911A2758F5CE00140B2E /* Logger+Categories.swift */; };
 		F31E911D2758F5CF00140B2E /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = F31E911B2758F5CF00140B2E /* Logger+Callers.swift */; };
@@ -3317,6 +3319,7 @@
 				D5136C71228592E80002C095 /* ProfilesTableViewCell.swift in Sources */,
 				D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
+				F31E0AEE2786DC8A0048FA38 /* OnboardingService.swift in Sources */,
 				42C37B002434E62C00366B79 /* UILabel+realSize.swift in Sources */,
 				D5F3765825402DF6008C7207 /* UIViewController+Announcements.swift in Sources */,
 				D5136C74228592E80002C095 /* SelectionTableViewCell.swift in Sources */,
@@ -3343,6 +3346,7 @@
 				D5136C7E228592E80002C095 /* AppDelegate.swift in Sources */,
 				D5136C7F228592E80002C095 /* WindowService.swift in Sources */,
 				D5136C922285A9190002C095 /* ServerUtilityTests.swift in Sources */,
+				F31E0AEF2786DC910048FA38 /* Onboarding+Configuration.swift in Sources */,
 				D5136C952285AEA10002C095 /* CountryItemViewModelTests.swift in Sources */,
 				D5136C83228592E80002C095 /* UIColor+Extension.swift in Sources */,
 				F316A07126DFB0B900669386 /* UserCachedStatus.swift in Sources */,
