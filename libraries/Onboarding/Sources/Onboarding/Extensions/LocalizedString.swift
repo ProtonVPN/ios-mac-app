@@ -14,6 +14,16 @@ public enum LocalizedString {
   public static var onboardingBeprotectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_subtitle") }
   /// Be protected everywhere
   public static var onboardingBeprotectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_title") }
+  /// Connected to:
+  public static var onboardingConnectedConnectedTo: String { return LocalizedString.tr("Localizable", "onboarding_connected_connected_to") }
+  /// Safely.
+  public static var onboardingConnectedNote: String { return LocalizedString.tr("Localizable", "onboarding_connected_note") }
+  /// Your connection is protected and you’re ready to browse the web.
+  public static var onboardingConnectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_connected_subtitle") }
+  /// Congratulations
+  public static var onboardingConnectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_connected_title") }
+  /// Done
+  public static var onboardingDone: String { return LocalizedString.tr("Localizable", "onboarding_done") }
   /// Access all countries with PLUS
   public static var onboardingEstablishAccessAll: String { return LocalizedString.tr("Localizable", "onboarding_establish_access_all") }
   /// Connect now

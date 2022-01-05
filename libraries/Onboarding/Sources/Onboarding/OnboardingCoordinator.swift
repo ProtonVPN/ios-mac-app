@@ -19,9 +19,19 @@
 import Foundation
 import UIKit
 
+public struct Country {
+    public let name: String
+    public let flag: UIImage
+
+    public init(name: String, flag: UIImage) {
+        self.name = name
+        self.flag = flag
+    }
+}
+
 public protocol OnboardingCoordinatorDelegate: AnyObject {
     func onboardingCoordinatorDidFinish()
-    func userDidRequestConnection(completion: @escaping (Result<(), Error>) -> Void)
+    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void)
 }
 
 public final class OnboardingCoordinator {
@@ -56,9 +66,10 @@ public final class OnboardingCoordinator {
         navigationController.pushViewController(connectionViewController, animated: true)
     }
 
-    private func showConnected() {
+    private func showConnected(country: Country) {
         let connectedViewController = storyboard.instantiateViewController(withIdentifier: "Connected") as! ConnectedViewController
         connectedViewController.delegate = self
+        connectedViewController.country = country
         navigationController.pushViewController(connectedViewController, animated: true)
     }
 }
@@ -82,16 +93,16 @@ extension OnboardingCoordinator: ConnectedViewControllerDelegate {
 }
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
-    func userDidRequestConnection(completion: @escaping (Result<(), Error>) -> Void) {
+    func userDidRequestConnection(completion: @escaping (Result<Country, Error>) -> Void) {
         delegate?.userDidRequestConnection { result in
             switch result {
             case let .failure(error):
-                DispatchQueue.main.async {
+                executeOnUIThread {
                     completion(.failure(error))
                 }
-            case .success:
-                DispatchQueue.main.async {
-                    self.showConnected()
+            case let .success(county: country):
+                executeOnUIThread {
+                    self.showConnected(country: country)
                 }
             }
         }

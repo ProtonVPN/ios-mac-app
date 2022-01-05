@@ -25,8 +25,26 @@ protocol ConnectedViewControllerDelegate: AnyObject {
 
 final class ConnectedViewController: UIViewController {
     @IBOutlet private weak var doneButton: UIButton!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var noteLabel: UILabel!
+    @IBOutlet private weak var countryView: UIView!
+    @IBOutlet private weak var connectedToLabel: UILabel!
+    @IBOutlet private weak var countryLabel: UILabel!
+    @IBOutlet private weak var countryImage: UIImageView!
 
     weak var delegate: ConnectedViewControllerDelegate?
+
+    var country: Country? {
+        didSet {
+            guard isViewLoaded else {
+                return
+            }
+
+            countryLabel.text = country?.name
+            countryImage.image = country?.flag
+        }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -37,6 +55,20 @@ final class ConnectedViewController: UIViewController {
     private func setupUI() {
         baseViewStyle(view)
         actionButtonStyle(doneButton)
+        titleStyle(titleLabel)
+        centeredTextStyle(subtitleLabel)
+        centeredTextStyle(noteLabel)
+        textSubNoteStyle(connectedToLabel)
+        countryTextStyle(countryLabel)
+        countryViewStyle(countryView)
+
+        titleLabel.text = LocalizedString.onboardingConnectedTitle
+        subtitleLabel.text = LocalizedString.onboardingConnectedSubtitle
+        noteLabel.text = LocalizedString.onboardingConnectedNote
+        connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
+
+        countryLabel.text = country?.name
+        countryImage.image = country?.flag
     }
 
     @IBAction private func doneTapped(_ sender: Any) {
