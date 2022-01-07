@@ -47,7 +47,7 @@ public final class OnboardingCoordinator {
     // MARK: Actions
 
     public func start() -> UIViewController {
-        let welcomeViewController = storyboard.instantiateViewController(withIdentifier: "Welcome") as! WelcomeViewController
+        let welcomeViewController = storyboard.instantiate(controllerType: WelcomeViewController.self)
         welcomeViewController.delegate = self
         navigationController.pushViewController(welcomeViewController, animated: false)
         return navigationController
@@ -56,19 +56,19 @@ public final class OnboardingCoordinator {
     // MARK: Internal
 
     private func showTour() {
-        let tourViewController = storyboard.instantiateViewController(withIdentifier: "Tour") as! TourViewController
+        let tourViewController = storyboard.instantiate(controllerType: TourViewController.self)
         tourViewController.delegate = self
         navigationController.pushViewController(tourViewController, animated: true)
     }
 
     private func showConnectionSetup() {
-        let connectionViewController = storyboard.instantiateViewController(withIdentifier: "Connection") as! ConnectionViewController
+        let connectionViewController = storyboard.instantiate(controllerType: ConnectionViewController.self)
         connectionViewController.delegate = self
         navigationController.pushViewController(connectionViewController, animated: true)
     }
 
-    private func showConnected(country: Country) {
-        let connectedViewController = storyboard.instantiateViewController(withIdentifier: "Connected") as! ConnectedViewController
+    private func showConnected(country: Country?) {
+        let connectedViewController = storyboard.instantiate(controllerType: ConnectedViewController.self)
         connectedViewController.delegate = self
         connectedViewController.country = country
         navigationController.pushViewController(connectedViewController, animated: true)
