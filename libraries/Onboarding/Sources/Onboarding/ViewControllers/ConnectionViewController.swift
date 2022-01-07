@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectionViewControllerDelegate: AnyObject {
-    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
+    func userDidRequestConnection()
 }
 
 final class ConnectionViewController: UIViewController {
@@ -44,18 +44,6 @@ final class ConnectionViewController: UIViewController {
         activityView.hidesWhenStopped = true
         return activityView
     }()
-
-    private var isConnecting: Bool = false {
-        didSet {
-            if isConnecting {
-                activityView.startAnimating()
-            } else {
-                activityView.stopAnimating()
-            }
-            view.isUserInteractionEnabled = !isConnecting
-            connectButton.backgroundColor = isConnecting ? colors.activeBrandButton : colors.brand
-        }
-    }
 
     // MARK: Setup
 
@@ -89,11 +77,10 @@ final class ConnectionViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func connectTapped(_ sender: Any) {
-        isConnecting = true
+        activityView.startAnimating()
+        view.isUserInteractionEnabled = false
 
-        delegate?.userDidRequestConnection { [weak self] _ in
-            self?.isConnecting = false
-        }
+        delegate?.userDidRequestConnection()
     }
 
     @IBAction private func purchaseTapped(_ sender: Any) {

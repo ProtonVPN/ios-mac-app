@@ -102,11 +102,9 @@ extension OnboardingCoordinator: ConnectedViewControllerDelegate {
 // MARK: Connection screen delegate
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
-    func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
-        delegate?.userDidRequestConnection { country in
-            if let country = country {
-                self.showConnected(country: country)
-            }
+    func userDidRequestConnection() {
+        delegate?.userDidRequestConnection { [weak self] country in
+            self?.showConnected(country: country)
         }
     }
 }

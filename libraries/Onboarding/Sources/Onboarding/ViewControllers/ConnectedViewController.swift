@@ -46,8 +46,7 @@ final class ConnectedViewController: UIViewController {
                 return
             }
 
-            countryLabel.text = country?.name
-            countryImage.image = country?.flag
+            setupCountry()
         }
     }
 
@@ -74,6 +73,11 @@ final class ConnectedViewController: UIViewController {
         noteLabel.text = LocalizedString.onboardingConnectedNote
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
 
+        setupCountry()
+    }
+
+    private func setupCountry() {
+        countryView.isHidden = country == nil
         countryLabel.text = country?.name
         countryImage.image = country?.flag
     }
