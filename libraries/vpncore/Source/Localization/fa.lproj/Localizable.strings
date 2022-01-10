@@ -83,7 +83,7 @@
 "_always_on_vpn" = "VPN همیشه-روشن";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "Always-on VPN reestablishes a secure VPN connection swiftly and automatically. For your security, this feature is always on.";
+"_always_on_vpn_tooltip_ios" = "در صورت قطع شدن، VPN همیشه روشن دوباره یک اتصال VPN امن را به صورت سریع و خودکار برقرار می‌کند. به منظور حفظ امنیت شما، این قابلیت همیشه روشن می‌ماند.";
 
 /* Disconnect notification */
 "_always_on_will_reconnect" = "قابلیت VPN همیشه فعال به صورت خودکار شما را دوباره متصل می‌کند";
