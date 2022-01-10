@@ -19,6 +19,11 @@
 import Foundation
 import Logging
 
+public protocol FileLogHandlerDelegate: class {
+    func didCreateNewLogFile()
+    func didRotateLogFile()
+}
+
 // swiftlint:disable no_print
 public class FileLogHandler: LogHandler {
     
@@ -31,6 +36,8 @@ public class FileLogHandler: LogHandler {
     public let formatter: PMLogFormatter
     public var logLevel: Logging.Logger.Level = .trace
     public var metadata = Logging.Logger.Metadata()
+    
+    public weak var delegate: FileLogHandlerDelegate?
     
     private let fileUrl: URL
     private var fileHandle: FileHandle?
@@ -79,6 +86,7 @@ public class FileLogHandler: LogHandler {
             #if !os(OSX)
             try (fileUrl as NSURL).setResourceValue( URLFileProtection.complete, forKey: .fileProtectionKey)
             #endif
+            delegate?.didCreateNewLogFile()
         }
 
         fileHandle = try FileHandle(forWritingTo: fileUrl)
@@ -125,6 +133,8 @@ public class FileLogHandler: LogHandler {
         moveToNextFile()
         removeOldFiles()
         // File will be reopened next time write operation is needed
+        
+        delegate?.didRotateLogFile()
     }
         
     private func moveToNextFile() {
