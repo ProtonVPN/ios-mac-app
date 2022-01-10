@@ -1349,7 +1349,7 @@
 "_report_field_email" = "E-posta:";
 
 /* Mac bug report: feedback field label */
-"_report_field_feedback" = "Ne yanlış gitti?";
+"_report_field_feedback" = "Yanlış giden neydi?";
 
 /* Mag bug report: textfields placeholder */
 "_report_field_placeholder" = "Yazmaya başlayın...";

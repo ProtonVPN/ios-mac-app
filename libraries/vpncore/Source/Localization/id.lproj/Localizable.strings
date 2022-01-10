@@ -2065,7 +2065,7 @@
 "_wgks_ks_off" = "Nonaktifkan Kill Switch";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Switch to OpenVPN";
+"_wgks_ovpn" = "Beralih ke OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
 "_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
