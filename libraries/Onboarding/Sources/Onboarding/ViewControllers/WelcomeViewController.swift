@@ -55,7 +55,7 @@ final class WelcomeViewController: UIViewController {
         actionButtonStyle(actionButton)
         textButtonStyle(skipButton)
         centeredTextStyle(subtitleLabel)
-        welcomeTitleStyle(titleLabel)
+        bigTitleStyle(titleLabel)
     }
 
     // MARK: Actions

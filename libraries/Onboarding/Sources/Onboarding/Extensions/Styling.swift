@@ -61,7 +61,7 @@ let centeredTextStyle =
         $0.textAlignment = .center
 }
 
-let welcomeTitleStyle =
+let bigTitleStyle =
     centeredTextStyle
     <> {
         $0.font = .systemFont(ofSize: 28, weight: .bold)

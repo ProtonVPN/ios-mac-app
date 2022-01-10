@@ -138,7 +138,12 @@ extension OnboardingCoordinator: WelcomeViewControllerDelegate {
 
 extension OnboardingCoordinator: TourViewControllerDelegate {
     func userDidRequestSkipTour() {
-        showConnectionSetup()
+        switch configuration.variant {
+        case .A:
+            showConnectionSetup()
+        case .B:
+            showUpsell()
+        }
     }
 }
 
@@ -153,6 +158,10 @@ extension OnboardingCoordinator: ConnectedViewControllerDelegate {
 // MARK: Connection screen delegate
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
+    func userDidRequestPurchaseFromConnection() {
+        showUpsell()
+    }
+
     func userDidRequestSkipConnection() {
         finishConnection()
     }

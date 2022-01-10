@@ -20,6 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectionViewControllerDelegate: AnyObject {
+    func userDidRequestPurchaseFromConnection()
     func userDidRequestConnection()
     func userDidRequestSkipConnection()
 }
@@ -88,7 +89,7 @@ final class ConnectionViewController: UIViewController {
     }
 
     @IBAction private func purchaseTapped(_ sender: Any) {
-
+        delegate?.userDidRequestPurchaseFromConnection()
     }
 
     @IBAction private func skipTapped(_ sender: Any) {
