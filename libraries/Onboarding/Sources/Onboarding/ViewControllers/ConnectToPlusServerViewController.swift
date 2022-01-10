@@ -25,7 +25,37 @@ protocol ConnectToPlusServerViewControllerDelegate: AnyObject {
 
 final class ConnectToPlusServerViewController: UIViewController {
 
+    // MARK: Outlets
+
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var subtitleLabel: UILabel!
+    @IBOutlet private weak var connectButton: UIButton!
+    @IBOutlet private weak var noteLabel: UILabel!
+
+    // MARK: Properties
+
     weak var delegate: ConnectToPlusServerViewControllerDelegate?
+
+    // MARK: Setup
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        setupUI()
+    }
+
+    private func setupUI() {
+        baseViewStyle(view)
+        bigTitleStyle(titleLabel)
+        centeredTextStyle(subtitleLabel)
+        centeredTextStyle(noteLabel)
+        actionButtonStyle(connectButton)
+
+        titleLabel.text = LocalizedString.onboardingCongratulations
+        subtitleLabel.text = LocalizedString.onboardingPurchasedSubtitle
+        noteLabel.text = LocalizedString.onboardingPurchasedNote
+        connectButton.setTitle(LocalizedString.onboardingConnectedConnectToPlus, for: .normal)
+    }
 
     // MARK: Actions
 

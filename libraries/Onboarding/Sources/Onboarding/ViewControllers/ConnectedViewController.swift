@@ -61,7 +61,7 @@ final class ConnectedViewController: UIViewController {
     private func setupUI() {
         baseViewStyle(view)
         actionButtonStyle(doneButton)
-        titleStyle(titleLabel)
+        bigTitleStyle(titleLabel)
         centeredTextStyle(subtitleLabel)
         centeredTextStyle(noteLabel)
         textSubNoteStyle(connectedToLabel)

@@ -14,6 +14,10 @@ public enum LocalizedString {
   public static var onboardingBeprotectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_subtitle") }
   /// Be protected everywhere
   public static var onboardingBeprotectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_beprotected_title") }
+  /// Congratulations
+  public static var onboardingCongratulations: String { return LocalizedString.tr("Localizable", "onboarding_congratulations") }
+  /// Connect to a PLUS server
+  public static var onboardingConnectedConnectToPlus: String { return LocalizedString.tr("Localizable", "onboarding_connected_connect_to_plus") }
   /// Connected to:
   public static var onboardingConnectedConnectedTo: String { return LocalizedString.tr("Localizable", "onboarding_connected_connected_to") }
   /// Safely.
@@ -42,6 +46,10 @@ public enum LocalizedString {
   public static var onboardingNext: String { return LocalizedString.tr("Localizable", "onboarding_next") }
   /// AVAILABLE WITH PLUS
   public static var onboardingPlusOnly: String { return LocalizedString.tr("Localizable", "onboarding_plus_only") }
+  /// Enjoy the world of privacy.
+  public static var onboardingPurchasedNote: String { return LocalizedString.tr("Localizable", "onboarding_purchased_note") }
+  /// You now have access to 1300+ secure servers and other premium features.
+  public static var onboardingPurchasedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_purchased_subtitle") }
   /// Skip
   public static var onboardingSkip: String { return LocalizedString.tr("Localizable", "onboarding_skip") }
   /// Take a tour
