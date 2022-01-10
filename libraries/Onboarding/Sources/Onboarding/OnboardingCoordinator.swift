@@ -32,12 +32,15 @@ public final class OnboardingCoordinator {
 
     private let storyboard: UIStoryboard
     private let navigationController: UINavigationController
+    private let configuration: Configuration
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
     // MARK: Setup
 
     public init(configuration: Configuration) {
+        self.configuration = configuration
+
         colors = configuration.colors
         storyboard = UIStoryboard(name: "Storyboard", bundle: Bundle.module)
         navigationController = UINavigationController()

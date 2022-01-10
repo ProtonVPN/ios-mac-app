@@ -38,9 +38,11 @@ public struct Colors {
 }
 
 public struct Configuration {
+    let variant: OnboardingVariant
     let colors: Colors
 
-    public init(colors: Colors) {
+    public init(variant: OnboardingVariant, colors: Colors) {
         self.colors = colors
+        self.variant = variant
     }
 }
