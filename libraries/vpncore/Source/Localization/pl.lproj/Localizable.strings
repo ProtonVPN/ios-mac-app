@@ -794,7 +794,7 @@
 "_loading_screen_slogan" = "Bezpieczny Internet w każdym miejscu";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_message" = "Nie posiadasz dostępu do tego serwera. Połącz się z innym serwerem lub ulepsz plan.";
+"_local_agent_policy_violation_error_message" = "Nie masz dostępu do tego serwera. Połącz się z innym serwerem lub ulepsz plan.";
 
 /* (No Comment) */
 "_local_agent_policy_violation_error_title" = "Naruszenie zasad";
