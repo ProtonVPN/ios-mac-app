@@ -21,6 +21,7 @@ import UIKit
 
 protocol UpsellViewControllerDelegate: AnyObject {
     func usedDidRequestPlus()
+    func userDidDismissUpsell()
 }
 
 final class UpsellViewController: UIViewController {
@@ -39,11 +40,18 @@ final class UpsellViewController: UIViewController {
 
     private func setupUI() {
         baseViewStyle(view)
+
+        let closeButton = UIBarButtonItem(image: UIImage(named: "CloseButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(closeTapped))
+        navigationItem.leftBarButtonItem = closeButton
     }
 
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
         delegate?.usedDidRequestPlus()
+    }
+
+    @objc private func closeTapped() {
+        delegate?.userDidDismissUpsell()
     }
 }
