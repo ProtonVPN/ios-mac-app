@@ -39,10 +39,12 @@ final class OnboardingModuleService {
     typealias Factory = WindowServiceFactory
         & VpnGatewayFactory
         & AppStateManagerFactory
+        & PlanServiceFactory
 
     private let windowService: WindowService
     private let vpnGateway: VpnGatewayProtocol
     private let appStateManager: AppStateManager
+    private let planService: PlanService
 
     private var onboardingCoordinator: OnboardingCoordinator?
     private var completion: OnboardingConnectionRequestCompletion?
@@ -53,6 +55,7 @@ final class OnboardingModuleService {
         windowService = factory.makeWindowService()
         vpnGateway = factory.makeVpnGateway()
         appStateManager = factory.makeAppStateManager()
+        planService = factory.makePlanService()
 
         NotificationCenter.default.addObserver(self, selector: #selector(connectionChanged), name: appStateManager.displayStateChange, object: nil)
     }
@@ -91,10 +94,21 @@ extension OnboardingModuleService: OnboardingService {
 }
 
 extension OnboardingModuleService: OnboardingCoordinatorDelegate {
-    func onboardingCoordinatorDidFinish() {
+    func userDidRequestPlanPurchase(purchase: PlanPurchase) {
+        planService.createPlusPlanUI { viewController in
+            purchase.onCreatePlanPurchaseViewController(viewController)
+        }
+    }
+
+    func onboardingCoordinatorDidFinish(requiresConnection: Bool) {
         log.debug("Onboarding finished", category: .app)
 
         delegate?.onboardingServiceDidFinish()
+
+        if requiresConnection {
+            log.debug("Doing quick connect required by finished onboarding", category: .app)
+            vpnGateway.quickConnect()
+        }
     }
 
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
