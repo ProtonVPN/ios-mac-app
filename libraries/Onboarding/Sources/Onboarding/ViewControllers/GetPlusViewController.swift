@@ -19,7 +19,14 @@
 import Foundation
 import UIKit
 
+protocol GetPlusViewControllerDelegate: AnyObject {
+    func userDidRequestBackFromGetPlus()
+}
+
 final class GetPlusViewController: UIViewController {
+
+    // MARK: Properties
+
     var planPurchaseViewController: UIViewController? {
         didSet {
             guard isViewLoaded else {
@@ -30,6 +37,10 @@ final class GetPlusViewController: UIViewController {
         }
     }
 
+    weak var delegate: GetPlusViewControllerDelegate?
+
+    // MARK: Setup
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -39,6 +50,9 @@ final class GetPlusViewController: UIViewController {
 
     private func setupUI() {
         view.backgroundColor = .red
+
+        let backButton = UIBarButtonItem(image: UIImage(named: "BackButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(backTapped))
+        navigationItem.leftBarButtonItem = backButton
     }
 
     private func setupPlanPurchaseViewController() {
@@ -56,5 +70,11 @@ final class GetPlusViewController: UIViewController {
             planPurchaseViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
         ])
         planPurchaseViewController.didMove(toParent: self)
+    }
+
+    // MARK: Actions
+
+    @objc private func backTapped() {
+        delegate?.userDidRequestBackFromGetPlus()
     }
 }

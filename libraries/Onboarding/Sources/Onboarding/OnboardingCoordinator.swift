@@ -106,6 +106,7 @@ public final class OnboardingCoordinator {
                 }
 
                 let getPlusViewController = self.storyboard.instantiate(controllerType: GetPlusViewController.self)
+                getPlusViewController.delegate = self
                 getPlusViewController.planPurchaseViewController = planPurchaseViewController
                 self.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
             },
@@ -176,6 +177,10 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 // MARK: Upsell screen delegate
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
+    func userDidDismissUpsell() {
+        popOverNavigationController?.dismiss(animated: true, completion: nil)
+    }
+
     func usedDidRequestPlus() {
         showGetPlus()
     }
@@ -186,5 +191,13 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
 extension OnboardingCoordinator: ConnectToPlusServerViewControllerDelegate {
     func userDidRequestConnectToPlus() {
         delegate?.onboardingCoordinatorDidFinish(requiresConnection: true)
+    }
+}
+
+// MARK: Get Plus screen delegate
+
+extension OnboardingCoordinator: GetPlusViewControllerDelegate {
+    func userDidRequestBackFromGetPlus() {
+        popOverNavigationController?.popViewController(animated: true)
     }
 }
