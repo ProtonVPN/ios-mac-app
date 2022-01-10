@@ -22,8 +22,16 @@ import Onboarding
 final class ViewController: UIViewController {
     private var coordinator: OnboardingCoordinator!
 
-    @IBAction private func startTapped(_ sender: Any) {
-        coordinator = OnboardingCoordinator(configuration: Configuration(colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1))))
+    @IBAction private func startATapped(_ sender: Any) {
+        startOnboarding(variant: .A)
+    }
+
+    @IBAction private func startBTapped(_ sender: Any) {
+        startOnboarding(variant: .B)
+    }
+
+    private func startOnboarding(variant: OnboardingVariant) {
+        coordinator = OnboardingCoordinator(configuration: Configuration(variant: variant, colors: Colors(background: .black, text: .white, brand: UIColor(red: 77/255, green: 163/255, blue: 88/255, alpha: 1), weakText: UIColor(red: 156/255, green: 160/255, blue: 170/255, alpha: 1), activeBrandButton: UIColor(red: 133/255, green: 181/255, blue: 121/255, alpha: 1), secondaryBackground: UIColor(red: 37/255, green: 39/255, blue: 44/255, alpha: 1))))
         coordinator.delegate = self
         let vc = coordinator.start()
         present(vc, animated: true, completion: nil)

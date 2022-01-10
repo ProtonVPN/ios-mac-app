@@ -17,19 +17,29 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7HQ-8o-y41">
-                                <rect key="frame" x="149" y="438" width="116" height="30"/>
+                                <rect key="frame" x="142" y="438" width="130" height="30"/>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Start onboarding"/>
+                                <state key="normal" title="Start onboarding A"/>
                                 <connections>
-                                    <action selector="startTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="G3F-HP-A6w"/>
+                                    <action selector="startATapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZkX-wQ-P9K"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BZg-SG-xYD">
+                                <rect key="frame" x="142.5" y="484" width="129" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Start onboarding B"/>
+                                <connections>
+                                    <action selector="startBTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wr7-ln-9CR"/>
                                 </connections>
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="BZg-SG-xYD" firstAttribute="top" secondItem="7HQ-8o-y41" secondAttribute="bottom" constant="16" id="7xj-x3-IgV"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Fnu-0r-F61"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aRR-KN-M8u"/>
+                            <constraint firstItem="BZg-SG-xYD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cC5-0j-7ZY"/>
                         </constraints>
                     </view>
                 </viewController>
