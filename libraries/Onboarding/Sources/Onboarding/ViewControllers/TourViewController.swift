@@ -29,7 +29,7 @@ final class TourViewController: UIViewController {
 
     @IBOutlet private weak var skipButton: UIButton!
     @IBOutlet private weak var actionButton: UIButton!
-    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet private weak var scrollView: UIScrollView!
 
     // MARK: Properties
 

@@ -21,6 +21,7 @@ import Onboarding
 
 final class ViewController: UIViewController {
     private var coordinator: OnboardingCoordinator!
+    private var purchase: PlanPurchase?
 
     @IBAction private func startATapped(_ sender: Any) {
         startOnboarding(variant: .A)
@@ -39,13 +40,20 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: OnboardingCoordinatorDelegate {
+    func userDidRequestPlanPurchase(purchase: PlanPurchase) {
+        let planPurchaseViewController = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "PlanPurchase") as! PlanPurchaseViewController
+        planPurchaseViewController.purchase = purchase
+
+        purchase.onCreatePlanPurchaseViewController(planPurchaseViewController)
+    }
+
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             completion(Country(name: "United States", flag: UIImage(named: "Flag")!))
         }
     }
 
-    func onboardingCoordinatorDidFinish() {
+    func onboardingCoordinatorDidFinish(requiresConnection: Bool) {
         coordinator = nil
         dismiss(animated: true, completion: nil)
     }

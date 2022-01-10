@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectedViewControllerDelegate: AnyObject {
-    func userDidFinish()
+    func userDidConnectingFinish()
 }
 
 final class ConnectedViewController: UIViewController {
@@ -85,6 +85,6 @@ final class ConnectedViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func doneTapped(_ sender: Any) {
-        delegate?.userDidFinish()
+        delegate?.userDidConnectingFinish()
     }
 }

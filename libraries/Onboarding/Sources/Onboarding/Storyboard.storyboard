@@ -211,6 +211,16 @@
                                     </button>
                                 </subviews>
                             </stackView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nVI-jK-02g">
+                                <rect key="frame" x="274" y="12" width="30" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Skip"/>
+                                <connections>
+                                    <action selector="skipTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="t4V-ya-Zu0"/>
+                                    <action selector="skipTapped:" destination="cZU-yD-5FX" eventType="touchUpInside" id="y0l-ev-eq2"/>
+                                    <action selector="skipTapped:" destination="vdj-QW-HHE" eventType="touchUpInside" id="ziO-Xl-65q"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="bLb-8o-WGL"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -224,9 +234,11 @@
                             <constraint firstItem="et3-f9-Kbl" firstAttribute="bottom" secondItem="bLb-8o-WGL" secondAttribute="bottom" constant="-16" id="OVG-sf-btE"/>
                             <constraint firstItem="et3-f9-Kbl" firstAttribute="leading" secondItem="bLb-8o-WGL" secondAttribute="leading" constant="16" id="Oq6-bm-gDW"/>
                             <constraint firstItem="rS6-4J-D6B" firstAttribute="leading" secondItem="bLb-8o-WGL" secondAttribute="leading" id="Si1-JM-0zC"/>
+                            <constraint firstItem="nVI-jK-02g" firstAttribute="top" secondItem="bLb-8o-WGL" secondAttribute="top" constant="12" id="XW4-Pz-7wu"/>
                             <constraint firstItem="bLb-8o-WGL" firstAttribute="trailing" secondItem="rS6-4J-D6B" secondAttribute="trailing" id="f90-HM-Q9k"/>
                             <constraint firstItem="rS6-4J-D6B" firstAttribute="height" secondItem="0SO-N4-naA" secondAttribute="height" multiplier="0.4" id="fWy-fy-8xM"/>
                             <constraint firstItem="rS6-4J-D6B" firstAttribute="top" secondItem="bLb-8o-WGL" secondAttribute="top" id="rlP-Iq-GhZ"/>
+                            <constraint firstItem="bLb-8o-WGL" firstAttribute="trailing" secondItem="nVI-jK-02g" secondAttribute="trailing" constant="16" id="s4g-gI-1d9"/>
                             <constraint firstItem="bLb-8o-WGL" firstAttribute="trailing" secondItem="GsY-C6-6lv" secondAttribute="trailing" constant="24" id="yOt-pY-AvV"/>
                         </constraints>
                     </view>
@@ -234,6 +246,7 @@
                         <outlet property="connectButton" destination="5fX-xH-Rp6" id="TDW-6p-IHQ"/>
                         <outlet property="noteLabel" destination="y5N-7S-uJg" id="rpd-z0-88X"/>
                         <outlet property="purchaseButon" destination="SEb-J4-sxd" id="nAH-Pp-jC4"/>
+                        <outlet property="skipButton" destination="nVI-jK-02g" id="RAY-3z-0PB"/>
                         <outlet property="subtitleLabel" destination="zHn-yT-QgC" id="bZZ-am-zAX"/>
                         <outlet property="titleLabel" destination="mpi-KW-q6R" id="N6T-qO-ho8"/>
                     </connections>
@@ -388,6 +401,73 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="v57-wg-VJm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2239" y="80"/>
+        </scene>
+        <!--Upsell View Controller-->
+        <scene sceneID="L6f-7N-qhx">
+            <objects>
+                <viewController storyboardIdentifier="Upsell" id="k5o-6U-yBH" customClass="UpsellViewController" customModule="Onboarding" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="n0X-8h-XkL">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FHs-vS-yIf">
+                                <rect key="frame" x="110" y="443" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="getPlusTapped:" destination="k5o-6U-yBH" eventType="touchUpInside" id="zkW-Th-cxn"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="Oow-8b-WVq"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bVF-50-7Mb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2916" y="79"/>
+        </scene>
+        <!--Get Plus View Controller-->
+        <scene sceneID="gpC-6Z-Vb6">
+            <objects>
+                <viewController storyboardIdentifier="GetPlus" id="cw8-9j-Oyr" customClass="GetPlusViewController" customModule="Onboarding" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="BdW-EQ-Lk6">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="4Hk-UO-yJg"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="C7C-6T-9jO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3606" y="78"/>
+        </scene>
+        <!--Connect To Plus Server View Controller-->
+        <scene sceneID="SME-9T-z9J">
+            <objects>
+                <viewController storyboardIdentifier="ConnectToPlusServer" id="kOK-QS-z90" customClass="ConnectToPlusServerViewController" customModule="Onboarding" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="3Hn-ma-VU1">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JMP-WP-vT7">
+                                <rect key="frame" x="76" y="416" width="67" height="31"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="cnnectToPlusServerTapped:" destination="kOK-QS-z90" eventType="touchUpInside" id="keg-vE-WBV"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="pJ9-4f-erB"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3sF-nH-6Jo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4294" y="78"/>
         </scene>
     </scenes>
     <resources>

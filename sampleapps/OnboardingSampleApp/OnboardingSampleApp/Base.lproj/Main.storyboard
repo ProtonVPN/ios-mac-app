@@ -47,6 +47,35 @@
             </objects>
             <point key="canvasLocation" x="132" y="68"/>
         </scene>
+        <!--Plan Purchase View Controller-->
+        <scene sceneID="p1k-he-HEq">
+            <objects>
+                <viewController storyboardIdentifier="PlanPurchase" id="LVS-9k-L4j" customClass="PlanPurchaseViewController" customModule="OnboardingSampleApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Yre-5r-LeI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hpq-lY-C9y">
+                                <rect key="frame" x="154" y="438" width="106" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Plus purchased"/>
+                                <connections>
+                                    <action selector="planPurchasedTapped:" destination="LVS-9k-L4j" eventType="touchUpInside" id="ili-KN-0XT"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="wPg-4X-7k8"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="hpq-lY-C9y" firstAttribute="centerX" secondItem="wPg-4X-7k8" secondAttribute="centerX" id="OZp-aH-EDa"/>
+                            <constraint firstItem="hpq-lY-C9y" firstAttribute="centerY" secondItem="wPg-4X-7k8" secondAttribute="centerY" id="cgp-KJ-Emh"/>
+                        </constraints>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gMD-ao-lzE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="803" y="68"/>
+        </scene>
     </scenes>
     <resources>
         <systemColor name="systemBackgroundColor">
