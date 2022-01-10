@@ -125,10 +125,10 @@ private final class BackgroundTimer {
     
     deinit {
         timerSource.setEventHandler {}
-        timerSource.cancel()
         if state == .suspended {
             timerSource.resume()
         }
+        timerSource.cancel()
     }
     
 }
