@@ -24,6 +24,7 @@ import ProtonCore_DataModel
 import ProtonCore_Payments
 import ProtonCore_PaymentsUI
 import vpncore
+import UIKit
 
 protocol PlanServiceFactory {
     func makePlanService() -> PlanService
@@ -40,12 +41,13 @@ protocol PlanService {
     func presentPlanSelection()
     func presentSubscriptionManagement()
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void)
+    func createPlusPlanUI(completion: @escaping (UIViewController) -> Void)
 
     func clear()
 }
 
 final class CorePlanService: PlanService {
-    private let paymentsUI: PaymentsUI
+    private var paymentsUI: PaymentsUI?
     private let payments: Payments
     private let alertService: CoreAlertService
     private let userCachedStatus: UserCachedStatus
@@ -72,7 +74,6 @@ final class CorePlanService: PlanService {
                 alertService.push(alert: ReportBugAlert())
             }
         )
-        paymentsUI = PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: ObfuscatedConstants.planNames)
     }
 
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void) {
@@ -94,20 +95,39 @@ final class CorePlanService: PlanService {
             return
         }
 
-        paymentsUI.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: true) { [weak self] response in
+        self.paymentsUI = createPaymentsUI()
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
     }
 
     func presentSubscriptionManagement() {
-        paymentsUI.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: true) { [weak self] response in
+        self.paymentsUI = createPaymentsUI()
+        paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
+        }
+    }
+
+    func createPlusPlanUI(completion: @escaping (UIViewController) -> Void) {
+        self.paymentsUI = createPaymentsUI(onlyPlusPlan: true)
+        paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { response in
+            switch response {
+            case let .open(vc: viewController, opened: false):
+                completion(viewController)
+            default:
+                assertionFailure("Invalid implementation")
+            }
         }
     }
 
     func clear() {
         tokenStorage?.clear()
         userCachedStatus.clear()
+    }
+
+    private func createPaymentsUI(onlyPlusPlan: Bool = false) -> PaymentsUI {
+        let planNames = onlyPlusPlan ? ObfuscatedConstants.planNames.filter({ $0.contains("plus") }) : ObfuscatedConstants.planNames
+        return PaymentsUI(payments: payments, clientApp: ClientApp.vpn, shownPlanNames: planNames)
     }
 
     private func handlePaymentsResponse(response: PaymentsUIResultReason) {
