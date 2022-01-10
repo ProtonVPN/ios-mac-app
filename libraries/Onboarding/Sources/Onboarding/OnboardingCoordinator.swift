@@ -22,7 +22,8 @@ import UIKit
 public typealias OnboardingConnectionRequestCompletion = (Country?) -> Void
 
 public protocol OnboardingCoordinatorDelegate: AnyObject {
-    func onboardingCoordinatorDidFinish()
+    func userDidRequestPlanPurchase(purchase: PlanPurchase)
+    func onboardingCoordinatorDidFinish(requiresConnection: Bool)
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
 }
 
@@ -33,6 +34,8 @@ public final class OnboardingCoordinator {
     private let storyboard: UIStoryboard
     private let navigationController: UINavigationController
     private let configuration: Configuration
+    private var popOverNavigationController: UINavigationController?
+    private var purchase: PlanPurchase?
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
@@ -76,6 +79,51 @@ public final class OnboardingCoordinator {
         connectedViewController.country = country
         navigationController.pushViewController(connectedViewController, animated: true)
     }
+
+    private func showUpsell() {
+        let upsellViewController = storyboard.instantiate(controllerType: UpsellViewController.self)
+        upsellViewController.delegate = self
+        let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
+        self.popOverNavigationController = popOverNavigationController
+        popOverNavigationController.modalPresentationStyle = .fullScreen
+        navigationController.present(popOverNavigationController, animated: true, completion: nil)
+    }
+
+    private func finishConnection() {
+        switch configuration.variant {
+        case .A:
+            showUpsell()
+        case .B:
+            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+        }
+    }
+
+    private func showGetPlus() {
+        let purchase = PlanPurchase(
+            onCreatePlanPurchaseViewController: { [weak self] planPurchaseViewController in
+                guard let self = self else {
+                    return
+                }
+
+                let getPlusViewController = self.storyboard.instantiate(controllerType: GetPlusViewController.self)
+                getPlusViewController.planPurchaseViewController = planPurchaseViewController
+                self.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
+            },
+            onPlanPurchased: { [weak self] in
+                self?.showConnectToPlusServer()
+            }
+        )
+        self.purchase = purchase
+
+        delegate?.userDidRequestPlanPurchase(purchase: purchase)
+    }
+
+    private func showConnectToPlusServer() {
+        let connectToPlusServerViewController = storyboard.instantiate(controllerType: ConnectToPlusServerViewController.self)
+        connectToPlusServerViewController.delegate = self
+        navigationController.pushViewController(connectToPlusServerViewController, animated: false)
+        popOverNavigationController?.dismiss(animated: true)
+    }
 }
 
 // MARK: Welcome screen delegate
@@ -97,17 +145,37 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
 // MARK: Connected screen delegate
 
 extension OnboardingCoordinator: ConnectedViewControllerDelegate {
-    func userDidFinish() {
-        delegate?.onboardingCoordinatorDidFinish()
+    func userDidConnectingFinish() {
+        finishConnection()
     }
 }
 
 // MARK: Connection screen delegate
 
 extension OnboardingCoordinator: ConnectionViewControllerDelegate {
+    func userDidRequestSkipConnection() {
+        finishConnection()
+    }
+
     func userDidRequestConnection() {
         delegate?.userDidRequestConnection { [weak self] country in
             self?.showConnected(country: country)
         }
+    }
+}
+
+// MARK: Upsell screen delegate
+
+extension OnboardingCoordinator: UpsellViewControllerDelegate {
+    func usedDidRequestPlus() {
+        showGetPlus()
+    }
+}
+
+// MARK: Connect to Plus screen delegate
+
+extension OnboardingCoordinator: ConnectToPlusServerViewControllerDelegate {
+    func userDidRequestConnectToPlus() {
+        delegate?.onboardingCoordinatorDidFinish(requiresConnection: true)
     }
 }

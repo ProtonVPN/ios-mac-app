@@ -21,6 +21,7 @@ import UIKit
 
 protocol ConnectionViewControllerDelegate: AnyObject {
     func userDidRequestConnection()
+    func userDidRequestSkipConnection()
 }
 
 final class ConnectionViewController: UIViewController {
@@ -32,6 +33,7 @@ final class ConnectionViewController: UIViewController {
     @IBOutlet private weak var noteLabel: UILabel!
     @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private weak var purchaseButon: UIButton!
+    @IBOutlet private weak var skipButton: UIButton!
 
     // MARK: Properties
 
@@ -60,12 +62,14 @@ final class ConnectionViewController: UIViewController {
         textNoteStyle(noteLabel)
         actionButtonStyle(connectButton)
         actionTextButtonStyle(purchaseButon)
+        textButtonStyle(skipButton)
 
         titleLabel.text = LocalizedString.onboardingEstablishTitle
         subtitleLabel.text = LocalizedString.onboardingEstablishSubtitle
         noteLabel.text = LocalizedString.onboardingEstablishNote
         connectButton.setTitle(LocalizedString.onboardingEstablishConnectNow, for: .normal)
         purchaseButon.setTitle(LocalizedString.onboardingEstablishAccessAll, for: .normal)
+        skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
 
         connectButton.addSubview(activityView)
         NSLayoutConstraint.activate([
@@ -85,5 +89,9 @@ final class ConnectionViewController: UIViewController {
 
     @IBAction private func purchaseTapped(_ sender: Any) {
 
+    }
+
+    @IBAction private func skipTapped(_ sender: Any) {
+        delegate?.userDidRequestSkipConnection()
     }
 }

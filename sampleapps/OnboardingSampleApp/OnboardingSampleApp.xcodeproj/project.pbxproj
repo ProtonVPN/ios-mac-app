@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F35F0BF6278C6689000A1F76 /* PlanPurchaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F35F0BF5278C6689000A1F76 /* PlanPurchaseViewController.swift */; };
 		F3BC53322784A395009E49B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC53312784A395009E49B4 /* AppDelegate.swift */; };
 		F3BC53342784A395009E49B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC53332784A395009E49B4 /* SceneDelegate.swift */; };
 		F3BC53362784A395009E49B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BC53352784A395009E49B4 /* ViewController.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F35F0BF5278C6689000A1F76 /* PlanPurchaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlanPurchaseViewController.swift; sourceTree = "<group>"; };
 		F3BC532E2784A395009E49B4 /* OnboardingSampleApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnboardingSampleApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F3BC53312784A395009E49B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F3BC53332784A395009E49B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				F3BC53332784A395009E49B4 /* SceneDelegate.swift */,
 				F3BC53352784A395009E49B4 /* ViewController.swift */,
 				F3BC53372784A395009E49B4 /* Main.storyboard */,
+				F35F0BF5278C6689000A1F76 /* PlanPurchaseViewController.swift */,
 				F3BC533A2784A396009E49B4 /* Assets.xcassets */,
 				F3BC533C2784A396009E49B4 /* LaunchScreen.storyboard */,
 				F3BC533F2784A396009E49B4 /* Info.plist */,
@@ -151,6 +154,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F35F0BF6278C6689000A1F76 /* PlanPurchaseViewController.swift in Sources */,
 				F3BC53362784A395009E49B4 /* ViewController.swift in Sources */,
 				F3BC53322784A395009E49B4 /* AppDelegate.swift in Sources */,
 				F3BC53342784A395009E49B4 /* SceneDelegate.swift in Sources */,
