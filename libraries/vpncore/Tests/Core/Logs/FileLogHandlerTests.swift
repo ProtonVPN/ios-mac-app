@@ -37,51 +37,91 @@ class FileLogHandlerTests: XCTestCase {
 
     func testCreatesFile() {
         let handler = FileLogHandler(file)
-        handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
-                
         let expectation = XCTestExpectation(description: "File created")
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
+        let delegate = LogDelegate()
+        delegate.newFileCallback = {
             if self.manager.fileExists(atPath: self.folder.path), self.manager.fileExists(atPath: self.file.path) {
                 expectation.fulfill()
             }
         }
-        wait(for: [expectation], timeout: 2)
+        handler.delegate = delegate
+        
+        handler.log(level: .info, message: "Message", metadata: nil, source: "", file: "", function: "", line: 1)
+
+        wait(for: [expectation], timeout: 5)
     }
     
     func testRotatesFiles() {
+        let expectationFileCount = XCTestExpectation(description: "3 Files are created")
+        
+        let expectationRotation = XCTestExpectation(description: "Files are rotated 2 times")
+        expectationRotation.expectedFulfillmentCount = 2
+        expectationRotation.assertForOverFulfill = true
+        
         let handler = FileLogHandler(file)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 50
         
+        let delegate = LogDelegate()
+        delegate.newFileCallback = {
+            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 3 {
+                expectationFileCount.fulfill()
+            }
+        }
+        delegate.rotationCallback = {
+            expectationRotation.fulfill()
+        }
+        handler.delegate = delegate
+        
         for i in 1 ... 7 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let expectation = XCTestExpectation(description: "3 Files are created")
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
-            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 3 {
-                expectation.fulfill()
-            }
-        }
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectationFileCount, expectationRotation], timeout: 2)
     }
     
     func testDeletesOldFiles() {
+        let expectationFileCount = XCTestExpectation(description: "Max 2 files are present an the same time")
+        
+        let expectationRotation = XCTestExpectation(description: "Files are rotated 3 times")
+        expectationRotation.expectedFulfillmentCount = 3
+        expectationRotation.assertForOverFulfill = true
+        
         let handler = FileLogHandler(file)
         handler.maxFileSize = 70
         handler.maxArchivedFilesCount = 1
         
-        for i in 1 ... 7 {
+        let delegate = LogDelegate()
+        delegate.newFileCallback = {
+            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
+                expectationFileCount.fulfill()
+            }
+        }
+        delegate.rotationCallback = {
+            expectationRotation.fulfill()
+        }
+        handler.delegate = delegate
+        
+        for i in 1 ... 9 {
             handler.log(level: .info, message: "Message \(i)", metadata: nil, source: "", file: "", function: "", line: 1)
         }
         
-        let expectation = XCTestExpectation(description: "2 Files are created")
-        DispatchQueue.global(qos: .background).asyncAfter(deadline: .now() + 1) {
-            if let files = try? self.manager.contentsOfDirectory(at: self.folder, includingPropertiesForKeys: nil, options: .skipsHiddenFiles), files.count == 2 { // maxArchivedFilesCount + current logfile
-                expectation.fulfill()
-            }
-        }
-        wait(for: [expectation], timeout: 2)
+        wait(for: [expectationFileCount, expectationRotation], timeout: 2)
     }
 
+}
+
+private class LogDelegate: FileLogHandlerDelegate {
+    
+    var newFileCallback: (() -> Void)?
+    var rotationCallback: (() -> Void)?
+    
+    func didCreateNewLogFile() {
+        newFileCallback?()
+    }
+        
+    func didRotateLogFile() {
+        rotationCallback?()
+    }
+    
 }
