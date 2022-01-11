@@ -139,3 +139,9 @@ let footerStyle =
         $0.textColor = colors.weakText
         $0.font = .systemFont(ofSize: 13)
 }
+
+let navigationStyle: (UINavigationController) -> Void = {
+    $0.navigationBar.backgroundColor = colors.background
+    $0.navigationBar.isTranslucent = false
+    $0.modalPresentationStyle = .fullScreen
+}
