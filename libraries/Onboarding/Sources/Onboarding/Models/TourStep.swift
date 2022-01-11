@@ -22,7 +22,7 @@ import UIKit
 enum TourStep: CaseIterable {
     case beProtected
     case unblockStreaming
-    case netShield
+    case netshield
 }
 
 extension TourStep {
@@ -32,7 +32,7 @@ extension TourStep {
             return UIImage(named: "BeProtected", in: Bundle.module, compatibleWith: nil)!
         case .unblockStreaming:
             return UIImage(named: "UnblockStreaming", in: Bundle.module, compatibleWith: nil)!
-        case .netShield:
+        case .netshield:
             return UIImage(named: "Netshield", in: Bundle.module, compatibleWith: nil)!
         }
     }
@@ -43,7 +43,7 @@ extension TourStep {
             return LocalizedString.onboardingBeprotectedTitle
         case .unblockStreaming:
             return LocalizedString.onboardingUnblockstreamingTitle
-        case .netShield:
+        case .netshield:
             return LocalizedString.onboardingNetshieldTitle
         }
     }
@@ -54,7 +54,7 @@ extension TourStep {
             return LocalizedString.onboardingBeprotectedSubtitle
         case .unblockStreaming:
             return LocalizedString.onboardingUnblockstreamingSubtitle
-        case .netShield:
+        case .netshield:
             return LocalizedString.onboardingNetshieldSubtitle
         }
     }
