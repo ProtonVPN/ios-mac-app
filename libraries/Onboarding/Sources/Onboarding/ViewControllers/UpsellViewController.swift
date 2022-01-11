@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol UpsellViewControllerDelegate: AnyObject {
-    func usedDidRequestPlus()
+    func userDidRequestPlus()
     func userDidDismissUpsell()
 }
 
@@ -76,7 +76,7 @@ final class UpsellViewController: UIViewController {
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
-        delegate?.usedDidRequestPlus()
+        delegate?.userDidRequestPlus()
     }
 
     @IBAction private func useFreeTapped(_ sender: Any) {
