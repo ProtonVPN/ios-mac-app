@@ -46,6 +46,8 @@ public enum LocalizedString {
   public static var onboardingNetshieldTitle: String { return LocalizedString.tr("Localizable", "onboarding_netshield_title") }
   /// Next
   public static var onboardingNext: String { return LocalizedString.tr("Localizable", "onboarding_next") }
+  /// ProtonVPN is now ready to be used.
+  public static var onboardingNotConnectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_not_connected_subtitle") }
   /// AVAILABLE WITH PLUS
   public static var onboardingPlusOnly: String { return LocalizedString.tr("Localizable", "onboarding_plus_only") }
   /// Enjoy the world of privacy.

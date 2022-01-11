@@ -36,6 +36,7 @@ public final class OnboardingCoordinator {
     private let navigationController: UINavigationController
     private let configuration: Configuration
     private var popOverNavigationController: UINavigationController?
+    private var onboardingFinished = false
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
@@ -67,10 +68,14 @@ public final class OnboardingCoordinator {
         navigationController.pushViewController(tourViewController, animated: true)
     }
 
-    private func showConnectionSetup() {
+    private func showConnectionSetup(animated: Bool = true) {
+        guard !(navigationController.topViewController is ConnectionViewController) else {
+            return
+        }
+
         let connectionViewController = storyboard.instantiate(controllerType: ConnectionViewController.self)
         connectionViewController.delegate = self
-        navigationController.pushViewController(connectionViewController, animated: true)
+        navigationController.pushViewController(connectionViewController, animated: animated)
     }
 
     private func showConnected(country: Country?) {
@@ -87,15 +92,6 @@ public final class OnboardingCoordinator {
         navigationStyle(popOverNavigationController)
         self.popOverNavigationController = popOverNavigationController
         navigationController.present(popOverNavigationController, animated: true, completion: nil)
-    }
-
-    private func finishConnection() {
-        switch configuration.variant {
-        case .A:
-            showUpsell()
-        case .B:
-            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
-        }
     }
 
     private func showGetPlus() {
@@ -152,8 +148,14 @@ extension OnboardingCoordinator: TourViewControllerDelegate {
 // MARK: Connected screen delegate
 
 extension OnboardingCoordinator: ConnectedViewControllerDelegate {
-    func userDidConnectingFinish() {
-        finishConnection()
+    func userDidFinish() {
+        switch configuration.variant {
+        case .A:
+            onboardingFinished = true
+            showUpsell()
+        case .B:
+            delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+        }
     }
 }
 
@@ -165,7 +167,7 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
     }
 
     func userDidRequestSkipConnection() {
-        finishConnection()
+        showConnected(country: nil)
     }
 
     func userDidRequestConnection() {
@@ -179,10 +181,21 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
 
 extension OnboardingCoordinator: UpsellViewControllerDelegate {
     func userDidDismissUpsell() {
-        popOverNavigationController?.dismiss(animated: true, completion: nil)
+        switch configuration.variant {
+        case .A:
+            if onboardingFinished {
+                delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+                return
+            }
+
+            popOverNavigationController?.dismiss(animated: true, completion: nil)
+        case .B:
+            showConnectionSetup(animated: false)
+            popOverNavigationController?.dismiss(animated: true, completion: nil)
+        }
     }
 
-    func usedDidRequestPlus() {
+    func userDidRequestPlus() {
         showGetPlus()
     }
 }

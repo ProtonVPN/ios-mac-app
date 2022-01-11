@@ -20,7 +20,7 @@ import Foundation
 import UIKit
 
 protocol ConnectedViewControllerDelegate: AnyObject {
-    func userDidConnectingFinish()
+    func userDidFinish()
 }
 
 final class ConnectedViewController: UIViewController {
@@ -69,8 +69,6 @@ final class ConnectedViewController: UIViewController {
         countryViewStyle(countryView)
 
         titleLabel.text = LocalizedString.onboardingConnectedTitle
-        subtitleLabel.text = LocalizedString.onboardingConnectedSubtitle
-        noteLabel.text = LocalizedString.onboardingConnectedNote
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
 
         setupCountry()
@@ -80,11 +78,14 @@ final class ConnectedViewController: UIViewController {
         countryView.isHidden = country == nil
         countryLabel.text = country?.name
         countryImage.image = country?.flag
+
+        subtitleLabel.text = country == nil ? LocalizedString.onboardingNotConnectedSubtitle : LocalizedString.onboardingConnectedSubtitle
+        noteLabel.text = country == nil ? nil : LocalizedString.onboardingConnectedNote
     }
 
     // MARK: Actions
 
     @IBAction private func doneTapped(_ sender: Any) {
-        delegate?.userDidConnectingFinish()
+        delegate?.userDidFinish()
     }
 }
