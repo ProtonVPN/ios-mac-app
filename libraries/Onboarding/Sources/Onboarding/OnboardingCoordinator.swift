@@ -84,10 +84,8 @@ public final class OnboardingCoordinator {
         let upsellViewController = storyboard.instantiate(controllerType: UpsellViewController.self)
         upsellViewController.delegate = self
         let popOverNavigationController = UINavigationController(rootViewController: upsellViewController)
-        popOverNavigationController.navigationBar.backgroundColor = configuration.colors.background
-        popOverNavigationController.navigationBar.isTranslucent = false
+        navigationStyle(popOverNavigationController)
         self.popOverNavigationController = popOverNavigationController
-        popOverNavigationController.modalPresentationStyle = .fullScreen
         navigationController.present(popOverNavigationController, animated: true, completion: nil)
     }
 
