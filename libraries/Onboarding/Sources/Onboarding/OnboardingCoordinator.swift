@@ -109,9 +109,13 @@ public final class OnboardingCoordinator {
                 let getPlusViewController = self.storyboard.instantiate(controllerType: GetPlusViewController.self)
                 getPlusViewController.delegate = self
                 getPlusViewController.planPurchaseViewController = planPurchaseViewController
-                self.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
+                executeOnUIThread { [weak self] in
+                    self?.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
+                }
             case .planPurchased:
-                self.showConnectToPlusServer()
+                executeOnUIThread { [weak self] in
+                    self?.showConnectToPlusServer()
+                }
             }
         }
     }
