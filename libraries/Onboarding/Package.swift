@@ -21,6 +21,7 @@ let package = Package(
         resources: [
             .process("Storyboard.storyboard"),
             .process("Views/TourStepView.xib"),
+            .process("Views/FeatureView.xib"),
             .process("Resources")
         ])
     ]
