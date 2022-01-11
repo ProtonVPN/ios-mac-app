@@ -34,6 +34,11 @@ protocol PlanServiceDelegate: AnyObject {
     func paymentTransactionDidFinish()
 }
 
+enum PlusPlanUIResult {
+    case PlanPurchaseViewControllerCreated(UIViewController)
+    case planPurchased
+}
+
 protocol PlanService {
     var allowUpgrade: Bool { get }
     var delegate: PlanServiceDelegate? { get set }
@@ -41,7 +46,7 @@ protocol PlanService {
     func presentPlanSelection()
     func presentSubscriptionManagement()
     func updateServicePlans(completion: @escaping (Result<(), Error>) -> Void)
-    func createPlusPlanUI(completion: @escaping (UIViewController) -> Void)
+    func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void)
 
     func clear()
 }
@@ -95,27 +100,36 @@ final class CorePlanService: PlanService {
             return
         }
 
-        self.paymentsUI = createPaymentsUI()
+        paymentsUI = createPaymentsUI()
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
     }
 
     func presentSubscriptionManagement() {
-        self.paymentsUI = createPaymentsUI()
+        paymentsUI = createPaymentsUI()
         paymentsUI?.showCurrentPlan(presentationType: PaymentsUIPresentationType.modal, backendFetch: true, updateCredits: false) { [weak self] response in
             self?.handlePaymentsResponse(response: response)
         }
     }
 
-    func createPlusPlanUI(completion: @escaping (UIViewController) -> Void) {
-        self.paymentsUI = createPaymentsUI(onlyPlusPlan: true)
+    func createPlusPlanUI(completion: @escaping (PlusPlanUIResult) -> Void) {
+        paymentsUI = createPaymentsUI(onlyPlusPlan: true)
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { response in
             switch response {
             case let .open(vc: viewController, opened: false):
-                completion(viewController)
-            default:
-                assertionFailure("Invalid implementation")
+                completion(.PlanPurchaseViewControllerCreated(viewController))
+            case .open(vc: _, opened: true):
+                assertionFailure("Invalid usage")
+            case let .purchaseError(error: error):
+                log.error("Purchase failed", category: .iap, metadata: ["error": "\(error)"])
+            case .close:
+                log.debug("Payments closed", category: .iap)
+            case let .purchasedPlan(accountPlan: plan):
+                log.debug("Purchased plan: \(plan.protonName)", category: .iap)
+                completion(.planPurchased)
+            case let .planPurchaseProcessingInProgress(accountPlan: plan):
+                log.debug("Purchasing \(plan.protonName)", category: .iap)
             }
         }
     }
