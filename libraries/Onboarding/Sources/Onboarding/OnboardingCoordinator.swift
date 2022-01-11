@@ -20,11 +20,12 @@ import Foundation
 import UIKit
 
 public typealias OnboardingConnectionRequestCompletion = (Country?) -> Void
+public typealias OnboardingPlanPurchaseCompletion = (PlanPurchaseAction) -> Void
 
 public protocol OnboardingCoordinatorDelegate: AnyObject {
-    func userDidRequestPlanPurchase(purchase: PlanPurchase)
     func onboardingCoordinatorDidFinish(requiresConnection: Bool)
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion)
+    func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion)
 }
 
 public final class OnboardingCoordinator {
@@ -35,7 +36,6 @@ public final class OnboardingCoordinator {
     private let navigationController: UINavigationController
     private let configuration: Configuration
     private var popOverNavigationController: UINavigationController?
-    private var purchase: PlanPurchase?
 
     public weak var delegate: OnboardingCoordinatorDelegate?
 
@@ -99,24 +99,21 @@ public final class OnboardingCoordinator {
     }
 
     private func showGetPlus() {
-        let purchase = PlanPurchase(
-            onCreatePlanPurchaseViewController: { [weak self] planPurchaseViewController in
-                guard let self = self else {
-                    return
-                }
+        delegate?.userDidRequestPlanPurchase { [weak self] action in
+            guard let self = self else {
+                return
+            }
 
+            switch action {
+            case let .planPurchaseViewControllerReady(planPurchaseViewController):
                 let getPlusViewController = self.storyboard.instantiate(controllerType: GetPlusViewController.self)
                 getPlusViewController.delegate = self
                 getPlusViewController.planPurchaseViewController = planPurchaseViewController
                 self.popOverNavigationController?.pushViewController(getPlusViewController, animated: true)
-            },
-            onPlanPurchased: { [weak self] in
-                self?.showConnectToPlusServer()
+            case .planPurchased:
+                self.showConnectToPlusServer()
             }
-        )
-        self.purchase = purchase
-
-        delegate?.userDidRequestPlanPurchase(purchase: purchase)
+        }
     }
 
     private func showConnectToPlusServer() {
