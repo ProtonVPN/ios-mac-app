@@ -60,6 +60,22 @@ public enum LocalizedString {
   public static var onboardingUnblockstreamingSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_subtitle") }
   /// Unblock streaming
   public static var onboardingUnblockstreamingTitle: String { return LocalizedString.tr("Localizable", "onboarding_unblockstreaming_title") }
+  /// Built-in adblocker (NetShield)
+  public static var onboardingUpsellFeatureHighSpeed: String { return LocalizedString.tr("Localizable", "onboarding_upsell_feature_highSpeed") }
+  /// Connect 10 devices simultaneously
+  public static var onboardingUpsellFeatureMultipleDevices: String { return LocalizedString.tr("Localizable", "onboarding_upsell_feature_multipleDevices") }
+  /// Highest speed (10 Gbps)
+  public static var onboardingUpsellFeatureNetshield: String { return LocalizedString.tr("Localizable", "onboarding_upsell_feature_netshield") }
+  /// Access streaming services globally
+  public static var onboardingUpsellFeatureStreaming: String { return LocalizedString.tr("Localizable", "onboarding_upsell_feature_streaming") }
+  /// and more premium features...
+  public static var onboardingUpsellFeaturesFooter: String { return LocalizedString.tr("Localizable", "onboarding_upsell_features_footer") }
+  /// Use limited FREE plan
+  public static var onboardingUpsellStayFree: String { return LocalizedString.tr("Localizable", "onboarding_upsell_stay_free") }
+  /// Take advantage of advanced features now!
+  public static var onboardingUpsellSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_upsell_subtitle") }
+  /// Access all 1300+ servers in 61 countries with Plus
+  public static var onboardingUpsellTitle: String { return LocalizedString.tr("Localizable", "onboarding_upsell_title") }
   /// Learn how to get the most out of ProtonVPN in just a few seconds
   public static var onboardingWelcomeSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_welcome_subtitle") }
   /// Welcome to ProtonVPN
