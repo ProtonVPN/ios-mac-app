@@ -435,9 +435,25 @@
                     <view key="view" contentMode="scaleToFill" id="BdW-EQ-Lk6">
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pe5-Ga-abW">
+                                <rect key="frame" x="16" y="16" width="288" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <viewLayoutGuide key="safeArea" id="4Hk-UO-yJg"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pe5-Ga-abW" firstAttribute="top" secondItem="4Hk-UO-yJg" secondAttribute="top" constant="16" id="3gA-a5-yIo"/>
+                            <constraint firstItem="pe5-Ga-abW" firstAttribute="leading" secondItem="4Hk-UO-yJg" secondAttribute="leading" constant="16" id="Nms-n8-xy0"/>
+                            <constraint firstItem="4Hk-UO-yJg" firstAttribute="trailing" secondItem="pe5-Ga-abW" secondAttribute="trailing" constant="16" id="P4m-hx-bVo"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="titleLabel" destination="pe5-Ga-abW" id="A5n-Yw-GRD"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="C7C-6T-9jO" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

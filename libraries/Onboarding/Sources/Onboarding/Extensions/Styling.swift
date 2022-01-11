@@ -127,3 +127,9 @@ let countryViewStyle =
     <> {
         $0.layer.cornerRadius = 8
 }
+
+let pageTitleStyle =
+    bigTitleStyle
+    <> {
+        $0.textAlignment = .left
+}

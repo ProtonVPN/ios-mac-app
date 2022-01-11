@@ -25,6 +25,10 @@ protocol GetPlusViewControllerDelegate: AnyObject {
 
 final class GetPlusViewController: UIViewController {
 
+    // MARK: Outlets
+
+    @IBOutlet private weak var titleLabel: UILabel!
+
     // MARK: Properties
 
     var planPurchaseViewController: UIViewController? {
@@ -49,7 +53,10 @@ final class GetPlusViewController: UIViewController {
     }
 
     private func setupUI() {
-        view.backgroundColor = .red
+        baseViewStyle(view)
+        pageTitleStyle(titleLabel)
+
+        titleLabel.text = LocalizedString.onboardingGetPlus
 
         let backButton = UIBarButtonItem(image: UIImage(named: "BackButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(backTapped))
         navigationItem.leftBarButtonItem = backButton
@@ -66,8 +73,8 @@ final class GetPlusViewController: UIViewController {
         NSLayoutConstraint.activate([
             planPurchaseViewController.view.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor),
             planPurchaseViewController.view.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor),
-            planPurchaseViewController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: 16),
-            planPurchaseViewController.view.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 16),
+            planPurchaseViewController.view.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            planPurchaseViewController.view.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
         ])
         planPurchaseViewController.didMove(toParent: self)
     }
