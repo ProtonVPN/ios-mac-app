@@ -19,12 +19,7 @@
 import Foundation
 import UIKit
 
-public final class PlanPurchase {
-    public let onCreatePlanPurchaseViewController: (UIViewController) -> Void
-    public let onPlanPurchased: () -> Void
-
-    init(onCreatePlanPurchaseViewController: @escaping (UIViewController) -> Void, onPlanPurchased: @escaping () -> Void) {
-        self.onCreatePlanPurchaseViewController = onCreatePlanPurchaseViewController
-        self.onPlanPurchased = onPlanPurchased
-    }
+public enum PlanPurchaseAction {
+    case planPurchaseViewControllerReady(UIViewController)
+    case planPurchased
 }

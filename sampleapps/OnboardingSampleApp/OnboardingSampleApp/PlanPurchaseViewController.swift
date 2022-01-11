@@ -21,9 +21,9 @@ import UIKit
 import Onboarding
 
 final class PlanPurchaseViewController: UIViewController {
-    var purchase: PlanPurchase?
+    var completion: OnboardingPlanPurchaseCompletion?
 
     @IBAction private func planPurchasedTapped(_ sender: Any) {
-        purchase?.onPlanPurchased()
+        completion?(.planPurchased)
     }
 }
