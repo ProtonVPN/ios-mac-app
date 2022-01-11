@@ -38,6 +38,8 @@ public enum LocalizedString {
   public static var onboardingEstablishSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_establish_subtitle") }
   /// Establish your first connection
   public static var onboardingEstablishTitle: String { return LocalizedString.tr("Localizable", "onboarding_establish_title") }
+  /// Get Plus
+  public static var onboardingGetPlus: String { return LocalizedString.tr("Localizable", "onboarding_get_plus") }
   /// Block malware, ads, and trackers in browser and in all apps.
   public static var onboardingNetshieldSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_netshield_subtitle") }
   /// Block ads and much more
