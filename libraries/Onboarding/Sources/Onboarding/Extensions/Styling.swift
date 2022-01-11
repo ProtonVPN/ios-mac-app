@@ -46,7 +46,6 @@ let actionTextButtonStyle =
     textButtonStyle
     <> {
         $0.titleLabel?.font = .systemFont(ofSize: 15)
-        $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
 }
 
 let baseTextStyle: (UILabel) -> Void = {
@@ -132,4 +131,11 @@ let pageTitleStyle =
     bigTitleStyle
     <> {
         $0.textAlignment = .left
+}
+
+let footerStyle =
+    baseTextStyle
+    <> {
+        $0.textColor = colors.weakText
+        $0.font = .systemFont(ofSize: 13)
 }

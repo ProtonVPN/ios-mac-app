@@ -26,6 +26,14 @@ protocol UpsellViewControllerDelegate: AnyObject {
 
 final class UpsellViewController: UIViewController {
 
+    // MARK: Outlets
+
+    @IBOutlet private weak var getPlusButton: UIButton!
+    @IBOutlet private weak var useFreeButton: UIButton!
+    @IBOutlet private weak var featuresStackView: UIStackView!
+    @IBOutlet private weak var titleLabel: UILabel!
+    @IBOutlet private weak var featuresFooterLabel: UILabel!
+
     // MARK: Properties
 
     weak var delegate: UpsellViewControllerDelegate?
@@ -40,15 +48,39 @@ final class UpsellViewController: UIViewController {
 
     private func setupUI() {
         baseViewStyle(view)
+        actionButtonStyle(getPlusButton)
+        actionTextButtonStyle(useFreeButton)
+        titleStyle(titleLabel)
+        footerStyle(featuresFooterLabel)
+
+        getPlusButton.setTitle(LocalizedString.onboardingGetPlus, for: .normal)
+        useFreeButton.setTitle(LocalizedString.onboardingUpsellStayFree, for: .normal)
+        titleLabel.text = LocalizedString.onboardingUpsellTitle
+        featuresFooterLabel.text = LocalizedString.onboardingUpsellFeaturesFooter
 
         let closeButton = UIBarButtonItem(image: UIImage(named: "CloseButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(closeTapped))
         navigationItem.leftBarButtonItem = closeButton
+
+        for view in featuresStackView.arrangedSubviews {
+            view.removeFromSuperview()
+            featuresStackView.removeArrangedSubview(view)
+        }
+
+        for feature in Feature.allCases {
+            let view = Bundle.module.loadNibNamed("FeatureView", owner: self, options: nil)?.first as! FeatureView
+            view.feature = feature
+            featuresStackView.addArrangedSubview(view)
+        }
     }
 
     // MARK: Actions
 
     @IBAction private func getPlusTapped(_ sender: Any) {
         delegate?.usedDidRequestPlus()
+    }
+
+    @IBAction private func useFreeTapped(_ sender: Any) {
+        delegate?.userDidDismissUpsell()
     }
 
     @objc private func closeTapped() {
