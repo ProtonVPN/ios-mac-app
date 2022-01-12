@@ -38,7 +38,7 @@ extension LocalAgentConfiguration {
     }
 
     init?(propertiesManager: PropertiesManagerProtocol, vpnProtocol: VpnProtocol?) {
-        guard let connectionConfiguration = propertiesManager.currentConnectionConfiguration() else {
+        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
@@ -54,7 +54,7 @@ extension LocalAgentConfiguration {
 extension VPNConnectionFeatures {
     
     init?(propertiesManager: PropertiesManagerProtocol, vpnProtocol: VpnProtocol?) {
-        guard let connectionConfiguration = propertiesManager.currentConnectionConfiguration() else {
+        guard let vpnProtocol = vpnProtocol, let connectionConfiguration = propertiesManager.currentConnectionConfiguration(for: vpnProtocol) else {
             return nil
         }
 
@@ -68,7 +68,7 @@ extension VPNConnectionFeatures {
 
 private extension PropertiesManagerProtocol {
     
-    func currentConnectionConfiguration() -> ConnectionConfiguration? {
+    func currentConnectionConfiguration(for vpnProtocol: VpnProtocol) -> ConnectionConfiguration? {
         let configuration: ConnectionConfiguration?
         switch vpnProtocol {
         case .ike:
