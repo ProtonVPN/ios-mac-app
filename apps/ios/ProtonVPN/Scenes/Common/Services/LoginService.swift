@@ -64,7 +64,7 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton)))
+        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.internal, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.vpn(LocalizedString.loginSummaryButton)))
         let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, listOfShownPlanNames: ObfuscatedConstants.planNames, reportBugAlertHandler: { [weak self] receipt in
             log.error("Error from payments, showing bug report", category: .iap)
             self?.alertService.push(alert: ReportBugAlert())
