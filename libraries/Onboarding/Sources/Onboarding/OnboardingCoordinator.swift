@@ -78,10 +78,10 @@ public final class OnboardingCoordinator {
         navigationController.pushViewController(connectionViewController, animated: animated)
     }
 
-    private func showConnected(country: Country?) {
+    private func showConnected(state: ConnectedState) {
         let connectedViewController = storyboard.instantiate(controllerType: ConnectedViewController.self)
         connectedViewController.delegate = self
-        connectedViewController.country = country
+        connectedViewController.state = state
         navigationController.pushViewController(connectedViewController, animated: true)
     }
 
@@ -167,12 +167,17 @@ extension OnboardingCoordinator: ConnectionViewControllerDelegate {
     }
 
     func userDidRequestSkipConnection() {
-        showConnected(country: nil)
+        showConnected(state: .notConnected)
     }
 
     func userDidRequestConnection() {
         delegate?.userDidRequestConnection { [weak self] country in
-            self?.showConnected(country: country)
+            guard let country = country else {
+                self?.showConnected(state: .error)
+                return
+            }
+
+            self?.showConnected(state: .connected(country))
         }
     }
 }
