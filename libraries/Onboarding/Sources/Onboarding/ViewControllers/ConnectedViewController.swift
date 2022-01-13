@@ -40,15 +40,7 @@ final class ConnectedViewController: UIViewController {
 
     weak var delegate: ConnectedViewControllerDelegate?
 
-    var country: Country? {
-        didSet {
-            guard isViewLoaded else {
-                return
-            }
-
-            setupCountry()
-        }
-    }
+    var state: ConnectedState = .notConnected
 
     // MARK: Setup
 
@@ -70,17 +62,21 @@ final class ConnectedViewController: UIViewController {
 
         titleLabel.text = LocalizedString.onboardingConnectedTitle
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
+        noteLabel.text = LocalizedString.onboardingConnectedNote
 
-        setupCountry()
-    }
-
-    private func setupCountry() {
-        countryView.isHidden = country == nil
-        countryLabel.text = country?.name
-        countryImage.image = country?.flag
-
-        subtitleLabel.text = country == nil ? LocalizedString.onboardingNotConnectedSubtitle : LocalizedString.onboardingConnectedSubtitle
-        noteLabel.text = country == nil ? nil : LocalizedString.onboardingConnectedNote
+        switch state {
+        case .notConnected:
+            countryView.isHidden = true
+            subtitleLabel.text = LocalizedString.onboardingNotConnectedSubtitle
+        case .error:
+            countryView.isHidden = true
+            subtitleLabel.text = LocalizedString.onboardingNotConnectedSubtitle
+        case let .connected(country):
+            countryView.isHidden = false
+            countryLabel.text = country.name
+            countryImage.image = country.flag
+            subtitleLabel.text = LocalizedString.onboardingConnectedSubtitle
+        }
     }
 
     // MARK: Actions
