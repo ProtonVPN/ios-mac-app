@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.5.0'
+  '3.6.0'
 end
 
 def openvpn
@@ -131,7 +131,8 @@ target 'ProtonVPN' do
   target 'ProtonVPNUITests' do    
     platform :ios, '12.1'
     pm_automation
-    pod 'ProtonCore-TestingToolkit/UITests/Core/Alamofire', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-TestingToolkit/UITests/Core', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-QuarkCommands/Alamofire', :git => proton_core_path, :tag => proton_core_version
   end
 
 end

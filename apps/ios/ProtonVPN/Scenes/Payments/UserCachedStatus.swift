@@ -17,6 +17,7 @@ final class UserCachedStatus: ServicePlanDataStorage {
         case defaultPlanDetails
         case currentSubscription
         case isIAPUpgradePlanAvailable
+        case paymentsBackendStatusAcceptsIAP
     }
 
     private let storage: Storage
@@ -58,6 +59,15 @@ final class UserCachedStatus: ServicePlanDataStorage {
         }
         set {
             storage.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
+        }
+    }
+
+    var paymentsBackendStatusAcceptsIAP: Bool {
+        get {
+            return storage.defaults.bool(forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
+        }
+        set {
+            storage.setValue(newValue, forKey: UserCachedStatusKeys.paymentsBackendStatusAcceptsIAP.rawValue)
         }
     }
 
