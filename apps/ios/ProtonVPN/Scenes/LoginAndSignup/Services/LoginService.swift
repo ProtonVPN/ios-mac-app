@@ -23,7 +23,8 @@ enum SilengLoginResult {
 }
 
 protocol LoginServiceDelegate: AnyObject {
-    func loginServiceDidFinish()
+    func userDidLogIn()
+    func usedDidSignUp()
 }
 
 protocol LoginService: AnyObject {
@@ -82,8 +83,10 @@ final class CoreLoginService {
             switch result {
             case .dismissed:
                 log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
-            case .loggedIn, .signedUp:
-                self?.delegate?.loginServiceDidFinish()
+            case .loggedIn:
+                self?.delegate?.userDidLogIn()
+            case .signedUp:
+                self?.delegate?.usedDidSignUp()
             }
 
             self?.login = nil
