@@ -28,13 +28,13 @@ final class macOSNetworkingDelegate: NetworkingDelegate {
 // swiftlint:enable type_name
 
 extension macOSNetworkingDelegate {
-    func onHumanVerify(methods: [VerifyMethod], startToken: String?, completion: @escaping ((HumanVerifyHeader, HumanVerifyIsClosed, SendVerificationCodeBlock?) -> Void)) {
+    func onHumanVerify(methods: [VerifyMethod], startToken: String?, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) {
         // there is no human verification on macOS so just show en error
         alertService.push(alert: UserVerificationAlert(verificationMethods: VerificationMethods(availableTokenTypes: methods.compactMap({ HumanVerificationToken.TokenType.type(fromString: $0.method) }), captchaToken: startToken), error: NSError(code: 0, localizedDescription: LocalizedString.errorUserFailedHumanValidation), success: { _ in }, failure: { _ in }))
 
         // report human verification as closed by the user
         // should result in the request failing with error
-        completion([:], true, nil)
+        completion(.verification(header: [:], verificationCodeBlock: nil))
     }
 
     func getSupportURL() -> URL {

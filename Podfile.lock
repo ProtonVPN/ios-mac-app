@@ -2,126 +2,114 @@ PODS:
   - Alamofire (5.3.0)
   - AlamofireImage (4.1.0):
     - Alamofire (~> 5.1)
-  - AwaitKit (5.2.0):
-    - PromiseKit (~> 6)
   - GSMessages (1.7.4)
   - KeychainAccess (3.2.1)
   - Logging (1.4.0)
-  - lottie-ios (3.2.3)
+  - lottie-ios (3.3.0)
   - OpenSSL-Apple (1.1.1k.11)
   - pmtest (1.0.0)
-  - PromiseKit (6.15.3):
-    - PromiseKit/CorePromise (= 6.15.3)
-    - PromiseKit/Foundation (= 6.15.3)
-    - PromiseKit/UIKit (= 6.15.3)
-  - PromiseKit/CorePromise (6.15.3)
-  - PromiseKit/Foundation (6.15.3):
-    - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.15.3):
-    - PromiseKit/CorePromise
-  - ProtonCore-APIClient/Alamofire (3.5.0):
-    - ProtonCore-DataModel (= 3.5.0)
-    - ProtonCore-Networking/Alamofire (= 3.5.0)
-    - ProtonCore-Services/Alamofire (= 3.5.0)
-  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (3.5.0)":
-    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-Crypto-VPN (= 3.5.0)
-    - ProtonCore-OpenPGP (= 3.5.0)
-  - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (3.5.0)":
-    - ProtonCore-APIClient/Alamofire (= 3.5.0)
-    - ProtonCore-Crypto-VPN (= 3.5.0)
-    - ProtonCore-Services/Alamofire (= 3.5.0)
-  - ProtonCore-Challenge (3.5.0):
-    - ProtonCore-Foundations (= 3.5.0)
-  - ProtonCore-CoreTranslation (3.5.0)
-  - ProtonCore-Crypto-VPN (3.5.0)
-  - ProtonCore-DataModel (3.5.0):
-    - ProtonCore-Utilities (= 3.5.0)
-  - ProtonCore-Doh (3.5.0):
-    - ProtonCore-Log (= 3.5.0)
-  - ProtonCore-ForceUpgrade/Alamofire (3.5.0):
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Networking/Alamofire (= 3.5.0)
-    - ProtonCore-UIFoundations (= 3.5.0)
-  - ProtonCore-Foundations (3.5.0)
-  - ProtonCore-HumanVerification/Alamofire (3.5.0):
-    - ProtonCore-APIClient/Alamofire (= 3.5.0)
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-UIFoundations (= 3.5.0)
-    - ProtonCore-Utilities (= 3.5.0)
-  - ProtonCore-Log (3.5.0)
-  - "ProtonCore-Login/UsingCryptoVPN+Alamofire (3.5.0)":
-    - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Crypto-VPN (= 3.5.0)
-    - ProtonCore-DataModel (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - ProtonCore-OpenPGP (= 3.5.0)
+  - ProtonCore-APIClient/Alamofire (3.6.0):
+    - ProtonCore-DataModel (= 3.6.0)
+    - ProtonCore-Networking/Alamofire (= 3.6.0)
+    - ProtonCore-Services/Alamofire (= 3.6.0)
+  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (3.6.0)":
+    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-Crypto-VPN (= 3.6.0)
+    - ProtonCore-OpenPGP (= 3.6.0)
+  - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (3.6.0)":
+    - ProtonCore-APIClient/Alamofire (= 3.6.0)
+    - ProtonCore-Crypto-VPN (= 3.6.0)
+    - ProtonCore-Services/Alamofire (= 3.6.0)
+  - ProtonCore-Challenge (3.6.0):
+    - ProtonCore-Foundations (= 3.6.0)
+  - ProtonCore-CoreTranslation (3.6.0)
+  - ProtonCore-Crypto-VPN (3.6.0)
+  - ProtonCore-DataModel (3.6.0):
+    - ProtonCore-Utilities (= 3.6.0)
+  - ProtonCore-Doh (3.6.0):
+    - ProtonCore-Log (= 3.6.0)
+  - ProtonCore-ForceUpgrade/Alamofire (3.6.0):
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Networking/Alamofire (= 3.6.0)
+    - ProtonCore-UIFoundations (= 3.6.0)
+  - ProtonCore-Foundations (3.6.0)
+  - ProtonCore-HumanVerification/Alamofire (3.6.0):
+    - ProtonCore-APIClient/Alamofire (= 3.6.0)
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-UIFoundations (= 3.6.0)
+    - ProtonCore-Utilities (= 3.6.0)
+  - ProtonCore-Log (3.6.0)
+  - "ProtonCore-Login/UsingCryptoVPN+Alamofire (3.6.0)":
+    - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Crypto-VPN (= 3.6.0)
+    - ProtonCore-DataModel (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - ProtonCore-OpenPGP (= 3.6.0)
     - TrustKit
-  - "ProtonCore-LoginUI/UsingCryptoVPN+Alamofire (3.5.0)":
+  - "ProtonCore-LoginUI/UsingCryptoVPN+Alamofire (3.6.0)":
     - lottie-ios
-    - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-Challenge (= 3.5.0)
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Crypto-VPN (= 3.5.0)
-    - ProtonCore-DataModel (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-HumanVerification/Alamofire (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - "ProtonCore-Login/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-OpenPGP (= 3.5.0)
-    - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-UIFoundations (= 3.5.0)
+    - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-Challenge (= 3.6.0)
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Crypto-VPN (= 3.6.0)
+    - ProtonCore-DataModel (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-HumanVerification/Alamofire (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - "ProtonCore-Login/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-OpenPGP (= 3.6.0)
+    - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-UIFoundations (= 3.6.0)
     - TrustKit
-  - ProtonCore-Networking/Alamofire (3.5.0):
+  - ProtonCore-Networking/Alamofire (3.6.0):
     - Alamofire (~> 5.2)
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
     - TrustKit
-  - ProtonCore-OpenPGP (3.5.0)
-  - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (3.5.0)":
-    - AwaitKit (~> 5.2.0)
-    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - ProtonCore-Services/Alamofire (= 3.5.0)
-    - ProtonCore-SRP (= 3.5.0)
+  - ProtonCore-OpenPGP (3.6.0)
+  - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (3.6.0)":
+    - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - ProtonCore-Services/Alamofire (= 3.6.0)
+    - ProtonCore-SRP (= 3.6.0)
     - ReachabilitySwift (~> 5.0.0)
-  - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (3.5.0)":
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (= 3.5.0)"
-    - ProtonCore-UIFoundations (= 3.5.0)
-  - ProtonCore-Services/Alamofire (3.5.0):
-    - AwaitKit (~> 5.2.0)
-    - PromiseKit (~> 6.0)
-    - ProtonCore-DataModel (= 3.5.0)
-    - ProtonCore-Doh (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - ProtonCore-Networking/Alamofire (= 3.5.0)
-    - ProtonCore-Utilities (= 3.5.0)
+  - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (3.6.0)":
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (= 3.6.0)"
+    - ProtonCore-UIFoundations (= 3.6.0)
+  - ProtonCore-QuarkCommands/Alamofire (3.6.0):
+    - ProtonCore-Doh (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - ProtonCore-Networking/Alamofire (= 3.6.0)
+    - ProtonCore-Services/Alamofire (= 3.6.0)
+  - ProtonCore-Services/Alamofire (3.6.0):
+    - ProtonCore-DataModel (= 3.6.0)
+    - ProtonCore-Doh (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+    - ProtonCore-Networking/Alamofire (= 3.6.0)
+    - ProtonCore-Utilities (= 3.6.0)
     - TrustKit
-  - ProtonCore-SRP (3.5.0)
-  - ProtonCore-TestingToolkit/UITests/Core/Alamofire (3.5.0):
+  - ProtonCore-SRP (3.6.0)
+  - ProtonCore-TestingToolkit/UITests/Core (3.6.0):
     - pmtest
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Doh (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-    - ProtonCore-Networking/Alamofire (= 3.5.0)
-    - ProtonCore-Services/Alamofire (= 3.5.0)
-  - ProtonCore-UIFoundations (3.5.0):
-    - ProtonCore-CoreTranslation (= 3.5.0)
-    - ProtonCore-Foundations (= 3.5.0)
-    - ProtonCore-Log (= 3.5.0)
-  - ProtonCore-Utilities (3.5.0):
-    - ProtonCore-Log (= 3.5.0)
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+  - ProtonCore-UIFoundations (3.6.0):
+    - ProtonCore-CoreTranslation (= 3.6.0)
+    - ProtonCore-Foundations (= 3.6.0)
+    - ProtonCore-Log (= 3.6.0)
+  - ProtonCore-Utilities (3.6.0):
+    - ProtonCore-Log (= 3.6.0)
   - ReachabilitySwift (5.0.0)
   - SDWebImage (5.10.0):
     - SDWebImage/Core (= 5.10.0)
@@ -155,29 +143,30 @@ DEPENDENCIES:
   - KeychainAccess (= 3.2.1)
   - Logging (= 1.4.0)
   - "pmtest (from `git@gitlab.protontech.ch:apple/shared/pmtestautomation.git`, commit `579ef5f66deea4231784614d936956982f53ee30`)"
-  - "ProtonCore-APIClient/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Crypto-VPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-ForceUpgrade/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-HumanVerification/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Login/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-LoginUI/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Networking/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Services/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-TestingToolkit/UITests/Core/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
-  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.5.0`)"
+  - "ProtonCore-APIClient/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Authentication-KeyGeneration/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Authentication/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Challenge (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-CoreTranslation (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Crypto-VPN (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-DataModel (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Doh (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-ForceUpgrade/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Foundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-HumanVerification/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Log (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Login/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-LoginUI/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Networking/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-OpenPGP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Payments/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-PaymentsUI/UsingCryptoVPN+Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-QuarkCommands/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Services/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-TestingToolkit/UITests/Core (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - ReachabilitySwift (= 5.0.0)
   - SDWebImage (= 5.10.0)
   - Sentry (= 5.2.2)
@@ -190,13 +179,11 @@ SPEC REPOS:
   trunk:
     - Alamofire
     - AlamofireImage
-    - AwaitKit
     - GSMessages
     - KeychainAccess
     - Logging
     - lottie-ios
     - OpenSSL-Apple
-    - PromiseKit
     - ReachabilitySwift
     - SDWebImage
     - Sentry
@@ -210,73 +197,76 @@ EXTERNAL SOURCES:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Crypto-VPN:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-LoginUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
+  ProtonCore-QuarkCommands:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.6.0
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-TestingToolkit:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -290,73 +280,76 @@ CHECKOUT OPTIONS:
     :git: "git@gitlab.protontech.ch:apple/shared/pmtestautomation.git"
   ProtonCore-APIClient:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Authentication:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Authentication-KeyGeneration:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Challenge:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-CoreTranslation:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Crypto-VPN:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-DataModel:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Doh:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-ForceUpgrade:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Foundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-HumanVerification:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Log:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Login:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-LoginUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Networking:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-OpenPGP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Payments:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-PaymentsUI:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
+  ProtonCore-QuarkCommands:
+    :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
+    :tag: 3.6.0
   ProtonCore-Services:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-SRP:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-TestingToolkit:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-UIFoundations:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   ProtonCore-Utilities:
     :git: "git@gitlab.protontech.ch:apple/shared/protoncore.git"
-    :tag: 3.5.0
+    :tag: 3.6.0
   TrustKit:
     :commit: 838fba789e01c9cabff77acea3fb7135f71a220f
     :git: https://github.com/ProtonMail/TrustKit
@@ -367,37 +360,36 @@ CHECKOUT OPTIONS:
 SPEC CHECKSUMS:
   Alamofire: 2c792affbdc2f18016e08fdbcacd60aebe1ba593
   AlamofireImage: c4a2ba349885fb3064feb74d2e547bd42ce9be10
-  AwaitKit: 512626cd12c82b1fbffddc8f414d0364cb456004
   GSMessages: 9a82cc40465b88cd5d5759bee1fe812c3c63cc3a
   KeychainAccess: d5470352939ced6d6f7fb51cb2e67aae51fc294f
   Logging: beeb016c9c80cf77042d62e83495816847ef108b
-  lottie-ios: c058aeafa76daa4cf64d773554bccc8385d0150e
+  lottie-ios: 6ac74dcc09904798f59b18cb3075c089d76be9ae
   OpenSSL-Apple: 3104e6d32de21815b68aeba31edaa6a78d90e7e0
   pmtest: cb339e22597f14ee4aba80b8c7d850018fb44496
-  PromiseKit: 3b2b6995e51a954c46dbc550ce3da44fbfb563c5
-  ProtonCore-APIClient: 33dd7d574e7db722f880eda30bac2c1cf36233a7
-  ProtonCore-Authentication: fed3aca8f0898c3baef7bc4110bb2700c98c7494
-  ProtonCore-Authentication-KeyGeneration: fdce12848d1cd00a8b7a17dacfee1148ff5aa2a3
-  ProtonCore-Challenge: 8bad71dd49a72e734195aae32f9555acb96447c2
-  ProtonCore-CoreTranslation: daa7ee7ceab93d628bfd55a4be5bff67e80a28d6
-  ProtonCore-Crypto-VPN: 30ac6c19a1ce6978088085759a31faaaebf89b37
-  ProtonCore-DataModel: aa4286edf1f921c6375b65646a12663fff0812ba
-  ProtonCore-Doh: 7090f8577981319af1d8a34e09f6ee42f1079004
-  ProtonCore-ForceUpgrade: 77bcdd9276cf93c1b474de3431803333dcdb217a
-  ProtonCore-Foundations: f8da3ba3914d4f222c8962d1f173f77888b1da55
-  ProtonCore-HumanVerification: 00f1916475d731b28ba9990837fcd1f5a9fe7f8a
-  ProtonCore-Log: 26fbc8d7690b320f71c8c096e1a61c614ff5375f
-  ProtonCore-Login: b8d751739fa7302462314c82fbfd48b83057b81e
-  ProtonCore-LoginUI: ca5dcefd32045e102755c31c42859e09658836d6
-  ProtonCore-Networking: 1b0d667f3ef051b8cfb74d34d5f8ccff68e28c2c
-  ProtonCore-OpenPGP: fab5ab2c3a626729a129eb7c8e9b940c557c9d7d
-  ProtonCore-Payments: 8620da148bff54fc1c957958eeef3762625f0482
-  ProtonCore-PaymentsUI: f1a16db069c34a6638d8129a80096be96aa404e4
-  ProtonCore-Services: 8566c895a8c71f6e02acfdd56577a4924aeb55b7
-  ProtonCore-SRP: cd56623b5921e63b5de1417222254142e7791a75
-  ProtonCore-TestingToolkit: 46187b01469e94b4335390670e2f59c38fad6b7f
-  ProtonCore-UIFoundations: 9d51651a51083b93e0f96b8f2b9d0e24784264cc
-  ProtonCore-Utilities: 3d9702a4c3d1ae7baee692929a1de94401d513e4
+  ProtonCore-APIClient: ff9e0da2b55b9ed27a5e08c555629b2608ada937
+  ProtonCore-Authentication: 7c01ccf40089afdf1cc51587a7c0c8b773558fb8
+  ProtonCore-Authentication-KeyGeneration: c1c27f31cb0e2a8a6df3a3e09bfd3ba0e38fff4e
+  ProtonCore-Challenge: 56b6fba39a70ed8c9104c616d042559fe0d00ffc
+  ProtonCore-CoreTranslation: 10cdb44c88ca4c495a7cce071208582452bfa661
+  ProtonCore-Crypto-VPN: 4882ad81dc6882175dd0c14d851eacea8068ba08
+  ProtonCore-DataModel: 7392ffba5259314977bc4674faee9deddb827738
+  ProtonCore-Doh: 92fdeef6bb6eb781d525e9a1e90109c4d6c3a441
+  ProtonCore-ForceUpgrade: 2db0a684c932db7fe5dae3308009520dec85b298
+  ProtonCore-Foundations: f856e54150f2133c422c00d2d74b7775ef50563e
+  ProtonCore-HumanVerification: 484d7f33875026a419b8adfd2cc8eccdd3b2e083
+  ProtonCore-Log: 46d7f77686dc8f205bf2980d8e4ccfc2cc944456
+  ProtonCore-Login: aa4a1c0cb738e78c8ce57541e8e9a47e00fee180
+  ProtonCore-LoginUI: f938c3c41a88aa6557a3665def775a70cbe81142
+  ProtonCore-Networking: bb003b36d4e14cb7f7ee848be408f4824e9dd631
+  ProtonCore-OpenPGP: d03a84aaf5aa34d39e41df5059e4b5bb3a884827
+  ProtonCore-Payments: d08a6cc6a38182dc57aa6014a481c7aa8b81c7fd
+  ProtonCore-PaymentsUI: 7ec653fd1f178b9ec527142bbd2b3b0c0ca9af95
+  ProtonCore-QuarkCommands: ab9f34792f8adaba0f8f64315d23bdbb62ff1bde
+  ProtonCore-Services: 14d6bf6158a22f924e2abc4cf9e6eb143f3af206
+  ProtonCore-SRP: ae287619646f0116ed8d8482a1333bdceb59f900
+  ProtonCore-TestingToolkit: a199e4ad22a56f90b544a06bbf04f601030f2324
+  ProtonCore-UIFoundations: 27fca53842a8d5fb9cf56d681b5fff1d04e00432
+  ProtonCore-Utilities: fe722673a870ee10fd991e5bb2fc674a6fefeec4
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SDWebImage: 9169792e9eec3e45bba2a0c02f74bf8bd922d1ee
   Sentry: 8fa58a051237554f22507fb483b9a1de0171a2dc
@@ -407,6 +399,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: c8623f61c6a65347f452853eae26548e4791bcb7
+PODFILE CHECKSUM: de78c0d4a9109cb81b39a168ff6be27dda9ebde0
 
-COCOAPODS: 1.10.1
+COCOAPODS: 1.11.2
