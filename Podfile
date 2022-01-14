@@ -131,7 +131,7 @@ target 'ProtonVPN' do
   target 'ProtonVPNUITests' do    
     platform :ios, '12.1'
     pm_automation
-    pod 'ProtonCore-TestingToolkit/UITests/Core/Alamofire', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-QuarkCommands/Alamofire', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/Login', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/HumanVerification', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/PaymentsUI', :git => proton_core_path, :tag => proton_core_version
