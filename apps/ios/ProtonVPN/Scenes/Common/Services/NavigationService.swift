@@ -376,14 +376,12 @@ extension NavigationService: ConnectionStatusService {
 // MARK: Login delegate
 
 extension NavigationService: LoginServiceDelegate {
-    func loginServiceDidFinish() {
-        #warning("Only start onboarding for signup, not also for login!")
-        if let vpnCredentials = try? vpnKeychain.fetch(), vpnCredentials.accountPlan == .free {
-            onboardingService.showOnboarding()
-            return
-        }
-
+    func userDidLogIn() {
         presentMainInterface()
+    }
+
+    func usedDidSignUp() {
+        onboardingService.showOnboarding()
     }
 }
 
