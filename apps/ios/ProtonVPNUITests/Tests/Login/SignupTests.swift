@@ -119,11 +119,6 @@ class SignupTests: ProtonVPNUITests {
             .nextButtonTap(robot: PaymentsRobot.self)
             .verify.subscribtionScreenIsShown()
             .selectFreePlan()
-//            .verify.creatingAccountScreenIsShown()
-//            .verify.summaryScreenIsShown()
-//            .startUsingProtonVpn()
-//            .goToSettingsTab()
-//            .verify.userIsCreated(email, plan)
     }
     
     func testSignupExistingExtAccount() {
