@@ -39,7 +39,6 @@ final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
         & WindowServiceFactory
-        & CoreAlertServiceFactory
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
@@ -48,7 +47,6 @@ final class CoreLoginService {
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
     private let windowService: WindowService
-    private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
@@ -62,7 +60,6 @@ final class CoreLoginService {
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()
-        alertService = factory.makeCoreAlertService()
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
@@ -71,11 +68,7 @@ final class CoreLoginService {
 
     private func show() {
         let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.external, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
-        let paymentsAvailability = PaymentsAvailability.available(parameters: PaymentsParameters(listOfIAPIdentifiers: ObfuscatedConstants.vpnIAPIdentifiers, listOfShownPlanNames: ObfuscatedConstants.planNames, reportBugAlertHandler: { [weak self] receipt in
-            log.error("Error from payments, showing bug report", category: .iap)
-            self?.alertService.push(alert: ReportBugAlert())
-        }))
-        let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: paymentsAvailability, signupAvailability: signupAvailability)
+        let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
 
         let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
