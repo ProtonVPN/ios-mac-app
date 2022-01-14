@@ -37,7 +37,66 @@ class SignupTests: ProtonVPNUITests {
         }
      }
     
-    func testSignupNewAccountSuccess() {
+    func testSwitchIntToLogin() {
+    
+        changeEnvToProdIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .signinButtonTap()
+            .verify.loginScreenIsShown()
+    }
+    
+    func testSignupExistingIntAccount() {
+        
+        let email = "vpnfree"
+        
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: SignupRobot.self)
+            .verify.usernameErrorIsShown()
+    }
+    
+    func testSignupNewIntAccountSuccess() {
+       
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        let code = "666666"
+        let plan = "ProtonVPN Free"
+
+        
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
+            .verify.recoveryScreenIsShown()
+            .skipButtonTap()
+            .verify.recoveryDialogDisplay()
+            .skipButtonTap(robot: PaymentsRobot.self)
+            .selectFreePlan()
+            .verify.humanVerificationScreenIsShown()
+            .performEmailVerification(email: randomEmail, code: code, to: AccountSummaryRobot.self)
+            .accountSummaryElementsDisplayed(robot: SummarySignupRobot.self)
+            .verify.summaryScreenIsShown()
+            .startUsingProtonVpn()
+            .goToSettingsTab()
+            .verify.userIsCreated(email, plan)
+    }
+    
+    func testSignupNewExtAccountSuccess() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
         let password = StringUtils().randomAlphanumericString(length: 8)
@@ -59,14 +118,14 @@ class SignupTests: ProtonVPNUITests {
             .nextButtonTap(robot: PaymentsRobot.self)
             .verify.subscribtionScreenIsShown()
             .selectFreePlan()
-            .verify.creatingAccountScreenIsShown()
-            .verify.summaryScreenIsShown()
-            .startUsingProtonVpn()
-            .goToSettingsTab()
-            .verify.userIsCreated(email, plan)
+//            .verify.creatingAccountScreenIsShown()
+//            .verify.summaryScreenIsShown()
+//            .startUsingProtonVpn()
+//            .goToSettingsTab()
+//            .verify.userIsCreated(email, plan)
     }
     
-    func testSignupExistingAccount() {
+    func testSignupExistingExtAccount() {
 
         let email = "vpnfree@gmail.com"
         let code = "666666"
@@ -85,7 +144,180 @@ class SignupTests: ProtonVPNUITests {
             .verify.loginScreenIsShown()
     }
     
-    func testSignupNewSendCodeRequestCodeCancel() {
+    func testPasswordVerificationPasswordEmpty() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordEmpty()
+    }
+    
+    func testPasswordVerificationRepeatPasswordEmpty() {
+
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let password = StringUtils().randomAlphanumericString(length: 8)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordNotEqual()
+    }
+
+    func testIntPasswordVerificationTooShort() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let password = StringUtils().randomAlphanumericString(length: 7)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordTooShort()
+    }
+    
+    func testIntPasswordsVerificationDoNotMatch() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        let repeatPassword = StringUtils().randomAlphanumericString(length: 8)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(repeatPassword)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordNotEqual()
+    }
+    
+    func testRecoveryVerificationEmail() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let recoveryEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
+        let password = StringUtils().randomAlphanumericString(length: 8)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: RecoveryRobot.self)
+            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
+            .insertRecoveryEmail(email: recoveryEmail)
+            .verify.nextButtonIsEnabled()
+    }
+    
+    func testRecoveryVerificationPhone() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let testNumber = "123d5678"
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
+            .verify.recoveryScreenIsShown()
+            .selectRecoveryMethod(method: .phone)
+            .insertRecoveryNumber(number: testNumber)
+            .verify.nextButtonIsEnabled()
+            .nextButtonTap()
+            .verify.phoneNumberInvalid()
+    }
+    
+    func testSignupNewIntAccountHVRequired() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let password = StringUtils().randomAlphanumericString(length: 8)
+        
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
+            .verify.recoveryScreenIsShown()
+            .skipButtonTap()
+            .verify.recoveryDialogDisplay()
+            .skipButtonTap(robot: PaymentsRobot.self)
+            .selectFreePlan()
+            .verify.humanVerificationScreenIsShown()
+            .closeButton()
+            .verify.humanVerificationRequired()
+    }
+    
+    func testSignupNewIntStayInRecoveryMethod() {
+        
+        let email = StringUtils().randomAlphanumericString(length: 5)
+        let password = StringUtils().randomAlphanumericString(length: 8)
+
+        changeEnvToBlackIfNedded()
+        useAndContinueTap()
+        mainRobot
+            .showSignup()
+            .verify.signupScreenIsShown()
+            .enterEmail(email)
+            .nextButtonTap(robot: PasswordRobot.self)
+            .verify.passwordScreenIsShown()
+            .enterPassword(password)
+            .enterRepeatPassword(password)
+            .nextButtonTap(robot: ProtonCore_TestingToolkit.RecoveryRobot.self)
+            .verify.recoveryScreenIsShown()
+            .skipButtonTap()
+            .verify.recoveryDialogDisplay()
+            .recoveryMethodTap()
+            .verify.recoveryScreenIsShown()
+            .skipButtonTap()
+            .verify.recoveryDialogDisplay()
+            .recoveryMethodTap()
+            .verify.recoveryScreenIsShown()
+    }
+    
+    func testSignupNewExtSendCodeRequestCodeCancel() {
     
         let email = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
             
@@ -100,119 +332,5 @@ class SignupTests: ProtonVPNUITests {
             .didNotReceiveCode()
             .cancelRequestCode()
             .verify.accountVerificationScreenIsShown()
-        }
-    
-    func testPasswordVerificationTooShort() {
-        
-        let email = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let code = "666666"
-        let password = StringUtils().randomAlphanumericString(length: 7)
-
-        changeEnvToBlackIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .enterRepeatPassword(password)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordTooShort()
-    }
-    
-    func testPasswordsVerificationDoNotMatch() {
-        
-        let email = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let code = "666666"
-        let password = StringUtils().randomAlphanumericString(length: 8)
-        let repeatPassword = StringUtils().randomAlphanumericString(length: 8)
-
-        changeEnvToBlackIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .enterRepeatPassword(repeatPassword)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordNotEqual()
-    }
-    
-    func testPasswordVerificationPasswordEmpty() {
-        
-        let email = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let code = "666666"
-
-        changeEnvToBlackIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordEmpty()
-    }
-    
-    func testPasswordVerificationRepeatPasswordEmpty() {
-
-        let email = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
-        let code = "666666"
-        let password = StringUtils().randomAlphanumericString(length: 8)
-
-        changeEnvToBlackIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: AccountVerificationRobot.self)
-            .verify.accountVerificationScreenIsShown()
-            .enterVerificationCode(code)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordScreenIsShown()
-            .enterPassword(password)
-            .nextButtonTap(robot: PasswordRobot.self)
-            .verify.passwordNotEqual()
-    }
-    
-    func testCreateAccountWithProtonmail() {
-        
-        let email = "qa@protonmail.com"
-    
-        changeEnvToProdIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .enterEmail(email)
-            .nextButtonTap(robot: SignupRobot.self)
-            .verify.protonmailAccountErrorIsShown()
-    }
-    
-    func testSwitchIntToLogin() {
-    
-        changeEnvToProdIfNedded()
-        useAndContinueTap()
-        mainRobot
-            .showSignup()
-            .verify.signupScreenIsShown()
-            .signinButtonTap()
-            .verify.loginScreenIsShown()
     }
 }
