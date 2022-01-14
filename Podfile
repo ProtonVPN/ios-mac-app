@@ -12,7 +12,7 @@ def proton_core_path
 end
 
 def proton_core_version
-  '3.5.0'
+  '3.6.0'
 end
 
 def openvpn
@@ -135,6 +135,7 @@ target 'ProtonVPN' do
     pod 'ProtonCore-TestingToolkit/UITests/Login', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/HumanVerification', :git => proton_core_path, :tag => proton_core_version
     pod 'ProtonCore-TestingToolkit/UITests/PaymentsUI', :git => proton_core_path, :tag => proton_core_version
+    pod 'ProtonCore-TestingToolkit/UITests/Core', :git => proton_core_path, :tag => proton_core_version
   end
 
 end

@@ -8,6 +8,7 @@
 
 import pmtest
 import ProtonCore_Doh
+import ProtonCore_QuarkCommands
 import ProtonCore_TestingToolkit
 
 class SignupTests: ProtonVPNUITests {
