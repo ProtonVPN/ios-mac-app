@@ -21,14 +21,14 @@ import pmtest
 fileprivate let summaryTitle = "SummaryViewController.header"
 fileprivate let summaryDescription = "SummaryViewController.descriptionLabel"
 fileprivate let summaryWelcome = "SummaryViewController.welcomeLabel"
-fileprivate let summaryButton = "SummaryViewController.startButton"
+fileprivate let summaryButton = "Start using ProtonVPN"
 
 class SummarySignupRobot: CoreElements {
     
     public let verify = Verify()
     
     func startUsingProtonVpn() -> MainRobot {
-        button(summaryButton).tap()
+        staticText(summaryButton).tap()
         return MainRobot()
     }
     
@@ -36,9 +36,9 @@ class SummarySignupRobot: CoreElements {
         
         @discardableResult
         func summaryScreenIsShown() -> SummarySignupRobot {
-            staticText(summaryTitle).wait(time: 5).checkExists()
-            staticText(summaryDescription).wait(time: 5).checkExists()
-            staticText(summaryWelcome).wait(time: 5).checkExists()
+            staticText(summaryTitle).wait(time: 10).checkExists()
+            staticText(summaryDescription).wait(time: 10).checkExists()
+            staticText(summaryWelcome).wait(time: 10).checkExists()
             return SummarySignupRobot()
         }
     }

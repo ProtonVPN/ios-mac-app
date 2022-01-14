@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import pmtest
+import ProtonCore_TestingToolkit
 
 fileprivate let titleId = "PaymentsUIViewController.tableHeaderLabel"
 fileprivate let freePlanTitle = "Free.planNameLabel"
@@ -25,19 +26,23 @@ fileprivate let footer = "PaymentsUIViewController.tableFooterTextLabel"
 
 class PaymentsRobot: CoreElements {
     
+    let corePaymentUIRobot = ProtonCore_TestingToolkit.PaymentsUIRobot()
+    
     public let verify = Verify()
     
-    func selectFreePlan() -> CreatingAccountRobot {
-        button(selectFreeButton).tap()
-        return CreatingAccountRobot()
+    func selectFreePlan() -> SignupHumanVerificationRobot {
+        _ = self.corePaymentUIRobot
+            .self.freePlanButtonTap()
+        return SignupHumanVerificationRobot()
     }
+    
     
     class Verify: CoreElements {
         
         @discardableResult
         func subscribtionScreenIsShown() -> PaymentsRobot {
-            staticText(titleId).wait(time: 2).checkExists()
-            staticText(freePlanTitle).wait(time: 2).checkExists()
+            staticText(titleId).wait(time: 10).checkExists()
+            staticText(freePlanTitle).wait(time: 10).checkExists()
             return PaymentsRobot()
         }
     }
