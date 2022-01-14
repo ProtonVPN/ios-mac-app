@@ -16,7 +16,6 @@ final class UserCachedStatus: ServicePlanDataStorage {
         case servicePlansDetails
         case defaultPlanDetails
         case currentSubscription
-        case isIAPUpgradePlanAvailable
         case paymentsBackendStatusAcceptsIAP
     }
 
@@ -50,15 +49,6 @@ final class UserCachedStatus: ServicePlanDataStorage {
         }
         set {
             storage.setEncodableValue(newValue, forKey: UserCachedStatusKeys.currentSubscription.rawValue)
-        }
-    }
-
-    var isIAPUpgradePlanAvailable: Bool {
-        get {
-            return storage.defaults.bool(forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
-        }
-        set {
-            storage.setValue(newValue, forKey: UserCachedStatusKeys.isIAPUpgradePlanAvailable.rawValue)
         }
     }
 
