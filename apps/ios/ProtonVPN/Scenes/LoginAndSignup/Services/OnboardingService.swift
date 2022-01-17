@@ -32,7 +32,7 @@ protocol OnboardingServiceDelegate: AnyObject {
 protocol OnboardingService: AnyObject {
     var delegate: OnboardingServiceDelegate? { get set }
 
-    func showOnboarding()
+    func showOnboarding(showFirstConnection: Bool)
 }
 
 final class OnboardingModuleService {
@@ -83,10 +83,10 @@ final class OnboardingModuleService {
 }
 
 extension OnboardingModuleService: OnboardingService {
-    func showOnboarding() {
-        log.debug("Starting onboarding", category: .app)
+    func showOnboarding(showFirstConnection: Bool) {
+        log.debug("Starting onboarding \(showFirstConnection ? "A" : "B")", category: .app)
 
-        onboardingCoordinator = OnboardingCoordinator(configuration: Configuration())
+        onboardingCoordinator = OnboardingCoordinator(configuration: Configuration(showFirstConnection: showFirstConnection))
         onboardingCoordinator?.delegate = self
         let viewController = onboardingCoordinator!.start()
         windowService.show(viewController: viewController)
