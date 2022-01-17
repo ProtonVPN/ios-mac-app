@@ -19,6 +19,7 @@ fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account pa
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
 fileprivate let errorBannerMessage = "Email address already used."
 fileprivate let assingConnectionErrorBannerMessage = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account."
+fileprivate let okButton = "OK"
 
 class LoginRobot: CoreElements {
     
@@ -82,7 +83,7 @@ class LoginRobot: CoreElements {
         @discardableResult
         func incorrectCredentialsErrorDialog() -> LoginRobot {
             textView(invalidCredentialText).wait().checkExists()
-            button("OK").wait().checkExists().tap()
+            button(okButton).wait().checkExists().tap()
             return LoginRobot()
         }
         
@@ -96,14 +97,14 @@ class LoginRobot: CoreElements {
         @discardableResult
         func emailAddresAlreadyExists() -> LoginRobot {
             textView(errorBannerMessage).wait(time: 5).checkExists()
-            button("OK").wait().checkExists().tap()
+            button(okButton).wait().checkExists().tap()
             return LoginRobot()
         }
         
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
             textView(assingConnectionErrorBannerMessage).wait().checkExists()
-            button("OK").wait().checkExists().tap()
+            button(okButton).wait().checkExists().tap()
             return LoginRobot()
         }
     }
