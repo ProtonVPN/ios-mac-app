@@ -24,7 +24,6 @@ import Foundation
 @testable import vpncore
 
 class CoreApiServiceMock: CoreApiService {
-    
     public var callbackGetApiNotificationsCallback: ((@escaping GenericCallback<GetApiNotificationsResponse>, @escaping ErrorCallback) -> Void)?
     
     func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void) {
@@ -34,5 +33,8 @@ class CoreApiServiceMock: CoreApiService {
             completion(.failure(error))
         })
     }
-    
+
+    func getApiFeature<T: Codable>(feature: CoreApiFeature, completion: @escaping (Result<T, Error>) -> Void) {
+
+    }
 }
