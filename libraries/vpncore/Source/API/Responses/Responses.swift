@@ -21,55 +21,6 @@
 
 import Foundation
 
-public struct AuthenticationProperties {
-    
-    public let username: String
-    public let clientEphemeral: String
-    public let clientProof: String
-    public let srpSession: String
-    
-    public var description: String {
-        return
-            "Username: \(username)\n" +
-            "Client ephemeral: \(clientEphemeral)\n" +
-            "Client proof: \(clientProof)\n" +
-            "SRP session: \(srpSession)\n"
-    }
-    
-    public init(username: String, clientEphemeral: String, clientProof: String, session: String!) {
-        self.username = username
-        self.clientEphemeral = clientEphemeral
-        self.clientProof = clientProof
-        self.srpSession = session
-    }
-}
-
-public struct RefreshAccessTokenProperties {
-    
-    public let refreshToken: String
-    
-    public var description: String {
-        return "Refresh token \(refreshToken)\n"
-    }
-    
-    public init(refreshToken: String) {
-        self.refreshToken = refreshToken
-    }
-}
-
-public struct RefreshAccessTokenResponse {
-    
-    public let accessToken: String
-    public let refreshToken: String
-    public let expiration: Date
-    
-    public init(dic: JSONDictionary) throws {
-        accessToken = try dic.stringOrThrow(key: "AccessToken")
-        refreshToken = try dic.stringOrThrow(key: "RefreshToken")
-        expiration = try dic.unixTimestampFromNowOrThrow(key: "ExpiresIn")
-    }
-}
-
 public struct VerificationMethods {
     
     private let availableTokenTypes: [HumanVerificationToken.TokenType]
