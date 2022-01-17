@@ -26,14 +26,18 @@ public struct Colors {
     let weakText: UIColor
     let activeBrandButton: UIColor
     let secondaryBackground: UIColor
+    let textInverted: UIColor
+    let notification: UIColor
 
-    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor) {
+    public init(background: UIColor, text: UIColor, brand: UIColor, weakText: UIColor, activeBrandButton: UIColor, secondaryBackground: UIColor, textInverted: UIColor, notification: UIColor) {
         self.background = background
         self.text = text
         self.brand = brand
         self.weakText = weakText
         self.activeBrandButton = activeBrandButton
         self.secondaryBackground = secondaryBackground
+        self.textInverted = textInverted
+        self.notification = notification
     }
 }
 

@@ -145,3 +145,14 @@ let navigationStyle: (UINavigationController) -> Void = {
     $0.navigationBar.isTranslucent = false
     $0.modalPresentationStyle = .fullScreen
 }
+
+let notificationViewStyle: (UIView) -> Void = {
+    $0.layer.cornerRadius = 8
+    $0.backgroundColor = colors.notification
+}
+
+let notificationTextStyle: (UILabel) -> Void = {
+    $0.font = UIFont.systemFont(ofSize: 15)
+    $0.textColor = colors.textInverted
+    $0.numberOfLines = 0
+}

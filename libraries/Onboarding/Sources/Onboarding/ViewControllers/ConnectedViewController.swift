@@ -32,6 +32,8 @@ final class ConnectedViewController: UIViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var noteLabel: UILabel!
     @IBOutlet private weak var countryView: UIView!
+    @IBOutlet private weak var errorLabel: UILabel!
+    @IBOutlet private weak var errorView: UIView!
     @IBOutlet private weak var connectedToLabel: UILabel!
     @IBOutlet private weak var countryLabel: UILabel!
     @IBOutlet private weak var countryImage: UIImageView!
@@ -59,19 +61,25 @@ final class ConnectedViewController: UIViewController {
         textSubNoteStyle(connectedToLabel)
         countryTextStyle(countryLabel)
         countryViewStyle(countryView)
+        notificationViewStyle(errorView)
+        notificationTextStyle(errorLabel)
 
         titleLabel.text = LocalizedString.onboardingConnectedTitle
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
         noteLabel.text = LocalizedString.onboardingConnectedNote
+        errorLabel.text = LocalizedString.onboardingNotConnectedError
 
         switch state {
         case .notConnected:
+            errorView.isHidden = true
             countryView.isHidden = true
             subtitleLabel.text = LocalizedString.onboardingNotConnectedSubtitle
         case .error:
+            errorView.isHidden = false
             countryView.isHidden = true
             subtitleLabel.text = LocalizedString.onboardingNotConnectedSubtitle
         case let .connected(country):
+            errorView.isHidden = true
             countryView.isHidden = false
             countryLabel.text = country.name
             countryImage.image = country.flag

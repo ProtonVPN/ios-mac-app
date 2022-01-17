@@ -21,6 +21,6 @@ import Onboarding
 
 extension Configuration {
     init(showFirstConnection: Bool) {
-        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor()))
+        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor(), textInverted: .backgroundColor(), notification: .normalTextColor()))
     }
 }
