@@ -71,7 +71,7 @@
 "_allow_lan_info" = "Позволяет обойти VPN и подключиться к устройствам в вашей локальной сети, например принтеру.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Учтите, что для применения этого изменения Ваше соединение должно быть перезапущено";
+"_allow_lan_note" = "Учтите, что для применения этого изменения, ваше соединение должно быть перезапущено";
 
 /* (No Comment) */
 "_allow_lan_title" = "Разрешить соединения по локальной сети";
@@ -260,13 +260,13 @@
 "_delete_profile_warning" = "Профиль будет окончательно удален. Вы хотите продолжить?";
 
 /* (No Comment) */
-"_delinquent_description" = "Вы снова получите доступ к премиум-функциям, когда эти счета будут оплачены.";
+"_delinquent_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены.";
 
 /* (No Comment) */
-"_delinquent_reconnection_description" = "Вы снова получите доступ к премиум-функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному бесплатному серверу.";
+"_delinquent_reconnection_description" = "Вы снова получите доступ к платным функциям, когда эти счета будут оплачены. А пока, мы подключаем Вас к самому быстрому доступному серверу тарифа FREE.";
 
 /* (No Comment) */
-"_delinquent_title" = "В Вашей учетной записи VPN есть неоплаченные счета";
+"_delinquent_title" = "Ваш аккаунт VPN имеет неоплаченные счета";
 
 /* Delinquent user alert */
 "_delinquent_user_description" = "У вашей учётной записи есть неоплаченный счёт. Пожалуйста, оплатите все неоплаченные счета на account.protonvpn.com";
@@ -590,16 +590,22 @@
 "_feature_speed" = "Скорость";
 
 /* (No Comment) */
-"_feature_streaming_description" = "Серверы PLUS поддерживают потоковое вещание (Netflix, Disney+, и т. д.) из любой точки мира.";
+"_feature_streaming_description" = "Серверы PLUS поддерживают трансляции (Netflix, Disney+, и т. д.) из любой точки мира.";
 
 /* iOS plan feature */
 "_feature_tor" = "Tor через VPN";
 
 /* (No Comment) */
-"_feature_tor_description" = "Направляйте ваш Интернет трафик через сеть Tor. Медленнее, но приватнее.";
+"_feature_tor_description" = "Направляйте ваш Интернет-трафик через сеть Tor. Медленнее, но более приватно.";
 
 /* (No Comment) */
 "_features_title" = "Функции";
+
+/* (No Comment) */
+"_force_upgrade_message" = "Версия приложения ProtonVPN, которую вы сейчас используете, больше не поддерживается. Пожалуйста, обновите приложение до последней версии.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Надо обновить приложение";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Забыли пароль?";
@@ -758,7 +764,7 @@
 "_kill_switch_reconnection_header" = "Kill Switch защищает ваш IP";
 
 /* MacOS: Settings -> Connection. Kill switch functionality description. */
-"_kill_switch_tooltip" = "Блокировка всего сетевого трафика, если подключение к VPN потеряно.";
+"_kill_switch_tooltip" = "Блокировка всего сетевого трафика, тунель VPN потерян.";
 
 /* (No Comment) */
 "_ks_dont_ask" = "Не спрашивать меня снова";
@@ -809,19 +815,19 @@
 "_location" = "Местоположение";
 
 /* (No Comment) */
-"_locations_all" = "Все места";
+"_locations_all" = "Все местоположения";
 
 /* (No Comment) */
-"_locations_basic" = "Места BASIC";
+"_locations_basic" = "Местоположения BASIC";
 
 /* (No Comment) */
-"_locations_basic_plus" = "Места BASIC и PLUS";
+"_locations_basic_plus" = "Местоположения BASIC & и PLUS";
 
 /* (No Comment) */
-"_locations_free" = "Места FREE";
+"_locations_free" = "Местоположения FREE";
 
 /* (No Comment) */
-"_locations_plus" = "Места PLUS";
+"_locations_plus" = "Местоположения PLUS";
 
 /* iOS: Login button in several places */
 "_log_in" = "Войти";
@@ -884,10 +890,10 @@
 "_maximum_device_description" = "Пожалуйста, отключите другое устройство, чтобы подключить текущее, или перейдите на %@, чтобы подключать до %d устройств одновременно.";
 
 /* (No Comment) */
-"_maximum_device_reached_description" = "Пожалуйста, отключите другое устройство, чтобы подключить текущее.";
+"_maximum_device_reached_description" = "Пожалуйста, отключите другое устройство, чтобы подключить это.";
 
 /* (No Comment) */
-"_maximum_device_title" = "Лимит на количество устройств достигнут";
+"_maximum_device_title" = "Вы достигли ограничения на количество устройств";
 
 /* Cancel button in trial modals used in both iOS and MacOS */
 "_maybe_later" = "Может, позже";
@@ -1511,7 +1517,7 @@
 "_skip" = "Пропустить";
 
 /* Description for Smart Protocol in Settings */
-"_smart_protocol_description" = "Включите умный протокол, чтобы автоматически использовать протокол и порт, которые обеспечивают наилучшее подключение.";
+"_smart_protocol_description" = "Включите Smart Protocol, чтобы автоматически использовать протокол и порт, которые обеспечивают наилучшее подключение.";
 
 /* Body for the modal dialog shown when trying to change Smart Protocol in Settings while connected */
 "_smart_protocol_reconnect_modal_body" = "Ваше соединение будет перезапущено для изменения режима Smart Protocol.";
@@ -1544,13 +1550,13 @@
 "_status" = "Состояние";
 
 /* (No Comment) */
-"_streaming_servers_description" = "Подключитесь к серверу Plus в этой стране, чтобы начать трансляцию.";
+"_streaming_servers_description" = "Подключитесь к серверу Plus в этой стране, чтобы начать просмотр трансляции.";
 
 /* (No Comment) */
 "_streaming_servers_extra" = "и многое другое";
 
 /* (No Comment) */
-"_streaming_servers_note" = "Примечание: Отключите службу определения местоположения и очистите кэш приложений потокового вещания, чтобы обеспечить появление нового контента.";
+"_streaming_servers_note" = "Примечание: Отключите службу определения местоположения и очистите кэш приложений трансляции, чтобы обеспечить появление нового содержимого.";
 
 /* (No Comment) */
 "_streaming_title" = "Стриминг";
@@ -1565,13 +1571,13 @@
 "_subscription_description" = "Вы можете приобрести больше кредитов, чтобы автоматически обновлять Ваш текущий план. По истечении вашего текущего периода подписки, эти кредиты будут использованы для пролонгации подписки.";
 
 /* (No Comment) */
-"_subscription_expired_description" = "Ваша подписка понижена.";
+"_subscription_expired_description" = "Вы перешли на более дешевую версию подписки.";
 
 /* (No Comment) */
-"_subscription_expired_reconnection_description" = "Ваша подписка была понижена, поэтому мы переподключаемся к самому быстрому доступному серверу.";
+"_subscription_expired_reconnection_description" = "Вы перешли на более дешевую версию подписки, поэтому мы переподключаемся к самому быстрому доступному серверу.";
 
 /* (No Comment) */
-"_subscription_expired_title" = "Срок вашей подписки на VPN истек";
+"_subscription_expired_title" = "Срок вашей подписки на тариф VPN истек";
 
 /* (No Comment) */
 "_subscription_extended_success" = "Вы успешно приобрели кредиты для продления вашей текущей подписки.";
@@ -1589,7 +1595,7 @@
 "_subscription_upgrade_option3" = "Дополнительные возможности: NetShield, Secure Core, Tor, P2P";
 
 /* (No Comment) */
-"_subscription_upgrade_title" = "Улучшите снова, чтобы насладиться всеми функциями:";
+"_subscription_upgrade_title" = "Улучшите снова, чтобы воспользоваться всеми функциями:";
 
 /* Manage subscription */
 "_subscription_will_expire" = "Текущий тариф истекает %@.";
@@ -1598,7 +1604,7 @@
 "_subscription_will_renew" = "Ваш тариф автоматически обновится %@.";
 
 /* (No Comment) */
-"_subuser_alert_assign_connections_button" = "Назначить VPN соединения";
+"_subuser_alert_assign_connections_button" = "Назначить подключения к VPN";
 
 /* (No Comment) */
 "_subuser_alert_description1" = "Чтобы начать свое путешествие в ProtonVPN, пожалуйста, назначьте подключения VPN для своего аккаунта или любого другого субаккаунта.";
@@ -1724,7 +1730,7 @@
 "_tier_basic" = "BASIC";
 
 /* (No Comment) */
-"_tier_free" = "БЕСПЛАТНО";
+"_tier_free" = "БЕСПЛАТНАЯ";
 
 /* (No Comment) */
 "_tier_plus" = "PLUS";
@@ -1742,7 +1748,7 @@
 "_timeout_ks_ike_switch_protocol" = "Переключиться на OpenVPN и повторить";
 
 /* (No Comment) */
-"_to_server_title" = "На сервер %@:";
+"_to_server_title" = "К серверу %@:";
 
 /* MacOS profile form: feature selection value; iOS: country.server description in countries list; */
 "_tor" = "TOR";
@@ -2029,7 +2035,7 @@
 "_vpn_stuck_disconnecting_title" = "Ошибка подключения";
 
 /* (No Comment) */
-"_vpnauth_certfail_description" = "Не удалось обновить сертификат VPN. Пожалуйста, проверьте Ваше подключение";
+"_vpnauth_certfail_description" = "Не удалось обновить сертификат VPN. Пожалуйста, проверьте свое подключение";
 
 /* Cert based auth */
 "_vpnauth_certfail_title" = "Ошибка аутентификации";
@@ -2049,17 +2055,23 @@
 /* MacOS: alert shown during login if already connected to VPN */
 "_warning_vpn_session_is_active" = "На этом устройстве активен еще один сеанс ProtonVPN. Продолжение процесса входа приведет к завершению сеанса. Вы хотите продолжить?";
 
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Быстрая Швейцарская VPN, которая охраняет конфиденциальность ваших данных, шифруя ваше соединение с Интернетом.";
+
 /* MacOS welcome screen: description */
 "_welcome_description" = "Спасибо за использование ProtonVPN. Взгляните \nна основные возможности приложения.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "В качестве приветственного подарка вам предоставляется 7-дневный доступ к\nподписке %@, которая дает вам:";
 
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Защитите себя в интернете";
+
 /* MacOS welcome screen: title */
 "_welcome_title" = "ДОБРО ПОЖАЛОВАТЬ НА БОРТ!";
 
 /* (No Comment) */
-"_wgks_description" = "Аварийный стоп препятствует подключению VPN к Интернету. Это может быть связано с несовместимостью с вашей операционной системой (macOS Catalina 10.15).\n\nЧтобы решить эту проблему, обновите операционную систему до последней версии.\n\nТакже вы можете перейти на протокол OpenVPN или отключить аварийный стоп.";
+"_wgks_description" = "Аварийный стоп препятствует подключению VPN к Интернету. Это может быть связано с несовместимостью с вашей операционной системой (macOS Catalina 10.15).\n\nЧтобы решить эту проблему, обновите операционную систему до последней версии.\n\nТакже вы можете перейти на протокол OpenVPN или отключить Аварийный стоп.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Отключить Kill Switch";
@@ -2084,4 +2096,10 @@
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Вы не подключены";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Настройка доступа к VPN";
+
+/* (No Comment) */
+"login_summary_button" = "Начать использовать ProtonVPN";
 
