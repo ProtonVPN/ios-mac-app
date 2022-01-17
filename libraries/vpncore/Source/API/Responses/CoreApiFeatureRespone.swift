@@ -18,11 +18,11 @@
 
 import Foundation
 
-struct CoreApiFeatureRespone: Codable {
+struct CoreApiFeatureRespone<T: Codable>: Codable {
     let code: Int
-    let feature: Feature
+    let feature: Feature<T>
 }
 
-struct Feature: Codable {
-    let value: Bool
+struct Feature<T: Codable>: Codable {
+    let value: T
 }
