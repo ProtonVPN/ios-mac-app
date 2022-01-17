@@ -601,6 +601,12 @@
 /* (No Comment) */
 "_features_title" = "Mogelijkheden";
 
+/* (No Comment) */
+"_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Application upgrade needed";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Wachtwoord vergeten?";
 
@@ -2049,11 +2055,17 @@
 /* MacOS: alert shown during login if already connected to VPN */
 "_warning_vpn_session_is_active" = "Een ProtonVPN-sessie van een andere gebruiker is actief op dit apparaat. Door in te loggen zal de huidige sessie beëindigd worden. Wilt u doorgaan?";
 
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.";
+
 /* MacOS welcome screen: description */
 "_welcome_description" = "Bedankt voor het gebruik van ProtonVPN. Bekijk snel \nde belangrijkste kenmerken van de applicatie.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Als welkomstgeschenk krijgt u 7 dagen toegang tot een\n%@ abonnement dat u het volgende biedt:";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Bescherm uzelf online";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WELKOM AAN BOORD!";
@@ -2084,4 +2096,10 @@
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "U bent niet verbonden";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Configuring your VPN access";
+
+/* (No Comment) */
+"login_summary_button" = "Start using ProtonVPN";
 

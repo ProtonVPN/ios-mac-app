@@ -601,6 +601,12 @@
 /* (No Comment) */
 "_features_title" = "Funktionen";
 
+/* (No Comment) */
+"_force_upgrade_message" = "Die von dir verwendete Anwendungsversion wird nicht länger unterstützt. Bitte aktualisiere auf die neueste Version.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Aktualisieren der Anwendung erforderlich";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Passwort vergessen?";
 
@@ -1265,7 +1271,7 @@
 "_quick_settings_netshield_option_off" = "Nicht sperren";
 
 /* Quick Settings */
-"_quick_settings_secureCore_description" = "Leiten Sie Ihre sensibelsten Daten über unsere sichersten Server in datenschutzfreundlichen Ländern weiter.";
+"_quick_settings_secureCore_description" = "Leite deine sensibelsten Daten über unsere sichersten Server in datenschutzfreundlichen Ländern weiter.";
 
 /* (No Comment) */
 "_quick_settings_secureCore_note" = "„Secure Core” kann die VPN-Geschwindigkeit reduzieren";
@@ -1757,7 +1763,7 @@
 "_tor_title" = "Tor";
 
 /* iOS trial expired screen */
-"_trial_expired_alert_body_iOS" = "Ihre 7‐tagige, kostenlose Probephase von ProtonVPN Plus ist abgelaufen. Sie können ProtonVPN Free allerdings weiterhin nutzen. Um jedoch das Projekt zu unterstützen und Zugriff auf mehr Länder und Funktionen zu erhalten, upgraden Sie bitte Ihr Abonnement.";
+"_trial_expired_alert_body_iOS" = "Deine 7‐tagige, kostenlose Probephase von ProtonVPN Plus ist abgelaufen. Du kannst ProtonVPN Free allerdings weiterhin nutzen. Um jedoch das Projekt zu unterstützen und Zugriff auf mehr Länder und Funktionen zu erhalten, upgrade bitte dein Abonnement.";
 
 /* iOS trial expired screen */
 "_trial_expired_alert_title_iOS" = "ProtonVPN‐Plus‐Probephase abgelaufen";
@@ -2049,11 +2055,17 @@
 /* MacOS: alert shown during login if already connected to VPN */
 "_warning_vpn_session_is_active" = "Die Sitzung eines anderen Benutzers ist auf diesem Gerät bereits aktiv. Durch das Fortfahren der Anmeldung wird die aktuelle Sitzung beendet. Möchten Sie fortfahren?";
 
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Schweizer Hochgeschwindigkeits-VPN, das deine Privatsphäre schützt, indem es deine Internetverbindung verschlüsselt.";
+
 /* MacOS welcome screen: description */
 "_welcome_description" = "Vielen Dank, dass Sie ProtonVPN benutzen. Schauen\nSie sich am besten direkt die wichtigsten Funktionen an.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "Als Willkommensgeschenk erhalten Sie einen 7-tägigen Zugang zu einem %@-Abonnement, welches Folgendes bietet:";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Schütze dich online";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WILLKOMMEN AN BOARD!";
@@ -2084,4 +2096,10 @@
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Verbindung getrennt";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Dein VPN-Zugang wird konfiguriert";
+
+/* (No Comment) */
+"login_summary_button" = "Fange an ProtonVPN zu nutzen";
 
