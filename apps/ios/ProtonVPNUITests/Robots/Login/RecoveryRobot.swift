@@ -20,11 +20,7 @@ import pmtest
 import ProtonCore_TestingToolkit
 
 private let phoneTextFieldId = "RecoveryViewController.recoveryPhoneTextField.textField"
-private let phoneButtonId = "RecoveryViewController.recoveryPhoneTextField.pickerButton"
-private let phonePickerId = "RecoveryViewController.recoveryPhoneTextField.pickerLabel"
-private let skipButtonId = "UINavigationItem.rightBarButtonItem"
 private let nextButtonId = "RecoveryViewController.nextButton"
-private let recoveryDialogSkipButtonAccessibilityId = "DialogSkipButton"
 
 class RecoveryRobot: CoreElements {
     
@@ -63,6 +59,13 @@ class RecoveryRobot: CoreElements {
         func recoveryDialogDisplay() -> RecoveryRobot {
             _ = self.coreRecoveryRobot
             self.recoveryDialogDisplay()
+            return RecoveryRobot()
+        }
+        
+        @discardableResult
+        func recoveryScreenIsShown() -> RecoveryRobot {
+            _ = self.coreRecoveryRobot
+            self.recoveryScreenIsShown()
             return RecoveryRobot()
         }
     }

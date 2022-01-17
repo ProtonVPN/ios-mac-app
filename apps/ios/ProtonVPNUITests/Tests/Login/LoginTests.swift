@@ -44,11 +44,13 @@ class LoginTests: ProtonVPNUITests {
         }
     }
     
-    func testLoginWithEmptyFields() {
-            
+    func testLoginAsSubuserWithNoConnectionsAssigned () {
+        
+        let subusercredentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "subusercredentials", withExtension: "plist")!)
+
         loginRobot
-            .loginEmptyFields()
-            .verify.pleaseEnterPasswordAndUsernameErrorIsShown()
+            .loginAsSubuser(subusercredentials: subusercredentials[0])
+            .verify.assignVPNConnectionErrorIsShown()
     }
     
     func testNeedHelpClosed() {

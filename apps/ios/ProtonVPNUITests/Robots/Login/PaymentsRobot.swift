@@ -21,8 +21,6 @@ import ProtonCore_TestingToolkit
 
 fileprivate let titleId = "PaymentsUIViewController.tableHeaderLabel"
 fileprivate let freePlanTitle = "Free.planNameLabel"
-fileprivate let selectFreeButton = "Select"
-fileprivate let footer = "PaymentsUIViewController.tableFooterTextLabel"
 
 class PaymentsRobot: CoreElements {
     
@@ -35,7 +33,6 @@ class PaymentsRobot: CoreElements {
             .self.freePlanButtonTap()
         return SignupHumanVerificationRobot()
     }
-    
     
     class Verify: CoreElements {
         
