@@ -20,7 +20,7 @@ import Foundation
 import Onboarding
 
 extension Configuration {
-    init() {
-        self.init(variant: OnboardingVariant.A, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor()))
+    init(showFirstConnection: Bool) {
+        self.init(variant: showFirstConnection ? OnboardingVariant.A : OnboardingVariant.B, colors: Colors(background: .backgroundColor(), text: .normalTextColor(), brand: .brandColor(), weakText: .weakTextColor(), activeBrandButton: .activeBrandColor(), secondaryBackground: .secondaryBackgroundColor()))
     }
 }

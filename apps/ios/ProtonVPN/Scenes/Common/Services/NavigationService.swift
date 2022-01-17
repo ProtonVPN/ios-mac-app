@@ -380,8 +380,8 @@ extension NavigationService: LoginServiceDelegate {
         presentMainInterface()
     }
 
-    func usedDidSignUp() {
-        onboardingService.showOnboarding()
+    func usedDidSignUp(onboardingShowFirstConnection: Bool) {
+        onboardingService.showOnboarding(showFirstConnection: onboardingShowFirstConnection)
     }
 }
 
