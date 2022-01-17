@@ -32,16 +32,33 @@
                                     <action selector="startBTapped:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Wr7-ln-9CR"/>
                                 </connections>
                             </button>
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5d4-Pr-WxZ">
+                                <rect key="frame" x="349" y="60" width="51" height="31"/>
+                            </switch>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Successful simulated VPN connection" textAlignment="right" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fJ8-2g-bEY">
+                                <rect key="frame" x="16" y="65.5" width="325" height="20.5"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="fJ8-2g-bEY" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="55d-c9-TEI"/>
+                            <constraint firstItem="fJ8-2g-bEY" firstAttribute="centerY" secondItem="5d4-Pr-WxZ" secondAttribute="centerY" id="6mE-UJ-dtK"/>
                             <constraint firstItem="BZg-SG-xYD" firstAttribute="top" secondItem="7HQ-8o-y41" secondAttribute="bottom" constant="16" id="7xj-x3-IgV"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="Fnu-0r-F61"/>
+                            <constraint firstItem="5d4-Pr-WxZ" firstAttribute="leading" secondItem="fJ8-2g-bEY" secondAttribute="trailing" constant="8" id="LaR-HZ-qbd"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="5d4-Pr-WxZ" secondAttribute="trailing" constant="16" id="SSi-x0-Mwm"/>
+                            <constraint firstItem="5d4-Pr-WxZ" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="16" id="WGa-Pa-CMu"/>
                             <constraint firstItem="7HQ-8o-y41" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="aRR-KN-M8u"/>
                             <constraint firstItem="BZg-SG-xYD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="cC5-0j-7ZY"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="vpnSuccessSwitch" destination="5d4-Pr-WxZ" id="uew-Ve-Lw6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

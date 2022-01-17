@@ -20,6 +20,8 @@ import UIKit
 import Onboarding
 
 final class ViewController: UIViewController {
+    @IBOutlet private weak var vpnSuccessSwitch: UISwitch!
+
     private var coordinator: OnboardingCoordinator!
 
     @IBAction private func startATapped(_ sender: Any) {
@@ -49,8 +51,14 @@ extension ViewController: OnboardingCoordinatorDelegate {
     }
 
     func userDidRequestConnection(completion: @escaping OnboardingConnectionRequestCompletion) {
+        let succes = vpnSuccessSwitch.isOn
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            completion(Country(name: "United States", flag: UIImage(named: "Flag")!))
+            if succes {
+                completion(Country(name: "United States", flag: UIImage(named: "Flag")!))
+            } else {
+                completion(nil)
+            }
         }
     }
 
