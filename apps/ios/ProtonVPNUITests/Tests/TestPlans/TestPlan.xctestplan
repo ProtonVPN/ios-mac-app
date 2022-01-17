@@ -19,6 +19,8 @@
         "LoginTests\/testLoginWithIncorrectCredentials_C100()",
         "OldLoginTests",
         "SignUpTests",
+        "SignupTests\/testSignupExistingExternalAccount()",
+        "SignupTests\/testSignupNewExternalAccountSuccess()",
         "UnloggedUserTests"
       ],
       "target" : {

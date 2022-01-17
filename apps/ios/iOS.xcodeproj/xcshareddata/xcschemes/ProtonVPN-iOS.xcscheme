@@ -99,6 +99,9 @@
                   Identifier = "SignupTests/testSignupExistingExtAccount()">
                </Test>
                <Test
+                  Identifier = "SignupTests/testSignupExistingExternalAccount()">
+               </Test>
+               <Test
                   Identifier = "SignupTests/testSignupNewAccountSuccess()">
                </Test>
                <Test
@@ -106,6 +109,9 @@
                </Test>
                <Test
                   Identifier = "SignupTests/testSignupNewExtSendCodeRequestCodeCancel()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupNewExternalAccountSuccess()">
                </Test>
                <Test
                   Identifier = "SignupTests/testSignupNewSendCodeRequestCodeCancel()">

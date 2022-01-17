@@ -52,7 +52,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.usernameErrorIsShown()
     }
     
-    func testSignupNewIntAccountSuccess() {
+    func testSignupNewInternalAccountSuccess() {
        
         let email = StringUtils().randomAlphanumericString(length: 5)
         let randomEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
@@ -86,7 +86,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.userIsCreated(email, plan)
     }
     
-    func testSignupNewIntAccountWithRecoveryEmailSuccess() {
+    func testSignupNewInternalAccountWithRecoveryEmailSuccess() {
        
         let email = StringUtils().randomAlphanumericString(length: 5)
         let testEmail = StringUtils().randomAlphanumericString(length: 5) + "@mail.com"
@@ -119,7 +119,7 @@ class SignupTests: ProtonVPNUITests {
             .verify.userIsCreated(email, plan)
     }
     
-    func testSignupNewExtAccountSuccess() {
+    func testSignupNewExternalAccountSuccess() {
         let email = StringUtils().randomAlphanumericString(length: 7) + "@mail.com"
         let code = "666666"
         let password = StringUtils().randomAlphanumericString(length: 8)
@@ -143,7 +143,7 @@ class SignupTests: ProtonVPNUITests {
             .selectFreePlan()
     }
     
-    func testSignupExistingExtAccount() {
+    func testSignupExistingExternalAccount() {
 
         let email = "vpnfree@gmail.com"
         let code = "666666"
