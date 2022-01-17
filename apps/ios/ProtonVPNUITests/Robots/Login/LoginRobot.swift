@@ -17,7 +17,8 @@ fileprivate let invalidCredentialText = "Incorrect login credentials. Please try
 fileprivate let helpButtonId = "LoginViewController.helpButton"
 fileprivate let enterPasswordErrorMessage = "Please enter your Proton Account password."
 fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account email or username."
-private let errorBannerMessage = "Email address already used."
+fileprivate let errorBannerMessage = "Email address already used."
+fileprivate let assingConnectionErrorBannerMessage = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account."
 
 class LoginRobot: CoreElements {
     
@@ -40,6 +41,12 @@ class LoginRobot: CoreElements {
     @discardableResult
     func loginEmptyFields() -> LoginRobot {
         return signIn()
+    }
+    
+    func loginAsSubuser(subusercredentials: Credentials) -> LoginRobot {
+        return typeUsername(username: subusercredentials.username)
+            .typePassword(password: subusercredentials.password)
+            .signIn()
     }
     
     func needHelp() -> NeedHelpRobot {
@@ -87,8 +94,15 @@ class LoginRobot: CoreElements {
         }
         
         @discardableResult
-        public func emailAddresAlreadyExists() -> LoginRobot {
+        func emailAddresAlreadyExists() -> LoginRobot {
             textView(errorBannerMessage).wait(time: 5).checkExists()
+            button("OK").wait().checkExists().tap()
+            return LoginRobot()
+        }
+        
+        @discardableResult
+        func assignVPNConnectionErrorIsShown() -> LoginRobot {
+            textView(assingConnectionErrorBannerMessage).wait().checkExists()
             button("OK").wait().checkExists().tap()
             return LoginRobot()
         }
