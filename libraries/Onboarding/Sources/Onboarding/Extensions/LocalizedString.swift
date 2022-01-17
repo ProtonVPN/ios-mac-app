@@ -46,6 +46,8 @@ public enum LocalizedString {
   public static var onboardingNetshieldTitle: String { return LocalizedString.tr("Localizable", "onboarding_netshield_title") }
   /// Next
   public static var onboardingNext: String { return LocalizedString.tr("Localizable", "onboarding_next") }
+  /// Unable to establish a connection. Please try again later in the app.
+  public static var onboardingNotConnectedError: String { return LocalizedString.tr("Localizable", "onboarding_not_connected_error") }
   /// You’re ready to browse the web.
   public static var onboardingNotConnectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_not_connected_subtitle") }
   /// AVAILABLE WITH PLUS
