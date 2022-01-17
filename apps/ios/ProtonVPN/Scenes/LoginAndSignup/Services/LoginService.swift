@@ -44,6 +44,7 @@ final class CoreLoginService {
         & PropertiesManagerFactory
         & NetworkingFactory
         & DoHVPNFactory
+        & CoreApiServiceFactory
 
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
@@ -52,6 +53,7 @@ final class CoreLoginService {
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
     private let doh: DoHVPN
+    private let coreApiService: CoreApiService
 
     private var login: LoginAndSignupInterface?
 
@@ -65,6 +67,7 @@ final class CoreLoginService {
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
         doh = factory.makeDoHVPN()
+        coreApiService = factory.makeCoreApiService()
     }
 
     private func show() {
@@ -72,10 +75,26 @@ final class CoreLoginService {
         let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
 
+        var onboardingShowFirstConnection = true
         let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
             // attempt to uset the login data to log in the app
             let authCredentials = AuthCredentials(data)
-            self?.appSessionManager.finishLogin(authCredentials: authCredentials, completion: completion)
+            self?.appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
+                switch result {
+                case .success:
+                    self?.coreApiService.getApiFeature(feature: .onboardingShowFirstConnection) { (result: Result<Bool, Error>) in
+                        switch result {
+                        case let .success(flag):
+                            onboardingShowFirstConnection = flag
+                            completion(.success(()))
+                        case let .failure(error):
+                            completion(.failure(error))
+                        }
+                    }
+                case let .failure(error):
+                    completion(.failure(error))
+                }
+            }
         }
 
         let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
@@ -86,7 +105,7 @@ final class CoreLoginService {
             case .loggedIn:
                 self?.delegate?.userDidLogIn()
             case .signedUp:
-                self?.delegate?.usedDidSignUp(onboardingShowFirstConnection: true)
+                self?.delegate?.usedDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
             }
 
             self?.login = nil
