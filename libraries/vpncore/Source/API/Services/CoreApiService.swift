@@ -28,6 +28,7 @@ public protocol CoreApiServiceFactory {
 
 public protocol CoreApiService {
     func getApiNotifications(completion: @escaping (Result<GetApiNotificationsResponse, Error>) -> Void)
+    func getApiFeature(feature: CoreApiFeature, completion: @escaping (Result<Bool, Error>) -> Void)
 }
 
 public class CoreApiServiceImplementation: CoreApiService {
@@ -54,6 +55,17 @@ public class CoreApiServiceImplementation: CoreApiService {
                 } catch let error {
                     completion(.failure(error))
                 }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
+    }
+
+    public func getApiFeature(feature: CoreApiFeature, completion: @escaping (Result<Bool, Error>) -> Void) {
+        networking.request(CoreApiFeatureRequest(feature: feature)) { (result: Result<CoreApiFeatureRespone, Error>) in
+            switch result {
+            case let .success(data):
+                completion(.success(data.feature.value))
             case let .failure(error):
                 completion(.failure(error))
             }
