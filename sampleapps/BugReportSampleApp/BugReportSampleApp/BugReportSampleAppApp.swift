@@ -77,6 +77,7 @@ struct ContentView: View {
 
 struct MockDelegate: BugReportDelegate {
     var model: BugReportModel
+    var prefilledEmail: String = ""
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
     

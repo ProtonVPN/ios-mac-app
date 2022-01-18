@@ -1,5 +1,5 @@
 //
-//  Created on 2022-01-14.
+//  Created on 2022-01-17.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -17,22 +17,10 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
-import BugReport
 
-class BugReportCoordinator: BugReportDelegate {
+public extension TimeInterval {
     
-    var model: BugReportModel = .mock
-    
-    func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
-        
-    }
-    
-    func finished() {
-        
-    }
-    
-    func troubleshootingRequired() {
-        
-    }
+    /// One day worth of seconds
+    static var day: TimeInterval = 60 * 60 * 24
     
 }

@@ -39,11 +39,17 @@ public struct BugReportView: View {
                     .padding(.horizontal)
                 
                 List(delegate.model.categories) { category in
-                    NavigationLink(destination: {
-                        QuickFixesList(category: category)
-                            .navigationTitle(Text(LocalizedString.brWindowTitle))
-                    }) {
-                        Text(category.label)
+                    if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form
+                        NavigationLink(destination: {
+                            FormView(viewModel: FormViewModel(fields: category.inputFields))
+                                .navigationTitle(Text(LocalizedString.brWindowTitle))
+                        }) { Text(category.label) }
+                        
+                    } else {
+                        NavigationLink(destination: {
+                            QuickFixesList(category: category)
+                                .navigationTitle(Text(LocalizedString.brWindowTitle))
+                        }) { Text(category.label) }
                     }
                 }
                 .listStyle(.plain)

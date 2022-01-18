@@ -21,9 +21,12 @@
 
 import Foundation
 import ProtonCore_APIClient
+import BugReport
+
+public typealias DynamicBugReportConfigCallback = GenericCallback<BugReportModel>
 
 public protocol ReportsApiServiceFactory {
-    func makeReportsApiService() -> ReportsApiService
+    func makeReportsApiService() -> ReportsApiService    
 }
 
 public class ReportsApiService {
@@ -52,5 +55,26 @@ public class ReportsApiService {
                 completion(.failure(error))
             }
         }
+    }
+    
+    public func dynamicBugReportConfig(success: @escaping DynamicBugReportConfigCallback, failure: @escaping ErrorCallback) {
+        let successWrapper: StringCallback = { response in
+            do {
+                guard let data = response.data(using: .utf8) else {
+                    throw ParseError.stringToDataConversion
+                }
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
+                let model = try decoder.decode(BugReportModel.self, from: data)
+                success(model)
+            
+            } catch {
+                log.error("Failed to parse load info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(response)"])
+                let error = ParseError.loadsParse
+                failure(error)
+            }
+        }
+        
+        alamofireWrapper.request(DynamicBugReportConfigRequest(), success: successWrapper, failure: failure)
     }
 }

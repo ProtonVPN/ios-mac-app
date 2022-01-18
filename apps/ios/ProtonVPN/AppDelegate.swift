@@ -61,6 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
                 
+        _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
+        
         return true
     }
         

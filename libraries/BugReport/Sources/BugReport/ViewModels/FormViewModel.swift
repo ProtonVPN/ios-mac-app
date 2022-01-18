@@ -79,7 +79,7 @@ class FormViewModel: ObservableObject {
     
     // MARK: - Other
         
-    private lazy var delegate: BugReportDelegate = Current.bugReportDelegate
+    private var delegate: BugReportDelegate = Current.bugReportDelegate
     private let emailFieldName = "_email"
     private let logsFieldName = "_logs"
     
@@ -87,12 +87,16 @@ class FormViewModel: ObservableObject {
         var formFields: [FormInputField] = []
         
         // Email field is always first
-        formFields.append(FormInputField(inputField: InputField(
-            label: LocalizedString.br3Email,
-            submitLabel: emailFieldName,
-            type: .textSingleLine,
-            isMandatory: true,
-            placeholder: nil)))
+        formFields.append(FormInputField(
+            inputField: InputField(
+                label: LocalizedString.br3Email,
+                submitLabel: emailFieldName,
+                type: .textSingleLine,
+                isMandatory: true,
+                placeholder: nil
+            ),
+            stringValue: delegate.prefilledEmail
+        ))
         
         formFields.append(contentsOf: fields.map { FormInputField(inputField: $0) })
         

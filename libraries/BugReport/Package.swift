@@ -7,7 +7,7 @@ let package = Package(
     name: "BugReport",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v12), // On iOS < 14, Creator will return null, so the app can use old, compatible BugReport
+        .iOS(.v12), // On iOS < 14, Creator will return nil, so the app can use old, compatible BugReport.
         .macOS(.v11)],
     products: [
         // Products define the executables and libraries a package produces, and make them visible to other packages.

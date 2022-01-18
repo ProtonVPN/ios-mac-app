@@ -33,8 +33,8 @@ final class DataTests: XCTestCase {
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         let model = try decoder.decode(BugReportModel.self, from: data)
         
-        XCTAssertEqual(model.categories.first?.label, "Slow speed")
-        XCTAssertEqual(model.categories.first?.suggestions.last?.text, "Select a server closer to your location.")
+        XCTAssertEqual(model.categories.first?.label, "Browsing speed_")
+        XCTAssertEqual(model.categories.first?.suggestions?.last?.text, "Try a different server. Servers in nearby countries often have faster connection speeds.")
     }
     
 }

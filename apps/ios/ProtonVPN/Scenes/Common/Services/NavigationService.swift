@@ -24,6 +24,7 @@ import GSMessages
 import UIKit
 import vpncore
 import SwiftUI
+import BugReport
 
 // MARK: Country Service
 
@@ -323,9 +324,14 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        
-        if #available(iOS 14.0.0, *) {
-            if let viewController = bugReportCreator.createBugReportViewController(delegate: BugReportCoordinator(), colors: nil) {
+        if #available(iOS 14.0.0, *) {            
+            let manager = factory.makeDynamicBugReportManager()
+            if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: nil) {
+                manager.username = AuthKeychain.fetch()?.username ?? ""
+                manager.planname = (try? vpnKeychain.fetch().accountPlan.name) ?? ""
+                manager.closeBugReportHandler = {
+                    self.windowService.dismissModal()
+                }
                 windowService.present(modal: viewController)
                 return
             }

@@ -1,5 +1,5 @@
 //
-//  Created on 2022-01-06.
+//  Created on 2022-01-14.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,19 +18,8 @@
 
 import Foundation
 
-public struct Category: Codable, Identifiable {
-    public let id = UUID()
-    
-    let label: String
-    let submitLabel: String
-    let suggestions: [Suggestion]?
-    let inputFields: [InputField]
-    
-    // Define keys explicitly to silence the warning on id
-    enum CodingKeys: String, CodingKey {
-        case label
-        case submitLabel
-        case suggestions
-        case inputFields
+class DynamicBugReportConfigRequest: VPNBaseRequest {
+    override func path() -> String {
+        return super.path() + "/featureconfig/dynamic-bug-reports"
     }
 }

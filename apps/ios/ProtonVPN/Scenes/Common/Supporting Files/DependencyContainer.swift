@@ -71,6 +71,11 @@ final class DependencyContainer {
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
 
+    private lazy var challenge = CoreChallenge()
+    
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes cofig from time to time.
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesProvider())
+
     private lazy var vpnAuthentication: VpnAuthentication = {
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: storage)
@@ -412,5 +417,13 @@ extension DependencyContainer: OnboardingServiceFactory {
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
         return iOSBugReportCreator()
+    }
+}
+
+// MARK: DynamicBugReportManagerFactory
+
+extension DependencyContainer: DynamicBugReportManagerFactory {
+    func makeDynamicBugReportManager() -> DynamicBugReportManager {
+        return dynamicBugReportManager
     }
 }
