@@ -12,6 +12,7 @@ import ProtonCore_DataModel
 import ProtonCore_Login
 import ProtonCore_LoginUI
 import ProtonCore_Networking
+import ProtonCore_Payments
 
 protocol LoginServiceFactory: AnyObject {
     func makeLoginService() -> LoginService
@@ -40,6 +41,7 @@ final class CoreLoginService {
     typealias Factory = AppSessionManagerFactory
         & AppSessionRefresherFactory
         & WindowServiceFactory
+        & CoreAlertServiceFactory
         & NetworkingDelegateFactory
         & PropertiesManagerFactory
         & NetworkingFactory
@@ -49,6 +51,7 @@ final class CoreLoginService {
     private let appSessionManager: AppSessionManager
     private let appSessionRefresher: AppSessionRefresher
     private let windowService: WindowService
+    private let alertService: AlertService
     private let networkingDelegate: NetworkingDelegate // swiftlint:disable:this weak_delegate
     private let networking: Networking
     private let propertiesManager: PropertiesManagerProtocol
@@ -63,6 +66,7 @@ final class CoreLoginService {
         appSessionManager = factory.makeAppSessionManager()
         appSessionRefresher = factory.makeAppSessionRefresher()
         windowService = factory.makeWindowService()
+        alertService = factory.makeCoreAlertService()
         networkingDelegate = factory.makeNetworkingDelegate()
         propertiesManager = factory.makePropertiesManager()
         networking = factory.makeNetworking()
@@ -71,13 +75,13 @@ final class CoreLoginService {
     }
 
     private func show() {
-        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(mode: SignupMode.internal, passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
+        let signupAvailability = SignupAvailability.available(parameters: SignupParameters(passwordRestrictions: SignupPasswordRestrictions.default, summaryScreenVariant: SummaryScreenVariant.noSummaryScreen))
         let login = LoginAndSignup(appName: "ProtonVPN", clientApp: ClientApp.vpn, doh: doh, apiServiceDelegate: networking, forceUpgradeDelegate: networkingDelegate, minimumAccountType: AccountType.username, isCloseButtonAvailable: false, paymentsAvailability: PaymentsAvailability.notAvailable, signupAvailability: signupAvailability)
         self.login = login
 
         var onboardingShowFirstConnection = true
         let finishFlow = WorkBeforeFlow(stepName: LocalizedString.loginFetchVpnData) { [weak self] (data: LoginData, completion: @escaping (Result<Void, Error>) -> Void) -> Void in
-            // attempt to uset the login data to log in the app
+            // attempt to use the login data to log in the app
             let authCredentials = AuthCredentials(data)
             self?.appSessionManager.finishLogin(authCredentials: authCredentials) { [weak self] result in
                 switch result {
@@ -98,7 +102,7 @@ final class CoreLoginService {
         }
 
         let variant = WelcomeScreenVariant.vpn(WelcomeScreenTexts(headline: LocalizedString.welcomeHeadline, body: LocalizedString.welcomeBody))
-        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlow: finishFlow, customErrorPresenter: nil) { [weak self] (result: LoginResult) -> Void in
+        let welcomeViewController = login.welcomeScreenForPresentingFlow(variant: variant, username: nil, performBeforeFlow: finishFlow, customErrorPresenter: self) { [weak self] (result: LoginResult) -> Void in
             switch result {
             case .dismissed:
                 log.error("Dismissing the Welcome screen without login or signup should not be possible", category: .app)
@@ -112,6 +116,51 @@ final class CoreLoginService {
         }
 
         windowService.show(viewController: welcomeViewController)
+    }
+}
+
+// MARK: LoginErrorPresenter
+extension CoreLoginService: LoginErrorPresenter {
+    func willPresentError(error: LoginError, from: UIViewController) -> Bool {
+        switch error {
+        case .generic(_, _, ProtonVpnError.subuserWithoutSessions):
+            alertService.push(alert: SubuserWithoutConnectionsAlert())
+            return true
+        default:
+            return false
+        }
+    }
+
+    func willPresentError(error: SignupError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: AvailabilityError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: SetUsernameError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: CreateAddressError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: CreateAddressKeysError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: StoreKitManagerErrors, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: ResponseError, from: UIViewController) -> Bool {
+        return false
+    }
+
+    func willPresentError(error: Error, from: UIViewController) -> Bool {
+        return false
     }
 }
 
