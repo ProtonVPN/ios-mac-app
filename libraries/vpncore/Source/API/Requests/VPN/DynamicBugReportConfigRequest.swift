@@ -16,10 +16,14 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+import ProtonCore_Networking
 
-class DynamicBugReportConfigRequest: VPNBaseRequest {
-    override func path() -> String {
-        return super.path() + "/featureconfig/dynamic-bug-reports"
+class DynamicBugReportConfigRequest: Request {
+    var path: String {
+        return "/vpn/featureconfig/dynamic-bug-reports"
+    }
+
+    var isAuth: Bool {
+        return false
     }
 }

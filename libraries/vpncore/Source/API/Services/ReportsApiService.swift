@@ -57,24 +57,7 @@ public class ReportsApiService {
         }
     }
     
-    public func dynamicBugReportConfig(success: @escaping DynamicBugReportConfigCallback, failure: @escaping ErrorCallback) {
-        let successWrapper: StringCallback = { response in
-            do {
-                guard let data = response.data(using: .utf8) else {
-                    throw ParseError.stringToDataConversion
-                }
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
-                let model = try decoder.decode(BugReportModel.self, from: data)
-                success(model)
-            
-            } catch {
-                log.error("Failed to parse load info for json", category: .api, event: .response, metadata: ["error": "\(error)", "json": "\(response)"])
-                let error = ParseError.loadsParse
-                failure(error)
-            }
-        }
-        
-        alamofireWrapper.request(DynamicBugReportConfigRequest(), success: successWrapper, failure: failure)
+    public func dynamicBugReportConfig(completion: @escaping (Result<BugReportModel, Error>) -> Void) {
+        networking.request(DynamicBugReportConfigRequest(), completion: completion)
     }
 }

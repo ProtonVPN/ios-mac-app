@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import ProtonCore_APIClient
 import BugReport
 
 #if os(iOS)
@@ -70,15 +71,18 @@ public class DynamicBugReportManager {
     }
     
     private func loadConfig() {
-        api.dynamicBugReportConfig(success: { result in
-            self.model = result
-            self.storage.store(result)
-            log.debug("Dynamic bug report config downloaded and saved", category: .app)
-            
-        }, failure: { error in
-            log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
-            // Ignoring this error as we have default config
-        })
+        api.dynamicBugReportConfig { result in
+            switch result {
+            case .success(let config):
+                self.model = config
+                self.storage.store(config)
+                log.debug("Dynamic bug report config downloaded and saved", category: .app)
+                
+            case .failure(let error):
+                log.debug("Dynamic bug report config download error", category: .app, event: .error, metadata: ["error": "\(error)"])
+                // Ignoring this error as we have default config
+            }
+        }
     }
     
     private func getDefaultConfig() -> BugReportModel {
@@ -133,12 +137,16 @@ extension DynamicBugReportManager: BugReportDelegate {
         
     public func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
         let report = fillReportBug(withData: form)
-        api.report(bug: report, success: {
-            self.prefilledEmail = report.email
-            result(.success(()))
-        }, failure: { error in
-            result(.failure(error))
-        })
+        api.report(bug: report) { requestResult in
+            switch requestResult {
+            case .success:
+                self.prefilledEmail = report.email
+                result(.success(()))
+                
+            case .failure(let error):
+                result(.failure(error))
+            }
+        }
     }
     
     public func finished() {
