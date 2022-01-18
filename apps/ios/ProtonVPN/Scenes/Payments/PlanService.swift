@@ -62,7 +62,7 @@ final class CorePlanService: PlanService {
     weak var delegate: PlanServiceDelegate?
 
     var allowUpgrade: Bool {
-        return userCachedStatus.isIAPUpgradePlanAvailable
+        return userCachedStatus.paymentsBackendStatusAcceptsIAP
     }
 
     init(networking: Networking, alertService: CoreAlertService, storage: Storage) {
@@ -95,7 +95,7 @@ final class CorePlanService: PlanService {
     }
 
     func presentPlanSelection() {
-        guard userCachedStatus.isIAPUpgradePlanAvailable else {
+        guard userCachedStatus.paymentsBackendStatusAcceptsIAP else {
             alertService.push(alert: UpgradeUnavailableAlert())
             return
         }

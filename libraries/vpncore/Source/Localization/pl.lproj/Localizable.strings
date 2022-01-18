@@ -601,6 +601,12 @@
 /* (No Comment) */
 "_features_title" = "Funkcje";
 
+/* (No Comment) */
+"_force_upgrade_message" = "Obecna wersja aplikacji ProtonVPN nie jest już wspierana. Zaktualizuj ją do najnowszej wersji.";
+
+/* (No Comment) */
+"_force_upgrade_title" = "Aplikacja wymaga aktualizacji";
+
 /* iOS: button in login screen */
 "_forgot_password" = "Nie pamiętasz hasła?";
 
@@ -797,7 +803,7 @@
 "_local_agent_policy_violation_error_message" = "Nie masz dostępu do tego serwera. Połącz się z innym serwerem lub ulepsz plan.";
 
 /* (No Comment) */
-"_local_agent_policy_violation_error_title" = "Naruszenie zasad";
+"_local_agent_policy_violation_error_title" = "Naruszenie regulaminu";
 
 /* (No Comment) */
 "_local_agent_server_error_message" = "Wystąpił błąd podczas łączenia z serwerem. Połącz się z innym serwerem.";
@@ -2049,11 +2055,17 @@
 /* MacOS: alert shown during login if already connected to VPN */
 "_warning_vpn_session_is_active" = "Sesja innego użytkownika ProtonVPN jest aktywna na tym urządzeniu. Kontynuowanie logowania spowoduje zakończenie obecnej sesji. Czy chcesz kontynuować?";
 
+/* Shown on the Welcome screen as the longer screen text */
+"_welcome_body" = "Szybka szwajcarska usługa VPN, która chroni Twoją prywatność, szyfrując Twoje połączenie internetowe.";
+
 /* MacOS welcome screen: description */
 "_welcome_description" = "Dziękujemy za skorzystanie z usługi ProtonVPN. Rzuć okiem\nna główne funkcje aplikacji.";
 
 /* %@ is always 'ProtonVPN PLUS' e.g. As a welcome gift, you are granted a 7-day access to a\nProtonVPN PLUS subscription which gives you: A list of Plus plan-only features follows this text */
 "_welcome_gift_description" = "W ramach prezentu powitalnego, otrzymujesz 7-dniowy dostęp do subskrypcji %@, która obejmuje:";
+
+/* Shown on the Welcome screen as the screen headline */
+"_welcome_headline" = "Zadbaj o bezpieczeństwo w sieci";
 
 /* MacOS welcome screen: title */
 "_welcome_title" = "WITAJ NA POKŁADZIE!";
@@ -2084,4 +2096,10 @@
 
 /* MacOS: text in main window */
 "_you_are_not_connected" = "Nie jesteś połączony";
+
+/* (No Comment) */
+"login_fetch_vpn_data" = "Konfiguracja dostępu do usługi VPN";
+
+/* (No Comment) */
+"login_summary_button" = "Zacznij korzystać z aplikacji ProtonVPN";
 

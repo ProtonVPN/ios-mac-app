@@ -135,7 +135,9 @@
 		A65DEEFDAF891142D8D50986 /* Pods_Siri_Shortcut_Handler.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E53B80090F8C4D5C80CEF21 /* Pods_Siri_Shortcut_Handler.framework */; };
 		AA7F4BB1B033290373864C0C /* Pods-WireGuardiOS Extension-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = C580A09B90DA2933EBF31BCB /* Pods-WireGuardiOS Extension-metadata.plist */; };
 		B16BE0B49F9E0CCCF9804853 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30E5DFDCF6801E41EA22CF47 /* VPNConnectionFeatures.swift */; };
+		B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F331727906E9100DBB8CA /* RecoveryRobot.swift */; };
 		B29CD6AF2654109600978637 /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29CD6AE2654109600978637 /* StringUtils.swift */; };
+		B2BDAEDE279572E2007FD11D /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = B2BDAEDD279572E1007FD11D /* subusercredentials.plist */; };
 		B2D4572A2771D8AD0065FEC2 /* PaymentsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */; };
 		B2D4572C2771D8C30065FEC2 /* SummarySignupRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */; };
 		B2D4572E2771D8D50065FEC2 /* CreatingAccountRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */; };
@@ -744,7 +746,9 @@
 		A5BC5042F59FA7B3799466BE /* Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN-ProtonVPNUITests/Pods-ProtonVPN-ProtonVPNUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		AED22C294A1EC298F1031617 /* AnnouncementFeatureView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AnnouncementFeatureView.xib; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/AnnouncementFeatureView.xib; sourceTree = "<group>"; };
 		B0D44B0BD8873013421C4548 /* Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ProtonVPN-WireGuardiOS Extension-metadata.plist"; sourceTree = "<group>"; };
+		B22F331727906E9100DBB8CA /* RecoveryRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecoveryRobot.swift; sourceTree = "<group>"; };
 		B29CD6AE2654109600978637 /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../ios/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
+		B2BDAEDD279572E1007FD11D /* subusercredentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = subusercredentials.plist; path = ../../ios/ProtonVPNUITests/subusercredentials.plist; sourceTree = "<group>"; };
 		B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymentsRobot.swift; sourceTree = "<group>"; };
 		B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SummarySignupRobot.swift; sourceTree = "<group>"; };
 		B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatingAccountRobot.swift; sourceTree = "<group>"; };
@@ -1589,6 +1593,7 @@
 				D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */,
 				F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */,
 				D5811D81229BBD870087B63A /* Info.plist */,
+				B2BDAEDD279572E1007FD11D /* subusercredentials.plist */,
 				D5AAA127229D23F500EA839A /* credentials.plist */,
 			);
 			path = ProtonVPNUITests;
@@ -2263,6 +2268,7 @@
 				B2D457292771D8AD0065FEC2 /* PaymentsRobot.swift */,
 				B2D4572B2771D8C30065FEC2 /* SummarySignupRobot.swift */,
 				B2D4572D2771D8D50065FEC2 /* CreatingAccountRobot.swift */,
+				B22F331727906E9100DBB8CA /* RecoveryRobot.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -2714,6 +2720,7 @@
 			files = (
 				D5AAA128229D23F500EA839A /* credentials.plist in Resources */,
 				47A5FDF82BE7BAF5F74AA67E /* Pods-ProtonVPNUITests-metadata.plist in Resources */,
+				B2BDAEDE279572E2007FD11D /* subusercredentials.plist in Resources */,
 				F377836D26E644BC00392958 /* TestPlan.xctestplan in Resources */,
 				C53623CCB48A9BF717A1BAB9 /* Pods-ProtonVPN-ProtonVPNUITests-metadata.plist in Resources */,
 			);
@@ -3396,6 +3403,7 @@
 				E97A67732772015A002EB33C /* ObfuscatedConstants.swift in Sources */,
 				F3B783F826E6428C006768A8 /* ConnectionStatusRobot.swift in Sources */,
 				F377836A26E644BC00392958 /* SettingsTests.swift in Sources */,
+				B22F331827906E9100DBB8CA /* RecoveryRobot.swift in Sources */,
 				F3B783F526E6428C006768A8 /* MainRobot.swift in Sources */,
 				F3B7840026E6428C006768A8 /* LoginRobot.swift in Sources */,
 				F3B783FB26E6428C006768A8 /* ServerListRobot.swift in Sources */,

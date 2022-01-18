@@ -11,10 +11,11 @@ import pmtest
 fileprivate let titleId = "SignupViewController.createAccountTitleLabel"
 fileprivate let subtitleId = "SignupViewController.createAccountDescriptionLabel"
 fileprivate let externalEmailTextFieldId = "SignupViewController.externalEmailTextField.textField"
-fileprivate let externamlEmailErrorDialog = "Email verification temporarily disabled"
+fileprivate let internalEmailTextFieldId = "SignupViewController.internalNameTextField.textField"
 fileprivate let nextButtonId = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
 fileprivate let protonmailErrorMessage = "Please use a non-ProtonMail email address"
+fileprivate let usernameErrorMessage = "Username already used"
 
 class SignupRobot: CoreElements {
     
@@ -26,11 +27,11 @@ class SignupRobot: CoreElements {
     }
     
     func enterEmail(_ email: String) -> SignupRobot {
-        return insertExternalEmail(email)
+        return insertInternalEmail(email)
     }
     
-    private func insertExternalEmail(_ email: String) -> SignupRobot {
-        textField(externalEmailTextFieldId).tap().typeText(email)
+    private func insertInternalEmail(_ email: String) -> SignupRobot {
+        textField(internalEmailTextFieldId).tap().typeText(email)
         return self
      }
     
@@ -43,14 +44,21 @@ class SignupRobot: CoreElements {
 
         @discardableResult
         func signupScreenIsShown() -> SignupRobot {
-            staticText(titleId).wait().checkExists()
-            staticText(subtitleId).wait().checkExists()
+            staticText(titleId).wait(time: 10).checkExists()
+            staticText(subtitleId).wait(time: 10).checkExists()
             return SignupRobot()
         }
         
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
             textView(protonmailErrorMessage).wait(time: 10).checkExists()
+            button("OK").wait().checkExists().tap()
+            return SignupRobot()
+        }
+        
+        @discardableResult
+        func usernameErrorIsShown() -> SignupRobot {
+            textView(usernameErrorMessage).wait(time: 2).checkExists()
             button("OK").wait().checkExists().tap()
             return SignupRobot()
         }

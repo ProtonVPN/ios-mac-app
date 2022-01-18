@@ -104,6 +104,15 @@ PODS:
     - pmtest
     - ProtonCore-CoreTranslation (= 3.6.0)
     - ProtonCore-Log (= 3.6.0)
+  - ProtonCore-TestingToolkit/UITests/HumanVerification (3.6.0):
+    - pmtest
+    - ProtonCore-CoreTranslation (= 3.6.0)
+  - ProtonCore-TestingToolkit/UITests/Login (3.6.0):
+    - pmtest
+    - ProtonCore-CoreTranslation (= 3.6.0)
+  - ProtonCore-TestingToolkit/UITests/PaymentsUI (3.6.0):
+    - pmtest
+    - ProtonCore-CoreTranslation (= 3.6.0)
   - ProtonCore-UIFoundations (3.6.0):
     - ProtonCore-CoreTranslation (= 3.6.0)
     - ProtonCore-Foundations (= 3.6.0)
@@ -165,6 +174,9 @@ DEPENDENCIES:
   - "ProtonCore-Services/Alamofire (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - "ProtonCore-SRP (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - "ProtonCore-TestingToolkit/UITests/Core (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-TestingToolkit/UITests/HumanVerification (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-TestingToolkit/UITests/Login (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
+  - "ProtonCore-TestingToolkit/UITests/PaymentsUI (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - "ProtonCore-UIFoundations (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - "ProtonCore-Utilities (from `git@gitlab.protontech.ch:apple/shared/protoncore.git`, tag `3.6.0`)"
   - ReachabilitySwift (= 5.0.0)
@@ -399,6 +411,6 @@ SPEC CHECKSUMS:
   TrustKit: 3fb011102271b79f7e3742bc2cfc54bb7193ca74
   TunnelKit: abc76b7580ac190c4e932d8e67b9ece11fba45a4
 
-PODFILE CHECKSUM: de78c0d4a9109cb81b39a168ff6be27dda9ebde0
+PODFILE CHECKSUM: 737c714ceb5c5162ab1f6618736f7ad0cfccfa22
 
 COCOAPODS: 1.11.2
