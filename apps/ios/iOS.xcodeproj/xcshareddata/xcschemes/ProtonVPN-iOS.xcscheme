@@ -84,21 +84,6 @@
                   Identifier = "SignupTests/testExtPasswordVerificationTooShort()">
                </Test>
                <Test
-                  Identifier = "SignupTests/testExtPasswordsVerificationDoNotMatch()">
-               </Test>
-               <Test
-                  Identifier = "SignupTests/testPasswordVerificationTooShort()">
-               </Test>
-               <Test
-                  Identifier = "SignupTests/testPasswordsVerificationDoNotMatch()">
-               </Test>
-               <Test
-                  Identifier = "SignupTests/testRecoveryVerificationPhone()">
-               </Test>
-               <Test
-                  Identifier = "SignupTests/testSignupExistingExtAccount()">
-               </Test>
-               <Test
                   Identifier = "SignupTests/testSignupExistingExternalAccount()">
                </Test>
                <Test
