@@ -85,7 +85,7 @@ public class DynamicBugReportManager {
         let bundle = Bundle.main
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
             log.error("BugReportConfig.json file not found. Returning empty config.")
-            return BugReportModel(categories: [])
+            return BugReportModel()
         }
         do {
             let data = try Data(contentsOf: configFile)
@@ -94,7 +94,7 @@ public class DynamicBugReportManager {
             return try decoder.decode(BugReportModel.self, from: data)
             
         } catch {
-            return BugReportModel(categories: [])
+            return BugReportModel()
         }
     }
     

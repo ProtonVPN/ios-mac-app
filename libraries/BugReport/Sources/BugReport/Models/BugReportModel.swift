@@ -21,7 +21,11 @@ import Foundation
 public struct BugReportModel: Codable {
     let categories: [Category]
     
-    public init(categories: [Category]) {
+    public init() {
+        self.categories = []
+    }
+    
+    init(categories: [Category]) {
         self.categories = categories
     }
 }

@@ -18,11 +18,11 @@
 
 import Foundation
 
-public struct BugReportEnvironment {
+struct BugReportEnvironment {
     public var bugReportDelegate: BugReportDelegate
     public var assetsBundle = Bundle.module
 }
 
-public var Current = BugReportEnvironment(
+var Current = BugReportEnvironment(
     bugReportDelegate: MockBugReportDelegate(model: .mock) // Will be changed in BugReportCreator to an actual implementation we get from the app
 )
