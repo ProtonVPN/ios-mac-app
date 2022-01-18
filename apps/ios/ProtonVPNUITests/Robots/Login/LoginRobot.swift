@@ -20,6 +20,8 @@ fileprivate let enterUsernameErrorMessage = "Please enter your Proton Account em
 fileprivate let errorBannerMessage = "Email address already used."
 fileprivate let assingConnectionErrorBannerMessage = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account."
 fileprivate let okButton = "OK"
+fileprivate let assignVPNConnectionButton = "Assign VPN connections"
+fileprivate let loginButton = "Login again"
 
 class LoginRobot: CoreElements {
     
@@ -103,8 +105,9 @@ class LoginRobot: CoreElements {
         
         @discardableResult
         func assignVPNConnectionErrorIsShown() -> LoginRobot {
-            textView(assingConnectionErrorBannerMessage).wait().checkExists()
-            button(okButton).wait().checkExists().tap()
+            staticText(assingConnectionErrorBannerMessage).wait().checkExists()
+            button(assignVPNConnectionButton).wait().checkExists()
+            button(loginButton).wait().checkExists().tap()
             return LoginRobot()
         }
     }
