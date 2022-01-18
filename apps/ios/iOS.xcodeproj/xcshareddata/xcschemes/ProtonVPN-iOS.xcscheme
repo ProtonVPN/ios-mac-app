@@ -81,7 +81,25 @@
                   Identifier = "SignUpTests">
                </Test>
                <Test
+                  Identifier = "SignupTests/testExtPasswordVerificationTooShort()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupExistingExternalAccount()">
+               </Test>
+               <Test
                   Identifier = "SignupTests/testSignupNewAccountSuccess()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupNewExtAccountSuccess()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupNewExtSendCodeRequestCodeCancel()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupNewExternalAccountSuccess()">
+               </Test>
+               <Test
+                  Identifier = "SignupTests/testSignupNewSendCodeRequestCodeCancel()">
                </Test>
                <Test
                   Identifier = "UnloggedUserTests">
