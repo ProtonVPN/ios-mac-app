@@ -45,10 +45,15 @@ public final class iOSBugReportCreator: BugReportCreator {
         
         Current.bugReportDelegate = delegate
 
-        return UIHostingController(
+        let controller = UIHostingController(
             rootView: BugReportView()
                 .environment(\.colors, colors ?? Colors())
+                .preferredColorScheme(.dark)
         )
+        
+        controller.overrideUserInterfaceStyle = .dark
+        
+        return controller
     }
 }
 #endif

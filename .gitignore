@@ -16,6 +16,7 @@ fastlane/README.md
 libraries/vpncore/Source/LocalizedString.swift
 
 sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj/xcuserdata
+libraries/Logger/.swiftpm/xcode/xcuserdata/
 
 # Dynamic bug report lib and examples
 libraries/BugReport/BugReport.xcodeproj/xcuserdata

@@ -1,5 +1,5 @@
 //
-//  Created on 2022-01-06.
+//  Created on 2022-01-18.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -16,24 +16,22 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import SwiftUI
+import UIKit
 import BugReport
 
-@main
-struct BugReportSampleAppApp: App {
-    var body: some Scene {
-        WindowGroup {
-            ContentView()
-        }
-    }
-}
+class ViewController: UIViewController {
 
-struct ContentView: View {
-    @State var isTroubleshootingShown: Bool = false
-    @State var isFinished: Bool = false
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do any additional setup after loading the view.
+    }
     
-    var body: some View {
-        // Prepare the data before using BugReportView
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        openBugReport()
+    }
+
+    @IBAction private func openBugReport() {
         let delegate = MockDelegate(
             model: model,
             sendCallback: { form, result in
@@ -45,27 +43,24 @@ struct ContentView: View {
                     }
                 }
             }, finishedCallback: {
-                self.isFinished = true
+                self.dismiss(animated: true, completion: nil)
                 
             }, troubleshootingCallback: {
-                self.isTroubleshootingShown = true
-                
+                self.dismiss(animated: true, completion: nil)
             })
         
-        BugReport.Current.bugReportDelegate = delegate
-        return BugReportView()
-            .sheet(isPresented: $isFinished) {
-                Text("Finished")
-            }
-            .sheet(isPresented: $isTroubleshootingShown) {
-                Text("Troubleshooting screen")
-            }
+        
+        
+        let bugReportCreator = iOSBugReportCreator()
+        if let viewController = bugReportCreator.createBugReportViewController(delegate: delegate, colors: nil) {
+            self.present(viewController, animated: true, completion: nil)
+        }
     }
     
     private var model: BugReportModel {
         let bundle = Bundle.main
         guard let testFile1 = bundle.url(forResource: "sample", withExtension: "json") else {
-            return BugReportModel(categories: [])
+            return BugReportModel()
         }
         
         let data = try! Data(contentsOf: testFile1)
@@ -73,6 +68,7 @@ struct ContentView: View {
         decoder.keyDecodingStrategy = .custom(decapitalizeFirstLetter)
         return try! decoder.decode(BugReportModel.self, from: data)
     }
+
 }
 
 struct MockDelegate: BugReportDelegate {
@@ -95,11 +91,5 @@ struct MockDelegate: BugReportDelegate {
     
     func troubleshootingRequired() {
         troubleshootingCallback?()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
     }
 }
