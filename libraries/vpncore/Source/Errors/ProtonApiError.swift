@@ -36,6 +36,7 @@ public enum ParseError: LocalizedError {
     case subscriptionsParse
     case verificationMethodsParse
     case createPaymentTokenParse
+    case stringToDataConversion
     
     public var localizedDescription: String {
         switch self {

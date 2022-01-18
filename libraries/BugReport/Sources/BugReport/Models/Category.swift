@@ -23,7 +23,7 @@ public struct Category: Codable, Identifiable {
     
     let label: String
     let submitLabel: String
-    let suggestions: [Suggestion]
+    let suggestions: [Suggestion]?
     let inputFields: [InputField]
     
     // Define keys explicitly to silence the warning on id

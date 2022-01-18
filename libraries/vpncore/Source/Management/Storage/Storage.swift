@@ -82,4 +82,8 @@ public class Storage {
     public func contains(_ key: String) -> Bool {
         return defaults.object(forKey: key) != nil
     }
+    
+    public func removeObject(forKey key: String) {
+        defaults.removeObject(forKey: key)
+    }
 }

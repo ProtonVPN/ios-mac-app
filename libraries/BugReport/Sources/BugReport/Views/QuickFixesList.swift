@@ -44,34 +44,36 @@ struct QuickFixesList: View {
             }.padding(.horizontal)
             
             VStack {
-                ForEach(category.suggestions) { suggestion in
-                    VStack(alignment: .leading) {
-                        if let link = suggestion.link, let url = URL(string: link) {
-                            Link(destination: url) {
+                if let suggestions = category.suggestions {
+                    ForEach(suggestions) { suggestion in
+                        VStack(alignment: .leading) {
+                            if let link = suggestion.link, let url = URL(string: link) {
+                                Link(destination: url) {
+                                    HStack(alignment: .top) {
+                                        Image(Asset.lightbulb.name, bundle: assetsBundle)
+                                            .foregroundColor(colors.qfIcon)
+                                        Text(suggestion.text)
+                                            .multilineTextAlignment(.leading)
+                                            .lineSpacing(7)
+                                            .frame(minHeight: 24, alignment: .leading)
+                                        Spacer()
+                                        Image(Asset.quickfixLink.name, bundle: assetsBundle)
+                                    }
+                                }
+                                .padding(.horizontal)
+                            } else {
                                 HStack(alignment: .top) {
                                     Image(Asset.lightbulb.name, bundle: assetsBundle)
                                         .foregroundColor(colors.qfIcon)
                                     Text(suggestion.text)
-                                        .multilineTextAlignment(.leading)
                                         .lineSpacing(7)
+                                        .multilineTextAlignment(.leading)
                                         .frame(minHeight: 24, alignment: .leading)
-                                    Spacer()
-                                    Image(Asset.quickfixLink.name, bundle: assetsBundle)
                                 }
+                                .padding(.horizontal)
                             }
-                            .padding(.horizontal)
-                        } else {
-                            HStack(alignment: .top) {
-                                Image(Asset.lightbulb.name, bundle: assetsBundle)
-                                    .foregroundColor(colors.qfIcon)
-                                Text(suggestion.text)
-                                    .lineSpacing(7)
-                                    .multilineTextAlignment(.leading)
-                                    .frame(minHeight: 24, alignment: .leading)
-                            }
-                            .padding(.horizontal)
+                            Divider().background(colors.separator)
                         }
-                        Divider().background(colors.separator)
                     }
                 }
             }

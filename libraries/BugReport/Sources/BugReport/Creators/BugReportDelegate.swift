@@ -20,6 +20,7 @@ import Foundation
 
 public protocol BugReportDelegate {
     var model: BugReportModel { get }
+    var prefilledEmail: String { get }
     
     typealias SendReportResult = Result<Void, Error>
     func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void)
@@ -32,6 +33,7 @@ public protocol BugReportDelegate {
 
 struct MockBugReportDelegate: BugReportDelegate {
     var model: BugReportModel
+    var prefilledEmail: String = ""
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
     
