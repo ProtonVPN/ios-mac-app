@@ -51,6 +51,7 @@ class LoginTests: ProtonVPNUITests {
         loginRobot
             .loginAsSubuser(subusercredentials: subusercredentials[0])
             .verify.assignVPNConnectionErrorIsShown()
+            .verify.loginScreenIsShown()
     }
     
     func testNeedHelpClosed() {
