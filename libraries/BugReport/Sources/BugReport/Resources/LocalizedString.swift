@@ -30,6 +30,8 @@ public enum LocalizedString {
   public static let br3Email = LocalizedString.tr("Localizable", "_br_3_email")
   /// A log is a type of file that shows us the actions you took that led to an error. We’ll only ever use them to help our engineers fix bugs.
   public static let br3LogsDescription = LocalizedString.tr("Localizable", "_br_3_logs_description")
+  /// Error logs help us to get to the bottom of your issue. If you don’t include them, we might not be able to investigate fully.
+  public static let br3LogsDisabled = LocalizedString.tr("Localizable", "_br_3_logs_disabled")
   /// Send error logs
   public static let br3LogsField = LocalizedString.tr("Localizable", "_br_3_logs_field")
   /// Try again
@@ -44,7 +46,7 @@ public enum LocalizedString {
   public static let brSuccessSubtitle = LocalizedString.tr("Localizable", "_br_success_subtitle")
   /// Thanks for your feedback
   public static let brSuccessTitle = LocalizedString.tr("Localizable", "_br_success_title")
-  /// Report an issue?
+  /// Report an issue
   public static let brWindowTitle = LocalizedString.tr("Localizable", "_br_window_title")
   /// Plural format key: "%#@STEP@ %#@STEPS@"
   public static func stepOf(_ p1: Int, _ p2: Int) -> String {

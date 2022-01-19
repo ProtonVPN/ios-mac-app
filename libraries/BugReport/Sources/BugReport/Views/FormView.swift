@@ -47,6 +47,20 @@ struct FormView: View {
                             SwitchInputView(field: field.inputField, value: $field.boolValue)
                         }
                     }
+                    
+                    if viewModel.showLogsInfo {
+                        HStack(alignment: .top, spacing: 0) {
+                            Image(Asset.icInfoCircle.name, bundle: Bundle.module)
+                                .padding(0)
+                            
+                            Text(LocalizedString.br3LogsDisabled)
+                                .font(.footnote)
+                                .foregroundColor(colors.textSecondary)
+                                .padding(.leading, 8)
+                            
+                        }
+                        .padding(.horizontal)
+                    }
                                         
                     Button(action: {
                         viewModel.sendTapped()

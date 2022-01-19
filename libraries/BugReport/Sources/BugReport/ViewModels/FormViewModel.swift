@@ -25,6 +25,10 @@ class FormViewModel: ObservableObject {
     @Published var isSending: Bool = false
     @Published var sendResult: BugReportDelegate.SendReportResult?
     
+    var showLogsInfo: Bool {
+        return fields.last?.boolValue == false
+    }
+    
     var shouldShowResultView: Bool { get { sendResult != nil } set {} }
     var sendResultError: Error? {
         if case .failure(let error) = sendResult {
