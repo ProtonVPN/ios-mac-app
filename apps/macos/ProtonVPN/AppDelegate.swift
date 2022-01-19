@@ -73,7 +73,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             }
 
             self.checkSystemExtension()
-            
+
             self.navigationService.launched()
         }
     }
@@ -153,7 +153,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     private func checkSystemExtension() {
         // only install the extension if OpenVPN/WireGuard is selected or Smart Protocol is enabled
         let needsInstallExtension: Bool
-        switch propertiesManager.vpnProtocol {
+        let vpnProtocol = propertiesManager.vpnProtocol
+        switch vpnProtocol {
         case .ike:
             needsInstallExtension = propertiesManager.smartProtocol
         case .openVpn:
@@ -162,6 +163,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
             needsInstallExtension = true
         }
         guard needsInstallExtension else {
+            log.debug("No need to install system extension (protocol is \(vpnProtocol.localizedString)), bailing.", category: .sysex)
+
             return
         }
         let check = container.makeSystemExtensionsStateCheck()

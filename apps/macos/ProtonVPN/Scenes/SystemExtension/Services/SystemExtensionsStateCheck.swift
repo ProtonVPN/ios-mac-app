@@ -32,11 +32,18 @@ class SystemExtensionsStateCheck {
     private let propertiesManager: PropertiesManagerProtocol
     
     init(systemExtensionManager: SystemExtensionManager, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol) {
+        log.debug("SystemExtensionsStateCheck init", category: .sysex)
+
         self.systemExtensionManager = systemExtensionManager
         self.alertService = alertService
         self.propertiesManager = propertiesManager
     }
-    
+
+    deinit {
+        log.debug("SystemExtensionsStateCheck deinit", category: .sysex)
+    }
+
+    // swiftlint:disable function_body_length
     func startCheckAndInstallIfNeeded(resultHandler: @escaping (Result<SuccessResultType, Error>) -> Void) {
         log.debug("Checking status of system extensions...", category: .sysex)
 
@@ -60,11 +67,14 @@ class SystemExtensionsStateCheck {
             }
             
             guard !installNeeded.isEmpty else {
+                log.debug("No install updates needed, bailing.", category: .sysex)
                 resultHandler(.success(updateWasNeeded ? .updated : .nothing))
                 return
             }
             
             guard !self.propertiesManager.sysexSuccessWasShown else {
+                log.debug("Already showed Sysex success, bailing.", category: .sysex)
+
                 return // Dirty workaround for a problem where after restart macos doesn't want to give us XPC connection on the first try and app thinks sysex is not yet installed.
             }
             
@@ -77,6 +87,8 @@ class SystemExtensionsStateCheck {
                 
                 installNeeded.forEach { type in
                     dispatchGroup.enter()
+                    log.debug("Requesting sysex install for \(type.rawValue)", category: .sysex)
+
                     self.systemExtensionManager.requestExtensionInstall(forType: type, completion: { result in
                         switch result {
                         case .success():
@@ -91,6 +103,8 @@ class SystemExtensionsStateCheck {
                 
                 dispatchGroup.notify(queue: DispatchQueue.global(qos: .background)) {
                     guard errors.isEmpty else {
+                        log.debug("Encountered errors in sysex install: \(String(describing: errors))", category: .sysex)
+
                         self.alertService.push(alert: SysexInstallingErrorAlert())
                         resultHandler(.failure(errors.first!))
                         return
