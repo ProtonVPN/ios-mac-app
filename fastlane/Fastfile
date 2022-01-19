@@ -19,7 +19,18 @@ $keychain_name = ENV["CI_KEYCHAIN_NAME"]
 desc "Run all Core iOS tests"
 lane :ios_core_test do
   simulator_name = ENV["CI_JOB_ID"]
-  scan(scheme: "vpncore-ios", 
+  scan(scheme: "vpncore-ios",
+    result_bundle: true,
+    derived_data_path: $derived_data_path,
+    skip_slack: true,
+    devices: [simulator_name],
+    clean: true)
+end
+
+desc "Run all Core iOS tests"
+lane :ios_bureport_test do
+  simulator_name = ENV["CI_JOB_ID"]
+  scan(scheme: "BugReport",
     result_bundle: true,
     derived_data_path: $derived_data_path,
     skip_slack: true,
