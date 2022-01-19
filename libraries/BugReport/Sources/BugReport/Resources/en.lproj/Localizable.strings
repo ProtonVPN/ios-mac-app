@@ -2,7 +2,7 @@
 // Step 1
 
 /* ReportBugwindow title */
-"_br_window_title" = "Report an issue?";
+"_br_window_title" = "Report an issue";
 
 /* ReportBug 1st step title */
 "_br_1_title" = "What's the issue?";
