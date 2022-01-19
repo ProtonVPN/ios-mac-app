@@ -30,6 +30,7 @@ internal enum Asset {
   internal static let notificationWarning = ColorAsset(name: "notification-warning")
   internal static let separator = ColorAsset(name: "separator")
   internal static let textWeak = ColorAsset(name: "text-weak")
+  internal static let icInfoCircle = ImageAsset(name: "ic-info-circle")
   internal static let icClipboard = ImageAsset(name: "ic_clipboard")
   internal static let icFailure = ImageAsset(name: "ic_failure")
   internal static let icSuccess = ImageAsset(name: "ic_success")

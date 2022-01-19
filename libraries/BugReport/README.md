@@ -22,3 +22,8 @@ Colors contained in the assets are only used for previews but are valid for the 
 ## Dependency injection
 
 Everything related to the views (concretely colors) is injected via SwiftUIs environment. Everything related to side effects (like a delegate to get initial data or send back filled report) is injected using `Current` global variable of type `BugReportEnvironment`. Initialy data is set to use mocked `BugReportModel`, but it is set either in `BugReportCreator` or if using `BugReportView` directly from the app, `Current.bugReportDelegate` should be pre-set directly.
+
+
+## Development
+
+If during development you need SwiftUI previews working, change `Package.swift` file `platforms` iOS value to `.iOS(.v15)` otherwise previews won't work.
