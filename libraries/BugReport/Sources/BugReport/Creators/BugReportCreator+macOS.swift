@@ -25,7 +25,7 @@ public protocol BugReportCreator {
     func createBugReportViewController(model: BugReportModel, colors: Colors?) -> NSViewController?
 }
 
-public final class macOSBugReportCreator: BugReportCreator {
+public final class MacOSBugReportCreator: BugReportCreator {
     public init() { }
 
     public func createBugReportViewController(model: BugReportModel, colors: Colors?) -> NSViewController? {

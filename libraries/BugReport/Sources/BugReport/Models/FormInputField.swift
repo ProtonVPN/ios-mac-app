@@ -27,8 +27,6 @@ struct FormInputField {
 
 extension FormInputField: Identifiable {
     var id: UUID {
-        get {
-            return inputField.id
-        }
+        return inputField.id
     }
 }

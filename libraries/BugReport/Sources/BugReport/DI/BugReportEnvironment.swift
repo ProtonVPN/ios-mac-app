@@ -19,7 +19,7 @@
 import Foundation
 
 struct BugReportEnvironment {
-    public var bugReportDelegate: BugReportDelegate
+    public weak var bugReportDelegate: BugReportDelegate?
     public var assetsBundle = Bundle.module
 }
 

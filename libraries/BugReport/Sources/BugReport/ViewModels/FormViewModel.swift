@@ -29,7 +29,8 @@ class FormViewModel: ObservableObject {
         return fields.last?.boolValue == false
     }
     
-    var shouldShowResultView: Bool { get { sendResult != nil } set {} }
+    // Lint is disbled here, because swiftui doesn't like get-only properties
+    var shouldShowResultView: Bool { get { sendResult != nil } set {} } // swiftlint:disable:this unused_setter_value
     var sendResultError: Error? {
         if case .failure(let error) = sendResult {
             return error
@@ -67,23 +68,23 @@ class FormViewModel: ObservableObject {
         isSending = true
         self.sendResult = nil
         
-        delegate.send(form: makeResult(), result: { requestResult in
+        delegate?.send(form: makeResult(), result: { requestResult in
             self.isSending = false
             self.sendResult = requestResult
         })
     }
     
     func troubleshootingTapped() {
-        delegate.troubleshootingRequired()
+        delegate?.troubleshootingRequired()
     }
     
     func finished() {
-        delegate.finished()
+        delegate?.finished()
     }
     
     // MARK: - Other
         
-    private var delegate: BugReportDelegate = Current.bugReportDelegate
+    private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
     private let emailFieldName = "_email"
     private let logsFieldName = "_logs"
     
@@ -99,7 +100,7 @@ class FormViewModel: ObservableObject {
                 isMandatory: true,
                 placeholder: nil
             ),
-            stringValue: delegate.prefilledEmail
+            stringValue: delegate?.prefilledEmail ?? ""
         ))
         
         formFields.append(contentsOf: fields.map { FormInputField(inputField: $0) })
@@ -117,7 +118,6 @@ class FormViewModel: ObservableObject {
         
         self.fields = formFields
     }
-    
     
     private func makeResult() -> BugReportResult {
         var email = ""

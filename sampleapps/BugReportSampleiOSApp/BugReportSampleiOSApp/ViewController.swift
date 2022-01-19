@@ -20,19 +20,14 @@ import UIKit
 import BugReport
 
 class ViewController: UIViewController {
+    
+    private var bugReportDelegate: BugReportDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-        openBugReport()
-    }
-
-    @IBAction private func openBugReport() {
-        let delegate = MockDelegate(
+        
+        bugReportDelegate = MockDelegate(
             model: model,
             sendCallback: { form, result in
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
@@ -48,11 +43,16 @@ class ViewController: UIViewController {
             }, troubleshootingCallback: {
                 self.dismiss(animated: true, completion: nil)
             })
-        
-        
-        
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        openBugReport()
+    }
+
+    @IBAction private func openBugReport() {
         let bugReportCreator = iOSBugReportCreator()
-        if let viewController = bugReportCreator.createBugReportViewController(delegate: delegate, colors: nil) {
+        if let viewController = bugReportCreator.createBugReportViewController(delegate: bugReportDelegate!, colors: nil) {
             self.present(viewController, animated: true, completion: nil)
         }
     }
@@ -71,9 +71,16 @@ class ViewController: UIViewController {
 
 }
 
-struct MockDelegate: BugReportDelegate {
+class MockDelegate: BugReportDelegate {
     var model: BugReportModel
     var prefilledEmail: String = ""
+    
+    public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?) {
+        self.model = model
+        self.sendCallback = sendCallback
+        self.finishedCallback = finishedCallback
+        self.troubleshootingCallback = troubleshootingCallback
+    }
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
     

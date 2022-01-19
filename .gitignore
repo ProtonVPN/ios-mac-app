@@ -22,3 +22,4 @@ libraries/Logger/.swiftpm/xcode/xcuserdata/
 libraries/BugReport/BugReport.xcodeproj/xcuserdata
 sampleapps/BugReportSampleMacOSApp/BugReportSampleMacOSApp.xcodeproj/xcuserdata
 sampleapps/BugReportSampleiOSApp/BugReportSampleiOSApp.xcodeproj/xcuserdata
+swiftlint.xml

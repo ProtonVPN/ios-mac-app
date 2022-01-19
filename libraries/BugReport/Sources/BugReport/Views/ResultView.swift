@@ -44,10 +44,10 @@ struct ResultView: View {
             .frame(maxHeight: .infinity, alignment: .center)
             
             VStack {
-                Button(action: { retryCallback?() }) { Text(LocalizedString.brFailureButtonRetry) }
+                Button(action: { retryCallback?() }, label: { Text(LocalizedString.brFailureButtonRetry) })
                     .buttonStyle(PrimaryButtonStyle())
                 
-                Button(action: { troubleshootCallback?() }) { Text(LocalizedString.brFailureButtonTroubleshoot) }
+                Button(action: { troubleshootCallback?() }, label: { Text(LocalizedString.brFailureButtonTroubleshoot) })
                     .buttonStyle(SecondaryButtonStyle())
             }
             .padding(.horizontal)
@@ -69,7 +69,7 @@ struct ResultView: View {
             }
             .frame(maxHeight: .infinity, alignment: .center)
             
-            Button(action: { finishCallback?() }) { Text(LocalizedString.brSuccessButton) }
+            Button(action: { finishCallback?() }, label: { Text(LocalizedString.brSuccessButton) })
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal)
                 .padding(.bottom, 32)

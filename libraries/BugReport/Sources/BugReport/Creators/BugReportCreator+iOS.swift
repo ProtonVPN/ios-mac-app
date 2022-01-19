@@ -26,7 +26,7 @@ public protocol BugReportCreator {
     func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController?
 }
 
-public final class iOSBugReportCreator: BugReportCreator {
+public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:this type_name
     public init() { }
     
     @available(iOS 14.0, *)

@@ -88,7 +88,7 @@ struct QuickFixesList: View {
             Spacer()
             
             VStack {
-                Button(action: {}) {
+                Button(action: {}, label: {
                     NavigationLink(destination: FormView(viewModel: FormViewModel(fields: category.inputFields)).navigationTitle(Text(LocalizedString.brWindowTitle))) {
                         Text(LocalizedString.br2ButtonNext)
                             .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
@@ -97,11 +97,9 @@ struct QuickFixesList: View {
                             .foregroundColor(.white)
                             .cornerRadius(8)
                     }
-                }
+                })
                                 
-                Button(action: {
-                    self.presentationMode.wrappedValue.dismiss()
-                }) { Text(LocalizedString.br2ButtonCancel) }
+                Button(action: { self.presentationMode.wrappedValue.dismiss() }, label: { Text(LocalizedString.br2ButtonCancel) })
                     .buttonStyle(SecondaryButtonStyle())
             }
             .padding(.horizontal)
@@ -110,11 +108,11 @@ struct QuickFixesList: View {
         .foregroundColor(colors.textPrimary)
         // Custom Back button
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action : {
+        .navigationBarItems(leading: Button(action: {
             self.presentationMode.wrappedValue.dismiss()
-        }){
+        }, label: {
             Image(systemName: "arrow.left").foregroundColor(colors.textPrimary)
-        })
+        }))
         
     }
 }
