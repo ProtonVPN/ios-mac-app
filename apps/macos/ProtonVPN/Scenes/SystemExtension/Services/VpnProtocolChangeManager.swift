@@ -43,14 +43,12 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
     
     typealias Factory = PropertiesManagerFactory
         & CoreAlertServiceFactory
-        & SystemExtensionManagerFactory
         & VpnGatewayFactory
         & SystemExtensionsStateCheckFactory
     private let factory: Factory
     
     private lazy var propertiesManager: PropertiesManagerProtocol = factory.makePropertiesManager()
     private lazy var alertService: CoreAlertService = factory.makeCoreAlertService()
-    private lazy var systemExtensionManager: SystemExtensionManager = factory.makeSystemExtensionManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var systemExtensionsStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
     
