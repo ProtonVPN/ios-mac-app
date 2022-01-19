@@ -92,7 +92,8 @@ final class CoreLoginService {
                             onboardingShowFirstConnection = flag
                             completion(.success(()))
                         case let .failure(error):
-                            completion(.failure(error))
+                            log.error("Failed to get onboardingShowFirstConnection flag, using default value", category: .app, metadata: ["error": "\(error)"])
+                            completion(.success(()))
                         }
                     }
                 case let .failure(error):
