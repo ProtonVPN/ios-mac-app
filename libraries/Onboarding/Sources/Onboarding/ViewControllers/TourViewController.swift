@@ -61,7 +61,7 @@ final class TourViewController: UIViewController {
     }
 
     private func setupScrollView(steps: [UIView]) {
-        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(steps.count), height: 0)
+        scrollView.contentSize = CGSize(width: scrollView.frame.width * CGFloat(steps.count), height: scrollView.frame.height - UIApplication.shared.statusBarFrame.height - (UIApplication.shared.keyWindow?.safeAreaInsets.top ?? 0))
 
         for i in 0 ..< steps.count {
             steps[i].frame = CGRect(x: scrollView.frame.width * CGFloat(i), y: 0, width: scrollView.frame.width, height: scrollView.frame.size.height)
@@ -72,7 +72,7 @@ final class TourViewController: UIViewController {
     }
 
     private func scrollToIndex(index: CGFloat, animated: Bool) {
-        scrollView.scrollRectToVisible(CGRect(x: index * scrollView.frame.width, y: 0, width: scrollView.frame.width, height: scrollView.frame.height), animated: animated)
+        scrollView.scrollRectToVisible(CGRect(x: index * scrollView.frame.width, y: 0, width: scrollView.frame.width, height: scrollView.contentSize.height), animated: animated)
     }
 
     override func viewDidLayoutSubviews() {
