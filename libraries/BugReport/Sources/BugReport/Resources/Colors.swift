@@ -32,7 +32,6 @@ public struct Colors {
     public var textPrimary: Color = Color.white
     public var textSecondary: Color = Color("text-weak", bundle: Bundle.module)
     
-    public var background: Color = Color("background-norm", bundle: Bundle.module)
     public var backgroundSecondary: Color = Color("background-secondary", bundle: Bundle.module)
     public var separator: Color = Color("separator", bundle: Bundle.module)
     

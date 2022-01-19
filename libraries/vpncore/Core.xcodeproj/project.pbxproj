@@ -403,52 +403,24 @@
 		E5CEC269A5522FA4524F4457 /* VPNConnectionFeatures.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8F2908E1AD633323F3CB9D4 /* VPNConnectionFeatures.swift */; };
 		E93518402617538000AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
 		E93518A9261756AE00AB4C7C /* UserVerificationAlertTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */; };
-		E91BDD42274BD6D7005F370C /* FileLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD41274BD6D7005F370C /* FileLogHandler.swift */; };
-		E91BDD44274BD6D7005F370C /* FileLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD41274BD6D7005F370C /* FileLogHandler.swift */; };
-		E91BDD9E274D2DB4005F370C /* LogHandler+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD9D274D2DB4005F370C /* LogHandler+Metadata.swift */; };
-		E91BDD9F274D2DB4005F370C /* LogHandler+Metadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD9D274D2DB4005F370C /* LogHandler+Metadata.swift */; };
-		E91BDDA0274D3CAC005F370C /* AlertServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */; };
-		E91BDDA1274D3CAD005F370C /* AlertServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5EF8F982293D4E400B713BD /* AlertServiceMock.swift */; };
-		E91BDDA3274D3FD3005F370C /* LogFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDDA2274D3FD3005F370C /* LogFileManager.swift */; };
-		E91BDDA4274D3FD3005F370C /* LogFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDDA2274D3FD3005F370C /* LogFileManager.swift */; };
-		E93993D3274FD49D001D5704 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93993D2274FD49D001D5704 /* PropertiesManager+Log.swift */; };
-		E93993D4274FD49D001D5704 /* PropertiesManager+Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93993D2274FD49D001D5704 /* PropertiesManager+Log.swift */; };
-		E93993D6274FE3E2001D5704 /* Optional+stringForLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93993D5274FE3E2001D5704 /* Optional+stringForLog.swift */; };
-		E93993D7274FE3E2001D5704 /* Optional+stringForLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = E93993D5274FE3E2001D5704 /* Optional+stringForLog.swift */; };
 		E939EEE827954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEE927954E47006E4305 /* DynamicBugReportStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */; };
 		E939EEEB27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
 		E939EEEC27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
-		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
+		E939EEF3279561EE006E4305 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */; };
 		E939EEF4279561F9006E4305 /* BugReport in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E939EEF1279561B1006E4305 /* BugReport */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E732696F76F001AE3FA /* CertificateConstants.swift */; };
 		E95E8E762696F76F001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E732696F76F001AE3FA /* CertificateConstants.swift */; };
 		E976C6286E41A6496964C105 /* String+Email.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125F0015F0BEB0E5E1ADB08B /* String+Email.swift */; };
-		E975E4AB273EC1290003087F /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4AA273EC1290003087F /* PMLogFormatter.swift */; };
-		E975E4AD273EC1290003087F /* PMLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4AA273EC1290003087F /* PMLogFormatter.swift */; };
-		E975E4B0273EC14B0003087F /* ConsoleLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4AF273EC14B0003087F /* ConsoleLogFormatter.swift */; };
-		E975E4B2273EC14B0003087F /* ConsoleLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4AF273EC14B0003087F /* ConsoleLogFormatter.swift */; };
-		E975E4B6273EC2040003087F /* ConsoleLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4B5273EC2040003087F /* ConsoleLogHandler.swift */; };
-		E975E4B8273EC2040003087F /* ConsoleLogHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4B5273EC2040003087F /* ConsoleLogHandler.swift */; };
-		E975E4BB273EC2330003087F /* Level+Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4BA273EC2330003087F /* Level+Print.swift */; };
-		E975E4BD273EC2330003087F /* Level+Print.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4BA273EC2330003087F /* Level+Print.swift */; };
-		E975E4C1273EC3030003087F /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4C0273EC3030003087F /* Logger+Callers.swift */; };
-		E975E4C3273EC3030003087F /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4C0273EC3030003087F /* Logger+Callers.swift */; };
-		E975E4C627453F840003087F /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4C527453F840003087F /* URL+String.swift */; };
-		E975E4C827453F840003087F /* URL+String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4C527453F840003087F /* URL+String.swift */; };
-		E975E4D42747FEB40003087F /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4D32747FEB40003087F /* Logger+Categories.swift */; };
-		E975E4D62747FEB40003087F /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4D32747FEB40003087F /* Logger+Categories.swift */; };
-		E975E4E3274805350003087F /* FileLogFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E975E4E0274805350003087F /* FileLogFormatter.swift */; };
 		E976FB282791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */; };
 		E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */; };
 		E976FB2B2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */; };
 		E976FB2C2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */; };
 		E977A7832681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */; };
-		E977A7852681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */; };
 		E977A78C268206B30013495A /* AuthCredentials+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */; };
 		E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */; };
 		E977A797268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
@@ -879,22 +851,12 @@
 		E1EA2A0422F4582100A747B1 /* OpenVpnConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenVpnConfig.swift; sourceTree = "<group>"; };
 		E53B11C3A25C550FBB6F9091 /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
 		E935183F2617538000AB4C7C /* UserVerificationAlertTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserVerificationAlertTests.swift; sourceTree = "<group>"; };
-		E93993D2274FD49D001D5704 /* PropertiesManager+Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PropertiesManager+Log.swift"; sourceTree = "<group>"; };
-		E93993D5274FE3E2001D5704 /* Optional+stringForLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Optional+stringForLog.swift"; sourceTree = "<group>"; };
 		E939EEE727954E47006E4305 /* DynamicBugReportStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportStorage.swift; sourceTree = "<group>"; };
 		E939EEEA27955317006E4305 /* BugReportConfig.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = BugReportConfig.json; sourceTree = "<group>"; };
 		E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Extension.swift"; sourceTree = "<group>"; };
 		E939EEF1279561B1006E4305 /* BugReport */ = {isa = PBXFileReference; lastKnownFileType = folder; name = BugReport; path = ../BugReport; sourceTree = "<group>"; };
 		E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WireguardProtocolFactory.swift; sourceTree = "<group>"; };
 		E95E8E732696F76F001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CertificateConstants.swift; sourceTree = "<group>"; };
-		E975E4AA273EC1290003087F /* PMLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PMLogFormatter.swift; sourceTree = "<group>"; };
-		E975E4AF273EC14B0003087F /* ConsoleLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogFormatter.swift; sourceTree = "<group>"; };
-		E975E4B5273EC2040003087F /* ConsoleLogHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsoleLogHandler.swift; sourceTree = "<group>"; };
-		E975E4BA273EC2330003087F /* Level+Print.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Level+Print.swift"; sourceTree = "<group>"; };
-		E975E4C0273EC3030003087F /* Logger+Callers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Callers.swift"; sourceTree = "<group>"; };
-		E975E4C527453F840003087F /* URL+String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URL+String.swift"; sourceTree = "<group>"; };
-		E975E4D32747FEB40003087F /* Logger+Categories.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Categories.swift"; sourceTree = "<group>"; };
-		E975E4E0274805350003087F /* FileLogFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileLogFormatter.swift; sourceTree = "<group>"; };
 		E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportConfigRequest.swift; sourceTree = "<group>"; };
 		E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicBugReportManager.swift; sourceTree = "<group>"; };
 		E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AuthCredentials+Alamofire.swift"; sourceTree = "<group>"; };
@@ -963,8 +925,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
-				F3D4DC4E2632FF9B0032B752 /* WireguardSRP.xcframework in Frameworks */,
+				E939EEF3279561EE006E4305 /* BuildFile in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1349,38 +1310,6 @@
 				E939EEF1279561B1006E4305 /* BugReport */,
 			);
 			name = Packages;
-			sourceTree = "<group>";
-		};
-		E975E4A9273EC1180003087F /* Formatters */ = {
-			isa = PBXGroup;
-			children = (
-				E975E4AA273EC1290003087F /* PMLogFormatter.swift */,
-				E975E4AF273EC14B0003087F /* ConsoleLogFormatter.swift */,
-				E975E4E0274805350003087F /* FileLogFormatter.swift */,
-			);
-			path = Formatters;
-			sourceTree = "<group>";
-		};
-		E975E4B4273EC1CF0003087F /* Handlers */ = {
-			isa = PBXGroup;
-			children = (
-				E975E4B5273EC2040003087F /* ConsoleLogHandler.swift */,
-				E91BDD41274BD6D7005F370C /* FileLogHandler.swift */,
-			);
-			path = Handlers;
-			sourceTree = "<group>";
-		};
-		E975E4BF273EC2EB0003087F /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				E975E4BA273EC2330003087F /* Level+Print.swift */,
-				E1B5F64321B6BAF100B558B0 /* Logger+Main.swift */,
-				E975E4C0273EC3030003087F /* Logger+Callers.swift */,
-				E975E4D32747FEB40003087F /* Logger+Categories.swift */,
-				E91BDD9D274D2DB4005F370C /* LogHandler+Metadata.swift */,
-				E9C5D91E274E79680017E51B /* FileHandler+New.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		E9AF94BF26B7F4D800AA1A5F /* VpnCredentials */ = {
@@ -2009,7 +1938,7 @@
 			);
 			name = "vpncore-ios";
 			packageProductDependencies = (
-				E939EEF2279561EE006E4305 /* BugReport */,
+				E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -2145,7 +2074,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				E939EEEB27955317006E4305 /* BugReportConfig.json in Resources */,
-				D5625927274271FD00315277 /* CoreAssets.xcassets in Resources */,
 				E1B6A33024AC5C050004322A /* ProtonVPN_ike_root.der in Resources */,
 				D5CD4B07236720010006AAF7 /* Localizable.strings in Resources */,
 				D51FBDCE23E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
@@ -2173,7 +2101,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				D51FBDD023E81E9C0056DC09 /* Localizable.stringsdict in Resources */,
-				D5625929274271FD00315277 /* CoreAssets.xcassets in Resources */,
 				E939EEEC27955317006E4305 /* BugReportConfig.json in Resources */,
 				E185A873237163AC0039E625 /* InfoPlist.strings in Resources */,
 				E1B6A33124AC5C050004322A /* ProtonVPN_ike_root.der in Resources */,
@@ -2504,9 +2431,7 @@
 				F349B1F42680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */,
 				E977A7832681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */,
-				E1616BDA21C80D3D00F42D79 /* StoreKitManager.swift in Sources */,
 				E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */,
-				4242B0652465A4410042145A /* BaseRequest.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
 				D5DCCACA252B4E0A004CB353 /* Announcement.swift in Sources */,
@@ -2549,7 +2474,6 @@
 				F30B9CDC2626F7000094C65E /* CertificateRequest.swift in Sources */,
 				4242B0382465A41A0042145A /* VPNClientConfigRequest.swift in Sources */,
 				E976FB2B2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */,
-				4242B05C2465A43E0042145A /* UserCheckRequest.swift in Sources */,
 				E1616BF221C95BBE00F42D79 /* ProfileType.swift in Sources */,
 				E13791B82313D3B300D7B1FA /* ConnectionConfiguration.swift in Sources */,
 				D585B5112447074200E901F3 /* Date+Misc.swift in Sources */,
@@ -2685,9 +2609,6 @@
 				D5D2945125A45B4D000FBD74 /* SemanticVersion.swift in Sources */,
 				4237064F262DA3BE00A920CF /* VpnStreamingOption.swift in Sources */,
 				E151126F22F07D6800C9A41F /* OpenVpnProtocolFactory.swift in Sources */,
-				4242B05F2465A43E0042145A /* UserCodeRequest.swift in Sources */,
-				E1A9A68422BA74EE0073711B /* TrialServiceMock.swift in Sources */,
-				D5FFE6F024A5D39B00F0F4A1 /* UserBaseV4Request.swift in Sources */,
 				E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */,
 				D5966F3D2538396B0061A75F /* AnnouncementsViewModel.swift in Sources */,
 				D55D79162498F63C009669E0 /* String+Cleanup.swift in Sources */,
@@ -3710,7 +3631,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E939EEF2279561EE006E4305 /* BugReport */ = {
+		E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};
