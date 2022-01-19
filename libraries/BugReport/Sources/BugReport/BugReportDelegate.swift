@@ -19,7 +19,7 @@
 import Foundation
 
 /// Delegate that is used by this BugReport library to communicate wit hthe app.
-public protocol BugReportDelegate {
+public protocol BugReportDelegate: AnyObject {
     
     /// Configuration for Dynamic Bug Report UI.
     var model: BugReportModel { get }
@@ -41,9 +41,13 @@ public protocol BugReportDelegate {
 
 // MARK: - Mocks
 
-struct MockBugReportDelegate: BugReportDelegate {
+class MockBugReportDelegate: BugReportDelegate {
     var model: BugReportModel
     var prefilledEmail: String = ""
+    
+    public init(model: BugReportModel) {
+        self.model = model
+    }
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
     

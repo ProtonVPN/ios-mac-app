@@ -23,7 +23,7 @@ import SwiftUI
 @available(iOS 14.0, *)
 public struct BugReportView: View {
         
-    private var delegate: BugReportDelegate = Current.bugReportDelegate
+    private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
     @Environment(\.colors) var colors: Colors
         
     public var body: some View {
@@ -38,18 +38,18 @@ public struct BugReportView: View {
                     .foregroundColor(colors.textPrimary)
                     .padding(.horizontal)
                 
-                List(delegate.model.categories) { category in
+                List(delegate?.model.categories ?? []) { category in
                     if category.suggestions?.isEmpty ?? true { // If no suggestions found skip directly to the form
                         NavigationLink(destination: {
                             FormView(viewModel: FormViewModel(fields: category.inputFields))
                                 .navigationTitle(Text(LocalizedString.brWindowTitle))
-                        }) { Text(category.label) }
+                        }, label: { Text(category.label) })
                         
                     } else {
                         NavigationLink(destination: {
                             QuickFixesList(category: category)
                                 .navigationTitle(Text(LocalizedString.brWindowTitle))
-                        }) { Text(category.label) }
+                        }, label: { Text(category.label) })
                     }
                 }
                 .listStyle(.plain)
@@ -62,7 +62,7 @@ public struct BugReportView: View {
         .preferredColorScheme(.dark)
     }
     
-    public init(){ }
+    public init() {}
 }
 
 // MARK: - Preview

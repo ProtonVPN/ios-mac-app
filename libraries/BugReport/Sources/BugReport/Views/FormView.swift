@@ -33,7 +33,7 @@ struct FormView: View {
             StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                 .padding(.bottom)
             
-            ScrollView{
+            ScrollView {
                 VStack(spacing: 20) {
                     
                     ForEach($viewModel.fields) { $field in
@@ -64,7 +64,7 @@ struct FormView: View {
                                         
                     Button(action: {
                         viewModel.sendTapped()
-                    }) { Text(viewModel.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) }
+                    }, label: { Text(viewModel.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
                         .disabled(!viewModel.canBeSent)
                         .buttonStyle(PrimaryButtonStyle())
                         .padding(.horizontal)
@@ -82,12 +82,12 @@ struct FormView: View {
         }
         // Custom Back button
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action : {
+        .navigationBarItems(leading: Button(action: {
             self.presentationMode.wrappedValue.dismiss()
-        }){
+        }, label: {
             Image(systemName: "arrow.left")
                 .foregroundColor(colors.textPrimary)
-        })
+        }))
         .environment(\.isLoading, viewModel.isSending)
     }
 }
