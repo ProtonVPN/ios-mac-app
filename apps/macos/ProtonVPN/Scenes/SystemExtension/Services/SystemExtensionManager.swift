@@ -71,14 +71,12 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
     private var completionCallbacks = [String: SystemExtensionManager.FinishedCallback]()
     
     private var sysExUninstallRequestResultHandler = SystemExtensionUninstallRequestDelegate()
-    
-    private var xpcConnections = [String: XPCServiceUser]()
-    
+
     init(factory: Factory) {
         self.factory = factory
         super.init()
     }
-    
+
     func extenstionStatus(forType type: SystemExtensionType, completion: @escaping StatusCallback) {
         xpcConnectionsRepository.getXpcConnection(for: type.machServiceName).getVersion(completionHandler: { result in
             guard let data = result, let info = try? JSONDecoder().decode(ExtensionInfo.self, from: data) else {
@@ -171,6 +169,8 @@ class SystemExtensionUninstallRequestDelegate: NSObject, OSSystemExtensionReques
     var completion: SystemExtensionManager.FinishedCallback?
     
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
+
+        log.debug("Telling sysextd to replace extension...", category: .sysex)
         return .replace
     }
     
