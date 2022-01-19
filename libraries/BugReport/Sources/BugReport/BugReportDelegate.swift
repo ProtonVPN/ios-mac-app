@@ -18,15 +18,25 @@
 
 import Foundation
 
+/// Delegate that is used by this BugReport library to communicate wit hthe app.
 public protocol BugReportDelegate {
+    
+    /// Configuration for Dynamic Bug Report UI.
     var model: BugReportModel { get }
+    
+    /// If app knows users email, it should be returned here.
     var prefilledEmail: String { get }
     
-    typealias SendReportResult = Result<Void, Error>
+    /// This method should send filled-in form to API and call `result` callback when finished.
     func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void)
+    typealias SendReportResult = Result<Void, Error>
     
+    /// This method called after used presses OK button on final `success` screen.
     func finished()
+    
+    /// This method is called when user presses `Troubleshooting` button in final `failure` screen. It should show apps troubleshooting screen.
     func troubleshootingRequired()
+    
 }
 
 // MARK: - Mocks

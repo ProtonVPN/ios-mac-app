@@ -59,6 +59,6 @@ struct StepProgress: View {
 struct StepProgress_Previews: PreviewProvider {
     static var previews: some View {
         StepProgress(step: 2, steps: 3, colorMain: .green, colorSecondary: .red)
-            .background(Colors().background)
+            .preferredColorScheme(.dark)
     }
 }

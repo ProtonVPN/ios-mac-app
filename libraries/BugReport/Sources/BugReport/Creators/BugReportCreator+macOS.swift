@@ -29,7 +29,7 @@ public final class macOSBugReportCreator: BugReportCreator {
     public init() { }
 
     public func createBugReportViewController(model: BugReportModel, colors: Colors?) -> NSViewController? {
-        guard isNewBugReportEnabled, #available(macOS 11, *) else {
+        guard #available(macOS 11, *) else {
             return nil
         }
 

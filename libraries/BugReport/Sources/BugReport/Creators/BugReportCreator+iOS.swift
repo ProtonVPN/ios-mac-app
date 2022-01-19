@@ -22,7 +22,6 @@ import UIKit
 import SwiftUI
 
 public protocol BugReportCreator {
-    var isBugReportAvailable: Bool { get }
     @available(iOS 14.0, *)
     func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController?
 }
@@ -30,19 +29,8 @@ public protocol BugReportCreator {
 public final class iOSBugReportCreator: BugReportCreator {
     public init() { }
     
-    public var isBugReportAvailable: Bool {
-        if isNewBugReportEnabled, #available(iOS 14.0.0, *) {
-            return true
-        }
-        return false
-    }
-
     @available(iOS 14.0, *)
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController? {
-        guard isBugReportAvailable else {
-            return nil
-        }
-        
         Current.bugReportDelegate = delegate
 
         let controller = UIHostingController(
@@ -51,8 +39,7 @@ public final class iOSBugReportCreator: BugReportCreator {
                 .preferredColorScheme(.dark)
         )
         
-        controller.overrideUserInterfaceStyle = .dark
-        
+        controller.overrideUserInterfaceStyle = .dark        
         return controller
     }
 }
