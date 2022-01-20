@@ -283,7 +283,7 @@
                                     <constraint firstAttribute="height" constant="48" id="rgy-Dr-sP1"/>
                                 </constraints>
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
-                                <state key="normal" title="Done"/>
+                                <state key="normal" title="Button"/>
                                 <connections>
                                     <action selector="doneTapped:" destination="Hep-ky-Hi3" eventType="touchUpInside" id="Os2-Bz-DrF"/>
                                     <action selector="nextTapped:" destination="vdj-QW-HHE" eventType="touchUpInside" id="ncK-YC-ufy"/>

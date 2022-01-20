@@ -68,6 +68,7 @@ final class ConnectedViewController: UIViewController {
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
         noteLabel.text = LocalizedString.onboardingConnectedNote
         errorLabel.text = LocalizedString.onboardingNotConnectedError
+        doneButton.setTitle(LocalizedString.onboardingContinue, for: .normal)
 
         switch state {
         case .notConnected:
