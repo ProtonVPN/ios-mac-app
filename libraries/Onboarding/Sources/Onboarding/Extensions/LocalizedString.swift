@@ -26,6 +26,8 @@ public enum LocalizedString {
   public static var onboardingConnectedSubtitle: String { return LocalizedString.tr("Localizable", "onboarding_connected_subtitle") }
   /// Congratulations
   public static var onboardingConnectedTitle: String { return LocalizedString.tr("Localizable", "onboarding_connected_title") }
+  /// Continue
+  public static var onboardingContinue: String { return LocalizedString.tr("Localizable", "onboarding_continue") }
   /// Done
   public static var onboardingDone: String { return LocalizedString.tr("Localizable", "onboarding_done") }
   /// Access all countries with PLUS

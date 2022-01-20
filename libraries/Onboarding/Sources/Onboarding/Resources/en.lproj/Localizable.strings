@@ -35,3 +35,4 @@
 "onboarding_upsell_feature_netshield" = "Highest speed (10 Gbps)";
 "onboarding_not_connected_subtitle" = "You’re ready to browse the web.";
 "onboarding_not_connected_error" = "Unable to establish a connection. Please try again later in the app.";
+"onboarding_continue" = "Continue";
