@@ -438,33 +438,6 @@ public class UnknownErrortAlert: SystemAlert {
     }
 }
 
-public class ErrorNotificationAlert: SystemAlert {
-    public var title: String? = LocalizedString.errorUnknownTitle
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = true
-    public var dismiss: (() -> Void)?
-    public var accessibilityIdentifier: String?
-    
-    public init(error: Error) {
-        message = error.localizedDescription
-        let nsError = error as NSError
-        accessibilityIdentifier = "Error notification with code \(nsError.code)"
-    }
-}
-
-public class SuccessNotificationAlert: SystemAlert {
-    public var title: String?
-    public var message: String?
-    public var actions = [AlertAction]()
-    public let isError: Bool = false
-    public var dismiss: (() -> Void)?
-    
-    public init(message: String) {
-        self.message = message
-    }
-}
-
 public class UserVerificationAlert: SystemAlert {
     public var title: String?
     public var message: String?
