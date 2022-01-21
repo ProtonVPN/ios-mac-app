@@ -38,7 +38,7 @@ class SignupTests: ProtonVPNUITests {
         }
      }
     
-    func testSignupExistingIntAccount() {
+    func testSignupExistingInternalAccount() {
         
         let email = "vpnfree"
         
@@ -75,13 +75,14 @@ class SignupTests: ProtonVPNUITests {
             .verify.recoveryScreenIsShown()
             .skipButtonTap()
             .verify.recoveryDialogDisplay()
-            .skipButtonTap(robot: PaymentsRobot.self)
-            .selectFreePlan()
+            .skipButtonTap(robot: SignupHumanVerificationRobot.self)
             .verify.humanVerificationScreenIsShown()
-            .performEmailVerification(email: randomEmail, code: code, to: AccountSummaryRobot.self)
-            .accountSummaryElementsDisplayed(robot: SummarySignupRobot.self)
+            .performEmailVerification(email: randomEmail, code: code, to: CreatingAccountRobot.self)
+            .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
+            .verify.onboardingScreensAreSkipped()
             .startUsingProtonVpn()
+            .closeScreen()
             .goToSettingsTab()
             .verify.userIsCreated(email, plan)
     }
@@ -95,7 +96,6 @@ class SignupTests: ProtonVPNUITests {
         let code = "666666"
         let plan = "ProtonVPN Free"
 
-        
         changeEnvToBlackIfNedded()
         useAndContinueTap()
         mainRobot
@@ -108,13 +108,14 @@ class SignupTests: ProtonVPNUITests {
             .enterRepeatPassword(password)
             .nextButtonTap(robot: RecoveryRobot.self)
             .insertRecoveryEmail(testEmail)
-            .nextButtonTap(robot: PaymentsRobot.self)
-            .selectFreePlan()
+            .nextButtonTap(robot: SignupHumanVerificationRobot.self)
             .verify.humanVerificationScreenIsShown()
-            .performEmailVerification(email: randomEmail, code: code, to: AccountSummaryRobot.self)
-            .accountSummaryElementsDisplayed(robot: SummarySignupRobot.self)
+            .performEmailVerification(email: randomEmail, code: code, to: CreatingAccountRobot.self)
+            .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
+            .verify.onboardingScreensAreSkipped()
             .startUsingProtonVpn()
+            .closeScreen()
             .goToSettingsTab()
             .verify.userIsCreated(email, plan)
     }
@@ -140,7 +141,6 @@ class SignupTests: ProtonVPNUITests {
             .enterRepeatPassword(password)
             .nextButtonTap(robot: PaymentsRobot.self)
             .verify.subscribtionScreenIsShown()
-            .selectFreePlan()
     }
     
     func testSignupExistingExternalAccount() {

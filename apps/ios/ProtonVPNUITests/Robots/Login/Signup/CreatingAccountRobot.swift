@@ -18,27 +18,23 @@
 
 import pmtest
 
-fileprivate let summaryTitle = "SummaryViewController.header"
-fileprivate let summaryDescription = "SummaryViewController.descriptionLabel"
-fileprivate let summaryWelcome = "SummaryViewController.welcomeLabel"
-fileprivate let summaryButton = "Start using ProtonVPN"
+fileprivate let titleId = "CompleteViewController.completeTitleLabel"
+fileprivate let subtitle = "CompleteViewController.completeDescriptionLabel"
+fileprivate let creatingAccount = "Creating your account"
+fileprivate let configuringAccess = "Configuring your VPN access"
 
-class SummarySignupRobot: CoreElements {
+class CreatingAccountRobot: CoreElements {
     
     public let verify = Verify()
-    
-    func startUsingProtonVpn() -> MainRobot {
-        staticText(summaryButton).tap()
-        return MainRobot()
-    }
     
     class Verify: CoreElements {
         
         @discardableResult
-        func summaryScreenIsShown() -> SummarySignupRobot {
-            staticText(summaryTitle).wait(time: 10).checkExists()
-            staticText(summaryDescription).wait(time: 10).checkExists()
-            staticText(summaryWelcome).wait(time: 10).checkExists()
+        func creatingAccountScreenIsShown() -> SummarySignupRobot {
+            staticText(titleId).wait(time:40).checkExists()
+            staticText(subtitle).wait(time:40).checkExists()
+            staticText(creatingAccount).wait(time:40).checkExists()
+            staticText(configuringAccess).wait(time:40).checkExists()
             return SummarySignupRobot()
         }
     }
