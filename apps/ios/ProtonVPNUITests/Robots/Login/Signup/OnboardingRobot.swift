@@ -47,7 +47,7 @@ class OnboardingRobot: CoreElements {
           return OnboardingRobot()
     }
     
-    func skippOnboarding() -> OnboardingRobot {
+    func skipOnboarding() -> OnboardingRobot {
           button(skipButton).tap()
           return OnboardingRobot()
     }
