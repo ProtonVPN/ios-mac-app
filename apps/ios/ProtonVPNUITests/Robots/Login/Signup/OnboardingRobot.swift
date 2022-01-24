@@ -32,6 +32,11 @@ class OnboardingRobot: CoreElements {
         return OnboardingRobot()
     }
     
+    func closeOnboardingScreen() -> OnboardingRobot {
+        button(closeButton).tap()
+        return OnboardingRobot()
+    }
+    
     func closeScreen() -> MainRobot {
         button(closeButton).tap()
         return MainRobot()
@@ -42,15 +47,8 @@ class OnboardingRobot: CoreElements {
           return OnboardingRobot()
     }
     
-    public let verify = Verify()
-    
-    class Verify: CoreElements {
-        
-        func onboardingScreensAreSkipped() -> OnboardingRobot {
-            button(skipButton).tap()
-            staticText(establishConnectionTitle).checkExists()
-            button(skipButton).tap()
-            return OnboardingRobot()
-        }
+    func skippOnboarding() -> OnboardingRobot {
+          button(skipButton).tap()
+          return OnboardingRobot()
     }
 }

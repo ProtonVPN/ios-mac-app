@@ -16,6 +16,7 @@ fileprivate let nextButtonId = "SignupViewController.nextButton"
 fileprivate let signInButtonId = "SignupViewController.signinButton"
 fileprivate let protonmailErrorMessage = "Please use a non-ProtonMail email address"
 fileprivate let usernameErrorMessage = "Username already used"
+fileprivate let okButton = "OK"
 
 class SignupRobot: CoreElements {
     
@@ -52,14 +53,14 @@ class SignupRobot: CoreElements {
         @discardableResult
         func protonmailAccountErrorIsShown() -> SignupRobot {
             textView(protonmailErrorMessage).wait(time: 10).checkExists()
-            button("OK").wait().checkExists().tap()
+            button(okButton).wait().checkExists().tap()
             return SignupRobot()
         }
         
         @discardableResult
         func usernameErrorIsShown() -> SignupRobot {
             textView(usernameErrorMessage).wait(time: 2).checkExists()
-            button("OK").wait().checkExists().tap()
+            button(okButton).wait().checkExists().tap()
             return SignupRobot()
         }
     }
