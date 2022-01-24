@@ -30,6 +30,20 @@ public enum ConnectionProtocol: Codable, Equatable {
         case vpnProtocol
     }
 
+    public var vpnProtocol: VpnProtocol? {
+        guard case let .vpnProtocol(vpnProtocol) = self else {
+            return nil
+        }
+        return vpnProtocol
+    }
+
+    public var requiresSystemExtension: Bool {
+        guard self != .smartProtocol else {
+            return true
+        }
+        return vpnProtocol?.requiresSystemExtension == true
+    }
+
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: Keys.self)
         if let vpnProtocol = try container.decodeIfPresent(VpnProtocol.self, forKey: .vpnProtocol) {
