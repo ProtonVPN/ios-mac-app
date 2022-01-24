@@ -50,6 +50,7 @@ class ProtonVPNUITests: XCTestCase {
     // MARK: - Helper methods
     
     private let loginRobot = LoginRobot()
+    public let onboardingRobot = OnboardingRobot()
     private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
     
     func loginAsFreeUser() {
@@ -159,5 +160,19 @@ class ProtonVPNUITests: XCTestCase {
             changeEnvToProduction()
             app.launch()
         }
+    }
+    
+    func skipOnboarding() -> OnboardingRobot {
+        
+        onboardingRobot.skippOnboarding()
+        let elementclose = app.buttons["CloseButton"]
+        
+        if elementclose.exists {
+            return onboardingRobot.closeOnboardingScreen().skippOnboarding().startUsingProtonVpn()
+        }
+        else {
+          return onboardingRobot.skippOnboarding().startUsingProtonVpn().closeOnboardingScreen()
+        }
+        return OnboardingRobot()
     }
 }

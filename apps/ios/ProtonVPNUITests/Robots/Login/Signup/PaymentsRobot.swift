@@ -28,12 +28,6 @@ class PaymentsRobot: CoreElements {
     
     public let verify = Verify()
     
-    func selectFreePlan() -> SignupHumanVerificationRobot {
-        _ = self.corePaymentUIRobot
-            .self.freePlanButtonTap()
-        return SignupHumanVerificationRobot()
-    }
-    
     class Verify: CoreElements {
         
         @discardableResult

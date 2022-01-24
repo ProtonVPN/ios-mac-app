@@ -60,7 +60,6 @@ class SignupTests: ProtonVPNUITests {
         let code = "666666"
         let plan = "ProtonVPN Free"
 
-        
         changeEnvToBlackIfNedded()
         useAndContinueTap()
         mainRobot
@@ -80,9 +79,8 @@ class SignupTests: ProtonVPNUITests {
             .performEmailVerification(email: randomEmail, code: code, to: CreatingAccountRobot.self)
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
-            .verify.onboardingScreensAreSkipped()
-            .startUsingProtonVpn()
-            .closeScreen()
+        skipOnboarding()
+        mainRobot
             .goToSettingsTab()
             .verify.userIsCreated(email, plan)
     }
@@ -113,9 +111,8 @@ class SignupTests: ProtonVPNUITests {
             .performEmailVerification(email: randomEmail, code: code, to: CreatingAccountRobot.self)
             .verify.creatingAccountScreenIsShown()
             .verify.summaryScreenIsShown()
-            .verify.onboardingScreensAreSkipped()
-            .startUsingProtonVpn()
-            .closeScreen()
+        skipOnboarding()
+        mainRobot
             .goToSettingsTab()
             .verify.userIsCreated(email, plan)
     }
