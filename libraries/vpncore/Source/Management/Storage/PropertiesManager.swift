@@ -53,7 +53,7 @@ public protocol PropertiesManagerProtocol: class {
     var serverTypeToggle: ServerType { get }
     var reportBugEmail: String? { get set }
     
-    // Distinguishes if kill switch should be disabled
+    // Destinguishes if kill switch should be disabled
     var intentionallyDisconnected: Bool { get set }
     var userIp: String? { get set }
     var userDataDisclaimerAgreed: Bool { get set }
