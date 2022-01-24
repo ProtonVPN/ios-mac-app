@@ -71,7 +71,7 @@
 "_allow_lan_info" = "Permite contornar a VPN e conectar-se a dispositivos na sua rede local, como sua impressora.";
 
 /* (No Comment) */
-"_allow_lan_note" = "Note that your connection needs to be restarted to apply this change";
+"_allow_lan_note" = "Observe que sua conexão precisa ser reiniciada para aplicar esta mudança";
 
 /* (No Comment) */
 "_allow_lan_title" = "Permitir conexões LAN";
@@ -1457,7 +1457,7 @@
 "_select_verification_option" = "Por favor, selecione uma opção de verificação para continuar:";
 
 /* iOS: text in human verification options screen */
-"_select_verification_option_top_message" = "To prevent abuse, you must verify you are a human.";
+"_select_verification_option_top_message" = "Para evitar abusos, você deve verificar se é humano.";
 
 /* Profile create/change form */
 "_server" = "Servidor";
@@ -1607,10 +1607,10 @@
 "_subuser_alert_assign_connections_button" = "Atribuir conexões VPN";
 
 /* (No Comment) */
-"_subuser_alert_description1" = "To start your journey in ProtonVPN please assign VPN connections to your account or any other sub-account.";
+"_subuser_alert_description1" = "Para iniciar sua jornada no ProtonVPN, atribua conexões VPN à sua conta ou a qualquer outra subconta.";
 
 /* (No Comment) */
-"_subuser_alert_description2" = "This step will take just a few minutes. After that you will be able to log in and protect all your devices.";
+"_subuser_alert_description2" = "Esta etapa levará apenas alguns minutos. Depois disso, você poderá fazer login e proteger todos os seus dispositivos.";
 
 /* (No Comment) */
 "_subuser_alert_login_button" = "Entrar novamente";
