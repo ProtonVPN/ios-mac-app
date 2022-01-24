@@ -157,7 +157,9 @@ extension DependencyContainer: WindowServiceFactory {
 // MARK: VpnApiServiceFactory
 extension DependencyContainer: VpnApiServiceFactory {
     func makeVpnApiService() -> VpnApiService {
-        return VpnApiService(networking: makeNetworking())
+        let service = VpnApiService(networking: makeNetworking())
+        service.appStateManager = appStateManager
+        return service
     }
 }
 

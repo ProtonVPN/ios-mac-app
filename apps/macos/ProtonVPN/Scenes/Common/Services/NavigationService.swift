@@ -71,7 +71,6 @@ class NavigationService {
     }
     
     func launched() {
-        vpnApiService.appStateManager = appStateManager
         NotificationCenter.default.addObserver(self, selector: #selector(sessionChanged(_:)),
                                                name: appSessionManager.sessionChanged, object: nil)
         NSWorkspace.shared.notificationCenter.addObserver(self, selector: #selector(powerOff(_:)),
