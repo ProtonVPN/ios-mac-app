@@ -67,7 +67,7 @@ class SystemExtensionsStateCheck {
             }
             
             guard !installNeeded.isEmpty else {
-                log.debug("No install updates needed, bailing.", category: .sysex)
+                log.debug("No initial install needed, bailing.", category: .sysex)
                 resultHandler(.success(updateWasNeeded ? .updated : .nothing))
                 return
             }

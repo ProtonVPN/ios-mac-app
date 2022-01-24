@@ -132,6 +132,15 @@ public enum VpnProtocol {
             return .undefined
         }
     }
+
+    public var requiresSystemExtension: Bool {
+        switch self {
+        case .openVpn, .wireGuard:
+            return true
+        default:
+            return false
+        }
+    }
 }
 
 extension VpnProtocol: Codable {
