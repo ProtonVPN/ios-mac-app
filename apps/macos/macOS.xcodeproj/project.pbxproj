@@ -412,6 +412,9 @@
 		F320E03A26F08E1400336F7A /* TourNumberView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E03926F08E1400336F7A /* TourNumberView.swift */; };
 		F320E03C26F08FAB00336F7A /* Tour.xib in Resources */ = {isa = PBXBuildFile; fileRef = F320E03B26F08FAB00336F7A /* Tour.xib */; };
 		F3747C0426D4E45100EF2F00 /* macOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */; };
+		F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */; };
+		F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */; };
+		F3B3BEB9279EBD5700F85BDF /* Upsell.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3B3BEB8279EBD5600F85BDF /* Upsell.xib */; };
 		FDF60D012BBC201E0EC1E1CE /* LogViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 78C16264DDB60F80353FA5CA /* LogViewHelper.swift */; };
 /* End PBXBuildFile section */
 
@@ -993,6 +996,9 @@
 		F320E03B26F08FAB00336F7A /* Tour.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Tour.xib; sourceTree = "<group>"; };
 		F3747C0326D4E45100EF2F00 /* macOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = macOSNetworkingDelegate.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/Services/macOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F38BB451265C0D8F00329619 /* Config.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Config.xcconfig; path = ../macos/Config.xcconfig; sourceTree = "<group>"; };
+		F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellViewController.swift; sourceTree = "<group>"; };
+		F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpsellGradientView.swift; sourceTree = "<group>"; };
+		F3B3BEB8279EBD5600F85BDF /* Upsell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = Upsell.xib; sourceTree = "<group>"; };
 		F556A48F963065E925A2A56B /* Pods-ProtonVPNTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNTests/Pods-ProtonVPNTests.staging.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -1605,9 +1611,10 @@
 		F320E02426F08D7A00336F7A /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				F320E02526F08D7A00336F7A /* WelcomeViewController.swift */,
-				F320E02626F08D7A00336F7A /* TourViewController.swift */,
 				F320E02726F08D7A00336F7A /* TourNumberViewController.swift */,
+				F320E02626F08D7A00336F7A /* TourViewController.swift */,
+				F3B3BEB4279EBD3000F85BDF /* UpsellViewController.swift */,
+				F320E02526F08D7A00336F7A /* WelcomeViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1629,6 +1636,8 @@
 				F320E03326F08DBD00336F7A /* TourNumber.xib */,
 				F320E03526F08DEC00336F7A /* TourNumberRingView.swift */,
 				F320E03926F08E1400336F7A /* TourNumberView.swift */,
+				F3B3BEB8279EBD5600F85BDF /* Upsell.xib */,
+				F3B3BEB6279EBD5200F85BDF /* UpsellGradientView.swift */,
 				F320E02C26F08D7A00336F7A /* Welcome.xib */,
 			);
 			path = Views;
@@ -2709,7 +2718,7 @@
 			);
 			mainGroup = EED534781EEC112000013607;
 			packageReferences = (
-				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */,
+				D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */,
 			);
 			productRefGroup = EED534821EEC112000013607 /* Products */;
 			projectDirPath = "";
@@ -2810,6 +2819,7 @@
 				E187021E20E26201000521AC /* StatusMenuProfileViewItem.xib in Resources */,
 				EEF7814B1F1A701900E77B59 /* CountriesSection.xib in Resources */,
 				D557D580264AC337007E4396 /* Intents.strings in Resources */,
+				F3B3BEB9279EBD5700F85BDF /* Upsell.xib in Resources */,
 				EE343B791F33AF080052C6C4 /* SecureCoreWarning.xib in Resources */,
 				F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */,
 				42BEF97126319ADC009180A7 /* StreamingServicesOverlayViewController.xib in Resources */,
@@ -3187,6 +3197,7 @@
 				E17C1CE320EA18CD00DCC687 /* StatusMenuItemBackground.swift in Sources */,
 				E1FFCF76202D942E001B8108 /* ServerInfoView.swift in Sources */,
 				EE4FCF661F22102200B04EF8 /* NSAttributedString+Extension.swift in Sources */,
+				F3B3BEB5279EBD3000F85BDF /* UpsellViewController.swift in Sources */,
 				E142F24D20A9B45800029163 /* UpdateManager.swift in Sources */,
 				42498A542518EE3C00ACB7EC /* ExpandablePopupViewModel.swift in Sources */,
 				D563319E23212A0800CE2EE3 /* AbstractProfileViewModel.swift in Sources */,
@@ -3378,6 +3389,7 @@
 				42498A512518E96B00ACB7EC /* ExpandableContentPopupViewController.swift in Sources */,
 				E15DE7D8202B4FF700BFA78D /* ResizingTextButton.swift in Sources */,
 				D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */,
+				F3B3BEB7279EBD5200F85BDF /* UpsellGradientView.swift in Sources */,
 				EE5B175D1F3A0BDA00879BE0 /* NotificationManager.swift in Sources */,
 				EECF306B1F179A54006F819F /* CountryItemViewModel.swift in Sources */,
 				E1B80FE1203E000100F1D76C /* ConnectingViewController.swift in Sources */,
@@ -4455,7 +4467,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */ = {
+		D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/jaroslavas/wireguard-apple.git";
 			requirement = {
@@ -4468,7 +4480,7 @@
 /* Begin XCSwiftPackageProductDependency section */
 		D5CA559526A59A9A001E9284 /* WireGuardKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple.git" */;
+			package = D5CA559226A58F9A001E9284 /* XCRemoteSwiftPackageReference "wireguard-apple" */;
 			productName = WireGuardKit;
 		};
 /* End XCSwiftPackageProductDependency section */
