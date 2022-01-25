@@ -54,3 +54,23 @@ echo "<dict>
 
 echo '</array>
 </plist>' >> credentials.plist
+
+
+# subusercredentials.plist
+
+echo '<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>' > subusercredentials.plist
+
+[ -n "$IOS_VPNTEST_SUBUSER1" ] && echo "<dict>
+            <key>plan</key>
+            <string></string>
+            <key>username</key>
+            <string>$IOS_VPNTEST_SUBUSER1</string>
+            <key>password</key>
+            <string>$IOS_VPNTEST_SUBPASSWORD5</string>
+        </dict>" >> subusercredentials.plist
+
+echo '</array>
+</plist>' >> subusercredentials.plist
