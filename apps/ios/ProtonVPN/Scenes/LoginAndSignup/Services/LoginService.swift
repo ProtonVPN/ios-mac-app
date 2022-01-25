@@ -25,7 +25,7 @@ enum SilengLoginResult {
 
 protocol LoginServiceDelegate: AnyObject {
     func userDidLogIn()
-    func usedDidSignUp(onboardingShowFirstConnection: Bool)
+    func userDidSignUp(onboardingShowFirstConnection: Bool)
 }
 
 protocol LoginService: AnyObject {
@@ -110,7 +110,7 @@ final class CoreLoginService {
             case .loggedIn:
                 self?.delegate?.userDidLogIn()
             case .signedUp:
-                self?.delegate?.usedDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
+                self?.delegate?.userDidSignUp(onboardingShowFirstConnection: onboardingShowFirstConnection)
             }
 
             self?.login = nil
