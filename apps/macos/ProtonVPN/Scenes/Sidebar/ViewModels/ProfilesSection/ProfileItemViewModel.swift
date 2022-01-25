@@ -29,6 +29,7 @@ class ProfileItemViewModel: AbstractProfileViewModel {
     
     private let vpnGateway: VpnGatewayProtocol
     private let alertService: CoreAlertService
+    private let stateCheck: SystemExtensionsStateCheck
     
     var enabled: Bool {
         return !underMaintenance
@@ -54,16 +55,17 @@ class ProfileItemViewModel: AbstractProfileViewModel {
         return formSecondaryDescription()
     }
     
-    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int, alertService: CoreAlertService) {
+    init(profile: Profile, vpnGateway: VpnGatewayProtocol, userTier: Int, alertService: CoreAlertService, sysexStateCheck: SystemExtensionsStateCheck) {
         self.vpnGateway = vpnGateway
         self.alertService = alertService
+        self.stateCheck = sysexStateCheck
         super.init(profile: profile, userTier: userTier)
     }
     
     func connectAction() {
         log.debug("Connect requested by selecting a profile.", category: .connectionConnect, event: .trigger)
         
-        if profile.connectionProtocol == ConnectionProtocol.vpnProtocol(.wireGuard), case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
+        if profile.connectionProtocol.vpnProtocol == .wireGuard, case let .custom(server) = profile.serverOffering, !server.server.ips.contains(where: { $0.supportsWireguard }) {
             log.debug("Won't connect because no wireguard server can be found for this profile.", category: .connectionConnect, event: .trigger)
             alertService.push(alert: WireguardProfileErrorAlert())
             return
@@ -74,9 +76,27 @@ class ProfileItemViewModel: AbstractProfileViewModel {
             SafariService.openLink(url: CoreAppConstants.ProtonVpnLinks.accountDashboard)
             return
         }
-        
-        log.debug("Will connect to profile: \(profile.logDescription)", category: .connectionConnect, event: .trigger)
-        vpnGateway.connectTo(profile: profile)
+
+        let performConnection = { [weak self] in
+            guard let `self` = self else { return }
+
+            log.debug("Will connect to profile: \(self.profile.logDescription)", category: .connectionConnect, event: .trigger)
+            self.vpnGateway.connectTo(profile: self.profile)
+        }
+
+        guard profile.connectionProtocol.requiresSystemExtension else {
+            performConnection()
+            return
+        }
+
+        stateCheck.startCheckAndInstallIfNeeded { result in
+            switch result {
+            case .success:
+                performConnection()
+            case let .failure(error):
+                log.error("Error installing sysex when profile was selected: \(String(describing: error))")
+            }
+        }
     }
     
     private func formSecondaryDescription() -> NSAttributedString {
