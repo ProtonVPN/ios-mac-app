@@ -592,7 +592,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Button"/>
                                 <connections>
-                                    <action selector="cnnectToPlusServerTapped:" destination="kOK-QS-z90" eventType="touchUpInside" id="keg-vE-WBV"/>
+                                    <action selector="connectToPlusServerTapped:" destination="kOK-QS-z90" eventType="touchUpInside" id="3b9-Oo-9cS"/>
                                 </connections>
                             </button>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="haF-NM-v3e">

@@ -59,7 +59,7 @@ final class ConnectToPlusServerViewController: UIViewController {
 
     // MARK: Actions
 
-    @IBAction private func cnnectToPlusServerTapped(_ sender: Any) {
+    @IBAction private func connectToPlusServerTapped(_ sender: Any) {
         delegate?.userDidRequestConnectToPlus()
     }
 }
