@@ -165,7 +165,6 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
                       self.propertiesManager.userIp != nil,
                       !(error is KeychainError) else {
 
-                    self?.logOutCleanup()
                     failure(error)
                     return
                 }
@@ -181,8 +180,7 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
             self?.profileManager.refreshProfiles()
             success()
             
-        }, failure: { [weak self] error in
-            self?.logOutCleanup()
+        }, failure: { error in
             failure(error)
         })
     }
