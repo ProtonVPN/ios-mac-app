@@ -70,6 +70,16 @@
 		851D919753C4F14262FF249E /* Pods-ProtonVPN-mac-metadata.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0CB9D7894ABA03D2148D44D2 /* Pods-ProtonVPN-mac-metadata.plist */; };
 		8A4FE4B98151786663E8E688 /* Pods_ProtonVPN_mac.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 029BF4990963CC3DFA0E3CEE /* Pods_ProtonVPN_mac.framework */; };
 		AEB34226A8F57095D108B88E /* Pods_ProtonVPN_WireGuard.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1331D833674A744FD9A2A250 /* Pods_ProtonVPN_WireGuard.framework */; };
+		B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F7278DC07800DBB8CA /* StringUtils.swift */; };
+		B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32F9278DC19E00DBB8CA /* LoginTests.swift */; };
+		B22F32FC278DC1C000DBB8CA /* LoginRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */; };
+		B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F32FF278DC6E400DBB8CA /* ProfileTests.swift */; };
+		B22F3302278DC70900DBB8CA /* ProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3301278DC70900DBB8CA /* ProfileRobot.swift */; };
+		B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3303278DC76C00DBB8CA /* MainRobot.swift */; };
+		B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3306278DC83500DBB8CA /* CreateProfileRobot.swift */; };
+		B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3309278DC8BA00DBB8CA /* ManageProfilesRobot.swift */; };
+		B22F3312278EC8B700DBB8CA /* SettingsRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3310278EC76600DBB8CA /* SettingsRobot.swift */; };
+		B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22F3314278ECB1100DBB8CA /* SettingsTests.swift */; };
 		BEC156ED7BB56668D6932825 /* AnnouncementFeatureView.xib in Resources */ = {isa = PBXBuildFile; fileRef = DCB571C8BB94766EC49E238C /* AnnouncementFeatureView.xib */; };
 		CCEFA9F416993B0624BEE7E5 /* Pods_ProtonVPNmacOSTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */; };
 		D202EF1A246C02E500617BD2 /* PVPNTextViewLink.swift in Sources */ = {isa = PBXBuildFile; fileRef = D202EF19246C02E500617BD2 /* PVPNTextViewLink.swift */; };
@@ -78,7 +88,6 @@
 		D26CBA3D2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */; };
 		D510690E25B7255B00302699 /* UpdateFileSelectorMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */; };
 		D516EB9D2315775E0095B735 /* MacAlertService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D516EB9C2315775E0095B735 /* MacAlertService.swift */; };
-		D5204E6822A116C100FFAB99 /* LoginTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6722A116C100FFAB99 /* LoginTests.swift */; };
 		D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */; };
 		D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5204E6C22A138C900FFAB99 /* Credentials.swift */; };
 		D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = D5204E6E22A1397F00FFAB99 /* credentials.plist */; };
@@ -193,6 +202,7 @@
 		E1FFCF82202DAF17001B8108 /* ServerInfo.xib in Resources */ = {isa = PBXBuildFile; fileRef = E1FFCF80202DAF17001B8108 /* ServerInfo.xib */; };
 		E9036B3F26C1044700EDFDA4 /* IPCOvpnService.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */; };
 		E9036B4126C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */; };
+		E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */ = {isa = PBXBuildFile; fileRef = E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */; };
 		E91BDD38274BC89A005F370C /* WGLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD37274BC89A005F370C /* WGLogger.swift */; };
 		E91BDD3B274BC9C1005F370C /* Logger+Callers.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD39274BC9C1005F370C /* Logger+Callers.swift */; };
 		E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */ = {isa = PBXBuildFile; fileRef = E91BDD3A274BC9C1005F370C /* Logger+Categories.swift */; };
@@ -588,6 +598,16 @@
 		A1E54F86CCDE59E21DC60F9A /* SysexGuideWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = SysexGuideWindowController.swift; path = ../../../../../macos/ProtonVPN/Scenes/SystemExtension/Windows/SysexGuideWindowController.swift; sourceTree = "<group>"; };
 		A5E7ACED174F96942750130A /* Pods-ProtonVPN OpenVPN.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN OpenVPN.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPN OpenVPN/Pods-ProtonVPN OpenVPN.staging.xcconfig"; sourceTree = "<group>"; };
 		AB1249E786C550282DE6DABC /* Pods_ProtonVPNmacOSTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPNmacOSTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B22F32F7278DC07800DBB8CA /* StringUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = StringUtils.swift; path = "../../../macos/ProtonVPNUITests/Other classes/StringUtils.swift"; sourceTree = "<group>"; };
+		B22F32F9278DC19E00DBB8CA /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
+		B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginRobot.swift; sourceTree = "<group>"; };
+		B22F32FF278DC6E400DBB8CA /* ProfileTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTests.swift; sourceTree = "<group>"; };
+		B22F3301278DC70900DBB8CA /* ProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileRobot.swift; sourceTree = "<group>"; };
+		B22F3303278DC76C00DBB8CA /* MainRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainRobot.swift; path = ../../../macos/ProtonVPNUITests/Robots/MainRobot.swift; sourceTree = "<group>"; };
+		B22F3306278DC83500DBB8CA /* CreateProfileRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProfileRobot.swift; sourceTree = "<group>"; };
+		B22F3309278DC8BA00DBB8CA /* ManageProfilesRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageProfilesRobot.swift; sourceTree = "<group>"; };
+		B22F3310278EC76600DBB8CA /* SettingsRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsRobot.swift; sourceTree = "<group>"; };
+		B22F3314278ECB1100DBB8CA /* SettingsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
 		C331B0EA32CEDA55E73C5228 /* Pods-ProtonVPNmacOSTests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNmacOSTests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNmacOSTests/Pods-ProtonVPNmacOSTests.staging.xcconfig"; sourceTree = "<group>"; };
 		C37FB484E4C17505B684247B /* Pods_ProtonVPN_OpenVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN_OpenVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C77BDD50C752FDC9115636D8 /* NetShieldType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NetShieldType.swift; path = ../../../../libraries/vpncore/Source/Models/Profiles/NetShieldType.swift; sourceTree = "<group>"; };
@@ -598,7 +618,6 @@
 		D26CBA3C2469B6F4005E51B8 /* WiFiWarningPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WiFiWarningPopupViewController.swift; sourceTree = "<group>"; };
 		D510690D25B7255B00302699 /* UpdateFileSelectorMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdateFileSelectorMock.swift; sourceTree = "<group>"; };
 		D516EB9C2315775E0095B735 /* MacAlertService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MacAlertService.swift; sourceTree = "<group>"; };
-		D5204E6722A116C100FFAB99 /* LoginTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginTests.swift; sourceTree = "<group>"; };
 		D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCUIElement+clearText.swift"; sourceTree = "<group>"; };
 		D5204E6C22A138C900FFAB99 /* Credentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Credentials.swift; sourceTree = "<group>"; };
 		D5204E6E22A1397F00FFAB99 /* credentials.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = credentials.plist; sourceTree = "<group>"; };
@@ -772,6 +791,7 @@
 		E1FFCF80202DAF17001B8108 /* ServerInfo.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ServerInfo.xib; sourceTree = "<group>"; };
 		E9036B3E26C1044700EDFDA4 /* IPCOvpnService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IPCOvpnService.swift; path = "../../../macos/ProtonVPN OpenVPN/IPC/IPCOvpnService.swift"; sourceTree = "<group>"; };
 		E9036B4026C1056C00EDFDA4 /* OVPNCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNCredentialsConfigurator.swift; path = ../../../../../macos/ProtonVPN/Scenes/Common/VPN/OVPNCredentialsConfigurator.swift; sourceTree = "<group>"; };
+		E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = subusercredentials.plist; sourceTree = "<group>"; };
 		E911B93CDEDAEACCA61CA0A0 /* Pods-ProtonVPN WireGuard.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPN WireGuard.debug.xcconfig"; path = "Target Support Files/Pods-ProtonVPN WireGuard/Pods-ProtonVPN WireGuard.debug.xcconfig"; sourceTree = "<group>"; };
 		E91BDD37274BC89A005F370C /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		E91BDD39274BC9C1005F370C /* Logger+Callers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Logger+Callers.swift"; path = "../../../../libraries/vpncore/Source/Core/Logs/Extensions/Logger+Callers.swift"; sourceTree = "<group>"; };
@@ -1188,6 +1208,77 @@
 			path = ViewControllers;
 			sourceTree = "<group>";
 		};
+		B22F32FD278DC40E00DBB8CA /* Robots */ = {
+			isa = PBXGroup;
+			children = (
+				B22F330D278E0F6A00DBB8CA /* Settings */,
+				B22F330C278DCF3900DBB8CA /* Login */,
+				B22F3305278DC79E00DBB8CA /* Profiles */,
+				B22F3303278DC76C00DBB8CA /* MainRobot.swift */,
+			);
+			path = Robots;
+			sourceTree = "<group>";
+		};
+		B22F32FE278DC44D00DBB8CA /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				B22F3313278ECAFF00DBB8CA /* Settings */,
+				B22F330B278DCF2C00DBB8CA /* Login */,
+				B22F3308278DC85000DBB8CA /* Profiles */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		B22F3305278DC79E00DBB8CA /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B22F3301278DC70900DBB8CA /* ProfileRobot.swift */,
+				B22F3306278DC83500DBB8CA /* CreateProfileRobot.swift */,
+				B22F3309278DC8BA00DBB8CA /* ManageProfilesRobot.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B22F3308278DC85000DBB8CA /* Profiles */ = {
+			isa = PBXGroup;
+			children = (
+				B22F32FF278DC6E400DBB8CA /* ProfileTests.swift */,
+			);
+			path = Profiles;
+			sourceTree = "<group>";
+		};
+		B22F330B278DCF2C00DBB8CA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B22F32F9278DC19E00DBB8CA /* LoginTests.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B22F330C278DCF3900DBB8CA /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				B22F32FB278DC1C000DBB8CA /* LoginRobot.swift */,
+			);
+			path = Login;
+			sourceTree = "<group>";
+		};
+		B22F330D278E0F6A00DBB8CA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B22F3310278EC76600DBB8CA /* SettingsRobot.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		B22F3313278ECAFF00DBB8CA /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				B22F3314278ECB1100DBB8CA /* SettingsTests.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		CF4CBD52B87483E7CE0F1406 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1215,18 +1306,11 @@
 			path = ../../Pods;
 			sourceTree = "<group>";
 		};
-		D5204E6622A1169800FFAB99 /* Login */ = {
-			isa = PBXGroup;
-			children = (
-				D5204E6722A116C100FFAB99 /* LoginTests.swift */,
-			);
-			path = Login;
-			sourceTree = "<group>";
-		};
 		D5204E6B22A138AB00FFAB99 /* Other classes */ = {
 			isa = PBXGroup;
 			children = (
 				D5204E6C22A138C900FFAB99 /* Credentials.swift */,
+				B22F32F7278DC07800DBB8CA /* StringUtils.swift */,
 			);
 			path = "Other classes";
 			sourceTree = "<group>";
@@ -1290,12 +1374,14 @@
 		D5911707229F9574005829DA /* ProtonVPNUITests */ = {
 			isa = PBXGroup;
 			children = (
+				B22F32FE278DC44D00DBB8CA /* Tests */,
+				B22F32FD278DC40E00DBB8CA /* Robots */,
 				D5204E6B22A138AB00FFAB99 /* Other classes */,
-				D5204E6622A1169800FFAB99 /* Login */,
 				D5911708229F9574005829DA /* ProtonVPNUITests.swift */,
 				D5204E6922A11B8400FFAB99 /* XCUIElement+clearText.swift */,
 				D591170A229F9574005829DA /* Info.plist */,
 				D5204E6E22A1397F00FFAB99 /* credentials.plist */,
+				E90AAE2227A03FAA00FDAEC6 /* subusercredentials.plist */,
 			);
 			path = ProtonVPNUITests;
 			sourceTree = "<group>";
@@ -2748,6 +2834,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E90AAE2327A03FAA00FDAEC6 /* subusercredentials.plist in Resources */,
 				D5204E6F22A1397F00FFAB99 /* credentials.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -3108,10 +3195,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B22F32FC278DC1C000DBB8CA /* LoginRobot.swift in Sources */,
+				B22F3312278EC8B700DBB8CA /* SettingsRobot.swift in Sources */,
+				B22F3304278DC76C00DBB8CA /* MainRobot.swift in Sources */,
+				B22F3300278DC6E400DBB8CA /* ProfileTests.swift in Sources */,
+				B22F3316278EF38600DBB8CA /* SettingsTests.swift in Sources */,
 				D5204E6A22A11B8400FFAB99 /* XCUIElement+clearText.swift in Sources */,
+				B22F32F8278DC07800DBB8CA /* StringUtils.swift in Sources */,
 				D5911709229F9574005829DA /* ProtonVPNUITests.swift in Sources */,
+				B22F3307278DC83500DBB8CA /* CreateProfileRobot.swift in Sources */,
+				B22F330A278DC8BA00DBB8CA /* ManageProfilesRobot.swift in Sources */,
 				D5204E6D22A138C900FFAB99 /* Credentials.swift in Sources */,
-				D5204E6822A116C100FFAB99 /* LoginTests.swift in Sources */,
+				B22F3302278DC70900DBB8CA /* ProfileRobot.swift in Sources */,
+				B22F32FA278DC19E00DBB8CA /* LoginTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
