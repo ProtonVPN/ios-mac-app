@@ -105,7 +105,7 @@ extension IosAlertService: CoreAlertService {
             showDefaultSystemAlert(alert)
             
         case is UnknownErrortAlert:
-            showDefaultSystemAlert(alert)      
+            showDefaultSystemAlert(alert)
             
         case is ApplyCreditAfterRegistrationFailedAlert:
             showDefaultSystemAlert(alert)
