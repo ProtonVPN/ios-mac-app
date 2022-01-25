@@ -40,6 +40,16 @@
           "Type": "TextSingleLine",
           "Placeholder": "Example => 10 MB in download",
           "SubmitLabel": "What is your connection speed without VPN?"
+        },
+        {
+            "Label": "Field with wrong type",
+            "Type": "Dropdown",
+            "Options": [
+                "Option1",
+                "Option2",
+                "Option3"
+            ],
+            "SubmitLabel": "Select the issue"
         }
       ],
       "SubmitLabel": "Browsing speed"
