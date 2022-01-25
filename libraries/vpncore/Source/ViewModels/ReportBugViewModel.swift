@@ -31,6 +31,7 @@ open class ReportBugViewModel {
     public var attachmentsListRefreshed: (() -> Void)?
     
     private var bug: ReportBug
+    private var sendingBug: Bool = false
     private let propertiesManager: PropertiesManagerProtocol
     private let reportsApiService: ReportsApiService
     private let alertService: CoreAlertService
@@ -132,6 +133,12 @@ open class ReportBugViewModel {
     }
     
     public func send(completion: @escaping (Result<(), Error>) -> Void) {
+        // Debounce multiple attempts to send a bug report (i.e., by mashing a button)
+        guard !sendingBug else {
+            return
+        }
+
+        sendingBug = true
         reportsApiService.report(bug: bug) { [weak self] result in
             switch result {
             case .success:
@@ -140,10 +147,12 @@ open class ReportBugViewModel {
                     self?.alertService.push(alert: BugReportSentAlert(confirmHandler: {
                         completion(.success)
                     }))
+                    self?.sendingBug = false
                 }
             case let .failure(apiError):
                 DispatchQueue.main.async {
                     completion(.failure(apiError))
+                    self?.sendingBug = false
                 }
             }
         }
