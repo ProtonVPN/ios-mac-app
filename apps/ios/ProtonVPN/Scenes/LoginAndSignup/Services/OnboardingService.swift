@@ -97,7 +97,7 @@ extension OnboardingModuleService: OnboardingCoordinatorDelegate {
     func userDidRequestPlanPurchase(completion: @escaping OnboardingPlanPurchaseCompletion) {
         planService.createPlusPlanUI { result in
             switch result {
-            case let .PlanPurchaseViewControllerCreated(viewController):
+            case let .planPurchaseViewControllerCreated(viewController):
                 completion(.planPurchaseViewControllerReady(viewController))
             case .planPurchased:
                 completion(.planPurchased)

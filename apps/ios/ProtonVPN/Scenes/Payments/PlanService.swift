@@ -35,7 +35,7 @@ protocol PlanServiceDelegate: AnyObject {
 }
 
 enum PlusPlanUIResult {
-    case PlanPurchaseViewControllerCreated(UIViewController)
+    case planPurchaseViewControllerCreated(UIViewController)
     case planPurchased
 }
 
@@ -118,7 +118,7 @@ final class CorePlanService: PlanService {
         paymentsUI?.showUpgradePlan(presentationType: PaymentsUIPresentationType.none, backendFetch: true, updateCredits: false) { response in
             switch response {
             case let .open(vc: viewController, opened: false):
-                completion(.PlanPurchaseViewControllerCreated(viewController))
+                completion(.planPurchaseViewControllerCreated(viewController))
             case .open(vc: _, opened: true):
                 assertionFailure("Invalid usage")
             case let .purchaseError(error: error):
