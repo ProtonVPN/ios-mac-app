@@ -17,6 +17,7 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import Foundation
+import Overture
 import UIKit
 
 var colors: Colors!
@@ -31,22 +32,18 @@ let brandStyle: (UIView) -> Void = {
     $0.backgroundColor = colors.brand
 }
 
-let actionButtonStyle =
-    baseButtonStyle <> brandStyle
-    <> {
-        $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
-}
+let actionButtonStyle = concat(baseButtonStyle, brandStyle, and: {
+    $0.heightAnchor.constraint(equalToConstant: 48).isActive = true
+})
 
 let textButtonStyle: (UIButton) -> Void = {
     $0.titleLabel?.font = .systemFont(ofSize: 17)
     $0.setTitleColor(colors.brand, for: .normal)
 }
 
-let actionTextButtonStyle =
-    textButtonStyle
-    <> {
-        $0.titleLabel?.font = .systemFont(ofSize: 15)
-}
+let actionTextButtonStyle = concat(textButtonStyle, and: {
+    $0.titleLabel?.font = .systemFont(ofSize: 15)
+})
 
 let baseTextStyle: (UILabel) -> Void = {
     $0.font = .systemFont(ofSize: 17)
@@ -54,17 +51,13 @@ let baseTextStyle: (UILabel) -> Void = {
     $0.numberOfLines = 0
 }
 
-let centeredTextStyle =
-    baseTextStyle
-    <> {
-        $0.textAlignment = .center
-}
+let centeredTextStyle = concat(baseTextStyle, and: {
+    $0.textAlignment = .center
+})
 
-let bigTitleStyle =
-    centeredTextStyle
-    <> {
-        $0.font = .systemFont(ofSize: 28, weight: .bold)
-}
+let bigTitleStyle = concat(centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 28, weight: .bold)
+})
 
 let baseViewStyle: (UIView) -> Void = {
     $0.backgroundColor = colors.background
@@ -80,65 +73,47 @@ let tourPagerStyle: (UIPageControl) -> Void = {
     $0.pageIndicatorTintColor = UIColor(red: 48 / 255, green: 50 / 255, blue: 57 / 255, alpha: 1)
 }
 
-let titleStyle =
-    centeredTextStyle
-    <> {
-        $0.font = .systemFont(ofSize: 22, weight: .bold)
-}
+let titleStyle = concat(centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 22, weight: .bold)
+})
 
-let plusOnlyStyle =
-    brandStyle
-    <> {
-        $0.layer.cornerRadius = 9
-}
+let plusOnlyStyle = concat(brandStyle, and: {
+    $0.layer.cornerRadius = 9
+})
 
-let plusOnlyTextStyle =
-    baseTextStyle
-    <> {
-        $0.font = .systemFont(ofSize: 11, weight: .semibold)
-}
+let plusOnlyTextStyle = concat(baseTextStyle, and: {
+    $0.font = .systemFont(ofSize: 11, weight: .semibold)
+})
 
-let textNoteStyle =
-    baseTextStyle <> centeredTextStyle
-    <> {
-        $0.font = .systemFont(ofSize: 15)
-        $0.textColor = colors.weakText
-}
+let textNoteStyle = concat(baseTextStyle, centeredTextStyle, and: {
+    $0.font = .systemFont(ofSize: 15)
+    $0.textColor = colors.weakText
+})
 
-let textSubNoteStyle =
-    textNoteStyle
-    <> {
-        $0.font = .systemFont(ofSize: 13, weight: .semibold)
-}
+let textSubNoteStyle = concat(textNoteStyle, and: {
+    $0.font = .systemFont(ofSize: 13, weight: .semibold)
+})
 
-let countryTextStyle =
-    baseTextStyle
-    <> {
-        $0.font = .systemFont(ofSize: 15, weight: .semibold)
-}
+let countryTextStyle = concat(baseTextStyle, and: {
+    $0.font = .systemFont(ofSize: 15, weight: .semibold)
+})
 
 let secondaryViewStyle: (UIView) -> Void = {
     $0.backgroundColor = colors.secondaryBackground
 }
 
-let countryViewStyle =
-    secondaryViewStyle
-    <> {
-        $0.layer.cornerRadius = 8
-}
+let countryViewStyle = concat(secondaryViewStyle, and: {
+    $0.layer.cornerRadius = 8
+})
 
-let pageTitleStyle =
-    bigTitleStyle
-    <> {
-        $0.textAlignment = .left
-}
+let pageTitleStyle = concat(bigTitleStyle, and: {
+    $0.textAlignment = .left
+})
 
-let footerStyle =
-    baseTextStyle
-    <> {
-        $0.textColor = colors.weakText
-        $0.font = .systemFont(ofSize: 13)
-}
+let footerStyle = concat(baseTextStyle, and: {
+    $0.textColor = colors.weakText
+    $0.font = .systemFont(ofSize: 13)
+})
 
 let navigationStyle: (UINavigationController) -> Void = {
     $0.navigationBar.backgroundColor = colors.background
