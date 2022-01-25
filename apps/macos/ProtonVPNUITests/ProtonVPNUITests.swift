@@ -46,25 +46,91 @@ class ProtonVPNUITests: XCTestCase {
 
     // MARK: - Helper methods
     
+    private let loginRobot = LoginRobot()
+    private let credentials = Credentials.loadFrom(plistUrl: Bundle(identifier: "ch.protonmail.vpn.ProtonVPNUITests")!.url(forResource: "credentials", withExtension: "plist")!)
+      
+    func loginAsFreeUser() {
+        login(withCredentials: credentials[0])
+    }
+      
+    func loginAsBasicUser() {
+        login(withCredentials: credentials[1])
+    }
+      
+    func loginAsPlusUser() {
+        login(withCredentials: credentials[2])
+    }
+      
+    func loginAsVisionaryUser() {
+        login(withCredentials: credentials[3])
+    }
+
+    func login(withCredentials credentials: Credentials) {
+        
+        let buttonQuickConnect = app.buttons["Quick Connect"]
+        super.setUp()
+           loginRobot
+               .loginUser(credentials: credentials)
+             
+        dismissDialogs()
+             
+        _ = waitForElementToDisappear(app.otherElements["loader"])
+                     
+        expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: buttonQuickConnect, handler: nil)
+             waitForExpectations(timeout: 5, handler: nil)
+             
+        dismissDialogs()
+        dismissPopups()
+             
+        if waitForElementToAppear(app.dialogs["Enabling custom protocols"]) {
+                dismissDialogs()
+        }
+             
+        window.typeKey(",", modifierFlags:.command)
+        
+        let preferencesWindow = app.windows["Preferences"]
+        let accountTabButton = app.buttons["Account"]
+        
+        XCTAssert(accountTabButton.waitForExistence(timeout: 5))
+        XCTAssert(accountTabButton.isHittable)
+        accountTabButton.click()
+
+        XCTAssert(app.staticTexts[credentials.username].exists)
+        XCTAssert(app.staticTexts[credentials.plan].exists)
+
+        preferencesWindow.buttons[XCUIIdentifierCloseWindow].click()
+    }
+    
     func logoutIfNeeded() {
         _ = waitForElementToDisappear(app.otherElements["loader"])
 
         // give the main window time to load and show OpenVPN alert if needed
         sleep(2)
-        
+             
         dismissPopups()
         dismissDialogs()
-        
+            
         let logoutButton = app.menuBars.menuItems["Log Out"]
         guard logoutButton.exists, logoutButton.isEnabled else {
             return
         }
-        
-        window.typeKey("w", modifierFlags:[.command, .shift])
+        logoutButton.click()
         
         // Make sure app is fully logged out
         expectation(for: NSPredicate(format: "exists == true"), evaluatedWith: app.buttons["Login"], handler: nil)
         waitForExpectations(timeout: 5, handler: nil)
+    }
+    
+    func logInIfNeeded() {
+        let buttonQuickConnect = app.buttons["Quick Connect"]
+        if buttonQuickConnect.waitForExistence(timeout: 4) {
+            return
+        }
+      
+        else {
+            loginRobot
+                .loginUser(credentials: credentials[2])
+        }
     }
     
     func waitForElementToDisappear(_ element: XCUIElement) -> Bool {
@@ -86,7 +152,7 @@ class ProtonVPNUITests: XCTestCase {
     }
     
     func dismissPopups() {
-        let dismissButtons = ["Maybe Later", "Cancel"]
+        let dismissButtons = ["Maybe Later", "Cancel", "No thanks", "Take a Tour"]
         
         for button in dismissButtons {
             if app.buttons[button].exists {
@@ -114,5 +180,4 @@ class ProtonVPNUITests: XCTestCase {
             }
         }
     }
-    
 }

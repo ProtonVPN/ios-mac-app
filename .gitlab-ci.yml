@@ -131,7 +131,7 @@ ios_unit_tests:
   script:
     - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/ios/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
     - fastlane ios_app_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
@@ -147,7 +147,7 @@ macos_unit_tests:
   stage: apps_unit_tests
   script:
     - cd apps/macos/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
-    - cd apps/macos/ProtonVPNUITests/ && Scripts/prepare_credentials.sh && cd ../../../
+    - cd apps/macos/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
     - base64 -D -o Certificates.p12 <<< $DEVELOPER_CERTIFICATE
     - mkdir -pv ~/Library/MobileDevice/Provisioning\ Profiles/
     - base64 -D -o ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile <<< $DEVELOPMENT_PROFILE

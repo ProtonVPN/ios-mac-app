@@ -1,0 +1,51 @@
+//
+//  Created on 2022-01-11.
+//
+//  Copyright (c) 2022 Proton AG
+//
+//  ProtonVPN is free software: you can redistribute it and/or modify
+//  it under the terms of the GNU General Public License as published by
+//  the Free Software Foundation, either version 3 of the License, or
+//  (at your option) any later version.
+//
+//  ProtonVPN is distributed in the hope that it will be useful,
+//  but WITHOUT ANY WARRANTY; without even the implied warranty of
+//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//  GNU General Public License for more details.
+//
+//  You should have received a copy of the GNU General Public License
+//  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+
+import Foundation
+import XCTest
+
+fileprivate let qcButton = "Quick Connect"
+fileprivate let preferencesTitle = "Preferences"
+fileprivate let menuItemReportAnIssue = "Report an Issue..."
+fileprivate let menuItemProfiles = "Overview"
+
+class MainRobot {
+
+    func openProfiles() -> ManageProfilesRobot {
+        XCTAssert(app.buttons[qcButton].waitForExistence(timeout: 5))
+        app.menuBars.menuItems[menuItemProfiles].click()
+        return ManageProfilesRobot()
+    }
+    
+    func openAppSettings() -> SettingsRobot {
+        app.menuBars.menuItems[preferencesTitle].click()
+        return SettingsRobot()
+    }
+    
+    let verify = Verify()
+    
+    class Verify {
+        
+        @discardableResult
+        func checkSettingsModalIsClosed() -> SettingsRobot {
+            XCTAssertFalse(app.buttons[preferencesTitle].exists)
+            XCTAssertTrue(app.buttons[qcButton].exists)
+            return SettingsRobot()
+        }
+    }
+}
