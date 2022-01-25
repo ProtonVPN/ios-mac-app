@@ -2,8 +2,7 @@ disabled_rules: # rule identifiers to exclude from running
   - file_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#file-line-length
   - line_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#line-length
   - type_body_length # https://github.com/realm/SwiftLint/blob/master/Rules.md#type-body-length
-  - identifier_name # https://github.com/realm/SwiftLint/blob/master/Rules.md#identifier-name
-  - trailing_whitespace # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-whitespace
+  - identifier_name # https://github.com/realm/SwiftLint/blob/master/Rules.md#identifier-name  
   - notification_center_detachment # https://github.com/realm/SwiftLint/blob/master/Rules.md#notification-center-detachment
   - trailing_comma # https://github.com/realm/SwiftLint/blob/master/Rules.md#trailing-comma
   - multiline_arguments # https://github.com/realm/SwiftLint/blob/master/Rules.md#multiline-arguments
