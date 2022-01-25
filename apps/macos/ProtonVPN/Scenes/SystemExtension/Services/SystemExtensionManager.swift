@@ -130,7 +130,8 @@ class SystemExtensionManagerImplementation: NSObject, SystemExtensionManager {
 extension SystemExtensionManagerImplementation: OSSystemExtensionRequestDelegate {
     
     func request(_ request: OSSystemExtensionRequest, actionForReplacingExtension existing: OSSystemExtensionProperties, withExtension ext: OSSystemExtensionProperties) -> OSSystemExtensionRequest.ReplacementAction {
-        
+
+        log.debug("Telling sysextd to replace extension...", category: .sysex)
         return .replace // Have to always replace extension to make system ask for permission to install sysex even after failed first attempt.
         
         // Return cancel on equal version, when/if Apple responds to bug report FB8978342.

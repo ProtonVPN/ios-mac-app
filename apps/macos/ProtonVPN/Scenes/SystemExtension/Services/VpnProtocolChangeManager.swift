@@ -75,25 +75,22 @@ final class VpnProtocolChangeManagerImplementation: VpnProtocolChangeManager {
             }
         }
 
-        switch vpnProtocol {
-        case .ike:
+        guard vpnProtocol.requiresSystemExtension else {
             propertiesManager.vpnProtocol = vpnProtocol
             reconnectIfNeeded()
-        
-        case .openVpn, .wireGuard:
-            systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
-                switch result {
-                case .success:
-                    self.propertiesManager.vpnProtocol = vpnProtocol
-                    reconnectIfNeeded()
-                    
-                case .failure:
-                    log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed", category: .connectionConnect)
-                }
-            }
-            
+            return
         }
-        
+
+        systemExtensionsStateCheck.startCheckAndInstallIfNeeded { result in
+            switch result {
+            case .success:
+                self.propertiesManager.vpnProtocol = vpnProtocol
+                reconnectIfNeeded()
+
+            case .failure:
+                log.error("Protocol (\(vpnProtocol)) was not set because sysex check/installation failed", category: .connectionConnect)
+            }
+        }
     }
         
 }

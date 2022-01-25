@@ -116,6 +116,14 @@ class NavigationService {
             
             if appHasPresented {
                 showSidebar()
+
+                do {
+                    let vpnCredentials = try vpnKeychain.fetch()
+                    // show upsell advert 15% of launches if no other models have been shown and account is free tier
+                    if vpnCredentials.accountPlan == .free && !upsellPresented && arc4random() % 100 < 15 {
+                        showUpsell()
+                    }
+                } catch {} // ignore vpn fetch error
             }
         } else {
             self.vpnGateway = nil
@@ -283,5 +291,11 @@ extension NavigationService {
         upsellPresented = true
 
         Storage.userDefaults().set(true, forKey: AppConstants.UserDefaults.welcomed)
+    }
+
+    private func showUpsell() {
+        let upsellViewController = UpsellViewController()
+        windowService.presentKeyModal(viewController: upsellViewController)
+        upsellPresented = true
     }
 }
