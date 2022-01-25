@@ -31,6 +31,10 @@ struct InputField: Codable, Identifiable {
         case textSingleLine = "TextSingleLine"
         case textMultiLine = "TextMultiLine"
         case `switch` = "switch" // Atm used only internally, not present in JSONs from API
+        
+        public init(from decoder: Decoder) throws {
+            self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .textSingleLine
+        }
     }
     
     // Define keys explicitly to silence the warning on id
