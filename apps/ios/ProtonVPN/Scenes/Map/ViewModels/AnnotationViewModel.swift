@@ -114,6 +114,6 @@ extension AnnotationViewModel {
     }
     
     var flag: UIImage? {
-        return UIImage(named: countryCode.lowercased() + "-round") ?? UIImage(named: countryCode.lowercased() + "-plain")
+        return UIImage.flag(countryCode: countryCode)
     }
 }

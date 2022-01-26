@@ -67,10 +67,8 @@ final class OnboardingModuleService {
                 return
             }
 
-            let flag = UIImage(named: connection.server.countryCode.lowercased() + "-round") ?? UIImage(named: connection.server.countryCode.lowercased() + "-plain")
-
             log.debug("Onboarding VPN connection successful", category: .app)
-            completion?(Country(name: connection.server.country, flag: flag ?? UIImage()))
+            completion?(Country(name: connection.server.country, flag: UIImage.flag(countryCode: connection.server.countryCode)))
             completion = nil
         case .disconnected:
             log.error("Onboarding VPN connection failed", category: .app)

@@ -470,6 +470,8 @@
 		F3607BEE25D582BF0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F3607C0A25D67B1F0076AE32 /* ConfirmationToggleSwitch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */; };
 		F36AC257264BF41B008CFCD3 /* SnapshotHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */; };
+		F36AF0A127A1680C009DD36C /* UIImage+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */; };
+		F36AF0A227A1681D009DD36C /* UIImage+Flag.swift in Sources */ = {isa = PBXBuildFile; fileRef = F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */; };
 		F3747BFB26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
 		F3747C0226D4E1A900EF2F00 /* URLConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 422395812446E9E00089002F /* URLConstants.swift */; };
 		F3747C0F26D4F25700EF2F00 /* EnvironmentsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */; };
@@ -994,6 +996,7 @@
 		F31E911F2758F5F900140B2E /* WGLogger.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WGLogger.swift; sourceTree = "<group>"; };
 		F3607BED25D582BF0076AE32 /* ConfirmationToggleSwitch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationToggleSwitch.swift; sourceTree = "<group>"; };
 		F36AC256264BF41B008CFCD3 /* SnapshotHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SnapshotHelper.swift; path = ../../../fastlane/SnapshotHelper.swift; sourceTree = "<group>"; };
+		F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = "UIImage+Flag.swift"; path = "../../../ios/ProtonVPN/Extensions/UIImage+Flag.swift"; sourceTree = "<group>"; };
 		F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSNetworkingDelegate.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSNetworkingDelegate.swift; sourceTree = "<group>"; };
 		F3747C0E26D4F25700EF2F00 /* EnvironmentsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = EnvironmentsViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/ViewControllers/EnvironmentsViewController.swift; sourceTree = "<group>"; };
 		F377835F26E644BC00392958 /* SettingsTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTests.swift; sourceTree = "<group>"; };
@@ -1338,6 +1341,7 @@
 				E109118D2295A111001F6A0B /* UIViewController+Extension.swift */,
 				D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */,
 				D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */,
+				F36AF0A027A1680C009DD36C /* UIImage+Flag.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -3201,6 +3205,7 @@
 				E178078121AB4C6F00C2B506 /* GenericTableViewDataSource.swift in Sources */,
 				793ECF462149045400C186A7 /* AppVersionView.swift in Sources */,
 				79848BB020D2011500EF6F9F /* CountryAnnotationViewModel.swift in Sources */,
+				F36AF0A127A1680C009DD36C /* UIImage+Flag.swift in Sources */,
 				D5ADA9C9228AE04A004B0891 /* UIAlertService.swift in Sources */,
 				791C54F2214A75DB00C6F337 /* ConnectionBarViewController.swift in Sources */,
 				E119AF732170B8E800255F7E /* CountryAnnotation.swift in Sources */,
@@ -3358,6 +3363,7 @@
 				E197BD4422C0DFD6004E0FE7 /* PlanServiceMock.swift in Sources */,
 				42066FC826304914001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
+				F36AF0A227A1681D009DD36C /* UIImage+Flag.swift in Sources */,
 				D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */,
 				F316A07626DFC57D00669386 /* PlanService.swift in Sources */,
 				D5136C78228592E80002C095 /* ButtonTableViewCell.swift in Sources */,
