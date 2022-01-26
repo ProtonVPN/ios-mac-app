@@ -27,12 +27,12 @@ public func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
 private struct JSONKey: CodingKey {
     var stringValue: String
     var intValue: Int?
-    
+
     init?(stringValue: String) {
         self.stringValue = stringValue
         self.intValue = nil
     }
-    
+
     init?(intValue: Int) {
         self.stringValue = "\(intValue)"
         self.intValue = intValue

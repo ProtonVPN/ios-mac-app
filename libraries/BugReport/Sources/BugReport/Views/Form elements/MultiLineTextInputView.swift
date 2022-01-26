@@ -17,46 +17,56 @@
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
 import SwiftUI
-import UIKit
 
 /// Multiline text input styled for usage in bug report form.
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct MultiLineTextInputView: View {
+
     var field: InputField
     @Binding var value: String
     @Environment(\.colors) var colors: Colors
-    
+
+    #if os(iOS)
+    var titleFontSize = 13.0
+    var userFontSize = 17.0
+    #else
+    var titleFontSize = 14.0
+    var userFontSize = 14.0
+    #endif
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(field.label)
-                .font(.system(size: 13))
+                .font(.system(size: titleFontSize))
                 .padding(.bottom, 8)
-            
+
             ZStack(alignment: .topLeading) {
                 if value.isEmpty {
                     Text(field.placeholder ?? "")
-                        .font(.system(size: 17))
+                        .font(.system(size: userFontSize))
                         .foregroundColor(colors.textSecondary)
                 }
-                TextView(text: $value, fontSize: 17)
+                TextView(text: $value, fontSize: userFontSize)
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
             .background(colors.backgroundSecondary)
             .cornerRadius(8)
-            
         }
         .padding(.horizontal)
     }
 }
 
+#if os(iOS)
+import UIKit
+
 @available(iOS 14.0, *)
 struct TextView: UIViewRepresentable {
-    
+
     @Binding var text: String
-    
+
     var fontSize: CGFloat
-    
+
     func makeUIView(context: Context) -> UITextView {
         let textView = UITextView()
         textView.backgroundColor = .clear
@@ -66,34 +76,102 @@ struct TextView: UIViewRepresentable {
         textView.delegate = context.coordinator
         return textView
     }
-    
+
     func updateUIView(_ textView: UITextView, context: Context) {
         textView.text = text
     }
-    
+
     func makeCoordinator() -> Coordinator {
         Coordinator($text)
     }
-    
+
     class Coordinator: NSObject, UITextViewDelegate {
         var text: Binding<String>
-        
+
         init(_ text: Binding<String>) {
             self.text = text
         }
-        
+
         func textViewDidChange(_ textView: UITextView) {
             self.text.wrappedValue = textView.text
         }
     }
 }
 
+#elseif os(macOS)
+import AppKit
+
+@available(macOS 11, *)
+struct TextView: NSViewRepresentable {
+
+    @Binding var text: String
+
+    var fontSize: CGFloat
+    @Environment(\.colors) var colors: Colors
+
+    func makeNSView(context: Context) -> NSScrollView {
+        let scrollView = NSTextView.scrollableTextView()
+        guard let textView = scrollView.documentView as? NSTextView else {
+            return scrollView
+        }
+
+        textView.backgroundColor = .clear
+        textView.drawsBackground = false
+        textView.isEditable = true
+        textView.isRichText = false
+        textView.font = font
+        textView.textColor = textColor
+        textView.textContainerInset = .zero
+        textView.delegate = context.coordinator
+
+        return scrollView
+    }
+
+    func updateNSView(_ containerView: NSScrollView, context: Context) {
+        guard let textView = containerView.documentView as? NSTextView else {
+            return
+        }
+        let length = text.count
+        let value = NSMutableAttributedString(string: text)
+        value.addAttribute(NSAttributedString.Key.font, value: font, range: NSRange(location: 0, length: length))
+        value.addAttribute(NSAttributedString.Key.foregroundColor, value: textColor, range: NSRange(location: 0, length: length))
+
+        textView.textStorage?.setAttributedString(value)
+    }
+
+    private var textColor: NSColor {
+        return NSColor(colors.textPrimary)
+    }
+
+    private var font: NSFont {
+        return NSFont.systemFont(ofSize: fontSize)
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator($text)
+    }
+
+    class Coordinator: NSObject, NSTextViewDelegate {
+        var text: Binding<String>
+
+        init(_ text: Binding<String>) {
+            self.text = text
+        }
+
+        func textDidChange(_ notification: Notification) {
+            guard let textView = notification.object as? NSTextView else { return }
+            self.text.wrappedValue = textView.string
+        }
+    }
+}
+#endif
+
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct MultiLineTextInputView_Previews: PreviewProvider {
     @State private static var text: String = ""
-    
+
     static var previews: some View {
         MultiLineTextInputView(
             field: InputField(

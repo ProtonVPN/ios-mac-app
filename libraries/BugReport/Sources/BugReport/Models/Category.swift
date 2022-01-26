@@ -20,12 +20,12 @@ import Foundation
 
 struct Category: Codable, Identifiable {
     public let id = UUID()
-    
+
     let label: String
     let submitLabel: String
     let suggestions: [Suggestion]?
     let inputFields: [InputField]
-    
+
     // Define keys explicitly to silence the warning on id
     enum CodingKeys: String, CodingKey {
         case label

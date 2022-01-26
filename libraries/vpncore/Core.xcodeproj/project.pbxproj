@@ -409,7 +409,7 @@
 		E939EEEC27955317006E4305 /* BugReportConfig.json in Resources */ = {isa = PBXBuildFile; fileRef = E939EEEA27955317006E4305 /* BugReportConfig.json */; };
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
-		E939EEF3279561EE006E4305 /* BuildFile in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */; };
+		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
 		E939EEF4279561F9006E4305 /* BugReport in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E939EEF1279561B1006E4305 /* BugReport */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
@@ -420,13 +420,13 @@
 		E976FB292791B111001EC8F3 /* DynamicBugReportConfigRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB272791B111001EC8F3 /* DynamicBugReportConfigRequest.swift */; };
 		E976FB2B2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */; };
 		E976FB2C2791C929001EC8F3 /* DynamicBugReportManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E976FB2A2791C929001EC8F3 /* DynamicBugReportManager.swift */; };
-		E977A7832681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */; };
 		E977A78C268206B30013495A /* AuthCredentials+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */; };
 		E977A78E268206B30013495A /* AuthCredentials+vpncore.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A78B268206B30013495A /* AuthCredentials+vpncore.swift */; };
 		E977A797268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
 		E977A799268215A70013495A /* KeychainConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A796268215A70013495A /* KeychainConstants.swift */; };
 		E992F27E26675C3200169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
 		E992F27F26675C3300169C6B /* VpnKeychainMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = E13DEEA922BBBD16001844F8 /* VpnKeychainMock.swift */; };
+		E99F266027A1A7A5003C4586 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E986F007279843F9003A745D /* BugReport */; };
 		E9AF94BB26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94BD26B7F1A600AA1A5F /* VpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94BA26B7F1A500AA1A5F /* VpnCredentialsConfigurator.swift */; };
 		E9AF94C126B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9AF94C026B7F4F100AA1A5F /* VpnCredentialsConfiguratorFactory.swift */; };
@@ -925,7 +925,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E939EEF3279561EE006E4305 /* BuildFile in Frameworks */,
+				E939EEF3279561EE006E4305 /* BugReport in Frameworks */,
 				179F144D89241E7160EFD846 /* Pods_Core_vpncore_ios.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -944,6 +944,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C7503BAFB9FD939891700C7F /* Pods_Core_vpncore_macos.framework in Frameworks */,
+				E99F266027A1A7A5003C4586 /* BugReport in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1205,6 +1206,7 @@
 				E1B5F5D921B68ABD00B558B0 /* Products */,
 				1424DAA14443FC92F0DE44D8 /* Frameworks */,
 				18B1DBD420173AFAB6BB4F4F /* Pods */,
+				E99F266127A1A7A5003C4586 /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1310,6 +1312,14 @@
 				E939EEF1279561B1006E4305 /* BugReport */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		E99F266127A1A7A5003C4586 /* Recovered References */ = {
+			isa = PBXGroup;
+			children = (
+				E977A7822681F9C70013495A /* AuthCredentials+Alamofire.swift */,
+			);
+			name = "Recovered References";
 			sourceTree = "<group>";
 		};
 		E9AF94BF26B7F4D800AA1A5F /* VpnCredentials */ = {
@@ -1938,7 +1948,7 @@
 			);
 			name = "vpncore-ios";
 			packageProductDependencies = (
-				E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */,
+				E939EEF2279561EE006E4305 /* BugReport */,
 			);
 			productName = "vpncore-ios";
 			productReference = E1B5F5D821B68ABD00B558B0 /* vpncore.framework */;
@@ -1981,6 +1991,9 @@
 			dependencies = (
 			);
 			name = "vpncore-macos";
+			packageProductDependencies = (
+				E986F007279843F9003A745D /* BugReport */,
+			);
 			productName = "vpncore-macos";
 			productReference = E1B5F60C21B6960100B558B0 /* vpncore.framework */;
 			productType = "com.apple.product-type.framework";
@@ -2430,7 +2443,6 @@
 				E1B5F67921B824A500B558B0 /* Arithmetic.swift in Sources */,
 				F349B1F42680B23E002C7A16 /* VpnKeys+Generation.swift in Sources */,
 				E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */,
-				E977A7832681F9C70013495A /* AuthCredentials+Alamofire.swift in Sources */,
 				E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */,
 				E151127122F0864900C9A41F /* VpnProtocolFactory.swift in Sources */,
 				E1616BE921C93ACA00F42D79 /* Profile.swift in Sources */,
@@ -3631,7 +3643,11 @@
 /* End XCConfigurationList section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		E939EEF2279561EE006E4305 /* SwiftPackageProductDependency */ = {
+		E939EEF2279561EE006E4305 /* BugReport */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BugReport;
+		};
+		E986F007279843F9003A745D /* BugReport */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = BugReport;
 		};

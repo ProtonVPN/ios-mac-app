@@ -38,9 +38,11 @@ class ViewController: UIViewController {
                     }
                 }
             }, finishedCallback: {
+                print("finishedCallback")
                 self.dismiss(animated: true, completion: nil)
                 
             }, troubleshootingCallback: {
+                print("troubleshootingCallback")
                 self.dismiss(animated: true, completion: nil)
             })
     }

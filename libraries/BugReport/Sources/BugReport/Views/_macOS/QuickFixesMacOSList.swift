@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-22.
+//  Created on 2022-01-20.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,31 +18,28 @@
 
 import SwiftUI
 
-/// Second step of Report Bug flow.
-/// Suggests quick fixes to user and allows to procede to contact form.
-@available(iOS 14.0, *)
-struct QuickFixesList: View {
-    
+@available(iOS 14.0, macOS 11, *)
+struct QuickFixesMacOSList: View {
+
     let category: Category
-    
+    let finished: () -> Void
+
     let assetsBundle = Current.assetsBundle
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-    
+
     var body: some View {
-        VStack(alignment: .leading) {
-            StepProgress(step: 2, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
-                .padding(.bottom)
-            
-            VStack(alignment: .leading, spacing: 8) {
+        VStack(alignment: .center) {
+
+            VStack(alignment: .center, spacing: 8) {
                 Text(LocalizedString.br2Title)
                     .font(.title2)
                     .fontWeight(.bold)
                 Text(LocalizedString.br2Subtitle)
                     .font(.subheadline)
-                    .foregroundColor(colors.textSecondary)
-            }.padding(.horizontal)
-            
+            }
+            .padding(.horizontal)
+
             VStack {
                 if let suggestions = category.suggestions {
                     ForEach(suggestions) { suggestion in
@@ -53,12 +50,13 @@ struct QuickFixesList: View {
                                         Image(Asset.lightbulb.name, bundle: assetsBundle)
                                             .foregroundColor(colors.qfIcon)
                                         Text(suggestion.text)
-                                            .multilineTextAlignment(.leading)
                                             .lineSpacing(7)
+                                            .multilineTextAlignment(.leading)
                                             .frame(minHeight: 24, alignment: .leading)
                                         Spacer()
                                         Image(Asset.quickfixLink.name, bundle: assetsBundle)
                                     }
+                                    .frame(width: 310) // Magic number that that prevents button to be too wide. Should be changed in case we change the width of ReportBug window.
                                 }
                                 .padding(.horizontal)
                             } else {
@@ -69,68 +67,50 @@ struct QuickFixesList: View {
                                         .lineSpacing(7)
                                         .multilineTextAlignment(.leading)
                                         .frame(minHeight: 24, alignment: .leading)
+                                    Spacer()
                                 }
                                 .padding(.horizontal)
                             }
-                            Divider().background(colors.separator)
+                            Divider().hidden() // Makes view fill whole width
                         }
                     }
                 }
             }
-            .padding(.top, 36)
-            .padding(.bottom, 24)
-            
+            .padding(.top, 32)
+            .padding(.bottom, 16)
+
             Text(LocalizedString.br2Footer)
                 .foregroundColor(colors.textSecondary)
                 .font(.footnote)
                 .frame(maxWidth: .infinity, alignment: .center)
-            
-            Spacer()
-            
-            VStack {
-                Button(action: {}, label: {
-                    NavigationLink(destination: FormView(viewModel: FormViewModel(fields: category.inputFields)).navigationTitle(Text(LocalizedString.brWindowTitle))) {
-                        Text(LocalizedString.br2ButtonNext)
-                            .frame(maxWidth: .infinity, minHeight: 48, alignment: .center)
-                            .padding(.horizontal, 16)
-                            .background(colors.brand)
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
-                    }
-                })
-                                
-                Button(action: { self.presentationMode.wrappedValue.dismiss() }, label: { Text(LocalizedString.br2ButtonCancel) })
-                    .buttonStyle(SecondaryButtonStyle())
-            }
+                .padding(.bottom, 32)
+
+            Button(action: finished, label: {
+                Text(LocalizedString.br2ButtonNext)
+            })
+            .buttonStyle(PrimaryButtonStyle())
             .padding(.horizontal)
-            .padding(.bottom, 32)
         }
         .foregroundColor(colors.textPrimary)
-        // Custom Back button
-        .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(action: {
-            self.presentationMode.wrappedValue.dismiss()
-        }, label: {
-            Image(systemName: "arrow.left").foregroundColor(colors.textPrimary)
-        }))
-        
+        .background(colors.background)
     }
 }
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
-struct QuickFixesList_Previews: PreviewProvider {
+@available(iOS 14.0, macOS 11, *)
+struct QuickFixesMacOSList_Previews: PreviewProvider {
     static var previews: some View {
         let category = Category(label: "Browsing speed",
                                 submitLabel: "Submit",
                                 suggestions: [
-                                    Suggestion(text: "Secure Core slows down your connection. Use it only when necessary.", link: nil),
-                                    Suggestion(text: "Select a server closer to your location.", link: "https://protonvpn.com/faq/choosing_best_server"),
+                                    Suggestion(text: "Secure Core slows down your connection. Use it only when necessary. Select a server closer to your location", link: nil),
+                                    Suggestion(text: "Select a server closer to your location. Select a server closer to your location", link: "https://protonvpn.com/faq/choosing_best_server"),
                                 ],
                                 inputFields: [])
-        
-        return QuickFixesList(category: category)
+
+        return QuickFixesMacOSList(category: category, finished: { })
+            .frame(width: 400.0)
             .preferredColorScheme(.dark)
     }
 }

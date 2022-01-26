@@ -25,16 +25,16 @@ struct FinalIcon: View {
         case success
         case failure
     }
-    
+
     let state: State
-    
+
     var body: some View {
         ZStack(alignment: .center) {
             Image(Asset.icClipboard.name, bundle: .module)
             icon.frame(width: 138, height: 160, alignment: .bottomLeading)
         }
     }
-    
+
     var icon: Image {
         switch state {
         case .success:

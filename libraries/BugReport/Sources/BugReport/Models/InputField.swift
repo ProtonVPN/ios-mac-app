@@ -20,23 +20,23 @@ import Foundation
 
 struct InputField: Codable, Identifiable {
     public let id = UUID()
-    
+
     let label: String
     let submitLabel: String
     let type: `Type`
     let isMandatory: Bool?
     let placeholder: String?
-    
+
     enum `Type`: String, Codable {
         case textSingleLine = "TextSingleLine"
         case textMultiLine = "TextMultiLine"
         case `switch` = "switch" // Atm used only internally, not present in JSONs from API
-        
+
         public init(from decoder: Decoder) throws {
             self = try Self(rawValue: decoder.singleValueContainer().decode(RawValue.self)) ?? .textSingleLine
         }
     }
-    
+
     // Define keys explicitly to silence the warning on id
     enum CodingKeys: String, CodingKey {
         case label

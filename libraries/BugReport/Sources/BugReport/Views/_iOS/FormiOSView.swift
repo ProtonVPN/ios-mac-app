@@ -20,48 +20,50 @@ import SwiftUI
 
 /// Thirst step of Report Bug flow.
 /// Asks user some questions to collect all the needed debug information.
-@available(iOS 14.0, *)
-struct FormView: View {
-            
+@available(iOS 14.0, macOS 11, *)
+struct FormiOSView: View {
+
     @StateObject var viewModel: FormViewModel
-        
+
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
-          
+
     var body: some View {
         VStack {
             StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                 .padding(.bottom)
-            
+
             ScrollView {
                 VStack(spacing: 20) {
-                    
+
                     ForEach($viewModel.fields) { $field in
                         switch field.inputField.type {
                         case .textSingleLine:
                             SingleLineTextInputView(field: field.inputField, value: $field.stringValue)
                         case .textMultiLine:
+                            #if os(iOS)
                             MultiLineTextInputView(field: field.inputField, value: $field.stringValue)
                                 .frame(height: 155, alignment: .top)
+                            #endif
                         case .switch:
                             SwitchInputView(field: field.inputField, value: $field.boolValue)
                         }
                     }
-                    
+
                     if viewModel.showLogsInfo {
                         HStack(alignment: .top, spacing: 0) {
                             Image(Asset.icInfoCircle.name, bundle: Bundle.module)
                                 .padding(0)
-                            
+
                             Text(LocalizedString.br3LogsDisabled)
                                 .font(.footnote)
                                 .foregroundColor(colors.textSecondary)
                                 .padding(.leading, 8)
-                            
+
                         }
                         .padding(.horizontal)
                     }
-                                        
+
                     Button(action: {
                         viewModel.sendTapped()
                     }, label: { Text(viewModel.isSending ? LocalizedString.br3ButtonSending : LocalizedString.br3ButtonSend) })
@@ -70,7 +72,7 @@ struct FormView: View {
                         .padding(.horizontal)
                 }
             }
-            
+
             NavigationLink(
                 destination: ResultView(
                     error: viewModel.sendResultError,
@@ -80,21 +82,23 @@ struct FormView: View {
                 ),
                 isActive: $viewModel.shouldShowResultView) { EmptyView() }
         }
+        #if os(iOS)
         // Custom Back button
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(action: {
             self.presentationMode.wrappedValue.dismiss()
         }, label: {
-            Image(systemName: "arrow.left")
+            Image(systemName: "chevron.left")
                 .foregroundColor(colors.textPrimary)
         }))
+        #endif
         .environment(\.isLoading, viewModel.isSending)
     }
 }
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct FormView_Previews: PreviewProvider {
     static var previews: some View {
         let fields = [
@@ -103,21 +107,21 @@ struct FormView_Previews: PreviewProvider {
                        type: .textSingleLine,
                        isMandatory: true,
                        placeholder: "Home, work, Wifi, cellular, etc."),
-            
+
             InputField(label: "What are you trying to do",
                        submitLabel: "What do you do",
                        type: .textMultiLine,
                        isMandatory: true,
                        placeholder: "Loerp ipsum"),
-            
+
             InputField(label: "What is the speed you are getting?",
                        submitLabel: "Speed",
                        type: .textMultiLine,
                        isMandatory: true,
                        placeholder: "Loerp ipsum speed"),
         ]
-        
-        return FormView(viewModel: FormViewModel(fields: fields))
+
+        return FormiOSView(viewModel: FormViewModel(fields: fields))
             .preferredColorScheme(.dark)
     }
 }

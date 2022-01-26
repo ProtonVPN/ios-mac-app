@@ -86,7 +86,7 @@ public class DynamicBugReportManager {
     }
     
     private func getDefaultConfig() -> BugReportModel {
-        let bundle = Bundle.main
+        let bundle = Bundle.vpnCore
         guard let configFile = bundle.url(forResource: "BugReportConfig", withExtension: "json") else {
             log.error("BugReportConfig.json file not found. Returning empty config.")
             return BugReportModel()
@@ -106,15 +106,15 @@ public class DynamicBugReportManager {
         #if os(iOS)
         let os = "iOS"
         let osVersion = UIDevice.current.systemVersion
-        let clientVersion = Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? ""
         #elseif os(macOS)
-        
+        let os = "MacOS"
+        let osVersion = ProcessInfo.processInfo.operatingSystemVersionString
         #endif
         
         var report = ReportBug(os: os,
                                osVersion: osVersion,
                                client: "App",
-                               clientVersion: clientVersion,
+                               clientVersion: Bundle.main.infoDictionary?["CFBundleShortVersionString"] as? String ?? "",
                                clientType: 2,
                                title: "Report from \(os) app",
                                description: data.text,
@@ -142,7 +142,7 @@ extension DynamicBugReportManager: BugReportDelegate {
             case .success:
                 self.prefilledEmail = report.email
                 result(.success(()))
-                
+
             case .failure(let error):
                 result(.failure(error))
             }

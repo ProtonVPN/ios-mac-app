@@ -19,16 +19,20 @@
 import Foundation
 
 @available(iOS 14.0, *)
-class FormViewModel: ObservableObject {
-    
+final class FormViewModel: ObservableObject {
+
     @Published var fields: [FormInputField]
     @Published var isSending: Bool = false
-    @Published var sendResult: BugReportDelegate.SendReportResult?
-    
+    @Published var sendResult: BugReportDelegate.SendReportResult? {
+        didSet {
+            sendResultChanged?()
+        }
+    }
+
     var showLogsInfo: Bool {
         return fields.last?.boolValue == false
     }
-    
+
     // Lint is disbled here, because swiftui doesn't like get-only properties
     var shouldShowResultView: Bool { get { sendResult != nil } set {} } // swiftlint:disable:this unused_setter_value
     var sendResultError: Error? {
@@ -37,10 +41,10 @@ class FormViewModel: ObservableObject {
         }
         return nil
     }
-    
+
     var canBeSent: Bool {
         var result = true
-        
+
         // Check if any of mandatory fields are not filled in
         for field in fields {
             // IsMandatory - optional boolean, if the field is absent, the input field is mandatory
@@ -57,40 +61,42 @@ class FormViewModel: ObservableObject {
                 }
             }
         }
-        
+
         return result
     }
-    
+
+    var sendResultChanged: (() -> Void)?
+
     // MARK: - User actions
-    
+
     func sendTapped() {
         guard canBeSent && !isSending else { return }
         isSending = true
         self.sendResult = nil
-        
+
         delegate?.send(form: makeResult(), result: { requestResult in
             self.isSending = false
             self.sendResult = requestResult
         })
     }
-    
+
     func troubleshootingTapped() {
         delegate?.troubleshootingRequired()
     }
-    
+
     func finished() {
         delegate?.finished()
     }
-    
+
     // MARK: - Other
-        
+
     private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
     private let emailFieldName = "_email"
     private let logsFieldName = "_logs"
-    
+
     init(fields: [InputField]) {
         var formFields: [FormInputField] = []
-        
+
         // Email field is always first
         formFields.append(FormInputField(
             inputField: InputField(
@@ -102,9 +108,9 @@ class FormViewModel: ObservableObject {
             ),
             stringValue: delegate?.prefilledEmail ?? ""
         ))
-        
+
         formFields.append(contentsOf: fields.map { FormInputField(inputField: $0) })
-        
+
         // Logs field is always last
         formFields.append(FormInputField(
             inputField: InputField(
@@ -115,15 +121,15 @@ class FormViewModel: ObservableObject {
                 placeholder: LocalizedString.br3LogsDescription),
             boolValue: true)
         )
-        
+
         self.fields = formFields
     }
-    
+
     private func makeResult() -> BugReportResult {
         var email = ""
         var text = ""
         var logs = false
-        
+
         for field in fields {
             // Custom pre-set fields
             if field.inputField.submitLabel == emailFieldName {
@@ -134,7 +140,7 @@ class FormViewModel: ObservableObject {
                 logs = field.boolValue
                 continue
             }
-            
+
             // Fields from the outside
             switch field.inputField.type {
             case .textSingleLine, .textMultiLine:
@@ -145,7 +151,7 @@ class FormViewModel: ObservableObject {
                 text += "\(field.boolValue ? "YES" : "NO")\n---\n"
             }
         }
-        
+
         return BugReportResult(email: email, text: text, logs: logs)
     }
 }

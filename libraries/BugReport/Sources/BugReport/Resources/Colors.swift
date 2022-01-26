@@ -21,22 +21,23 @@ import SwiftUI
 
 @available(iOS 14.0, *)
 public struct Colors {
-    
+
     public init() { }
-        
+
     public var brand: Color = Color("brand", bundle: Bundle.module)
     public var brandLight20: Color = Color("brand-lighten20", bundle: Bundle.module)
     public var brandLight40: Color = Color("brand-lighten40", bundle: Bundle.module)
     public var brandDark40: Color = Color("brand-darken40", bundle: Bundle.module)
-    
+
     public var textPrimary: Color = Color.white
     public var textSecondary: Color = Color("text-weak", bundle: Bundle.module)
-    
+
+    public var background: Color = Color("background-norm", bundle: Bundle.module)
     public var backgroundSecondary: Color = Color("background-secondary", bundle: Bundle.module)
     public var separator: Color = Color("separator", bundle: Bundle.module)
-    
+
     public var qfIcon: Color = Color("notification-warning", bundle: Bundle.module)
-    
+
 }
 
 @available(iOS 14.0, *)
