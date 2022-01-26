@@ -7,8 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B2F106C227A16A86003113A3 /* OnboardingSampleAppBaseTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106C127A16A86003113A3 /* OnboardingSampleAppBaseTestCase.swift */; };
-		B2F106C427A16A86003113A3 /* OnboardingSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106C327A16A86003113A3 /* OnboardingSampleAppUITests.swift */; };
+		B2F106C227A16A86003113A3 /* OnboardingSampleAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106C127A16A86003113A3 /* OnboardingSampleAppUITests.swift */; };
 		B2F106D227A17483003113A3 /* OnboardingMainRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106D127A17483003113A3 /* OnboardingMainRobot.swift */; };
 		B2F106D427A18126003113A3 /* OnboardingSlidesRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106D327A18126003113A3 /* OnboardingSlidesRobot.swift */; };
 		B2F106D627A18471003113A3 /* OnboardingConnectionRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2F106D527A18471003113A3 /* OnboardingConnectionRobot.swift */; };
@@ -35,8 +34,7 @@
 
 /* Begin PBXFileReference section */
 		B2F106BF27A16A86003113A3 /* OnboardingSampleAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OnboardingSampleAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B2F106C127A16A86003113A3 /* OnboardingSampleAppBaseTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSampleAppBaseTestCase.swift; sourceTree = "<group>"; };
-		B2F106C327A16A86003113A3 /* OnboardingSampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSampleAppUITests.swift; sourceTree = "<group>"; };
+		B2F106C127A16A86003113A3 /* OnboardingSampleAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSampleAppUITests.swift; sourceTree = "<group>"; };
 		B2F106D127A17483003113A3 /* OnboardingMainRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingMainRobot.swift; sourceTree = "<group>"; };
 		B2F106D327A18126003113A3 /* OnboardingSlidesRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingSlidesRobot.swift; sourceTree = "<group>"; };
 		B2F106D527A18471003113A3 /* OnboardingConnectionRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingConnectionRobot.swift; sourceTree = "<group>"; };
@@ -75,8 +73,7 @@
 			isa = PBXGroup;
 			children = (
 				B2F106D927A19A61003113A3 /* Robots */,
-				B2F106C127A16A86003113A3 /* OnboardingSampleAppBaseTestCase.swift */,
-				B2F106C327A16A86003113A3 /* OnboardingSampleAppUITests.swift */,
+				B2F106C127A16A86003113A3 /* OnboardingSampleAppUITests.swift */,
 			);
 			path = OnboardingSampleAppUITests;
 			sourceTree = "<group>";
@@ -238,8 +235,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2F106D427A18126003113A3 /* OnboardingSlidesRobot.swift in Sources */,
-				B2F106C227A16A86003113A3 /* OnboardingSampleAppBaseTestCase.swift in Sources */,
-				B2F106C427A16A86003113A3 /* OnboardingSampleAppUITests.swift in Sources */,
+				B2F106C227A16A86003113A3 /* OnboardingSampleAppUITests.swift in Sources */,
 				B2F106D227A17483003113A3 /* OnboardingMainRobot.swift in Sources */,
 				B2F106D827A18B26003113A3 /* OnboardingPaymentsRobot.swift in Sources */,
 				B2F106D627A18471003113A3 /* OnboardingConnectionRobot.swift in Sources */,
