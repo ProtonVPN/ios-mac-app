@@ -1,5 +1,5 @@
 //
-//  Created on 05.01.2022.
+//  Created on 26.01.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -19,12 +19,8 @@
 import Foundation
 import UIKit
 
-public struct Country {
-    public let name: String
-    public let flag: UIImage?
-
-    public init(name: String, flag: UIImage?) {
-        self.name = name
-        self.flag = flag
+extension UIImage {
+    static func flag(countryCode: String) -> UIImage? {
+        return UIImage(named: countryCode.lowercased() + "-round") ?? UIImage(named: countryCode.lowercased() + "-plain")
     }
 }
