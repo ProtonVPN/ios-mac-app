@@ -21,9 +21,9 @@ import UIKit
 
 public struct Country {
     public let name: String
-    public let flag: UIImage
+    public let flag: UIImage?
 
-    public init(name: String, flag: UIImage) {
+    public init(name: String, flag: UIImage?) {
         self.name = name
         self.flag = flag
     }

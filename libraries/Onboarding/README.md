@@ -32,7 +32,7 @@ You can develop the Onboarding module as part of the project workspace or separa
 
 ### External tools
 
-There is no way to integrate any custom build steps to a Swift Package Manager package project type in Xcode, so external tools need to be run manually or as part fo the CI.
+There is no way to integrate any custom build steps to a Swift Package Manager package project type in Xcode, so external tools need to be run manually or as part of the CI.
 
 The CI is set to run a linting step with `SwiftLint`, to make sure your code will not fail the linting step execute `swiftlint --strict` from the module folder (`libraries/Onboarding`).
 
