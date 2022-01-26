@@ -23,7 +23,7 @@
 import AppKit
 import Foundation
 import vpncore
-import BugReportUI
+import BugReport
 
 // FUTURETODO: clean up objects that are possible to re-create if memory warning is received
 
@@ -83,6 +83,9 @@ final class DependencyContainer {
     
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
+    
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes cofig from time to time.
+    private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesProvider())
     
     #if TLS_PIN_DISABLE
     private lazy var trustKitHelper: TrustKitHelper? = nil
@@ -439,6 +442,7 @@ extension DependencyContainer: AppInfoFactory {
     }
 }
 
+// MARK: DoHVPNFactory
 extension DependencyContainer: DoHVPNFactory {
     func makeDoHVPN() -> DoHVPN {
         return doh
@@ -448,6 +452,13 @@ extension DependencyContainer: DoHVPNFactory {
 // MARK: BugReportCreatorFactory
 extension DependencyContainer: BugReportCreatorFactory {
     func makeBugReportCreator() -> BugReportCreator {
-        return macOSBugReportCreator()
+        return MacOSBugReportCreator()
+    }
+}
+
+// MARK: DynamicBugReportManagerFactory
+extension DependencyContainer: DynamicBugReportManagerFactory {
+    func makeDynamicBugReportManager() -> DynamicBugReportManager {
+        return dynamicBugReportManager
     }
 }

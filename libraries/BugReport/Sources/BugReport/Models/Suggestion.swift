@@ -20,10 +20,10 @@ import Foundation
 
 struct Suggestion: Codable, Identifiable {
     public let id = UUID()
-    
+
     let text: String
     let link: String?
-    
+
     // Define keys explicitly to silence the warning on id
     enum CodingKeys: String, CodingKey {
         case text

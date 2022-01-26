@@ -23,19 +23,19 @@ import SwiftUI
 struct StepProgress: View {
     var step: UInt
     var steps: UInt
-    
+
     let colorMain: Color
     let colorSecondary: Color
-    
+
     var barHeight: CGFloat = 2
     var font: Font = .system(size: 11)
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             ZStack {
                 Rectangle()
                     .fill(colorSecondary)
-                
+
                 GeometryReader { geo in
                     Rectangle()
                         .fill(colorMain)
@@ -43,19 +43,19 @@ struct StepProgress: View {
                 }
             }
             .frame(height: barHeight)
-            
+
             Text(LocalizedString.stepOf(Int(step), Int(steps)))
                 .font(font)
                 .foregroundColor(colorMain)
                 .padding(.horizontal)
-            
+
         }
     }
 }
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct StepProgress_Previews: PreviewProvider {
     static var previews: some View {
         StepProgress(step: 2, steps: 3, colorMain: .green, colorSecondary: .red)

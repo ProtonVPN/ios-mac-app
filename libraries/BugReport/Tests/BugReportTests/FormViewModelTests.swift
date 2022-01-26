@@ -40,7 +40,7 @@ final class FormViewModelTests: XCTestCase {
     func testEmailIsAddedToResult() {
         let expectation = XCTestExpectation(description: "Email field is present")
         
-        var delegate = MockBugReportDelegate(model: .mock)
+        let delegate = MockBugReportDelegate(model: .mock)
         delegate.sendCallback = { form, _ in
             if form.email == self.emailValue {
                 expectation.fulfill()
@@ -61,7 +61,7 @@ final class FormViewModelTests: XCTestCase {
         let expectationNotSent = XCTestExpectation(description: "Form data should not be send before user fills in all mandatory fields")
         expectationNotSent.isInverted = true
         
-        var delegate = MockBugReportDelegate(model: .mock)
+        let delegate = MockBugReportDelegate(model: .mock)
         delegate.sendCallback = { _, _ in
             expectationNotSent.fulfill()
         }
@@ -89,7 +89,7 @@ final class FormViewModelTests: XCTestCase {
     }
     
     func testErrorIsShownOnRequestError() {
-        var delegate = MockBugReportDelegate(model: .mock)
+        let delegate = MockBugReportDelegate(model: .mock)
         delegate.sendCallback = { _, callback in
             callback(.failure(NSError(domain: "test-error", code: 789, userInfo: nil)))
         }
@@ -108,7 +108,7 @@ final class FormViewModelTests: XCTestCase {
         let expectationTroubleshooting = XCTestExpectation(description: "Troubleshooting is open")
         let expectationFinish = XCTestExpectation(description: "Process is finished")
         
-        var delegate = MockBugReportDelegate(model: .mock)
+        let delegate = MockBugReportDelegate(model: .mock)
         delegate.sendCallback = { _, callback in
             expectationSend.fulfill()
         }
@@ -130,7 +130,7 @@ final class FormViewModelTests: XCTestCase {
     }
         
     func testShowsResultViewAfterSendingData() {
-        var delegate = MockBugReportDelegate(model: .mock)
+        let delegate = MockBugReportDelegate(model: .mock)
         delegate.sendCallback = { _, callback in
             callback(.success(Void()))
         }

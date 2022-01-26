@@ -24,13 +24,13 @@ struct SingleLineTextInputView: View {
     var field: InputField
     @Binding var value: String
     @Environment(\.colors) var colors: Colors
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
             Text(field.label)
                 .font(.system(size: 13))
                 .padding(.bottom, 8)
-            
+
             TextField(
                 field.placeholder ?? "",
                 text: $value
@@ -41,7 +41,6 @@ struct SingleLineTextInputView: View {
                 .padding(.horizontal)
                 .background(RoundedRectangle(cornerRadius: 8))
                 .foregroundColor(colors.backgroundSecondary)
-            
         }
         .padding(.horizontal)
     }
@@ -49,10 +48,10 @@ struct SingleLineTextInputView: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct SingleLineTextInputView_Previews: PreviewProvider {
     @State private static var text: String = ""
-    
+
     static var previews: some View {
         SingleLineTextInputView(
             field: InputField(
@@ -62,7 +61,7 @@ struct SingleLineTextInputView_Previews: PreviewProvider {
                 isMandatory: true,
                 placeholder: "User name (email address)"),
             value: $text)
-        
+
             .preferredColorScheme(.dark)
     }
 }

@@ -18,19 +18,21 @@
 
 import SwiftUI
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct ResultView: View {
     var error: Error?
     var finishCallback: (() -> Void)?
     var retryCallback: (() -> Void)?
     var troubleshootCallback: (() -> Void)?
-        
+
     var body: some View {
         guard let error = error else {
             return AnyView(successBody)
+                #if os(iOS)
                 .navigationBarBackButtonHidden(true)
+                #endif
         }
-        
+
         return AnyView(VStack {
             VStack(spacing: 8) {
                 FinalIcon(state: .failure)
@@ -42,20 +44,25 @@ struct ResultView: View {
                     .font(.body)
             }
             .frame(maxHeight: .infinity, alignment: .center)
-            
+
+            Spacer()
+
             VStack {
                 Button(action: { retryCallback?() }, label: { Text(LocalizedString.brFailureButtonRetry) })
                     .buttonStyle(PrimaryButtonStyle())
-                
+
                 Button(action: { troubleshootCallback?() }, label: { Text(LocalizedString.brFailureButtonTroubleshoot) })
                     .buttonStyle(SecondaryButtonStyle())
             }
             .padding(.horizontal)
             .padding(.bottom, 32)
-            
-        }).navigationBarBackButtonHidden(true)
+
+        })
+            #if os(iOS)
+            .navigationBarBackButtonHidden(true)
+            #endif
     }
-    
+
     var successBody: some View {
         VStack {
             VStack(spacing: 8) {
@@ -68,20 +75,20 @@ struct ResultView: View {
                     .font(.body)
             }
             .frame(maxHeight: .infinity, alignment: .center)
-            
+
             Button(action: { finishCallback?() }, label: { Text(LocalizedString.brSuccessButton) })
                 .buttonStyle(PrimaryButtonStyle())
                 .padding(.horizontal)
                 .padding(.bottom, 32)
         }
-        
+
     }
-    
+
 }
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct ResultView_Previews: PreviewProvider {
     static var previews: some View {
         ResultView(error: NSError(domain: "abc", code: 123, userInfo: nil))

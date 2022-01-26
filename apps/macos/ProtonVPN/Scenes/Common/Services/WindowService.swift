@@ -23,7 +23,8 @@
 import Cocoa
 import vpncore
 import SwiftUI
-import BugReportUI
+import BugReport
+import AppKit
 
 protocol WindowServiceFactory {
     func makeWindowService() -> WindowService
@@ -84,12 +85,15 @@ class WindowServiceImplementation: WindowService {
         & SafariServiceFactory
         & LogFileManagerFactory
         & BugReportCreatorFactory
+        & DynamicBugReportManagerFactory
+        & VpnKeychainFactory
 
     private let factory: Factory
     
     private lazy var navService: NavigationService = factory.makeNavigationService()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var bugReportCreator: BugReportCreator = factory.makeBugReportCreator()
+    private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     
     fileprivate var mainWindowController: WindowController?
     fileprivate var statusMenuWindowController: StatusMenuWindowController?
@@ -209,7 +213,19 @@ class WindowServiceImplementation: WindowService {
     func openReportBugWindow(viewModel: ReportBugViewModel, alertService: CoreAlertService) {
         NSApp.setActivationPolicy(.regular)
         
-        let viewController = bugReportCreator.createBugReportViewController(model: BugReportModel()) ?? ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
+        let viewController: NSViewController
+        let manager = factory.makeDynamicBugReportManager()
+        
+        if #available(macOS 11, *), let vc = bugReportCreator.createBugReportViewController(delegate: manager, colors: nil) {
+            manager.username = AuthKeychain.fetch()?.username ?? ""
+            manager.planname = (try? vpnKeychain.fetch().accountPlan.name) ?? ""
+            manager.closeBugReportHandler = { [weak self] in
+                self?.closeWindow(withController: ReportBugWindowController.self)
+            }
+            viewController = vc
+        } else {
+            viewController = ReportBugViewController(viewModel: viewModel, alertService: alertService, vpnManager: vpnManager, logFileManager: factory.makeLogFileManager())
+        }
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.delegate = self
         activeWindowControllers.append(windowController)
@@ -244,6 +260,13 @@ class WindowServiceImplementation: WindowService {
         NSRunningApplication.current.activate(options: [.activateAllWindows, .activateIgnoringOtherApps])
         
         return true
+    }
+        
+    func closeWindow(withController controllerType: NSWindowController.Type) {
+        activeWindowControllers
+            .filter { vc in vc.isKind(of: controllerType) }
+            .forEach { $0.close() }
+        activeWindowControllers.removeAll(where: { vc in vc.isKind(of: controllerType) })
     }
     
     func closeActiveWindows(except: [NSWindowController.Type]) {

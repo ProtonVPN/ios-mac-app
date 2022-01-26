@@ -28,18 +28,18 @@ public protocol BugReportCreator {
 
 public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:this type_name
     public init() { }
-    
+
     @available(iOS 14.0, *)
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController? {
         Current.bugReportDelegate = delegate
 
         let controller = UIHostingController(
-            rootView: BugReportView()
+            rootView: BugReportiOSView()
                 .environment(\.colors, colors ?? Colors())
                 .preferredColorScheme(.dark)
         )
-        
-        controller.overrideUserInterfaceStyle = .dark        
+
+        controller.overrideUserInterfaceStyle = .dark
         return controller
     }
 }

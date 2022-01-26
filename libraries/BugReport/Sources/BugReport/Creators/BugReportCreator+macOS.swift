@@ -22,18 +22,26 @@ import AppKit
 import SwiftUI
 
 public protocol BugReportCreator {
-    func createBugReportViewController(model: BugReportModel, colors: Colors?) -> NSViewController?
+    func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> NSViewController?
 }
 
 public final class MacOSBugReportCreator: BugReportCreator {
     public init() { }
 
-    public func createBugReportViewController(model: BugReportModel, colors: Colors?) -> NSViewController? {
+    public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> NSViewController? {
         guard #available(macOS 11, *) else {
             return nil
         }
 
-        return NSHostingController(rootView: BugReportView(model: model).frame(width: 600, height: 600, alignment: .center))
+        Current.bugReportDelegate = delegate
+
+        let controller = NSHostingController(rootView: BugReportNavigationView(viewModel: MacBugReportViewModel(model: delegate.model))
+                                .frame(width: 600, height: 650, alignment: .center)
+                                .environment(\.colors, colors ?? Colors())
+                                .preferredColorScheme(.dark)
+        )
+
+        return controller
     }
 }
 #endif

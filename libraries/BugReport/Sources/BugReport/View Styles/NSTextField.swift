@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-20.
+//  Created on 2022-01-25.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -16,25 +16,15 @@
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
 
-import Foundation
+#if os(macOS)
+import AppKit
 
-public func decapitalizeFirstLetter(_ path: [CodingKey]) -> CodingKey {
-    let original: String = path.last!.stringValue
-    let uncapitalized = original.prefix(1).lowercased() + original.dropFirst()
-    return JSONKey(stringValue: uncapitalized) ?? path.last!
-}
-
-private struct JSONKey: CodingKey {
-    var stringValue: String
-    var intValue: Int?
-
-    init?(stringValue: String) {
-        self.stringValue = stringValue
-        self.intValue = nil
-    }
-
-    init?(intValue: Int) {
-        self.stringValue = "\(intValue)"
-        self.intValue = intValue
+// Removes focus ring from input fields
+extension NSTextField {
+    override open var focusRingType: NSFocusRingType {
+        get { .none }
+        set { } // swiftlint:disable:this unused_setter_value
     }
 }
+
+#endif

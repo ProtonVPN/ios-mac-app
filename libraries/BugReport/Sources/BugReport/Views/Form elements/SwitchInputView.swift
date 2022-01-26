@@ -19,20 +19,22 @@
 import SwiftUI
 
 /// Toggle input styled for usage in bug report form.
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct SwitchInputView: View {
     var field: InputField
     @Binding var value: Bool
     @Environment(\.colors) var colors: Colors
-    
+
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack {
                 Toggle(field.label, isOn: $value)
             }
             .padding()
+            #if os(iOS)
             .background(Rectangle().foregroundColor(colors.backgroundSecondary))
-            
+            #endif
+
             if let placeholder = field.placeholder {
                 Text(placeholder)
                     .font(.footnote)
@@ -45,10 +47,10 @@ struct SwitchInputView: View {
 
 // MARK: - Preview
 
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct SwitchInputView_Previews: PreviewProvider {
     @State private static var text: Bool = false
-    
+
     static var previews: some View {
         SwitchInputView(
             field: InputField(label: LocalizedString.br3LogsField,

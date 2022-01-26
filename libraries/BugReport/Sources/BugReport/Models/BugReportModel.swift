@@ -20,11 +20,11 @@ import Foundation
 
 public struct BugReportModel: Codable {
     let categories: [Category]
-    
+
     public init() {
         self.categories = []
     }
-    
+
     init(categories: [Category]) {
         self.categories = categories
     }
@@ -46,19 +46,19 @@ public extension BugReportModel {
                                type: .textSingleLine,
                                isMandatory: true,
                                placeholder: "Home, work, Wifi, cellular, etc."),
-                    
+
                     InputField(label: "What are you trying to do",
                                submitLabel: "What do you do",
                                type: .textMultiLine,
                                isMandatory: true,
                                placeholder: "Loerp ipsum"),
-                    
+
                     InputField(label: "What is the speed you are getting?",
                                submitLabel: "Speed",
                                type: .textMultiLine,
                                isMandatory: true,
                                placeholder: "Loerp ipsum speed"),
-                    
+
                     InputField(label: "What is you connection speed without VPN?",
                                submitLabel: "Speed without VPN",
                                type: .textMultiLine,
