@@ -1,5 +1,6 @@
 stages:
   - linting
+  - modules_unit_tests
   - core_unit_tests
   - apps_unit_tests
   - bot
@@ -141,6 +142,20 @@ ios_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
+
+onboarding_unit_tests:
+  stage: modules_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`    
+    - fastlane onboarding_test
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit          
 
 macos_unit_tests:
   dependencies: []
