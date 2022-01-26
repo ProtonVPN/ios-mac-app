@@ -35,8 +35,8 @@ final class iOSNetworkingDelegate: NetworkingDelegate {
 }
 
 extension iOSNetworkingDelegate {
-    func onHumanVerify(methods: [VerifyMethod], startToken: String?, currentURL: URL?, completion: @escaping ((HumanVerifyFinishReason) -> Void)) {
-        humanVerify?.onHumanVerify(methods: methods, startToken: startToken, currentURL: currentURL, completion: completion)
+    func onHumanVerify(parameters: HumanVerifyParameters, currentURL: URL?, completion: (@escaping (HumanVerifyFinishReason) -> Void)) {
+        humanVerify?.onHumanVerify(parameters: parameters, currentURL: currentURL, completion: completion)
     }
 
     func getSupportURL() -> URL {
