@@ -28,7 +28,7 @@ final class PlanPurchaseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        planPurchasedButton.accessibilityLabel = "PlanPurchaseButton"
+        planPurchasedButton.accessibilityIdentifier = "PlanPurchaseButton"
     }
 
     @IBAction private func planPurchasedTapped(_ sender: Any) {

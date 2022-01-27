@@ -51,7 +51,7 @@ final class WelcomeViewController: UIViewController {
         titleLabel.text = LocalizedString.onboardingWelcomeTitle
         subtitleLabel.text = LocalizedString.onboardingWelcomeSubtitle
 
-        skipButton.accessibilityLabel = "SkipButton"
+        skipButton.accessibilityIdentifier = "SkipButton"
 
         baseViewStyle(view)
         actionButtonStyle(actionButton)
