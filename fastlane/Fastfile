@@ -72,6 +72,19 @@ lane :macos_app_test do
   )  
 end
 
+desc "Run all iOS app tests"
+lane :ios_bugreport_ui_test do
+    simulator_name = ENV["CI_JOB_ID"]
+    scan(
+      scheme: "BugReportSampleiOSApp",
+      derived_data_path: $derived_data_path,
+      clean: true,
+      result_bundle: true,
+      skip_slack: true,
+      devices: [simulator_name]
+    )
+end
+
 lane :create_macos_keychain do
   create_keychain(
     name: $keychain_name,

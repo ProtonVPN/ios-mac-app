@@ -194,6 +194,21 @@ onboarding_unit_tests:
       junit:
         - fastlane/test_output/report.junit
 
+ios_bugreport_ui_tests:
+  stage: apps_unit_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - fastlane ios_bugreport_ui_test
+    - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
+        
 macos_unit_tests:
   dependencies: []
   stage: apps_unit_tests

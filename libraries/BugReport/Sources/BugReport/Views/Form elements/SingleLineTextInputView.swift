@@ -19,7 +19,7 @@
 import SwiftUI
 
 /// Single line text input styled for usage in bug report form.
-@available(iOS 14.0, *)
+@available(iOS 14.0, macOS 11, *)
 struct SingleLineTextInputView: View {
     var field: InputField
     @Binding var value: String
@@ -35,6 +35,7 @@ struct SingleLineTextInputView: View {
                 field.placeholder ?? "",
                 text: $value
             )
+                .accessibilityIdentifier("Single line input \(field.submitLabel)")
                 .textFieldStyle(.plain)
                 .foregroundColor(.white)
                 .padding(.vertical, 6)
