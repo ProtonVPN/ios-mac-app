@@ -59,7 +59,7 @@ final class GetPlusViewController: UIViewController {
         titleLabel.text = LocalizedString.onboardingGetPlus
 
         let backButton = UIBarButtonItem(image: UIImage(named: "BackButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(backTapped))
-        backButton.accessibilityLabel = "BackButton"
+        backButton.accessibilityIdentifier = "BackButton"
         navigationItem.leftBarButtonItem = backButton
     }
 

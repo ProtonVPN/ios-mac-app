@@ -29,9 +29,9 @@ final class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        vpnSuccessSwitch.accessibilityLabel = "VPNSuccessSwitch"
-        startAButton.accessibilityLabel = "StartAButton"
-        startBButton.accessibilityLabel = "StartBButton"
+        vpnSuccessSwitch.accessibilityIdentifier = "VPNSuccessSwitch"
+        startAButton.accessibilityIdentifier = "StartAButton"
+        startBButton.accessibilityIdentifier = "StartBButton"
     }
 
     @IBAction private func startATapped(_ sender: Any) {
