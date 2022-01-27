@@ -21,6 +21,7 @@ import UIKit
 
 protocol ConnectToPlusServerViewControllerDelegate: AnyObject {
     func userDidRequestConnectToPlus()
+    func userDidRequestSkipConnectToPlus()
 }
 
 final class ConnectToPlusServerViewController: UIViewController {
@@ -31,6 +32,7 @@ final class ConnectToPlusServerViewController: UIViewController {
     @IBOutlet private weak var subtitleLabel: UILabel!
     @IBOutlet private weak var connectButton: UIButton!
     @IBOutlet private weak var noteLabel: UILabel!
+    @IBOutlet private weak var skipButton: UIButton!
 
     // MARK: Properties
 
@@ -50,11 +52,15 @@ final class ConnectToPlusServerViewController: UIViewController {
         centeredTextStyle(subtitleLabel)
         centeredTextStyle(noteLabel)
         actionButtonStyle(connectButton)
+        textButtonStyle(skipButton)
 
         titleLabel.text = LocalizedString.onboardingCongratulations
         subtitleLabel.text = LocalizedString.onboardingPurchasedSubtitle
         noteLabel.text = LocalizedString.onboardingPurchasedNote
         connectButton.setTitle(LocalizedString.onboardingConnectedConnectToPlus, for: .normal)
+        skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
+
+        skipButton.accessibilityIdentifier = "SkipButton"
 
         connectButton.accessibilityIdentifier = "ConnectToPlusServerButton"
     }
@@ -63,5 +69,9 @@ final class ConnectToPlusServerViewController: UIViewController {
 
     @IBAction private func connectToPlusServerTapped(_ sender: Any) {
         delegate?.userDidRequestConnectToPlus()
+    }
+
+    @IBAction private func skipTapped(_ sender: Any) {
+        delegate?.userDidRequestSkipConnectToPlus()
     }
 }

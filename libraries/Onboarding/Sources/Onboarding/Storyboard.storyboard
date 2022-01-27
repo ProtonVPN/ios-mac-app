@@ -632,14 +632,27 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qB4-bf-XFP">
+                                <rect key="frame" x="274" y="12" width="30" height="30"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <state key="normal" title="Skip"/>
+                                <connections>
+                                    <action selector="skipTapped:" destination="kOK-QS-z90" eventType="touchUpInside" id="24O-ih-n60"/>
+                                    <action selector="skipTapped:" destination="cZU-yD-5FX" eventType="touchUpInside" id="9k5-jW-xVh"/>
+                                    <action selector="skipTapped:" destination="Y6W-OH-hqX" eventType="touchUpInside" id="9ts-HO-HGI"/>
+                                    <action selector="skipTapped:" destination="vdj-QW-HHE" eventType="touchUpInside" id="hDs-Qt-Su6"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="pJ9-4f-erB"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="SRo-bh-Fqd" firstAttribute="top" secondItem="Mtu-pr-C2I" secondAttribute="bottom" constant="16" id="0iU-uZ-xeb"/>
+                            <constraint firstItem="qB4-bf-XFP" firstAttribute="top" secondItem="pJ9-4f-erB" secondAttribute="top" constant="12" id="BwZ-gc-JEI"/>
                             <constraint firstItem="haF-NM-v3e" firstAttribute="top" secondItem="pJ9-4f-erB" secondAttribute="top" id="Jmk-tw-F8u"/>
                             <constraint firstItem="pJ9-4f-erB" firstAttribute="trailing" secondItem="Mtu-pr-C2I" secondAttribute="trailing" constant="24" id="LQV-UD-vXG"/>
                             <constraint firstItem="Mtu-pr-C2I" firstAttribute="leading" secondItem="pJ9-4f-erB" secondAttribute="leading" constant="24" id="N1a-k5-Rle"/>
+                            <constraint firstItem="pJ9-4f-erB" firstAttribute="trailing" secondItem="qB4-bf-XFP" secondAttribute="trailing" constant="16" id="NdP-1c-b89"/>
                             <constraint firstItem="pJ9-4f-erB" firstAttribute="trailing" secondItem="SRo-bh-Fqd" secondAttribute="trailing" constant="16" id="ODx-kv-6bI"/>
                             <constraint firstItem="pJ9-4f-erB" firstAttribute="bottom" secondItem="JMP-WP-vT7" secondAttribute="bottom" constant="16" id="c3m-bY-6Rq"/>
                             <constraint firstItem="pJ9-4f-erB" firstAttribute="trailing" secondItem="haF-NM-v3e" secondAttribute="trailing" id="cqU-Xc-4gB"/>
@@ -654,6 +667,7 @@
                     <connections>
                         <outlet property="connectButton" destination="JMP-WP-vT7" id="W3D-1s-tGB"/>
                         <outlet property="noteLabel" destination="SRo-bh-Fqd" id="3Yi-R5-5D7"/>
+                        <outlet property="skipButton" destination="qB4-bf-XFP" id="yan-lp-fTU"/>
                         <outlet property="subtitleLabel" destination="Iop-3n-opT" id="5yo-nt-iFV"/>
                         <outlet property="titleLabel" destination="o1s-Ve-irc" id="dh4-7l-Xka"/>
                     </connections>
