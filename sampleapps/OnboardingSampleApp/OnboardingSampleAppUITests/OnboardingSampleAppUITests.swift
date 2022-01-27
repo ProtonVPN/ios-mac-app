@@ -1,5 +1,5 @@
 //
-//  Created on 2022-01-26.
+//  Created on 27.01.2022.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -18,29 +18,25 @@
 
 import XCTest
 
-class OnboardingSampleAppBaseTestCase: XCTestCase {
+final class OnboardingSampleAppUITests: XCTestCase {
 
     let app = XCUIApplication()
-    
-    override func setUp() {
+
+    override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
 
         // In UI tests it is usually best to stop immediately when a failure occurs.
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
-        
+
         app.launch()
     }
 
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
     private let onboardingMainRobot = OnboardingMainRobot()
-    
+
     func testStartOnboardingAConnectNowAndGetPlus() {
-        
+
         onboardingMainRobot
             .startOnboardingA()
             .verify.welcomeScreenIsShown()
@@ -61,9 +57,9 @@ class OnboardingSampleAppBaseTestCase: XCTestCase {
             .connectToAPlusServer()
             .verify.onboardingABScreen()
     }
-    
+
     func testStartOnboardingAConnectNowFreePlan() {
-        
+
         onboardingMainRobot
             .startOnboardingA()
             .verify.welcomeScreenIsShown()
@@ -82,9 +78,9 @@ class OnboardingSampleAppBaseTestCase: XCTestCase {
             .useFreePlanA()
             .verify.onboardingABScreen()
     }
-    
+
     func testStartOnboardingBConnectNowAndGetPlus() {
-        
+
         onboardingMainRobot
             .startOnboardingB()
             .verify.welcomeScreenIsShown()
@@ -102,9 +98,9 @@ class OnboardingSampleAppBaseTestCase: XCTestCase {
             .connectToAPlusServer()
             .verify.onboardingABScreen()
     }
-    
+
     func testStartOnboardingBConnectNowFreePlan() {
-        
+
         onboardingMainRobot
             .startOnboardingB()
             .verify.welcomeScreenIsShown()
