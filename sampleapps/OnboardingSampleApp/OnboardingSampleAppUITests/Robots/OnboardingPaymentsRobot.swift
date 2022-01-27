@@ -19,13 +19,13 @@
 import XCTest
 
 fileprivate let plusFeature = "Access all 1300+ servers in 61 countries with Plus"
-fileprivate let getPlusButton = "Get Plus"
-fileprivate let useFreePlanButton = "Use limited FREE plan"
+fileprivate let getPlusButton = "GetPlusButton"
+fileprivate let useFreePlanButton = "UseFreeButton"
 fileprivate let closeButton = "CloseButton"
-fileprivate let plusPurchased = "Plus purchased"
+fileprivate let plusPurchased = "PlanPurchaseButton"
 fileprivate let congratulationsTitle = "Congratulations"
 fileprivate let congratulationsDescription = "You now have access to 1300+ secure servers and other premium features."
-fileprivate let connectButton = "Connect to a PLUS server"
+fileprivate let connectButton = "ConnectToPlusServerButton"
 
 class OnboardingPaymentRobot {
     

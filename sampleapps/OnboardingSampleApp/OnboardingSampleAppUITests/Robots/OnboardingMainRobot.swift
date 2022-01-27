@@ -21,12 +21,12 @@ import XCTest
 
 let app = XCUIApplication()
 
-fileprivate let onboardingA = "Start onboarding A"
-fileprivate let onboardingB = "Start onboarding B"
+fileprivate let onboardingA = "StartAButton"
+fileprivate let onboardingB = "StartBButton"
 fileprivate let takeATourButton = "Take a tour"
 fileprivate let welcomeTitle = "Welcome to ProtonVPN"
 fileprivate let welcomeDescription = "Learn how to get the most out of ProtonVPN in just a few seconds"
-fileprivate let skipButton = "Skip"
+fileprivate let skipButton = "SkipButton"
 
 class OnboardingMainRobot {
     

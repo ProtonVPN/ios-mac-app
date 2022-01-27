@@ -24,8 +24,8 @@ fileprivate let slideTwoTitle = "Unblock streaming"
 fileprivate let slideTwoDescription = "Secure access your favourite content from other countries, now also on AndroidTV."
 fileprivate let slideThreeTitle = "Block ads and much more"
 fileprivate let slideThreeDescription = "Block malware, ads, and trackers in browser and in all apps."
-fileprivate let skipButton = "Skip"
-fileprivate let nextButton = "Next"
+fileprivate let skipButton = "SkipButton"
+fileprivate let nextButton = "NextButton"
 
 class OnboardingSlidesRobot {
     
