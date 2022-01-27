@@ -20,9 +20,19 @@ import UIKit
 import Onboarding
 
 final class ViewController: UIViewController {
+    @IBOutlet private weak var startAButton: UIButton!
     @IBOutlet private weak var vpnSuccessSwitch: UISwitch!
+    @IBOutlet private weak var startBButton: UIButton!
 
     private var coordinator: OnboardingCoordinator!
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        vpnSuccessSwitch.accessibilityLabel = "VPNSuccessSwitch"
+        startAButton.accessibilityLabel = "StartAButton"
+        startBButton.accessibilityLabel = "StartBButton"
+    }
 
     @IBAction private func startATapped(_ sender: Any) {
         startOnboarding(variant: .A)

@@ -55,6 +55,8 @@ final class ConnectToPlusServerViewController: UIViewController {
         subtitleLabel.text = LocalizedString.onboardingPurchasedSubtitle
         noteLabel.text = LocalizedString.onboardingPurchasedNote
         connectButton.setTitle(LocalizedString.onboardingConnectedConnectToPlus, for: .normal)
+
+        connectButton.accessibilityLabel = "ConnectToPlusServerButton"
     }
 
     // MARK: Actions

@@ -58,7 +58,11 @@ final class UpsellViewController: UIViewController {
         titleLabel.text = LocalizedString.onboardingUpsellTitle
         featuresFooterLabel.text = LocalizedString.onboardingUpsellFeaturesFooter
 
+        useFreeButton.accessibilityLabel = "UseFreeButton"
+        getPlusButton.accessibilityLabel = "GetPlusButton"
+
         let closeButton = UIBarButtonItem(image: UIImage(named: "CloseButton", in: Bundle.module, compatibleWith: nil), style: .plain, target: self, action: #selector(closeTapped))
+        closeButton.accessibilityLabel = "CloseButton"
         navigationItem.leftBarButtonItem = closeButton
 
         for view in featuresStackView.arrangedSubviews {

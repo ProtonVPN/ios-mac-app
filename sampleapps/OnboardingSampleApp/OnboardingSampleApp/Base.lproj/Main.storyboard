@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
@@ -57,6 +58,8 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="startAButton" destination="7HQ-8o-y41" id="OPn-GX-KLx"/>
+                        <outlet property="startBButton" destination="BZg-SG-xYD" id="Sk6-2U-Mx9"/>
                         <outlet property="vpnSuccessSwitch" destination="5d4-Pr-WxZ" id="uew-Ve-Lw6"/>
                     </connections>
                 </viewController>
@@ -88,6 +91,9 @@
                             <constraint firstItem="hpq-lY-C9y" firstAttribute="centerY" secondItem="wPg-4X-7k8" secondAttribute="centerY" id="cgp-KJ-Emh"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="planPurchasedButton" destination="hpq-lY-C9y" id="hIx-LE-MS5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gMD-ao-lzE" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
