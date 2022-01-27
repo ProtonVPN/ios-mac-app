@@ -208,6 +208,10 @@ extension OnboardingCoordinator: UpsellViewControllerDelegate {
 // MARK: Connect to Plus screen delegate
 
 extension OnboardingCoordinator: ConnectToPlusServerViewControllerDelegate {
+    func userDidRequestSkipConnectToPlus() {
+        delegate?.onboardingCoordinatorDidFinish(requiresConnection: false)
+    }
+
     func userDidRequestConnectToPlus() {
         delegate?.onboardingCoordinatorDidFinish(requiresConnection: true)
     }
