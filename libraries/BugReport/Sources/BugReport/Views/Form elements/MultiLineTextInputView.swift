@@ -47,6 +47,7 @@ struct MultiLineTextInputView: View {
                         .foregroundColor(colors.textSecondary)
                 }
                 TextView(text: $value, fontSize: userFontSize)
+                    .accessibilityIdentifier("Multiline input \(field.submitLabel)")
             }
             .padding(.vertical, 12)
             .padding(.horizontal, 16)
