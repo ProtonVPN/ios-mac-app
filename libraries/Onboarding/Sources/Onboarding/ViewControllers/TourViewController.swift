@@ -47,6 +47,9 @@ final class TourViewController: UIViewController {
         actionButton.setTitle(LocalizedString.onboardingNext, for: .normal)
         skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
 
+        skipButton.accessibilityLabel = "SkipButton"
+        actionButton.accessibilityLabel = "NextButton"
+
         let steps = TourStep.allCases.map { step -> UIView in
             let view = Bundle.module.loadNibNamed("TourStepView", owner: self, options: nil)?.first as! TourStepView
             view.step = step

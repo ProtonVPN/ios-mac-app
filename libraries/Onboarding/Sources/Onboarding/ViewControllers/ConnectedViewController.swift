@@ -64,6 +64,8 @@ final class ConnectedViewController: UIViewController {
         notificationViewStyle(errorView)
         notificationTextStyle(errorLabel)
 
+        doneButton.accessibilityLabel = "DoneButton"
+
         titleLabel.text = LocalizedString.onboardingConnectedTitle
         connectedToLabel.text = LocalizedString.onboardingConnectedConnectedTo
         noteLabel.text = LocalizedString.onboardingConnectedNote

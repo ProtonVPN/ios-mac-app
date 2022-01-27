@@ -72,6 +72,9 @@ final class ConnectionViewController: UIViewController {
         purchaseButon.setTitle(LocalizedString.onboardingEstablishAccessAll, for: .normal)
         skipButton.setTitle(LocalizedString.onboardingSkip, for: .normal)
 
+        skipButton.accessibilityLabel = "SkipButton"
+        purchaseButon.accessibilityLabel = "PurchasePlusButton"
+
         connectButton.addSubview(activityView)
         NSLayoutConstraint.activate([
             activityView.trailingAnchor.constraint(equalTo: connectButton.trailingAnchor, constant: -16),

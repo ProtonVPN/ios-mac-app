@@ -21,7 +21,15 @@ import UIKit
 import Onboarding
 
 final class PlanPurchaseViewController: UIViewController {
+    @IBOutlet private weak var planPurchasedButton: UIButton!
+
     var completion: OnboardingPlanPurchaseCompletion?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        planPurchasedButton.accessibilityLabel = "PlanPurchaseButton"
+    }
 
     @IBAction private func planPurchasedTapped(_ sender: Any) {
         completion?(.planPurchased)
