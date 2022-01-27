@@ -21,13 +21,13 @@ import XCTest
 fileprivate let establishConnectionTitle = "Establish your first connection"
 fileprivate let establishConnectionDescription = "We will connect you to the fastest and most stable server depending on your location."
 fileprivate let connectNowButton = "Connect now"
-fileprivate let accessButton = "Access all countries with PLUS"
-fileprivate let skipButton = "Skip"
+fileprivate let purchasePlusButton = "PurchasePlusButton"
+fileprivate let skipButton = "SkipButton"
 fileprivate let connectionTitle = "Congratulations"
 fileprivate let connectionDescription = "Your connection is protected and you’re ready to browse the web."
 fileprivate let connectedTo = "Connected to:"
-fileprivate let continueButton = "Continue"
-fileprivate let getPlusButton = "Get Plus"
+fileprivate let continueButton = "DoneButton"
+fileprivate let getPlusButton = "GetPlusButton"
 
 class OnboardingConnectionRobot {
     
@@ -37,7 +37,7 @@ class OnboardingConnectionRobot {
     }
 
     func accessAllCountries() -> OnboardingConnectionRobot {
-        app.buttons[accessButton].tap()
+        app.buttons[purchasePlusButton].tap()
         return OnboardingConnectionRobot()
     }
     
@@ -60,7 +60,7 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
             XCTAssertTrue(app.buttons[connectNowButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
-            XCTAssertTrue(app.buttons[accessButton].isEnabled)
+            XCTAssertTrue(app.buttons[purchasePlusButton].isEnabled)
             return OnboardingConnectionRobot()
         }
         
