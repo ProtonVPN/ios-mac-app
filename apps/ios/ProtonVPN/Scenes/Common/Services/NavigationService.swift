@@ -323,7 +323,7 @@ extension NavigationService: SettingsService {
     }
     
     func presentReportBug() {
-        if #available(iOS 14.0.0, *) {            
+        if #available(iOS 14.0.0, *), !ProcessInfo.processInfo.arguments.contains("UITests") { // Switch to old report bug because new flow is tested separately in sample app
             let manager = factory.makeDynamicBugReportManager()
             if let viewController = bugReportCreator.createBugReportViewController(delegate: manager, colors: nil) {
                 manager.username = AuthKeychain.fetch()?.username ?? ""

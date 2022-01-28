@@ -8,7 +8,8 @@
 
 import Foundation
 
-let isNewBugReportEnabled = true
+// NavigationService.presentReportBug() checks if UI tests are being run, and if yes, uses old ReportBug screen, wchich is tested here.
+// New ReportBug screens are tested separately in SampleApps/BugReportSampleMacOSApp and SampleApps/BugReportSampleiOSApp.
 
 class ReportBugTests: ProtonVPNUITests {
     
