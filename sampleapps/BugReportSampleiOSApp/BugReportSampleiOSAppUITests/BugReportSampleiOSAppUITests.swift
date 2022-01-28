@@ -36,6 +36,7 @@ class BugReportSampleiOSAppUITests: XCTestCase {
     func testExample() throws {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
+        app.launchArguments = ["UITests"]
         app.launch()
         
         app.tables.buttons["Something else_"].tap()
