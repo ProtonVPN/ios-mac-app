@@ -84,11 +84,7 @@ final class MacBugReportViewModel: ObservableObject {
             pop(.form(form))
 
         case .form:
-            guard let category = category else {
-                pop(.categories(model.categories))
-                return
-            }
-            guard let suggestions = category.suggestions, !suggestions.isEmpty else {
+            guard let category = category, let suggestions = category.suggestions, !suggestions.isEmpty else {
                 pop(.categories(model.categories))
                 return
             }
