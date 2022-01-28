@@ -26,6 +26,8 @@ class ViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+                
+        statusTextField.setAccessibilityIdentifier("statusLabel")
 
         bugReportDelegate = MockDelegate(
             model: model,

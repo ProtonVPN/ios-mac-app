@@ -72,7 +72,7 @@ lane :macos_app_test do
   )  
 end
 
-desc "Run all iOS app tests"
+desc "Run BugReport on iOS UI tests"
 lane :ios_bugreport_ui_test do
     simulator_name = ENV["CI_JOB_ID"]
     scan(
@@ -82,6 +82,17 @@ lane :ios_bugreport_ui_test do
       result_bundle: true,
       skip_slack: true,
       devices: [simulator_name]
+    )
+end
+
+desc "Run BugReport on mac UI tests"
+lane :macos_bugreport_ui_test do
+    scan(
+      scheme: "BugReportSampleMacOSApp",
+      derived_data_path: $derived_data_path,
+      clean: true,
+      result_bundle: true,
+      skip_slack: true
     )
 end
 

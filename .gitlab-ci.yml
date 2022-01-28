@@ -208,6 +208,18 @@ ios_bugreport_ui_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
+
+macos_bugreport_ui_tests:
+  stage: apps_unit_tests
+  tags:
+    - macOS_ARM
+  script:
+    - fastlane macos_bugreport_ui_test
+    - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit
         
 macos_unit_tests:
   dependencies: []
