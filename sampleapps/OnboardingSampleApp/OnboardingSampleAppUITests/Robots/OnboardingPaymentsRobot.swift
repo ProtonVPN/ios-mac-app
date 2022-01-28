@@ -26,6 +26,7 @@ fileprivate let plusPurchased = "PlanPurchaseButton"
 fileprivate let congratulationsTitle = "Congratulations"
 fileprivate let congratulationsDescription = "You now have access to 1300+ secure servers and other premium features."
 fileprivate let connectButton = "ConnectToPlusServerButton"
+fileprivate let skipButton = "SkipButton"
 
 class OnboardingPaymentRobot {
     
@@ -51,6 +52,11 @@ class OnboardingPaymentRobot {
     
     func connectToAPlusServer() -> OnboardingMainRobot {
         app.buttons[connectButton].tap()
+        return OnboardingMainRobot()
+    }
+
+    func skip() -> OnboardingMainRobot {
+        app.buttons[skipButton].tap()
         return OnboardingMainRobot()
     }
     

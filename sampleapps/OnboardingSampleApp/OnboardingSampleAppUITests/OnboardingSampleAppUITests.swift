@@ -36,7 +36,6 @@ final class OnboardingSampleAppUITests: XCTestCase {
     private let onboardingMainRobot = OnboardingMainRobot()
 
     func testStartOnboardingAConnectNowAndGetPlus() {
-
         onboardingMainRobot
             .startOnboardingA()
             .verify.welcomeScreenIsShown()
@@ -58,8 +57,29 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .verify.onboardingABScreen()
     }
 
-    func testStartOnboardingAConnectNowFreePlan() {
+    func testStartOnboardingAConnectNowGetPlusAndSkipConnecting() {
+        onboardingMainRobot
+            .startOnboardingA()
+            .verify.welcomeScreenIsShown()
+            .startUserOnboarding()
+            .verify.onboardingFirstSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingSecondSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingThirdSlideIsShown()
+            .nextStepA()
+            .connectNow()
+            .verify.connectionScreenIsShown()
+            .nextStepA()
+            .verify.accessAllCountriesScreenIsShown()
+            .getPlus()
+            .plusPlanIsPurchased()
+            .verify.congratulationsScreenIsShown()
+            .skip()
+            .verify.onboardingABScreen()
+    }
 
+    func testStartOnboardingAConnectNowFreePlan() {
         onboardingMainRobot
             .startOnboardingA()
             .verify.welcomeScreenIsShown()
@@ -80,7 +100,6 @@ final class OnboardingSampleAppUITests: XCTestCase {
     }
 
     func testStartOnboardingBConnectNowAndGetPlus() {
-
         onboardingMainRobot
             .startOnboardingB()
             .verify.welcomeScreenIsShown()
@@ -99,8 +118,26 @@ final class OnboardingSampleAppUITests: XCTestCase {
             .verify.onboardingABScreen()
     }
 
-    func testStartOnboardingBConnectNowFreePlan() {
+    func testStartOnboardingBConnectNowGetPlusAndSkipConnecting() {
+        onboardingMainRobot
+            .startOnboardingB()
+            .verify.welcomeScreenIsShown()
+            .startUserOnboarding()
+            .verify.onboardingFirstSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingSecondSlideIsShown()
+            .nextOnboardingScreen()
+            .verify.onboardingThirdSlideIsShown()
+            .nextStepB()
+            .verify.accessAllCountriesScreenIsShown()
+            .getPlus()
+            .plusPlanIsPurchased()
+            .verify.congratulationsScreenIsShown()
+            .skip()
+            .verify.onboardingABScreen()
+    }
 
+    func testStartOnboardingBConnectNowFreePlan() {
         onboardingMainRobot
             .startOnboardingB()
             .verify.welcomeScreenIsShown()
