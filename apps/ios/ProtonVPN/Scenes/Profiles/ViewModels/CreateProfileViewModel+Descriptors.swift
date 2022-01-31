@@ -22,6 +22,7 @@
 
 import Foundation
 import vpncore
+import UIKit
 
 extension CreateOrEditProfileViewModel {
     
@@ -70,11 +71,16 @@ extension CreateOrEditProfileViewModel {
         }
         
         let imageAttributedString = NSMutableAttributedString(attributedString: NSAttributedString.imageAttachment(named: imageName, width: 18, height: 18) ?? NSAttributedString(string: ""))
-        imageAttributedString.addAttributes([NSAttributedString.Key.baselineOffset: -3],
-                                            range: NSRange(location: 0, length: 1))
-        
-        let nameAttributedString = ("  " + name).attributed(withColor: .normalTextColor(), fontSize: 16, alignment: .left)
-        return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
+        let nameAttributedString = NSMutableAttributedString(
+            string: "  " + name,
+            attributes: [
+                .font: UIFont.systemFont(ofSize: 16),
+                .baselineOffset: 4
+            ]
+        )
+        nameAttributedString.insert(imageAttributedString, at: 0)
+
+        return nameAttributedString
     }
     
     private func embededImageIcon(named name: String) -> NSAttributedString {
