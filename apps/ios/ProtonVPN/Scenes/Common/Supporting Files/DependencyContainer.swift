@@ -71,7 +71,7 @@ final class DependencyContainer {
     // Refreshes announements from API
     private lazy var announcementRefresher = AnnouncementRefresherImplementation(factory: self)
     
-    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes cofig from time to time.
+    // Instance of DynamicBugReportManager is persisted because it has a timer that refreshes config from time to time.
     private lazy var dynamicBugReportManager = DynamicBugReportManager(api: makeReportsApiService(), storage: DynamicBugReportStorageUserDefaults(userDefaults: Storage()), alertService: makeCoreAlertService(), propertiesManager: makePropertiesManager(), logFilesProvider: makeLogFilesProvider())
 
     private lazy var vpnAuthentication: VpnAuthentication = {
