@@ -1,7 +1,7 @@
 //
-//  Created on 2021-12-20.
+//  Created on 2022-02-01.
 //
-//  Copyright (c) 2021 Proton AG
+//  Copyright (c) 2022 Proton AG
 //
 //  ProtonVPN is free software: you can redistribute it and/or modify
 //  it under the terms of the GNU General Public License as published by
@@ -18,14 +18,29 @@
 
 import Foundation
 
-public struct BugReportModel: Codable {
-    let categories: [Category]
+class MockBugReportDelegate: BugReportDelegate {
+    var model: BugReportModel
+    var prefilledEmail: String = ""
 
-    public init() {
-        self.categories = []
+    public init(model: BugReportModel) {
+        self.model = model
     }
 
-    init(categories: [Category]) {
-        self.categories = categories
+    var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
+
+    func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
+        sendCallback?(form, result)
+    }
+
+    var finishedCallback: (() -> Void)?
+
+    func finished() {
+        finishedCallback?()
+    }
+
+    var troubleshootingCallback: (() -> Void)?
+
+    func troubleshootingRequired() {
+        troubleshootingCallback?()
     }
 }
