@@ -11,8 +11,6 @@ DerivedData
 fastlane/README.md
 .last_build_nr
 
-.swiftpm
-
 libraries/vpncore/Source/LocalizedString.swift
 
 sampleapps/OnboardingSampleApp/OnboardingSampleApp.xcodeproj/xcuserdata
