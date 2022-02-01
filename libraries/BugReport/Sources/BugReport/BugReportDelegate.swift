@@ -38,32 +38,3 @@ public protocol BugReportDelegate: AnyObject {
     func troubleshootingRequired()
 
 }
-
-// MARK: - Mocks
-
-class MockBugReportDelegate: BugReportDelegate {
-    var model: BugReportModel
-    var prefilledEmail: String = ""
-
-    public init(model: BugReportModel) {
-        self.model = model
-    }
-
-    var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
-
-    func send(form: BugReportResult, result: @escaping (SendReportResult) -> Void) {
-        sendCallback?(form, result)
-    }
-
-    var finishedCallback: (() -> Void)?
-
-    func finished() {
-        finishedCallback?()
-    }
-
-    var troubleshootingCallback: (() -> Void)?
-
-    func troubleshootingRequired() {
-        troubleshootingCallback?()
-    }
-}
