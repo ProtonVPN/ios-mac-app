@@ -144,9 +144,7 @@ public class VpnGateway: VpnGatewayProtocol {
         }
     }
     
-    public var connection: ConnectionStatus {
-        return ConnectionStatus.forAppState(appStateManager.state)
-    }
+    public var connection: ConnectionStatus
     
     public var lastConnectionRequest: ConnectionRequest? {
         return propertiesManager.lastConnectionRequest
@@ -168,13 +166,19 @@ public class VpnGateway: VpnGatewayProtocol {
         self.propertiesManager = propertiesManager
         self.profileManager = profileManager
         serverTierChecker = ServerTierChecker(alertService: alertService, vpnKeychain: vpnKeychain)
-        
-        if case AppState.connected(_) = appStateManager.state, let activeServer = appStateManager.activeConnection()?.server {
+
+        let state = appStateManager.state
+        self.connection = ConnectionStatus.forAppState(state)
+
+        if case .connected = state, let activeServer = appStateManager.activeConnection()?.server {
             changeActiveServerType(activeServer.serverType)
         }
+        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+                                               object: nil,
+                                               queue: nil,
+                                               using: appStateChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(userPlanChanged), name: type(of: vpnKeychain).vpnPlanChanged, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(userBecameDelinquent), name: type(of: vpnKeychain).vpnUserDelinquent, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged), name: appStateManager.stateChange, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(reconnectOnNotification), name: type(of: self).needsReconnectNotification, object: nil)
     }
     
@@ -379,10 +383,17 @@ public class VpnGateway: VpnGatewayProtocol {
         connectionPreparer?.connect(with: connectionProtocol, to: server, netShieldType: netShieldType)
     }
     
-    @objc private func appStateChanged() {
+    private func appStateChanged(_ notification: Notification) {
+        guard let state = notification.object as? AppState else {
+            return
+        }
+
+        self.connection = ConnectionStatus.forAppState(state)
         DispatchQueue.main.async { [weak self] in
             guard let `self` = self else { return }
-            NotificationCenter.default.post(name: VpnGateway.connectionChanged, object: self.connection)
+            NotificationCenter.default.post(name: VpnGateway.connectionChanged,
+                                            object: self.connection,
+                                            userInfo: [AppState.appStateKey: state])
         }
     }
 

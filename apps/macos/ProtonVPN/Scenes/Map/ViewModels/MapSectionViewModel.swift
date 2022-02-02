@@ -77,9 +77,11 @@ class MapSectionViewModel {
         self.navService = navService
         self.vpnKeychain = vpnKeychain
         self.alertService = alertService
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(appStateChanged),
-                                               name: appStateManager.stateChange, object: nil)
+
+        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+                                               object: nil,
+                                               queue: nil,
+                                               using: appStateChanged)
         NotificationCenter.default.addObserver(self, selector: #selector(viewToggled(_:)),
                                                name: viewToggle, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(resetCurrentState),
@@ -93,14 +95,18 @@ class MapSectionViewModel {
     }
     
     // MARK: - Private functions
-    @objc private func appStateChanged() {
-        if appStateManager.state.isConnected,
+    private func appStateChanged(_ notification: Notification) {
+        guard let state = notification.object as? AppState else {
+            return
+        }
+
+        if state.isConnected,
             let serverType = appStateManager.activeConnection()?.server.serverType, serverType != activeView {
             setView(serverType)
         }
         
         annotations.forEach { (annotation) in
-            annotation.appStateChanged()
+            annotation.appStateChanged(to: state)
         }
         
         updateConnections()

@@ -36,30 +36,60 @@ final class ConnectionBarViewModel {
     
     init(appStateManager: AppStateManager) {
         self.appStateManager = appStateManager
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(updateState), name: appStateManager.stateChange, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(updateDisplayState), name: appStateManager.displayStateChange, object: nil)
 
-        self.updateDisplayState()
-        self.updateState()
+        NotificationCenter.default.addObserver(forName: appStateManager.stateChange,
+                                               object: nil,
+                                               queue: nil,
+                                               using: updateState)
+        NotificationCenter.default.addObserver(forName: appStateManager.displayStateChange,
+                                               object: nil,
+                                               queue: nil,
+                                               using: updateDisplayState)
+
+        self.updateDisplayState(with: appStateManager.displayState)
+        self.updateState(with: appStateManager.state)
     }
 
-    @objc func updateDisplayState() {
+    func updateDisplayStateFromUIThread() {
+        updateDisplayState(with: appStateManager.displayState)
+    }
+
+    private func updateDisplayState(_ notification: Notification) {
+        guard let displayState = notification.object as? AppDisplayState else {
+            return
+        }
+
+        updateDisplayState(with: displayState)
+    }
+
+    private func updateDisplayState(with displayState: AppDisplayState) {
         DispatchQueue.main.async { [weak self] in
             guard let self = self else {
                 return
             }
 
-            self.onAppDisplayStateChanged?(self.appStateManager.displayState)
+            self.onAppDisplayStateChanged?(displayState)
         }
     }
+
+    func updateStateFromUIThread() {
+        updateState(with: appStateManager.state)
+    }
     
-    @objc func updateState() {
+    private func updateState(_ notification: Notification) {
+        guard let state = notification.object as? AppState else {
+            return
+        }
+
+        updateState(with: state)
+    }
+
+    private func updateState(with state: AppState) {
         appStateManager.connectedDate { [weak self] (date) in
             self?.connectedDate = date ?? Date()
         }
-        
-        switch self.appStateManager.state {
+
+        switch state {
         case .connected:
             if !self.timer.isValid {
                 self.runTimer()

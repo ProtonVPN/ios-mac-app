@@ -95,4 +95,6 @@ public enum AppState {
             return nil
         }
     }
+
+    public static let appStateKey: String = "AppStateKey"
 }

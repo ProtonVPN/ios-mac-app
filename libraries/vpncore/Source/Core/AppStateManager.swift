@@ -78,11 +78,24 @@ public class AppStateManagerImplementation: AppStateManager {
     public weak var alertService: CoreAlertService?
     
     private var reachability: Reachability?
-    public private(set) var state: AppState = .disconnected {
-        didSet {
+
+    private var _state: AppState = .disconnected
+    public private(set) var state: AppState {
+        get {
+            #if DEBUG
+            dispatchPrecondition(condition: .onQueue(.main))
+            #endif
+            return _state
+        }
+        set {
+            #if DEBUG
+            dispatchPrecondition(condition: .onQueue(.main))
+            #endif
+            _state = newValue
             computeDisplayState()
         }
     }
+
     public var displayState: AppDisplayState = .disconnected {
         didSet {
             guard displayState != oldValue else {
@@ -94,7 +107,8 @@ public class AppStateManagerImplementation: AppStateManager {
                     return
                 }
 
-                NotificationCenter.default.post(name: self.displayStateChange, object: self.state)
+                NotificationCenter.default.post(name: self.displayStateChange,
+                                                object: self.displayState)
             }
         }
     }
@@ -361,9 +375,19 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
+            guard Thread.isMainThread else {
+                return DispatchQueue.main.async {
+                    self?.vpnStateChanged()
+                }
+            }
             self?.vpnStateChanged()
         }
         vpnManager.localAgentStateChanged = { [weak self] in
+            guard Thread.isMainThread else {
+                return DispatchQueue.main.async {
+                    self?.computeDisplayState()
+                }
+            }
             self?.computeDisplayState()
         }
         

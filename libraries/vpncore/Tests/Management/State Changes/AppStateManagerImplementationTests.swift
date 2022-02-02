@@ -32,7 +32,7 @@ class AppStateManagerImplementationTests: XCTestCase {
     
     var vpnManager: VpnManagerMock!
     var appStateManager: AppStateManager!
-    
+
     override func setUp() {
         super.setUp()
 
@@ -50,18 +50,25 @@ class AppStateManagerImplementationTests: XCTestCase {
         XCTAssertFalse(appStateManager.state.isConnected)
         XCTAssert(appStateManager.state.isDisconnected)
     }
-    
+
     func prepareToConnect() {
         appStateManager.prepareToConnect()
-        if case AppState.preparingConnection = appStateManager.state {} else { XCTAssert(false) }
+        let state = appStateManager.state
+        if case AppState.preparingConnection = state {} else {
+            XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
+        }
     }
     
     func startConnection() {
         appStateManager.connect(withConfiguration: connectionConfig)
         vpnManager.state = .connecting(serverDescriptor)
-        if case AppState.connecting(_) = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.connecting(_) = state {} else {
+            XCTFail("App state should be 'connecting' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func startConnectionFromConnected() {
@@ -72,69 +79,103 @@ class AppStateManagerImplementationTests: XCTestCase {
     
     func successfullyConnect() {
         vpnManager.state = .connected(serverDescriptor)
-        if case AppState.connected(_) = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssert(appStateManager.state.isConnected)
-        XCTAssertFalse(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.connected(_) = state {} else {
+            XCTFail("App state should be 'connected' but it's \(state.description)")
+        }
+        XCTAssert(state.isConnected)
+        XCTAssertFalse(state.isDisconnected)
     }
     
     func startDisconnecting() {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
-        if case AppState.disconnecting(_) = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssertFalse(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.disconnecting(_) = state {} else {
+            XCTFail("App state should be 'disconnecting' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssertFalse(state.isDisconnected)
     }
     
     func successfullyDisconnect() {
         vpnManager.state = .disconnected
-        if case AppState.disconnected = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.disconnected = state {} else {
+            XCTFail("App state should be 'disconnected' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func startExplicitDisconnectingAsPartOfConnect() {
         appStateManager.disconnect()
         vpnManager.state = .disconnecting(serverDescriptor)
-        if case AppState.preparingConnection = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.preparingConnection = state {} else {
+            XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func startImplicitDisconnectingAsPartOfConnect() {
         vpnManager.state = .disconnecting(serverDescriptor)
-        if case AppState.connecting = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.connecting = state {} else {
+            XCTFail("App state should be 'connecting' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func successfullyDisconnectAsPartOfConnect() {
         vpnManager.state = .disconnected
-        if case AppState.preparingConnection = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.preparingConnection = state {} else {
+            XCTFail("App state should be 'preparingConnection' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func userInitatedCancel() {
         appStateManager.cancelConnectionAttempt()
-        if case AppState.aborted(let userInitiated) = appStateManager.state {
+
+        let state = self.appStateManager.state
+        if case AppState.aborted(let userInitiated) = state {
             XCTAssert(userInitiated)
         } else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func initialError() {
         vpnManager.state = .error(NSError(code: 0, localizedDescription: ""))
-        if case AppState.disconnected = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.disconnected = state {} else {
+            XCTFail("App state should be 'disconnected' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func subsequentError() {
         vpnManager.state = .error(NSError(code: 0, localizedDescription: ""))
-        if case AppState.error(_) = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.error(_) = state {} else {
+            XCTFail("App state should be 'error' but it's \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
 
     func testFirstTimeConnecting() {
@@ -217,12 +258,16 @@ class AppStateManagerImplementationTests: XCTestCase {
         subsequentError()
     }
     
-    func testReaserting() {
+    func testReasserting() {
         vpnManager.state = .connecting(serverDescriptor)
         vpnManager.state = .reasserting(serverDescriptor)
-        if case AppState.connecting(_) = appStateManager.state {} else { XCTAssert(false) }
-        XCTAssertFalse(appStateManager.state.isConnected)
-        XCTAssert(appStateManager.state.isDisconnected)
+
+        let state = self.appStateManager.state
+        if case AppState.connecting(_) = state {} else {
+            XCTFail("State should be 'connecting' but is actually \(state.description)")
+        }
+        XCTAssertFalse(state.isConnected)
+        XCTAssert(state.isDisconnected)
     }
     
     func testSupressesInitialError() {

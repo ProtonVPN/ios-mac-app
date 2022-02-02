@@ -93,8 +93,8 @@ class CountryAnnotationViewModel {
         self.state = state
     }
     
-    func appStateChanged() {
-        if !appStateManager.state.isStable {
+    func appStateChanged(to appState: AppState) {
+        if !appState.isStable {
             state = .idle
         }
         viewStateChange?()
