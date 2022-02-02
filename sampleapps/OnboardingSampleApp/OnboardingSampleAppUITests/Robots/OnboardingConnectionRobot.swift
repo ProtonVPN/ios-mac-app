@@ -30,38 +30,47 @@ fileprivate let continueButton = "DoneButton"
 fileprivate let getPlusButton = "GetPlusButton"
 
 class OnboardingConnectionRobot {
+    let app: XCUIApplication
+    let verify: Verify
+
+    init(app: XCUIApplication) {
+        self.app = app
+        self.verify = Verify(app: app)
+    }
     
     func connectNow() -> OnboardingConnectionRobot {
         app.buttons[connectNowButton].tap()
-        return OnboardingConnectionRobot()
+        return OnboardingConnectionRobot(app: app)
     }
 
     func accessAllCountries() -> OnboardingConnectionRobot {
         app.buttons[purchasePlusButton].tap()
-        return OnboardingConnectionRobot()
+        return OnboardingConnectionRobot(app: app)
     }
     
     func nextStepA() -> OnboardingPaymentRobot {
         app.buttons[continueButton].tap()
-        return OnboardingPaymentRobot()
+        return OnboardingPaymentRobot(app: app)
     }
     
     func nextStepB() -> OnboardingMainRobot {
         app.buttons[continueButton].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
     
-    public let verify = Verify()
-    
     class Verify {
-        
+        let app: XCUIApplication
+
+        init(app: XCUIApplication) {
+            self.app = app
+        }
         func establichConnectionScreenIsShown() -> OnboardingConnectionRobot {
             XCTAssertTrue(app.staticTexts[establishConnectionTitle].exists)
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
             XCTAssertTrue(app.buttons[connectNowButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
             XCTAssertTrue(app.buttons[purchasePlusButton].isEnabled)
-            return OnboardingConnectionRobot()
+            return OnboardingConnectionRobot(app: app)
         }
         
         func connectionScreenIsShown() -> OnboardingConnectionRobot {
@@ -69,7 +78,7 @@ class OnboardingConnectionRobot {
             XCTAssertTrue(app.staticTexts[connectionDescription].exists)
             XCTAssertTrue(app.staticTexts[connectedTo].exists)
             XCTAssertTrue(app.buttons[continueButton].isEnabled)
-            return OnboardingConnectionRobot()
+            return OnboardingConnectionRobot(app: app)
         }
     }
 }

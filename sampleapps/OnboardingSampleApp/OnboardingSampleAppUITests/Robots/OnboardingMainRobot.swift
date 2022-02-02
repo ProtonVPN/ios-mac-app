@@ -19,8 +19,6 @@
 import Foundation
 import XCTest
 
-let app = XCUIApplication()
-
 fileprivate let onboardingA = "StartAButton"
 fileprivate let onboardingB = "StartBButton"
 fileprivate let takeATourButton = "Take a tour"
@@ -29,25 +27,35 @@ fileprivate let welcomeDescription = "Learn how to get the most out of ProtonVPN
 fileprivate let skipButton = "SkipButton"
 
 class OnboardingMainRobot {
+    let app: XCUIApplication
+    let verify: Verify
+
+    init(app: XCUIApplication) {
+        self.app = app
+        self.verify = Verify(app: app)
+    }
     
     func startOnboardingA() -> OnboardingMainRobot {
         app.buttons[onboardingA].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
     
     func startOnboardingB() -> OnboardingMainRobot {
         app.buttons[onboardingB].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
     
     func startUserOnboarding() -> OnboardingSlidesRobot {
         app.buttons[takeATourButton].tap()
-        return OnboardingSlidesRobot()
+        return OnboardingSlidesRobot(app: app)
     }
     
-    public let verify = Verify()
-    
     class Verify {
+        let app: XCUIApplication
+
+        init(app: XCUIApplication) {
+            self.app = app
+        }
         
         @discardableResult
         func welcomeScreenIsShown() -> OnboardingMainRobot {
@@ -55,14 +63,14 @@ class OnboardingMainRobot {
             XCTAssertTrue(app.staticTexts[welcomeDescription].exists)
             XCTAssertTrue(app.buttons[takeATourButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
-            return OnboardingMainRobot()
+            return OnboardingMainRobot(app: app)
         }
         
         @discardableResult
         func onboardingABScreen() -> OnboardingMainRobot {
             XCTAssertTrue(app.buttons[onboardingA].exists)
             XCTAssertTrue(app.buttons[onboardingA].exists)
-            return OnboardingMainRobot()
+            return OnboardingMainRobot(app: app)
         }
     }
 }

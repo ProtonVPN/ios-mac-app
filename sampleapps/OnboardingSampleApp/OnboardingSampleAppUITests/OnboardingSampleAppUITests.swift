@@ -34,7 +34,7 @@ final class OnboardingSampleAppUITests: XCTestCase {
         app.launch()
     }
 
-    private let onboardingMainRobot = OnboardingMainRobot()
+    private lazy var onboardingMainRobot = OnboardingMainRobot(app: app)
 
     func testStartOnboardingAConnectNowAndGetPlus() {
         onboardingMainRobot

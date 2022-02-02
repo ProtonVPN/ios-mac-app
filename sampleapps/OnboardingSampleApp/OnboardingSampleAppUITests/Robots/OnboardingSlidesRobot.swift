@@ -28,33 +28,42 @@ fileprivate let skipButton = "SkipButton"
 fileprivate let nextButton = "NextButton"
 
 class OnboardingSlidesRobot {
+    let app: XCUIApplication
+    let verify: Verify
+
+    init(app: XCUIApplication) {
+        self.app = app
+        self.verify = Verify(app: app)
+    }
     
     func nextOnboardingScreen() -> OnboardingSlidesRobot {
         app.buttons[nextButton].tap()
-        return OnboardingSlidesRobot() 
+        return OnboardingSlidesRobot(app: app)
     }
     
     func nextStepA() -> OnboardingConnectionRobot {
         app.buttons[nextButton].tap()
-        return OnboardingConnectionRobot()
+        return OnboardingConnectionRobot(app: app)
     }
     
     func nextStepB() -> OnboardingPaymentRobot {
         app.buttons[nextButton].tap()
-        return OnboardingPaymentRobot()
-    }
-    
-    public let verify = Verify()
+        return OnboardingPaymentRobot(app: app)
+    }    
     
     class Verify {
-        
+        let app: XCUIApplication
+
+        init(app: XCUIApplication) {
+            self.app = app
+        }
         @discardableResult
         func onboardingFirstSlideIsShown() -> OnboardingSlidesRobot {
             XCTAssertTrue(app.staticTexts[slideOneTitle].exists)
             XCTAssertTrue(app.staticTexts[slideOneDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
-            return OnboardingSlidesRobot()
+            return OnboardingSlidesRobot(app: app)
         }
         
         @discardableResult
@@ -63,7 +72,7 @@ class OnboardingSlidesRobot {
             XCTAssertTrue(app.staticTexts[slideTwoDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
-            return OnboardingSlidesRobot()
+            return OnboardingSlidesRobot(app: app)
         }
         
         @discardableResult
@@ -72,7 +81,7 @@ class OnboardingSlidesRobot {
             XCTAssertTrue(app.staticTexts[slideThreeDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
-            return OnboardingSlidesRobot()
+            return OnboardingSlidesRobot(app: app)
         }
     }
 }
