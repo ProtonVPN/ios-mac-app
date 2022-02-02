@@ -76,7 +76,7 @@ class OnboardingPaymentRobot {
 
         @discardableResult
         func accessAllCountriesScreenIsShown() -> OnboardingPaymentRobot {
-            XCTAssertTrue(app.staticTexts[plusFeature].exists)
+            XCTAssert(app.staticTexts[plusFeature].waitForExistence(timeout: 5))
             XCTAssertTrue(app.buttons[getPlusButton].isEnabled)
             XCTAssertTrue(app.buttons[useFreePlanButton].isEnabled)
             XCTAssertTrue(app.buttons[closeButton].isEnabled)
@@ -85,7 +85,7 @@ class OnboardingPaymentRobot {
         
         @discardableResult
         func congratulationsScreenIsShown() -> OnboardingPaymentRobot {
-            XCTAssertTrue(app.staticTexts[congratulationsTitle].exists)
+            XCTAssert(app.staticTexts[congratulationsTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[congratulationsDescription].exists)
             XCTAssertTrue(app.buttons[connectButton].isEnabled)
             return OnboardingPaymentRobot(app: app)

@@ -64,8 +64,9 @@ class OnboardingConnectionRobot {
         init(app: XCUIApplication) {
             self.app = app
         }
+
         func establichConnectionScreenIsShown() -> OnboardingConnectionRobot {
-            XCTAssertTrue(app.staticTexts[establishConnectionTitle].exists)
+            XCTAssert(app.staticTexts[establishConnectionTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[establishConnectionDescription].exists)
             XCTAssertTrue(app.buttons[connectNowButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
