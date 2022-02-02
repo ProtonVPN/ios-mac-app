@@ -61,8 +61,8 @@ class ConnectionBarViewController: UIViewController {
         }
         viewModel?.updateConnected = { [weak self] in self?.updateConnected() }
 
-        viewModel?.updateDisplayState()
-        viewModel?.updateState()
+        viewModel?.updateDisplayStateFromUIThread()
+        viewModel?.updateStateFromUIThread()
     }
     
     func embed(in parentViewController: UIViewController, with containerView: UIView) {

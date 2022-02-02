@@ -63,7 +63,9 @@ class VpnConnectionPreparer {
     
     private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, ports: [Int]) {
         if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, ports: ports) {
-            appStateManager.connect(withConfiguration: configuration)
+            DispatchQueue.main.async { [weak self] in
+                self?.appStateManager.connect(withConfiguration: configuration)
+            }
         }
     }
 
