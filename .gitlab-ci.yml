@@ -131,15 +131,19 @@ bugreport_ios_unit_tests:
   tags:
     - iOS_ARM
   script:
-    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
-    - fastlane ios_bureport_test
-    - fastlane/print-coverage.sh fastlane/test_output/BugReport.xcresult vpncore.framework
-  after_script:
-    - xcrun simctl delete $CI_JOB_ID
+    - cd libraries/BugReport/
+    - swift test --enable-code-coverage
+    - mkdir -p ../../fastlane/test_output
+    - XCODE_PATH=`xcode-select -p`
+    - ARCH="$(uname -m)"
+    - $XCODE_PATH/Toolchains/XcodeDefault.xctoolchain/usr/bin/llvm-cov export -instr-profile=.build/$ARCH-apple-macosx/debug/codecov/default.profdata .build/$ARCH-apple-macosx/debug/BugReportPackageTests.xctest/Contents/MacOS/BugReportPackageTests -format=lcov > ../../fastlane/test_output/BugReport.lcov
+    - cd -
+    - python3 `pip3 show lcov_cobertura | grep Location | cut -d " " -f2`/lcov_cobertura.py fastlane/test_output/BugReport.lcov -o fastlane/test_output/BugReport.xml
+    - Scripts/print-coverage-cobertura.sh fastlane/test_output/BugReport.xml
   artifacts:
     reports:
-      junit:
-        - fastlane/test_output/report.junit
+      cobertura:
+        - fastlane/test_output/BugReport.xml
         
 core_macos_unit_tests:
   stage: core_unit_tests
