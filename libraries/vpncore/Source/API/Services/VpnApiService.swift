@@ -26,7 +26,6 @@ public protocol VpnApiServiceFactory {
 }
 
 public class VpnApiService {
-    public var appStateManager: AppStateManager?
     private let networking: Networking
     
     public init(networking: Networking) {
@@ -34,7 +33,7 @@ public class VpnApiService {
     }
     
     // swiftlint:disable function_body_length cyclomatic_complexity
-    public func vpnProperties(lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
+    public func vpnProperties(isDisconnected: Bool, lastKnownIp: String?, completion: @escaping (Result<VpnProperties, Error>) -> Void) {
         let dispatchGroup = DispatchGroup()
         
         var rCredentials: VpnCredentials?
@@ -69,7 +68,7 @@ public class VpnApiService {
         
         // Only retrieve IP address when not connected to VPN
         dispatchGroup.enter()
-        if appStateManager?.state.isDisconnected ?? true {
+        if isDisconnected {
             // Just use last known IP if getting new one failed
             userIp { result in
                 switch result {

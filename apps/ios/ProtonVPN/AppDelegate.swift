@@ -32,6 +32,7 @@ import Foundation
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     private let container = DependencyContainer()
+    private lazy var vpnManager: VpnManagerProtocol = container.makeVpnManager()
     private lazy var navigationService: NavigationService = container.makeNavigationService()
     private lazy var propertiesManager: PropertiesManagerProtocol = container.makePropertiesManager()
     private lazy var appStateManager: AppStateManager = container.makeAppStateManager()
@@ -55,14 +56,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         AnnouncementButtonViewModel.shared = container.makeAnnouncementButtonViewModel()
 
         setupCoreIntegration()
-    
-        navigationService.launched()
+
+        vpnManager.whenReady(queue: DispatchQueue.main) {
+            self.navigationService.launched()
+        }
         
         container.makeMaintenanceManagerHelper().startMaintenanceManager()
         NotificationCenter.default.addObserver(self, selector: #selector(featureFlagsChanged), name: PropertiesManager.featureFlagsNotification, object: nil)
                 
         _ = container.makeDynamicBugReportManager() // Loads initial bug report config and sets up a timer to refresh it daily.
-        
         return true
     }
         
@@ -112,8 +114,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         // Otherwise just  check directly  the connection
-        let state = container.makeVpnManager().state
-        self.checkStuckConnection(state)
+        self.checkStuckConnection(vpnManager.state)
         
         // Refresh API announcements
         let announcementRefresher = self.container.makeAnnouncementRefresher() // This creates refresher that is persisted in DI container
@@ -199,9 +200,7 @@ fileprivate extension AppDelegate {
         }
         
         DispatchQueue.main.asyncAfter(deadline: .now() + AppConstants.Time.waitingTimeForConnectionStuck) {
-            let state = self.container.makeVpnManager().state
-            
-            guard case .connecting = state else {
+            guard case .connecting = self.vpnManager.state else {
                 propertiesManager.lastTimeForeground = nil
                 return
             }

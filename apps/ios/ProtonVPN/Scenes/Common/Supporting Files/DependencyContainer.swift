@@ -49,7 +49,8 @@ final class DependencyContainer {
     private lazy var openVpnFactory = OpenVpnProtocolFactory(bundleId: AppConstants.NetworkExtensions.openVpn, appGroup: appGroup, propertiesManager: makePropertiesManager())
     private lazy var vpnKeychain: VpnKeychainProtocol = VpnKeychain()
     private lazy var windowService: WindowService = WindowServiceImplementation(window: UIWindow(frame: UIScreen.main.bounds))
-    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(vpnApiService: makeVpnApiService(),
+    private lazy var appStateManager: AppStateManager = AppStateManagerImplementation(
+                                                                        vpnApiService: makeVpnApiService(),
                                                                         vpnManager: makeVpnManager(),
                                                                         networking: makeNetworking(),
                                                                         alertService: makeCoreAlertService(),

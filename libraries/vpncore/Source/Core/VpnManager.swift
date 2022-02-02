@@ -40,6 +40,10 @@ public protocol VpnManagerProtocol {
     func refreshManagers()
     func removeConfigurations(completionHandler: ((Error?) -> Void)?)
 
+    /// Called when `VpnManager` is ready and has finished querying the device's VPN connection state.
+    /// - Note: Only call this function once over the course of `VpnManager`'s lifetime.
+    func whenReady(queue: DispatchQueue, completion: @escaping () -> Void)
+
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
 }
@@ -90,6 +94,7 @@ public class VpnManager: VpnManagerProtocol {
     }
 
     public private(set) var state: VpnState = .invalid
+    public var readyGroup: DispatchGroup? = DispatchGroup()
 
     public var currentVpnProtocol: VpnProtocol? {
         didSet {
@@ -129,6 +134,8 @@ public class VpnManager: VpnManagerProtocol {
     }
     
     public init(ikeFactory: VpnProtocolFactory, openVpnFactory: VpnProtocolFactory, wireguardProtocolFactory: VpnProtocolFactory, appGroup: String, vpnAuthentication: VpnAuthentication, vpnKeychain: VpnKeychainProtocol, propertiesManager: PropertiesManagerProtocol, vpnStateConfiguration: VpnStateConfiguration, alertService: CoreAlertService? = nil, vpnCredentialsConfiguratorFactory: VpnCredentialsConfiguratorFactory) {
+        readyGroup?.enter()
+
         self.ikeProtocolFactory = ikeFactory
         self.openVpnProtocolFactory = openVpnFactory
         self.wireguardProtocolFactory = wireguardProtocolFactory
@@ -140,7 +147,7 @@ public class VpnManager: VpnManagerProtocol {
         self.vpnStateConfiguration = vpnStateConfiguration
         self.vpnCredentialsConfiguratorFactory = vpnCredentialsConfiguratorFactory
         
-        prepareManagers()
+        prepareManagers(forSetup: true)
     }
     
     public func isOnDemandEnabled(handler: @escaping (Bool) -> Void) {
@@ -565,8 +572,8 @@ public class VpnManager: VpnManagerProtocol {
      *  Upon initiation of VPN manager, VPN configuration from manager needs
      *  to be loaded in order for storing of further configurations to work.
      */
-    private func prepareManagers() {
-        vpnStateConfiguration.determineActiveVpnProtocol { [weak self] vpnProtocol in
+    private func prepareManagers(forSetup: Bool = false) {
+        vpnStateConfiguration.determineActiveVpnProtocol(defaultToIke: true) { [weak self] vpnProtocol in
             guard let self = self else {
                 return
             }
@@ -577,6 +584,17 @@ public class VpnManager: VpnManagerProtocol {
             NotificationCenter.default.removeObserver(self, name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
             NotificationCenter.default.addObserver(self, selector: #selector(self.vpnStatusChanged),
                                                    name: NSNotification.Name.NEVPNStatusDidChange, object: nil)
+
+            if forSetup {
+                self.readyGroup?.leave()
+            }
+        }
+    }
+
+    public func whenReady(queue: DispatchQueue, completion: @escaping () -> Void) {
+        self.readyGroup?.notify(queue: queue) {
+            completion()
+            self.readyGroup = nil
         }
     }
     

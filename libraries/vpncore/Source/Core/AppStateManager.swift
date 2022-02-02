@@ -82,15 +82,11 @@ public class AppStateManagerImplementation: AppStateManager {
     private var _state: AppState = .disconnected
     public private(set) var state: AppState {
         get {
-            #if DEBUG
-            dispatchPrecondition(condition: .onQueue(.main))
-            #endif
+            dispatchAssert(condition: .onQueue(.main))
             return _state
         }
         set {
-            #if DEBUG
-            dispatchPrecondition(condition: .onQueue(.main))
-            #endif
+            dispatchAssert(condition: .onQueue(.main))
             _state = newValue
             computeDisplayState()
         }
@@ -375,20 +371,14 @@ public class AppStateManagerImplementation: AppStateManager {
     
     private func startObserving() {
         vpnManager.stateChanged = { [weak self] in
-            guard Thread.isMainThread else {
-                return DispatchQueue.main.async {
-                    self?.vpnStateChanged()
-                }
+            executeOnUIThread {
+                self?.vpnStateChanged()
             }
-            self?.vpnStateChanged()
         }
         vpnManager.localAgentStateChanged = { [weak self] in
-            guard Thread.isMainThread else {
-                return DispatchQueue.main.async {
-                    self?.computeDisplayState()
-                }
+            executeOnUIThread {
+                self?.computeDisplayState()
             }
-            self?.computeDisplayState()
         }
         
         NotificationCenter.default.addObserver(self, selector: #selector(killSwitchChanged), name: type(of: propertiesManager).hasConnectedNotification, object: nil)
