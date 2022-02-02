@@ -57,9 +57,10 @@ class OnboardingSlidesRobot {
         init(app: XCUIApplication) {
             self.app = app
         }
+
         @discardableResult
         func onboardingFirstSlideIsShown() -> OnboardingSlidesRobot {
-            XCTAssertTrue(app.staticTexts[slideOneTitle].exists)
+            XCTAssert(app.staticTexts[slideOneTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[slideOneDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].firstMatch.isEnabled)
@@ -68,7 +69,7 @@ class OnboardingSlidesRobot {
         
         @discardableResult
         func onboardingSecondSlideIsShown() -> OnboardingSlidesRobot {
-            XCTAssertTrue(app.staticTexts[slideTwoTitle].exists)
+            XCTAssert(app.staticTexts[slideTwoTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[slideTwoDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
@@ -77,7 +78,7 @@ class OnboardingSlidesRobot {
         
         @discardableResult
         func onboardingThirdSlideIsShown() -> OnboardingSlidesRobot {
-            XCTAssertTrue(app.staticTexts[slideThreeTitle].exists)
+            XCTAssert(app.staticTexts[slideThreeTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[slideThreeDescription].exists)
             XCTAssertTrue(app.buttons[nextButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)

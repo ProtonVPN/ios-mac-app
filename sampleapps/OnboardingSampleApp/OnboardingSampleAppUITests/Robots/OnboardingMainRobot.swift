@@ -59,7 +59,7 @@ class OnboardingMainRobot {
         
         @discardableResult
         func welcomeScreenIsShown() -> OnboardingMainRobot {
-            XCTAssertTrue(app.staticTexts[welcomeTitle].exists)
+            XCTAssert(app.staticTexts[welcomeTitle].waitForExistence(timeout: 5))
             XCTAssertTrue(app.staticTexts[welcomeDescription].exists)
             XCTAssertTrue(app.buttons[takeATourButton].isEnabled)
             XCTAssertTrue(app.buttons[skipButton].isEnabled)
@@ -68,7 +68,7 @@ class OnboardingMainRobot {
         
         @discardableResult
         func onboardingABScreen() -> OnboardingMainRobot {
-            XCTAssertTrue(app.buttons[onboardingA].exists)
+            XCTAssert(app.buttons[onboardingA].waitForExistence(timeout: 5))
             XCTAssertTrue(app.buttons[onboardingA].exists)
             return OnboardingMainRobot(app: app)
         }
