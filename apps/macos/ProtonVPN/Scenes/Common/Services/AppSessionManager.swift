@@ -128,7 +128,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     private func retrieveProperties(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+        vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
+                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
             switch result {
             case let .success(properties):
                 guard let self = self else {

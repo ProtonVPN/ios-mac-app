@@ -139,7 +139,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
     }
     
     func loadDataWithoutLogin(success: @escaping () -> Void, failure: @escaping (Error) -> Void) {
-        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+        vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
+                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
             guard let self = self else {
                 return
             }
@@ -196,7 +197,8 @@ class AppSessionManagerImplementation: AppSessionRefresherImplementation, AppSes
 
         var vpnPropertiesError: Error?
         group.enter()
-        vpnApiService.vpnProperties(lastKnownIp: propertiesManager.userIp) { [weak self] result in
+        vpnApiService.vpnProperties(isDisconnected: appStateManager.state.isDisconnected,
+                                    lastKnownIp: propertiesManager.userIp) { [weak self] result in
             let fail = { (error: Error) in
                 vpnPropertiesError = error
                 group.leave()

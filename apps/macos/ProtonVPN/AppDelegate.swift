@@ -75,7 +75,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
             self.checkSystemExtension()
 
-            self.navigationService.launched()
+            self.container.makeVpnManager().whenReady(queue: DispatchQueue.main) {
+                self.navigationService.launched()
+            }
         }
     }
     

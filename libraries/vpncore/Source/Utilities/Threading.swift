@@ -31,3 +31,9 @@ public func executeOnUIThread(closure: @escaping () -> Void) {
         }
     }
 }
+
+public func dispatchAssert(condition: DispatchPredicate) {
+    #if DEBUG
+    dispatchPrecondition(condition: condition)
+    #endif
+}

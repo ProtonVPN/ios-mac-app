@@ -50,7 +50,10 @@ final class ConnectionBarViewModel {
         self.updateState(with: appStateManager.state)
     }
 
+    /// Should only be called from the UI thread, since it accesses the `appStateManager` directly and
+    /// does not get the state from a `displayStateChange` notification.
     func updateDisplayStateFromUIThread() {
+        dispatchAssert(condition: .onQueue(.main))
         updateDisplayState(with: appStateManager.displayState)
     }
 
@@ -72,7 +75,10 @@ final class ConnectionBarViewModel {
         }
     }
 
+    /// Should only be called from the UI thread, since it accesses the `appStateManager` directly and
+    /// does not get the state from a `stateChange` notification.
     func updateStateFromUIThread() {
+        dispatchAssert(condition: .onQueue(.main))
         updateState(with: appStateManager.state)
     }
     
