@@ -29,48 +29,58 @@ fileprivate let connectButton = "ConnectToPlusServerButton"
 fileprivate let skipButton = "SkipButton"
 
 class OnboardingPaymentRobot {
-    
+    let app: XCUIApplication
+    let verify: Verify
+
+    init(app: XCUIApplication) {
+        self.app = app
+        self.verify = Verify(app: app)
+    }
+
     func getPlus() -> OnboardingPaymentRobot {
         app.buttons[getPlusButton].tap()
-        return OnboardingPaymentRobot()
+        return OnboardingPaymentRobot(app: app)
     }
     
     func useFreePlanA() -> OnboardingMainRobot {
         app.buttons[useFreePlanButton].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
     
     func useFreePlanB() -> OnboardingConnectionRobot {
         app.buttons[useFreePlanButton].tap()
-        return OnboardingConnectionRobot()
+        return OnboardingConnectionRobot(app: app)
     }
     
     func plusPlanIsPurchased() -> OnboardingPaymentRobot {
         app.buttons[plusPurchased].tap()
-        return OnboardingPaymentRobot()
+        return OnboardingPaymentRobot(app: app)
     }
     
     func connectToAPlusServer() -> OnboardingMainRobot {
         app.buttons[connectButton].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
 
     func skip() -> OnboardingMainRobot {
         app.buttons[skipButton].tap()
-        return OnboardingMainRobot()
+        return OnboardingMainRobot(app: app)
     }
     
-    public let verify = Verify()
-    
     class Verify {
-        
+        let app: XCUIApplication
+
+        init(app: XCUIApplication) {
+            self.app = app
+        }
+
         @discardableResult
         func accessAllCountriesScreenIsShown() -> OnboardingPaymentRobot {
             XCTAssertTrue(app.staticTexts[plusFeature].exists)
             XCTAssertTrue(app.buttons[getPlusButton].isEnabled)
             XCTAssertTrue(app.buttons[useFreePlanButton].isEnabled)
             XCTAssertTrue(app.buttons[closeButton].isEnabled)
-            return OnboardingPaymentRobot()
+            return OnboardingPaymentRobot(app: app)
         }
         
         @discardableResult
@@ -78,7 +88,7 @@ class OnboardingPaymentRobot {
             XCTAssertTrue(app.staticTexts[congratulationsTitle].exists)
             XCTAssertTrue(app.staticTexts[congratulationsDescription].exists)
             XCTAssertTrue(app.buttons[connectButton].isEnabled)
-            return OnboardingPaymentRobot()
+            return OnboardingPaymentRobot(app: app)
         }
     }
 }
