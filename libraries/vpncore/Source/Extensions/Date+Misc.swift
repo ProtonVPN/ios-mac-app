@@ -24,8 +24,6 @@ import Foundation
 
 public extension Date {
     
-    static var tomorrow = Date().addingTimeInterval(.day)
-    
     /// Check if this date represnt time in future
     var isFuture: Bool {
         return self.timeIntervalSinceNow > 0
