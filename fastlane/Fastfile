@@ -50,16 +50,18 @@ lane :ios_app_ui_test do
     )
 end
 
-desc "Run all Core macOS tests"
-lane :macos_app_test do 
-  scan(
-      scheme: "ProtonVPN-macOS",
-      clean: true,
-      derived_data_path: $derived_data_path,
-      result_bundle: true,
-      skip_slack: true,
-      number_of_retries: 1
-  )  
+desc "Run all macOS app unit tests"
+lane :macos_app_unit_test do 
+  runMacOSTests(
+    skip_testing: "ProtonVPNmacOSUITests"
+  )
+end
+
+desc "Run all macOS app UI tests"
+lane :macos_app_ui_test do 
+  runMacOSTests(
+    skip_testing: "ProtonVPNmacOSTests"
+  )
 end
 
 desc "Run BugReport on iOS UI tests"
@@ -242,4 +244,16 @@ def self.runIOSTests(params)
     devices: [simulator_name],
     skip_testing: params[:skip_testing]
   )
-end  
+end
+
+def self.runMacOSTests(params)
+  scan(
+    scheme: "ProtonVPN-macOS",
+    clean: true,
+    derived_data_path: $derived_data_path,
+    result_bundle: true,
+    skip_slack: true,
+    number_of_retries: 1,
+    skip_testing: params[:skip_testing]
+  )  
+end
