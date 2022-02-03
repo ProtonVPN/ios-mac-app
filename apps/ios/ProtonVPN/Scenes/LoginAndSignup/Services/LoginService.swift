@@ -118,6 +118,21 @@ final class CoreLoginService {
 
         windowService.show(viewController: welcomeViewController)
     }
+
+    private func convertError(from error: Error) -> Error {
+        // try to get the real error from the Core response error
+        guard let responseError = error as? ResponseError, let underlyingError = responseError.underlyingError else {
+            return error
+        }
+
+        // if it is networking or tls error convert it to the vpncore
+        // to get a localized error message from the project's translations
+        if underlyingError.isNetworkError || underlyingError.isTlsError {
+            return NetworkError.error(forCode: underlyingError.code)
+        }
+
+        return underlyingError
+    }
 }
 
 // MARK: LoginErrorPresenter
@@ -127,6 +142,19 @@ extension CoreLoginService: LoginErrorPresenter {
         case .generic(_, _, ProtonVpnError.subuserWithoutSessions):
             alertService.push(alert: SubuserWithoutConnectionsAlert())
             return true
+        case let .generic(_, code: _, originalError: originalError):
+
+            // show a custom alert with a way to show the troubleshooting screen
+            // for networking and tls errors
+            let error = convertError(from: originalError)
+            if error.isTlsError || error.isNetworkError {
+                alertService.push(alert: UnreachableNetworkAlert(error: error, troubleshoot: { [weak self] in
+                    self?.alertService.push(alert: ConnectionTroubleshootingAlert())
+                }))
+                return true
+            }
+
+            return false
         default:
             return false
         }
