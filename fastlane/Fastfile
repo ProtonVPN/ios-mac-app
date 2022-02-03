@@ -43,7 +43,7 @@ lane :ios_app_unit_test do
   )
 end
 
-desc "Run all iOS app unit UI tests"
+desc "Run all iOS app UI tests"
 lane :ios_app_ui_test do
     runIOSTests(
       skip_testing: "ProtonVPNTests"
