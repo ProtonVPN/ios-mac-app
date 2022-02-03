@@ -22,9 +22,11 @@
 
 import UIKit
 import vpncore
+import ProtonCore_UIFoundations
 
 final class SettingsViewModel {
     typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory & SafeModePropertyProviderFactory & PaymentsApiServiceFactory & CouponViewModelFactory
+
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -40,7 +42,6 @@ final class SettingsViewModel {
     private lazy var safeModePropertyProvider: SafeModePropertyProvider = factory.makeSafeModePropertyProvider()
     private lazy var vpnManager: VpnManagerProtocol = factory.makeVpnManager()
     private lazy var vpnStateConfiguration: VpnStateConfiguration = factory.makeVpnStateConfiguration()
-    private lazy var planService: PlanService = factory.makePlanService()
     private lazy var appInfo: AppInfo = factory.makeAppInfo()
     private let protocolService: ProtocolService
     
@@ -81,16 +82,6 @@ final class SettingsViewModel {
         sections.append(bottomSection)
         
         return sections
-    }
-    
-    /// Open modal with new plan selection (for free/trial users)
-    func buySubscriptionAction() {
-        planService.presentPlanSelection()
-    }
-
-    /// Open screen with info about current plan
-    func manageSubscriptionAction() {
-        planService.presentSubscriptionManagement()
     }
     
     var isSessionEstablished: Bool {
@@ -188,48 +179,27 @@ final class SettingsViewModel {
     private var accountSection: TableViewSection {
         let username: String
         let accountPlanName: String
-        let allowUpgrade: Bool
-        let allowPlanManagement: Bool
         
         if let authCredentials = AuthKeychain.fetch(),
             let vpnCredentials = try? vpnKeychain.fetchCached() {
 
-            let accountPlan = vpnCredentials.accountPlan
             username = authCredentials.username
             accountPlanName = vpnCredentials.accountPlan.description
-
-            allowPlanManagement = accountPlan.paid
-            allowUpgrade = planService.allowUpgrade && !allowPlanManagement
 
         } else {
             username = LocalizedString.unavailable
             accountPlanName = LocalizedString.unavailable
-            allowUpgrade = false
-            allowPlanManagement = false
-        }
-        
-        var cells: [TableViewCellModel] = [
-            .staticKeyValue(key: LocalizedString.username, value: username),
-            .staticKeyValue(key: LocalizedString.subscriptionPlan, value: accountPlanName)
-        ]
-        if allowUpgrade {
-            cells.append(TableViewCellModel.button(title: LocalizedString.upgradeSubscription, accessibilityIdentifier: "Upgrade Subscription", color: .textAccent(), handler: { [buySubscriptionAction] in
-                buySubscriptionAction()
-            }))
-        }
-        if allowPlanManagement {
-            cells.append(TableViewCellModel.button(title: LocalizedString.manageSubscription, accessibilityIdentifier: "Manage subscription", color: .textAccent(), handler: { [weak self] in
-                self?.manageSubscriptionAction()
-            }))
         }
 
-        if propertiesManager.featureFlags.promoCode, let credentials = try? vpnKeychain.fetchCached(), credentials.canUsePromoCode {
-            cells.append(TableViewCellModel.button(title: LocalizedString.useCoupon, accessibilityIdentifier: "Use coupon", color: .textAccent(), handler: { [weak self] in
-                self?.pushCouponViewController()
-            }))
+        let cell = TableViewCellModel.pushAccountDetails(
+            initials: NSAttributedString(string: username.initials(), attributes: .CaptionStrong),
+            username: NSAttributedString(string: username, attributes: .DefaultSmall),
+            plan: NSAttributedString(string: accountPlanName, attributes: .CaptionWeak)
+        ) { [weak self] in
+            self?.pushSettingsAccountViewController()
         }
 
-        return TableViewSection(title: LocalizedString.account, cells: cells)
+        return TableViewSection(title: LocalizedString.account, cells: [cell])
     }
     
     private var securitySection: TableViewSection {
@@ -238,8 +208,8 @@ final class SettingsViewModel {
         var cells: [TableViewCellModel] = []
 
         let protocolValue = propertiesManager.smartProtocol ? LocalizedString.smartTitle : vpnProtocol.localizedString
-        cells.append(.pushKeyValue(key: LocalizedString.protocol, value: protocolValue, handler: { [protocolCellAction] in
-            protocolCellAction()
+        cells.append(.pushKeyValue(key: LocalizedString.protocol, value: protocolValue, handler: { [weak self] in
+            self?.protocolCellAction()
         }))
         cells.append(.tooltip(text: LocalizedString.smartProtocolDescription))
 
@@ -577,6 +547,13 @@ final class SettingsViewModel {
         }
     }
     
+    private func pushSettingsAccountViewController() {
+        guard let pushHandler = pushHandler, let accountViewController = settingsService.makeSettingsAccountViewController() else {
+            return
+        }
+        pushHandler(accountViewController)
+    }
+    
     private func pushProtocolViewController() {
         let vpnProtocolViewModel = VpnProtocolViewModel(connectionProtocol: propertiesManager.connectionProtocol, featureFlags: propertiesManager.featureFlags, alertService: alertService)
         vpnProtocolViewModel.protocolChanged = { [self] connectionProtocol in
@@ -618,9 +595,5 @@ final class SettingsViewModel {
     
     private func logOut() {
         appSessionManager.logOut(force: false, reason: nil)
-    }
-
-    private func pushCouponViewController() {
-        pushHandler?(CouponViewController(viewModel: factory.makeCouponViewModel()))
     }
 }

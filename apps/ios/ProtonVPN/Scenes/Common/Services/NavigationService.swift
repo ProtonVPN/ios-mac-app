@@ -51,6 +51,7 @@ protocol ProfileService {
 
 protocol SettingsService {
     func makeSettingsViewController() -> SettingsViewController?
+    func makeSettingsAccountViewController() -> SettingsAccountViewController?
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController
     func makeLogSelectionViewController() -> LogSelectionViewController
     func makeBatteryUsageViewController() -> BatteryUsageViewController
@@ -289,6 +290,7 @@ extension NavigationService: ProfileService {
 }
 
 extension NavigationService: SettingsService {
+    
     func makeSettingsViewController() -> SettingsViewController? {
         if let settingsViewController = mainStoryboard.instantiateViewController(withIdentifier: String(describing: SettingsViewController.self)) as? SettingsViewController {
             settingsViewController.viewModel = SettingsViewModel(factory: factory, protocolService: self)
@@ -297,6 +299,11 @@ extension NavigationService: SettingsService {
         }
         
         return nil
+    }
+    
+    func makeSettingsAccountViewController() -> SettingsAccountViewController? {
+        guard let connectionBar = makeConnectionBarViewController() else { return nil }
+        return SettingsAccountViewController(viewModel: SettingsAccountViewModel(factory: factory), connectionBar: connectionBar)
     }
     
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {

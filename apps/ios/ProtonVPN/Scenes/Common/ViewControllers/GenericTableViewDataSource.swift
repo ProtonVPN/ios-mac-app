@@ -24,22 +24,36 @@ import UIKit
 
 enum TableViewCellModel {
     
-    case pushStandard(title: String, handler: (() -> Void) )
-    case pushKeyValue(key: String, value: String, handler: (() -> Void) )
-    case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: (() -> Void) )
+    case pushStandard(title: String, handler: () -> Void)
+    case pushKeyValue(key: String, value: String, handler: () -> Void)
+    case pushKeyValueAttributed(key: String, value: NSAttributedString, handler: () -> Void)
+    case pushAccountDetails(initials: NSAttributedString,
+                            username: NSAttributedString,
+                            plan: NSAttributedString,
+                            handler: () -> Void)
     case titleTextField(title: String, textFieldText: String, textFieldPlaceholder: String, textFieldDelegate: UITextFieldDelegate)
     case staticKeyValue(key: String, value: String)
     case staticPushKeyValue(key: String, value: String, handler: (() -> Void))
     case toggle(title: String, on: () -> Bool, enabled: Bool, handler: ((Bool, @escaping (Bool) -> Void) -> Void)?)
     case button(title: String, accessibilityIdentifier: String?, color: UIColor, handler: (() -> Void) )
+    case buttonWithLoadingIndicator(title: String,
+                                    accessibilityIdentifier: String?,
+                                    color: UIColor,
+                                    controller: ButtonWithLoadingIndicatorController)
     case tooltip(text: String)
     case instructionStep(number: Int, text: String)
-    case checkmarkStandard(title: String, checked: Bool, handler: (() -> Bool))
+    case checkmarkStandard(title: String, checked: Bool, handler: () -> Bool)
     case colorPicker(viewModel: ColorPickerViewModel)
-    case invertedKeyValue(key: String, value: String, handler: (() -> Void) )
-    case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: (() -> Void) )
+    case invertedKeyValue(key: String, value: String, handler: () -> Void)
+    case attributedKeyValue(key: NSAttributedString, value: NSAttributedString, handler: () -> Void)
     case textWithActivityCell(title: String, textColor: UIColor, backgroundColor: UIColor, showActivity: Bool)
     case attributedTooltip(text: NSAttributedString)
+}
+
+protocol ButtonWithLoadingIndicatorController: AnyObject {
+    var startLoading: () -> Void { get set }
+    var stopLoading: () -> Void { get set }
+    func onPressed()
 }
 
 struct TableViewSection {
@@ -79,6 +93,9 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
         tableView.register(CheckmarkTableViewCell.nib, forCellReuseIdentifier: CheckmarkTableViewCell.identifier)
         tableView.register(ColorPickerTableViewCell.nib, forCellReuseIdentifier: ColorPickerTableViewCell.identifier)
         tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
+        tableView.register(TextWithActivityCell.nib, forCellReuseIdentifier: TextWithActivityCell.identifier)
+        tableView.register(AccountDetailsTableViewCell.nib, forCellReuseIdentifier: AccountDetailsTableViewCell.identifier)
+        tableView.register(ButtonWithLoadingTableViewCell.nib, forCellReuseIdentifier: ButtonWithLoadingTableViewCell.identifier)
     }
     
     public func update(rows: [IndexPath: TableViewCellModel]) {
@@ -269,6 +286,24 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             cell.tooltipLabel.attributedText = attributedText
 
             return cell
+        
+        case let .pushAccountDetails(initials, username, plan, handler):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: AccountDetailsTableViewCell.identifier) as? AccountDetailsTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.setup(initials: initials, username: username, plan: plan, handler: handler)
+            
+            return cell
+            
+        case let .buttonWithLoadingIndicator(title, accessibilityIdentifier, color, controller):
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: ButtonWithLoadingTableViewCell.identifier) as? ButtonWithLoadingTableViewCell else {
+                return UITableViewCell()
+            }
+            
+            cell.setup(title: title, accessibilityIdentifier: accessibilityIdentifier, color: color, controller: controller)
+            
+            return cell
         }
     }
     // swiftlint:enable cyclomatic_complexity function_body_length
@@ -284,9 +319,6 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        guard !(indexPath.row == 0 && indexPath.section == 0) else {
-            return UIConstants.connectionStatusCellHeight
-        }
         switch sections[indexPath.section].cells[indexPath.row] {
         case .tooltip, .attributedTooltip:
             return -1 // allows for self sizing
@@ -296,6 +328,8 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             return viewModel.height
         case .textWithActivityCell:
             return -1 // allows for self sizing
+        case .pushAccountDetails:
+            return -1
         default:
             return UIConstants.cellHeight
         }
@@ -318,6 +352,12 @@ class GenericTableViewDataSource: NSObject, UITableViewDataSource, UITableViewDe
             onSelectionChange?()
         case .staticPushKeyValue:
             guard let cell = cell as? KeyValueTableViewCell else { return }
+            
+            cell.select()
+            onSelectionChange?()
+            
+        case .pushAccountDetails:
+            guard let cell = cell as? AccountDetailsTableViewCell else { return }
             
             cell.select()
             onSelectionChange?()

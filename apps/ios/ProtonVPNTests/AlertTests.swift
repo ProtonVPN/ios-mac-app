@@ -157,6 +157,10 @@ fileprivate class SettingsServiceMock: SettingsService {
         return nil
     }
     
+    func makeSettingsAccountViewController() -> SettingsAccountViewController? {
+        return nil
+    }
+    
     func makeExtensionsSettingsViewController() -> WidgetSettingsViewController {
         let viewModel = WidgetSettingsViewModel()
         return WidgetSettingsViewController(viewModel: viewModel)

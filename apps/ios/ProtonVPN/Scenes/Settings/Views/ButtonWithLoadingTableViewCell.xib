@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="19529" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="19519"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Lq0-Kj-a0U" customClass="ButtonWithLoadingTableViewCell" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+            <autoresizingMask key="autoresizingMask"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Lq0-Kj-a0U" id="0e8-JW-Pbs">
+                <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="medium" translatesAutoresizingMaskIntoConstraints="NO" id="IIP-9Z-hZt">
+                        <rect key="frame" x="384" y="12" width="20" height="20"/>
+                    </activityIndicatorView>
+                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="B4k-Nv-Nvn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="44"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <inset key="contentEdgeInsets" minX="32" minY="0.0" maxX="32" maxY="0.0"/>
+                        <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                        <state key="normal" title="Button"/>
+                        <connections>
+                            <action selector="onPressed:" destination="Lq0-Kj-a0U" eventType="touchUpInside" id="s12-yQ-lCr"/>
+                        </connections>
+                    </button>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="trailing" secondItem="IIP-9Z-hZt" secondAttribute="trailing" constant="10" id="6ne-zz-TD5"/>
+                    <constraint firstItem="B4k-Nv-Nvn" firstAttribute="centerX" secondItem="0e8-JW-Pbs" secondAttribute="centerX" id="MPF-Ok-aJN"/>
+                    <constraint firstAttribute="bottom" secondItem="B4k-Nv-Nvn" secondAttribute="bottom" id="Mui-kL-7fJ"/>
+                    <constraint firstItem="B4k-Nv-Nvn" firstAttribute="top" secondItem="0e8-JW-Pbs" secondAttribute="top" id="QHn-RL-FgE"/>
+                    <constraint firstItem="IIP-9Z-hZt" firstAttribute="centerY" secondItem="0e8-JW-Pbs" secondAttribute="centerY" id="r4y-0t-1Nl"/>
+                    <constraint firstItem="B4k-Nv-Nvn" firstAttribute="width" secondItem="0e8-JW-Pbs" secondAttribute="width" id="wpq-e7-LLx"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="button" destination="B4k-Nv-Nvn" id="GPp-iH-a6c"/>
+                <outlet property="loading" destination="IIP-9Z-hZt" id="gns-e4-oJh"/>
+            </connections>
+            <point key="canvasLocation" x="132" y="93"/>
+        </tableViewCell>
+    </objects>
+</document>

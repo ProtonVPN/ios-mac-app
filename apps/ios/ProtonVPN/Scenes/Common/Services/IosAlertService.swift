@@ -53,6 +53,13 @@ extension IosAlertService: CoreAlertService {
         log.debug("Alert shown: \(String(describing: type(of: alert)))", category: .ui)
 
         switch alert {
+        
+        case is AccountDeletionErrorAlert:
+            showDefaultSystemAlert(alert)
+            
+        case is AccountDeletionWarningAlert:
+            showDefaultSystemAlert(alert)
+            
         case let appUpdateRequiredAlert as AppUpdateRequiredAlert:
             show(appUpdateRequiredAlert)
             
