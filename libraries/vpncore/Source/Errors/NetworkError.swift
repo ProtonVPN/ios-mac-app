@@ -21,7 +21,7 @@
 
 import Foundation
 
-class NetworkError {
+public class NetworkError {
     
     private static let requestTimedOut = NSError(code: NetworkErrorCode.timedOut,
                                                  localizedDescription: LocalizedString.neRequestTimedOut)
@@ -34,7 +34,7 @@ class NetworkError {
     private static let tls = NSError(code: NetworkErrorCode.tls,
                                      localizedDescription: LocalizedString.errorMitmDescription)
     
-    static func error(forCode code: Int) -> NSError {
+    public static func error(forCode code: Int) -> NSError {
         let error: NSError
         switch code {
         case NetworkErrorCode.timedOut:
