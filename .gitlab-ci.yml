@@ -193,8 +193,7 @@ ios_ui_tests:
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  when: 
-    - manual
+  when: manual
   artifacts:
     reports:
       junit:
@@ -209,8 +208,7 @@ onboarding_ui_tests:
     - fastlane onboarding_test
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  when: 
-    - manual
+  when: manual
   artifacts:
     name: "onboarding-tests-$CI_COMMIT_TAG"
     when: always
@@ -231,8 +229,7 @@ ios_bugreport_ui_tests:
     - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleiOSApp.xcresult "BugReport " 2
   after_script:
     - xcrun simctl delete $CI_JOB_ID
-  when: 
-    - manual
+  when: manual
   artifacts:
     reports:
       junit:
@@ -245,8 +242,7 @@ macos_bugreport_ui_tests:
   script:
     - fastlane macos_bugreport_ui_test
     - fastlane/print-coverage.sh fastlane/test_output/BugReportSampleMacOSApp.xcresult "BugReport " 1
-  when: 
-    - manual
+  when: manual
   artifacts:
     reports:
       junit:
@@ -300,8 +296,7 @@ macos_ui_tests:
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_Mac_Development_PP.provisionprofile
     - rm -f ~/Library/MobileDevice/Provisioning\ Profiles/ProtonVPN_OpenVPN_Development_PP.provisionprofile
     - fastlane delete_macos_keychain
-  when:
-    - manual
+  when: manual
   tags:
     - macOS_ARM
   artifacts:
