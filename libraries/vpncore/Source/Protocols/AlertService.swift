@@ -119,6 +119,32 @@ extension SystemAlert {
     }
 }
 
+public class AccountDeletionErrorAlert: SystemAlert {
+    public var title: String? = LocalizedString.accountDeletionError
+    public var message: String?
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(message: String) {
+        self.message = message
+    }
+}
+
+public class AccountDeletionWarningAlert: SystemAlert {
+    
+    public var title: String? = LocalizedString.vpnConnectionActive
+    public var message: String? = LocalizedString.accountDeletionConnectionWarning
+    public var actions = [AlertAction]()
+    public let isError: Bool = true
+    public var dismiss: (() -> Void)?
+    
+    public init(confirmHandler: @escaping () -> Void, cancelHandler: @escaping () -> Void) {
+        actions.append(AlertAction(title: LocalizedString.continue, style: .confirmative, handler: confirmHandler))
+        actions.append(AlertAction(title: LocalizedString.cancel, style: .cancel, handler: cancelHandler))
+    }
+}
+
 /// App should update to be able to use API
 public class AppUpdateRequiredAlert: SystemAlert {
     public var title: String? = LocalizedString.updateRequired

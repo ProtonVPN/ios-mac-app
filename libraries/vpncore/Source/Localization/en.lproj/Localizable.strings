@@ -1072,6 +1072,12 @@
 /* Account tab button in settings window (MacOS and in several modals (both MacOS and iOS */
 "_account" = "Account";
 
+/* Alert title for account deletion error */
+"_account_deletion_error" = "Deleting your account will end your VPN session.";
+
+/* iOS: Message explaining that deleting account closes the VPN connection */
+"_account_deletion_connection_warning" = "Deleting your account will end your VPN session.";
+
 /* MacOS: General tab in setting window */
 "_general" = "General";
 

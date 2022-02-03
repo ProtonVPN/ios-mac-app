@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="20037" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="20020"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" accessoryType="disclosureIndicator" indentationWidth="10" id="63f-lv-RGn" customClass="AccountDetailsTableViewCell" customModule="ProtonVPN" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="70"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="63f-lv-RGn" id="0Rp-dr-Yjf">
+                <rect key="frame" x="0.0" y="0.0" width="385.5" height="70"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="acL-8p-qUV">
+                        <rect key="frame" x="16" y="0.0" width="353.5" height="70"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IGP-Vv-yIY">
+                                <rect key="frame" x="0.0" y="21" width="28" height="28"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="LB" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="none" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yKl-ue-Gu4">
+                                        <rect key="frame" x="4" y="4" width="20" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="White"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" name="MobileBrandNorm"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="28" id="7fN-TR-lXC"/>
+                                    <constraint firstAttribute="height" constant="28" id="elM-AG-PLq"/>
+                                    <constraint firstItem="yKl-ue-Gu4" firstAttribute="centerX" secondItem="IGP-Vv-yIY" secondAttribute="centerX" id="ffl-nl-MDq"/>
+                                    <constraint firstItem="yKl-ue-Gu4" firstAttribute="centerY" secondItem="IGP-Vv-yIY" secondAttribute="centerY" id="uo2-BF-AJL"/>
+                                </constraints>
+                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="CBu-lB-jLo">
+                                <rect key="frame" x="44" y="12" width="309.5" height="46"/>
+                                <subviews>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Ka-Pj-fqG">
+                                        <rect key="frame" x="0.0" y="0.0" width="309.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="TextNorm"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="252" verticalHuggingPriority="252" horizontalCompressionResistancePriority="752" verticalCompressionResistancePriority="752" text="Label" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZXf-LV-mrU">
+                                        <rect key="frame" x="0.0" y="23" width="309.5" height="23"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <color key="textColor" name="TextWeak"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="CBu-lB-jLo" firstAttribute="height" secondItem="acL-8p-qUV" secondAttribute="height" constant="-24" id="89z-uc-AfR"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstAttribute="top" secondItem="acL-8p-qUV" secondAttribute="top" id="3SC-ut-hXt"/>
+                    <constraint firstItem="acL-8p-qUV" firstAttribute="trailing" secondItem="0Rp-dr-Yjf" secondAttribute="trailing" constant="-16" id="7xu-fd-Dq0"/>
+                    <constraint firstAttribute="leading" secondItem="acL-8p-qUV" secondAttribute="leading" constant="-16" id="Tqe-Bo-BBA"/>
+                    <constraint firstAttribute="bottom" secondItem="acL-8p-qUV" secondAttribute="bottom" id="vs7-nQ-aPI"/>
+                </constraints>
+            </tableViewCellContentView>
+            <connections>
+                <outlet property="initialsRect" destination="IGP-Vv-yIY" id="nf3-Vl-cJP"/>
+                <outlet property="initialsText" destination="yKl-ue-Gu4" id="klz-lJ-JKR"/>
+                <outlet property="plan" destination="ZXf-LV-mrU" id="oYt-NN-FgQ"/>
+                <outlet property="username" destination="9Ka-Pj-fqG" id="Sg4-yR-gf5"/>
+            </connections>
+            <point key="canvasLocation" x="-142.02898550724638" y="75"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <namedColor name="MobileBrandNorm">
+            <color red="0.42745098039215684" green="0.29019607843137257" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextNorm">
+            <color red="0.090000003576278687" green="0.093999996781349182" blue="0.10999999940395355" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="TextWeak">
+            <color red="0.44699999690055847" green="0.46299999952316284" blue="0.50199997425079346" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+        <namedColor name="White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

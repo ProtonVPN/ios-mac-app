@@ -31,6 +31,7 @@ class UIConstants {
     static let cellHeight: CGFloat = 52.5
     static let headerHeight: CGFloat = 56
     static let countriesHeaderHeight: CGFloat = 40
+    static let connectionBarHeight: CGFloat = 44
     
     // MARK: - Messages
     static let messageOptions: [GSMessageOption] = [

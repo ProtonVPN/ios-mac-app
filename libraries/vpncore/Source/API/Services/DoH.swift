@@ -77,7 +77,8 @@ public class DoHVPN: DoH, ServerConfig {
 
     public var accountHost: String {
         if defaultHost == liveURL {
-            return "https://account.protonvpn.com"
+            // the account deletion is deployed on account.protonmail.com
+            return "https://account.protonmail.com"
         }
 
         // some test servers are hosted on a vpn subdomain that is not used for the account host
