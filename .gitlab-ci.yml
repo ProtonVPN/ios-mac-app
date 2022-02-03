@@ -127,7 +127,7 @@ core_ios_unit_tests:
       junit:
         - fastlane/test_output/report.junit
 
-bugreport_ios_unit_tests:
+bugreport_unit_tests:
   stage: core_unit_tests
   tags:
     - iOS_ARM
