@@ -171,7 +171,7 @@ ios_unit_tests:
     - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
     - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
     - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
-    - fastlane ios_app_test
+    - fastlane ios_app_unit_test
     - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
   after_script:
     - xcrun simctl delete $CI_JOB_ID
@@ -179,6 +179,26 @@ ios_unit_tests:
     reports:
       junit:
         - fastlane/test_output/report.junit
+
+ios_ui_tests:
+  stage: apps_ui_tests
+  tags:
+    - iOS_ARM
+  script:
+    - xcrun simctl create ${CI_JOB_ID} com.apple.CoreSimulator.SimDeviceType.iPhone-11 `xcrun simctl list runtimes | grep iOS | awk '{print $NF}'`
+    - cd apps/ios/ProtonVPN/ && ../../../libraries/vpncore/Source/prepare_obfuscated_constants.sh && cd ../../../
+    - cd apps/ios/ProtonVPNUITests/ && ../../../Scripts/UITests/prepare_credentials.sh && cd ../../../
+    - defaults write com.apple.iphonesimulator ConnectHardwareKeyboard 0 # Fixed UI tests failing on secure field
+    - fastlane ios_app_ui_test
+    - fastlane/print-coverage.sh fastlane/test_output/ProtonVPN-iOS.xcresult ProtonVPN.app
+  after_script:
+    - xcrun simctl delete $CI_JOB_ID
+  when: 
+    - manual
+  artifacts:
+    reports:
+      junit:
+        - fastlane/test_output/report.junit        
 
 onboarding_ui_tests:
   stage: apps_ui_tests

@@ -36,16 +36,17 @@ lane :macos_core_test do
     clean: true)
 end
 
-desc "Run all iOS app tests"
-lane :ios_app_test do
-    simulator_name = ENV["CI_JOB_ID"]
-    scan(
-      scheme: "ProtonVPN-iOS",
-      derived_data_path: $derived_data_path,
-      clean: true,
-      result_bundle: true,
-      skip_slack: true,
-      devices: [simulator_name]
+desc "Run all iOS app unit tests"
+lane :ios_app_unit_test do
+  runIOSTests(
+    skip_testing: "ProtonVPNUITests"
+  )
+end
+
+desc "Run all iOS app unit UI tests"
+lane :ios_app_ui_test do
+    runIOSTests(
+      skip_testing: "ProtonVPNTests"
     )
 end
 
@@ -229,3 +230,16 @@ lane :mac_update_build_numbers do
   )
 
 end
+
+def self.runIOSTests(params)
+  simulator_name = ENV["CI_JOB_ID"]
+  scan(
+    scheme: "ProtonVPN-iOS",
+    derived_data_path: $derived_data_path,
+    clean: true,
+    result_bundle: true,
+    skip_slack: true,
+    devices: [simulator_name],
+    skip_testing: params[:skip_testing]
+  )
+end  
