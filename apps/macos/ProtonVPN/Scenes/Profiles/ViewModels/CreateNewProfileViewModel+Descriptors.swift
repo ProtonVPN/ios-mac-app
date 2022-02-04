@@ -22,15 +22,16 @@
 
 import Foundation
 import vpncore
+import AppKit
 
 extension CreateNewProfileViewModel {
-    
+
     internal func countryDescriptor(for country: CountryModel) -> NSAttributedString {
         let imageAttributedString = embededImageIcon(named: country.countryCode.lowercased() + "-plain")
         let countryString = ("  " + country.country)
         let nameAttributedString: NSAttributedString
         if country.lowestTier <= userTier {
-            nameAttributedString = countryString.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            nameAttributedString = countryString.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         } else {
             nameAttributedString = (countryString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
         }
@@ -39,16 +40,16 @@ extension CreateNewProfileViewModel {
     
     internal func serverDescriptor(for server: ServerModel) -> NSAttributedString {
         if server.isSecureCore {
-            let via = "via  ".attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let via = "via  ".attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
             let entryCountryFlag = embededImageIcon(named: server.entryCountryCode.lowercased() + "-plain")
-            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            let entryCountry = ("  " + server.entryCountry).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
             return NSAttributedString.concatenate(via, entryCountryFlag, entryCountry)
         } else {
             let countryFlag = embededImageIcon(named: server.countryCode.lowercased() + "-plain")
             let serverString = "  " + server.name
             let serverDescriptor: NSAttributedString
             if server.tier <= userTier {
-                serverDescriptor = serverString.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+                serverDescriptor = serverString.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
             } else {
                 serverDescriptor = (serverString + " (\(LocalizedString.upgradeRequired))").attributed(withColor: .protonGreyOutOfFocus(), fontSize: 16, alignment: .left)
             }
@@ -70,7 +71,7 @@ extension CreateNewProfileViewModel {
         }
         
         let imageAttributedString = embededImageIcon(named: imageName)
-        let nameAttributedString = ("  " + name).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        let nameAttributedString = ("  " + name).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         return NSAttributedString.concatenate(imageAttributedString, nameAttributedString)
     }
     

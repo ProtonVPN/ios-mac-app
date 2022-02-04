@@ -70,7 +70,21 @@ extension NSColor {
                        blue: 253/255,
                        alpha: 1.0)
     }
+
+    class func dropDownWhiteColor() -> NSColor {
+        if #available(macOS 12, *) {
+            return .protonOffWhite()
+        }
+        return .protonWhite()
+    }
     
+    class func protonOffWhite() -> NSColor {
+        return NSColor(red: 254/255,
+                       green: 255/255,
+                       blue: 255/255,
+                       alpha: 1.0)
+    }
+
     class func protonWhite() -> NSColor {
         return NSColor(red: 255/255,
                        green: 255/255,
