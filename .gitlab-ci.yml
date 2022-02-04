@@ -390,6 +390,9 @@ i18n-crowdin-upload:
   variables:
       I18N_SYNC_CROWDIN_PROJECT: 'apple-vpn'
   extends: .i18n-sync-crowdin-shared-apple
+  before_script:
+    - sh fastlane/adjust-for-strings-export.sh
+    - !reference [.i18n-sync-crowdin-shared-apple, before_script]
 
 i18n-crowdin-download:
   stage: bot
