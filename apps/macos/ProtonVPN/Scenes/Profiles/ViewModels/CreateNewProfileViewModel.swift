@@ -241,7 +241,7 @@ class CreateNewProfileViewModel {
             title = LocalizedString.tor
         }
         
-        return title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return title.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
     }
 
     func vpnProtocol(for vpnProtocol: VpnProtocol) -> NSAttributedString {
@@ -262,7 +262,7 @@ class CreateNewProfileViewModel {
             title = LocalizedString.wireguard
         }
 
-        return title.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return title.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
     }
     
     func country(for typeIndex: Int, index countryIndex: Int) -> NSAttributedString {
