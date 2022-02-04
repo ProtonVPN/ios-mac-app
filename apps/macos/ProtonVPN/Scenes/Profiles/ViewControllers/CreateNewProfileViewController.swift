@@ -301,7 +301,7 @@ final class CreateNewProfileViewController: NSViewController {
             errors = appendedWithSeparator(string: errors)
             errors += LocalizedString.profileNameIsRequired
         }
-        if nameTextField.stringValue.count > 18 {
+        if nameTextField.stringValue.count > 25 {
             errors = appendedWithSeparator(string: errors)
             errors += LocalizedString.profileNameIsTooLong
         }
