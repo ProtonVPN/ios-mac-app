@@ -27,29 +27,89 @@ class BugReportSampleiOSAppUITests: XCTestCase {
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        let app = XCUIApplication()
+        app.launchArguments = ["UITests"]
+        app.launch()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testFilledInFormCanBeSent() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launchArguments = ["UITests"]
-        app.launch()
-        
-        app.tables.buttons["Something else_"].tap()
-        
-        let email = app.textFields["Single line input _email"]
-        email.tap()
-        email.typeText("email@protonmail.com")
-        
-        let description = app.textViews["Multiline input What went wrong?"]
-        description.tap()
-        description.typeText("A description")
-        
-        app.buttons["Send report"].tap()
-        
-    }
-}
+    private let bugReportRobot = BugReportRobot()
+
+     func testSendBugReportSomethingElse() {
+         
+         let email = "success@email.com"
+         let description = "Description"
+              
+         bugReportRobot
+             .verify.reportAnIssueScreenIsShown()
+             .reportSomethingElseIssue()
+             .verify.bugReportFormIsShown()
+             .enterEmailAddress(email)
+             .enterDescription(description)
+             .sendBugReport()
+             .verify.successMessageIsShown()
+     }
+     
+     func testSendBugReportBrowsingSpeed() {
+
+         let email = "success@email.com"
+         let text = "Description"
+         
+         bugReportRobot
+             .verify.reportAnIssueScreenIsShown()
+             .reportBrowsingSpeedIssue()
+             .verify.browsingSpeedScreenIsShown()
+             .contactUs()
+             .verify.bugReportFormIsShown()
+             .enterEmailAddress(email)
+             .fillDetails(text)
+             .toggleSendLogs()
+             .sendBugReport()
+             .verify.successMessageIsShown()
+     }
+     
+     func testSendBugReportWithError() {
+         
+         let email = "success@email"
+         let description = "Description"
+         
+         bugReportRobot
+             .verify.reportAnIssueScreenIsShown()
+             .reportSomethingElseIssue()
+             .verify.bugReportFormIsShown()
+             .enterEmailAddress(email)
+             .enterDescription(description)
+             .sendBugReport()
+             .verify.errorMessageIsShown()
+             .sendBugReport()
+             .openTroubleshootScreen()
+             .verify.troubleshootButtonIsClicked()
+     }
+     
+     func testBugReportBackButton() {
+         
+         bugReportRobot
+             .verify.reportAnIssueScreenIsShown()
+             .reportUsingTheAppIssue()
+             .verify.usingTheAppScreenIsShown()
+             .contactUs()
+             .verify.bugReportFormIsShown()
+             .backToPreviousScreen()
+             .verify.usingTheAppScreenIsShown()
+             .backToPreviousScreen()
+             .verify.reportAnIssueScreenIsShown()
+     }
+     
+     func testCanelBugReport() {
+         bugReportRobot
+             .verify.reportAnIssueScreenIsShown()
+             .reportUsingTheAppIssue()
+             .verify.usingTheAppScreenIsShown()
+             .cancelReport()
+             .verify.reportAnIssueScreenIsShown()
+     }
+ }

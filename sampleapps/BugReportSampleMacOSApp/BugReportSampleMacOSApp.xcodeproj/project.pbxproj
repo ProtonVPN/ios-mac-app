@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B2109BD627ABFDA6004D8A16 /* BugReportRobot.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2109BD527ABFDA6004D8A16 /* BugReportRobot.swift */; };
 		E964BC1027A3EBD400986FBD /* BugReportSampleMacOSAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E964BC0F27A3EBD400986FBD /* BugReportSampleMacOSAppUITests.swift */; };
 		E9771DAB27A2DEAD00C1E3D6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9771DAA27A2DEAD00C1E3D6 /* AppDelegate.swift */; };
 		E9771DAD27A2DEAD00C1E3D6 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9771DAC27A2DEAD00C1E3D6 /* ViewController.swift */; };
@@ -27,6 +28,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		B2109BD527ABFDA6004D8A16 /* BugReportRobot.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportRobot.swift; sourceTree = "<group>"; };
 		E964BC0D27A3EBD400986FBD /* BugReportSampleMacOSAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BugReportSampleMacOSAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E964BC0F27A3EBD400986FBD /* BugReportSampleMacOSAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BugReportSampleMacOSAppUITests.swift; sourceTree = "<group>"; };
 		E9771DA727A2DEAD00C1E3D6 /* BugReportSampleMacOSApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BugReportSampleMacOSApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				E964BC0F27A3EBD400986FBD /* BugReportSampleMacOSAppUITests.swift */,
+				B2109BD527ABFDA6004D8A16 /* BugReportRobot.swift */,
 			);
 			path = BugReportSampleMacOSAppUITests;
 			sourceTree = "<group>";
@@ -216,6 +219,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E964BC1027A3EBD400986FBD /* BugReportSampleMacOSAppUITests.swift in Sources */,
+				B2109BD627ABFDA6004D8A16 /* BugReportRobot.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -346,7 +350,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -401,7 +405,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 11.6;
+				MACOSX_DEPLOYMENT_TARGET = 10.15;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = macosx;
