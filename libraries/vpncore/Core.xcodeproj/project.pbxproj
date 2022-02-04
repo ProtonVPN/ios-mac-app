@@ -410,7 +410,6 @@
 		E939EEEE27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEEF27955EFB006E4305 /* TimeInterval+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E939EEED27955EFB006E4305 /* TimeInterval+Extension.swift */; };
 		E939EEF3279561EE006E4305 /* BugReport in Frameworks */ = {isa = PBXBuildFile; productRef = E939EEF2279561EE006E4305 /* BugReport */; };
-		E939EEF4279561F9006E4305 /* BugReport in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E939EEF1279561B1006E4305 /* BugReport */; };
 		E952B2A226525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E952B2A426525929000BD5D4 /* WireguardProtocolFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = E952B2A126525929000BD5D4 /* WireguardProtocolFactory.swift */; };
 		E95E8E742696F76F001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E732696F76F001AE3FA /* CertificateConstants.swift */; };
@@ -558,7 +557,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E939EEF4279561F9006E4305 /* BugReport in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
