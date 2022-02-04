@@ -21,6 +21,8 @@ import BugReport
 
 class ViewController: UIViewController {
     
+    @IBOutlet private var statusLabel: UILabel!
+    
     private var bugReportDelegate: BugReportDelegate?
 
     override func viewDidLoad() {
@@ -30,8 +32,9 @@ class ViewController: UIViewController {
         bugReportDelegate = MockDelegate(
             model: model,
             sendCallback: { form, result in
+                self.statusLabel.text = "Sent"
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                    if form.email == "Ok" {
+                    if form.email == "success@email.com" {
                         result(.success(Void()))
                     } else {
                         result(.failure(NSError(domain: "domain", code: 153, userInfo: [NSLocalizedDescriptionKey: "Just and error"])))
@@ -39,10 +42,12 @@ class ViewController: UIViewController {
                 }
             }, finishedCallback: {
                 print("finishedCallback")
+                self.statusLabel.text = "Finished"
                 self.dismiss(animated: true, completion: nil)
                 
             }, troubleshootingCallback: {
                 print("troubleshootingCallback")
+                self.statusLabel.text = "Troubleshooting"
                 self.dismiss(animated: true, completion: nil)
             })
     }

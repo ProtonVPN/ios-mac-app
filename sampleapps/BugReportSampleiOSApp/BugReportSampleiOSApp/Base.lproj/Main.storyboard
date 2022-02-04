@@ -24,16 +24,30 @@
                                     <action selector="openBugReport" destination="BYZ-38-t0r" eventType="touchUpInside" id="2od-sO-CYO"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Status label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9Re-CI-flV">
+                                <rect key="frame" x="20" y="471" width="374" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="XS6-X6-qxK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="97O-Kh-E6J"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9Re-CI-flV" secondAttribute="trailing" constant="20" id="BxQ-Nj-9lC"/>
+                            <constraint firstItem="9Re-CI-flV" firstAttribute="top" secondItem="XS6-X6-qxK" secondAttribute="bottom" constant="7.5" id="Cc2-gl-xXA"/>
+                            <constraint firstItem="9Re-CI-flV" firstAttribute="centerX" secondItem="XS6-X6-qxK" secondAttribute="centerX" id="QOB-Xh-uqR"/>
+                            <constraint firstItem="9Re-CI-flV" firstAttribute="top" secondItem="XS6-X6-qxK" secondAttribute="bottom" constant="7.5" id="bDD-y0-nVh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XS6-X6-qxK" secondAttribute="trailing" constant="20" id="eXq-Nu-sOe"/>
                             <constraint firstItem="XS6-X6-qxK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="lwO-7S-k9m"/>
                             <constraint firstItem="XS6-X6-qxK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="oZY-53-94P"/>
+                            <constraint firstItem="9Re-CI-flV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ouK-vv-Gdr"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="statusLabel" destination="9Re-CI-flV" id="cpq-KA-bWk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

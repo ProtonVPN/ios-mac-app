@@ -27,29 +27,78 @@ class BugReportSampleMacOSAppUITests: XCTestCase {
         continueAfterFailure = false
 
         // In UI tests it’s important to set the initial state - such as interface orientation - required for your tests before they run. The setUp method is a good place to do this.
+        
+        let app = XCUIApplication()
+        app.launch()
     }
 
     override func tearDownWithError() throws {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
-
-    func testFormIsOpened() throws {
-        // UI tests must launch the application that they test.
-        let app = XCUIApplication()
-        app.launch()
-
-        let windowMain = app.windows["Window"]
-        let bugReportWindow = app.windows["Bug report"]
+    
+    private let bugReportRobot = BugReportRobot()
         
-        windowMain.buttons["Bug report"].click()
-        
-        bugReportWindow.buttons["Something else_"].click()
-        
-        let email = bugReportWindow.textFields["Single line input _email"]
-        email.click()
-        email.click() // Stupid hack that has to be used before we find a way to speed up animations in UI tests
-        email.typeText("email@protonmail.com")
-        
+    func testSendBugReportSomethingElse() {
+            
+        let email = "success@email.com"
+        let text = "Desccription"
+            
+        bugReportRobot
+            .openBugReport()
+            .reportSomethingElseIssue()
+            .verify.bugReportFormIsShown()
+            .enterEmailAddress(email)
+            .enterDescription(text)
+            .sendBugReport()
+            .verify.successMessageIsShown()
     }
-
+        
+    func testSendBugReportBrowsingSpeed() {
+            
+        let email = "success@email.com"
+        let text = "Description"
+            
+        bugReportRobot
+            .openBugReport()
+            .reportBrowsingSpeedIssue()
+            .verify.browsingSpeedScreenIsShown()
+            .contactUs()
+            .verify.bugReportFormIsShown()
+            .enterEmailAddress(email)
+            .fillDetails(text)
+            .toggleSendLogs()
+            .sendBugReport()
+            .verify.successMessageIsShown()
+    }
+        
+    func testSendBugReportWithError() {
+            
+        let email = "success@email"
+        let description = "Description"
+        
+        bugReportRobot
+            .openBugReport()
+            .reportSomethingElseIssue()
+            .verify.bugReportFormIsShown()
+            .enterEmailAddress(email)
+            .enterDescription(description)
+            .sendBugReport()
+            .openTroubleshootScreen()
+            .verify.troubleshootButtonIsClicked()
+            .verify.errorMessageIsShown()
+    }
+        
+    func testBugReportBackButton() {
+            
+        bugReportRobot
+            .openBugReport()
+            .reportUsingTheAppIssue()
+            .verify.usingTheAppScreenIsShown()
+            .contactUs()
+            .verify.bugReportFormIsShown()
+            .backToPreviousScreen()
+            .verify.usingTheAppScreenIsShown()
+            .backToPreviousScreen()
+            .verify.reportAnIssueScreenIsShown()
+    }
 }
