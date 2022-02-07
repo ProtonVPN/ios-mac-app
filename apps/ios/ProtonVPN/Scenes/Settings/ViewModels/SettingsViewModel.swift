@@ -335,7 +335,7 @@ final class SettingsViewModel {
                                 approve()
                                 self.vpnManager.set(natType: type)
                             case .withReconnect:
-                                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: "XX", confirmHandler: {
+                                self.alertService.push(alert: ReconnectOnActionAlert(actionTitle: LocalizedString.natTypeChangeTitle, confirmHandler: {
                                     approve()
                                     log.info("Connection will restart after VPN feature change", category: .connectionConnect, event: .trigger, metadata: ["feature": "natType"])
                                     self.vpnGateway?.reconnect(with: type)
