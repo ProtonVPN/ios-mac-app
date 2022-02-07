@@ -24,7 +24,7 @@ import UIKit
 import vpncore
 
 final class SettingsViewModel {
-    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & PaidFeatureServiceFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory
+    typealias Factory = AppStateManagerFactory & AppSessionManagerFactory & VpnGatewayFactory & CoreAlertServiceFactory & SettingsServiceFactory & VpnKeychainFactory & ConnectionStatusServiceFactory & NetShieldPropertyProviderFactory & VpnManagerFactory & VpnStateConfigurationFactory & PlanServiceFactory & PropertiesManagerFactory & AppInfoFactory & ProfileManagerFactory & NATTypePropertyProviderFactory
     private let factory: Factory
     
     private let maxCharCount = 20
@@ -33,7 +33,6 @@ final class SettingsViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var alertService: AlertService = factory.makeCoreAlertService()
     private lazy var settingsService: SettingsService = factory.makeSettingsService()
-    private lazy var paidFeatureService: PaidFeatureService = factory.makePaidFeatureService()
     private lazy var vpnKeychain: VpnKeychainProtocol = factory.makeVpnKeychain()
     private lazy var connectionStatusService: ConnectionStatusService = factory.makeConnectionStatusService()
     private lazy var netShieldPropertyProvider: NetShieldPropertyProvider = factory.makeNetShieldPropertyProvider()
@@ -547,12 +546,17 @@ final class SettingsViewModel {
         pushHandler?(settingsService.makeCustomServerViewController())
     }
     
-    private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, callback: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
-        pushHandler?(paidFeatureService.makePaidFeatureSelectionViewController(selectedFeature: selectedFeature, allFeatures: NetShieldType.allCases, title: LocalizedString.netshieldTitle, callback: callback, onChange: onChange))
+    private func pushNetshieldSelectionViewController(selectedFeature: NetShieldType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NetShieldType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NetShieldType>.FeatureChangeCallback) {
+        pushHandler?(makePaidFeatureSelectionViewController(title: LocalizedString.netshieldTitle, allFeatures: NetShieldType.allCases, selectedFeature: selectedFeature, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange))
     }
 
-    private func pushNATTypeSelectionViewController(selectedFeature: NATType, callback: @escaping PaidFeatureSelectionViewModel<NATType>.ApproveCallback, onChange: @escaping PaidFeatureSelectionViewModel<NATType>.FeatureChangeCallback) {
-        pushHandler?(paidFeatureService.makePaidFeatureSelectionViewController(selectedFeature: selectedFeature, allFeatures: NATType.allCases, title: LocalizedString.natTypeTitle, callback: callback, onChange: onChange))
+    private func pushNATTypeSelectionViewController(selectedFeature: NATType, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<NATType>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<NATType>.FeatureChangeCallback) {
+        pushHandler?(makePaidFeatureSelectionViewController(title: LocalizedString.natTypeTitle, allFeatures: NATType.allCases, selectedFeature: selectedFeature, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange))
+    }
+
+    private func makePaidFeatureSelectionViewController<T>(title: String, allFeatures: [T], selectedFeature: T, shouldSelectNewValue: @escaping PaidFeatureSelectionViewModel<T>.ApproveCallback, onFeatureChange: @escaping PaidFeatureSelectionViewModel<T>.FeatureChangeCallback) -> PaidFeatureSelectionViewController<T> where T: PaidFeature {
+        let viewModel = PaidFeatureSelectionViewModel(title: title, allFeatures: allFeatures, selectedFeature: selectedFeature, factory: factory, shouldSelectNewValue: shouldSelectNewValue, onFeatureChange: onFeatureChange)
+        return PaidFeatureSelectionViewController(viewModel: viewModel)
     }
 
     private func reportBug() {
