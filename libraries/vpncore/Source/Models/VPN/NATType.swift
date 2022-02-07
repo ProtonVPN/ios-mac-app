@@ -37,14 +37,3 @@ public enum NATType: Codable {
 
     static let defaultValue: NATType = .strictNAT
 }
-
-extension NATType: CustomStringConvertible {
-    public var description: String {
-        switch self {
-        case .strictNAT:
-            return "Strict NAT"
-        case .moderateNAT:
-            return "Moderate NAT"
-        }
-    }
-}
