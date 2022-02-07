@@ -19,6 +19,7 @@
 import Foundation
 
 class MockBugReportDelegate: BugReportDelegate {
+
     var model: BugReportModel
     var prefilledEmail: String = ""
 
@@ -42,5 +43,18 @@ class MockBugReportDelegate: BugReportDelegate {
 
     func troubleshootingRequired() {
         troubleshootingCallback?()
+    }
+    var updateAvailable: Bool = true
+
+    func checkUpdateAvailability() {
+        updateAvailabilityChanged?(updateAvailable)
+    }
+
+    var updateAvailabilityChanged: ((Bool) -> Void)?
+
+    var updateAppCallback: (() -> Void)?
+
+    func updateApp() {
+        updateAppCallback?()
     }
 }

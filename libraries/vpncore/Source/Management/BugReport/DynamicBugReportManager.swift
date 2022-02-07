@@ -52,13 +52,15 @@ public class DynamicBugReportManager {
     private var propertiesManager: PropertiesManagerProtocol
     private var logFilesProvider: LogFilesProvider
     private var timer: Timer?
+    private let updateChecker: UpdateChecker
     
-    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, logFilesProvider: LogFilesProvider) {
+    public init(api: ReportsApiService, storage: DynamicBugReportStorage, alertService: CoreAlertService, propertiesManager: PropertiesManagerProtocol, logFilesProvider: LogFilesProvider, updateChecker: UpdateChecker) {
         self.api = api
         self.storage = storage
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.logFilesProvider = logFilesProvider
+        self.updateChecker = updateChecker
         
         model = storage.fetch() ?? getDefaultConfig()
         setupRefresh()
@@ -131,6 +133,9 @@ public class DynamicBugReportManager {
         return report
     }
     
+    // BugReportDelegate
+    public var updateAvailabilityChanged: ((Bool) -> Void)?
+    
 }
 
 extension DynamicBugReportManager: BugReportDelegate {
@@ -156,5 +161,14 @@ extension DynamicBugReportManager: BugReportDelegate {
     public func troubleshootingRequired() {
         alertService.push(alert: ConnectionTroubleshootingAlert())
     }
+
+    public func updateApp() {
+        return updateChecker.startUpdate()
+    }
     
+    public func checkUpdateAvailability() {
+        self.updateChecker.isUpdateAvailable { available in
+            self.updateAvailabilityChanged?(available)
+        }
+    }
 }

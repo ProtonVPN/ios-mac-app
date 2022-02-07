@@ -1,5 +1,5 @@
 //
-//  Created on 2022-01-13.
+//  Created on 2022-02-07.
 //
 //  Copyright (c) 2022 Proton AG
 //
@@ -19,13 +19,12 @@
 import Foundation
 
 @available(iOS 14.0, *)
-struct BugReportEnvironment {
-    public weak var bugReportDelegate: BugReportDelegate?
-    public var assetsBundle = Bundle.module
-    #if os(iOS)
-    public var iOSUpdateViewModel = IOSUpdateViewModel(updateIsAvailable: false)
-    #endif
-}
+public final class IOSUpdateViewModel: ObservableObject {
 
-@available(iOS 14.0, *)
-var Current = BugReportEnvironment()
+    @Published var updateIsAvailable: Bool
+
+    init(updateIsAvailable: Bool) {
+        self.updateIsAvailable = updateIsAvailable
+    }
+
+}

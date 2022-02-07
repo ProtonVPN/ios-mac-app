@@ -15,7 +15,7 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
-
+#if os(iOS)
 import SwiftUI
 
 /// Second step of Report Bug flow.
@@ -25,12 +25,16 @@ struct QuickFixesiOSList: View {
 
     let category: Category
 
+    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
     let assetsBundle = Current.assetsBundle
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-        VStack(alignment: .leading) {
+        VStack(alignment: .leading, spacing: 0) {
+
+            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
             StepProgress(step: 2, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                 .padding(.bottom)
 
@@ -135,3 +139,5 @@ struct QuickFixesList_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+
+#endif

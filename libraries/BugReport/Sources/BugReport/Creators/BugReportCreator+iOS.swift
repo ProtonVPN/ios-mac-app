@@ -33,6 +33,13 @@ public final class iOSBugReportCreator: BugReportCreator { // swiftlint:disable:
     public func createBugReportViewController(delegate: BugReportDelegate, colors: Colors?) -> UIViewController? {
         Current.bugReportDelegate = delegate
 
+        delegate.updateAvailabilityChanged = { available in
+            withAnimation {
+                Current.iOSUpdateViewModel.updateIsAvailable = available
+            }
+        }
+        delegate.checkUpdateAvailability()
+
         let controller = UIHostingController(
             rootView: BugReportiOSView()
                 .environment(\.colors, colors ?? Colors())

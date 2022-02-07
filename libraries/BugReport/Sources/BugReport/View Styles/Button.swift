@@ -69,6 +69,21 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 }
 
+@available(iOS 14.0, macOS 11, *)
+struct UpdateButtonStyle: ButtonStyle {
+    @Environment(\.colors) var colors: Colors
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .padding(.horizontal, 16)
+            .padding(.vertical, 8)
+            .foregroundColor(colors.textPrimary)
+            .background(colors.backgroundUpdateButton)
+            .cornerRadius(8)
+            .opacity(configuration.isPressed ? 0.5 : 1)
+    }
+}
+
 // MARK: - Mac only styles
 
 @available(iOS 14.0, macOS 11, *)

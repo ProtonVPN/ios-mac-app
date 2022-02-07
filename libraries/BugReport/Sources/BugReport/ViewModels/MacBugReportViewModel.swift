@@ -23,6 +23,7 @@ import SwiftUI
 final class MacBugReportViewModel: ObservableObject {
 
     @Published var page: Page
+    @Published var updateIsAvailable: Bool
 
     var model: BugReportModel
     var category: Category?
@@ -41,6 +42,7 @@ final class MacBugReportViewModel: ObservableObject {
     init(model: BugReportModel) {
         self.model = model
         page = .categories(model.categories)
+        updateIsAvailable = false
     }
 
     enum Page {

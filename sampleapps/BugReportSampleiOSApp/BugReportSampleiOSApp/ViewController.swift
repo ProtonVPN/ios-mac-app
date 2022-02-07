@@ -21,15 +21,16 @@ import BugReport
 
 class ViewController: UIViewController {
     
+    @IBOutlet private var updateSwitch: UISwitch!
     @IBOutlet private var statusLabel: UILabel!
     
-    private var bugReportDelegate: BugReportDelegate?
+    private var bugReportDelegate: MockBugReportDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        bugReportDelegate = MockDelegate(
+        bugReportDelegate = MockBugReportDelegate(
             model: model,
             sendCallback: { form, result in
                 self.statusLabel.text = "Sent"
@@ -49,12 +50,20 @@ class ViewController: UIViewController {
                 print("troubleshootingCallback")
                 self.statusLabel.text = "Troubleshooting"
                 self.dismiss(animated: true, completion: nil)
+            }, updateAppCallback: {
+                print("updateAppCallback")
+                self.updateSwitch.isOn = false
+                self.updateSwitchChanged()
+                self.statusLabel.text = "Update"
             })
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        openBugReport()
+    }
+    
+    @IBAction private func updateSwitchChanged() {
+        bugReportDelegate?.updateAvailable = updateSwitch.isOn
     }
 
     @IBAction private func openBugReport() {
@@ -78,15 +87,17 @@ class ViewController: UIViewController {
 
 }
 
-class MockDelegate: BugReportDelegate {
+class MockBugReportDelegate: BugReportDelegate {
+    
     var model: BugReportModel
     var prefilledEmail: String = ""
     
-    public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?) {
+    public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?, updateAppCallback: (() -> Void)?) {
         self.model = model
         self.sendCallback = sendCallback
         self.finishedCallback = finishedCallback
         self.troubleshootingCallback = troubleshootingCallback
+        self.updateAppCallback = updateAppCallback
     }
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
@@ -106,4 +117,22 @@ class MockDelegate: BugReportDelegate {
     func troubleshootingRequired() {
         troubleshootingCallback?()
     }
+    
+    var updateAvailable: Bool = true {
+        didSet {
+            updateAvailabilityChanged?(updateAvailable)
+        }
+    }
+
+    var updateAppCallback: (() -> Void)?
+    
+    func updateApp() {
+        updateAppCallback?()
+    }
+    
+    func checkUpdateAvailability() {
+        updateAvailabilityChanged?(updateAvailable)
+    }
+    
+    var updateAvailabilityChanged: ((Bool) -> Void)?
 }

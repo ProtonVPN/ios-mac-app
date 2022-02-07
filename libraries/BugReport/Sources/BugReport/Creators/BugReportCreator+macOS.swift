@@ -35,7 +35,15 @@ public final class MacOSBugReportCreator: BugReportCreator {
 
         Current.bugReportDelegate = delegate
 
-        let controller = NSHostingController(rootView: BugReportNavigationView(viewModel: MacBugReportViewModel(model: delegate.model))
+        let viewModel = MacBugReportViewModel(model: delegate.model)
+        delegate.updateAvailabilityChanged = { available in
+            withAnimation {
+                viewModel.updateIsAvailable = available
+            }
+        }
+        delegate.checkUpdateAvailability()
+
+        let controller = NSHostingController(rootView: BugReportNavigationView(viewModel: viewModel)
                                 .frame(width: 600, height: 650, alignment: .center)
                                 .environment(\.colors, colors ?? Colors())
                                 .preferredColorScheme(.dark)

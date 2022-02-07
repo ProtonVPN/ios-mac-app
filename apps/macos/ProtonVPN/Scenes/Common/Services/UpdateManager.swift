@@ -120,6 +120,10 @@ class UpdateManager: NSObject {
         return nil
     }
     
+    private var newestAppCastItem: SUAppcastItem? {
+        return appcast?.items.first // We put newest version on top of the file
+    }
+    
     private let suDateFormatter: DateFormatter = DateFormatter()
     
 }
@@ -141,6 +145,19 @@ extension UpdateManager: SPUUpdaterDelegate {
         let url = updateFileSelector.updateFileUrl
         log.info("FeedURL is \(url)", category: .appUpdate)
         return url
+    }
+    
+}
+
+extension UpdateManager: UpdateChecker {
+    
+    func isUpdateAvailable(_ callback: (Bool) -> Void) {
+        guard let item = newestAppCastItem, let currentBuild = currentBuild else {
+            callback(false)
+            return
+        }
+        // Using `SUStandardVersionComparator` from Sparkle lib here, so result will be exactly the same as during the update process.
+        callback(SUStandardVersionComparator().compareVersion(currentBuild, toVersion: item.versionString) == .orderedAscending)
     }
     
 }

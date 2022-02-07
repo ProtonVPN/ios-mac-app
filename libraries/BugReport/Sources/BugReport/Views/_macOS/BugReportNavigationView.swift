@@ -51,9 +51,9 @@ struct BugReportNavigationView: View {
             if case .result(let error) = viewModel.page {
                 ResultView(
                     error: error,
-                    finishCallback: { viewModel.form?.finished() /*self.viewModel.finished()*/ },
+                    finishCallback: { viewModel.form?.finished() },
                     retryCallback: { withAnimation { self.viewModel.back() } },
-                    troubleshootCallback: { viewModel.form?.troubleshootingTapped() /*self.viewModel.troubleshootingTapped()*/ }
+                    troubleshootCallback: { viewModel.form?.troubleshootingTapped() }
                 )
                     .padding(.horizontal, horizontalPadding)
                     .padding(.bottom, verticalPadding)
@@ -68,6 +68,8 @@ struct BugReportNavigationView: View {
                     StepProgress(step: viewModel.step, steps: viewModel.steps, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                         .padding(.bottom)
                         .transition(.opacity)
+
+                    UpdateAvailableView(isActive: $viewModel.updateIsAvailable)
                 }
                 .padding(.horizontal, horizontalPadding)
 
