@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Includi i log delle app e i dettagli di sistema";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Segnala un bug";
+"_report_bug" = "Segnala un problema";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Fornendo i seguenti dettagli, il nostro team può identificare il tuo problema e una possibile soluzione con maggiori possibilità e tempi più brevi:\n• Registri dell'app ProtonVPN\n• Registri OpenVPN\n• Registri WireGuard";

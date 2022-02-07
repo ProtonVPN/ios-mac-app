@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Uygulama günlüğü kayıtları ve sistem bilgileri katılsın";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Hata bildir";
+"_report_bug" = "Bir sorun bildirin";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Aşağıdaki bilgileri verdiğinizde ekibimiz, sorununuzu ve olası çözümünü daha yüksek olasılıkla ve daha kısa sürede bulabilir:\n• ProtonVPN uygulama günlüğü kayıtları\n• OpenVPN günlüğü kayıtları\n• WireGuard günlüğü kayıtları";

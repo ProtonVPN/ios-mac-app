@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "App-Protokolle und Systemdetails einbeziehen";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Bug melden";
+"_report_bug" = "Problem melden";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Mit den folgenden Angaben kann unser Team Ihr Problem besser identifizieren und eine mögliche Lösung mit höherer Wahrscheinlichkeit und kürzerer Zeit finden:\n• ProtonVPN-Anwendungsprotokolle\n• OpenVPN-Protokolle\n• WireGuard-Protokolle";

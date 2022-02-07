@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Termasuk log aplikasi dan detail sistem";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Melaporkan kesalahan";
+"_report_bug" = "Laporkan masalah";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Apabila Anda melampirkan berkas-berkas berikut, tim kami akan dapat mengenali dan menyelesaikan masalah yang Anda hadapi dengan lebih cepat dan akurat:\n• Berkas-berkas log ProtonVPN\n• Berkas-berkas log OpenVPN \n• Berkas-berkas log WireGuard";
