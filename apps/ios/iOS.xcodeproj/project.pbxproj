@@ -238,9 +238,6 @@
 		D5209C7B26CBE05A00AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */; };
 		D5209C7C26CBE06D00AD14EA /* OVPNiOSCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */; };
 		D5209C7D26CBE07200AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */; };
-		D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
-		D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */; };
-		D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
 		D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
 		D550A19E25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */ = {isa = PBXBuildFile; fileRef = D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */; };
@@ -270,8 +267,6 @@
 		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
-		D5924D8A250F853E00DCFF15 /* NetshieldSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */; };
-		D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */; };
 		D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
@@ -455,6 +450,10 @@
 		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
 		F314140F27B11DC3007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314140E27B11DC3007424E9 /* NATType.swift */; };
+		F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
+		F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
+		F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
+		F314142127B17698007424E9 /* PaidFeatureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314142027B17698007424E9 /* PaidFeatureService.swift */; };
 		F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07126DFB0B900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -782,9 +781,6 @@
 		D5209C6F26CBBCF900AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = IOSVpnCredentialsConfiguratorFactory.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/IOSVpnCredentialsConfiguratorFactory.swift; sourceTree = "<group>"; };
 		D5209C7326CBC87E00AD14EA /* OVPNiOSCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = OVPNiOSCredentialsConfigurator.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/OVPNiOSCredentialsConfigurator.swift; sourceTree = "<group>"; };
 		D5209C7726CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = WGiOSVpnCredentialsConfigurator.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/VPN/WGiOSVpnCredentialsConfigurator.swift; sourceTree = "<group>"; };
-		D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewController.swift; sourceTree = "<group>"; };
-		D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NetshieldSelectionViewController.xib; sourceTree = "<group>"; };
-		D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldSelectionViewModel.swift; sourceTree = "<group>"; };
 		D54D331D264A97CB000BEF04 /* vpncore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = vpncore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D550A19C25651ABF00FE2D54 /* TimeInterval+Render.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TimeInterval+Render.swift"; sourceTree = "<group>"; };
 		D550A1A525651B6700FE2D54 /* TimeIntervalTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeIntervalTests.swift; sourceTree = "<group>"; };
@@ -997,6 +993,10 @@
 		EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
 		F314140E27B11DC3007424E9 /* NATType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NATType.swift; path = ../../../../libraries/vpncore/Source/Models/VPN/NATType.swift; sourceTree = "<group>"; };
+		F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/PaidFeatureSelectionViewModel.swift; sourceTree = "<group>"; };
+		F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/PaidFeatureSelectionViewController.swift; sourceTree = "<group>"; };
+		F314141D27B174C5007424E9 /* PaidFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeature.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Models/PaidFeature.swift; sourceTree = "<group>"; };
+		F314142027B17698007424E9 /* PaidFeatureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Services/PaidFeatureService.swift; sourceTree = "<group>"; };
 		F316A06F26DFB05E00669386 /* UserCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCachedStatus.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/UserCachedStatus.swift; sourceTree = "<group>"; };
 		F316A07426DFBCB600669386 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		F31E91182758F5C600140B2E /* PMLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PMLogFormatter.swift; path = ../../../../libraries/vpncore/Source/Core/Logs/Formatters/PMLogFormatter.swift; sourceTree = "<group>"; };
@@ -1307,12 +1307,11 @@
 				E16C2924239E673500E7B61D /* CustomServersViewController.swift */,
 				E1EB9E7422FF096A009E704F /* LogSelectionViewController.swift */,
 				E1A4BF5A21ADBE05004D187F /* LogsViewController.swift */,
-				D52585292508F39A00657B80 /* NetshieldSelectionViewController.swift */,
-				D525852A2508F39A00657B80 /* NetshieldSelectionViewController.xib */,
 				D554789C22C601CE00AD3C5B /* ReportBugViewController.swift */,
 				79FF145420C41EE200BA3623 /* SettingsViewController.swift */,
 				E1D187E72301A20700C5F492 /* VpnProtocolViewController.swift */,
 				E13EDF7421F1D07700030CE7 /* WidgetSettingsViewController.swift */,
+				F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -1971,6 +1970,22 @@
 			path = ../../Pods;
 			sourceTree = "<group>";
 		};
+		F314141C27B174BF007424E9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F314141D27B174C5007424E9 /* PaidFeature.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F314141F27B1768D007424E9 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				F314142027B17698007424E9 /* PaidFeatureService.swift */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
@@ -2111,6 +2126,8 @@
 		F36ECCAE2611C73B0089B898 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				F314141F27B1768D007424E9 /* Services */,
+				F314141C27B174BF007424E9 /* Models */,
 				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
 				F36ECCD42611C8530089B898 /* Views */,
 				791DE610208E08E600A29EA5 /* ViewControllers */,
@@ -2125,7 +2142,7 @@
 				E16C2928239E68E200E7B61D /* CustomServersViewModel.swift */,
 				E1EB9E7822FF0B30009E704F /* LogSelectionViewModel.swift */,
 				E1EB9E7A23015FF2009E704F /* LogsViewModel.swift */,
-				D525852D2508F44800657B80 /* NetshieldSelectionViewModel.swift */,
+				F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */,
 				79F986F220D838D90064C1C7 /* SettingsViewModel.swift */,
 				E1D187EB2301A26D00C5F492 /* VpnProtocolViewModel.swift */,
 				E13EDF6A21F0BF9300030CE7 /* WidgetSettingsViewModel.swift */,
@@ -2710,7 +2727,6 @@
 				E98630A226987C6B00F56B87 /* ProtonVPN_ike_root.der in Resources */,
 				793ECF422148EA0B00C186A7 /* ButtonTableViewCell.xib in Resources */,
 				79312B812119905D00E79D09 /* SelectionTableViewCell.xib in Resources */,
-				D525852C2508F39A00657B80 /* NetshieldSelectionViewController.xib in Resources */,
 				796BD1D321144D63003D6B8D /* ServersHeaderView.xib in Resources */,
 				E986309C269835E500F56B87 /* Intents.strings in Resources */,
 				E986309A269835E500F56B87 /* Localizable.strings in Resources */,
@@ -3138,6 +3154,7 @@
 				E1FB5481230C2DD000153F4D /* ColorPickerTableViewCell.swift in Sources */,
 				E14FE84F215D2DC60062E624 /* DefaultProfileViewModel.swift in Sources */,
 				79C5597C20A5672A00E6D3F6 /* UIColor+Extension.swift in Sources */,
+				F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				79FF145520C41EE200BA3623 /* SettingsViewController.swift in Sources */,
 				D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */,
 				D5209C7826CBD67100AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
@@ -3174,12 +3191,12 @@
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
+				F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */,
 				428DF98B262F031600944379 /* ServersStreamingFeaturesViewModel.swift in Sources */,
 				D55131772319427900784ED0 /* RoundCheckboxView.swift in Sources */,
 				E134558921889EC500FEEECE /* Data+Extension.swift in Sources */,
 				79AFDA9420DB3809002F8751 /* ProfileItemViewModel.swift in Sources */,
 				D5A8CD732456BD4100F9B0C9 /* NSMutableAttributedString+Extension.swift in Sources */,
-				D525852E2508F44800657B80 /* NetshieldSelectionViewModel.swift in Sources */,
 				E1EB9E7922FF0B30009E704F /* LogSelectionViewModel.swift in Sources */,
 				E13EDF6B21F0BF9300030CE7 /* WidgetSettingsViewModel.swift in Sources */,
 				79312B802119905D00E79D09 /* SelectionTableViewCell.swift in Sources */,
@@ -3193,7 +3210,6 @@
 				E1D187F12301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
 				F37EC5B1272FF2AD002A5B8E /* TokenStorage.swift in Sources */,
 				793ECF3D2148E84500C186A7 /* TooltipTableViewCell.swift in Sources */,
-				D525852B2508F39A00657B80 /* NetshieldSelectionViewController.swift in Sources */,
 				791C54F5214A777500C6F337 /* ConnectionBarViewModel.swift in Sources */,
 				D5F37635254010EF008C7207 /* UIViewController+Announcements.swift in Sources */,
 				7995FCDC20908E6F0030E1EB /* UIConstants.swift in Sources */,
@@ -3216,6 +3232,7 @@
 				7995FCDF20908E6F0030E1EB /* AppConstants.swift in Sources */,
 				E16C2929239E68E200E7B61D /* CustomServersViewModel.swift in Sources */,
 				F3E87E3126CFF26B00675AD2 /* LoginService.swift in Sources */,
+				F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */,
 				F3BC535427859EB9009E49B4 /* Onboarding+Configuration.swift in Sources */,
 				D51DA6902541A66900B4A421 /* BadgedBarButtonItem.swift in Sources */,
 				E1FB547B230C000E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
@@ -3236,6 +3253,7 @@
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
 				D554789E22C601CE00AD3C5B /* ReportBugViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
+				F314142127B17698007424E9 /* PaidFeatureService.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */,
@@ -3277,7 +3295,6 @@
 				D5136C2B228592E80002C095 /* NSAttributedString+Extension.swift in Sources */,
 				E109118F2295A111001F6A0B /* UIViewController+Extension.swift in Sources */,
 				D5BCDD2C25307681004BAEE8 /* CountryViewController.swift in Sources */,
-				D5924D8B250F855500DCFF15 /* NetshieldSelectionViewController.swift in Sources */,
 				F3E87E3226CFF8A100675AD2 /* LoginService.swift in Sources */,
 				E1FB547D230C001E00153F4D /* TitleTextFieldTableViewCell.swift in Sources */,
 				D5136C2F228592E80002C095 /* UIView+nib.swift in Sources */,
@@ -3319,7 +3336,6 @@
 				D5136C4C228592E80002C095 /* ConnectionBarViewModel.swift in Sources */,
 				D5136C4D228592E80002C095 /* SecureCoreToggleHandler.swift in Sources */,
 				D55B36CD2457FF4D00D8B0B9 /* NSMutableAttributedString+Extension.swift in Sources */,
-				D5924D8A250F853E00DCFF15 /* NetshieldSelectionViewModel.swift in Sources */,
 				E1D6CF6E22E0C99500B58E11 /* ObfuscatedConstants.swift in Sources */,
 				D5209C7B26CBE05A00AD14EA /* IOSVpnCredentialsConfiguratorFactory.swift in Sources */,
 				422395842446EF660089002F /* URLConstants.swift in Sources */,

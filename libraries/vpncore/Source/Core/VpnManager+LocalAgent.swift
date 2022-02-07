@@ -113,6 +113,20 @@ extension VpnManager {
             break
         }
     }
+
+    func updateActiveConnection(natType: NATType) {
+        propertiesManager.lastConnectionRequest = propertiesManager.lastConnectionRequest?.withChanged(natType: natType)
+        switch currentVpnProtocol {
+        case .ike:
+            propertiesManager.lastIkeConnection = propertiesManager.lastIkeConnection?.withChanged(natType: natType)
+        case .openVpn:
+            propertiesManager.lastOpenVpnConnection = propertiesManager.lastOpenVpnConnection?.withChanged(natType: natType)
+        case .wireGuard:
+            propertiesManager.lastWireguardConnection = propertiesManager.lastWireguardConnection?.withChanged(natType: natType)
+        case nil:
+            break
+        }
+    }
 }
 
 extension VpnManager: LocalAgentDelegate {

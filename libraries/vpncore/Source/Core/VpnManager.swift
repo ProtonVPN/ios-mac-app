@@ -46,6 +46,7 @@ public protocol VpnManagerProtocol {
 
     func set(vpnAccelerator: Bool)
     func set(netShieldType: NetShieldType)
+    func set(natType: NATType)
 }
 
 public protocol VpnManagerFactory {
@@ -304,7 +305,18 @@ public class VpnManager: VpnManagerProtocol {
         // also update the last connection request and active connection for retries and reconnections
         updateActiveConnection(netShieldType: netShieldType)
         localAgent.update(netshield: netShieldType)
-    }    
+    }
+
+    public func set(natType: NATType) {
+        guard let localAgent = localAgent else {
+            log.error("Trying to change netshield via local agent when local agent instance does not exist", category: .settings)
+            return
+        }
+
+        // also update the last connection request and active connection for retries and reconnections
+        updateActiveConnection(natType: natType)
+        localAgent.update(natType: natType)
+    }
     
     // MARK: - Private functions
 

@@ -82,11 +82,15 @@ public struct ConnectionRequest: Codable {
     }
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: natType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: self.natType, profileId: self.profileId)
+    }
+
+    public func withChanged(natType: NATType) -> ConnectionRequest {
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: self.netShieldType, natType: natType, profileId: self.profileId)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: natType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: self.natType, profileId: self.profileId)
     }
 
     private enum Keys: CodingKey {

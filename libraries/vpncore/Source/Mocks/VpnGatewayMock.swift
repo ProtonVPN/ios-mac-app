@@ -98,6 +98,10 @@ public class VpnGatewayMock: VpnGatewayProtocol {
     public func reconnect(with netShieldType: NetShieldType) {
         
     }
+
+    public func reconnect(with natType: NATType) {
+        
+    }
     
     public func reconnect(with connectionProtocol: ConnectionProtocol) {
         
