@@ -1867,3 +1867,4 @@
 "_nat_type_strict" = "Strict NAT";
 "_nat_type_moderate" = "Moderate NAT";
 "_nat_type_explanation" = "NAT translates the various private addresses of your network to a single public IP address. Strict NAT is extremelv secure as it restricts almost every packet being received by your device. Moderate NAT is slightly less secure but can prevent lags on applications and video games.";
+"_nat_type_change_title" = "Change NAT Type";
