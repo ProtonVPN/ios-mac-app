@@ -325,7 +325,7 @@ final class SettingsViewModel {
             ])
         }
 
-        if true /* propertiesManager.featureFlags.moderateNAT */ {
+        if propertiesManager.featureFlags.moderateNAT {
             cells.append(contentsOf: [
                 .pushKeyValue(key: LocalizedString.natTypeTitle, value: natTypePropertyProvider.natType.name, handler: { [pushNATTypeSelectionViewController] in
                     pushNATTypeSelectionViewController(self.natTypePropertyProvider.natType, { type, approve in
