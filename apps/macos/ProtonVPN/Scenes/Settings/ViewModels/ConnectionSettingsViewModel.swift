@@ -316,17 +316,17 @@ final class ConnectionSettingsViewModel {
         
         switch index {
         case 0:
-            return LocalizedString.smartTitle.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.smartTitle.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         case 1:
             transport = " (" + LocalizedString.tcp + ")"
         case 2:
             transport = " (" + LocalizedString.udp + ")"
         case 3:
-            return LocalizedString.wireguard.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.wireguard.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         default:
-            return LocalizedString.ikev2.attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+            return LocalizedString.ikev2.attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
         }
-        return (LocalizedString.openvpn + transport).attributed(withColor: .protonWhite(), fontSize: 16, alignment: .left)
+        return (LocalizedString.openvpn + transport).attributed(withColor: .dropDownWhiteColor(), fontSize: 16, alignment: .left)
     }
     
     // MARK: - Values
@@ -343,7 +343,7 @@ final class ConnectionSettingsViewModel {
     }
     
     private func concatenated(imageString: NSAttributedString, with text: String) -> NSAttributedString {
-        let nameAttributedString = ("  " + text).attributed(withColor: .protonWhite(), fontSize: 16)
+        let nameAttributedString = ("  " + text).attributed(withColor: .dropDownWhiteColor(), fontSize: 16)
         let attributedString = NSMutableAttributedString(attributedString: NSAttributedString.concatenate(imageString, nameAttributedString))
         let range = (attributedString.string as NSString).range(of: attributedString.string)
         let paragraphStyle = NSMutableParagraphStyle()
