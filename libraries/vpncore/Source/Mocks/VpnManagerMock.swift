@@ -78,6 +78,10 @@ public class VpnManagerMock: VpnManagerProtocol {
 
     }
 
+    public func set(natType: NATType) {
+        
+    }
+
     public private(set) var isLocalAgentConnected: Bool?
     public var localAgentStateChanged: (() -> Void)?
 }

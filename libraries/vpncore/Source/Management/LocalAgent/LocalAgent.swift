@@ -38,6 +38,7 @@ protocol LocalAgent {
     func disconnect()
     func update(netshield: NetShieldType)
     func update(vpnAccelerator: Bool)
+    func update(natType: NATType)
     func unjail()
 }
 
@@ -100,6 +101,11 @@ final class LocalAgentImplementation: LocalAgent {
 
     func unjail() {
         let features = LocalAgentNewFeatures()?.with(jailed: false)
+        agent?.setFeatures(features)
+    }
+
+    func update(natType: NATType) {
+        let features = LocalAgentNewFeatures()?.with(natType: natType)
         agent?.setFeatures(features)
     }
 }

@@ -32,4 +32,8 @@ public struct ConnectionConfiguration: Codable {
     public func withChanged(netShieldType: NetShieldType) -> ConnectionConfiguration {
         return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, ports: ports)
     }
+
+    public func withChanged(natType: NATType) -> ConnectionConfiguration {
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, ports: ports)
+    }
 }
