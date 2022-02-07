@@ -21,7 +21,8 @@ import BugReport
 
 class ViewController: NSViewController {
     
-    private var bugReportDelegate: BugReportDelegate?
+    private var bugReportDelegate: MockDelegate?
+    @IBOutlet private var updateSwitch: NSSwitch!
     @IBOutlet private var statusTextField: NSTextField!
     
     override func viewDidLoad() {
@@ -47,6 +48,9 @@ class ViewController: NSViewController {
             }, troubleshootingCallback: {
                 print("troubleshootingCallback")
                 self.statusTextField.stringValue = "Troubleshooting"
+            }, updateAppCallback: {
+                print("updateAppCallback")
+                self.statusTextField.stringValue = "Update"
             })
     }
 
@@ -76,18 +80,24 @@ class ViewController: NSViewController {
         let windowController = ReportBugWindowController(viewController: viewController)
         windowController.showWindow(self)
     }
+    
+    @IBAction private func updateSwitchChanged(_ sender: Any) {
+        bugReportDelegate?.updateAvailable = updateSwitch.state == .on
+    }
 
 }
 
 class MockDelegate: BugReportDelegate {
+    
     var model: BugReportModel
     var prefilledEmail: String = ""
     
-    public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?) {
+    public init(model: BugReportModel, sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?, finishedCallback: (() -> Void)?, troubleshootingCallback: (() -> Void)?, updateAppCallback: (() -> Void)?) {
         self.model = model
         self.sendCallback = sendCallback
         self.finishedCallback = finishedCallback
         self.troubleshootingCallback = troubleshootingCallback
+        self.updateAppCallback = updateAppCallback
     }
     
     var sendCallback: ((BugReportResult, @escaping (SendReportResult) -> Void) -> Void)?
@@ -107,4 +117,22 @@ class MockDelegate: BugReportDelegate {
     func troubleshootingRequired() {
         troubleshootingCallback?()
     }
+    
+    var updateAvailable: Bool = true {
+        didSet {
+            updateAvailabilityChanged?(updateAvailable)
+        }
+    }
+
+    var updateAppCallback: (() -> Void)?
+    
+    func updateApp() {
+        updateAppCallback?()
+    }
+    
+    func checkUpdateAvailability() {
+        updateAvailabilityChanged?(updateAvailable)
+    }
+    
+    var updateAvailabilityChanged: ((Bool) -> Void)?
 }

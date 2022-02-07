@@ -67,3 +67,14 @@
 
 /* ReportBug success window: troubleshoot button */
 "_br_failure_button_troubleshoot" = "Troubleshoot";
+
+// Update view
+
+/* Title of the view nudging users to update before filling Bug Report */
+"_update_view_title" = "Update ProtonVPN";
+
+/* Description text of the view nudging users to update before filling Bug Report */
+"_update_view_description" = "You’re more likely to have issues on older versions of ProtonVPN.";
+
+/* Action button of the view nudging users to update before filling Bug Report */
+"_update_view_button" = "Update";

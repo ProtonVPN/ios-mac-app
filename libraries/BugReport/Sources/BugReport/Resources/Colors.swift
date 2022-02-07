@@ -34,6 +34,7 @@ public struct Colors {
 
     public var background: Color = Color("background-norm", bundle: Bundle.module)
     public var backgroundSecondary: Color = Color("background-secondary", bundle: Bundle.module)
+    public var backgroundUpdateButton: Color = Color("interaction-weak", bundle: Bundle.module)
     public var separator: Color = Color("separator", bundle: Bundle.module)
 
     public var qfIcon: Color = Color("notification-warning", bundle: Bundle.module)

@@ -15,6 +15,7 @@
 //
 //  You should have received a copy of the GNU General Public License
 //  along with ProtonVPN.  If not, see <https://www.gnu.org/licenses/>.
+#if os(iOS)
 
 import SwiftUI
 
@@ -24,12 +25,16 @@ import SwiftUI
 struct FormiOSView: View {
 
     @StateObject var viewModel: FormViewModel
+    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
 
     @Environment(\.colors) var colors: Colors
     @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+
+            UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
             StepProgress(step: 3, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                 .padding(.bottom)
 
@@ -125,3 +130,5 @@ struct FormView_Previews: PreviewProvider {
             .preferredColorScheme(.dark)
     }
 }
+
+#endif

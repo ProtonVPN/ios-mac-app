@@ -731,10 +731,33 @@
                                 </textFieldCell>
                                 <accessibility identifier="statusLabel"/>
                             </textField>
+                            <customView fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="5YI-IA-gKl">
+                                <rect key="frame" x="159" y="88" width="162" height="22"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="C9t-TD-KU7">
+                                        <rect key="frame" x="46" y="3" width="118" height="16"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" title="Update is available" id="amR-Dz-vAc">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                    <switch horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" baseWritingDirection="leftToRight" alignment="left" state="on" translatesAutoresizingMaskIntoConstraints="NO" id="hGL-sQ-kfq">
+                                        <rect key="frame" x="-2" y="-2" width="42" height="25"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <connections>
+                                            <action selector="updateSwitchChanged:" target="XfG-lQ-9wD" id="GaX-GG-iPK"/>
+                                        </connections>
+                                    </switch>
+                                </subviews>
+                            </customView>
                         </subviews>
                     </view>
                     <connections>
                         <outlet property="statusTextField" destination="rFp-vJ-pl2" id="uyL-iy-HJx"/>
+                        <outlet property="updateSwitch" destination="hGL-sQ-kfq" id="OtB-Mb-H0Z"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>

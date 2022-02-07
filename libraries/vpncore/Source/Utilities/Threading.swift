@@ -22,7 +22,7 @@
 
 import Foundation
 
-func executeOnUIThread(closure: @escaping () -> Void) {
+public func executeOnUIThread(closure: @escaping () -> Void) {
     if Thread.isMainThread {
         closure()
     } else {

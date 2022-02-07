@@ -25,11 +25,15 @@ import SwiftUI
 public struct BugReportiOSView: View {
 
     private weak var delegate: BugReportDelegate? = Current.bugReportDelegate
+    @StateObject var updateViewModel: IOSUpdateViewModel = Current.iOSUpdateViewModel
     @Environment(\.colors) var colors: Colors
 
     public var body: some View {
         NavigationView {
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 0) {
+
+                UpdateAvailableView(isActive: $updateViewModel.updateIsAvailable)
+
                 StepProgress(step: 1, steps: 3, colorMain: colors.brand, colorSecondary: colors.brandLight40)
                     .padding(.bottom)
 
@@ -63,15 +67,17 @@ public struct BugReportiOSView: View {
         .preferredColorScheme(.dark)
     }
 
-    public init() {}
 }
 
 // MARK: - Preview
 
 @available(iOS 14.0, *)
 struct BugReportView_Previews: PreviewProvider {
-    static var previews: some View {
+    private static let bugReport = MockBugReportDelegate(model: .mock)
 
+    static var previews: some View {
+        Current.bugReportDelegate = bugReport
+        Current.iOSUpdateViewModel.updateIsAvailable = true
         return Group {
             BugReportiOSView()
         }

@@ -30,6 +30,34 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3Bf-kE-qaF">
+                                <rect key="frame" x="107" y="500" width="200" height="31"/>
+                                <subviews>
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Fdb-Ec-gEX">
+                                        <rect key="frame" x="0.0" y="0.0" width="51" height="31"/>
+                                        <accessibility key="accessibilityConfiguration" identifier="UpdateAvailableSwitch"/>
+                                        <connections>
+                                            <action selector="updateSwitchChanged" destination="BYZ-38-t0r" eventType="valueChanged" id="5w7-Xv-7b3"/>
+                                        </connections>
+                                    </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Update is available" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J5M-e3-iT8">
+                                        <rect key="frame" x="57" y="0.0" width="143" height="31"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="J5M-e3-iT8" firstAttribute="leading" secondItem="Fdb-Ec-gEX" secondAttribute="trailing" constant="8" symbolic="YES" id="9MK-dl-8Tp"/>
+                                    <constraint firstAttribute="trailing" secondItem="J5M-e3-iT8" secondAttribute="trailing" id="D8N-be-YOy"/>
+                                    <constraint firstItem="J5M-e3-iT8" firstAttribute="top" secondItem="3Bf-kE-qaF" secondAttribute="top" id="Kba-l8-gqf"/>
+                                    <constraint firstAttribute="bottom" secondItem="Fdb-Ec-gEX" secondAttribute="bottom" id="SLe-e8-16q"/>
+                                    <constraint firstAttribute="bottom" secondItem="J5M-e3-iT8" secondAttribute="bottom" id="VUP-ST-osC"/>
+                                    <constraint firstItem="Fdb-Ec-gEX" firstAttribute="top" secondItem="3Bf-kE-qaF" secondAttribute="top" id="WJi-CU-7v0"/>
+                                    <constraint firstItem="Fdb-Ec-gEX" firstAttribute="leading" secondItem="3Bf-kE-qaF" secondAttribute="leading" id="zft-Ag-RWR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -38,15 +66,18 @@
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="9Re-CI-flV" secondAttribute="trailing" constant="20" id="BxQ-Nj-9lC"/>
                             <constraint firstItem="9Re-CI-flV" firstAttribute="top" secondItem="XS6-X6-qxK" secondAttribute="bottom" constant="7.5" id="Cc2-gl-xXA"/>
                             <constraint firstItem="9Re-CI-flV" firstAttribute="centerX" secondItem="XS6-X6-qxK" secondAttribute="centerX" id="QOB-Xh-uqR"/>
+                            <constraint firstItem="3Bf-kE-qaF" firstAttribute="top" secondItem="9Re-CI-flV" secondAttribute="bottom" constant="8" symbolic="YES" id="WYe-zL-mYc"/>
                             <constraint firstItem="9Re-CI-flV" firstAttribute="top" secondItem="XS6-X6-qxK" secondAttribute="bottom" constant="7.5" id="bDD-y0-nVh"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="XS6-X6-qxK" secondAttribute="trailing" constant="20" id="eXq-Nu-sOe"/>
                             <constraint firstItem="XS6-X6-qxK" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="lwO-7S-k9m"/>
                             <constraint firstItem="XS6-X6-qxK" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="oZY-53-94P"/>
                             <constraint firstItem="9Re-CI-flV" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="20" id="ouK-vv-Gdr"/>
+                            <constraint firstItem="3Bf-kE-qaF" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="v4h-dY-Idg"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="statusLabel" destination="9Re-CI-flV" id="cpq-KA-bWk"/>
+                        <outlet property="updateSwitch" destination="Fdb-Ec-gEX" id="mdX-tC-jem"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

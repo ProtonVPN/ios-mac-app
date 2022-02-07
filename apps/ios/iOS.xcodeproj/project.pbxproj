@@ -277,6 +277,7 @@
 		D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
 		D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
 		D59AF71725597BBC004C60E3 /* TextWithActivityCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D59AF71525597BBC004C60E3 /* TextWithActivityCell.xib */; };
+		D5A3D97427B2618B004EE255 /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		D5A6ACB5250273CE00FB381F /* BatteryUsageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A6ACB3250273CE00FB381F /* BatteryUsageViewController.swift */; };
 		D5A6ACB6250273CE00FB381F /* BatteryUsageViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = D5A6ACB4250273CE00FB381F /* BatteryUsageViewController.xib */; };
 		D5A880F422C61A59009B63D1 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5A880F322C61A59009B63D1 /* UIButton+Extension.swift */; };
@@ -412,6 +413,7 @@
 		E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */; };
 		E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */; };
 		E95E8E792696F822001AE3FA /* CertificateConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95E8E782696F822001AE3FA /* CertificateConstants.swift */; };
+		E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E95F81E627B1474800A2458A /* iOSUpdateManager.swift */; };
 		E977A77F2681DADA0013495A /* VpnCertificate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A77E2681DADA0013495A /* VpnCertificate.swift */; };
 		E977A7812681F0D90013495A /* Dictionary+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7802681F0D90013495A /* Dictionary+Extension.swift */; };
 		E977A7882681FE2B0013495A /* AuthCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = E977A7872681FE2B0013495A /* AuthCredentials.swift */; };
@@ -910,6 +912,7 @@
 		E9492EE2266A14E800500E7D /* LogSelectionViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = LogSelectionViewModelTests.swift; path = ../../../../ios/ProtonVPNTests/ViewModels/Settings/LogSelectionViewModelTests.swift; sourceTree = "<group>"; };
 		E9492EE4266A1C2200500E7D /* MockLogFilesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MockLogFilesProvider.swift; path = ../../../ios/ProtonVPNTests/Mocks/MockLogFilesProvider.swift; sourceTree = "<group>"; };
 		E95E8E782696F822001AE3FA /* CertificateConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CertificateConstants.swift; path = ../../../../libraries/vpncore/Source/Constants/CertificateConstants.swift; sourceTree = "<group>"; };
+		E95F81E627B1474800A2458A /* iOSUpdateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = iOSUpdateManager.swift; path = ../../../../../ios/ProtonVPN/Scenes/Common/Services/iOSUpdateManager.swift; sourceTree = "<group>"; };
 		E977A77E2681DADA0013495A /* VpnCertificate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = VpnCertificate.swift; path = ../../../../libraries/vpncore/Source/Models/VpnAuthentication/VpnCertificate.swift; sourceTree = "<group>"; };
 		E977A7802681F0D90013495A /* Dictionary+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = "Dictionary+Extension.swift"; path = "../../../../libraries/vpncore/Source/Extensions/Dictionary+Extension.swift"; sourceTree = "<group>"; };
 		E977A7872681FE2B0013495A /* AuthCredentials.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = AuthCredentials.swift; path = ../../../../libraries/vpncore/Source/Models/Credentials/AuthCredentials.swift; sourceTree = "<group>"; };
@@ -2030,6 +2033,7 @@
 				D5ADA9C8228AE04A004B0891 /* UIAlertService.swift */,
 				79C559A320B1BD1600E6D3F6 /* WindowService.swift */,
 				F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */,
+				E95F81E627B1474800A2458A /* iOSUpdateManager.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -3162,6 +3166,7 @@
 				E1D21AB321831DA2000C389B /* AnnotationViewModel.swift in Sources */,
 				7904DA4520E57BA3008A4FCB /* ServerUtility.swift in Sources */,
 				79F17EFA20A5570C004D2696 /* CountryItemViewModel.swift in Sources */,
+				E95F81E727B1474800A2458A /* iOSUpdateManager.swift in Sources */,
 				E1D187EC2301A26D00C5F492 /* VpnProtocolViewModel.swift in Sources */,
 				D550A19D25651ABF00FE2D54 /* TimeInterval+Render.swift in Sources */,
 				7905995B212AB3A800C0E401 /* CreateProfileTableViewCell.swift in Sources */,
@@ -3360,6 +3365,7 @@
 				D5136C6F228592E80002C095 /* SecureCoreEntryAnnotation.swift in Sources */,
 				D5136C70228592E80002C095 /* ColorPickerItem.swift in Sources */,
 				D5136C71228592E80002C095 /* ProfilesTableViewCell.swift in Sources */,
+				D5A3D97427B2618B004EE255 /* iOSUpdateManager.swift in Sources */,
 				D5136C72228592E80002C095 /* SwitchTableViewCell.swift in Sources */,
 				D5136C73228592E80002C095 /* DrillInTableViewCell.swift in Sources */,
 				F31E0AEE2786DC8A0048FA38 /* OnboardingService.swift in Sources */,

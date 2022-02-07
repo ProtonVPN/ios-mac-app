@@ -18,11 +18,14 @@
 
 import Foundation
 
+@available(iOS 14.0, *)
 struct BugReportEnvironment {
     public weak var bugReportDelegate: BugReportDelegate?
     public var assetsBundle = Bundle.module
+    #if os(iOS)
+    public var iOSUpdateViewModel = IOSUpdateViewModel(updateIsAvailable: false)
+    #endif
 }
 
-var Current = BugReportEnvironment(
-    bugReportDelegate: MockBugReportDelegate(model: .mock) // Will be changed in BugReportCreator to an actual implementation we get from the app
-)
+@available(iOS 14.0, *)
+var Current = BugReportEnvironment()
