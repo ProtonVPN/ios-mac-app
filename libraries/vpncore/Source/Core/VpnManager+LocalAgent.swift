@@ -177,6 +177,8 @@ extension VpnManager: LocalAgentDelegate {
     func didReceiveFeatures(_ features: VPNConnectionFeatures) {
         didReceiveFeature(netshield: features.netshield)
         didReceiveFeature(vpnAccelerator: features.vpnAccelerator)
+        didReceiveFeature(natType: features.natType)
+
         // Try refreshing certificate in case features are different from the ones we have in current certificate
         vpnAuthentication.refreshCertificates(features: features, completion: { result in
             switch result {
@@ -185,7 +187,7 @@ extension VpnManager: LocalAgentDelegate {
                 if nsError.code == 429 || nsError.code == 85092 {
                     self.alertService?.push(alert: TooManyCertificateRequestsAlert())
                 }
-            case .success(_):
+            case .success:
                 break
             }
         })
@@ -209,5 +211,14 @@ extension VpnManager: LocalAgentDelegate {
         log.debug("Netshield was set to \(currentNetshield), changing to \(netshield) received from local agent", category: .localAgent, event: .stateChange)
         updateActiveConnection(netShieldType: netshield)
         propertiesManager.netShieldType = netshield
+    }
+
+    private func didReceiveFeature(natType: NATType) {
+        guard propertiesManager.natType != natType else {
+            return
+        }
+
+        log.debug("NAT type was set to \(propertiesManager.natType), changing to \(natType) received from local agent", category: .localAgent, event: .stateChange)
+        propertiesManager.natType = natType
     }
 }

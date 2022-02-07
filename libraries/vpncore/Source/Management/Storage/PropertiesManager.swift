@@ -71,6 +71,7 @@ public protocol PropertiesManagerProtocol: class {
     var killSwitch: Bool { get set }
     var excludeLocalNetworks: Bool { get set }
     var vpnAcceleratorEnabled: Bool { get set }
+    var natType: NATType { get set }
     
     // Development properties
     var apiEndpoint: String? { get set }
@@ -157,6 +158,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
         case netshield = "NetShield"
         case maintenanceServerRefreshIntereval = "MaintenanceServerRefreshIntereval"
         case vpnAcceleratorEnabled = "VpnAcceleratorEnabled"
+        case natType = "NATType"
         
         case humanValidationFailed = "humanValidationFailed"
         case alternativeRouting = "alternativeRouting"
@@ -177,6 +179,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
     public static let vpnProtocolNotification: Notification.Name = Notification.Name("VPNProtocolChanged")
     public static let killSwitchNotification: Notification.Name = Notification.Name("KillSwitchChanged")
     public static let vpnAcceleratorNotification: Notification.Name = Notification.Name("VpnAcceleratorChanged")
+    public static let natTypeNotification: Notification.Name = Notification.Name("NATTypeChanged")
     public static let excludeLocalNetworksNotification: Notification.Name = Notification.Name("ExcludeLocalNetworksChanged")
     public static let smartProtocolNotification: Notification.Name = Notification.Name("SmartProtocolChanged")
 
@@ -487,6 +490,16 @@ public class PropertiesManager: PropertiesManagerProtocol {
         set {
             storage.setValue(newValue, forKey: Keys.vpnAcceleratorEnabled.rawValue)
             postNotificationOnUIThread(type(of: self).vpnAcceleratorNotification, object: newValue)
+        }
+    }
+
+    public var natType: NATType {
+        get {
+            return storage.defaults.object(forKey: Keys.natType.rawValue) as? NATType ?? .defaultValue
+        }
+        set {
+            storage.setValue(newValue, forKey: Keys.natType.rawValue)
+            postNotificationOnUIThread(type(of: self).natTypeNotification, object: newValue)
         }
     }
     

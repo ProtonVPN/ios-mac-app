@@ -69,22 +69,24 @@ public struct ConnectionRequest: Codable {
     public let connectionType: ConnectionRequestType
     public let connectionProtocol: ConnectionProtocol
     public let netShieldType: NetShieldType
+    public let natType: NATType
     public let profileId: String?
 
-    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, profileId: String?) {
+    public init(serverType: ServerType, connectionType: ConnectionRequestType, connectionProtocol: ConnectionProtocol, netShieldType: NetShieldType, natType: NATType, profileId: String?) {
         self.serverType = serverType
         self.connectionType = connectionType
         self.connectionProtocol = connectionProtocol
         self.netShieldType = netShieldType
         self.profileId = profileId
+        self.natType = natType
     }
     
     public func withChanged(netShieldType: NetShieldType) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: self.connectionProtocol, netShieldType: netShieldType, natType: natType, profileId: self.profileId)
     }
 
     public func withChanged(connectionProtocol: ConnectionProtocol) -> ConnectionRequest {
-        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, profileId: self.profileId)
+        return ConnectionRequest(serverType: self.serverType, connectionType: self.connectionType, connectionProtocol: connectionProtocol, netShieldType: self.netShieldType, natType: natType, profileId: self.profileId)
     }
 
     private enum Keys: CodingKey {
@@ -94,6 +96,7 @@ public struct ConnectionRequest: Codable {
         case netShieldType
         case profileId
         case vpnProtocol
+        case natType
     }
 
     public init(from decoder: Decoder) throws {
@@ -108,6 +111,11 @@ public struct ConnectionRequest: Codable {
             connectionProtocol = .vpnProtocol(vpnProtocol)
         } else {
             connectionProtocol = try container.decode(ConnectionProtocol.self, forKey: .connectionProtocol)
+        }
+        if let natTypeValue = try container.decodeIfPresent(NATType.self, forKey: .natType) {
+            natType = natTypeValue
+        } else {
+            natType = .strictNAT
         }
     }
 }

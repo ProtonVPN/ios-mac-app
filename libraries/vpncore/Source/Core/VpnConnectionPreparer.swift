@@ -48,21 +48,22 @@ class VpnConnectionPreparer {
         self.wireguardConfig = wireguardConfig
     }
     
-    func connect(with connectionProtocol: ConnectionProtocol, to server: ServerModel, netShieldType: NetShieldType) {
+    func connect(with connectionProtocol: ConnectionProtocol, to server: ServerModel, netShieldType: NetShieldType, natType: NATType) {
         guard let serverIp = selectServerIp(server: server) else {
             return
         }
         
         selectVpnProtocol(for: connectionProtocol, toIP: serverIp) { (vpnProtocol, ports) in
             log.info("Connecting with \(vpnProtocol) to \(server.name) via \(serverIp.entryIp):\(ports)", category: .connectionConnect)
-            self.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, ports: ports)
+            self.connect(withProtocol: vpnProtocol, server: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, ports: ports)
         }
     }
     
     // MARK: - Private functions
-    
-    private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, ports: [Int]) {
-        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, ports: ports) {
+
+    // swiftlint:disable:next function_parameter_count
+    private func connect(withProtocol vpnProtocol: VpnProtocol, server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, ports: [Int]) {
+        if let configuration = formConfiguration(withProtocol: vpnProtocol, fromServer: server, serverIp: serverIp, netShieldType: netShieldType, natType: natType, ports: ports) {
             DispatchQueue.main.async { [weak self] in
                 self?.appStateManager.connect(withConfiguration: configuration)
             }
@@ -97,13 +98,14 @@ class VpnConnectionPreparer {
             }
         }
     }
-    
-    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, ports: [Int]) -> ConnectionConfiguration? {
+
+    // swiftlint:disable:next function_parameter_count
+    private func formConfiguration(withProtocol vpnProtocol: VpnProtocol, fromServer server: ServerModel, serverIp: ServerIp, netShieldType: NetShieldType, natType: NATType, ports: [Int]) -> ConnectionConfiguration? {
         
         if let requiresUpgrade = serverTierChecker.serverRequiresUpgrade(server), requiresUpgrade {
             return nil
         }
         
-        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, ports: ports)
+        return ConnectionConfiguration(server: server, serverIp: serverIp, vpnProtocol: vpnProtocol, netShieldType: netShieldType, natType: natType, ports: ports)
     }
 }

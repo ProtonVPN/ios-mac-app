@@ -21,10 +21,10 @@ import Crypto_VPN
 
 extension LocalAgentFeatures {   
     var vpnFeatures: VPNConnectionFeatures? {
-        guard let netshield = self.netshield, let vpnAccelerator = self.vpnAccelerator else {
+        guard let netshield = self.netshield, let vpnAccelerator = self.vpnAccelerator, let natType = self.natType else {
             return nil
         }
-        return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing)
+        return VPNConnectionFeatures(netshield: netshield, vpnAccelerator: vpnAccelerator, bouncing: bouncing, natType: natType)
     }
     
 }
