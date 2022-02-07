@@ -495,7 +495,7 @@ public class PropertiesManager: PropertiesManagerProtocol {
 
     public var natType: NATType {
         get {
-            return storage.defaults.object(forKey: Keys.natType.rawValue) as? NATType ?? .defaultValue
+            return storage.defaults.object(forKey: Keys.natType.rawValue) as? NATType ?? .default
         }
         set {
             storage.setValue(newValue, forKey: Keys.natType.rawValue)

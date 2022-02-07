@@ -36,7 +36,7 @@ public struct VPNConnectionFeatures: Equatable {
         self.netshield = .level1
         self.vpnAccelerator = true
         self.bouncing = nil
-        self.natType = .defaultValue
+        self.natType = .default
     }
     
     var asDict: [String: Any] {
@@ -67,7 +67,7 @@ extension VPNConnectionFeatures: Codable {
         if let natTypeValue = try values.decodeIfPresent(NATType.self, forKey: .natType) {
             natType = natTypeValue
         } else {
-            natType = .defaultValue
+            natType = .default
         }
     }
 }
