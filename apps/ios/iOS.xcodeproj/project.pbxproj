@@ -452,8 +452,6 @@
 		F314141927B170FC007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
 		F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
 		F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
-		F314142127B17698007424E9 /* PaidFeatureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314142027B17698007424E9 /* PaidFeatureService.swift */; };
-		F314142227B19B36007424E9 /* PaidFeatureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314142027B17698007424E9 /* PaidFeatureService.swift */; };
 		F314142327B19B5B007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
 		F314142427B19B66007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
 		F314142527B19B72007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
@@ -998,7 +996,6 @@
 		F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewModel.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewModels/PaidFeatureSelectionViewModel.swift; sourceTree = "<group>"; };
 		F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureSelectionViewController.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/ViewControllers/PaidFeatureSelectionViewController.swift; sourceTree = "<group>"; };
 		F314141D27B174C5007424E9 /* PaidFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeature.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Models/PaidFeature.swift; sourceTree = "<group>"; };
-		F314142027B17698007424E9 /* PaidFeatureService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PaidFeatureService.swift; path = ../../../../../ios/ProtonVPN/Scenes/Settings/Services/PaidFeatureService.swift; sourceTree = "<group>"; };
 		F316A06F26DFB05E00669386 /* UserCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCachedStatus.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/UserCachedStatus.swift; sourceTree = "<group>"; };
 		F316A07426DFBCB600669386 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		F31E91182758F5C600140B2E /* PMLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PMLogFormatter.swift; path = ../../../../libraries/vpncore/Source/Core/Logs/Formatters/PMLogFormatter.swift; sourceTree = "<group>"; };
@@ -1979,14 +1976,6 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
-		F314141F27B1768D007424E9 /* Services */ = {
-			isa = PBXGroup;
-			children = (
-				F314142027B17698007424E9 /* PaidFeatureService.swift */,
-			);
-			path = Services;
-			sourceTree = "<group>";
-		};
 		F31E911E2758F5F900140B2E /* vpncore */ = {
 			isa = PBXGroup;
 			children = (
@@ -2127,7 +2116,6 @@
 		F36ECCAE2611C73B0089B898 /* Settings */ = {
 			isa = PBXGroup;
 			children = (
-				F314141F27B1768D007424E9 /* Services */,
 				F314141C27B174BF007424E9 /* Models */,
 				D554789D22C601CE00AD3C5B /* ReportBugViewController.xib */,
 				F36ECCD42611C8530089B898 /* Views */,
@@ -3254,7 +3242,6 @@
 				E11B0CBD21B15452008E7B25 /* SecureCoreToggleHandler.swift in Sources */,
 				D554789E22C601CE00AD3C5B /* ReportBugViewController.swift in Sources */,
 				79C5599220AC30CE00E6D3F6 /* ServerItemViewModel.swift in Sources */,
-				F314142127B17698007424E9 /* PaidFeatureService.swift in Sources */,
 				799BD70A2165071700A84933 /* CreateProfileViewModel+Descriptors.swift in Sources */,
 				F3BC535027859CF6009E49B4 /* AuthCredentials+Login.swift in Sources */,
 				428DF9B5262F126600944379 /* StreamingServiceCell.swift in Sources */,
@@ -3412,7 +3399,6 @@
 				E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */,
 				D5136C7A228592E80002C095 /* KeyValueTableViewCell.swift in Sources */,
 				E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */,
-				F314142227B19B36007424E9 /* PaidFeatureService.swift in Sources */,
 				D5136C7B228592E80002C095 /* StandardTableViewCell.swift in Sources */,
 				4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */,
 				D5136C7C228592E80002C095 /* TooltipTableViewCell.swift in Sources */,

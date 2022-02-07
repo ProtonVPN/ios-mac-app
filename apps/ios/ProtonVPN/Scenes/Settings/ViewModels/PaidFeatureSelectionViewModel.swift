@@ -50,7 +50,7 @@ final class PaidFeatureSelectionViewModel<T> where T: PaidFeature {
 
     let title: String
 
-    public init(selectedFeature: T, factory: Factory, shouldSelectNewValue: @escaping ApproveCallback, onFeatureChange: @escaping FeatureChangeCallback, allFeatures: [T], title: String) {
+    public init(title: String, allFeatures: [T], selectedFeature: T, factory: Factory, shouldSelectNewValue: @escaping ApproveCallback, onFeatureChange: @escaping FeatureChangeCallback) {
         self.factory = factory
         self.selectedFeature = selectedFeature
         self.shouldSelectNewValue = shouldSelectNewValue
