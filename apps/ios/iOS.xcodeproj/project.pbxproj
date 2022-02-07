@@ -267,7 +267,6 @@
 		D580AB8E2452C798003C34B9 /* TroubleshootingCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = D580AB8C2452C798003C34B9 /* TroubleshootingCell.xib */; };
 		D580AB912452CD5E003C34B9 /* TroubleshootCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D580AB902452CD5E003C34B9 /* TroubleshootCoordinator.swift */; };
 		D5811D80229BBD870087B63A /* ProtonVPNUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */; };
-		D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */; };
 		D594A958227C0E470041D423 /* UIView+nib.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A957227C0E470041D423 /* UIView+nib.swift */; };
 		D594A965227C466F0041D423 /* UIView+constraints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D594A964227C466F0041D423 /* UIView+constraints.swift */; };
 		D59AF71625597BBC004C60E3 /* TextWithActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */; };
@@ -454,6 +453,10 @@
 		F314141B27B17380007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
 		F314141E27B174C5007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
 		F314142127B17698007424E9 /* PaidFeatureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314142027B17698007424E9 /* PaidFeatureService.swift */; };
+		F314142227B19B36007424E9 /* PaidFeatureService.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314142027B17698007424E9 /* PaidFeatureService.swift */; };
+		F314142327B19B5B007424E9 /* PaidFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141D27B174C5007424E9 /* PaidFeature.swift */; };
+		F314142427B19B66007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141827B170FC007424E9 /* PaidFeatureSelectionViewModel.swift */; };
+		F314142527B19B72007424E9 /* PaidFeatureSelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141A27B17380007424E9 /* PaidFeatureSelectionViewController.swift */; };
 		F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07126DFB0B900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -805,7 +808,6 @@
 		D5811D7D229BBD870087B63A /* ProtonVPNUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ProtonVPNUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5811D7F229BBD870087B63A /* ProtonVPNUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProtonVPNUITests.swift; sourceTree = "<group>"; };
 		D5811D81229BBD870087B63A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetshieldServiceMock.swift; sourceTree = "<group>"; };
 		D594A957227C0E470041D423 /* UIView+nib.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+nib.swift"; sourceTree = "<group>"; };
 		D594A964227C466F0041D423 /* UIView+constraints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+constraints.swift"; sourceTree = "<group>"; };
 		D59AF71425597BBC004C60E3 /* TextWithActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextWithActivityCell.swift; sourceTree = "<group>"; };
@@ -1513,7 +1515,6 @@
 				D55B36CE2458002000D8B0B9 /* Coordinator */,
 				D5136C182285918C0002C095 /* AlertService.swift */,
 				D5F568A22327833100795953 /* AppSessionManagerMock.swift */,
-				D5924D8C250F86A300DCFF15 /* NetshieldServiceMock.swift */,
 				E197BD4322C0DFD6004E0FE7 /* PlanServiceMock.swift */,
 				D5D4D05522E1DAE30034389A /* ProfileServiceMock.swift */,
 				E14CC340233E723600306EAD /* ProtocolServiceMock.swift */,
@@ -3323,6 +3324,7 @@
 				D5136C40228592E80002C095 /* ProtonQCViewController.swift in Sources */,
 				D5136C41228592E80002C095 /* ProfilesViewController.swift in Sources */,
 				D5136C42228592E80002C095 /* CreateProfileViewController.swift in Sources */,
+				F314142427B19B66007424E9 /* PaidFeatureSelectionViewModel.swift in Sources */,
 				D5136C43228592E80002C095 /* SelectionViewController.swift in Sources */,
 				D5136C45228592E80002C095 /* SettingsViewController.swift in Sources */,
 				F3F36C4126D64CC4008AD48B /* iOSNetworkingDelegate.swift in Sources */,
@@ -3378,7 +3380,6 @@
 				D5136C69228592E80002C095 /* ServersHeaderView.swift in Sources */,
 				E1EB9E7C23016060009E704F /* LogsViewModel.swift in Sources */,
 				D5476CDC255D7B13001B1806 /* TextWithActivityCell.swift in Sources */,
-				D5924D8D250F86A300DCFF15 /* NetshieldServiceMock.swift in Sources */,
 				D550A1A625651B6700FE2D54 /* TimeIntervalTests.swift in Sources */,
 				D5136C6C228592E80002C095 /* AnnotationView.swift in Sources */,
 				D5136C6D228592E80002C095 /* CountryAnnotation.swift in Sources */,
@@ -3403,6 +3404,7 @@
 				42066FC826304914001F86DB /* ServersFeaturesInformationViewModel.swift in Sources */,
 				E1D187F22301AB2E00C5F492 /* CheckmarkTableViewCell.swift in Sources */,
 				F36AF0A227A1681D009DD36C /* UIImage+Flag.swift in Sources */,
+				F314142327B19B5B007424E9 /* PaidFeature.swift in Sources */,
 				D5136C8E2285A2620002C095 /* ColorPickerViewModelTests.swift in Sources */,
 				F316A07626DFC57D00669386 /* PlanService.swift in Sources */,
 				D5136C78228592E80002C095 /* ButtonTableViewCell.swift in Sources */,
@@ -3410,6 +3412,7 @@
 				E9492EE3266A14E800500E7D /* LogSelectionViewModelTests.swift in Sources */,
 				D5136C7A228592E80002C095 /* KeyValueTableViewCell.swift in Sources */,
 				E9492EE5266A1C2200500E7D /* MockLogFilesProvider.swift in Sources */,
+				F314142227B19B36007424E9 /* PaidFeatureService.swift in Sources */,
 				D5136C7B228592E80002C095 /* StandardTableViewCell.swift in Sources */,
 				4233504226242E200063FDAD /* UserAccountUpdateViewController.swift in Sources */,
 				D5136C7C228592E80002C095 /* TooltipTableViewCell.swift in Sources */,
@@ -3432,6 +3435,7 @@
 				D5136C1F228592D70002C095 /* AnnotationViewModel.swift in Sources */,
 				42066FE0263049FA001F86DB /* StreamingServiceCell.swift in Sources */,
 				D55B36D02458003100D8B0B9 /* TroubleshootCoordinatorMock.swift in Sources */,
+				F314142527B19B72007424E9 /* PaidFeatureSelectionViewController.swift in Sources */,
 				D5136C192285918C0002C095 /* AlertService.swift in Sources */,
 				D5209C7D26CBE07200AD14EA /* WGiOSVpnCredentialsConfigurator.swift in Sources */,
 				D5136C1422858D9D0002C095 /* CountryAnnotationViewModel.swift in Sources */,

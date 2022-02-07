@@ -39,8 +39,6 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
     
     lazy var standardProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .standard, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
     lazy var secureCoreProfile = Profile(accessTier: 4, profileIcon: .circle(0), profileType: .user, serverType: .secureCore, serverOffering: .fastest("US"), name: "", connectionProtocol: ConnectionProtocol.vpnProtocol(.ike))
-    
-    let netshieldViewModel = NetshieldSelectionViewModel(selectedType: .off, factory: NetshieldSelectionViewModelFactory(vpnKeychainProtocol: VpnKeychainMock(), planService: PlanServiceMock()), shouldSelectNewValue: {_,_  in }, onTypeChange: {_ in })
 
     lazy var appInfo = AppInfoImplementation()
     
@@ -176,24 +174,4 @@ class CreateOrEditProfileViewModelTests: XCTestCase {
             }
         }
     }
-}
-
-class NetshieldSelectionViewModelFactory: NetshieldSelectionViewModel.Factory {
-    
-    public var vpnKeychainProtocol: VpnKeychainProtocol
-    public var planService: PlanService
-
-    public init(vpnKeychainProtocol: VpnKeychainProtocol, planService: PlanService) {
-        self.vpnKeychainProtocol = vpnKeychainProtocol
-        self.planService = planService
-    }
-
-    func makeVpnKeychain() -> VpnKeychainProtocol {
-        return vpnKeychainProtocol
-    }
-
-    func makePlanService() -> PlanService {
-        return planService
-    }
-    
 }
