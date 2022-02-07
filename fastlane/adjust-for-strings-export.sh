@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# This script generates full Xcode projects for all the SPM packages as their are needed for strings export
+# This script generates full Xcode projects for all the SPM packages as they are needed for strings export
 # String export is done in the CI using `xcodebuild -exportLocalizations -localizationPath $outputDir -exportLanguage en`
 
 # make sure dependencies are installed
