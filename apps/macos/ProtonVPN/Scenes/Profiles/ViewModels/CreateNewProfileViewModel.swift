@@ -61,7 +61,7 @@ extension DependencyContainer: CreateNewProfileViewModelFactory {
 
 class CreateNewProfileViewModel {
     
-    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory
+    typealias Factory = CoreAlertServiceFactory & VpnKeychainFactory & PropertiesManagerFactory & AppStateManagerFactory & VpnGatewayFactory & ProfileManagerFactory & SystemExtensionsStateCheckFactory
     private let factory: Factory
     
     var prefillContent: ((PrefillInformation) -> Void)?
@@ -78,6 +78,8 @@ class CreateNewProfileViewModel {
     private lazy var appStateManager: AppStateManager = factory.makeAppStateManager()
     private lazy var vpnGateway: VpnGatewayProtocol = factory.makeVpnGateway()
     private lazy var profileManager: ProfileManager = factory.makeProfileManager()
+    private lazy var sysexStateCheck: SystemExtensionsStateCheck = factory.makeSystemExtensionsStateCheck()
+
     internal let defaultServerCount = 2
     let colorPickerViewModel = ColorPickerViewModel()
     
@@ -292,5 +294,29 @@ class CreateNewProfileViewModel {
             return false
         }
         return true
+    }
+
+    func checkSysexInstallation(vpnProtocolIndex: Int) {
+        let vpnProtocol = availableVpnProtocols[vpnProtocolIndex]
+        guard vpnProtocol.requiresSystemExtension else {
+            return
+        }
+
+        // Just log success/failure in the continuation. User will get an error alert
+        // if installation failed, and will be re-prompted for installation if they try
+        // to connect from the profile overview after failure/while installation is pending.
+        sysexStateCheck.startCheckAndInstallIfNeeded { result in
+            switch result {
+            case .success:
+                log.info("System extension installation succeeded while creating profile",
+                         category: .sysex,
+                         metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)"])
+            case .failure(let error):
+                log.info("System extension installation failed while creating profile",
+                         category: .sysex,
+                         metadata: ["vpnProtocol": "\(vpnProtocol.localizedString)",
+                                    "error": "\(String(describing: error))"])
+            }
+        }
     }
 }

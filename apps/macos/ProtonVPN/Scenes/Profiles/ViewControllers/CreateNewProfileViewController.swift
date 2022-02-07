@@ -271,6 +271,7 @@ final class CreateNewProfileViewController: NSViewController {
 
     @objc private func protocolSelected() {
         refreshProtocolList(withSelectionAt: protocolList.indexOfSelectedItem)
+        viewModel.checkSysexInstallation(vpnProtocolIndex: protocolList.indexOfSelectedItem)
     }
     
     @objc private func countrySelected() {
