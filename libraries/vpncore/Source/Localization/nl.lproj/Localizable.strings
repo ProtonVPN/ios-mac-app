@@ -602,10 +602,10 @@
 "_features_title" = "Mogelijkheden";
 
 /* (No Comment) */
-"_force_upgrade_message" = "The version of ProtonVPN application you are currently using is no longer supported. Please update to the latest version.";
+"_force_upgrade_message" = "De versie van de ProtonVPN app die u momenteel gebruikt, wordt niet langer ondersteund. Gelieve te updaten naar de meest recente versie.";
 
 /* (No Comment) */
-"_force_upgrade_title" = "Application upgrade needed";
+"_force_upgrade_title" = "Applicatie upgrade vereist";
 
 /* iOS: button in login screen */
 "_forgot_password" = "Wachtwoord vergeten?";
@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Inclusief app logs en systeemdetails";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Bug melden";
+"_report_bug" = "Een probleem melden";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Door de volgende details te verstrekken, kan ons team uw probleem identificeren en een mogelijke oplossing met hogere kansen en kortere tijd vinden:\n• ProtonVPN app logs\n• OpenVPN logboeken\n• WireGuard logboeken";
@@ -2041,7 +2041,7 @@
 "_vpnauth_certfail_title" = "Authenticatiefout";
 
 /* (No Comment) */
-"_vpnauth_too_many_certs_description" = "You reached the maximum number of setting changes. Please try again in a few minutes";
+"_vpnauth_too_many_certs_description" = "U heeft het maximale aantal instellingswijzigingen bereikt. Probeer over enkele minuten opnieuw";
 
 /* (No Comment) */
 "_vpnauth_too_many_certs_title" = "Authenticatiefout";
@@ -2056,7 +2056,7 @@
 "_warning_vpn_session_is_active" = "Een ProtonVPN-sessie van een andere gebruiker is actief op dit apparaat. Door in te loggen zal de huidige sessie beëindigd worden. Wilt u doorgaan?";
 
 /* Shown on the Welcome screen as the longer screen text */
-"_welcome_body" = "High-speed Swiss VPN that safeguards your privacy by encrypting your Internet connection.";
+"_welcome_body" = "Snelle Zwitserse VPN die uw privacy waarborgt door uw internetverbinding te versleutelen.";
 
 /* MacOS welcome screen: description */
 "_welcome_description" = "Bedankt voor het gebruik van ProtonVPN. Bekijk snel \nde belangrijkste kenmerken van de applicatie.";
@@ -2071,16 +2071,16 @@
 "_welcome_title" = "WELKOM AAN BOORD!";
 
 /* (No Comment) */
-"_wgks_description" = "Kill Switch is preventing the VPN to connect to the Internet. This might be due to an incompatibility with your operating system (macOS Catalina 10.15).\n\nTo resolve this problem, update your operating system to the latest version.\n\nAlternatively, you can switch to the OpenVPN protocol or disable Kill Switch.";
+"_wgks_description" = "Kill Switch voorkomt de VPN om met het internet te verbinden. Dit wordt mogelijks veroorzaakt wegens een incompatibiliteit met uw besturingssysteem (macOS Catalina 10.15).\n\nUpdate uw besturingssysteem naar de meest recente versie om dit probleem op te lossen.\n\nAlternatief, kan u wisselen naar het OpenVPN-protocol of kunt u de Kill Switch uitschakelen.";
 
 /* (No Comment) */
 "_wgks_ks_off" = "Schakel Kill Switch uit";
 
 /* (No Comment) */
-"_wgks_ovpn" = "Switch to OpenVPN";
+"_wgks_ovpn" = "Wissel naar OpenVPN";
 
 /* Wireguard + KillSwitch alert on Catalina */
-"_wgks_title" = "Kill Switch is preventing the VPN to connect to Internet";
+"_wgks_title" = "Kill Switch voorkomt de VPN om met het internet te verbinden";
 
 /* iOS: 1. Menu point in settings screen. 2. Widget description screen title. */
 "_widget" = "iOS Widget";
@@ -2098,8 +2098,8 @@
 "_you_are_not_connected" = "U bent niet verbonden";
 
 /* (No Comment) */
-"login_fetch_vpn_data" = "Configuring your VPN access";
+"login_fetch_vpn_data" = "VPN-toegang aan het configureren";
 
 /* (No Comment) */
-"login_summary_button" = "Start using ProtonVPN";
+"login_summary_button" = "Aan de slag met ProtonVPN";
 

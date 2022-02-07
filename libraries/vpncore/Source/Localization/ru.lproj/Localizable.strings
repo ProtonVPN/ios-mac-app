@@ -83,10 +83,10 @@
 "_always_on_vpn" = "Постоянная VPN";
 
 /* iOS Settinsg screen: always-on description under the switch */
-"_always_on_vpn_tooltip_ios" = "«Постоянный VPN» переподключает VPN при обрывах быстро и автоматически. Для Вашей безопасности, эту функцию нельзя отключить.";
+"_always_on_vpn_tooltip_ios" = "Постоянная VPN переподключает VPN при обрывах быстро и автоматически. Для вашей безопасности, эту функцию нельзя отключить.";
 
 /* Disconnect notification */
-"_always_on_will_reconnect" = "«Постоянный VPN» восстановит ваше подключение автоматически";
+"_always_on_will_reconnect" = "Постоянная VPN восстановит ваше подключение автоматически";
 
 /* iOS Settings: applications logs row */
 "_application_logs" = "Журналы приложения";
@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Включить журналы и системные данные";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Сообщить об ошибке";
+"_report_bug" = "Сообщить о проблеме";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Наша команда сможет определить проблему и найти возможное решение с большей вероятностью и за более короткий срок, если вы предоставите следующую нформацию:\n• логи ProtonVPN\n• логи OpenVPN\n• логи WireGuard";

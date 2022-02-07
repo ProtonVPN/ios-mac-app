@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Inclure les journaux des applications et les détails du système";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Signaler une erreur";
+"_report_bug" = "Signaler un problème";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "En fournissant les détails suivants, notre équipe peut potentiellement identifier et solutionner plus vite et plus efficacement votre problème :\n• Journaux de l'application ProtonVPN\n• Journaux OpenVPN\n• Journaux WireGuard";

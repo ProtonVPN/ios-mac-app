@@ -1283,7 +1283,7 @@
 "_quick_settings_tour_feature_1" = "Dodaj dodatkowe zabezpieczenie za pomocą funkcji Secure Core.";
 
 /* MacOS app tour: quick settings net shield */
-"_quick_settings_tour_feature_2" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania, dzięki funkcji NetShield.";
+"_quick_settings_tour_feature_2" = "Przeglądaj Internet bez reklam i złośliwego oprogramowania dzięki funkcji NetShield.";
 
 /* MacOS app tour: quick settings kill switch */
 "_quick_settings_tour_feature_3" = "Włączenie funkcji Kill Switch zapobiega ujawnieniu Twojego adresu IP.";
@@ -1346,7 +1346,7 @@
 "_report_attachments_checkbox" = "Dołącz logi aplikacji i szczegóły systemu operacyjnego";
 
 /* Report bug screen title; iOS settings screen: item; */
-"_report_bug" = "Zgłoś błąd";
+"_report_bug" = "Zgłoś problem";
 
 /* Mac bug report: description text before bug report form */
 "_report_description" = "Przesłanie następujących szczegółów pomoże naszemu zespołowi zidentyfikować problem i znaleźć jego rozwiązanie z większym prawdopodobieństwem i w szybszym czasie:\n• Logi aplikacji ProtonVPN\n• Logi protokołu OpenVPN\n• Logi protokołu WireGuard";
@@ -1496,7 +1496,7 @@
 "_setup_complete_basic" = "Twój zakup się powiódł. Plan ProtonVPN Basic jest już aktywny.";
 
 /* iOS: title of the screen after successfull purchase */
-"_setup_complete_free" = "Zarejestrowałeś się w ProtonVPN z planem Free. Skorzystaj z bezpłatnej, 7-dniowej wersji próbnej planu Plus.";
+"_setup_complete_free" = "Zarejestrowałeś się w ProtonVPN z planem Free. Skorzystaj z darmowej 7-dniowej wersji próbnej planu Plus.";
 
 /* iOS: title of the screen after successfull purchase */
 "_setup_complete_plus" = "Twój zakup się powiódł. Plan ProtonVPN Plus jest już aktywny.";
@@ -1631,7 +1631,7 @@
 "_sysex_cannot_enable" = "Nie można włączyć rozszerzenia systemu";
 
 /* (No Comment) */
-"_sysex_enabled_description" = "Konfiguracja została zakończona. Możesz przeglądać Internet szybciej, dzięki najlepszej technologii VPN.";
+"_sysex_enabled_description" = "Konfiguracja została zakończona. Możesz przeglądać Internet szybciej dzięki najlepszej technologii VPN.";
 
 /* (No Comment) */
 "_sysex_enabled_title" = "Konfiguracja została zakończona";
@@ -1772,7 +1772,7 @@
 "_trial_popup_call_to_upgrade" = "Ulepsz swój plan, aby uzyskać stały dostęp do funkcji planu ProtonVPN Plus.";
 
 /* (No Comment) */
-"_trial_popup_enjoy" = "Dzięki usłudze ProtonVPN, ciesz się wszystkimi zaletami bezpiecznego Internetu w każdym miejscu";
+"_trial_popup_enjoy" = "Ciesz się wszystkimi zaletami bezpiecznego Internetu w każdym miejscu dzięki usłudze ProtonVPN";
 
 /* Final text:
  
