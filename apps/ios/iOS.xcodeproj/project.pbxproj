@@ -454,6 +454,7 @@
 		E9F88DE527B517C0003E5179 /* Colors+BugReport.swift in Sources */ = {isa = PBXBuildFile; fileRef = E9F88DE427B517C0003E5179 /* Colors+BugReport.swift */; };
 		ED1BD7A5112EE2E929DFBEA8 /* AnnouncementDetailViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 01B66D12FF24C71F902E71AF /* AnnouncementDetailViewController.xib */; };
 		F1068F78FB6EE30F5A405DD5 /* Pods_WireGuardiOS_Extension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 054CF247E3BFF1B048C3C5F3 /* Pods_WireGuardiOS_Extension.framework */; };
+		F314140F27B11DC3007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314140E27B11DC3007424E9 /* NATType.swift */; };
 		F316A07026DFB05E00669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07126DFB0B900669386 /* UserCachedStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = F316A06F26DFB05E00669386 /* UserCachedStatus.swift */; };
 		F316A07226DFB0D900669386 /* iOSNetworkingDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3747BFA26D4DB8C00EF2F00 /* iOSNetworkingDelegate.swift */; };
@@ -995,6 +996,7 @@
 		EB2244E51CA0DBD254B41DB9 /* Pods-ProtonVPNUITests.staging.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ProtonVPNUITests.staging.xcconfig"; path = "Target Support Files/Pods-ProtonVPNUITests/Pods-ProtonVPNUITests.staging.xcconfig"; sourceTree = "<group>"; };
 		EF41EA6C88059332CF53C361 /* Pods_ProtonVPN.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_ProtonVPN.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		F11B29AEC814A4370AB62EF3 /* RoundedCornersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = RoundedCornersView.swift; path = ../../../../../ios/ProtonVPN/Scenes/Announcements/Views/RoundedCornersView.swift; sourceTree = "<group>"; };
+		F314140E27B11DC3007424E9 /* NATType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NATType.swift; path = ../../../../libraries/vpncore/Source/Models/VPN/NATType.swift; sourceTree = "<group>"; };
 		F316A06F26DFB05E00669386 /* UserCachedStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = UserCachedStatus.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/UserCachedStatus.swift; sourceTree = "<group>"; };
 		F316A07426DFBCB600669386 /* PlanService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = PlanService.swift; path = ../../../../ios/ProtonVPN/Scenes/Payments/PlanService.swift; sourceTree = "<group>"; };
 		F31E91182758F5C600140B2E /* PMLogFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PMLogFormatter.swift; path = ../../../../libraries/vpncore/Source/Core/Logs/Formatters/PMLogFormatter.swift; sourceTree = "<group>"; };
@@ -1833,6 +1835,7 @@
 				E977A790268211950013495A /* VpnAuthenticationStorage.swift */,
 				E977A77E2681DADA0013495A /* VpnCertificate.swift */,
 				E977A792268211C10013495A /* VpnKeys.swift */,
+				F314140E27B11DC3007424E9 /* NATType.swift */,
 				B322C18D0C4176A8BA5417F5 /* NetShieldType.swift */,
 				2B508BF2E5156C4F29C009F7 /* Optional+stringForLog.swift */,
 				552536E9D3C3A3ED5F3D2677 /* Storage.swift */,
@@ -3539,6 +3542,7 @@
 				E99799A626A6FE0C0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				F31E911D2758F5CF00140B2E /* Logger+Callers.swift in Sources */,
 				E977A79E26821B680013495A /* Data+JSONDictionary.swift in Sources */,
+				F314140F27B11DC3007424E9 /* NATType.swift in Sources */,
 				E977A77F2681DADA0013495A /* VpnCertificate.swift in Sources */,
 				E99799AA26A6FE0C0083D61E /* Logger.swift in Sources */,
 				E977A78A2681FEF50013495A /* AuthKeychain.swift in Sources */,
