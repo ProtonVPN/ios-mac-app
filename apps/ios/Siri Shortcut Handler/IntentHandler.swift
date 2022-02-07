@@ -39,7 +39,8 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
         let appIdentifierPrefix = Bundle.main.infoDictionary!["AppIdentifierPrefix"] as! String
         let vpnAuthKeychain = VpnAuthenticationKeychain(accessGroup: "\(appIdentifierPrefix)prt.ProtonVPN", storage: Storage())
         let userTierProvider = UserTierProviderImplementation(UserTierProviderFactory(vpnKeychainProtocol: vpnKeychain))
-        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(NetShieldPropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
+        let netShieldPropertyProvider = NetShieldPropertyProviderImplementation(PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
+        let natTypePropertyProvider = NATTypePropertyProviderImplementation(PaidFeaturePropertyProviderFactory(propertiesManager: propertiesManager, userTierProvider: userTierProvider))
         let ikeFactory = IkeProtocolFactory()
         let openVpnFactory = OpenVpnProtocolFactory(bundleId: openVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
         let wireguardVpnFactory = WireguardProtocolFactory(bundleId: wireguardVpnExtensionBundleIdentifier, appGroup: appGroup, propertiesManager: propertiesManager)
@@ -60,6 +61,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
                                                     vpnKeychain: vpnKeychain,
                                                     propertiesManager: propertiesManager,
                                                     netShieldPropertyProvider: netShieldPropertyProvider,
+                                                    natTypePropertyProvider: natTypePropertyProvider,
                                                     profileManager: ProfileManager(serverStorage: ServerStorageConcrete(), propertiesManager: propertiesManager),
                                                     doh: doh)
         
@@ -87,8 +89,7 @@ class IntentHandler: INExtension, QuickConnectIntentHandling, DisconnectIntentHa
     
 }
 
-fileprivate class NetShieldPropertyProviderFactory: NetShieldPropertyProviderImplementation.Factory {
-    
+fileprivate class PaidFeaturePropertyProviderFactory: PaidFeaturePropertyProvider.Factory {
     private let propertiesManager: PropertiesManagerProtocol
     private let userTierProvider: UserTierProvider
     
@@ -104,7 +105,6 @@ fileprivate class NetShieldPropertyProviderFactory: NetShieldPropertyProviderImp
     func makeUserTierProvider() -> UserTierProvider {
         return userTierProvider
     }
-    
 }
 
 fileprivate class UserTierProviderFactory: UserTierProviderImplementation.Factory {

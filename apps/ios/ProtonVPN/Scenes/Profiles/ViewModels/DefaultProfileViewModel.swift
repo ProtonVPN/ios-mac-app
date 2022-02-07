@@ -30,6 +30,7 @@ class DefaultProfileViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let natTypePropertyProvider: NATTypePropertyProvider
     
     private var profile: Profile {
         switch serverOffering {
@@ -55,14 +56,14 @@ class DefaultProfileViewModel {
     
     private var isConnected: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connected {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType)
         }
         return false
     }
     
     private var isConnecting: Bool {
         if let vpnGateway = vpnGateway, let activeConnectionRequest = vpnGateway.lastConnectionRequest, vpnGateway.connection == .connecting {
-            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType)
+            return activeConnectionRequest == profile.connectionRequest(withDefaultNetshield: netShieldPropertyProvider.netShieldType, withDefaultNATType: natTypePropertyProvider.natType)
         }
         return false
     }
@@ -105,12 +106,13 @@ class DefaultProfileViewModel {
         }
     }
     
-    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider) {
+    init(serverOffering: ServerOffering, vpnGateway: VpnGatewayProtocol?, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider) {
         self.serverOffering = serverOffering
         self.propertiesManager = propertiesManager
         self.vpnGateway = vpnGateway
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.natTypePropertyProvider = natTypePropertyProvider
         
         startObserving()
     }

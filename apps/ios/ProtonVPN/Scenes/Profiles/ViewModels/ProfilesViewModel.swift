@@ -33,6 +33,7 @@ class ProfilesViewModel {
     private let propertiesManager: PropertiesManagerProtocol
     private let connectionStatusService: ConnectionStatusService
     private let netShieldPropertyProvider: NetShieldPropertyProvider
+    private let natTypePropertyProvider: NATTypePropertyProvider
     private let planService: PlanService
     
     private let sectionTitles = [LocalizedString.recommended, LocalizedString.myProfiles]
@@ -49,13 +50,14 @@ class ProfilesViewModel {
         }
     }
     
-    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, planService: PlanService, profileManager: ProfileManager) {
+    init(vpnGateway: VpnGatewayProtocol?, factory: Factory, alertService: AlertService, propertiesManager: PropertiesManagerProtocol, connectionStatusService: ConnectionStatusService, netShieldPropertyProvider: NetShieldPropertyProvider, natTypePropertyProvider: NATTypePropertyProvider, planService: PlanService, profileManager: ProfileManager) {
         self.vpnGateway = vpnGateway
         self.factory = factory
         self.alertService = alertService
         self.propertiesManager = propertiesManager
         self.connectionStatusService = connectionStatusService
         self.netShieldPropertyProvider = netShieldPropertyProvider
+        self.natTypePropertyProvider = natTypePropertyProvider
         self.planService = planService
         
         if vpnGateway != nil {
@@ -101,12 +103,12 @@ class ProfilesViewModel {
     
     func defaultCellModel(for row: Int) -> DefaultProfileViewModel {
         let serverOffering = row == 0 ? ServerOffering.fastest(nil) : ServerOffering.random(nil)
-        return DefaultProfileViewModel(serverOffering: serverOffering, vpnGateway: vpnGateway, propertiesManager: propertiesManager, connectionStatusService: connectionStatusService, netShieldPropertyProvider: netShieldPropertyProvider)
+        return DefaultProfileViewModel(serverOffering: serverOffering, vpnGateway: vpnGateway, propertiesManager: propertiesManager, connectionStatusService: connectionStatusService, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider)
     }
     
     func cellModel(for index: Int) -> ProfileItemViewModel? {
         if let profile = profileManager?.customProfiles[index] {
-            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, connectionStatusService: connectionStatusService, planService: planService)
+            return ProfileItemViewModel(profile: profile, vpnGateway: vpnGateway, alertService: alertService, userTier: userTier, netShieldPropertyProvider: netShieldPropertyProvider, natTypePropertyProvider: natTypePropertyProvider, connectionStatusService: connectionStatusService, planService: planService)
         }
         return nil
     }

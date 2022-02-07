@@ -411,6 +411,7 @@
 		F3021D6225E9332A00EF73A1 /* TroubleshootingPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */; };
 		F3021DA925E9508500EF73A1 /* TroubleshootingRowItem.xib in Resources */ = {isa = PBXBuildFile; fileRef = F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */; };
 		F3021DB025E950A300EF73A1 /* TroubleshootingRowItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */; };
+		F314141127B12443007424E9 /* NATType.swift in Sources */ = {isa = PBXBuildFile; fileRef = F314141027B12443007424E9 /* NATType.swift */; };
 		F320E02D26F08D7A00336F7A /* WelcomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02526F08D7A00336F7A /* WelcomeViewController.swift */; };
 		F320E02E26F08D7A00336F7A /* TourViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02626F08D7A00336F7A /* TourViewController.swift */; };
 		F320E02F26F08D7A00336F7A /* TourNumberViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F320E02726F08D7A00336F7A /* TourNumberViewController.swift */; };
@@ -1009,6 +1010,7 @@
 		F3021D6125E9332A00EF73A1 /* TroubleshootingPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingPopup.swift; sourceTree = "<group>"; };
 		F3021DA825E9508400EF73A1 /* TroubleshootingRowItem.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TroubleshootingRowItem.xib; sourceTree = "<group>"; };
 		F3021DAF25E950A300EF73A1 /* TroubleshootingRowItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TroubleshootingRowItem.swift; sourceTree = "<group>"; };
+		F314141027B12443007424E9 /* NATType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NATType.swift; path = ../../../../libraries/vpncore/Source/Models/VPN/NATType.swift; sourceTree = "<group>"; };
 		F320E02526F08D7A00336F7A /* WelcomeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeViewController.swift; sourceTree = "<group>"; };
 		F320E02626F08D7A00336F7A /* TourViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourViewController.swift; sourceTree = "<group>"; };
 		F320E02726F08D7A00336F7A /* TourNumberViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TourNumberViewController.swift; sourceTree = "<group>"; };
@@ -1503,6 +1505,7 @@
 				E997994B26A6F50F0083D61E /* VpnCertificate.swift */,
 				E997994C26A6F50F0083D61E /* VpnKeys.swift */,
 				1A10940E60F666D60A950D73 /* VPNConnectionFeatures.swift */,
+				F314141027B12443007424E9 /* NATType.swift */,
 				C77BDD50C752FDC9115636D8 /* NetShieldType.swift */,
 			);
 			path = vpncore;
@@ -3266,6 +3269,7 @@
 				E997995326A6F5840083D61E /* CertificateConstants.swift in Sources */,
 				E99799BE26A6FFAC0083D61E /* TunnelConfiguration+WgQuickConfig.swift in Sources */,
 				E997994F26A6F5780083D61E /* AuthKeychain.swift in Sources */,
+				F314141127B12443007424E9 /* NATType.swift in Sources */,
 				E99799C226A6FFAC0083D61E /* Logger.swift in Sources */,
 				E997995126A6F57E0083D61E /* Dictionary+Extension.swift in Sources */,
 				E91BDD3C274BC9C1005F370C /* Logger+Categories.swift in Sources */,
