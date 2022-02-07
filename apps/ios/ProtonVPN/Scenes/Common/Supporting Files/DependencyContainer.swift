@@ -433,3 +433,10 @@ extension DependencyContainer: NATTypePropertyProviderFactory {
         return NATTypePropertyProviderImplementation(self)
     }
 }
+
+// MARK: PaidFeatureServiceFactory
+extension DependencyContainer: PaidFeatureServiceFactory {
+    func makePaidFeatureService() -> PaidFeatureService {
+        return PaidFeatureServiceImplementation(factory: self)
+    }
+}
