@@ -35,5 +35,5 @@ public enum NATType: Codable {
         }
     }
 
-    static let defaultValue: NATType = .strictNAT
+    public static let `default`: NATType = .strictNAT
 }

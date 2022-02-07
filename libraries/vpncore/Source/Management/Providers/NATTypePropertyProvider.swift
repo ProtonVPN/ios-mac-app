@@ -40,7 +40,7 @@ public class NATTypePropertyProviderImplementation: NATTypePropertyProvider {
     public var natType: NATType {
         get {
             guard isUserEligibleForNATTypeChange else {
-                return .defaultValue
+                return .default
             }
             return propertiesManager.natType
         }
